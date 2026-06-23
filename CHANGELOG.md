@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G153 schermlezerlabels: herhaalde en contextafhankelijke acties zoals verwijderen,
+  herordenen, innames markeren, fase wijzigen en kennis verifiëren hebben nu
+  contextuele `aria-label`s.
 - G142 back-upaanmoediging: back-upscherm toont lokaal wanneer een versleutelde
   export nog ontbreekt of verouderd is en bewaart de laatste succesvolle exportdatum
   versleuteld in settings.
