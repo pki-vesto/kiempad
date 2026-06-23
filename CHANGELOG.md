@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G133 datamodel-sync: ontbrekende TypeScript-interfaces toegevoegd voor de
+  later-modules uit `DATAMODEL.md` en een sync-test toegevoegd voor entiteiten en
+  kernvelden.
 - G066 notificatieprivacy: versleutelde lokale setting toegevoegd waarmee
   notificaties standaard generiek blijven en details op het vergrendelscherm alleen
   na expliciete keuze verschijnen.
