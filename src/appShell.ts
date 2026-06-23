@@ -19,6 +19,7 @@ import {
   type BehandelGeschiedenisItem,
   reconstrueerBehandelGeschiedenis,
 } from './domain/behandelGeschiedenis';
+import { type ConsultInzichtKoppeling, koppelConsultInzichten } from './domain/consultInzichten';
 import { CONSULT_VERSLAG_BRON_LABELS } from './domain/consultVerslag';
 import {
   bouwDossierIndex,
@@ -1156,6 +1157,12 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
     afspraak ? `Afspraak: ${afspraak.titel}` : undefined,
     traject ? `Traject: ${traject.naam}` : undefined,
   ].filter((detail): detail is string => Boolean(detail));
+  const inzichten = koppelConsultInzichten({
+    consult: verslag,
+    fasen: state.trajecten.flatMap((item) => item.fasen),
+    medicatie: state.medicatie.map((item) => item.medicatie),
+    dossierDocumenten: state.dossierDocuments ?? [],
+  });
 
   return `
     <li class="phase-item">
@@ -1169,6 +1176,7 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
         }
         ${renderConsultSamenvatting(verslag)}
         ${renderConsultActiepunten(verslag)}
+        ${renderConsultInzichten(inzichten)}
         ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
       </div>
     </li>
@@ -1187,6 +1195,33 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
       <small>Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
     </div>
   `;
+}
+
+function renderConsultInzichten(inzichten: ConsultInzichtKoppeling[]): string {
+  if (inzichten.length === 0) {
+    return '<p class="small-print">Nog geen lokale koppelingen naar fase, medicatie, embryo of onderzoek herkend.</p>';
+  }
+
+  return `
+    <div class="linked-note">
+      <strong>Consultinzichten</strong>
+      <ul class="compact-list">
+        ${inzichten
+          .map(
+            (inzicht) =>
+              `<li>${escapeHtml(consultInzichtSoortLabel(inzicht.soort))}: ${escapeHtml(inzicht.label)} <small>Bron: ${escapeHtml(inzicht.bron)}</small></li>`,
+          )
+          .join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function consultInzichtSoortLabel(soort: ConsultInzichtKoppeling['soort']): string {
+  if (soort === 'trajectfase') return 'Fase';
+  if (soort === 'medicatie') return 'Medicatie';
+  if (soort === 'embryo') return 'Embryo';
+  return 'Onderzoek';
 }
 
 function renderConsultActiepunten(verslag: ConsultVerslag): string {

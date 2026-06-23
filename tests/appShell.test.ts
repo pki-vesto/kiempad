@@ -533,7 +533,14 @@ describe('app shell', () => {
             status: 'lopend',
             pogingNummer: 1,
           },
-          fasen: [],
+          fasen: [
+            {
+              id: 'fase-1',
+              trajectId: 'traject-1',
+              fase: 'stimulatie',
+              startDatum: '2026-05-01',
+            },
+          ],
         },
       ],
       afspraken: [
@@ -546,7 +553,17 @@ describe('app shell', () => {
           },
         },
       ],
-      medicatie: [],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-1',
+            naam: 'Progesteron',
+            vorm: 'zetpil',
+            actief: true,
+          },
+          doseLogs: [],
+        },
+      ],
       herinneringen: [],
       vragen: [],
       kennisItems: [],
@@ -556,7 +573,7 @@ describe('app shell', () => {
           datum: '2026-05-01',
           titel: 'Intakegesprek verslag',
           bron: 'handmatig',
-          tekst: 'Afgesproken om bloeduitslagen mee te nemen.',
+          tekst: 'Afgesproken om bloeduitslagen mee te nemen. Progesteron en Labuitslag besproken.',
           afspraakId: 'afspraak-1',
           trajectId: 'traject-1',
           notitie: 'Vraag over vervolgstap bewaren.',
@@ -726,6 +743,10 @@ describe('app shell', () => {
     expect(html).toContain('Taak: Afgesproken om bloeduitslagen mee te nemen.');
     expect(html).toContain('Vraag: Vraag over vervolgstap bewaren.');
     expect(html).toContain('Bron: consulttekst regel 1');
+    expect(html).toContain('Consultinzichten');
+    expect(html).toContain('Fase: Stimulatie');
+    expect(html).toContain('Medicatie: Progesteron');
+    expect(html).toContain('Onderzoek: Labuitslag');
     expect(html).toContain('Notitie: Vraag over vervolgstap bewaren.');
     expect(html).toContain('2026-05-01T09:30 · Consult · Bron: Agenda');
     expect(html).toContain('2026-05-01 · Consultverslag · Bron: Consulttekst');

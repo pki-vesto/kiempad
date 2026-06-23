@@ -175,6 +175,9 @@
 - **G200 PFIP behandelgeschiedenis:** Dossier-scherm reconstrueert lokaal een
   chronologische behandelgeschiedenis uit afspraken, consultverslagen en
   dossierdocumenten met bronlabels en koppelingen.
+- **G201 PFIP consultinzichten:** Consultverslagen tonen lokale koppelingen naar
+  trajectfase, medicatie, embryo en onderzoek wanneer datumcontext of consulttekst
+  die relatie feitelijk ondersteunt.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -307,7 +310,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G200 nog 43 open doelen (G201-G243), gericht op dossier-ingest,
+heeft na G201 nog 42 open doelen (G202-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -357,8 +360,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G201: consultinzichten koppelen aan trajectfase, medicatie,
-   embryo of onderzoek.
+1. PFIP uitvoeren vanaf G202: verschilweergave tussen consultsamenvatting en
+   gebruiker-correctie.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
