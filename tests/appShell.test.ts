@@ -1016,13 +1016,18 @@ describe('app shell', () => {
     expect(html).toContain('Back-up & import');
     expect(html).toContain('id="export-backup"');
     expect(html).toContain('Download back-up');
+    expect(html).toContain('id="export-sync"');
+    expect(html).toContain('Download syncpakket');
+    expect(html).toContain('Het pakket bevat alleen encrypted records');
     expect(html).toContain('Back-up herinnering');
     expect(html).toContain('Maak regelmatig een back-up');
     expect(html).toContain('Er is nog geen succesvolle back-updatum bekend');
     expect(html).toContain('data-backup-reminder="missing"');
     expect(html).toContain('id="import-backup-form"');
+    expect(html).toContain('id="import-sync-form"');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
+    expect(html).toContain('.kiempad-sync');
   });
 
   it('rendert de laatst bekende back-updatum en periodieke aanmoediging', () => {

@@ -49,8 +49,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **AI-provider (opt-in):** verzonden tekst kan door de provider gelogd/gecached
   worden. Daarom: minimaliseren en de-identificeren, alleen op expliciet verzoek,
   default uit. Gebruiker kiest provider/model en levert eigen sleutel.
-- **Sync-relay (later):** moet zo zijn ontworpen dat hij **uitsluitend versleutelde
-  blobs** ziet; compromittering van de relay levert geen leesbare data op.
+- **Sync-relay:** ziet uitsluitend versleutelde blobs; compromittering van de relay
+  levert geen leesbare data op.
 - **Afhankelijkheden:** minimaliseer npm-dependencies; houd ze actueel; CI kan een
   audit-stap draaien.
 
@@ -70,6 +70,7 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 - [x] Auto-lock na inactiviteit.
 - [x] Geen tracking/analytics/ads; geen third-party scripts.
 - [x] Geen standaard uitgaand verkeer; privacy-test borgt dat opslag lokaal blijft.
-- [ ] Opt-in voor AI/sync; TLS; E2E voor sync.
+- [x] Opt-in voor sync; E2E-syncpakket bevat alleen versleutelde blobs.
+- [ ] Opt-in voor AI; TLS voor eventuele externe provider.
 - [ ] Versleutelde back-up/export; veilig sleutelbeheer voor een eventuele AI-sleutel.
 - [ ] `.env` en data/back-ups buiten git (`.gitignore`).

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 173 |
+| ☑ klaar | 176 |
 | ◐ bezig | 1 |
-| ☐ open | 5 |
+| ☐ open | 2 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -249,9 +249,9 @@
 | G140 | Import van versleutelde export (zelfde/ander toestel) | P1 | F2 | ☑ |
 | G141 | Export-integriteit gecontroleerd bij import | P1 | F2 | ☑ |
 | G142 | Herinnering/aanmoediging om periodiek te back-uppen | P2 | F2 | ☑ |
-| G143 | E2E-versleutelde sync tussen apparaten | P3 | F3 | ☐ |
-| G144 | Sync-relay ziet enkel onleesbare blobs | P3 | F3 | ☐ |
-| G145 | Conflictafhandeling bij sync (laatste-wint of merge) | P3 | F3 | ☐ |
+| G143 | E2E-versleutelde sync tussen apparaten | P3 | F3 | ☑ |
+| G144 | Sync-relay ziet enkel onleesbare blobs | P3 | F3 | ☑ |
+| G145 | Conflictafhandeling bij sync (laatste-wint of merge) | P3 | F3 | ☑ |
 | G146 | PDF-export voor het consult (lokaal gegenereerd) | P3 | F3 | ☑ |
 
 ## 15. UX, toegankelijkheid & PWA

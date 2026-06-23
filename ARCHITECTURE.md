@@ -89,11 +89,11 @@ Alle externe koppelingen zijn **opt-in en uit by default**:
   AI-provider. Output krijgt een waarschuwingslabel + bronvermelding, en **nooit**
   dosering/diagnose/behandelkeuze. Beslissing:
   [`docs/adr/0003-ai-met-waarborgen.md`](docs/adr/0003-ai-met-waarborgen.md).
-- **E2E-sync (later):** optionele synchronisatie tussen apparaten via een relay die
-  enkel **versleutelde blobs** ziet; de sleutel verlaat het toestel nooit.
-- **Agenda-export (later):** **ICS**-export van afspraken/herinneringen, lokaal
-  gegenereerd.
-- **PDF-export (later):** lokaal gegenereerde samenvatting voor het consult.
+- **E2E-sync:** optionele synchronisatie tussen gekoppelde apparaten via
+  syncpakketten of een relay die enkel **versleutelde blobs** ziet; de sleutel
+  verlaat het toestel nooit.
+- **Agenda-export:** **ICS**-export/import van afspraken, lokaal gegenereerd.
+- **PDF-export:** lokaal gegenereerde samenvatting voor het consult.
 
 ## 5. Datamodel
 
@@ -108,15 +108,15 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
 - **Optioneel hosten:** de statische build kan via Docker Compose op een eigen knooppunt
   (bv. de tailnet, zoals de andere apps) worden geserveerd. De container is **stateless**
   en bevat **geen** gebruikersdata (zie [`Dockerfile`](Dockerfile)).
-- **Optionele sync-relay (later):** een minimale dienst die uitsluitend versleutelde
-  blobs doorgeeft/bewaart.
+- **Optionele sync-relay:** een minimale dienst kan uitsluitend versleutelde blobs
+  doorgeven/bewaren; het huidige syncpakketcontract werkt ook handmatig.
 
 ## 7. Kostenraming
 
 - **Hosting:** ~€0 — local-first; optioneel zelf-hosten op bestaande hardware/tailnet.
 - **AI (opt-in):** alleen bij gebruik; verbruik onder de eigen abonnements-/API-sleutel
   van de gebruiker, met goedkope modellen voor samenvatten. Default uit ⇒ €0.
-- **Sync-relay (later):** verwaarloosbaar; minimale opslag van blobs.
+- **Sync-relay:** verwaarloosbaar; minimale opslag van onleesbare blobs.
 - Geen licenties, geen betaalde diensten in de MVP.
 
 ## 8. Toekomstige Architectuur
@@ -133,7 +133,7 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
 |---|---|---|---|
 | Opslag | Local-first, versleutelde IndexedDB | Server + Postgres (de ecosysteem-default) | Een server-DB is het tegenovergestelde van local-first en vergroot het privacyrisico; niet nodig voor één stel. |
 | Platform | PWA (web, mobielvriendelijk) | Native iOS/Android app | Eén codebase, snel itereren, geen app-store; PWA dekt offline + notificaties voldoende. |
-| Backend | Geen (MVP) | Thin API direct vanaf start | Onnodige complexiteit en aanvalsvlak; sync kan later E2E-versleuteld bij. |
+| Backend | Geen verplichte backend | Thin API direct vanaf start | Onnodige complexiteit en aanvalsvlak; sync werkt via E2E-versleutelde pakketten en heeft hooguit een blob-relay nodig. |
 | Stack | TypeScript + Vite + React | Python + losse frontend (Sentinel-stijl) | Eén taal, client-side, sluit aan op `nova-studio`; lichter voor een MVP. |
 | AI | Opt-in cloud-samenvatting met waarborgen | Standaard ingebouwde AI | Privacy: data mag niet ongevraagd naar derden; AI moet bewust en geminimaliseerd. |
 | Governance | Handmatig (met AI-assistentie) | Onder Sentinel autonome build | Privé-app met gevoelige data hoort niet in een automatische, op publieke repos gerichte pipeline (ADR-0005). |

@@ -127,6 +127,9 @@
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
+- **G143/G144/G145 E2E-syncpakket:** back-upscherm kan een `.kiempad-sync`-pakket
+  met uitsluitend encrypted records downloaden en importeren op een gekoppelde kluis;
+  conflicten worden deterministisch last-wins op `updatedAt` afgehandeld.
 - **G146 consult-PDF:** vragenscherm kan een lokaal printbaar consultoverzicht openen
   met afspraken, vragen en medicatie; de browser kan dit zonder externe dienst als PDF
   opslaan.
@@ -221,7 +224,8 @@
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
 - Kosten, research + AI-providercall, gedeelde modus.
-- Tailscale-publicatie via aparte HTTPS-node, plus sync, PDF, ICS en trends.
+- Tailscale-publicatie via aparte HTTPS-node, optionele WebAuthn/biometrie en
+  on-device AI-verkenning.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
