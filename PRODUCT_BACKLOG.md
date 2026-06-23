@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 118 |
+| ☑ klaar | 120 |
 | ◐ bezig | 0 |
-| ☐ open | 56 |
+| ☐ open | 54 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -72,8 +72,8 @@
 | G023 | Per fase een korte toelichting/verwachting tonen (uit kennisbank) | P1 | F1 | ☑ |
 | G024 | Tijdlijn/overzichtsweergave van het traject | P1 | F1 | ☑ |
 | G025 | "Volgende stap/afspraak" prominent op het startscherm | P1 | F1 | ☑ |
-| G026 | Meerdere trajecten/pogingen naast elkaar bewaren | P2 | F2 | ☐ |
-| G027 | Pogingnummer bijhouden t.b.v. vergoedingstelling | P2 | F2 | ☐ |
+| G026 | Meerdere trajecten/pogingen naast elkaar bewaren | P2 | F2 | ☑ |
+| G027 | Pogingnummer bijhouden t.b.v. vergoedingstelling | P2 | F2 | ☑ |
 | G028 | Notities per traject | P2 | F1 | ☑ |
 | G029 | Trajecten archiveren zonder te verwijderen | P3 | F3 | ☐ |
 | G030 | Trends/overzicht over meerdere cycli | P3 | F3 | ☐ |

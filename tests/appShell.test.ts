@@ -316,4 +316,45 @@ describe('app shell', () => {
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
   });
+
+  it('rendert meerdere pogingen met pogingnummer en nieuw-poging formulier', () => {
+    const html = renderAppShell('traject', {
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'ivf',
+            startDatum: '2026-06-23',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+        {
+          traject: {
+            id: 'traject-2',
+            naam: 'Poging 2',
+            type: 'icsi',
+            startDatum: '2026-08-01',
+            status: 'gepland',
+            pogingNummer: 2,
+          },
+          fasen: [],
+        },
+      ],
+    });
+
+    expect(html).toContain('id="traject-new-form"');
+    expect(html).toContain('Alle pogingen');
+    expect(html).toContain('Poging 1 · lopend');
+    expect(html).toContain('Poging 2 · gepland');
+  });
 });
