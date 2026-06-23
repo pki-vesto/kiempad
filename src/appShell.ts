@@ -1,3 +1,11 @@
+import {
+  TRAJECT_FASE_LABELS,
+  bepaalHuidigeFase,
+  bepaalVolgendeStap,
+  type TrajectMetFasen,
+} from './domain/traject';
+import type { Traject } from './domain/types';
+
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
   'en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
@@ -65,8 +73,13 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
   return SCREENS.some((screen) => screen.id === candidate) ? (candidate as ScreenId) : 'start';
 }
 
-export function renderAppShell(activeId: ScreenId): string {
+export type AppShellState = {
+  trajecten: TrajectMetFasen[];
+};
+
+export function renderAppShell(activeId: ScreenId, state: AppShellState = { trajecten: [] }): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
+  const screenContent = renderScreenContent(activeId, activeScreen, state);
 
   return `
     <div class="app-shell">
@@ -93,16 +106,7 @@ export function renderAppShell(activeId: ScreenId): string {
           <p>${activeScreen.intro}</p>
         </section>
 
-        <section class="workspace" aria-label="${activeScreen.label}">
-          <div class="summary-panel">
-            <h2>Volgende stap</h2>
-            <p>${activeScreen.emptyState}</p>
-          </div>
-          <aside class="policy-panel" aria-labelledby="disclaimer-title">
-            <h2 id="disclaimer-title">Geen medisch advies</h2>
-            <p>${DISCLAIMER}</p>
-          </aside>
-        </section>
+        ${screenContent}
       </main>
     </div>
   `;
@@ -144,4 +148,172 @@ function renderNavItem(screen: Screen, activeId: ScreenId): string {
   const isActive = screen.id === activeId;
   const ariaCurrent = isActive ? ' aria-current="page"' : '';
   return `<a href="#${screen.id}"${ariaCurrent}>${screen.label}</a>`;
+}
+
+function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {
+  if (activeId === 'start') return renderStartScreen(state);
+  if (activeId === 'traject') return renderTrajectScreen(state);
+
+  return `
+    <section class="workspace" aria-label="${screen.label}">
+      <div class="summary-panel">
+        <h2>Volgende stap</h2>
+        <p>${screen.emptyState}</p>
+      </div>
+      ${renderPolicyPanel()}
+    </section>
+  `;
+}
+
+function renderStartScreen(state: AppShellState): string {
+  const activeTraject = state.trajecten[0];
+
+  return `
+    <section class="workspace" aria-label="Startoverzicht">
+      <div class="summary-panel priority-panel">
+        <h2>Waar staan we?</h2>
+        <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
+        ${
+          activeTraject
+            ? `<a class="inline-action" href="#traject">Bekijk traject</a>`
+            : `<a class="inline-action" href="#traject">Traject aanmaken</a>`
+        }
+      </div>
+      ${renderPolicyPanel()}
+    </section>
+  `;
+}
+
+function renderTrajectScreen(state: AppShellState): string {
+  const selected = state.trajecten[0];
+
+  return `
+    <section class="traject-layout" aria-label="Traject beheren">
+      <div class="form-panel">
+        <h2>${selected ? 'Traject bewerken' : 'Traject aanmaken'}</h2>
+        ${renderTrajectForm(selected?.traject)}
+      </div>
+      <div class="timeline-panel">
+        <div class="panel-heading">
+          <h2>Fasen</h2>
+          ${
+            selected
+              ? `<button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}">Verwijder traject</button>`
+              : ''
+          }
+        </div>
+        ${
+          selected
+            ? renderTimeline(selected)
+            : '<p class="empty-state">Nog geen traject. Maak links een poging aan om de vaste fasen te tonen.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderTrajectForm(traject?: Traject): string {
+  return `
+    <form id="traject-form" class="data-form">
+      <input type="hidden" name="id" value="${escapeAttribute(traject?.id ?? '')}" />
+      <label>
+        Naam
+        <input name="naam" required value="${escapeAttribute(traject?.naam ?? 'Poging 1')}" />
+      </label>
+      <div class="form-grid">
+        <label>
+          Type
+          <select name="type">
+            ${renderOption('ivf', 'IVF', traject?.type)}
+            ${renderOption('icsi', 'ICSI', traject?.type)}
+            ${renderOption('onbekend', 'Nog onbekend', traject?.type)}
+          </select>
+        </label>
+        <label>
+          Status
+          <select name="status">
+            ${renderOption('gepland', 'Gepland', traject?.status)}
+            ${renderOption('lopend', 'Lopend', traject?.status)}
+            ${renderOption('afgerond', 'Afgerond', traject?.status)}
+            ${renderOption('gepauzeerd', 'Gepauzeerd', traject?.status)}
+            ${renderOption('geannuleerd', 'Geannuleerd', traject?.status)}
+          </select>
+        </label>
+      </div>
+      <div class="form-grid">
+        <label>
+          Startdatum
+          <input name="startDatum" type="date" required value="${escapeAttribute(traject?.startDatum ?? new Date().toISOString().slice(0, 10))}" />
+        </label>
+        <label>
+          Pogingnummer
+          <input name="pogingNummer" type="number" min="1" step="1" required value="${traject?.pogingNummer ?? 1}" />
+        </label>
+      </div>
+      <label>
+        Notitie
+        <textarea name="notitie" rows="4">${escapeHtml(traject?.notitie ?? '')}</textarea>
+      </label>
+      <button type="submit">${traject ? 'Bewaar traject' : 'Maak traject aan'}</button>
+    </form>
+  `;
+}
+
+function renderTimeline(item: TrajectMetFasen): string {
+  const current = bepaalHuidigeFase(item.fasen);
+
+  return `
+    <ol class="phase-list">
+      ${item.fasen
+        .map((fase) => {
+          const isCurrent = current?.fase === fase.fase;
+          return `
+            <li class="phase-item${isCurrent ? ' current' : ''}">
+              <div>
+                <h3>${TRAJECT_FASE_LABELS[fase.fase]}</h3>
+                <p>${escapeHtml(fase.toelichting ?? '')}</p>
+                <small>${renderPhaseDates(fase.startDatum, fase.eindDatum)}</small>
+              </div>
+              <button class="phase-button" type="button" data-traject-id="${item.traject.id}" data-fase="${fase.fase}">
+                ${isCurrent ? 'Huidig' : 'Markeer'}
+              </button>
+            </li>
+          `;
+        })
+        .join('')}
+    </ol>
+  `;
+}
+
+function renderPhaseDates(startDatum?: string, eindDatum?: string): string {
+  if (startDatum && eindDatum) return `${startDatum} t/m ${eindDatum}`;
+  if (startDatum) return `Gestart op ${startDatum}`;
+  return 'Nog niet gestart';
+}
+
+function renderPolicyPanel(): string {
+  return `
+    <aside class="policy-panel" aria-labelledby="disclaimer-title">
+      <h2 id="disclaimer-title">Geen medisch advies</h2>
+      <p>${DISCLAIMER}</p>
+    </aside>
+  `;
+}
+
+function renderOption(value: string, label: string, current?: string): string {
+  const selected = value === current ? ' selected' : '';
+  return `<option value="${value}"${selected}>${label}</option>`;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function escapeAttribute(value: string): string {
+  return escapeHtml(value);
 }

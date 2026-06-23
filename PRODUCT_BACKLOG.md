@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 41 |
-| ◐ bezig | 1 |
-| ☐ open | 132 |
+| ☑ klaar | 50 |
+| ◐ bezig | 0 |
+| ☐ open | 124 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -65,16 +65,16 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G019 | Traject (cyclus/poging) aanmaken, bewerken, verwijderen | P0 | F1 | ☐ |
-| G020 | Trajectstatus zetten (gepland/lopend/afgerond/gepauzeerd/geannuleerd) | P1 | F1 | ☐ |
-| G021 | Fasen van een traject tonen in vaste volgorde | P0 | F1 | ☐ |
-| G022 | Huidige fase markeren en wijzigen | P0 | F1 | ☐ |
-| G023 | Per fase een korte toelichting/verwachting tonen (uit kennisbank) | P1 | F1 | ☐ |
-| G024 | Tijdlijn/overzichtsweergave van het traject | P1 | F1 | ☐ |
-| G025 | "Volgende stap/afspraak" prominent op het startscherm | P1 | F1 | ☐ |
+| G019 | Traject (cyclus/poging) aanmaken, bewerken, verwijderen | P0 | F1 | ☑ |
+| G020 | Trajectstatus zetten (gepland/lopend/afgerond/gepauzeerd/geannuleerd) | P1 | F1 | ☑ |
+| G021 | Fasen van een traject tonen in vaste volgorde | P0 | F1 | ☑ |
+| G022 | Huidige fase markeren en wijzigen | P0 | F1 | ☑ |
+| G023 | Per fase een korte toelichting/verwachting tonen (uit kennisbank) | P1 | F1 | ☑ |
+| G024 | Tijdlijn/overzichtsweergave van het traject | P1 | F1 | ☑ |
+| G025 | "Volgende stap/afspraak" prominent op het startscherm | P1 | F1 | ☑ |
 | G026 | Meerdere trajecten/pogingen naast elkaar bewaren | P2 | F2 | ☐ |
 | G027 | Pogingnummer bijhouden t.b.v. vergoedingstelling | P2 | F2 | ☐ |
-| G028 | Notities per traject | P2 | F1 | ☐ |
+| G028 | Notities per traject | P2 | F1 | ☑ |
 | G029 | Trajecten archiveren zonder te verwijderen | P3 | F3 | ☐ |
 | G030 | Trends/overzicht over meerdere cycli | P3 | F3 | ☐ |
 
@@ -275,7 +275,7 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G159 | Unit-tests voor domeinregels (vergoeding, fase-logica, datums) | P1 | F1 | ◐ |
+| G159 | Unit-tests voor domeinregels (vergoeding, fase-logica, datums) | P1 | F1 | ☑ |
 | G160 | Tests voor versleuteling/ontsleuteling (round-trip) | P0 | F1 | ☑ |
 | G161 | Tests voor opslaglaag (CRUD op IndexedDB, mock) | P1 | F1 | ☑ |
 | G162 | Tests voor herinnering-/DoseLog-generatie | P1 | F1 | ☐ |
