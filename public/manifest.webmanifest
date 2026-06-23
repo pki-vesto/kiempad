@@ -1,0 +1,19 @@
+{
+  "name": "Kiempad",
+  "short_name": "Kiempad",
+  "description": "Local-first IVF/ICSI overzicht zonder tracking.",
+  "lang": "nl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ec",
+  "theme_color": "#5b8c5a",
+  "icons": [
+    {
+      "src": "/kiempad-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

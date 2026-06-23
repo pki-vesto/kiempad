@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 88 |
+| ☑ klaar | 94 |
 | ◐ bezig | 0 |
-| ☐ open | 86 |
+| ☐ open | 80 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -260,15 +260,15 @@
 |---|---|---|---|---|
 | G147 | Warme, niet-klinische, rustige toon in UI en teksten | P1 | F1 | ☑ |
 | G148 | Mobielvriendelijke, responsieve layout | P0 | F1 | ☑ |
-| G149 | PWA installeerbaar (manifest, icons) | P1 | F1 | ☐ |
-| G150 | Volledig offline bruikbaar na eerste laden | P1 | F1 | ☐ |
-| G151 | Startscherm met "waar staan we / wat is de volgende stap" | P1 | F1 | ☐ |
-| G152 | Toegankelijkheid: contrast, focus, toetsenbordnavigatie | P1 | F1 | ☐ |
+| G149 | PWA installeerbaar (manifest, icons) | P1 | F1 | ☑ |
+| G150 | Volledig offline bruikbaar na eerste laden | P1 | F1 | ☑ |
+| G151 | Startscherm met "waar staan we / wat is de volgende stap" | P1 | F1 | ☑ |
+| G152 | Toegankelijkheid: contrast, focus, toetsenbordnavigatie | P1 | F1 | ☑ |
 | G153 | Schermlezer-vriendelijke labels (ARIA) | P2 | F2 | ☐ |
 | G154 | Donkere modus | P3 | F2 | ☐ |
 | G155 | Nederlandstalige UI (default `nl`) | P1 | F1 | ☑ |
-| G156 | Lege-staten met vriendelijke uitleg i.p.v. lege schermen | P2 | F1 | ☐ |
-| G157 | Bevestiging bij destructieve acties (verwijderen) | P1 | F1 | ☐ |
+| G156 | Lege-staten met vriendelijke uitleg i.p.v. lege schermen | P2 | F1 | ☑ |
+| G157 | Bevestiging bij destructieve acties (verwijderen) | P1 | F1 | ☑ |
 | G158 | Snelle invoer (zo min mogelijk velden verplicht) | P2 | F1 | ☐ |
 
 ## 16. Testen & kwaliteit

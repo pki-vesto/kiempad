@@ -42,6 +42,9 @@
 - **M1.8 basis-kennisbank:** KennisItems lokaal seedden uit `docs/KENNISBANK.md`,
   tonen per categorie, bronvermelding, AI-label, artsverificatielabel en expliciet
   markeren als geverifieerd met arts.
+- **M1.9 UX/PWA-baseline:** installatiemanifest en SVG-icon, offline service-worker
+  met cacheversie, standaard service-workerregistratie, concreter startscherm,
+  skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -52,8 +55,8 @@
 
 De rest van F1 (MVP) en later, o.a.:
 
-- PWA-/service-worker-runtime voor volledig offline installeren.
-- PWA-/service-worker-runtime.
+- Geen gedeeltelijke F1-hoofdworkflow bekend; resterende punten zitten vooral in
+  kwaliteit, onderhoud en latere F2/F3-modules.
 - Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
 
@@ -75,10 +78,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
-  seedt en toont conceptkennis lokaal met bron- en verificatielabels.
+  seedt en toont conceptkennis lokaal met bron- en verificatielabels. De app heeft
+  een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (51 passing), `npm run build` en `npm audit --audit-level=high`.
+  (56 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -86,9 +90,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **PWA/offline-runtime** met manifest en installatiemetadata.
-2. **UX-baseline** voor toegankelijkheid, lege-staten en verwijderen.
-3. **Tests & kwaliteit** uitbreiden richting de resterende F1-gates.
+1. **Tests & kwaliteit** uitbreiden richting de resterende F1-gates.
+2. **Onderhoudsdoelen** expliciet afvinken waar de workflow inmiddels structureel is.
+3. **F2-scope kiezen**: kosten/vergoedingen, symptomen of back-up/export.
 
 ## 7. Permanente onderhoudsregel
 

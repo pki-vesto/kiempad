@@ -1,5 +1,6 @@
 import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
+import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { AgendaStore, type AfspraakBundle } from './domain/agendaStore';
 import { HerinneringStore } from './domain/herinneringStore';
 import { MedicatieStore, type MedicatieBundle } from './domain/medicatieStore';
@@ -25,6 +26,7 @@ import { VaultSession } from './storage/vaultSession';
 import {
   clearScheduledNotifications,
   getNotificationRuntimeStatus,
+  registerKiempadServiceWorker,
   requestNotificationPermissionAndRegister,
   scheduleLocalNotifications,
   type NotificationRuntimeStatus,
@@ -98,6 +100,7 @@ async function mount(): Promise<void> {
   if (!app) return;
 
   const driver = await openIndexedDbDriver();
+  await registerKiempadServiceWorker().catch(() => undefined);
   const session = new VaultSession(driver);
   const state: RuntimeState = {
     driver,
@@ -176,7 +179,7 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
     const vraagId = button.dataset.vraagId;
     if (!vraagId || !state.vraagStore) return;
 
-    const confirmed = window.confirm('Weet je zeker dat je deze vraag wilt verwijderen?');
+    const confirmed = window.confirm(DELETE_CONFIRMATIONS.vraag);
     if (!confirmed) return;
 
     void state.vraagStore.delete(vraagId).then(() => reloadAndRender(root, state));
@@ -223,7 +226,7 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
     const trajectId = button.dataset.trajectId;
     if (!trajectId || !state.trajectStore) return;
 
-    const confirmed = window.confirm('Weet je zeker dat je dit traject en de fasen wilt verwijderen?');
+    const confirmed = window.confirm(DELETE_CONFIRMATIONS.traject);
     if (!confirmed) return;
 
     void state.trajectStore.delete(trajectId).then(() => reloadAndRender(root, state));
@@ -242,7 +245,7 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
     const afspraakId = button.dataset.afspraakId;
     if (!afspraakId || !state.agendaStore) return;
 
-    const confirmed = window.confirm('Weet je zeker dat je deze afspraak wilt verwijderen?');
+    const confirmed = window.confirm(DELETE_CONFIRMATIONS.afspraak);
     if (!confirmed) return;
 
     void state.agendaStore.delete(afspraakId).then(() => reloadAndRender(root, state));
@@ -261,7 +264,7 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
     const medicatieId = button.dataset.medicatieId;
     if (!medicatieId || !state.medicatieStore) return;
 
-    const confirmed = window.confirm('Weet je zeker dat je deze medicatie en geplande logs wilt verwijderen?');
+    const confirmed = window.confirm(DELETE_CONFIRMATIONS.medicatie);
     if (!confirmed) return;
 
     void state.medicatieStore.delete(medicatieId).then(() => reloadAndRender(root, state));

@@ -11,6 +11,11 @@
   box-sizing: border-box;
 }
 
+:focus-visible {
+  outline: 3px solid #2f6f73;
+  outline-offset: 3px;
+}
+
 html {
   min-width: 320px;
   background: #f7f8f4;
@@ -33,6 +38,24 @@ a {
   padding: 20px;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 20;
+  top: 10px;
+  left: 10px;
+  transform: translateY(-140%);
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #18362f;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 .topbar {
   display: flex;
   align-items: center;
@@ -47,12 +70,6 @@ a {
   align-items: center;
   gap: 12px;
   text-decoration: none;
-}
-
-.brand:focus-visible,
-.primary-nav a:focus-visible {
-  outline: 3px solid #2f6f73;
-  outline-offset: 3px;
 }
 
 .brand-mark {
@@ -205,6 +222,15 @@ h2 {
   display: grid;
   align-content: start;
   gap: 12px;
+}
+
+.start-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 18px;
+  color: #465148;
+  line-height: 1.55;
 }
 
 .inline-action {

@@ -150,6 +150,7 @@ export function renderAppShell(
 
   return `
     <div class="app-shell">
+      <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
       <header class="topbar">
         <a class="brand" href="#start" aria-label="Kiempad startscherm">
           <span class="brand-mark" aria-hidden="true">K</span>
@@ -297,22 +298,32 @@ function renderKennisItem(item: KennisItem): string {
 
 function renderStartScreen(state: AppShellState): string {
   const activeTraject = state.trajecten[0];
+  const nextAppointment = beschrijfVolgendeAfspraak(
+    state.afspraken.map((bundle) => bundle.afspraak),
+    new Date().toISOString().slice(0, 16),
+  );
+  const nextReminder = beschrijfVolgendeHerinnering(state.herinneringen);
+  const openQuestions = beschrijfOpenstaandeVragen(state);
 
   return `
     <section class="workspace" aria-label="Startoverzicht">
       <div class="summary-panel priority-panel">
         <h2>Waar staan we?</h2>
         <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
-        <p>${escapeHtml(beschrijfVolgendeAfspraak(state.afspraken.map((bundle) => bundle.afspraak), new Date().toISOString().slice(0, 16)))}</p>
-        <p>${escapeHtml(beschrijfVolgendeHerinnering(state.herinneringen))}</p>
-        <p>${escapeHtml(beschrijfOpenstaandeVragen(state))}</p>
         ${
           activeTraject
             ? `<a class="inline-action" href="#traject">Bekijk traject</a>`
             : `<a class="inline-action" href="#traject">Traject aanmaken</a>`
         }
       </div>
-      ${renderPolicyPanel()}
+      <div class="summary-panel">
+        <h2>Volgende stap</h2>
+        <ul class="start-list">
+          <li><strong>Afspraak:</strong> ${escapeHtml(nextAppointment)}</li>
+          <li><strong>Herinnering:</strong> ${escapeHtml(nextReminder)}</li>
+          <li><strong>Vragen:</strong> ${escapeHtml(openQuestions)}</li>
+        </ul>
+      </div>
     </section>
   `;
 }

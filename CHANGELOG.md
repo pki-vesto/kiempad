@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.9 UX/PWA-baseline: installatiemanifest, SVG-icon, offline service-worker met
+  cacheversie en navigatiefallback, standaard service-workerregistratie, concreter
+  startscherm, skiplink/focusstijl, lege-staten en testbare delete-confirmaties
+  (G149-G152, G156, G157).
 - M1.8 basis-kennisbank: versleutelde KennisItem-store, seed van conceptitems uit
   `docs/KENNISBANK.md`, categorieoverzicht voor fasen/leefstijl/kosten/research,
   zichtbare bron-, AI- en artsverificatielabels en expliciet markeren als

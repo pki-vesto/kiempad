@@ -18,6 +18,8 @@ describe('app shell', () => {
   it('rendert basisnavigatie voor alle hoofdschermen', () => {
     const html = renderAppShell('agenda');
 
+    expect(html).toContain('Ga naar inhoud');
+    expect(html).toContain('href="#inhoud"');
     for (const screen of SCREENS) {
       expect(html).toContain(`href="#${screen.id}"`);
       expect(html).toContain(`>${screen.label}</a>`);
@@ -43,6 +45,18 @@ describe('app shell', () => {
     expect(html).toContain('Geen herstel-achterdeur');
     expect(html).toContain('Kiempad bewaart je passphrase niet');
     expect(html).toContain('versleutelde back-up');
+  });
+
+  it('rendert het startscherm met concrete volgende-stapblokken en lege-staten', () => {
+    const html = renderAppShell('start');
+
+    expect(html).toContain('Waar staan we?');
+    expect(html).toContain('Volgende stap');
+    expect(html).toContain('Afspraak:');
+    expect(html).toContain('Herinnering:');
+    expect(html).toContain('Vragen:');
+    expect(html).toContain('Nog geen komende afspraken vastgelegd');
+    expect(html).toContain('Nog geen komende herinneringen');
   });
 
   it('rendert agenda-afspraken met gekoppelde vraag en herinnering', () => {
