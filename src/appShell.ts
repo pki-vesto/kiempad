@@ -70,7 +70,12 @@ import {
   volgendeAfspraakMetOpenVragen,
 } from './domain/vraag';
 import type { VraagBundle } from './domain/vraagStore';
-import { berekenWelzijnOverzicht, type WelzijnOverzicht } from './domain/welzijn';
+import {
+  berekenWelzijnOverzicht,
+  berekenWelzijnTrends,
+  type WelzijnOverzicht,
+  type WelzijnTrendPeriode,
+} from './domain/welzijn';
 import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
 
 export const DISCLAIMER =
@@ -767,6 +772,7 @@ function renderWelzijnScreen(state: AppShellState): string {
   const checkIns = state.mentalCheckIns ?? [];
   const perDag = symptomenPerDag(logs);
   const overzicht = berekenWelzijnOverzicht(logs, checkIns);
+  const trends = berekenWelzijnTrends(logs, checkIns);
 
   return `
     <section class="traject-layout" aria-label="Symptomen en welzijn">
@@ -780,6 +786,7 @@ function renderWelzijnScreen(state: AppShellState): string {
       </div>
       <div class="timeline-panel">
         ${renderWelzijnOverzicht(overzicht)}
+        ${renderWelzijnTrends(trends)}
         <h2>Mentale check-ins</h2>
         ${
           checkIns.length > 0
@@ -799,6 +806,31 @@ function renderWelzijnScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
         }
       </div>
+    </section>
+  `;
+}
+
+function renderWelzijnTrends(trends: WelzijnTrendPeriode[]): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Welzijn-trends">
+      <h2>Trends per periode</h2>
+      <p class="small-print">Feitelijke aantallen per maand, zonder score of oordeel.</p>
+      ${
+        trends.length > 0
+          ? `<ol class="compact-list">
+              ${trends
+                .map(
+                  (trend) => `
+                    <li>
+                      <strong>${escapeHtml(trend.periode)}</strong>
+                      <span>${trend.symptomLogAantal} symptoomlog(s) · ${trend.checkInAantal} check-in(s)${trend.gemiddeldeIntensiteit ? ` · gemiddelde intensiteit ${trend.gemiddeldeIntensiteit}/5` : ''} · zwaar ${trend.stemmingVerdeling.zwaar}</span>
+                    </li>
+                  `,
+                )
+                .join('')}
+            </ol>`
+          : '<p class="empty-state">Nog geen trendgegevens.</p>'
+      }
     </section>
   `;
 }

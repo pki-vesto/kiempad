@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G111 welzijnstrends: welzijnscherm toont feitelijke maandtrends voor
+  symptoomlogs, intensiteit en mentale check-ins zonder score of oordeel.
 - G107 CycleData: welzijnscherm kan feitelijke cyclusmetingen zoals temperatuur of
   bloeding versleuteld lokaal vastleggen en terug tonen.
 - G056 injectie-instructie: medicatie kan naast instructietekst een lokale

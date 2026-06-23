@@ -724,6 +724,11 @@ describe('app shell', () => {
     expect(html).toContain('name="stemming"');
     expect(html).toContain('Welzijn-overzicht');
     expect(html).toContain('geen oordeel of score');
+    expect(html).toContain('Trends per periode');
+    expect(html).toContain('Feitelijke aantallen per maand, zonder score of oordeel.');
+    expect(html).toContain(
+      '2 symptoomlog(s) · 1 check-in(s) · gemiddelde intensiteit 4/5 · zwaar 1',
+    );
     expect(html).toContain('Dagen met symptomen');
     expect(html).toContain('Stemming zwaar');
     expect(html).toContain('data-owner="partner"');
