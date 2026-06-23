@@ -235,12 +235,17 @@
   opt-in voor lokale OCR-verwerking. Tekstbestanden worden direct in de browser
   uitgelezen; PDF's en afbeeldingen krijgen een versleutelde OCR-wachtstatus voor
   lokale verwerking zonder cloudstap, diagnose of behandeladvies.
+- **G182 PFIP metadata-extractie:** nieuwe dossierdocumenten krijgen lokaal
+  afgeleide metadata voor documentdatum, instelling, documenttype,
+  trajectkoppeling, arts en bronbestand. De extractie gebruikt alleen bestandsnaam,
+  formulierdata, notitie en eventuele lokale OCR-tekst; oudere records krijgen in
+  de UI een veilige fallbackweergave.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G181 nog 62 open doelen (G182-G243), gericht op dossier-ingest,
+heeft na G182 nog 61 open doelen (G183-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -290,8 +295,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G182: medische dossier-ingest uitbreiden met
-   metadata-extractie, tijdlijnopbouw, indexering en lokale zoekfunctionaliteit.
+1. PFIP uitvoeren vanaf G183: medische dossier-ingest uitbreiden met
+   conceptbevestiging, tijdlijnopbouw, indexering en lokale zoekfunctionaliteit.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

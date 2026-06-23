@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G182 PFIP dossier-ingest: dossierdocumenten krijgen lokale metadata-extractie
+  voor documentdatum, instelling, documenttype, trajectkoppeling, arts en
+  bronbestand op basis van bestandsnaam, formulierdata, notitie en OCR-tekst.
 - G181 PFIP dossier-ingest: dossieruploads hebben een expliciete lokale
   OCR-opt-in. Tekstbestanden worden direct op het toestel uitgelezen; PDF's en
   afbeeldingen krijgen een versleutelde lokale OCR-wachtstatus zonder

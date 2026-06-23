@@ -208,6 +208,15 @@ export interface DossierDocument {
     samenvatting: string;
     signalen: string[];
   };
+  metadata: {
+    documentDatum?: IsoDate;
+    instelling?: string;
+    documenttype?: string;
+    trajectId?: string;
+    arts?: string;
+    bronbestand: string;
+    extractieBronnen: string[];
+  };
   ocr?: {
     status: 'tekst_uitgelezen' | 'wacht_op_lokale_ocr' | 'niet_ondersteund';
     bron: 'tekstbestand' | 'pdf' | 'afbeelding' | 'onbekend';
