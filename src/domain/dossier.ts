@@ -103,6 +103,15 @@ export type ImagingContextSamenvatting = {
   bronnen: string[];
 };
 
+export type ImagingRepositoryFilter = {
+  soort?: DossierBeeldClassificatie;
+  datumVanaf?: string;
+  datumTot?: string;
+  trajectId?: string;
+  afspraakId?: string;
+  embryoLabel?: string;
+};
+
 export type DossierBeeldClassificatie = ImagingRepositoryItem['soort'];
 
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
@@ -308,6 +317,27 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       mimeType: document.mimeType,
       document,
     }));
+}
+
+export function filterImagingRepository(
+  items: readonly ImagingRepositoryItem[],
+  filter: ImagingRepositoryFilter,
+): ImagingRepositoryItem[] {
+  const embryoQuery = normaliseerZoektekst(filter.embryoLabel ?? '');
+  return items.filter((item) => {
+    if (filter.soort && item.soort !== filter.soort) return false;
+    if (filter.datumVanaf && item.datum < filter.datumVanaf) return false;
+    if (filter.datumTot && item.datum > filter.datumTot) return false;
+    if (filter.trajectId && item.tijdlijnKoppeling.pogingId !== filter.trajectId) return false;
+    if (filter.afspraakId && item.tijdlijnKoppeling.afspraakId !== filter.afspraakId) return false;
+    if (
+      embryoQuery &&
+      !normaliseerZoektekst(item.tijdlijnKoppeling.embryoLabel ?? '').includes(embryoQuery)
+    ) {
+      return false;
+    }
+    return true;
+  });
 }
 
 export function bouwImagingVergelijking(

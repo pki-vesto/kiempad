@@ -16,7 +16,9 @@ import { DecisionStore } from './domain/decisionStore';
 import {
   bepaalDossierUploadProfiel,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
+  type DossierBeeldClassificatie,
   formatBytes,
+  type ImagingRepositoryFilter,
 } from './domain/dossier';
 import { DossierStore } from './domain/dossierStore';
 import { EventLogStore } from './domain/eventLogStore';
@@ -115,6 +117,7 @@ type RuntimeState = {
   dossierStatus?: string;
   dossierError?: string;
   dossierZoekterm?: string;
+  imagingFilter?: ImagingRepositoryFilter;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -155,6 +158,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dossierStatus: state.dossierStatus,
     dossierError: state.dossierError,
     dossierZoekterm: state.dossierZoekterm,
+    imagingFilter: state.imagingFilter,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
@@ -223,6 +227,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.dossierStatus = undefined;
     state.dossierError = undefined;
     state.dossierZoekterm = undefined;
+    state.imagingFilter = undefined;
     state.agendaImportStatus = undefined;
     state.agendaImportError = undefined;
     state.medicatieImportStatus = undefined;
@@ -333,6 +338,22 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     const form = event.currentTarget;
     if (!(form instanceof HTMLFormElement)) return;
     state.dossierZoekterm = optionalString(new FormData(form).get('dossierZoekterm'));
+    render(root, state);
+  });
+
+  root.querySelector('#imaging-filter-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement)) return;
+    const data = new FormData(form);
+    state.imagingFilter = {
+      soort: parseImagingSoort(data.get('imagingSoort')),
+      datumVanaf: optionalString(data.get('imagingDatumVanaf')),
+      datumTot: optionalString(data.get('imagingDatumTot')),
+      trajectId: optionalString(data.get('imagingTrajectId')),
+      afspraakId: optionalString(data.get('imagingAfspraakId')),
+      embryoLabel: optionalString(data.get('imagingEmbryoLabel')),
+    };
     render(root, state);
   });
 }
@@ -1944,6 +1965,22 @@ function parseDossierUploadProfiel(
     value === 'behandelverslag' ||
     value === 'pdf' ||
     value === 'afbeelding'
+  ) {
+    return value;
+  }
+
+  return undefined;
+}
+
+function parseImagingSoort(
+  value: FormDataEntryValue | null,
+): DossierBeeldClassificatie | undefined {
+  if (
+    value === 'echo' ||
+    value === 'foto' ||
+    value === 'scan' ||
+    value === 'embryo_afbeelding' ||
+    value === 'overig_beeld'
   ) {
     return value;
   }

@@ -8,6 +8,7 @@ import {
   bouwImagingVergelijking,
   classificeerDossierBeeld,
   extraheerDossierMetadata,
+  filterImagingRepository,
   formatBytes,
   maakDossierDocument,
   maakDossierOcrResultaat,
@@ -638,6 +639,49 @@ describe('dossier', () => {
       label: 'Geen beeldpreview beschikbaar',
     });
     expect(bouwImagingRepository([kleinBeeld])[0]?.previewState.status).toBe('thumbnail');
+  });
+
+  it('filtert de imaging-repository op type, datum, traject, afspraak en embryo', () => {
+    const embryoBeeld = maakDossierDocument('img-embryo-filter', {
+      datum: '2026-05-05',
+      titel: 'Embryo foto',
+      categorie: 'beeld',
+      bestandsNaam: 'embryo-foto.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'anBn',
+      afspraakId: 'afspraak-1',
+      trajectId: 'traject-1',
+      beeldMetadata: { cyclusDag: 5, embryoLabel: 'Embryo 1' },
+    });
+    const echoBeeld = maakDossierDocument('img-echo-filter', {
+      datum: '2026-05-01',
+      titel: 'Echo',
+      categorie: 'beeld',
+      bestandsNaam: 'echo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'anBn',
+      afspraakId: 'afspraak-2',
+      trajectId: 'traject-2',
+    });
+    const repository = bouwImagingRepository([embryoBeeld, echoBeeld]);
+
+    expect(
+      filterImagingRepository(repository, { soort: 'embryo_afbeelding' }).map((i) => i.id),
+    ).toEqual(['img-embryo-filter']);
+    expect(
+      filterImagingRepository(repository, { datumVanaf: '2026-05-02' }).map((i) => i.id),
+    ).toEqual(['img-embryo-filter']);
+    expect(
+      filterImagingRepository(repository, { trajectId: 'traject-2' }).map((i) => i.id),
+    ).toEqual(['img-echo-filter']);
+    expect(
+      filterImagingRepository(repository, { afspraakId: 'afspraak-1' }).map((i) => i.id),
+    ).toEqual(['img-embryo-filter']);
+    expect(
+      filterImagingRepository(repository, { embryoLabel: 'embryo 1' }).map((i) => i.id),
+    ).toEqual(['img-embryo-filter']);
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {

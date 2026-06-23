@@ -731,6 +731,13 @@ describe('app shell', () => {
     expect(html).toContain('Echo 6 weken');
     expect(html).toContain('Foto/echo');
     expect(html).toContain('Imaging-repository');
+    expect(html).toContain('id="imaging-filter-form"');
+    expect(html).toContain('name="imagingSoort"');
+    expect(html).toContain('name="imagingDatumVanaf"');
+    expect(html).toContain('name="imagingDatumTot"');
+    expect(html).toContain('name="imagingTrajectId"');
+    expect(html).toContain('name="imagingAfspraakId"');
+    expect(html).toContain('name="imagingEmbryoLabel"');
     expect(html).toContain('Beeldmomenten vergelijken');
     expect(html).toContain('Echo vervolg');
     expect(html).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
