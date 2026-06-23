@@ -6,6 +6,7 @@ import {
   genereerDoseLogs,
   maakMedicatie,
   markeerDoseLogGenomen,
+  parseMedicatieSchemaImport,
 } from '../src/domain/medicatie';
 
 describe('medicatie domeinregels', () => {
@@ -82,5 +83,21 @@ describe('medicatie domeinregels', () => {
     ];
 
     expect(doseLogsVoorDag(logs, '2026-06-23').map((log) => log.id)).toEqual(['1', '2']);
+  });
+
+  it('parset een handmatig klinieklijstje zonder dosering af te leiden', () => {
+    expect(
+      parseMedicatieSchemaImport('Progesteron | 2026-06-23 | 08:00\nInjectie | 2026-06-23 | 20:00'),
+    ).toEqual([
+      { naam: 'Progesteron', datum: '2026-06-23', tijdstip: '08:00' },
+      { naam: 'Injectie', datum: '2026-06-23', tijdstip: '20:00' },
+    ]);
+  });
+
+  it('weigert ongeldige importregels', () => {
+    expect(() => parseMedicatieSchemaImport('Progesteron | 2026-06-23')).toThrow('Regel 1');
+    expect(() => parseMedicatieSchemaImport('Progesteron | 2026-06-23 | 99:00')).toThrow(
+      'tijdstip',
+    );
   });
 });

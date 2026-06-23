@@ -92,6 +92,9 @@
 - **G052/G053 DoseLog-notities en historie:** innames/injecties kunnen bij afvinken een
   optionele notitie bewaren en medicatie toont een historie van geplande, genomen en
   overgeslagen DoseLogs per middel.
+- **G055 medicatieschema-import:** medicatiescherm kan een handmatig gestructureerd
+  klinieklijstje importeren met regels `Medicatie | YYYY-MM-DD | HH:MM`; Kiempad maakt
+  alleen expliciete DoseLogs en leidt geen dosering af.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -122,8 +125,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   beheren; het startscherm biedt snelle invoer voor afspraak, medicatie en vraag; het
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren en toont
   week-/maandgroeperingen plus afgelopen afspraken met terugblik; het
-  medicatiescherm kan middelen, geplande DoseLogs, notities per inname en
-  innameshistorie versleuteld beheren; het
+  medicatiescherm kan middelen, geplande DoseLogs, notities per inname,
+  innameshistorie en gestructureerde schema-import versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale
@@ -132,7 +135,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (88 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (92 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

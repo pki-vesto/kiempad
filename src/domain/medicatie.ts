@@ -23,6 +23,12 @@ export type DoseLogInput = {
   tijdstip: string;
 };
 
+export type MedicatieSchemaImportRegel = {
+  naam: string;
+  datum: string;
+  tijdstip: string;
+};
+
 export function maakMedicatie(id: string, input: MedicatieInput): Medicatie {
   return {
     id,
@@ -71,8 +77,46 @@ export function doseLogsVoorDag(doseLogs: readonly DoseLog[], datum: string): Do
     .sort((a, b) => a.geplandOp.localeCompare(b.geplandOp));
 }
 
+export function parseMedicatieSchemaImport(tekst: string): MedicatieSchemaImportRegel[] {
+  const regels = tekst
+    .split(/\r?\n/)
+    .map((regel) => regel.trim())
+    .filter(Boolean);
+
+  return regels.map((regel, index) => parseImportRegel(regel, index + 1));
+}
+
 export function beschrijfMedicatieDosis(medicatie: Medicatie): string {
   return medicatie.voorgeschrevenDosis ?? 'Dosis niet ingevuld; neem over wat de kliniek opgeeft.';
+}
+
+function parseImportRegel(regel: string, regelNummer: number): MedicatieSchemaImportRegel {
+  const parts = regel.split('|').map((part) => part.trim());
+  if (parts.length !== 3) {
+    throw new Error(`Regel ${regelNummer}: gebruik "Medicatie | YYYY-MM-DD | HH:MM".`);
+  }
+
+  const naam = parts[0] ?? '';
+  const datum = parts[1] ?? '';
+  const tijdstip = parts[2] ?? '';
+  if (!naam) throw new Error(`Regel ${regelNummer}: medicatienaam ontbreekt.`);
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(datum) ||
+    Number.isNaN(new Date(`${datum}T00:00:00Z`).getTime())
+  ) {
+    throw new Error(`Regel ${regelNummer}: datum moet YYYY-MM-DD zijn.`);
+  }
+  if (!/^\d{2}:\d{2}$/.test(tijdstip)) {
+    throw new Error(`Regel ${regelNummer}: tijdstip moet HH:MM zijn.`);
+  }
+  const [hourText = '', minuteText = ''] = tijdstip.split(':');
+  const hour = Number(hourText);
+  const minute = Number(minuteText);
+  if (hour > 23 || minute > 59) {
+    throw new Error(`Regel ${regelNummer}: tijdstip moet HH:MM zijn.`);
+  }
+
+  return { naam, datum, tijdstip };
 }
 
 function addDays(startDatum: string, days: number): string {

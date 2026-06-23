@@ -144,6 +144,8 @@ export type AppShellState = {
   aiError?: string;
   backupStatus?: string;
   backupError?: string;
+  medicatieImportStatus?: string;
+  medicatieImportError?: string;
 };
 
 export function renderAppShell(
@@ -897,6 +899,8 @@ function renderMedicatieScreen(state: AppShellState): string {
       <div class="form-panel">
         <h2>${selected ? 'Medicatie bewerken' : 'Medicatie toevoegen'}</h2>
         ${renderMedicatieForm(selected?.medicatie)}
+        <h2 class="section-subheading">Schema importeren</h2>
+        ${renderMedicatieImportForm(state)}
       </div>
       <div class="timeline-panel">
         <div class="panel-heading">
@@ -915,6 +919,21 @@ function renderMedicatieScreen(state: AppShellState): string {
         </div>
       </div>
     </section>
+  `;
+}
+
+function renderMedicatieImportForm(state: AppShellState): string {
+  return `
+    <form id="medicatie-import-form" class="data-form compact-form">
+      <label>
+        Klinieklijstje
+        <textarea name="schemaImport" rows="5" placeholder="Progesteron | 2026-06-23 | 08:00" required></textarea>
+      </label>
+      <p class="small-print">Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad neemt geen dosering over of berekent niets.</p>
+      <button type="submit">Importeer schema</button>
+    </form>
+    ${state.medicatieImportStatus ? `<p class="linked-note">${escapeHtml(state.medicatieImportStatus)}</p>` : ''}
+    ${state.medicatieImportError ? `<p class="form-error" role="alert">${escapeHtml(state.medicatieImportError)}</p>` : ''}
   `;
 }
 
