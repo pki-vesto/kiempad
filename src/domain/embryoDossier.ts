@@ -8,6 +8,9 @@ export type EmbryoDossierItem = {
   laatsteDatum: string;
   kwaliteiten: string[];
   statussen: string[];
+  meetmomenten: string[];
+  kliniekTerminologieen: string[];
+  bronnen: string[];
   embryoIds: string[];
   embryoDagen: number[];
   laboratoriumContexten: string[];
@@ -62,6 +65,15 @@ function bouwEmbryoDossier(
       .filter((status) => status !== undefined)
       .map((status) => status.toString()),
   );
+  const meetmomenten = uniekeWaarden(
+    dossierDocumenten.map((document) => document.embryo?.meetmoment).filter(isString),
+  );
+  const kliniekTerminologieen = uniekeWaarden(
+    dossierDocumenten.map((document) => document.embryo?.kliniekTerminologie).filter(isString),
+  );
+  const bronnen = uniekeWaarden(
+    dossierDocumenten.map((document) => document.embryo?.bron).filter(isString),
+  );
   const embryoIds = uniekeWaarden(
     dossierDocumenten.map((document) => document.beeldMetadata?.embryoId).filter(isString),
   );
@@ -83,6 +95,9 @@ function bouwEmbryoDossier(
     laatsteDatum: bepaalDatum(dossierDocumenten[dossierDocumenten.length - 1] ?? eerste),
     kwaliteiten,
     statussen,
+    meetmomenten,
+    kliniekTerminologieen,
+    bronnen,
     embryoIds,
     embryoDagen,
     laboratoriumContexten,

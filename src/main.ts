@@ -581,12 +581,18 @@ async function saveEmbryoQualityFromForm(
     const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
     const embryoDag = optionalPositiveNumber(data.get('embryoDag'));
+    const embryoMeetmoment = optionalString(data.get('embryoMeetmoment'));
     const embryoStatus = parseEmbryoStatus(data.get('embryoStatus'));
+    const embryoKliniekTerminologie = optionalString(data.get('embryoKliniekTerminologie'));
+    const embryoBron = optionalString(data.get('embryoBron'));
     const inhoud = JSON.stringify({
       embryo: embryoLabel,
       dag: embryoDag,
+      meetmoment: embryoMeetmoment,
       kwaliteit: embryoKwaliteit,
+      kliniekTerminologie: embryoKliniekTerminologie,
       status: embryoStatus,
+      bron: embryoBron,
       notitie,
     });
 
@@ -604,6 +610,9 @@ async function saveEmbryoQualityFromForm(
         label: embryoLabel,
         kwaliteit: embryoKwaliteit,
         dag: embryoDag,
+        meetmoment: embryoMeetmoment,
+        kliniekTerminologie: embryoKliniekTerminologie,
+        bron: embryoBron,
         status: embryoStatus,
       },
       notitie,

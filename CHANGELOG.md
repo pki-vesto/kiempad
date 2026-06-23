@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G206 PFIP embryo tracking: embryokwaliteit kan per meetmoment worden
+  vastgelegd met kliniekterminologie en bron, zichtbaar in dossierdocument en
+  embryo-dossier.
 - G205 PFIP embryo tracking: embryo-uploads kunnen worden gekoppeld aan
   embryo-id, embryodag, poging en laboratoriumcontext en verschijnen zo in de
   imaging-tijdlijn en het embryo-dossier.

@@ -301,7 +301,10 @@ describe('dossier', () => {
       embryo: {
         label: 'Embryo 1',
         dag: 5,
+        meetmoment: 'Dag 5 blastocyst',
         kwaliteit: '4AA',
+        kliniekTerminologie: 'Gardner-score',
+        bron: 'Labrapport',
         status: 'teruggeplaatst',
       },
     });
@@ -309,7 +312,10 @@ describe('dossier', () => {
     expect(document.embryo).toEqual({
       label: 'Embryo 1',
       dag: 5,
+      meetmoment: 'Dag 5 blastocyst',
       kwaliteit: '4AA',
+      kliniekTerminologie: 'Gardner-score',
+      bron: 'Labrapport',
       status: 'teruggeplaatst',
     });
     expect(document.analyse.samenvatting).toContain('Embryokwaliteit opgeslagen');

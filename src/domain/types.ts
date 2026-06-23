@@ -202,6 +202,9 @@ export interface DossierDocument {
     kwaliteit: string;
     dag?: number;
     status?: 'bevrucht' | 'ingevroren' | 'teruggeplaatst' | 'niet_gebruikt' | 'onbekend';
+    meetmoment?: string;
+    kliniekTerminologie?: string;
+    bron?: string;
   };
   notitie?: string;
   analyse: {
