@@ -1,4 +1,4 @@
-import { classificeerDossierBeeld } from './dossier';
+import { classificeerDossierBeeld, EMBRYO_KWALITEIT_WAARSCHUWING } from './dossier';
 import { TRAJECT_FASE_LABELS, type TrajectMetFasen } from './traject';
 import type { Afspraak, DossierDocument } from './types';
 
@@ -102,7 +102,7 @@ export function bouwEmbryoVergelijkingen(
           historieAantal: item.historie.length,
         })),
       waarschuwing:
-        'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar; Kiempad rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
+        'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar. Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
     }))
     .sort((a, b) => a.trajectId.localeCompare(b.trajectId, 'nl-NL'));
 }
@@ -191,8 +191,7 @@ function bouwEmbryoDossier(
       })),
     ]),
     behandelContext: bouwBehandelContext(traject, dossierDocumenten, relevanteAfspraken),
-    waarschuwing:
-      'Embryo-dossier is een feitelijk overzicht van kliniekterugkoppelingen; Kiempad berekent geen kansen en geeft geen medisch advies.',
+    waarschuwing: EMBRYO_KWALITEIT_WAARSCHUWING,
   };
 }
 

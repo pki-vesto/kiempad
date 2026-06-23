@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G211 PFIP embryo tracking: embryokwaliteit gebruikt een expliciete gedeelde
+  waarschuwing dat Kiempad geen uitkomst voorspelt, embryo's niet rangschikt,
+  geen kansen berekent en geen medisch advies geeft.
 - G210 PFIP embryo tracking: embryo-dossiers tonen behandelcontext met poging,
   protocolfasen en relevante notities uit afspraken en dossierdocumenten.
 - G209 PFIP embryo tracking: embryo-historie is geïntegreerd met gekoppelde

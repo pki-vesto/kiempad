@@ -33,6 +33,7 @@ import {
   classificeerBeeldLabel,
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
+  EMBRYO_KWALITEIT_WAARSCHUWING,
   EMBRYO_STATUS_LABELS,
   filterImagingRepository,
   formatBytes,
@@ -930,7 +931,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar embryokwaliteit</button>
         </form>
-        <p class="small-print">Embryokwaliteit wordt vastgelegd als kliniekterugkoppeling. Kiempad berekent geen kansen en geeft geen medisch advies.</p>
+        <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
       </div>
       <div class="timeline-panel">
         <h2>Dossier zoeken</h2>
