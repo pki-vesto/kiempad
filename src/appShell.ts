@@ -24,7 +24,9 @@ import {
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   EMBRYO_STATUS_LABELS,
+  filterImagingRepository,
   formatBytes,
+  type ImagingRepositoryFilter,
   maakImagingContextSamenvatting,
   zoekDossierDocumenten,
 } from './domain/dossier';
@@ -248,6 +250,7 @@ export type AppShellState = {
   dossierStatus?: string;
   dossierError?: string;
   dossierZoekterm?: string;
+  imagingFilter?: ImagingRepositoryFilter;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -683,8 +686,9 @@ function renderDossierScreen(state: AppShellState): string {
   const matchMap = new Map(
     zoekResultaten.map((resultaat) => [resultaat.document.id, resultaat.matches]),
   );
-  const imagingItems = bouwImagingRepository(zichtbareDocumenten);
-  const imagingVergelijking = bouwImagingVergelijking(zichtbareDocumenten);
+  const alleImagingItems = bouwImagingRepository(zichtbareDocumenten);
+  const imagingItems = filterImagingRepository(alleImagingItems, state.imagingFilter ?? {});
+  const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
   const afspraakOpties = state.afspraken
@@ -843,6 +847,7 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
         }
         <h2>Imaging-repository</h2>
+        ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
         ${renderImagingVergelijking(imagingVergelijking)}
         ${
           imagingItems.length > 0
@@ -863,6 +868,70 @@ function renderDossierScreen(state: AppShellState): string {
         }
       </div>
     </section>
+  `;
+}
+
+function renderImagingFilterForm(filter: ImagingRepositoryFilter, state: AppShellState): string {
+  const trajectOpties = state.trajecten
+    .map(({ traject }) => renderOption(traject.id, traject.naam, filter.trajectId))
+    .join('');
+  const afspraakOpties = state.afspraken
+    .map(({ afspraak }) =>
+      renderOption(
+        afspraak.id,
+        `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`,
+        filter.afspraakId,
+      ),
+    )
+    .join('');
+
+  return `
+    <form id="imaging-filter-form" class="data-form compact-form">
+      <label>
+        Type beeld
+        <select name="imagingSoort">
+          <option value="">Alle typen</option>
+          ${(
+            [
+              ['echo', 'Echo'],
+              ['foto', 'Foto'],
+              ['scan', 'Scan'],
+              ['embryo_afbeelding', 'Embryo-afbeelding'],
+              ['overig_beeld', 'Overig beeld'],
+            ] satisfies Array<[NonNullable<ImagingRepositoryFilter['soort']>, string]>
+          )
+            .map(([value, label]) => renderOption(value, label, filter.soort))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Vanaf datum
+        <input name="imagingDatumVanaf" type="date" value="${escapeAttribute(filter.datumVanaf ?? '')}" />
+      </label>
+      <label>
+        Tot datum
+        <input name="imagingDatumTot" type="date" value="${escapeAttribute(filter.datumTot ?? '')}" />
+      </label>
+      <label>
+        Traject
+        <select name="imagingTrajectId">
+          <option value="">Alle trajecten</option>
+          ${trajectOpties}
+        </select>
+      </label>
+      <label>
+        Afspraak
+        <select name="imagingAfspraakId">
+          <option value="">Alle afspraken</option>
+          ${afspraakOpties}
+        </select>
+      </label>
+      <label>
+        Embryo
+        <input name="imagingEmbryoLabel" autocomplete="off" value="${escapeAttribute(filter.embryoLabel ?? '')}" />
+      </label>
+      <button type="submit">Filter beelden</button>
+    </form>
   `;
 }
 

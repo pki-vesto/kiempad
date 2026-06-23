@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G195 PFIP imaging: imaging-repository kan lokaal filteren op beeldtype, datum,
+  traject, afspraak en embryo.
 - G194 PFIP imaging: imaging-items tonen previewstates voor vergrendeld,
   thumbnail, volledige preview en geen preview; kleine ontgrendelde beelden krijgen
   een lokale thumbnailweergave.
