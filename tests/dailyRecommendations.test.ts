@@ -52,8 +52,22 @@ describe('dagelijkse aanbevelingen', () => {
       titel: 'Eigen aandachtspunten vastleggen',
     });
     expect(overzicht.samen.map((item) => item.titel)).toEqual([
+      'Voeding en supplementen checklijst',
       'Volgende afspraak voorbereiden',
       'Open vragen ordenen',
+    ]);
+    expect(overzicht.samen[0]?.checklist).toEqual([
+      {
+        label: 'Voeding: noteer feitelijke vragen of observaties voor het consult.',
+        bron: 'Lokale leefstijlcontext',
+        disclaimer: 'Geen voedingsadvies; bespreek persoonlijke keuzes met behandelaars.',
+      },
+      {
+        label:
+          'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
+        bron: 'Medicatie- en dossiercontext',
+        disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+      },
     ]);
     const titelEnDetail = Object.values(overzicht)
       .flat()

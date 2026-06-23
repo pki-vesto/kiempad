@@ -81,6 +81,15 @@ describe('app shell', () => {
     expect(html).toContain('Dagelijkse aanbevelingen Samen');
     expect(html).toContain('Dagcheck zonder extra medicatiemoment');
     expect(html).toContain('Eigen aandachtspunten vastleggen');
+    expect(html).toContain('Voeding en supplementen checklijst');
+    expect(html).toContain('Voeding: noteer feitelijke vragen of observaties voor het consult.');
+    expect(html).toContain('Bron: Lokale leefstijlcontext');
+    expect(html).toContain('Geen voedingsadvies; bespreek persoonlijke keuzes met behandelaars.');
+    expect(html).toContain(
+      'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
+    );
+    expect(html).toContain('Bron: Medicatie- en dossiercontext');
+    expect(html).toContain('Kiempad adviseert geen supplement en geen hoeveelheid.');
     expect(html).toContain('Vragenlijst nalopen');
     expect(html).toContain('Kiempad geeft geen medisch advies');
     expect(html).toContain('Afspraak:');
