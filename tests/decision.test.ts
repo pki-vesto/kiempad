@@ -5,6 +5,7 @@ describe('decision', () => {
   it('maakt een beslisnotitie met opgeschoonde opties', () => {
     const decision = maakDecision('decision-1', {
       onderwerp: '  Kliniek bellen?  ',
+      vraagId: ' vraag-1 ',
       datum: '2026-06-23',
       opties: [
         {
@@ -20,6 +21,7 @@ describe('decision', () => {
     expect(decision).toEqual({
       id: 'decision-1',
       onderwerp: 'Kliniek bellen?',
+      vraagId: 'vraag-1',
       datum: '2026-06-23',
       opties: [
         {

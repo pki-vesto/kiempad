@@ -155,6 +155,7 @@ export type DecisionOption = {
 export interface Decision {
   id: string;
   onderwerp: string;
+  vraagId?: string;
   opties: DecisionOption[];
   keuze?: string;
   onderbouwing?: string;

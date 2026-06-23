@@ -25,6 +25,7 @@ describe('DecisionStore', () => {
 
     const saved = await store.save({
       onderwerp: 'Kliniek bellen?',
+      vraagId: 'vraag-1',
       datum: '2026-06-23',
       opties: [
         {
@@ -39,6 +40,7 @@ describe('DecisionStore', () => {
 
     expect(saved).toMatchObject({
       onderwerp: 'Kliniek bellen?',
+      vraagId: 'vraag-1',
       datum: '2026-06-23',
       opties: [
         {
@@ -51,6 +53,7 @@ describe('DecisionStore', () => {
     });
     expect(raw?.type).toBe('decision');
     expect(raw?.payload.ciphertext).not.toContain('Kliniek bellen');
+    expect(raw?.payload.ciphertext).not.toContain('vraag-1');
     expect(await store.list()).toEqual([saved]);
   });
 

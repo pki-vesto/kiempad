@@ -391,13 +391,13 @@ function renderAfwegingenScreen(state: AppShellState): string {
     <section class="traject-layout" aria-label="Afwegingen beheren">
       <div class="form-panel">
         <h2>Beslisnotitie toevoegen</h2>
-        ${renderDecisionForm()}
+        ${renderDecisionForm(state)}
       </div>
       <div class="timeline-panel">
         <h2>Beslisnotities</h2>
         ${
           decisions.length > 0
-            ? `<ol class="phase-list">${decisions.map(renderDecisionItem).join('')}</ol>`
+            ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionItem(decision, state)).join('')}</ol>`
             : '<p class="empty-state">Nog geen beslisnotities vastgelegd.</p>'
         }
       </div>
@@ -405,7 +405,13 @@ function renderAfwegingenScreen(state: AppShellState): string {
   `;
 }
 
-function renderDecisionForm(): string {
+function renderDecisionForm(state: AppShellState): string {
+  const vraagOpties = state.vragen
+    .map(({ vraag, afspraak }) =>
+      renderOption(vraag.id, `${vraag.vraag}${afspraak ? ` · ${afspraak.titel}` : ''}`),
+    )
+    .join('');
+
   return `
     <form id="decision-form" class="data-form">
       <label>
@@ -415,6 +421,13 @@ function renderDecisionForm(): string {
       <label>
         Onderwerp
         <input name="onderwerp" autocomplete="off" required />
+      </label>
+      <label>
+        Koppel aan vraag voor de arts
+        <select name="vraagId">
+          <option value="">Geen vraag</option>
+          ${vraagOpties}
+        </select>
       </label>
       <label>
         Opties
@@ -433,12 +446,17 @@ function renderDecisionForm(): string {
   `;
 }
 
-function renderDecisionItem(item: Decision): string {
+function renderDecisionItem(item: Decision, state: AppShellState): string {
+  const vraag = item.vraagId
+    ? state.vragen.find((bundle) => bundle.vraag.id === item.vraagId)
+    : undefined;
+
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.onderwerp)}</h3>
         <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
+        ${vraag ? `<p class="linked-note">Vraag voor de arts: ${escapeHtml(vraag.vraag.vraag)}</p>` : ''}
         ${renderDecisionChoiceSummary(item)}
         <ul class="compact-list">
           ${item.opties.map(renderDecisionOption).join('')}

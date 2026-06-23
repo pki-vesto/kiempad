@@ -187,6 +187,8 @@
   onderbouwing lokaal versleuteld bewaren en terug tonen.
 - G115 beslisverslag: afwegingen zijn terugleesbaar als verslag met onderwerp, datum,
   opties, voors/tegens, keuze en onderbouwing.
+- G116 vraagkoppeling: afwegingen kunnen optioneel aan een bestaande vraag voor de
+  arts worden gekoppeld en tonen die vraag bij de beslisnotitie.
 - G179 Tailscale-publicatie: optionele compose-stack en runbook voor een aparte
   Kiempad HTTPS-node zijn voorbereid, inclusief deploy- en smoke-scripts;
   daadwerkelijke tailnet-aanmelding/deploy staat nog open op issue #101.

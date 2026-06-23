@@ -164,6 +164,7 @@ Conventies:
 |---|---|---|
 | id | string | |
 | onderwerp | string | |
+| vraagId | string? | optionele koppeling naar vraag voor de arts |
 | opties | `{ titel, voors[], tegens[] }[]` | |
 | keuze | string? | |
 | onderbouwing | string? | |

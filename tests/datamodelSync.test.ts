@@ -62,7 +62,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
   MentalCheckIn: ['id', 'datum', 'owner', 'stemming', 'notitie'],
   CycleData: ['id', 'datum', 'meting', 'waarde'],
   CostItem: ['id', 'trajectId', 'omschrijving', 'bedrag', 'datum', 'categorie', 'vergoed'],
-  Decision: ['id', 'onderwerp', 'opties', 'keuze', 'onderbouwing', 'datum'],
+  Decision: ['id', 'onderwerp', 'vraagId', 'opties', 'keuze', 'onderbouwing', 'datum'],
   EventLog: ['id', 'datum', 'categorie', 'gebeurtenis', 'detail'],
   DossierDocument: [
     'id',
