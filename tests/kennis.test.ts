@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 import {
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
+  bouwResearchBronnenCache,
   filterKennisItems,
   INITIELE_KENNIS_ITEMS,
+  INITIELE_RESEARCH_BRONNEN,
   kennisItemsPerCategorie,
   maakEigenKennisItem,
   maakResearchKennisItem,
@@ -34,6 +36,29 @@ describe('kennis domeinregels', () => {
     expect(grouped.leefstijl.length).toBeGreaterThan(0);
     expect(grouped.kosten.length).toBeGreaterThan(0);
     expect(grouped.research.length).toBeGreaterThan(0);
+  });
+
+  it('bouwt researchbronnen uit handmatige seed en lokale researchcache', () => {
+    const researchItem = maakResearchKennisItem('research-cache-1', {
+      titel: 'Eigen artikel embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      notitie: 'Lokale notitie bij gevonden artikel.',
+    });
+
+    const bronnen = bouwResearchBronnenCache([...INITIELE_KENNIS_ITEMS, researchItem]);
+
+    expect(INITIELE_RESEARCH_BRONNEN).toHaveLength(3);
+    expect(bronnen.map((bron) => bron.herkomst)).toContain('handmatige_seed');
+    expect(bronnen).toContainEqual({
+      id: 'cache-research-cache-1',
+      titel: 'Eigen artikel embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      herkomst: 'lokale_cache',
+      toelichting: 'Lokale notitie bij gevonden artikel.',
+    });
+    expect(bronnen.find((bron) => bron.id === 'seed-research-pubmed')?.toelichting).toContain(
+      'Kiempad haalt niets automatisch op',
+    );
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {

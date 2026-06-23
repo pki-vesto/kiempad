@@ -56,10 +56,12 @@ import {
 } from './domain/herinnering';
 import {
   bepaalKennisKostenJaar,
+  bouwResearchBronnenCache,
   filterKennisItems,
   KENNIS_CATEGORIE_LABELS,
   type KennisFilter,
   kennisItemsPerCategorie,
+  type ResearchBron,
 } from './domain/kennis';
 import {
   berekenKostenOverzicht,
@@ -1792,6 +1794,7 @@ function renderKennisScreen(state: AppShellState): string {
   const filter = state.kennisFilter ?? {};
   const filteredItems = filterKennisItems(state.kennisItems, filter);
   const grouped = kennisItemsPerCategorie(filteredItems);
+  const researchBronnen = bouwResearchBronnenCache(state.kennisItems);
 
   return `
     <section class="workspace" aria-label="Kennisbank">
@@ -1808,6 +1811,9 @@ function renderKennisScreen(state: AppShellState): string {
       <div class="summary-panel">
         <h2>Research opslaan</h2>
         ${renderResearchItemForm()}
+      </div>
+      <div class="summary-panel">
+        ${renderResearchBronnenCache(researchBronnen)}
       </div>
       <div class="summary-panel">
         <h2>AI-instelling</h2>
@@ -1995,6 +2001,26 @@ function renderResearchItemForm(): string {
       </label>
       <button type="submit">Bewaar research</button>
     </form>
+  `;
+}
+
+function renderResearchBronnenCache(bronnen: readonly ResearchBron[]): string {
+  return `
+    <h2>Researchbronnen</h2>
+    <p class="small-print">Handmatige seed en lokale cache uit opgeslagen researchitems. Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.</p>
+    <ol class="compact-list">
+      ${bronnen
+        .map(
+          (bron) => `
+            <li>
+              <strong>${escapeHtml(bron.titel)}</strong>
+              <span>${escapeHtml(bron.herkomst === 'handmatige_seed' ? 'Seedbron' : 'Lokale cache')} · ${escapeHtml(bron.bron)}</span>
+              <small>${escapeHtml(bron.toelichting)}</small>
+            </li>
+          `,
+        )
+        .join('')}
+    </ol>
   `;
 }
 

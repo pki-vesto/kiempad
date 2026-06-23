@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G212 PFIP research intelligence: kennisscherm toont researchbronnen uit een
+  handmatige seed en lokale cache van opgeslagen researchitems, zonder netwerkstap.
 - G211 PFIP embryo tracking: embryokwaliteit gebruikt een expliciete gedeelde
   waarschuwing dat Kiempad geen uitkomst voorspelt, embryo's niet rangschikt,
   geen kansen berekent en geen medisch advies geeft.

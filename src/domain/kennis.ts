@@ -13,6 +13,39 @@ export type KennisFilter = {
   categorie?: KennisItem['categorie'];
 };
 
+export type ResearchBron = {
+  id: string;
+  titel: string;
+  bron: string;
+  herkomst: 'handmatige_seed' | 'lokale_cache';
+  toelichting: string;
+};
+
+export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
+  {
+    id: 'seed-research-eshre',
+    titel: 'ESHRE richtlijnen en updates',
+    bron: 'https://www.eshre.eu/Guidelines-and-Legal/Guidelines',
+    herkomst: 'handmatige_seed',
+    toelichting: 'Startpunt voor Europese richtlijnen en achtergrondbronnen rond fertiliteitszorg.',
+  },
+  {
+    id: 'seed-research-cochrane',
+    titel: 'Cochrane Fertility Regulation reviews',
+    bron: 'https://www.cochranelibrary.com/cdsr/reviews/topics?topicId=GYNAECA%3AFERTILREG',
+    herkomst: 'handmatige_seed',
+    toelichting: 'Startpunt voor systematische reviews; gebruiker controleert relevantie zelf.',
+  },
+  {
+    id: 'seed-research-pubmed',
+    titel: 'PubMed fertility research zoekstart',
+    bron: 'https://pubmed.ncbi.nlm.nih.gov/?term=IVF+ICSI+embryo+fertility',
+    herkomst: 'handmatige_seed',
+    toelichting:
+      'Handmatige zoekstart voor recente publicaties; Kiempad haalt niets automatisch op.',
+  },
+] as const;
+
 export const INITIELE_KENNIS_ITEMS: readonly KennisItem[] = [
   {
     id: 'seed-fasen-globaal',
@@ -84,6 +117,33 @@ export function kennisItemsPerCategorie(
     grouped[categorie] = sorteerKennisItems(items.filter((item) => item.categorie === categorie));
   }
   return grouped;
+}
+
+export function bouwResearchBronnenCache(items: readonly KennisItem[]): ResearchBron[] {
+  const lokaleResearchBronnen = sorteerKennisItems(items)
+    .filter((item) => item.categorie === 'research')
+    .map((item): ResearchBron => {
+      const bron = item.bron?.trim() || `Lokale notitie zonder externe link: ${item.titel}`;
+
+      return {
+        id: `cache-${item.id}`,
+        titel: item.titel,
+        bron,
+        herkomst: 'lokale_cache',
+        toelichting: item.inhoud,
+      };
+    });
+
+  const cache = new Map<string, ResearchBron>();
+  for (const bron of [...INITIELE_RESEARCH_BRONNEN, ...lokaleResearchBronnen]) {
+    cache.set(normaliseerResearchBron(bron.bron), bron);
+  }
+
+  return [...cache.values()].sort(
+    (a, b) =>
+      herkomstVolgorde(a.herkomst) - herkomstVolgorde(b.herkomst) ||
+      a.titel.localeCompare(b.titel, 'nl-NL'),
+  );
 }
 
 export function filterKennisItems(
@@ -203,4 +263,12 @@ export function sorteerKennisItems(items: readonly KennisItem[]): KennisItem[] {
       Object.keys(KENNIS_CATEGORIE_LABELS).indexOf(b.categorie);
     return categoryOrder || a.titel.localeCompare(b.titel);
   });
+}
+
+function normaliseerResearchBron(bron: string): string {
+  return bron.trim().toLocaleLowerCase('nl-NL');
+}
+
+function herkomstVolgorde(herkomst: ResearchBron['herkomst']): number {
+  return herkomst === 'handmatige_seed' ? 0 : 1;
 }
