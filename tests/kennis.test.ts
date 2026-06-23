@@ -4,6 +4,7 @@ import {
   berekenVolgendeKennisVerificatie,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
+  bouwWetenschappelijkeResearchSamenvattingen,
   filterKennisItems,
   INITIELE_KENNIS_ITEMS,
   INITIELE_RESEARCH_BRONNEN,
@@ -78,6 +79,33 @@ describe('kennis domeinregels', () => {
     expect(aan.waarschuwing).toContain('haalt nog niet automatisch op');
   });
 
+  it('bouwt wetenschappelijke samenvattingen per researchpublicatie met bron en datum', () => {
+    const item = maakResearchKennisItem('research-1', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+    });
+
+    const samenvattingen = bouwWetenschappelijkeResearchSamenvattingen([
+      ...INITIELE_KENNIS_ITEMS,
+      item,
+    ]);
+
+    expect(samenvattingen).toEqual([
+      {
+        id: 'research-1',
+        titel: 'Artikel over embryo-cultuur',
+        publicatieDatum: '2026-05-10',
+        bron: 'https://voorbeeld.test/embryo-cultuur',
+        wetenschappelijkeSamenvatting:
+          'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      },
+    ]);
+  });
+
   it('filtert kennisitems op zoekterm en categorie', () => {
     const filtered = filterKennisItems(INITIELE_KENNIS_ITEMS, {
       zoekterm: 'eigen risico',
@@ -115,6 +143,27 @@ describe('kennis domeinregels', () => {
       ai_gegenereerd: false,
       geverifieerd_met_arts: false,
     });
+  });
+
+  it('vereist bron, datum en tekst voor een wetenschappelijke researchsamenvatting', () => {
+    expect(() =>
+      maakResearchKennisItem('research-ongeldig', {
+        titel: 'Artikel zonder datum',
+        bron: 'https://voorbeeld.test/artikel',
+        notitie: 'Eigen notitie.',
+        wetenschappelijkeSamenvatting: 'Samenvatting zonder datum.',
+      }),
+    ).toThrow('Publicatiedatum is verplicht');
+
+    expect(() =>
+      maakResearchKennisItem('research-ongeldig', {
+        titel: 'Artikel met ongeldige datum',
+        bron: 'https://voorbeeld.test/artikel',
+        publicatieDatum: '24-06-2026',
+        notitie: 'Eigen notitie.',
+        wetenschappelijkeSamenvatting: 'Samenvatting met ongeldige datum.',
+      }),
+    ).toThrow('Publicatiedatum moet YYYY-MM-DD zijn');
   });
 
   it('maakt eigen kennisitems in gekozen categorie', () => {

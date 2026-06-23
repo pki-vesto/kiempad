@@ -112,6 +112,11 @@ export interface KennisItem {
   inhoud: string;
   bron?: string;
   categorie: 'fasen' | 'leefstijl' | 'kosten' | 'research' | 'overig';
+  researchPublicatie?: {
+    publicatieDatum: IsoDate;
+    wetenschappelijkeSamenvatting: string;
+    bron: string;
+  };
   /** True als (deels) door AI gegenereerd/samengevat — toont een waarschuwingslabel. */
   ai_gegenereerd: boolean;
   /** True zodra een behandelaar de inhoud heeft bevestigd. */

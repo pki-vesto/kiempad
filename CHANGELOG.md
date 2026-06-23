@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G214 PFIP research intelligence: handmatige researchpublicaties kunnen een
+  wetenschappelijke samenvatting met bron en publicatiedatum bewaren en tonen,
+  lokaal versleuteld en zonder netwerkactie.
 - G213 PFIP research intelligence: researchaggregatie staat achter een
   versleutelde, expliciete netwerk-opt-in en blijft standaard uit zonder
   automatische netwerkrequests.

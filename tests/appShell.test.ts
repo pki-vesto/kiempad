@@ -1217,7 +1217,9 @@ describe('app shell', () => {
     expect(html).toContain('id="research-item-form"');
     expect(html).toContain('name="researchTitel"');
     expect(html).toContain('name="researchBron" type="url"');
+    expect(html).toContain('name="researchPublicatieDatum" type="date"');
     expect(html).toContain('name="researchNotitie"');
+    expect(html).toContain('name="researchWetenschappelijkeSamenvatting"');
     expect(html).toContain('Bewaar research');
     expect(html).toContain('Researchbronnen');
     expect(html).toContain('Seedbron');
@@ -1227,6 +1229,8 @@ describe('app shell', () => {
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('https://voorbeeld.test/embryo-cultuur');
     expect(html).toContain('Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.');
+    expect(html).toContain('Wetenschappelijke samenvattingen');
+    expect(html).toContain('Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.');
     expect(html).toContain('Researchaggregatie');
     expect(html).toContain('id="research-network-form"');
     expect(html).toContain('name="researchNetwerkIngeschakeld"');
@@ -1285,6 +1289,43 @@ describe('app shell', () => {
     expect(html).toContain(
       'ESHRE richtlijnen en updates · https://www.eshre.eu/Guidelines-and-Legal/Guidelines · Seedbron',
     );
+  });
+
+  it('rendert wetenschappelijke researchsamenvattingen met bron en publicatiedatum', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-eigen',
+          titel: 'Eigen artikel embryo-cultuur',
+          inhoud: 'Lokale notitie bij gevonden artikel.',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          categorie: 'research',
+          researchPublicatie: {
+            publicatieDatum: '2026-05-10',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            wetenschappelijkeSamenvatting:
+              'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+          },
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('Wetenschappelijke samenvattingen');
+    expect(html).toContain('Eigen artikel embryo-cultuur');
+    expect(html).toContain('2026-05-10 · https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain(
+      'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+    );
+    expect(html).toContain('Dit is geen behandeladvies');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {

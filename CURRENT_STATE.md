@@ -215,6 +215,10 @@
   versleutelde netwerk-opt-in in de settings, staat standaard uit en toont pas na
   toestemming welke bronnen klaarstaan voor handmatige aggregatie zonder
   automatische netwerkrequests.
+- **G214 PFIP wetenschappelijke researchsamenvatting:** Handmatige
+  researchpublicaties kunnen een wetenschappelijke samenvatting met bron en
+  publicatiedatum bewaren; het kennisscherm toont deze per publicatie zonder
+  netwerkactie of behandeladvies.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -347,7 +351,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G213 nog 30 open doelen (G214-G243), gericht op dossier-ingest,
+heeft na G214 nog 29 open doelen (G215-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -397,8 +401,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G214: wetenschappelijke samenvatting per publicatie met
-   bron en datum.
+1. PFIP uitvoeren vanaf G215: eenvoudige lekensamenvatting per publicatie in
+   begrijpelijk Nederlands.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
