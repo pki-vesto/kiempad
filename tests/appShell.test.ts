@@ -236,6 +236,8 @@ describe('app shell', () => {
           categorie: 'fasen',
           ai_gegenereerd: false,
           geverifieerd_met_arts: false,
+          geverifieerdOp: undefined,
+          volgendeVerificatieOp: undefined,
         },
       ],
     });
@@ -244,6 +246,7 @@ describe('app shell', () => {
     expect(html).toContain('Bron: docs/KENNISBANK.md');
     expect(html).toContain('Niet AI-gegenereerd');
     expect(html).toContain('Concept · niet geverifieerd');
+    expect(html).toContain('Nog niet met behandelaar geverifieerd');
     expect(html).toContain('Markeer geverifieerd');
   });
 

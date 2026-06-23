@@ -81,11 +81,32 @@ export function kennisItemsPerCategorie(
   return grouped;
 }
 
-export function markeerKennisItemGeverifieerd(item: KennisItem, geverifieerd = true): KennisItem {
+export function markeerKennisItemGeverifieerd(
+  item: KennisItem,
+  geverifieerd = true,
+  geverifieerdOp = new Date().toISOString().slice(0, 10),
+): KennisItem {
+  if (!geverifieerd) {
+    return {
+      ...item,
+      geverifieerd_met_arts: false,
+      geverifieerdOp: undefined,
+      volgendeVerificatieOp: undefined,
+    };
+  }
+
   return {
     ...item,
-    geverifieerd_met_arts: geverifieerd,
+    geverifieerd_met_arts: true,
+    geverifieerdOp,
+    volgendeVerificatieOp: berekenVolgendeKennisVerificatie(geverifieerdOp),
   };
+}
+
+export function berekenVolgendeKennisVerificatie(geverifieerdOp: string): string {
+  const date = new Date(`${geverifieerdOp}T00:00:00.000Z`);
+  date.setUTCFullYear(date.getUTCFullYear() + 1);
+  return date.toISOString().slice(0, 10);
 }
 
 export function sorteerKennisItems(items: readonly KennisItem[]): KennisItem[] {

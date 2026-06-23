@@ -40,10 +40,12 @@ describe('KennisStore', () => {
     const { store } = await setupStore();
     await store.seedInitialItems();
 
-    await store.markVerified('seed-fasen-globaal', true);
+    await store.markVerified('seed-fasen-globaal', true, '2026-06-23');
 
-    expect(
-      (await store.list()).find((item) => item.id === 'seed-fasen-globaal')?.geverifieerd_met_arts,
-    ).toBe(true);
+    expect((await store.list()).find((item) => item.id === 'seed-fasen-globaal')).toMatchObject({
+      geverifieerd_met_arts: true,
+      geverifieerdOp: '2026-06-23',
+      volgendeVerificatieOp: '2027-06-23',
+    });
   });
 });

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G171 kennisbankverificatie: kennisitems bewaren verificatiedatum en volgende
+  jaarlijkse reviewdatum na bevestiging door een behandelaar.
 - G169 ADR-dekking: ADR-0008 toegevoegd voor de aangescherpte CI/lintgate en
   privacyveilige notificatie-inhoud als opt-in instelling.
 - G167/G168/G170/G174 onderhoudschecks: tests toegevoegd voor actuele

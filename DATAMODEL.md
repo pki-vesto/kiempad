@@ -114,6 +114,8 @@ Conventies:
 | categorie | `fasen` \| `leefstijl` \| `kosten` \| `research` \| `overig` | |
 | ai_gegenereerd | boolean | toont waarschuwingslabel |
 | geverifieerd_met_arts | boolean | toont "bevestigd" pas na arts |
+| geverifieerdOp | IsoDate? | datum waarop behandelaar bevestigde |
+| volgendeVerificatieOp | IsoDate? | periodieke herverificatie uiterlijk op deze datum |
 
 ### SymptomLog (later)
 | veld | type | opmerking |

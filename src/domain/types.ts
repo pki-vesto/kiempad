@@ -105,6 +105,8 @@ export interface KennisItem {
   ai_gegenereerd: boolean;
   /** True zodra een behandelaar de inhoud heeft bevestigd. */
   geverifieerd_met_arts: boolean;
+  geverifieerdOp?: IsoDate;
+  volgendeVerificatieOp?: IsoDate;
 }
 
 export interface SymptomLog {
