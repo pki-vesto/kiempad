@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G116 vraagkoppeling: afwegingen kunnen aan een bestaande vraag voor de arts
+  worden gekoppeld en tonen die context bij de beslisnotitie.
 - G154 donkere modus: topbar heeft een lokale themakeuze en settings bewaren de
   voorkeur versleuteld met een donker CSS-palet.
 - G172 vergoedingscijfers: NL 2026-kostenkennis en vergoedingconstanten zijn

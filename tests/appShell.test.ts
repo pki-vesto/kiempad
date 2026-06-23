@@ -827,12 +827,21 @@ describe('app shell', () => {
       afspraken: [],
       medicatie: [],
       herinneringen: [],
-      vragen: [],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-1',
+            vraag: 'Wanneer moeten we bellen?',
+            beantwoord: false,
+          },
+        },
+      ],
       kennisItems: [],
       decisions: [
         {
           id: 'decision-1',
           onderwerp: 'Kliniek bellen?',
+          vraagId: 'vraag-1',
           datum: '2026-06-24',
           keuze: 'Vandaag bellen',
           onderbouwing: 'Geeft eerder duidelijkheid.',
@@ -858,10 +867,13 @@ describe('app shell', () => {
     expect(html).toContain('Beslisnotitie toevoegen');
     expect(html).toContain('id="decision-form"');
     expect(html).toContain('name="onderwerp"');
+    expect(html).toContain('name="vraagId"');
+    expect(html).toContain('Wanneer moeten we bellen?');
     expect(html).toContain('name="opties"');
     expect(html).toContain('name="voors"');
     expect(html).toContain('name="tegens"');
     expect(html).toContain('Kliniek bellen?');
+    expect(html).toContain('Vraag voor de arts: Wanneer moeten we bellen?');
     expect(html).toContain('2 opties');
     expect(html).toContain('Vandaag bellen');
     expect(html).toContain('Voors: Sneller duidelijkheid');

@@ -10,6 +10,7 @@ export type DecisionOptionInput =
 
 export type DecisionInput = {
   onderwerp: string;
+  vraagId?: string;
   opties: DecisionOptionInput[];
   datum: string;
 };
@@ -22,6 +23,7 @@ export type DecisionChoiceInput = {
 
 export function maakDecision(id: string, input: DecisionInput): Decision {
   const onderwerp = input.onderwerp.trim();
+  const vraagId = input.vraagId?.trim();
   const datum = input.datum.trim();
   const opties = input.opties
     .map(normalizeDecisionOption)
@@ -34,6 +36,7 @@ export function maakDecision(id: string, input: DecisionInput): Decision {
   return {
     id,
     onderwerp,
+    vraagId: vraagId || undefined,
     opties,
     datum,
   };

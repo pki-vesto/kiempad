@@ -756,6 +756,7 @@ async function saveDecisionFromForm(
   const data = new FormData(target);
   await state.decisionStore.save({
     onderwerp: String(data.get('onderwerp') ?? ''),
+    vraagId: optionalString(data.get('vraagId')),
     datum: String(data.get('datum') ?? ''),
     opties: parseDecisionOptions(
       String(data.get('opties') ?? ''),
