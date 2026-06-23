@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Kiempad">
-  <rect width="512" height="512" rx="96" fill="#f7f4ec"/>
-  <circle cx="256" cy="256" r="188" fill="#2f6f73"/>
+  <rect width="512" height="512" rx="96" fill="#e4dccd"/>
+  <circle cx="256" cy="256" r="188" fill="#7a9471"/>
   <path fill="#ffffff" d="M160 352V160h48v78l74-78h62l-84 88 92 104h-64l-80-92v92h-48z"/>
 </svg>

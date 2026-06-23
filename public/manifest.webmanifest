@@ -6,8 +6,8 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f7f4ec",
-  "theme_color": "#5b8c5a",
+  "background_color": "#e4dccd",
+  "theme_color": "#7a9471",
   "icons": [
     {
       "src": "/kiempad-icon.svg",
