@@ -703,6 +703,20 @@ describe('app shell', () => {
           intensiteit: 5,
         },
       ],
+      cycleData: [
+        {
+          id: 'cycle-1',
+          datum: '2026-06-23',
+          meting: 'Temperatuur',
+          waarde: 36.8,
+        },
+        {
+          id: 'cycle-2',
+          datum: '2026-06-22',
+          meting: 'Bloeding',
+          waarde: 'licht',
+        },
+      ],
     });
 
     expect(html).toContain('Mentale check-in');
@@ -723,6 +737,9 @@ describe('app shell', () => {
     expect(html).toContain('Symptoomlog toevoegen');
     expect(html).toContain('id="symptom-log-form"');
     expect(html).toContain('name="intensiteit" type="number" min="1" max="5"');
+    expect(html).toContain('Cyclusmeting toevoegen');
+    expect(html).toContain('id="cycle-data-form"');
+    expect(html).toContain('Feitelijke registratie zonder interpretatie of medisch advies.');
     expect(html).toContain('2026-06-23');
     expect(html).toContain('2 logs');
     expect(html).toContain('Gemiddelde intensiteit 4/5');
@@ -731,6 +748,9 @@ describe('app shell', () => {
     expect(html).toContain('Intensiteit 3/5');
     expect(html).toContain('Moe');
     expect(html).toContain('Notitie: Na de afspraak.');
+    expect(html).toContain('Cyclusmetingen');
+    expect(html).toContain('Temperatuur: 36.8');
+    expect(html).toContain('Bloeding: licht');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {

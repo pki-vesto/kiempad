@@ -4,6 +4,7 @@ import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
+import { CycleDataStore } from './domain/cycleDataStore';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
 import { DossierStore } from './domain/dossierStore';
@@ -24,6 +25,7 @@ import { TrajectStore } from './domain/trajectStore';
 import type {
   Afspraak,
   CostItem,
+  CycleData,
   Decision,
   DoseLog,
   DossierDocument,
@@ -70,6 +72,7 @@ type RuntimeState = {
   dossierStore?: DossierStore;
   eventLogStore?: EventLogStore;
   symptomenStore?: SymptomenStore;
+  cycleDataStore?: CycleDataStore;
   mentaleCheckInStore?: MentaleCheckInStore;
   settingsStore?: SettingsStore;
   trajecten: TrajectMetFasen[];
@@ -80,6 +83,7 @@ type RuntimeState = {
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
   symptomLogs: SymptomLog[];
+  cycleData: CycleData[];
   mentalCheckIns: MentalCheckIn[];
   decisions: Decision[];
   dossierDocuments: DossierDocument[];
@@ -117,6 +121,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     kennisItems: state.kennisItems,
     kennisFilter: state.kennisFilter,
     symptomLogs: state.symptomLogs,
+    cycleData: state.cycleData,
     mentalCheckIns: state.mentalCheckIns,
     decisions: state.decisions,
     kosten: state.kosten,
@@ -171,6 +176,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.dossierStore = undefined;
     state.eventLogStore = undefined;
     state.symptomenStore = undefined;
+    state.cycleDataStore = undefined;
     state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
@@ -181,6 +187,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kennisItems = [];
     state.kennisFilter = undefined;
     state.symptomLogs = [];
+    state.cycleData = [];
     state.mentalCheckIns = [];
     state.decisions = [];
     state.dossierDocuments = [];
@@ -235,6 +242,7 @@ async function mount(): Promise<void> {
     vragen: [],
     kennisItems: [],
     symptomLogs: [],
+    cycleData: [],
     mentalCheckIns: [],
     decisions: [],
     dossierDocuments: [],
@@ -452,6 +460,7 @@ async function importBackupFromForm(
     state.dossierStore = undefined;
     state.eventLogStore = undefined;
     state.symptomenStore = undefined;
+    state.cycleDataStore = undefined;
     state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
@@ -462,6 +471,7 @@ async function importBackupFromForm(
     state.kennisItems = [];
     state.kennisFilter = undefined;
     state.symptomLogs = [];
+    state.cycleData = [];
     state.mentalCheckIns = [];
     state.decisions = [];
     state.dossierDocuments = [];
@@ -505,6 +515,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.dossierStore = createDossierStore(state);
         state.eventLogStore = createEventLogStore(state);
         state.symptomenStore = createSymptomenStore(state);
+        state.cycleDataStore = createCycleDataStore(state);
         state.mentaleCheckInStore = createMentaleCheckInStore(state);
         state.settingsStore = createSettingsStore(state);
         await state.kennisStore.seedInitialItems();
@@ -516,6 +527,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.vragen = await state.vraagStore.list();
         state.kennisItems = await state.kennisStore.list();
         state.symptomLogs = await state.symptomenStore.list();
+        state.cycleData = await state.cycleDataStore.list();
         state.mentalCheckIns = await state.mentaleCheckInStore.list();
         state.decisions = await state.decisionStore.list();
         state.dossierDocuments = await state.dossierStore.list();
@@ -736,6 +748,11 @@ function bindWelzijnControls(root: HTMLElement, state: RuntimeState): void {
   root.querySelector('#symptom-log-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveSymptomLogFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#cycle-data-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveCycleDataFromForm(event.currentTarget, root, state);
   });
 }
 
@@ -1348,6 +1365,23 @@ async function saveSymptomLogFromForm(
   await reloadAndRender(root, state);
 }
 
+async function saveCycleDataFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.cycleDataStore) return;
+
+  const data = new FormData(target);
+  await state.cycleDataStore.save({
+    datum: String(data.get('datum') ?? ''),
+    meting: String(data.get('meting') ?? ''),
+    waarde: String(data.get('waarde') ?? ''),
+  });
+
+  await reloadAndRender(root, state);
+}
+
 async function saveMentalCheckInFromForm(
   target: EventTarget | null,
   root: HTMLElement,
@@ -1387,6 +1421,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   }
   if (state.symptomenStore) {
     state.symptomLogs = await state.symptomenStore.list();
+  }
+  if (state.cycleDataStore) {
+    state.cycleData = await state.cycleDataStore.list();
   }
   if (state.mentaleCheckInStore) {
     state.mentalCheckIns = await state.mentaleCheckInStore.list();
@@ -1479,6 +1516,12 @@ function createEventLogStore(state: RuntimeState): EventLogStore {
 function createSymptomenStore(state: RuntimeState): SymptomenStore {
   return new SymptomenStore(
     new EncryptedRecordRepository<SymptomLog>(state.driver, state.session, 'symptom_log'),
+  );
+}
+
+function createCycleDataStore(state: RuntimeState): CycleDataStore {
+  return new CycleDataStore(
+    new EncryptedRecordRepository<CycleData>(state.driver, state.session, 'cycle_data'),
   );
 }
 

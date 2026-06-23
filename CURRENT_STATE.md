@@ -56,6 +56,9 @@
   symptoom, intensiteit en notitie versleuteld lokaal bewaren en terug tonen.
 - **G106 symptomen per dag/over tijd:** welzijnscherm groepeert symptoomlogs per
   datum en toont per dag het aantal logs en de gemiddelde intensiteit.
+- **G107 CycleData vastleggen:** welzijnscherm kan cyclusmetingen zoals temperatuur
+  of bloeding als feitelijke lokale registratie bewaren en tonen, zonder interpretatie
+  of medisch advies.
 - **G108 mentale check-in:** welzijnscherm kan stemming en privé notitie als
   versleutelde check-in bewaren en teruglezen.
 - **G109 oordeelvrij welzijnsoverzicht:** welzijnscherm toont feitelijke aantallen,
