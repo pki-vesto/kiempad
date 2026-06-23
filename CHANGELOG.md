@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G230 PFIP knowledge graph: contextuele graph-inzichten tonen bronpad,
+  onzekerheidslabel en veilige waarschuwing zonder causale of medische claims.
 - G229 PFIP knowledge graph: graph-relaties kunnen lokaal automatisch worden
   voorgesteld op basis van datum, type en titelmatch en daarna handmatig worden
   bevestigd.

@@ -3,6 +3,7 @@ import { bouwDagelijksAanbevelingsoverzicht } from '../src/domain/dailyRecommend
 import {
   bevestigFertilityGraphRelaties,
   bouwFertilityKnowledgeGraph,
+  genereerFertilityGraphContextInzichten,
   stelFertilityGraphRelatiesVoor,
 } from '../src/domain/fertilityKnowledgeGraph';
 import type { ConsultVerslag, DossierDocument, KennisItem } from '../src/domain/types';
@@ -252,6 +253,75 @@ describe('fertility knowledge graph', () => {
     );
     expect(bevestigd.edges.every((edge) => edge.waarschuwing.includes('geen causaliteit'))).toBe(
       true,
+    );
+  });
+
+  it('genereert contextuele inzichten met bronpad en onzekerheidslabel', () => {
+    const graph = bouwFertilityKnowledgeGraph({
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          trajectId: 'traject-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-24T09:30',
+          type: 'echo',
+        },
+      ],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-24',
+          titel: 'Echo verslag',
+          categorie: 'onderzoek',
+          bestandsNaam: 'echo.pdf',
+          grootteBytes: 512,
+          inhoudBase64: 'base64',
+          trajectId: 'traject-1',
+          analyse: { samenvatting: 'Echo vastgelegd.', signalen: [] },
+          metadata: { bronbestand: 'echo.pdf', extractieBronnen: [] },
+          uploadedAt: '2026-06-24T10:00:00.000Z',
+        } as DossierDocument,
+      ],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+    const voorstellen = stelFertilityGraphRelatiesVoor(graph);
+
+    const inzichten = genereerFertilityGraphContextInzichten(graph, voorstellen);
+
+    expect(inzichten).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          samenvatting: expect.stringContaining('is lokaal gekoppeld aan'),
+          bronpad: expect.arrayContaining(['document: Echo verslag', 'behandeling: Poging 1']),
+          onzekerheid: 'laag',
+          onzekerheidsLabel: expect.stringContaining('Laag'),
+        }),
+        expect.objectContaining({
+          samenvatting: expect.stringContaining('nog te bevestigen mogelijke relatie'),
+          onzekerheid: 'middel',
+          onzekerheidsLabel: expect.stringContaining('handmatig moet worden bevestigd'),
+        }),
+      ]),
+    );
+    expect(inzichten.every((inzicht) => inzicht.waarschuwing.includes('geen causaliteit'))).toBe(
+      true,
+    );
+    expect(inzichten.map((inzicht) => inzicht.samenvatting).join(' ')).not.toMatch(
+      /\bdiagnose|behandeladvies|kansberekening\b/i,
     );
   });
 });

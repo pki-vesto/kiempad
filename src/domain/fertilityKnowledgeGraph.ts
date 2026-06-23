@@ -53,6 +53,18 @@ export type FertilityGraphRelatieVoorstel = {
   waarschuwing: string;
 };
 
+export type FertilityGraphOnzekerheid = 'laag' | 'middel';
+
+export type FertilityGraphContextInzicht = {
+  id: string;
+  titel: string;
+  samenvatting: string;
+  bronpad: string[];
+  onzekerheid: FertilityGraphOnzekerheid;
+  onzekerheidsLabel: string;
+  waarschuwing: string;
+};
+
 const GRAPH_WAARSCHUWING =
   'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
 
@@ -347,6 +359,51 @@ export function bevestigFertilityGraphRelaties(
   };
 }
 
+export function genereerFertilityGraphContextInzichten(
+  graph: FertilityKnowledgeGraph,
+  voorstellen: readonly FertilityGraphRelatieVoorstel[] = [],
+): FertilityGraphContextInzicht[] {
+  const nodes = new Map(graph.nodes.map((node) => [node.id, node]));
+  const bevestigdeInzichten = graph.edges.map((edge): FertilityGraphContextInzicht | undefined => {
+    const from = nodes.get(edge.from);
+    const to = nodes.get(edge.to);
+    if (!from || !to) return undefined;
+
+    return {
+      id: `inzicht:${normaliseerGraphId(edge.id)}`,
+      titel: `${from.titel} <-> ${to.titel}`,
+      samenvatting: `${from.titel} is lokaal gekoppeld aan ${to.titel}: ${edge.label}.`,
+      bronpad: [formatNodePad(from), edge.label, formatNodePad(to)],
+      onzekerheid: 'laag',
+      onzekerheidsLabel:
+        'Laag: relatie komt uit bestaande graph-koppeling of handmatige bevestiging.',
+      waarschuwing: GRAPH_WAARSCHUWING,
+    };
+  });
+
+  const voorgesteldeInzichten = voorstellen.map(
+    (voorstel): FertilityGraphContextInzicht | undefined => {
+      const from = nodes.get(voorstel.from);
+      const to = nodes.get(voorstel.to);
+      if (!from || !to) return undefined;
+
+      return {
+        id: `inzicht:${normaliseerGraphId(voorstel.id)}`,
+        titel: `${from.titel} <-> ${to.titel}`,
+        samenvatting: `${from.titel} heeft een nog te bevestigen mogelijke relatie met ${to.titel}: ${voorstel.reden}`,
+        bronpad: [formatNodePad(from), voorstel.label, formatNodePad(to)],
+        onzekerheid: 'middel',
+        onzekerheidsLabel: 'Middel: automatisch voorstel dat handmatig moet worden bevestigd.',
+        waarschuwing: GRAPH_WAARSCHUWING,
+      };
+    },
+  );
+
+  return [...bevestigdeInzichten, ...voorgesteldeInzichten]
+    .filter((inzicht): inzicht is FertilityGraphContextInzicht => Boolean(inzicht))
+    .sort((a, b) => a.onzekerheid.localeCompare(b.onzekerheid) || a.id.localeCompare(b.id));
+}
+
 function trajectNodeId(id: string): string {
   return `traject:${id}`;
 }
@@ -395,6 +452,10 @@ function titelLijktGerelateerd(titel: string, label: string): boolean {
   const normalizedTitel = normaliseerGraphId(titel);
   const normalizedLabel = normaliseerGraphId(label);
   return Boolean(normalizedLabel) && normalizedTitel.includes(normalizedLabel);
+}
+
+function formatNodePad(node: FertilityGraphNode): string {
+  return `${node.type}: ${node.titel}`;
 }
 
 function normaliseerGraphId(value: string): string {
