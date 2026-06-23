@@ -290,6 +290,10 @@ function renderKennisScreen(state: AppShellState): string {
         <p>${state.kennisItems.length} item(s) lokaal beschikbaar.</p>
       </div>
       <div class="summary-panel">
+        <h2>Research opslaan</h2>
+        ${renderResearchItemForm()}
+      </div>
+      <div class="summary-panel">
         <h2>AI-instelling</h2>
         ${renderAiSettingsForm(state.settings)}
       </div>
@@ -309,6 +313,26 @@ function renderKennisScreen(state: AppShellState): string {
           .join('')}
       </div>
     </section>
+  `;
+}
+
+function renderResearchItemForm(): string {
+  return `
+    <form id="research-item-form" class="data-form compact-form">
+      <label>
+        Titel
+        <input name="researchTitel" autocomplete="off" required />
+      </label>
+      <label>
+        Bron of link
+        <input name="researchBron" type="url" autocomplete="off" placeholder="https://..." />
+      </label>
+      <label>
+        Notitie
+        <textarea name="researchNotitie" rows="4" required></textarea>
+      </label>
+      <button type="submit">Bewaar research</button>
+    </form>
   `;
 }
 

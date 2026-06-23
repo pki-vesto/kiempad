@@ -68,6 +68,29 @@ describe('KennisStore', () => {
     expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
   });
 
+  it('bewaart een handmatig researchitem versleuteld in de bibliotheek', async () => {
+    const { driver, store } = await setupStore();
+
+    const item = await store.saveResearchItem({
+      titel: 'Artikel over stimulatie',
+      bron: 'https://voorbeeld.test/research',
+      notitie: 'Eigen samenvatting en aandachtspunt voor consult.',
+    });
+    const raw = await driver.getRecord(item.id);
+
+    expect(item).toMatchObject({
+      titel: 'Artikel over stimulatie',
+      bron: 'https://voorbeeld.test/research',
+      inhoud: 'Eigen samenvatting en aandachtspunt voor consult.',
+      categorie: 'research',
+      ai_gegenereerd: false,
+      geverifieerd_met_arts: false,
+    });
+    expect(raw?.type).toBe('kennis_item');
+    expect(raw?.payload.ciphertext).not.toContain('Artikel over stimulatie');
+    expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
+  });
+
   it('weigert verboden medische AI-output', async () => {
     const { store } = await setupStore();
 

@@ -363,6 +363,12 @@ describe('app shell', () => {
   it('rendert lokale AI-instellingen standaard uit zonder netwerkactie', () => {
     const html = renderAppShell('kennis');
 
+    expect(html).toContain('Research opslaan');
+    expect(html).toContain('id="research-item-form"');
+    expect(html).toContain('name="researchTitel"');
+    expect(html).toContain('name="researchBron" type="url"');
+    expect(html).toContain('name="researchNotitie"');
+    expect(html).toContain('Bewaar research');
     expect(html).toContain('AI-instelling');
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');

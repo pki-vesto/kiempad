@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G094 researchbibliotheek: kennisscherm kan handmatig researchitems met titel,
+  bron/link en notitie als versleuteld conceptkennisitem bewaren.
 - G102 AI-provider/modelkeuze: kennisscherm toont provider- en modelvelden in de
   lokale AI-instelling en bewaart die keuze versleuteld zonder externe call.
 - G175-G178 dossier- en uploaddoelen toegevoegd voor historische onderzoeken,

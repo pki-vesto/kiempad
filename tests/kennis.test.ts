@@ -3,6 +3,7 @@ import {
   berekenVolgendeKennisVerificatie,
   INITIELE_KENNIS_ITEMS,
   kennisItemsPerCategorie,
+  maakResearchKennisItem,
   markeerKennisItemGeverifieerd,
 } from '../src/domain/kennis';
 
@@ -25,6 +26,24 @@ describe('kennis domeinregels', () => {
     expect(grouped.leefstijl.length).toBeGreaterThan(0);
     expect(grouped.kosten.length).toBeGreaterThan(0);
     expect(grouped.research.length).toBeGreaterThan(0);
+  });
+
+  it('maakt handmatige researchitems als concept zonder AI-label', () => {
+    const item = maakResearchKennisItem('research-1', {
+      titel: ' Artikel over stimulatie ',
+      bron: ' https://voorbeeld.test/artikel ',
+      notitie: ' Eigen notitie bij dit artikel. ',
+    });
+
+    expect(item).toEqual({
+      id: 'research-1',
+      titel: 'Artikel over stimulatie',
+      bron: 'https://voorbeeld.test/artikel',
+      inhoud: 'Eigen notitie bij dit artikel.',
+      categorie: 'research',
+      ai_gegenereerd: false,
+      geverifieerd_met_arts: false,
+    });
   });
 
   it('markeert items pas geverifieerd na expliciete bevestiging', () => {

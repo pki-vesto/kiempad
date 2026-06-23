@@ -81,6 +81,9 @@
 - **G102 AI-provider/modelkeuze:** het kennisscherm bevat lokale AI-instellingen voor
   opt-in, provider, model en API-sleutel; deze keuze wordt versleuteld in het
   settingsrecord bewaard zonder externe call.
+- **G094 researchbibliotheek:** het kennisscherm kan handmatige researchitems met
+  titel, bron/link en notitie als versleuteld conceptkennisitem in de categorie
+  research bewaren.
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
@@ -141,8 +144,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   herinneringenscherm toont komende lokale herinneringen, eigen losse herinneringen,
   standaard-waarschuwtijd en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
-  seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale
-  AI-opt-ininstellingen, provider/modelkeuze, payload-preview en
+  seedt en toont conceptkennis lokaal met bron- en verificatielabels, kan handmatige
+  researchitems opslaan en biedt lokale AI-opt-ininstellingen, provider/modelkeuze, payload-preview en
   AI-samenvatting-opslag. Het back-upscherm
   kan versleutelde exportbestanden downloaden en checksum-gecontroleerd importeren.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
