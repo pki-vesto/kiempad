@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G226 PFIP daily recommendations: iedere dagelijkse aanbeveling toont gebruikte
+  lokale bronnen, zoals dossierdocumenten, cyclusmetingen, afspraken, medicatie,
+  vragen of consultverslagen.
 - G225 PFIP daily recommendations: man-sectie toont een leefstijl- en
   voorbereidingskaart voor feitelijke observaties en consultvragen, zonder
   vruchtbaarheidsadvies, supplementadvies of behandelkeuze.

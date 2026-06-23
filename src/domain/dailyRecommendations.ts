@@ -24,6 +24,7 @@ export type DailyRecommendation = {
   bron: string;
   waarschuwing: string;
   checklist?: DailyRecommendationChecklistItem[];
+  gebruikteBronnen?: string[];
 };
 
 export type DailyRecommendationChecklistItem = {
@@ -64,7 +65,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
     consultVerslagen: input.consultVerslagen ?? [],
   });
 
-  return {
+  return verrijkDagelijksAanbevelingsoverzicht({
     vrouw: [
       ...(leefstijlContext ? [leefstijlContext] : []),
       ...(cyclusContext ? [cyclusContext] : []),
@@ -76,6 +77,10 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             detail: `${doseLogsVandaag.length} gepland(e) medicatiemoment(en) vandaag; neem alleen over wat de kliniek heeft voorgeschreven.`,
             bron: 'Medicatieplanning vandaag',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+            gebruikteBronnen: doseLogsVandaag.map(
+              (item) =>
+                `Medicatieplanning: ${item.medicatie.naam} op ${item.doseLog.geplandOp.replace('T', ' ')}`,
+            ),
           }
         : {
             id: 'vrouw-basisdag',
@@ -85,6 +90,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
               'Bekijk of er vandaag eigen notities, symptomen of vragen zijn om lokaal vast te leggen.',
             bron: 'Lokale dagstart',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+            gebruikteBronnen: ['Lokale dagstart zonder extra medicatiemoment'],
           },
     ],
     man: [
@@ -130,6 +136,9 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             detail: `${afspraak.titel} staat gepland op ${afspraak.datumTijd.replace('T', ' ')}.`,
             bron: 'Agenda',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+            gebruikteBronnen: [
+              `Agenda: ${afspraak.titel} op ${afspraak.datumTijd.replace('T', ' ')}`,
+            ],
           }
         : {
             id: 'samen-geen-afspraak',
@@ -138,6 +147,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             detail: 'Controleer samen of de lokale agenda nog klopt.',
             bron: 'Agenda',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+            gebruikteBronnen: ['Agenda: geen komende afspraak gevonden'],
           },
       vragenOpen.length > 0
         ? {
@@ -147,6 +157,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             detail: `${vragenOpen.length} open vraag/vragen staan klaar voor consultvoorbereiding.`,
             bron: 'Vragenlijst',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+            gebruikteBronnen: vragenOpen.slice(0, 3).map((vraag) => `Open vraag: ${vraag.vraag}`),
           }
         : {
             id: 'samen-geen-open-vragen',
@@ -156,9 +167,44 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
               'Er staan geen open vragen klaar; voeg alleen toe wat jullie echt willen bespreken.',
             bron: 'Vragenlijst',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+            gebruikteBronnen: ['Vragenlijst: geen open vragen'],
           },
     ],
+  });
+}
+
+function verrijkDagelijksAanbevelingsoverzicht(
+  overview: DailyRecommendationOverview,
+): DailyRecommendationOverview {
+  return {
+    vrouw: overview.vrouw.map(verrijkAanbevelingMetBronnen),
+    man: overview.man.map(verrijkAanbevelingMetBronnen),
+    samen: overview.samen.map(verrijkAanbevelingMetBronnen),
   };
+}
+
+function verrijkAanbevelingMetBronnen(item: DailyRecommendation): DailyRecommendation {
+  const bronnen = uniekeTeksten([
+    ...(item.gebruikteBronnen ?? []),
+    item.bron,
+    ...(item.checklist?.map((checklistItem) => checklistItem.bron) ?? []),
+  ]);
+
+  return {
+    ...item,
+    gebruikteBronnen: bronnen,
+  };
+}
+
+function uniekeTeksten(items: readonly string[]): string[] {
+  const gezien = new Set<string>();
+  return items
+    .map((item) => item.trim())
+    .filter((item) => {
+      if (!item || gezien.has(item)) return false;
+      gezien.add(item);
+      return true;
+    });
 }
 
 function bouwMannelijkeVoorbereidingskaart(): DailyRecommendation {
@@ -170,6 +216,7 @@ function bouwMannelijkeVoorbereidingskaart(): DailyRecommendation {
       'Gebruik dit als lokale notitiekaart voor feitelijke observaties en vragen die je eventueel met de kliniek wilt bespreken.',
     bron: 'Lokale dagstart en gedeelde voorbereiding',
     waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    gebruikteBronnen: ['Lokale dagstart', 'Gedeelde consultvoorbereiding'],
     checklist: [
       {
         label: 'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
@@ -244,6 +291,19 @@ function bouwBehandelvoorbereiding(input: {
       'Bundel vandaag alleen bestaande afspraken, medicatiemomenten en open actiepunten als voorbereiding.',
     bron: 'Agenda, medicatie, vragenlijst en consultverslagen',
     waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    gebruikteBronnen: [
+      input.afspraak
+        ? `Agenda: ${input.afspraak.titel} op ${input.afspraak.datumTijd.replace('T', ' ')}`
+        : undefined,
+      ...input.doseLogsVandaag.map(
+        (item) =>
+          `Medicatieplanning: ${item.medicatie.naam} op ${item.doseLog.geplandOp.replace('T', ' ')}`,
+      ),
+      ...input.vragenOpen.slice(0, 3).map((vraag) => `Open vraag: ${vraag.vraag}`),
+      ...input.consultVerslagen
+        .filter((verslag) => (verslag.actiepunten ?? []).length > 0)
+        .map((verslag) => `Consultverslag: ${verslag.titel} op ${verslag.datum}`),
+    ].filter((bron): bron is string => Boolean(bron)),
     checklist,
   };
 }
@@ -282,6 +342,10 @@ function bouwCyclusAanbeveling(input: {
       'Bekijk cyclusfase en metingen alleen als feitelijke context voor wat je vandaag wilt vastleggen of vragen.',
     bron: 'Trajectfase en lokale cyclusmetingen',
     waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    gebruikteBronnen: [
+      fase ? `Trajectfase: ${fase}` : undefined,
+      meting ? `Cyclusmeting: ${meting.meting} op ${meting.datum}` : undefined,
+    ].filter((bron): bron is string => Boolean(bron)),
     checklist,
   };
 }
@@ -307,7 +371,39 @@ function bouwLeefstijlContextAanbeveling(input: {
     detail: `Gebruik lokale context voor haalbare dagnotities: ${context.join('; ')}.`,
     bron: 'Dossier, cyclusfase en behandelgeschiedenis',
     waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    gebruikteBronnen: bouwLeefstijlContextBronnen(input),
   };
+}
+
+function bouwLeefstijlContextBronnen(input: {
+  datum: string;
+  trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
+  dossierDocuments?: readonly DossierDocument[];
+  cycleData?: readonly CycleData[];
+}): string[] {
+  const actief =
+    (input.trajecten ?? []).find((item) => item.traject.status === 'lopend') ??
+    (input.trajecten ?? [])[0];
+  const fase = actief
+    ? actief.fasen.find(
+        (item) =>
+          item.startDatum &&
+          item.startDatum <= input.datum &&
+          (!item.eindDatum || item.eindDatum >= input.datum),
+      )
+    : undefined;
+  const meting = laatsteCyclusmeting(input.cycleData ?? []);
+  const document = laatsteDossierdocument(input.dossierDocuments ?? []);
+
+  return [
+    fase
+      ? `Trajectfase: ${TRAJECT_FASE_LABELS[fase.fase]} vanaf ${fase.startDatum ?? 'onbekend'}`
+      : actief
+        ? `Traject: ${actief.traject.naam}`
+        : undefined,
+    meting ? `Cyclusmeting: ${meting.meting} op ${meting.datum}` : undefined,
+    document ? `Dossierdocument: ${document.titel} op ${document.datum}` : undefined,
+  ].filter((bron): bron is string => Boolean(bron));
 }
 
 function beschrijfCyclusfase(
@@ -343,8 +439,12 @@ function laatsteCyclusmeting(items: readonly CycleData[]): CycleData | undefined
 }
 
 function beschrijfRecentDossierdocument(items: readonly DossierDocument[]): string | undefined {
-  const document = [...items].sort((a, b) => b.datum.localeCompare(a.datum))[0];
+  const document = laatsteDossierdocument(items);
   if (!document) return undefined;
 
   return `recent dossierdocument ${document.titel} op ${document.datum}`;
+}
+
+function laatsteDossierdocument(items: readonly DossierDocument[]): DossierDocument | undefined {
+  return [...items].sort((a, b) => b.datum.localeCompare(a.datum))[0];
 }
