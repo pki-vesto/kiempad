@@ -6,6 +6,7 @@ import {
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
+  bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
   filterKennisItems,
@@ -217,6 +218,37 @@ describe('kennis domeinregels', () => {
       bron: 'https://voorbeeld.test/ivf-embryo',
     });
     expect(groepen.every((groep) => groep.waarschuwing.includes('geen bewijsweging'))).toBe(true);
+  });
+
+  it('bouwt bronverificatie en publicatiedatum voor iedere researchkaart', () => {
+    const publicatie = maakResearchKennisItem('research-publicatie', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+    });
+    const lokaleNotitie = maakResearchKennisItem('research-zonder-publicatiedatum', {
+      titel: 'Lokale researchnotitie',
+      notitie: 'Eigen researchnotitie zonder externe bron.',
+    });
+    const nietResearchItem = INITIELE_KENNIS_ITEMS.find((item) => item.categorie !== 'research');
+
+    expect(bouwResearchKaartMetadata(publicatie)).toEqual({
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      bronverificatie: 'Bronverificatie: bron vastgelegd voor handmatige controle',
+      publicatieDatum: '2026-05-10',
+    });
+    expect(bouwResearchKaartMetadata(lokaleNotitie)).toEqual({
+      bron: 'Geen bron vastgelegd',
+      bronverificatie: 'Bronverificatie: bron ontbreekt',
+      publicatieDatum: 'Publicatiedatum onbekend',
+    });
+    expect(nietResearchItem).toBeDefined();
+    if (!nietResearchItem) return;
+
+    expect(bouwResearchKaartMetadata(nietResearchItem)).toBeUndefined();
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
