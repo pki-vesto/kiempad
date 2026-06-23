@@ -1,4 +1,11 @@
-import { AFSPRAAK_TYPE_LABELS, beschrijfVolgendeAfspraak, formatDateTime } from './domain/agenda';
+import {
+  AFSPRAAK_TYPE_LABELS,
+  type AgendaGroep,
+  afsprakenPerMaand,
+  afsprakenPerWeek,
+  beschrijfVolgendeAfspraak,
+  formatDateTime,
+} from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
 import type { AiSamenvattingPayload } from './domain/ai';
 import {
@@ -695,6 +702,14 @@ function renderAgendaScreen(state: AppShellState): string {
               : ''
           }
         </div>
+        ${
+          state.afspraken.length > 0
+            ? `<div class="agenda-overview">
+                ${renderAgendaGroups('Weekweergave', afsprakenPerWeek(state.afspraken.map((bundle) => bundle.afspraak)))}
+                ${renderAgendaGroups('Maandweergave', afsprakenPerMaand(state.afspraken.map((bundle) => bundle.afspraak)))}
+              </div>`
+            : ''
+        }
         ${state.afspraken.length > 0 ? renderAgendaList(state.afspraken, state.trajecten) : '<p class="empty-state">Nog geen afspraken. Maak links de eerste afspraak aan.</p>'}
       </div>
     </section>
@@ -761,6 +776,26 @@ function renderAfspraakForm(
       </label>
       <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
     </form>
+  `;
+}
+
+function renderAgendaGroups(title: string, groups: AgendaGroep[]): string {
+  return `
+    <section class="embedded-summary" aria-label="${title}">
+      <h3>${title}</h3>
+      <ol class="compact-list">
+        ${groups
+          .map(
+            (group) => `
+              <li>
+                <strong>${escapeHtml(group.label)}</strong>
+                <span>${group.afspraken.length} afspraak${group.afspraken.length === 1 ? '' : 'en'}</span>
+              </li>
+            `,
+          )
+          .join('')}
+      </ol>
+    </section>
   `;
 }
 

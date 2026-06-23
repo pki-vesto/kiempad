@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G035 agenda week-/maandweergave: agendascherm toont afspraken compact gegroepeerd
+  per ISO-week en maand naast de bestaande chronologische lijst.
 - G026/G027 meerdere pogingen: trajectscherm kan een nieuwe poging toevoegen naast het
   bewerken van de eerste poging en toont alle pogingen met pogingnummer.
 - G139/G140/G141 back-up export/import: back-upscherm toegevoegd voor

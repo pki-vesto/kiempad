@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 120 |
+| ☑ klaar | 121 |
 | ◐ bezig | 0 |
-| ☐ open | 54 |
+| ☐ open | 53 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -86,7 +86,7 @@
 | G032 | Afspraak bewerken en verwijderen | P0 | F1 | ☑ |
 | G033 | Afspraaktypes (echo/bloedprik/punctie/terugplaatsing/consult/overig) | P1 | F1 | ☑ |
 | G034 | Agenda-lijstweergave (komende afspraken) | P0 | F1 | ☑ |
-| G035 | Agenda-maand-/weekweergave | P2 | F2 | ☐ |
+| G035 | Agenda-maand-/weekweergave | P2 | F2 | ☑ |
 | G036 | Afspraak koppelen aan een traject | P1 | F1 | ☑ |
 | G037 | Voorbereiding/notitie per afspraak | P1 | F1 | ☑ |
 | G038 | Vragen-voor-de-arts koppelen aan een afspraak | P1 | F1 | ☑ |
