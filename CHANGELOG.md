@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G158 snelle invoer: startscherm krijgt een compacte invoerroute waarmee een
+  afspraak, medicatie of vraag met alleen een korte tekst kan worden toegevoegd via
+  de bestaande versleutelde stores.
 - G171 kennisbankverificatie: kennisitems bewaren verificatiedatum en volgende
   jaarlijkse reviewdatum na bevestiging door een behandelaar.
 - G169 ADR-dekking: ADR-0008 toegevoegd voor de aangescherpte CI/lintgate en

@@ -7,6 +7,7 @@ import { KennisStore } from './domain/kennisStore';
 import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import { SettingsStore } from './domain/settingsStore';
+import { maakSnelleAfspraak, maakSnelleMedicatie, maakSnelleVraag } from './domain/snelleInvoer';
 import { maakTraject, type TrajectMetFasen } from './domain/traject';
 import { TrajectStore } from './domain/trajectStore';
 import type {
@@ -75,6 +76,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     notificaties: state.notificaties,
   });
   bindTrajectControls(root, state);
+  bindQuickEntryControls(root, state);
   bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
   bindHerinneringControls(root, state);
@@ -168,6 +170,13 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.error = error instanceof Error ? error.message : 'Ontgrendelen is mislukt.';
         render(root, state);
       });
+  });
+}
+
+function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#quick-entry-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveQuickEntryFromForm(event.currentTarget, root, state);
   });
 }
 
@@ -321,6 +330,33 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
         .then(() => reloadAndRender(root, state));
     });
   });
+}
+
+async function saveQuickEntryFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement)) return;
+
+  const data = new FormData(target);
+  const quickType = String(data.get('quickType') ?? '');
+  const quickText = String(data.get('quickText') ?? '').trim();
+  if (!quickText) return;
+
+  if (quickType === 'afspraak' && state.agendaStore) {
+    await state.agendaStore.save(maakSnelleAfspraak(quickText));
+  }
+
+  if (quickType === 'medicatie' && state.medicatieStore) {
+    await state.medicatieStore.save(maakSnelleMedicatie(quickText));
+  }
+
+  if (quickType === 'vraag' && state.vraagStore) {
+    await state.vraagStore.save(maakSnelleVraag(quickText));
+  }
+
+  await reloadAndRender(root, state);
 }
 
 async function saveTrajectFromForm(
