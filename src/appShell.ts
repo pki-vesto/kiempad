@@ -60,6 +60,7 @@ import {
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
+  bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
   type EenvoudigeResearchSamenvatting,
@@ -70,6 +71,7 @@ import {
   kennisItemsPerCategorie,
   type ResearchAggregatiePlan,
   type ResearchBron,
+  type ResearchKaartMetadata,
   type ResearchRelevantieVoorGebruiker,
   type ResearchTrendGroep,
   type WetenschappelijkeResearchSamenvatting,
@@ -2341,6 +2343,7 @@ function renderKennisCategorie(label: string, items: KennisItem[]): string {
 
 function renderKennisItem(item: KennisItem): string {
   const kostenJaar = bepaalKennisKostenJaar(item);
+  const researchMetadata = bouwResearchKaartMetadata(item);
 
   return `
     <li class="phase-item">
@@ -2348,6 +2351,7 @@ function renderKennisItem(item: KennisItem): string {
         <h3>${escapeHtml(item.titel)}</h3>
         <p>${escapeHtml(item.inhoud)}</p>
         <small>Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</small>
+        ${researchMetadata ? renderResearchKaartMetadata(researchMetadata) : ''}
         ${
           item.geverifieerdOp
             ? `<p class="linked-note">Geverifieerd op ${escapeHtml(item.geverifieerdOp)} · review uiterlijk ${escapeHtml(item.volgendeVerificatieOp ?? 'onbekend')}</p>`
@@ -2373,6 +2377,16 @@ function renderKennisItem(item: KennisItem): string {
           : ''
       }
     </li>
+  `;
+}
+
+function renderResearchKaartMetadata(metadata: ResearchKaartMetadata): string {
+  return `
+    <dl class="summary-list">
+      <div><dt>Bronverificatie</dt><dd>${escapeHtml(metadata.bronverificatie)}</dd></div>
+      <div><dt>Publicatiedatum</dt><dd>${escapeHtml(metadata.publicatieDatum)}</dd></div>
+      <div><dt>Researchbron</dt><dd>${escapeHtml(metadata.bron)}</dd></div>
+    </dl>
   `;
 }
 

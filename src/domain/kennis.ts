@@ -81,6 +81,12 @@ export type ResearchTrendGroep = {
   waarschuwing: string;
 };
 
+export type ResearchKaartMetadata = {
+  bron: string;
+  bronverificatie: string;
+  publicatieDatum: string;
+};
+
 export const RESEARCH_TREND_LABELS: Record<ResearchTrendOnderwerp, string> = {
   ivf: 'IVF',
   icsi: 'ICSI',
@@ -379,6 +385,20 @@ export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTr
         'Trendgroepering is een lokale trefwoordindeling voor overzicht; dit is geen bewijsweging of behandeladvies.',
     }))
     .filter((groep) => groep.items.length > 0);
+}
+
+export function bouwResearchKaartMetadata(item: KennisItem): ResearchKaartMetadata | undefined {
+  if (item.categorie !== 'research') return undefined;
+
+  const bron = item.researchPublicatie?.bron ?? item.bron?.trim();
+
+  return {
+    bron: bron || 'Geen bron vastgelegd',
+    bronverificatie: bron
+      ? 'Bronverificatie: bron vastgelegd voor handmatige controle'
+      : 'Bronverificatie: bron ontbreekt',
+    publicatieDatum: item.researchPublicatie?.publicatieDatum ?? 'Publicatiedatum onbekend',
+  };
 }
 
 export function filterKennisItems(

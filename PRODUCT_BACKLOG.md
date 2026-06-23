@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 217 |
+| ☑ klaar | 218 |
 | ◐ bezig | 0 |
-| ☐ open | 26 |
+| ☐ open | 25 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -356,7 +356,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G215 | PFIP research intelligence: eenvoudige lekensamenvatting per publicatie in begrijpelijk Nederlands | P0 | F4 | ☑ |
 | G216 | PFIP research intelligence: relevantie voor gebruiker koppelen aan dossiercontext zonder behandeladvies | P0 | F4 | ☑ |
 | G217 | PFIP research intelligence: trends groeperen per onderwerp zoals IVF, ICSI, embryo, leefstijl en mannelijke factor | P2 | F4 | ☑ |
-| G218 | PFIP research intelligence: bronverificatie en publicatiedatum zichtbaar bij iedere researchkaart | P0 | F4 | ☐ |
+| G218 | PFIP research intelligence: bronverificatie en publicatiedatum zichtbaar bij iedere researchkaart | P0 | F4 | ☑ |
 | G219 | PFIP research intelligence: verouderde research markeren en periodieke herverificatie plannen | P1 | F4 | ☐ |
 | G220 | PFIP daily recommendations: dagelijks aanbevelingsoverzicht met scheiding vrouw, man en samen | P0 | F4 | ☐ |
 | G221 | PFIP daily recommendations: leefstijlaanbevelingen baseren op dossier, cyclusfase en behandelgeschiedenis | P0 | F4 | ☐ |

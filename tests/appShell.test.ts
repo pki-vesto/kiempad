@@ -1230,6 +1230,10 @@ describe('app shell', () => {
     expect(html).toContain('Lokale cache');
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain('Bronverificatie');
+    expect(html).toContain('Bronverificatie: bron vastgelegd voor handmatige controle');
+    expect(html).toContain('Publicatiedatum onbekend');
+    expect(html).toContain('Researchbron');
     expect(html).toContain('Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.');
     expect(html).toContain('Wetenschappelijke samenvattingen');
     expect(html).toContain('Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.');
@@ -1331,6 +1335,8 @@ describe('app shell', () => {
     expect(html).toContain('Wetenschappelijke samenvattingen');
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('2026-05-10 · https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain('Bronverificatie: bron vastgelegd voor handmatige controle');
+    expect(html).toContain('<dt>Publicatiedatum</dt><dd>2026-05-10</dd>');
     expect(html).toContain(
       'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
     );

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G218 PFIP research intelligence: iedere researchkaart toont bronverificatie,
+  publicatiedatum en researchbron, ook wanneer bron of datum nog ontbreekt.
 - G217 PFIP research intelligence: opgeslagen researchitems worden lokaal
   gegroepeerd als trends per onderwerp, zoals IVF, ICSI, embryo, leefstijl en
   mannelijke factor, met waarschuwing dat dit geen bewijsweging is.
