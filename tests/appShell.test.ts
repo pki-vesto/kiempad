@@ -441,15 +441,26 @@ describe('app shell', () => {
           intensiteit: 3,
           notitie: 'Na de afspraak.',
         },
+        {
+          id: 'symptom-2',
+          datum: '2026-06-23',
+          owner: 'peter',
+          symptoom: 'Moe',
+          intensiteit: 5,
+        },
       ],
     });
 
     expect(html).toContain('Symptoomlog toevoegen');
     expect(html).toContain('id="symptom-log-form"');
     expect(html).toContain('name="intensiteit" type="number" min="1" max="5"');
+    expect(html).toContain('2026-06-23');
+    expect(html).toContain('2 logs');
+    expect(html).toContain('Gemiddelde intensiteit 4/5');
     expect(html).toContain('Hoofdpijn');
     expect(html).toContain('Samen');
     expect(html).toContain('Intensiteit 3/5');
+    expect(html).toContain('Moe');
     expect(html).toContain('Notitie: Na de afspraak.');
   });
 

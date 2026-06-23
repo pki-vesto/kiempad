@@ -35,7 +35,7 @@ import {
 } from './domain/medicatie';
 import type { MedicatieBundle } from './domain/medicatieStore';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
-import { OWNER_LABELS } from './domain/symptomen';
+import { OWNER_LABELS, type SymptomDagGroep, symptomenPerDag } from './domain/symptomen';
 import {
   bepaalHuidigeFase,
   bepaalVolgendeStap,
@@ -323,6 +323,7 @@ function renderBackupScreen(state: AppShellState): string {
 
 function renderWelzijnScreen(state: AppShellState): string {
   const logs = state.symptomLogs ?? [];
+  const perDag = symptomenPerDag(logs);
 
   return `
     <section class="traject-layout" aria-label="Symptomen en welzijn">
@@ -333,8 +334,8 @@ function renderWelzijnScreen(state: AppShellState): string {
       <div class="timeline-panel">
         <h2>Symptoomlogboek</h2>
         ${
-          logs.length > 0
-            ? `<ol class="phase-list">${logs.map(renderSymptomLogItem).join('')}</ol>`
+          perDag.length > 0
+            ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
             : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
         }
       </div>
@@ -374,14 +375,26 @@ function renderSymptomLogForm(): string {
   `;
 }
 
-function renderSymptomLogItem(log: SymptomLog): string {
+function renderSymptomDagGroep(group: SymptomDagGroep): string {
   return `
     <li class="phase-item">
       <div>
-        <h3>${escapeHtml(log.symptoom)}</h3>
-        <p>${escapeHtml(log.datum)} · ${escapeHtml(OWNER_LABELS[log.owner])}${log.intensiteit ? ` · Intensiteit ${log.intensiteit}/5` : ''}</p>
-        ${log.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(log.notitie)}</p>` : ''}
+        <h3>${escapeHtml(group.datum)}</h3>
+        <p>${group.logs.length} log${group.logs.length === 1 ? '' : 's'}${group.gemiddeldeIntensiteit ? ` · Gemiddelde intensiteit ${group.gemiddeldeIntensiteit}/5` : ''}</p>
+        <ol class="compact-list">
+          ${group.logs.map(renderSymptomLogItem).join('')}
+        </ol>
       </div>
+    </li>
+  `;
+}
+
+function renderSymptomLogItem(log: SymptomLog): string {
+  return `
+    <li>
+      <strong>${escapeHtml(log.symptoom)}</strong>
+      <span>${escapeHtml(OWNER_LABELS[log.owner])}${log.intensiteit ? ` · Intensiteit ${log.intensiteit}/5` : ''}</span>
+        ${log.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(log.notitie)}</p>` : ''}
     </li>
   `;
 }
