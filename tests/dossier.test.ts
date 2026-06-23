@@ -4,6 +4,7 @@ import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
+  classificeerDossierBeeld,
   extraheerDossierMetadata,
   formatBytes,
   maakDossierDocument,
@@ -443,6 +444,31 @@ describe('dossier', () => {
       bronbestand: 'echo-6-weken.jpg',
       mimeType: 'image/jpeg',
     });
+  });
+
+  it('classificeert beeldmateriaal lokaal naar echo, foto, scan, embryo of overig beeld', () => {
+    const maakBeeld = (id: string, titel: string, bestandsNaam: string) =>
+      maakDossierDocument(id, {
+        datum: '2026-05-01',
+        titel,
+        categorie: 'beeld',
+        bestandsNaam,
+        mimeType: 'image/jpeg',
+        grootteBytes: 1024,
+        inhoudBase64: 'anBn',
+      });
+
+    expect(classificeerDossierBeeld(maakBeeld('echo', 'Echo follikelmeting', 'echo.jpg'))).toBe(
+      'echo',
+    );
+    expect(classificeerDossierBeeld(maakBeeld('foto', 'Foto test', 'foto.jpg'))).toBe('foto');
+    expect(classificeerDossierBeeld(maakBeeld('scan', 'MRI scan', 'scan.jpg'))).toBe('scan');
+    expect(classificeerDossierBeeld(maakBeeld('embryo', 'Embryo 1', 'embryo.jpg'))).toBe(
+      'embryo_afbeelding',
+    );
+    expect(classificeerDossierBeeld(maakBeeld('overig', 'Beeldbijlage', 'bijlage.jpg'))).toBe(
+      'overig_beeld',
+    );
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {

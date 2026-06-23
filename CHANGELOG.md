@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G189 PFIP imaging: beeldmateriaal krijgt een expliciete lokale classificatie
+  naar echo, foto, scan, embryo-afbeelding of overig beeld.
 - G188 PFIP imaging: het dossierscherm heeft een aparte imaging-repository voor
   echo's, foto's, scans en embryo-afbeeldingen met lokale preview na ontgrendeling.
 - G187 PFIP dossier-ingest: privacytest bewaakt dat lokale OCR- en

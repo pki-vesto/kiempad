@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 188 |
+| ☑ klaar | 189 |
 | ◐ bezig | 0 |
-| ☐ open | 55 |
+| ☐ open | 54 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -327,7 +327,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G186 | PFIP dossier-ingest: full-text zoeken in OCR-tekst en handmatige notities binnen de lokale kluis | P1 | F3 | ☑ |
 | G187 | PFIP dossier-ingest: privacytest dat OCR en extractie geen netwerkverkeer starten zonder opt-in | P0 | F3 | ☑ |
 | G188 | PFIP imaging: imaging-repository voor echo's, foto's, scans en embryo-afbeeldingen als aparte dossierweergave | P0 | F3 | ☑ |
-| G189 | PFIP imaging: lokale beeldclassificatie naar echo, foto, scan, embryo of overig beeld | P1 | F3 | ☐ |
+| G189 | PFIP imaging: lokale beeldclassificatie naar echo, foto, scan, embryo of overig beeld | P1 | F3 | ☑ |
 | G190 | PFIP imaging: beeldmetadata vastleggen voor datum, lichaams-/trajectcontext, bron en gekoppelde afspraak | P1 | F3 | ☐ |
 | G191 | PFIP imaging: tijdlijnkoppeling voor beelden aan poging, afspraak, cyclusdag of embryo | P0 | F3 | ☐ |
 | G192 | PFIP imaging: vergelijking tussen twee beeldmomenten met notities zonder medische interpretatie | P1 | F3 | ☐ |
