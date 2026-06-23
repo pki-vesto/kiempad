@@ -821,6 +821,7 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])}${uploadProfiel ? ` · ${escapeHtml(uploadProfiel)}` : ''} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
+        ${renderDossierMetadata(document)}
         ${renderEmbryoDetails(document)}
         ${renderDossierOcrDetails(document)}
         ${renderDossierImagePreview(document)}
@@ -831,6 +832,31 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
         ${document.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(document.notitie)}</p>` : ''}
       </div>
     </li>
+  `;
+}
+
+function renderDossierMetadata(document: DossierDocument): string {
+  const metadata = document.metadata ?? {
+    documentDatum: document.datum,
+    documenttype: document.uploadProfiel
+      ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+      : DOSSIER_CATEGORIE_LABELS[document.categorie],
+    trajectId: document.trajectId,
+    bronbestand: document.bestandsNaam,
+    extractieBronnen: ['legacy-record'],
+  };
+  const details = [
+    metadata.documentDatum ? `Datum: ${metadata.documentDatum}` : undefined,
+    metadata.instelling ? `Instelling: ${metadata.instelling}` : undefined,
+    metadata.documenttype ? `Documenttype: ${metadata.documenttype}` : undefined,
+    metadata.trajectId ? `Traject: ${metadata.trajectId}` : undefined,
+    metadata.arts ? `Arts: ${metadata.arts}` : undefined,
+    `Bronbestand: ${metadata.bronbestand}`,
+  ].filter((value): value is string => Boolean(value));
+
+  return `
+    <p class="linked-note">Metadata: ${details.map(escapeHtml).join(' · ')}</p>
+    <p class="linked-note">Metadata-bronnen: ${metadata.extractieBronnen.map(escapeHtml).join(', ')}</p>
   `;
 }
 

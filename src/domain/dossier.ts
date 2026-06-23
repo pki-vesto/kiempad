@@ -88,6 +88,16 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     input.ocr,
     uploadedAt,
   );
+  const metadata = extraheerDossierMetadata({
+    datum,
+    titel,
+    categorie,
+    uploadProfiel,
+    bestandsNaam,
+    trajectId,
+    notitie,
+    ocr,
+  });
 
   if (!datum) throw new Error('Datum is verplicht voor een dossierdocument.');
   if (!titel) throw new Error('Titel is verplicht voor een dossierdocument.');
@@ -115,10 +125,12 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
       categorie,
       uploadProfiel,
       ocr,
+      metadata,
       bestandsNaam,
       mimeType,
       grootteBytes: input.grootteBytes,
     }),
+    metadata,
     ocr,
     uploadedAt,
   };
@@ -137,6 +149,7 @@ function analyseerDossierDocument(input: {
   categorie: DossierDocument['categorie'];
   uploadProfiel?: DossierDocument['uploadProfiel'];
   ocr?: DossierDocument['ocr'];
+  metadata: DossierDocument['metadata'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -147,9 +160,10 @@ function analyseerDossierDocument(input: {
     ? DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]
     : 'Onbekend profiel';
   const ocrFragment = input.ocr ? ` Lokale OCR-status: ${beschrijfOcrStatus(input.ocr)}.` : '';
+  const metadataAantal = telGevondenMetadata(input.metadata);
 
   return {
-    samenvatting: `${DOSSIER_CATEGORIE_LABELS[input.categorie]} opgeslagen als ${typeLabel}; uploadprofiel ${profielLabel}; ${formatBytes(input.grootteBytes)}. Analyse is lokaal en niet-medisch.${ocrFragment}`,
+    samenvatting: `${DOSSIER_CATEGORIE_LABELS[input.categorie]} opgeslagen als ${typeLabel}; uploadprofiel ${profielLabel}; ${formatBytes(input.grootteBytes)}. ${metadataAantal} metadata${metadataAantal === 1 ? 'veld' : 'velden'} lokaal herkend. Analyse is lokaal en niet-medisch.${ocrFragment}`,
     signalen,
   };
 }
@@ -158,6 +172,7 @@ function bepaalSignalen(input: {
   categorie: DossierDocument['categorie'];
   uploadProfiel?: DossierDocument['uploadProfiel'];
   ocr?: DossierDocument['ocr'];
+  metadata: DossierDocument['metadata'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -199,6 +214,10 @@ function bepaalSignalen(input: {
   if (input.ocr) {
     signalen.push('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');
     signalen.push(input.ocr.waarschuwing);
+  }
+  signalen.push(`Bronbestand metadata: ${input.metadata.bronbestand}.`);
+  for (const signaal of beschrijfMetadataSignalen(input.metadata)) {
+    signalen.push(signaal);
   }
   if (input.mimeType?.startsWith('image/')) {
     signalen.push('Bestandstype is beeldmateriaal.');
@@ -296,6 +315,108 @@ export function maakDossierOcrResultaat(
       'Dit bestandstype heeft nog geen lokale OCR-route; het originele bestand blijft wel bewaard.',
     verwerktOp,
   };
+}
+
+export function extraheerDossierMetadata(input: {
+  datum: string;
+  titel: string;
+  categorie: DossierDocument['categorie'];
+  uploadProfiel?: DossierDocument['uploadProfiel'];
+  bestandsNaam: string;
+  trajectId?: string;
+  notitie?: string;
+  ocr?: DossierDocument['ocr'];
+}): DossierDocument['metadata'] {
+  const bronnen: string[] = ['bronbestand', 'formulierdatum'];
+  const tekstBronnen = [input.bestandsNaam, input.titel, input.notitie, input.ocr?.tekst].filter(
+    (value): value is string => Boolean(value),
+  );
+  if (input.notitie) bronnen.push('notitie');
+  if (input.ocr?.tekst) bronnen.push('ocr-tekst');
+
+  const gecombineerdeTekst = tekstBronnen.join('\n');
+  const documentDatum = normaliseerMetadataDatum(gecombineerdeTekst) ?? input.datum;
+  const instelling = extraheerInstelling(gecombineerdeTekst);
+  const arts = extraheerArts(gecombineerdeTekst);
+  const documenttype = input.uploadProfiel
+    ? DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]
+    : DOSSIER_CATEGORIE_LABELS[input.categorie];
+
+  if (input.trajectId) bronnen.push('trajectkoppeling');
+  if (instelling) bronnen.push('instellingherkenning');
+  if (arts) bronnen.push('artsherkenning');
+
+  return {
+    documentDatum,
+    instelling,
+    documenttype,
+    trajectId: input.trajectId || undefined,
+    arts,
+    bronbestand: input.bestandsNaam,
+    extractieBronnen: Array.from(new Set(bronnen)),
+  };
+}
+
+function normaliseerMetadataDatum(value: string): string | undefined {
+  const iso = value.match(/\b(20\d{2})[-_. ](0?[1-9]|1[0-2])[-_. ](0?[1-9]|[12]\d|3[01])\b/);
+  const [, isoJaar, isoMaand, isoDag] = iso ?? [];
+  if (isoJaar && isoMaand && isoDag) {
+    return `${isoJaar}-${isoMaand.padStart(2, '0')}-${isoDag.padStart(2, '0')}`;
+  }
+
+  const nl = value.match(/\b(0?[1-9]|[12]\d|3[01])[-_. ](0?[1-9]|1[0-2])[-_. ](20\d{2})\b/);
+  const [, nlDag, nlMaand, nlJaar] = nl ?? [];
+  if (nlDag && nlMaand && nlJaar) {
+    return `${nlJaar}-${nlMaand.padStart(2, '0')}-${nlDag.padStart(2, '0')}`;
+  }
+
+  return undefined;
+}
+
+function extraheerInstelling(value: string): string | undefined {
+  const known = [
+    'Erasmus MC',
+    'Radboudumc',
+    'UMC Utrecht',
+    'Amsterdam UMC',
+    'Isala',
+    'Reinier de Graaf',
+    'Fertiliteitskliniek',
+    'Ziekenhuis',
+    'Kliniek',
+  ];
+  const lower = value.toLowerCase();
+  return known.find((item) => lower.includes(item.toLowerCase()));
+}
+
+function extraheerArts(value: string): string | undefined {
+  const match = value.match(
+    /\b(?:dr\.?|dokter|arts)\s+([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)?)/,
+  );
+  if (!match) return undefined;
+  const naam = match[1];
+  return naam ? `dr. ${naam.trim()}` : undefined;
+}
+
+function telGevondenMetadata(metadata: DossierDocument['metadata']): number {
+  return [
+    metadata.documentDatum,
+    metadata.instelling,
+    metadata.documenttype,
+    metadata.trajectId,
+    metadata.arts,
+    metadata.bronbestand,
+  ].filter(Boolean).length;
+}
+
+function beschrijfMetadataSignalen(metadata: DossierDocument['metadata']): string[] {
+  return [
+    metadata.documentDatum ? `Metadata datum: ${metadata.documentDatum}.` : undefined,
+    metadata.instelling ? `Metadata instelling: ${metadata.instelling}.` : undefined,
+    metadata.documenttype ? `Metadata documenttype: ${metadata.documenttype}.` : undefined,
+    metadata.trajectId ? `Metadata trajectkoppeling: ${metadata.trajectId}.` : undefined,
+    metadata.arts ? `Metadata arts: ${metadata.arts}.` : undefined,
+  ].filter((value): value is string => Boolean(value));
 }
 
 function bepaalOcrBron(

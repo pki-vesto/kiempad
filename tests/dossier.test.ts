@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   bepaalDossierUploadProfiel,
+  extraheerDossierMetadata,
   formatBytes,
   maakDossierDocument,
   maakDossierOcrResultaat,
@@ -35,11 +36,20 @@ describe('dossier', () => {
       grootteBytes: 2048,
       inhoudBase64: 'cGRm',
       notitie: 'Historisch onderzoek',
+      metadata: {
+        documentDatum: '2026-05-01',
+        documenttype: 'Labuitslag',
+        bronbestand: 'bloed-lab-uitslag.pdf',
+      },
       uploadedAt: '2026-06-23T15:00:00.000Z',
     });
     expect(document.analyse.samenvatting).toContain('Onderzoek opgeslagen als PDF');
     expect(document.analyse.samenvatting).toContain('uploadprofiel Labuitslag');
+    expect(document.analyse.samenvatting).toContain('metadata');
     expect(document.analyse.samenvatting).toContain('niet-medisch');
+    expect(document.analyse.signalen).toContain('Metadata datum: 2026-05-01.');
+    expect(document.analyse.signalen).toContain('Metadata documenttype: Labuitslag.');
+    expect(document.analyse.signalen).toContain('Bronbestand metadata: bloed-lab-uitslag.pdf.');
     expect(document.analyse.signalen).toContain('Uploadprofiel: Labuitslag.');
     expect(document.analyse.signalen).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
     expect(document.analyse.signalen).toContain('Bestandstype is PDF.');
@@ -202,6 +212,44 @@ describe('dossier', () => {
     expect(document.analyse.signalen).toContain(
       'Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.',
     );
+  });
+
+  it('extraheert metadata uit bestandsnaam, notitie, OCR-tekst en koppelingen', () => {
+    const metadata = extraheerDossierMetadata({
+      datum: '2026-06-01',
+      titel: 'Controle',
+      categorie: 'onderzoek',
+      uploadProfiel: 'fertiliteitsrapport',
+      bestandsNaam: '2026-05-24-erasmus-rapport.pdf',
+      trajectId: 'traject-1',
+      notitie: 'Gedeeld door Erasmus MC',
+      ocr: {
+        status: 'tekst_uitgelezen',
+        bron: 'tekstbestand',
+        explicieteLokaleVerwerking: true,
+        tekst: 'Controle door dr. Jansen bij Erasmus MC',
+        waarschuwing: 'Lokaal gelezen.',
+        verwerktOp: '2026-06-23T15:00:00.000Z',
+      },
+    });
+
+    expect(metadata).toEqual({
+      documentDatum: '2026-05-24',
+      instelling: 'Erasmus MC',
+      documenttype: 'Fertiliteitsrapport',
+      trajectId: 'traject-1',
+      arts: 'dr. Jansen',
+      bronbestand: '2026-05-24-erasmus-rapport.pdf',
+      extractieBronnen: [
+        'bronbestand',
+        'formulierdatum',
+        'notitie',
+        'ocr-tekst',
+        'trajectkoppeling',
+        'instellingherkenning',
+        'artsherkenning',
+      ],
+    });
   });
 
   it('bewaart gespreksverslagen met afspraak- en trajectkoppeling', () => {

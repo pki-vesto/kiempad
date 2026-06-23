@@ -541,12 +541,28 @@ describe('app shell', () => {
           notitie: 'Historisch onderzoek',
           analyse: {
             samenvatting:
-              'Onderzoek opgeslagen als PDF; uploadprofiel Labuitslag; 2 KB. Analyse is lokaal en niet-medisch. Lokale OCR-status: klaargezet voor lokale OCR.',
+              'Onderzoek opgeslagen als PDF; uploadprofiel Labuitslag; 2 KB. 5 metadatavelden lokaal herkend. Analyse is lokaal en niet-medisch. Lokale OCR-status: klaargezet voor lokale OCR.',
             signalen: [
               'Uploadprofiel: Labuitslag.',
               'Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.',
+              'Bronbestand metadata: bloed-lab-uitslag.pdf.',
+              'Metadata instelling: Erasmus MC.',
+              'Metadata documenttype: Labuitslag.',
               'Bestandsnaam lijkt op laboratoriumuitslag.',
               'Bestandstype is PDF.',
+            ],
+          },
+          metadata: {
+            documentDatum: '2026-05-01',
+            instelling: 'Erasmus MC',
+            documenttype: 'Labuitslag',
+            trajectId: 'traject-1',
+            bronbestand: 'bloed-lab-uitslag.pdf',
+            extractieBronnen: [
+              'bronbestand',
+              'formulierdatum',
+              'trajectkoppeling',
+              'instellingherkenning',
             ],
           },
           ocr: {
@@ -593,6 +609,11 @@ describe('app shell', () => {
     expect(html).toContain('bloed-lab-uitslag.pdf');
     expect(html).toContain('Onderzoek');
     expect(html).toContain('Labuitslag');
+    expect(html).toContain('Metadata: Datum: 2026-05-01');
+    expect(html).toContain('Instelling: Erasmus MC');
+    expect(html).toContain('Documenttype: Labuitslag');
+    expect(html).toContain('Bronbestand: bloed-lab-uitslag.pdf');
+    expect(html).toContain('Metadata-bronnen: bronbestand, formulierdatum');
     expect(html).toContain('2 KB');
     expect(html).toContain('Uploadprofiel: Labuitslag.');
     expect(html).toContain('OCR: Klaargezet voor lokale OCR');
@@ -634,6 +655,12 @@ describe('app shell', () => {
               'Bestandstype is beeldmateriaal.',
               'Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.',
             ],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'echo-foto-6-weken.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -704,6 +731,13 @@ describe('app shell', () => {
               'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
               'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
             ],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Embryokwaliteit',
+            trajectId: 'traject-1',
+            bronbestand: 'embryokwaliteit-Embryo 1.json',
+            extractieBronnen: ['bronbestand', 'formulierdatum', 'trajectkoppeling'],
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
