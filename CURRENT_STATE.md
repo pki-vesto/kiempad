@@ -42,6 +42,8 @@
 - **G071 vraagprioriteit:** vragen kunnen een consultprioriteit krijgen en vanuit de
   vragenlijst omhoog of omlaag worden gezet, zodat de bespreekvolgorde lokaal
   bewaard blijft.
+- **G072 vraagverslag per afspraak:** beantwoorde, aan een afspraak gekoppelde vragen
+  worden in het vragenscherm per afspraak terugleesbaar met antwoordtekst.
 - **M1.8 basis-kennisbank:** KennisItems lokaal seedden uit `docs/KENNISBANK.md`,
   tonen per categorie, bronvermelding, AI-label, artsverificatielabel en expliciet
   markeren als geverifieerd met arts.

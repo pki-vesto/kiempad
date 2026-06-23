@@ -49,7 +49,11 @@ import type {
   Medicatie,
   Traject,
 } from './domain/types';
-import { openstaandeVragen, volgendeAfspraakMetOpenVragen } from './domain/vraag';
+import {
+  beantwoordeVragenPerAfspraak,
+  openstaandeVragen,
+  volgendeAfspraakMetOpenVragen,
+} from './domain/vraag';
 import type { VraagBundle } from './domain/vraagStore';
 import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
 
@@ -631,6 +635,10 @@ function renderVragenScreen(state: AppShellState): string {
     state.vragen.map((bundle) => bundle.vraag),
     new Date().toISOString().slice(0, 16),
   );
+  const vraagVerslagen = beantwoordeVragenPerAfspraak(
+    state.afspraken.map((bundle) => bundle.afspraak),
+    state.vragen.map((bundle) => bundle.vraag),
+  );
 
   return `
     <section class="traject-layout" aria-label="Vragen voor de arts beheren">
@@ -654,6 +662,12 @@ function renderVragenScreen(state: AppShellState): string {
         }
         <h2 class="section-subheading">Alle vragen</h2>
         ${state.vragen.length > 0 ? renderVragenList(state.vragen) : '<p class="empty-state">Nog geen vragen. Voeg links een vraag toe voor het volgende contactmoment.</p>'}
+        <h2 class="section-subheading">Verslag per afspraak</h2>
+        ${
+          vraagVerslagen.length > 0
+            ? renderVraagVerslagen(vraagVerslagen)
+            : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>'
+        }
       </div>
     </section>
   `;
@@ -716,6 +730,37 @@ function renderOpenVragenVoorAfspraak(item: {
         ${item.vragen.map((vraag) => `<li>${escapeHtml(vraag.vraag)}</li>`).join('')}
       </ul>
     </div>
+  `;
+}
+
+function renderVraagVerslagen(items: ReturnType<typeof beantwoordeVragenPerAfspraak>): string {
+  return `
+    <ol class="phase-list">
+      ${items
+        .map(
+          (item) => `
+            <li class="phase-item">
+              <div>
+                <h3>${escapeHtml(item.afspraak.titel)}</h3>
+                <p>${formatDateTime(item.afspraak.datumTijd)}</p>
+                <ul class="question-list">
+                  ${item.vragen
+                    .map(
+                      (vraag) => `
+                        <li>
+                          <strong>${escapeHtml(vraag.vraag)}</strong>
+                          ${vraag.antwoord ? `<span>Antwoord: ${escapeHtml(vraag.antwoord)}</span>` : ''}
+                        </li>
+                      `,
+                    )
+                    .join('')}
+                </ul>
+              </div>
+            </li>
+          `,
+        )
+        .join('')}
+    </ol>
   `;
 }
 

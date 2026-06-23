@@ -338,6 +338,22 @@ describe('app shell', () => {
             type: 'consult',
           },
         },
+        {
+          vraag: {
+            id: 'vraag-2',
+            vraag: 'Wanneer horen we de uitslag?',
+            voorAfspraakId: 'afspraak-1',
+            prioriteit: 2,
+            beantwoord: true,
+            antwoord: 'De kliniek belt morgen.',
+          },
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Consult',
+            datumTijd: '2099-06-24T09:00',
+            type: 'consult',
+          },
+        },
       ],
     });
 
@@ -350,6 +366,9 @@ describe('app shell', () => {
     expect(html).toContain('value="omhoog"');
     expect(html).toContain('value="omlaag"');
     expect(html).toContain('Verwijder vraag');
+    expect(html).toContain('Verslag per afspraak');
+    expect(html).toContain('Wanneer horen we de uitslag?');
+    expect(html).toContain('Antwoord: De kliniek belt morgen.');
   });
 
   it('rendert kennisitems met bron en verificatielabels', () => {

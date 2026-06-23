@@ -60,6 +60,21 @@ export function volgendeAfspraakMetOpenVragen(
     .find((item) => item.vragen.length > 0);
 }
 
+export function beantwoordeVragenPerAfspraak(
+  afspraken: readonly Afspraak[],
+  vragen: readonly Vraag[],
+): { afspraak: Afspraak; vragen: Vraag[] }[] {
+  return afspraken
+    .map((afspraak) => ({
+      afspraak,
+      vragen: sorteerVragen(vragen).filter(
+        (vraag) => vraag.beantwoord && vraag.voorAfspraakId === afspraak.id,
+      ),
+    }))
+    .filter((item) => item.vragen.length > 0)
+    .sort((a, b) => b.afspraak.datumTijd.localeCompare(a.afspraak.datumTijd));
+}
+
 export function sorteerVragen(vragen: readonly Vraag[]): Vraag[] {
   return [...vragen].sort((a, b) => {
     if (a.beantwoord !== b.beantwoord) return a.beantwoord ? 1 : -1;
