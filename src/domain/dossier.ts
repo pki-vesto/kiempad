@@ -10,6 +10,16 @@ export type DossierDocumentInput = {
   inhoudBase64: string;
   afspraakId?: string;
   trajectId?: string;
+  embryo?: {
+    label: string;
+    kwaliteit: string;
+    dag?: number;
+    status?: DossierDocument['embryo'] extends infer Embryo
+      ? Embryo extends { status?: infer Status }
+        ? Status
+        : never
+      : never;
+  };
   notitie?: string;
   uploadedAt?: string;
 };
@@ -22,6 +32,17 @@ export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], stri
   overig: 'Overig',
 };
 
+export const EMBRYO_STATUS_LABELS: Record<
+  NonNullable<NonNullable<DossierDocument['embryo']>['status']>,
+  string
+> = {
+  bevrucht: 'Bevrucht',
+  ingevroren: 'Ingevroren',
+  teruggeplaatst: 'Teruggeplaatst',
+  niet_gebruikt: 'Niet gebruikt',
+  onbekend: 'Onbekend',
+};
+
 export function maakDossierDocument(id: string, input: DossierDocumentInput): DossierDocument {
   const datum = input.datum.trim();
   const bestandsNaam = input.bestandsNaam.trim();
@@ -30,6 +51,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const inhoudBase64 = input.inhoudBase64.trim();
   const afspraakId = input.afspraakId?.trim();
   const trajectId = input.trajectId?.trim();
+  const embryo = normaliseerEmbryo(input.embryo);
   const notitie = input.notitie?.trim();
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
   const categorie = input.categorie ?? 'onderzoek';
@@ -53,6 +75,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     inhoudBase64,
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
+    embryo,
     notitie: notitie || undefined,
     analyse: analyseerDossierDocument({
       categorie,
@@ -115,6 +138,10 @@ function bepaalSignalen(input: {
       /\b(consult|gesprek|gespreksverslag|verslag|intake|telefonisch)\b/,
       'Bestandsnaam lijkt op een gespreksverslag.',
     ],
+    [
+      /\b(embryo|blastocyst|blastocyste|kwaliteit|score)\b/,
+      'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
+    ],
   ];
 
   for (const [pattern, label] of herkenningen) {
@@ -134,11 +161,30 @@ function bepaalSignalen(input: {
   if (input.categorie === 'gespreksverslag') {
     signalen.push('Gespreksverslag kan aan afspraak of traject gekoppeld worden.');
   }
+  if (input.categorie === 'embryo') {
+    signalen.push('Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.');
+  }
   if (input.grootteBytes > 10 * 1024 * 1024) {
     signalen.push('Bestand is groter dan 10 MB; back-up kan daardoor groter worden.');
   }
 
   return signalen.length > 0 ? signalen : ['Geen automatische signalen gevonden.'];
+}
+
+function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocument['embryo'] {
+  const label = input?.label.trim();
+  const kwaliteit = input?.kwaliteit.trim();
+  if (!label && !kwaliteit) return undefined;
+  if (!label) throw new Error('Embryolabel is verplicht voor embryokwaliteit.');
+  if (!kwaliteit) throw new Error('Kwaliteit is verplicht voor embryokwaliteit.');
+
+  return {
+    label,
+    kwaliteit,
+    dag:
+      input?.dag && Number.isFinite(input.dag) && input.dag > 0 ? Math.round(input.dag) : undefined,
+    status: input?.status,
+  };
 }
 
 function beschrijfBestandstype(mimeType: string | undefined): string {

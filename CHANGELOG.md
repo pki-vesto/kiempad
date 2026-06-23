@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G178 embryokwaliteit: Dossier-scherm kan embryokwaliteit als lokale
+  kliniekterugkoppeling vastleggen en koppelen aan poging of terugplaatsing, zonder
+  kansberekening.
 - G177 gespreksverslagen: Dossier-scherm kan gespreksverslagen uploaden en
   versleuteld koppelen aan bestaande afspraken en/of trajecten.
 - G176 beeldmateriaal: Dossier-scherm accepteert foto's/echo's via image-upload,

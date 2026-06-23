@@ -558,6 +558,77 @@ describe('app shell', () => {
     expect(html).toContain('Bestandstype is beeldmateriaal.');
   });
 
+  it('rendert embryokwaliteit met traject- en terugplaatsingskoppeling', () => {
+    const html = renderAppShell('dossier', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-04-01',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-transfer',
+            titel: 'Terugplaatsing',
+            datumTijd: '2026-05-04T11:00',
+            type: 'terugplaatsing',
+          },
+        },
+      ],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-embryo',
+          datum: '2026-05-04',
+          titel: 'Embryokwaliteit Embryo 1',
+          categorie: 'embryo',
+          bestandsNaam: 'embryokwaliteit-Embryo 1.json',
+          mimeType: 'application/json',
+          grootteBytes: 128,
+          inhoudBase64: 'e30=',
+          afspraakId: 'afspraak-transfer',
+          trajectId: 'traject-1',
+          embryo: {
+            label: 'Embryo 1',
+            dag: 5,
+            kwaliteit: '4AA',
+            status: 'teruggeplaatst',
+          },
+          analyse: {
+            samenvatting:
+              'Embryokwaliteit opgeslagen als application/json; 128 B. Analyse is lokaal en niet-medisch.',
+            signalen: [
+              'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
+              'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
+            ],
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('id="embryo-quality-form"');
+    expect(html).toContain('Embryokwaliteit vastleggen');
+    expect(html).toContain('Kwaliteit volgens kliniek');
+    expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
+    expect(html).toContain('Embryo: Embryo 1 · Dag 5 · Kwaliteit: 4AA · Status: Teruggeplaatst');
+    expect(html).toContain('zonder kansberekening');
+    expect(html).not.toContain('e30=');
+  });
+
   it('rendert het welzijnscherm met symptoomlogformulier en logs', () => {
     const html = renderAppShell('welzijn', {
       trajecten: [],

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 160 |
+| ☑ klaar | 161 |
 | ◐ bezig | 1 |
-| ☐ open | 18 |
+| ☐ open | 17 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -304,7 +304,7 @@
 | G175 | Met terugwerkende kracht alle onderzoeken uploaden en analyseren | P2 | F2 | ☑ |
 | G176 | Foto's, echo's en ander beeldmateriaal uploaden als dossierbijlage | P2 | F2 | ☑ |
 | G177 | Gespreksverslagen uploaden en koppelen aan relevante afspraken of trajecten | P2 | F2 | ☑ |
-| G178 | Embryokwaliteit uploaden of vastleggen per embryo, poging of terugplaatsing | P2 | F2 | ☐ |
+| G178 | Embryokwaliteit uploaden of vastleggen per embryo, poging of terugplaatsing | P2 | F2 | ☑ |
 
 ## 19. Publicatie & infrastructuur
 
