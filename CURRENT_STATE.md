@@ -39,6 +39,14 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 - **Geen draaiende runtime.** Lokaal te starten met `npm run dev` zodra de UI er is.
 - Geen externe diensten actief; geen data verzonden.
+- **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
+  (2 passing) en `npm run build`.
+- **CI:** workflow staat klaar (`.github/workflows/ci.yml`), maar GitHub Actions wordt
+  geblokkeerd door de **Actions-billing/spending-limit van de pki-vesto-org** voor
+  **private** repos (de job start niet, verbruikt geen minuten). Kiempad blijft
+  **bewust private** (gezondheidsdata) — dus géén public-workaround zoals bij de
+  andere apps. CI draait vanzelf zodra de org-billing/limit is opgelost; tot die tijd
+  is lokale validatie de gate (zie CONTRIBUTING.md).
 
 ## 6. Hoogste Prioriteiten
 
