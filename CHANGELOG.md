@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G137 opslag-schemaversie: lokale opslag krijgt een `schema` meta-record met de
+  huidige schemaversie; ontbrekende metadata wordt bij ontgrendelen aangevuld en
+  nieuwere schema's worden veilig geweigerd.
 - G153 schermlezerlabels: herhaalde en contextafhankelijke acties zoals verwijderen,
   herordenen, innames markeren, fase wijzigen en kennis verifiëren hebben nu
   contextuele `aria-label`s.

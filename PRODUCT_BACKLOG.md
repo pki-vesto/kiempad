@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 156 |
+| ☑ klaar | 157 |
 | ◐ bezig | 1 |
-| ☐ open | 22 |
+| ☐ open | 21 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -238,7 +238,7 @@
 | G134 | UUID-id-generatie client-side | P1 | F1 | ☑ |
 | G135 | ISO-8601 datums/tijden als tekst opgeslagen | P1 | F1 | ☑ |
 | G136 | Additieve migratiestrategie (geen betekeniswijziging) | P1 | F1 | ☑ |
-| G137 | Migratie-/schemaversie bijgehouden in opslag | P2 | F2 | ☐ |
+| G137 | Migratie-/schemaversie bijgehouden in opslag | P2 | F2 | ☑ |
 | G138 | Seed van initiële kennisbank-inhoud bij eerste start | P2 | F1 | ☑ |
 
 ## 14. Back-up, export & sync

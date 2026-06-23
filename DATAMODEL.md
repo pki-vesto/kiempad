@@ -199,6 +199,9 @@ systeemgebeurtenissen.
 - Records worden als **versleutelde blobs** in IndexedDB bewaard; alleen
   niet-gevoelige indexvelden (bv. `type`, `datum` voor sortering) staan in klare
   tekst waar zoeken dat vereist — bewust minimaal.
+- De opslagmetadata bevat een `schema` record met de huidige schemaversie. De app
+  vult ontbrekende schemametadata bij ontgrendelen aan en weigert een kluis met een
+  nieuwer schema dan deze app ondersteunt.
 - Migraties zijn **additief**: velden komen erbij, betekenis van bestaande velden
   verandert niet (vgl. de "additive-only" lijn in het ecosysteem).
 - Export/back-up serialiseert alle records **versleuteld** naar één bestand.
