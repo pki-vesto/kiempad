@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 220 |
+| ☑ klaar | 221 |
 | ◐ bezig | 0 |
-| ☐ open | 23 |
+| ☐ open | 22 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -359,7 +359,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G218 | PFIP research intelligence: bronverificatie en publicatiedatum zichtbaar bij iedere researchkaart | P0 | F4 | ☑ |
 | G219 | PFIP research intelligence: verouderde research markeren en periodieke herverificatie plannen | P1 | F4 | ☑ |
 | G220 | PFIP daily recommendations: dagelijks aanbevelingsoverzicht met scheiding vrouw, man en samen | P0 | F4 | ☑ |
-| G221 | PFIP daily recommendations: leefstijlaanbevelingen baseren op dossier, cyclusfase en behandelgeschiedenis | P0 | F4 | ☐ |
+| G221 | PFIP daily recommendations: leefstijlaanbevelingen baseren op dossier, cyclusfase en behandelgeschiedenis | P0 | F4 | ☑ |
 | G222 | PFIP daily recommendations: voeding- en supplementnotities tonen als checklijst met bron en disclaimer | P0 | F4 | ☐ |
 | G223 | PFIP daily recommendations: behandelvoorbereiding genereren uit afspraken, medicatie en open actiepunten | P0 | F4 | ☐ |
 | G224 | PFIP daily recommendations: cyclusgerelateerde aanbevelingen tonen zonder diagnose of dosering | P0 | F4 | ☐ |

@@ -7,6 +7,7 @@ import {
   SCREENS,
 } from '../src/appShell';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
+import type { DossierDocument } from '../src/domain/types';
 
 describe('app shell', () => {
   it('normaliseert onbekende routes naar het startscherm', () => {
@@ -142,6 +143,52 @@ describe('app shell', () => {
     expect(html).toContain(`Echo controle staat gepland op ${vandaag} 09:30.`);
     expect(html).toContain('Open vragen ordenen');
     expect(html).toContain('1 open vraag/vragen staan klaar');
+  });
+
+  it('rendert leefstijlcontext uit dossier, cyclusfase en behandelgeschiedenis', () => {
+    const html = renderAppShell('start', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [
+            {
+              id: 'fase-1',
+              trajectId: 'traject-1',
+              fase: 'stimulatie',
+              startDatum: '2026-06-22',
+            },
+          ],
+        },
+      ],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-23',
+          titel: 'Labuitslag',
+        } as DossierDocument,
+      ],
+      cycleData: [{ id: 'cyclus-1', datum: '2026-06-24', meting: 'cyclusdag', waarde: 7 }],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Leefstijlcontext nalopen');
+    expect(html).toContain('cyclusfase Stimulatie');
+    expect(html).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
+    expect(html).toContain('recent dossierdocument Labuitslag op 2026-06-23');
+    expect(html).toContain('Bron: Dossier, cyclusfase en behandelgeschiedenis');
   });
 
   it('rendert agenda-afspraken met gekoppelde vraag en herinnering', () => {

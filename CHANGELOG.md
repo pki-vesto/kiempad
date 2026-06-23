@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G221 PFIP daily recommendations: leefstijlcontext in het dagoverzicht gebruikt
+  lokale dossierdocumenten, cyclusfase en behandelgeschiedenis zonder voorschrift
+  of medisch advies.
 - G220 PFIP daily recommendations: startscherm toont een lokaal dagelijks
   aanbevelingsoverzicht met aparte blokken voor vrouw, man en samen, zonder
   diagnose, behandelkeuze of medisch advies.
