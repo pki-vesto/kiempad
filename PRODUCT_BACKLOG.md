@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 103 |
+| ☑ klaar | 104 |
 | ◐ bezig | 0 |
-| ☐ open | 71 |
+| ☐ open | 70 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -290,7 +290,7 @@
 |---|---|---|---|---|
 | G167 | `CURRENT_STATE.md` actueel gehouden per wijziging | P1 | F0 | ☑ |
 | G168 | `CHANGELOG.md` bijgewerkt per wijziging | P1 | F0 | ☑ |
-| G169 | ADR toegevoegd bij elke belangrijke keuze | P1 | F0 | ☐ |
+| G169 | ADR toegevoegd bij elke belangrijke keuze | P1 | F0 | ☑ |
 | G170 | Backlog-telling bijgewerkt bij statuswijziging | P2 | F0 | ☑ |
 | G171 | Kennisbank-inhoud periodiek verifiëren met behandelaars | P1 | F1 | ☐ |
 | G172 | Vergoedingscijfers jaarlijks herzien | P2 | F2 | ☐ |
