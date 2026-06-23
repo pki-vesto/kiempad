@@ -26,6 +26,12 @@ import {
   vergelijkConsultSamenvatting,
 } from './domain/consultVerslag';
 import {
+  bouwDagelijksAanbevelingsoverzicht,
+  type DailyRecommendation,
+  type DailyRecommendationOverview,
+  type DailyRecommendationOwner,
+} from './domain/dailyRecommendations';
+import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
@@ -2407,12 +2413,19 @@ function isEigenKennisItem(item: KennisItem): boolean {
 
 function renderStartScreen(state: AppShellState): string {
   const activeTraject = state.trajecten[0];
+  const vandaag = new Date().toISOString().slice(0, 10);
   const nextAppointment = beschrijfVolgendeAfspraak(
     state.afspraken.map((bundle) => bundle.afspraak),
     new Date().toISOString().slice(0, 16),
   );
   const nextReminder = beschrijfVolgendeHerinnering(state.herinneringen);
   const openQuestions = beschrijfOpenstaandeVragen(state);
+  const dailyRecommendations = bouwDagelijksAanbevelingsoverzicht({
+    datum: vandaag,
+    afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+    medicatie: state.medicatie,
+    vragen: state.vragen.map((bundle) => bundle.vraag),
+  });
 
   return `
     <section class="workspace" aria-label="Startoverzicht">
@@ -2434,10 +2447,55 @@ function renderStartScreen(state: AppShellState): string {
         </ul>
       </div>
       <div class="summary-panel">
+        ${renderDailyRecommendations(dailyRecommendations)}
+      </div>
+      <div class="summary-panel">
         <h2>Snelle invoer</h2>
         ${renderQuickEntryForm()}
       </div>
     </section>
+  `;
+}
+
+const DAILY_RECOMMENDATION_OWNER_LABELS: Record<DailyRecommendationOwner, string> = {
+  vrouw: 'Vrouw',
+  man: 'Man',
+  samen: 'Samen',
+};
+
+function renderDailyRecommendations(overview: DailyRecommendationOverview): string {
+  return `
+    <h2>Dagelijkse aanbevelingen</h2>
+    <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
+    <div class="dashboard-grid">
+      ${(['vrouw', 'man', 'samen'] as const)
+        .map((owner) => renderDailyRecommendationGroup(owner, overview[owner]))
+        .join('')}
+    </div>
+  `;
+}
+
+function renderDailyRecommendationGroup(
+  owner: DailyRecommendationOwner,
+  items: readonly DailyRecommendation[],
+): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Dagelijkse aanbevelingen ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}">
+      <h3>${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}</h3>
+      <ol class="compact-list">
+        ${items.map(renderDailyRecommendationItem).join('')}
+      </ol>
+    </section>
+  `;
+}
+
+function renderDailyRecommendationItem(item: DailyRecommendation): string {
+  return `
+    <li>
+      <strong>${escapeHtml(item.titel)}</strong>
+      <span>${escapeHtml(item.detail)}</span>
+      <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
+    </li>
   `;
 }
 

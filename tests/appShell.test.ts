@@ -74,11 +74,74 @@ describe('app shell', () => {
     expect(html).toContain('Snelle invoer');
     expect(html).toContain('id="quick-entry-form"');
     expect(html).toContain('name="quickText" required');
+    expect(html).toContain('Dagelijkse aanbevelingen');
+    expect(html).toContain('Dagelijkse aanbevelingen Vrouw');
+    expect(html).toContain('Dagelijkse aanbevelingen Man');
+    expect(html).toContain('Dagelijkse aanbevelingen Samen');
+    expect(html).toContain('Dagcheck zonder extra medicatiemoment');
+    expect(html).toContain('Eigen aandachtspunten vastleggen');
+    expect(html).toContain('Vragenlijst nalopen');
+    expect(html).toContain('Kiempad geeft geen medisch advies');
     expect(html).toContain('Afspraak:');
     expect(html).toContain('Herinnering:');
     expect(html).toContain('Vragen:');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {
+    const vandaag = new Date().toISOString().slice(0, 10);
+    const html = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Echo controle',
+            datumTijd: `${vandaag}T09:30`,
+            type: 'echo',
+          },
+        },
+      ],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-1',
+            naam: 'Progesteron',
+            vorm: 'tablet',
+            actief: true,
+          },
+          doseLogs: [
+            {
+              id: 'dose-1',
+              medicatieId: 'med-1',
+              geplandOp: `${vandaag}T08:00`,
+              status: 'gepland',
+            },
+          ],
+        },
+      ],
+      herinneringen: [],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-1',
+            vraag: 'Wanneer horen we de uitslag?',
+            beantwoord: false,
+          },
+        },
+      ],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Medicatieschema controleren');
+    expect(html).toContain('1 gepland(e) medicatiemoment(en) vandaag');
+    expect(html).toContain('Volgende afspraak voorbereiden');
+    expect(html).toContain(`Echo controle staat gepland op ${vandaag} 09:30.`);
+    expect(html).toContain('Open vragen ordenen');
+    expect(html).toContain('1 open vraag/vragen staan klaar');
   });
 
   it('rendert agenda-afspraken met gekoppelde vraag en herinnering', () => {
