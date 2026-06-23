@@ -392,9 +392,23 @@ describe('app shell', () => {
           geverifieerdOp: undefined,
           volgendeVerificatieOp: undefined,
         },
+        {
+          id: 'eigen-1',
+          titel: 'Eigen kennis',
+          inhoud: 'Zelf genoteerde uitleg.',
+          bron: 'Consult',
+          categorie: 'overig',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+          geverifieerdOp: undefined,
+          volgendeVerificatieOp: undefined,
+        },
       ],
     });
 
+    expect(html).toContain('Eigen kennisitem');
+    expect(html).toContain('id="knowledge-item-form"');
+    expect(html).toContain('name="kennisTitel"');
     expect(html).toContain('Kosten 2026: eigen risico');
     expect(html).toContain('Bron: docs/KENNISBANK.md');
     expect(html).toContain('Kostenjaar 2026');
@@ -402,6 +416,9 @@ describe('app shell', () => {
     expect(html).toContain('Concept · niet geverifieerd');
     expect(html).toContain('Nog niet met behandelaar geverifieerd');
     expect(html).toContain('Markeer geverifieerd');
+    expect(html).toContain('Eigen kennis');
+    expect(html).toContain('name="kennisId" value="eigen-1"');
+    expect(html).toContain('Werk kennisitem bij');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {

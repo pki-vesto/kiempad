@@ -91,6 +91,37 @@ describe('KennisStore', () => {
     expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
   });
 
+  it('bewaart en bewerkt eigen kennisitems versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const item = await store.saveEigenKennisItem({
+      titel: 'Eigen kennis',
+      inhoud: 'Zelf genoteerde uitleg.',
+      bron: 'Consult',
+      categorie: 'overig',
+    });
+    const updated = await store.saveEigenKennisItem({
+      id: item.id,
+      titel: 'Eigen kennis bijgewerkt',
+      inhoud: 'Aangepaste notitie.',
+      bron: 'Consult',
+      categorie: 'research',
+    });
+    const raw = await driver.getRecord(item.id);
+
+    expect(updated).toMatchObject({
+      id: item.id,
+      titel: 'Eigen kennis bijgewerkt',
+      inhoud: 'Aangepaste notitie.',
+      bron: 'Consult',
+      categorie: 'research',
+      ai_gegenereerd: false,
+      geverifieerd_met_arts: false,
+    });
+    expect(raw?.payload.ciphertext).not.toContain('Aangepaste notitie');
+    expect((await store.list()).filter((listed) => listed.id === item.id)).toHaveLength(1);
+  });
+
   it('weigert verboden medische AI-output', async () => {
     const { store } = await setupStore();
 

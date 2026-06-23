@@ -153,6 +153,36 @@ export function maakResearchKennisItem(
   };
 }
 
+export function maakEigenKennisItem(
+  id: string,
+  input: {
+    titel: string;
+    inhoud: string;
+    categorie: KennisItem['categorie'];
+    bron?: string;
+  },
+  existing?: KennisItem,
+): KennisItem {
+  const titel = input.titel.trim();
+  const inhoud = input.inhoud.trim();
+  const bron = input.bron?.trim();
+
+  if (!titel) throw new Error('Titel is verplicht voor een kennisitem.');
+  if (!inhoud) throw new Error('Inhoud is verplicht voor een kennisitem.');
+
+  return {
+    id,
+    titel,
+    inhoud,
+    bron: bron || undefined,
+    categorie: input.categorie,
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: existing?.geverifieerd_met_arts ?? false,
+    geverifieerdOp: existing?.geverifieerdOp,
+    volgendeVerificatieOp: existing?.volgendeVerificatieOp,
+  };
+}
+
 export function berekenVolgendeKennisVerificatie(geverifieerdOp: string): string {
   const date = new Date(`${geverifieerdOp}T00:00:00.000Z`);
   date.setUTCFullYear(date.getUTCFullYear() + 1);

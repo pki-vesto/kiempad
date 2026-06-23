@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G082 eigen kennisitems: kennisscherm kan handmatige kennisitems toevoegen en
+  bestaande eigen items bewerken met titel, inhoud, bron en categorie.
 - G081 kennisbank zoeken/filteren: kennisscherm filtert lokale kennisitems op zoekterm
   en categorie zonder externe opslag of netwerkverkeer.
 - G072 vraagverslag per afspraak: beantwoorde, gekoppelde vragen worden in het
