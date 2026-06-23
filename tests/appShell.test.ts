@@ -305,4 +305,15 @@ describe('app shell', () => {
     expect(html).toContain('Details tonen na expliciete keuze');
     expect(html).toContain('value="false" selected');
   });
+
+  it('rendert het back-upscherm met export en import', () => {
+    const html = renderAppShell('backup');
+
+    expect(html).toContain('Back-up & import');
+    expect(html).toContain('id="export-backup"');
+    expect(html).toContain('Download back-up');
+    expect(html).toContain('id="import-backup-form"');
+    expect(html).toContain('type="file"');
+    expect(html).toContain('.kiempad-export');
+  });
 });

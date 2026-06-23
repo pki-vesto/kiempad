@@ -32,6 +32,7 @@ import {
   requestNotificationPermissionAndRegister,
   scheduleLocalNotifications,
 } from './notificationRuntime';
+import { importeerVersleuteldeExport, maakVersleuteldeExport } from './storage/backup';
 import { EncryptedRecordRepository } from './storage/encryptedRepository';
 import { openIndexedDbDriver } from './storage/indexedDbDriver';
 import type { EncryptedStorageDriver } from './storage/records';
@@ -58,6 +59,8 @@ type RuntimeState = {
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
   aiError?: string;
+  backupStatus?: string;
+  backupError?: string;
   error?: string;
 };
 
@@ -79,6 +82,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     notificaties: state.notificaties,
     aiPreview: state.aiPreview,
     aiError: state.aiError,
+    backupStatus: state.backupStatus,
+    backupError: state.backupError,
   });
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
@@ -87,6 +92,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindHerinneringControls(root, state);
   bindVraagControls(root, state);
   bindKennisControls(root, state);
+  bindBackupControls(root, state);
   scheduleLocalNotifications(
     state.herinneringen,
     state.settings,
@@ -110,6 +116,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
     state.aiError = undefined;
+    state.backupStatus = undefined;
+    state.backupError = undefined;
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
@@ -139,6 +147,74 @@ async function mount(): Promise<void> {
 
   render(app, state);
   window.addEventListener('hashchange', () => render(app, state));
+}
+
+function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#export-backup')?.addEventListener('click', () => {
+    void exportBackup(root, state);
+  });
+
+  root.querySelector('#import-backup-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void importBackupFromForm(event.currentTarget, root, state);
+  });
+}
+
+async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<void> {
+  try {
+    const inhoud = await maakVersleuteldeExport(state.driver);
+    const blob = new Blob([inhoud], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `kiempad-${new Date().toISOString().slice(0, 10)}.kiempad-export`;
+    link.click();
+    URL.revokeObjectURL(url);
+    state.backupStatus = 'Back-upbestand klaargezet voor download.';
+    state.backupError = undefined;
+  } catch (error: unknown) {
+    state.backupError = error instanceof Error ? error.message : 'Back-up maken is mislukt.';
+  }
+  render(root, state);
+}
+
+async function importBackupFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement)) return;
+  const file = new FormData(target).get('backupFile');
+  if (!(file instanceof File)) return;
+
+  try {
+    const result = await importeerVersleuteldeExport(state.driver, await file.text());
+    state.session.lock();
+    clearScheduledNotifications();
+    state.hasVault = await state.session.hasVault();
+    state.trajectStore = undefined;
+    state.agendaStore = undefined;
+    state.medicatieStore = undefined;
+    state.herinneringStore = undefined;
+    state.vraagStore = undefined;
+    state.kennisStore = undefined;
+    state.settingsStore = undefined;
+    state.trajecten = [];
+    state.afspraken = [];
+    state.medicatie = [];
+    state.herinneringen = [];
+    state.vragen = [];
+    state.kennisItems = [];
+    state.settings = DEFAULT_APP_SETTINGS;
+    state.aiPreview = undefined;
+    state.aiError = undefined;
+    state.backupStatus = `Back-up geïmporteerd (${result.records} records, ${result.meta} metadata-items). Ontgrendel opnieuw.`;
+    state.backupError = undefined;
+  } catch (error: unknown) {
+    state.backupError = error instanceof Error ? error.message : 'Back-up importeren is mislukt.';
+  }
+
+  render(root, state);
 }
 
 function bindVaultForm(root: HTMLElement, state: RuntimeState): void {

@@ -45,7 +45,8 @@ type ScreenId =
   | 'medicatie'
   | 'herinneringen'
   | 'vragen'
-  | 'kennis';
+  | 'kennis'
+  | 'backup';
 
 type Screen = {
   id: ScreenId;
@@ -106,6 +107,13 @@ export const SCREENS: readonly Screen[] = [
     intro: 'Nederlandstalige conceptinformatie met bron, AI-label en artsverificatie.',
     emptyState: 'Nog geen kennisitems in de app. De vaste inhoud wordt later lokaal geseed.',
   },
+  {
+    id: 'backup',
+    label: 'Back-up',
+    title: 'Back-up & import',
+    intro: 'Download of importeer een versleutelde Kiempad-back-up.',
+    emptyState: 'Nog geen back-upactie uitgevoerd.',
+  },
 ] as const;
 
 const DEFAULT_SCREEN = SCREENS[0] as Screen;
@@ -126,6 +134,8 @@ export type AppShellState = {
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
   aiError?: string;
+  backupStatus?: string;
+  backupError?: string;
 };
 
 export function renderAppShell(
@@ -222,6 +232,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
+  if (activeId === 'backup') return renderBackupScreen(state);
 
   return `
     <section class="workspace" aria-label="${screen.label}">
@@ -230,6 +241,30 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
         <p>${screen.emptyState}</p>
       </div>
       ${renderPolicyPanel()}
+    </section>
+  `;
+}
+
+function renderBackupScreen(state: AppShellState): string {
+  return `
+    <section class="traject-layout" aria-label="Back-up en import">
+      <div class="form-panel">
+        <h2>Versleutelde export</h2>
+        <button id="export-backup" class="phase-button" type="button">Download back-up</button>
+        <p class="small-print">Het bestand bevat versleutelde records en kluismetadata; geen ontsleutelde gezondheidsdata.</p>
+      </div>
+      <div class="timeline-panel">
+        <h2>Import</h2>
+        <form id="import-backup-form" class="data-form">
+          <label>
+            Kiempad-exportbestand
+            <input name="backupFile" type="file" accept=".kiempad-export,application/json" required />
+          </label>
+          <button type="submit">Importeer back-up</button>
+        </form>
+        ${state.backupStatus ? `<p class="linked-note">${escapeHtml(state.backupStatus)}</p>` : ''}
+        ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
+      </div>
     </section>
   `;
 }

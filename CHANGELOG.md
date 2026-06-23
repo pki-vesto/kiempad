@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G139/G140/G141 back-up export/import: back-upscherm toegevoegd voor
+  `.kiempad-export` downloads en checksum-gecontroleerde import van versleutelde
+  records plus kluismetadata.
 - G101/G103 AI-preview en samenvatting opslaan: kennisscherm toont de lokale
   gede-identificeerde payload-preview en kan een AI-samenvatting als gelabeld
   KennisItem bewaren via de versleutelde kennisstore.

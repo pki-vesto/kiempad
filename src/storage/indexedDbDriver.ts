@@ -31,6 +31,12 @@ export class IndexedDbEncryptedStorageDriver implements EncryptedStorageDriver {
     await transactionDone(transaction);
   }
 
+  async listMeta(): Promise<StorageMeta[]> {
+    const transaction = this.database.transaction(META_STORE, 'readonly');
+    const request = transaction.objectStore(META_STORE).getAll();
+    return requestToPromise<StorageMeta[]>(request);
+  }
+
   async getRecord(id: string): Promise<EncryptedRecord | undefined> {
     const transaction = this.database.transaction(RECORD_STORE, 'readonly');
     const request = transaction.objectStore(RECORD_STORE).get(id);
