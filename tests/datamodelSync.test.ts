@@ -68,6 +68,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'publicatieDatum',
     'wetenschappelijkeSamenvatting',
     'eenvoudigeSamenvatting',
+    'relevantieVoorGebruiker',
     'ai_gegenereerd',
     'geverifieerd_met_arts',
     'geverifieerdOp',

@@ -116,6 +116,7 @@ export interface KennisItem {
     publicatieDatum: IsoDate;
     wetenschappelijkeSamenvatting: string;
     eenvoudigeSamenvatting?: string;
+    relevantieVoorGebruiker?: string;
     bron: string;
   };
   /** True als (deels) door AI gegenereerd/samengevat — toont een waarschuwingslabel. */

@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G216 PFIP research intelligence: researchpublicaties kunnen een handmatige
+  relevantienotitie voor de gebruiker bewaren en tonen, gekoppeld aan lokale
+  dossiercontextbronnen en zonder diagnose, dosering of behandelkeuze.
 - G215 PFIP research intelligence: researchpublicaties kunnen naast de
   wetenschappelijke samenvatting ook een eenvoudige Nederlandse lekensamenvatting
   bewaren en tonen met bron en datum, zonder diagnose of behandeladvies.

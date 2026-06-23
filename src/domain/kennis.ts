@@ -43,6 +43,22 @@ export type EenvoudigeResearchSamenvatting = {
   eenvoudigeSamenvatting: string;
 };
 
+export type ResearchDossierContextBron = {
+  id: string;
+  label: string;
+  type: 'traject' | 'consult' | 'document';
+};
+
+export type ResearchRelevantieVoorGebruiker = {
+  id: string;
+  titel: string;
+  publicatieDatum: string;
+  bron: string;
+  relevantieVoorGebruiker: string;
+  dossierContextBronnen: ResearchDossierContextBron[];
+  waarschuwing: string;
+};
+
 export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
   {
     id: 'seed-research-eshre',
@@ -234,6 +250,75 @@ export function bouwEenvoudigeResearchSamenvattingen(
     );
 }
 
+export function bouwResearchDossierContextBronnen(input: {
+  trajecten?: readonly { id: string; naam: string; status: string }[];
+  consultVerslagen?: readonly { id: string; titel: string; datum: string }[];
+  dossierDocuments?: readonly { id: string; titel: string; datum: string; categorie: string }[];
+}): ResearchDossierContextBron[] {
+  const trajectBronnen =
+    input.trajecten
+      ?.filter((traject) => traject.status !== 'afgerond')
+      .map((traject) => ({
+        id: `traject-${traject.id}`,
+        label: `Traject: ${traject.naam}`,
+        type: 'traject' as const,
+      })) ?? [];
+  const consultBronnen =
+    input.consultVerslagen
+      ?.slice()
+      .sort((a, b) => b.datum.localeCompare(a.datum))
+      .slice(0, 2)
+      .map((verslag) => ({
+        id: `consult-${verslag.id}`,
+        label: `Consult: ${verslag.datum} · ${verslag.titel}`,
+        type: 'consult' as const,
+      })) ?? [];
+  const documentBronnen =
+    input.dossierDocuments
+      ?.slice()
+      .sort((a, b) => b.datum.localeCompare(a.datum))
+      .slice(0, 2)
+      .map((document) => ({
+        id: `document-${document.id}`,
+        label: `Dossierdocument: ${document.datum} · ${document.titel}`,
+        type: 'document' as const,
+      })) ?? [];
+
+  return [...trajectBronnen, ...consultBronnen, ...documentBronnen].slice(0, 5);
+}
+
+export function bouwResearchRelevantieVoorGebruiker(
+  items: readonly KennisItem[],
+  dossierContextBronnen: readonly ResearchDossierContextBron[],
+): ResearchRelevantieVoorGebruiker[] {
+  return items
+    .filter(
+      (
+        item,
+      ): item is KennisItem & {
+        researchPublicatie: NonNullable<KennisItem['researchPublicatie']> & {
+          relevantieVoorGebruiker: string;
+        };
+      } =>
+        item.categorie === 'research' && Boolean(item.researchPublicatie?.relevantieVoorGebruiker),
+    )
+    .map((item) => ({
+      id: item.id,
+      titel: item.titel,
+      publicatieDatum: item.researchPublicatie.publicatieDatum,
+      bron: item.researchPublicatie.bron,
+      relevantieVoorGebruiker: item.researchPublicatie.relevantieVoorGebruiker,
+      dossierContextBronnen: [...dossierContextBronnen],
+      waarschuwing:
+        'Relevantie is een contextnotitie voor het gesprek met de kliniek; dit is geen diagnose, dosering of behandelkeuze.',
+    }))
+    .sort(
+      (a, b) =>
+        b.publicatieDatum.localeCompare(a.publicatieDatum) ||
+        a.titel.localeCompare(b.titel, 'nl-NL'),
+    );
+}
+
 export function filterKennisItems(
   items: readonly KennisItem[],
   filter: KennisFilter = {},
@@ -284,6 +369,7 @@ export function maakResearchKennisItem(
     publicatieDatum?: string;
     wetenschappelijkeSamenvatting?: string;
     eenvoudigeSamenvatting?: string;
+    relevantieVoorGebruiker?: string;
   },
 ): KennisItem {
   const titel = input.titel.trim();
@@ -292,8 +378,12 @@ export function maakResearchKennisItem(
   const publicatieDatum = input.publicatieDatum?.trim();
   const wetenschappelijkeSamenvatting = input.wetenschappelijkeSamenvatting?.trim();
   const eenvoudigeSamenvatting = input.eenvoudigeSamenvatting?.trim();
+  const relevantieVoorGebruiker = input.relevantieVoorGebruiker?.trim();
   const heeftPublicatieSamenvatting = Boolean(
-    publicatieDatum || wetenschappelijkeSamenvatting || eenvoudigeSamenvatting,
+    publicatieDatum ||
+      wetenschappelijkeSamenvatting ||
+      eenvoudigeSamenvatting ||
+      relevantieVoorGebruiker,
   );
 
   if (!titel) throw new Error('Titel is verplicht voor een research-item.');
@@ -312,6 +402,14 @@ export function maakResearchKennisItem(
   if (eenvoudigeSamenvatting && eenvoudigeSamenvatting.length < 20) {
     throw new Error('Eenvoudige samenvatting moet begrijpelijke context bevatten.');
   }
+  if (relevantieVoorGebruiker && relevantieVoorGebruiker.length < 20) {
+    throw new Error('Relevantie voor gebruiker moet concrete dossiercontext bevatten.');
+  }
+  if (relevantieVoorGebruiker && bevatBehandeladviesClaim(relevantieVoorGebruiker)) {
+    throw new Error(
+      'Relevantie voor gebruiker mag geen diagnose, dosering of behandelkeuze geven.',
+    );
+  }
   if (publicatieDatum && !/^\d{4}-\d{2}-\d{2}$/.test(publicatieDatum)) {
     throw new Error('Publicatiedatum moet YYYY-MM-DD zijn.');
   }
@@ -328,6 +426,7 @@ export function maakResearchKennisItem(
             publicatieDatum,
             wetenschappelijkeSamenvatting,
             eenvoudigeSamenvatting,
+            relevantieVoorGebruiker,
             bron,
           }
         : undefined,
@@ -386,6 +485,12 @@ export function sorteerKennisItems(items: readonly KennisItem[]): KennisItem[] {
       Object.keys(KENNIS_CATEGORIE_LABELS).indexOf(b.categorie);
     return categoryOrder || a.titel.localeCompare(b.titel);
   });
+}
+
+function bevatBehandeladviesClaim(value: string): boolean {
+  return /\b(moet(en)?\b.{0,40}\b(kiezen|starten|stoppen|gebruiken)|beste behandeling|dosering|diagnose)\b/i.test(
+    value,
+  );
 }
 
 function normaliseerResearchBron(bron: string): string {

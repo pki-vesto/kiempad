@@ -59,6 +59,8 @@ import {
   bouwEenvoudigeResearchSamenvattingen,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
+  bouwResearchDossierContextBronnen,
+  bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
   type EenvoudigeResearchSamenvatting,
   filterKennisItems,
@@ -67,6 +69,7 @@ import {
   kennisItemsPerCategorie,
   type ResearchAggregatiePlan,
   type ResearchBron,
+  type ResearchRelevantieVoorGebruiker,
   type WetenschappelijkeResearchSamenvatting,
 } from './domain/kennis';
 import {
@@ -1803,6 +1806,15 @@ function renderKennisScreen(state: AppShellState): string {
   const researchBronnen = bouwResearchBronnenCache(state.kennisItems);
   const researchSamenvattingen = bouwWetenschappelijkeResearchSamenvattingen(state.kennisItems);
   const eenvoudigeResearchSamenvattingen = bouwEenvoudigeResearchSamenvattingen(state.kennisItems);
+  const researchDossierContextBronnen = bouwResearchDossierContextBronnen({
+    trajecten: state.trajecten.map((bundle) => bundle.traject),
+    consultVerslagen: state.consultVerslagen ?? [],
+    dossierDocuments: state.dossierDocuments ?? [],
+  });
+  const researchRelevantie = bouwResearchRelevantieVoorGebruiker(
+    state.kennisItems,
+    researchDossierContextBronnen,
+  );
   const researchAggregatie = bouwResearchAggregatiePlan(
     researchBronnen,
     state.settings.researchNetwerk.ingeschakeld,
@@ -1832,6 +1844,9 @@ function renderKennisScreen(state: AppShellState): string {
       </div>
       <div class="summary-panel">
         ${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen)}
+      </div>
+      <div class="summary-panel">
+        ${renderResearchRelevantieVoorGebruiker(researchRelevantie)}
       </div>
       <div class="summary-panel">
         ${renderResearchNetworkSettingsForm(state.settings)}
@@ -2033,6 +2048,10 @@ function renderResearchItemForm(): string {
         Eenvoudige samenvatting
         <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone Nederlandse taal uit wat deze publicatie zegt en wat nog onzeker is"></textarea>
       </label>
+      <label>
+        Relevantie voor jullie dossiercontext
+        <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
+      </label>
       <button type="submit">Bewaar research</button>
     </form>
   `;
@@ -2102,6 +2121,36 @@ function renderEenvoudigeResearchSamenvattingen(
             )
             .join('')}</ol>`
         : '<p class="empty-state">Nog geen eenvoudige samenvattingen per publicatie vastgelegd.</p>'
+    }
+  `;
+}
+
+function renderResearchRelevantieVoorGebruiker(
+  items: readonly ResearchRelevantieVoorGebruiker[],
+): string {
+  return `
+    <h2>Relevantie voor jullie context</h2>
+    <p class="small-print">Handmatige contextnotities gekoppeld aan lokale dossierbronnen. Dit is geen diagnose, dosering of behandelkeuze.</p>
+    ${
+      items.length > 0
+        ? `<ol class="compact-list">${items
+            .map(
+              (item) => `
+                <li>
+                  <strong>${escapeHtml(item.titel)}</strong>
+                  <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
+                  <small>${escapeHtml(item.relevantieVoorGebruiker)}</small>
+                  ${
+                    item.dossierContextBronnen.length > 0
+                      ? `<small>Context: ${item.dossierContextBronnen.map((bron) => escapeHtml(bron.label)).join(' · ')}</small>`
+                      : '<small>Context: nog geen lokale dossierbron beschikbaar.</small>'
+                  }
+                  <small>${escapeHtml(item.waarschuwing)}</small>
+                </li>
+              `,
+            )
+            .join('')}</ol>`
+        : '<p class="empty-state">Nog geen relevantie per publicatie aan dossiercontext gekoppeld.</p>'
     }
   `;
 }

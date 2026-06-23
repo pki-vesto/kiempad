@@ -120,7 +120,7 @@ Conventies:
 | inhoud | string | |
 | bron | string? | NL-bron, zie KENNISBANK.md |
 | categorie | `fasen` \| `leefstijl` \| `kosten` \| `research` \| `overig` | |
-| researchPublicatie | `{ publicatieDatum, wetenschappelijkeSamenvatting, eenvoudigeSamenvatting?, bron }?` | handmatige wetenschappelijke en eenvoudige samenvatting per researchpublicatie met bron en datum |
+| researchPublicatie | `{ publicatieDatum, wetenschappelijkeSamenvatting, eenvoudigeSamenvatting?, relevantieVoorGebruiker?, bron }?` | handmatige samenvattingen en contextuele relevantie per researchpublicatie met bron en datum; geen behandeladvies |
 | ai_gegenereerd | boolean | toont waarschuwingslabel |
 | geverifieerd_met_arts | boolean | toont "bevestigd" pas na arts |
 | geverifieerdOp | IsoDate? | datum waarop behandelaar bevestigde |

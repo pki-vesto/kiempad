@@ -1221,6 +1221,7 @@ describe('app shell', () => {
     expect(html).toContain('name="researchNotitie"');
     expect(html).toContain('name="researchWetenschappelijkeSamenvatting"');
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
+    expect(html).toContain('name="researchRelevantieVoorGebruiker"');
     expect(html).toContain('Bewaar research');
     expect(html).toContain('Researchbronnen');
     expect(html).toContain('Seedbron');
@@ -1234,6 +1235,8 @@ describe('app shell', () => {
     expect(html).toContain('Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.');
     expect(html).toContain('Eenvoudige samenvattingen');
     expect(html).toContain('Nog geen eenvoudige samenvattingen per publicatie vastgelegd.');
+    expect(html).toContain('Relevantie voor jullie context');
+    expect(html).toContain('Nog geen relevantie per publicatie aan dossiercontext gekoppeld.');
     expect(html).toContain('Researchaggregatie');
     expect(html).toContain('id="research-network-form"');
     expect(html).toContain('name="researchNetwerkIngeschakeld"');
@@ -1368,6 +1371,59 @@ describe('app shell', () => {
       'Dit artikel legt uit welke labfactoren zijn bekeken. Het zegt niet welke behandeling jullie moeten kiezen.',
     );
     expect(html).toContain('Dit is geen diagnose of behandeladvies');
+  });
+
+  it('rendert researchrelevantie gekoppeld aan lokale dossiercontext zonder behandeladvies', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-23',
+            status: 'lopend',
+            pogingNummer: 1,
+            teltMeeVoorVergoeding: true,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-eigen',
+          titel: 'Eigen artikel embryo-cultuur',
+          inhoud: 'Lokale notitie bij gevonden artikel.',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          categorie: 'research',
+          researchPublicatie: {
+            publicatieDatum: '2026-05-10',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            wetenschappelijkeSamenvatting:
+              'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+            eenvoudigeSamenvatting:
+              'Dit artikel legt uit welke labfactoren zijn bekeken zonder behandelkeuze.',
+            relevantieVoorGebruiker:
+              'Relevant als achtergrond bij het lopende ICSI-traject en vragen voor de kliniek.',
+          },
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('Relevantie voor jullie context');
+    expect(html).toContain(
+      'Relevant als achtergrond bij het lopende ICSI-traject en vragen voor de kliniek.',
+    );
+    expect(html).toContain('Context: Traject: Poging 1');
+    expect(html).toContain('dit is geen diagnose, dosering of behandelkeuze');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {
