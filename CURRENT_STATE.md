@@ -261,6 +261,9 @@
 - **G227 PFIP aanbevelingsacties:** Dagelijkse aanbevelingen kunnen lokaal worden
   bewaard, afgewezen of omgezet naar een eigen herinnering of open vraag; acties
   gebruiken bestaande versleutelde stores en het lokale gebeurtenissenlog.
+- **G228 PFIP fertility knowledge graph-model:** De domeinlaag kan lokaal een graph
+  bouwen met nodes en feitelijke relaties voor behandelingen, documenten, embryo's,
+  gesprekken, research en aanbevelingen, zonder causaliteit of medisch advies.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -393,7 +396,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G227 nog 16 open doelen (G228-G243), gericht op dossier-ingest,
+heeft na G228 nog 15 open doelen (G229-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -443,8 +446,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G228: lokaal graph-model voor relaties tussen documenten,
-   embryo's, behandelingen, gesprekken, research en aanbevelingen.
+1. PFIP uitvoeren vanaf G229: graph-relaties automatisch voorstellen en handmatig
+   laten bevestigen.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
