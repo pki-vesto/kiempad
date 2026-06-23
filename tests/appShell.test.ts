@@ -467,6 +467,12 @@ describe('app shell', () => {
     expect(html).toContain('geen oordeel of score');
     expect(html).toContain('Dagen met symptomen');
     expect(html).toContain('Stemming zwaar');
+    expect(html).toContain('data-owner="partner"');
+    expect(html).toContain('Eigenaar: Partner');
+    expect(html).toContain('data-owner="samen"');
+    expect(html).toContain('Eigenaar: Samen');
+    expect(html).toContain('data-owner="peter"');
+    expect(html).toContain('Eigenaar: Peter');
     expect(html).toContain('Zwaar');
     expect(html).toContain('Privé notitie: Veel spanning vandaag.');
     expect(html).toContain('Symptoomlog toevoegen');

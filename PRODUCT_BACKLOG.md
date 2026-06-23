@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 148 |
+| ☑ klaar | 149 |
 | ◐ bezig | 0 |
-| ☐ open | 30 |
+| ☐ open | 29 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -196,7 +196,7 @@
 | G107 | CycleData vastleggen (bv. temperatuur/bloeding) | P3 | F3 | ☐ |
 | G108 | Mentale check-in (stemming) met privé notitie | P2 | F2 | ☑ |
 | G109 | Welzijn-overzicht zonder oordeel/score-druk | P2 | F2 | ☑ |
-| G110 | Owner-markering (peter/partner/samen) bij logs | P2 | F2 | ☐ |
+| G110 | Owner-markering (peter/partner/samen) bij logs | P2 | F2 | ☑ |
 | G111 | Trends van symptomen/welzijn over meerdere cycli | P3 | F3 | ☐ |
 
 ## 11. Afwegingen / beslisnotities
