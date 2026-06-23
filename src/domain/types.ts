@@ -93,6 +93,7 @@ export interface Vraag {
   id: string;
   vraag: string;
   voorAfspraakId?: string;
+  prioriteit?: number;
   beantwoord: boolean;
   antwoord?: string;
 }

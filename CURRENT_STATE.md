@@ -39,6 +39,9 @@
 - **M1.7 vragen voor de arts:** vragen toevoegen/bewerken/verwijderen, koppelen aan
   afspraken, als beantwoord markeren met antwoordtekst en openstaande vragen voor de
   eerstvolgende afspraak tonen.
+- **G071 vraagprioriteit:** vragen kunnen een consultprioriteit krijgen en vanuit de
+  vragenlijst omhoog of omlaag worden gezet, zodat de bespreekvolgorde lokaal
+  bewaard blijft.
 - **M1.8 basis-kennisbank:** KennisItems lokaal seedden uit `docs/KENNISBANK.md`,
   tonen per categorie, bronvermelding, AI-label, artsverificatielabel en expliciet
   markeren als geverifieerd met arts.

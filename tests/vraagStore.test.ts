@@ -63,4 +63,27 @@ describe('VraagStore', () => {
     await store.delete(saved.id);
     expect(await store.list()).toEqual([]);
   });
+
+  it('herordent vragen door consultprioriteit versleuteld op te slaan', async () => {
+    const { store } = await setupStore();
+    await store.save({
+      vraag: 'Eerste vraag',
+      prioriteit: 1,
+      beantwoord: false,
+    });
+    const second = await store.save({
+      vraag: 'Tweede vraag',
+      prioriteit: 2,
+      beantwoord: false,
+    });
+
+    await store.movePriority(second.id, 'omhoog');
+
+    expect(
+      (await store.list()).map((bundle) => [bundle.vraag.vraag, bundle.vraag.prioriteit]),
+    ).toEqual([
+      ['Tweede vraag', 1],
+      ['Eerste vraag', 2],
+    ]);
+  });
 });
