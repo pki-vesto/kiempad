@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+*.local
+
+# Secrets & lokale config — NOOIT committen (privacy!)
+.env
+.env.*
+!.env.example
+
+# Lokale, versleutelde gebruikersdata en back-ups — blijven op het toestel
+data/
+backups/
+*.kiempad-export
+*.kiempad-backup
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Test- en coverage-output
+coverage/
+.vitest/

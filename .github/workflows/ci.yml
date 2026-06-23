@@ -1,0 +1,28 @@
+name: CI
+
+# Kiempad CI: faal een PR die de typecheck of tests breekt, in plaats van te
+# vertrouwen op handmatige controle. Draait alleen op GitHub-hosted runners; geen
+# secrets nodig (Kiempad is client-side en heeft geen backend/DB in CI).
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install
+        run: npm ci || npm install
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Test
+        run: npm run test
+      - name: Build
+        run: npm run build

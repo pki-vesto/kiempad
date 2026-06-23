@@ -1,0 +1,108 @@
+/**
+ * Kiempad — kerntypes van het datamodel.
+ *
+ * Dit is een eerste, lichte schets die het datamodel uit DATAMODEL.md in code
+ * vastlegt zodat de docs en de codebase niet uit elkaar lopen. Het is bewust nog
+ * geen volledige implementatie — alleen de stabiele kernvormen. Verfijn samen met
+ * DATAMODEL.md.
+ *
+ * Privacy: deze types beschrijven gevoelige gezondheidsdata. Ze worden uitsluitend
+ * versleuteld lokaal opgeslagen (zie SECURITY.md). Niets hiervan verlaat het
+ * toestel zonder expliciete keuze van de gebruiker.
+ */
+
+/** ISO-8601 datum (YYYY-MM-DD) of datum-tijd. Tekstueel opgeslagen voor stabiliteit. */
+export type IsoDate = string;
+
+/** Bron/eigenaar van een record in de gedeelde modus. */
+export type Owner = 'peter' | 'partner' | 'samen';
+
+export type TrajectFase =
+  | 'voorbereiding'
+  | 'stimulatie'
+  | 'punctie'
+  | 'lab_bevruchting'
+  | 'terugplaatsing'
+  | 'wachttijd'
+  | 'zwangerschapstest'
+  | 'uitslag'
+  | 'pauze';
+
+/** Eén IVF/ICSI-poging (cyclus). */
+export interface Traject {
+  id: string;
+  naam: string;
+  type: 'ivf' | 'icsi' | 'onbekend';
+  startDatum: IsoDate;
+  status: 'gepland' | 'lopend' | 'afgerond' | 'gepauzeerd' | 'geannuleerd';
+  pogingNummer: number; // telt voor vergoeding pas mee na geslaagde punctie (zie KENNISBANK)
+  notitie?: string;
+}
+
+export interface Fase {
+  id: string;
+  trajectId: string;
+  fase: TrajectFase;
+  startDatum?: IsoDate;
+  eindDatum?: IsoDate;
+  toelichting?: string;
+}
+
+export interface Afspraak {
+  id: string;
+  trajectId?: string;
+  titel: string;
+  datumTijd: IsoDate;
+  locatie?: string;
+  type: 'echo' | 'bloedprik' | 'punctie' | 'terugplaatsing' | 'consult' | 'overig';
+  voorbereiding?: string;
+  notitie?: string;
+}
+
+export interface Medicatie {
+  id: string;
+  naam: string;
+  vorm: 'injectie' | 'tablet' | 'neusspray' | 'zetpil' | 'overig';
+  // Dosering wordt door de KLINIEK voorgeschreven en hier alleen vastgelegd zoals
+  // opgegeven. Kiempad genereert nooit zelf een dosering (zie ADR-0004).
+  voorgeschrevenDosis?: string;
+  instructie?: string;
+  actief: boolean;
+}
+
+export interface DoseLog {
+  id: string;
+  medicatieId: string;
+  geplandOp: IsoDate;
+  genomenOp?: IsoDate;
+  status: 'gepland' | 'genomen' | 'overgeslagen';
+  notitie?: string;
+}
+
+export interface Herinnering {
+  id: string;
+  bron: { soort: 'medicatie' | 'afspraak' | 'eigen'; refId?: string };
+  tijdstip: IsoDate;
+  herhaling?: 'eenmalig' | 'dagelijks' | 'wekelijks';
+  actief: boolean;
+}
+
+export interface Vraag {
+  id: string;
+  vraag: string;
+  voorAfspraakId?: string;
+  beantwoord: boolean;
+  antwoord?: string;
+}
+
+export interface KennisItem {
+  id: string;
+  titel: string;
+  inhoud: string;
+  bron?: string;
+  categorie: 'fasen' | 'leefstijl' | 'kosten' | 'research' | 'overig';
+  /** True als (deels) door AI gegenereerd/samengevat — toont een waarschuwingslabel. */
+  ai_gegenereerd: boolean;
+  /** True zodra een behandelaar de inhoud heeft bevestigd. */
+  geverifieerd_met_arts: boolean;
+}

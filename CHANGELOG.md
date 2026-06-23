@@ -1,0 +1,26 @@
+# Changelog
+
+Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
+[Keep a Changelog](https://keepachangelog.com/nl/1.0.0/); versies volgen
+[SemVer](https://semver.org/lang/nl/).
+
+## [Unreleased]
+
+### Added
+- Eerste documentatieset en repo-fundament (v0.1, F0):
+  - Kerndocumenten: `README.md`, `VISIE.md`, `ARCHITECTURE.md`, `ROADMAP.md`,
+    `CURRENT_STATE.md`, `MASTER_CONTEXT.md`, `DATAMODEL.md`, `PRIVACY.md`,
+    `SECURITY.md`, `CONTRIBUTING.md`, `PRODUCT_BACKLOG.md`.
+  - `docs/RUNBOOK.md`, `docs/KENNISBANK.md` en ADR's in `docs/adr/`.
+  - Project-scaffold: TypeScript/Vite-opzet, `Makefile`, `Dockerfile`,
+    `docker-compose.yml`, `.github`-templates + CI, `.gitignore`, `.env.example`,
+    `LICENSE`.
+  - Domein-kernvormen (`src/domain/types.ts`) en eerste geteste domeinregel
+    (`src/domain/vergoeding.ts` + Vitest-test).
+- `PRODUCT_BACKLOG.md` met 100+ concrete, afvinkbare doelen, gekoppeld aan de roadmap.
+
+### Changed
+- (nog niets)
+
+### Fixed
+- (nog niets)

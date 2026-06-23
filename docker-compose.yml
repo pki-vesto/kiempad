@@ -1,0 +1,10 @@
+# Optioneel: de statische PWA lokaal/zelfgehost serveren (bv. op de tailnet).
+# Niet nodig voor dagelijks gebruik — `npm run dev` of de geinstalleerde PWA
+# volstaat. De container bevat GEEN gebruikersdata (zie Dockerfile).
+services:
+  kiempad-web:
+    build: .
+    container_name: kiempad-web
+    ports:
+      - "8088:80"
+    restart: unless-stopped

@@ -1,0 +1,72 @@
+# Security
+
+> Beveiliging van een privé-app met gevoelige gezondheidsdata. Sober, concreet,
+> defensief. Zie ook [`PRIVACY.md`](PRIVACY.md).
+
+## Threat Model
+
+**Wat we beschermen:** de gezondheidsdata van het stel (traject, medicatie,
+symptomen, notities, research).
+
+**Tegen wie/wat:**
+
+- **Verloren/gestolen of gedeeld toestel** → data moet onleesbaar zijn zonder de
+  passphrase.
+- **Andere apps / nieuwsgierige software op het toestel** → data versleuteld at rest;
+  geen klare-tekst gevoelige velden.
+- **Afluisteren onderweg** → alles lokaal; bij opt-in verkeer (AI/sync) uitsluitend
+  over TLS, en bij sync end-to-end versleuteld.
+- **Ongewild lekken naar derden** → geen tracking, opt-in voor uitgaand verkeer,
+  dataminimalisatie.
+
+**Buiten scope:** een toestel dat al volledig gecompromitteerd is terwijl de app
+ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
+
+## Secrets
+
+- **Passphrase** (van de gebruiker): nooit opgeslagen. Alleen een **afgeleide sleutel**
+  bestaat, en alleen **in geheugen** zolang de sessie ontgrendeld is.
+- **Sleutelafleiding:** PBKDF2 (hoge iteratietelling) of Argon2id, met per-installatie
+  **salt**.
+- **Versleuteling:** AES-256-GCM per record (uniek IV per record).
+- **AI-API-sleutel** (indien opt-in): versleuteld in de lokale opslag, **nooit** in de
+  repo of in klare tekst; niet in `.env` committen (`.env` staat in `.gitignore`).
+- **Geen secrets in git.** `.env.example` bevat alleen lege placeholders.
+
+## Authentication And Authorization
+
+- **Ontgrendelen** met passphrase; optioneel biometrie/WebAuthn als gemak bovenop de
+  afgeleide sleutel.
+- Eén-stel-app: geen rollenmodel naar buiten. In de **gedeelde modus** zijn er twee
+  profielen (`peter`/`partner`) op dezelfde, gezamenlijk versleutelde dataset —
+  vertrouwensgrens ligt bij het stel, niet tussen de partners.
+- Automatische **vergrendeling** na inactiviteit (sleutel uit geheugen).
+
+## Provider Risk
+
+- **AI-provider (opt-in):** verzonden tekst kan door de provider gelogd/gecached
+  worden. Daarom: minimaliseren en de-identificeren, alleen op expliciet verzoek,
+  default uit. Gebruiker kiest provider/model en levert eigen sleutel.
+- **Sync-relay (later):** moet zo zijn ontworpen dat hij **uitsluitend versleutelde
+  blobs** ziet; compromittering van de relay levert geen leesbare data op.
+- **Afhankelijkheden:** minimaliseer npm-dependencies; houd ze actueel; CI kan een
+  audit-stap draaien.
+
+## Responsible Disclosure
+
+Dit is een privé-app voor twee personen; er is geen extern meldkanaal nodig.
+Beveiligingsproblemen die we zelf vinden noteren we in
+[`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) (of als GitHub-issue in de private repo) en
+pakken we met voorrang op. Mocht er ooit toch breder gedeeld worden (niet de
+bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichten.
+
+## Concrete maatregelen (checklist)
+
+- [ ] Versleuteling at rest (AES-GCM) voor alle gevoelige records.
+- [ ] Sleutel uit passphrase (PBKDF2/Argon2id) + per-installatie salt.
+- [ ] Toegang via passphrase, optioneel biometrie/WebAuthn.
+- [ ] Auto-lock na inactiviteit.
+- [ ] Geen tracking/analytics/ads; geen third-party scripts.
+- [ ] Minimale data naar buiten; opt-in voor AI/sync; TLS; E2E voor sync.
+- [ ] Versleutelde back-up/export; veilig sleutelbeheer voor een eventuele AI-sleutel.
+- [ ] `.env` en data/back-ups buiten git (`.gitignore`).
