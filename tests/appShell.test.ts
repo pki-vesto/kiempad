@@ -599,6 +599,8 @@ describe('app shell', () => {
     expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
     expect(html).toContain('name="beeldContext"');
     expect(html).toContain('name="beeldBron"');
+    expect(html).toContain('name="beeldCyclusDag"');
+    expect(html).toContain('name="beeldEmbryoLabel"');
     expect(html).toContain('id="dossier-concept-preview"');
     expect(html).toContain('Kies bestanden om conceptrecords lokaal te controleren vóór opslag.');
     expect(html).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
@@ -689,6 +691,8 @@ describe('app shell', () => {
             bron: 'Kliniekportaal',
             afspraakId: 'afspraak-beeld',
             trajectId: 'traject-beeld',
+            cyclusDag: 9,
+            embryoLabel: 'Embryo 1',
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -703,6 +707,9 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
     expect(html).toContain(
       'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
+    );
+    expect(html).toContain(
+      'Tijdlijnkoppeling: Poging: traject-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1',
     );
     expect(html).toContain('alt="Lokale imaging-preview van Echo 6 weken"');
     expect(html).toContain('data:image/jpeg;base64,anBn');

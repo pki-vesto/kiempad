@@ -461,6 +461,8 @@ describe('dossier', () => {
       beeldMetadata: {
         context: 'Follikelmeting links',
         bron: 'Kliniekportaal',
+        cyclusDag: 9,
+        embryoLabel: 'Embryo 1',
       },
     });
 
@@ -470,6 +472,8 @@ describe('dossier', () => {
       bron: 'Kliniekportaal',
       afspraakId: 'afspraak-echo',
       trajectId: 'traject-1',
+      cyclusDag: 9,
+      embryoLabel: 'Embryo 1',
     });
     expect(bouwImagingRepository([document])[0]).toMatchObject({
       datum: '2026-05-04',
@@ -477,6 +481,12 @@ describe('dossier', () => {
       context: 'Follikelmeting links',
       afspraakId: 'afspraak-echo',
       trajectId: 'traject-1',
+      tijdlijnKoppeling: {
+        pogingId: 'traject-1',
+        afspraakId: 'afspraak-echo',
+        cyclusDag: 9,
+        embryoLabel: 'Embryo 1',
+      },
     });
   });
 

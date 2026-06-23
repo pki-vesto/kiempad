@@ -760,6 +760,14 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
           </label>
           <label>
+            Beeld cyclusdag
+            <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
+          </label>
+          <label>
+            Beeld embryo
+            <input name="beeldEmbryoLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo 1" />
+          </label>
+          <label>
             Notitie
             <textarea name="notitie" rows="4"></textarea>
           </label>
@@ -857,6 +865,7 @@ function renderImagingRepositoryItem(
   item: ReturnType<typeof bouwImagingRepository>[number],
 ): string {
   const soortLabel = imagingSoortLabel(item.soort);
+  const tijdlijnKoppeling = renderImagingTijdlijnKoppeling(item.tijdlijnKoppeling);
   const preview =
     item.mimeType?.startsWith('image/') && item.document.inhoudBase64
       ? `<figure class="linked-note">
@@ -882,10 +891,26 @@ function renderImagingRepositoryItem(
                 .join(' · ')}</p>`
             : ''
         }
+        ${tijdlijnKoppeling}
         ${preview}
       </div>
     </li>
   `;
+}
+
+function renderImagingTijdlijnKoppeling(
+  koppeling: ReturnType<typeof bouwImagingRepository>[number]['tijdlijnKoppeling'],
+): string {
+  const details = [
+    koppeling.pogingId ? `Poging: ${koppeling.pogingId}` : undefined,
+    koppeling.afspraakId ? `Afspraak: ${koppeling.afspraakId}` : undefined,
+    koppeling.cyclusDag ? `Cyclusdag: ${koppeling.cyclusDag}` : undefined,
+    koppeling.embryoLabel ? `Embryo: ${koppeling.embryoLabel}` : undefined,
+  ].filter((value): value is string => Boolean(value));
+
+  return details.length > 0
+    ? `<p class="linked-note">Tijdlijnkoppeling: ${details.map(escapeHtml).join(' · ')}</p>`
+    : '';
 }
 
 function imagingSoortLabel(
