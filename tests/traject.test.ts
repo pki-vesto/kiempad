@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
-  TRAJECT_FASE_VOLGORDE,
   bepaalHuidigeFase,
   bepaalVolgendeStap,
   maakInitiëleFasen,
   maakTraject,
   markeerHuidigeFase,
   sorteerFasen,
+  TRAJECT_FASE_VOLGORDE,
 } from '../src/domain/traject';
 
 describe('traject en fasen', () => {
@@ -63,8 +63,6 @@ describe('traject en fasen', () => {
     });
     const fasen = markeerHuidigeFase(maakInitiëleFasen(traject.id), 'wachttijd', '2026-07-01');
 
-    expect(bepaalVolgendeStap({ traject, fasen })).toBe(
-      'Poging 1: huidige fase is Wachttijd.',
-    );
+    expect(bepaalVolgendeStap({ traject, fasen })).toBe('Poging 1: huidige fase is Wachttijd.');
   });
 });

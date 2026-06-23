@@ -1,12 +1,12 @@
 import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
-import { AgendaStore, type AfspraakBundle } from './domain/agendaStore';
+import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { HerinneringStore } from './domain/herinneringStore';
-import { MedicatieStore, type MedicatieBundle } from './domain/medicatieStore';
-import { TrajectStore } from './domain/trajectStore';
-import { VraagStore, type VraagBundle } from './domain/vraagStore';
 import { KennisStore } from './domain/kennisStore';
+import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
+import { maakTraject, type TrajectMetFasen } from './domain/traject';
+import { TrajectStore } from './domain/trajectStore';
 import type {
   Afspraak,
   DoseLog,
@@ -18,19 +18,19 @@ import type {
   TrajectFase,
   Vraag,
 } from './domain/types';
-import { maakTraject, type TrajectMetFasen } from './domain/traject';
-import { EncryptedRecordRepository } from './storage/encryptedRepository';
-import type { EncryptedStorageDriver } from './storage/records';
-import { openIndexedDbDriver } from './storage/indexedDbDriver';
-import { VaultSession } from './storage/vaultSession';
+import { type VraagBundle, VraagStore } from './domain/vraagStore';
 import {
   clearScheduledNotifications,
   getNotificationRuntimeStatus,
+  type NotificationRuntimeStatus,
   registerKiempadServiceWorker,
   requestNotificationPermissionAndRegister,
   scheduleLocalNotifications,
-  type NotificationRuntimeStatus,
 } from './notificationRuntime';
+import { EncryptedRecordRepository } from './storage/encryptedRepository';
+import { openIndexedDbDriver } from './storage/indexedDbDriver';
+import type { EncryptedStorageDriver } from './storage/records';
+import { VaultSession } from './storage/vaultSession';
 
 type RuntimeState = {
   driver: EncryptedStorageDriver;
@@ -216,7 +216,9 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
       const fase = button.dataset.fase as TrajectFase | undefined;
       if (!trajectId || !fase || !state.trajectStore) return;
 
-      void state.trajectStore.setCurrentPhase(trajectId, fase).then(() => reloadAndRender(root, state));
+      void state.trajectStore
+        .setCurrentPhase(trajectId, fase)
+        .then(() => reloadAndRender(root, state));
     });
   });
 
@@ -277,7 +279,9 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
       if (!doseLogId || !state.medicatieStore) return;
       if (status !== 'genomen' && status !== 'overgeslagen') return;
 
-      void state.medicatieStore.markDoseLog(doseLogId, status).then(() => reloadAndRender(root, state));
+      void state.medicatieStore
+        .markDoseLog(doseLogId, status)
+        .then(() => reloadAndRender(root, state));
     });
   });
 }

@@ -1,38 +1,25 @@
-import {
-  TRAJECT_FASE_LABELS,
-  bepaalHuidigeFase,
-  bepaalVolgendeStap,
-  type TrajectMetFasen,
-} from './domain/traject';
-import {
-  AFSPRAAK_TYPE_LABELS,
-  beschrijfVolgendeAfspraak,
-  formatDateTime,
-} from './domain/agenda';
+import { AFSPRAAK_TYPE_LABELS, beschrijfVolgendeAfspraak, formatDateTime } from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
-import {
-  MEDICATIE_VORM_LABELS,
-  beschrijfMedicatieDosis,
-  doseLogIsGemist,
-  doseLogsVoorDag,
-} from './domain/medicatie';
-import type { MedicatieBundle } from './domain/medicatieStore';
-import {
-  openstaandeVragen,
-  volgendeAfspraakMetOpenVragen,
-} from './domain/vraag';
-import type { VraagBundle } from './domain/vraagStore';
-import {
-  KENNIS_CATEGORIE_LABELS,
-  kennisItemsPerCategorie,
-} from './domain/kennis';
 import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
   komendeHerinneringen,
   localDateTimeIso,
 } from './domain/herinnering';
-import type { NotificationRuntimeStatus } from './notificationRuntime';
+import { KENNIS_CATEGORIE_LABELS, kennisItemsPerCategorie } from './domain/kennis';
+import {
+  beschrijfMedicatieDosis,
+  doseLogIsGemist,
+  doseLogsVoorDag,
+  MEDICATIE_VORM_LABELS,
+} from './domain/medicatie';
+import type { MedicatieBundle } from './domain/medicatieStore';
+import {
+  bepaalHuidigeFase,
+  bepaalVolgendeStap,
+  TRAJECT_FASE_LABELS,
+  type TrajectMetFasen,
+} from './domain/traject';
 import type {
   Afspraak,
   DoseLog,
@@ -41,6 +28,9 @@ import type {
   Medicatie,
   Traject,
 } from './domain/types';
+import { openstaandeVragen, volgendeAfspraakMetOpenVragen } from './domain/vraag';
+import type { VraagBundle } from './domain/vraagStore';
+import type { NotificationRuntimeStatus } from './notificationRuntime';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
@@ -251,10 +241,7 @@ function renderKennisScreen(state: AppShellState): string {
       <div class="timeline-panel">
         ${Object.entries(KENNIS_CATEGORIE_LABELS)
           .map(([categorie, label]) =>
-            renderKennisCategorie(
-              label,
-              grouped[categorie as KennisItem['categorie']],
-            ),
+            renderKennisCategorie(label, grouped[categorie as KennisItem['categorie']]),
           )
           .join('')}
       </div>
@@ -404,7 +391,10 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
   `;
 }
 
-function renderOpenVragenVoorAfspraak(item: { afspraak: Afspraak; vragen: VraagBundle['vraag'][] }): string {
+function renderOpenVragenVoorAfspraak(item: {
+  afspraak: Afspraak;
+  vragen: VraagBundle['vraag'][];
+}): string {
   return `
     <div class="summary-panel embedded-summary">
       <h3>${escapeHtml(item.afspraak.titel)}</h3>
@@ -455,7 +445,8 @@ function renderHerinneringenScreen(state: AppShellState): string {
           <p><strong>Service worker:</strong> ${renderServiceWorkerLabel(state.notificaties.serviceWorker)}</p>
         </div>
         ${
-          state.notificaties.permission === 'default' || state.notificaties.serviceWorker === 'unregistered'
+          state.notificaties.permission === 'default' ||
+          state.notificaties.serviceWorker === 'unregistered'
             ? '<button id="request-notifications" type="button">Notificaties aanzetten</button>'
             : ''
         }
@@ -545,7 +536,10 @@ function renderAgendaScreen(state: AppShellState): string {
   `;
 }
 
-function renderAfspraakForm(bundle: AfspraakBundle | undefined, trajecten: TrajectMetFasen[]): string {
+function renderAfspraakForm(
+  bundle: AfspraakBundle | undefined,
+  trajecten: TrajectMetFasen[],
+): string {
   const afspraak = bundle?.afspraak;
 
   return `
@@ -734,7 +728,9 @@ function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): str
     <ol class="phase-list">
       ${doseLogs
         .map((doseLog) => {
-          const medicatie = bundles.find((bundle) => bundle.medicatie.id === doseLog.medicatieId)?.medicatie;
+          const medicatie = bundles.find(
+            (bundle) => bundle.medicatie.id === doseLog.medicatieId,
+          )?.medicatie;
           const missed = doseLogIsGemist(doseLog, now);
           return `
             <li class="phase-item${missed ? ' missed' : ''}">

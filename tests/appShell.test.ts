@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   DISCLAIMER,
-  SCREENS,
   normalizeScreenId,
   renderAppShell,
   renderVaultGate,
+  SCREENS,
 } from '../src/appShell';
 
 describe('app shell', () => {
@@ -133,7 +133,7 @@ describe('app shell', () => {
             {
               id: 'dose-1',
               medicatieId: 'med-1',
-              geplandOp: new Date().toISOString().slice(0, 10) + 'T08:00',
+              geplandOp: `${new Date().toISOString().slice(0, 10)}T08:00`,
               status: 'gepland',
             },
           ],

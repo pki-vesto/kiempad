@@ -1,15 +1,15 @@
-import {
-  doseLogsVoorDag,
-  genereerDoseLogs,
-  maakMedicatie,
-  markeerDoseLogGenomen,
-  type DoseLogInput,
-  type MedicatieInput,
-} from './medicatie';
-import { maakMedicatieHerinnering } from './herinnering';
-import type { DoseLog, Herinnering, Medicatie } from './types';
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId, nowIso } from '../storage/records';
+import { maakMedicatieHerinnering } from './herinnering';
+import {
+  type DoseLogInput,
+  doseLogsVoorDag,
+  genereerDoseLogs,
+  type MedicatieInput,
+  maakMedicatie,
+  markeerDoseLogGenomen,
+} from './medicatie';
+import type { DoseLog, Herinnering, Medicatie } from './types';
 
 export type MedicatieBundleInput = MedicatieInput & {
   id?: string;
@@ -130,6 +130,9 @@ export class MedicatieStore {
     const records = await this.herinneringRepository.list();
     return records
       .map((record) => record.value)
-      .find((herinnering) => herinnering.bron.soort === 'medicatie' && herinnering.bron.refId === doseLogId);
+      .find(
+        (herinnering) =>
+          herinnering.bron.soort === 'medicatie' && herinnering.bron.refId === doseLogId,
+      );
   }
 }

@@ -1,11 +1,7 @@
-import {
-  maakHerinnering,
-  sorteerHerinneringen,
-  type HerinneringInput,
-} from './herinnering';
-import type { Herinnering } from './types';
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId } from '../storage/records';
+import { type HerinneringInput, maakHerinnering, sorteerHerinneringen } from './herinnering';
+import type { Herinnering } from './types';
 
 export type HerinneringStoreInput = HerinneringInput & {
   id?: string;

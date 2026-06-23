@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { KDF_ITERATIONS, decryptJson, deriveAesKey, encryptJson } from '../src/storage/crypto';
+import { decryptJson, deriveAesKey, encryptJson, KDF_ITERATIONS } from '../src/storage/crypto';
 import { randomBytes } from '../src/storage/encoding';
 
 describe('storage crypto', () => {

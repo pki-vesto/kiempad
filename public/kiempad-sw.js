@@ -15,9 +15,7 @@ self.addEventListener('activate', (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys
-            .filter((key) => key !== 'kiempad-m1-9-v1')
-            .map((key) => caches.delete(key)),
+          keys.filter((key) => key !== 'kiempad-m1-9-v1').map((key) => caches.delete(key)),
         ),
       )
       .then(() => self.clients.claim()),
@@ -56,7 +54,7 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('message', (event) => {
   const message = event.data;
-  if (!message || message.type !== 'KIEMPAD_NOTIFY') return;
+  if (message?.type !== 'KIEMPAD_NOTIFY') return;
 
   event.waitUntil(
     self.registration.showNotification(message.title || 'Kiempad herinnering', {

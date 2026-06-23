@@ -74,19 +74,14 @@ export const INITIELE_KENNIS_ITEMS: readonly KennisItem[] = [
 export function kennisItemsPerCategorie(
   items: readonly KennisItem[],
 ): Record<KennisItem['categorie'], KennisItem[]> {
-  return Object.keys(KENNIS_CATEGORIE_LABELS).reduce(
-    (grouped, categorie) => ({
-      ...grouped,
-      [categorie]: sorteerKennisItems(items.filter((item) => item.categorie === categorie)),
-    }),
-    {} as Record<KennisItem['categorie'], KennisItem[]>,
-  );
+  const grouped = {} as Record<KennisItem['categorie'], KennisItem[]>;
+  for (const categorie of Object.keys(KENNIS_CATEGORIE_LABELS) as Array<KennisItem['categorie']>) {
+    grouped[categorie] = sorteerKennisItems(items.filter((item) => item.categorie === categorie));
+  }
+  return grouped;
 }
 
-export function markeerKennisItemGeverifieerd(
-  item: KennisItem,
-  geverifieerd = true,
-): KennisItem {
+export function markeerKennisItemGeverifieerd(item: KennisItem, geverifieerd = true): KennisItem {
   return {
     ...item,
     geverifieerd_met_arts: geverifieerd,

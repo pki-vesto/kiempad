@@ -31,12 +31,18 @@ describe('medicatie domeinregels', () => {
 
   it('genereert DoseLogs per dag vanuit expliciete planning zonder dosis te berekenen', () => {
     let counter = 0;
-    const logs = genereerDoseLogs(() => `dose-${(counter += 1)}`, {
-      medicatieId: 'med-1',
-      startDatum: '2026-06-23',
-      aantalDagen: 3,
-      tijdstip: '20:00',
-    });
+    const logs = genereerDoseLogs(
+      () => {
+        counter += 1;
+        return `dose-${counter}`;
+      },
+      {
+        medicatieId: 'med-1',
+        startDatum: '2026-06-23',
+        aantalDagen: 3,
+        tijdstip: '20:00',
+      },
+    );
 
     expect(logs).toEqual([
       { id: 'dose-1', medicatieId: 'med-1', geplandOp: '2026-06-23T20:00', status: 'gepland' },
@@ -56,7 +62,10 @@ describe('medicatie domeinregels', () => {
 
     expect(doseLogIsGemist(gepland, '2026-06-24T08:00')).toBe(true);
     expect(
-      doseLogIsGemist(markeerDoseLogGenomen(gepland, '2026-06-23T20:05', 'genomen'), '2026-06-24T08:00'),
+      doseLogIsGemist(
+        markeerDoseLogGenomen(gepland, '2026-06-23T20:05', 'genomen'),
+        '2026-06-24T08:00',
+      ),
     ).toBe(false);
   });
 

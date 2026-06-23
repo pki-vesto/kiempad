@@ -1,9 +1,5 @@
 import { decryptJson, encryptJson } from './crypto';
-import type {
-  ClearRecordIndex,
-  EncryptedStorageDriver,
-  StoredRecordType,
-} from './records';
+import type { ClearRecordIndex, EncryptedStorageDriver, StoredRecordType } from './records';
 import { CURRENT_SCHEMA_VERSION, generateRecordId, nowIso } from './records';
 import type { VaultSession } from './vaultSession';
 
