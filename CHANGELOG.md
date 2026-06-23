@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G222 PFIP daily recommendations: dagelijks overzicht toont voeding- en
+  supplementnotities als checklist met bron en disclaimer, zonder voedings- of
+  supplementadvies.
 - G221 PFIP daily recommendations: leefstijlcontext in het dagoverzicht gebruikt
   lokale dossierdocumenten, cyclusfase en behandelgeschiedenis zonder voorschrift
   of medisch advies.

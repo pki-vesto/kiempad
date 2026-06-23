@@ -2497,6 +2497,20 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
     <li>
       <strong>${escapeHtml(item.titel)}</strong>
       <span>${escapeHtml(item.detail)}</span>
+      ${
+        item.checklist
+          ? `<ol class="compact-list">${item.checklist
+              .map(
+                (checklistItem) => `
+                  <li>
+                    <span>${escapeHtml(checklistItem.label)}</span>
+                    <small>Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}</small>
+                  </li>
+                `,
+              )
+              .join('')}</ol>`
+          : ''
+      }
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     </li>
   `;

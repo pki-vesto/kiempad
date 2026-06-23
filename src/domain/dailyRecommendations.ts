@@ -22,6 +22,13 @@ export type DailyRecommendation = {
   detail: string;
   bron: string;
   waarschuwing: string;
+  checklist?: DailyRecommendationChecklistItem[];
+};
+
+export type DailyRecommendationChecklistItem = {
+  label: string;
+  bron: string;
+  disclaimer: string;
 };
 
 export type DailyRecommendationOverview = Record<DailyRecommendationOwner, DailyRecommendation[]>;
@@ -82,6 +89,27 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
       },
     ],
     samen: [
+      {
+        id: 'samen-voeding-supplement-checklist',
+        owner: 'samen',
+        titel: 'Voeding en supplementen checklijst',
+        detail: 'Gebruik dit alleen als notitielijst voor vragen aan de kliniek of apotheek.',
+        bron: 'Lokale leefstijl- en medicatiecontext',
+        waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+        checklist: [
+          {
+            label: 'Voeding: noteer feitelijke vragen of observaties voor het consult.',
+            bron: 'Lokale leefstijlcontext',
+            disclaimer: 'Geen voedingsadvies; bespreek persoonlijke keuzes met behandelaars.',
+          },
+          {
+            label:
+              'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
+            bron: 'Medicatie- en dossiercontext',
+            disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+          },
+        ],
+      },
       afspraak
         ? {
             id: 'samen-volgende-afspraak',
