@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G207 PFIP embryo tracking: embryo-dossiers tonen een chronologische
+  embryo-historie met bevruchting, meetmomenten, beeldmomenten en eindstatussen
+  zoals terugplaatsing, invriezen of stop/niet gebruikt.
 - G206 PFIP embryo tracking: embryokwaliteit kan per meetmoment worden
   vastgelegd met kliniekterminologie en bron, zichtbaar in dossierdocument en
   embryo-dossier.
