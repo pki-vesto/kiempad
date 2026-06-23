@@ -463,6 +463,10 @@ describe('app shell', () => {
     expect(html).toContain('Mentale check-in');
     expect(html).toContain('id="mental-check-in-form"');
     expect(html).toContain('name="stemming"');
+    expect(html).toContain('Welzijn-overzicht');
+    expect(html).toContain('geen oordeel of score');
+    expect(html).toContain('Dagen met symptomen');
+    expect(html).toContain('Stemming zwaar');
     expect(html).toContain('Zwaar');
     expect(html).toContain('Privé notitie: Veel spanning vandaag.');
     expect(html).toContain('Symptoomlog toevoegen');

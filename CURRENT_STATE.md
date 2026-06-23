@@ -57,6 +57,8 @@
   datum en toont per dag het aantal logs en de gemiddelde intensiteit.
 - **G108 mentale check-in:** welzijnscherm kan stemming en privé notitie als
   versleutelde check-in bewaren en teruglezen.
+- **G109 oordeelvrij welzijnsoverzicht:** welzijnscherm toont feitelijke aantallen,
+  dagen en stemmingsverdeling zonder score, normering of oordeel.
 - **M1.9 UX/PWA-baseline:** installatiemanifest en SVG-icon, offline service-worker
   met cacheversie, standaard service-workerregistratie, concreter startscherm,
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.
