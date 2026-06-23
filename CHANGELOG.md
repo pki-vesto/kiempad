@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G228 PFIP knowledge graph: nieuw lokaal fertility knowledge graph-model met
+  nodes en feitelijke relaties voor behandelingen, documenten, embryo's,
+  gesprekken, research en aanbevelingen.
 - G227 PFIP daily recommendations: aanbevelingskaarten kunnen lokaal worden
   bewaard, afgewezen of omgezet naar een eigen herinnering of open vraag.
 - G226 PFIP daily recommendations: iedere dagelijkse aanbeveling toont gebruikte
