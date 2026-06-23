@@ -716,6 +716,13 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="lokaleOcr" type="checkbox" value="ja" />
             Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
           </label>
+          <div id="dossier-concept-preview" class="linked-note" aria-live="polite">
+            Kies bestanden om conceptrecords lokaal te controleren vóór opslag.
+          </div>
+          <label class="check-row">
+            <input name="conceptBevestigd" type="checkbox" value="ja" required />
+            Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
+          </label>
           <label>
             Koppel aan afspraak
             <select name="afspraakId">

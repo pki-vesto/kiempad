@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G183 PFIP dossier-ingest: bestandsselectie toont lokale conceptrecords vóór
+  opslag en dossieruploads vereisen expliciete bevestiging dat datum, categorie,
+  uploadprofiel en koppelingen zijn gecontroleerd of gecorrigeerd.
 - G182 PFIP dossier-ingest: dossierdocumenten krijgen lokale metadata-extractie
   voor documentdatum, instelling, documenttype, trajectkoppeling, arts en
   bronbestand op basis van bestandsnaam, formulierdata, notitie en OCR-tekst.
