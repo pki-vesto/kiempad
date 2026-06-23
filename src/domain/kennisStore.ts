@@ -3,6 +3,7 @@ import { generateRecordId } from '../storage/records';
 import { maakAiSamenvattingKennisItem } from './ai';
 import {
   INITIELE_KENNIS_ITEMS,
+  maakEigenKennisItem,
   maakResearchKennisItem,
   markeerKennisItemGeverifieerd,
   sorteerKennisItems,
@@ -60,6 +61,19 @@ export class KennisStore {
     bron?: string;
   }): Promise<KennisItem> {
     const item = maakResearchKennisItem(generateRecordId(), input);
+    await this.kennisItems.saveWithId(item);
+    return item;
+  }
+
+  async saveEigenKennisItem(input: {
+    id?: string;
+    titel: string;
+    inhoud: string;
+    categorie: KennisItem['categorie'];
+    bron?: string;
+  }): Promise<KennisItem> {
+    const existing = input.id ? await this.kennisItems.get(input.id) : undefined;
+    const item = maakEigenKennisItem(input.id || generateRecordId(), input, existing?.value);
     await this.kennisItems.saveWithId(item);
     return item;
   }

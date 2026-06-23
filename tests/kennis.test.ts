@@ -5,6 +5,7 @@ import {
   filterKennisItems,
   INITIELE_KENNIS_ITEMS,
   kennisItemsPerCategorie,
+  maakEigenKennisItem,
   maakResearchKennisItem,
   markeerKennisItemGeverifieerd,
 } from '../src/domain/kennis';
@@ -66,6 +67,27 @@ describe('kennis domeinregels', () => {
       categorie: 'research',
       ai_gegenereerd: false,
       geverifieerd_met_arts: false,
+    });
+  });
+
+  it('maakt eigen kennisitems in gekozen categorie', () => {
+    const item = maakEigenKennisItem('eigen-1', {
+      titel: ' Eigen uitleg ',
+      inhoud: ' Notitie voor later. ',
+      bron: ' eigen bron ',
+      categorie: 'overig',
+    });
+
+    expect(item).toEqual({
+      id: 'eigen-1',
+      titel: 'Eigen uitleg',
+      inhoud: 'Notitie voor later.',
+      bron: 'eigen bron',
+      categorie: 'overig',
+      ai_gegenereerd: false,
+      geverifieerd_met_arts: false,
+      geverifieerdOp: undefined,
+      volgendeVerificatieOp: undefined,
     });
   });
 

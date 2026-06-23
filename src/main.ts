@@ -301,6 +301,13 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
     applyKennisFilterFromForm(event.currentTarget, (event as SubmitEvent).submitter, root, state);
   });
 
+  root.querySelectorAll<HTMLFormElement>('.knowledge-item-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveEigenKennisItemFromForm(event.currentTarget, root, state);
+    });
+  });
+
   root.querySelector('#research-item-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveResearchItemFromForm(event.currentTarget, root, state);
@@ -329,6 +336,25 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
       void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
     });
   });
+}
+
+async function saveEigenKennisItemFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.kennisStore) return;
+
+  const data = new FormData(target);
+  const categorie = parseKennisCategorie(data.get('kennisCategorie')) ?? 'overig';
+  await state.kennisStore.saveEigenKennisItem({
+    id: optionalString(data.get('kennisId')),
+    titel: String(data.get('kennisTitel') ?? ''),
+    inhoud: String(data.get('kennisInhoud') ?? ''),
+    bron: optionalString(data.get('kennisBron')),
+    categorie,
+  });
+  await reloadAndRender(root, state);
 }
 
 function applyKennisFilterFromForm(

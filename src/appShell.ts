@@ -323,6 +323,10 @@ function renderKennisScreen(state: AppShellState): string {
         ${renderKennisFilterForm(filter)}
       </div>
       <div class="summary-panel">
+        <h2>Eigen kennisitem</h2>
+        ${renderEigenKennisItemForm()}
+      </div>
+      <div class="summary-panel">
         <h2>Research opslaan</h2>
         ${renderResearchItemForm()}
       </div>
@@ -346,6 +350,35 @@ function renderKennisScreen(state: AppShellState): string {
           .join('')}
       </div>
     </section>
+  `;
+}
+
+function renderEigenKennisItemForm(item?: KennisItem): string {
+  return `
+    <form ${item ? 'class="data-form compact-form knowledge-item-form"' : 'id="knowledge-item-form" class="data-form compact-form knowledge-item-form"'}>
+      ${item ? `<input type="hidden" name="kennisId" value="${escapeAttribute(item.id)}" />` : ''}
+      <label>
+        Titel
+        <input name="kennisTitel" value="${escapeAttribute(item?.titel ?? '')}" autocomplete="off" required />
+      </label>
+      <label>
+        Categorie
+        <select name="kennisCategorie">
+          ${Object.entries(KENNIS_CATEGORIE_LABELS)
+            .map(([value, label]) => renderOption(value, label, item?.categorie))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Bron of link
+        <input name="kennisBron" value="${escapeAttribute(item?.bron ?? '')}" autocomplete="off" />
+      </label>
+      <label>
+        Inhoud
+        <textarea name="kennisInhoud" rows="4" required>${escapeHtml(item?.inhoud ?? '')}</textarea>
+      </label>
+      <button type="submit">${item ? 'Werk kennisitem bij' : 'Bewaar kennisitem'}</button>
+    </form>
   `;
 }
 
@@ -596,8 +629,20 @@ function renderKennisItem(item: KennisItem): string {
           ? ''
           : `<button class="phase-button" type="button" data-kennis-id="${item.id}">Markeer geverifieerd</button>`
       }
+      ${
+        isEigenKennisItem(item)
+          ? `<details>
+              <summary>Bewerk</summary>
+              ${renderEigenKennisItemForm(item)}
+            </details>`
+          : ''
+      }
     </li>
   `;
+}
+
+function isEigenKennisItem(item: KennisItem): boolean {
+  return !item.id.startsWith('seed-') && !item.ai_gegenereerd;
 }
 
 function renderStartScreen(state: AppShellState): string {
