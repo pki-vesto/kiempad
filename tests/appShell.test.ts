@@ -411,6 +411,11 @@ describe('app shell', () => {
     expect(html).toContain('Vergoed gemarkeerd');
     expect(html).toContain('Mogelijke eigen bijdrage');
     expect(html).toContain('Nog onbekend');
+    expect(html).toContain('Eigen risico 2026 gebruikt');
+    expect(html).toContain('Eigen risico 2026 resterend');
+    expect(html).toContain('Boven eigen-risicogrens');
+    expect(html).toContain('Het verplichte eigen risico voor 2026 staat op €385');
+    expect(html).toContain('controleer altijd je eigen polis en verzekeraar');
     expect(html).toContain('Apotheekfactuur');
     expect(html).toContain('€');
     expect(html).toContain('Medicatie');

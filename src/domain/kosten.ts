@@ -14,6 +14,8 @@ export const COST_VERGOED_LABELS: Record<CostItem['vergoed'], string> = {
   onbekend: 'Onbekend',
 };
 
+export const VERPLICHT_EIGEN_RISICO_2026 = 385;
+
 export type CostItemInput = {
   trajectId?: string;
   omschrijving: string;
@@ -28,6 +30,9 @@ export type KostenOverzicht = {
   vergoed: number;
   eigenBijdrage: number;
   onbekend: number;
+  eigenRisicoGebruikt: number;
+  eigenRisicoResterend: number;
+  eigenRisicoBovenGrens: number;
 };
 
 export function maakCostItem(id: string, input: CostItemInput): CostItem {
@@ -67,10 +72,28 @@ export function berekenKostenOverzicht(items: readonly CostItem[]): KostenOverzi
       if (item.vergoed === 'nee' || item.vergoed === 'eigen_risico') {
         summary.eigenBijdrage += item.bedrag;
       }
+      if (item.vergoed === 'eigen_risico') {
+        const eigenRisicoTotaal =
+          summary.eigenRisicoGebruikt + summary.eigenRisicoBovenGrens + item.bedrag;
+        summary.eigenRisicoGebruikt = Math.min(eigenRisicoTotaal, VERPLICHT_EIGEN_RISICO_2026);
+        summary.eigenRisicoResterend = Math.max(VERPLICHT_EIGEN_RISICO_2026 - eigenRisicoTotaal, 0);
+        summary.eigenRisicoBovenGrens = Math.max(
+          eigenRisicoTotaal - VERPLICHT_EIGEN_RISICO_2026,
+          0,
+        );
+      }
       if (item.vergoed === 'onbekend') summary.onbekend += item.bedrag;
 
       return summary;
     },
-    { totaal: 0, vergoed: 0, eigenBijdrage: 0, onbekend: 0 },
+    {
+      totaal: 0,
+      vergoed: 0,
+      eigenBijdrage: 0,
+      onbekend: 0,
+      eigenRisicoGebruikt: 0,
+      eigenRisicoResterend: VERPLICHT_EIGEN_RISICO_2026,
+      eigenRisicoBovenGrens: 0,
+    },
   );
 }

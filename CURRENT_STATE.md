@@ -89,6 +89,9 @@
   opgeslagen.
 - **G088 kostenoverzicht:** kostenscherm telt lokaal ingevoerde bedragen op naar
   totaal, vergoed gemarkeerd, mogelijke eigen bijdrage en onbekende posten.
+- **G089/G092/G093 eigen-risicoteller:** kostenscherm toont een 2026-teller voor het
+  verplichte eigen risico van 385 euro, verwijst expliciet naar eigen polis/
+  verzekeraar en labelt het overzicht als geen financieel advies.
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
@@ -152,7 +155,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   seedt en toont conceptkennis lokaal met bron- en verificatielabels, kan handmatige
   researchitems opslaan en biedt lokale AI-opt-ininstellingen, provider/modelkeuze,
   payload-preview en AI-samenvatting-opslag; het kostenscherm bewaart kostenposten met
-  categorie/vergoedstatus en toont een lokaal kostenoverzicht. Het back-upscherm
+  categorie/vergoedstatus, toont een lokaal kostenoverzicht en bewaakt de
+  eigen-risicostand voor 2026. Het back-upscherm
   kan versleutelde exportbestanden downloaden en checksum-gecontroleerd importeren.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
