@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G108 mentale check-in: welzijnscherm bewaart stemming en privé notitie als
+  versleutelde lokale check-in.
 - G106 symptomen per dag/over tijd: welzijnscherm groepeert symptoomlogs per datum
   en toont per dag het aantal logs en de gemiddelde intensiteit.
 - G105 symptoomlog toevoegen: nieuw welzijnscherm bewaart symptoomlogs met datum,

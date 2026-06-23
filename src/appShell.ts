@@ -34,6 +34,7 @@ import {
   MEDICATIE_VORM_LABELS,
 } from './domain/medicatie';
 import type { MedicatieBundle } from './domain/medicatieStore';
+import { STEMMING_LABELS } from './domain/mentaleCheckIn';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import { OWNER_LABELS, type SymptomDagGroep, symptomenPerDag } from './domain/symptomen';
 import {
@@ -50,6 +51,7 @@ import type {
   Herinnering,
   KennisItem,
   Medicatie,
+  MentalCheckIn,
   SymptomLog,
   Traject,
 } from './domain/types';
@@ -175,6 +177,7 @@ export type AppShellState = {
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
   symptomLogs?: SymptomLog[];
+  mentalCheckIns?: MentalCheckIn[];
   kosten?: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -323,16 +326,25 @@ function renderBackupScreen(state: AppShellState): string {
 
 function renderWelzijnScreen(state: AppShellState): string {
   const logs = state.symptomLogs ?? [];
+  const checkIns = state.mentalCheckIns ?? [];
   const perDag = symptomenPerDag(logs);
 
   return `
     <section class="traject-layout" aria-label="Symptomen en welzijn">
       <div class="form-panel">
-        <h2>Symptoomlog toevoegen</h2>
+        <h2>Mentale check-in</h2>
+        ${renderMentalCheckInForm()}
+        <h2 class="section-subheading">Symptoomlog toevoegen</h2>
         ${renderSymptomLogForm()}
       </div>
       <div class="timeline-panel">
-        <h2>Symptoomlogboek</h2>
+        <h2>Mentale check-ins</h2>
+        ${
+          checkIns.length > 0
+            ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
+        }
+        <h2 class="section-subheading">Symptoomlogboek</h2>
         ${
           perDag.length > 0
             ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
@@ -340,6 +352,50 @@ function renderWelzijnScreen(state: AppShellState): string {
         }
       </div>
     </section>
+  `;
+}
+
+function renderMentalCheckInForm(): string {
+  return `
+    <form id="mental-check-in-form" class="data-form">
+      <label>
+        Datum
+        <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+      </label>
+      <label>
+        Van wie
+        <select name="owner">
+          ${Object.entries(OWNER_LABELS)
+            .map(([value, label]) => renderOption(value, label))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Stemming
+        <select name="stemming">
+          ${Object.entries(STEMMING_LABELS)
+            .map(([value, label]) => renderOption(value, label))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Privé notitie
+        <textarea name="notitie" rows="4"></textarea>
+      </label>
+      <button type="submit">Bewaar check-in</button>
+    </form>
+  `;
+}
+
+function renderMentalCheckInItem(item: MentalCheckIn): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.datum)}</h3>
+        <p>${escapeHtml(OWNER_LABELS[item.owner])} · ${escapeHtml(STEMMING_LABELS[item.stemming])}</p>
+        ${item.notitie ? `<p class="linked-note">Privé notitie: ${escapeHtml(item.notitie)}</p>` : ''}
+      </div>
+    </li>
   `;
 }
 

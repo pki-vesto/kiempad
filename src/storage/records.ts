@@ -11,6 +11,7 @@ export type StoredRecordType =
   | 'kennis_item'
   | 'cost_item'
   | 'symptom_log'
+  | 'mental_check_in'
   | 'settings'
   | 'system';
 

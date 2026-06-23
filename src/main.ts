@@ -9,6 +9,7 @@ import type { KennisFilter } from './domain/kennis';
 import { KennisStore } from './domain/kennisStore';
 import { KostenStore } from './domain/kostenStore';
 import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
+import { MentaleCheckInStore } from './domain/mentaleCheckInStore';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import { SettingsStore } from './domain/settingsStore';
 import { maakSnelleAfspraak, maakSnelleMedicatie, maakSnelleVraag } from './domain/snelleInvoer';
@@ -23,6 +24,7 @@ import type {
   Herinnering,
   KennisItem,
   Medicatie,
+  MentalCheckIn,
   SettingsRecord,
   SymptomLog,
   Traject,
@@ -57,6 +59,7 @@ type RuntimeState = {
   kennisStore?: KennisStore;
   kostenStore?: KostenStore;
   symptomenStore?: SymptomenStore;
+  mentaleCheckInStore?: MentaleCheckInStore;
   settingsStore?: SettingsStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -66,6 +69,7 @@ type RuntimeState = {
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
   symptomLogs: SymptomLog[];
+  mentalCheckIns: MentalCheckIn[];
   kosten: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -94,6 +98,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     kennisItems: state.kennisItems,
     kennisFilter: state.kennisFilter,
     symptomLogs: state.symptomLogs,
+    mentalCheckIns: state.mentalCheckIns,
     kosten: state.kosten,
     settings: state.settings,
     notificaties: state.notificaties,
@@ -135,6 +140,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kennisStore = undefined;
     state.kostenStore = undefined;
     state.symptomenStore = undefined;
+    state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
@@ -144,6 +150,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kennisItems = [];
     state.kennisFilter = undefined;
     state.symptomLogs = [];
+    state.mentalCheckIns = [];
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -176,6 +183,7 @@ async function mount(): Promise<void> {
     vragen: [],
     kennisItems: [],
     symptomLogs: [],
+    mentalCheckIns: [],
     kosten: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
@@ -236,6 +244,7 @@ async function importBackupFromForm(
     state.kennisStore = undefined;
     state.kostenStore = undefined;
     state.symptomenStore = undefined;
+    state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
@@ -245,6 +254,7 @@ async function importBackupFromForm(
     state.kennisItems = [];
     state.kennisFilter = undefined;
     state.symptomLogs = [];
+    state.mentalCheckIns = [];
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -279,6 +289,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.kennisStore = createKennisStore(state);
         state.kostenStore = createKostenStore(state);
         state.symptomenStore = createSymptomenStore(state);
+        state.mentaleCheckInStore = createMentaleCheckInStore(state);
         state.settingsStore = createSettingsStore(state);
         await state.kennisStore.seedInitialItems();
         state.settings = await state.settingsStore.get();
@@ -289,6 +300,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.vragen = await state.vraagStore.list();
         state.kennisItems = await state.kennisStore.list();
         state.symptomLogs = await state.symptomenStore.list();
+        state.mentalCheckIns = await state.mentaleCheckInStore.list();
         state.kosten = await state.kostenStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
@@ -493,6 +505,11 @@ function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindWelzijnControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#mental-check-in-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveMentalCheckInFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelector('#symptom-log-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveSymptomLogFromForm(event.currentTarget, root, state);
@@ -928,6 +945,24 @@ async function saveSymptomLogFromForm(
   await reloadAndRender(root, state);
 }
 
+async function saveMentalCheckInFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.mentaleCheckInStore) return;
+
+  const data = new FormData(target);
+  await state.mentaleCheckInStore.save({
+    datum: String(data.get('datum') ?? ''),
+    owner: parseOwner(data.get('owner')),
+    stemming: parseStemming(data.get('stemming')),
+    notitie: optionalString(data.get('notitie')),
+  });
+
+  await reloadAndRender(root, state);
+}
+
 async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<void> {
   if (state.trajectStore) {
     state.trajecten = await state.trajectStore.list();
@@ -949,6 +984,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   }
   if (state.symptomenStore) {
     state.symptomLogs = await state.symptomenStore.list();
+  }
+  if (state.mentaleCheckInStore) {
+    state.mentalCheckIns = await state.mentaleCheckInStore.list();
   }
   if (state.kostenStore) {
     state.kosten = await state.kostenStore.list();
@@ -1011,6 +1049,12 @@ function createKostenStore(state: RuntimeState): KostenStore {
 function createSymptomenStore(state: RuntimeState): SymptomenStore {
   return new SymptomenStore(
     new EncryptedRecordRepository<SymptomLog>(state.driver, state.session, 'symptom_log'),
+  );
+}
+
+function createMentaleCheckInStore(state: RuntimeState): MentaleCheckInStore {
+  return new MentaleCheckInStore(
+    new EncryptedRecordRepository<MentalCheckIn>(state.driver, state.session, 'mental_check_in'),
   );
 }
 
@@ -1130,6 +1174,11 @@ function parseKennisCategorie(value: FormDataEntryValue | null): KennisFilter['c
 function parseOwner(value: FormDataEntryValue | null): SymptomLog['owner'] {
   if (value === 'peter' || value === 'partner' || value === 'samen') return value;
   return 'samen';
+}
+
+function parseStemming(value: FormDataEntryValue | null): MentalCheckIn['stemming'] {
+  if (value === 'goed' || value === 'ok' || value === 'zwaar') return value;
+  return 'ok';
 }
 
 function optionalString(value: FormDataEntryValue | null): string | undefined {
