@@ -45,6 +45,8 @@
 - **M1.9 UX/PWA-baseline:** installatiemanifest en SVG-icon, offline service-worker
   met cacheversie, standaard service-workerregistratie, concreter startscherm,
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.
+- **M1.10 tests & kwaliteit:** Biome lint/format-check toegevoegd, CI draait nu
+  lint/format naast typecheck, tests, audit en build; groene CI blijft de merge-gate.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -81,8 +83,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   seedt en toont conceptkennis lokaal met bron- en verificatielabels. De app heeft
   een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
-- **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (56 passing), `npm run build` en `npm audit --audit-level=high`.
+- **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
+  `npm run test` (56 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -90,9 +92,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **Tests & kwaliteit** uitbreiden richting de resterende F1-gates.
-2. **Onderhoudsdoelen** expliciet afvinken waar de workflow inmiddels structureel is.
-3. **F2-scope kiezen**: kosten/vergoedingen, symptomen of back-up/export.
+1. **Onderhoudsdoelen** expliciet afvinken waar de workflow inmiddels structureel is.
+2. **F2-scope kiezen**: kosten/vergoedingen, symptomen of back-up/export.
+3. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
 
 ## 7. Permanente onderhoudsregel
 

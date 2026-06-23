@@ -71,8 +71,8 @@ describe('vraag domeinregels', () => {
     );
 
     expect(result?.afspraak.id).toBe('first');
-    expect(openstaandeVragenVoorAfspraak(result?.vragen ?? [], 'first').map((vraag) => vraag.id)).toEqual([
-      'vraag-1',
-    ]);
+    expect(
+      openstaandeVragenVoorAfspraak(result?.vragen ?? [], 'first').map((vraag) => vraag.id),
+    ).toEqual(['vraag-1']);
   });
 });

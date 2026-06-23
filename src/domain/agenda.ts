@@ -39,14 +39,14 @@ export function sorteerAfspraken(afspraken: readonly Afspraak[]): Afspraak[] {
   return [...afspraken].sort((a, b) => a.datumTijd.localeCompare(b.datumTijd));
 }
 
-export function komendeAfspraken(
-  afspraken: readonly Afspraak[],
-  vanafIso: string,
-): Afspraak[] {
+export function komendeAfspraken(afspraken: readonly Afspraak[], vanafIso: string): Afspraak[] {
   return sorteerAfspraken(afspraken).filter((afspraak) => afspraak.datumTijd >= vanafIso);
 }
 
-export function beschrijfVolgendeAfspraak(afspraken: readonly Afspraak[], vanafIso: string): string {
+export function beschrijfVolgendeAfspraak(
+  afspraken: readonly Afspraak[],
+  vanafIso: string,
+): string {
   const volgende = komendeAfspraken(afspraken, vanafIso)[0];
   if (!volgende) return 'Nog geen komende afspraken vastgelegd.';
 

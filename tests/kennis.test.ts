@@ -28,8 +28,10 @@ describe('kennis domeinregels', () => {
 
   it('markeert items pas geverifieerd na expliciete bevestiging', () => {
     const item = INITIELE_KENNIS_ITEMS[0];
+    expect(item).toBeDefined();
+    if (!item) return;
 
-    expect(item?.geverifieerd_met_arts).toBe(false);
-    expect(markeerKennisItemGeverifieerd(item!).geverifieerd_met_arts).toBe(true);
+    expect(item.geverifieerd_met_arts).toBe(false);
+    expect(markeerKennisItemGeverifieerd(item).geverifieerd_met_arts).toBe(true);
   });
 });

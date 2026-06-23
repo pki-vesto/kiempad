@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 94 |
+| ☑ klaar | 96 |
 | ◐ bezig | 0 |
-| ☐ open | 80 |
+| ☐ open | 78 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -281,8 +281,8 @@
 | G162 | Tests voor herinnering-/DoseLog-generatie | P1 | F1 | ☑ |
 | G163 | Policy-test: geen dosering-/diagnose-output | P0 | F1 | ☑ |
 | G164 | Privacy-test: geen uitgaand verkeer zonder opt-in | P0 | F1 | ☑ |
-| G165 | CI groen vereist vóór merge | P1 | F0 | ☐ |
-| G166 | Linting/formatting consistent (bv. eslint/prettier of biome) | P2 | F1 | ☐ |
+| G165 | CI groen vereist vóór merge | P1 | F0 | ☑ |
+| G166 | Linting/formatting consistent (bv. eslint/prettier of biome) | P2 | F1 | ☑ |
 
 ## 17. Documentatie & onderhoud
 

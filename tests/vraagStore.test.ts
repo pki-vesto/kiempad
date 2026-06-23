@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { VraagStore } from '../src/domain/vraagStore';
 import type { Afspraak, Vraag } from '../src/domain/types';
+import { VraagStore } from '../src/domain/vraagStore';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
 import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
 import { VaultSession } from '../src/storage/vaultSession';

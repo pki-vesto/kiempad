@@ -90,7 +90,9 @@ function requestToPromise<T>(request: IDBRequest<T>): Promise<T> {
 function transactionDone(transaction: IDBTransaction): Promise<void> {
   return new Promise((resolve, reject) => {
     transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error ?? new Error('IndexedDB-transactie mislukt.'));
-    transaction.onabort = () => reject(transaction.error ?? new Error('IndexedDB-transactie afgebroken.'));
+    transaction.onerror = () =>
+      reject(transaction.error ?? new Error('IndexedDB-transactie mislukt.'));
+    transaction.onabort = () =>
+      reject(transaction.error ?? new Error('IndexedDB-transactie afgebroken.'));
   });
 }

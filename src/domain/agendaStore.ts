@@ -1,13 +1,13 @@
+import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
+import { generateRecordId } from '../storage/records';
 import {
+  type AfspraakInput,
   maakAfspraak,
   maakAfspraakHerinnering,
   maakAfspraakVraag,
   sorteerAfspraken,
-  type AfspraakInput,
 } from './agenda';
 import type { Afspraak, Herinnering, Vraag } from './types';
-import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
-import { generateRecordId } from '../storage/records';
 
 export type AfspraakBundleInput = AfspraakInput & {
   id?: string;
@@ -86,7 +86,9 @@ export class AgendaStore {
           (herinnering) =>
             herinnering.bron.soort === 'afspraak' && herinnering.bron.refId === afspraakId,
         ),
-      vraag: vragen.map((record) => record.value).find((vraag) => vraag.voorAfspraakId === afspraakId),
+      vraag: vragen
+        .map((record) => record.value)
+        .find((vraag) => vraag.voorAfspraakId === afspraakId),
     };
   }
 
@@ -119,7 +121,11 @@ export class AgendaStore {
       return undefined;
     }
 
-    const vraag = maakAfspraakVraag(existing.vraag?.id ?? generateRecordId(), afspraakId, vraagTekst);
+    const vraag = maakAfspraakVraag(
+      existing.vraag?.id ?? generateRecordId(),
+      afspraakId,
+      vraagTekst,
+    );
     await this.vragen.saveWithId(vraag);
     return vraag;
   }

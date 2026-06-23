@@ -1,4 +1,5 @@
-import type { Fase, Traject, TrajectFase } from './types';
+import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
+import { generateRecordId, nowIso } from '../storage/records';
 import {
   maakInitiëleFasen,
   maakTraject,
@@ -7,8 +8,7 @@ import {
   type TrajectInput,
   type TrajectMetFasen,
 } from './traject';
-import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
-import { generateRecordId, nowIso } from '../storage/records';
+import type { Fase, Traject, TrajectFase } from './types';
 
 export class TrajectStore {
   constructor(
@@ -52,7 +52,11 @@ export class TrajectStore {
     ]);
   }
 
-  async setCurrentPhase(trajectId: string, fase: TrajectFase, datum = todayIsoDate()): Promise<void> {
+  async setCurrentPhase(
+    trajectId: string,
+    fase: TrajectFase,
+    datum = todayIsoDate(),
+  ): Promise<void> {
     const alleFasen = await this.fasen.list();
     const trajectFasen = alleFasen
       .map((record) => record.value)

@@ -42,7 +42,9 @@ export async function requestNotificationPermissionAndRegister(): Promise<Notifi
   };
 }
 
-export async function registerKiempadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
+export async function registerKiempadServiceWorker(): Promise<
+  ServiceWorkerRegistration | undefined
+> {
   if (!('serviceWorker' in navigator)) return undefined;
   return navigator.serviceWorker.register('/kiempad-sw.js');
 }
@@ -72,7 +74,9 @@ export function scheduleLocalNotifications(
 }
 
 export function clearScheduledNotifications(): void {
-  timers.forEach((timer) => window.clearTimeout(timer));
+  timers.forEach((timer) => {
+    window.clearTimeout(timer);
+  });
   timers.clear();
 }
 

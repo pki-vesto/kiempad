@@ -37,12 +37,9 @@ export const TRAJECT_FASE_TOELICHTING: Record<TrajectFase, string> = {
     'Rond terugplaatsing staat voorbereiding centraal, zonder dat Kiempad kansen of keuzes voorspelt.',
   wachttijd:
     'De wachttijd is vooral een periode om afspraken, vragen en notities rustig bij elkaar te houden.',
-  zwangerschapstest:
-    'Leg vast wat afgesproken is met de kliniek en wanneer er contact volgt.',
-  uitslag:
-    'Bewaar de uitslag en eventuele vervolgafspraken als eigen notitie.',
-  pauze:
-    'Een pauze kan gepland of onverwacht zijn. Kiempad bewaart de context zonder oordeel.',
+  zwangerschapstest: 'Leg vast wat afgesproken is met de kliniek en wanneer er contact volgt.',
+  uitslag: 'Bewaar de uitslag en eventuele vervolgafspraken als eigen notitie.',
+  pauze: 'Een pauze kan gepland of onverwacht zijn. Kiempad bewaart de context zonder oordeel.',
 };
 
 export type TrajectInput = {

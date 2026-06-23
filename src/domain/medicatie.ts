@@ -34,10 +34,7 @@ export function maakMedicatie(id: string, input: MedicatieInput): Medicatie {
   };
 }
 
-export function genereerDoseLogs(
-  idFactory: () => string,
-  input: DoseLogInput,
-): DoseLog[] {
+export function genereerDoseLogs(idFactory: () => string, input: DoseLogInput): DoseLog[] {
   const days = Math.max(0, Math.floor(input.aantalDagen));
   return Array.from({ length: days }, (_, index) => {
     const date = addDays(input.startDatum, index);

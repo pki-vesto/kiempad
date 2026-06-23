@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.10 tests & kwaliteit: Biome toegevoegd voor consistente lint/format-checks,
+  `npm run lint`/`npm run format:check` scripts toegevoegd en CI uitgebreid met de
+  lint/format-gate naast typecheck, tests, audit en build (G165, G166).
 - M1.9 UX/PWA-baseline: installatiemanifest, SVG-icon, offline service-worker met
   cacheversie en navigatiefallback, standaard service-workerregistratie, concreter
   startscherm, skiplink/focusstijl, lege-staten en testbare delete-confirmaties

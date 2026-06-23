@@ -1,12 +1,7 @@
-import {
-  maakVraag,
-  markeerVraagBeantwoord,
-  sorteerVragen,
-  type VraagInput,
-} from './vraag';
-import type { Afspraak, Vraag } from './types';
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId } from '../storage/records';
+import type { Afspraak, Vraag } from './types';
+import { maakVraag, markeerVraagBeantwoord, sorteerVragen, type VraagInput } from './vraag';
 
 export type VraagBundleInput = VraagInput & {
   id?: string;

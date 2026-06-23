@@ -1,10 +1,6 @@
-import {
-  INITIELE_KENNIS_ITEMS,
-  markeerKennisItemGeverifieerd,
-  sorteerKennisItems,
-} from './kennis';
-import type { KennisItem } from './types';
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
+import { INITIELE_KENNIS_ITEMS, markeerKennisItemGeverifieerd, sorteerKennisItems } from './kennis';
+import type { KennisItem } from './types';
 
 export class KennisStore {
   constructor(private readonly kennisItems: EncryptedRecordRepository<KennisItem>) {}
