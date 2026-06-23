@@ -834,6 +834,22 @@ function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>)
                 <p>${formatDateTime(volgendMoment)} · ${HERHALING_LABELS[herinnering.herhaling ?? 'eenmalig']}</p>
                 <small>${herinnering.actief ? 'Actief' : 'Inactief'}</small>
               </div>
+              <form class="reminder-reschedule-form compact-form" data-herinnering-id="${escapeAttribute(herinnering.id)}">
+                <label>
+                  Snooze
+                  <select name="snoozeMinuten">
+                    ${renderOption('10', '10 min')}
+                    ${renderOption('30', '30 min')}
+                    ${renderOption('60', '1 uur')}
+                  </select>
+                </label>
+                <button class="phase-button" type="submit" name="reminderAction" value="snooze">Snooze</button>
+                <label>
+                  Nieuw tijdstip
+                  <input name="nieuwTijdstip" type="datetime-local" value="${escapeAttribute(volgendMoment)}" />
+                </label>
+                <button class="phase-button secondary" type="submit" name="reminderAction" value="reschedule">Plan opnieuw</button>
+              </form>
             </li>
           `,
         )

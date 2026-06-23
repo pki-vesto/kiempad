@@ -85,6 +85,32 @@ export function sorteerHerinneringen(herinneringen: readonly Herinnering[]): Her
   return [...herinneringen].sort((a, b) => a.tijdstip.localeCompare(b.tijdstip));
 }
 
+export function planHerinneringOpnieuw(herinnering: Herinnering, tijdstip: string): Herinnering {
+  const normalized = tijdstip.trim();
+  if (!normalized) throw new Error('Nieuw herinneringstijdstip is verplicht.');
+
+  return {
+    ...herinnering,
+    tijdstip: normalized,
+    actief: true,
+  };
+}
+
+export function snoozeHerinnering(
+  herinnering: Herinnering,
+  vanafIso: string,
+  minuten: number,
+): Herinnering {
+  const minutes = Math.max(1, Math.floor(minuten));
+  const date = new Date(`${vanafIso}:00.000`);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error('Snooze-starttijd is ongeldig.');
+  }
+
+  date.setMinutes(date.getMinutes() + minutes);
+  return planHerinneringOpnieuw(herinnering, localDateTimeIso(date));
+}
+
 export function komendeHerinneringen(
   herinneringen: readonly Herinnering[],
   vanafIso: string,

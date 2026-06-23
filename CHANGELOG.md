@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G063 snooze/opnieuw plannen: komende herinneringen kunnen vanuit het
+  herinneringenscherm worden gesnoozed of naar een nieuw tijdstip verplaatst.
 - G084 kostenjaar-markering: kostenkennisitems tonen automatisch een jaartallabel,
   zodat vergoedingsteksten zichtbaar tijdgebonden blijven.
 - G090 vergoede-pogingen-teller: trajectscherm telt handmatig gemarkeerde pogingen
