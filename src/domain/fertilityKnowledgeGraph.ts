@@ -65,6 +65,21 @@ export type FertilityGraphContextInzicht = {
   waarschuwing: string;
 };
 
+export type FertilityGraphTrajectFilter = {
+  trajectId: string;
+  relatieType?: FertilityGraphEdgeType;
+  datumVanaf?: string;
+  datumTot?: string;
+};
+
+export type FertilityGraphTrajectWeergave = {
+  trajectId: string;
+  filter: FertilityGraphTrajectFilter;
+  nodes: FertilityGraphNode[];
+  edges: FertilityGraphEdge[];
+  waarschuwing: string;
+};
+
 const GRAPH_WAARSCHUWING =
   'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
 
@@ -404,6 +419,39 @@ export function genereerFertilityGraphContextInzichten(
     .sort((a, b) => a.onzekerheid.localeCompare(b.onzekerheid) || a.id.localeCompare(b.id));
 }
 
+export function bouwFertilityGraphWeergavePerTraject(
+  graph: FertilityKnowledgeGraph,
+  filter: FertilityGraphTrajectFilter,
+): FertilityGraphTrajectWeergave {
+  const trajectId = trajectNodeId(filter.trajectId);
+  const nodes = new Map(graph.nodes.map((node) => [node.id, node]));
+  const trajectRelaties = graph.edges.filter(
+    (edge) => edge.from === trajectId || edge.to === trajectId,
+  );
+  const trajectNodeIds = new Set<string>([
+    trajectId,
+    ...trajectRelaties.flatMap((edge) => [edge.from, edge.to]),
+  ]);
+
+  const edges = graph.edges.filter((edge) => {
+    if (!trajectNodeIds.has(edge.from) && !trajectNodeIds.has(edge.to)) return false;
+    if (filter.relatieType && edge.type !== filter.relatieType) return false;
+    return edgePastBinnenPeriode(edge, nodes, filter);
+  });
+  const zichtbareNodeIds = new Set([trajectId, ...edges.flatMap((edge) => [edge.from, edge.to])]);
+
+  return {
+    trajectId: filter.trajectId,
+    filter,
+    nodes: [...zichtbareNodeIds]
+      .map((id) => nodes.get(id))
+      .filter((node): node is FertilityGraphNode => Boolean(node))
+      .sort((a, b) => a.type.localeCompare(b.type) || a.id.localeCompare(b.id)),
+    edges: edges.sort((a, b) => a.id.localeCompare(b.id)),
+    waarschuwing: GRAPH_WAARSCHUWING,
+  };
+}
+
 function trajectNodeId(id: string): string {
   return `traject:${id}`;
 }
@@ -456,6 +504,24 @@ function titelLijktGerelateerd(titel: string, label: string): boolean {
 
 function formatNodePad(node: FertilityGraphNode): string {
   return `${node.type}: ${node.titel}`;
+}
+
+function edgePastBinnenPeriode(
+  edge: FertilityGraphEdge,
+  nodes: ReadonlyMap<string, FertilityGraphNode>,
+  filter: FertilityGraphTrajectFilter,
+): boolean {
+  if (!filter.datumVanaf && !filter.datumTot) return true;
+  const datums = [nodes.get(edge.from)?.datum, nodes.get(edge.to)?.datum]
+    .filter((datum): datum is string => Boolean(datum))
+    .map((datum) => datum.slice(0, 10));
+  if (datums.length === 0) return false;
+
+  return datums.some((datum) => {
+    if (filter.datumVanaf && datum < filter.datumVanaf) return false;
+    if (filter.datumTot && datum > filter.datumTot) return false;
+    return true;
+  });
 }
 
 function normaliseerGraphId(value: string): string {

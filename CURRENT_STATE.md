@@ -270,6 +270,9 @@
 - **G230 PFIP graph-contextinzichten:** De graph-domeinlaag kan contextuele
   inzichten genereren met bronpad, laag/middel onzekerheidslabel en waarschuwing
   tegen causaliteit, diagnose, kansberekening of behandeladvies.
+- **G231 PFIP graphweergave per traject:** Het trajectscherm toont een lokale
+  graphweergave per traject met filter op relatietype en periode, inclusief nodes,
+  relaties, bron en veilige graph-waarschuwing.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -402,7 +405,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G230 nog 13 open doelen (G231-G243), gericht op dossier-ingest,
+heeft na G231 nog 12 open doelen (G232-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -452,8 +455,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G231: graphweergave per traject met filters op type relatie
-   en periode.
+1. PFIP uitvoeren vanaf G232: relatie tussen research en persoonlijk dossier tonen
+   zonder causale claims.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

@@ -23,6 +23,10 @@ import {
 } from './domain/dossier';
 import { DossierStore } from './domain/dossierStore';
 import { EventLogStore } from './domain/eventLogStore';
+import type {
+  FertilityGraphEdgeType,
+  FertilityGraphTrajectFilter,
+} from './domain/fertilityKnowledgeGraph';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
 import type { KennisFilter } from './domain/kennis';
@@ -122,6 +126,7 @@ type RuntimeState = {
   dossierError?: string;
   dossierZoekterm?: string;
   imagingFilter?: ImagingRepositoryFilter;
+  graphFilter?: Partial<FertilityGraphTrajectFilter>;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -165,6 +170,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dossierError: state.dossierError,
     dossierZoekterm: state.dossierZoekterm,
     imagingFilter: state.imagingFilter,
+    graphFilter: state.graphFilter,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
@@ -1455,6 +1461,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveTrajectFromForm(event.currentTarget, root, state);
   });
+  root.querySelector('#graph-filter-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applyGraphFilterFromForm(event.currentTarget, root, state);
+  });
   root.querySelector('#traject-new-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveTrajectFromForm(event.currentTarget, root, state);
@@ -1494,6 +1504,22 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
         .then(() => reloadAndRender(root, state));
     });
   });
+}
+
+function applyGraphFilterFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (!(target instanceof HTMLFormElement)) return;
+  const data = new FormData(target);
+  state.graphFilter = {
+    trajectId: String(data.get('graphTrajectId') ?? ''),
+    relatieType: parseGraphRelatieType(data.get('graphRelatieType')),
+    datumVanaf: optionalString(data.get('graphDatumVanaf')),
+    datumTot: optionalString(data.get('graphDatumTot')),
+  };
+  render(root, state);
 }
 
 function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
@@ -2124,6 +2150,22 @@ function parseTrajectStatus(value: FormDataEntryValue | null): Traject['status']
 function parseHerhaling(value: FormDataEntryValue | null): Herinnering['herhaling'] {
   if (value === 'dagelijks' || value === 'wekelijks' || value === 'eenmalig') return value;
   return 'eenmalig';
+}
+
+function parseGraphRelatieType(
+  value: FormDataEntryValue | null,
+): FertilityGraphEdgeType | undefined {
+  if (
+    value === 'hoort_bij_behandeling' ||
+    value === 'hoort_bij_afspraak' ||
+    value === 'beschrijft_embryo' ||
+    value === 'gebruikt_bron' ||
+    value === 'research_notitie'
+  ) {
+    return value;
+  }
+
+  return undefined;
 }
 
 function parseCostCategorie(value: FormDataEntryValue | null): CostItem['categorie'] {

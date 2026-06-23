@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { bouwDagelijksAanbevelingsoverzicht } from '../src/domain/dailyRecommendations';
 import {
   bevestigFertilityGraphRelaties,
+  bouwFertilityGraphWeergavePerTraject,
   bouwFertilityKnowledgeGraph,
   genereerFertilityGraphContextInzichten,
   stelFertilityGraphRelatiesVoor,
@@ -323,5 +324,94 @@ describe('fertility knowledge graph', () => {
     expect(inzichten.map((inzicht) => inzicht.samenvatting).join(' ')).not.toMatch(
       /\bdiagnose|behandeladvies|kansberekening\b/i,
     );
+  });
+
+  it('bouwt een graphweergave per traject met filters op relatietype en periode', () => {
+    const graph = bouwFertilityKnowledgeGraph({
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+        {
+          traject: {
+            id: 'traject-2',
+            naam: 'Poging 2',
+            type: 'ivf',
+            startDatum: '2026-07-01',
+            status: 'gepland',
+            pogingNummer: 2,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          trajectId: 'traject-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-24T09:30',
+          type: 'echo',
+        },
+        {
+          id: 'afspraak-2',
+          trajectId: 'traject-2',
+          titel: 'Consult andere poging',
+          datumTijd: '2026-07-02T09:30',
+          type: 'consult',
+        },
+      ],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-24',
+          titel: 'Echo verslag',
+          categorie: 'onderzoek',
+          bestandsNaam: 'echo.pdf',
+          grootteBytes: 512,
+          inhoudBase64: 'base64',
+          trajectId: 'traject-1',
+          analyse: { samenvatting: 'Echo vastgelegd.', signalen: [] },
+          metadata: { bronbestand: 'echo.pdf', trajectId: 'traject-1', extractieBronnen: [] },
+          uploadedAt: '2026-06-24T10:00:00.000Z',
+        } as DossierDocument,
+      ],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+
+    const weergave = bouwFertilityGraphWeergavePerTraject(graph, {
+      trajectId: 'traject-1',
+      relatieType: 'hoort_bij_behandeling',
+      datumVanaf: '2026-06-01',
+      datumTot: '2026-06-30',
+    });
+
+    expect(weergave.trajectId).toBe('traject-1');
+    expect(weergave.nodes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: 'traject:traject-1' }),
+        expect.objectContaining({ id: 'afspraak:afspraak-1' }),
+        expect.objectContaining({ id: 'document:doc-1' }),
+      ]),
+    );
+    expect(weergave.nodes).not.toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 'afspraak:afspraak-2' })]),
+    );
+    expect(weergave.edges.every((edge) => edge.type === 'hoort_bij_behandeling')).toBe(true);
+    expect(weergave.edges.map((edge) => edge.id)).toEqual(
+      expect.arrayContaining([
+        'afspraak:afspraak-1->hoort_bij_behandeling->traject:traject-1',
+        'document:doc-1->hoort_bij_behandeling->traject:traject-1',
+      ]),
+    );
+    expect(weergave.waarschuwing).toContain('geen causaliteit');
   });
 });

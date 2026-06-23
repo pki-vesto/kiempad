@@ -55,6 +55,14 @@ import {
 } from './domain/embryoDossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
+  bouwFertilityGraphWeergavePerTraject,
+  bouwFertilityKnowledgeGraph,
+  type FertilityGraphEdge,
+  type FertilityGraphEdgeType,
+  type FertilityGraphTrajectFilter,
+  type FertilityGraphTrajectWeergave,
+} from './domain/fertilityKnowledgeGraph';
+import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
   komendeHerinneringen,
@@ -295,6 +303,7 @@ export type AppShellState = {
   dossierError?: string;
   dossierZoekterm?: string;
   imagingFilter?: ImagingRepositoryFilter;
+  graphFilter?: Partial<FertilityGraphTrajectFilter>;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -3400,6 +3409,7 @@ function renderTrajectScreen(state: AppShellState): string {
   const selected = actieveTrajecten[0];
   const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
   const overzicht = berekenTrajectOverzicht(state.trajecten);
+  const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
 
   return `
     <section class="traject-layout" aria-label="Traject beheren">
@@ -3422,6 +3432,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
         ${renderTrajectOverzicht(overzicht)}
+        ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
         <div class="panel-heading">
           <h2>Fasen</h2>
           ${
@@ -3443,6 +3454,130 @@ function renderTrajectScreen(state: AppShellState): string {
       </div>
     </section>
   `;
+}
+
+const FERTILITY_GRAPH_RELATIE_LABELS: Record<FertilityGraphEdgeType, string> = {
+  hoort_bij_behandeling: 'Hoort bij behandeling',
+  hoort_bij_afspraak: 'Hoort bij afspraak',
+  beschrijft_embryo: 'Beschrijft embryo',
+  gebruikt_bron: 'Gebruikt bron',
+  research_notitie: 'Researchnotitie',
+};
+
+function bouwTrajectGraphWeergave(
+  state: AppShellState,
+  fallbackTrajectId: string | undefined,
+): FertilityGraphTrajectWeergave | undefined {
+  const trajectId = state.graphFilter?.trajectId ?? fallbackTrajectId;
+  if (!trajectId) return undefined;
+
+  const vandaag = new Date().toISOString().slice(0, 10);
+  const aanbevelingen = bouwDagelijksAanbevelingsoverzicht({
+    datum: vandaag,
+    afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+    medicatie: state.medicatie,
+    vragen: state.vragen.map((bundle) => bundle.vraag),
+    consultVerslagen: state.consultVerslagen ?? [],
+    trajecten: state.trajecten,
+    dossierDocuments: state.dossierDocuments ?? [],
+    cycleData: state.cycleData ?? [],
+  });
+  const graph = bouwFertilityKnowledgeGraph({
+    trajecten: state.trajecten,
+    afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+    dossierDocuments: state.dossierDocuments ?? [],
+    consultVerslagen: state.consultVerslagen ?? [],
+    kennisItems: state.kennisItems,
+    aanbevelingen,
+  });
+
+  return bouwFertilityGraphWeergavePerTraject(graph, {
+    trajectId,
+    relatieType: parseFertilityGraphRelatieType(state.graphFilter?.relatieType),
+    datumVanaf: state.graphFilter?.datumVanaf,
+    datumTot: state.graphFilter?.datumTot,
+  });
+}
+
+function renderTrajectGraphWeergave(
+  weergave: FertilityGraphTrajectWeergave,
+  trajecten: readonly TrajectMetFasen[],
+): string {
+  return `
+    <section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject">
+      <h2>Knowledge graph</h2>
+      ${renderTrajectGraphFilterForm(weergave.filter, trajecten)}
+      <dl class="summary-list">
+        <div><dt>Nodes</dt><dd>${weergave.nodes.length}</dd></div>
+        <div><dt>Relaties</dt><dd>${weergave.edges.length}</dd></div>
+      </dl>
+      ${
+        weergave.edges.length > 0
+          ? `<ol class="compact-list">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
+          : '<p class="empty-state">Geen graph-relaties binnen dit filter.</p>'
+      }
+      <p class="small-print">${escapeHtml(weergave.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderTrajectGraphFilterForm(
+  filter: FertilityGraphTrajectFilter,
+  trajecten: readonly TrajectMetFasen[],
+): string {
+  return `
+    <form id="graph-filter-form" class="data-form compact-form">
+      <label>
+        Traject
+        <select name="graphTrajectId">
+          ${trajecten.map((item) => renderOption(item.traject.id, item.traject.naam, filter.trajectId)).join('')}
+        </select>
+      </label>
+      <label>
+        Relatietype
+        <select name="graphRelatieType">
+          <option value="">Alle relaties</option>
+          ${Object.entries(FERTILITY_GRAPH_RELATIE_LABELS)
+            .map(([value, label]) => renderOption(value, label, filter.relatieType))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Vanaf
+        <input name="graphDatumVanaf" type="date" value="${escapeAttribute(filter.datumVanaf ?? '')}" />
+      </label>
+      <label>
+        Tot
+        <input name="graphDatumTot" type="date" value="${escapeAttribute(filter.datumTot ?? '')}" />
+      </label>
+      <button type="submit">Filter graph</button>
+    </form>
+  `;
+}
+
+function renderTrajectGraphEdge(
+  edge: FertilityGraphEdge,
+  weergave: FertilityGraphTrajectWeergave,
+): string {
+  const nodeMap = new Map(weergave.nodes.map((node) => [node.id, node]));
+  const from = nodeMap.get(edge.from);
+  const to = nodeMap.get(edge.to);
+
+  return `
+    <li>
+      <strong>${escapeHtml(edge.label)}</strong>
+      <span>${escapeHtml(from?.titel ?? edge.from)} -> ${escapeHtml(to?.titel ?? edge.to)}</span>
+      <small>${escapeHtml(FERTILITY_GRAPH_RELATIE_LABELS[edge.type])} · Bron: ${escapeHtml(edge.bron)}</small>
+    </li>
+  `;
+}
+
+function parseFertilityGraphRelatieType(
+  value: string | undefined,
+): FertilityGraphEdgeType | undefined {
+  return value && value in FERTILITY_GRAPH_RELATIE_LABELS
+    ? (value as FertilityGraphEdgeType)
+    : undefined;
 }
 
 function renderTrajectOverzicht(overzicht: ReturnType<typeof berekenTrajectOverzicht>): string {
