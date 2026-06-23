@@ -147,8 +147,10 @@
 
 ## 2. Gedeeltelijk Gebouwd
 
-- Traject/fasen, agenda, medicatie, herinneringen, vragen en kennisbank zijn
-  aangesloten op de versleutelde repository-laag.
+- Traject/fasen, agenda, medicatie, herinneringen, vragen, kennisbank en
+  beslisnotities zijn aangesloten op de versleutelde repository-laag.
+- G112 beslisnotities: het afwegingenscherm bewaart onderwerp, datum en opties als
+  lokale versleutelde beslisnotitie.
 
 ## 3. Nog Niet Gebouwd
 

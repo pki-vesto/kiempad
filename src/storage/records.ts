@@ -12,6 +12,7 @@ export type StoredRecordType =
   | 'cost_item'
   | 'symptom_log'
   | 'mental_check_in'
+  | 'decision'
   | 'settings'
   | 'system';
 
