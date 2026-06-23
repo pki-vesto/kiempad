@@ -413,7 +413,10 @@ function renderMentalCheckInItem(item: MentalCheckIn): string {
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.datum)}</h3>
-        <p>${escapeHtml(OWNER_LABELS[item.owner])} · ${escapeHtml(STEMMING_LABELS[item.stemming])}</p>
+        <div class="label-row">
+          ${renderOwnerMarkering(item.owner)}
+          <span class="status-pill">${escapeHtml(STEMMING_LABELS[item.stemming])}</span>
+        </div>
         ${item.notitie ? `<p class="linked-note">Privé notitie: ${escapeHtml(item.notitie)}</p>` : ''}
       </div>
     </li>
@@ -470,10 +473,14 @@ function renderSymptomLogItem(log: SymptomLog): string {
   return `
     <li>
       <strong>${escapeHtml(log.symptoom)}</strong>
-      <span>${escapeHtml(OWNER_LABELS[log.owner])}${log.intensiteit ? ` · Intensiteit ${log.intensiteit}/5` : ''}</span>
+      <span>${renderOwnerMarkering(log.owner)}${log.intensiteit ? ` Intensiteit ${log.intensiteit}/5` : ''}</span>
         ${log.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(log.notitie)}</p>` : ''}
     </li>
   `;
+}
+
+function renderOwnerMarkering(owner: SymptomLog['owner']): string {
+  return `<span class="status-pill" data-owner="${escapeAttribute(owner)}">Eigenaar: ${escapeHtml(OWNER_LABELS[owner])}</span>`;
 }
 
 function renderKennisScreen(state: AppShellState): string {

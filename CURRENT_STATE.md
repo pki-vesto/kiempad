@@ -59,6 +59,8 @@
   versleutelde check-in bewaren en teruglezen.
 - **G109 oordeelvrij welzijnsoverzicht:** welzijnscherm toont feitelijke aantallen,
   dagen en stemmingsverdeling zonder score, normering of oordeel.
+- **G110 owner-markering:** welzijnslogs tonen expliciete eigenaarlabels voor Peter,
+  partner of samen.
 - **M1.9 UX/PWA-baseline:** installatiemanifest en SVG-icon, offline service-worker
   met cacheversie, standaard service-workerregistratie, concreter startscherm,
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.

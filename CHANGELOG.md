@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G110 owner-markering: symptoomlogs en mentale check-ins tonen expliciete
+  eigenaarlabels voor Peter, partner of samen.
 - G109 welzijn-overzicht zonder oordeel: welzijnscherm toont feitelijke aantallen,
   dagen en stemmingsverdeling zonder score-druk.
 - G108 mentale check-in: welzijnscherm bewaart stemming en privé notitie als
