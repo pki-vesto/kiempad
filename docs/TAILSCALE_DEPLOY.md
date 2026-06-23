@@ -54,6 +54,19 @@ cd ~/kiempad
 TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
 ```
 
+Het deployscript stopt vóór build/start als:
+
+- `TS_AUTHKEY` ontbreekt of niet op `tskey-*` lijkt;
+- Docker of de Docker Compose plugin ontbreekt;
+- de lokale fallbackpoort al door een andere service wordt gebruikt.
+
+De lokale fallbackpoort is standaard `127.0.0.1:8088`. Als die poort bewust anders
+moet zijn:
+
+```bash
+KIEMPAD_TAILSCALE_LOCAL_PORT=8098 TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
+```
+
 Verwachte containers:
 
 - `kiempad-ts`
@@ -69,6 +82,9 @@ Lokale fallback op de host:
 ```bash
 curl -I http://127.0.0.1:8088
 ```
+
+Gebruik dezelfde `KIEMPAD_TAILSCALE_LOCAL_PORT` bij smoke als je bij deploy een
+andere lokale poort koos.
 
 Tailnet-smoke vanaf een apparaat in de tailnet:
 
