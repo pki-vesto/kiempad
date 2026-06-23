@@ -3519,6 +3519,8 @@ function bouwFertilityTimelineVoorState(state: AppShellState): FertilityTimeline
     afspraken: state.afspraken.map((bundle) => bundle.afspraak),
     dossierDocuments: state.dossierDocuments ?? [],
     consultVerslagen: state.consultVerslagen ?? [],
+    vragen: state.vragen,
+    medicatie: state.medicatie,
     kennisItems: state.kennisItems,
     aanbevelingen,
     aanbevelingenDatum: vandaag,

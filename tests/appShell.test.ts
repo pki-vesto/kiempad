@@ -123,9 +123,42 @@ describe('app shell', () => {
     const html = renderAppShell('start', {
       trajecten: [],
       afspraken: [],
-      medicatie: [],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-1',
+            naam: 'Progesteron',
+            vorm: 'zetpil',
+            actief: true,
+          },
+          doseLogs: [
+            {
+              id: 'dose-1',
+              medicatieId: 'med-1',
+              geplandOp: '2026-06-24T20:00',
+              status: 'gepland',
+            },
+          ],
+        },
+      ],
       herinneringen: [],
-      vragen: [],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-1',
+            vraag: 'Welke vragen nemen we mee?',
+            voorAfspraakId: 'afspraak-1',
+            beantwoord: false,
+          },
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Echo controle',
+            datumTijd: '2026-06-24T09:30',
+            type: 'echo',
+            trajectId: 'traject-1',
+          },
+        },
+      ],
       consultVerslagen: [
         {
           id: 'consult-1',
@@ -483,6 +516,7 @@ describe('app shell', () => {
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {
+    const vandaag = new Date().toISOString().slice(0, 10);
     const html = renderAppShell('medicatie', {
       trajecten: [],
       afspraken: [],
@@ -512,9 +546,9 @@ describe('app shell', () => {
             {
               id: 'dose-1',
               medicatieId: 'med-1',
-              geplandOp: `${new Date().toISOString().slice(0, 10)}T08:00`,
+              geplandOp: `${vandaag}T08:00`,
               status: 'genomen',
-              genomenOp: `${new Date().toISOString().slice(0, 10)}T08:05`,
+              genomenOp: `${vandaag}T08:05`,
               notitie: 'plek links',
             },
           ],
@@ -537,8 +571,8 @@ describe('app shell', () => {
     expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');
     expect(html).toContain('aria-label="Verwijder medicatie: Progesteron"');
-    expect(html).toContain('aria-label="Markeer Progesteron op 2026-06-23 08:00 als genomen"');
-    expect(html).toContain('aria-label="Markeer Progesteron op 2026-06-23 08:00 als overgeslagen"');
+    expect(html).toContain(`aria-label="Markeer Progesteron op ${vandaag} 08:00 als genomen"`);
+    expect(html).toContain(`aria-label="Markeer Progesteron op ${vandaag} 08:00 als overgeslagen"`);
     expect(html).toContain('Notitie: plek links');
     expect(html).toContain('Historie van innames');
     expect(html).toContain('plek links');

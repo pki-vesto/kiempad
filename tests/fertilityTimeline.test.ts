@@ -82,6 +82,43 @@ describe('fertility timeline', () => {
           uploadedAt: '2026-06-23T10:00:00.000Z',
         },
       ],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-1',
+            vraag: 'Welke vragen moeten mee naar het consult?',
+            voorAfspraakId: 'afspraak-1',
+            beantwoord: false,
+            prioriteit: 1,
+          },
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Echo controle',
+            datumTijd: '2026-06-21T09:30',
+            type: 'echo',
+            trajectId: 'traject-1',
+          },
+        },
+      ],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-1',
+            naam: 'Progesteron',
+            vorm: 'zetpil',
+            actief: true,
+            voorgeschrevenDosis: 'zoals kliniek',
+          },
+          doseLogs: [
+            {
+              id: 'dose-1',
+              medicatieId: 'med-1',
+              geplandOp: '2026-06-21T20:00',
+              status: 'gepland',
+            },
+          ],
+        },
+      ],
       kennisItems: [research],
       aanbevelingen: {
         vrouw: [
@@ -104,6 +141,9 @@ describe('fertility timeline', () => {
       'research',
       'behandeling',
       'behandeling',
+      'vraag',
+      'medicatie',
+      'medicatie',
       'onderzoek',
       'embryo',
       'consult',
@@ -116,6 +156,12 @@ describe('fertility timeline', () => {
         expect.objectContaining({ titel: 'Embryorapport', soort: 'onderzoek' }),
         expect.objectContaining({ titel: 'Embryo A', soort: 'embryo' }),
         expect.objectContaining({ titel: 'Labconsult', soort: 'consult' }),
+        expect.objectContaining({
+          titel: 'Welke vragen moeten mee naar het consult?',
+          soort: 'vraag',
+        }),
+        expect.objectContaining({ titel: 'Progesteron', label: 'Zetpil' }),
+        expect.objectContaining({ titel: 'Progesteron', label: 'Medicatiemoment · gepland' }),
         expect.objectContaining({ titel: 'Embryo research', soort: 'research' }),
         expect.objectContaining({ titel: 'Consultvraag voorbereiden', soort: 'aanbeveling' }),
       ]),

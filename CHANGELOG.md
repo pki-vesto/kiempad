@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G237 PFIP fertility timeline: tijdlijn normaliseert nu ook vragen,
+  medicatierecords en medicatiemomenten naast afspraken, dossierdocumenten en
+  embryo's.
 - G236 PFIP fertility timeline: trajectscherm toont een centrale fertility
   timeline met onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en
   research uit lokale records.
