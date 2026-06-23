@@ -56,12 +56,14 @@ import {
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   bouwFertilityGraphWeergavePerTraject,
+  type FertilityGraphConsultSamenvattingExport,
   type FertilityGraphEdge,
   type FertilityGraphEdgeType,
   type FertilityGraphIndexRebuildRapport,
   type FertilityGraphTrajectFilter,
   type FertilityGraphTrajectWeergave,
   herbouwFertilityGraphIndex,
+  maakFertilityGraphConsultSamenvattingExport,
 } from './domain/fertilityKnowledgeGraph';
 import {
   HERHALING_LABELS,
@@ -3540,6 +3542,7 @@ function renderTrajectGraphWeergave(
   weergave: FertilityGraphTrajectWeergave,
   trajecten: readonly TrajectMetFasen[],
 ): string {
+  const consultExport = maakFertilityGraphConsultSamenvattingExport(weergave);
   return `
     <section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject">
       <h2>Knowledge graph</h2>
@@ -3554,7 +3557,27 @@ function renderTrajectGraphWeergave(
           ? `<ol class="compact-list">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
           : '<p class="empty-state">Geen graph-relaties binnen dit filter.</p>'
       }
+      ${renderGraphConsultSamenvattingExport(consultExport)}
       <p class="small-print">${escapeHtml(weergave.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderGraphConsultSamenvattingExport(
+  consultExport: FertilityGraphConsultSamenvattingExport,
+): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Graph-export consultvoorbereiding">
+      <h3>Graph-export consultvoorbereiding</h3>
+      <label>
+        Bestandsnaam
+        <input readonly value="${escapeAttribute(consultExport.bestandsNaam)}" />
+      </label>
+      <label>
+        Markdown
+        <textarea readonly rows="8">${escapeHtml(consultExport.inhoud)}</textarea>
+      </label>
+      <small>${escapeHtml(consultExport.waarschuwing)}</small>
     </section>
   `;
 }
