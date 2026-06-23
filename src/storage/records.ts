@@ -14,6 +14,7 @@ export type StoredRecordType =
   | 'mental_check_in'
   | 'decision'
   | 'event_log'
+  | 'dossier_document'
   | 'settings'
   | 'system';
 

@@ -17,6 +17,7 @@ const entityInterfaceMap = {
   CostItem: 'CostItem',
   Decision: 'Decision',
   EventLog: 'EventLog',
+  DossierDocument: 'DossierDocument',
   Settings: 'SettingsRecord',
 } as const;
 
@@ -63,6 +64,19 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
   CostItem: ['id', 'trajectId', 'omschrijving', 'bedrag', 'datum', 'categorie', 'vergoed'],
   Decision: ['id', 'onderwerp', 'opties', 'keuze', 'onderbouwing', 'datum'],
   EventLog: ['id', 'datum', 'categorie', 'gebeurtenis', 'detail'],
+  DossierDocument: [
+    'id',
+    'datum',
+    'titel',
+    'categorie',
+    'bestandsNaam',
+    'mimeType',
+    'grootteBytes',
+    'inhoudBase64',
+    'notitie',
+    'analyse',
+    'uploadedAt',
+  ],
   Settings: [
     'id',
     'profielen',

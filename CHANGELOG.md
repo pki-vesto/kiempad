@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G175 historische onderzoeken: nieuw Dossier-scherm uploadt meerdere
+  onderzoeksbestanden, bewaart de inhoud versleuteld lokaal en toont lokale,
+  niet-medische analyse van bestandsnaam, type en grootte.
 - G137 opslag-schemaversie: lokale opslag krijgt een `schema` meta-record met de
   huidige schemaversie; ontbrekende metadata wordt bij ontgrendelen aangevuld en
   nieuwere schema's worden veilig geweigerd.
