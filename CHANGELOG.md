@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G146 consult-PDF: vragenscherm kan een lokaal printbaar consultoverzicht openen
+  voor browser-PDF-export zonder externe dienst.
 - G111 welzijnstrends: welzijnscherm toont feitelijke maandtrends voor
   symptoomlogs, intensiteit en mentale check-ins zonder score of oordeel.
 - G107 CycleData: welzijnscherm kan feitelijke cyclusmetingen zoals temperatuur of

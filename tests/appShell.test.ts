@@ -276,6 +276,13 @@ describe('app shell', () => {
     expect(html).toContain('Er staat een herinnering klaar.');
   });
 
+  it('rendert een lokale consult PDF-exportknop in het vragenscherm', () => {
+    const html = renderAppShell('vragen');
+
+    expect(html).toContain('id="export-consult-pdf"');
+    expect(html).toContain('Print/PDF');
+  });
+
   it('rendert agenda-importfeedback', () => {
     const html = renderAppShell('agenda', {
       trajecten: [],
