@@ -258,6 +258,34 @@ describe('app shell', () => {
     );
   });
 
+  it('rendert AI-provider en modelkeuze in de kennisinstellingen', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        ai: {
+          ingeschakeld: true,
+          provider: 'OpenAI',
+          model: 'gpt-5-mini',
+          apiKey: 'sk-test-secret',
+          laatsteOptInOp: '2026-06-23T12:00:00.000Z',
+        },
+      },
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('AI-instelling');
+    expect(html).toContain('name="aiProvider" value="OpenAI"');
+    expect(html).toContain('name="aiModel" value="gpt-5-mini"');
+    expect(html).toContain('Opgeslagen; laat leeg om te bewaren');
+    expect(html).not.toContain('sk-test-secret');
+  });
+
   it('rendert vragen met afspraakkoppeling en antwoordstatus', () => {
     const html = renderAppShell('vragen', {
       trajecten: [],
