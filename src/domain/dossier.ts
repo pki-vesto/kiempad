@@ -32,6 +32,16 @@ export type DossierOcrInput = {
   verwerktOp?: string;
 };
 
+export type DossierTijdlijnItem = {
+  id: string;
+  datum: string;
+  titel: string;
+  documenttype: string;
+  bronbestand: string;
+  bron: 'metadata' | 'formulier';
+  document: DossierDocument;
+};
+
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
   onderzoek: 'Onderzoek',
   beeld: 'Foto/echo',
@@ -139,10 +149,34 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
 export function sorteerDossierDocumenten(items: readonly DossierDocument[]): DossierDocument[] {
   return [...items].sort(
     (a, b) =>
-      b.datum.localeCompare(a.datum) ||
+      bepaalDossierTijdlijnDatum(b).localeCompare(bepaalDossierTijdlijnDatum(a)) ||
       b.uploadedAt.localeCompare(a.uploadedAt) ||
       a.titel.localeCompare(b.titel),
   );
+}
+
+export function bouwDossierTijdlijn(items: readonly DossierDocument[]): DossierTijdlijnItem[] {
+  return sorteerDossierDocumenten(items).map((document) => {
+    const metadata = document.metadata;
+    const datum = bepaalDossierTijdlijnDatum(document);
+    return {
+      id: document.id,
+      datum,
+      titel: document.titel,
+      documenttype:
+        metadata?.documenttype ??
+        (document.uploadProfiel
+          ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+          : DOSSIER_CATEGORIE_LABELS[document.categorie]),
+      bronbestand: metadata?.bronbestand ?? document.bestandsNaam,
+      bron: metadata?.extractieBronnen.includes('datumherkenning') ? 'metadata' : 'formulier',
+      document,
+    };
+  });
+}
+
+function bepaalDossierTijdlijnDatum(document: DossierDocument): string {
+  return document.metadata?.documentDatum || document.datum;
 }
 
 function analyseerDossierDocument(input: {
@@ -335,7 +369,8 @@ export function extraheerDossierMetadata(input: {
   if (input.ocr?.tekst) bronnen.push('ocr-tekst');
 
   const gecombineerdeTekst = tekstBronnen.join('\n');
-  const documentDatum = normaliseerMetadataDatum(gecombineerdeTekst) ?? input.datum;
+  const herkendeDatum = normaliseerMetadataDatum(gecombineerdeTekst);
+  const documentDatum = herkendeDatum ?? input.datum;
   const instelling = extraheerInstelling(gecombineerdeTekst);
   const arts = extraheerArts(gecombineerdeTekst);
   const documenttype = input.uploadProfiel
@@ -343,6 +378,7 @@ export function extraheerDossierMetadata(input: {
     : DOSSIER_CATEGORIE_LABELS[input.categorie];
 
   if (input.trajectId) bronnen.push('trajectkoppeling');
+  if (herkendeDatum) bronnen.push('datumherkenning');
   if (instelling) bronnen.push('instellingherkenning');
   if (arts) bronnen.push('artsherkenning');
 

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   bepaalDossierUploadProfiel,
+  bouwDossierTijdlijn,
   extraheerDossierMetadata,
   formatBytes,
   maakDossierDocument,
@@ -246,6 +247,7 @@ describe('dossier', () => {
         'notitie',
         'ocr-tekst',
         'trajectkoppeling',
+        'datumherkenning',
         'instellingherkenning',
         'artsherkenning',
       ],
@@ -330,6 +332,44 @@ describe('dossier', () => {
     ];
 
     expect(sorteerDossierDocumenten(items).map((item) => item.id)).toEqual(['doc-2', 'doc-1']);
+  });
+
+  it('bouwt een documenttijdlijn op uit metadata met fallback naar formulierdatum', () => {
+    const items = [
+      maakDossierDocument('doc-formulier', {
+        datum: '2026-05-01',
+        titel: 'Formulierdatum',
+        bestandsNaam: 'formulier.pdf',
+        mimeType: 'application/pdf',
+        grootteBytes: 1,
+        inhoudBase64: 'a',
+        uploadedAt: '2026-06-23T10:00:00.000Z',
+      }),
+      maakDossierDocument('doc-metadata', {
+        datum: '2026-04-01',
+        titel: 'Metadata datum',
+        bestandsNaam: '2026-06-15-erasmus-rapport.pdf',
+        mimeType: 'application/pdf',
+        grootteBytes: 1,
+        inhoudBase64: 'b',
+        uploadedAt: '2026-06-23T09:00:00.000Z',
+      }),
+    ];
+
+    expect(bouwDossierTijdlijn(items).map((item) => item.id)).toEqual([
+      'doc-metadata',
+      'doc-formulier',
+    ]);
+    expect(bouwDossierTijdlijn(items)[0]).toMatchObject({
+      datum: '2026-06-15',
+      documenttype: 'Fertiliteitsrapport',
+      bronbestand: '2026-06-15-erasmus-rapport.pdf',
+      bron: 'metadata',
+    });
+    expect(bouwDossierTijdlijn(items)[1]).toMatchObject({
+      datum: '2026-05-01',
+      bron: 'formulier',
+    });
   });
 
   it('formatteert bestandsgrootte compact', () => {

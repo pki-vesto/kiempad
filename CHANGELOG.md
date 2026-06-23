@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G184 PFIP dossier-ingest: het dossierscherm bouwt automatisch een
+  documenttijdlijn uit herkende metadata en formuliercorrecties, met zichtbare
+  datumbron per document.
 - G183 PFIP dossier-ingest: bestandsselectie toont lokale conceptrecords vóór
   opslag en dossieruploads vereisen expliciete bevestiging dat datum, categorie,
   uploadprofiel en koppelingen zijn gecontroleerd of gecorrigeerd.

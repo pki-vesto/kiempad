@@ -16,6 +16,7 @@ import {
 } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
 import {
+  bouwDossierTijdlijn,
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   EMBRYO_STATUS_LABELS,
@@ -669,6 +670,7 @@ function renderWebAuthnSettings(status?: WebAuthnViewStatus): string {
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
+  const tijdlijn = bouwDossierTijdlijn(documenten);
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
       renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
@@ -795,10 +797,10 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Embryokwaliteit wordt vastgelegd als kliniekterugkoppeling. Kiempad berekent geen kansen en geeft geen medisch advies.</p>
       </div>
       <div class="timeline-panel">
-        <h2>Historische onderzoeken</h2>
+        <h2>Documenttijdlijn</h2>
         ${
-          documenten.length > 0
-            ? `<ol class="phase-list">${documenten.map((document) => renderDossierDocument(document, state)).join('')}</ol>`
+          tijdlijn.length > 0
+            ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state)).join('')}</ol>`
             : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
         }
       </div>
@@ -806,7 +808,23 @@ function renderDossierScreen(state: AppShellState): string {
   `;
 }
 
-function renderDossierDocument(document: DossierDocument, state: AppShellState): string {
+function renderDossierTijdlijnItem(
+  item: ReturnType<typeof bouwDossierTijdlijn>[number],
+  state: AppShellState,
+): string {
+  const bron = item.bron === 'metadata' ? 'metadata' : 'formulierdatum';
+  return renderDossierDocument(item.document, state, {
+    datum: item.datum,
+    documenttype: item.documenttype,
+    bron,
+  });
+}
+
+function renderDossierDocument(
+  document: DossierDocument,
+  state: AppShellState,
+  tijdlijn?: { datum: string; documenttype: string; bron: string },
+): string {
   const afspraak = document.afspraakId
     ? state.afspraken.find((item) => item.afspraak.id === document.afspraakId)?.afspraak
     : undefined;
@@ -825,6 +843,11 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(document.titel)}</h3>
+        ${
+          tijdlijn
+            ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}</p>`
+            : ''
+        }
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])}${uploadProfiel ? ` · ${escapeHtml(uploadProfiel)}` : ''} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
