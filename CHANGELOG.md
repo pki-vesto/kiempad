@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.5 medicatie & injectieschema: versleuteld medicatie vastleggen met vorm,
+  instructie, actief/inactief en kliniekdosistekst, injectievorm apart ondersteunen,
+  DoseLogs genereren vanuit expliciete planning, vandaag-overzicht tonen, innames als
+  genomen/overgeslagen markeren, gemiste geplande innames markeren en policy-/store-
+  tests die borgen dat Kiempad geen dosering berekent of adviseert (G043-G051, G162,
+  G163).
 - M1.4 agenda & afspraken: versleuteld afspraken aanmaken/bewerken/verwijderen,
   afspraaktypes, komende-afsprakenlijst, trajectkoppeling, voorbereiding/notitie,
   gekoppelde vraag voor de arts, afspraakherinnering als lokaal record en agenda-

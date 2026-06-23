@@ -10,7 +10,14 @@ import {
   formatDateTime,
 } from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
-import type { Afspraak, Traject } from './domain/types';
+import {
+  MEDICATIE_VORM_LABELS,
+  beschrijfMedicatieDosis,
+  doseLogIsGemist,
+  doseLogsVoorDag,
+} from './domain/medicatie';
+import type { MedicatieBundle } from './domain/medicatieStore';
+import type { Afspraak, DoseLog, Medicatie, Traject } from './domain/types';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
@@ -82,11 +89,12 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
 export type AppShellState = {
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
+  medicatie: MedicatieBundle[];
 };
 
 export function renderAppShell(
   activeId: ScreenId,
-  state: AppShellState = { trajecten: [], afspraken: [] },
+  state: AppShellState = { trajecten: [], afspraken: [], medicatie: [] },
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
   const screenContent = renderScreenContent(activeId, activeScreen, state);
@@ -164,6 +172,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'start') return renderStartScreen(state);
   if (activeId === 'traject') return renderTrajectScreen(state);
   if (activeId === 'agenda') return renderAgendaScreen(state);
+  if (activeId === 'medicatie') return renderMedicatieScreen(state);
 
   return `
     <section class="workspace" aria-label="${screen.label}">
@@ -311,6 +320,145 @@ function renderAfspraakMeta(afspraak: Afspraak, trajectNaam?: string): string {
   ].filter(Boolean);
 
   return parts.length > 0 ? parts.join(' · ') : 'Geen extra details';
+}
+
+function renderMedicatieScreen(state: AppShellState): string {
+  const selected = state.medicatie[0];
+  const today = new Date().toISOString().slice(0, 10);
+  const todayLogs = doseLogsVoorDag(
+    state.medicatie.flatMap((bundle) => bundle.doseLogs),
+    today,
+  );
+
+  return `
+    <section class="traject-layout" aria-label="Medicatie beheren">
+      <div class="form-panel">
+        <h2>${selected ? 'Medicatie bewerken' : 'Medicatie toevoegen'}</h2>
+        ${renderMedicatieForm(selected?.medicatie)}
+      </div>
+      <div class="timeline-panel">
+        <div class="panel-heading">
+          <h2>Vandaag</h2>
+          ${
+            selected
+              ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}">Verwijder medicatie</button>`
+              : ''
+          }
+        </div>
+        ${todayLogs.length > 0 ? renderDoseLogList(todayLogs, state.medicatie) : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>'}
+        <h2 class="section-subheading">Middelen</h2>
+        ${state.medicatie.length > 0 ? renderMedicatieList(state.medicatie) : '<p class="empty-state">Nog geen medicatie. Voeg links een middel toe zoals de kliniek het voorschrijft.</p>'}
+        <div class="section-subheading">
+          ${renderPolicyPanel()}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderMedicatieForm(medicatie?: Medicatie): string {
+  const today = new Date().toISOString().slice(0, 10);
+
+  return `
+    <form id="medicatie-form" class="data-form">
+      <input type="hidden" name="id" value="${escapeAttribute(medicatie?.id ?? '')}" />
+      <label>
+        Naam
+        <input name="naam" required value="${escapeAttribute(medicatie?.naam ?? '')}" />
+      </label>
+      <div class="form-grid">
+        <label>
+          Vorm
+          <select name="vorm">
+            ${Object.entries(MEDICATIE_VORM_LABELS)
+              .map(([value, label]) => renderOption(value, label, medicatie?.vorm))
+              .join('')}
+          </select>
+        </label>
+        <label>
+          Actief
+          <select name="actief">
+            ${renderOption('true', 'Actief', medicatie?.actief === false ? 'false' : 'true')}
+            ${renderOption('false', 'Inactief', medicatie?.actief === false ? 'false' : 'true')}
+          </select>
+        </label>
+      </div>
+      <label>
+        Voorgeschreven dosis
+        <input name="voorgeschrevenDosis" value="${escapeAttribute(medicatie?.voorgeschrevenDosis ?? '')}" placeholder="Neem exact over van de kliniek" />
+      </label>
+      <label>
+        Instructie
+        <textarea name="instructie" rows="3">${escapeHtml(medicatie?.instructie ?? '')}</textarea>
+      </label>
+      <div class="form-grid">
+        <label>
+          Schema startdatum
+          <input name="schemaStartDatum" type="date" value="${today}" />
+        </label>
+        <label>
+          Tijdstip
+          <input name="schemaTijdstip" type="time" value="20:00" />
+        </label>
+      </div>
+      <label>
+        Aantal dagen voor geplande logs
+        <input name="schemaAantalDagen" type="number" min="0" step="1" value="0" />
+      </label>
+      <p class="small-print">Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.</p>
+      <button type="submit">${medicatie ? 'Bewaar medicatie' : 'Voeg medicatie toe'}</button>
+    </form>
+  `;
+}
+
+function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): string {
+  const now = new Date().toISOString().slice(0, 16);
+
+  return `
+    <ol class="phase-list">
+      ${doseLogs
+        .map((doseLog) => {
+          const medicatie = bundles.find((bundle) => bundle.medicatie.id === doseLog.medicatieId)?.medicatie;
+          const missed = doseLogIsGemist(doseLog, now);
+          return `
+            <li class="phase-item${missed ? ' missed' : ''}">
+              <div>
+                <h3>${escapeHtml(medicatie?.naam ?? 'Onbekende medicatie')}</h3>
+                <p>${formatDateTime(doseLog.geplandOp)} · ${doseLog.status}${missed ? ' · gemist' : ''}</p>
+                <small>${escapeHtml(medicatie ? beschrijfMedicatieDosis(medicatie) : '')}</small>
+              </div>
+              <div class="button-row">
+                <button class="dose-button" type="button" data-dose-log-id="${doseLog.id}" data-dose-status="genomen">Genomen</button>
+                <button class="dose-button secondary" type="button" data-dose-log-id="${doseLog.id}" data-dose-status="overgeslagen">Overgeslagen</button>
+              </div>
+            </li>
+          `;
+        })
+        .join('')}
+    </ol>
+  `;
+}
+
+function renderMedicatieList(bundles: MedicatieBundle[]): string {
+  return `
+    <ol class="phase-list">
+      ${bundles
+        .map(
+          (bundle) => `
+            <li class="phase-item">
+              <div>
+                <h3>${escapeHtml(bundle.medicatie.naam)}</h3>
+                <p>${MEDICATIE_VORM_LABELS[bundle.medicatie.vorm]} · ${bundle.medicatie.actief ? 'actief' : 'inactief'}</p>
+                <small>${escapeHtml(beschrijfMedicatieDosis(bundle.medicatie))}</small>
+                ${bundle.medicatie.instructie ? `<p class="linked-note">Instructie: ${escapeHtml(bundle.medicatie.instructie)}</p>` : ''}
+                <p class="linked-note">${bundle.doseLogs.length} geplande log(s)</p>
+              </div>
+            </li>
+          `,
+        )
+        .join('')}
+    </ol>
+  `;
 }
 
 function renderTrajectScreen(state: AppShellState): string {

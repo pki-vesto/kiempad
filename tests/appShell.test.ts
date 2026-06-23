@@ -60,6 +60,7 @@ describe('app shell', () => {
           fasen: [],
         },
       ],
+      medicatie: [],
       afspraken: [
         {
           afspraak: {
@@ -90,5 +91,37 @@ describe('app shell', () => {
     expect(html).toContain('Vraag: Wanneer horen we de uitslag?');
     expect(html).toContain('Herinnering: 2026-06-24 08:30');
     expect(html).toContain('Traject: Poging 1');
+  });
+
+  it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {
+    const html = renderAppShell('medicatie', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-1',
+            naam: 'Progesteron',
+            vorm: 'zetpil',
+            voorgeschrevenDosis: 'zoals kliniek: 2x per dag',
+            instructie: 'ochtend en avond',
+            actief: true,
+          },
+          doseLogs: [
+            {
+              id: 'dose-1',
+              medicatieId: 'med-1',
+              geplandOp: new Date().toISOString().slice(0, 10) + 'T08:00',
+              status: 'gepland',
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(html).toContain('Progesteron');
+    expect(html).toContain('zoals kliniek: 2x per dag');
+    expect(html).toContain('Genomen');
+    expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
   });
 });

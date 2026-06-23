@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 58 |
+| ☑ klaar | 69 |
 | ◐ bezig | 0 |
-| ☐ open | 116 |
+| ☐ open | 105 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -99,15 +99,15 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G043 | Medicatie toevoegen (naam, vorm, instructie) | P0 | F1 | ☐ |
-| G044 | Voorgeschreven dosis vastleggen **zoals door de kliniek opgegeven** | P0 | F1 | ☐ |
-| G045 | App berekent/adviseert **nooit** zelf een dosering (policy-test) | P0 | F1 | ☐ |
-| G046 | Medicatie als actief/inactief markeren | P1 | F1 | ☐ |
-| G047 | Injectievorm apart ondersteunen (timing belangrijk) | P0 | F1 | ☐ |
-| G048 | DoseLog: geplande inname/injectie per dag genereren | P0 | F1 | ☐ |
-| G049 | Inname afvinken (genomen/overgeslagen) met tijdstip | P0 | F1 | ☐ |
-| G050 | Dagoverzicht "wat moet ik vandaag innemen/injecteren" | P0 | F1 | ☐ |
-| G051 | Waarschuwing/markering bij gemiste inname | P1 | F1 | ☐ |
+| G043 | Medicatie toevoegen (naam, vorm, instructie) | P0 | F1 | ☑ |
+| G044 | Voorgeschreven dosis vastleggen **zoals door de kliniek opgegeven** | P0 | F1 | ☑ |
+| G045 | App berekent/adviseert **nooit** zelf een dosering (policy-test) | P0 | F1 | ☑ |
+| G046 | Medicatie als actief/inactief markeren | P1 | F1 | ☑ |
+| G047 | Injectievorm apart ondersteunen (timing belangrijk) | P0 | F1 | ☑ |
+| G048 | DoseLog: geplande inname/injectie per dag genereren | P0 | F1 | ☑ |
+| G049 | Inname afvinken (genomen/overgeslagen) met tijdstip | P0 | F1 | ☑ |
+| G050 | Dagoverzicht "wat moet ik vandaag innemen/injecteren" | P0 | F1 | ☑ |
+| G051 | Waarschuwing/markering bij gemiste inname | P1 | F1 | ☑ |
 | G052 | Notitie per inname (bv. bijwerking, plek injectie) | P2 | F2 | ☐ |
 | G053 | Historie van innames per medicatie | P2 | F2 | ☐ |
 | G054 | Voorraad/teller (nog X doses over) | P3 | F3 | ☐ |
@@ -278,8 +278,8 @@
 | G159 | Unit-tests voor domeinregels (vergoeding, fase-logica, datums) | P1 | F1 | ☑ |
 | G160 | Tests voor versleuteling/ontsleuteling (round-trip) | P0 | F1 | ☑ |
 | G161 | Tests voor opslaglaag (CRUD op IndexedDB, mock) | P1 | F1 | ☑ |
-| G162 | Tests voor herinnering-/DoseLog-generatie | P1 | F1 | ☐ |
-| G163 | Policy-test: geen dosering-/diagnose-output | P0 | F1 | ☐ |
+| G162 | Tests voor herinnering-/DoseLog-generatie | P1 | F1 | ☑ |
+| G163 | Policy-test: geen dosering-/diagnose-output | P0 | F1 | ☑ |
 | G164 | Privacy-test: geen uitgaand verkeer zonder opt-in | P0 | F1 | ☑ |
 | G165 | CI groen vereist vóór merge | P1 | F0 | ☐ |
 | G166 | Linting/formatting consistent (bv. eslint/prettier of biome) | P2 | F1 | ☐ |

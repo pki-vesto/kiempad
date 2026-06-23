@@ -1,8 +1,18 @@
 import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { AgendaStore, type AfspraakBundle } from './domain/agendaStore';
+import { MedicatieStore, type MedicatieBundle } from './domain/medicatieStore';
 import { TrajectStore } from './domain/trajectStore';
-import type { Afspraak, Fase, Herinnering, Traject, TrajectFase, Vraag } from './domain/types';
+import type {
+  Afspraak,
+  DoseLog,
+  Fase,
+  Herinnering,
+  Medicatie,
+  Traject,
+  TrajectFase,
+  Vraag,
+} from './domain/types';
 import { maakTraject, type TrajectMetFasen } from './domain/traject';
 import { EncryptedRecordRepository } from './storage/encryptedRepository';
 import type { EncryptedStorageDriver } from './storage/records';
@@ -15,8 +25,10 @@ type RuntimeState = {
   hasVault: boolean;
   trajectStore?: TrajectStore;
   agendaStore?: AgendaStore;
+  medicatieStore?: MedicatieStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
+  medicatie: MedicatieBundle[];
   error?: string;
 };
 
@@ -30,15 +42,19 @@ function render(root: HTMLElement, state: RuntimeState): void {
   root.innerHTML = renderAppShell(normalizeScreenId(window.location.hash), {
     trajecten: state.trajecten,
     afspraken: state.afspraken,
+    medicatie: state.medicatie,
   });
   bindTrajectControls(root, state);
   bindAgendaControls(root, state);
+  bindMedicatieControls(root, state);
   root.querySelector('#lock-button')?.addEventListener('click', () => {
     state.session.lock();
     state.trajectStore = undefined;
     state.agendaStore = undefined;
+    state.medicatieStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
+    state.medicatie = [];
     state.error = undefined;
     render(root, state);
   });
@@ -56,6 +72,7 @@ async function mount(): Promise<void> {
     hasVault: await session.hasVault(),
     trajecten: [],
     afspraken: [],
+    medicatie: [],
   };
 
   render(app, state);
@@ -77,8 +94,10 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.hasVault = await state.session.hasVault();
         state.trajectStore = createTrajectStore(state);
         state.agendaStore = createAgendaStore(state);
+        state.medicatieStore = createMedicatieStore(state);
         state.trajecten = await state.trajectStore.list();
         state.afspraken = await state.agendaStore.list();
+        state.medicatie = await state.medicatieStore.list();
         state.error = undefined;
         render(root, state);
       })
@@ -137,6 +156,36 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
   });
 }
 
+function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#medicatie-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveMedicatieFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#delete-medicatie')?.addEventListener('click', (event) => {
+    const button = event.currentTarget;
+    if (!(button instanceof HTMLButtonElement)) return;
+    const medicatieId = button.dataset.medicatieId;
+    if (!medicatieId || !state.medicatieStore) return;
+
+    const confirmed = window.confirm('Weet je zeker dat je deze medicatie en geplande logs wilt verwijderen?');
+    if (!confirmed) return;
+
+    void state.medicatieStore.delete(medicatieId).then(() => reloadAndRender(root, state));
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('.dose-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const doseLogId = button.dataset.doseLogId;
+      const status = button.dataset.doseStatus;
+      if (!doseLogId || !state.medicatieStore) return;
+      if (status !== 'genomen' && status !== 'overgeslagen') return;
+
+      void state.medicatieStore.markDoseLog(doseLogId, status).then(() => reloadAndRender(root, state));
+    });
+  });
+}
+
 async function saveTrajectFromForm(
   target: EventTarget | null,
   root: HTMLElement,
@@ -160,6 +209,29 @@ async function saveTrajectFromForm(
   } else {
     await state.trajectStore.create(input);
   }
+
+  await reloadAndRender(root, state);
+}
+
+async function saveMedicatieFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.medicatieStore) return;
+
+  const data = new FormData(target);
+  await state.medicatieStore.save({
+    id: optionalString(data.get('id')),
+    naam: String(data.get('naam') ?? ''),
+    vorm: parseMedicatieVorm(data.get('vorm')),
+    voorgeschrevenDosis: optionalString(data.get('voorgeschrevenDosis')),
+    instructie: optionalString(data.get('instructie')),
+    actief: data.get('actief') !== 'false',
+    schemaStartDatum: optionalString(data.get('schemaStartDatum')),
+    schemaTijdstip: optionalString(data.get('schemaTijdstip')),
+    schemaAantalDagen: Number(data.get('schemaAantalDagen') ?? 0),
+  });
 
   await reloadAndRender(root, state);
 }
@@ -195,6 +267,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.agendaStore) {
     state.afspraken = await state.agendaStore.list();
   }
+  if (state.medicatieStore) {
+    state.medicatie = await state.medicatieStore.list();
+  }
   render(root, state);
 }
 
@@ -211,6 +286,27 @@ function createAgendaStore(state: RuntimeState): AgendaStore {
     new EncryptedRecordRepository<Herinnering>(state.driver, state.session, 'herinnering'),
     new EncryptedRecordRepository<Vraag>(state.driver, state.session, 'vraag'),
   );
+}
+
+function createMedicatieStore(state: RuntimeState): MedicatieStore {
+  return new MedicatieStore(
+    new EncryptedRecordRepository<Medicatie>(state.driver, state.session, 'medicatie'),
+    new EncryptedRecordRepository<DoseLog>(state.driver, state.session, 'dose_log'),
+  );
+}
+
+function parseMedicatieVorm(value: FormDataEntryValue | null): Medicatie['vorm'] {
+  if (
+    value === 'injectie' ||
+    value === 'tablet' ||
+    value === 'neusspray' ||
+    value === 'zetpil' ||
+    value === 'overig'
+  ) {
+    return value;
+  }
+
+  return 'overig';
 }
 
 function parseAfspraakType(value: FormDataEntryValue | null): Afspraak['type'] {

@@ -27,18 +27,22 @@
   versleutelde repository, afspraaktypes, komende-afsprakenlijst, trajectkoppeling,
   voorbereiding/notitie, gekoppelde vraag voor de arts en afspraakherinnering als
   lokaal record.
+- **M1.5 medicatie & injectieschema:** medicatie vastleggen met vorm, instructie,
+  actief/inactief en kliniekdosistekst, injectievorm apart tonen, DoseLogs genereren
+  vanuit expliciete planning, vandaag-overzicht tonen, innames als genomen/
+  overgeslagen markeren en gemiste geplande innames markeren zonder ooit een dosering
+  te berekenen.
 
 ## 2. Gedeeltelijk Gebouwd
 
-- Medicatie, herinneringen, vragen en kennisitems tonen nog inhoudelijke lege-staten;
-  traject/fasen en agenda zijn aangesloten op de versleutelde repository-laag.
+- Herinneringen, vragen en kennisitems tonen nog inhoudelijke lege-staten; traject/
+  fasen, agenda en medicatie zijn aangesloten op de versleutelde repository-laag.
 
 ## 3. Nog Niet Gebouwd
 
 De rest van F1 (MVP) en later, o.a.:
 
-- Inhoudelijke UI-workflows voor medicatie/DoseLog, herinneringen, vragen en
-  kennisbank.
+- Inhoudelijke UI-workflows voor herinneringen, vragen en kennisbank.
 - PWA-/service-worker-runtime.
 - Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
@@ -57,10 +61,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 - **Client-side runtime aanwezig.** Lokaal te starten met `npm run dev`; de app-shell
   toont eerst een passphrase-kluis en navigeert na ontgrendelen via hash-routes.
   Het trajectscherm kan nu een poging met fasen lokaal versleuteld beheren; het
-  agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren.
+  agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren; het
+  medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (25 passing), `npm run build` en `npm audit --audit-level=high`.
+  (33 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -68,7 +73,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **Medicatie/injectieschema + herinneringen** (de "niet missen"-kern).
+1. **Herinneringen/notificaties** voor medicatie en afspraken.
 2. **Vragen voor de arts** als eigen hoofdscherm.
 3. **Basis-kennisbank** met conceptinhoud en herkomstlabels.
 
