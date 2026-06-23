@@ -966,6 +966,10 @@ describe('app shell', () => {
       'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
     );
     expect(html).toContain('Embryo-dossiers');
+    expect(html).toContain('Embryo-historie');
+    expect(html).toContain(
+      '2026-05-04 · Terugplaatsing · dag 5 · kwaliteit 4AA · terminologie Gardner-score · Bron: Labrapport',
+    );
     expect(html).toContain('Laatste datum: 2026-05-04');
     expect(html).toContain('Kwaliteit: 4AA');
     expect(html).toContain('Status: teruggeplaatst');

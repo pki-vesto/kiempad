@@ -21,6 +21,13 @@ export type EmbryoDossierItem = {
     soort: 'kwaliteit' | 'beeld' | 'document';
     bron: string;
   }[];
+  historie: {
+    id: string;
+    datum: string;
+    gebeurtenis: string;
+    detail: string;
+    bron: string;
+  }[];
   waarschuwing: string;
 };
 
@@ -108,6 +115,13 @@ function bouwEmbryoDossier(
       soort: bepaalDocumentSoort(document),
       bron: document.metadata.bronbestand ?? document.bestandsNaam,
     })),
+    historie: dossierDocumenten.map((document) => ({
+      id: document.id,
+      datum: bepaalDatum(document),
+      gebeurtenis: bepaalHistorieGebeurtenis(document),
+      detail: beschrijfHistorieDetail(document),
+      bron: bepaalBron(document),
+    })),
     waarschuwing:
       'Embryo-dossier is een feitelijk overzicht van kliniekterugkoppelingen; Kiempad berekent geen kansen en geeft geen medisch advies.',
   };
@@ -138,6 +152,40 @@ function bepaalDocumentSoort(
     return 'beeld';
   }
   return 'document';
+}
+
+function bepaalHistorieGebeurtenis(document: DossierDocument): string {
+  if (document.embryo?.status === 'bevrucht') return 'Bevruchting';
+  if (document.embryo?.status === 'teruggeplaatst') return 'Terugplaatsing';
+  if (document.embryo?.status === 'ingevroren') return 'Ingevroren';
+  if (document.embryo?.status === 'niet_gebruikt') return 'Stop/niet gebruikt';
+  if (document.embryo) return document.embryo.meetmoment ?? 'Kwaliteitsmeetmoment';
+  if (bepaalDocumentSoort(document) === 'beeld') return 'Beeldmoment';
+  return 'Dossiermoment';
+}
+
+function beschrijfHistorieDetail(document: DossierDocument): string {
+  const details = [
+    document.embryo?.dag ? `dag ${document.embryo.dag}` : undefined,
+    document.embryo?.kwaliteit ? `kwaliteit ${document.embryo.kwaliteit}` : undefined,
+    document.embryo?.kliniekTerminologie
+      ? `terminologie ${document.embryo.kliniekTerminologie}`
+      : undefined,
+    document.beeldMetadata?.embryoDag ? `embryodag ${document.beeldMetadata.embryoDag}` : undefined,
+    document.beeldMetadata?.laboratoriumContext,
+    document.beeldMetadata?.context,
+  ].filter(isString);
+
+  return details.length > 0 ? details.join(' · ') : document.titel;
+}
+
+function bepaalBron(document: DossierDocument): string {
+  return (
+    document.embryo?.bron ??
+    document.beeldMetadata?.bron ??
+    document.metadata.bronbestand ??
+    document.bestandsNaam
+  );
 }
 
 function normaliseerLabel(label: string): string {

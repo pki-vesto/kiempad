@@ -1195,6 +1195,15 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
       <div>
         <h3>${escapeHtml(item.embryoLabel)}</h3>
         <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
+        <p class="small-print">Embryo-historie</p>
+        <ol class="compact-list">
+          ${item.historie
+            .map(
+              (moment) =>
+                `<li>${escapeHtml(moment.datum)} · ${escapeHtml(moment.gebeurtenis)} · ${escapeHtml(moment.detail)} · Bron: ${escapeHtml(moment.bron)}</li>`,
+            )
+            .join('')}
+        </ol>
         <ul class="compact-list">
           ${item.documenten
             .map(
