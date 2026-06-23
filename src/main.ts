@@ -270,6 +270,11 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#research-item-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveResearchItemFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelector('#ai-preview-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     saveAiPreviewFromForm(event.currentTarget, root, state);
@@ -293,6 +298,22 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
       void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
     });
   });
+}
+
+async function saveResearchItemFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.kennisStore) return;
+
+  const data = new FormData(target);
+  await state.kennisStore.saveResearchItem({
+    titel: String(data.get('researchTitel') ?? ''),
+    bron: optionalString(data.get('researchBron')),
+    notitie: String(data.get('researchNotitie') ?? ''),
+  });
+  await reloadAndRender(root, state);
 }
 
 function saveAiPreviewFromForm(

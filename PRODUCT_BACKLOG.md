@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 128 |
+| ☑ klaar | 129 |
 | ◐ bezig | 0 |
-| ☐ open | 50 |
+| ☐ open | 49 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -175,7 +175,7 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G094 | Research-item (link/notitie/bron) opslaan in bibliotheek | P2 | F2 | ☐ |
+| G094 | Research-item (link/notitie/bron) opslaan in bibliotheek | P2 | F2 | ☑ |
 | G095 | AI-functie staat **standaard uit** (opt-in) | P0 | F2 | ☑ |
 | G096 | AI-samenvatting alleen op expliciet verzoek | P0 | F2 | ☑ |
 | G097 | Verstuurde tekst wordt geminimaliseerd/gede-identificeerd | P0 | F2 | ☑ |
