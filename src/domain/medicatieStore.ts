@@ -6,7 +6,8 @@ import {
   type DoseLogInput,
   type MedicatieInput,
 } from './medicatie';
-import type { DoseLog, Medicatie } from './types';
+import { maakMedicatieHerinnering } from './herinnering';
+import type { DoseLog, Herinnering, Medicatie } from './types';
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId, nowIso } from '../storage/records';
 
@@ -26,6 +27,7 @@ export class MedicatieStore {
   constructor(
     private readonly medicatieRepository: EncryptedRecordRepository<Medicatie>,
     private readonly doseLogRepository: EncryptedRecordRepository<DoseLog>,
+    private readonly herinneringRepository?: EncryptedRecordRepository<Herinnering>,
   ) {}
 
   async list(): Promise<MedicatieBundle[]> {
@@ -68,6 +70,7 @@ export class MedicatieStore {
     await Promise.all([
       this.medicatieRepository.delete(medicatieId),
       ...doseLogs.map((doseLog) => this.doseLogRepository.delete(doseLog.id)),
+      ...doseLogs.map((doseLog) => this.deleteMedicatieReminder(doseLog.id)),
     ]);
   }
 
@@ -79,9 +82,8 @@ export class MedicatieStore {
     const record = await this.doseLogRepository.get(doseLogId);
     if (!record) return;
 
-    await this.doseLogRepository.saveWithId(
-      markeerDoseLogGenomen(record.value, genomenOp, status),
-    );
+    await this.doseLogRepository.saveWithId(markeerDoseLogGenomen(record.value, genomenOp, status));
+    await this.deleteMedicatieReminder(doseLogId);
   }
 
   async doseLogsForDay(datum: string): Promise<DoseLog[]> {
@@ -98,6 +100,7 @@ export class MedicatieStore {
 
     const doseLogs = genereerDoseLogs(generateRecordId, input);
     await Promise.all(doseLogs.map((doseLog) => this.doseLogRepository.saveWithId(doseLog)));
+    await Promise.all(doseLogs.map((doseLog) => this.saveMedicatieReminder(doseLog)));
   }
 
   private async listDoseLogsForMedication(medicatieId: string): Promise<DoseLog[]> {
@@ -106,5 +109,27 @@ export class MedicatieStore {
       .map((record) => record.value)
       .filter((doseLog) => doseLog.medicatieId === medicatieId)
       .sort((a, b) => a.geplandOp.localeCompare(b.geplandOp));
+  }
+
+  private async saveMedicatieReminder(doseLog: DoseLog): Promise<void> {
+    if (!this.herinneringRepository || doseLog.status !== 'gepland') return;
+
+    const existing = await this.findMedicatieReminder(doseLog.id);
+    const reminder = maakMedicatieHerinnering(existing?.id ?? generateRecordId(), doseLog);
+    await this.herinneringRepository.saveWithId(reminder);
+  }
+
+  private async deleteMedicatieReminder(doseLogId: string): Promise<void> {
+    const existing = await this.findMedicatieReminder(doseLogId);
+    if (existing) await this.herinneringRepository?.delete(existing.id);
+  }
+
+  private async findMedicatieReminder(doseLogId: string): Promise<Herinnering | undefined> {
+    if (!this.herinneringRepository) return undefined;
+
+    const records = await this.herinneringRepository.list();
+    return records
+      .map((record) => record.value)
+      .find((herinnering) => herinnering.bron.soort === 'medicatie' && herinnering.bron.refId === doseLogId);
   }
 }

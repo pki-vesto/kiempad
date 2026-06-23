@@ -61,6 +61,8 @@ describe('app shell', () => {
         },
       ],
       medicatie: [],
+      herinneringen: [],
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       afspraken: [
         {
           afspraak: {
@@ -97,6 +99,8 @@ describe('app shell', () => {
     const html = renderAppShell('medicatie', {
       trajecten: [],
       afspraken: [],
+      herinneringen: [],
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       medicatie: [
         {
           medicatie: {
@@ -123,5 +127,28 @@ describe('app shell', () => {
     expect(html).toContain('zoals kliniek: 2x per dag');
     expect(html).toContain('Genomen');
     expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
+  });
+
+  it('rendert herinneringen met permissiestatus en generieke notificatie-uitleg', () => {
+    const html = renderAppShell('herinneringen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      notificaties: { permission: 'default', serviceWorker: 'unregistered' },
+      herinneringen: [
+        {
+          id: 'rem-1',
+          bron: { soort: 'medicatie', refId: 'dose-1' },
+          tijdstip: '2099-06-23T20:00',
+          herhaling: 'eenmalig',
+          actief: true,
+        },
+      ],
+    });
+
+    expect(html).toContain('Notificaties aanzetten');
+    expect(html).toContain('Medicatie');
+    expect(html).toContain('Eenmalig');
+    expect(html).toContain('generieke tekst');
   });
 });

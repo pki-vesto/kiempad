@@ -1,4 +1,6 @@
-import type { Afspraak, Herinnering, Vraag } from './types';
+import type { Afspraak, Vraag } from './types';
+
+export { maakAfspraakHerinnering } from './herinnering';
 
 export const AFSPRAAK_TYPE_LABELS: Record<Afspraak['type'], string> = {
   echo: 'Echo',
@@ -29,20 +31,6 @@ export function maakAfspraak(id: string, input: AfspraakInput): Afspraak {
     locatie: normaliseerOptioneleTekst(input.locatie),
     voorbereiding: normaliseerOptioneleTekst(input.voorbereiding),
     notitie: normaliseerOptioneleTekst(input.notitie),
-  };
-}
-
-export function maakAfspraakHerinnering(
-  id: string,
-  afspraakId: string,
-  tijdstip: string,
-): Herinnering {
-  return {
-    id,
-    bron: { soort: 'afspraak', refId: afspraakId },
-    tijdstip,
-    herhaling: 'eenmalig',
-    actief: true,
   };
 }
 

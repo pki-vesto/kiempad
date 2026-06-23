@@ -7,6 +7,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.6 herinneringen & lokale notificaties: centrale versleutelde herinneringenopslag,
+  afspraak- en medicatieherinneringen vanuit afspraken/DoseLogs, eenmalige/
+  dagelijkse/wekelijkse herhalingslogica, herinneringenscherm met permissiestatus,
+  lokale service-worker-notificaties en generieke notificatietekst zonder medische
+  details (G057-G059, G061, G064).
 - M1.5 medicatie & injectieschema: versleuteld medicatie vastleggen met vorm,
   instructie, actief/inactief en kliniekdosistekst, injectievorm apart ondersteunen,
   DoseLogs genereren vanuit expliciete planning, vandaag-overzicht tonen, innames als

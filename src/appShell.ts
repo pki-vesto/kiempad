@@ -17,13 +17,27 @@ import {
   doseLogsVoorDag,
 } from './domain/medicatie';
 import type { MedicatieBundle } from './domain/medicatieStore';
-import type { Afspraak, DoseLog, Medicatie, Traject } from './domain/types';
+import {
+  HERHALING_LABELS,
+  HERINNERING_BRON_LABELS,
+  komendeHerinneringen,
+  localDateTimeIso,
+} from './domain/herinnering';
+import type { NotificationRuntimeStatus } from './notificationRuntime';
+import type { Afspraak, DoseLog, Herinnering, Medicatie, Traject } from './domain/types';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
   'en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
 
-type ScreenId = 'start' | 'traject' | 'agenda' | 'medicatie' | 'vragen' | 'kennis';
+type ScreenId =
+  | 'start'
+  | 'traject'
+  | 'agenda'
+  | 'medicatie'
+  | 'herinneringen'
+  | 'vragen'
+  | 'kennis';
 
 type Screen = {
   id: ScreenId;
@@ -64,6 +78,13 @@ export const SCREENS: readonly Screen[] = [
     emptyState: 'Nog geen medicatie. Doseringen worden nooit door Kiempad berekend.',
   },
   {
+    id: 'herinneringen',
+    label: 'Herinneringen',
+    title: 'Herinneringen',
+    intro: 'Lokale meldingen voor medicatie en afspraken, zonder externe dienst.',
+    emptyState: 'Nog geen herinneringen. Ze ontstaan vanuit medicatie en afspraken.',
+  },
+  {
     id: 'vragen',
     label: 'Vragen',
     title: 'Vragen voor de arts',
@@ -90,11 +111,19 @@ export type AppShellState = {
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
   medicatie: MedicatieBundle[];
+  herinneringen: Herinnering[];
+  notificaties: NotificationRuntimeStatus;
 };
 
 export function renderAppShell(
   activeId: ScreenId,
-  state: AppShellState = { trajecten: [], afspraken: [], medicatie: [] },
+  state: AppShellState = {
+    trajecten: [],
+    afspraken: [],
+    medicatie: [],
+    herinneringen: [],
+    notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+  },
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
   const screenContent = renderScreenContent(activeId, activeScreen, state);
@@ -173,6 +202,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'traject') return renderTrajectScreen(state);
   if (activeId === 'agenda') return renderAgendaScreen(state);
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
+  if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
 
   return `
     <section class="workspace" aria-label="${screen.label}">
@@ -194,6 +224,7 @@ function renderStartScreen(state: AppShellState): string {
         <h2>Waar staan we?</h2>
         <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
         <p>${escapeHtml(beschrijfVolgendeAfspraak(state.afspraken.map((bundle) => bundle.afspraak), new Date().toISOString().slice(0, 16)))}</p>
+        <p>${escapeHtml(beschrijfVolgendeHerinnering(state.herinneringen))}</p>
         ${
           activeTraject
             ? `<a class="inline-action" href="#traject">Bekijk traject</a>`
@@ -203,6 +234,84 @@ function renderStartScreen(state: AppShellState): string {
       ${renderPolicyPanel()}
     </section>
   `;
+}
+
+function renderHerinneringenScreen(state: AppShellState): string {
+  const komende = komendeHerinneringen(state.herinneringen, localDateTimeIso(new Date()));
+
+  return `
+    <section class="traject-layout" aria-label="Herinneringen beheren">
+      <div class="form-panel">
+        <h2>Notificaties</h2>
+        <div class="notification-status">
+          <p><strong>Toestemming:</strong> ${renderPermissionLabel(state.notificaties.permission)}</p>
+          <p><strong>Service worker:</strong> ${renderServiceWorkerLabel(state.notificaties.serviceWorker)}</p>
+        </div>
+        ${
+          state.notificaties.permission === 'default' || state.notificaties.serviceWorker === 'unregistered'
+            ? '<button id="request-notifications" type="button">Notificaties aanzetten</button>'
+            : ''
+        }
+        ${
+          state.notificaties.permission === 'denied'
+            ? '<p class="small-print">Notificaties zijn in de browser geweigerd. Kiempad blijft herinneringen in de app tonen.</p>'
+            : ''
+        }
+        <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
+      </div>
+      <div class="timeline-panel">
+        <div class="panel-heading">
+          <h2>Komende herinneringen</h2>
+        </div>
+        ${
+          komende.length > 0
+            ? renderHerinneringenList(komende)
+            : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>): string {
+  return `
+    <ol class="phase-list">
+      ${items
+        .map(
+          ({ herinnering, volgendMoment }) => `
+            <li class="phase-item">
+              <div>
+                <h3>${HERINNERING_BRON_LABELS[herinnering.bron.soort]}</h3>
+                <p>${formatDateTime(volgendMoment)} · ${HERHALING_LABELS[herinnering.herhaling ?? 'eenmalig']}</p>
+                <small>${herinnering.actief ? 'Actief' : 'Inactief'}</small>
+              </div>
+            </li>
+          `,
+        )
+        .join('')}
+    </ol>
+  `;
+}
+
+function beschrijfVolgendeHerinnering(herinneringen: Herinnering[]): string {
+  const volgende = komendeHerinneringen(herinneringen, localDateTimeIso(new Date()))[0];
+  if (!volgende) return 'Nog geen komende herinneringen.';
+
+  return `Volgende herinnering: ${formatDateTime(volgende.volgendMoment)}.`;
+}
+
+function renderPermissionLabel(permission: NotificationRuntimeStatus['permission']): string {
+  if (permission === 'granted') return 'toegestaan';
+  if (permission === 'denied') return 'geweigerd';
+  if (permission === 'default') return 'nog niet gevraagd';
+  return 'niet ondersteund';
+}
+
+function renderServiceWorkerLabel(status: NotificationRuntimeStatus['serviceWorker']): string {
+  if (status === 'ready') return 'actief';
+  if (status === 'unregistered') return 'nog niet geregistreerd';
+  if (status === 'error') return 'fout';
+  return 'niet ondersteund';
 }
 
 function renderAgendaScreen(state: AppShellState): string {
