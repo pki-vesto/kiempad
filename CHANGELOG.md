@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G225 PFIP daily recommendations: man-sectie toont een leefstijl- en
+  voorbereidingskaart voor feitelijke observaties en consultvragen, zonder
+  vruchtbaarheidsadvies, supplementadvies of behandelkeuze.
 - G224 PFIP daily recommendations: dagoverzicht toont een cyclusdagcheck op basis
   van lokale trajectfase en cyclusmetingen, zonder diagnose, dosering,
   timingadvies of behandelkeuze.

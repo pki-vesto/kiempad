@@ -88,6 +88,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
           },
     ],
     man: [
+      bouwMannelijkeVoorbereidingskaart(),
       {
         id: 'man-basisdag',
         owner: 'man',
@@ -156,6 +157,35 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             bron: 'Vragenlijst',
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
           },
+    ],
+  };
+}
+
+function bouwMannelijkeVoorbereidingskaart(): DailyRecommendation {
+  return {
+    id: 'man-leefstijl-voorbereiding',
+    owner: 'man',
+    titel: 'Mannelijke leefstijl- en voorbereidingskaart',
+    detail:
+      'Gebruik dit als lokale notitiekaart voor feitelijke observaties en vragen die je eventueel met de kliniek wilt bespreken.',
+    bron: 'Lokale dagstart en gedeelde voorbereiding',
+    waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    checklist: [
+      {
+        label: 'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
+        bron: 'Eigen lokale notities',
+        disclaimer: 'Geen vruchtbaarheidsadvies of leefstijlvoorschrift.',
+      },
+      {
+        label: 'Voeding en supplementen: verzamel vragen voor kliniek, arts of apotheek.',
+        bron: 'Gedeelde consultvoorbereiding',
+        disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+      },
+      {
+        label: 'Voorbereiding: controleer welke praktische punten jullie zelf willen bespreken.',
+        bron: 'Agenda en vragenlijst',
+        disclaimer: 'Geen behandelkeuze of medische interpretatie.',
+      },
     ],
   };
 }
