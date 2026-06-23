@@ -91,6 +91,8 @@ Publicatie via een aparte Tailscale HTTPS-node is voorbereid met
   AES-GCM; sleutel afgeleid van een passphrase).
 - **Back-up:** versleutelde export/import als bestand (handmatig, op je eigen
   apparaat).
+- **Ontgrendelen:** passphrase als basis; optioneel WebAuthn/biometrie via lokale
+  PRF-keywrap als gemak op ondersteunde HTTPS/localhost-browsers.
 - **AI (optioneel, opt-in):** alleen op expliciet verzoek; samenvatten van research
   met waarschuwingslabels en bronvermelding, **nooit** dosering/diagnose/behandelkeuze.
   De on-device AI-verkenning toont alleen passief lokale browsermogelijkheden; Kiempad

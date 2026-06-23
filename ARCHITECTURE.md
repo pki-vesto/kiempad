@@ -72,8 +72,9 @@ en blijft **lokaal en versleuteld**.
   **afgeleid uit een passphrase** met **PBKDF2** (hoge iteratietelling) of Argon2id,
   met een per-installatie salt. De sleutel staat **alleen in geheugen** zolang de
   sessie ontgrendeld is; hij wordt nooit platgeschreven of geëxporteerd.
-- **Toegang:** ontgrendelen met passphrase; waar beschikbaar biometrie/WebAuthn als
-  extra ontgrendelgemak (de afgeleide sleutel blijft de basis).
+- **Toegang:** ontgrendelen met passphrase; waar beschikbaar optioneel
+  biometrie/WebAuthn via een lokale PRF-keywrap als extra ontgrendelgemak. De
+  passphrase blijft fallback en herstelroute.
 - **Back-up:** **versleutelde export** naar een bestand (`*.kiempad-export`), te
   importeren op hetzelfde of een ander toestel. De gebruiker beheert de back-up zelf.
 

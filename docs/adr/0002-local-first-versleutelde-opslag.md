@@ -21,6 +21,9 @@ randvoorwaarde is dat data **lokaal en/of versleuteld** blijft en dat er standaa
 - **Sleutel:** afgeleid uit een **passphrase** met **PBKDF2** (hoge iteratietelling)
   of Argon2id, met per-installatie **salt**. De sleutel bestaat alleen **in geheugen**
   zolang de sessie ontgrendeld is; hij wordt nooit platgeschreven of geëxporteerd.
+- **Optionele WebAuthn-ontgrendeling:** na een passphrase-unlock kan de gebruiker op
+  hetzelfde toestel WebAuthn PRF koppelen. Kiempad bewaart dan alleen een lokaal
+  versleutelde keywrap; de passphrase blijft de fallback en herstelroute.
 - **Back-up:** **versleutelde export/import** als bestand; de gebruiker beheert dit
   zelf.
 - **Migraties:** **additief** (velden komen erbij; bestaande betekenis verandert niet).

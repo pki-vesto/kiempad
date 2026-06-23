@@ -239,7 +239,17 @@ export type AppShellState = {
   agendaImportError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
+  webAuthnStatus?: WebAuthnViewStatus;
   inAppFallbackNotifications?: InAppFallbackNotification[];
+};
+
+export type WebAuthnViewStatus = {
+  runtimeBeschikbaar: boolean;
+  reden: string;
+  gekoppeld: boolean;
+  label?: string;
+  status?: string;
+  error?: string;
 };
 
 export function renderAppShell(
@@ -255,6 +265,11 @@ export function renderAppShell(
     kosten: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    webAuthnStatus: {
+      runtimeBeschikbaar: false,
+      reden: 'WebAuthn-status nog niet bepaald.',
+      gekoppeld: false,
+    },
   },
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
@@ -302,7 +317,11 @@ export function renderAppShell(
   `;
 }
 
-export function renderVaultGate(hasVault: boolean, error?: string): string {
+export function renderVaultGate(
+  hasVault: boolean,
+  error?: string,
+  webAuthnStatus?: WebAuthnViewStatus,
+): string {
   const title = hasVault ? 'Ontgrendel Kiempad' : 'Maak je lokale kluis aan';
   const button = hasVault ? 'Ontgrendel' : 'Kluis aanmaken';
   const help = hasVault
@@ -320,6 +339,7 @@ export function renderVaultGate(hasVault: boolean, error?: string): string {
           <input id="passphrase" name="passphrase" type="password" minlength="8" autocomplete="current-password" required />
           <button type="submit">${button}</button>
         </form>
+        ${renderVaultWebAuthnUnlock(webAuthnStatus)}
         ${error ? `<p class="form-error" role="alert">${error}</p>` : ''}
         <aside class="policy-panel" aria-labelledby="recovery-title">
           <h2 id="recovery-title">Geen herstel-achterdeur</h2>
@@ -331,6 +351,20 @@ export function renderVaultGate(hasVault: boolean, error?: string): string {
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
+  `;
+}
+
+function renderVaultWebAuthnUnlock(status?: WebAuthnViewStatus): string {
+  if (!status?.gekoppeld) return '';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="WebAuthn ontgrendeling">
+      <h2>Biometrie/WebAuthn</h2>
+      <p>${escapeHtml(status.label ?? 'Lokale WebAuthn-sleutel')} is gekoppeld als ontgrendelgemak. Je passphrase blijft de fallback en herstelroute.</p>
+      <button id="webauthn-unlock" class="secondary-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>Ontgrendel met WebAuthn</button>
+      <p class="small-print">${escapeHtml(status.reden)}</p>
+      ${status.error ? `<p class="form-error" role="alert">${escapeHtml(status.error)}</p>` : ''}
+    </section>
   `;
 }
 
@@ -583,6 +617,7 @@ function renderBackupScreen(state: AppShellState): string {
           <p>${escapeHtml(reminder.tekst)}</p>
           ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
         </section>
+        ${renderWebAuthnSettings(state.webAuthnStatus)}
       </div>
       <div class="timeline-panel">
         <h2>Import</h2>
@@ -604,6 +639,25 @@ function renderBackupScreen(state: AppShellState): string {
         ${state.backupStatus ? `<p class="linked-note">${escapeHtml(state.backupStatus)}</p>` : ''}
         ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
       </div>
+    </section>
+  `;
+}
+
+function renderWebAuthnSettings(status?: WebAuthnViewStatus): string {
+  if (!status) return '';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn">
+      <h2>Biometrie/WebAuthn</h2>
+      <p>Optioneel ontgrendelgemak op dit toestel. Je passphrase blijft nodig als fallback en voor herstel via back-up.</p>
+      <dl class="summary-list">
+        <div><dt>Status</dt><dd>${status.gekoppeld ? `Gekoppeld: ${escapeHtml(status.label ?? 'WebAuthn/biometrie')}` : 'Niet gekoppeld'}</dd></div>
+        <div><dt>Browser</dt><dd>${escapeHtml(status.reden)}</dd></div>
+      </dl>
+      <button id="webauthn-enroll" class="phase-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>${status.gekoppeld ? 'WebAuthn opnieuw koppelen' : 'Koppel WebAuthn'}</button>
+      <p class="small-print">Kiempad gebruikt alleen lokale WebAuthn PRF-output om een kluissleutel versleuteld te bewaren; er gaat niets naar een server.</p>
+      ${status.status ? `<p class="linked-note">${escapeHtml(status.status)}</p>` : ''}
+      ${status.error ? `<p class="form-error" role="alert">${escapeHtml(status.error)}</p>` : ''}
     </section>
   `;
 }

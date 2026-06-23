@@ -1,9 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
+import { randomBytes } from '../src/storage/encoding';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
 import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
 import { CURRENT_SCHEMA_VERSION } from '../src/storage/records';
 import { STORAGE_SCHEMA_META_KEY, type StorageSchemaMetadata } from '../src/storage/schema';
-import { VaultSession } from '../src/storage/vaultSession';
+import { VaultSession, type WebAuthnUnlockMetadata } from '../src/storage/vaultSession';
 
 type TestTraject = {
   naam: string;
@@ -101,6 +102,64 @@ describe('encrypted storage', () => {
     vi.advanceTimersByTime(1_001);
     expect(session.isUnlocked()).toBe(false);
     vi.useRealTimers();
+  });
+
+  it('ontgrendelt optioneel met WebAuthn PRF-keywrap zonder passphrase te bewaren', async () => {
+    const driver = new MemoryEncryptedStorageDriver();
+    const session = new VaultSession(driver, { autoLockMs: 60_000 });
+    await session.initializeOrUnlock('webauthn passphrase');
+
+    const repository = new EncryptedRecordRepository<TestTraject>(driver, session, 'traject');
+    const index = await repository.save({ naam: 'Poging 1', notitie: 'blijft versleuteld' });
+    const prfSecret = randomBytes(32);
+    const prfSalt = randomBytes(32);
+    await session.enableWebAuthnUnlock({
+      credentialId: 'credential-id',
+      prfSalt,
+      prfSecret,
+      label: 'Laptop biometrie',
+    });
+    session.lock();
+
+    const metadata = await driver.getMeta<WebAuthnUnlockMetadata>('webauthn-unlock');
+    expect(metadata).toMatchObject({
+      credentialId: 'credential-id',
+      label: 'Laptop biometrie',
+      version: 1,
+    });
+    expect(JSON.stringify(metadata)).not.toContain('webauthn passphrase');
+    expect(JSON.stringify(metadata)).not.toContain('blijft versleuteld');
+
+    const webAuthnSession = new VaultSession(driver, { autoLockMs: 60_000 });
+    await webAuthnSession.unlockWithWebAuthnPrf(prfSecret);
+    const webAuthnRepository = new EncryptedRecordRepository<TestTraject>(
+      driver,
+      webAuthnSession,
+      'traject',
+    );
+
+    await expect(webAuthnRepository.get(index.id)).resolves.toMatchObject({
+      value: { naam: 'Poging 1', notitie: 'blijft versleuteld' },
+    });
+  });
+
+  it('weigert WebAuthn-ontgrendeling met een andere PRF-output', async () => {
+    const driver = new MemoryEncryptedStorageDriver();
+    const session = new VaultSession(driver, { autoLockMs: 60_000 });
+    await session.initializeOrUnlock('webauthn passphrase');
+    await session.enableWebAuthnUnlock({
+      credentialId: 'credential-id',
+      prfSalt: randomBytes(32),
+      prfSecret: randomBytes(32),
+      label: 'Laptop biometrie',
+    });
+    session.lock();
+
+    const wrongSession = new VaultSession(driver, { autoLockMs: 60_000 });
+
+    await expect(wrongSession.unlockWithWebAuthnPrf(randomBytes(32))).rejects.toThrow(
+      'WebAuthn-verificatie past niet bij deze Kiempad-kluis',
+    );
   });
 
   it('doet geen uitgaand netwerkverkeer bij kluis- en repository-acties', async () => {

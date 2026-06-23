@@ -19,15 +19,24 @@ export async function deriveAesKey(
   salt: Uint8Array,
   iterations = KDF_ITERATIONS,
 ): Promise<CryptoKey> {
+  const rawKey = await deriveAesKeyBytes(passphrase, salt, iterations);
+  return importAesKey(rawKey);
+}
+
+export async function deriveAesKeyBytes(
+  passphrase: string,
+  salt: Uint8Array,
+  iterations = KDF_ITERATIONS,
+): Promise<Uint8Array> {
   const material = await globalThis.crypto.subtle.importKey(
     'raw',
     textEncoder.encode(passphrase),
     'PBKDF2',
     false,
-    ['deriveKey'],
+    ['deriveBits'],
   );
 
-  return globalThis.crypto.subtle.deriveKey(
+  const bits = await globalThis.crypto.subtle.deriveBits(
     {
       name: 'PBKDF2',
       hash: 'SHA-256',
@@ -35,6 +44,20 @@ export async function deriveAesKey(
       iterations,
     },
     material,
+    256,
+  );
+
+  return new Uint8Array(bits);
+}
+
+export async function importAesKey(rawKey: Uint8Array): Promise<CryptoKey> {
+  if (rawKey.byteLength !== 32) {
+    throw new Error('AES-256 sleutel moet 32 bytes zijn.');
+  }
+
+  return globalThis.crypto.subtle.importKey(
+    'raw',
+    toArrayBuffer(rawKey),
     {
       name: 'AES-GCM',
       length: 256,

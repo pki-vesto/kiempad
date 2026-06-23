@@ -109,6 +109,10 @@
 - **G104 on-device AI-verkenning:** het kennisscherm detecteert passief lokale
   browser-AI API-objecten zoals `LanguageModel` en `Summarizer`, zonder sessie,
   modeldownload, provider-call of cloud-stap. Zie [`docs/ON_DEVICE_AI.md`](docs/ON_DEVICE_AI.md).
+- **G121 WebAuthn/biometrie:** back-upscherm kan WebAuthn PRF lokaal koppelen als
+  ontgrendelgemak; de vergrendelde kluis kan daarna met dezelfde credential en
+  PRF-output openen via een lokale keywrap. De passphrase blijft fallback en
+  herstelroute. Zie [`docs/WEBAUTHN_UNLOCK.md`](docs/WEBAUTHN_UNLOCK.md).
 - **G094 researchbibliotheek:** het kennisscherm kan handmatige researchitems met
   titel, bron/link en notitie als versleuteld conceptkennisitem in de categorie
   research bewaren.
@@ -227,7 +231,7 @@
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
 - Kosten, research + AI-providercall, gedeelde modus.
-- Tailscale-publicatie via aparte HTTPS-node en optionele WebAuthn/biometrie.
+- Tailscale-publicatie via aparte HTTPS-node.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
@@ -258,12 +262,13 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   kostenkennis met jaartal; het kostenscherm bewaart kostenposten met
   categorie/vergoedstatus, toont een lokaal kostenoverzicht en bewaakt de
   eigen-risicostand voor 2026; het trajectscherm toont de vergoede-pogingen-teller.
-  Het back-upscherm
-  kan versleutelde exportbestanden downloaden en checksum-gecontroleerd importeren.
+  Het back-upscherm kan versleutelde exportbestanden downloaden,
+  checksum-gecontroleerd importeren, syncpakketten verwerken en optioneel
+  WebAuthn/biometrie als PRF-keywrap koppelen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (96 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test`, `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
