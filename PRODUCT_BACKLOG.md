@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 132 |
+| ☑ klaar | 133 |
 | ◐ bezig | 0 |
-| ☐ open | 46 |
+| ☐ open | 45 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -164,7 +164,7 @@
 | G085 | CostItem toevoegen/bewerken/verwijderen | P2 | F2 | ☑ |
 | G086 | Kosten categoriseren (medicatie/behandeling/reis/overig) | P2 | F2 | ☑ |
 | G087 | Markeren of een kostenpost vergoed/eigen risico/zelf is | P2 | F2 | ☑ |
-| G088 | Overzicht totale kosten en eigen bijdrage | P2 | F2 | ☐ |
+| G088 | Overzicht totale kosten en eigen bijdrage | P2 | F2 | ☑ |
 | G089 | Eigen-risico-teller (€385 in 2026) | P2 | F2 | ☐ |
 | G090 | Vergoede-pogingen-teller (3 per zwangerschap, <43 jr) | P2 | F2 | ☐ |
 | G091 | Regel "poging telt pas na geslaagde punctie" toegepast | P2 | F2 | ☑ |

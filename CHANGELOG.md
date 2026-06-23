@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G088 kostenoverzicht: kostenscherm toont totaal, vergoed gemarkeerd, mogelijke eigen
+  bijdrage en onbekende bedragen op basis van lokaal ingevoerde kostenposten.
 - G085/G086/G087 kostenbasis: kostenscherm kan kostenposten toevoegen, bewerken en
   verwijderen met categorie en vergoedstatus, lokaal versleuteld opgeslagen.
 - G094 researchbibliotheek: kennisscherm kan handmatig researchitems met titel,

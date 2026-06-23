@@ -87,6 +87,8 @@
 - **G085/G086/G087 kostenbasis:** kostenscherm kan kostenposten toevoegen, bewerken en
   verwijderen met categorie en vergoedstatus; records worden versleuteld lokaal
   opgeslagen.
+- **G088 kostenoverzicht:** kostenscherm telt lokaal ingevoerde bedragen op naar
+  totaal, vergoed gemarkeerd, mogelijke eigen bijdrage en onbekende posten.
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
@@ -150,7 +152,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   seedt en toont conceptkennis lokaal met bron- en verificatielabels, kan handmatige
   researchitems opslaan en biedt lokale AI-opt-ininstellingen, provider/modelkeuze,
   payload-preview en AI-samenvatting-opslag; het kostenscherm bewaart kostenposten met
-  categorie en vergoedstatus. Het back-upscherm
+  categorie/vergoedstatus en toont een lokaal kostenoverzicht. Het back-upscherm
   kan versleutelde exportbestanden downloaden en checksum-gecontroleerd importeren.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.

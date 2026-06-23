@@ -16,7 +16,11 @@ import {
   localDateTimeIso,
 } from './domain/herinnering';
 import { KENNIS_CATEGORIE_LABELS, kennisItemsPerCategorie } from './domain/kennis';
-import { COST_CATEGORIE_LABELS, COST_VERGOED_LABELS } from './domain/kosten';
+import {
+  berekenKostenOverzicht,
+  COST_CATEGORIE_LABELS,
+  COST_VERGOED_LABELS,
+} from './domain/kosten';
 import {
   beschrijfMedicatieDosis,
   doseLogIsGemist,
@@ -331,7 +335,7 @@ function renderKennisScreen(state: AppShellState): string {
 
 function renderKostenScreen(state: AppShellState): string {
   const kosten = state.kosten ?? [];
-  const totaal = kosten.reduce((sum, item) => sum + item.bedrag, 0);
+  const overzicht = berekenKostenOverzicht(kosten);
 
   return `
     <section class="traject-layout" aria-label="Kosten en vergoedingen">
@@ -341,7 +345,13 @@ function renderKostenScreen(state: AppShellState): string {
       </div>
       <div class="timeline-panel">
         <h2>Lokale kostenbibliotheek</h2>
-        <p class="small-print">Totaal vastgelegd: ${formatEuro(totaal)}. Dit is geen financieel advies; eigen polis en verzekeraar blijven leidend.</p>
+        <dl class="summary-list">
+          <div><dt>Totaal</dt><dd>${formatEuro(overzicht.totaal)}</dd></div>
+          <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
+          <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
+          <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
+        </dl>
+        <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Dit is geen financieel advies; eigen polis en verzekeraar blijven leidend.</p>
         ${
           kosten.length > 0
             ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
