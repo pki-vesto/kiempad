@@ -91,7 +91,10 @@ function bepaalSignalen(input: {
   const signalen: string[] = [];
 
   const herkenningen: Array<[RegExp, string]> = [
-    [/\b(echo|ultrasound)\b/, 'Bestandsnaam lijkt op echo/beeldonderzoek.'],
+    [
+      /\b(echo|ultrasound|foto|image|beeld)\b/,
+      'Bestandsnaam lijkt op foto/echo of beeldonderzoek.',
+    ],
     [
       /\b(bloed|lab|uitslag|hormoon|amh|fsh|lh|estradiol)\b/,
       'Bestandsnaam lijkt op laboratoriumuitslag.',
@@ -109,6 +112,7 @@ function bepaalSignalen(input: {
 
   if (input.mimeType?.startsWith('image/')) {
     signalen.push('Bestandstype is beeldmateriaal.');
+    signalen.push('Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.');
   } else if (input.mimeType === 'application/pdf') {
     signalen.push('Bestandstype is PDF.');
   } else if (input.mimeType?.startsWith('text/')) {

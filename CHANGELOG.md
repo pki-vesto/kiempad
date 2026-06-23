@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G176 beeldmateriaal: Dossier-scherm accepteert foto's/echo's via image-upload,
+  herkent beeldbijlagen lokaal en toont na ontgrendeling een lokale preview uit de
+  versleutelde dossierpayload.
 - G175 historische onderzoeken: nieuw Dossier-scherm uploadt meerdere
   onderzoeksbestanden, bewaart de inhoud versleuteld lokaal en toont lokale,
   niet-medische analyse van bestandsnaam, type en grootte.

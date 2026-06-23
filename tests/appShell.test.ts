@@ -471,7 +471,9 @@ describe('app shell', () => {
     expect(html).toContain('Dossier');
     expect(html).toContain('Historische onderzoeken uploaden');
     expect(html).toContain('id="dossier-upload-form"');
-    expect(html).toContain('name="dossierBestanden" type="file" multiple required');
+    expect(html).toContain(
+      'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
+    );
     expect(html).toContain('Bestanden en analyse blijven versleuteld lokaal');
     expect(html).toContain('geen medisch advies');
     expect(html).toContain('Bloeduitslag mei');
@@ -483,6 +485,48 @@ describe('app shell', () => {
     expect(html).toContain('Notitie: Historisch onderzoek');
     expect(html).toContain('1 onderzoeksbestand lokaal versleuteld toegevoegd.');
     expect(html).not.toContain('cGRm');
+  });
+
+  it('rendert beeldmateriaal als lokale dossierpreview', () => {
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-beeld',
+          datum: '2026-05-02',
+          titel: 'Echo 6 weken',
+          categorie: 'beeld',
+          bestandsNaam: 'echo-foto-6-weken.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'anBn',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; 4 KB. Analyse is lokaal en niet-medisch.',
+            signalen: [
+              'Bestandsnaam lijkt op foto/echo of beeldonderzoek.',
+              'Bestandstype is beeldmateriaal.',
+              'Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.',
+            ],
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Echo 6 weken');
+    expect(html).toContain('Foto/echo');
+    expect(html).toContain('data:image/jpeg;base64,anBn');
+    expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
+    expect(html).toContain('Lokale preview; dit beeld blijft op dit toestel.');
+    expect(html).toContain('Bestandstype is beeldmateriaal.');
   });
 
   it('rendert het welzijnscherm met symptoomlogformulier en logs', () => {

@@ -56,6 +56,26 @@ describe('dossier', () => {
     ).toThrow('Bestandsinhoud is verplicht');
   });
 
+  it('herkent foto- en echo-bestanden als beeldbijlage', () => {
+    const document = maakDossierDocument('doc-beeld', {
+      datum: '2026-05-02',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-foto-6-weken.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 4096,
+      inhoudBase64: 'anBn',
+    });
+
+    expect(document.analyse.samenvatting).toContain('Foto/echo opgeslagen als beeldbestand');
+    expect(document.analyse.signalen).toContain(
+      'Bestandsnaam lijkt op foto/echo of beeldonderzoek.',
+    );
+    expect(document.analyse.signalen).toContain('Bestandstype is beeldmateriaal.');
+    expect(document.analyse.signalen).toContain(
+      'Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.',
+    );
+  });
+
   it('sorteert dossierdocumenten aflopend op onderzoeksdatum', () => {
     const items = [
       maakDossierDocument('doc-1', {

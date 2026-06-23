@@ -579,7 +579,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <label>
             Bestanden
-            <input name="dossierBestanden" type="file" multiple required />
+            <input name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required />
           </label>
           <label>
             Notitie
@@ -587,7 +587,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Upload naar dossier</button>
         </form>
-        <p class="small-print">Bestanden en analyse blijven versleuteld lokaal. De analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        <p class="small-print">Bestanden en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
       </div>
@@ -610,6 +610,7 @@ function renderDossierDocument(document: DossierDocument): string {
         <h3>${escapeHtml(document.titel)}</h3>
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
+        ${renderDossierImagePreview(document)}
         <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
         <ul class="compact-list">
           ${document.analyse.signalen.map((signaal) => `<li>${escapeHtml(signaal)}</li>`).join('')}
@@ -617,6 +618,17 @@ function renderDossierDocument(document: DossierDocument): string {
         ${document.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(document.notitie)}</p>` : ''}
       </div>
     </li>
+  `;
+}
+
+function renderDossierImagePreview(document: DossierDocument): string {
+  if (document.categorie !== 'beeld' || !document.mimeType?.startsWith('image/')) return '';
+
+  return `
+    <figure class="linked-note">
+      <img src="data:${escapeAttribute(document.mimeType)};base64,${escapeAttribute(document.inhoudBase64)}" alt="Lokale preview van ${escapeAttribute(document.titel)}" loading="lazy" />
+      <figcaption>Lokale preview; dit beeld blijft op dit toestel.</figcaption>
+    </figure>
   `;
 }
 
