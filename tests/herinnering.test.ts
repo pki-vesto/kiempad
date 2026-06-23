@@ -28,6 +28,27 @@ describe('herinnering domeinregels', () => {
     });
   });
 
+  it('maakt een eigen losse herinnering met titel', () => {
+    expect(
+      komendeHerinneringen(
+        [
+          {
+            id: 'own',
+            bron: { soort: 'eigen' },
+            titel: 'Water drinken',
+            tijdstip: '2026-06-23T12:00',
+            herhaling: 'eenmalig',
+            actief: true,
+          },
+        ],
+        '2026-06-23T11:00',
+      )[0]?.herinnering,
+    ).toMatchObject({
+      bron: { soort: 'eigen' },
+      titel: 'Water drinken',
+    });
+  });
+
   it('berekent volgende dagelijkse en wekelijkse momenten zonder externe dienst', () => {
     expect(
       volgendHerinneringMoment(

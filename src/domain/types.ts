@@ -82,6 +82,7 @@ export interface DoseLog {
 export interface Herinnering {
   id: string;
   bron: { soort: 'medicatie' | 'afspraak' | 'eigen'; refId?: string };
+  titel?: string;
   tijdstip: IsoDate;
   herhaling?: 'eenmalig' | 'dagelijks' | 'wekelijks';
   actief: boolean;

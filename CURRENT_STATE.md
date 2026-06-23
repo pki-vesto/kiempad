@@ -95,6 +95,9 @@
 - **G055 medicatieschema-import:** medicatiescherm kan een handmatig gestructureerd
   klinieklijstje importeren met regels `Medicatie | YYYY-MM-DD | HH:MM`; Kiempad maakt
   alleen expliciete DoseLogs en leidt geen dosering af.
+- **G060 eigen losse herinneringen:** herinneringenscherm kan eigen herinneringen met
+  titel, tijdstip en herhaling versleuteld bewaren naast medicatie- en
+  afspraakherinneringen.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -127,7 +130,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   week-/maandgroeperingen plus afgelopen afspraken met terugblik; het
   medicatiescherm kan middelen, geplande DoseLogs, notities per inname,
   innameshistorie en gestructureerde schema-import versleuteld beheren; het
-  herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
+  herinneringenscherm toont komende lokale herinneringen, eigen losse herinneringen en
+  notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale
   AI-opt-ininstellingen, payload-preview en AI-samenvatting-opslag. Het back-upscherm
@@ -135,7 +139,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (92 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (94 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

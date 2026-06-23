@@ -206,12 +206,24 @@ describe('app shell', () => {
           herhaling: 'eenmalig',
           actief: true,
         },
+        {
+          id: 'rem-2',
+          bron: { soort: 'eigen' },
+          titel: 'Water drinken',
+          tijdstip: '2099-06-23T12:00',
+          herhaling: 'dagelijks',
+          actief: true,
+        },
       ],
     });
 
     expect(html).toContain('Notificaties aanzetten');
+    expect(html).toContain('id="eigen-herinnering-form"');
+    expect(html).toContain('Voeg herinnering toe');
+    expect(html).toContain('Water drinken');
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eenmalig');
+    expect(html).toContain('Dagelijks');
     expect(html).toContain('generieke tekst');
   });
 

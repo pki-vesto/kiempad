@@ -43,6 +43,22 @@ describe('HerinneringStore', () => {
     expect((await store.list()).map((reminder) => reminder.id)).toEqual([first.id, later.id]);
   });
 
+  it('bewaart eigen losse herinneringen met titel versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      bron: { soort: 'eigen' },
+      titel: 'Water drinken',
+      tijdstip: '2026-06-23T12:00',
+      herhaling: 'dagelijks',
+      actief: true,
+    });
+
+    const raw = await driver.getRecord(saved.id);
+    expect(saved).toMatchObject({ titel: 'Water drinken', bron: { soort: 'eigen' } });
+    expect(raw?.payload.ciphertext).not.toContain('Water drinken');
+  });
+
   it('verwijdert herinneringen', async () => {
     const { store } = await setupStore();
     const saved = await store.save({

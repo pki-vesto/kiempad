@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G060 eigen losse herinneringen: herinneringenscherm kan eigen herinneringen met
+  titel, tijdstip en herhaling versleuteld bewaren.
 - G055 medicatieschema-import: handmatig gestructureerde regels
   `Medicatie | YYYY-MM-DD | HH:MM` maken expliciete DoseLogs zonder dosering af te
   leiden.

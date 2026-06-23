@@ -631,6 +631,8 @@ function renderHerinneringenScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar notificatieprivacy</button>
         </form>
+        <h2 class="section-subheading">Eigen herinnering</h2>
+        ${renderEigenHerinneringForm()}
       </div>
       <div class="timeline-panel">
         <div class="panel-heading">
@@ -646,6 +648,30 @@ function renderHerinneringenScreen(state: AppShellState): string {
   `;
 }
 
+function renderEigenHerinneringForm(): string {
+  return `
+    <form id="eigen-herinnering-form" class="data-form compact-form">
+      <label>
+        Titel
+        <input name="titel" required autocomplete="off" />
+      </label>
+      <label>
+        Tijdstip
+        <input name="tijdstip" type="datetime-local" required />
+      </label>
+      <label>
+        Herhaling
+        <select name="herhaling">
+          <option value="eenmalig">Eenmalig</option>
+          <option value="dagelijks">Dagelijks</option>
+          <option value="wekelijks">Wekelijks</option>
+        </select>
+      </label>
+      <button type="submit">Voeg herinnering toe</button>
+    </form>
+  `;
+}
+
 function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>): string {
   return `
     <ol class="phase-list">
@@ -654,7 +680,7 @@ function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>)
           ({ herinnering, volgendMoment }) => `
             <li class="phase-item">
               <div>
-                <h3>${HERINNERING_BRON_LABELS[herinnering.bron.soort]}</h3>
+                <h3>${escapeHtml(herinnering.titel ?? HERINNERING_BRON_LABELS[herinnering.bron.soort])}</h3>
                 <p>${formatDateTime(volgendMoment)} · ${HERHALING_LABELS[herinnering.herhaling ?? 'eenmalig']}</p>
                 <small>${herinnering.actief ? 'Actief' : 'Inactief'}</small>
               </div>
