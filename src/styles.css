@@ -402,6 +402,11 @@ h2 {
   background: #e6f0ec;
 }
 
+.phase-item.missed {
+  border-color: #b85d4f;
+  background: #fff2ef;
+}
+
 .phase-item h3 {
   margin: 0 0 6px;
   font-size: 1rem;
@@ -421,6 +426,23 @@ h2 {
   margin: 0;
   color: #465148;
   line-height: 1.6;
+}
+
+.section-subheading {
+  margin-top: 18px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: end;
+}
+
+.dose-button.secondary {
+  border: 1px solid #aeb9ae;
+  background: #ffffff;
+  color: #334236;
 }
 
 @media (max-width: 760px) {
@@ -480,8 +502,13 @@ h2 {
   }
 
   .danger-button,
-  .phase-button {
+  .phase-button,
+  .dose-button {
     width: 100%;
+  }
+
+  .button-row {
+    justify-content: stretch;
   }
 }
 
