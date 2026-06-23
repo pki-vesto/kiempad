@@ -79,6 +79,7 @@ Conventies:
 | instructie | string? | |
 | actief | boolean | |
 | voorraadAantal | number? | optionele teller met resterend aantal doses; geen doseringsadvies |
+| instructieVideo | `{ bestandsNaam, mimeType?, grootteBytes, inhoudBase64 }?` | optionele lokale video-bijlage; geen externe embed/tracking |
 
 ### DoseLog (inname/injectie)
 | veld | type | opmerking |

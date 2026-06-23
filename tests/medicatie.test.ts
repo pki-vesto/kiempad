@@ -19,6 +19,12 @@ describe('medicatie domeinregels', () => {
       instructie: '  avond  ',
       actief: true,
       voorraadAantal: 4.8,
+      instructieVideo: {
+        bestandsNaam: ' injectie.mp4 ',
+        mimeType: ' video/mp4 ',
+        grootteBytes: 1234.9,
+        inhoudBase64: 'bG9rYWxlLXZpZGVv',
+      },
     });
 
     expect(medicatie).toEqual({
@@ -29,6 +35,12 @@ describe('medicatie domeinregels', () => {
       instructie: 'avond',
       actief: true,
       voorraadAantal: 4,
+      instructieVideo: {
+        bestandsNaam: 'injectie.mp4',
+        mimeType: 'video/mp4',
+        grootteBytes: 1234,
+        inhoudBase64: 'bG9rYWxlLXZpZGVv',
+      },
     });
     expect(beschrijfMedicatieDosis(medicatie)).toBe('volgens kliniek: 150 IE');
     expect(beschrijfMedicatieVoorraad(medicatie)).toBe('4 doses over');

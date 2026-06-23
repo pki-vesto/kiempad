@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G056 injectie-instructie: medicatie kan naast instructietekst een lokale
+  instructievideo als versleutelde bijlage tonen, zonder externe embed of tracking.
 - G054 medicatievoorraad: medicaties kunnen een optionele resterende
   dosisteller bewaren die lokaal verlaagt bij een genomen DoseLog.
 - G042 ICS-import: agendascherm kan een lokaal `.ics`-bestand van de kliniek lezen

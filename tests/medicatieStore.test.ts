@@ -33,6 +33,12 @@ describe('MedicatieStore', () => {
       instructie: 'ochtend en avond',
       actief: true,
       voorraadAantal: 12,
+      instructieVideo: {
+        bestandsNaam: 'injectie.mp4',
+        mimeType: 'video/mp4',
+        grootteBytes: 2048,
+        inhoudBase64: 'dmVyc2xldXRlbGRlLXZpZGVv',
+      },
       schemaStartDatum: '2026-06-23',
       schemaAantalDagen: 2,
       schemaTijdstip: '08:00',
@@ -46,7 +52,9 @@ describe('MedicatieStore', () => {
       '2026-06-24T08:00',
     ]);
     expect(saved.medicatie.voorraadAantal).toBe(12);
+    expect(saved.medicatie.instructieVideo?.bestandsNaam).toBe('injectie.mp4');
     expect((await driver.listRecords('herinnering')).length).toBe(2);
+    expect(raw?.payload.ciphertext).not.toContain('injectie.mp4');
   });
 
   it('markeert DoseLogs als genomen en verlaagt voorraad eenmalig', async () => {
