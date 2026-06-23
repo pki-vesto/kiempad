@@ -15,6 +15,10 @@ import {
   type OnDeviceAiCapability,
 } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
+import {
+  type BehandelGeschiedenisItem,
+  reconstrueerBehandelGeschiedenis,
+} from './domain/behandelGeschiedenis';
 import { CONSULT_VERSLAG_BRON_LABELS } from './domain/consultVerslag';
 import {
   bouwDossierIndex,
@@ -698,6 +702,11 @@ function renderDossierScreen(state: AppShellState): string {
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
+  const behandelGeschiedenis = reconstrueerBehandelGeschiedenis({
+    afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+    consultVerslagen,
+    dossierDocumenten: zichtbareDocumenten,
+  });
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
       renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
@@ -918,6 +927,12 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state, matchMap.get(item.id))).join('')}</ol>`
             : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
         }
+        <h2>Behandelgeschiedenis</h2>
+        ${
+          behandelGeschiedenis.length > 0
+            ? `<ol class="phase-list">${behandelGeschiedenis.map(renderBehandelGeschiedenisItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
+        }
       </div>
     </section>
   `;
@@ -1091,6 +1106,24 @@ function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number
       ${details.map(escapeHtml).join(' · ')}
       <br />
       <small>Tags: ${item.tags.map(escapeHtml).join(', ')}</small>
+    </li>
+  `;
+}
+
+function renderBehandelGeschiedenisItem(item: BehandelGeschiedenisItem): string {
+  const koppelingen = [
+    item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+    item.afspraakId ? `Afspraak: ${item.afspraakId}` : undefined,
+  ].filter((detail): detail is string => Boolean(detail));
+
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.titel)}</h3>
+        <p class="linked-note">${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · Bron: ${escapeHtml(item.bron)}</p>
+        <p>${escapeHtml(item.detail)}</p>
+        ${koppelingen.length > 0 ? `<p class="small-print">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
+      </div>
     </li>
   `;
 }

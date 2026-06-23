@@ -661,6 +661,7 @@ describe('app shell', () => {
     expect(html).toContain('1 resultaat voor "erasmus"');
     expect(html).toContain('Dossierindex');
     expect(html).toContain('Documenttijdlijn');
+    expect(html).toContain('Behandelgeschiedenis');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(
       'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
@@ -726,6 +727,9 @@ describe('app shell', () => {
     expect(html).toContain('Vraag: Vraag over vervolgstap bewaren.');
     expect(html).toContain('Bron: consulttekst regel 1');
     expect(html).toContain('Notitie: Vraag over vervolgstap bewaren.');
+    expect(html).toContain('2026-05-01T09:30 · Consult · Bron: Agenda');
+    expect(html).toContain('2026-05-01 · Consultverslag · Bron: Consulttekst');
+    expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
     expect(html).toContain('1 dossierbestand lokaal versleuteld toegevoegd.');
     expect(html).not.toContain('cGRm');
   });
