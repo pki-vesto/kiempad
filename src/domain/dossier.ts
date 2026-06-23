@@ -42,6 +42,15 @@ export type DossierTijdlijnItem = {
   document: DossierDocument;
 };
 
+export type DossierIndexItem = {
+  id: string;
+  datum: string;
+  documenttype: string;
+  bron: string;
+  trajectId?: string;
+  tags: string[];
+};
+
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
   onderzoek: 'Onderzoek',
   beeld: 'Foto/echo',
@@ -175,8 +184,44 @@ export function bouwDossierTijdlijn(items: readonly DossierDocument[]): DossierT
   });
 }
 
+export function bouwDossierIndex(items: readonly DossierDocument[]): DossierIndexItem[] {
+  return sorteerDossierDocumenten(items).map((document) => {
+    const metadata = document.metadata;
+    const documenttype =
+      metadata?.documenttype ??
+      (document.uploadProfiel
+        ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+        : DOSSIER_CATEGORIE_LABELS[document.categorie]);
+
+    return {
+      id: document.id,
+      datum: bepaalDossierTijdlijnDatum(document),
+      documenttype,
+      bron: metadata?.bronbestand ?? document.bestandsNaam,
+      trajectId: metadata?.trajectId ?? document.trajectId,
+      tags: bepaalDossierIndexTags(document, documenttype),
+    };
+  });
+}
+
 function bepaalDossierTijdlijnDatum(document: DossierDocument): string {
   return document.metadata?.documentDatum || document.datum;
+}
+
+function bepaalDossierIndexTags(document: DossierDocument, documenttype: string): string[] {
+  const tags = [
+    documenttype,
+    DOSSIER_CATEGORIE_LABELS[document.categorie],
+    document.uploadProfiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel] : undefined,
+    document.mimeType === 'application/pdf' ? 'PDF' : undefined,
+    document.mimeType?.startsWith('image/') ? 'Beeld' : undefined,
+    document.ocr ? 'OCR' : undefined,
+    document.metadata?.instelling,
+    document.metadata?.arts,
+    document.trajectId ? 'Traject gekoppeld' : undefined,
+  ].filter((tag): tag is string => Boolean(tag));
+
+  return Array.from(new Set(tags));
 }
 
 function analyseerDossierDocument(input: {

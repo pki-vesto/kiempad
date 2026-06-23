@@ -248,12 +248,15 @@
   documenttijdlijn uit herkende metadata en gebruiker-correcties. De tijdlijn
   sorteert op de beste bekende documentdatum en toont of die uit metadata of uit
   de formulierdatum komt.
+- **G185 PFIP dossierindex:** het dossierscherm toont een lokale index met
+  documentdatum, documenttype, bronbestand, trajectkoppeling en tags uit categorie,
+  uploadprofiel, bestandstype, OCR-status, instelling en arts.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G184 nog 59 open doelen (G185-G243), gericht op dossier-ingest,
+heeft na G185 nog 58 open doelen (G186-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -303,8 +306,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G185: medische dossier-ingest uitbreiden met indexering
-   en lokale zoekfunctionaliteit.
+1. PFIP uitvoeren vanaf G186: medische dossier-ingest uitbreiden met lokale
+   zoekfunctionaliteit en privacytests voor OCR/extractie.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

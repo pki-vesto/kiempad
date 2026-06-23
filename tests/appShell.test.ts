@@ -583,6 +583,7 @@ describe('app shell', () => {
 
     expect(html).toContain('Dossier');
     expect(html).toContain('Dossierdocument uploaden');
+    expect(html).toContain('Dossierindex');
     expect(html).toContain('Documenttijdlijn');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(
@@ -611,6 +612,8 @@ describe('app shell', () => {
     expect(html).toContain('Poging 1');
     expect(html).toContain('geen medisch advies');
     expect(html).toContain('Bloeduitslag mei');
+    expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
+    expect(html).toContain('Tags: Labuitslag, Onderzoek, PDF, OCR, Erasmus MC');
     expect(html).toContain('bloed-lab-uitslag.pdf');
     expect(html).toContain('Onderzoek');
     expect(html).toContain('Labuitslag');

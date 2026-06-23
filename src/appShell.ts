@@ -16,6 +16,7 @@ import {
 } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
 import {
+  bouwDossierIndex,
   bouwDossierTijdlijn,
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
@@ -670,6 +671,7 @@ function renderWebAuthnSettings(status?: WebAuthnViewStatus): string {
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
+  const indexItems = bouwDossierIndex(documenten);
   const tijdlijn = bouwDossierTijdlijn(documenten);
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
@@ -797,6 +799,12 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Embryokwaliteit wordt vastgelegd als kliniekterugkoppeling. Kiempad berekent geen kansen en geeft geen medisch advies.</p>
       </div>
       <div class="timeline-panel">
+        <h2>Dossierindex</h2>
+        ${
+          indexItems.length > 0
+            ? `<ol class="compact-list">${indexItems.map(renderDossierIndexItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
+        }
         <h2>Documenttijdlijn</h2>
         ${
           tijdlijn.length > 0
@@ -805,6 +813,22 @@ function renderDossierScreen(state: AppShellState): string {
         }
       </div>
     </section>
+  `;
+}
+
+function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number]): string {
+  const details = [
+    item.datum,
+    item.documenttype,
+    `Bron: ${item.bron}`,
+    item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+  ].filter((value): value is string => Boolean(value));
+  return `
+    <li>
+      ${details.map(escapeHtml).join(' · ')}
+      <br />
+      <small>Tags: ${item.tags.map(escapeHtml).join(', ')}</small>
+    </li>
   `;
 }
 
