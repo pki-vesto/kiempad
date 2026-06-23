@@ -8,6 +8,7 @@ import {
   type MedicatieInput,
   maakMedicatie,
   markeerDoseLogGenomen,
+  parseMedicatieSchemaImport,
 } from './medicatie';
 import type { DoseLog, Herinnering, Medicatie } from './types';
 
@@ -95,6 +96,39 @@ export class MedicatieStore {
       records.map((record) => record.value),
       datum,
     );
+  }
+
+  async importSchema(tekst: string): Promise<{ medicatie: number; doseLogs: number }> {
+    const regels = parseMedicatieSchemaImport(tekst);
+    const existing = await this.list();
+    const byName = new Map(existing.map((bundle) => [bundle.medicatie.naam.toLowerCase(), bundle]));
+    let createdMedication = 0;
+    let createdDoseLogs = 0;
+
+    for (const regel of regels) {
+      let bundle = byName.get(regel.naam.toLowerCase());
+      if (!bundle) {
+        bundle = await this.save({
+          naam: regel.naam,
+          vorm: 'overig',
+          actief: true,
+        });
+        byName.set(bundle.medicatie.naam.toLowerCase(), bundle);
+        createdMedication += 1;
+      }
+
+      const doseLog: DoseLog = {
+        id: generateRecordId(),
+        medicatieId: bundle.medicatie.id,
+        geplandOp: `${regel.datum}T${regel.tijdstip}`,
+        status: 'gepland',
+      };
+      await this.doseLogRepository.saveWithId(doseLog);
+      await this.saveMedicatieReminder(doseLog);
+      createdDoseLogs += 1;
+    }
+
+    return { medicatie: createdMedication, doseLogs: createdDoseLogs };
   }
 
   private async replaceDoseLogs(input: DoseLogInput): Promise<void> {

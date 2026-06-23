@@ -177,6 +177,9 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Progesteron');
+    expect(html).toContain('Schema importeren');
+    expect(html).toContain('id="medicatie-import-form"');
+    expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
     expect(html).toContain('zoals kliniek: 2x per dag');
     expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');

@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G055 medicatieschema-import: handmatig gestructureerde regels
+  `Medicatie | YYYY-MM-DD | HH:MM` maken expliciete DoseLogs zonder dosering af te
+  leiden.
 - G052/G053 DoseLog-notities en historie: innames/injecties kunnen een notitie
   bewaren bij afvinken en medicatie toont een historie per middel.
 - G040 afgelopen afspraken: agendascherm toont afspraken uit het verleden apart als

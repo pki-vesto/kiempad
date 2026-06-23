@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 124 |
+| ☑ klaar | 125 |
 | ◐ bezig | 0 |
-| ☐ open | 50 |
+| ☐ open | 49 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -111,7 +111,7 @@
 | G052 | Notitie per inname (bv. bijwerking, plek injectie) | P2 | F2 | ☑ |
 | G053 | Historie van innames per medicatie | P2 | F2 | ☑ |
 | G054 | Voorraad/teller (nog X doses over) | P3 | F3 | ☐ |
-| G055 | Schema importeren vanaf een klinieklijstje (handmatig invoeren, gestructureerd) | P2 | F2 | ☐ |
+| G055 | Schema importeren vanaf een klinieklijstje (handmatig invoeren, gestructureerd) | P2 | F2 | ☑ |
 | G056 | Injectie-instructievideo/-tekst koppelen (lokaal, geen tracking) | P3 | F3 | ☐ |
 
 ## 5. Herinneringen & notificaties

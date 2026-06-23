@@ -97,4 +97,32 @@ describe('MedicatieStore', () => {
     expect(await driver.listRecords('dose_log')).toEqual([]);
     expect(await driver.listRecords('herinnering')).toEqual([]);
   });
+
+  it('importeert een gestructureerd klinieklijstje als medicatie en DoseLogs', async () => {
+    const { driver, store } = await setupStore();
+
+    const result = await store.importSchema(
+      'Progesteron | 2026-06-23 | 08:00\nProgesteron | 2026-06-23 | 20:00',
+    );
+
+    const listed = await store.list();
+    expect(result).toEqual({ medicatie: 1, doseLogs: 2 });
+    expect(listed[0]?.medicatie).toMatchObject({ naam: 'Progesteron', vorm: 'overig' });
+    expect(listed[0]?.doseLogs.map((log) => log.geplandOp)).toEqual([
+      '2026-06-23T08:00',
+      '2026-06-23T20:00',
+    ]);
+    expect(await driver.listRecords('herinnering')).toHaveLength(2);
+    expect((await driver.listRecords('dose_log'))[0]?.payload.ciphertext).not.toContain(
+      'Progesteron',
+    );
+  });
+
+  it('schrijft niets bij een ongeldige importregel', async () => {
+    const { store } = await setupStore();
+
+    await expect(store.importSchema('Progesteron | 2026-06-23')).rejects.toThrow('Regel 1');
+
+    expect(await store.list()).toEqual([]);
+  });
 });

@@ -61,6 +61,8 @@ type RuntimeState = {
   aiError?: string;
   backupStatus?: string;
   backupError?: string;
+  medicatieImportStatus?: string;
+  medicatieImportError?: string;
   error?: string;
 };
 
@@ -84,6 +86,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     aiError: state.aiError,
     backupStatus: state.backupStatus,
     backupError: state.backupError,
+    medicatieImportStatus: state.medicatieImportStatus,
+    medicatieImportError: state.medicatieImportError,
   });
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
@@ -118,6 +122,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.aiError = undefined;
     state.backupStatus = undefined;
     state.backupError = undefined;
+    state.medicatieImportStatus = undefined;
+    state.medicatieImportError = undefined;
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
@@ -467,6 +473,10 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveMedicatieFromForm(event.currentTarget, root, state);
   });
+  root.querySelector('#medicatie-import-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void importMedicatieSchemaFromForm(event.currentTarget, root, state);
+  });
 
   root.querySelector('#delete-medicatie')?.addEventListener('click', (event) => {
     const button = event.currentTarget;
@@ -496,6 +506,26 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
         .then(() => reloadAndRender(root, state));
     });
   });
+}
+
+async function importMedicatieSchemaFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.medicatieStore) return;
+
+  const data = new FormData(target);
+  try {
+    const result = await state.medicatieStore.importSchema(String(data.get('schemaImport') ?? ''));
+    state.medicatieImportStatus = `Schema geïmporteerd: ${result.medicatie} middel(en), ${result.doseLogs} gepland moment(en).`;
+    state.medicatieImportError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.medicatieImportError =
+      error instanceof Error ? error.message : 'Medicatieschema importeren is mislukt.';
+    render(root, state);
+  }
 }
 
 async function saveQuickEntryFromForm(
