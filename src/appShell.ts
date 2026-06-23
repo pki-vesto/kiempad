@@ -245,7 +245,7 @@ export function renderAppShell(
   const screenContent = renderScreenContent(activeId, activeScreen, state);
 
   return `
-    <div class="app-shell">
+    <div class="app-shell" data-theme="${escapeAttribute(state.settings.thema)}">
       <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
       <header class="topbar">
         <a class="brand" href="#start" aria-label="Kiempad startscherm">
@@ -256,6 +256,16 @@ export function renderAppShell(
           </span>
         </a>
         <p class="status-pill">Local-first · geen tracking</p>
+        <form id="theme-form" class="theme-form" aria-label="Weergavethema">
+          <label>
+            Thema
+            <select name="thema">
+              ${renderOption('licht', 'Licht', state.settings.thema)}
+              ${renderOption('donker', 'Donker', state.settings.thema)}
+            </select>
+          </label>
+          <button type="submit">Bewaar thema</button>
+        </form>
         <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
       </header>
 

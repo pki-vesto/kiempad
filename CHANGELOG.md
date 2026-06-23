@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G154 donkere modus: topbar heeft een lokale themakeuze en settings bewaren de
+  voorkeur versleuteld met een donker CSS-palet.
 - G172 vergoedingscijfers: NL 2026-kostenkennis en vergoedingconstanten zijn
   herzien met verificatiedatum en bronverwijzingen naar Rijksoverheid,
   Zorginstituut Nederland en Zilveren Kruis.

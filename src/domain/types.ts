@@ -209,5 +209,6 @@ export interface SettingsRecord {
   laatsteBackupOp?: IsoDate;
   herinneringStandaarden?: Record<string, unknown>;
   taal?: string;
+  thema?: 'licht' | 'donker';
   toonNotificatieDetailsOpVergrendelscherm: boolean;
 }

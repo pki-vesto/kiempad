@@ -752,6 +752,24 @@ describe('app shell', () => {
     expect(html).toContain('Bewaar AI-instelling');
   });
 
+  it('rendert donkere modus als lokale thema-instelling', () => {
+    const html = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: { ...DEFAULT_APP_SETTINGS, thema: 'donker' },
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('data-theme="donker"');
+    expect(html).toContain('id="theme-form"');
+    expect(html).toContain('name="thema"');
+    expect(html).toContain('value="donker" selected');
+  });
+
   it('rendert kostenposten met categorie, vergoedstatus en CRUD-formulieren', () => {
     const html = renderAppShell('kosten', {
       trajecten: [],

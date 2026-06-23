@@ -94,6 +94,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'laatsteBackupOp',
     'herinneringStandaarden',
     'taal',
+    'thema',
     'toonNotificatieDetailsOpVergrendelscherm',
   ],
 };
