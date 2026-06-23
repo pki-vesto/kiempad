@@ -4,7 +4,13 @@ import {
   bepaalVolgendeStap,
   type TrajectMetFasen,
 } from './domain/traject';
-import type { Traject } from './domain/types';
+import {
+  AFSPRAAK_TYPE_LABELS,
+  beschrijfVolgendeAfspraak,
+  formatDateTime,
+} from './domain/agenda';
+import type { AfspraakBundle } from './domain/agendaStore';
+import type { Afspraak, Traject } from './domain/types';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
@@ -75,9 +81,13 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
 
 export type AppShellState = {
   trajecten: TrajectMetFasen[];
+  afspraken: AfspraakBundle[];
 };
 
-export function renderAppShell(activeId: ScreenId, state: AppShellState = { trajecten: [] }): string {
+export function renderAppShell(
+  activeId: ScreenId,
+  state: AppShellState = { trajecten: [], afspraken: [] },
+): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
   const screenContent = renderScreenContent(activeId, activeScreen, state);
 
@@ -153,6 +163,7 @@ function renderNavItem(screen: Screen, activeId: ScreenId): string {
 function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {
   if (activeId === 'start') return renderStartScreen(state);
   if (activeId === 'traject') return renderTrajectScreen(state);
+  if (activeId === 'agenda') return renderAgendaScreen(state);
 
   return `
     <section class="workspace" aria-label="${screen.label}">
@@ -173,6 +184,7 @@ function renderStartScreen(state: AppShellState): string {
       <div class="summary-panel priority-panel">
         <h2>Waar staan we?</h2>
         <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
+        <p>${escapeHtml(beschrijfVolgendeAfspraak(state.afspraken.map((bundle) => bundle.afspraak), new Date().toISOString().slice(0, 16)))}</p>
         ${
           activeTraject
             ? `<a class="inline-action" href="#traject">Bekijk traject</a>`
@@ -182,6 +194,123 @@ function renderStartScreen(state: AppShellState): string {
       ${renderPolicyPanel()}
     </section>
   `;
+}
+
+function renderAgendaScreen(state: AppShellState): string {
+  const selected = state.afspraken[0];
+
+  return `
+    <section class="traject-layout" aria-label="Agenda beheren">
+      <div class="form-panel">
+        <h2>${selected ? 'Afspraak bewerken' : 'Afspraak aanmaken'}</h2>
+        ${renderAfspraakForm(selected, state.trajecten)}
+      </div>
+      <div class="timeline-panel">
+        <div class="panel-heading">
+          <h2>Komende afspraken</h2>
+          ${
+            selected
+              ? `<button class="danger-button" id="delete-afspraak" type="button" data-afspraak-id="${selected.afspraak.id}">Verwijder afspraak</button>`
+              : ''
+          }
+        </div>
+        ${state.afspraken.length > 0 ? renderAgendaList(state.afspraken, state.trajecten) : '<p class="empty-state">Nog geen afspraken. Maak links de eerste afspraak aan.</p>'}
+      </div>
+    </section>
+  `;
+}
+
+function renderAfspraakForm(bundle: AfspraakBundle | undefined, trajecten: TrajectMetFasen[]): string {
+  const afspraak = bundle?.afspraak;
+
+  return `
+    <form id="afspraak-form" class="data-form">
+      <input type="hidden" name="id" value="${escapeAttribute(afspraak?.id ?? '')}" />
+      <label>
+        Titel
+        <input name="titel" required value="${escapeAttribute(afspraak?.titel ?? 'Afspraak kliniek')}" />
+      </label>
+      <div class="form-grid">
+        <label>
+          Datum en tijd
+          <input name="datumTijd" type="datetime-local" required value="${escapeAttribute(afspraak?.datumTijd ?? new Date().toISOString().slice(0, 16))}" />
+        </label>
+        <label>
+          Type
+          <select name="type">
+            ${Object.entries(AFSPRAAK_TYPE_LABELS)
+              .map(([value, label]) => renderOption(value, label, afspraak?.type))
+              .join('')}
+          </select>
+        </label>
+      </div>
+      <div class="form-grid">
+        <label>
+          Traject
+          <select name="trajectId">
+            <option value="">Geen koppeling</option>
+            ${trajecten
+              .map((item) => renderOption(item.traject.id, item.traject.naam, afspraak?.trajectId))
+              .join('')}
+          </select>
+        </label>
+        <label>
+          Locatie
+          <input name="locatie" value="${escapeAttribute(afspraak?.locatie ?? '')}" />
+        </label>
+      </div>
+      <label>
+        Voorbereiding
+        <textarea name="voorbereiding" rows="3">${escapeHtml(afspraak?.voorbereiding ?? '')}</textarea>
+      </label>
+      <label>
+        Vragen voor de arts
+        <textarea name="vraagVoorArts" rows="3">${escapeHtml(bundle?.vraag?.vraag ?? '')}</textarea>
+      </label>
+      <label>
+        Notitie
+        <textarea name="notitie" rows="3">${escapeHtml(afspraak?.notitie ?? '')}</textarea>
+      </label>
+      <label>
+        Herinnering
+        <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? '')}" />
+      </label>
+      <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
+    </form>
+  `;
+}
+
+function renderAgendaList(bundles: AfspraakBundle[], trajecten: TrajectMetFasen[]): string {
+  return `
+    <ol class="phase-list">
+      ${bundles
+        .map((bundle) => {
+          const traject = trajecten.find((item) => item.traject.id === bundle.afspraak.trajectId);
+          return `
+            <li class="phase-item">
+              <div>
+                <h3>${escapeHtml(bundle.afspraak.titel)}</h3>
+                <p>${AFSPRAAK_TYPE_LABELS[bundle.afspraak.type]} · ${formatDateTime(bundle.afspraak.datumTijd)}</p>
+                <small>${escapeHtml(renderAfspraakMeta(bundle.afspraak, traject?.traject.naam))}</small>
+                ${bundle.vraag ? `<p class="linked-note">Vraag: ${escapeHtml(bundle.vraag.vraag)}</p>` : ''}
+                ${bundle.herinnering ? `<p class="linked-note">Herinnering: ${formatDateTime(bundle.herinnering.tijdstip)}</p>` : ''}
+              </div>
+            </li>
+          `;
+        })
+        .join('')}
+    </ol>
+  `;
+}
+
+function renderAfspraakMeta(afspraak: Afspraak, trajectNaam?: string): string {
+  const parts = [
+    afspraak.locatie ? `Locatie: ${afspraak.locatie}` : undefined,
+    trajectNaam ? `Traject: ${trajectNaam}` : undefined,
+    afspraak.voorbereiding ? 'Voorbereiding opgeslagen' : undefined,
+  ].filter(Boolean);
+
+  return parts.length > 0 ? parts.join(' · ') : 'Geen extra details';
 }
 
 function renderTrajectScreen(state: AppShellState): string {

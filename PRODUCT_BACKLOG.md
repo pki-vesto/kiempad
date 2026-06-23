@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 50 |
+| ☑ klaar | 58 |
 | ◐ bezig | 0 |
-| ☐ open | 124 |
+| ☐ open | 116 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -82,15 +82,15 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G031 | Afspraak aanmaken (titel, datum-tijd, type, locatie) | P0 | F1 | ☐ |
-| G032 | Afspraak bewerken en verwijderen | P0 | F1 | ☐ |
-| G033 | Afspraaktypes (echo/bloedprik/punctie/terugplaatsing/consult/overig) | P1 | F1 | ☐ |
-| G034 | Agenda-lijstweergave (komende afspraken) | P0 | F1 | ☐ |
+| G031 | Afspraak aanmaken (titel, datum-tijd, type, locatie) | P0 | F1 | ☑ |
+| G032 | Afspraak bewerken en verwijderen | P0 | F1 | ☑ |
+| G033 | Afspraaktypes (echo/bloedprik/punctie/terugplaatsing/consult/overig) | P1 | F1 | ☑ |
+| G034 | Agenda-lijstweergave (komende afspraken) | P0 | F1 | ☑ |
 | G035 | Agenda-maand-/weekweergave | P2 | F2 | ☐ |
-| G036 | Afspraak koppelen aan een traject | P1 | F1 | ☐ |
-| G037 | Voorbereiding/notitie per afspraak | P1 | F1 | ☐ |
-| G038 | Vragen-voor-de-arts koppelen aan een afspraak | P1 | F1 | ☐ |
-| G039 | Herinnering instellen bij een afspraak | P1 | F1 | ☐ |
+| G036 | Afspraak koppelen aan een traject | P1 | F1 | ☑ |
+| G037 | Voorbereiding/notitie per afspraak | P1 | F1 | ☑ |
+| G038 | Vragen-voor-de-arts koppelen aan een afspraak | P1 | F1 | ☑ |
+| G039 | Herinnering instellen bij een afspraak | P1 | F1 | ☑ |
 | G040 | Afgelopen afspraken als "geweest" tonen met terugblik/notitie | P2 | F2 | ☐ |
 | G041 | ICS-export van afspraken | P3 | F3 | ☐ |
 | G042 | ICS-import (lezen) van een kliniek-agenda | P3 | F3 | ☐ |
