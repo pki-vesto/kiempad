@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G042 ICS-import: agendascherm kan een lokaal `.ics`-bestand van de kliniek lezen
+  en afspraken als versleutelde lokale agenda-items opslaan.
 - G041 ICS-export: agendascherm kan alle lokale afspraken als `.ics`-bestand
   downloaden voor eigen agenda-import.
 - G030 trajecttrends: trajectscherm toont een lokaal overzicht over meerdere

@@ -94,6 +94,15 @@ export function exporteerAfsprakenAlsIcs(
   return `${lines.join('\r\n')}\r\n`;
 }
 
+export function importeerAfsprakenUitIcs(inhoud: string): AfspraakInput[] {
+  const events = parseIcsEvents(inhoud);
+  if (events.length === 0) {
+    throw new Error('Geen afspraken gevonden in het ICS-bestand.');
+  }
+
+  return [...events].sort((a, b) => a.datumTijd.localeCompare(b.datumTijd));
+}
+
 function renderIcsEvent(afspraak: Afspraak, generatedAt: string): string[] {
   const description = [afspraak.voorbereiding, afspraak.notitie].filter(Boolean).join('\n');
 
@@ -133,6 +142,111 @@ function escapeIcsText(value: string): string {
     .replace(/\r?\n/g, '\\n')
     .replace(/,/g, '\\,')
     .replace(/;/g, '\\;');
+}
+
+function parseIcsEvents(inhoud: string): AfspraakInput[] {
+  const lines = unfoldIcsLines(inhoud);
+  const events: Record<string, string>[] = [];
+  let current: Record<string, string> | undefined;
+
+  for (const rawLine of lines) {
+    const parsed = parseIcsLine(rawLine);
+    if (!parsed) continue;
+
+    if (parsed.name === 'BEGIN' && parsed.value.toUpperCase() === 'VEVENT') {
+      current = {};
+      continue;
+    }
+
+    if (parsed.name === 'END' && parsed.value.toUpperCase() === 'VEVENT') {
+      if (current) events.push(current);
+      current = undefined;
+      continue;
+    }
+
+    if (!current) continue;
+    if (!current[parsed.name]) current[parsed.name] = parsed.value;
+  }
+
+  return events.map(mapIcsEventToAfspraak);
+}
+
+function unfoldIcsLines(inhoud: string): string[] {
+  return inhoud
+    .replace(/\r\n[ \t]/g, '')
+    .replace(/\n[ \t]/g, '')
+    .split(/\r?\n/)
+    .map((line) => line.trimEnd())
+    .filter(Boolean);
+}
+
+function parseIcsLine(line: string): { name: string; value: string } | undefined {
+  const separatorIndex = line.indexOf(':');
+  if (separatorIndex < 1) return undefined;
+
+  const rawName = line.slice(0, separatorIndex).split(';')[0]?.toUpperCase();
+  if (!rawName) return undefined;
+
+  return {
+    name: rawName,
+    value: unescapeIcsText(line.slice(separatorIndex + 1)),
+  };
+}
+
+function mapIcsEventToAfspraak(event: Record<string, string>): AfspraakInput {
+  const datumTijd = parseIcsDateTime(event.DTSTART);
+  if (!datumTijd) {
+    throw new Error('Een ICS-afspraak mist een geldige starttijd.');
+  }
+
+  const titel = event.SUMMARY?.trim() || 'Afspraak uit kliniek-agenda';
+  const type = bepaalAfspraakType(`${titel} ${event.CATEGORIES ?? ''}`);
+
+  return {
+    titel,
+    datumTijd,
+    type,
+    locatie: normaliseerOptioneleTekst(event.LOCATION),
+    voorbereiding: normaliseerOptioneleTekst(event.DESCRIPTION),
+  };
+}
+
+function parseIcsDateTime(value: string | undefined): string | undefined {
+  const normalized = value?.trim().replace(/Z$/, '');
+  const match = normalized?.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})?)?$/);
+  if (!match) return undefined;
+
+  const [, year, month, day, hour = '00', minute = '00'] = match;
+  return `${year}-${month}-${day}T${hour}:${minute}`;
+}
+
+function bepaalAfspraakType(value: string): Afspraak['type'] {
+  const normalized = value.toLowerCase();
+  if (/\b(echo|ultrasound|scan|follikel)\b/.test(normalized)) return 'echo';
+  if (/\b(bloed|blood|lab|prik)\b/.test(normalized)) return 'bloedprik';
+  if (/\b(punctie|pickup|opu)\b/.test(normalized)) return 'punctie';
+  if (/\b(terugplaatsing|transfer|embryo)\b/.test(normalized)) return 'terugplaatsing';
+  if (/\b(consult|intake|gesprek|controle)\b/.test(normalized)) return 'consult';
+  return 'overig';
+}
+
+function unescapeIcsText(value: string): string {
+  let result = '';
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index];
+    if (char !== '\\') {
+      result += char;
+      continue;
+    }
+
+    const next = value[index + 1];
+    if (next === 'n' || next === 'N') result += '\n';
+    else if (next === ',' || next === ';' || next === '\\') result += next;
+    else result += next ?? '';
+    index += 1;
+  }
+
+  return result;
 }
 
 function groepeerAfspraken(

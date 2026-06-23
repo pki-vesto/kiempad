@@ -222,6 +222,8 @@ export type AppShellState = {
   backupError?: string;
   dossierStatus?: string;
   dossierError?: string;
+  agendaImportStatus?: string;
+  agendaImportError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   inAppFallbackNotifications?: InAppFallbackNotification[];
@@ -1662,6 +1664,8 @@ function renderAgendaScreen(state: AppShellState): string {
       <div class="form-panel">
         <h2>${selected ? 'Afspraak bewerken' : 'Afspraak aanmaken'}</h2>
         ${renderAfspraakForm(selected, state.trajecten, state.settings)}
+        <h2 class="section-subheading">ICS importeren</h2>
+        ${renderAgendaImportForm(state)}
       </div>
       <div class="timeline-panel">
         <div class="panel-heading">
@@ -1690,6 +1694,21 @@ function renderAgendaScreen(state: AppShellState): string {
         }
       </div>
     </section>
+  `;
+}
+
+function renderAgendaImportForm(state: AppShellState): string {
+  return `
+    <form id="ics-import-form" class="data-form compact-form">
+      <label>
+        Kliniekagenda (.ics)
+        <input name="icsFile" type="file" accept=".ics,text/calendar,text/plain" required />
+      </label>
+      <p class="small-print">Kiempad leest het bestand lokaal en maakt alleen afspraken aan die in het bestand staan.</p>
+      <button type="submit">Importeer ICS</button>
+    </form>
+    ${state.agendaImportStatus ? `<p class="linked-note">${escapeHtml(state.agendaImportStatus)}</p>` : ''}
+    ${state.agendaImportError ? `<p class="form-error" role="alert">${escapeHtml(state.agendaImportError)}</p>` : ''}
   `;
 }
 

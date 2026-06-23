@@ -1,7 +1,7 @@
 import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
-import { exporteerAfsprakenAlsIcs } from './domain/agenda';
+import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import type { DecisionOptionInput } from './domain/decision';
@@ -93,6 +93,8 @@ type RuntimeState = {
   backupError?: string;
   dossierStatus?: string;
   dossierError?: string;
+  agendaImportStatus?: string;
+  agendaImportError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   error?: string;
@@ -127,6 +129,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     backupError: state.backupError,
     dossierStatus: state.dossierStatus,
     dossierError: state.dossierError,
+    agendaImportStatus: state.agendaImportStatus,
+    agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     inAppFallbackNotifications: buildInAppFallbackNotifications(
@@ -189,6 +193,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.backupError = undefined;
     state.dossierStatus = undefined;
     state.dossierError = undefined;
+    state.agendaImportStatus = undefined;
+    state.agendaImportError = undefined;
     state.medicatieImportStatus = undefined;
     state.medicatieImportError = undefined;
     clearScheduledNotifications();
@@ -1053,6 +1059,11 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
     void saveAfspraakFromForm(event.currentTarget, root, state);
   });
 
+  root.querySelector('#ics-import-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void importAgendaIcsFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelector('#delete-afspraak')?.addEventListener('click', (event) => {
     const button = event.currentTarget;
     if (!(button instanceof HTMLButtonElement)) return;
@@ -1078,6 +1089,36 @@ function exportAgendaIcs(state: RuntimeState): void {
   link.download = `kiempad-afspraken-${new Date().toISOString().slice(0, 10)}.ics`;
   link.click();
   URL.revokeObjectURL(url);
+}
+
+async function importAgendaIcsFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.agendaStore) return;
+
+  const data = new FormData(target);
+  const file = data.get('icsFile');
+  if (!(file instanceof File)) {
+    state.agendaImportError = 'Kies eerst een ICS-bestand.';
+    render(root, state);
+    return;
+  }
+
+  try {
+    const afspraken = importeerAfsprakenUitIcs(await file.text());
+    for (const afspraak of afspraken) {
+      await state.agendaStore.save(afspraak);
+    }
+
+    state.agendaImportStatus = `ICS geïmporteerd: ${afspraken.length} afspraak${afspraken.length === 1 ? '' : 'en'}.`;
+    state.agendaImportError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.agendaImportError = error instanceof Error ? error.message : 'ICS importeren is mislukt.';
+    render(root, state);
+  }
 }
 
 function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
