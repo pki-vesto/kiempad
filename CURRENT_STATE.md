@@ -53,6 +53,8 @@
   inhoud, bron en categorie toevoegen en bestaande eigen items bewerken.
 - **G105 symptoomlog toevoegen:** welzijnscherm kan symptoomlogs met datum, eigenaar,
   symptoom, intensiteit en notitie versleuteld lokaal bewaren en terug tonen.
+- **G106 symptomen per dag/over tijd:** welzijnscherm groepeert symptoomlogs per
+  datum en toont per dag het aantal logs en de gemiddelde intensiteit.
 - **M1.9 UX/PWA-baseline:** installatiemanifest en SVG-icon, offline service-worker
   met cacheversie, standaard service-workerregistratie, concreter startscherm,
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.

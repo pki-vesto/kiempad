@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G106 symptomen per dag/over tijd: welzijnscherm groepeert symptoomlogs per datum
+  en toont per dag het aantal logs en de gemiddelde intensiteit.
 - G105 symptoomlog toevoegen: nieuw welzijnscherm bewaart symptoomlogs met datum,
   eigenaar, symptoom, intensiteit en notitie versleuteld lokaal.
 - G082 eigen kennisitems: kennisscherm kan handmatige kennisitems toevoegen en
