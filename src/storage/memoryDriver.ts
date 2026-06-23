@@ -12,6 +12,10 @@ export class MemoryEncryptedStorageDriver implements EncryptedStorageDriver {
     this.meta.set(key, value);
   }
 
+  async listMeta(): Promise<Array<{ key: string; value: unknown }>> {
+    return Array.from(this.meta.entries()).map(([key, value]) => ({ key, value }));
+  }
+
   async getRecord(id: string): Promise<EncryptedRecord | undefined> {
     return this.records.get(id);
   }

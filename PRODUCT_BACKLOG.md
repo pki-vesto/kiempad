@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 115 |
+| ☑ klaar | 118 |
 | ◐ bezig | 0 |
-| ☐ open | 59 |
+| ☐ open | 56 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -245,9 +245,9 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G139 | Versleutelde export naar bestand (`*.kiempad-export`) | P1 | F2 | ☐ |
-| G140 | Import van versleutelde export (zelfde/ander toestel) | P1 | F2 | ☐ |
-| G141 | Export-integriteit gecontroleerd bij import | P1 | F2 | ☐ |
+| G139 | Versleutelde export naar bestand (`*.kiempad-export`) | P1 | F2 | ☑ |
+| G140 | Import van versleutelde export (zelfde/ander toestel) | P1 | F2 | ☑ |
+| G141 | Export-integriteit gecontroleerd bij import | P1 | F2 | ☑ |
 | G142 | Herinnering/aanmoediging om periodiek te back-uppen | P2 | F2 | ☐ |
 | G143 | E2E-versleutelde sync tussen apparaten | P3 | F3 | ☐ |
 | G144 | Sync-relay ziet enkel onleesbare blobs | P3 | F3 | ☐ |

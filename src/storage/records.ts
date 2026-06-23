@@ -32,6 +32,7 @@ export type StorageMeta = {
 export interface EncryptedStorageDriver {
   getMeta<T>(key: string): Promise<T | undefined>;
   putMeta<T>(key: string, value: T): Promise<void>;
+  listMeta(): Promise<StorageMeta[]>;
   getRecord(id: string): Promise<EncryptedRecord | undefined>;
   putRecord(record: EncryptedRecord): Promise<void>;
   deleteRecord(id: string): Promise<void>;
