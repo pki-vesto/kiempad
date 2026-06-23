@@ -83,6 +83,13 @@ export type ImagingRepositoryItem = {
   document: DossierDocument;
 };
 
+export type ImagingVergelijking = {
+  links: ImagingRepositoryItem;
+  rechts: ImagingRepositoryItem;
+  notities: string[];
+  waarschuwing: string;
+};
+
 export type DossierBeeldClassificatie = ImagingRepositoryItem['soort'];
 
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
@@ -287,6 +294,37 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       mimeType: document.mimeType,
       document,
     }));
+}
+
+export function bouwImagingVergelijking(
+  items: readonly DossierDocument[],
+): ImagingVergelijking | undefined {
+  const beeldItems = bouwImagingRepository(items);
+  if (beeldItems.length < 2) return undefined;
+  const [links, rechts] = beeldItems;
+  if (!links || !rechts) return undefined;
+
+  return {
+    links,
+    rechts,
+    notities: [
+      `Vergelijking op datum: ${links.datum} en ${rechts.datum}.`,
+      `Soorten: ${classificeerBeeldLabel(links.soort)} en ${classificeerBeeldLabel(rechts.soort)}.`,
+      links.context || rechts.context
+        ? `Context: ${[links.context, rechts.context].filter(Boolean).join(' / ')}.`
+        : 'Geen aanvullende beeldcontext vastgelegd.',
+    ],
+    waarschuwing:
+      'Deze vergelijking toont alleen vastgelegde metadata en notities; Kiempad interpreteert beelden niet medisch.',
+  };
+}
+
+export function classificeerBeeldLabel(soort: DossierBeeldClassificatie): string {
+  if (soort === 'echo') return 'Echo';
+  if (soort === 'foto') return 'Foto';
+  if (soort === 'scan') return 'Scan';
+  if (soort === 'embryo_afbeelding') return 'Embryo-afbeelding';
+  return 'Overig beeld';
 }
 
 function isImagingDocument(document: DossierDocument): boolean {

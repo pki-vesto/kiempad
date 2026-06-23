@@ -696,6 +696,33 @@ describe('app shell', () => {
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
+        {
+          id: 'doc-beeld-2',
+          datum: '2026-05-04',
+          titel: 'Echo vervolg',
+          categorie: 'beeld',
+          bestandsNaam: 'echo-vervolg.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 2048,
+          inhoudBase64: 'anBnMg==',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; 2 KB. Analyse is lokaal en niet-medisch.',
+            signalen: ['Bestandstype is beeldmateriaal.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Foto/echo',
+            bronbestand: 'echo-vervolg.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-04',
+            context: 'Follikelmeting rechts',
+            bron: 'Kliniekportaal',
+          },
+          uploadedAt: '2026-06-23T16:00:00.000Z',
+        },
       ],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -704,6 +731,10 @@ describe('app shell', () => {
     expect(html).toContain('Echo 6 weken');
     expect(html).toContain('Foto/echo');
     expect(html).toContain('Imaging-repository');
+    expect(html).toContain('Beeldmomenten vergelijken');
+    expect(html).toContain('Echo vervolg');
+    expect(html).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
+    expect(html).toContain('Kiempad interpreteert beelden niet medisch.');
     expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
     expect(html).toContain(
       'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
