@@ -645,6 +645,12 @@ describe('app shell', () => {
     expect(html).toContain('Voors: Meer rust vandaag');
     expect(html).toContain('Keuze: Vandaag bellen');
     expect(html).toContain('Onderbouwing: Geeft eerder duidelijkheid.');
+    expect(html).toContain('Beslisverslag');
+    expect(html).toContain('aria-label="Beslisverslag Kliniek bellen?"');
+    expect(html).toContain('Onderwerp: Kliniek bellen?');
+    expect(html).toContain('Datum: 2026-06-24');
+    expect(html).toContain('Gemaakte keuze: Vandaag bellen');
+    expect(html).toContain('Tegens: Geen tegens vastgelegd');
     expect(html).toContain('class="data-form compact-form decision-choice-form"');
     expect(html).toContain('data-decision-id="decision-1"');
     expect(html).toContain('name="keuze"');
