@@ -47,6 +47,8 @@ datamodel-schets, keuzes vastgelegd als ADR's.
   risico, "telt pas na geslaagde punctie").
 - **Symptoom-/cyclus-logging.**
 - **Research-bibliotheek** + **AI-samenvatting** (opt-in, met waarborgen).
+- **Dossieruploads** voor onderzoeken, beeldmateriaal, gespreksverslagen en
+  embryokwaliteit, lokaal versleuteld en koppelbaar aan trajectcontext.
 - **Gedeelde modus** voor beide partners (twee profielen, één dataset).
 - **Afwegingen/beslisnotities** (Decision-entiteit).
 - **Mentale check-in.**

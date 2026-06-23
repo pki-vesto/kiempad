@@ -1,6 +1,6 @@
 # Kiempad — Codex Build Prompt (`/goal`)
 
-> Dit bestand is de **opdracht voor Codex** om Kiempad te bouwen op basis van de 174
+> Dit bestand is de **opdracht voor Codex** om Kiempad te bouwen op basis van de 178
 > doelen in [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md), in de volgorde van
 > [`ROADMAP.md`](ROADMAP.md) (MVP/F1 eerst). Het heeft hoogste prioriteit voor de
 > bouw-agent; als een ander document hiermee conflicteert geldt dit document, **behalve**
@@ -38,7 +38,7 @@ stappen die elk op zichzelf bruikbaar zijn.
 In deze volgorde, vóór je code schrijft:
 
 1. [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) — invarianten, policy (§4) en Definition of Done (§8).
-2. [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) — de 174 doelen (G-id's), prioriteit + fase.
+2. [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) — de 178 doelen (G-id's), prioriteit + fase.
 3. [`ROADMAP.md`](ROADMAP.md) — de volgorde (F0–F4), MVP eerst.
 4. [`ARCHITECTURE.md`](ARCHITECTURE.md) en [`DATAMODEL.md`](DATAMODEL.md) — opzet + entiteiten.
 5. [`PRIVACY.md`](PRIVACY.md), [`SECURITY.md`](SECURITY.md) en [`docs/adr/`](docs/adr/) — de waarom-keuzes.

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G175-G178 dossier- en uploaddoelen toegevoegd voor historische onderzoeken,
+  foto's/echo's, gespreksverslagen en embryokwaliteit.
 - G062 standaard-waarschuwtijd: herinneringenscherm bewaart een versleutelde
   standaard afspraakwaarschuwing en nieuwe afspraakformulieren vullen de herinnering
   vooraf in.
@@ -107,7 +109,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 - `PRODUCT_BACKLOG.md` met 100+ concrete, afvinkbare doelen, gekoppeld aan de roadmap.
 - `docs/adr/0006-repo-publiek.md` — beslissing om de repo publiek te maken.
 - `CODEX_BUILD_PROMPT.md` — bouwopdracht voor Codex (`/goal`) om Kiempad op basis van
-  de 174 doelen gefaseerd (F1 eerst) te bouwen.
+  de 178 doelen gefaseerd (F1 eerst) te bouwen.
 - `docs/adr/0007-codex-autonoom-bouwen.md` — Codex bouwt en merget autonoom; groene CI
   is de merge-gate (vervangt menselijke review uit ADR-0005). Build prompt,
   MASTER_CONTEXT, CONTRIBUTING en PR-template hierop afgestemd.
