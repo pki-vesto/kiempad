@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G101/G103 AI-preview en samenvatting opslaan: kennisscherm toont de lokale
+  gede-identificeerde payload-preview en kan een AI-samenvatting als gelabeld
+  KennisItem bewaren via de versleutelde kennisstore.
 - G097/G098/G099 veilige AI-samenvattinglaag: helpers toegevoegd voor
   de-identificatie/minimalisatie van toekomstige AI-payloads, waarschuwing + bron bij
   AI-samenvattingen als KennisItem en policy-tests tegen dosering, diagnose en

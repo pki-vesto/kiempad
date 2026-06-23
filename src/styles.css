@@ -401,6 +401,15 @@ h2 {
   resize: vertical;
 }
 
+.payload-preview {
+  max-width: 100%;
+  margin: 10px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #1f2b24;
+  font: inherit;
+}
+
 .data-form button,
 .phase-button,
 .danger-button {

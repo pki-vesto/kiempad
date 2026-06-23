@@ -1,4 +1,6 @@
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
+import { generateRecordId } from '../storage/records';
+import { maakAiSamenvattingKennisItem } from './ai';
 import { INITIELE_KENNIS_ITEMS, markeerKennisItemGeverifieerd, sorteerKennisItems } from './kennis';
 import type { KennisItem } from './types';
 
@@ -35,5 +37,15 @@ export class KennisStore {
     await this.kennisItems.saveWithId(
       markeerKennisItemGeverifieerd(record.value, geverifieerd, geverifieerdOp),
     );
+  }
+
+  async saveAiSamenvatting(input: {
+    titel: string;
+    samenvatting: string;
+    bron: string;
+  }): Promise<KennisItem> {
+    const item = maakAiSamenvattingKennisItem(generateRecordId(), input);
+    await this.kennisItems.saveWithId(item);
+    return item;
   }
 }

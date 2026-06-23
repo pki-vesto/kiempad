@@ -48,4 +48,35 @@ describe('KennisStore', () => {
       volgendeVerificatieOp: '2027-06-23',
     });
   });
+
+  it('bewaart een AI-samenvatting als conceptkennisitem', async () => {
+    const { store } = await setupStore();
+
+    const item = await store.saveAiSamenvatting({
+      titel: 'Samenvatting artikel',
+      samenvatting: 'Onderzoeksvraag zonder behandeladvies.',
+      bron: 'https://voorbeeld.test/artikel',
+    });
+
+    expect(item).toMatchObject({
+      titel: 'Samenvatting artikel',
+      bron: 'https://voorbeeld.test/artikel',
+      categorie: 'research',
+      ai_gegenereerd: true,
+      geverifieerd_met_arts: false,
+    });
+    expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
+  });
+
+  it('weigert verboden medische AI-output', async () => {
+    const { store } = await setupStore();
+
+    await expect(
+      store.saveAiSamenvatting({
+        titel: 'Verboden',
+        samenvatting: 'Mijn advies: kies voor ICSI.',
+        bron: 'https://voorbeeld.test/artikel',
+      }),
+    ).rejects.toThrow('behandelkeuze');
+  });
 });

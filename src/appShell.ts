@@ -1,5 +1,6 @@
 import { AFSPRAAK_TYPE_LABELS, beschrijfVolgendeAfspraak, formatDateTime } from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
+import type { AiSamenvattingPayload } from './domain/ai';
 import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
@@ -123,6 +124,8 @@ export type AppShellState = {
   kennisItems: KennisItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
+  aiPreview?: AiSamenvattingPayload;
+  aiError?: string;
 };
 
 export function renderAppShell(
@@ -245,6 +248,14 @@ function renderKennisScreen(state: AppShellState): string {
         <h2>AI-instelling</h2>
         ${renderAiSettingsForm(state.settings)}
       </div>
+      <div class="summary-panel">
+        <h2>AI-preview</h2>
+        ${renderAiPreviewForm(state.aiPreview, state.aiError)}
+      </div>
+      <div class="summary-panel">
+        <h2>AI-samenvatting bewaren</h2>
+        ${renderAiSummaryForm(state.aiPreview)}
+      </div>
       <div class="timeline-panel">
         ${Object.entries(KENNIS_CATEGORIE_LABELS)
           .map(([categorie, label]) =>
@@ -253,6 +264,52 @@ function renderKennisScreen(state: AppShellState): string {
           .join('')}
       </div>
     </section>
+  `;
+}
+
+function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): string {
+  return `
+    <form id="ai-preview-form" class="data-form compact-form">
+      <label>
+        Bron
+        <input name="aiBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
+      </label>
+      <label>
+        Tekst voor preview
+        <textarea name="aiBronTekst" rows="5" required>${escapeHtml(preview?.tekst ?? '')}</textarea>
+      </label>
+      <button type="submit">Toon payload-preview</button>
+    </form>
+    ${
+      preview
+        ? `<div class="policy-panel embedded-summary" aria-label="AI payload-preview">
+            <h3>Payload-preview</h3>
+            <p class="small-print">${preview.lengteVerstuurd} van ${preview.lengteOrigineel} tekens na minimalisatie.</p>
+            <pre class="payload-preview">${escapeHtml(preview.tekst)}</pre>
+          </div>`
+        : ''
+    }
+    ${error ? `<p class="form-error" role="alert">${escapeHtml(error)}</p>` : ''}
+  `;
+}
+
+function renderAiSummaryForm(preview?: AiSamenvattingPayload): string {
+  return `
+    <form id="ai-summary-form" class="data-form compact-form">
+      <label>
+        Titel
+        <input name="aiTitel" value="${escapeAttribute(preview ? 'AI-samenvatting research' : '')}" required />
+      </label>
+      <label>
+        Bron
+        <input name="aiSamenvattingBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
+      </label>
+      <label>
+        Samenvatting
+        <textarea name="aiSamenvatting" rows="5" required></textarea>
+      </label>
+      <button type="submit">Bewaar als kennisitem</button>
+    </form>
   `;
 }
 

@@ -74,6 +74,10 @@
   geminimaliseerd en gede-identificeerd, AI-samenvattingen worden als conceptkennis
   met waarschuwing en bron gelabeld, en policy-tests blokkeren dosering, diagnose en
   behandelkeuze-achtige output.
+- **G101/G103 AI-preview en samenvatting opslaan:** het kennisscherm toont lokaal de
+  exacte gede-identificeerde payload-preview voordat iets naar AI zou gaan, en kan een
+  AI-samenvatting als `ai_gegenereerd=true` KennisItem bewaren via de versleutelde
+  kennisstore.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -107,11 +111,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale
-  AI-opt-ininstellingen. De app heeft een PWA-manifest en service worker voor offline
-  gebruik na de eerste load.
+  AI-opt-ininstellingen, payload-preview en AI-samenvatting-opslag. De app heeft een
+  PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (79 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (82 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -120,8 +124,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 ## 6. Hoogste Prioriteiten
 
 1. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
-2. **AI-samenvatting** pas verder bouwen met expliciete preview en opslaan in de
-   kennisbank achter de bestaande opt-in en safety helpers.
+2. **AI-samenvatting** pas verder bouwen met een expliciete provider-aanroep achter
+   de bestaande opt-in, preview en safety helpers.
 3. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
 
 ## 7. Permanente onderhoudsregel

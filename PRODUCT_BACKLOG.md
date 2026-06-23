@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 113 |
+| ☑ klaar | 115 |
 | ◐ bezig | 0 |
-| ☐ open | 61 |
+| ☐ open | 59 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -182,9 +182,9 @@
 | G098 | AI-output draagt waarschuwingslabel + bron | P0 | F2 | ☑ |
 | G099 | AI geeft **nooit** dosering/diagnose/behandelkeuze (policy-test) | P0 | F2 | ☑ |
 | G100 | AI-API-sleutel versleuteld lokaal opgeslagen (niet in repo/.env) | P0 | F2 | ☑ |
-| G101 | Vooraf zichtbaar **wat** er naar de AI wordt verstuurd | P1 | F2 | ☐ |
+| G101 | Vooraf zichtbaar **wat** er naar de AI wordt verstuurd | P1 | F2 | ☑ |
 | G102 | Keuze van provider/model in instellingen | P2 | F2 | ☐ |
-| G103 | AI-samenvatting opgeslagen als KennisItem met `ai_gegenereerd=true` | P1 | F2 | ☐ |
+| G103 | AI-samenvatting opgeslagen als KennisItem met `ai_gegenereerd=true` | P1 | F2 | ☑ |
 | G104 | On-device AI verkennen (geen cloud-stap) | P3 | F4 | ☐ |
 
 ## 10. Symptomen, cyclus & welzijn

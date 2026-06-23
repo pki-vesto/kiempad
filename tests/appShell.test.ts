@@ -262,6 +262,32 @@ describe('app shell', () => {
     expect(html).toContain('Bewaar AI-instelling');
   });
 
+  it('rendert AI-payloadpreview en samenvatting-opslag in het kennisscherm', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      aiPreview: {
+        tekst: 'Naam: [naam verwijderd]',
+        bron: 'https://voorbeeld.test/artikel',
+        lengteOrigineel: 80,
+        lengteVerstuurd: 24,
+      },
+    });
+
+    expect(html).toContain('id="ai-preview-form"');
+    expect(html).toContain('Payload-preview');
+    expect(html).toContain('Naam: [naam verwijderd]');
+    expect(html).toContain('24 van 80 tekens');
+    expect(html).toContain('id="ai-summary-form"');
+    expect(html).toContain('Bewaar als kennisitem');
+  });
+
   it('rendert notificatieprivacy standaard als generiek', () => {
     const html = renderAppShell('herinneringen', {
       trajecten: [],
