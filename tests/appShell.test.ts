@@ -541,12 +541,21 @@ describe('app shell', () => {
           notitie: 'Historisch onderzoek',
           analyse: {
             samenvatting:
-              'Onderzoek opgeslagen als PDF; uploadprofiel Labuitslag; 2 KB. Analyse is lokaal en niet-medisch.',
+              'Onderzoek opgeslagen als PDF; uploadprofiel Labuitslag; 2 KB. Analyse is lokaal en niet-medisch. Lokale OCR-status: klaargezet voor lokale OCR.',
             signalen: [
               'Uploadprofiel: Labuitslag.',
+              'Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.',
               'Bestandsnaam lijkt op laboratoriumuitslag.',
               'Bestandstype is PDF.',
             ],
+          },
+          ocr: {
+            status: 'wacht_op_lokale_ocr',
+            bron: 'pdf',
+            explicieteLokaleVerwerking: true,
+            waarschuwing:
+              'PDF of afbeelding is klaargezet voor lokale OCR; er is geen cloudverwerking gestart.',
+            verwerktOp: '2026-06-23T15:00:00.000Z',
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -562,6 +571,8 @@ describe('app shell', () => {
     expect(html).toContain(
       'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
     );
+    expect(html).toContain('name="lokaleOcr" type="checkbox" value="ja"');
+    expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
     expect(html).toContain('name="uploadProfiel"');
     expect(html).toContain('Automatisch herkennen');
     expect(html).toContain('Labuitslag');
@@ -570,7 +581,9 @@ describe('app shell', () => {
     expect(html).toContain('Behandelverslag');
     expect(html).toContain('PDF');
     expect(html).toContain('Afbeelding');
-    expect(html).toContain('Bestanden, gespreksverslagen en analyse blijven versleuteld lokaal');
+    expect(html).toContain(
+      'Bestanden, gespreksverslagen, OCR-status en analyse blijven versleuteld lokaal',
+    );
     expect(html).toContain('Koppel aan afspraak');
     expect(html).toContain('Intakegesprek · 2026-05-01 09:30');
     expect(html).toContain('Koppel aan traject');
@@ -582,6 +595,10 @@ describe('app shell', () => {
     expect(html).toContain('Labuitslag');
     expect(html).toContain('2 KB');
     expect(html).toContain('Uploadprofiel: Labuitslag.');
+    expect(html).toContain('OCR: Klaargezet voor lokale OCR');
+    expect(html).toContain('PDF of afbeelding is klaargezet voor lokale OCR');
+    expect(html).toContain('Lokale OCR-status: klaargezet voor lokale OCR.');
+    expect(html).toContain('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');
     expect(html).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
     expect(html).toContain('Bestandstype is PDF.');
     expect(html).toContain('Afspraak: Intakegesprek (2026-05-01 09:30)');

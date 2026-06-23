@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 180 |
+| ☑ klaar | 181 |
 | ◐ bezig | 0 |
-| ☐ open | 63 |
+| ☐ open | 62 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -319,7 +319,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
 | G180 | PFIP dossier-ingest: uploadprofielen voor onderzoeken, labuitslagen, rapporten, ziekenhuisdocumenten, behandelverslagen, PDF's en afbeeldingen | P0 | F3 | ☑ |
-| G181 | PFIP dossier-ingest: client-side OCR-pipeline voor PDF's en afbeeldingen met expliciete lokale verwerking | P0 | F3 | ☐ |
+| G181 | PFIP dossier-ingest: client-side OCR-pipeline voor PDF's en afbeeldingen met expliciete lokale verwerking | P0 | F3 | ☑ |
 | G182 | PFIP dossier-ingest: metadata-extractie voor datum, instelling, documenttype, traject, arts en bronbestand | P0 | F3 | ☐ |
 | G183 | PFIP dossier-ingest: herkende documenten als conceptrecords laten bevestigen of corrigeren vóór opslag | P0 | F3 | ☐ |
 | G184 | PFIP dossier-ingest: medische documenttijdlijn automatisch opbouwen uit metadata en gebruiker-correcties | P0 | F3 | ☐ |
