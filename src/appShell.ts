@@ -894,6 +894,13 @@ function renderImagingRepositoryItem(
   const soortLabel = imagingSoortLabel(item.soort);
   const tijdlijnKoppeling = renderImagingTijdlijnKoppeling(item.tijdlijnKoppeling);
   const contextSamenvatting = maakImagingContextSamenvatting(item);
+  const thumbnail =
+    item.previewState.status === 'thumbnail' && item.mimeType?.startsWith('image/')
+      ? `<figure class="linked-note imaging-thumbnail">
+          <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale thumbnail van ${escapeAttribute(item.titel)}" loading="lazy" />
+          <figcaption>Thumbnail uit ontgrendelde lokale kluis.</figcaption>
+        </figure>`
+      : '';
   const preview =
     item.mimeType?.startsWith('image/') && item.document.inhoudBase64
       ? `<figure class="linked-note">
@@ -907,6 +914,7 @@ function renderImagingRepositoryItem(
       <div>
         <h3>${escapeHtml(item.titel)}</h3>
         <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(item.bronbestand)}</p>
+        <p class="linked-note">Previewstatus: ${escapeHtml(item.previewState.label)}</p>
         ${
           item.context || item.afspraakId || item.trajectId
             ? `<p class="linked-note">Beeldmetadata: ${[
@@ -922,6 +930,7 @@ function renderImagingRepositoryItem(
         ${tijdlijnKoppeling}
         <p class="linked-note">${escapeHtml(contextSamenvatting.titel)}: ${escapeHtml(contextSamenvatting.notitie)}</p>
         <p class="small-print">${escapeHtml(contextSamenvatting.waarschuwing)}</p>
+        ${thumbnail}
         ${preview}
       </div>
     </li>

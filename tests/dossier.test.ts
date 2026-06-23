@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   bepaalDossierUploadProfiel,
+  bepaalImagingPreviewState,
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
@@ -589,6 +590,54 @@ describe('dossier', () => {
         'embryokoppeling',
       ],
     });
+  });
+
+  it('bepaalt previewstates voor versleutelde beelden na ontgrendeling', () => {
+    const kleinBeeld = maakDossierDocument('img-klein', {
+      datum: '2026-05-01',
+      titel: 'Klein beeld',
+      categorie: 'beeld',
+      bestandsNaam: 'klein.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'anBn',
+    });
+    const grootBeeld = maakDossierDocument('img-groot', {
+      datum: '2026-05-01',
+      titel: 'Groot beeld',
+      categorie: 'beeld',
+      bestandsNaam: 'groot.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 2 * 1024 * 1024,
+      inhoudBase64: 'anBn',
+    });
+    const pdf = maakDossierDocument('img-pdf', {
+      datum: '2026-05-01',
+      titel: 'Scan PDF',
+      categorie: 'beeld',
+      bestandsNaam: 'scan.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'cGRm',
+    });
+
+    expect(bepaalImagingPreviewState(kleinBeeld, false)).toEqual({
+      status: 'locked',
+      label: 'Preview beschikbaar na ontgrendeling',
+    });
+    expect(bepaalImagingPreviewState(kleinBeeld, true)).toEqual({
+      status: 'thumbnail',
+      label: 'Thumbnail en preview beschikbaar',
+    });
+    expect(bepaalImagingPreviewState(grootBeeld, true)).toEqual({
+      status: 'preview',
+      label: 'Preview beschikbaar; thumbnail wordt niet verkleind opgeslagen',
+    });
+    expect(bepaalImagingPreviewState(pdf, true)).toEqual({
+      status: 'geen_preview',
+      label: 'Geen beeldpreview beschikbaar',
+    });
+    expect(bouwImagingRepository([kleinBeeld])[0]?.previewState.status).toBe('thumbnail');
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {
