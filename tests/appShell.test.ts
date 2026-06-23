@@ -15,6 +15,7 @@ describe('app shell', () => {
     expect(normalizeScreenId('#/agenda')).toBe('agenda');
     expect(normalizeScreenId('#welzijn')).toBe('welzijn');
     expect(normalizeScreenId('#afwegingen')).toBe('afwegingen');
+    expect(normalizeScreenId('#logboek')).toBe('logboek');
     expect(normalizeScreenId('#/bestaat-niet')).toBe('start');
   });
 
@@ -712,6 +713,39 @@ describe('app shell', () => {
     expect(html).toContain('id="import-backup-form"');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
+  });
+
+  it('rendert het lokale gebeurtenissenlog zonder export-actie', () => {
+    const html = renderAppShell('logboek', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      eventLogs: [
+        {
+          id: 'event-1',
+          datum: '2026-06-23T15:00:00.000Z',
+          categorie: 'backup',
+          gebeurtenis: 'Versleutelde back-up klaargezet',
+          detail: 'Back-upbestand is lokaal als download aangeboden.',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Lokaal logboek');
+    expect(html).toContain('Recente gebeurtenissen');
+    expect(html).toContain('Dit logboek blijft op dit toestel');
+    expect(html).toContain('alleen versleuteld lokaal opgeslagen');
+    expect(html).toContain('1 gebeurtenis vastgelegd');
+    expect(html).toContain('Versleutelde back-up klaargezet');
+    expect(html).toContain('2026-06-23 15:00');
+    expect(html).toContain('Back-up');
+    expect(html).toContain('Back-upbestand is lokaal als download aangeboden.');
+    expect(html).not.toContain('Download back-up');
   });
 
   it('rendert meerdere pogingen met pogingnummer en nieuw-poging formulier', () => {

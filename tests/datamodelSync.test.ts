@@ -16,6 +16,7 @@ const entityInterfaceMap = {
   CycleData: 'CycleData',
   CostItem: 'CostItem',
   Decision: 'Decision',
+  EventLog: 'EventLog',
   Settings: 'SettingsRecord',
 } as const;
 
@@ -61,6 +62,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
   CycleData: ['id', 'datum', 'meting', 'waarde'],
   CostItem: ['id', 'trajectId', 'omschrijving', 'bedrag', 'datum', 'categorie', 'vergoed'],
   Decision: ['id', 'onderwerp', 'opties', 'keuze', 'onderbouwing', 'datum'],
+  EventLog: ['id', 'datum', 'categorie', 'gebeurtenis', 'detail'],
   Settings: [
     'id',
     'profielen',

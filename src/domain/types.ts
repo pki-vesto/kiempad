@@ -161,6 +161,14 @@ export interface Decision {
   datum: IsoDate;
 }
 
+export interface EventLog {
+  id: string;
+  datum: IsoDate;
+  categorie: 'kluis' | 'backup' | 'ai' | 'systeem';
+  gebeurtenis: string;
+  detail?: string;
+}
+
 export interface SettingsRecord {
   id: string;
   profielen?: { peter?: string; partner?: string };

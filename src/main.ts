@@ -5,6 +5,7 @@ import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
+import { EventLogStore } from './domain/eventLogStore';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
 import type { KennisFilter } from './domain/kennis';
@@ -23,6 +24,7 @@ import type {
   CostItem,
   Decision,
   DoseLog,
+  EventLog,
   Fase,
   Herinnering,
   KennisItem,
@@ -62,6 +64,7 @@ type RuntimeState = {
   kennisStore?: KennisStore;
   kostenStore?: KostenStore;
   decisionStore?: DecisionStore;
+  eventLogStore?: EventLogStore;
   symptomenStore?: SymptomenStore;
   mentaleCheckInStore?: MentaleCheckInStore;
   settingsStore?: SettingsStore;
@@ -76,6 +79,7 @@ type RuntimeState = {
   mentalCheckIns: MentalCheckIn[];
   decisions: Decision[];
   kosten: CostItem[];
+  eventLogs: EventLog[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
@@ -106,6 +110,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     mentalCheckIns: state.mentalCheckIns,
     decisions: state.decisions,
     kosten: state.kosten,
+    eventLogs: state.eventLogs,
     settings: state.settings,
     notificaties: state.notificaties,
     aiPreview: state.aiPreview,
@@ -147,6 +152,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kennisStore = undefined;
     state.kostenStore = undefined;
     state.decisionStore = undefined;
+    state.eventLogStore = undefined;
     state.symptomenStore = undefined;
     state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
@@ -161,6 +167,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.mentalCheckIns = [];
     state.decisions = [];
     state.kosten = [];
+    state.eventLogs = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
     state.aiError = undefined;
@@ -195,6 +202,7 @@ async function mount(): Promise<void> {
     mentalCheckIns: [],
     decisions: [],
     kosten: [],
+    eventLogs: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
   };
@@ -226,6 +234,11 @@ async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<voi
     URL.revokeObjectURL(url);
     state.backupStatus = 'Back-upbestand klaargezet voor download.';
     state.backupError = undefined;
+    await state.eventLogStore?.record({
+      categorie: 'backup',
+      gebeurtenis: 'Versleutelde back-up klaargezet',
+      detail: 'Back-upbestand is lokaal als download aangeboden.',
+    });
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Back-up maken is mislukt.';
   }
@@ -243,6 +256,11 @@ async function importBackupFromForm(
 
   try {
     const result = await importeerVersleuteldeExport(state.driver, await file.text());
+    await state.eventLogStore?.record({
+      categorie: 'backup',
+      gebeurtenis: 'Versleutelde back-up geïmporteerd',
+      detail: `${result.records} records en ${result.meta} metadata-items verwerkt.`,
+    });
     state.session.lock();
     clearScheduledNotifications();
     state.hasVault = await state.session.hasVault();
@@ -254,6 +272,7 @@ async function importBackupFromForm(
     state.kennisStore = undefined;
     state.kostenStore = undefined;
     state.decisionStore = undefined;
+    state.eventLogStore = undefined;
     state.symptomenStore = undefined;
     state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
@@ -268,6 +287,7 @@ async function importBackupFromForm(
     state.mentalCheckIns = [];
     state.decisions = [];
     state.kosten = [];
+    state.eventLogs = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
     state.aiError = undefined;
@@ -301,6 +321,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.kennisStore = createKennisStore(state);
         state.kostenStore = createKostenStore(state);
         state.decisionStore = createDecisionStore(state);
+        state.eventLogStore = createEventLogStore(state);
         state.symptomenStore = createSymptomenStore(state);
         state.mentaleCheckInStore = createMentaleCheckInStore(state);
         state.settingsStore = createSettingsStore(state);
@@ -316,6 +337,11 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.mentalCheckIns = await state.mentaleCheckInStore.list();
         state.decisions = await state.decisionStore.list();
         state.kosten = await state.kostenStore.list();
+        await state.eventLogStore.record({
+          categorie: 'kluis',
+          gebeurtenis: 'Kluis ontgrendeld',
+        });
+        state.eventLogs = await state.eventLogStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
         render(root, state);
@@ -1097,6 +1123,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.kostenStore) {
     state.kosten = await state.kostenStore.list();
   }
+  if (state.eventLogStore) {
+    state.eventLogs = await state.eventLogStore.list();
+  }
   if (state.settingsStore) {
     state.settings = await state.settingsStore.get();
   }
@@ -1155,6 +1184,12 @@ function createKostenStore(state: RuntimeState): KostenStore {
 function createDecisionStore(state: RuntimeState): DecisionStore {
   return new DecisionStore(
     new EncryptedRecordRepository<Decision>(state.driver, state.session, 'decision'),
+  );
+}
+
+function createEventLogStore(state: RuntimeState): EventLogStore {
+  return new EventLogStore(
+    new EncryptedRecordRepository<EventLog>(state.driver, state.session, 'event_log'),
   );
 }
 

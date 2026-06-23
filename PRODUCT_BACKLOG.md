@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 153 |
+| ☑ klaar | 154 |
 | ◐ bezig | 1 |
-| ☐ open | 25 |
+| ☐ open | 24 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -222,7 +222,7 @@
 | G123 | Geen tracking/analytics/advertenties/third-party scripts | P0 | F1 | ☑ |
 | G124 | Geen standaard uitgaand verkeer (privacy-rooktest in CI/handmatig) | P0 | F1 | ☑ |
 | G125 | Opt-in vereist voor elk uitgaand verkeer (AI/sync) | P0 | F2 | ☑ |
-| G126 | Lokaal gebeurtenissenlog (verlaat toestel niet) | P2 | F2 | ☐ |
+| G126 | Lokaal gebeurtenissenlog (verlaat toestel niet) | P2 | F2 | ☑ |
 | G127 | Duidelijke "geen herstel-achterdeur"-uitleg + back-up-aansporing | P1 | F1 | ☑ |
 | G128 | Minimale npm-dependencies; audit-stap in CI | P1 | F1 | ☑ |
 | G129 | Geen secrets/persoonsdata in de (publieke) repo; data blijft local-first (ADR-0006) | P0 | F0 | ☑ |

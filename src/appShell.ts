@@ -9,6 +9,7 @@ import {
 } from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
 import type { AiSamenvattingPayload } from './domain/ai';
+import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
@@ -49,6 +50,7 @@ import type {
   CostItem,
   Decision,
   DoseLog,
+  EventLog,
   Herinnering,
   KennisItem,
   Medicatie,
@@ -80,6 +82,7 @@ type ScreenId =
   | 'welzijn'
   | 'afwegingen'
   | 'kosten'
+  | 'logboek'
   | 'backup';
 
 type Screen = {
@@ -163,6 +166,13 @@ export const SCREENS: readonly Screen[] = [
     emptyState: 'Nog geen kostenposten vastgelegd.',
   },
   {
+    id: 'logboek',
+    label: 'Logboek',
+    title: 'Lokaal logboek',
+    intro: 'Bekijk privacyrelevante gebeurtenissen die alleen lokaal versleuteld zijn opgeslagen.',
+    emptyState: 'Nog geen gebeurtenissen vastgelegd.',
+  },
+  {
     id: 'backup',
     label: 'Back-up',
     title: 'Back-up & import',
@@ -190,6 +200,7 @@ export type AppShellState = {
   mentalCheckIns?: MentalCheckIn[];
   decisions?: Decision[];
   kosten?: CostItem[];
+  eventLogs?: EventLog[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
@@ -299,6 +310,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'welzijn') return renderWelzijnScreen(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreen(state);
   if (activeId === 'kosten') return renderKostenScreen(state);
+  if (activeId === 'logboek') return renderLogboekScreen(state);
   if (activeId === 'backup') return renderBackupScreen(state);
 
   return `
@@ -309,6 +321,40 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
       </div>
       ${renderPolicyPanel()}
     </section>
+  `;
+}
+
+function renderLogboekScreen(state: AppShellState): string {
+  const logs = state.eventLogs ?? [];
+
+  return `
+    <section class="workspace" aria-label="Lokaal gebeurtenissenlog">
+      <div class="summary-panel">
+        <h2>Gebeurtenissen</h2>
+        <p>Dit logboek blijft op dit toestel en wordt alleen versleuteld lokaal opgeslagen.</p>
+        <p>${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.</p>
+      </div>
+      <div class="timeline-panel">
+        <h2>Recente gebeurtenissen</h2>
+        ${
+          logs.length > 0
+            ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderEventLogItem(item: EventLog): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.gebeurtenis)}</h3>
+        <p>${escapeHtml(formatDateTime(item.datum))} · ${escapeHtml(EVENT_CATEGORIE_LABELS[item.categorie])}</p>
+        ${item.detail ? `<p class="linked-note">${escapeHtml(item.detail)}</p>` : ''}
+      </div>
+    </li>
   `;
 }
 
