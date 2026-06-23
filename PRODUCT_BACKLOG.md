@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 171 |
+| ☑ klaar | 172 |
 | ◐ bezig | 1 |
-| ☐ open | 7 |
+| ☐ open | 6 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -197,7 +197,7 @@
 | G108 | Mentale check-in (stemming) met privé notitie | P2 | F2 | ☑ |
 | G109 | Welzijn-overzicht zonder oordeel/score-druk | P2 | F2 | ☑ |
 | G110 | Owner-markering (peter/partner/samen) bij logs | P2 | F2 | ☑ |
-| G111 | Trends van symptomen/welzijn over meerdere cycli | P3 | F3 | ☐ |
+| G111 | Trends van symptomen/welzijn over meerdere cycli | P3 | F3 | ☑ |
 
 ## 11. Afwegingen / beslisnotities
 
