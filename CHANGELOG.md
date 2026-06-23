@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G204 PFIP embryo tracking: dossierscherm toont een embryo-dossier per embryo
+  binnen een poging met kwaliteit, status en gekoppelde documenten.
 - G203 PFIP consult intelligence: consult-AI-output wordt expliciet gefilterd tegen
   diagnose, doseringsadvies en behandelkeuze.
 - G202 PFIP consult intelligence: consultverslagen kunnen een gebruikerscorrectie

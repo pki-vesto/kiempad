@@ -951,6 +951,12 @@ describe('app shell', () => {
     expect(html).toContain('Kwaliteit volgens kliniek');
     expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
     expect(html).toContain('Embryo: Embryo 1 · Dag 5 · Kwaliteit: 4AA · Status: Teruggeplaatst');
+    expect(html).toContain('Embryo-dossiers');
+    expect(html).toContain('Laatste datum: 2026-05-04');
+    expect(html).toContain('Kwaliteit: 4AA');
+    expect(html).toContain('Status: teruggeplaatst');
+    expect(html).toContain('Embryokwaliteit Embryo 1 · kwaliteit');
+    expect(html).toContain('Kiempad berekent geen kansen en geeft geen medisch advies');
     expect(html).toContain('zonder kansberekening');
     expect(html).not.toContain('e30=');
   });

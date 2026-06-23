@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 203 |
+| ☑ klaar | 204 |
 | ◐ bezig | 0 |
-| ☐ open | 40 |
+| ☐ open | 39 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -342,7 +342,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G201 | PFIP consult intelligence: consultinzichten koppelen aan trajectfase, medicatie, embryo of onderzoek | P1 | F3 | ☑ |
 | G202 | PFIP consult intelligence: verschilweergave tussen consultsamenvatting en gebruiker-correctie | P2 | F4 | ☑ |
 | G203 | PFIP consult intelligence: safety-policy dat consult-AI geen diagnose of behandelkeuze adviseert | P0 | F3 | ☑ |
-| G204 | PFIP embryo tracking: embryo-dossier als eigen overzicht per embryo binnen een poging | P0 | F3 | ☐ |
+| G204 | PFIP embryo tracking: embryo-dossier als eigen overzicht per embryo binnen een poging | P0 | F3 | ☑ |
 | G205 | PFIP embryo tracking: embryo uploads koppelen aan embryo-id, dag, poging en laboratoriumcontext | P0 | F3 | ☐ |
 | G206 | PFIP embryo tracking: kwaliteitsregistratie per meetmoment met kliniekterminologie en bron | P0 | F3 | ☐ |
 | G207 | PFIP embryo tracking: embryo-historie tonen van bevruchting tot terugplaatsing/invriezen/stop | P0 | F3 | ☐ |

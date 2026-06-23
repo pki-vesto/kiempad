@@ -184,6 +184,9 @@
 - **G203 PFIP consult-AI safety-policy:** Consultsamenvattingen en
   consultactiepunten filteren lokale AI-output tegen diagnose, doseringsadvies en
   behandelkeuze terwijl de originele consulttekst bewaard kan blijven.
+- **G204 PFIP embryo-dossier:** Dossier-scherm toont per embryo binnen een poging
+  een feitelijk embryo-dossier met kwaliteit, status en gekoppelde
+  dossierdocumenten, zonder kansberekening.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -316,7 +319,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G203 nog 40 open doelen (G204-G243), gericht op dossier-ingest,
+heeft na G204 nog 39 open doelen (G205-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -366,8 +369,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G204: embryo-dossier als eigen overzicht per embryo binnen
-   een poging.
+1. PFIP uitvoeren vanaf G205: embryo uploads koppelen aan embryo-id, dag, poging en
+   laboratoriumcontext.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
