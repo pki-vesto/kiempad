@@ -3,6 +3,7 @@ import {
   bepaalDossierUploadProfiel,
   bouwDossierIndex,
   bouwDossierTijdlijn,
+  bouwImagingRepository,
   extraheerDossierMetadata,
   formatBytes,
   maakDossierDocument,
@@ -399,6 +400,49 @@ describe('dossier', () => {
         tags: ['Labuitslag', 'Onderzoek', 'PDF', 'OCR', 'Erasmus MC', 'Traject gekoppeld'],
       },
     ]);
+  });
+
+  it('bouwt een imaging-repository voor echo, foto, scan en embryo-afbeelding', () => {
+    const echo = maakDossierDocument('img-echo', {
+      datum: '2026-05-01',
+      titel: 'Echo 6 weken',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-6-weken.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 2048,
+      inhoudBase64: 'anBn',
+    });
+    const scan = maakDossierDocument('img-scan', {
+      datum: '2026-05-02',
+      titel: 'Scan baarmoeder',
+      categorie: 'beeld',
+      bestandsNaam: 'scan-baarmoeder.png',
+      mimeType: 'image/png',
+      grootteBytes: 2048,
+      inhoudBase64: 'cG5n',
+    });
+    const embryo = maakDossierDocument('img-embryo', {
+      datum: '2026-05-03',
+      titel: 'Embryo afbeelding',
+      categorie: 'beeld',
+      bestandsNaam: 'embryo-1.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 2048,
+      inhoudBase64: 'anBn',
+    });
+
+    expect(bouwImagingRepository([scan, embryo, echo]).map((item) => item.soort)).toEqual([
+      'embryo_afbeelding',
+      'scan',
+      'echo',
+    ]);
+    expect(bouwImagingRepository([echo])[0]).toMatchObject({
+      id: 'img-echo',
+      datum: '2026-05-01',
+      titel: 'Echo 6 weken',
+      bronbestand: 'echo-6-weken.jpg',
+      mimeType: 'image/jpeg',
+    });
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {

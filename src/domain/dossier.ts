@@ -56,6 +56,16 @@ export type DossierZoekResultaat = {
   matches: string[];
 };
 
+export type ImagingRepositoryItem = {
+  id: string;
+  datum: string;
+  titel: string;
+  soort: 'echo' | 'foto' | 'scan' | 'embryo_afbeelding' | 'overig_beeld';
+  bronbestand: string;
+  mimeType?: string;
+  document: DossierDocument;
+};
+
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
   onderzoek: 'Onderzoek',
   beeld: 'Foto/echo',
@@ -227,6 +237,41 @@ export function zoekDossierDocumenten(
       return { document, matches };
     })
     .filter((resultaat) => resultaat.matches.length > 0);
+}
+
+export function bouwImagingRepository(items: readonly DossierDocument[]): ImagingRepositoryItem[] {
+  return sorteerDossierDocumenten(items)
+    .filter(isImagingDocument)
+    .map((document) => ({
+      id: document.id,
+      datum: bepaalDossierTijdlijnDatum(document),
+      titel: document.titel,
+      soort: bepaalImagingSoort(document),
+      bronbestand: document.metadata?.bronbestand ?? document.bestandsNaam,
+      mimeType: document.mimeType,
+      document,
+    }));
+}
+
+function isImagingDocument(document: DossierDocument): boolean {
+  return (
+    document.categorie === 'beeld' ||
+    document.uploadProfiel === 'afbeelding' ||
+    document.mimeType?.startsWith('image/') === true
+  );
+}
+
+function bepaalImagingSoort(document: DossierDocument): ImagingRepositoryItem['soort'] {
+  const tekst = normaliseerZoektekst(
+    [document.titel, document.bestandsNaam, document.metadata?.documenttype, document.notitie].join(
+      ' ',
+    ),
+  );
+  if (/\b(embryo|blastocyst|blastocyste)\b/.test(tekst)) return 'embryo_afbeelding';
+  if (/\b(echo|ultrasound)\b/.test(tekst)) return 'echo';
+  if (/\b(scan|mri|ct)\b/.test(tekst)) return 'scan';
+  if (/\b(foto|photo|image|afbeelding)\b/.test(tekst)) return 'foto';
+  return 'overig_beeld';
 }
 
 function bepaalDossierTijdlijnDatum(document: DossierDocument): string {

@@ -259,12 +259,16 @@
   metadata-extractie zonder OCR-opt-in geen `fetch`, `XMLHttpRequest` of
   `sendBeacon` gebruikt. De invariant dekt documentaanmaak, metadata-extractie,
   OCR-resultaatvorming en lokale dossierzoekfunctie.
+- **G188 PFIP imaging-repository:** het dossierscherm toont een aparte lokale
+  imaging-repository voor echo's, foto's, scans en embryo-afbeeldingen. Beelden
+  blijven dossierrecords in de versleutelde kluis en krijgen pas na ontgrendeling
+  een lokale preview.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G187 nog 56 open doelen (G188-G243), gericht op dossier-ingest,
+heeft na G188 nog 55 open doelen (G189-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -314,8 +318,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G188: imaging-repository bouwen voor echo's, foto's, scans
-   en embryo-afbeeldingen als aparte dossierweergave.
+1. PFIP uitvoeren vanaf G189: lokale beeldclassificatie uitbreiden naar echo,
+   foto, scan, embryo of overig beeld.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
