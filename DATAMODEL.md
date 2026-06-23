@@ -220,6 +220,7 @@ systeemgebeurtenissen.
 | afspraakId | string? | optionele koppeling naar relevante afspraak |
 | trajectId | string? | optionele koppeling naar relevante poging/traject |
 | notitie | string? | lokale toelichting |
+| samenvatting | `{ status, methode, tekst, bronnen[], waarschuwing, gegenereerdOp }?` | lokale conceptsamenvatting met bronverwijzing; geen medisch advies |
 | uploadedAt | IsoDate | moment van lokaal toevoegen |
 
 ConsultVerslag-records zijn bewust gescheiden van algemene dossierdocumenten,

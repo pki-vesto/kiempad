@@ -15,6 +15,11 @@ export type ConsultVerslagInput = {
   uploadedAt?: string;
 };
 
+export type ConsultSamenvattingInput = Pick<
+  ConsultVerslag,
+  'titel' | 'tekst' | 'notitie' | 'bestandsNaam' | 'uploadedAt'
+>;
+
 export const CONSULT_VERSLAG_BRON_LABELS: Record<ConsultVerslag['bron'], string> = {
   upload: 'Upload',
   handmatig: 'Handmatig',
@@ -58,7 +63,40 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
     notitie: notitie || undefined,
+    samenvatting: maakConsultSamenvatting({
+      titel,
+      tekst: tekst || undefined,
+      notitie: notitie || undefined,
+      bestandsNaam: bestandsNaam || undefined,
+      uploadedAt,
+    }),
     uploadedAt,
+  };
+}
+
+export function maakConsultSamenvatting(
+  input: ConsultSamenvattingInput,
+): ConsultVerslag['samenvatting'] | undefined {
+  const bronnen: string[] = [];
+  if (input.tekst) bronnen.push('consulttekst');
+  if (input.notitie) bronnen.push('notitie');
+  if (input.bestandsNaam) bronnen.push(`bestand: ${input.bestandsNaam}`);
+  if (!input.tekst && !input.notitie) return undefined;
+
+  const kernzinnen = selecteerKernzinnen(`${input.tekst ?? ''}\n${input.notitie ?? ''}`);
+  const tekst =
+    kernzinnen.length > 0
+      ? kernzinnen.join(' ')
+      : `Conceptsamenvatting voor ${input.titel}: raadpleeg de originele consulttekst.`;
+
+  return {
+    status: 'concept',
+    methode: 'lokale_tekstheuristiek',
+    tekst,
+    bronnen,
+    waarschuwing:
+      'Concept op basis van lokaal ingevoerde tekst; controleer altijd met het originele consult en je kliniek.',
+    gegenereerdOp: input.uploadedAt,
   };
 }
 
@@ -69,4 +107,17 @@ export function sorteerConsultVerslagen(items: readonly ConsultVerslag[]): Consu
       b.uploadedAt.localeCompare(a.uploadedAt) ||
       a.titel.localeCompare(b.titel),
   );
+}
+
+function selecteerKernzinnen(tekst: string): string[] {
+  const zinnen = tekst
+    .split(/(?<=[.!?])\s+|\n+/u)
+    .map((zin) => zin.trim())
+    .filter((zin) => zin.length >= 12);
+  const relevanteZinnen = zinnen.filter((zin) =>
+    /\b(besproken|afgesproken|advies|vraag|vragen|actie|volgende|controle|uitslag|medicatie|embryo|echo|onderzoek)\b/iu.test(
+      zin,
+    ),
+  );
+  return (relevanteZinnen.length > 0 ? relevanteZinnen : zinnen).slice(0, 3);
 }
