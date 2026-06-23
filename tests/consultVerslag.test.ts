@@ -4,6 +4,7 @@ import {
   maakConsultSamenvatting,
   maakConsultVerslag,
   sorteerConsultVerslagen,
+  vergelijkConsultSamenvatting,
 } from '../src/domain/consultVerslag';
 
 describe('consultVerslag', () => {
@@ -124,5 +125,28 @@ describe('consultVerslag', () => {
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
     ]);
+  });
+
+  it('maakt een verschilweergave tussen conceptsamenvatting en gebruikerscorrectie', () => {
+    const verslag = maakConsultVerslag('consult-3', {
+      datum: '2026-06-12',
+      titel: 'Consult',
+      tekst:
+        'Afgesproken dat de uitslag wordt meegenomen naar de volgende controle. Vraag blijft open over timing.',
+      samenvattingCorrectie:
+        'Afgesproken dat de uitslag wordt meegenomen naar de volgende controle. Vraag over timing is beantwoord door de kliniek.',
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    });
+
+    expect(verslag.samenvattingCorrectie).toEqual({
+      tekst:
+        'Afgesproken dat de uitslag wordt meegenomen naar de volgende controle. Vraag over timing is beantwoord door de kliniek.',
+      bijgewerktOp: '2026-06-12T10:00:00.000Z',
+    });
+    expect(vergelijkConsultSamenvatting(verslag)).toMatchObject({
+      status: 'gewijzigd',
+      toegevoegd: ['Vraag over timing is beantwoord door de kliniek.'],
+      verwijderd: ['Vraag blijft open over timing.'],
+    });
   });
 });
