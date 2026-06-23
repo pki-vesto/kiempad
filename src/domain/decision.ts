@@ -14,6 +14,12 @@ export type DecisionInput = {
   datum: string;
 };
 
+export type DecisionChoiceInput = {
+  keuze: string;
+  onderbouwing: string;
+  datum: string;
+};
+
 export function maakDecision(id: string, input: DecisionInput): Decision {
   const onderwerp = input.onderwerp.trim();
   const datum = input.datum.trim();
@@ -29,6 +35,26 @@ export function maakDecision(id: string, input: DecisionInput): Decision {
     id,
     onderwerp,
     opties,
+    datum,
+  };
+}
+
+export function legDecisionKeuzeVast(decision: Decision, input: DecisionChoiceInput): Decision {
+  const keuze = input.keuze.trim();
+  const onderbouwing = input.onderbouwing.trim();
+  const datum = input.datum.trim();
+
+  if (!keuze) throw new Error('Keuze is verplicht voor een beslisnotitie.');
+  if (!decision.opties.some((optie) => optie.titel === keuze)) {
+    throw new Error('Keuze moet overeenkomen met een bestaande optie.');
+  }
+  if (!onderbouwing) throw new Error('Onderbouwing is verplicht voor een beslisnotitie.');
+  if (!datum) throw new Error('Datum is verplicht voor een beslisnotitie.');
+
+  return {
+    ...decision,
+    keuze,
+    onderbouwing,
     datum,
   };
 }

@@ -367,11 +367,52 @@ function renderDecisionItem(item: Decision): string {
       <div>
         <h3>${escapeHtml(item.onderwerp)}</h3>
         <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
+        ${renderDecisionChoiceSummary(item)}
         <ul class="compact-list">
           ${item.opties.map(renderDecisionOption).join('')}
         </ul>
+        ${renderDecisionChoiceForm(item)}
       </div>
     </li>
+  `;
+}
+
+function renderDecisionChoiceSummary(item: Decision): string {
+  if (!item.keuze) return '';
+
+  return `
+    <p class="linked-note">
+      Keuze: ${escapeHtml(item.keuze)}
+      ${item.onderbouwing ? ` · Onderbouwing: ${escapeHtml(item.onderbouwing)}` : ''}
+    </p>
+  `;
+}
+
+function renderDecisionChoiceForm(item: Decision): string {
+  return `
+    <form class="data-form compact-form decision-choice-form" data-decision-id="${escapeAttribute(item.id)}">
+      <label>
+        Gemaakte keuze
+        <select name="keuze" required>
+          <option value="">Kies een optie</option>
+          ${item.opties
+            .map(
+              (optie) =>
+                `<option value="${escapeAttribute(optie.titel)}"${optie.titel === item.keuze ? ' selected' : ''}>${escapeHtml(optie.titel)}</option>`,
+            )
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Datum keuze
+        <input name="keuzeDatum" type="date" required value="${escapeAttribute(item.datum)}" />
+      </label>
+      <label>
+        Onderbouwing
+        <textarea name="onderbouwing" rows="3" required>${escapeHtml(item.onderbouwing ?? '')}</textarea>
+      </label>
+      <button type="submit">Bewaar keuze</button>
+    </form>
   `;
 }
 

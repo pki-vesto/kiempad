@@ -535,6 +535,13 @@ function bindAfwegingControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveDecisionFromForm(event.currentTarget, root, state);
   });
+
+  root.querySelectorAll<HTMLFormElement>('.decision-choice-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveDecisionChoiceFromForm(event.currentTarget, root, state);
+    });
+  });
 }
 
 async function saveDecisionFromForm(
@@ -553,6 +560,24 @@ async function saveDecisionFromForm(
       String(data.get('voors') ?? ''),
       String(data.get('tegens') ?? ''),
     ),
+  });
+  await reloadAndRender(root, state);
+}
+
+async function saveDecisionChoiceFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.decisionStore) return;
+  const decisionId = target.dataset.decisionId;
+  if (!decisionId) return;
+
+  const data = new FormData(target);
+  await state.decisionStore.setChoice(decisionId, {
+    keuze: String(data.get('keuze') ?? ''),
+    datum: String(data.get('keuzeDatum') ?? ''),
+    onderbouwing: String(data.get('onderbouwing') ?? ''),
   });
   await reloadAndRender(root, state);
 }

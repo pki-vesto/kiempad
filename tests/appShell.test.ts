@@ -608,7 +608,9 @@ describe('app shell', () => {
         {
           id: 'decision-1',
           onderwerp: 'Kliniek bellen?',
-          datum: '2026-06-23',
+          datum: '2026-06-24',
+          keuze: 'Vandaag bellen',
+          onderbouwing: 'Geeft eerder duidelijkheid.',
           opties: [
             {
               titel: 'Vandaag bellen',
@@ -641,6 +643,14 @@ describe('app shell', () => {
     expect(html).toContain('Tegens: Misschien onnodig onrustig');
     expect(html).toContain('Morgen afwachten');
     expect(html).toContain('Voors: Meer rust vandaag');
+    expect(html).toContain('Keuze: Vandaag bellen');
+    expect(html).toContain('Onderbouwing: Geeft eerder duidelijkheid.');
+    expect(html).toContain('class="data-form compact-form decision-choice-form"');
+    expect(html).toContain('data-decision-id="decision-1"');
+    expect(html).toContain('name="keuze"');
+    expect(html).toContain('name="keuzeDatum" type="date" required value="2026-06-24"');
+    expect(html).toContain('name="onderbouwing"');
+    expect(html).toContain('Bewaar keuze');
   });
 
   it('rendert AI-payloadpreview en samenvatting-opslag in het kennisscherm', () => {

@@ -153,6 +153,8 @@
   lokale versleutelde beslisnotitie.
 - G113 voors/tegens: beslisnotities kunnen per optie argumenten voor en tegen lokaal
   versleuteld bewaren en terug tonen.
+- G114 keuzevastlegging: beslisnotities kunnen een gemaakte keuze met datum en
+  onderbouwing lokaal versleuteld bewaren en terug tonen.
 
 ## 3. Nog Niet Gebouwd
 
