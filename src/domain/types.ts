@@ -237,6 +237,22 @@ export interface DossierDocument {
   uploadedAt: IsoDate;
 }
 
+export interface ConsultVerslag {
+  id: string;
+  datum: IsoDate;
+  titel: string;
+  bron: 'upload' | 'handmatig';
+  bestandsNaam?: string;
+  mimeType?: string;
+  grootteBytes?: number;
+  inhoudBase64?: string;
+  tekst?: string;
+  afspraakId?: string;
+  trajectId?: string;
+  notitie?: string;
+  uploadedAt: IsoDate;
+}
+
 export interface SettingsRecord {
   id: string;
   profielen?: { peter?: string; partner?: string };

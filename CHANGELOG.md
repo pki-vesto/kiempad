@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G196 PFIP consult intelligence: consultverslagen hebben een eigen lokaal
+  versleuteld recordtype met apart formulier en aparte lijst naast algemene
+  dossierdocumenten.
 - G195 PFIP imaging: imaging-repository kan lokaal filteren op beeldtype, datum,
   traject, afspraak en embryo.
 - G194 PFIP imaging: imaging-items tonen previewstates voor vergrendeld,

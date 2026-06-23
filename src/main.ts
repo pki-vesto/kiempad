@@ -10,6 +10,7 @@ import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/age
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import { maakConsultPrintHtml } from './domain/consultExport';
+import { ConsultVerslagStore } from './domain/consultVerslagStore';
 import { CycleDataStore } from './domain/cycleDataStore';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
@@ -37,6 +38,7 @@ import { maakTraject, type TrajectMetFasen } from './domain/traject';
 import { TrajectStore } from './domain/trajectStore';
 import type {
   Afspraak,
+  ConsultVerslag,
   CostItem,
   CycleData,
   Decision,
@@ -89,6 +91,7 @@ type RuntimeState = {
   kostenStore?: KostenStore;
   decisionStore?: DecisionStore;
   dossierStore?: DossierStore;
+  consultVerslagStore?: ConsultVerslagStore;
   eventLogStore?: EventLogStore;
   symptomenStore?: SymptomenStore;
   cycleDataStore?: CycleDataStore;
@@ -106,6 +109,7 @@ type RuntimeState = {
   mentalCheckIns: MentalCheckIn[];
   decisions: Decision[];
   dossierDocuments: DossierDocument[];
+  consultVerslagen: ConsultVerslag[];
   kosten: CostItem[];
   eventLogs: EventLog[];
   settings: AppSettings;
@@ -141,6 +145,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     herinneringen: state.herinneringen,
     vragen: state.vragen,
     dossierDocuments: state.dossierDocuments,
+    consultVerslagen: state.consultVerslagen,
     kennisItems: state.kennisItems,
     kennisFilter: state.kennisFilter,
     symptomLogs: state.symptomLogs,
@@ -200,6 +205,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kostenStore = undefined;
     state.decisionStore = undefined;
     state.dossierStore = undefined;
+    state.consultVerslagStore = undefined;
     state.eventLogStore = undefined;
     state.symptomenStore = undefined;
     state.cycleDataStore = undefined;
@@ -217,6 +223,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.mentalCheckIns = [];
     state.decisions = [];
     state.dossierDocuments = [];
+    state.consultVerslagen = [];
     state.kosten = [];
     state.eventLogs = [];
     state.settings = DEFAULT_APP_SETTINGS;
@@ -274,6 +281,7 @@ async function mount(): Promise<void> {
     mentalCheckIns: [],
     decisions: [],
     dossierDocuments: [],
+    consultVerslagen: [],
     kosten: [],
     eventLogs: [],
     settings: DEFAULT_APP_SETTINGS,
@@ -333,6 +341,11 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     void saveEmbryoQualityFromForm(event.currentTarget, root, state);
   });
 
+  root.querySelector('#consult-verslag-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveConsultVerslagFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelector('#dossier-search-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -356,6 +369,55 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     };
     render(root, state);
   });
+}
+
+async function saveConsultVerslagFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.consultVerslagStore) return;
+
+  const data = new FormData(target);
+  const file = data.get('consultBestand');
+  const consultBestand = file instanceof File && file.size > 0 ? file : undefined;
+  const tekst = optionalString(data.get('tekst'));
+
+  if (!consultBestand && !tekst) {
+    state.dossierError = 'Voeg tekst of een bestand toe voor het consultverslag.';
+    render(root, state);
+    return;
+  }
+
+  try {
+    await state.consultVerslagStore.save({
+      datum: String(data.get('datum') ?? ''),
+      titel: optionalString(data.get('titel')) ?? consultBestand?.name,
+      bron: consultBestand ? 'upload' : 'handmatig',
+      bestandsNaam: consultBestand?.name,
+      mimeType: consultBestand?.type || undefined,
+      grootteBytes: consultBestand?.size,
+      inhoudBase64: consultBestand ? await fileToBase64(consultBestand) : undefined,
+      tekst,
+      afspraakId: optionalString(data.get('afspraakId')),
+      trajectId: optionalString(data.get('trajectId')),
+      notitie: optionalString(data.get('notitie')),
+    });
+
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Consultverslag toegevoegd',
+      detail: 'Consultverslag lokaal versleuteld als apart recordtype opgeslagen.',
+    });
+    state.dossierStatus = 'Consultverslag lokaal versleuteld toegevoegd.';
+    state.dossierError = undefined;
+    target.reset();
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Consultverslag opslaan is mislukt.';
+    render(root, state);
+  }
 }
 
 async function saveDossierDocumentsFromForm(
@@ -780,6 +842,7 @@ async function loadUnlockedState(state: RuntimeState, eventName: string): Promis
   state.kostenStore = createKostenStore(state);
   state.decisionStore = createDecisionStore(state);
   state.dossierStore = createDossierStore(state);
+  state.consultVerslagStore = createConsultVerslagStore(state);
   state.eventLogStore = createEventLogStore(state);
   state.symptomenStore = createSymptomenStore(state);
   state.cycleDataStore = createCycleDataStore(state);
@@ -798,6 +861,7 @@ async function loadUnlockedState(state: RuntimeState, eventName: string): Promis
   state.mentalCheckIns = await state.mentaleCheckInStore.list();
   state.decisions = await state.decisionStore.list();
   state.dossierDocuments = await state.dossierStore.list();
+  state.consultVerslagen = await state.consultVerslagStore.list();
   state.kosten = await state.kostenStore.list();
   await state.eventLogStore.record({
     categorie: 'kluis',
@@ -1730,6 +1794,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.dossierStore) {
     state.dossierDocuments = await state.dossierStore.list();
   }
+  if (state.consultVerslagStore) {
+    state.consultVerslagen = await state.consultVerslagStore.list();
+  }
   if (state.kostenStore) {
     state.kosten = await state.kostenStore.list();
   }
@@ -1800,6 +1867,12 @@ function createDecisionStore(state: RuntimeState): DecisionStore {
 function createDossierStore(state: RuntimeState): DossierStore {
   return new DossierStore(
     new EncryptedRecordRepository<DossierDocument>(state.driver, state.session, 'dossier_document'),
+  );
+}
+
+function createConsultVerslagStore(state: RuntimeState): ConsultVerslagStore {
+  return new ConsultVerslagStore(
+    new EncryptedRecordRepository<ConsultVerslag>(state.driver, state.session, 'consult_verslag'),
   );
 }
 

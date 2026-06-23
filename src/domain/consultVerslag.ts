@@ -1,0 +1,72 @@
+import type { ConsultVerslag } from './types';
+
+export type ConsultVerslagInput = {
+  datum: string;
+  titel?: string;
+  bron?: ConsultVerslag['bron'];
+  bestandsNaam?: string;
+  mimeType?: string;
+  grootteBytes?: number;
+  inhoudBase64?: string;
+  tekst?: string;
+  afspraakId?: string;
+  trajectId?: string;
+  notitie?: string;
+  uploadedAt?: string;
+};
+
+export const CONSULT_VERSLAG_BRON_LABELS: Record<ConsultVerslag['bron'], string> = {
+  upload: 'Upload',
+  handmatig: 'Handmatig',
+};
+
+export function maakConsultVerslag(id: string, input: ConsultVerslagInput): ConsultVerslag {
+  const datum = input.datum.trim();
+  const bestandsNaam = input.bestandsNaam?.trim();
+  const titel = (input.titel?.trim() || bestandsNaam || 'Consultverslag').trim();
+  const tekst = input.tekst?.trim();
+  const notitie = input.notitie?.trim();
+  const afspraakId = input.afspraakId?.trim();
+  const trajectId = input.trajectId?.trim();
+  const inhoudBase64 = input.inhoudBase64?.trim();
+  const mimeType = input.mimeType?.trim();
+  const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
+  const bron = input.bron ?? (bestandsNaam ? 'upload' : 'handmatig');
+
+  if (!datum) throw new Error('Datum is verplicht voor een consultverslag.');
+  if (!titel) throw new Error('Titel is verplicht voor een consultverslag.');
+  if (!tekst && !inhoudBase64) {
+    throw new Error('Voeg tekst of een bestand toe voor het consultverslag.');
+  }
+  if (
+    input.grootteBytes !== undefined &&
+    (!Number.isFinite(input.grootteBytes) || input.grootteBytes < 0)
+  ) {
+    throw new Error('Bestandsgrootte is ongeldig.');
+  }
+
+  return {
+    id,
+    datum,
+    titel,
+    bron,
+    bestandsNaam: bestandsNaam || undefined,
+    mimeType: mimeType || undefined,
+    grootteBytes: input.grootteBytes === undefined ? undefined : Math.floor(input.grootteBytes),
+    inhoudBase64: inhoudBase64 || undefined,
+    tekst: tekst || undefined,
+    afspraakId: afspraakId || undefined,
+    trajectId: trajectId || undefined,
+    notitie: notitie || undefined,
+    uploadedAt,
+  };
+}
+
+export function sorteerConsultVerslagen(items: readonly ConsultVerslag[]): ConsultVerslag[] {
+  return [...items].sort(
+    (a, b) =>
+      b.datum.localeCompare(a.datum) ||
+      b.uploadedAt.localeCompare(a.uploadedAt) ||
+      a.titel.localeCompare(b.titel),
+  );
+}

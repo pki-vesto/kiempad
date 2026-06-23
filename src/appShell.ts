@@ -15,6 +15,7 @@ import {
   type OnDeviceAiCapability,
 } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
+import { CONSULT_VERSLAG_BRON_LABELS } from './domain/consultVerslag';
 import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
@@ -70,6 +71,7 @@ import {
 } from './domain/traject';
 import type {
   Afspraak,
+  ConsultVerslag,
   CostItem,
   CycleData,
   Decision,
@@ -232,6 +234,7 @@ export type AppShellState = {
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
+  consultVerslagen?: ConsultVerslag[];
   dossierDocuments?: DossierDocument[];
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
@@ -276,6 +279,7 @@ export function renderAppShell(
     medicatie: [],
     herinneringen: [],
     vragen: [],
+    consultVerslagen: [],
     dossierDocuments: [],
     kennisItems: [],
     kosten: [],
@@ -680,6 +684,7 @@ function renderWebAuthnSettings(status?: WebAuthnViewStatus): string {
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
+  const consultVerslagen = state.consultVerslagen ?? [];
   const zoekterm = state.dossierZoekterm ?? '';
   const zoekResultaten = zoekDossierDocumenten(documenten, zoekterm);
   const zichtbareDocumenten = zoekResultaten.map((resultaat) => resultaat.document);
@@ -784,6 +789,45 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
+        <h2>Consultverslag toevoegen</h2>
+        <form id="consult-verslag-form" class="data-form">
+          <label>
+            Datum consult
+            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+          </label>
+          <label>
+            Titel
+            <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: evaluatie na punctie" />
+          </label>
+          <label>
+            Upload verslag
+            <input name="consultBestand" type="file" accept="application/pdf,text/*" />
+          </label>
+          <label>
+            Tekst of samenvatting
+            <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
+          </label>
+          <label>
+            Koppel aan afspraak
+            <select name="afspraakId">
+              <option value="">Geen afspraak</option>
+              ${afspraakOpties}
+            </select>
+          </label>
+          <label>
+            Koppel aan traject
+            <select name="trajectId">
+              <option value="">Geen traject</option>
+              ${trajectOpties}
+            </select>
+          </label>
+          <label>
+            Notitie
+            <textarea name="notitie" rows="3"></textarea>
+          </label>
+          <button type="submit">Bewaar consultverslag</button>
+        </form>
+        <p class="small-print">Consultverslagen worden als eigen recordtype versleuteld lokaal bewaard. Kiempad vat hier nog niets medisch samen en geeft geen behandeladvies.</p>
         <h2>Embryokwaliteit vastleggen</h2>
         <form id="embryo-quality-form" class="data-form">
           <label>
@@ -845,6 +889,12 @@ function renderDossierScreen(state: AppShellState): string {
           zoekterm
             ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde lokale kluis.</p>`
             : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
+        }
+        <h2>Consultverslagen</h2>
+        ${
+          consultVerslagen.length > 0
+            ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
+            : '<p class="empty-state">Nog geen consultverslagen als apart recordtype vastgelegd.</p>'
         }
         <h2>Imaging-repository</h2>
         ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
@@ -1055,6 +1105,37 @@ function renderDossierTijdlijnItem(
     bron,
     matches,
   });
+}
+
+function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): string {
+  const afspraak = verslag.afspraakId
+    ? state.afspraken.find((item) => item.afspraak.id === verslag.afspraakId)?.afspraak
+    : undefined;
+  const traject = verslag.trajectId
+    ? state.trajecten.find((item) => item.traject.id === verslag.trajectId)?.traject
+    : undefined;
+  const details = [
+    CONSULT_VERSLAG_BRON_LABELS[verslag.bron],
+    verslag.bestandsNaam,
+    verslag.grootteBytes !== undefined ? formatBytes(verslag.grootteBytes) : undefined,
+    afspraak ? `Afspraak: ${afspraak.titel}` : undefined,
+    traject ? `Traject: ${traject.naam}` : undefined,
+  ].filter((detail): detail is string => Boolean(detail));
+
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(verslag.titel)}</h3>
+        <p class="linked-note">Consultdatum: ${escapeHtml(verslag.datum)} · ${details.map(escapeHtml).join(' · ')}</p>
+        ${
+          verslag.tekst
+            ? `<p>${escapeHtml(verslag.tekst)}</p>`
+            : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
+        }
+        ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
+      </div>
+    </li>
+  `;
 }
 
 function renderDossierDocument(

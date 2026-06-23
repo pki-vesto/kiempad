@@ -16,6 +16,7 @@ export type StoredRecordType =
   | 'decision'
   | 'event_log'
   | 'dossier_document'
+  | 'consult_verslag'
   | 'settings'
   | 'system';
 

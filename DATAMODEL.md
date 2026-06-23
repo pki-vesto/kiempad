@@ -23,6 +23,7 @@ SymptomLog (n)        CycleData (n)
 CostItem (n)          Decision (n)
 EventLog (n)          KennisItem (n)        (kennisbank; deels vaste inhoud)
 DossierDocument (n)   (historische onderzoeken en latere dossierbijlagen)
+ConsultVerslag (n)    (consultnotities en gespreksverslagen als eigen recordtype)
 ```
 
 Conventies:
@@ -203,6 +204,27 @@ systeemgebeurtenissen.
 | notitie | string? | lokale toelichting |
 | analyse | `{ samenvatting, signalen[] }` | lokale, niet-medische analyse van naam/type/grootte |
 | uploadedAt | IsoDate | moment van lokaal toevoegen |
+
+### ConsultVerslag
+| veld | type | opmerking |
+|---|---|---|
+| id | string | |
+| datum | IsoDate | datum van consult of gesprek |
+| titel | string | herkenbare lokale titel |
+| bron | `upload` \| `handmatig` | onderscheid tussen bestand en ingeplakte notitie |
+| bestandsNaam | string? | originele bestandsnaam bij upload |
+| mimeType | string? | browser-bestandstype indien bekend |
+| grootteBytes | number? | originele bestandsgrootte |
+| inhoudBase64 | string? | bestandsinhoud, versleuteld opgeslagen in recordpayload |
+| tekst | string? | handmatige tekst of uitgelezen tekst |
+| afspraakId | string? | optionele koppeling naar relevante afspraak |
+| trajectId | string? | optionele koppeling naar relevante poging/traject |
+| notitie | string? | lokale toelichting |
+| uploadedAt | IsoDate | moment van lokaal toevoegen |
+
+ConsultVerslag-records zijn bewust gescheiden van algemene dossierdocumenten,
+zodat consult-intelligence later samenvattingen, actiepunten en vragenlijsten kan
+opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
 
 ### Settings
 | veld | type | opmerking |
