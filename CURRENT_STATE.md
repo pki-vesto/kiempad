@@ -15,17 +15,21 @@
 - **M1.1 app-skelet:** een Nederlandstalige, responsive Vite-app-shell met
   hash-navigatie tussen de hoofdschermen, rustige start-/werkruimte en zichtbare
   niet-medische disclaimer.
+- **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
+  niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
+  auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
+  metadata, additieve schema-opzet en tests voor crypto/opslag/privacy.
 
 ## 2. Gedeeltelijk Gebouwd
 
 - De hoofdschermen tonen nu nog inhoudelijke lege-staten; echte trajecten, afspraken,
-  medicatie, vragen en kennisitems worden in volgende F1-mijlpalen toegevoegd.
+  medicatie, vragen en kennisitems worden in volgende F1-mijlpalen op de versleutelde
+  repository-laag aangesloten.
 
 ## 3. Nog Niet Gebouwd
 
 De rest van F1 (MVP) en later, o.a.:
 
-- Versleutelde lokale opslag (passphrase/sleutel/IndexedDB).
 - Inhoudelijke UI-workflows voor traject, agenda, medicatie/DoseLog, herinneringen,
   vragen en kennisbank.
 - PWA-/service-worker-runtime.
@@ -44,10 +48,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 ## 5. Runtime-status
 
 - **Client-side runtime aanwezig.** Lokaal te starten met `npm run dev`; de app-shell
-  werkt zonder externe diensten en navigeert via hash-routes.
+  toont eerst een passphrase-kluis en navigeert na ontgrendelen via hash-routes.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (5 passing) en `npm run build`.
+  (13 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -55,9 +59,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **F1-fundament:** versleutelde lokale opslag werkend + ontgrendelflow.
-2. **Trajectoverzicht/fasen** en **agenda**.
-3. **Medicatie/injectieschema + herinneringen** (de "niet missen"-kern).
+1. **Trajectoverzicht/fasen** en **agenda** aansluiten op de versleutelde opslag.
+2. **Medicatie/injectieschema + herinneringen** (de "niet missen"-kern).
+3. **Vragen voor de arts** en basis-kennisbank.
 
 ## 7. Permanente onderhoudsregel
 

@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.2 versleutelde opslagfundering: PBKDF2 + salt, niet-exporteerbare AES-256-GCM
+  sessiesleutel, verifier-based passphrase unlock, auto-lock, IndexedDB repository
+  voor versleutelde records, geen-herstel-uitleg, CI-auditstap en crypto/opslag/
+  privacy-tests (G117-G120, G122-G128, G131-G132, G134-G136, G160-G161, G164).
 - M1.1 app-skelet: Nederlandstalige, responsive app-shell met hash-navigatie tussen
   hoofdschermen, zichtbare niet-medische disclaimer en Vitest-dekking voor de
   navigatie-/disclaimer-rendering (G016, G017, G018, G130, G147, G148, G155).

@@ -64,11 +64,12 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 
 ## Concrete maatregelen (checklist)
 
-- [ ] Versleuteling at rest (AES-GCM) voor alle gevoelige records.
-- [ ] Sleutel uit passphrase (PBKDF2/Argon2id) + per-installatie salt.
-- [ ] Toegang via passphrase, optioneel biometrie/WebAuthn.
-- [ ] Auto-lock na inactiviteit.
-- [ ] Geen tracking/analytics/ads; geen third-party scripts.
-- [ ] Minimale data naar buiten; opt-in voor AI/sync; TLS; E2E voor sync.
+- [x] Versleuteling at rest (AES-GCM) voor alle gevoelige records.
+- [x] Sleutel uit passphrase (PBKDF2/Argon2id) + per-installatie salt.
+- [x] Toegang via passphrase (biometrie/WebAuthn blijft optioneel/later).
+- [x] Auto-lock na inactiviteit.
+- [x] Geen tracking/analytics/ads; geen third-party scripts.
+- [x] Geen standaard uitgaand verkeer; privacy-test borgt dat opslag lokaal blijft.
+- [ ] Opt-in voor AI/sync; TLS; E2E voor sync.
 - [ ] Versleutelde back-up/export; veilig sleutelbeheer voor een eventuele AI-sleutel.
 - [ ] `.env` en data/back-ups buiten git (`.gitignore`).

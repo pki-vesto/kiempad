@@ -79,6 +79,7 @@ export function renderAppShell(activeId: ScreenId): string {
           </span>
         </a>
         <p class="status-pill">Local-first · geen tracking</p>
+        <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
       </header>
 
       <nav class="primary-nav" aria-label="Hoofdschermen">
@@ -104,6 +105,38 @@ export function renderAppShell(activeId: ScreenId): string {
         </section>
       </main>
     </div>
+  `;
+}
+
+export function renderVaultGate(hasVault: boolean, error?: string): string {
+  const title = hasVault ? 'Ontgrendel Kiempad' : 'Maak je lokale kluis aan';
+  const button = hasVault ? 'Ontgrendel' : 'Kluis aanmaken';
+  const help = hasVault
+    ? 'Voer je passphrase in om de sleutel tijdelijk in het geheugen te laden.'
+    : 'Kies een passphrase. Kiempad gebruikt die om een lokale sleutel af te leiden.';
+
+  return `
+    <main class="vault-gate" aria-labelledby="vault-title">
+      <section class="vault-card">
+        <p class="eyebrow">Local-first opslag</p>
+        <h1 id="vault-title">${title}</h1>
+        <p>${help}</p>
+        <form id="vault-form" class="vault-form">
+          <label for="passphrase">Passphrase</label>
+          <input id="passphrase" name="passphrase" type="password" minlength="8" autocomplete="current-password" required />
+          <button type="submit">${button}</button>
+        </form>
+        ${error ? `<p class="form-error" role="alert">${error}</p>` : ''}
+        <aside class="policy-panel" aria-labelledby="recovery-title">
+          <h2 id="recovery-title">Geen herstel-achterdeur</h2>
+          <p>
+            Kiempad bewaart je passphrase niet. Zonder passphrase is versleutelde data
+            niet te herstellen. Maak straks regelmatig een versleutelde back-up.
+          </p>
+        </aside>
+        <p class="small-print">${DISCLAIMER}</p>
+      </section>
+    </main>
   `;
 }
 

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 24 |
+| ☑ klaar | 41 |
 | ◐ bezig | 1 |
-| ☐ open | 149 |
+| ☐ open | 132 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -213,18 +213,18 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G117 | Versleuteling at rest (AES-GCM) voor alle gevoelige records | P0 | F1 | ☐ |
-| G118 | Sleutel afgeleid uit passphrase (PBKDF2/Argon2id) + salt | P0 | F1 | ☐ |
-| G119 | Sleutel alleen in geheugen; nooit platgeschreven/geëxporteerd | P0 | F1 | ☐ |
-| G120 | Ontgrendelen met passphrase | P0 | F1 | ☐ |
+| G117 | Versleuteling at rest (AES-GCM) voor alle gevoelige records | P0 | F1 | ☑ |
+| G118 | Sleutel afgeleid uit passphrase (PBKDF2/Argon2id) + salt | P0 | F1 | ☑ |
+| G119 | Sleutel alleen in geheugen; nooit platgeschreven/geëxporteerd | P0 | F1 | ☑ |
+| G120 | Ontgrendelen met passphrase | P0 | F1 | ☑ |
 | G121 | Optioneel biometrie/WebAuthn als ontgrendelgemak | P2 | F2 | ☐ |
-| G122 | Automatische vergrendeling na inactiviteit | P1 | F1 | ☐ |
-| G123 | Geen tracking/analytics/advertenties/third-party scripts | P0 | F1 | ☐ |
-| G124 | Geen standaard uitgaand verkeer (privacy-rooktest in CI/handmatig) | P0 | F1 | ☐ |
+| G122 | Automatische vergrendeling na inactiviteit | P1 | F1 | ☑ |
+| G123 | Geen tracking/analytics/advertenties/third-party scripts | P0 | F1 | ☑ |
+| G124 | Geen standaard uitgaand verkeer (privacy-rooktest in CI/handmatig) | P0 | F1 | ☑ |
 | G125 | Opt-in vereist voor elk uitgaand verkeer (AI/sync) | P0 | F2 | ☐ |
 | G126 | Lokaal gebeurtenissenlog (verlaat toestel niet) | P2 | F2 | ☐ |
-| G127 | Duidelijke "geen herstel-achterdeur"-uitleg + back-up-aansporing | P1 | F1 | ☐ |
-| G128 | Minimale npm-dependencies; audit-stap in CI | P1 | F1 | ☐ |
+| G127 | Duidelijke "geen herstel-achterdeur"-uitleg + back-up-aansporing | P1 | F1 | ☑ |
+| G128 | Minimale npm-dependencies; audit-stap in CI | P1 | F1 | ☑ |
 | G129 | Geen secrets/persoonsdata in de (publieke) repo; data blijft local-first (ADR-0006) | P0 | F0 | ☑ |
 | G130 | Disclaimer zichtbaar in app én docs | P0 | F1 | ☑ |
 
@@ -232,12 +232,12 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G131 | IndexedDB-opslaglaag met repository-interface | P0 | F1 | ☐ |
-| G132 | Records versleuteld; minimale klare-tekst indexvelden | P0 | F1 | ☐ |
+| G131 | IndexedDB-opslaglaag met repository-interface | P0 | F1 | ☑ |
+| G132 | Records versleuteld; minimale klare-tekst indexvelden | P0 | F1 | ☑ |
 | G133 | Datamodel-types in code synchroon met `DATAMODEL.md` | P1 | F1 | ☐ |
-| G134 | UUID-id-generatie client-side | P1 | F1 | ☐ |
-| G135 | ISO-8601 datums/tijden als tekst opgeslagen | P1 | F1 | ☐ |
-| G136 | Additieve migratiestrategie (geen betekeniswijziging) | P1 | F1 | ☐ |
+| G134 | UUID-id-generatie client-side | P1 | F1 | ☑ |
+| G135 | ISO-8601 datums/tijden als tekst opgeslagen | P1 | F1 | ☑ |
+| G136 | Additieve migratiestrategie (geen betekeniswijziging) | P1 | F1 | ☑ |
 | G137 | Migratie-/schemaversie bijgehouden in opslag | P2 | F2 | ☐ |
 | G138 | Seed van initiële kennisbank-inhoud bij eerste start | P2 | F1 | ☐ |
 
@@ -276,11 +276,11 @@
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
 | G159 | Unit-tests voor domeinregels (vergoeding, fase-logica, datums) | P1 | F1 | ◐ |
-| G160 | Tests voor versleuteling/ontsleuteling (round-trip) | P0 | F1 | ☐ |
-| G161 | Tests voor opslaglaag (CRUD op IndexedDB, mock) | P1 | F1 | ☐ |
+| G160 | Tests voor versleuteling/ontsleuteling (round-trip) | P0 | F1 | ☑ |
+| G161 | Tests voor opslaglaag (CRUD op IndexedDB, mock) | P1 | F1 | ☑ |
 | G162 | Tests voor herinnering-/DoseLog-generatie | P1 | F1 | ☐ |
 | G163 | Policy-test: geen dosering-/diagnose-output | P0 | F1 | ☐ |
-| G164 | Privacy-test: geen uitgaand verkeer zonder opt-in | P0 | F1 | ☐ |
+| G164 | Privacy-test: geen uitgaand verkeer zonder opt-in | P0 | F1 | ☑ |
 | G165 | CI groen vereist vóór merge | P1 | F0 | ☐ |
 | G166 | Linting/formatting consistent (bv. eslint/prettier of biome) | P2 | F1 | ☐ |
 

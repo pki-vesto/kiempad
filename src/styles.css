@@ -92,6 +92,30 @@ a {
   font-size: 0.9rem;
 }
 
+.lock-button,
+.vault-form button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: #2f6f73;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lock-button {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+}
+
+.lock-button:focus-visible,
+.vault-form input:focus-visible,
+.vault-form button:focus-visible {
+  outline: 3px solid #2f6f73;
+  outline-offset: 3px;
+}
+
 .primary-nav {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -193,6 +217,67 @@ h2 {
   color: #465148;
 }
 
+.vault-gate {
+  display: grid;
+  min-height: 100vh;
+  padding: 20px;
+  place-items: center;
+}
+
+.vault-card {
+  width: min(680px, 100%);
+  padding: 28px;
+  border: 1px solid #d8ded5;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.vault-card h1 {
+  max-width: 18ch;
+  font-size: 3rem;
+}
+
+.vault-card > p {
+  color: #465148;
+  line-height: 1.6;
+}
+
+.vault-form {
+  display: grid;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.vault-form label {
+  color: #334236;
+  font-weight: 800;
+}
+
+.vault-form input {
+  min-height: 48px;
+  width: 100%;
+  border: 1px solid #aeb9ae;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.vault-form button {
+  padding: 10px 14px;
+}
+
+.form-error {
+  padding: 10px 12px;
+  border: 1px solid #b85d4f;
+  border-radius: 8px;
+  background: #fff2ef;
+  color: #7a2c22;
+}
+
+.small-print {
+  font-size: 0.92rem;
+}
+
 @media (max-width: 760px) {
   .app-shell {
     padding: 14px;
@@ -207,6 +292,10 @@ h2 {
     width: 100%;
   }
 
+  .lock-button {
+    width: 100%;
+  }
+
   .primary-nav {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -217,6 +306,14 @@ h2 {
 
   h1 {
     font-size: 2.35rem;
+  }
+
+  .vault-card {
+    padding: 22px;
+  }
+
+  .vault-card h1 {
+    font-size: 2.2rem;
   }
 
   .workspace {
