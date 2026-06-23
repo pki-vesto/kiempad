@@ -80,6 +80,8 @@ describe('app shell', () => {
     expect(html).toContain('Dagelijkse aanbevelingen Man');
     expect(html).toContain('Dagelijkse aanbevelingen Samen');
     expect(html).toContain('Dagcheck zonder extra medicatiemoment');
+    expect(html).toContain('Gebruikte bronnen:');
+    expect(html).toContain('Gebruikte bronnen: Lokale dagstart zonder extra medicatiemoment');
     expect(html).toContain('Mannelijke leefstijl- en voorbereidingskaart');
     expect(html).toContain(
       'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
@@ -159,6 +161,7 @@ describe('app shell', () => {
 
     expect(html).toContain('Medicatieschema controleren');
     expect(html).toContain('1 gepland(e) medicatiemoment(en) vandaag');
+    expect(html).toContain(`Gebruikte bronnen: Medicatieplanning: Progesteron op ${vandaag} 08:00`);
     expect(html).toContain('Behandelvoorbereiding');
     expect(html).toContain(`Afspraak: controleer Echo controle op ${vandaag} 09:30.`);
     expect(html).toContain(
@@ -168,6 +171,8 @@ describe('app shell', () => {
     expect(html).toContain('Bron: Agenda');
     expect(html).toContain('Bron: Medicatieplanning vandaag');
     expect(html).toContain('Bron: Vragenlijst');
+    expect(html).toContain(`Agenda: Echo controle op ${vandaag} 09:30`);
+    expect(html).toContain('Open vraag: Wanneer horen we de uitslag?');
     expect(html).toContain('Volgende afspraak voorbereiden');
     expect(html).toContain(`Echo controle staat gepland op ${vandaag} 09:30.`);
     expect(html).toContain('Open vragen ordenen');
@@ -218,6 +223,9 @@ describe('app shell', () => {
     expect(html).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
     expect(html).toContain('recent dossierdocument Labuitslag op 2026-06-23');
     expect(html).toContain('Bron: Dossier, cyclusfase en behandelgeschiedenis');
+    expect(html).toContain('Gebruikte bronnen: Trajectfase: Stimulatie vanaf 2026-06-22');
+    expect(html).toContain('Cyclusmeting: cyclusdag op 2026-06-24');
+    expect(html).toContain('Dossierdocument: Labuitslag op 2026-06-23');
     expect(html).toContain('Cyclusdagcheck');
     expect(html).toContain(
       'Fase: gebruik cyclusfase Stimulatie alleen als context voor feitelijke dagnotities.',

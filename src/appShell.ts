@@ -2512,6 +2512,11 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
               .join('')}</ol>`
           : ''
       }
+      ${
+        item.gebruikteBronnen?.length
+          ? `<p class="small-print">Gebruikte bronnen: ${item.gebruikteBronnen.map(escapeHtml).join(' · ')}</p>`
+          : ''
+      }
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     </li>
   `;

@@ -110,6 +110,21 @@ describe('dagelijkse aanbevelingen', () => {
         disclaimer: 'Conceptvragen; controleer zelf wat je met de kliniek bespreekt.',
       },
     ]);
+    expect(
+      Object.values(overzicht)
+        .flat()
+        .every((item) => item.gebruikteBronnen?.length),
+    ).toBe(true);
+    expect(overzicht.vrouw[0]?.gebruikteBronnen).toContain(
+      'Medicatieplanning: Progesteron op 2026-06-24 08:00',
+    );
+    expect(overzicht.samen[1]?.gebruikteBronnen).toEqual(
+      expect.arrayContaining([
+        'Agenda: Echo controle op 2026-06-24 09:30',
+        'Medicatieplanning: Progesteron op 2026-06-24 08:00',
+        'Open vraag: Wanneer horen we de uitslag?',
+      ]),
+    );
     const titelEnDetail = Object.values(overzicht)
       .flat()
       .map((item) => `${item.titel} ${item.detail}`)
@@ -163,6 +178,13 @@ describe('dagelijkse aanbevelingen', () => {
     expect(overzicht.vrouw[0]?.detail).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
     expect(overzicht.vrouw[0]?.detail).toContain('recent dossierdocument Labuitslag op 2026-06-23');
     expect(overzicht.vrouw[0]?.detail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
+    expect(overzicht.vrouw[0]?.gebruikteBronnen).toEqual(
+      expect.arrayContaining([
+        'Trajectfase: Stimulatie vanaf 2026-06-22',
+        'Cyclusmeting: cyclusdag op 2026-06-24',
+        'Dossierdocument: Labuitslag op 2026-06-23',
+      ]),
+    );
     expect(overzicht.vrouw[1]).toMatchObject({
       id: 'vrouw-cyclus-dagcheck',
       titel: 'Cyclusdagcheck',
@@ -240,6 +262,12 @@ describe('dagelijkse aanbevelingen', () => {
         disclaimer: 'Lokale conceptactiepunten; geen medisch advies of behandelkeuze.',
       },
     ]);
+    expect(voorbereiding?.gebruikteBronnen).toEqual(
+      expect.arrayContaining([
+        'Agenda: Consult voorbereiding op 2026-06-24 14:00',
+        'Consultverslag: Voorbereidend consult op 2026-06-20',
+      ]),
+    );
     expect(
       `${voorbereiding?.detail} ${voorbereiding?.checklist?.map((item) => item.disclaimer)}`,
     ).not.toMatch(/\bdosering|diagnose\b/i);
