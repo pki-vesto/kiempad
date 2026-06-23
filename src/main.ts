@@ -12,6 +12,7 @@ import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import { SettingsStore } from './domain/settingsStore';
 import { maakSnelleAfspraak, maakSnelleMedicatie, maakSnelleVraag } from './domain/snelleInvoer';
+import { SymptomenStore } from './domain/symptomenStore';
 import { maakTraject, type TrajectMetFasen } from './domain/traject';
 import { TrajectStore } from './domain/trajectStore';
 import type {
@@ -23,6 +24,7 @@ import type {
   KennisItem,
   Medicatie,
   SettingsRecord,
+  SymptomLog,
   Traject,
   TrajectFase,
   Vraag,
@@ -54,6 +56,7 @@ type RuntimeState = {
   vraagStore?: VraagStore;
   kennisStore?: KennisStore;
   kostenStore?: KostenStore;
+  symptomenStore?: SymptomenStore;
   settingsStore?: SettingsStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -62,6 +65,7 @@ type RuntimeState = {
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
+  symptomLogs: SymptomLog[];
   kosten: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -89,6 +93,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     vragen: state.vragen,
     kennisItems: state.kennisItems,
     kennisFilter: state.kennisFilter,
+    symptomLogs: state.symptomLogs,
     kosten: state.kosten,
     settings: state.settings,
     notificaties: state.notificaties,
@@ -112,6 +117,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindHerinneringControls(root, state);
   bindVraagControls(root, state);
   bindKennisControls(root, state);
+  bindWelzijnControls(root, state);
   bindKostenControls(root, state);
   bindBackupControls(root, state);
   scheduleLocalNotifications(
@@ -128,6 +134,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.vraagStore = undefined;
     state.kennisStore = undefined;
     state.kostenStore = undefined;
+    state.symptomenStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
@@ -136,6 +143,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.vragen = [];
     state.kennisItems = [];
     state.kennisFilter = undefined;
+    state.symptomLogs = [];
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -167,6 +175,7 @@ async function mount(): Promise<void> {
     herinneringen: [],
     vragen: [],
     kennisItems: [],
+    symptomLogs: [],
     kosten: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
@@ -226,6 +235,7 @@ async function importBackupFromForm(
     state.vraagStore = undefined;
     state.kennisStore = undefined;
     state.kostenStore = undefined;
+    state.symptomenStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
@@ -234,6 +244,7 @@ async function importBackupFromForm(
     state.vragen = [];
     state.kennisItems = [];
     state.kennisFilter = undefined;
+    state.symptomLogs = [];
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -267,6 +278,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.vraagStore = createVraagStore(state);
         state.kennisStore = createKennisStore(state);
         state.kostenStore = createKostenStore(state);
+        state.symptomenStore = createSymptomenStore(state);
         state.settingsStore = createSettingsStore(state);
         await state.kennisStore.seedInitialItems();
         state.settings = await state.settingsStore.get();
@@ -276,6 +288,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.herinneringen = await state.herinneringStore.list();
         state.vragen = await state.vraagStore.list();
         state.kennisItems = await state.kennisStore.list();
+        state.symptomLogs = await state.symptomenStore.list();
         state.kosten = await state.kostenStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
@@ -476,6 +489,13 @@ function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
 
       void state.kostenStore.delete(kostenId).then(() => reloadAndRender(root, state));
     });
+  });
+}
+
+function bindWelzijnControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#symptom-log-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveSymptomLogFromForm(event.currentTarget, root, state);
   });
 }
 
@@ -889,6 +909,25 @@ async function saveVraagFromForm(
   await reloadAndRender(root, state);
 }
 
+async function saveSymptomLogFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.symptomenStore) return;
+
+  const data = new FormData(target);
+  await state.symptomenStore.save({
+    datum: String(data.get('datum') ?? ''),
+    owner: parseOwner(data.get('owner')),
+    symptoom: String(data.get('symptoom') ?? ''),
+    intensiteit: optionalPositiveNumber(data.get('intensiteit')),
+    notitie: optionalString(data.get('notitie')),
+  });
+
+  await reloadAndRender(root, state);
+}
+
 async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<void> {
   if (state.trajectStore) {
     state.trajecten = await state.trajectStore.list();
@@ -907,6 +946,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   }
   if (state.kennisStore) {
     state.kennisItems = await state.kennisStore.list();
+  }
+  if (state.symptomenStore) {
+    state.symptomLogs = await state.symptomenStore.list();
   }
   if (state.kostenStore) {
     state.kosten = await state.kostenStore.list();
@@ -963,6 +1005,12 @@ function createKennisStore(state: RuntimeState): KennisStore {
 function createKostenStore(state: RuntimeState): KostenStore {
   return new KostenStore(
     new EncryptedRecordRepository<CostItem>(state.driver, state.session, 'cost_item'),
+  );
+}
+
+function createSymptomenStore(state: RuntimeState): SymptomenStore {
+  return new SymptomenStore(
+    new EncryptedRecordRepository<SymptomLog>(state.driver, state.session, 'symptom_log'),
   );
 }
 
@@ -1077,6 +1125,11 @@ function parseKennisCategorie(value: FormDataEntryValue | null): KennisFilter['c
   }
 
   return undefined;
+}
+
+function parseOwner(value: FormDataEntryValue | null): SymptomLog['owner'] {
+  if (value === 'peter' || value === 'partner' || value === 'samen') return value;
+  return 'samen';
 }
 
 function optionalString(value: FormDataEntryValue | null): string | undefined {

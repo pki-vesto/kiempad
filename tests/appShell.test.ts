@@ -13,6 +13,7 @@ describe('app shell', () => {
     expect(normalizeScreenId('')).toBe('start');
     expect(normalizeScreenId('#start')).toBe('start');
     expect(normalizeScreenId('#/agenda')).toBe('agenda');
+    expect(normalizeScreenId('#welzijn')).toBe('welzijn');
     expect(normalizeScreenId('#/bestaat-niet')).toBe('start');
   });
 
@@ -419,6 +420,37 @@ describe('app shell', () => {
     expect(html).toContain('Eigen kennis');
     expect(html).toContain('name="kennisId" value="eigen-1"');
     expect(html).toContain('Werk kennisitem bij');
+  });
+
+  it('rendert het welzijnscherm met symptoomlogformulier en logs', () => {
+    const html = renderAppShell('welzijn', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      symptomLogs: [
+        {
+          id: 'symptom-1',
+          datum: '2026-06-23',
+          owner: 'samen',
+          symptoom: 'Hoofdpijn',
+          intensiteit: 3,
+          notitie: 'Na de afspraak.',
+        },
+      ],
+    });
+
+    expect(html).toContain('Symptoomlog toevoegen');
+    expect(html).toContain('id="symptom-log-form"');
+    expect(html).toContain('name="intensiteit" type="number" min="1" max="5"');
+    expect(html).toContain('Hoofdpijn');
+    expect(html).toContain('Samen');
+    expect(html).toContain('Intensiteit 3/5');
+    expect(html).toContain('Notitie: Na de afspraak.');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {

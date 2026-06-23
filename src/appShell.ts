@@ -35,6 +35,7 @@ import {
 } from './domain/medicatie';
 import type { MedicatieBundle } from './domain/medicatieStore';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
+import { OWNER_LABELS } from './domain/symptomen';
 import {
   bepaalHuidigeFase,
   bepaalVolgendeStap,
@@ -49,6 +50,7 @@ import type {
   Herinnering,
   KennisItem,
   Medicatie,
+  SymptomLog,
   Traject,
 } from './domain/types';
 import {
@@ -71,6 +73,7 @@ type ScreenId =
   | 'herinneringen'
   | 'vragen'
   | 'kennis'
+  | 'welzijn'
   | 'kosten'
   | 'backup';
 
@@ -134,6 +137,13 @@ export const SCREENS: readonly Screen[] = [
     emptyState: 'Nog geen kennisitems in de app. De vaste inhoud wordt later lokaal geseed.',
   },
   {
+    id: 'welzijn',
+    label: 'Welzijn',
+    title: 'Symptomen & welzijn',
+    intro: 'Leg symptomen rustig vast als privé logboek, zonder oordeel of advies.',
+    emptyState: 'Nog geen symptoomlogs vastgelegd.',
+  },
+  {
     id: 'kosten',
     label: 'Kosten',
     title: 'Kosten & vergoedingen',
@@ -164,6 +174,7 @@ export type AppShellState = {
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
+  symptomLogs?: SymptomLog[];
   kosten?: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -271,6 +282,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
+  if (activeId === 'welzijn') return renderWelzijnScreen(state);
   if (activeId === 'kosten') return renderKostenScreen(state);
   if (activeId === 'backup') return renderBackupScreen(state);
 
@@ -306,6 +318,71 @@ function renderBackupScreen(state: AppShellState): string {
         ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
       </div>
     </section>
+  `;
+}
+
+function renderWelzijnScreen(state: AppShellState): string {
+  const logs = state.symptomLogs ?? [];
+
+  return `
+    <section class="traject-layout" aria-label="Symptomen en welzijn">
+      <div class="form-panel">
+        <h2>Symptoomlog toevoegen</h2>
+        ${renderSymptomLogForm()}
+      </div>
+      <div class="timeline-panel">
+        <h2>Symptoomlogboek</h2>
+        ${
+          logs.length > 0
+            ? `<ol class="phase-list">${logs.map(renderSymptomLogItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderSymptomLogForm(): string {
+  return `
+    <form id="symptom-log-form" class="data-form">
+      <label>
+        Datum
+        <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+      </label>
+      <label>
+        Van wie
+        <select name="owner">
+          ${Object.entries(OWNER_LABELS)
+            .map(([value, label]) => renderOption(value, label))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Symptoom
+        <input name="symptoom" autocomplete="off" required />
+      </label>
+      <label>
+        Intensiteit
+        <input name="intensiteit" type="number" min="1" max="5" step="1" />
+      </label>
+      <label>
+        Notitie
+        <textarea name="notitie" rows="4"></textarea>
+      </label>
+      <button type="submit">Bewaar symptoomlog</button>
+    </form>
+  `;
+}
+
+function renderSymptomLogItem(log: SymptomLog): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(log.symptoom)}</h3>
+        <p>${escapeHtml(log.datum)} · ${escapeHtml(OWNER_LABELS[log.owner])}${log.intensiteit ? ` · Intensiteit ${log.intensiteit}/5` : ''}</p>
+        ${log.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(log.notitie)}</p>` : ''}
+      </div>
+    </li>
   `;
 }
 
