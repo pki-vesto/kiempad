@@ -74,7 +74,10 @@ describe('KennisStore', () => {
     const item = await store.saveResearchItem({
       titel: 'Artikel over stimulatie',
       bron: 'https://voorbeeld.test/research',
+      publicatieDatum: '2026-05-10',
       notitie: 'Eigen samenvatting en aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Gerandomiseerde studie met populatie, interventie en beperkingen samengevat.',
     });
     const raw = await driver.getRecord(item.id);
 
@@ -83,11 +86,18 @@ describe('KennisStore', () => {
       bron: 'https://voorbeeld.test/research',
       inhoud: 'Eigen samenvatting en aandachtspunt voor consult.',
       categorie: 'research',
+      researchPublicatie: {
+        publicatieDatum: '2026-05-10',
+        bron: 'https://voorbeeld.test/research',
+        wetenschappelijkeSamenvatting:
+          'Gerandomiseerde studie met populatie, interventie en beperkingen samengevat.',
+      },
       ai_gegenereerd: false,
       geverifieerd_met_arts: false,
     });
     expect(raw?.type).toBe('kennis_item');
     expect(raw?.payload.ciphertext).not.toContain('Artikel over stimulatie');
+    expect(raw?.payload.ciphertext).not.toContain('Gerandomiseerde studie');
     expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
   });
 

@@ -27,6 +27,14 @@ export type ResearchAggregatiePlan = {
   waarschuwing: string;
 };
 
+export type WetenschappelijkeResearchSamenvatting = {
+  id: string;
+  titel: string;
+  publicatieDatum: string;
+  bron: string;
+  wetenschappelijkeSamenvatting: string;
+};
+
 export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
   {
     id: 'seed-research-eshre',
@@ -165,6 +173,31 @@ export function bouwResearchAggregatiePlan(
   };
 }
 
+export function bouwWetenschappelijkeResearchSamenvattingen(
+  items: readonly KennisItem[],
+): WetenschappelijkeResearchSamenvatting[] {
+  return items
+    .filter(
+      (
+        item,
+      ): item is KennisItem & {
+        researchPublicatie: NonNullable<KennisItem['researchPublicatie']>;
+      } => item.categorie === 'research' && Boolean(item.researchPublicatie),
+    )
+    .map((item) => ({
+      id: item.id,
+      titel: item.titel,
+      publicatieDatum: item.researchPublicatie.publicatieDatum,
+      bron: item.researchPublicatie.bron,
+      wetenschappelijkeSamenvatting: item.researchPublicatie.wetenschappelijkeSamenvatting,
+    }))
+    .sort(
+      (a, b) =>
+        b.publicatieDatum.localeCompare(a.publicatieDatum) ||
+        a.titel.localeCompare(b.titel, 'nl-NL'),
+    );
+}
+
 export function filterKennisItems(
   items: readonly KennisItem[],
   filter: KennisFilter = {},
@@ -212,14 +245,33 @@ export function maakResearchKennisItem(
     titel: string;
     notitie: string;
     bron?: string;
+    publicatieDatum?: string;
+    wetenschappelijkeSamenvatting?: string;
   },
 ): KennisItem {
   const titel = input.titel.trim();
   const inhoud = input.notitie.trim();
   const bron = input.bron?.trim();
+  const publicatieDatum = input.publicatieDatum?.trim();
+  const wetenschappelijkeSamenvatting = input.wetenschappelijkeSamenvatting?.trim();
+  const heeftPublicatieSamenvatting = Boolean(publicatieDatum || wetenschappelijkeSamenvatting);
 
   if (!titel) throw new Error('Titel is verplicht voor een research-item.');
   if (!inhoud) throw new Error('Notitie is verplicht voor een research-item.');
+  if (heeftPublicatieSamenvatting && !bron) {
+    throw new Error('Bron is verplicht voor een wetenschappelijke researchsamenvatting.');
+  }
+  if (heeftPublicatieSamenvatting && !publicatieDatum) {
+    throw new Error(
+      'Publicatiedatum is verplicht voor een wetenschappelijke researchsamenvatting.',
+    );
+  }
+  if (heeftPublicatieSamenvatting && !wetenschappelijkeSamenvatting) {
+    throw new Error('Wetenschappelijke samenvatting is verplicht voor een researchpublicatie.');
+  }
+  if (publicatieDatum && !/^\d{4}-\d{2}-\d{2}$/.test(publicatieDatum)) {
+    throw new Error('Publicatiedatum moet YYYY-MM-DD zijn.');
+  }
 
   return {
     id,
@@ -227,6 +279,14 @@ export function maakResearchKennisItem(
     inhoud,
     bron: bron || undefined,
     categorie: 'research',
+    researchPublicatie:
+      heeftPublicatieSamenvatting && publicatieDatum && wetenschappelijkeSamenvatting && bron
+        ? {
+            publicatieDatum,
+            wetenschappelijkeSamenvatting,
+            bron,
+          }
+        : undefined,
     ai_gegenereerd: false,
     geverifieerd_met_arts: false,
   };

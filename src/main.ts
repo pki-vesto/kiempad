@@ -1020,7 +1020,11 @@ async function saveResearchItemFromForm(
   await state.kennisStore.saveResearchItem({
     titel: String(data.get('researchTitel') ?? ''),
     bron: optionalString(data.get('researchBron')),
+    publicatieDatum: optionalString(data.get('researchPublicatieDatum')),
     notitie: String(data.get('researchNotitie') ?? ''),
+    wetenschappelijkeSamenvatting: optionalString(
+      data.get('researchWetenschappelijkeSamenvatting'),
+    ),
   });
   await reloadAndRender(root, state);
 }
