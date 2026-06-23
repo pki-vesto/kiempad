@@ -5,12 +5,15 @@ vergelijkbaar met Shred (`shred`) en Healthcore (`healthcore`), maar zonder back
 of serverdata. De node serveert alleen de statische PWA-assets; alle Kiempad-data
 blijft lokaal en versleuteld in de browser.
 
+Actuele productie-URL: `https://kiempad.tail9d0c71.ts.net`.
+Lokale fallback op de host: `http://127.0.0.1:8098`.
+
 ## Architectuur
 
 ```
 Tailscale-device
   │
-  │ https://kiempad.<tailnet>.ts.net
+  │ https://kiempad.tail9d0c71.ts.net
   ▼
 kiempad-ts (tailscale/tailscale)
   └─ Tailscale Serve HTTPS :443
@@ -60,8 +63,8 @@ Het deployscript stopt vóór build/start als:
 - Docker of de Docker Compose plugin ontbreekt;
 - de lokale fallbackpoort al door een andere service wordt gebruikt.
 
-De lokale fallbackpoort is standaard `127.0.0.1:8088`. Als die poort bewust anders
-moet zijn:
+De lokale fallbackpoort is standaard `127.0.0.1:8088`. Voor de live Kiempad-node is
+`8098` gebruikt omdat Shred al `8088` gebruikt. Als de poort bewust anders moet zijn:
 
 ```bash
 KIEMPAD_TAILSCALE_LOCAL_PORT=8098 TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
@@ -80,7 +83,7 @@ De Tailscale-container gebruikt `ts/serve.json`:
 Lokale fallback op de host:
 
 ```bash
-curl -I http://127.0.0.1:8088
+curl -I http://127.0.0.1:8098
 ```
 
 Gebruik dezelfde `KIEMPAD_TAILSCALE_LOCAL_PORT` bij smoke als je bij deploy een
@@ -89,13 +92,13 @@ andere lokale poort koos.
 Tailnet-smoke vanaf een apparaat in de tailnet:
 
 ```bash
-curl -I https://kiempad.<tailnet>.ts.net
+curl -I https://kiempad.tail9d0c71.ts.net
 ```
 
 Gecombineerde smoke:
 
 ```bash
-KIEMPAD_TAILNET_URL=https://kiempad.<tailnet>.ts.net npm run smoke:tailscale
+KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale
 ```
 
 In de Tailscale-container:

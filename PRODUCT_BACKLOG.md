@@ -28,8 +28,8 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 178 |
-| ◐ bezig | 1 |
+| ☑ klaar | 179 |
+| ◐ bezig | 0 |
 | ☐ open | 0 |
 | **Totaal** | **179** |
 
@@ -310,7 +310,7 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G179 | App publiceren via Tailscale op een aparte node met HTTPS, vergelijkbaar met Shred en Healthcore | P2 | F2 | ◐ |
+| G179 | App publiceren via Tailscale op een aparte node met HTTPS, vergelijkbaar met Shred en Healthcore | P2 | F2 | ☑ |
 
 ---
 

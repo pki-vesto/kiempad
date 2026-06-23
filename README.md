@@ -80,7 +80,8 @@ Optioneel zelf-hosten van de statische build:
 docker compose up -d --build    # of: make up   — serveert op http://localhost:8088
 ```
 
-Publicatie via een aparte Tailscale HTTPS-node is voorbereid met
+Publicatie via een aparte Tailscale HTTPS-node draait op
+`https://kiempad.tail9d0c71.ts.net`; beheer loopt via
 `docker-compose.tailscale.yml` en `npm run deploy:tailscale`; zie
 [`docs/TAILSCALE_DEPLOY.md`](docs/TAILSCALE_DEPLOY.md).
 

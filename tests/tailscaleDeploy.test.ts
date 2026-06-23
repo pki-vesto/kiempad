@@ -24,7 +24,8 @@ describe('Tailscale publicatieconfiguratie', () => {
     const certDomainKey = '$' + '{TS_CERT_DOMAIN}:443';
     expect(serveConfig.Web[certDomainKey]?.Handlers['/']?.Proxy).toBe('http://127.0.0.1:80');
 
-    expect(deployDocs).toContain('https://kiempad.<tailnet>.ts.net');
+    expect(deployDocs).toContain('https://kiempad.tail9d0c71.ts.net');
+    expect(deployDocs).toContain('kiempad.<tailnet>.ts.net');
     expect(deployDocs).toContain('Geen Tailscale Funnel');
     expect(deployDocs).toContain('Geen applicatie-backend');
     expect(deployDocs).toContain('IndexedDB');
@@ -44,5 +45,6 @@ describe('Tailscale publicatieconfiguratie', () => {
     expect(smokeScript).toContain('docker exec kiempad-ts tailscale serve status');
     expect(deployDocs).toContain('npm run deploy:tailscale');
     expect(deployDocs).toContain('npm run smoke:tailscale');
+    expect(deployDocs).toContain('KIEMPAD_TAILSCALE_LOCAL_PORT=8098');
   });
 });
