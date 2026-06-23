@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MedicatieStore } from '../src/domain/medicatieStore';
-import type { DoseLog, Medicatie } from '../src/domain/types';
+import type { DoseLog, Herinnering, Medicatie } from '../src/domain/types';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
 import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
 import { VaultSession } from '../src/storage/vaultSession';
@@ -18,6 +18,7 @@ async function setupStore(): Promise<{
     store: new MedicatieStore(
       new EncryptedRecordRepository<Medicatie>(driver, session, 'medicatie'),
       new EncryptedRecordRepository<DoseLog>(driver, session, 'dose_log'),
+      new EncryptedRecordRepository<Herinnering>(driver, session, 'herinnering'),
     ),
   };
 }
@@ -43,10 +44,11 @@ describe('MedicatieStore', () => {
       '2026-06-23T08:00',
       '2026-06-24T08:00',
     ]);
+    expect((await driver.listRecords('herinnering')).length).toBe(2);
   });
 
   it('markeert DoseLogs als genomen of overgeslagen', async () => {
-    const { store } = await setupStore();
+    const { driver, store } = await setupStore();
     const saved = await store.save({
       naam: 'Injectie',
       vorm: 'injectie',
@@ -63,6 +65,7 @@ describe('MedicatieStore', () => {
       status: 'genomen',
       genomenOp: '2026-06-23T20:02',
     });
+    expect(await driver.listRecords('herinnering')).toEqual([]);
   });
 
   it('geeft dagoverzicht en verwijdert DoseLogs samen met medicatie', async () => {
@@ -84,5 +87,6 @@ describe('MedicatieStore', () => {
 
     expect(await store.list()).toEqual([]);
     expect(await driver.listRecords('dose_log')).toEqual([]);
+    expect(await driver.listRecords('herinnering')).toEqual([]);
   });
 });

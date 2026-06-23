@@ -1,6 +1,7 @@
 import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { AgendaStore, type AfspraakBundle } from './domain/agendaStore';
+import { HerinneringStore } from './domain/herinneringStore';
 import { MedicatieStore, type MedicatieBundle } from './domain/medicatieStore';
 import { TrajectStore } from './domain/trajectStore';
 import type {
@@ -18,6 +19,13 @@ import { EncryptedRecordRepository } from './storage/encryptedRepository';
 import type { EncryptedStorageDriver } from './storage/records';
 import { openIndexedDbDriver } from './storage/indexedDbDriver';
 import { VaultSession } from './storage/vaultSession';
+import {
+  clearScheduledNotifications,
+  getNotificationRuntimeStatus,
+  requestNotificationPermissionAndRegister,
+  scheduleLocalNotifications,
+  type NotificationRuntimeStatus,
+} from './notificationRuntime';
 
 type RuntimeState = {
   driver: EncryptedStorageDriver;
@@ -26,9 +34,12 @@ type RuntimeState = {
   trajectStore?: TrajectStore;
   agendaStore?: AgendaStore;
   medicatieStore?: MedicatieStore;
+  herinneringStore?: HerinneringStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
   medicatie: MedicatieBundle[];
+  herinneringen: Herinnering[];
+  notificaties: NotificationRuntimeStatus;
   error?: string;
 };
 
@@ -43,18 +54,25 @@ function render(root: HTMLElement, state: RuntimeState): void {
     trajecten: state.trajecten,
     afspraken: state.afspraken,
     medicatie: state.medicatie,
+    herinneringen: state.herinneringen,
+    notificaties: state.notificaties,
   });
   bindTrajectControls(root, state);
   bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
+  bindHerinneringControls(root, state);
+  scheduleLocalNotifications(state.herinneringen);
   root.querySelector('#lock-button')?.addEventListener('click', () => {
     state.session.lock();
     state.trajectStore = undefined;
     state.agendaStore = undefined;
     state.medicatieStore = undefined;
+    state.herinneringStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
     state.medicatie = [];
+    state.herinneringen = [];
+    clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
   });
@@ -73,6 +91,8 @@ async function mount(): Promise<void> {
     trajecten: [],
     afspraken: [],
     medicatie: [],
+    herinneringen: [],
+    notificaties: await getNotificationRuntimeStatus(),
   };
 
   render(app, state);
@@ -94,15 +114,36 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.hasVault = await state.session.hasVault();
         state.trajectStore = createTrajectStore(state);
         state.agendaStore = createAgendaStore(state);
+        state.herinneringStore = createHerinneringStore(state);
         state.medicatieStore = createMedicatieStore(state);
         state.trajecten = await state.trajectStore.list();
         state.afspraken = await state.agendaStore.list();
         state.medicatie = await state.medicatieStore.list();
+        state.herinneringen = await state.herinneringStore.list();
+        state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
         render(root, state);
       })
       .catch((error: unknown) => {
         state.error = error instanceof Error ? error.message : 'Ontgrendelen is mislukt.';
+        render(root, state);
+      });
+  });
+}
+
+function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#request-notifications')?.addEventListener('click', () => {
+    void requestNotificationPermissionAndRegister()
+      .then((status) => {
+        state.notificaties = status;
+        scheduleLocalNotifications(state.herinneringen);
+        render(root, state);
+      })
+      .catch(async () => {
+        state.notificaties = await getNotificationRuntimeStatus().catch(() => ({
+          permission: 'unsupported',
+          serviceWorker: 'error',
+        }));
         render(root, state);
       });
   });
@@ -270,6 +311,10 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.medicatieStore) {
     state.medicatie = await state.medicatieStore.list();
   }
+  if (state.herinneringStore) {
+    state.herinneringen = await state.herinneringStore.list();
+  }
+  state.notificaties = await getNotificationRuntimeStatus();
   render(root, state);
 }
 
@@ -292,6 +337,13 @@ function createMedicatieStore(state: RuntimeState): MedicatieStore {
   return new MedicatieStore(
     new EncryptedRecordRepository<Medicatie>(state.driver, state.session, 'medicatie'),
     new EncryptedRecordRepository<DoseLog>(state.driver, state.session, 'dose_log'),
+    new EncryptedRecordRepository<Herinnering>(state.driver, state.session, 'herinnering'),
+  );
+}
+
+function createHerinneringStore(state: RuntimeState): HerinneringStore {
+  return new HerinneringStore(
+    new EncryptedRecordRepository<Herinnering>(state.driver, state.session, 'herinnering'),
   );
 }
 

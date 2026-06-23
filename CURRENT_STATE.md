@@ -32,17 +32,21 @@
   vanuit expliciete planning, vandaag-overzicht tonen, innames als genomen/
   overgeslagen markeren en gemiste geplande innames markeren zonder ooit een dosering
   te berekenen.
+- **M1.6 herinneringen & lokale notificaties:** centrale herinneringenopslag,
+  afspraak- en medicatieherinneringen vanuit afspraken/DoseLogs, eenmalige/
+  dagelijkse/wekelijkse herhalingslogica, herinneringenscherm met permissiestatus en
+  lokale service-worker-notificaties met generieke meldingstekst.
 
 ## 2. Gedeeltelijk Gebouwd
 
-- Herinneringen, vragen en kennisitems tonen nog inhoudelijke lege-staten; traject/
-  fasen, agenda en medicatie zijn aangesloten op de versleutelde repository-laag.
+- Vragen en kennisitems tonen nog inhoudelijke lege-staten; traject/fasen, agenda,
+  medicatie en herinneringen zijn aangesloten op de versleutelde repository-laag.
 
 ## 3. Nog Niet Gebouwd
 
 De rest van F1 (MVP) en later, o.a.:
 
-- Inhoudelijke UI-workflows voor herinneringen, vragen en kennisbank.
+- Inhoudelijke UI-workflows voor vragen en kennisbank.
 - PWA-/service-worker-runtime.
 - Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
@@ -62,10 +66,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   toont eerst een passphrase-kluis en navigeert na ontgrendelen via hash-routes.
   Het trajectscherm kan nu een poging met fasen lokaal versleuteld beheren; het
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren; het
-  medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren.
+  medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
+  herinneringenscherm toont komende lokale herinneringen en notificatiepermissie.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (33 passing), `npm run build` en `npm audit --audit-level=high`.
+  (39 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -73,9 +78,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **Herinneringen/notificaties** voor medicatie en afspraken.
-2. **Vragen voor de arts** als eigen hoofdscherm.
-3. **Basis-kennisbank** met conceptinhoud en herkomstlabels.
+1. **Vragen voor de arts** als eigen hoofdscherm.
+2. **Basis-kennisbank** met conceptinhoud en herkomstlabels.
+3. **PWA/offline-runtime** met manifest en installatiemetadata.
 
 ## 7. Permanente onderhoudsregel
 

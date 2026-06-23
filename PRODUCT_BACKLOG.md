@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 69 |
+| ☑ klaar | 74 |
 | ◐ bezig | 0 |
-| ☐ open | 105 |
+| ☐ open | 100 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -118,14 +118,14 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G057 | Lokale notificaties via service worker | P0 | F1 | ☐ |
-| G058 | Herinnering voor medicatie/injectie op tijdstip | P0 | F1 | ☐ |
-| G059 | Herinnering voor afspraken | P1 | F1 | ☐ |
+| G057 | Lokale notificaties via service worker | P0 | F1 | ☑ |
+| G058 | Herinnering voor medicatie/injectie op tijdstip | P0 | F1 | ☑ |
+| G059 | Herinnering voor afspraken | P1 | F1 | ☑ |
 | G060 | Eigen losse herinneringen | P2 | F2 | ☐ |
-| G061 | Herhaling (eenmalig/dagelijks/wekelijks) | P1 | F1 | ☐ |
+| G061 | Herhaling (eenmalig/dagelijks/wekelijks) | P1 | F1 | ☑ |
 | G062 | Instelbare standaard-waarschuwtijd (bv. 30 min vooraf) | P2 | F2 | ☐ |
 | G063 | Herinnering snoozen / opnieuw plannen | P2 | F2 | ☐ |
-| G064 | Notificatie-permissie netjes aanvragen + uitleg bij weigering | P1 | F1 | ☐ |
+| G064 | Notificatie-permissie netjes aanvragen + uitleg bij weigering | P1 | F1 | ☑ |
 | G065 | Fallback in-app meldingen als notificaties uit staan | P2 | F2 | ☐ |
 | G066 | Geen notificatie-inhoud lekt gevoelige data op vergrendeld scherm (instelbaar) | P1 | F1 | ☐ |
 
