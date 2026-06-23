@@ -43,6 +43,8 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'categorie',
     'ai_gegenereerd',
     'geverifieerd_met_arts',
+    'geverifieerdOp',
+    'volgendeVerificatieOp',
   ],
   SymptomLog: ['id', 'datum', 'owner', 'symptoom', 'intensiteit', 'notitie'],
   CycleData: ['id', 'datum', 'meting', 'waarde'],

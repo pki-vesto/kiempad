@@ -272,6 +272,11 @@ function renderKennisItem(item: KennisItem): string {
         <h3>${escapeHtml(item.titel)}</h3>
         <p>${escapeHtml(item.inhoud)}</p>
         <small>Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</small>
+        ${
+          item.geverifieerdOp
+            ? `<p class="linked-note">Geverifieerd op ${escapeHtml(item.geverifieerdOp)} · review uiterlijk ${escapeHtml(item.volgendeVerificatieOp ?? 'onbekend')}</p>`
+            : '<p class="linked-note">Nog niet met behandelaar geverifieerd.</p>'
+        }
         <div class="label-row">
           <span class="status-pill">${item.ai_gegenereerd ? 'AI-gegenereerd' : 'Niet AI-gegenereerd'}</span>
           <span class="status-pill">${item.geverifieerd_met_arts ? 'Geverifieerd met arts' : 'Concept · niet geverifieerd'}</span>

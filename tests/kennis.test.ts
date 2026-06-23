@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  berekenVolgendeKennisVerificatie,
   INITIELE_KENNIS_ITEMS,
   kennisItemsPerCategorie,
   markeerKennisItemGeverifieerd,
@@ -32,6 +33,14 @@ describe('kennis domeinregels', () => {
     if (!item) return;
 
     expect(item.geverifieerd_met_arts).toBe(false);
-    expect(markeerKennisItemGeverifieerd(item).geverifieerd_met_arts).toBe(true);
+    expect(markeerKennisItemGeverifieerd(item, true, '2026-06-23')).toMatchObject({
+      geverifieerd_met_arts: true,
+      geverifieerdOp: '2026-06-23',
+      volgendeVerificatieOp: '2027-06-23',
+    });
+  });
+
+  it('berekent jaarlijkse herverificatie', () => {
+    expect(berekenVolgendeKennisVerificatie('2026-06-23')).toBe('2027-06-23');
   });
 });

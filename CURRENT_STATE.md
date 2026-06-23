@@ -62,6 +62,8 @@
   kerndocumenten.
 - **G169 ADR-dekking:** ADR-0008 legt de aangescherpte CI/lintgate en
   notificatieprivacy-keuze vast.
+- **G171 kennisbankverificatie:** kennisitems bewaren verificatiedatum en volgende
+  reviewdatum; markeren als geverifieerd plant automatisch jaarlijkse herverificatie.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -99,7 +101,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (67 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (68 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

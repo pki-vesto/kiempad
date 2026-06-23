@@ -24,10 +24,16 @@ export class KennisStore {
     return sorteerKennisItems(records.map((record) => record.value));
   }
 
-  async markVerified(itemId: string, geverifieerd = true): Promise<void> {
+  async markVerified(
+    itemId: string,
+    geverifieerd = true,
+    geverifieerdOp = new Date().toISOString().slice(0, 10),
+  ): Promise<void> {
     const record = await this.kennisItems.get(itemId);
     if (!record) return;
 
-    await this.kennisItems.saveWithId(markeerKennisItemGeverifieerd(record.value, geverifieerd));
+    await this.kennisItems.saveWithId(
+      markeerKennisItemGeverifieerd(record.value, geverifieerd, geverifieerdOp),
+    );
   }
 }
