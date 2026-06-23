@@ -55,6 +55,8 @@ TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
 
 Die stack maakt een eigen Tailscale-node `kiempad`, gebruikt Tailscale Serve voor
 HTTPS op `https://kiempad.<tailnet>.ts.net` en proxyt naar de statische nginx-PWA.
+De lokale fallbackpoort is standaard `127.0.0.1:8088`; zet
+`KIEMPAD_TAILSCALE_LOCAL_PORT` als die poort bezet is.
 Controleer daarna met `KIEMPAD_TAILNET_URL=https://kiempad.<tailnet>.ts.net npm run smoke:tailscale`.
 Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
 

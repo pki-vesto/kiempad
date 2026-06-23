@@ -2,16 +2,37 @@
 set -euo pipefail
 
 compose_file="docker-compose.tailscale.yml"
-local_url="${KIEMPAD_LOCAL_SMOKE_URL:-http://127.0.0.1:8088}"
+local_port="${KIEMPAD_TAILSCALE_LOCAL_PORT:-8088}"
+local_url="${KIEMPAD_LOCAL_SMOKE_URL:-http://127.0.0.1:${local_port}}"
 tailnet_url="${KIEMPAD_TAILNET_URL:-}"
 
-if ! command -v docker >/dev/null 2>&1; then
-  echo "Docker is niet beschikbaar op PATH." >&2
+fail() {
+  echo "$1" >&2
   exit 2
+}
+
+compose() {
+  TS_AUTHKEY="${TS_AUTHKEY:-tskey-placeholder}" docker compose -f "${compose_file}" "$@"
+}
+
+if ! command -v docker >/dev/null 2>&1; then
+  fail "Docker is niet beschikbaar op PATH."
 fi
 
-docker compose -f "${compose_file}" ps
-docker compose -f "${compose_file}" config >/dev/null
+if ! docker compose version >/dev/null 2>&1; then
+  fail "Docker Compose plugin is niet beschikbaar."
+fi
+
+compose ps
+compose config >/dev/null
+
+if [[ "$(docker inspect -f '{{.State.Running}}' kiempad-ts 2>/dev/null || true)" != "true" ]]; then
+  fail "Container kiempad-ts draait niet. Start eerst met: TS_AUTHKEY=... npm run deploy:tailscale"
+fi
+
+if [[ "$(docker inspect -f '{{.State.Running}}' kiempad-web 2>/dev/null || true)" != "true" ]]; then
+  fail "Container kiempad-web draait niet. Start eerst met: TS_AUTHKEY=... npm run deploy:tailscale"
+fi
 
 echo "Lokale fallback check: ${local_url}"
 curl -fsSI "${local_url}" >/dev/null

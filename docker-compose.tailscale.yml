@@ -28,7 +28,7 @@ services:
       - ts_state:/var/lib/tailscale
       - ./ts/serve.json:/config/serve.json:ro
     ports:
-      - "127.0.0.1:8088:80"
+      - "127.0.0.1:${KIEMPAD_TAILSCALE_LOCAL_PORT:-8088}:80"
 
   kiempad-web:
     build: .
