@@ -207,6 +207,15 @@ describe('app shell', () => {
     expect(html).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
     expect(html).toContain('recent dossierdocument Labuitslag op 2026-06-23');
     expect(html).toContain('Bron: Dossier, cyclusfase en behandelgeschiedenis');
+    expect(html).toContain('Cyclusdagcheck');
+    expect(html).toContain(
+      'Fase: gebruik cyclusfase Stimulatie alleen als context voor feitelijke dagnotities.',
+    );
+    expect(html).toContain('Meting: controleer cyclusdag van 2026-06-24 met waarde 7.');
+    expect(html).toContain('Bron: Trajectfase');
+    expect(html).toContain('Bron: Lokale cyclusmetingen');
+    expect(html).toContain('Geen diagnose, timingadvies of behandelkeuze.');
+    expect(html).toContain('Kiempad interpreteert deze meting niet medisch.');
   });
 
   it('rendert agenda-afspraken met gekoppelde vraag en herinnering', () => {

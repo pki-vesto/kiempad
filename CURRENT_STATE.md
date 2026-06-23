@@ -249,6 +249,9 @@
 - **G223 PFIP behandelvoorbereiding:** Dagelijkse aanbevelingen bundelen afspraken,
   medicatieplanning, open vragen en consultactiepunten als lokale
   voorbereidingschecklist, zonder diagnose, dosering of behandelkeuze.
+- **G224 PFIP cyclusdagcheck:** Dagelijkse aanbevelingen tonen cyclusfase en
+  cyclusmetingen als feitelijke dagcheck, zonder diagnose, dosering, timingadvies
+  of behandelkeuze.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -381,7 +384,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G223 nog 20 open doelen (G224-G243), gericht op dossier-ingest,
+heeft na G224 nog 19 open doelen (G225-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -431,8 +434,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G224: cyclusgerelateerde aanbevelingen tonen zonder diagnose
-   of dosering.
+1. PFIP uitvoeren vanaf G225: mannelijke vruchtbaarheidsoptimalisatie als
+   leefstijl- en voorbereidingskaart.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
