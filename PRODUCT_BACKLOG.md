@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 15 |
+| ☑ klaar | 17 |
 | ◐ bezig | 1 |
-| ☐ open | 158 |
+| ☐ open | 156 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -42,7 +42,7 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G001 | Private GitHub-repo `pki-vesto/kiempad` bestaat | P0 | F0 | ☐ |
+| G001 | Private GitHub-repo `pki-vesto/kiempad` bestaat | P0 | F0 | ☑ |
 | G002 | Documentatieset compleet en consistent (deze repo) | P0 | F0 | ☑ |
 | G003 | TypeScript/Vite-projectopzet met `package.json`, `tsconfig.json` | P0 | F0 | ☑ |
 | G004 | Vitest geconfigureerd (`vitest.config.ts`) | P0 | F0 | ☑ |
@@ -225,7 +225,7 @@
 | G126 | Lokaal gebeurtenissenlog (verlaat toestel niet) | P2 | F2 | ☐ |
 | G127 | Duidelijke "geen herstel-achterdeur"-uitleg + back-up-aansporing | P1 | F1 | ☐ |
 | G128 | Minimale npm-dependencies; audit-stap in CI | P1 | F1 | ☐ |
-| G129 | Repo blijft private; geen mirrors/forks | P0 | F0 | ☐ |
+| G129 | Repo blijft private; geen mirrors/forks | P0 | F0 | ☑ |
 | G130 | Disclaimer zichtbaar in app én docs | P0 | F1 | ☐ |
 
 ## 13. Datamodel & opslag
