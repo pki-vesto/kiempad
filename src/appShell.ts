@@ -10,7 +10,7 @@ import {
 import type { AfspraakBundle } from './domain/agendaStore';
 import type { AiSamenvattingPayload } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
-import { DOSSIER_CATEGORIE_LABELS, formatBytes } from './domain/dossier';
+import { DOSSIER_CATEGORIE_LABELS, EMBRYO_STATUS_LABELS, formatBytes } from './domain/dossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
@@ -612,6 +612,53 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Bestanden, gespreksverslagen en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
+        <h2>Embryokwaliteit vastleggen</h2>
+        <form id="embryo-quality-form" class="data-form">
+          <label>
+            Datum labterugkoppeling
+            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+          </label>
+          <label>
+            Embryo
+            <input name="embryoLabel" autocomplete="off" required placeholder="Bijvoorbeeld: embryo 1" />
+          </label>
+          <label>
+            Dag
+            <input name="embryoDag" type="number" min="1" max="7" step="1" />
+          </label>
+          <label>
+            Kwaliteit volgens kliniek
+            <input name="embryoKwaliteit" autocomplete="off" required placeholder="Bijvoorbeeld: 4AA of kliniektekst" />
+          </label>
+          <label>
+            Status
+            <select name="embryoStatus">
+              ${Object.entries(EMBRYO_STATUS_LABELS)
+                .map(([value, label]) => renderOption(value, label, 'onbekend'))
+                .join('')}
+            </select>
+          </label>
+          <label>
+            Koppel aan traject
+            <select name="trajectId">
+              <option value="">Geen traject</option>
+              ${trajectOpties}
+            </select>
+          </label>
+          <label>
+            Koppel aan afspraak/terugplaatsing
+            <select name="afspraakId">
+              <option value="">Geen afspraak</option>
+              ${afspraakOpties}
+            </select>
+          </label>
+          <label>
+            Notitie
+            <textarea name="notitie" rows="3"></textarea>
+          </label>
+          <button type="submit">Bewaar embryokwaliteit</button>
+        </form>
+        <p class="small-print">Embryokwaliteit wordt vastgelegd als kliniekterugkoppeling. Kiempad berekent geen kansen en geeft geen medisch advies.</p>
       </div>
       <div class="timeline-panel">
         <h2>Historische onderzoeken</h2>
@@ -644,6 +691,7 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
+        ${renderEmbryoDetails(document)}
         ${renderDossierImagePreview(document)}
         <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
         <ul class="compact-list">
@@ -653,6 +701,19 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
       </div>
     </li>
   `;
+}
+
+function renderEmbryoDetails(document: DossierDocument): string {
+  if (!document.embryo) return '';
+  const status = document.embryo.status ? EMBRYO_STATUS_LABELS[document.embryo.status] : undefined;
+  const details = [
+    `Embryo: ${document.embryo.label}`,
+    document.embryo.dag ? `Dag ${document.embryo.dag}` : undefined,
+    `Kwaliteit: ${document.embryo.kwaliteit}`,
+    status ? `Status: ${status}` : undefined,
+  ].filter((label): label is string => Boolean(label));
+
+  return `<p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>`;
 }
 
 function renderDossierImagePreview(document: DossierDocument): string {

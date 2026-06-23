@@ -242,6 +242,11 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveDossierDocumentsFromForm(event.currentTarget, root, state);
   });
+
+  root.querySelector('#embryo-quality-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveEmbryoQualityFromForm(event.currentTarget, root, state);
+  });
 }
 
 async function saveDossierDocumentsFromForm(
@@ -297,6 +302,73 @@ async function saveDossierDocumentsFromForm(
   } catch (error: unknown) {
     state.dossierError =
       error instanceof Error ? error.message : 'Dossierdocumenten uploaden is mislukt.';
+    render(root, state);
+  }
+}
+
+async function saveEmbryoQualityFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+
+  const data = new FormData(target);
+  const embryoLabel = optionalString(data.get('embryoLabel'));
+  const embryoKwaliteit = optionalString(data.get('embryoKwaliteit'));
+
+  if (!embryoLabel || !embryoKwaliteit) {
+    state.dossierError = 'Vul embryo en kwaliteit in om embryokwaliteit vast te leggen.';
+    render(root, state);
+    return;
+  }
+
+  try {
+    const datum = String(data.get('datum') ?? '');
+    const afspraakId = optionalString(data.get('afspraakId'));
+    const trajectId = optionalString(data.get('trajectId'));
+    const notitie = optionalString(data.get('notitie'));
+    const embryoDag = optionalPositiveNumber(data.get('embryoDag'));
+    const embryoStatus = parseEmbryoStatus(data.get('embryoStatus'));
+    const inhoud = JSON.stringify({
+      embryo: embryoLabel,
+      dag: embryoDag,
+      kwaliteit: embryoKwaliteit,
+      status: embryoStatus,
+      notitie,
+    });
+
+    await state.dossierStore.save({
+      datum,
+      titel: `Embryokwaliteit ${embryoLabel}`,
+      categorie: 'embryo',
+      bestandsNaam: `embryokwaliteit-${embryoLabel}.json`,
+      mimeType: 'application/json',
+      grootteBytes: new TextEncoder().encode(inhoud).byteLength,
+      inhoudBase64: textToBase64(inhoud),
+      afspraakId,
+      trajectId,
+      embryo: {
+        label: embryoLabel,
+        kwaliteit: embryoKwaliteit,
+        dag: embryoDag,
+        status: embryoStatus,
+      },
+      notitie,
+    });
+
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Embryokwaliteit vastgelegd',
+      detail: 'Embryokwaliteit lokaal versleuteld als dossierdocument opgeslagen.',
+    });
+    state.dossierStatus = 'Embryokwaliteit lokaal versleuteld toegevoegd.';
+    state.dossierError = undefined;
+    target.reset();
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Embryokwaliteit vastleggen is mislukt.';
     render(root, state);
   }
 }
@@ -1430,6 +1502,22 @@ function parseDossierCategorie(value: FormDataEntryValue | null): DossierDocumen
   return 'onderzoek';
 }
 
+function parseEmbryoStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<NonNullable<DossierDocument['embryo']>['status']> {
+  if (
+    value === 'bevrucht' ||
+    value === 'ingevroren' ||
+    value === 'teruggeplaatst' ||
+    value === 'niet_gebruikt' ||
+    value === 'onbekend'
+  ) {
+    return value;
+  }
+
+  return 'onbekend';
+}
+
 function parseOwner(value: FormDataEntryValue | null): SymptomLog['owner'] {
   if (value === 'peter' || value === 'partner' || value === 'samen') return value;
   return 'samen';
@@ -1447,6 +1535,19 @@ function optionalString(value: FormDataEntryValue | null): string | undefined {
 
 async function fileToBase64(file: File): Promise<string> {
   const bytes = new Uint8Array(await file.arrayBuffer());
+  let binary = '';
+  const chunkSize = 0x8000;
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    const chunk = bytes.subarray(index, index + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+
+  return btoa(binary);
+}
+
+function textToBase64(value: string): string {
+  const bytes = new TextEncoder().encode(value);
   let binary = '';
   const chunkSize = 0x8000;
 

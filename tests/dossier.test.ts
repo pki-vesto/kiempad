@@ -101,6 +101,40 @@ describe('dossier', () => {
     );
   });
 
+  it('bewaart embryokwaliteit als dossierinformatie zonder kansberekening', () => {
+    const document = maakDossierDocument('doc-embryo', {
+      datum: '2026-05-04',
+      titel: 'Embryokwaliteit embryo 1',
+      categorie: 'embryo',
+      bestandsNaam: 'embryokwaliteit-embryo-1.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      afspraakId: 'afspraak-transfer',
+      embryo: {
+        label: 'Embryo 1',
+        dag: 5,
+        kwaliteit: '4AA',
+        status: 'teruggeplaatst',
+      },
+    });
+
+    expect(document.embryo).toEqual({
+      label: 'Embryo 1',
+      dag: 5,
+      kwaliteit: '4AA',
+      status: 'teruggeplaatst',
+    });
+    expect(document.analyse.samenvatting).toContain('Embryokwaliteit opgeslagen');
+    expect(document.analyse.signalen).toContain(
+      'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
+    );
+    expect(document.analyse.signalen).toContain(
+      'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
+    );
+  });
+
   it('sorteert dossierdocumenten aflopend op onderzoeksdatum', () => {
     const items = [
       maakDossierDocument('doc-1', {

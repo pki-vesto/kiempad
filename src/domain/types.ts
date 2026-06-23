@@ -180,6 +180,12 @@ export interface DossierDocument {
   inhoudBase64: string;
   afspraakId?: string;
   trajectId?: string;
+  embryo?: {
+    label: string;
+    kwaliteit: string;
+    dag?: number;
+    status?: 'bevrucht' | 'ingevroren' | 'teruggeplaatst' | 'niet_gebruikt' | 'onbekend';
+  };
   notitie?: string;
   analyse: {
     samenvatting: string;
