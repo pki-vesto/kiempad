@@ -583,7 +583,7 @@ describe('app shell', () => {
             tekst: 'Afgesproken om bloeduitslagen mee te nemen.',
             bronnen: ['consulttekst', 'notitie'],
             waarschuwing:
-              'Concept op basis van lokaal ingevoerde tekst; controleer altijd met het originele consult en je kliniek.',
+              'Concept op basis van lokaal ingevoerde tekst. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze; controleer altijd met de kliniek.',
             gegenereerdOp: '2026-06-23T15:05:00.000Z',
           },
           samenvattingCorrectie: {
@@ -743,7 +743,7 @@ describe('app shell', () => {
     expect(html).toContain('Afgesproken om bloeduitslagen mee te nemen.');
     expect(html).toContain('Conceptsamenvatting');
     expect(html).toContain('Bronnen: consulttekst, notitie');
-    expect(html).toContain('controleer altijd met het originele consult');
+    expect(html).toContain('Consult-AI geeft geen diagnose');
     expect(html).toContain('Verschil met gebruikerscorrectie');
     expect(html).toContain('Toegevoegd: Progesteron navragen bij de kliniek.');
     expect(html).toContain('Verwijderd uit concept: geen zinnen.');
