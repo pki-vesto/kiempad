@@ -30,6 +30,8 @@ export type DossierDocumentInput = {
 export type DossierBeeldMetadataInput = {
   context?: string;
   bron?: string;
+  cyclusDag?: number;
+  embryoLabel?: string;
 };
 
 export type DossierOcrInput = {
@@ -71,6 +73,12 @@ export type ImagingRepositoryItem = {
   context?: string;
   afspraakId?: string;
   trajectId?: string;
+  tijdlijnKoppeling: {
+    pogingId?: string;
+    afspraakId?: string;
+    cyclusDag?: number;
+    embryoLabel?: string;
+  };
   mimeType?: string;
   document: DossierDocument;
 };
@@ -275,6 +283,7 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       context: document.beeldMetadata?.context,
       afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
       trajectId: document.beeldMetadata?.trajectId ?? document.trajectId,
+      tijdlijnKoppeling: bouwImagingTijdlijnKoppeling(document),
       mimeType: document.mimeType,
       document,
     }));
@@ -315,6 +324,11 @@ export function maakBeeldMetadata(
   const bron = input?.bron?.trim() || document.bestandsNaam;
   const afspraakId = document.afspraakId?.trim();
   const trajectId = document.trajectId?.trim();
+  const embryoLabel = input?.embryoLabel?.trim();
+  const cyclusDag =
+    input?.cyclusDag && Number.isFinite(input.cyclusDag) && input.cyclusDag > 0
+      ? Math.round(input.cyclusDag)
+      : undefined;
 
   return {
     datum: document.datum,
@@ -322,6 +336,19 @@ export function maakBeeldMetadata(
     bron,
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
+    cyclusDag,
+    embryoLabel: embryoLabel || undefined,
+  };
+}
+
+export function bouwImagingTijdlijnKoppeling(
+  document: DossierDocument,
+): ImagingRepositoryItem['tijdlijnKoppeling'] {
+  return {
+    pogingId: document.beeldMetadata?.trajectId ?? document.trajectId,
+    afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
+    cyclusDag: document.beeldMetadata?.cyclusDag,
+    embryoLabel: document.beeldMetadata?.embryoLabel ?? document.embryo?.label,
   };
 }
 

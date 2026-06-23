@@ -365,6 +365,8 @@ async function saveDossierDocumentsFromForm(
     const notitie = optionalString(data.get('notitie'));
     const beeldContext = optionalString(data.get('beeldContext'));
     const beeldBron = optionalString(data.get('beeldBron'));
+    const beeldCyclusDag = parsePositiveInteger(data.get('beeldCyclusDag'));
+    const beeldEmbryoLabel = optionalString(data.get('beeldEmbryoLabel'));
     const lokaleOcr = data.get('lokaleOcr') === 'ja';
     const conceptBevestigd = data.get('conceptBevestigd') === 'ja';
 
@@ -389,10 +391,12 @@ async function saveDossierDocumentsFromForm(
         trajectId,
         notitie,
         beeldMetadata:
-          beeldContext || beeldBron
+          beeldContext || beeldBron || beeldCyclusDag || beeldEmbryoLabel
             ? {
                 context: beeldContext,
                 bron: beeldBron,
+                cyclusDag: beeldCyclusDag,
+                embryoLabel: beeldEmbryoLabel,
               }
             : undefined,
         ocr: lokaleOcr
@@ -1980,6 +1984,11 @@ function parseStemming(value: FormDataEntryValue | null): MentalCheckIn['stemmin
 function optionalString(value: FormDataEntryValue | null): string | undefined {
   const normalized = String(value ?? '').trim();
   return normalized ? normalized : undefined;
+}
+
+function parsePositiveInteger(value: FormDataEntryValue | null): number | undefined {
+  const parsed = Number(String(value ?? '').trim());
+  return Number.isFinite(parsed) && parsed > 0 ? Math.round(parsed) : undefined;
 }
 
 async function fileToBase64(file: File): Promise<string> {

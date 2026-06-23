@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G191 PFIP imaging: beeldrecords tonen een tijdlijnkoppeling naar poging,
+  afspraak, cyclusdag en embryo wanneer die lokaal is vastgelegd.
 - G190 PFIP imaging: beelduploads kunnen beelddatum, lichaams-/trajectcontext,
   bron, gekoppelde afspraak en traject als lokale beeldmetadata bewaren.
 - G189 PFIP imaging: beeldmateriaal krijgt een expliciete lokale classificatie

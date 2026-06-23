@@ -223,6 +223,8 @@ export interface DossierDocument {
     bron: string;
     afspraakId?: string;
     trajectId?: string;
+    cyclusDag?: number;
+    embryoLabel?: string;
   };
   ocr?: {
     status: 'tekst_uitgelezen' | 'wacht_op_lokale_ocr' | 'niet_ondersteund';
