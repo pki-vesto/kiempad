@@ -40,7 +40,12 @@ import {
   maakImagingContextSamenvatting,
   zoekDossierDocumenten,
 } from './domain/dossier';
-import { bouwEmbryoDossiers, type EmbryoDossierItem } from './domain/embryoDossier';
+import {
+  bouwEmbryoDossiers,
+  bouwEmbryoVergelijkingen,
+  type EmbryoDossierItem,
+  type EmbryoVergelijking,
+} from './domain/embryoDossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
@@ -709,6 +714,7 @@ function renderDossierScreen(state: AppShellState): string {
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
   const embryoDossiers = bouwEmbryoDossiers(zichtbareDocumenten);
+  const embryoVergelijkingen = bouwEmbryoVergelijkingen(embryoDossiers);
   const behandelGeschiedenis = reconstrueerBehandelGeschiedenis({
     afspraken: state.afspraken.map((bundle) => bundle.afspraak),
     consultVerslagen,
@@ -957,6 +963,7 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
         }
         <h2>Embryo-dossiers</h2>
+        ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
         ${
           embryoDossiers.length > 0
             ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
@@ -1169,6 +1176,48 @@ function renderBehandelGeschiedenisItem(item: BehandelGeschiedenisItem): string 
         ${koppelingen.length > 0 ? `<p class="small-print">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
       </div>
     </li>
+  `;
+}
+
+function renderEmbryoVergelijkingen(vergelijkingen: readonly EmbryoVergelijking[]): string {
+  if (vergelijkingen.length === 0) {
+    return '<p class="small-print">Embryovergelijking verschijnt zodra één poging meerdere embryo-dossiers heeft.</p>';
+  }
+
+  return `
+    <div class="linked-note">
+      <h3>Embryovergelijking per poging</h3>
+      ${vergelijkingen.map(renderEmbryoVergelijking).join('')}
+    </div>
+  `;
+}
+
+function renderEmbryoVergelijking(vergelijking: EmbryoVergelijking): string {
+  return `
+    <section>
+      <p class="small-print">Poging: ${escapeHtml(vergelijking.trajectId)}</p>
+      <ul class="compact-list">
+        ${vergelijking.embryos
+          .map((embryo) => {
+            const details = [
+              embryo.embryoDagen.length > 0 ? `Dagen: ${embryo.embryoDagen.join(', ')}` : undefined,
+              embryo.kwaliteiten.length > 0
+                ? `Kwaliteit: ${embryo.kwaliteiten.join(', ')}`
+                : undefined,
+              embryo.statussen.length > 0 ? `Status: ${embryo.statussen.join(', ')}` : undefined,
+              embryo.meetmomenten.length > 0
+                ? `Meetmoment: ${embryo.meetmomenten.join(', ')}`
+                : undefined,
+              embryo.bronnen.length > 0 ? `Bron: ${embryo.bronnen.join(', ')}` : undefined,
+              `Historiemomenten: ${embryo.historieAantal}`,
+            ].filter((detail): detail is string => Boolean(detail));
+
+            return `<li>${escapeHtml(embryo.embryoLabel)} · ${details.map(escapeHtml).join(' · ')}</li>`;
+          })
+          .join('')}
+      </ul>
+      <p class="small-print">${escapeHtml(vergelijking.waarschuwing)}</p>
+    </section>
   `;
 }
 

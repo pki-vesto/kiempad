@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G208 PFIP embryo tracking: embryo-dossiers tonen een feitelijke vergelijking
+  van meerdere embryo's binnen dezelfde poging zonder rangschikking,
+  kansberekening of medisch advies.
 - G207 PFIP embryo tracking: embryo-dossiers tonen een chronologische
   embryo-historie met bevruchting, meetmomenten, beeldmomenten en eindstatussen
   zoals terugplaatsing, invriezen of stop/niet gebruikt.
