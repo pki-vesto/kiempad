@@ -29,8 +29,8 @@
 | Status | Aantal |
 |---|---|
 | ☑ klaar | 153 |
-| ◐ bezig | 0 |
-| ☐ open | 26 |
+| ◐ bezig | 1 |
+| ☐ open | 25 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -310,7 +310,7 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G179 | App publiceren via Tailscale op een aparte node met HTTPS, vergelijkbaar met Shred en Healthcore | P2 | F2 | ☐ |
+| G179 | App publiceren via Tailscale op een aparte node met HTTPS, vergelijkbaar met Shred en Healthcore | P2 | F2 | ◐ |
 
 ---
 
