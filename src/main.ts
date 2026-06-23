@@ -1025,6 +1025,7 @@ async function saveResearchItemFromForm(
     wetenschappelijkeSamenvatting: optionalString(
       data.get('researchWetenschappelijkeSamenvatting'),
     ),
+    eenvoudigeSamenvatting: optionalString(data.get('researchEenvoudigeSamenvatting')),
   });
   await reloadAndRender(root, state);
 }

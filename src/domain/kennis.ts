@@ -35,6 +35,14 @@ export type WetenschappelijkeResearchSamenvatting = {
   wetenschappelijkeSamenvatting: string;
 };
 
+export type EenvoudigeResearchSamenvatting = {
+  id: string;
+  titel: string;
+  publicatieDatum: string;
+  bron: string;
+  eenvoudigeSamenvatting: string;
+};
+
 export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
   {
     id: 'seed-research-eshre',
@@ -198,6 +206,34 @@ export function bouwWetenschappelijkeResearchSamenvattingen(
     );
 }
 
+export function bouwEenvoudigeResearchSamenvattingen(
+  items: readonly KennisItem[],
+): EenvoudigeResearchSamenvatting[] {
+  return items
+    .filter(
+      (
+        item,
+      ): item is KennisItem & {
+        researchPublicatie: NonNullable<KennisItem['researchPublicatie']> & {
+          eenvoudigeSamenvatting: string;
+        };
+      } =>
+        item.categorie === 'research' && Boolean(item.researchPublicatie?.eenvoudigeSamenvatting),
+    )
+    .map((item) => ({
+      id: item.id,
+      titel: item.titel,
+      publicatieDatum: item.researchPublicatie.publicatieDatum,
+      bron: item.researchPublicatie.bron,
+      eenvoudigeSamenvatting: item.researchPublicatie.eenvoudigeSamenvatting,
+    }))
+    .sort(
+      (a, b) =>
+        b.publicatieDatum.localeCompare(a.publicatieDatum) ||
+        a.titel.localeCompare(b.titel, 'nl-NL'),
+    );
+}
+
 export function filterKennisItems(
   items: readonly KennisItem[],
   filter: KennisFilter = {},
@@ -247,6 +283,7 @@ export function maakResearchKennisItem(
     bron?: string;
     publicatieDatum?: string;
     wetenschappelijkeSamenvatting?: string;
+    eenvoudigeSamenvatting?: string;
   },
 ): KennisItem {
   const titel = input.titel.trim();
@@ -254,7 +291,10 @@ export function maakResearchKennisItem(
   const bron = input.bron?.trim();
   const publicatieDatum = input.publicatieDatum?.trim();
   const wetenschappelijkeSamenvatting = input.wetenschappelijkeSamenvatting?.trim();
-  const heeftPublicatieSamenvatting = Boolean(publicatieDatum || wetenschappelijkeSamenvatting);
+  const eenvoudigeSamenvatting = input.eenvoudigeSamenvatting?.trim();
+  const heeftPublicatieSamenvatting = Boolean(
+    publicatieDatum || wetenschappelijkeSamenvatting || eenvoudigeSamenvatting,
+  );
 
   if (!titel) throw new Error('Titel is verplicht voor een research-item.');
   if (!inhoud) throw new Error('Notitie is verplicht voor een research-item.');
@@ -268,6 +308,9 @@ export function maakResearchKennisItem(
   }
   if (heeftPublicatieSamenvatting && !wetenschappelijkeSamenvatting) {
     throw new Error('Wetenschappelijke samenvatting is verplicht voor een researchpublicatie.');
+  }
+  if (eenvoudigeSamenvatting && eenvoudigeSamenvatting.length < 20) {
+    throw new Error('Eenvoudige samenvatting moet begrijpelijke context bevatten.');
   }
   if (publicatieDatum && !/^\d{4}-\d{2}-\d{2}$/.test(publicatieDatum)) {
     throw new Error('Publicatiedatum moet YYYY-MM-DD zijn.');
@@ -284,6 +327,7 @@ export function maakResearchKennisItem(
         ? {
             publicatieDatum,
             wetenschappelijkeSamenvatting,
+            eenvoudigeSamenvatting,
             bron,
           }
         : undefined,
