@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G065 in-app fallbackmeldingen: herinneringenscherm toont komende meldingen in de
+  app wanneer browsernotificaties niet klaar staan, met dezelfde privacyregels als
+  OS-notificaties.
 - G063 snooze/opnieuw plannen: komende herinneringen kunnen vanuit het
   herinneringenscherm worden gesnoozed of naar een nieuw tijdstip verplaatst.
 - G084 kostenjaar-markering: kostenkennisitems tonen automatisch een jaartallabel,

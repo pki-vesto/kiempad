@@ -122,6 +122,9 @@
 - **G063 snooze/opnieuw plannen:** komende herinneringen kunnen direct worden gesnoozed
   of naar een nieuw tijdstip verplaatst; de wijziging wordt versleuteld lokaal
   opgeslagen.
+- **G065 in-app fallbackmeldingen:** als browsernotificaties niet klaar staan toont het
+  herinneringenscherm komende meldingen in de app, met dezelfde privacyregels als
+  OS-notificaties.
 
 ## 2. Gedeeltelijk Gebouwd
 

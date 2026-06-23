@@ -20,6 +20,12 @@ export type NotificationMessage = {
   body: string;
 };
 
+export type InAppFallbackNotification = {
+  id: string;
+  dueAt: string;
+  message: NotificationMessage;
+};
+
 export async function getNotificationRuntimeStatus(): Promise<NotificationRuntimeStatus> {
   if (!('Notification' in globalThis)) {
     return { permission: 'unsupported', serviceWorker: 'unsupported' };
@@ -110,6 +116,25 @@ export function buildNotificationMessage(
     title: 'Kiempad herinnering',
     body: detail,
   };
+}
+
+export function buildInAppFallbackNotifications(
+  herinneringen: readonly Herinnering[],
+  settings: AppSettings,
+  status: NotificationRuntimeStatus,
+  details: NotificationDetailMap = {},
+  vanaf = new Date(),
+): InAppFallbackNotification[] {
+  if (status.permission === 'granted' && status.serviceWorker === 'ready') return [];
+
+  const nowIso = localDateTimeIso(vanaf);
+  return komendeHerinneringen(herinneringen, nowIso)
+    .slice(0, 5)
+    .map((item) => ({
+      id: item.herinnering.id,
+      dueAt: item.volgendMoment,
+      message: buildNotificationMessage(item.herinnering, settings, details),
+    }));
 }
 
 async function notifyViaServiceWorker(id: string, message: NotificationMessage): Promise<void> {

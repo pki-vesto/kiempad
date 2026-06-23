@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { Herinnering } from '../src/domain/types';
-import { buildNotificationMessage } from '../src/notificationRuntime';
+import {
+  buildInAppFallbackNotifications,
+  buildNotificationMessage,
+} from '../src/notificationRuntime';
 
 const herinnering: Herinnering = {
   id: 'rem-1',
@@ -42,5 +45,52 @@ describe('notification runtime privacy', () => {
         toonNotificatieDetailsOpVergrendelscherm: true,
       }).body,
     ).toBe('Er staat een herinnering klaar.');
+  });
+});
+
+describe('notification runtime in-app fallback', () => {
+  it('bouwt komende in-app fallbackmeldingen als browsernotificaties niet klaar staan', () => {
+    const items = buildInAppFallbackNotifications(
+      [herinnering],
+      DEFAULT_APP_SETTINGS,
+      { permission: 'denied', serviceWorker: 'ready' },
+      { 'afspraak-1': 'Afspraak: Echo controle' },
+      new Date('2026-06-23T07:00:00.000'),
+    );
+
+    expect(items).toEqual([
+      {
+        id: 'rem-1',
+        dueAt: '2026-06-23T08:00',
+        message: {
+          title: 'Kiempad herinnering',
+          body: 'Er staat een herinnering klaar.',
+        },
+      },
+    ]);
+  });
+
+  it('toont geen fallback als permissie en service worker klaar zijn', () => {
+    expect(
+      buildInAppFallbackNotifications(
+        [herinnering],
+        DEFAULT_APP_SETTINGS,
+        { permission: 'granted', serviceWorker: 'ready' },
+        {},
+        new Date('2026-06-23T07:00:00.000'),
+      ),
+    ).toEqual([]);
+  });
+
+  it('gebruikt details in fallback alleen na expliciete privacykeuze', () => {
+    expect(
+      buildInAppFallbackNotifications(
+        [herinnering],
+        { ...DEFAULT_APP_SETTINGS, toonNotificatieDetailsOpVergrendelscherm: true },
+        { permission: 'default', serviceWorker: 'unregistered' },
+        { 'afspraak-1': 'Afspraak: Echo controle' },
+        new Date('2026-06-23T07:00:00.000'),
+      )[0]?.message.body,
+    ).toBe('Afspraak: Echo controle');
   });
 });

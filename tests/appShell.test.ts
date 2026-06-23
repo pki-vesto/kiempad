@@ -199,6 +199,16 @@ describe('app shell', () => {
       kennisItems: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'default', serviceWorker: 'unregistered' },
+      inAppFallbackNotifications: [
+        {
+          id: 'rem-1',
+          dueAt: '2099-06-23T20:00',
+          message: {
+            title: 'Kiempad herinnering',
+            body: 'Er staat een herinnering klaar.',
+          },
+        },
+      ],
       herinneringen: [
         {
           id: 'rem-1',
@@ -232,6 +242,9 @@ describe('app shell', () => {
     expect(html).toContain('Snooze');
     expect(html).toContain('Plan opnieuw');
     expect(html).toContain('generieke tekst');
+    expect(html).toContain('In-app meldingen');
+    expect(html).toContain('Browsernotificaties staan niet klaar');
+    expect(html).toContain('Er staat een herinnering klaar.');
   });
 
   it('vult nieuwe afspraakherinnering met standaard waarschuwtijd', () => {
