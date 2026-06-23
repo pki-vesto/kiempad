@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G232 PFIP knowledge graph: kennisscherm toont research-dossierrelaties als
+  contextrelatie met bronpad en expliciete waarschuwing zonder causale of
+  medische claims.
 - G231 PFIP knowledge graph: trajectscherm toont een graphweergave per traject
   met filters voor relatietype en periode.
 - G230 PFIP knowledge graph: contextuele graph-inzichten tonen bronpad,

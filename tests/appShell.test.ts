@@ -1719,6 +1719,13 @@ describe('app shell', () => {
     );
     expect(html).toContain('Context: Traject: Poging 1');
     expect(html).toContain('dit is geen diagnose, dosering of behandelkeuze');
+    expect(html).toContain('Research-dossierrelaties');
+    expect(html).toContain('Research is gekoppeld als bespreekcontext bij deze dossierbron.');
+    expect(html).toContain(
+      'Bronpad: Research: Eigen artikel embryo-cultuur > Publicatie: 2026-05-10 > Traject: Poging 1',
+    );
+    expect(html).toContain('Onzekerheid: contextrelatie, geen causaliteit.');
+    expect(html).toContain('dit bewijst geen oorzaak, diagnose, dosering of behandelkeuze');
   });
 
   it('rendert researchtrends gegroepeerd per onderwerp', () => {
