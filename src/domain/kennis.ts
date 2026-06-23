@@ -8,6 +8,11 @@ export const KENNIS_CATEGORIE_LABELS: Record<KennisItem['categorie'], string> = 
   overig: 'Overig',
 };
 
+export type KennisFilter = {
+  zoekterm?: string;
+  categorie?: KennisItem['categorie'];
+};
+
 export const INITIELE_KENNIS_ITEMS: readonly KennisItem[] = [
   {
     id: 'seed-fasen-globaal',
@@ -79,6 +84,25 @@ export function kennisItemsPerCategorie(
     grouped[categorie] = sorteerKennisItems(items.filter((item) => item.categorie === categorie));
   }
   return grouped;
+}
+
+export function filterKennisItems(
+  items: readonly KennisItem[],
+  filter: KennisFilter = {},
+): KennisItem[] {
+  const zoekterm = filter.zoekterm?.trim().toLowerCase();
+
+  return sorteerKennisItems(
+    items.filter((item) => {
+      if (filter.categorie && item.categorie !== filter.categorie) return false;
+      if (!zoekterm) return true;
+
+      return [item.titel, item.inhoud, item.bron ?? '', KENNIS_CATEGORIE_LABELS[item.categorie]]
+        .join(' ')
+        .toLowerCase()
+        .includes(zoekterm);
+    }),
+  );
 }
 
 export function markeerKennisItemGeverifieerd(

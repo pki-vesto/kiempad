@@ -5,6 +5,7 @@ import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
+import type { KennisFilter } from './domain/kennis';
 import { KennisStore } from './domain/kennisStore';
 import { KostenStore } from './domain/kostenStore';
 import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
@@ -60,6 +61,7 @@ type RuntimeState = {
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
+  kennisFilter?: KennisFilter;
   kosten: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -86,6 +88,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     herinneringen: state.herinneringen,
     vragen: state.vragen,
     kennisItems: state.kennisItems,
+    kennisFilter: state.kennisFilter,
     kosten: state.kosten,
     settings: state.settings,
     notificaties: state.notificaties,
@@ -132,6 +135,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.herinneringen = [];
     state.vragen = [];
     state.kennisItems = [];
+    state.kennisFilter = undefined;
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -229,6 +233,7 @@ async function importBackupFromForm(
     state.herinneringen = [];
     state.vragen = [];
     state.kennisItems = [];
+    state.kennisFilter = undefined;
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -291,6 +296,11 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#knowledge-filter-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applyKennisFilterFromForm(event.currentTarget, (event as SubmitEvent).submitter, root, state);
+  });
+
   root.querySelector('#research-item-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveResearchItemFromForm(event.currentTarget, root, state);
@@ -319,6 +329,31 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
       void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
     });
   });
+}
+
+function applyKennisFilterFromForm(
+  target: EventTarget | null,
+  submitter: HTMLElement | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (!(target instanceof HTMLFormElement)) return;
+  const action =
+    submitter instanceof HTMLButtonElement
+      ? submitter.value
+      : new FormData(target).get('filterAction');
+  if (action === 'clear') {
+    state.kennisFilter = undefined;
+    render(root, state);
+    return;
+  }
+
+  const data = new FormData(target);
+  state.kennisFilter = {
+    zoekterm: optionalString(data.get('kennisZoekterm')),
+    categorie: parseKennisCategorie(data.get('kennisCategorie')),
+  };
+  render(root, state);
 }
 
 async function saveResearchItemFromForm(
@@ -1002,6 +1037,20 @@ function parseCostVergoed(value: FormDataEntryValue | null): CostItem['vergoed']
   }
 
   return 'onbekend';
+}
+
+function parseKennisCategorie(value: FormDataEntryValue | null): KennisFilter['categorie'] {
+  if (
+    value === 'fasen' ||
+    value === 'leefstijl' ||
+    value === 'kosten' ||
+    value === 'research' ||
+    value === 'overig'
+  ) {
+    return value;
+  }
+
+  return undefined;
 }
 
 function optionalString(value: FormDataEntryValue | null): string | undefined {
