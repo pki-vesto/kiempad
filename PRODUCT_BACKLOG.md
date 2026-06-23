@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 110 |
+| ☑ klaar | 113 |
 | ◐ bezig | 0 |
-| ☐ open | 64 |
+| ☐ open | 61 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -178,9 +178,9 @@
 | G094 | Research-item (link/notitie/bron) opslaan in bibliotheek | P2 | F2 | ☐ |
 | G095 | AI-functie staat **standaard uit** (opt-in) | P0 | F2 | ☑ |
 | G096 | AI-samenvatting alleen op expliciet verzoek | P0 | F2 | ☑ |
-| G097 | Verstuurde tekst wordt geminimaliseerd/gede-identificeerd | P0 | F2 | ☐ |
-| G098 | AI-output draagt waarschuwingslabel + bron | P0 | F2 | ☐ |
-| G099 | AI geeft **nooit** dosering/diagnose/behandelkeuze (policy-test) | P0 | F2 | ☐ |
+| G097 | Verstuurde tekst wordt geminimaliseerd/gede-identificeerd | P0 | F2 | ☑ |
+| G098 | AI-output draagt waarschuwingslabel + bron | P0 | F2 | ☑ |
+| G099 | AI geeft **nooit** dosering/diagnose/behandelkeuze (policy-test) | P0 | F2 | ☑ |
 | G100 | AI-API-sleutel versleuteld lokaal opgeslagen (niet in repo/.env) | P0 | F2 | ☑ |
 | G101 | Vooraf zichtbaar **wat** er naar de AI wordt verstuurd | P1 | F2 | ☐ |
 | G102 | Keuze van provider/model in instellingen | P2 | F2 | ☐ |
