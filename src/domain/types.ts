@@ -181,6 +181,7 @@ export interface SettingsRecord {
     laatsteOptInOp?: IsoDate;
   };
   afspraakWaarschuwingMinuten?: number;
+  laatsteBackupOp?: IsoDate;
   herinneringStandaarden?: Record<string, unknown>;
   taal?: string;
   toonNotificatieDetailsOpVergrendelscherm: boolean;

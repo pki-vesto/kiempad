@@ -74,6 +74,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'apiKey',
     'laatsteOptInOp',
     'afspraakWaarschuwingMinuten',
+    'laatsteBackupOp',
     'herinneringStandaarden',
     'taal',
     'toonNotificatieDetailsOpVergrendelscherm',

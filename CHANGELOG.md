@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G142 back-upaanmoediging: back-upscherm toont lokaal wanneer een versleutelde
+  export nog ontbreekt of verouderd is en bewaart de laatste succesvolle exportdatum
+  versleuteld in settings.
 - G126 lokaal gebeurtenissenlog: nieuw Logboek-scherm toont kluis- en back-up
   gebeurtenissen uit een versleuteld lokaal EventLog-record dat het toestel niet
   verlaat.

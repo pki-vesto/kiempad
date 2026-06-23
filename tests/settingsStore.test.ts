@@ -73,4 +73,16 @@ describe('SettingsStore', () => {
     expect(saved.afspraakWaarschuwingMinuten).toBe(45);
     expect(raw?.payload.ciphertext).not.toContain('afspraakWaarschuwingMinuten');
   });
+
+  it('bewaart de laatste succesvolle back-updatum versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.setLaatsteBackupOp('2026-06-23T15:00:00.000Z');
+    const raw = await driver.getRecord('app-settings');
+
+    expect(saved.laatsteBackupOp).toBe('2026-06-23T15:00:00.000Z');
+    expect(raw?.type).toBe('settings');
+    expect(raw?.payload.ciphertext).not.toContain('2026-06-23');
+    expect(raw?.payload.ciphertext).not.toContain('laatsteBackupOp');
+  });
 });

@@ -12,6 +12,7 @@ export type AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: boolean;
   ai: AiSettings;
   afspraakWaarschuwingMinuten: number;
+  laatsteBackupOp?: IsoDate;
 };
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
@@ -33,6 +34,7 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
     ...DEFAULT_APP_SETTINGS,
     ...value,
     afspraakWaarschuwingMinuten,
+    laatsteBackupOp: normaliseerIsoDatum(value?.laatsteBackupOp),
     ai: {
       ...DEFAULT_APP_SETTINGS.ai,
       ...value?.ai,
@@ -43,4 +45,9 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
 function normaliseerWaarschuwingMinuten(value: number | undefined): number {
   if (typeof value !== 'number' || !Number.isFinite(value)) return 30;
   return Math.max(0, Math.min(24 * 60, Math.floor(value)));
+}
+
+function normaliseerIsoDatum(value: string | undefined): IsoDate | undefined {
+  if (!value?.trim()) return undefined;
+  return value.trim();
 }
