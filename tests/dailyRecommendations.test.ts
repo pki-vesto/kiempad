@@ -49,6 +49,28 @@ describe('dagelijkse aanbevelingen', () => {
     });
     expect(overzicht.man[0]).toMatchObject({
       owner: 'man',
+      titel: 'Mannelijke leefstijl- en voorbereidingskaart',
+      bron: 'Lokale dagstart en gedeelde voorbereiding',
+    });
+    expect(overzicht.man[0]?.checklist).toEqual([
+      {
+        label: 'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
+        bron: 'Eigen lokale notities',
+        disclaimer: 'Geen vruchtbaarheidsadvies of leefstijlvoorschrift.',
+      },
+      {
+        label: 'Voeding en supplementen: verzamel vragen voor kliniek, arts of apotheek.',
+        bron: 'Gedeelde consultvoorbereiding',
+        disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+      },
+      {
+        label: 'Voorbereiding: controleer welke praktische punten jullie zelf willen bespreken.',
+        bron: 'Agenda en vragenlijst',
+        disclaimer: 'Geen behandelkeuze of medische interpretatie.',
+      },
+    ]);
+    expect(overzicht.man[1]).toMatchObject({
+      owner: 'man',
       titel: 'Eigen aandachtspunten vastleggen',
     });
     expect(overzicht.samen.map((item) => item.titel)).toEqual([
