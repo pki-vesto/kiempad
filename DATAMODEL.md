@@ -221,6 +221,7 @@ systeemgebeurtenissen.
 | trajectId | string? | optionele koppeling naar relevante poging/traject |
 | notitie | string? | lokale toelichting |
 | samenvatting | `{ status, methode, tekst, bronnen[], waarschuwing, gegenereerdOp }?` | lokale conceptsamenvatting met bronverwijzing; geen medisch advies |
+| actiepunten | `{ id, soort, status, tekst, bron, aangemaaktOp }[]?` | lokale concepttaken of conceptvragen uit consulttekst; gebruiker controleert |
 | uploadedAt | IsoDate | moment van lokaal toevoegen |
 
 ConsultVerslag-records zijn bewust gescheiden van algemene dossierdocumenten,

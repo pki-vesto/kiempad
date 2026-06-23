@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G198 PFIP consult intelligence: consultverslagen extraheren lokale
+  conceptactiepunten als taak of vraag met bronregel, zonder netwerkverwerking.
 - G197 PFIP consult intelligence: consultverslagen krijgen automatisch een lokale
   conceptsamenvatting met bronverwijzing en waarschuwing dat de gebruiker die moet
   controleren met het originele consult.

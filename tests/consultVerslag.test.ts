@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  extraheerConsultActiepunten,
   maakConsultSamenvatting,
   maakConsultVerslag,
   sorteerConsultVerslagen,
@@ -31,6 +32,16 @@ describe('consultVerslag', () => {
       bronnen: ['consulttekst'],
     });
     expect(verslag.samenvatting?.waarschuwing).toContain('controleer altijd');
+    expect(verslag.actiepunten).toEqual([
+      {
+        id: 'consult-1-actie-1',
+        soort: 'taak',
+        status: 'concept',
+        tekst: 'Besproken wat de volgende stap wordt.',
+        bron: 'consulttekst regel 1',
+        aangemaaktOp: '2026-06-12T10:00:00.000Z',
+      },
+    ]);
   });
 
   it('vereist inhoud zonder medisch advies te genereren', () => {
@@ -76,5 +87,42 @@ describe('consultVerslag', () => {
     expect(samenvatting?.tekst).toContain('Afgesproken');
     expect(samenvatting?.tekst).toContain('Vraag blijft open');
     expect(samenvatting?.waarschuwing).toContain('lokaal ingevoerde tekst');
+  });
+
+  it('extraheert concepttaken en conceptvragen met lokale bronverwijzing', () => {
+    const actiepunten = extraheerConsultActiepunten({
+      id: 'consult-2',
+      tekst:
+        'Afgesproken: bloeduitslag meenemen naar volgende afspraak.\nVraag aan arts: wanneer plannen we de controle?',
+      notitie: 'Zelf regelen: formulier uploaden.',
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    });
+
+    expect(actiepunten).toEqual([
+      {
+        id: 'consult-2-actie-1',
+        soort: 'taak',
+        status: 'concept',
+        tekst: 'Afgesproken: bloeduitslag meenemen naar volgende afspraak.',
+        bron: 'consulttekst regel 1',
+        aangemaaktOp: '2026-06-12T10:00:00.000Z',
+      },
+      {
+        id: 'consult-2-actie-2',
+        soort: 'vraag',
+        status: 'concept',
+        tekst: 'Vraag aan arts: wanneer plannen we de controle?',
+        bron: 'consulttekst regel 2',
+        aangemaaktOp: '2026-06-12T10:00:00.000Z',
+      },
+      {
+        id: 'consult-2-actie-3',
+        soort: 'taak',
+        status: 'concept',
+        tekst: 'Zelf regelen: formulier uploaden.',
+        bron: 'notitie regel 1',
+        aangemaaktOp: '2026-06-12T10:00:00.000Z',
+      },
+    ]);
   });
 });

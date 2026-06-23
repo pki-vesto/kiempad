@@ -544,6 +544,24 @@ describe('app shell', () => {
               'Concept op basis van lokaal ingevoerde tekst; controleer altijd met het originele consult en je kliniek.',
             gegenereerdOp: '2026-06-23T15:05:00.000Z',
           },
+          actiepunten: [
+            {
+              id: 'consult-1-actie-1',
+              soort: 'taak',
+              status: 'concept',
+              tekst: 'Afgesproken om bloeduitslagen mee te nemen.',
+              bron: 'consulttekst regel 1',
+              aangemaaktOp: '2026-06-23T15:05:00.000Z',
+            },
+            {
+              id: 'consult-1-actie-2',
+              soort: 'vraag',
+              status: 'concept',
+              tekst: 'Vraag over vervolgstap bewaren.',
+              bron: 'notitie regel 1',
+              aangemaaktOp: '2026-06-23T15:05:00.000Z',
+            },
+          ],
           uploadedAt: '2026-06-23T15:05:00.000Z',
         },
       ],
@@ -678,6 +696,10 @@ describe('app shell', () => {
     expect(html).toContain('Conceptsamenvatting');
     expect(html).toContain('Bronnen: consulttekst, notitie');
     expect(html).toContain('controleer altijd met het originele consult');
+    expect(html).toContain('Conceptactiepunten');
+    expect(html).toContain('Taak: Afgesproken om bloeduitslagen mee te nemen.');
+    expect(html).toContain('Vraag: Vraag over vervolgstap bewaren.');
+    expect(html).toContain('Bron: consulttekst regel 1');
     expect(html).toContain('Notitie: Vraag over vervolgstap bewaren.');
     expect(html).toContain('1 dossierbestand lokaal versleuteld toegevoegd.');
     expect(html).not.toContain('cGRm');

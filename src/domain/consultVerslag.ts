@@ -20,6 +20,11 @@ export type ConsultSamenvattingInput = Pick<
   'titel' | 'tekst' | 'notitie' | 'bestandsNaam' | 'uploadedAt'
 >;
 
+export type ConsultActiepuntenInput = Pick<
+  ConsultVerslag,
+  'id' | 'tekst' | 'notitie' | 'uploadedAt'
+>;
+
 export const CONSULT_VERSLAG_BRON_LABELS: Record<ConsultVerslag['bron'], string> = {
   upload: 'Upload',
   handmatig: 'Handmatig',
@@ -70,6 +75,12 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
       bestandsNaam: bestandsNaam || undefined,
       uploadedAt,
     }),
+    actiepunten: extraheerConsultActiepunten({
+      id,
+      tekst: tekst || undefined,
+      notitie: notitie || undefined,
+      uploadedAt,
+    }),
     uploadedAt,
   };
 }
@@ -109,6 +120,26 @@ export function sorteerConsultVerslagen(items: readonly ConsultVerslag[]): Consu
   );
 }
 
+export function extraheerConsultActiepunten(
+  input: ConsultActiepuntenInput,
+): NonNullable<ConsultVerslag['actiepunten']> | undefined {
+  const bronregels = [
+    ...(input.tekst ? maakBronRegels(input.tekst, 'consulttekst') : []),
+    ...(input.notitie ? maakBronRegels(input.notitie, 'notitie') : []),
+  ];
+  const kandidaten = bronregels.filter((regel) => isActiepuntKandidaat(regel.tekst));
+  const actiepunten = kandidaten.slice(0, 8).map((regel, index) => ({
+    id: `${input.id}-actie-${index + 1}`,
+    soort: bepaalActiepuntSoort(regel.tekst),
+    status: 'concept' as const,
+    tekst: normaliseerActiepuntTekst(regel.tekst),
+    bron: `${regel.bron} regel ${regel.regelNummer}`,
+    aangemaaktOp: input.uploadedAt,
+  }));
+
+  return actiepunten.length > 0 ? actiepunten : undefined;
+}
+
 function selecteerKernzinnen(tekst: string): string[] {
   const zinnen = tekst
     .split(/(?<=[.!?])\s+|\n+/u)
@@ -120,4 +151,32 @@ function selecteerKernzinnen(tekst: string): string[] {
     ),
   );
   return (relevanteZinnen.length > 0 ? relevanteZinnen : zinnen).slice(0, 3);
+}
+
+function maakBronRegels(
+  tekst: string,
+  bron: string,
+): { tekst: string; bron: string; regelNummer: number }[] {
+  return tekst
+    .split(/\n+|(?<=[.!?])\s+/u)
+    .map((regel, index) => ({
+      tekst: regel.trim(),
+      bron,
+      regelNummer: index + 1,
+    }))
+    .filter((regel) => regel.tekst.length >= 8);
+}
+
+function isActiepuntKandidaat(tekst: string): boolean {
+  return /\b(actie|afgesproken|besproken|regelen|meenemen|vragen|vraag|navragen|bespreken|bellen|mailen|plannen|afspraak|controle|uitslag|document|formulier)\b/iu.test(
+    tekst,
+  );
+}
+
+function bepaalActiepuntSoort(tekst: string): 'taak' | 'vraag' {
+  return /\b(vraag|vragen|navragen|bespreken|\?)\b/iu.test(tekst) ? 'vraag' : 'taak';
+}
+
+function normaliseerActiepuntTekst(tekst: string): string {
+  return tekst.replace(/^\s*[-*]\s*/u, '').trim();
 }

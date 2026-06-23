@@ -258,6 +258,14 @@ export interface ConsultVerslag {
     waarschuwing: string;
     gegenereerdOp: IsoDate;
   };
+  actiepunten?: {
+    id: string;
+    soort: 'taak' | 'vraag';
+    status: 'concept';
+    tekst: string;
+    bron: string;
+    aangemaaktOp: IsoDate;
+  }[];
   uploadedAt: IsoDate;
 }
 
