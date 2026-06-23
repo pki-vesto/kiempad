@@ -80,6 +80,13 @@ describe('app shell', () => {
     expect(html).toContain('Dagelijkse aanbevelingen Man');
     expect(html).toContain('Dagelijkse aanbevelingen Samen');
     expect(html).toContain('Dagcheck zonder extra medicatiemoment');
+    expect(html).toContain('class="daily-recommendation-action-form compact-form"');
+    expect(html).toContain('name="recommendationAction" value="bewaar"');
+    expect(html).toContain('name="recommendationAction" value="afwijzen"');
+    expect(html).toContain('name="recommendationAction" value="herinnering"');
+    expect(html).toContain('name="recommendationAction" value="vraag"');
+    expect(html).toContain('name="reminderTijdstip" type="datetime-local"');
+    expect(html).toContain('data-recommendation-id="vrouw-basisdag"');
     expect(html).toContain('Gebruikte bronnen:');
     expect(html).toContain('Gebruikte bronnen: Lokale dagstart zonder extra medicatiemoment');
     expect(html).toContain('Mannelijke leefstijl- en voorbereidingskaart');
@@ -110,6 +117,22 @@ describe('app shell', () => {
     expect(html).toContain('Vragen:');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('toont status na een dagelijkse aanbevelingsactie', () => {
+    const html = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      dailyRecommendationStatus: 'Aanbeveling bewaard: Dagcheck zonder extra medicatiemoment.',
+    });
+
+    expect(html).toContain('Aanbeveling bewaard: Dagcheck zonder extra medicatiemoment.');
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

@@ -299,6 +299,7 @@ export type AppShellState = {
   agendaImportError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
+  dailyRecommendationStatus?: string;
   webAuthnStatus?: WebAuthnViewStatus;
   inAppFallbackNotifications?: InAppFallbackNotification[];
 };
@@ -2451,6 +2452,7 @@ function renderStartScreen(state: AppShellState): string {
         </ul>
       </div>
       <div class="summary-panel">
+        ${state.dailyRecommendationStatus ? `<p class="status-message">${escapeHtml(state.dailyRecommendationStatus)}</p>` : ''}
         ${renderDailyRecommendations(dailyRecommendations)}
       </div>
       <div class="summary-panel">
@@ -2517,9 +2519,35 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
           ? `<p class="small-print">Gebruikte bronnen: ${item.gebruikteBronnen.map(escapeHtml).join(' · ')}</p>`
           : ''
       }
+      ${renderDailyRecommendationActions(item)}
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     </li>
   `;
+}
+
+function renderDailyRecommendationActions(item: DailyRecommendation): string {
+  return `
+    <form class="daily-recommendation-action-form compact-form" data-recommendation-id="${escapeAttribute(item.id)}">
+      <input type="hidden" name="recommendationId" value="${escapeAttribute(item.id)}" />
+      <input type="hidden" name="titel" value="${escapeAttribute(item.titel)}" />
+      <input type="hidden" name="detail" value="${escapeAttribute(item.detail)}" />
+      <label>
+        Herinner op
+        <input name="reminderTijdstip" type="datetime-local" value="${escapeAttribute(defaultRecommendationReminderTime())}" />
+      </label>
+      <button class="phase-button secondary" type="submit" name="recommendationAction" value="bewaar">Bewaar</button>
+      <button class="phase-button secondary" type="submit" name="recommendationAction" value="afwijzen">Wijs af</button>
+      <button class="phase-button secondary" type="submit" name="recommendationAction" value="herinnering">Maak herinnering</button>
+      <button class="phase-button secondary" type="submit" name="recommendationAction" value="vraag">Maak vraag</button>
+    </form>
+  `;
+}
+
+function defaultRecommendationReminderTime(): string {
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  date.setHours(9, 0, 0, 0);
+  return localDateTimeIso(date);
 }
 
 function renderQuickEntryForm(): string {
