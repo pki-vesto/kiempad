@@ -3,6 +3,7 @@ import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
+import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
@@ -547,9 +548,50 @@ async function saveDecisionFromForm(
   await state.decisionStore.save({
     onderwerp: String(data.get('onderwerp') ?? ''),
     datum: String(data.get('datum') ?? ''),
-    opties: String(data.get('opties') ?? '').split(/\r?\n/),
+    opties: parseDecisionOptions(
+      String(data.get('opties') ?? ''),
+      String(data.get('voors') ?? ''),
+      String(data.get('tegens') ?? ''),
+    ),
   });
   await reloadAndRender(root, state);
+}
+
+function parseDecisionOptions(
+  optiesText: string,
+  voorsText: string,
+  tegensText: string,
+): DecisionOptionInput[] {
+  const voors = parseDecisionArgumentLines(voorsText);
+  const tegens = parseDecisionArgumentLines(tegensText);
+
+  return optiesText
+    .split(/\r?\n/)
+    .map((titel) => titel.trim())
+    .filter(Boolean)
+    .map((titel) => ({
+      titel,
+      voors: voors[titel] ?? [],
+      tegens: tegens[titel] ?? [],
+    }));
+}
+
+function parseDecisionArgumentLines(text: string): Record<string, string[]> {
+  const byOption: Record<string, string[]> = {};
+
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    const separatorIndex = trimmed.indexOf(':');
+    if (separatorIndex <= 0) continue;
+
+    const optionTitle = trimmed.slice(0, separatorIndex).trim();
+    const argument = trimmed.slice(separatorIndex + 1).trim();
+    if (!optionTitle || !argument) continue;
+
+    byOption[optionTitle] = [...(byOption[optionTitle] ?? []), argument];
+  }
+
+  return byOption;
 }
 
 async function saveKostenFromForm(

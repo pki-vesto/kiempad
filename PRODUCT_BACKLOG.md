@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 150 |
+| ☑ klaar | 151 |
 | ◐ bezig | 0 |
-| ☐ open | 28 |
+| ☐ open | 27 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -204,7 +204,7 @@
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
 | G112 | Decision aanmaken met onderwerp en opties | P2 | F2 | ☑ |
-| G113 | Voors/tegens per optie vastleggen | P2 | F2 | ☐ |
+| G113 | Voors/tegens per optie vastleggen | P2 | F2 | ☑ |
 | G114 | Gemaakte keuze + onderbouwing + datum vastleggen | P2 | F2 | ☐ |
 | G115 | Afwegingen teruglezen als beslisverslag | P2 | F2 | ☐ |
 | G116 | Afweging koppelen aan een vraag voor de arts | P3 | F2 | ☐ |

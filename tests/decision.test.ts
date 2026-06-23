@@ -6,7 +6,15 @@ describe('decision', () => {
     const decision = maakDecision('decision-1', {
       onderwerp: '  Kliniek bellen?  ',
       datum: '2026-06-23',
-      opties: [' Vandaag bellen ', '', ' Morgen afwachten '],
+      opties: [
+        {
+          titel: ' Vandaag bellen ',
+          voors: ['  sneller duidelijkheid ', ''],
+          tegens: ['  misschien onnodig onrustig  '],
+        },
+        '',
+        ' Morgen afwachten ',
+      ],
     });
 
     expect(decision).toEqual({
@@ -14,7 +22,11 @@ describe('decision', () => {
       onderwerp: 'Kliniek bellen?',
       datum: '2026-06-23',
       opties: [
-        { titel: 'Vandaag bellen', voors: [], tegens: [] },
+        {
+          titel: 'Vandaag bellen',
+          voors: ['sneller duidelijkheid'],
+          tegens: ['misschien onnodig onrustig'],
+        },
         { titel: 'Morgen afwachten', voors: [], tegens: [] },
       ],
     });

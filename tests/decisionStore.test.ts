@@ -26,7 +26,14 @@ describe('DecisionStore', () => {
     const saved = await store.save({
       onderwerp: 'Kliniek bellen?',
       datum: '2026-06-23',
-      opties: ['Vandaag bellen', 'Morgen afwachten'],
+      opties: [
+        {
+          titel: 'Vandaag bellen',
+          voors: ['Sneller duidelijkheid'],
+          tegens: ['Misschien onnodig onrustig'],
+        },
+        'Morgen afwachten',
+      ],
     });
     const raw = await driver.getRecord(saved.id);
 
@@ -34,7 +41,11 @@ describe('DecisionStore', () => {
       onderwerp: 'Kliniek bellen?',
       datum: '2026-06-23',
       opties: [
-        { titel: 'Vandaag bellen', voors: [], tegens: [] },
+        {
+          titel: 'Vandaag bellen',
+          voors: ['Sneller duidelijkheid'],
+          tegens: ['Misschien onnodig onrustig'],
+        },
         { titel: 'Morgen afwachten', voors: [], tegens: [] },
       ],
     });
