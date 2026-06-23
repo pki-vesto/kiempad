@@ -1251,6 +1251,7 @@ async function saveMedicatieFromForm(
     voorgeschrevenDosis: optionalString(data.get('voorgeschrevenDosis')),
     instructie: optionalString(data.get('instructie')),
     actief: data.get('actief') !== 'false',
+    voorraadAantal: optionalNonNegativeNumber(data.get('voorraadAantal')),
     schemaStartDatum: optionalString(data.get('schemaStartDatum')),
     schemaTijdstip: optionalString(data.get('schemaTijdstip')),
     schemaAantalDagen: Number(data.get('schemaAantalDagen') ?? 0),
@@ -1653,6 +1654,13 @@ function textToBase64(value: string): string {
 function optionalPositiveNumber(value: FormDataEntryValue | null): number | undefined {
   const normalized = Number(String(value ?? '').trim());
   return Number.isFinite(normalized) && normalized > 0 ? Math.round(normalized) : undefined;
+}
+
+function optionalNonNegativeNumber(value: FormDataEntryValue | null): number | undefined {
+  const text = String(value ?? '').trim();
+  if (!text) return undefined;
+  const normalized = Number(text);
+  return Number.isFinite(normalized) && normalized >= 0 ? Math.floor(normalized) : undefined;
 }
 
 void mount();

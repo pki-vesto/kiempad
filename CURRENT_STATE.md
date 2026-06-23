@@ -31,8 +31,8 @@
 - **M1.5 medicatie & injectieschema:** medicatie vastleggen met vorm, instructie,
   actief/inactief en kliniekdosistekst, injectievorm apart tonen, DoseLogs genereren
   vanuit expliciete planning, vandaag-overzicht tonen, innames als genomen/
-  overgeslagen markeren en gemiste geplande innames markeren zonder ooit een dosering
-  te berekenen.
+  overgeslagen markeren, een optionele voorraad bijhouden en gemiste geplande innames
+  markeren zonder ooit een dosering te berekenen.
 - **M1.6 herinneringen & lokale notificaties:** centrale herinneringenopslag,
   afspraak- en medicatieherinneringen vanuit afspraken/DoseLogs, eenmalige/
   dagelijkse/wekelijkse herhalingslogica, herinneringenscherm met permissiestatus en
@@ -168,6 +168,9 @@
 - **G052/G053 DoseLog-notities en historie:** innames/injecties kunnen bij afvinken een
   optionele notitie bewaren en medicatie toont een historie van geplande, genomen en
   overgeslagen DoseLogs per middel.
+- **G054 medicatievoorraad:** medicatie kan een optionele resterende dosisteller
+  bewaren; de teller verlaagt lokaal wanneer een DoseLog nieuw als genomen wordt
+  gemarkeerd en gaat niet onder nul.
 - **G055 medicatieschema-import:** medicatiescherm kan een handmatig gestructureerd
   klinieklijstje importeren met regels `Medicatie | YYYY-MM-DD | HH:MM`; Kiempad maakt
   alleen expliciete DoseLogs en leidt geen dosering af.

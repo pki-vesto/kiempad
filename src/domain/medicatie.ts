@@ -14,6 +14,7 @@ export type MedicatieInput = {
   voorgeschrevenDosis?: string;
   instructie?: string;
   actief: boolean;
+  voorraadAantal?: number;
 };
 
 export type DoseLogInput = {
@@ -37,6 +38,7 @@ export function maakMedicatie(id: string, input: MedicatieInput): Medicatie {
     voorgeschrevenDosis: normaliseerOptioneleTekst(input.voorgeschrevenDosis),
     instructie: normaliseerOptioneleTekst(input.instructie),
     actief: input.actief,
+    voorraadAantal: normaliseerVoorraadAantal(input.voorraadAantal),
   };
 }
 
@@ -90,6 +92,11 @@ export function beschrijfMedicatieDosis(medicatie: Medicatie): string {
   return medicatie.voorgeschrevenDosis ?? 'Dosis niet ingevuld; neem over wat de kliniek opgeeft.';
 }
 
+export function beschrijfMedicatieVoorraad(medicatie: Medicatie): string {
+  if (medicatie.voorraadAantal === undefined) return 'Voorraad niet ingevuld.';
+  return `${medicatie.voorraadAantal} ${medicatie.voorraadAantal === 1 ? 'dosis' : 'doses'} over`;
+}
+
 function parseImportRegel(regel: string, regelNummer: number): MedicatieSchemaImportRegel {
   const parts = regel.split('|').map((part) => part.trim());
   if (parts.length !== 3) {
@@ -128,4 +135,9 @@ function addDays(startDatum: string, days: number): string {
 function normaliseerOptioneleTekst(value: string | undefined): string | undefined {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
+}
+
+function normaliseerVoorraadAantal(value: number | undefined): number | undefined {
+  if (value === undefined || !Number.isFinite(value)) return undefined;
+  return Math.max(0, Math.floor(value));
 }
