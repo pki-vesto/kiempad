@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   bepaalDossierUploadProfiel,
+  bouwDossierIndex,
   bouwDossierTijdlijn,
   extraheerDossierMetadata,
   formatBytes,
@@ -370,6 +371,33 @@ describe('dossier', () => {
       datum: '2026-05-01',
       bron: 'formulier',
     });
+  });
+
+  it('bouwt een dossierindex met documenttype, bron, datum, traject en tags', () => {
+    const document = maakDossierDocument('doc-index', {
+      datum: '2026-05-01',
+      titel: 'Labuitslag',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: '2026-05-01-erasmus-lab.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      trajectId: 'traject-1',
+      notitie: 'Erasmus MC',
+      ocr: { explicieteLokaleVerwerking: true },
+    });
+
+    expect(bouwDossierIndex([document])).toEqual([
+      {
+        id: 'doc-index',
+        datum: '2026-05-01',
+        documenttype: 'Labuitslag',
+        bron: '2026-05-01-erasmus-lab.pdf',
+        trajectId: 'traject-1',
+        tags: ['Labuitslag', 'Onderzoek', 'PDF', 'OCR', 'Erasmus MC', 'Traject gekoppeld'],
+      },
+    ]);
   });
 
   it('formatteert bestandsgrootte compact', () => {
