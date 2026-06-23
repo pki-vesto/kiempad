@@ -589,6 +589,10 @@ describe('app shell', () => {
     );
     expect(html).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
+    expect(html).toContain('id="dossier-concept-preview"');
+    expect(html).toContain('Kies bestanden om conceptrecords lokaal te controleren vóór opslag.');
+    expect(html).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
+    expect(html).toContain('Conceptrecords gecontroleerd en waar nodig datum, categorie');
     expect(html).toContain('name="uploadProfiel"');
     expect(html).toContain('Automatisch herkennen');
     expect(html).toContain('Labuitslag');

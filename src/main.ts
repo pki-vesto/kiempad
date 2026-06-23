@@ -13,6 +13,11 @@ import { maakConsultPrintHtml } from './domain/consultExport';
 import { CycleDataStore } from './domain/cycleDataStore';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
+import {
+  bepaalDossierUploadProfiel,
+  DOSSIER_UPLOAD_PROFIEL_LABELS,
+  formatBytes,
+} from './domain/dossier';
 import { DossierStore } from './domain/dossierStore';
 import { EventLogStore } from './domain/eventLogStore';
 import { localDateTimeIso } from './domain/herinnering';
@@ -297,10 +302,23 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#dossier-upload-form')?.addEventListener('submit', (event) => {
+  const dossierForm = root.querySelector('#dossier-upload-form');
+  dossierForm?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveDossierDocumentsFromForm(event.currentTarget, root, state);
   });
+  if (dossierForm instanceof HTMLFormElement) {
+    for (const selector of [
+      'input[name="dossierBestanden"]',
+      'select[name="categorie"]',
+      'select[name="uploadProfiel"]',
+    ]) {
+      dossierForm.querySelector(selector)?.addEventListener('change', () => {
+        updateDossierConceptPreview(dossierForm);
+      });
+    }
+    updateDossierConceptPreview(dossierForm);
+  }
 
   root.querySelector('#embryo-quality-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -335,6 +353,14 @@ async function saveDossierDocumentsFromForm(
     const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
     const lokaleOcr = data.get('lokaleOcr') === 'ja';
+    const conceptBevestigd = data.get('conceptBevestigd') === 'ja';
+
+    if (!conceptBevestigd) {
+      state.dossierError =
+        'Controleer de conceptrecords en bevestig dat datum, categorie, uploadprofiel en koppelingen kloppen.';
+      render(root, state);
+      return;
+    }
 
     for (const file of files) {
       await state.dossierStore.save({
@@ -372,6 +398,44 @@ async function saveDossierDocumentsFromForm(
       error instanceof Error ? error.message : 'Dossierdocumenten uploaden is mislukt.';
     render(root, state);
   }
+}
+
+function updateDossierConceptPreview(form: HTMLFormElement): void {
+  const container = form.querySelector('#dossier-concept-preview');
+  const fileInput = form.querySelector('input[name="dossierBestanden"]');
+  if (!(container instanceof HTMLElement) || !(fileInput instanceof HTMLInputElement)) return;
+
+  const files = Array.from(fileInput.files ?? []).filter((file) => file.size > 0);
+  container.replaceChildren();
+  if (files.length === 0) {
+    container.textContent = 'Kies bestanden om conceptrecords lokaal te controleren vóór opslag.';
+    return;
+  }
+
+  const data = new FormData(form);
+  const categorie = parseDossierCategorie(data.get('categorie'));
+  const gekozenProfiel = parseDossierUploadProfiel(data.get('uploadProfiel'));
+  const list = document.createElement('ul');
+  list.className = 'compact-list';
+
+  for (const file of files) {
+    const profiel = bepaalDossierUploadProfiel({
+      categorie,
+      uploadProfiel: gekozenProfiel,
+      bestandsNaam: file.name,
+      mimeType: file.type || undefined,
+    });
+    const item = document.createElement('li');
+    item.textContent = `${file.name} · ${
+      profiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[profiel] : 'Onbekend profiel'
+    } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}`;
+    list.append(item);
+  }
+
+  const intro = document.createElement('p');
+  intro.textContent =
+    'Conceptrecords klaar voor controle. Pas datum, categorie, uploadprofiel of koppelingen aan vóór opslag.';
+  container.append(intro, list);
 }
 
 async function saveEmbryoQualityFromForm(
