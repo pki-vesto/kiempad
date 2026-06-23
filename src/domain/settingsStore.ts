@@ -5,6 +5,7 @@ import {
   type AppSettings,
   DEFAULT_APP_SETTINGS,
   normaliseerAppSettings,
+  type ResearchNetworkSettings,
 } from './settings';
 import type { SettingsRecord } from './types';
 
@@ -43,6 +44,17 @@ export class SettingsStore {
       ...current,
       ai: {
         ...current.ai,
+        ...input,
+      },
+    });
+  }
+
+  async setResearchNetworkSettings(input: Partial<ResearchNetworkSettings>): Promise<AppSettings> {
+    const current = await this.get();
+    return this.save({
+      ...current,
+      researchNetwerk: {
+        ...current.researchNetwerk,
         ...input,
       },
     });

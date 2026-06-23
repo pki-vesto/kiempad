@@ -950,6 +950,11 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
     void saveAiSettingsFromForm(event.currentTarget, root, state);
   });
 
+  root.querySelector('#research-network-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveResearchNetworkSettingsFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelectorAll<HTMLButtonElement>('[data-kennis-id]').forEach((button) => {
     button.addEventListener('click', () => {
       const itemId = button.dataset.kennisId;
@@ -1075,6 +1080,26 @@ async function saveAiSettingsFromForm(
     model: optionalString(data.get('aiModel')),
     apiKey,
     laatsteOptInOp: ingeschakeld ? new Date().toISOString() : state.settings.ai.laatsteOptInOp,
+  });
+
+  await reloadAndRender(root, state);
+}
+
+async function saveResearchNetworkSettingsFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.settingsStore) return;
+
+  const data = new FormData(target);
+  const ingeschakeld = data.get('researchNetwerkIngeschakeld') === 'true';
+
+  await state.settingsStore.setResearchNetworkSettings({
+    ingeschakeld,
+    laatsteOptInOp: ingeschakeld
+      ? new Date().toISOString()
+      : state.settings.researchNetwerk.laatsteOptInOp,
   });
 
   await reloadAndRender(root, state);

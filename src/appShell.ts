@@ -56,11 +56,13 @@ import {
 } from './domain/herinnering';
 import {
   bepaalKennisKostenJaar,
+  bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   filterKennisItems,
   KENNIS_CATEGORIE_LABELS,
   type KennisFilter,
   kennisItemsPerCategorie,
+  type ResearchAggregatiePlan,
   type ResearchBron,
 } from './domain/kennis';
 import {
@@ -1795,6 +1797,10 @@ function renderKennisScreen(state: AppShellState): string {
   const filteredItems = filterKennisItems(state.kennisItems, filter);
   const grouped = kennisItemsPerCategorie(filteredItems);
   const researchBronnen = bouwResearchBronnenCache(state.kennisItems);
+  const researchAggregatie = bouwResearchAggregatiePlan(
+    researchBronnen,
+    state.settings.researchNetwerk.ingeschakeld,
+  );
 
   return `
     <section class="workspace" aria-label="Kennisbank">
@@ -1814,6 +1820,10 @@ function renderKennisScreen(state: AppShellState): string {
       </div>
       <div class="summary-panel">
         ${renderResearchBronnenCache(researchBronnen)}
+      </div>
+      <div class="summary-panel">
+        ${renderResearchNetworkSettingsForm(state.settings)}
+        ${renderResearchAggregatiePlan(researchAggregatie)}
       </div>
       <div class="summary-panel">
         <h2>AI-instelling</h2>
@@ -2021,6 +2031,43 @@ function renderResearchBronnenCache(bronnen: readonly ResearchBron[]): string {
         )
         .join('')}
     </ol>
+  `;
+}
+
+function renderResearchNetworkSettingsForm(settings: AppSettings): string {
+  return `
+    <h2>Researchaggregatie</h2>
+    <form id="research-network-form" class="data-form compact-form">
+      <label>
+        Netwerkresearch
+        <select name="researchNetwerkIngeschakeld">
+          ${renderOption('false', 'Uit: alleen lokale cache', String(settings.researchNetwerk.ingeschakeld))}
+          ${renderOption('true', 'Aan na expliciete opt-in', String(settings.researchNetwerk.ingeschakeld))}
+        </select>
+      </label>
+      <button type="submit">Bewaar research-opt-in</button>
+    </form>
+    <p class="small-print">Deze instelling bewaart alleen toestemming. Kiempad start geen automatische netwerkrequest.</p>
+  `;
+}
+
+function renderResearchAggregatiePlan(plan: ResearchAggregatiePlan): string {
+  return `
+    <div class="policy-panel embedded-summary" aria-label="Researchaggregatie-status">
+      <h3>Aggregatiestatus</h3>
+      <p class="small-print">${escapeHtml(plan.waarschuwing)}</p>
+      <p>${plan.status === 'klaar_voor_handmatige_start' ? `${plan.bronnen.length} bron(nen) klaar voor handmatige aggregatie.` : 'Aggregatie uitgeschakeld.'}</p>
+      ${
+        plan.bronnen.length > 0
+          ? `<ol class="compact-list">${plan.bronnen
+              .map(
+                (bron) =>
+                  `<li>${escapeHtml(bron.titel)} · ${escapeHtml(bron.bron)} · ${escapeHtml(bron.herkomst === 'handmatige_seed' ? 'Seedbron' : 'Lokale cache')}</li>`,
+              )
+              .join('')}</ol>`
+          : ''
+      }
+    </div>
   `;
 }
 

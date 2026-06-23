@@ -290,6 +290,10 @@ export interface SettingsRecord {
     apiKey?: string;
     laatsteOptInOp?: IsoDate;
   };
+  researchNetwerk?: {
+    ingeschakeld: boolean;
+    laatsteOptInOp?: IsoDate;
+  };
   afspraakWaarschuwingMinuten?: number;
   laatsteBackupOp?: IsoDate;
   herinneringStandaarden?: Record<string, unknown>;

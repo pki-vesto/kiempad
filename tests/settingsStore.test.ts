@@ -76,6 +76,24 @@ describe('SettingsStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('gpt-5-mini');
   });
 
+  it('bewaart research-netwerk-opt-in versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.setResearchNetworkSettings({
+      ingeschakeld: true,
+      laatsteOptInOp: '2026-06-24T08:00:00.000Z',
+    });
+    const raw = await driver.getRecord('app-settings');
+
+    expect(saved.researchNetwerk).toEqual({
+      ingeschakeld: true,
+      laatsteOptInOp: '2026-06-24T08:00:00.000Z',
+    });
+    expect(raw?.type).toBe('settings');
+    expect(raw?.payload.ciphertext).not.toContain('researchNetwerk');
+    expect(raw?.payload.ciphertext).not.toContain('2026-06-24');
+  });
+
   it('bewaart standaard afspraakwaarschuwing versleuteld en begrensd', async () => {
     const { driver, store } = await setupStore();
 

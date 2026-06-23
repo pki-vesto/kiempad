@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G213 PFIP research intelligence: researchaggregatie staat achter een
+  versleutelde, expliciete netwerk-opt-in en blijft standaard uit zonder
+  automatische netwerkrequests.
 - G212 PFIP research intelligence: kennisscherm toont researchbronnen uit een
   handmatige seed en lokale cache van opgeslagen researchitems, zonder netwerkstap.
 - G211 PFIP embryo tracking: embryokwaliteit gebruikt een expliciete gedeelde

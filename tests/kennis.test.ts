@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
+  bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   filterKennisItems,
   INITIELE_KENNIS_ITEMS,
@@ -59,6 +60,22 @@ describe('kennis domeinregels', () => {
     expect(bronnen.find((bron) => bron.id === 'seed-research-pubmed')?.toelichting).toContain(
       'Kiempad haalt niets automatisch op',
     );
+  });
+
+  it('zet researchaggregatie pas klaar na expliciete netwerk-opt-in', () => {
+    const bronnen = bouwResearchBronnenCache(INITIELE_KENNIS_ITEMS);
+    const uit = bouwResearchAggregatiePlan(bronnen, false);
+    const aan = bouwResearchAggregatiePlan(bronnen, true);
+
+    expect(uit).toMatchObject({
+      status: 'uitgeschakeld',
+      bronnen: [],
+    });
+    expect(uit.waarschuwing).toContain('haalt geen publicaties op');
+    expect(aan.status).toBe('klaar_voor_handmatige_start');
+    expect(aan.bronnen.length).toBe(bronnen.length);
+    expect(aan.waarschuwing).toContain('expliciete opt-in');
+    expect(aan.waarschuwing).toContain('haalt nog niet automatisch op');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {

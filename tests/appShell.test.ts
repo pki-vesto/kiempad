@@ -1227,6 +1227,14 @@ describe('app shell', () => {
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('https://voorbeeld.test/embryo-cultuur');
     expect(html).toContain('Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.');
+    expect(html).toContain('Researchaggregatie');
+    expect(html).toContain('id="research-network-form"');
+    expect(html).toContain('name="researchNetwerkIngeschakeld"');
+    expect(html).toContain('Uit: alleen lokale cache');
+    expect(html).toContain('Bewaar research-opt-in');
+    expect(html).toContain('Aggregatie uitgeschakeld.');
+    expect(html).toContain('Netwerkresearch staat uit');
+    expect(html).toContain('Kiempad start geen automatische netwerkrequest');
     expect(html).toContain('AI-instelling');
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');
@@ -1238,6 +1246,45 @@ describe('app shell', () => {
     );
     expect(html).toContain('LanguageModel');
     expect(html).toContain('Summarizer');
+  });
+
+  it('zet researchaggregatie pas klaar in de UI na netwerk-opt-in', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        researchNetwerk: {
+          ingeschakeld: true,
+          laatsteOptInOp: '2026-06-24T08:00:00.000Z',
+        },
+      },
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-eigen',
+          titel: 'Eigen artikel embryo-cultuur',
+          inhoud: 'Lokale notitie bij gevonden artikel.',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          categorie: 'research',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('value="true" selected');
+    expect(html).toContain('Netwerkresearch staat aan na expliciete opt-in');
+    expect(html).toContain('4 bron(nen) klaar voor handmatige aggregatie.');
+    expect(html).toContain(
+      'Eigen artikel embryo-cultuur · https://voorbeeld.test/embryo-cultuur · Lokale cache',
+    );
+    expect(html).toContain(
+      'ESHRE richtlijnen en updates · https://www.eshre.eu/Guidelines-and-Legal/Guidelines · Seedbron',
+    );
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {

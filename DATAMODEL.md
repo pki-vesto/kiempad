@@ -237,6 +237,7 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
 | profielen | `{ peter, partner }` | namen/voorkeuren |
 | gedeeldeModus | boolean | |
 | ai | `{ ingeschakeld, provider?, model?, apiKey?, laatsteOptInOp? }` | API-sleutel staat alleen in het versleutelde lokale settingsrecord, niet in repo/.env |
+| researchNetwerk | `{ ingeschakeld, laatsteOptInOp? }` | expliciete opt-in voor researchaggregatie; default uit en geen automatische netwerkrequests |
 | afspraakWaarschuwingMinuten | number | standaard afspraakherinnering, default 30 minuten vooraf |
 | laatsteBackupOp | IsoDate? | laatst bekende succesvolle versleutelde export |
 | herinneringStandaarden | object | bv. standaard waarschuwtijd |

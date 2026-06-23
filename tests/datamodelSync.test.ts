@@ -118,6 +118,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'profielen',
     'gedeeldeModus',
     'ai',
+    'researchNetwerk',
     'ingeschakeld',
     'provider',
     'model',
