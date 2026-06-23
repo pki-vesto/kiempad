@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G210 PFIP embryo tracking: embryo-dossiers tonen behandelcontext met poging,
+  protocolfasen en relevante notities uit afspraken en dossierdocumenten.
 - G209 PFIP embryo tracking: embryo-historie is geïntegreerd met gekoppelde
   afspraken, labrapporten en terugplaatsingsafspraken in één feitelijke
   embryo-tijdlijn.

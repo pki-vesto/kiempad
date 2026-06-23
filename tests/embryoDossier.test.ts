@@ -388,4 +388,82 @@ describe('embryoDossier', () => {
       }),
     ]);
   });
+
+  it('toont behandelcontext bij embryo met protocol, poging en relevante notities', () => {
+    const kwaliteit = maakDossierDocument('doc-context', {
+      datum: '2026-06-14',
+      titel: 'Embryokwaliteit embryo 1',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-context.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      afspraakId: 'afspraak-transfer',
+      notitie: 'Kliniek benoemt rustige terugplaatsing.',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        dag: 5,
+        status: 'teruggeplaatst',
+      },
+    });
+
+    expect(
+      bouwEmbryoDossiers(
+        [kwaliteit],
+        [
+          {
+            id: 'afspraak-transfer',
+            titel: 'Terugplaatsing',
+            datumTijd: '2026-06-14T11:00',
+            type: 'terugplaatsing',
+            trajectId: 'traject-1',
+            voorbereiding: 'Neem legitimatie en kliniekbrief mee.',
+            notitie: 'Transfer gepland met embryo 1.',
+          },
+        ],
+        [
+          {
+            traject: {
+              id: 'traject-1',
+              naam: 'Poging 1',
+              type: 'icsi',
+              startDatum: '2026-06-01',
+              status: 'lopend',
+              pogingNummer: 1,
+              notitie: 'Kort antagonistprotocol volgens kliniek.',
+            },
+            fasen: [
+              {
+                id: 'fase-lab',
+                trajectId: 'traject-1',
+                fase: 'lab_bevruchting',
+                startDatum: '2026-06-10',
+                eindDatum: '2026-06-14',
+                toelichting: 'Lab volgt embryogroei.',
+              },
+              {
+                id: 'fase-transfer',
+                trajectId: 'traject-1',
+                fase: 'terugplaatsing',
+                startDatum: '2026-06-14',
+                toelichting: 'Transfer volgens kliniekplanning.',
+              },
+            ],
+          },
+        ],
+      )[0]?.behandelContext,
+    ).toEqual({
+      poging: 'Poging 1 · ICSI · poging 1',
+      protocol:
+        'Lab & bevruchting · 2026-06-10 t/m 2026-06-14 · Lab volgt embryogroei. | Terugplaatsing · 2026-06-14 · Transfer volgens kliniekplanning.',
+      notities: [
+        'Pogingnotitie: Kort antagonistprotocol volgens kliniek.',
+        'Afspraak Terugplaatsing: Neem legitimatie en kliniekbrief mee.',
+        'Afspraak Terugplaatsing: Transfer gepland met embryo 1.',
+        'Embryokwaliteit embryo 1: Kliniek benoemt rustige terugplaatsing.',
+      ],
+    });
+  });
 });

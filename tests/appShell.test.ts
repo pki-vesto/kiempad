@@ -894,8 +894,18 @@ describe('app shell', () => {
             startDatum: '2026-04-01',
             status: 'lopend',
             pogingNummer: 1,
+            notitie: 'Kort antagonistprotocol volgens kliniek.',
           },
-          fasen: [],
+          fasen: [
+            {
+              id: 'fase-lab',
+              trajectId: 'traject-1',
+              fase: 'lab_bevruchting',
+              startDatum: '2026-05-01',
+              eindDatum: '2026-05-04',
+              toelichting: 'Lab volgt embryogroei.',
+            },
+          ],
         },
       ],
       afspraken: [
@@ -905,6 +915,9 @@ describe('app shell', () => {
             titel: 'Terugplaatsing',
             datumTijd: '2026-05-04T11:00',
             type: 'terugplaatsing',
+            trajectId: 'traject-1',
+            voorbereiding: 'Neem legitimatie en kliniekbrief mee.',
+            notitie: 'Transfer gepland met embryo 1.',
           },
         },
       ],
@@ -924,6 +937,7 @@ describe('app shell', () => {
           inhoudBase64: 'e30=',
           afspraakId: 'afspraak-transfer',
           trajectId: 'traject-1',
+          notitie: 'Kliniek benoemt rustige terugplaatsing.',
           embryo: {
             label: 'Embryo 1',
             dag: 5,
@@ -1016,7 +1030,20 @@ describe('app shell', () => {
       '2026-05-04 · Terugplaatsing · dag 5 · kwaliteit 4AA · terminologie Gardner-score · Bron: Labrapport',
     );
     expect(html).toContain(
-      '2026-05-04T11:00 · Afspraak terugplaatsing · Terugplaatsing · Bron: Agenda',
+      '2026-05-04T11:00 · Afspraak terugplaatsing · Terugplaatsing · Transfer gepland met embryo 1. · Bron: Agenda',
+    );
+    expect(html).toContain('Behandelcontext');
+    expect(html).toContain('Poging: Poging 1 · ICSI · poging 1');
+    expect(html).toContain(
+      'Protocol: Lab &amp; bevruchting · 2026-05-01 t/m 2026-05-04 · Lab volgt embryogroei.',
+    );
+    expect(html).toContain('Notitie: Pogingnotitie: Kort antagonistprotocol volgens kliniek.');
+    expect(html).toContain(
+      'Notitie: Afspraak Terugplaatsing: Neem legitimatie en kliniekbrief mee.',
+    );
+    expect(html).toContain('Notitie: Afspraak Terugplaatsing: Transfer gepland met embryo 1.');
+    expect(html).toContain(
+      'Notitie: Embryokwaliteit Embryo 1: Kliniek benoemt rustige terugplaatsing.',
     );
     expect(html).toContain('Laatste datum: 2026-05-04');
     expect(html).toContain('Kwaliteit: 4AA');
