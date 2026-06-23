@@ -8,6 +8,8 @@ export type DossierDocumentInput = {
   mimeType?: string;
   grootteBytes: number;
   inhoudBase64: string;
+  afspraakId?: string;
+  trajectId?: string;
   notitie?: string;
   uploadedAt?: string;
 };
@@ -26,6 +28,8 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const titel = (input.titel?.trim() || bestandsNaam).trim();
   const mimeType = input.mimeType?.trim();
   const inhoudBase64 = input.inhoudBase64.trim();
+  const afspraakId = input.afspraakId?.trim();
+  const trajectId = input.trajectId?.trim();
   const notitie = input.notitie?.trim();
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
   const categorie = input.categorie ?? 'onderzoek';
@@ -47,6 +51,8 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     mimeType: mimeType || undefined,
     grootteBytes: Math.floor(input.grootteBytes),
     inhoudBase64,
+    afspraakId: afspraakId || undefined,
+    trajectId: trajectId || undefined,
     notitie: notitie || undefined,
     analyse: analyseerDossierDocument({
       categorie,
@@ -83,6 +89,7 @@ function analyseerDossierDocument(input: {
 }
 
 function bepaalSignalen(input: {
+  categorie: DossierDocument['categorie'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -104,6 +111,10 @@ function bepaalSignalen(input: {
       /\b(punctie|terugplaatsing|transfer)\b/,
       'Bestandsnaam lijkt gekoppeld aan een IVF/ICSI-moment.',
     ],
+    [
+      /\b(consult|gesprek|gespreksverslag|verslag|intake|telefonisch)\b/,
+      'Bestandsnaam lijkt op een gespreksverslag.',
+    ],
   ];
 
   for (const [pattern, label] of herkenningen) {
@@ -120,6 +131,9 @@ function bepaalSignalen(input: {
   }
 
   if (!input.mimeType) signalen.push('Bestandstype ontbreekt; controleer de bron handmatig.');
+  if (input.categorie === 'gespreksverslag') {
+    signalen.push('Gespreksverslag kan aan afspraak of traject gekoppeld worden.');
+  }
   if (input.grootteBytes > 10 * 1024 * 1024) {
     signalen.push('Bestand is groter dan 10 MB; back-up kan daardoor groter worden.');
   }

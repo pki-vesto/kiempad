@@ -439,8 +439,29 @@ describe('app shell', () => {
 
   it('rendert dossierupload voor historische onderzoeken met lokale analyse', () => {
     const html = renderAppShell('dossier', {
-      trajecten: [],
-      afspraken: [],
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'ivf',
+            startDatum: '2026-04-01',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Intakegesprek',
+            datumTijd: '2026-05-01T09:30',
+            type: 'consult',
+          },
+        },
+      ],
       medicatie: [],
       herinneringen: [],
       vragen: [],
@@ -455,6 +476,8 @@ describe('app shell', () => {
           mimeType: 'application/pdf',
           grootteBytes: 2048,
           inhoudBase64: 'cGRm',
+          afspraakId: 'afspraak-1',
+          trajectId: 'traject-1',
           notitie: 'Historisch onderzoek',
           analyse: {
             samenvatting: 'Onderzoek opgeslagen als PDF; 2 KB. Analyse is lokaal en niet-medisch.',
@@ -463,18 +486,22 @@ describe('app shell', () => {
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
       ],
-      dossierStatus: '1 onderzoeksbestand lokaal versleuteld toegevoegd.',
+      dossierStatus: '1 dossierbestand lokaal versleuteld toegevoegd.',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
     expect(html).toContain('Dossier');
-    expect(html).toContain('Historische onderzoeken uploaden');
+    expect(html).toContain('Dossierdocument uploaden');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(
       'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
     );
-    expect(html).toContain('Bestanden en analyse blijven versleuteld lokaal');
+    expect(html).toContain('Bestanden, gespreksverslagen en analyse blijven versleuteld lokaal');
+    expect(html).toContain('Koppel aan afspraak');
+    expect(html).toContain('Intakegesprek · 2026-05-01 09:30');
+    expect(html).toContain('Koppel aan traject');
+    expect(html).toContain('Poging 1');
     expect(html).toContain('geen medisch advies');
     expect(html).toContain('Bloeduitslag mei');
     expect(html).toContain('bloed-lab-uitslag.pdf');
@@ -482,8 +509,10 @@ describe('app shell', () => {
     expect(html).toContain('2 KB');
     expect(html).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
     expect(html).toContain('Bestandstype is PDF.');
+    expect(html).toContain('Afspraak: Intakegesprek (2026-05-01 09:30)');
+    expect(html).toContain('Traject: Poging 1');
     expect(html).toContain('Notitie: Historisch onderzoek');
-    expect(html).toContain('1 onderzoeksbestand lokaal versleuteld toegevoegd.');
+    expect(html).toContain('1 dossierbestand lokaal versleuteld toegevoegd.');
     expect(html).not.toContain('cGRm');
   });
 

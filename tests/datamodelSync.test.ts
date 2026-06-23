@@ -73,6 +73,8 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'mimeType',
     'grootteBytes',
     'inhoudBase64',
+    'afspraakId',
+    'trajectId',
     'notitie',
     'analyse',
     'uploadedAt',

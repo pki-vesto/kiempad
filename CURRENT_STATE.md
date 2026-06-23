@@ -135,6 +135,8 @@
 - **G176 beeldmateriaal:** Dossier-scherm accepteert foto's, echo's en andere
   image-bestanden als `beeld`-dossierbijlage en toont na ontgrendeling een lokale
   preview vanuit de versleutelde dossierpayload.
+- **G177 gespreksverslagen:** Dossier-scherm kan gespreksverslagen uploaden en als
+  versleuteld `DossierDocument` koppelen aan een bestaande afspraak en/of poging.
 - **G126 lokaal gebeurtenissenlog:** Logboek-scherm toont kluis- en back-up
   gebeurtenissen uit versleutelde lokale EventLog-records; dit logboek blijft op het
   toestel en is niet gekoppeld aan export of externe diensten.
@@ -186,7 +188,7 @@
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
 - Kosten, research + AI-providercall, gedeelde modus.
-- Dossieruploads voor gespreksverslagen en embryokwaliteit.
+- Dossieruploads voor embryokwaliteit.
 - Tailscale-publicatie via aparte HTTPS-node, plus sync, PDF, ICS en trends.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
@@ -232,8 +234,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 1. **AI-samenvatting** pas verder bouwen met een expliciete provider-aanroep achter
    de bestaande opt-in, preview en safety helpers.
 2. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
-3. **Dossieruploads** voor gespreksverslagen en embryokwaliteit local-first
-   ontwerpen en toevoegen.
+3. **Dossieruploads** voor embryokwaliteit local-first ontwerpen en toevoegen.
 4. **Publicatie via Tailscale** op een aparte HTTPS-node uitwerken, vergelijkbaar met
    Shred en Healthcore.
 

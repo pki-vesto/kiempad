@@ -266,6 +266,8 @@ async function saveDossierDocumentsFromForm(
     const datum = String(data.get('datum') ?? '');
     const titel = optionalString(data.get('titel'));
     const categorie = parseDossierCategorie(data.get('categorie'));
+    const afspraakId = optionalString(data.get('afspraakId'));
+    const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
 
     for (const file of files) {
@@ -277,16 +279,18 @@ async function saveDossierDocumentsFromForm(
         mimeType: file.type || undefined,
         grootteBytes: file.size,
         inhoudBase64: await fileToBase64(file),
+        afspraakId,
+        trajectId,
         notitie,
       });
     }
 
     await state.eventLogStore?.record({
       categorie: 'systeem',
-      gebeurtenis: 'Historische onderzoeken toegevoegd',
+      gebeurtenis: 'Dossierdocumenten toegevoegd',
       detail: `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld opgeslagen.`,
     });
-    state.dossierStatus = `${files.length} onderzoeksbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld toegevoegd.`;
+    state.dossierStatus = `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld toegevoegd.`;
     state.dossierError = undefined;
     target.reset();
     await reloadAndRender(root, state);

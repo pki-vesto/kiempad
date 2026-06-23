@@ -178,6 +178,8 @@ export interface DossierDocument {
   mimeType?: string;
   grootteBytes: number;
   inhoudBase64: string;
+  afspraakId?: string;
+  trajectId?: string;
   notitie?: string;
   analyse: {
     samenvatting: string;

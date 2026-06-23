@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G177 gespreksverslagen: Dossier-scherm kan gespreksverslagen uploaden en
+  versleuteld koppelen aan bestaande afspraken en/of trajecten.
 - G176 beeldmateriaal: Dossier-scherm accepteert foto's/echo's via image-upload,
   herkent beeldbijlagen lokaal en toont na ontgrendeling een lokale preview uit de
   versleutelde dossierpayload.
