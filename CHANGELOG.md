@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G233 PFIP knowledge graph: trajectscherm toont een rebuildrapport voor de
+  graph-index uit lokale kluisrecords met bronrecordtelling, controlehash en
+  dataverliescontrole zonder opslagwrites.
 - G232 PFIP knowledge graph: kennisscherm toont research-dossierrelaties als
   contextrelatie met bronpad en expliciete waarschuwing zonder causale of
   medische claims.
