@@ -199,6 +199,9 @@
 - **G208 PFIP embryovergelijking:** Dossier-scherm toont per poging een feitelijke
   vergelijking van meerdere embryo's met dagen, kwaliteiten, status, meetmomenten,
   bronnen en historiemomenten, zonder rangschikking of kansberekening.
+- **G209 PFIP embryo-tijdlijnintegratie:** Embryo-historie neemt gekoppelde
+  afspraken, labrapporten en terugplaatsingsafspraken op in dezelfde chronologische
+  embryo-tijdlijn.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -331,7 +334,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G208 nog 35 open doelen (G209-G243), gericht op dossier-ingest,
+heeft na G209 nog 34 open doelen (G210-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -381,8 +384,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G209: embryo-tijdlijn integreren met afspraken,
-   labrapporten en terugplaatsing.
+1. PFIP uitvoeren vanaf G210: behandelcontext tonen bij embryo, inclusief protocol,
+   poging en relevante notities.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

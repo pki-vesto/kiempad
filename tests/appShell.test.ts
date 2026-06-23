@@ -1005,7 +1005,7 @@ describe('app shell', () => {
     expect(html).toContain('Embryovergelijking per poging');
     expect(html).toContain('Poging: traject-1');
     expect(html).toContain(
-      'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 1',
+      'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 2',
     );
     expect(html).toContain(
       'Embryo 2 · Dagen: 5 · Kwaliteit: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 1',
@@ -1014,6 +1014,9 @@ describe('app shell', () => {
     expect(html).toContain('Embryo-historie');
     expect(html).toContain(
       '2026-05-04 · Terugplaatsing · dag 5 · kwaliteit 4AA · terminologie Gardner-score · Bron: Labrapport',
+    );
+    expect(html).toContain(
+      '2026-05-04T11:00 · Afspraak terugplaatsing · Terugplaatsing · Bron: Agenda',
     );
     expect(html).toContain('Laatste datum: 2026-05-04');
     expect(html).toContain('Kwaliteit: 4AA');
