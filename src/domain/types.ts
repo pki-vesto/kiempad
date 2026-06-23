@@ -36,6 +36,7 @@ export interface Traject {
   startDatum: IsoDate;
   status: 'gepland' | 'lopend' | 'afgerond' | 'gepauzeerd' | 'geannuleerd';
   pogingNummer: number; // telt voor vergoeding pas mee na geslaagde punctie (zie KENNISBANK)
+  teltMeeVoorVergoeding?: boolean;
   notitie?: string;
 }
 

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   bepaalHuidigeFase,
   bepaalVolgendeStap,
+  berekenVergoedePogingenTeller,
   maakInitiëleFasen,
   maakTraject,
   markeerHuidigeFase,
@@ -17,6 +18,7 @@ describe('traject en fasen', () => {
       startDatum: '2026-06-23',
       status: 'lopend',
       pogingNummer: 1,
+      teltMeeVoorVergoeding: true,
       notitie: '  kliniekprotocol volgen  ',
     });
     const fasen = maakInitiëleFasen(traject.id);
@@ -28,6 +30,7 @@ describe('traject en fasen', () => {
       startDatum: '2026-06-23',
       status: 'lopend',
       pogingNummer: 1,
+      teltMeeVoorVergoeding: true,
       notitie: 'kliniekprotocol volgen',
     });
     expect(fasen.map((fase) => fase.fase)).toEqual(TRAJECT_FASE_VOLGORDE);
@@ -64,5 +67,38 @@ describe('traject en fasen', () => {
     const fasen = markeerHuidigeFase(maakInitiëleFasen(traject.id), 'wachttijd', '2026-07-01');
 
     expect(bepaalVolgendeStap({ traject, fasen })).toBe('Poging 1: huidige fase is Wachttijd.');
+  });
+
+  it('telt alleen expliciet meetellende pogingen voor vergoeding', () => {
+    const trajecten = [
+      {
+        traject: maakTraject('traject-1', {
+          naam: 'Poging 1',
+          type: 'icsi',
+          startDatum: '2026-06-23',
+          status: 'afgerond',
+          pogingNummer: 1,
+          teltMeeVoorVergoeding: true,
+        }),
+        fasen: [],
+      },
+      {
+        traject: maakTraject('traject-2', {
+          naam: 'Poging 2',
+          type: 'icsi',
+          startDatum: '2026-07-23',
+          status: 'lopend',
+          pogingNummer: 2,
+          teltMeeVoorVergoeding: false,
+        }),
+        fasen: [],
+      },
+    ];
+
+    expect(berekenVergoedePogingenTeller(trajecten)).toEqual({
+      meetellend: 1,
+      resterend: 2,
+      maximum: 3,
+    });
   });
 });

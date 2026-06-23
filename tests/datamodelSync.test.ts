@@ -19,7 +19,16 @@ const entityInterfaceMap = {
 } as const;
 
 const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
-  Traject: ['id', 'naam', 'type', 'startDatum', 'status', 'pogingNummer', 'notitie'],
+  Traject: [
+    'id',
+    'naam',
+    'type',
+    'startDatum',
+    'status',
+    'pogingNummer',
+    'teltMeeVoorVergoeding',
+    'notitie',
+  ],
   Fase: ['id', 'trajectId', 'fase', 'startDatum', 'eindDatum', 'toelichting'],
   Afspraak: [
     'id',
