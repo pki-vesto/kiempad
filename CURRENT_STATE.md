@@ -112,6 +112,8 @@
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
 - Kosten, symptomen, research + AI-providercall, gedeelde modus.
+- Dossieruploads voor historische onderzoeken, foto's/echo's, gespreksverslagen en
+  embryokwaliteit.
 - Sync, PDF, ICS, trends.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
@@ -153,7 +155,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 1. **AI-samenvatting** pas verder bouwen met een expliciete provider-aanroep achter
    de bestaande opt-in, preview en safety helpers.
 2. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
-3. **Symptoom-/welzijnslogging** toevoegen als volgende F2-gebruikerswaarde.
+3. **Dossieruploads** voor onderzoeken, beeldmateriaal, gespreksverslagen en
+   embryokwaliteit local-first ontwerpen en toevoegen.
 
 ## 7. Permanente onderhoudsregel
 

@@ -30,8 +30,8 @@
 |---|---|
 | ☑ klaar | 127 |
 | ◐ bezig | 0 |
-| ☐ open | 47 |
-| **Totaal** | **174** |
+| ☐ open | 51 |
+| **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -297,11 +297,20 @@
 | G173 | Dependencies periodiek updaten (security) | P1 | F1 | ☑ |
 | G174 | Disclaimer-tekst review bij elke release | P1 | F1 | ☑ |
 
+## 18. Dossier & uploads
+
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G175 | Met terugwerkende kracht alle onderzoeken uploaden en analyseren | P2 | F2 | ☐ |
+| G176 | Foto's, echo's en ander beeldmateriaal uploaden als dossierbijlage | P2 | F2 | ☐ |
+| G177 | Gespreksverslagen uploaden en koppelen aan relevante afspraken of trajecten | P2 | F2 | ☐ |
+| G178 | Embryokwaliteit uploaden of vastleggen per embryo, poging of terugplaatsing | P2 | F2 | ☐ |
+
 ---
 
 ## Telling
 
-- **Totaal doelen: 174** (id's G001 t/m G174, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 178** (id's G001 t/m G178, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
