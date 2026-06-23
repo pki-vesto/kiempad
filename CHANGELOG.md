@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G186 PFIP dossier-ingest: dossierdocumenten zijn lokaal doorzoekbaar op OCR-tekst,
+  handmatige notities, metadata, bestandsnaam en tags binnen de ontgrendelde kluis.
 - G185 PFIP dossier-ingest: het dossierscherm toont een dossierindex met
   documentdatum, documenttype, bronbestand, trajectkoppeling en lokale tags.
 - G184 PFIP dossier-ingest: het dossierscherm bouwt automatisch een

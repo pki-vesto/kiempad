@@ -51,6 +51,11 @@ export type DossierIndexItem = {
   tags: string[];
 };
 
+export type DossierZoekResultaat = {
+  document: DossierDocument;
+  matches: string[];
+};
+
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
   onderzoek: 'Onderzoek',
   beeld: 'Foto/echo',
@@ -204,8 +209,53 @@ export function bouwDossierIndex(items: readonly DossierDocument[]): DossierInde
   });
 }
 
+export function zoekDossierDocumenten(
+  items: readonly DossierDocument[],
+  zoekterm: string | undefined,
+): DossierZoekResultaat[] {
+  const normalizedQuery = normaliseerZoektekst(zoekterm ?? '');
+  if (!normalizedQuery)
+    return sorteerDossierDocumenten(items).map((document) => ({ document, matches: [] }));
+
+  return sorteerDossierDocumenten(items)
+    .map((document) => {
+      const velden = bouwDossierZoekVelden(document);
+      const matches = velden
+        .filter((veld) => normaliseerZoektekst(veld.waarde).includes(normalizedQuery))
+        .map((veld) => veld.label);
+
+      return { document, matches };
+    })
+    .filter((resultaat) => resultaat.matches.length > 0);
+}
+
 function bepaalDossierTijdlijnDatum(document: DossierDocument): string {
   return document.metadata?.documentDatum || document.datum;
+}
+
+function bouwDossierZoekVelden(
+  document: DossierDocument,
+): Array<{ label: string; waarde: string }> {
+  const index = bouwDossierIndex([document])[0];
+  return [
+    { label: 'titel', waarde: document.titel },
+    { label: 'bestandsnaam', waarde: document.bestandsNaam },
+    { label: 'notitie', waarde: document.notitie ?? '' },
+    { label: 'OCR-tekst', waarde: document.ocr?.tekst ?? '' },
+    { label: 'documenttype', waarde: document.metadata?.documenttype ?? index?.documenttype ?? '' },
+    { label: 'instelling', waarde: document.metadata?.instelling ?? '' },
+    { label: 'arts', waarde: document.metadata?.arts ?? '' },
+    { label: 'bronbestand', waarde: document.metadata?.bronbestand ?? document.bestandsNaam },
+    { label: 'tags', waarde: index?.tags.join(' ') ?? '' },
+  ];
+}
+
+function normaliseerZoektekst(value: string): string {
+  return value
+    .normalize('NFKD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+    .trim();
 }
 
 function bepaalDossierIndexTags(document: DossierDocument, documenttype: string): string[] {

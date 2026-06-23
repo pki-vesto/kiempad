@@ -114,6 +114,7 @@ type RuntimeState = {
   backupError?: string;
   dossierStatus?: string;
   dossierError?: string;
+  dossierZoekterm?: string;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -153,6 +154,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     backupError: state.backupError,
     dossierStatus: state.dossierStatus,
     dossierError: state.dossierError,
+    dossierZoekterm: state.dossierZoekterm,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
@@ -220,6 +222,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.backupError = undefined;
     state.dossierStatus = undefined;
     state.dossierError = undefined;
+    state.dossierZoekterm = undefined;
     state.agendaImportStatus = undefined;
     state.agendaImportError = undefined;
     state.medicatieImportStatus = undefined;
@@ -323,6 +326,14 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
   root.querySelector('#embryo-quality-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveEmbryoQualityFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#dossier-search-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement)) return;
+    state.dossierZoekterm = optionalString(new FormData(form).get('dossierZoekterm'));
+    render(root, state);
   });
 }
 

@@ -8,6 +8,7 @@ import {
   maakDossierDocument,
   maakDossierOcrResultaat,
   sorteerDossierDocumenten,
+  zoekDossierDocumenten,
 } from '../src/domain/dossier';
 
 describe('dossier', () => {
@@ -398,6 +399,44 @@ describe('dossier', () => {
         tags: ['Labuitslag', 'Onderzoek', 'PDF', 'OCR', 'Erasmus MC', 'Traject gekoppeld'],
       },
     ]);
+  });
+
+  it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {
+    const match = maakDossierDocument('doc-match', {
+      datum: '2026-05-01',
+      titel: 'Labuitslag',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: 'lab.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      notitie: 'Besproken met Erasmus MC',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'AMH waarde gecontroleerd',
+      },
+    });
+    const geenMatch = maakDossierDocument('doc-geen-match', {
+      datum: '2026-04-01',
+      titel: 'Echo',
+      categorie: 'beeld',
+      bestandsNaam: 'echo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 1024,
+      inhoudBase64: 'anBn',
+      notitie: 'Geen labtekst',
+    });
+
+    expect(zoekDossierDocumenten([match, geenMatch], 'amh')).toEqual([
+      { document: match, matches: ['OCR-tekst'] },
+    ]);
+    expect(zoekDossierDocumenten([match, geenMatch], 'erasmus')).toEqual([
+      { document: match, matches: ['notitie', 'instelling', 'tags'] },
+    ]);
+    expect(
+      zoekDossierDocumenten([match, geenMatch], '').map((result) => result.document.id),
+    ).toEqual(['doc-match', 'doc-geen-match']);
   });
 
   it('formatteert bestandsgrootte compact', () => {
