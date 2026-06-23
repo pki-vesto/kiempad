@@ -1,5 +1,5 @@
 import { classificeerDossierBeeld } from './dossier';
-import type { DossierDocument } from './types';
+import type { Afspraak, DossierDocument } from './types';
 
 export type EmbryoDossierItem = {
   id: string;
@@ -45,7 +45,10 @@ export type EmbryoVergelijking = {
   waarschuwing: string;
 };
 
-export function bouwEmbryoDossiers(documenten: readonly DossierDocument[]): EmbryoDossierItem[] {
+export function bouwEmbryoDossiers(
+  documenten: readonly DossierDocument[],
+  afspraken: readonly Afspraak[] = [],
+): EmbryoDossierItem[] {
   const groepen = new Map<string, DossierDocument[]>();
 
   for (const document of documenten) {
@@ -58,7 +61,7 @@ export function bouwEmbryoDossiers(documenten: readonly DossierDocument[]): Embr
   }
 
   return [...groepen.entries()]
-    .map(([sleutel, items]) => bouwEmbryoDossier(sleutel, items))
+    .map(([sleutel, items]) => bouwEmbryoDossier(sleutel, items, afspraken))
     .sort(
       (a, b) =>
         (a.trajectId ?? '').localeCompare(b.trajectId ?? '') ||
@@ -100,6 +103,7 @@ export function bouwEmbryoVergelijkingen(
 function bouwEmbryoDossier(
   sleutel: string,
   documenten: readonly DossierDocument[],
+  afspraken: readonly Afspraak[],
 ): EmbryoDossierItem {
   const eerste = documenten[0];
   const embryoLabel = eerste ? (bepaalEmbryoLabel(eerste) ?? 'Embryo') : 'Embryo';
@@ -108,6 +112,7 @@ function bouwEmbryoDossier(
   const dossierDocumenten = [...documenten].sort((a, b) =>
     bepaalDatum(a).localeCompare(bepaalDatum(b)),
   );
+  const relevanteAfspraken = selecteerRelevanteAfspraken(dossierDocumenten, afspraken);
   const kwaliteiten = uniekeWaarden(
     dossierDocumenten.map((document) => document.embryo?.kwaliteit).filter(isString),
   );
@@ -160,13 +165,22 @@ function bouwEmbryoDossier(
       soort: bepaalDocumentSoort(document),
       bron: document.metadata.bronbestand ?? document.bestandsNaam,
     })),
-    historie: dossierDocumenten.map((document) => ({
-      id: document.id,
-      datum: bepaalDatum(document),
-      gebeurtenis: bepaalHistorieGebeurtenis(document),
-      detail: beschrijfHistorieDetail(document),
-      bron: bepaalBron(document),
-    })),
+    historie: sorteerHistorie([
+      ...dossierDocumenten.map((document) => ({
+        id: document.id,
+        datum: bepaalDatum(document),
+        gebeurtenis: bepaalHistorieGebeurtenis(document),
+        detail: beschrijfHistorieDetail(document),
+        bron: bepaalBron(document),
+      })),
+      ...relevanteAfspraken.map((afspraak) => ({
+        id: `afspraak-${afspraak.id}`,
+        datum: afspraak.datumTijd,
+        gebeurtenis: afspraak.type === 'terugplaatsing' ? 'Afspraak terugplaatsing' : 'Afspraak',
+        detail: [afspraak.titel, afspraak.locatie, afspraak.notitie].filter(isString).join(' · '),
+        bron: 'Agenda',
+      })),
+    ]),
     waarschuwing:
       'Embryo-dossier is een feitelijk overzicht van kliniekterugkoppelingen; Kiempad berekent geen kansen en geeft geen medisch advies.',
   };
@@ -200,6 +214,7 @@ function bepaalDocumentSoort(
 }
 
 function bepaalHistorieGebeurtenis(document: DossierDocument): string {
+  if (isLabrapport(document)) return 'Labrapport';
   if (document.embryo?.status === 'bevrucht') return 'Bevruchting';
   if (document.embryo?.status === 'teruggeplaatst') return 'Terugplaatsing';
   if (document.embryo?.status === 'ingevroren') return 'Ingevroren';
@@ -230,6 +245,45 @@ function bepaalBron(document: DossierDocument): string {
     document.beeldMetadata?.bron ??
     document.metadata.bronbestand ??
     document.bestandsNaam
+  );
+}
+
+function selecteerRelevanteAfspraken(
+  documenten: readonly DossierDocument[],
+  afspraken: readonly Afspraak[],
+): Afspraak[] {
+  const afspraakIds = new Set(documenten.map((document) => document.afspraakId).filter(isString));
+  const trajectIds = new Set(
+    documenten
+      .map(
+        (document) =>
+          document.trajectId ?? document.metadata.trajectId ?? document.beeldMetadata?.trajectId,
+      )
+      .filter(isString),
+  );
+  const heeftTerugplaatsing = documenten.some(
+    (document) => document.embryo?.status === 'teruggeplaatst',
+  );
+
+  return afspraken.filter((afspraak) => {
+    if (afspraakIds.has(afspraak.id)) return true;
+    return (
+      heeftTerugplaatsing &&
+      afspraak.type === 'terugplaatsing' &&
+      Boolean(afspraak.trajectId && trajectIds.has(afspraak.trajectId))
+    );
+  });
+}
+
+function sorteerHistorie(items: EmbryoDossierItem['historie']): EmbryoDossierItem['historie'] {
+  return [...items].sort((a, b) => a.datum.localeCompare(b.datum) || a.id.localeCompare(b.id));
+}
+
+function isLabrapport(document: DossierDocument): boolean {
+  return (
+    document.uploadProfiel === 'labuitslag' ||
+    document.metadata.documenttype?.toLocaleLowerCase('nl-NL') === 'labuitslag' ||
+    /\b(lab|laboratorium|uitslag)\b/iu.test(`${document.titel} ${document.bestandsNaam}`)
   );
 }
 

@@ -713,7 +713,10 @@ function renderDossierScreen(state: AppShellState): string {
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
-  const embryoDossiers = bouwEmbryoDossiers(zichtbareDocumenten);
+  const embryoDossiers = bouwEmbryoDossiers(
+    zichtbareDocumenten,
+    state.afspraken.map((bundle) => bundle.afspraak),
+  );
   const embryoVergelijkingen = bouwEmbryoVergelijkingen(embryoDossiers);
   const behandelGeschiedenis = reconstrueerBehandelGeschiedenis({
     afspraken: state.afspraken.map((bundle) => bundle.afspraak),

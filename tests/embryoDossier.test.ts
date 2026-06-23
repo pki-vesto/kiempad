@@ -300,4 +300,92 @@ describe('embryoDossier', () => {
       },
     ]);
   });
+
+  it('integreert embryo-tijdlijn met afspraken, labrapporten en terugplaatsing', () => {
+    const bevruchting = maakDossierDocument('doc-bevrucht-integratie', {
+      datum: '2026-06-10',
+      titel: 'Bevruchting embryo 1',
+      categorie: 'embryo',
+      bestandsNaam: 'bevruchting.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '2PN',
+        dag: 1,
+        bron: 'Labrapport',
+        status: 'bevrucht',
+      },
+    });
+    const labrapport = maakDossierDocument('doc-lab-integratie', {
+      datum: '2026-06-12',
+      titel: 'Labrapport embryo 1',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: 'labrapport-embryo-1.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 256,
+      inhoudBase64: 'cGRm',
+      afspraakId: 'afspraak-lab',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: 'cleavage',
+        dag: 3,
+        bron: 'Labrapport',
+      },
+    });
+    const terugplaatsing = maakDossierDocument('doc-transfer-integratie', {
+      datum: '2026-06-14',
+      titel: 'Terugplaatsing embryo 1',
+      categorie: 'embryo',
+      bestandsNaam: 'terugplaatsing.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        dag: 5,
+        bron: 'Labrapport',
+        status: 'teruggeplaatst',
+      },
+    });
+
+    expect(
+      bouwEmbryoDossiers(
+        [terugplaatsing, labrapport, bevruchting],
+        [
+          {
+            id: 'afspraak-lab',
+            titel: 'Telefonische labuitslag',
+            datumTijd: '2026-06-12T09:30',
+            type: 'consult',
+            trajectId: 'traject-1',
+            notitie: 'Embryoloog licht labrapport toe.',
+          },
+          {
+            id: 'afspraak-transfer',
+            titel: 'Terugplaatsing',
+            datumTijd: '2026-06-14T11:00',
+            type: 'terugplaatsing',
+            trajectId: 'traject-1',
+            locatie: 'Kliniek',
+          },
+        ],
+      )[0]?.historie,
+    ).toEqual([
+      expect.objectContaining({ id: 'doc-bevrucht-integratie', gebeurtenis: 'Bevruchting' }),
+      expect.objectContaining({ id: 'doc-lab-integratie', gebeurtenis: 'Labrapport' }),
+      expect.objectContaining({ id: 'afspraak-afspraak-lab', gebeurtenis: 'Afspraak' }),
+      expect.objectContaining({ id: 'doc-transfer-integratie', gebeurtenis: 'Terugplaatsing' }),
+      expect.objectContaining({
+        id: 'afspraak-afspraak-transfer',
+        gebeurtenis: 'Afspraak terugplaatsing',
+      }),
+    ]);
+  });
 });
