@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G113 voors/tegens: beslisnotities kunnen per optie argumenten voor en tegen
+  vastleggen en terug tonen.
 - G112 beslisnotities: afwegingenscherm kan onderwerp, datum en opties als
   versleutelde lokale beslisnotitie bewaren en terug tonen.
 - G110 owner-markering: symptoomlogs en mentale check-ins tonen expliciete

@@ -348,6 +348,14 @@ function renderDecisionForm(): string {
         Opties
         <textarea name="opties" rows="5" required placeholder="Een optie per regel"></textarea>
       </label>
+      <label>
+        Voors per optie
+        <textarea name="voors" rows="5" placeholder="Optie: voordeel per regel"></textarea>
+      </label>
+      <label>
+        Tegens per optie
+        <textarea name="tegens" rows="5" placeholder="Optie: nadeel per regel"></textarea>
+      </label>
       <button type="submit">Bewaar beslisnotitie</button>
     </form>
   `;
@@ -360,10 +368,28 @@ function renderDecisionItem(item: Decision): string {
         <h3>${escapeHtml(item.onderwerp)}</h3>
         <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
         <ul class="compact-list">
-          ${item.opties.map((optie) => `<li>${escapeHtml(optie.titel)}</li>`).join('')}
+          ${item.opties.map(renderDecisionOption).join('')}
         </ul>
       </div>
     </li>
+  `;
+}
+
+function renderDecisionOption(optie: Decision['opties'][number]): string {
+  return `
+    <li>
+      <strong>${escapeHtml(optie.titel)}</strong>
+      ${renderArgumentList('Voors', optie.voors)}
+      ${renderArgumentList('Tegens', optie.tegens)}
+    </li>
+  `;
+}
+
+function renderArgumentList(label: string, items: readonly string[]): string {
+  if (items.length === 0) return '';
+
+  return `
+    <span>${label}: ${items.map(escapeHtml).join('; ')}</span>
   `;
 }
 

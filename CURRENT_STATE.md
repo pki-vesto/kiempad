@@ -151,6 +151,8 @@
   beslisnotities zijn aangesloten op de versleutelde repository-laag.
 - G112 beslisnotities: het afwegingenscherm bewaart onderwerp, datum en opties als
   lokale versleutelde beslisnotitie.
+- G113 voors/tegens: beslisnotities kunnen per optie argumenten voor en tegen lokaal
+  versleuteld bewaren en terug tonen.
 
 ## 3. Nog Niet Gebouwd
 

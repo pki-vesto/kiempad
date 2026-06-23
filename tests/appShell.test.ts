@@ -610,8 +610,16 @@ describe('app shell', () => {
           onderwerp: 'Kliniek bellen?',
           datum: '2026-06-23',
           opties: [
-            { titel: 'Vandaag bellen', voors: [], tegens: [] },
-            { titel: 'Morgen afwachten', voors: [], tegens: [] },
+            {
+              titel: 'Vandaag bellen',
+              voors: ['Sneller duidelijkheid'],
+              tegens: ['Misschien onnodig onrustig'],
+            },
+            {
+              titel: 'Morgen afwachten',
+              voors: ['Meer rust vandaag'],
+              tegens: [],
+            },
           ],
         },
       ],
@@ -624,10 +632,15 @@ describe('app shell', () => {
     expect(html).toContain('id="decision-form"');
     expect(html).toContain('name="onderwerp"');
     expect(html).toContain('name="opties"');
+    expect(html).toContain('name="voors"');
+    expect(html).toContain('name="tegens"');
     expect(html).toContain('Kliniek bellen?');
     expect(html).toContain('2 opties');
     expect(html).toContain('Vandaag bellen');
+    expect(html).toContain('Voors: Sneller duidelijkheid');
+    expect(html).toContain('Tegens: Misschien onnodig onrustig');
     expect(html).toContain('Morgen afwachten');
+    expect(html).toContain('Voors: Meer rust vandaag');
   });
 
   it('rendert AI-payloadpreview en samenvatting-opslag in het kennisscherm', () => {
