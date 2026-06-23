@@ -66,6 +66,8 @@ export type ImagingRepositoryItem = {
   document: DossierDocument;
 };
 
+export type DossierBeeldClassificatie = ImagingRepositoryItem['soort'];
+
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
   onderzoek: 'Onderzoek',
   beeld: 'Foto/echo',
@@ -246,7 +248,7 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       id: document.id,
       datum: bepaalDossierTijdlijnDatum(document),
       titel: document.titel,
-      soort: bepaalImagingSoort(document),
+      soort: classificeerDossierBeeld(document),
       bronbestand: document.metadata?.bronbestand ?? document.bestandsNaam,
       mimeType: document.mimeType,
       document,
@@ -261,7 +263,7 @@ function isImagingDocument(document: DossierDocument): boolean {
   );
 }
 
-function bepaalImagingSoort(document: DossierDocument): ImagingRepositoryItem['soort'] {
+export function classificeerDossierBeeld(document: DossierDocument): DossierBeeldClassificatie {
   const tekst = normaliseerZoektekst(
     [document.titel, document.bestandsNaam, document.metadata?.documenttype, document.notitie].join(
       ' ',
@@ -270,7 +272,7 @@ function bepaalImagingSoort(document: DossierDocument): ImagingRepositoryItem['s
   if (/\b(embryo|blastocyst|blastocyste)\b/.test(tekst)) return 'embryo_afbeelding';
   if (/\b(echo|ultrasound)\b/.test(tekst)) return 'echo';
   if (/\b(scan|mri|ct)\b/.test(tekst)) return 'scan';
-  if (/\b(foto|photo|image|afbeelding)\b/.test(tekst)) return 'foto';
+  if (/\b(foto|photo)\b/.test(tekst)) return 'foto';
   return 'overig_beeld';
 }
 
