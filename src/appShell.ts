@@ -350,8 +350,11 @@ function renderKostenScreen(state: AppShellState): string {
           <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
           <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
           <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
+          <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
+          <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
+          <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
         </dl>
-        <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Dit is geen financieel advies; eigen polis en verzekeraar blijven leidend.</p>
+        <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
         ${
           kosten.length > 0
             ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`

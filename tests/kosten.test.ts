@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { berekenKostenOverzicht, maakCostItem, sorteerCostItems } from '../src/domain/kosten';
+import {
+  berekenKostenOverzicht,
+  maakCostItem,
+  sorteerCostItems,
+  VERPLICHT_EIGEN_RISICO_2026,
+} from '../src/domain/kosten';
 
 describe('kosten domeinregels', () => {
   it('maakt een kostenpost met categorie en vergoedstatus', () => {
@@ -79,6 +84,34 @@ describe('kosten domeinregels', () => {
       vergoed: 100,
       eigenBijdrage: 75,
       onbekend: 10,
+      eigenRisicoGebruikt: 50,
+      eigenRisicoResterend: 335,
+      eigenRisicoBovenGrens: 0,
+    });
+  });
+
+  it('telt eigen-risicoposten tot de 2026-grens en toont overschrijding apart', () => {
+    const items = [
+      maakCostItem('eigen-risico-1', {
+        omschrijving: 'Medicatie eigen risico',
+        bedrag: 300,
+        datum: '2026-06-23',
+        categorie: 'medicatie',
+        vergoed: 'eigen_risico',
+      }),
+      maakCostItem('eigen-risico-2', {
+        omschrijving: 'Behandeling eigen risico',
+        bedrag: 120,
+        datum: '2026-06-24',
+        categorie: 'behandeling',
+        vergoed: 'eigen_risico',
+      }),
+    ];
+
+    expect(berekenKostenOverzicht(items)).toMatchObject({
+      eigenRisicoGebruikt: VERPLICHT_EIGEN_RISICO_2026,
+      eigenRisicoResterend: 0,
+      eigenRisicoBovenGrens: 35,
     });
   });
 });

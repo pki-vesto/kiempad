@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G089/G092/G093 eigen-risicoteller: kostenscherm toont het gebruikte/resterende
+  eigen risico voor 2026, verwijst naar eigen polis/verzekeraar en labelt het
+  overzicht als geen financieel advies.
 - G088 kostenoverzicht: kostenscherm toont totaal, vergoed gemarkeerd, mogelijke eigen
   bijdrage en onbekende bedragen op basis van lokaal ingevoerde kostenposten.
 - G085/G086/G087 kostenbasis: kostenscherm kan kostenposten toevoegen, bewerken en
