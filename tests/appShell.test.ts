@@ -597,6 +597,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
+    expect(html).toContain('name="beeldContext"');
+    expect(html).toContain('name="beeldBron"');
     expect(html).toContain('id="dossier-concept-preview"');
     expect(html).toContain('Kies bestanden om conceptrecords lokaal te controleren vóór opslag.');
     expect(html).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
@@ -663,6 +665,8 @@ describe('app shell', () => {
           mimeType: 'image/jpeg',
           grootteBytes: 4096,
           inhoudBase64: 'anBn',
+          afspraakId: 'afspraak-beeld',
+          trajectId: 'traject-beeld',
           analyse: {
             samenvatting:
               'Foto/echo opgeslagen als beeldbestand; 4 KB. Analyse is lokaal en niet-medisch.',
@@ -675,8 +679,16 @@ describe('app shell', () => {
           metadata: {
             documentDatum: '2026-05-02',
             documenttype: 'Foto/echo',
+            trajectId: 'traject-beeld',
             bronbestand: 'echo-foto-6-weken.jpg',
-            extractieBronnen: ['bronbestand', 'formulierdatum'],
+            extractieBronnen: ['bronbestand', 'formulierdatum', 'trajectkoppeling'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-02',
+            context: 'Follikelmeting links',
+            bron: 'Kliniekportaal',
+            afspraakId: 'afspraak-beeld',
+            trajectId: 'traject-beeld',
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -688,7 +700,10 @@ describe('app shell', () => {
     expect(html).toContain('Echo 6 weken');
     expect(html).toContain('Foto/echo');
     expect(html).toContain('Imaging-repository');
-    expect(html).toContain('2026-05-02 · Echo · echo-foto-6-weken.jpg');
+    expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
+    expect(html).toContain(
+      'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
+    );
     expect(html).toContain('alt="Lokale imaging-preview van Echo 6 weken"');
     expect(html).toContain('data:image/jpeg;base64,anBn');
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');

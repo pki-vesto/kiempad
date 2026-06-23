@@ -90,6 +90,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'notitie',
     'analyse',
     'metadata',
+    'beeldMetadata',
     'ocr',
     'uploadedAt',
   ],

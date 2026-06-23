@@ -446,6 +446,40 @@ describe('dossier', () => {
     });
   });
 
+  it('legt beeldmetadata vast voor datum, context, bron, afspraak en traject', () => {
+    const document = maakDossierDocument('img-metadata', {
+      datum: '2026-05-04',
+      titel: 'Echo follikelmeting',
+      categorie: 'beeld',
+      uploadProfiel: 'afbeelding',
+      bestandsNaam: 'echo-follikel.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 2048,
+      inhoudBase64: 'anBn',
+      afspraakId: 'afspraak-echo',
+      trajectId: 'traject-1',
+      beeldMetadata: {
+        context: 'Follikelmeting links',
+        bron: 'Kliniekportaal',
+      },
+    });
+
+    expect(document.beeldMetadata).toEqual({
+      datum: '2026-05-04',
+      context: 'Follikelmeting links',
+      bron: 'Kliniekportaal',
+      afspraakId: 'afspraak-echo',
+      trajectId: 'traject-1',
+    });
+    expect(bouwImagingRepository([document])[0]).toMatchObject({
+      datum: '2026-05-04',
+      bronbestand: 'Kliniekportaal',
+      context: 'Follikelmeting links',
+      afspraakId: 'afspraak-echo',
+      trajectId: 'traject-1',
+    });
+  });
+
   it('classificeert beeldmateriaal lokaal naar echo, foto, scan, embryo of overig beeld', () => {
     const maakBeeld = (id: string, titel: string, bestandsNaam: string) =>
       maakDossierDocument(id, {

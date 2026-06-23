@@ -752,6 +752,14 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           <label>
+            Beeldcontext
+            <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
+          </label>
+          <label>
+            Beeldbron
+            <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
+          </label>
+          <label>
             Notitie
             <textarea name="notitie" rows="4"></textarea>
           </label>
@@ -862,6 +870,18 @@ function renderImagingRepositoryItem(
       <div>
         <h3>${escapeHtml(item.titel)}</h3>
         <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(item.bronbestand)}</p>
+        ${
+          item.context || item.afspraakId || item.trajectId
+            ? `<p class="linked-note">Beeldmetadata: ${[
+                item.context ? `Context: ${item.context}` : undefined,
+                item.afspraakId ? `Afspraak: ${item.afspraakId}` : undefined,
+                item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+              ]
+                .filter((value): value is string => Boolean(value))
+                .map(escapeHtml)
+                .join(' · ')}</p>`
+            : ''
+        }
         ${preview}
       </div>
     </li>

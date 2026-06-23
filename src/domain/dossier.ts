@@ -22,8 +22,14 @@ export type DossierDocumentInput = {
       : never;
   };
   notitie?: string;
+  beeldMetadata?: DossierBeeldMetadataInput;
   ocr?: DossierOcrInput;
   uploadedAt?: string;
+};
+
+export type DossierBeeldMetadataInput = {
+  context?: string;
+  bron?: string;
 };
 
 export type DossierOcrInput = {
@@ -62,6 +68,9 @@ export type ImagingRepositoryItem = {
   titel: string;
   soort: 'echo' | 'foto' | 'scan' | 'embryo_afbeelding' | 'overig_beeld';
   bronbestand: string;
+  context?: string;
+  afspraakId?: string;
+  trajectId?: string;
   mimeType?: string;
   document: DossierDocument;
 };
@@ -134,6 +143,17 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     notitie,
     ocr,
   });
+  const beeldMetadata = maakBeeldMetadata(
+    {
+      datum,
+      categorie,
+      uploadProfiel,
+      bestandsNaam,
+      afspraakId,
+      trajectId,
+    },
+    input.beeldMetadata,
+  );
 
   if (!datum) throw new Error('Datum is verplicht voor een dossierdocument.');
   if (!titel) throw new Error('Titel is verplicht voor een dossierdocument.');
@@ -167,6 +187,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
       grootteBytes: input.grootteBytes,
     }),
     metadata,
+    beeldMetadata,
     ocr,
     uploadedAt,
   };
@@ -249,7 +270,11 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       datum: bepaalDossierTijdlijnDatum(document),
       titel: document.titel,
       soort: classificeerDossierBeeld(document),
-      bronbestand: document.metadata?.bronbestand ?? document.bestandsNaam,
+      bronbestand:
+        document.beeldMetadata?.bron ?? document.metadata?.bronbestand ?? document.bestandsNaam,
+      context: document.beeldMetadata?.context,
+      afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
+      trajectId: document.beeldMetadata?.trajectId ?? document.trajectId,
       mimeType: document.mimeType,
       document,
     }));
@@ -274,6 +299,30 @@ export function classificeerDossierBeeld(document: DossierDocument): DossierBeel
   if (/\b(scan|mri|ct)\b/.test(tekst)) return 'scan';
   if (/\b(foto|photo)\b/.test(tekst)) return 'foto';
   return 'overig_beeld';
+}
+
+export function maakBeeldMetadata(
+  document: Pick<
+    DossierDocumentInput,
+    'datum' | 'categorie' | 'uploadProfiel' | 'bestandsNaam' | 'afspraakId' | 'trajectId'
+  >,
+  input: DossierBeeldMetadataInput | undefined,
+): DossierDocument['beeldMetadata'] {
+  const isBeeld = document.categorie === 'beeld' || document.uploadProfiel === 'afbeelding';
+  if (!isBeeld) return undefined;
+
+  const context = input?.context?.trim();
+  const bron = input?.bron?.trim() || document.bestandsNaam;
+  const afspraakId = document.afspraakId?.trim();
+  const trajectId = document.trajectId?.trim();
+
+  return {
+    datum: document.datum,
+    context: context || undefined,
+    bron,
+    afspraakId: afspraakId || undefined,
+    trajectId: trajectId || undefined,
+  };
 }
 
 function bepaalDossierTijdlijnDatum(document: DossierDocument): string {
