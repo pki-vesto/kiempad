@@ -56,6 +56,10 @@
 - **G173 dependency-security update:** range-compatible npm-updates toegepast
   (`vite` naar 8.1.0 via lockfile) en audit blijft schoon; TypeScript 6 is als
   major buiten de huidige range bewust niet meegenomen.
+- **G167/G168/G170/G174 onderhoudschecks:** tests borgen nu dat
+  `CURRENT_STATE.md`/`CHANGELOG.md` de onderhoudsdoelen noemen, de backlogtelling
+  overeenkomt met de doelstatussen en de disclaimer-grens consistent blijft in app en
+  kerndocumenten.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -93,7 +97,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (64 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (67 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

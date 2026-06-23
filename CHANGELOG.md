@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G167/G168/G170/G174 onderhoudschecks: tests toegevoegd voor actuele
+  onderhoudsvermeldingen, correcte backlogtelling en consistente niet-medische
+  disclaimer in app en kerndocumenten.
 - G173 dependency-security update: range-compatible npm-update uitgevoerd, waardoor
   Vite via de lockfile naar 8.1.0 gaat; audit blijft schoon.
 - G133 datamodel-sync: ontbrekende TypeScript-interfaces toegevoegd voor de
