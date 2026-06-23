@@ -227,6 +227,10 @@ describe('app shell', () => {
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eenmalig');
     expect(html).toContain('Dagelijks');
+    expect(html).toContain('class="reminder-reschedule-form compact-form"');
+    expect(html).toContain('data-herinnering-id="rem-1"');
+    expect(html).toContain('Snooze');
+    expect(html).toContain('Plan opnieuw');
     expect(html).toContain('generieke tekst');
   });
 

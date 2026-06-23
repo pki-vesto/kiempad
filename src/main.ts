@@ -3,6 +3,7 @@ import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
+import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
 import { KennisStore } from './domain/kennisStore';
 import { KostenStore } from './domain/kostenStore';
@@ -505,6 +506,40 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
       render(root, state);
     });
   });
+
+  root.querySelectorAll<HTMLFormElement>('.reminder-reschedule-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void rescheduleReminderFromForm(event.currentTarget, event.submitter, root, state);
+    });
+  });
+}
+
+async function rescheduleReminderFromForm(
+  target: EventTarget | null,
+  submitter: HTMLElement | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.herinneringStore) return;
+  const herinneringId = target.dataset.herinneringId;
+  if (!herinneringId) return;
+
+  const data = new FormData(target);
+  const action =
+    submitter instanceof HTMLButtonElement ? submitter.value : String(data.get('reminderAction'));
+
+  if (action === 'snooze') {
+    await state.herinneringStore.snooze(
+      herinneringId,
+      localDateTimeIso(new Date()),
+      Number(data.get('snoozeMinuten') ?? 10),
+    );
+  } else {
+    await state.herinneringStore.reschedule(herinneringId, String(data.get('nieuwTijdstip') ?? ''));
+  }
+
+  await reloadAndRender(root, state);
 }
 
 async function saveEigenHerinneringFromForm(

@@ -72,4 +72,28 @@ describe('HerinneringStore', () => {
 
     expect(await store.list()).toEqual([]);
   });
+
+  it('snoozet en plant herinneringen opnieuw versleuteld', async () => {
+    const { driver, store } = await setupStore();
+    const saved = await store.save({
+      bron: { soort: 'eigen' },
+      titel: 'Water drinken',
+      tijdstip: '2026-06-23T08:00',
+      herhaling: 'eenmalig',
+      actief: true,
+    });
+
+    const snoozed = await store.snooze(saved.id, '2026-06-23T08:00', 15);
+    const rescheduled = await store.reschedule(saved.id, '2026-06-24T09:30');
+    const raw = await driver.getRecord(saved.id);
+
+    expect(snoozed?.tijdstip).toBe('2026-06-23T08:15');
+    expect(rescheduled).toMatchObject({
+      id: saved.id,
+      titel: 'Water drinken',
+      tijdstip: '2026-06-24T09:30',
+      actief: true,
+    });
+    expect(raw?.payload.ciphertext).not.toContain('2026-06-24T09:30');
+  });
 });

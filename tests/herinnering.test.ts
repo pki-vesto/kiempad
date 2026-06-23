@@ -3,6 +3,8 @@ import {
   komendeHerinneringen,
   maakAfspraakHerinnering,
   maakMedicatieHerinnering,
+  planHerinneringOpnieuw,
+  snoozeHerinnering,
   volgendHerinneringMoment,
 } from '../src/domain/herinnering';
 
@@ -75,6 +77,28 @@ describe('herinnering domeinregels', () => {
         '2026-06-23T07:00',
       ),
     ).toBe('2026-06-27T08:00');
+  });
+
+  it('snoozet en plant herinneringen opnieuw zonder bronmetadata te verliezen', () => {
+    const herinnering = {
+      id: 'rem-1',
+      bron: { soort: 'eigen' as const },
+      titel: 'Water',
+      tijdstip: '2026-06-23T08:00',
+      herhaling: 'eenmalig' as const,
+      actief: false,
+    };
+
+    expect(snoozeHerinnering(herinnering, '2026-06-23T09:00', 30)).toMatchObject({
+      bron: { soort: 'eigen' },
+      titel: 'Water',
+      tijdstip: '2026-06-23T09:30',
+      actief: true,
+    });
+    expect(planHerinneringOpnieuw(herinnering, '2026-06-24T10:15')).toMatchObject({
+      tijdstip: '2026-06-24T10:15',
+      actief: true,
+    });
   });
 
   it('toont alleen actieve komende herinneringen in tijdvolgorde', () => {

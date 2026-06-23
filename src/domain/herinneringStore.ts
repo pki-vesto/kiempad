@@ -1,6 +1,12 @@
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId } from '../storage/records';
-import { type HerinneringInput, maakHerinnering, sorteerHerinneringen } from './herinnering';
+import {
+  type HerinneringInput,
+  maakHerinnering,
+  planHerinneringOpnieuw,
+  snoozeHerinnering,
+  sorteerHerinneringen,
+} from './herinnering';
 import type { Herinnering } from './types';
 
 export type HerinneringStoreInput = HerinneringInput & {
@@ -23,5 +29,27 @@ export class HerinneringStore {
 
   async delete(herinneringId: string): Promise<void> {
     await this.herinneringen.delete(herinneringId);
+  }
+
+  async reschedule(herinneringId: string, tijdstip: string): Promise<Herinnering | undefined> {
+    const record = await this.herinneringen.get(herinneringId);
+    if (!record) return undefined;
+
+    const herinnering = planHerinneringOpnieuw(record.value, tijdstip);
+    await this.herinneringen.saveWithId(herinnering);
+    return herinnering;
+  }
+
+  async snooze(
+    herinneringId: string,
+    vanafIso: string,
+    minuten: number,
+  ): Promise<Herinnering | undefined> {
+    const record = await this.herinneringen.get(herinneringId);
+    if (!record) return undefined;
+
+    const herinnering = snoozeHerinnering(record.value, vanafIso, minuten);
+    await this.herinneringen.saveWithId(herinnering);
+    return herinnering;
   }
 }

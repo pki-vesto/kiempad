@@ -119,6 +119,9 @@
 - **G062 standaard-waarschuwtijd:** herinneringenscherm bewaart een versleutelde
   standaard afspraakwaarschuwing in minuten en nieuwe afspraakformulieren vullen de
   herinneringstijd daarmee vooraf in.
+- **G063 snooze/opnieuw plannen:** komende herinneringen kunnen direct worden gesnoozed
+  of naar een nieuw tijdstip verplaatst; de wijziging wordt versleuteld lokaal
+  opgeslagen.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -154,7 +157,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   medicatiescherm kan middelen, geplande DoseLogs, notities per inname,
   innameshistorie en gestructureerde schema-import versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen, eigen losse herinneringen,
-  standaard-waarschuwtijd en notificatiepermissie; het
+  snooze/opnieuw plannen, standaard-waarschuwtijd en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels, kan handmatige
   researchitems opslaan en biedt lokale AI-opt-ininstellingen, provider/modelkeuze,
