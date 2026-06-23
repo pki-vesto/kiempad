@@ -63,6 +63,7 @@ describe('app shell', () => {
       medicatie: [],
       herinneringen: [],
       vragen: [],
+      kennisItems: [],
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       afspraken: [
         {
@@ -102,6 +103,7 @@ describe('app shell', () => {
       afspraken: [],
       herinneringen: [],
       vragen: [],
+      kennisItems: [],
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       medicatie: [
         {
@@ -137,6 +139,7 @@ describe('app shell', () => {
       afspraken: [],
       medicatie: [],
       vragen: [],
+      kennisItems: [],
       notificaties: { permission: 'default', serviceWorker: 'unregistered' },
       herinneringen: [
         {
@@ -160,6 +163,7 @@ describe('app shell', () => {
       trajecten: [],
       medicatie: [],
       herinneringen: [],
+      kennisItems: [],
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       afspraken: [
         {
@@ -193,5 +197,33 @@ describe('app shell', () => {
     expect(html).toContain('Consult');
     expect(html).toContain('Openstaand');
     expect(html).toContain('Verwijder vraag');
+  });
+
+  it('rendert kennisitems met bron en verificatielabels', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'kennis-1',
+          titel: 'Globale fasen',
+          inhoud: 'Conceptinhoud',
+          bron: 'docs/KENNISBANK.md',
+          categorie: 'fasen',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('Globale fasen');
+    expect(html).toContain('Bron: docs/KENNISBANK.md');
+    expect(html).toContain('Niet AI-gegenereerd');
+    expect(html).toContain('Concept · niet geverifieerd');
+    expect(html).toContain('Markeer geverifieerd');
   });
 });

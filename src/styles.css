@@ -235,6 +235,17 @@ h2 {
   line-height: 1.6;
 }
 
+.knowledge-category + .knowledge-category {
+  margin-top: 22px;
+}
+
+.label-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
 .policy-panel {
   border: 1px solid #d3c9b6;
   background: #fffaf1;

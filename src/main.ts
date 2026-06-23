@@ -5,11 +5,13 @@ import { HerinneringStore } from './domain/herinneringStore';
 import { MedicatieStore, type MedicatieBundle } from './domain/medicatieStore';
 import { TrajectStore } from './domain/trajectStore';
 import { VraagStore, type VraagBundle } from './domain/vraagStore';
+import { KennisStore } from './domain/kennisStore';
 import type {
   Afspraak,
   DoseLog,
   Fase,
   Herinnering,
+  KennisItem,
   Medicatie,
   Traject,
   TrajectFase,
@@ -37,11 +39,13 @@ type RuntimeState = {
   medicatieStore?: MedicatieStore;
   herinneringStore?: HerinneringStore;
   vraagStore?: VraagStore;
+  kennisStore?: KennisStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
+  kennisItems: KennisItem[];
   notificaties: NotificationRuntimeStatus;
   error?: string;
 };
@@ -59,6 +63,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatie: state.medicatie,
     herinneringen: state.herinneringen,
     vragen: state.vragen,
+    kennisItems: state.kennisItems,
     notificaties: state.notificaties,
   });
   bindTrajectControls(root, state);
@@ -66,6 +71,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindMedicatieControls(root, state);
   bindHerinneringControls(root, state);
   bindVraagControls(root, state);
+  bindKennisControls(root, state);
   scheduleLocalNotifications(state.herinneringen);
   root.querySelector('#lock-button')?.addEventListener('click', () => {
     state.session.lock();
@@ -74,11 +80,13 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.medicatieStore = undefined;
     state.herinneringStore = undefined;
     state.vraagStore = undefined;
+    state.kennisStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
     state.medicatie = [];
     state.herinneringen = [];
     state.vragen = [];
+    state.kennisItems = [];
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
@@ -100,6 +108,7 @@ async function mount(): Promise<void> {
     medicatie: [],
     herinneringen: [],
     vragen: [],
+    kennisItems: [],
     notificaties: await getNotificationRuntimeStatus(),
   };
 
@@ -125,11 +134,14 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.herinneringStore = createHerinneringStore(state);
         state.medicatieStore = createMedicatieStore(state);
         state.vraagStore = createVraagStore(state);
+        state.kennisStore = createKennisStore(state);
+        await state.kennisStore.seedInitialItems();
         state.trajecten = await state.trajectStore.list();
         state.afspraken = await state.agendaStore.list();
         state.medicatie = await state.medicatieStore.list();
         state.herinneringen = await state.herinneringStore.list();
         state.vragen = await state.vraagStore.list();
+        state.kennisItems = await state.kennisStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
         render(root, state);
@@ -138,6 +150,17 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.error = error instanceof Error ? error.message : 'Ontgrendelen is mislukt.';
         render(root, state);
       });
+  });
+}
+
+function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelectorAll<HTMLButtonElement>('[data-kennis-id]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const itemId = button.dataset.kennisId;
+      if (!itemId || !state.kennisStore) return;
+
+      void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
+    });
   });
 }
 
@@ -365,6 +388,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.vraagStore) {
     state.vragen = await state.vraagStore.list();
   }
+  if (state.kennisStore) {
+    state.kennisItems = await state.kennisStore.list();
+  }
   state.notificaties = await getNotificationRuntimeStatus();
   render(root, state);
 }
@@ -402,6 +428,12 @@ function createVraagStore(state: RuntimeState): VraagStore {
   return new VraagStore(
     new EncryptedRecordRepository<Vraag>(state.driver, state.session, 'vraag'),
     new EncryptedRecordRepository<Afspraak>(state.driver, state.session, 'afspraak'),
+  );
+}
+
+function createKennisStore(state: RuntimeState): KennisStore {
+  return new KennisStore(
+    new EncryptedRecordRepository<KennisItem>(state.driver, state.session, 'kennis_item'),
   );
 }
 

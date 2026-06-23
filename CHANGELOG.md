@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.8 basis-kennisbank: versleutelde KennisItem-store, seed van conceptitems uit
+  `docs/KENNISBANK.md`, categorieoverzicht voor fasen/leefstijl/kosten/research,
+  zichtbare bron-, AI- en artsverificatielabels en expliciet markeren als
+  geverifieerd met arts (G073-G080, G083, G138).
 - M1.7 vragen voor de arts: centrale versleutelde vragenopslag, vragen toevoegen/
   bewerken/verwijderen, koppeling aan afspraken, beantwoordstatus met antwoordtekst
   en overzicht van openstaande vragen voor de eerstvolgende afspraak (G067-G070).

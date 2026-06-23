@@ -39,17 +39,20 @@
 - **M1.7 vragen voor de arts:** vragen toevoegen/bewerken/verwijderen, koppelen aan
   afspraken, als beantwoord markeren met antwoordtekst en openstaande vragen voor de
   eerstvolgende afspraak tonen.
+- **M1.8 basis-kennisbank:** KennisItems lokaal seedden uit `docs/KENNISBANK.md`,
+  tonen per categorie, bronvermelding, AI-label, artsverificatielabel en expliciet
+  markeren als geverifieerd met arts.
 
 ## 2. Gedeeltelijk Gebouwd
 
-- Kennisitems tonen nog inhoudelijke lege-staten; traject/fasen, agenda, medicatie,
-  herinneringen en vragen zijn aangesloten op de versleutelde repository-laag.
+- Traject/fasen, agenda, medicatie, herinneringen, vragen en kennisbank zijn
+  aangesloten op de versleutelde repository-laag.
 
 ## 3. Nog Niet Gebouwd
 
 De rest van F1 (MVP) en later, o.a.:
 
-- Inhoudelijke UI-workflow voor de kennisbank.
+- PWA-/service-worker-runtime voor volledig offline installeren.
 - PWA-/service-worker-runtime.
 - Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
@@ -71,10 +74,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren; het
   medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
-  vragenscherm kan consultvragen en antwoorden versleuteld beheren.
+  vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
+  seedt en toont conceptkennis lokaal met bron- en verificatielabels.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (45 passing), `npm run build` en `npm audit --audit-level=high`.
+  (51 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -82,9 +86,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **Basis-kennisbank** met conceptinhoud en herkomstlabels.
-2. **PWA/offline-runtime** met manifest en installatiemetadata.
-3. **UX-baseline** voor toegankelijkheid, lege-staten en verwijderen.
+1. **PWA/offline-runtime** met manifest en installatiemetadata.
+2. **UX-baseline** voor toegankelijkheid, lege-staten en verwijderen.
+3. **Tests & kwaliteit** uitbreiden richting de resterende F1-gates.
 
 ## 7. Permanente onderhoudsregel
 
