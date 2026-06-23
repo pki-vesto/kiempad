@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.1 app-skelet: Nederlandstalige, responsive app-shell met hash-navigatie tussen
+  hoofdschermen, zichtbare niet-medische disclaimer en Vitest-dekking voor de
+  navigatie-/disclaimer-rendering (G016, G017, G018, G130, G147, G148, G155).
 - Eerste documentatieset en repo-fundament (v0.1, F0):
   - Kerndocumenten: `README.md`, `VISIE.md`, `ARCHITECTURE.md`, `ROADMAP.md`,
     `CURRENT_STATE.md`, `MASTER_CONTEXT.md`, `DATAMODEL.md`, `PRIVACY.md`,
@@ -26,6 +29,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   MASTER_CONTEXT, CONTRIBUTING en PR-template hierop afgestemd.
 
 ### Changed
+- Ontwikkeltooling bijgewerkt naar Vite 8, Vitest 4 en vite-plugin-pwa 1.x; Node-floor
+  expliciet gemaakt op 20.19+ zodat `npm audit` weer schoon is.
 - Repo **publiek** gemaakt (ADR-0006) i.v.m. de GitHub Actions-billingblokkade op
   private repos. Docs aangepast zodat ze de publieke realiteit weerspiegelen
   (`README`, `PRIVACY`, `MASTER_CONTEXT`, `SECURITY`, `CONTRIBUTING`, `LICENSE`,

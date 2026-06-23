@@ -21,7 +21,7 @@
 - **Grondhouding:** privacy-first en **local-first** — gezondheidsdata blijft
   **lokaal en versleuteld** op het toestel; standaard gaat er **niets** naar derden
   zonder expliciete keuze.
-- **Status:** documentatie- en fundamentfase (v0.1). Zie
+- **Status:** F1 is gestart met een eerste app-shell bovenop het fundament. Zie
   [`CURRENT_STATE.md`](CURRENT_STATE.md) voor wat wél/niet gebouwd is.
 - **Plek in het ecosysteem:** eigen **publieke** repo onder `pki-vesto`, naast de
   andere apps. De **code en docs zijn publiek**; de **gezondheidsdata blijft
@@ -46,7 +46,7 @@ versleutelde, lokale opslag.
 
 ## Setup (fresh checkout)
 
-> Vereist: Node ≥ 20 en npm. Een Docker-setup is optioneel (zie hieronder).
+> Vereist: Node ≥ 20.19 en npm. Een Docker-setup is optioneel (zie hieronder).
 
 ```bash
 git clone git@github.com:pki-vesto/kiempad.git
