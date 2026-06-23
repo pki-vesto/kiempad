@@ -126,6 +126,7 @@ type RuntimeState = {
   agendaImportError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
+  dailyRecommendationStatus?: string;
   webAuthnStatus: WebAuthnViewStatus;
   error?: string;
 };
@@ -168,6 +169,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
+    dailyRecommendationStatus: state.dailyRecommendationStatus,
     webAuthnStatus: state.webAuthnStatus,
     inAppFallbackNotifications: buildInAppFallbackNotifications(
       state.herinneringen,
@@ -179,6 +181,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindThemeControls(root, state);
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
+  bindDailyRecommendationControls(root, state);
   bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
   bindHerinneringControls(root, state);
@@ -917,6 +920,20 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
   });
 }
 
+function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelectorAll<HTMLFormElement>('.daily-recommendation-action-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void handleDailyRecommendationAction(
+        event.currentTarget,
+        (event as SubmitEvent).submitter,
+        root,
+        state,
+      );
+    });
+  });
+}
+
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
   root.querySelector('#knowledge-filter-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -1636,6 +1653,79 @@ async function saveQuickEntryFromForm(
   }
 
   await reloadAndRender(root, state);
+}
+
+async function handleDailyRecommendationAction(
+  target: EventTarget | null,
+  submitter: HTMLElement | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement)) return;
+
+  const data = new FormData(target);
+  const action =
+    submitter instanceof HTMLButtonElement
+      ? submitter.value
+      : String(data.get('recommendationAction') ?? '');
+  const titel = String(data.get('titel') ?? '').trim();
+  const detail = String(data.get('detail') ?? '').trim();
+  const recommendationId = String(data.get('recommendationId') ?? '').trim();
+  if (!titel || !recommendationId) return;
+
+  if (action === 'bewaar') {
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Dagelijkse aanbeveling bewaard',
+      detail: `${titel} (${recommendationId})`,
+    });
+    state.dailyRecommendationStatus = `Aanbeveling bewaard: ${titel}.`;
+    await reloadAndRender(root, state);
+    return;
+  }
+
+  if (action === 'afwijzen') {
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Dagelijkse aanbeveling afgewezen',
+      detail: `${titel} (${recommendationId})`,
+    });
+    state.dailyRecommendationStatus = `Aanbeveling afgewezen: ${titel}.`;
+    await reloadAndRender(root, state);
+    return;
+  }
+
+  if (action === 'herinnering' && state.herinneringStore) {
+    await state.herinneringStore.save({
+      bron: { soort: 'eigen', refId: recommendationId },
+      titel: `Aanbeveling: ${titel}`,
+      tijdstip: String(data.get('reminderTijdstip') ?? ''),
+      herhaling: 'eenmalig',
+      actief: true,
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Aanbeveling omgezet naar herinnering',
+      detail: `${titel} (${recommendationId})`,
+    });
+    state.dailyRecommendationStatus = `Aanbeveling omgezet naar herinnering: ${titel}.`;
+    await reloadAndRender(root, state);
+    return;
+  }
+
+  if (action === 'vraag' && state.vraagStore) {
+    await state.vraagStore.save({
+      vraag: `Aanbeveling bespreken: ${titel}${detail ? `. ${detail}` : ''}`,
+      beantwoord: false,
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Aanbeveling omgezet naar vraag',
+      detail: `${titel} (${recommendationId})`,
+    });
+    state.dailyRecommendationStatus = `Aanbeveling omgezet naar vraag: ${titel}.`;
+    await reloadAndRender(root, state);
+  }
 }
 
 async function saveTrajectFromForm(
