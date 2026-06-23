@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 139 |
+| ☑ klaar | 140 |
 | ◐ bezig | 0 |
-| ☐ open | 39 |
+| ☐ open | 38 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -126,7 +126,7 @@
 | G062 | Instelbare standaard-waarschuwtijd (bv. 30 min vooraf) | P2 | F2 | ☑ |
 | G063 | Herinnering snoozen / opnieuw plannen | P2 | F2 | ☑ |
 | G064 | Notificatie-permissie netjes aanvragen + uitleg bij weigering | P1 | F1 | ☑ |
-| G065 | Fallback in-app meldingen als notificaties uit staan | P2 | F2 | ☐ |
+| G065 | Fallback in-app meldingen als notificaties uit staan | P2 | F2 | ☑ |
 | G066 | Geen notificatie-inhoud lekt gevoelige data op vergrendeld scherm (instelbaar) | P1 | F1 | ☑ |
 
 ## 6. Vragen voor de arts

@@ -51,7 +51,7 @@ import type {
 } from './domain/types';
 import { openstaandeVragen, volgendeAfspraakMetOpenVragen } from './domain/vraag';
 import type { VraagBundle } from './domain/vraagStore';
-import type { NotificationRuntimeStatus } from './notificationRuntime';
+import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
@@ -166,6 +166,7 @@ export type AppShellState = {
   backupError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
+  inAppFallbackNotifications?: InAppFallbackNotification[];
 };
 
 export function renderAppShell(
@@ -743,6 +744,7 @@ function beschrijfOpenstaandeVragen(state: AppShellState): string {
 
 function renderHerinneringenScreen(state: AppShellState): string {
   const komende = komendeHerinneringen(state.herinneringen, localDateTimeIso(new Date()));
+  const fallback = state.inAppFallbackNotifications ?? [];
 
   return `
     <section class="traject-layout" aria-label="Herinneringen beheren">
@@ -788,12 +790,37 @@ function renderHerinneringenScreen(state: AppShellState): string {
         <div class="panel-heading">
           <h2>Komende herinneringen</h2>
         </div>
+        ${fallback.length > 0 ? renderInAppFallbackNotifications(fallback) : ''}
         ${
           komende.length > 0
             ? renderHerinneringenList(komende)
             : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
         }
       </div>
+    </section>
+  `;
+}
+
+function renderInAppFallbackNotifications(items: InAppFallbackNotification[]): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="In-app meldingen">
+      <h2>In-app meldingen</h2>
+      <p class="small-print">Browsernotificaties staan niet klaar. Kiempad toont daarom komende herinneringen hier in de app.</p>
+      <ol class="phase-list">
+        ${items
+          .map(
+            (item) => `
+              <li class="phase-item">
+                <div>
+                  <h3>${escapeHtml(item.message.title)}</h3>
+                  <p>${escapeHtml(item.message.body)}</p>
+                  <small>${formatDateTime(item.dueAt)}</small>
+                </div>
+              </li>
+            `,
+          )
+          .join('')}
+      </ol>
     </section>
   `;
 }

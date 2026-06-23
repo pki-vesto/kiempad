@@ -28,6 +28,7 @@ import type {
 } from './domain/types';
 import { type VraagBundle, VraagStore } from './domain/vraagStore';
 import {
+  buildInAppFallbackNotifications,
   clearScheduledNotifications,
   getNotificationRuntimeStatus,
   type NotificationRuntimeStatus,
@@ -94,6 +95,12 @@ function render(root: HTMLElement, state: RuntimeState): void {
     backupError: state.backupError,
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
+    inAppFallbackNotifications: buildInAppFallbackNotifications(
+      state.herinneringen,
+      state.settings,
+      state.notificaties,
+      createNotificationDetailMap(state),
+    ),
   });
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
