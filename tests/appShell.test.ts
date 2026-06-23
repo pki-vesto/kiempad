@@ -392,6 +392,14 @@ describe('app shell', () => {
           categorie: 'medicatie',
           vergoed: 'eigen_risico',
         },
+        {
+          id: 'cost-2',
+          omschrijving: 'Vergoede behandeling',
+          bedrag: 100,
+          datum: '2026-06-24',
+          categorie: 'behandeling',
+          vergoed: 'ja',
+        },
       ],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -399,6 +407,10 @@ describe('app shell', () => {
 
     expect(html).toContain('Kostenpost toevoegen');
     expect(html).toContain('id="kosten-form"');
+    expect(html).toContain('Totaal');
+    expect(html).toContain('Vergoed gemarkeerd');
+    expect(html).toContain('Mogelijke eigen bijdrage');
+    expect(html).toContain('Nog onbekend');
     expect(html).toContain('Apotheekfactuur');
     expect(html).toContain('€');
     expect(html).toContain('Medicatie');
