@@ -164,6 +164,7 @@ Conventies:
 | profielen | `{ peter, partner }` | namen/voorkeuren |
 | gedeeldeModus | boolean | |
 | ai | `{ ingeschakeld, provider?, model?, apiKey?, laatsteOptInOp? }` | API-sleutel staat alleen in het versleutelde lokale settingsrecord, niet in repo/.env |
+| afspraakWaarschuwingMinuten | number | standaard afspraakherinnering, default 30 minuten vooraf |
 | herinneringStandaarden | object | bv. standaard waarschuwtijd |
 | taal | string | default `nl` |
 | toonNotificatieDetailsOpVergrendelscherm | boolean | default `false` |

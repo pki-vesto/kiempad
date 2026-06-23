@@ -40,4 +40,11 @@ export class SettingsStore {
       },
     });
   }
+
+  async setAfspraakWaarschuwingMinuten(minutes: number): Promise<AppSettings> {
+    return this.save({
+      ...(await this.get()),
+      afspraakWaarschuwingMinuten: minutes,
+    });
+  }
 }

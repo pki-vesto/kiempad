@@ -417,6 +417,19 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
       render(root, state);
     });
   });
+
+  root.querySelector('#warning-default-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement) || !state.settingsStore) return;
+
+    const data = new FormData(form);
+    const minutes = Number(data.get('afspraakWaarschuwingMinuten') ?? 30);
+    void state.settingsStore.setAfspraakWaarschuwingMinuten(minutes).then((settings) => {
+      state.settings = settings;
+      render(root, state);
+    });
+  });
 }
 
 async function saveEigenHerinneringFromForm(

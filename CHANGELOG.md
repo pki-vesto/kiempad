@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G062 standaard-waarschuwtijd: herinneringenscherm bewaart een versleutelde
+  standaard afspraakwaarschuwing en nieuwe afspraakformulieren vullen de herinnering
+  vooraf in.
 - G060 eigen losse herinneringen: herinneringenscherm kan eigen herinneringen met
   titel, tijdstip en herhaling versleuteld bewaren.
 - G055 medicatieschema-import: handmatig gestructureerde regels

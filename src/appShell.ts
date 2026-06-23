@@ -631,6 +631,13 @@ function renderHerinneringenScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar notificatieprivacy</button>
         </form>
+        <form id="warning-default-form" class="data-form compact-form">
+          <label>
+            Standaard afspraakwaarschuwing (minuten vooraf)
+            <input name="afspraakWaarschuwingMinuten" type="number" min="0" max="1440" step="5" value="${state.settings.afspraakWaarschuwingMinuten}" />
+          </label>
+          <button type="submit">Bewaar standaardtijd</button>
+        </form>
         <h2 class="section-subheading">Eigen herinnering</h2>
         ${renderEigenHerinneringForm()}
       </div>
@@ -736,7 +743,7 @@ function renderAgendaScreen(state: AppShellState): string {
     <section class="traject-layout" aria-label="Agenda beheren">
       <div class="form-panel">
         <h2>${selected ? 'Afspraak bewerken' : 'Afspraak aanmaken'}</h2>
-        ${renderAfspraakForm(selected, state.trajecten)}
+        ${renderAfspraakForm(selected, state.trajecten, state.settings)}
       </div>
       <div class="timeline-panel">
         <div class="panel-heading">
@@ -770,8 +777,15 @@ function renderAgendaScreen(state: AppShellState): string {
 function renderAfspraakForm(
   bundle: AfspraakBundle | undefined,
   trajecten: TrajectMetFasen[],
+  settings: AppSettings,
 ): string {
   const afspraak = bundle?.afspraak;
+  const defaultDatumTijd = new Date().toISOString().slice(0, 16);
+  const afspraakDatumTijd = afspraak?.datumTijd ?? defaultDatumTijd;
+  const defaultReminder = berekenStandaardHerinneringTijdstip(
+    afspraakDatumTijd,
+    settings.afspraakWaarschuwingMinuten,
+  );
 
   return `
     <form id="afspraak-form" class="data-form">
@@ -783,7 +797,7 @@ function renderAfspraakForm(
       <div class="form-grid">
         <label>
           Datum en tijd
-          <input name="datumTijd" type="datetime-local" required value="${escapeAttribute(afspraak?.datumTijd ?? new Date().toISOString().slice(0, 16))}" />
+          <input name="datumTijd" type="datetime-local" required value="${escapeAttribute(afspraakDatumTijd)}" />
         </label>
         <label>
           Type
@@ -823,11 +837,21 @@ function renderAfspraakForm(
       </label>
       <label>
         Herinnering
-        <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? '')}" />
+        <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? defaultReminder)}" />
       </label>
       <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
     </form>
   `;
+}
+
+function berekenStandaardHerinneringTijdstip(
+  afspraakDatumTijd: string,
+  minutenVooraf: number,
+): string {
+  const date = new Date(`${afspraakDatumTijd}:00.000`);
+  if (Number.isNaN(date.getTime())) return '';
+  date.setMinutes(date.getMinutes() - minutenVooraf);
+  return localDateTimeIso(date);
 }
 
 function renderAgendaGroups(title: string, groups: AgendaGroep[]): string {

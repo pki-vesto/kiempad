@@ -62,4 +62,14 @@ describe('SettingsStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('sk-test-secret');
     expect(raw?.payload.ciphertext).not.toContain('provider');
   });
+
+  it('bewaart standaard afspraakwaarschuwing versleuteld en begrensd', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.setAfspraakWaarschuwingMinuten(45);
+    const raw = await driver.getRecord('app-settings');
+
+    expect(saved.afspraakWaarschuwingMinuten).toBe(45);
+    expect(raw?.payload.ciphertext).not.toContain('afspraakWaarschuwingMinuten');
+  });
 });
