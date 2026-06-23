@@ -89,6 +89,9 @@
 - **G040 afgelopen afspraken:** agendascherm splitst afgelopen afspraken naar een
   aparte "Afgelopen"-sectie, labelt ze als "Geweest" en toont bestaande notities als
   terugblik.
+- **G052/G053 DoseLog-notities en historie:** innames/injecties kunnen bij afvinken een
+  optionele notitie bewaren en medicatie toont een historie van geplande, genomen en
+  overgeslagen DoseLogs per middel.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -119,7 +122,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   beheren; het startscherm biedt snelle invoer voor afspraak, medicatie en vraag; het
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren en toont
   week-/maandgroeperingen plus afgelopen afspraken met terugblik; het
-  medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
+  medicatiescherm kan middelen, geplande DoseLogs, notities per inname en
+  innameshistorie versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale

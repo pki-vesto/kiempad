@@ -167,7 +167,9 @@ describe('app shell', () => {
               id: 'dose-1',
               medicatieId: 'med-1',
               geplandOp: `${new Date().toISOString().slice(0, 10)}T08:00`,
-              status: 'gepland',
+              status: 'genomen',
+              genomenOp: `${new Date().toISOString().slice(0, 10)}T08:05`,
+              notitie: 'plek links',
             },
           ],
         },
@@ -176,7 +178,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Progesteron');
     expect(html).toContain('zoals kliniek: 2x per dag');
+    expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');
+    expect(html).toContain('Notitie: plek links');
+    expect(html).toContain('Historie van innames');
+    expect(html).toContain('plek links');
     expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
   });
 

@@ -58,13 +58,21 @@ describe('MedicatieStore', () => {
       schemaTijdstip: '20:00',
     });
 
-    await store.markDoseLog(saved.doseLogs[0]?.id ?? '', 'genomen', '2026-06-23T20:02');
+    await store.markDoseLog(
+      saved.doseLogs[0]?.id ?? '',
+      'genomen',
+      '2026-06-23T20:02',
+      'plek links',
+    );
 
     const listed = await store.list();
+    const rawDoseLog = await driver.getRecord(saved.doseLogs[0]?.id ?? '');
     expect(listed[0]?.doseLogs[0]).toMatchObject({
       status: 'genomen',
       genomenOp: '2026-06-23T20:02',
+      notitie: 'plek links',
     });
+    expect(rawDoseLog?.payload.ciphertext).not.toContain('plek links');
     expect(await driver.listRecords('herinnering')).toEqual([]);
   });
 

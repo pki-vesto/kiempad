@@ -78,11 +78,14 @@ export class MedicatieStore {
     doseLogId: string,
     status: 'genomen' | 'overgeslagen',
     genomenOp = nowIso().slice(0, 16),
+    notitie?: string,
   ): Promise<void> {
     const record = await this.doseLogRepository.get(doseLogId);
     if (!record) return;
 
-    await this.doseLogRepository.saveWithId(markeerDoseLogGenomen(record.value, genomenOp, status));
+    await this.doseLogRepository.saveWithId(
+      markeerDoseLogGenomen(record.value, genomenOp, status, notitie),
+    );
     await this.deleteMedicatieReminder(doseLogId);
   }
 

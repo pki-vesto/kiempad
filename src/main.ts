@@ -480,15 +480,19 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
     void state.medicatieStore.delete(medicatieId).then(() => reloadAndRender(root, state));
   });
 
-  root.querySelectorAll<HTMLButtonElement>('.dose-button').forEach((button) => {
-    button.addEventListener('click', () => {
-      const doseLogId = button.dataset.doseLogId;
-      const status = button.dataset.doseStatus;
+  root.querySelectorAll<HTMLFormElement>('.dose-log-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const submitter = event.submitter;
+      if (!(submitter instanceof HTMLButtonElement)) return;
+      const doseLogId = form.dataset.doseLogId;
+      const status = submitter.value;
       if (!doseLogId || !state.medicatieStore) return;
       if (status !== 'genomen' && status !== 'overgeslagen') return;
+      const data = new FormData(form);
 
       void state.medicatieStore
-        .markDoseLog(doseLogId, status)
+        .markDoseLog(doseLogId, status, undefined, optionalString(data.get('doseLogNotitie')))
         .then(() => reloadAndRender(root, state));
     });
   });
