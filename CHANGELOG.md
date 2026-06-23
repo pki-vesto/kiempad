@@ -21,6 +21,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 - `docs/adr/0006-repo-publiek.md` — beslissing om de repo publiek te maken.
 - `CODEX_BUILD_PROMPT.md` — bouwopdracht voor Codex (`/goal`) om Kiempad op basis van
   de 174 doelen gefaseerd (F1 eerst) te bouwen.
+- `docs/adr/0007-codex-autonoom-bouwen.md` — Codex bouwt en merget autonoom; groene CI
+  is de merge-gate (vervangt menselijke review uit ADR-0005). Build prompt,
+  MASTER_CONTEXT, CONTRIBUTING en PR-template hierop afgestemd.
 
 ### Changed
 - Repo **publiek** gemaakt (ADR-0006) i.v.m. de GitHub Actions-billingblokkade op

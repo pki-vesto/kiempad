@@ -20,7 +20,10 @@ Roep Codex aan met `/goal` en verwijs naar dit bestand, bijvoorbeeld:
 Of richt het op een concrete set doelen, bv.: `/goal Implementeer M1.1 (versleutelde
 lokale opslag, G117–G120, G131–G132) van CODEX_BUILD_PROMPT.md.`
 
-Elke `/goal`-run levert **één PR** op die Peter reviewt vóór merge.
+**Codex werkt volledig autonoom** (ADR-0007): één `/goal` mag meerdere milestones
+achter elkaar bouwen, en Codex **merget zijn eigen PR's zodra CI groen is** — Peter
+hoeft tussentijds niets te beslissen. Werk wel in kleine, afgeronde PR's zodat alles
+traceerbaar en terugdraaibaar blijft.
 
 ## Missie
 
@@ -61,9 +64,10 @@ Dit zijn de policies P1–P6 uit `MASTER_CONTEXT.md` §4, concreet voor de bouw:
 - **Repo is PUBLIC** (ADR-0006): commit **nooit** secrets of databestanden. `.env`,
   `data/` en back-ups blijven buiten git (`.gitignore`). Gezondheidsdata komt **nooit**
   in de repo.
-- **Buiten autonome Sentinel-governance** (ADR-0005): bouw via `/goal` onder Peters
-  aansturing; **elke PR is door Peter gereviewd vóór merge**. Wire Kiempad niet in de
-  Sentinel-engine/PR-loops.
+- **Autonoom bouwen + mergen** (ADR-0007): bouw via `/goal` zonder tussentijdse
+  goedkeuring; **merge je eigen PR's zodra CI groen is**, nooit met rode CI. Groene CI is
+  de harde gate die de menselijke review vervangt. Wire Kiempad niet in de
+  Sentinel-engine/PR-loops (ADR-0005).
 
 ## Werkwijze per `/goal`-run
 
@@ -84,14 +88,15 @@ Dit zijn de policies P1–P6 uit `MASTER_CONTEXT.md` §4, concreet voor de bouw:
    - Update [`CURRENT_STATE.md`](CURRENT_STATE.md) (gebouwd / gedeeltelijk / nog niet).
    - Voeg een regel toe aan [`CHANGELOG.md`](CHANGELOG.md) onder `[Unreleased]`.
    - Bij een architectuur-/beleidskeuze: voeg een **ADR** toe in `docs/adr/`.
-7. **PR** met het PR-template; verwijs naar de G-id(s). **Wacht op Peters review en
-   groene CI vóór merge.**
+7. **PR & autonoom mergen.** Open een PR met het PR-template (verwijs naar de G-id(s)).
+   **Merge zelf zodra CI groen is** — geen menselijke review nodig. Merge **nooit** met
+   rode of onafgemaakte CI. Ga daarna door met de volgende scope.
 
 ## Definitie van gereed
 
 Zie `MASTER_CONTEXT.md` §8. Samengevat: functioneel werkend op de relevante workflow;
 validatiegate groen; harde regels gerespecteerd; geen nieuwe uitgaande dataroute zonder
-opt-in; docs + backlog + changelog bijgewerkt; PR human-reviewed.
+opt-in; docs + backlog + changelog bijgewerkt; PR met **groene CI** autonoom gemerged.
 
 ## Verboden gedrag
 
@@ -145,5 +150,8 @@ F0 (fundament) is gereed. Begin bij F1. Voorgestelde milestones met concrete G-i
 Daarna pas **F2** (kosten/vergoedingen, symptomen, research+AI opt-in, gedeelde modus,
 afwegingen, back-up/export) en later **F3/F4**.
 
-> Werk per milestone in losse, kleine PR's. Eén coherente eenheid per PR. Stop en vraag
-> Peter bij twijfel over medische inhoud of bij een keuze die een hard principe raakt.
+> Werk per milestone in losse, kleine PR's. Eén coherente eenheid per PR. **Stop niet om
+> Peter te vragen** — kies bij twijfel de veilige optie en documenteer die in de PR/ADR.
+> Markeer medische inhoud altijd als concept (`geverifieerd_met_arts` blijft `false`) en
+> verzin nooit medische feiten of doseringen. Raakt een wijziging een hard principe
+> (privacy/niet-medisch/secrets), kies dan de optie die het principe respecteert.

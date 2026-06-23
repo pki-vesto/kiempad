@@ -18,6 +18,7 @@ Doel(en):
 <!-- Bewust buiten scope gelaten / vervolg. -->
 
 ## Uitvoeringsvorm
-<!-- ADR-0005: Kiempad wordt handmatig (met AI-assistentie) gebouwd, met menselijke review. -->
-- [ ] Handmatig / Claude Code, menselijk gereviewd vóór merge
+<!-- ADR-0007: Codex bouwt en merget autonoom via /goal; groene CI is de merge-gate. -->
+- [ ] Codex `/goal` — autonoom gebouwd, self-merge bij groene CI
+- [ ] Handmatig / Claude Code
 - [ ] Gemotiveerde afwijking — licht toe
