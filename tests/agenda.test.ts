@@ -5,6 +5,7 @@ import {
   afsprakenPerWeek,
   beschrijfVolgendeAfspraak,
   exporteerAfsprakenAlsIcs,
+  importeerAfsprakenUitIcs,
   komendeAfspraken,
   maakAfspraak,
   maakAfspraakHerinnering,
@@ -121,5 +122,51 @@ describe('agenda domeinregels', () => {
     expect(ics).toContain('DESCRIPTION:ID meenemen\\nVraag: medicatie\\nVolgende stap');
     expect(ics).toContain('CATEGORIES:Consult');
     expect(ics.endsWith('END:VCALENDAR\r\n')).toBe(true);
+  });
+
+  it('importeert kliniekafspraken uit ICS met escaping en gevouwen regels', () => {
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      'DTSTART;TZID=Europe/Amsterdam:20260624T093000',
+      'SUMMARY:Echo\\, follikelcontrole',
+      'LOCATION:Kliniek\\; kamer 2',
+      'DESCRIPTION:Neem ID mee\\nMeld je bij de balie',
+      'CATEGORIES:Echo',
+      'END:VEVENT',
+      'BEGIN:VEVENT',
+      'DTSTART:20260625T081500Z',
+      'SUMMARY:Bloedprik ochtend',
+      'DESCRIPTION:Regel met lange tekst die',
+      ' doorloopt op de volgende regel',
+      'CATEGORIES:Lab',
+      'END:VEVENT',
+      'END:VCALENDAR',
+    ].join('\r\n');
+
+    const afspraken = importeerAfsprakenUitIcs(ics);
+
+    expect(afspraken).toEqual([
+      {
+        titel: 'Echo, follikelcontrole',
+        datumTijd: '2026-06-24T09:30',
+        type: 'echo',
+        locatie: 'Kliniek; kamer 2',
+        voorbereiding: 'Neem ID mee\nMeld je bij de balie',
+      },
+      {
+        titel: 'Bloedprik ochtend',
+        datumTijd: '2026-06-25T08:15',
+        type: 'bloedprik',
+        voorbereiding: 'Regel met lange tekst diedoorloopt op de volgende regel',
+      },
+    ]);
+  });
+
+  it('weigert ICS zonder afspraakevents', () => {
+    expect(() => importeerAfsprakenUitIcs('BEGIN:VCALENDAR\nEND:VCALENDAR')).toThrow(
+      'Geen afspraken gevonden in het ICS-bestand.',
+    );
   });
 });

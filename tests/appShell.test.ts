@@ -137,6 +137,9 @@ describe('app shell', () => {
     expect(html).toContain('Echo controle');
     expect(html).toContain('id="export-ics"');
     expect(html).toContain('Download ICS');
+    expect(html).toContain('ICS importeren');
+    expect(html).toContain('id="ics-import-form"');
+    expect(html).toContain('accept=".ics,text/calendar,text/plain"');
     expect(html).toContain('Weekweergave');
     expect(html).toContain('Week 26 2026');
     expect(html).toContain('Maandweergave');
@@ -257,6 +260,25 @@ describe('app shell', () => {
     expect(html).toContain('In-app meldingen');
     expect(html).toContain('Browsernotificaties staan niet klaar');
     expect(html).toContain('Er staat een herinnering klaar.');
+  });
+
+  it('rendert agenda-importfeedback', () => {
+    const html = renderAppShell('agenda', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      agendaImportStatus: 'ICS geïmporteerd: 2 afspraken.',
+      agendaImportError: 'Een ICS-afspraak mist een geldige starttijd.',
+    });
+
+    expect(html).toContain('ICS geïmporteerd: 2 afspraken.');
+    expect(html).toContain('Een ICS-afspraak mist een geldige starttijd.');
+    expect(html).toContain('role="alert"');
   });
 
   it('vult nieuwe afspraakherinnering met standaard waarschuwtijd', () => {
