@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- Personal Fertility Intelligence Platform epic toegevoegd met 64 extra uitvoerbare
+  doelen (G180-G243) voor dossier-ingest, imaging, consult intelligence, embryo
+  tracking, research intelligence, dagelijkse aanbevelingen, knowledge graph en
+  fertility timeline.
 - G179 Tailscale-publicatie: Kiempad draait live op de aparte Tailscale-node
   `kiempad` via Tailscale Serve HTTPS op `https://kiempad.tail9d0c71.ts.net`,
   met lokale fallback op `127.0.0.1:8098`.

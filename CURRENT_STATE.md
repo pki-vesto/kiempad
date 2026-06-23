@@ -229,8 +229,11 @@
 
 ## 3. Nog Niet Gebouwd
 
-F1 (MVP) en alle huidige backlogdoelen zijn afgevinkt. Mogelijke latere uitbreidingen
-komen uit roadmap/visie en krijgen eerst een nieuw doel of issue.
+F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
+epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
+heeft 64 extra open doelen toegevoegd (G180-G243), gericht op dossier-ingest,
+imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
+aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
@@ -278,7 +281,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Nieuwe doelen alleen toevoegen als ze uit roadmap/visie of expliciete wensen komen.
+1. PFIP uitvoeren vanaf G180: medische dossier-ingest uitbreiden met uploadprofielen,
+   OCR, metadata-extractie, tijdlijnopbouw, indexering en lokale zoekfunctionaliteit.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
