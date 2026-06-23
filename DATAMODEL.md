@@ -91,6 +91,7 @@ Conventies:
 |---|---|---|
 | id | string | |
 | bron | `{ soort: 'medicatie'\|'afspraak'\|'eigen', refId? }` | |
+| titel | string? | label voor eigen losse herinneringen |
 | tijdstip | IsoDate | |
 | herhaling | `eenmalig` \| `dagelijks` \| `wekelijks` ? | |
 | actief | boolean | |

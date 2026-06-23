@@ -375,6 +375,11 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#eigen-herinnering-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveEigenHerinneringFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelector('#request-notifications')?.addEventListener('click', () => {
     void requestNotificationPermissionAndRegister()
       .then((status) => {
@@ -412,6 +417,25 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
       render(root, state);
     });
   });
+}
+
+async function saveEigenHerinneringFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.herinneringStore) return;
+
+  const data = new FormData(target);
+  await state.herinneringStore.save({
+    bron: { soort: 'eigen' },
+    titel: String(data.get('titel') ?? ''),
+    tijdstip: String(data.get('tijdstip') ?? ''),
+    herhaling: parseHerhaling(data.get('herhaling')),
+    actief: true,
+  });
+
+  await reloadAndRender(root, state);
 }
 
 function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
@@ -738,6 +762,12 @@ function createNotificationDetailMap(state: RuntimeState): Record<string, string
     }
   }
 
+  for (const herinnering of state.herinneringen) {
+    if (herinnering.bron.soort === 'eigen' && herinnering.titel) {
+      details[herinnering.id] = `Herinnering: ${herinnering.titel}`;
+    }
+  }
+
   return details;
 }
 
@@ -786,6 +816,11 @@ function parseTrajectStatus(value: FormDataEntryValue | null): Traject['status']
   }
 
   return 'gepland';
+}
+
+function parseHerhaling(value: FormDataEntryValue | null): Herinnering['herhaling'] {
+  if (value === 'dagelijks' || value === 'wekelijks' || value === 'eenmalig') return value;
+  return 'eenmalig';
 }
 
 function optionalString(value: FormDataEntryValue | null): string | undefined {

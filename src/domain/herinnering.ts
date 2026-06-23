@@ -14,6 +14,7 @@ export const HERHALING_LABELS: Record<NonNullable<Herinnering['herhaling']>, str
 
 export type HerinneringInput = {
   bron: Herinnering['bron'];
+  titel?: string;
   tijdstip: string;
   herhaling?: Herinnering['herhaling'];
   actief: boolean;
@@ -28,6 +29,7 @@ export function maakHerinnering(id: string, input: HerinneringInput): Herinnerin
   return {
     id,
     bron: input.bron,
+    titel: normaliseerOptioneleTekst(input.titel),
     tijdstip: input.tijdstip,
     herhaling: input.herhaling ?? 'eenmalig',
     actief: input.actief,
@@ -103,4 +105,9 @@ export function localDateTimeIso(date: Date): string {
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function normaliseerOptioneleTekst(value: string | undefined): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
 }

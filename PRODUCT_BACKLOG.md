@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 125 |
+| ☑ klaar | 126 |
 | ◐ bezig | 0 |
-| ☐ open | 49 |
+| ☐ open | 48 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -121,7 +121,7 @@
 | G057 | Lokale notificaties via service worker | P0 | F1 | ☑ |
 | G058 | Herinnering voor medicatie/injectie op tijdstip | P0 | F1 | ☑ |
 | G059 | Herinnering voor afspraken | P1 | F1 | ☑ |
-| G060 | Eigen losse herinneringen | P2 | F2 | ☐ |
+| G060 | Eigen losse herinneringen | P2 | F2 | ☑ |
 | G061 | Herhaling (eenmalig/dagelijks/wekelijks) | P1 | F1 | ☑ |
 | G062 | Instelbare standaard-waarschuwtijd (bv. 30 min vooraf) | P2 | F2 | ☐ |
 | G063 | Herinnering snoozen / opnieuw plannen | P2 | F2 | ☐ |
