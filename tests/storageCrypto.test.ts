@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { decryptJson, deriveAesKey, encryptJson, KDF_ITERATIONS } from '../src/storage/crypto';
+import {
+  decryptJson,
+  deriveAesKey,
+  deriveAesKeyBytes,
+  encryptJson,
+  importAesKey,
+  KDF_ITERATIONS,
+} from '../src/storage/crypto';
 import { randomBytes } from '../src/storage/encoding';
 
 describe('storage crypto', () => {
@@ -25,6 +32,17 @@ describe('storage crypto', () => {
     const envelope = await encryptJson({ vraag: 'Wat moeten we meenemen?' }, correctKey);
 
     await expect(decryptJson(envelope, wrongKey)).rejects.toThrow();
+  });
+
+  it('kan afgeleide sleutelbytes als niet-exporteerbare AES-sleutel importeren', async () => {
+    const salt = randomBytes(16);
+    const rawKey = await deriveAesKeyBytes('correcte passphrase', salt, 1);
+    const key = await importAesKey(rawKey);
+    const envelope = await encryptJson({ lokaal: true }, key);
+
+    expect(rawKey).toHaveLength(32);
+    expect(key.extractable).toBe(false);
+    await expect(decryptJson(envelope, key)).resolves.toEqual({ lokaal: true });
   });
 
   it('legt een hoge PBKDF2-iteratietelling vast voor echte kluizen', () => {

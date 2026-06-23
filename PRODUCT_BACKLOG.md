@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 177 |
+| ☑ klaar | 178 |
 | ◐ bezig | 1 |
-| ☐ open | 1 |
+| ☐ open | 0 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -217,7 +217,7 @@
 | G118 | Sleutel afgeleid uit passphrase (PBKDF2/Argon2id) + salt | P0 | F1 | ☑ |
 | G119 | Sleutel alleen in geheugen; nooit platgeschreven/geëxporteerd | P0 | F1 | ☑ |
 | G120 | Ontgrendelen met passphrase | P0 | F1 | ☑ |
-| G121 | Optioneel biometrie/WebAuthn als ontgrendelgemak | P2 | F2 | ☐ |
+| G121 | Optioneel biometrie/WebAuthn als ontgrendelgemak | P2 | F2 | ☑ |
 | G122 | Automatische vergrendeling na inactiviteit | P1 | F1 | ☑ |
 | G123 | Geen tracking/analytics/advertenties/third-party scripts | P0 | F1 | ☑ |
 | G124 | Geen standaard uitgaand verkeer (privacy-rooktest in CI/handmatig) | P0 | F1 | ☑ |

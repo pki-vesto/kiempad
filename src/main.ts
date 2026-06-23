@@ -1,5 +1,10 @@
 import './styles.css';
-import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
+import {
+  normalizeScreenId,
+  renderAppShell,
+  renderVaultGate,
+  type WebAuthnViewStatus,
+} from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
@@ -58,6 +63,11 @@ import { openIndexedDbDriver } from './storage/indexedDbDriver';
 import type { EncryptedStorageDriver } from './storage/records';
 import { importeerVersleuteldSyncPakket, maakVersleuteldSyncPakket } from './storage/sync';
 import { VaultSession } from './storage/vaultSession';
+import {
+  bepaalWebAuthnRuntimeStatus,
+  koppelWebAuthnPrf,
+  vraagWebAuthnPrfSecret,
+} from './storage/webauthn';
 
 type RuntimeState = {
   driver: EncryptedStorageDriver;
@@ -103,13 +113,15 @@ type RuntimeState = {
   agendaImportError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
+  webAuthnStatus: WebAuthnViewStatus;
   error?: string;
 };
 
 function render(root: HTMLElement, state: RuntimeState): void {
   if (!state.session.isUnlocked()) {
-    root.innerHTML = renderVaultGate(state.hasVault, state.error);
+    root.innerHTML = renderVaultGate(state.hasVault, state.error, state.webAuthnStatus);
     bindVaultForm(root, state);
+    bindWebAuthnUnlock(root, state);
     return;
   }
 
@@ -140,6 +152,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
+    webAuthnStatus: state.webAuthnStatus,
     inAppFallbackNotifications: buildInAppFallbackNotifications(
       state.herinneringen,
       state.settings,
@@ -208,7 +221,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.medicatieImportError = undefined;
     clearScheduledNotifications();
     state.error = undefined;
-    render(root, state);
+    void refreshWebAuthnStatus(state).then(() => render(root, state));
   });
 }
 
@@ -252,6 +265,7 @@ async function mount(): Promise<void> {
     eventLogs: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
+    webAuthnStatus: await buildWebAuthnStatus(session),
   };
 
   render(app, state);
@@ -275,6 +289,10 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
   root.querySelector('#import-sync-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void importSyncFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#webauthn-enroll')?.addEventListener('click', () => {
+    void enrollWebAuthnUnlock(root, state);
   });
 }
 
@@ -518,6 +536,7 @@ async function importBackupFromForm(
     state.backupError = undefined;
     state.dossierStatus = undefined;
     state.dossierError = undefined;
+    await refreshWebAuthnStatus(state);
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Back-up importeren is mislukt.';
   }
@@ -563,41 +582,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
     void state.session
       .initializeOrUnlock(passphrase)
       .then(async () => {
-        state.hasVault = await state.session.hasVault();
-        state.trajectStore = createTrajectStore(state);
-        state.agendaStore = createAgendaStore(state);
-        state.herinneringStore = createHerinneringStore(state);
-        state.medicatieStore = createMedicatieStore(state);
-        state.vraagStore = createVraagStore(state);
-        state.kennisStore = createKennisStore(state);
-        state.kostenStore = createKostenStore(state);
-        state.decisionStore = createDecisionStore(state);
-        state.dossierStore = createDossierStore(state);
-        state.eventLogStore = createEventLogStore(state);
-        state.symptomenStore = createSymptomenStore(state);
-        state.cycleDataStore = createCycleDataStore(state);
-        state.mentaleCheckInStore = createMentaleCheckInStore(state);
-        state.settingsStore = createSettingsStore(state);
-        await state.kennisStore.seedInitialItems();
-        state.settings = await state.settingsStore.get();
-        state.trajecten = await state.trajectStore.list();
-        state.afspraken = await state.agendaStore.list();
-        state.medicatie = await state.medicatieStore.list();
-        state.herinneringen = await state.herinneringStore.list();
-        state.vragen = await state.vraagStore.list();
-        state.kennisItems = await state.kennisStore.list();
-        state.symptomLogs = await state.symptomenStore.list();
-        state.cycleData = await state.cycleDataStore.list();
-        state.mentalCheckIns = await state.mentaleCheckInStore.list();
-        state.decisions = await state.decisionStore.list();
-        state.dossierDocuments = await state.dossierStore.list();
-        state.kosten = await state.kostenStore.list();
-        await state.eventLogStore.record({
-          categorie: 'kluis',
-          gebeurtenis: 'Kluis ontgrendeld',
-        });
-        state.eventLogs = await state.eventLogStore.list();
-        state.notificaties = await getNotificationRuntimeStatus();
+        await loadUnlockedState(state, 'Kluis ontgrendeld');
         state.error = undefined;
         render(root, state);
       })
@@ -606,6 +591,119 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         render(root, state);
       });
   });
+}
+
+function bindWebAuthnUnlock(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#webauthn-unlock')?.addEventListener('click', () => {
+    void unlockWithWebAuthn(root, state);
+  });
+}
+
+async function unlockWithWebAuthn(root: HTMLElement, state: RuntimeState): Promise<void> {
+  try {
+    const metadata = await state.session.getWebAuthnUnlockMetadata();
+    if (!metadata) {
+      throw new Error('WebAuthn-ontgrendeling is niet ingesteld voor deze kluis.');
+    }
+
+    const prfSecret = await vraagWebAuthnPrfSecret(metadata);
+    await state.session.unlockWithWebAuthnPrf(prfSecret);
+    await loadUnlockedState(state, 'Kluis ontgrendeld met WebAuthn');
+    state.error = undefined;
+    render(root, state);
+  } catch (error: unknown) {
+    state.error = error instanceof Error ? error.message : 'WebAuthn-ontgrendeling is mislukt.';
+    await refreshWebAuthnStatus(state);
+    render(root, state);
+  }
+}
+
+async function enrollWebAuthnUnlock(root: HTMLElement, state: RuntimeState): Promise<void> {
+  try {
+    const enrollment = await koppelWebAuthnPrf('Kiempad lokale kluis');
+    const metadata = await state.session.enableWebAuthnUnlock({
+      credentialId: enrollment.credentialId,
+      prfSalt: enrollment.prfSalt,
+      prfSecret: enrollment.prfSecret,
+      label: 'Kiempad lokale kluis',
+    });
+
+    state.webAuthnStatus = {
+      ...(await buildWebAuthnStatus(state.session)),
+      gekoppeld: true,
+      label: metadata.label,
+      status: 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak.',
+      error: undefined,
+    };
+    await state.eventLogStore?.record({
+      categorie: 'kluis',
+      gebeurtenis: 'WebAuthn ontgrendelgemak gekoppeld',
+      detail: 'Lokale PRF-keywrap toegevoegd; passphrase blijft fallback.',
+    });
+    state.eventLogs = (await state.eventLogStore?.list()) ?? state.eventLogs;
+  } catch (error: unknown) {
+    state.webAuthnStatus = {
+      ...(await buildWebAuthnStatus(state.session)),
+      error: error instanceof Error ? error.message : 'WebAuthn koppelen is mislukt.',
+    };
+  }
+
+  render(root, state);
+}
+
+async function loadUnlockedState(state: RuntimeState, eventName: string): Promise<void> {
+  state.hasVault = await state.session.hasVault();
+  state.trajectStore = createTrajectStore(state);
+  state.agendaStore = createAgendaStore(state);
+  state.herinneringStore = createHerinneringStore(state);
+  state.medicatieStore = createMedicatieStore(state);
+  state.vraagStore = createVraagStore(state);
+  state.kennisStore = createKennisStore(state);
+  state.kostenStore = createKostenStore(state);
+  state.decisionStore = createDecisionStore(state);
+  state.dossierStore = createDossierStore(state);
+  state.eventLogStore = createEventLogStore(state);
+  state.symptomenStore = createSymptomenStore(state);
+  state.cycleDataStore = createCycleDataStore(state);
+  state.mentaleCheckInStore = createMentaleCheckInStore(state);
+  state.settingsStore = createSettingsStore(state);
+  await state.kennisStore.seedInitialItems();
+  state.settings = await state.settingsStore.get();
+  state.trajecten = await state.trajectStore.list();
+  state.afspraken = await state.agendaStore.list();
+  state.medicatie = await state.medicatieStore.list();
+  state.herinneringen = await state.herinneringStore.list();
+  state.vragen = await state.vraagStore.list();
+  state.kennisItems = await state.kennisStore.list();
+  state.symptomLogs = await state.symptomenStore.list();
+  state.cycleData = await state.cycleDataStore.list();
+  state.mentalCheckIns = await state.mentaleCheckInStore.list();
+  state.decisions = await state.decisionStore.list();
+  state.dossierDocuments = await state.dossierStore.list();
+  state.kosten = await state.kostenStore.list();
+  await state.eventLogStore.record({
+    categorie: 'kluis',
+    gebeurtenis: eventName,
+  });
+  state.eventLogs = await state.eventLogStore.list();
+  state.notificaties = await getNotificationRuntimeStatus();
+  await refreshWebAuthnStatus(state);
+}
+
+async function refreshWebAuthnStatus(state: RuntimeState): Promise<void> {
+  state.webAuthnStatus = await buildWebAuthnStatus(state.session);
+}
+
+async function buildWebAuthnStatus(session: VaultSession): Promise<WebAuthnViewStatus> {
+  const runtime = bepaalWebAuthnRuntimeStatus();
+  const metadata = await session.getWebAuthnUnlockMetadata();
+
+  return {
+    runtimeBeschikbaar: runtime.beschikbaar,
+    reden: runtime.reden,
+    gekoppeld: metadata !== undefined,
+    label: metadata?.label,
+  };
 }
 
 function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {

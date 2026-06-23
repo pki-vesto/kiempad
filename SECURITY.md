@@ -37,8 +37,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 
 ## Authentication And Authorization
 
-- **Ontgrendelen** met passphrase; optioneel biometrie/WebAuthn als gemak bovenop de
-  afgeleide sleutel.
+- **Ontgrendelen** met passphrase; optioneel biometrie/WebAuthn als gemak via een
+  lokale WebAuthn PRF-keywrap. De passphrase blijft fallback en herstelroute.
 - Eén-stel-app: geen rollenmodel naar buiten. In de **gedeelde modus** zijn er twee
   profielen (`peter`/`partner`) op dezelfde, gezamenlijk versleutelde dataset —
   vertrouwensgrens ligt bij het stel, niet tussen de partners.
@@ -66,7 +66,9 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 
 - [x] Versleuteling at rest (AES-GCM) voor alle gevoelige records.
 - [x] Sleutel uit passphrase (PBKDF2/Argon2id) + per-installatie salt.
-- [x] Toegang via passphrase (biometrie/WebAuthn blijft optioneel/later).
+- [x] Toegang via passphrase.
+- [x] Optioneel WebAuthn/biometrie-ontgrendelgemak via lokale PRF-keywrap; geen
+  serveraccount en geen passphrase-opslag.
 - [x] Auto-lock na inactiviteit.
 - [x] Geen tracking/analytics/ads; geen third-party scripts.
 - [x] Geen standaard uitgaand verkeer; privacy-test borgt dat opslag lokaal blijft.

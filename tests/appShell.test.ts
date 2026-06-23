@@ -52,6 +52,20 @@ describe('app shell', () => {
     expect(html).toContain('versleutelde back-up');
   });
 
+  it('toont WebAuthn-ontgrendeling alleen bij een gekoppelde kluis', () => {
+    const html = renderVaultGate(true, undefined, {
+      runtimeBeschikbaar: true,
+      reden: 'Browser meldt WebAuthn',
+      gekoppeld: true,
+      label: 'Laptop biometrie',
+    });
+
+    expect(html).toContain('Biometrie/WebAuthn');
+    expect(html).toContain('Laptop biometrie');
+    expect(html).toContain('id="webauthn-unlock"');
+    expect(html).toContain('Je passphrase blijft de fallback');
+  });
+
   it('rendert het startscherm met concrete volgende-stapblokken en lege-staten', () => {
     const html = renderAppShell('start');
 
@@ -1032,6 +1046,10 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-reminder="missing"');
     expect(html).toContain('id="import-backup-form"');
     expect(html).toContain('id="import-sync-form"');
+    expect(html).toContain('Biometrie/WebAuthn');
+    expect(html).toContain('id="webauthn-enroll"');
+    expect(html).toContain('Niet gekoppeld');
+    expect(html).toContain('niets naar een server');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
     expect(html).toContain('.kiempad-sync');

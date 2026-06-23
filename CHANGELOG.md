@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G121 WebAuthn/biometrie: back-upscherm kan lokaal WebAuthn PRF koppelen als
+  optioneel ontgrendelgemak; vergrendelde kluis kan daarna via PRF-keywrap openen
+  zonder passphrase op te slaan en met passphrase als fallback.
 - G104 on-device AI-verkenning: kennisscherm toont passief welke lokale
   browser-AI API-objecten beschikbaar lijken, zonder sessie, modeldownload,
   provider-call of cloud-stap.
