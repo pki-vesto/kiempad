@@ -950,6 +950,42 @@ describe('app shell', () => {
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
+        {
+          id: 'doc-embryo-2',
+          datum: '2026-05-04',
+          titel: 'Embryokwaliteit Embryo 2',
+          categorie: 'embryo',
+          bestandsNaam: 'embryokwaliteit-Embryo 2.json',
+          mimeType: 'application/json',
+          grootteBytes: 128,
+          inhoudBase64: 'e30=',
+          trajectId: 'traject-1',
+          embryo: {
+            label: 'Embryo 2',
+            dag: 5,
+            meetmoment: 'Dag 5 blastocyst',
+            kwaliteit: '4BB',
+            kliniekTerminologie: 'Gardner-score',
+            bron: 'Labrapport',
+            status: 'ingevroren',
+          },
+          analyse: {
+            samenvatting:
+              'Embryokwaliteit opgeslagen als application/json; 128 B. Analyse is lokaal en niet-medisch.',
+            signalen: [
+              'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
+              'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
+            ],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Embryokwaliteit',
+            trajectId: 'traject-1',
+            bronbestand: 'embryokwaliteit-Embryo 2.json',
+            extractieBronnen: ['bronbestand', 'formulierdatum', 'trajectkoppeling'],
+          },
+          uploadedAt: '2026-06-23T15:05:00.000Z',
+        },
       ],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -966,6 +1002,15 @@ describe('app shell', () => {
       'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
     );
     expect(html).toContain('Embryo-dossiers');
+    expect(html).toContain('Embryovergelijking per poging');
+    expect(html).toContain('Poging: traject-1');
+    expect(html).toContain(
+      'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 1',
+    );
+    expect(html).toContain(
+      'Embryo 2 · Dagen: 5 · Kwaliteit: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 1',
+    );
+    expect(html).toContain('Kiempad rangschikt embryo’s niet');
     expect(html).toContain('Embryo-historie');
     expect(html).toContain(
       '2026-05-04 · Terugplaatsing · dag 5 · kwaliteit 4AA · terminologie Gardner-score · Bron: Labrapport',

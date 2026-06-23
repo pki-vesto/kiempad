@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { maakDossierDocument } from '../src/domain/dossier';
-import { bouwEmbryoDossiers } from '../src/domain/embryoDossier';
+import { bouwEmbryoDossiers, bouwEmbryoVergelijkingen } from '../src/domain/embryoDossier';
 
 describe('embryoDossier', () => {
   it('bouwt een embryo-dossier per embryo binnen een poging', () => {
@@ -217,5 +217,87 @@ describe('embryoDossier', () => {
     expect(dossiers.find((item) => item.embryoLabel === 'Embryo 3')?.historie[0]).toEqual(
       expect.objectContaining({ gebeurtenis: 'Stop/niet gebruikt', bron: 'Embryoloog' }),
     );
+  });
+
+  it('vergelijkt embryo’s binnen dezelfde poging zonder rangschikking of kansberekening', () => {
+    const embryo1 = maakDossierDocument('doc-e1', {
+      datum: '2026-06-14',
+      titel: 'Embryo 1 dag 5',
+      categorie: 'embryo',
+      bestandsNaam: 'e1.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '4AA',
+        dag: 5,
+        meetmoment: 'Dag 5 blastocyst',
+        bron: 'Labrapport',
+        status: 'teruggeplaatst',
+      },
+    });
+    const embryo2 = maakDossierDocument('doc-e2', {
+      datum: '2026-06-14',
+      titel: 'Embryo 2 dag 5',
+      categorie: 'embryo',
+      bestandsNaam: 'e2.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 2',
+        kwaliteit: '4BB',
+        dag: 5,
+        meetmoment: 'Dag 5 blastocyst',
+        bron: 'Labrapport',
+        status: 'ingevroren',
+      },
+    });
+    const anderTraject = maakDossierDocument('doc-e3', {
+      datum: '2026-06-14',
+      titel: 'Embryo 1 andere poging',
+      categorie: 'embryo',
+      bestandsNaam: 'e3.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'e30=',
+      trajectId: 'traject-2',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: '3BB',
+        dag: 5,
+      },
+    });
+
+    expect(bouwEmbryoVergelijkingen(bouwEmbryoDossiers([embryo2, anderTraject, embryo1]))).toEqual([
+      {
+        trajectId: 'traject-1',
+        embryos: [
+          {
+            embryoLabel: 'Embryo 1',
+            embryoDagen: [5],
+            kwaliteiten: ['4AA'],
+            statussen: ['teruggeplaatst'],
+            meetmomenten: ['Dag 5 blastocyst'],
+            bronnen: ['Labrapport'],
+            historieAantal: 1,
+          },
+          {
+            embryoLabel: 'Embryo 2',
+            embryoDagen: [5],
+            kwaliteiten: ['4BB'],
+            statussen: ['ingevroren'],
+            meetmomenten: ['Dag 5 blastocyst'],
+            bronnen: ['Labrapport'],
+            historieAantal: 1,
+          },
+        ],
+        waarschuwing:
+          'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar; Kiempad rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
+      },
+    ]);
   });
 });

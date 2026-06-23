@@ -31,6 +31,20 @@ export type EmbryoDossierItem = {
   waarschuwing: string;
 };
 
+export type EmbryoVergelijking = {
+  trajectId: string;
+  embryos: {
+    embryoLabel: string;
+    embryoDagen: number[];
+    kwaliteiten: string[];
+    statussen: string[];
+    meetmomenten: string[];
+    bronnen: string[];
+    historieAantal: number;
+  }[];
+  waarschuwing: string;
+};
+
 export function bouwEmbryoDossiers(documenten: readonly DossierDocument[]): EmbryoDossierItem[] {
   const groepen = new Map<string, DossierDocument[]>();
 
@@ -50,6 +64,37 @@ export function bouwEmbryoDossiers(documenten: readonly DossierDocument[]): Embr
         (a.trajectId ?? '').localeCompare(b.trajectId ?? '') ||
         a.embryoLabel.localeCompare(b.embryoLabel),
     );
+}
+
+export function bouwEmbryoVergelijkingen(
+  dossiers: readonly EmbryoDossierItem[],
+): EmbryoVergelijking[] {
+  const groepen = new Map<string, EmbryoDossierItem[]>();
+
+  for (const dossier of dossiers) {
+    if (!dossier.trajectId) continue;
+    groepen.set(dossier.trajectId, [...(groepen.get(dossier.trajectId) ?? []), dossier]);
+  }
+
+  return [...groepen.entries()]
+    .filter(([, items]) => items.length > 1)
+    .map(([trajectId, items]) => ({
+      trajectId,
+      embryos: [...items]
+        .sort((a, b) => a.embryoLabel.localeCompare(b.embryoLabel, 'nl-NL'))
+        .map((item) => ({
+          embryoLabel: item.embryoLabel,
+          embryoDagen: item.embryoDagen,
+          kwaliteiten: item.kwaliteiten,
+          statussen: item.statussen,
+          meetmomenten: item.meetmomenten,
+          bronnen: item.bronnen,
+          historieAantal: item.historie.length,
+        })),
+      waarschuwing:
+        'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar; Kiempad rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
+    }))
+    .sort((a, b) => a.trajectId.localeCompare(b.trajectId, 'nl-NL'));
 }
 
 function bouwEmbryoDossier(
