@@ -577,12 +577,18 @@ describe('app shell', () => {
         },
       ],
       dossierStatus: '1 dossierbestand lokaal versleuteld toegevoegd.',
+      dossierZoekterm: 'erasmus',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
     expect(html).toContain('Dossier');
     expect(html).toContain('Dossierdocument uploaden');
+    expect(html).toContain('Dossier zoeken');
+    expect(html).toContain('id="dossier-search-form"');
+    expect(html).toContain('name="dossierZoekterm"');
+    expect(html).toContain('value="erasmus"');
+    expect(html).toContain('1 resultaat voor "erasmus"');
     expect(html).toContain('Dossierindex');
     expect(html).toContain('Documenttijdlijn');
     expect(html).toContain('id="dossier-upload-form"');
@@ -619,6 +625,7 @@ describe('app shell', () => {
     expect(html).toContain('Labuitslag');
     expect(html).toContain('Metadata: Datum: 2026-05-01');
     expect(html).toContain('Tijdlijn: 2026-05-01 · Labuitslag · bron: formulierdatum');
+    expect(html).toContain('Zoekmatch: instelling, tags');
     expect(html).toContain('Instelling: Erasmus MC');
     expect(html).toContain('Documenttype: Labuitslag');
     expect(html).toContain('Bronbestand: bloed-lab-uitslag.pdf');

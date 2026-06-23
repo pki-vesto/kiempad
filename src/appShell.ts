@@ -22,6 +22,7 @@ import {
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   EMBRYO_STATUS_LABELS,
   formatBytes,
+  zoekDossierDocumenten,
 } from './domain/dossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
@@ -242,6 +243,7 @@ export type AppShellState = {
   backupError?: string;
   dossierStatus?: string;
   dossierError?: string;
+  dossierZoekterm?: string;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -671,8 +673,14 @@ function renderWebAuthnSettings(status?: WebAuthnViewStatus): string {
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
-  const indexItems = bouwDossierIndex(documenten);
-  const tijdlijn = bouwDossierTijdlijn(documenten);
+  const zoekterm = state.dossierZoekterm ?? '';
+  const zoekResultaten = zoekDossierDocumenten(documenten, zoekterm);
+  const zichtbareDocumenten = zoekResultaten.map((resultaat) => resultaat.document);
+  const matchMap = new Map(
+    zoekResultaten.map((resultaat) => [resultaat.document.id, resultaat.matches]),
+  );
+  const indexItems = bouwDossierIndex(zichtbareDocumenten);
+  const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
       renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
@@ -799,6 +807,19 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Embryokwaliteit wordt vastgelegd als kliniekterugkoppeling. Kiempad berekent geen kansen en geeft geen medisch advies.</p>
       </div>
       <div class="timeline-panel">
+        <h2>Dossier zoeken</h2>
+        <form id="dossier-search-form" class="data-form">
+          <label>
+            Zoek in notities en OCR-tekst
+            <input name="dossierZoekterm" autocomplete="off" value="${escapeAttribute(zoekterm)}" placeholder="Bijvoorbeeld: AMH, Erasmus MC of consult" />
+          </label>
+          <button type="submit">Zoek lokaal</button>
+        </form>
+        ${
+          zoekterm
+            ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde lokale kluis.</p>`
+            : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
+        }
         <h2>Dossierindex</h2>
         ${
           indexItems.length > 0
@@ -808,7 +829,7 @@ function renderDossierScreen(state: AppShellState): string {
         <h2>Documenttijdlijn</h2>
         ${
           tijdlijn.length > 0
-            ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state)).join('')}</ol>`
+            ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state, matchMap.get(item.id))).join('')}</ol>`
             : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
         }
       </div>
@@ -835,19 +856,21 @@ function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number
 function renderDossierTijdlijnItem(
   item: ReturnType<typeof bouwDossierTijdlijn>[number],
   state: AppShellState,
+  matches: string[] = [],
 ): string {
   const bron = item.bron === 'metadata' ? 'metadata' : 'formulierdatum';
   return renderDossierDocument(item.document, state, {
     datum: item.datum,
     documenttype: item.documenttype,
     bron,
+    matches,
   });
 }
 
 function renderDossierDocument(
   document: DossierDocument,
   state: AppShellState,
-  tijdlijn?: { datum: string; documenttype: string; bron: string },
+  tijdlijn?: { datum: string; documenttype: string; bron: string; matches?: string[] },
 ): string {
   const afspraak = document.afspraakId
     ? state.afspraken.find((item) => item.afspraak.id === document.afspraakId)?.afspraak
@@ -870,6 +893,11 @@ function renderDossierDocument(
         ${
           tijdlijn
             ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}</p>`
+            : ''
+        }
+        ${
+          tijdlijn?.matches && tijdlijn.matches.length > 0
+            ? `<p class="linked-note">Zoekmatch: ${tijdlijn.matches.map(escapeHtml).join(', ')}</p>`
             : ''
         }
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])}${uploadProfiel ? ` · ${escapeHtml(uploadProfiel)}` : ''} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>

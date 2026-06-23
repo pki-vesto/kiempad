@@ -251,12 +251,16 @@
 - **G185 PFIP dossierindex:** het dossierscherm toont een lokale index met
   documentdatum, documenttype, bronbestand, trajectkoppeling en tags uit categorie,
   uploadprofiel, bestandstype, OCR-status, instelling en arts.
+- **G186 PFIP lokale dossierzoekfunctie:** het dossierscherm kan lokaal zoeken in
+  OCR-tekst, handmatige notities, metadata, bestandsnamen en tags van de
+  ontgrendelde kluis. Zoekresultaten tonen welke velden matchen en starten geen
+  opslag- of netwerkstap.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G185 nog 58 open doelen (G186-G243), gericht op dossier-ingest,
+heeft na G186 nog 57 open doelen (G187-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -306,8 +310,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G186: medische dossier-ingest uitbreiden met lokale
-   zoekfunctionaliteit en privacytests voor OCR/extractie.
+1. PFIP uitvoeren vanaf G187: privacytests toevoegen die bewijzen dat OCR en
+   extractie geen netwerkverkeer starten zonder opt-in.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
