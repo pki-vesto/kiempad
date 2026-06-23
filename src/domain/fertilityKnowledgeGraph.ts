@@ -77,20 +77,52 @@ export type FertilityGraphTrajectWeergave = {
   filter: FertilityGraphTrajectFilter;
   nodes: FertilityGraphNode[];
   edges: FertilityGraphEdge[];
+  rebuildRapport?: FertilityGraphIndexRebuildRapport;
   waarschuwing: string;
 };
 
-const GRAPH_WAARSCHUWING =
-  'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
-
-export function bouwFertilityKnowledgeGraph(input: {
+export type FertilityGraphIndexRebuildInput = {
   trajecten: readonly TrajectMetFasen[];
   afspraken: readonly Afspraak[];
   dossierDocuments: readonly DossierDocument[];
   consultVerslagen: readonly ConsultVerslag[];
   kennisItems: readonly KennisItem[];
   aanbevelingen?: DailyRecommendationOverview;
-}): FertilityKnowledgeGraph {
+};
+
+export type FertilityGraphIndexRebuildRapport = {
+  status: 'opnieuw_opgebouwd';
+  recordAantallen: {
+    trajecten: number;
+    afspraken: number;
+    dossierDocuments: number;
+    consultVerslagen: number;
+    kennisItems: number;
+    aanbevelingen: number;
+  };
+  bronRecordIds: string[];
+  nodeAantal: number;
+  relatieAantal: number;
+  voorstelAantal: number;
+  inzichtAantal: number;
+  controleHash: string;
+  dataverliesControle: string;
+  waarschuwing: string;
+};
+
+export type FertilityGraphIndexRebuildResultaat = {
+  graph: FertilityKnowledgeGraph;
+  voorstellen: FertilityGraphRelatieVoorstel[];
+  inzichten: FertilityGraphContextInzicht[];
+  rapport: FertilityGraphIndexRebuildRapport;
+};
+
+const GRAPH_WAARSCHUWING =
+  'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
+
+export function bouwFertilityKnowledgeGraph(
+  input: FertilityGraphIndexRebuildInput,
+): FertilityKnowledgeGraph {
   const nodes = new Map<string, FertilityGraphNode>();
   const edges = new Map<string, FertilityGraphEdge>();
 
@@ -285,6 +317,41 @@ export function bouwFertilityKnowledgeGraph(input: {
     ),
     edges: [...edges.values()].sort((a, b) => a.id.localeCompare(b.id)),
     waarschuwing: GRAPH_WAARSCHUWING,
+  };
+}
+
+export function herbouwFertilityGraphIndex(
+  input: FertilityGraphIndexRebuildInput,
+): FertilityGraphIndexRebuildResultaat {
+  const graph = bouwFertilityKnowledgeGraph(input);
+  const voorstellen = stelFertilityGraphRelatiesVoor(graph);
+  const inzichten = genereerFertilityGraphContextInzichten(graph, voorstellen);
+  const bronRecordIds = bepaalGraphBronRecordIds(input);
+
+  return {
+    graph,
+    voorstellen,
+    inzichten,
+    rapport: {
+      status: 'opnieuw_opgebouwd',
+      recordAantallen: {
+        trajecten: input.trajecten.length,
+        afspraken: input.afspraken.length,
+        dossierDocuments: input.dossierDocuments.length,
+        consultVerslagen: input.consultVerslagen.length,
+        kennisItems: input.kennisItems.length,
+        aanbevelingen: Object.values(input.aanbevelingen ?? {}).flat().length,
+      },
+      bronRecordIds,
+      nodeAantal: graph.nodes.length,
+      relatieAantal: graph.edges.length,
+      voorstelAantal: voorstellen.length,
+      inzichtAantal: inzichten.length,
+      controleHash: berekenGraphControleHash(graph, bronRecordIds),
+      dataverliesControle:
+        'Index is opnieuw afgeleid uit ontsleutelde kluisrecords; originele versleutelde records worden niet overschreven.',
+      waarschuwing: GRAPH_WAARSCHUWING,
+    },
   };
 }
 
@@ -522,6 +589,35 @@ function edgePastBinnenPeriode(
     if (filter.datumTot && datum > filter.datumTot) return false;
     return true;
   });
+}
+
+function bepaalGraphBronRecordIds(input: FertilityGraphIndexRebuildInput): string[] {
+  return [
+    ...input.trajecten.map((item) => `traject:${item.traject.id}`),
+    ...input.afspraken.map((item) => `afspraak:${item.id}`),
+    ...input.dossierDocuments.map((item) => `dossier_document:${item.id}`),
+    ...input.consultVerslagen.map((item) => `consult_verslag:${item.id}`),
+    ...input.kennisItems.map((item) => `kennis_item:${item.id}`),
+    ...Object.values(input.aanbevelingen ?? {})
+      .flat()
+      .map((item) => `aanbeveling:${item.id}`),
+  ].sort((a, b) => a.localeCompare(b));
+}
+
+function berekenGraphControleHash(
+  graph: FertilityKnowledgeGraph,
+  bronRecordIds: readonly string[],
+): string {
+  const materiaal = [
+    ...bronRecordIds,
+    ...graph.nodes.map((node) => `node:${node.id}:${node.type}`),
+    ...graph.edges.map((edge) => `edge:${edge.id}:${edge.type}`),
+  ].join('|');
+  let hash = 0;
+  for (let index = 0; index < materiaal.length; index += 1) {
+    hash = (hash * 31 + materiaal.charCodeAt(index)) >>> 0;
+  }
+  return hash.toString(16).padStart(8, '0');
 }
 
 function normaliseerGraphId(value: string): string {

@@ -410,6 +410,11 @@ describe('app shell', () => {
     expect(html).toContain('name="graphDatumTot" type="date" value="2026-06-30"');
     expect(html).toContain('Nodes');
     expect(html).toContain('Relaties');
+    expect(html).toContain('Graph-index rebuild');
+    expect(html).toContain('Opnieuw opgebouwd uit lokale kluisrecords');
+    expect(html).toContain('Bronrecords');
+    expect(html).toContain('Controlehash');
+    expect(html).toContain('originele versleutelde records worden niet overschreven');
     expect(html).toContain('Afspraak hoort bij traject');
     expect(html).toContain('Echo controle -> Poging 1');
     expect(html).toContain('Document hoort bij traject');

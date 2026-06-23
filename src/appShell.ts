@@ -56,11 +56,12 @@ import {
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   bouwFertilityGraphWeergavePerTraject,
-  bouwFertilityKnowledgeGraph,
   type FertilityGraphEdge,
   type FertilityGraphEdgeType,
+  type FertilityGraphIndexRebuildRapport,
   type FertilityGraphTrajectFilter,
   type FertilityGraphTrajectWeergave,
+  herbouwFertilityGraphIndex,
 } from './domain/fertilityKnowledgeGraph';
 import {
   HERHALING_LABELS,
@@ -3513,7 +3514,7 @@ function bouwTrajectGraphWeergave(
     dossierDocuments: state.dossierDocuments ?? [],
     cycleData: state.cycleData ?? [],
   });
-  const graph = bouwFertilityKnowledgeGraph({
+  const rebuild = herbouwFertilityGraphIndex({
     trajecten: state.trajecten,
     afspraken: state.afspraken.map((bundle) => bundle.afspraak),
     dossierDocuments: state.dossierDocuments ?? [],
@@ -3522,12 +3523,17 @@ function bouwTrajectGraphWeergave(
     aanbevelingen,
   });
 
-  return bouwFertilityGraphWeergavePerTraject(graph, {
+  const weergave = bouwFertilityGraphWeergavePerTraject(rebuild.graph, {
     trajectId,
     relatieType: parseFertilityGraphRelatieType(state.graphFilter?.relatieType),
     datumVanaf: state.graphFilter?.datumVanaf,
     datumTot: state.graphFilter?.datumTot,
   });
+
+  return {
+    ...weergave,
+    rebuildRapport: rebuild.rapport,
+  };
 }
 
 function renderTrajectGraphWeergave(
@@ -3542,12 +3548,29 @@ function renderTrajectGraphWeergave(
         <div><dt>Nodes</dt><dd>${weergave.nodes.length}</dd></div>
         <div><dt>Relaties</dt><dd>${weergave.edges.length}</dd></div>
       </dl>
+      ${weergave.rebuildRapport ? renderGraphIndexRebuildRapport(weergave.rebuildRapport) : ''}
       ${
         weergave.edges.length > 0
           ? `<ol class="compact-list">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
           : '<p class="empty-state">Geen graph-relaties binnen dit filter.</p>'
       }
       <p class="small-print">${escapeHtml(weergave.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderGraphIndexRebuildRapport(rapport: FertilityGraphIndexRebuildRapport): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Graph-index rebuild">
+      <h3>Graph-index rebuild</h3>
+      <dl class="summary-list">
+        <div><dt>Status</dt><dd>Opnieuw opgebouwd uit lokale kluisrecords</dd></div>
+        <div><dt>Bronrecords</dt><dd>${rapport.bronRecordIds.length}</dd></div>
+        <div><dt>Controlehash</dt><dd>${escapeHtml(rapport.controleHash)}</dd></div>
+        <div><dt>Voorstellen</dt><dd>${rapport.voorstelAantal}</dd></div>
+        <div><dt>Inzichten</dt><dd>${rapport.inzichtAantal}</dd></div>
+      </dl>
+      <small>${escapeHtml(rapport.dataverliesControle)}</small>
     </section>
   `;
 }

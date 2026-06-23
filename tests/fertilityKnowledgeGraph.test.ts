@@ -4,7 +4,9 @@ import {
   bevestigFertilityGraphRelaties,
   bouwFertilityGraphWeergavePerTraject,
   bouwFertilityKnowledgeGraph,
+  type FertilityGraphIndexRebuildInput,
   genereerFertilityGraphContextInzichten,
+  herbouwFertilityGraphIndex,
   stelFertilityGraphRelatiesVoor,
 } from '../src/domain/fertilityKnowledgeGraph';
 import type { ConsultVerslag, DossierDocument, KennisItem } from '../src/domain/types';
@@ -413,5 +415,79 @@ describe('fertility knowledge graph', () => {
       ]),
     );
     expect(weergave.waarschuwing).toContain('geen causaliteit');
+  });
+
+  it('herbouwt de graph-index uit ontsleutelde kluisrecords zonder bronrecords te wijzigen', () => {
+    const document = {
+      id: 'doc-1',
+      datum: '2026-06-24',
+      titel: 'Echo verslag',
+      categorie: 'onderzoek',
+      bestandsNaam: 'echo.pdf',
+      grootteBytes: 512,
+      inhoudBase64: 'base64',
+      trajectId: 'traject-1',
+      analyse: { samenvatting: 'Echo vastgelegd.', signalen: [] },
+      metadata: { bronbestand: 'echo.pdf', trajectId: 'traject-1', extractieBronnen: [] },
+      uploadedAt: '2026-06-24T10:00:00.000Z',
+    } as DossierDocument;
+    const input = {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          trajectId: 'traject-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-24T09:30',
+          type: 'echo',
+        },
+      ],
+      dossierDocuments: [document],
+      consultVerslagen: [],
+      kennisItems: [],
+    } satisfies FertilityGraphIndexRebuildInput;
+    const voorRebuild = JSON.stringify(input);
+
+    const resultaat = herbouwFertilityGraphIndex(input);
+
+    expect(JSON.stringify(input)).toBe(voorRebuild);
+    expect(resultaat.rapport).toMatchObject({
+      status: 'opnieuw_opgebouwd',
+      recordAantallen: {
+        trajecten: 1,
+        afspraken: 1,
+        dossierDocuments: 1,
+        consultVerslagen: 0,
+        kennisItems: 0,
+        aanbevelingen: 0,
+      },
+      bronRecordIds: ['afspraak:afspraak-1', 'dossier_document:doc-1', 'traject:traject-1'],
+      nodeAantal: resultaat.graph.nodes.length,
+      relatieAantal: resultaat.graph.edges.length,
+      dataverliesControle:
+        'Index is opnieuw afgeleid uit ontsleutelde kluisrecords; originele versleutelde records worden niet overschreven.',
+    });
+    expect(resultaat.rapport.controleHash).toMatch(/^[0-9a-f]{8}$/);
+    expect(resultaat.graph.edges).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          from: 'document:doc-1',
+          to: 'traject:traject-1',
+          type: 'hoort_bij_behandeling',
+        }),
+      ]),
+    );
   });
 });
