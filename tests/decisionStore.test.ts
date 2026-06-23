@@ -53,4 +53,29 @@ describe('DecisionStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Kliniek bellen');
     expect(await store.list()).toEqual([saved]);
   });
+
+  it('legt een keuze en onderbouwing versleuteld vast op een bestaande beslisnotitie', async () => {
+    const { driver, store } = await setupStore();
+    const saved = await store.save({
+      onderwerp: 'Kliniek bellen?',
+      datum: '2026-06-23',
+      opties: ['Vandaag bellen', 'Morgen afwachten'],
+    });
+
+    const updated = await store.setChoice(saved.id, {
+      keuze: 'Vandaag bellen',
+      onderbouwing: 'Geeft eerder duidelijkheid.',
+      datum: '2026-06-24',
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(updated).toMatchObject({
+      id: saved.id,
+      keuze: 'Vandaag bellen',
+      onderbouwing: 'Geeft eerder duidelijkheid.',
+      datum: '2026-06-24',
+    });
+    expect(raw?.payload.ciphertext).not.toContain('Geeft eerder duidelijkheid');
+    expect(await store.list()).toEqual([updated]);
+  });
 });

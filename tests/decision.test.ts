@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { maakDecision, sorteerDecisions } from '../src/domain/decision';
+import { legDecisionKeuzeVast, maakDecision, sorteerDecisions } from '../src/domain/decision';
 
 describe('decision', () => {
   it('maakt een beslisnotitie met opgeschoonde opties', () => {
@@ -56,6 +56,58 @@ describe('decision', () => {
         opties: ['A'],
       }),
     ).toThrow('minimaal twee opties');
+  });
+
+  it('legt een gemaakte keuze met onderbouwing en datum vast', () => {
+    const decision = maakDecision('decision-1', {
+      onderwerp: 'Kliniek bellen?',
+      datum: '2026-06-23',
+      opties: ['Vandaag bellen', 'Morgen afwachten'],
+    });
+
+    expect(
+      legDecisionKeuzeVast(decision, {
+        keuze: ' Vandaag bellen ',
+        onderbouwing: '  Geeft eerder duidelijkheid. ',
+        datum: '2026-06-24',
+      }),
+    ).toMatchObject({
+      keuze: 'Vandaag bellen',
+      onderbouwing: 'Geeft eerder duidelijkheid.',
+      datum: '2026-06-24',
+    });
+  });
+
+  it('vereist een bestaande optie, onderbouwing en datum voor een keuze', () => {
+    const decision = maakDecision('decision-1', {
+      onderwerp: 'Kliniek bellen?',
+      datum: '2026-06-23',
+      opties: ['Vandaag bellen', 'Morgen afwachten'],
+    });
+
+    expect(() =>
+      legDecisionKeuzeVast(decision, {
+        keuze: 'Andere kliniek',
+        onderbouwing: 'Past beter.',
+        datum: '2026-06-24',
+      }),
+    ).toThrow('bestaande optie');
+
+    expect(() =>
+      legDecisionKeuzeVast(decision, {
+        keuze: 'Vandaag bellen',
+        onderbouwing: '',
+        datum: '2026-06-24',
+      }),
+    ).toThrow('Onderbouwing is verplicht');
+
+    expect(() =>
+      legDecisionKeuzeVast(decision, {
+        keuze: 'Vandaag bellen',
+        onderbouwing: 'Geeft eerder duidelijkheid.',
+        datum: '',
+      }),
+    ).toThrow('Datum is verplicht');
   });
 
   it('sorteert beslisnotities nieuw naar oud en daarna op onderwerp', () => {
