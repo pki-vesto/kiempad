@@ -716,6 +716,7 @@ function renderDossierScreen(state: AppShellState): string {
   const embryoDossiers = bouwEmbryoDossiers(
     zichtbareDocumenten,
     state.afspraken.map((bundle) => bundle.afspraak),
+    state.trajecten,
   );
   const embryoVergelijkingen = bouwEmbryoVergelijkingen(embryoDossiers);
   const behandelGeschiedenis = reconstrueerBehandelGeschiedenis({
@@ -1256,6 +1257,7 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
             )
             .join('')}
         </ol>
+        ${renderEmbryoBehandelContext(item)}
         <ul class="compact-list">
           ${item.documenten
             .map(
@@ -1267,6 +1269,24 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
         <p class="small-print">${escapeHtml(item.waarschuwing)}</p>
       </div>
     </li>
+  `;
+}
+
+function renderEmbryoBehandelContext(item: EmbryoDossierItem): string {
+  const context = item.behandelContext;
+  const details = [
+    context.poging ? `Poging: ${context.poging}` : undefined,
+    context.protocol ? `Protocol: ${context.protocol}` : undefined,
+    ...context.notities.map((notitie) => `Notitie: ${notitie}`),
+  ].filter((detail): detail is string => Boolean(detail));
+
+  if (details.length === 0) return '';
+
+  return `
+    <p class="small-print">Behandelcontext</p>
+    <ul class="compact-list">
+      ${details.map((detail) => `<li>${escapeHtml(detail)}</li>`).join('')}
+    </ul>
   `;
 }
 

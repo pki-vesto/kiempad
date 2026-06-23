@@ -1,4 +1,5 @@
 import { classificeerDossierBeeld } from './dossier';
+import { TRAJECT_FASE_LABELS, type TrajectMetFasen } from './traject';
 import type { Afspraak, DossierDocument } from './types';
 
 export type EmbryoDossierItem = {
@@ -28,6 +29,11 @@ export type EmbryoDossierItem = {
     detail: string;
     bron: string;
   }[];
+  behandelContext: {
+    poging?: string;
+    protocol?: string;
+    notities: string[];
+  };
   waarschuwing: string;
 };
 
@@ -48,6 +54,7 @@ export type EmbryoVergelijking = {
 export function bouwEmbryoDossiers(
   documenten: readonly DossierDocument[],
   afspraken: readonly Afspraak[] = [],
+  trajecten: readonly TrajectMetFasen[] = [],
 ): EmbryoDossierItem[] {
   const groepen = new Map<string, DossierDocument[]>();
 
@@ -61,7 +68,7 @@ export function bouwEmbryoDossiers(
   }
 
   return [...groepen.entries()]
-    .map(([sleutel, items]) => bouwEmbryoDossier(sleutel, items, afspraken))
+    .map(([sleutel, items]) => bouwEmbryoDossier(sleutel, items, afspraken, trajecten))
     .sort(
       (a, b) =>
         (a.trajectId ?? '').localeCompare(b.trajectId ?? '') ||
@@ -104,6 +111,7 @@ function bouwEmbryoDossier(
   sleutel: string,
   documenten: readonly DossierDocument[],
   afspraken: readonly Afspraak[],
+  trajecten: readonly TrajectMetFasen[],
 ): EmbryoDossierItem {
   const eerste = documenten[0];
   const embryoLabel = eerste ? (bepaalEmbryoLabel(eerste) ?? 'Embryo') : 'Embryo';
@@ -113,6 +121,7 @@ function bouwEmbryoDossier(
     bepaalDatum(a).localeCompare(bepaalDatum(b)),
   );
   const relevanteAfspraken = selecteerRelevanteAfspraken(dossierDocumenten, afspraken);
+  const traject = trajectId ? trajecten.find((item) => item.traject.id === trajectId) : undefined;
   const kwaliteiten = uniekeWaarden(
     dossierDocumenten.map((document) => document.embryo?.kwaliteit).filter(isString),
   );
@@ -181,6 +190,7 @@ function bouwEmbryoDossier(
         bron: 'Agenda',
       })),
     ]),
+    behandelContext: bouwBehandelContext(traject, dossierDocumenten, relevanteAfspraken),
     waarschuwing:
       'Embryo-dossier is een feitelijk overzicht van kliniekterugkoppelingen; Kiempad berekent geen kansen en geeft geen medisch advies.',
   };
@@ -284,6 +294,49 @@ function isLabrapport(document: DossierDocument): boolean {
     document.uploadProfiel === 'labuitslag' ||
     document.metadata.documenttype?.toLocaleLowerCase('nl-NL') === 'labuitslag' ||
     /\b(lab|laboratorium|uitslag)\b/iu.test(`${document.titel} ${document.bestandsNaam}`)
+  );
+}
+
+function bouwBehandelContext(
+  traject: TrajectMetFasen | undefined,
+  documenten: readonly DossierDocument[],
+  afspraken: readonly Afspraak[],
+): EmbryoDossierItem['behandelContext'] {
+  const poging = traject
+    ? `${traject.traject.naam} · ${traject.traject.type.toUpperCase()} · poging ${traject.traject.pogingNummer}`
+    : undefined;
+  const protocol = traject
+    ? uniekeWaarden(
+        sorteerFasen(traject.fasen).map((fase) => {
+          const datums = [fase.startDatum, fase.eindDatum].filter(isString).join(' t/m ');
+          return [TRAJECT_FASE_LABELS[fase.fase], datums || undefined, fase.toelichting]
+            .filter(isString)
+            .join(' · ');
+        }),
+      ).join(' | ') || undefined
+    : undefined;
+  const notities = uniekeWaarden(
+    [
+      traject?.traject.notitie ? `Pogingnotitie: ${traject.traject.notitie}` : undefined,
+      ...afspraken.flatMap((afspraak) => [
+        afspraak.voorbereiding
+          ? `Afspraak ${afspraak.titel}: ${afspraak.voorbereiding}`
+          : undefined,
+        afspraak.notitie ? `Afspraak ${afspraak.titel}: ${afspraak.notitie}` : undefined,
+      ]),
+      ...documenten.map((document) =>
+        document.notitie ? `${document.titel}: ${document.notitie}` : undefined,
+      ),
+    ].filter(isString),
+  );
+
+  return { poging, protocol, notities };
+}
+
+function sorteerFasen(fasen: readonly TrajectMetFasen['fasen'][number][]) {
+  return [...fasen].sort(
+    (a, b) =>
+      (a.startDatum ?? '').localeCompare(b.startDatum ?? '') || a.fase.localeCompare(b.fase),
   );
 }
 
