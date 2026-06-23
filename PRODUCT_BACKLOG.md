@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 228 |
+| ☑ klaar | 229 |
 | ◐ bezig | 0 |
-| ☐ open | 15 |
+| ☐ open | 14 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -367,7 +367,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G226 | PFIP daily recommendations: aanbevelingen uitlegbaar maken met gebruikte dossierbronnen | P0 | F4 | ☑ |
 | G227 | PFIP daily recommendations: gebruiker kan aanbevelingen afwijzen, bewaren of omzetten naar herinnering/vraag | P1 | F4 | ☑ |
 | G228 | PFIP knowledge graph: lokaal graph-model voor relaties tussen documenten, embryo's, behandelingen, gesprekken, research en aanbevelingen | P0 | F4 | ☑ |
-| G229 | PFIP knowledge graph: graph-relaties automatisch voorstellen en handmatig laten bevestigen | P0 | F4 | ☐ |
+| G229 | PFIP knowledge graph: graph-relaties automatisch voorstellen en handmatig laten bevestigen | P0 | F4 | ☑ |
 | G230 | PFIP knowledge graph: contextuele inzichten genereren met bronpad en onzekerheidslabel | P0 | F4 | ☐ |
 | G231 | PFIP knowledge graph: graphweergave per traject met filters op type relatie en periode | P2 | F4 | ☐ |
 | G232 | PFIP knowledge graph: relatie tussen research en persoonlijk dossier tonen zonder causale claims | P0 | F4 | ☐ |
