@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G200 PFIP consult intelligence: dossierscherm reconstrueert een lokale
+  behandelgeschiedenis uit afspraken, consultverslagen en dossierdocumenten.
 - G199 PFIP consult intelligence: vragenscherm genereert lokaal een conceptvragenlijst
   voor de eerstvolgende afspraak uit open vragen en consultactiepunten.
 - G198 PFIP consult intelligence: consultverslagen extraheren lokale
