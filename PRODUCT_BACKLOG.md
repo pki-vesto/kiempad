@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 105 |
+| ☑ klaar | 106 |
 | ◐ bezig | 0 |
-| ☐ open | 69 |
+| ☐ open | 68 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -269,7 +269,7 @@
 | G155 | Nederlandstalige UI (default `nl`) | P1 | F1 | ☑ |
 | G156 | Lege-staten met vriendelijke uitleg i.p.v. lege schermen | P2 | F1 | ☑ |
 | G157 | Bevestiging bij destructieve acties (verwijderen) | P1 | F1 | ☑ |
-| G158 | Snelle invoer (zo min mogelijk velden verplicht) | P2 | F1 | ☐ |
+| G158 | Snelle invoer (zo min mogelijk velden verplicht) | P2 | F1 | ☑ |
 
 ## 16. Testen & kwaliteit
 

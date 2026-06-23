@@ -64,6 +64,9 @@
   notificatieprivacy-keuze vast.
 - **G171 kennisbankverificatie:** kennisitems bewaren verificatiedatum en volgende
   reviewdatum; markeren als geverifieerd plant automatisch jaarlijkse herverificatie.
+- **G158 snelle invoer:** startscherm bevat een compacte invoerroute voor afspraak,
+  medicatie of vraag met alleen een korte tekst als verplicht veld; records worden via
+  de bestaande versleutelde stores opgeslagen met veilige defaults.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -72,10 +75,8 @@
 
 ## 3. Nog Niet Gebouwd
 
-De rest van F1 (MVP) en later, o.a.:
+F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
-- Geen gedeeltelijke F1-hoofdworkflow bekend; resterende punten zitten vooral in
-  kwaliteit, onderhoud en latere F2/F3-modules.
 - Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
 
@@ -83,8 +84,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 4. Technische Schuld
 
-- Geen bekende technische schuld in de app-shell; de inhoudelijke F1-workflows volgen
-  nog.
+- Geen bekende technische schuld in de app-shell; F2-modules volgen na de afgeronde
+  F1-basis.
 - `npm install` is nog niet als CI-cache vastgelegd; `package-lock.json` ontstaat bij
   de eerste install.
 
@@ -93,6 +94,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 - **Client-side runtime aanwezig.** Lokaal te starten met `npm run dev`; de app-shell
   toont eerst een passphrase-kluis en navigeert na ontgrendelen via hash-routes.
   Het trajectscherm kan nu een poging met fasen lokaal versleuteld beheren; het
+  startscherm biedt snelle invoer voor afspraak, medicatie en vraag; het
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren; het
   medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
@@ -101,7 +103,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (68 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (71 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -109,9 +111,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **Onderhoudsdoelen** expliciet afvinken waar de workflow inmiddels structureel is.
-2. **F2-scope kiezen**: kosten/vergoedingen, symptomen of back-up/export.
-3. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
+1. **F2-scope kiezen**: kosten/vergoedingen, symptomen of back-up/export.
+2. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
+3. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
 
 ## 7. Permanente onderhoudsregel
 

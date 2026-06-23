@@ -319,7 +319,31 @@ function renderStartScreen(state: AppShellState): string {
           <li><strong>Vragen:</strong> ${escapeHtml(openQuestions)}</li>
         </ul>
       </div>
+      <div class="summary-panel">
+        <h2>Snelle invoer</h2>
+        ${renderQuickEntryForm()}
+      </div>
     </section>
+  `;
+}
+
+function renderQuickEntryForm(): string {
+  return `
+    <form id="quick-entry-form" class="data-form compact-form">
+      <label>
+        Type
+        <select name="quickType">
+          <option value="afspraak">Afspraak</option>
+          <option value="medicatie">Medicatie</option>
+          <option value="vraag">Vraag</option>
+        </select>
+      </label>
+      <label>
+        Korte invoer
+        <input name="quickText" required autocomplete="off" />
+      </label>
+      <button type="submit">Voeg snel toe</button>
+    </form>
   `;
 }
 

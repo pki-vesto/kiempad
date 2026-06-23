@@ -53,6 +53,9 @@ describe('app shell', () => {
 
     expect(html).toContain('Waar staan we?');
     expect(html).toContain('Volgende stap');
+    expect(html).toContain('Snelle invoer');
+    expect(html).toContain('id="quick-entry-form"');
+    expect(html).toContain('name="quickText" required');
     expect(html).toContain('Afspraak:');
     expect(html).toContain('Herinnering:');
     expect(html).toContain('Vragen:');
