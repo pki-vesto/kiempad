@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G081 kennisbank zoeken/filteren: kennisscherm filtert lokale kennisitems op zoekterm
+  en categorie zonder externe opslag of netwerkverkeer.
 - G072 vraagverslag per afspraak: beantwoorde, gekoppelde vragen worden in het
   vragenscherm per afspraak terugleesbaar met antwoordtekst.
 - G071 vraagprioriteit: vragen kunnen met een consultprioriteit worden opgeslagen en

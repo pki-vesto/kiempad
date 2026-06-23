@@ -404,6 +404,48 @@ describe('app shell', () => {
     expect(html).toContain('Markeer geverifieerd');
   });
 
+  it('filtert kennisitems op zoekterm en categorie', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisFilter: {
+        zoekterm: 'eigen risico',
+        categorie: 'kosten',
+      },
+      kennisItems: [
+        {
+          id: 'kosten-1',
+          titel: 'Kosten 2026: eigen risico',
+          inhoud: 'Conceptinhoud over eigen risico.',
+          bron: 'Bron kosten',
+          categorie: 'kosten',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+        {
+          id: 'fase-1',
+          titel: 'Fasen overzicht',
+          inhoud: 'Conceptinhoud over fasen.',
+          bron: 'Bron fasen',
+          categorie: 'fasen',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('id="knowledge-filter-form"');
+    expect(html).toContain('name="kennisZoekterm" value="eigen risico"');
+    expect(html).toContain('1 van 2 item(s) getoond');
+    expect(html).toContain('Kosten 2026: eigen risico');
+    expect(html).not.toContain('Fasen overzicht');
+  });
+
   it('rendert lokale AI-instellingen standaard uit zonder netwerkactie', () => {
     const html = renderAppShell('kennis');
 

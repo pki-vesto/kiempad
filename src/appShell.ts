@@ -17,7 +17,9 @@ import {
 } from './domain/herinnering';
 import {
   bepaalKennisKostenJaar,
+  filterKennisItems,
   KENNIS_CATEGORIE_LABELS,
+  type KennisFilter,
   kennisItemsPerCategorie,
 } from './domain/kennis';
 import {
@@ -161,6 +163,7 @@ export type AppShellState = {
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
+  kennisFilter?: KennisFilter;
   kosten?: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -307,14 +310,17 @@ function renderBackupScreen(state: AppShellState): string {
 }
 
 function renderKennisScreen(state: AppShellState): string {
-  const grouped = kennisItemsPerCategorie(state.kennisItems);
+  const filter = state.kennisFilter ?? {};
+  const filteredItems = filterKennisItems(state.kennisItems, filter);
+  const grouped = kennisItemsPerCategorie(filteredItems);
 
   return `
     <section class="workspace" aria-label="Kennisbank">
       <div class="summary-panel priority-panel">
         <h2>Kennisbank</h2>
         <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
-        <p>${state.kennisItems.length} item(s) lokaal beschikbaar.</p>
+        <p>${filteredItems.length} van ${state.kennisItems.length} item(s) getoond.</p>
+        ${renderKennisFilterForm(filter)}
       </div>
       <div class="summary-panel">
         <h2>Research opslaan</h2>
@@ -340,6 +346,28 @@ function renderKennisScreen(state: AppShellState): string {
           .join('')}
       </div>
     </section>
+  `;
+}
+
+function renderKennisFilterForm(filter: KennisFilter): string {
+  return `
+    <form id="knowledge-filter-form" class="data-form compact-form">
+      <label>
+        Zoek
+        <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
+      </label>
+      <label>
+        Categorie
+        <select name="kennisCategorie">
+          <option value="">Alle categorieën</option>
+          ${Object.entries(KENNIS_CATEGORIE_LABELS)
+            .map(([value, label]) => renderOption(value, label, filter.categorie))
+            .join('')}
+        </select>
+      </label>
+      <button type="submit" name="filterAction" value="apply">Filter kennis</button>
+      <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
+    </form>
   `;
 }
 

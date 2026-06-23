@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
+  filterKennisItems,
   INITIELE_KENNIS_ITEMS,
   kennisItemsPerCategorie,
   maakResearchKennisItem,
@@ -27,6 +28,15 @@ describe('kennis domeinregels', () => {
     expect(grouped.leefstijl.length).toBeGreaterThan(0);
     expect(grouped.kosten.length).toBeGreaterThan(0);
     expect(grouped.research.length).toBeGreaterThan(0);
+  });
+
+  it('filtert kennisitems op zoekterm en categorie', () => {
+    const filtered = filterKennisItems(INITIELE_KENNIS_ITEMS, {
+      zoekterm: 'eigen risico',
+      categorie: 'kosten',
+    });
+
+    expect(filtered.map((item) => item.id)).toEqual(['seed-kosten-2026-eigen-risico']);
   });
 
   it('markeert het jaartal alleen bij kostenkennis', () => {

@@ -47,6 +47,8 @@
 - **M1.8 basis-kennisbank:** KennisItems lokaal seedden uit `docs/KENNISBANK.md`,
   tonen per categorie, bronvermelding, AI-label, artsverificatielabel en expliciet
   markeren als geverifieerd met arts.
+- **G081 kennisbank zoeken/filteren:** kennisscherm kan lokale kennisitems filteren
+  op zoekterm en categorie zonder netwerkverkeer.
 - **M1.9 UX/PWA-baseline:** installatiemanifest en SVG-icon, offline service-worker
   met cacheversie, standaard service-workerregistratie, concreter startscherm,
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.
