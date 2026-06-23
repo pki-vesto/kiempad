@@ -106,6 +106,9 @@
 - **G102 AI-provider/modelkeuze:** het kennisscherm bevat lokale AI-instellingen voor
   opt-in, provider, model en API-sleutel; deze keuze wordt versleuteld in het
   settingsrecord bewaard zonder externe call.
+- **G104 on-device AI-verkenning:** het kennisscherm detecteert passief lokale
+  browser-AI API-objecten zoals `LanguageModel` en `Summarizer`, zonder sessie,
+  modeldownload, provider-call of cloud-stap. Zie [`docs/ON_DEVICE_AI.md`](docs/ON_DEVICE_AI.md).
 - **G094 researchbibliotheek:** het kennisscherm kan handmatige researchitems met
   titel, bron/link en notitie als versleuteld conceptkennisitem in de categorie
   research bewaren.
@@ -224,8 +227,7 @@
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
 - Kosten, research + AI-providercall, gedeelde modus.
-- Tailscale-publicatie via aparte HTTPS-node, optionele WebAuthn/biometrie en
-  on-device AI-verkenning.
+- Tailscale-publicatie via aparte HTTPS-node en optionele WebAuthn/biometrie.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
@@ -252,7 +254,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels, kan handmatige
   researchitems opslaan en biedt lokale AI-opt-ininstellingen, provider/modelkeuze,
-  payload-preview en AI-samenvatting-opslag en markeert kostenkennis met jaartal; het kostenscherm bewaart kostenposten met
+  passieve on-device AI-status, payload-preview en AI-samenvatting-opslag en markeert
+  kostenkennis met jaartal; het kostenscherm bewaart kostenposten met
   categorie/vergoedstatus, toont een lokaal kostenoverzicht en bewaakt de
   eigen-risicostand voor 2026; het trajectscherm toont de vergoede-pogingen-teller.
   Het back-upscherm

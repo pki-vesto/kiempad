@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 176 |
+| ☑ klaar | 177 |
 | ◐ bezig | 1 |
-| ☐ open | 2 |
+| ☐ open | 1 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -185,7 +185,7 @@
 | G101 | Vooraf zichtbaar **wat** er naar de AI wordt verstuurd | P1 | F2 | ☑ |
 | G102 | Keuze van provider/model in instellingen | P2 | F2 | ☑ |
 | G103 | AI-samenvatting opgeslagen als KennisItem met `ai_gegenereerd=true` | P1 | F2 | ☑ |
-| G104 | On-device AI verkennen (geen cloud-stap) | P3 | F4 | ☐ |
+| G104 | On-device AI verkennen (geen cloud-stap) | P3 | F4 | ☑ |
 
 ## 10. Symptomen, cyclus & welzijn
 

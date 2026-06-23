@@ -8,7 +8,12 @@ import {
   formatDateTime,
 } from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
-import type { AiSamenvattingPayload } from './domain/ai';
+import {
+  type AiSamenvattingPayload,
+  beschrijfOnDeviceAiStatus,
+  detecteerOnDeviceAiCapabilities,
+  type OnDeviceAiCapability,
+} from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
 import { DOSSIER_CATEGORIE_LABELS, EMBRYO_STATUS_LABELS, formatBytes } from './domain/dossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
@@ -1027,6 +1032,7 @@ function renderKennisScreen(state: AppShellState): string {
       <div class="summary-panel">
         <h2>AI-instelling</h2>
         ${renderAiSettingsForm(state.settings)}
+        ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
       </div>
       <div class="summary-panel">
         <h2>AI-preview</h2>
@@ -1282,6 +1288,31 @@ function renderAiSettingsForm(settings: AppSettings): string {
       </label>
       <button type="submit">Bewaar AI-instelling</button>
     </form>
+  `;
+}
+
+function renderOnDeviceAiStatus(capabilities: OnDeviceAiCapability[]): string {
+  return `
+    <div class="policy-panel embedded-summary" aria-label="On-device AI verkenning">
+      <h3>On-device AI</h3>
+      <p class="small-print">${escapeHtml(beschrijfOnDeviceAiStatus(capabilities))}</p>
+      <p class="small-print">Verkenning zonder cloud-stap: Kiempad start geen AI-sessie, downloadt geen model en verstuurt niets.</p>
+      <dl class="summary-list">
+        ${capabilities
+          .map(
+            (capability) => `
+              <div>
+                <dt>${escapeHtml(capability.label)}</dt>
+                <dd>
+                  <span class="status-pill">${capability.beschikbaar ? 'API-object aanwezig' : 'Niet aanwezig'}</span>
+                  <span>${escapeHtml(capability.globaalObject)} · ${escapeHtml(capability.toelichting)}</span>
+                </dd>
+              </div>
+            `,
+          )
+          .join('')}
+      </dl>
+    </div>
   `;
 }
 
