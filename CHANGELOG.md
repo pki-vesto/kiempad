@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G236 PFIP fertility timeline: trajectscherm toont een centrale fertility
+  timeline met onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en
+  research uit lokale records.
 - G235 PFIP knowledge graph: trajectscherm toont een exporteerbare
   Markdown-samenvatting van de graph voor consultvoorbereiding met bronpad,
   controlehash en medische waarschuwing.
