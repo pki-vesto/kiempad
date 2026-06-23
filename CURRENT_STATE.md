@@ -151,6 +151,8 @@
 - **G026/G027 meerdere pogingen:** trajectscherm kan naast het bewerken van de eerste
   poging expliciet een nieuwe poging toevoegen en toont alle pogingen met
   pogingnummer voor vergoedingstelling.
+- **G029 trajectarchief:** trajecten kunnen uit de actieve lijst worden gearchiveerd
+  en later hersteld zonder traject- of faserecords te verwijderen.
 - **G035 agenda week-/maandweergave:** agendascherm toont naast de chronologische
   afsprakenlijst compacte groeperingen per ISO-week en maand.
 - **G040 afgelopen afspraken:** agendascherm splitst afgelopen afspraken naar een

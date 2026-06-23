@@ -37,6 +37,7 @@ export interface Traject {
   status: 'gepland' | 'lopend' | 'afgerond' | 'gepauzeerd' | 'geannuleerd';
   pogingNummer: number; // telt voor vergoeding pas mee na geslaagde punctie (zie KENNISBANK)
   teltMeeVoorVergoeding?: boolean;
+  gearchiveerd?: boolean;
   notitie?: string;
 }
 

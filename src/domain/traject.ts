@@ -50,6 +50,7 @@ export type TrajectInput = {
   status: Traject['status'];
   pogingNummer: number;
   teltMeeVoorVergoeding?: boolean;
+  gearchiveerd?: boolean;
   notitie?: string;
 };
 
@@ -67,7 +68,15 @@ export function maakTraject(id: string, input: TrajectInput): Traject {
     status: input.status,
     pogingNummer: input.pogingNummer,
     teltMeeVoorVergoeding: input.teltMeeVoorVergoeding === true,
+    gearchiveerd: input.gearchiveerd === true,
     notitie: normaliseerOptioneleTekst(input.notitie),
+  };
+}
+
+export function archiveerTraject(traject: Traject, gearchiveerd = true): Traject {
+  return {
+    ...traject,
+    gearchiveerd,
   };
 }
 

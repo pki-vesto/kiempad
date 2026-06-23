@@ -30,6 +30,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'status',
     'pogingNummer',
     'teltMeeVoorVergoeding',
+    'gearchiveerd',
     'notitie',
   ],
   Fase: ['id', 'trajectId', 'fase', 'startDatum', 'eindDatum', 'toelichting'],

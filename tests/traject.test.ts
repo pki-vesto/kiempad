@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  archiveerTraject,
   bepaalHuidigeFase,
   bepaalVolgendeStap,
   berekenVergoedePogingenTeller,
@@ -31,6 +32,7 @@ describe('traject en fasen', () => {
       status: 'lopend',
       pogingNummer: 1,
       teltMeeVoorVergoeding: true,
+      gearchiveerd: false,
       notitie: 'kliniekprotocol volgen',
     });
     expect(fasen.map((fase) => fase.fase)).toEqual(TRAJECT_FASE_VOLGORDE);
@@ -100,5 +102,25 @@ describe('traject en fasen', () => {
       resterend: 2,
       maximum: 3,
     });
+  });
+
+  it('archiveert een traject zonder vergoedingstelling of inhoud te wijzigen', () => {
+    const traject = maakTraject('traject-1', {
+      naam: 'Poging 1',
+      type: 'icsi',
+      startDatum: '2026-06-23',
+      status: 'afgerond',
+      pogingNummer: 1,
+      teltMeeVoorVergoeding: true,
+      notitie: 'Bewaren voor later.',
+    });
+
+    expect(archiveerTraject(traject, true)).toMatchObject({
+      id: 'traject-1',
+      gearchiveerd: true,
+      teltMeeVoorVergoeding: true,
+      notitie: 'Bewaren voor later.',
+    });
+    expect(archiveerTraject(traject, false).gearchiveerd).toBe(false);
   });
 });

@@ -1029,6 +1029,17 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
 
     void state.trajectStore.delete(trajectId).then(() => reloadAndRender(root, state));
   });
+
+  root.querySelectorAll<HTMLButtonElement>('.archive-traject').forEach((button) => {
+    button.addEventListener('click', () => {
+      const trajectId = button.dataset.trajectId;
+      if (!trajectId || !state.trajectStore) return;
+      const gearchiveerd = button.dataset.gearchiveerd === 'true';
+      void state.trajectStore
+        .archive(trajectId, gearchiveerd)
+        .then(() => reloadAndRender(root, state));
+    });
+  });
 }
 
 function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
