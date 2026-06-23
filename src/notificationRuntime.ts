@@ -30,7 +30,7 @@ export async function requestNotificationPermissionAndRegister(): Promise<Notifi
     return { permission: 'unsupported', serviceWorker: 'unsupported' };
   }
 
-  const registration = await navigator.serviceWorker.register('/kiempad-sw.js');
+  const registration = await registerKiempadServiceWorker();
   const permission =
     Notification.permission === 'default'
       ? await Notification.requestPermission()
@@ -38,8 +38,13 @@ export async function requestNotificationPermissionAndRegister(): Promise<Notifi
 
   return {
     permission,
-    serviceWorker: registration.active || registration.waiting || registration.installing ? 'ready' : 'ready',
+    serviceWorker: registration ? 'ready' : 'error',
   };
+}
+
+export async function registerKiempadServiceWorker(): Promise<ServiceWorkerRegistration | undefined> {
+  if (!('serviceWorker' in navigator)) return undefined;
+  return navigator.serviceWorker.register('/kiempad-sw.js');
 }
 
 export function scheduleLocalNotifications(
