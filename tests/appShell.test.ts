@@ -952,7 +952,7 @@ describe('app shell', () => {
               'Embryokwaliteit opgeslagen als application/json; 128 B. Analyse is lokaal en niet-medisch.',
             signalen: [
               'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
-              'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
+              'Embryokwaliteit is een feitelijke kliniekregistratie; Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
             ],
           },
           metadata: {
@@ -988,7 +988,7 @@ describe('app shell', () => {
               'Embryokwaliteit opgeslagen als application/json; 128 B. Analyse is lokaal en niet-medisch.',
             signalen: [
               'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
-              'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
+              'Embryokwaliteit is een feitelijke kliniekregistratie; Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
             ],
           },
           metadata: {
@@ -1024,7 +1024,7 @@ describe('app shell', () => {
     expect(html).toContain(
       'Embryo 2 · Dagen: 5 · Kwaliteit: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 1',
     );
-    expect(html).toContain('Kiempad rangschikt embryo’s niet');
+    expect(html).toContain('Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet');
     expect(html).toContain('Embryo-historie');
     expect(html).toContain(
       '2026-05-04 · Terugplaatsing · dag 5 · kwaliteit 4AA · terminologie Gardner-score · Bron: Labrapport',
@@ -1052,8 +1052,9 @@ describe('app shell', () => {
     expect(html).toContain('Terminologie: Gardner-score');
     expect(html).toContain('Bron: Labrapport');
     expect(html).toContain('Embryokwaliteit Embryo 1 · kwaliteit');
-    expect(html).toContain('Kiempad berekent geen kansen en geeft geen medisch advies');
-    expect(html).toContain('zonder kansberekening');
+    expect(html).toContain('Kiempad voorspelt geen uitkomst');
+    expect(html).toContain('rangschikt embryo’s niet');
+    expect(html).toContain('berekent geen kansen en geeft geen medisch advies');
     expect(html).not.toContain('e30=');
   });
 

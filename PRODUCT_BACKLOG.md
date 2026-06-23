@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 210 |
+| ☑ klaar | 211 |
 | ◐ bezig | 0 |
-| ☐ open | 33 |
+| ☐ open | 32 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -349,7 +349,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G208 | PFIP embryo tracking: embryo's binnen dezelfde poging vergelijken zonder kansberekening | P1 | F3 | ☑ |
 | G209 | PFIP embryo tracking: embryo-tijdlijn integreren met afspraken, labrapporten en terugplaatsing | P0 | F3 | ☑ |
 | G210 | PFIP embryo tracking: behandelcontext tonen bij embryo, inclusief protocol, poging en relevante notities | P1 | F3 | ☑ |
-| G211 | PFIP embryo tracking: waarschuwing dat embryokwaliteit geen voorspelling of medisch advies is | P0 | F3 | ☐ |
+| G211 | PFIP embryo tracking: waarschuwing dat embryokwaliteit geen voorspelling of medisch advies is | P0 | F3 | ☑ |
 | G212 | PFIP research intelligence: bronnenlijst voor relevante fertiliteitsresearch met handmatige seed en lokale cache | P1 | F4 | ☐ |
 | G213 | PFIP research intelligence: researchaggregatie achter expliciete netwerk-opt-in | P0 | F4 | ☐ |
 | G214 | PFIP research intelligence: wetenschappelijke samenvatting per publicatie met bron en datum | P1 | F4 | ☐ |

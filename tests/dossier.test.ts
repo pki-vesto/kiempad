@@ -323,7 +323,7 @@ describe('dossier', () => {
       'Bestandsnaam lijkt op embryokwaliteit of labsamenvatting.',
     );
     expect(document.analyse.signalen).toContain(
-      'Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.',
+      'Embryokwaliteit is een feitelijke kliniekregistratie; Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
     );
   });
 

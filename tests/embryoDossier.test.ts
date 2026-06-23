@@ -296,7 +296,7 @@ describe('embryoDossier', () => {
           },
         ],
         waarschuwing:
-          'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar; Kiempad rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
+          'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar. Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
       },
     ]);
   });

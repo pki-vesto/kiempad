@@ -144,6 +144,9 @@ export const DOSSIER_UPLOAD_PROFIEL_LABELS: Record<
   afbeelding: 'Afbeelding',
 };
 
+export const EMBRYO_KWALITEIT_WAARSCHUWING =
+  'Embryokwaliteit is een feitelijke kliniekregistratie; Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.';
+
 export const EMBRYO_STATUS_LABELS: Record<
   NonNullable<NonNullable<DossierDocument['embryo']>['status']>,
   string
@@ -635,7 +638,7 @@ function bepaalSignalen(input: {
     signalen.push('Gespreksverslag kan aan afspraak of traject gekoppeld worden.');
   }
   if (input.categorie === 'embryo') {
-    signalen.push('Embryokwaliteit is opgeslagen als dossierinformatie zonder kansberekening.');
+    signalen.push(EMBRYO_KWALITEIT_WAARSCHUWING);
   }
   if (input.grootteBytes > 10 * 1024 * 1024) {
     signalen.push('Bestand is groter dan 10 MB; back-up kan daardoor groter worden.');
