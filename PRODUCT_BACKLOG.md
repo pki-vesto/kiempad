@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 99 |
+| ☑ klaar | 103 |
 | ◐ bezig | 0 |
-| ☐ open | 75 |
+| ☐ open | 71 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -288,14 +288,14 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G167 | `CURRENT_STATE.md` actueel gehouden per wijziging | P1 | F0 | ☐ |
-| G168 | `CHANGELOG.md` bijgewerkt per wijziging | P1 | F0 | ☐ |
+| G167 | `CURRENT_STATE.md` actueel gehouden per wijziging | P1 | F0 | ☑ |
+| G168 | `CHANGELOG.md` bijgewerkt per wijziging | P1 | F0 | ☑ |
 | G169 | ADR toegevoegd bij elke belangrijke keuze | P1 | F0 | ☐ |
-| G170 | Backlog-telling bijgewerkt bij statuswijziging | P2 | F0 | ☐ |
+| G170 | Backlog-telling bijgewerkt bij statuswijziging | P2 | F0 | ☑ |
 | G171 | Kennisbank-inhoud periodiek verifiëren met behandelaars | P1 | F1 | ☐ |
 | G172 | Vergoedingscijfers jaarlijks herzien | P2 | F2 | ☐ |
 | G173 | Dependencies periodiek updaten (security) | P1 | F1 | ☑ |
-| G174 | Disclaimer-tekst review bij elke release | P1 | F1 | ☐ |
+| G174 | Disclaimer-tekst review bij elke release | P1 | F1 | ☑ |
 
 ---
 
