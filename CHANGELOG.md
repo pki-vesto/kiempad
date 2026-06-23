@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G217 PFIP research intelligence: opgeslagen researchitems worden lokaal
+  gegroepeerd als trends per onderwerp, zoals IVF, ICSI, embryo, leefstijl en
+  mannelijke factor, met waarschuwing dat dit geen bewijsweging is.
 - G216 PFIP research intelligence: researchpublicaties kunnen een handmatige
   relevantienotitie voor de gebruiker bewaren en tonen, gekoppeld aan lokale
   dossiercontextbronnen en zonder diagnose, dosering of behandelkeuze.

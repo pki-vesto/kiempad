@@ -64,12 +64,14 @@ import {
   bouwWetenschappelijkeResearchSamenvattingen,
   type EenvoudigeResearchSamenvatting,
   filterKennisItems,
+  groepeerResearchTrends,
   KENNIS_CATEGORIE_LABELS,
   type KennisFilter,
   kennisItemsPerCategorie,
   type ResearchAggregatiePlan,
   type ResearchBron,
   type ResearchRelevantieVoorGebruiker,
+  type ResearchTrendGroep,
   type WetenschappelijkeResearchSamenvatting,
 } from './domain/kennis';
 import {
@@ -1815,6 +1817,7 @@ function renderKennisScreen(state: AppShellState): string {
     state.kennisItems,
     researchDossierContextBronnen,
   );
+  const researchTrendGroepen = groepeerResearchTrends(state.kennisItems);
   const researchAggregatie = bouwResearchAggregatiePlan(
     researchBronnen,
     state.settings.researchNetwerk.ingeschakeld,
@@ -1847,6 +1850,9 @@ function renderKennisScreen(state: AppShellState): string {
       </div>
       <div class="summary-panel">
         ${renderResearchRelevantieVoorGebruiker(researchRelevantie)}
+      </div>
+      <div class="summary-panel">
+        ${renderResearchTrendGroepen(researchTrendGroepen)}
       </div>
       <div class="summary-panel">
         ${renderResearchNetworkSettingsForm(state.settings)}
@@ -2151,6 +2157,36 @@ function renderResearchRelevantieVoorGebruiker(
             )
             .join('')}</ol>`
         : '<p class="empty-state">Nog geen relevantie per publicatie aan dossiercontext gekoppeld.</p>'
+    }
+  `;
+}
+
+function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): string {
+  return `
+    <h2>Researchtrends</h2>
+    <p class="small-print">Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.</p>
+    ${
+      groepen.length > 0
+        ? `<ol class="compact-list">${groepen
+            .map(
+              (groep) => `
+                <li>
+                  <strong>${escapeHtml(groep.label)}</strong>
+                  <span>${groep.items.length} item(s)</span>
+                  <small>${escapeHtml(groep.waarschuwing)}</small>
+                  <ol>
+                    ${groep.items
+                      .map(
+                        (item) =>
+                          `<li>${escapeHtml(item.titel)}${item.publicatieDatum ? ` · ${escapeHtml(item.publicatieDatum)}` : ''}${item.bron ? ` · ${escapeHtml(item.bron)}` : ''}</li>`,
+                      )
+                      .join('')}
+                  </ol>
+                </li>
+              `,
+            )
+            .join('')}</ol>`
+        : '<p class="empty-state">Nog geen researchtrends gevonden in opgeslagen researchitems.</p>'
     }
   `;
 }

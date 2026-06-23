@@ -9,6 +9,7 @@ import {
   bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
   filterKennisItems,
+  groepeerResearchTrends,
   INITIELE_KENNIS_ITEMS,
   INITIELE_RESEARCH_BRONNEN,
   kennisItemsPerCategorie,
@@ -172,6 +173,50 @@ describe('kennis domeinregels', () => {
           'Relevantie is een contextnotitie voor het gesprek met de kliniek; dit is geen diagnose, dosering of behandelkeuze.',
       },
     ]);
+  });
+
+  it('groepeert researchtrends per onderwerp op basis van lokale trefwoorden', () => {
+    const items = [
+      maakResearchKennisItem('research-ivf-embryo', {
+        titel: 'IVF embryo-cultuur',
+        bron: 'https://voorbeeld.test/ivf-embryo',
+        publicatieDatum: '2026-05-10',
+        notitie: 'Artikel over IVF en embryo-ontwikkeling.',
+        wetenschappelijkeSamenvatting:
+          'Beschrijft IVF-labfactoren en embryo-observaties zonder behandeladvies.',
+      }),
+      maakResearchKennisItem('research-man-leefstijl', {
+        titel: 'Mannelijke factor en leefstijl',
+        bron: 'https://voorbeeld.test/man-leefstijl',
+        publicatieDatum: '2026-04-01',
+        notitie: 'Artikel over sperma, voeding en slaap.',
+        wetenschappelijkeSamenvatting:
+          'Beschrijft zaadkwaliteit, voeding en slaap als onderzoeksonderwerpen.',
+      }),
+      maakResearchKennisItem('research-icsi', {
+        titel: 'ICSI achtergrond',
+        bron: 'https://voorbeeld.test/icsi',
+        publicatieDatum: '2026-03-01',
+        notitie: 'Artikel over ICSI.',
+        wetenschappelijkeSamenvatting: 'Beschrijft ICSI als laboratoriumtechniek.',
+      }),
+    ];
+
+    const groepen = groepeerResearchTrends(items);
+
+    expect(groepen.map((groep) => groep.onderwerp)).toEqual([
+      'ivf',
+      'icsi',
+      'embryo',
+      'leefstijl',
+      'mannelijke_factor',
+    ]);
+    expect(groepen.find((groep) => groep.onderwerp === 'embryo')?.items[0]).toMatchObject({
+      titel: 'IVF embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      bron: 'https://voorbeeld.test/ivf-embryo',
+    });
+    expect(groepen.every((groep) => groep.waarschuwing.includes('geen bewijsweging'))).toBe(true);
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
