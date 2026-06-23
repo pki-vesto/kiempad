@@ -286,6 +286,9 @@
 - **G235 PFIP graph-consultexport:** Het trajectscherm toont een exporteerbare
   Markdown-samenvatting van de graph voor consultvoorbereiding met relaties,
   bronpad, controlehash en expliciete waarschuwing zonder medische claims.
+- **G236 PFIP centrale fertility timeline:** Het trajectscherm toont een centrale
+  tijdlijn uit lokale onderzoeken, consulten, behandelingen, embryo's,
+  aanbevelingen en research, met bron en veilige waarschuwing.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -418,7 +421,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G235 nog 8 open doelen (G236-G243), gericht op dossier-ingest,
+heeft na G236 nog 7 open doelen (G237-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -468,8 +471,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G236: centraal fertiliteitstraject-scherm met onderzoeken,
-   consulten, behandelingen, embryo's, aanbevelingen en research.
+1. PFIP uitvoeren vanaf G237: tijdlijnitems normaliseren uit bestaande afspraken,
+   dossierdocumenten, embryo's, vragen en medicatie.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

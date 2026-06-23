@@ -65,6 +65,7 @@ import {
   herbouwFertilityGraphIndex,
   maakFertilityGraphConsultSamenvattingExport,
 } from './domain/fertilityKnowledgeGraph';
+import { bouwFertilityTimeline, type FertilityTimeline } from './domain/fertilityTimeline';
 import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
@@ -3443,6 +3444,7 @@ function renderTrajectScreen(state: AppShellState): string {
   const selected = actieveTrajecten[0];
   const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
   const overzicht = berekenTrajectOverzicht(state.trajecten);
+  const fertilityTimeline = bouwFertilityTimelineVoorState(state);
   const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
 
   return `
@@ -3466,6 +3468,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
         ${renderTrajectOverzicht(overzicht)}
+        ${renderFertilityTimeline(fertilityTimeline)}
         ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
         <div class="panel-heading">
           <h2>Fasen</h2>
@@ -3497,6 +3500,56 @@ const FERTILITY_GRAPH_RELATIE_LABELS: Record<FertilityGraphEdgeType, string> = {
   gebruikt_bron: 'Gebruikt bron',
   research_notitie: 'Researchnotitie',
 };
+
+function bouwFertilityTimelineVoorState(state: AppShellState): FertilityTimeline {
+  const vandaag = new Date().toISOString().slice(0, 10);
+  const aanbevelingen = bouwDagelijksAanbevelingsoverzicht({
+    datum: vandaag,
+    afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+    medicatie: state.medicatie,
+    vragen: state.vragen.map((bundle) => bundle.vraag),
+    consultVerslagen: state.consultVerslagen ?? [],
+    trajecten: state.trajecten,
+    dossierDocuments: state.dossierDocuments ?? [],
+    cycleData: state.cycleData ?? [],
+  });
+
+  return bouwFertilityTimeline({
+    trajecten: state.trajecten,
+    afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+    dossierDocuments: state.dossierDocuments ?? [],
+    consultVerslagen: state.consultVerslagen ?? [],
+    kennisItems: state.kennisItems,
+    aanbevelingen,
+    aanbevelingenDatum: vandaag,
+  });
+}
+
+function renderFertilityTimeline(timeline: FertilityTimeline): string {
+  return `
+    <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline">
+      <h2>Fertility timeline</h2>
+      <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research vanuit lokale records.</p>
+      ${
+        timeline.items.length > 0
+          ? `<ol class="compact-list">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
+          : '<p class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
+      }
+      <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): string {
+  return `
+    <li>
+      <strong>${escapeHtml(item.titel)}</strong>
+      <span>${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · ${escapeHtml(item.bron)}</span>
+      <small>${escapeHtml(item.detail)}</small>
+      ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
+    </li>
+  `;
+}
 
 function bouwTrajectGraphWeergave(
   state: AppShellState,

@@ -126,7 +126,33 @@ describe('app shell', () => {
       medicatie: [],
       herinneringen: [],
       vragen: [],
-      kennisItems: [],
+      consultVerslagen: [
+        {
+          id: 'consult-1',
+          datum: '2026-06-25',
+          titel: 'Labconsult',
+          bron: 'handmatig',
+          tekst: 'Bespreek labrapport.',
+          trajectId: 'traject-1',
+          uploadedAt: '2026-06-25T10:00:00.000Z',
+        },
+      ],
+      kennisItems: [
+        {
+          id: 'research-1',
+          titel: 'Embryo research',
+          inhoud: 'Lokale researchnotitie.',
+          categorie: 'research',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+          researchPublicatie: {
+            publicatieDatum: '2026-06-01',
+            bron: 'https://example.test/research',
+            wetenschappelijkeSamenvatting: 'Wetenschappelijke samenvatting.',
+            eenvoudigeSamenvatting: 'Eenvoudige samenvatting voor consultcontext.',
+          },
+        },
+      ],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       dailyRecommendationStatus: 'Aanbeveling bewaard: Dagcheck zonder extra medicatiemoment.',
@@ -228,7 +254,33 @@ describe('app shell', () => {
       medicatie: [],
       herinneringen: [],
       vragen: [],
-      kennisItems: [],
+      consultVerslagen: [
+        {
+          id: 'consult-1',
+          datum: '2026-06-25',
+          titel: 'Labconsult',
+          bron: 'handmatig',
+          tekst: 'Bespreek labrapport.',
+          trajectId: 'traject-1',
+          uploadedAt: '2026-06-25T10:00:00.000Z',
+        },
+      ],
+      kennisItems: [
+        {
+          id: 'research-1',
+          titel: 'Embryo research',
+          inhoud: 'Lokale researchnotitie.',
+          categorie: 'research',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+          researchPublicatie: {
+            publicatieDatum: '2026-06-01',
+            bron: 'https://example.test/research',
+            wetenschappelijkeSamenvatting: 'Wetenschappelijke samenvatting.',
+            eenvoudigeSamenvatting: 'Eenvoudige samenvatting voor consultcontext.',
+          },
+        },
+      ],
       dossierDocuments: [
         {
           id: 'doc-1',
@@ -403,6 +455,10 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Knowledge graph');
+    expect(html).toContain('Fertility timeline');
+    expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
+    expect(html).toContain('Echo verslag');
+    expect(html).toContain('Behandelvoorbereiding');
     expect(html).toContain('id="graph-filter-form"');
     expect(html).toContain('name="graphRelatieType"');
     expect(html).toContain('Hoort bij behandeling');
