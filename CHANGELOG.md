@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G169 ADR-dekking: ADR-0008 toegevoegd voor de aangescherpte CI/lintgate en
+  privacyveilige notificatie-inhoud als opt-in instelling.
 - G167/G168/G170/G174 onderhoudschecks: tests toegevoegd voor actuele
   onderhoudsvermeldingen, correcte backlogtelling en consistente niet-medische
   disclaimer in app en kerndocumenten.

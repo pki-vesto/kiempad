@@ -60,6 +60,8 @@
   `CURRENT_STATE.md`/`CHANGELOG.md` de onderhoudsdoelen noemen, de backlogtelling
   overeenkomt met de doelstatussen en de disclaimer-grens consistent blijft in app en
   kerndocumenten.
+- **G169 ADR-dekking:** ADR-0008 legt de aangescherpte CI/lintgate en
+  notificatieprivacy-keuze vast.
 
 ## 2. Gedeeltelijk Gebouwd
 
