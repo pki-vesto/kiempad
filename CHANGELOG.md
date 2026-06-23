@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G202 PFIP consult intelligence: consultverslagen kunnen een gebruikerscorrectie
+  op de conceptsamenvatting tonen met lokale verschilweergave.
 - G201 PFIP consult intelligence: consultverslagen tonen lokale koppelingen naar
   trajectfase, medicatie, embryo en onderzoek wanneer die uit context herleidbaar zijn.
 - G200 PFIP consult intelligence: dossierscherm reconstrueert een lokale

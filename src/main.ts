@@ -399,6 +399,7 @@ async function saveConsultVerslagFromForm(
       grootteBytes: consultBestand?.size,
       inhoudBase64: consultBestand ? await fileToBase64(consultBestand) : undefined,
       tekst,
+      samenvattingCorrectie: optionalString(data.get('samenvattingCorrectie')),
       afspraakId: optionalString(data.get('afspraakId')),
       trajectId: optionalString(data.get('trajectId')),
       notitie: optionalString(data.get('notitie')),

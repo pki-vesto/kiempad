@@ -20,7 +20,11 @@ import {
   reconstrueerBehandelGeschiedenis,
 } from './domain/behandelGeschiedenis';
 import { type ConsultInzichtKoppeling, koppelConsultInzichten } from './domain/consultInzichten';
-import { CONSULT_VERSLAG_BRON_LABELS } from './domain/consultVerslag';
+import {
+  CONSULT_VERSLAG_BRON_LABELS,
+  type ConsultSamenvattingVerschil,
+  vergelijkConsultSamenvatting,
+} from './domain/consultVerslag';
 import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
@@ -820,6 +824,10 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
           </label>
           <label>
+            Correctie op conceptsamenvatting
+            <textarea name="samenvattingCorrectie" rows="4" placeholder="Optioneel: corrigeer de lokale conceptsamenvatting in eigen woorden"></textarea>
+          </label>
+          <label>
             Koppel aan afspraak
             <select name="afspraakId">
               <option value="">Geen afspraak</option>
@@ -1175,6 +1183,7 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
             : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
         }
         ${renderConsultSamenvatting(verslag)}
+        ${renderConsultSamenvattingVerschil(vergelijkConsultSamenvatting(verslag))}
         ${renderConsultActiepunten(verslag)}
         ${renderConsultInzichten(inzichten)}
         ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
@@ -1193,6 +1202,32 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
       <strong>Conceptsamenvatting</strong>
       <p>${escapeHtml(verslag.samenvatting.tekst)}</p>
       <small>Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
+    </div>
+  `;
+}
+
+function renderConsultSamenvattingVerschil(
+  verschil: ConsultSamenvattingVerschil | undefined,
+): string {
+  if (!verschil) return '';
+  if (verschil.status === 'geen_correctie') {
+    return '<p class="small-print">Nog geen gebruikerscorrectie voor de conceptsamenvatting vastgelegd.</p>';
+  }
+
+  return `
+    <div class="linked-note">
+      <strong>Verschil met gebruikerscorrectie</strong>
+      ${
+        verschil.toegevoegd.length > 0
+          ? `<p>Toegevoegd: ${verschil.toegevoegd.map(escapeHtml).join(' ')}</p>`
+          : '<p>Toegevoegd: geen nieuwe zinnen.</p>'
+      }
+      ${
+        verschil.verwijderd.length > 0
+          ? `<p>Verwijderd uit concept: ${verschil.verwijderd.map(escapeHtml).join(' ')}</p>`
+          : '<p>Verwijderd uit concept: geen zinnen.</p>'
+      }
+      <small>${escapeHtml(verschil.waarschuwing)}</small>
     </div>
   `;
 }

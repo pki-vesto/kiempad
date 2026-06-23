@@ -9,6 +9,7 @@ export type ConsultVerslagInput = {
   grootteBytes?: number;
   inhoudBase64?: string;
   tekst?: string;
+  samenvattingCorrectie?: string;
   afspraakId?: string;
   trajectId?: string;
   notitie?: string;
@@ -25,6 +26,15 @@ export type ConsultActiepuntenInput = Pick<
   'id' | 'tekst' | 'notitie' | 'uploadedAt'
 >;
 
+export type ConsultSamenvattingVerschil = {
+  status: 'geen_correctie' | 'gewijzigd' | 'ongewijzigd';
+  concept: string;
+  correctie?: string;
+  toegevoegd: string[];
+  verwijderd: string[];
+  waarschuwing: string;
+};
+
 export const CONSULT_VERSLAG_BRON_LABELS: Record<ConsultVerslag['bron'], string> = {
   upload: 'Upload',
   handmatig: 'Handmatig',
@@ -38,6 +48,7 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
   const notitie = input.notitie?.trim();
   const afspraakId = input.afspraakId?.trim();
   const trajectId = input.trajectId?.trim();
+  const samenvattingCorrectie = input.samenvattingCorrectie?.trim();
   const inhoudBase64 = input.inhoudBase64?.trim();
   const mimeType = input.mimeType?.trim();
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
@@ -75,6 +86,12 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
       bestandsNaam: bestandsNaam || undefined,
       uploadedAt,
     }),
+    samenvattingCorrectie: samenvattingCorrectie
+      ? {
+          tekst: samenvattingCorrectie,
+          bijgewerktOp: uploadedAt,
+        }
+      : undefined,
     actiepunten: extraheerConsultActiepunten({
       id,
       tekst: tekst || undefined,
@@ -82,6 +99,42 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
       uploadedAt,
     }),
     uploadedAt,
+  };
+}
+
+export function vergelijkConsultSamenvatting(
+  verslag: ConsultVerslag,
+): ConsultSamenvattingVerschil | undefined {
+  const concept = verslag.samenvatting?.tekst.trim();
+  if (!concept) return undefined;
+
+  const correctie = verslag.samenvattingCorrectie?.tekst.trim();
+  if (!correctie) {
+    return {
+      status: 'geen_correctie',
+      concept,
+      toegevoegd: [],
+      verwijderd: [],
+      waarschuwing:
+        'Geen gebruikerscorrectie vastgelegd; controleer het concept met het originele consult.',
+    };
+  }
+
+  const conceptZinnen = normaliseerZinnen(concept);
+  const correctieZinnen = normaliseerZinnen(correctie);
+  const conceptKeys = new Set(conceptZinnen.map((zin) => normaliseerDiffTekst(zin)));
+  const correctieKeys = new Set(correctieZinnen.map((zin) => normaliseerDiffTekst(zin)));
+  const toegevoegd = correctieZinnen.filter((zin) => !conceptKeys.has(normaliseerDiffTekst(zin)));
+  const verwijderd = conceptZinnen.filter((zin) => !correctieKeys.has(normaliseerDiffTekst(zin)));
+
+  return {
+    status: toegevoegd.length > 0 || verwijderd.length > 0 ? 'gewijzigd' : 'ongewijzigd',
+    concept,
+    correctie,
+    toegevoegd,
+    verwijderd,
+    waarschuwing:
+      'Verschilweergave is lokaal en tekstueel; de gebruikerscorrectie is leidend voor eigen notities.',
   };
 }
 
@@ -179,4 +232,20 @@ function bepaalActiepuntSoort(tekst: string): 'taak' | 'vraag' {
 
 function normaliseerActiepuntTekst(tekst: string): string {
   return tekst.replace(/^\s*[-*]\s*/u, '').trim();
+}
+
+function normaliseerZinnen(tekst: string): string[] {
+  return tekst
+    .split(/(?<=[.!?])\s+|\n+/u)
+    .map((zin) => zin.trim())
+    .filter(Boolean);
+}
+
+function normaliseerDiffTekst(tekst: string): string {
+  return tekst
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLocaleLowerCase('nl-NL');
 }

@@ -586,6 +586,11 @@ describe('app shell', () => {
               'Concept op basis van lokaal ingevoerde tekst; controleer altijd met het originele consult en je kliniek.',
             gegenereerdOp: '2026-06-23T15:05:00.000Z',
           },
+          samenvattingCorrectie: {
+            tekst:
+              'Afgesproken om bloeduitslagen mee te nemen. Progesteron navragen bij de kliniek.',
+            bijgewerktOp: '2026-06-23T15:10:00.000Z',
+          },
           actiepunten: [
             {
               id: 'consult-1-actie-1',
@@ -739,6 +744,9 @@ describe('app shell', () => {
     expect(html).toContain('Conceptsamenvatting');
     expect(html).toContain('Bronnen: consulttekst, notitie');
     expect(html).toContain('controleer altijd met het originele consult');
+    expect(html).toContain('Verschil met gebruikerscorrectie');
+    expect(html).toContain('Toegevoegd: Progesteron navragen bij de kliniek.');
+    expect(html).toContain('Verwijderd uit concept: geen zinnen.');
     expect(html).toContain('Conceptactiepunten');
     expect(html).toContain('Taak: Afgesproken om bloeduitslagen mee te nemen.');
     expect(html).toContain('Vraag: Vraag over vervolgstap bewaren.');
