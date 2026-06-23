@@ -1,6 +1,7 @@
 import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
+import { exporteerAfsprakenAlsIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import type { DecisionOptionInput } from './domain/decision';
@@ -1043,6 +1044,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#export-ics')?.addEventListener('click', () => {
+    exportAgendaIcs(state);
+  });
+
   root.querySelector('#afspraak-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveAfspraakFromForm(event.currentTarget, root, state);
@@ -1059,6 +1064,20 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
 
     void state.agendaStore.delete(afspraakId).then(() => reloadAndRender(root, state));
   });
+}
+
+function exportAgendaIcs(state: RuntimeState): void {
+  const afspraken = state.afspraken.map((bundle) => bundle.afspraak);
+  if (afspraken.length === 0) return;
+
+  const inhoud = exporteerAfsprakenAlsIcs(afspraken);
+  const blob = new Blob([inhoud], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `kiempad-afspraken-${new Date().toISOString().slice(0, 10)}.ics`;
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {

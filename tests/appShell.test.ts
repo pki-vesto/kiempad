@@ -135,6 +135,8 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Echo controle');
+    expect(html).toContain('id="export-ics"');
+    expect(html).toContain('Download ICS');
     expect(html).toContain('Weekweergave');
     expect(html).toContain('Week 26 2026');
     expect(html).toContain('Maandweergave');

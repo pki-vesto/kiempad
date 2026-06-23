@@ -1666,6 +1666,7 @@ function renderAgendaScreen(state: AppShellState): string {
       <div class="timeline-panel">
         <div class="panel-heading">
           <h2>Komende afspraken</h2>
+          ${state.afspraken.length > 0 ? '<button class="phase-button" id="export-ics" type="button">Download ICS</button>' : ''}
           ${
             selected
               ? `<button class="danger-button" id="delete-afspraak" type="button" data-afspraak-id="${selected.afspraak.id}" aria-label="Verwijder afspraak: ${escapeAttribute(selected.afspraak.titel)}">Verwijder afspraak</button>`
