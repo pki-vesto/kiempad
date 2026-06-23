@@ -77,6 +77,64 @@ export function formatDateTime(value: string): string {
   return value.replace('T', ' ');
 }
 
+export function exporteerAfsprakenAlsIcs(
+  afspraken: readonly Afspraak[],
+  generatedAt = new Date().toISOString(),
+): string {
+  const lines = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Kiempad//Agenda//NL',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    ...sorteerAfspraken(afspraken).flatMap((afspraak) => renderIcsEvent(afspraak, generatedAt)),
+    'END:VCALENDAR',
+  ];
+
+  return `${lines.join('\r\n')}\r\n`;
+}
+
+function renderIcsEvent(afspraak: Afspraak, generatedAt: string): string[] {
+  const description = [afspraak.voorbereiding, afspraak.notitie].filter(Boolean).join('\n');
+
+  return [
+    'BEGIN:VEVENT',
+    `UID:${escapeIcsText(`kiempad-${afspraak.id}`)}`,
+    `DTSTAMP:${formatIcsDateTime(generatedAt)}`,
+    `DTSTART:${formatIcsDateTime(afspraak.datumTijd)}`,
+    `DTEND:${formatIcsDateTime(telMinutenOp(afspraak.datumTijd, 60))}`,
+    `SUMMARY:${escapeIcsText(afspraak.titel)}`,
+    afspraak.locatie ? `LOCATION:${escapeIcsText(afspraak.locatie)}` : undefined,
+    description ? `DESCRIPTION:${escapeIcsText(description)}` : undefined,
+    `CATEGORIES:${escapeIcsText(AFSPRAAK_TYPE_LABELS[afspraak.type])}`,
+    'END:VEVENT',
+  ].filter((line): line is string => Boolean(line));
+}
+
+function formatIcsDateTime(value: string): string {
+  const normalized = value.replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
+  if (normalized.endsWith('Z')) return `${normalized.slice(0, 15)}Z`;
+  return normalized.padEnd(15, '0').slice(0, 15);
+}
+
+function telMinutenOp(value: string, minutes: number): string {
+  const [datePart, timePart = '00:00'] = value.replace(/Z$/, '').split('T');
+  const [year, month, day] = (datePart ?? '').split('-').map(Number);
+  const [hour, minute] = timePart.split(':').map(Number);
+  const date = new Date(
+    Date.UTC(year ?? 1970, (month ?? 1) - 1, day ?? 1, hour ?? 0, (minute ?? 0) + minutes),
+  );
+  return date.toISOString().slice(0, 16);
+}
+
+function escapeIcsText(value: string): string {
+  return value
+    .replace(/\\/g, '\\\\')
+    .replace(/\r?\n/g, '\\n')
+    .replace(/,/g, '\\,')
+    .replace(/;/g, '\\;');
+}
+
 function groepeerAfspraken(
   afspraken: readonly Afspraak[],
   groepVoorAfspraak: (afspraak: Afspraak) => Omit<AgendaGroep, 'afspraken'>,

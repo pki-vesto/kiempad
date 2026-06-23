@@ -157,6 +157,8 @@
   pogingen met totalen, actief/archief, status/type-verdeling en periode.
 - **G035 agenda week-/maandweergave:** agendascherm toont naast de chronologische
   afsprakenlijst compacte groeperingen per ISO-week en maand.
+- **G041 ICS-export:** agendascherm kan alle lokale afspraken als `.ics`-bestand
+  downloaden voor eigen agenda-import; generatie gebeurt in de browser.
 - **G040 afgelopen afspraken:** agendascherm splitst afgelopen afspraken naar een
   aparte "Afgelopen"-sectie, labelt ze als "Geweest" en toont bestaande notities als
   terugblik.

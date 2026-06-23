@@ -4,6 +4,7 @@ import {
   afsprakenPerMaand,
   afsprakenPerWeek,
   beschrijfVolgendeAfspraak,
+  exporteerAfsprakenAlsIcs,
   komendeAfspraken,
   maakAfspraak,
   maakAfspraakHerinnering,
@@ -93,5 +94,32 @@ describe('agenda domeinregels', () => {
       ['Juni 2026', 2],
       ['Juli 2026', 1],
     ]);
+  });
+
+  it('exporteert afspraken als lokaal ICS-bestand met escaping', () => {
+    const afspraken = [
+      maakAfspraak('later', {
+        titel: 'Consult, bespreken',
+        datumTijd: '2026-06-24T09:30',
+        type: 'consult',
+        locatie: 'Kliniek; kamer 2',
+        voorbereiding: 'ID meenemen',
+        notitie: 'Vraag: medicatie\nVolgende stap',
+      }),
+    ];
+
+    const ics = exporteerAfsprakenAlsIcs(afspraken, '2026-06-23T12:00:00.000Z');
+
+    expect(ics).toContain('BEGIN:VCALENDAR\r\n');
+    expect(ics).toContain('PRODID:-//Kiempad//Agenda//NL');
+    expect(ics).toContain('UID:kiempad-later');
+    expect(ics).toContain('DTSTAMP:20260623T120000Z');
+    expect(ics).toContain('DTSTART:20260624T093000');
+    expect(ics).toContain('DTEND:20260624T103000');
+    expect(ics).toContain('SUMMARY:Consult\\, bespreken');
+    expect(ics).toContain('LOCATION:Kliniek\\; kamer 2');
+    expect(ics).toContain('DESCRIPTION:ID meenemen\\nVraag: medicatie\\nVolgende stap');
+    expect(ics).toContain('CATEGORIES:Consult');
+    expect(ics.endsWith('END:VCALENDAR\r\n')).toBe(true);
   });
 });

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G041 ICS-export: agendascherm kan alle lokale afspraken als `.ics`-bestand
+  downloaden voor eigen agenda-import.
 - G030 trajecttrends: trajectscherm toont een lokaal overzicht over meerdere
   pogingen met totalen, actief/archief, status/type-verdeling en periode.
 - G029 trajectarchief: trajecten kunnen uit de actieve lijst worden gearchiveerd en
