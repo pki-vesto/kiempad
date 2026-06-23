@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G102 AI-provider/modelkeuze: kennisscherm toont provider- en modelvelden in de
+  lokale AI-instelling en bewaart die keuze versleuteld zonder externe call.
 - G175-G178 dossier- en uploaddoelen toegevoegd voor historische onderzoeken,
   foto's/echo's, gespreksverslagen en embryokwaliteit.
 - G062 standaard-waarschuwtijd: herinneringenscherm bewaart een versleutelde

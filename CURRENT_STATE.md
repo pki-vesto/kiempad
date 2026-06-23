@@ -78,6 +78,9 @@
   exacte gede-identificeerde payload-preview voordat iets naar AI zou gaan, en kan een
   AI-samenvatting als `ai_gegenereerd=true` KennisItem bewaren via de versleutelde
   kennisstore.
+- **G102 AI-provider/modelkeuze:** het kennisscherm bevat lokale AI-instellingen voor
+  opt-in, provider, model en API-sleutel; deze keuze wordt versleuteld in het
+  settingsrecord bewaard zonder externe call.
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
@@ -139,7 +142,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   standaard-waarschuwtijd en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale
-  AI-opt-ininstellingen, payload-preview en AI-samenvatting-opslag. Het back-upscherm
+  AI-opt-ininstellingen, provider/modelkeuze, payload-preview en
+  AI-samenvatting-opslag. Het back-upscherm
   kan versleutelde exportbestanden downloaden en checksum-gecontroleerd importeren.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.

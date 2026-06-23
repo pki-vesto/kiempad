@@ -40,13 +40,13 @@ describe('SettingsStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('toonNotificatieDetailsOpVergrendelscherm');
   });
 
-  it('bewaart AI-opt-in en API-sleutel versleuteld', async () => {
+  it('bewaart AI-provider, model en API-sleutel versleuteld', async () => {
     const { driver, store } = await setupStore();
 
     const saved = await store.setAiSettings({
       ingeschakeld: true,
-      provider: 'provider',
-      model: 'model',
+      provider: 'OpenAI',
+      model: 'gpt-5-mini',
       apiKey: 'sk-test-secret',
       laatsteOptInOp: '2026-06-23T12:00:00.000Z',
     });
@@ -54,13 +54,14 @@ describe('SettingsStore', () => {
 
     expect(saved.ai).toMatchObject({
       ingeschakeld: true,
-      provider: 'provider',
-      model: 'model',
+      provider: 'OpenAI',
+      model: 'gpt-5-mini',
       apiKey: 'sk-test-secret',
     });
     expect(raw?.type).toBe('settings');
     expect(raw?.payload.ciphertext).not.toContain('sk-test-secret');
-    expect(raw?.payload.ciphertext).not.toContain('provider');
+    expect(raw?.payload.ciphertext).not.toContain('OpenAI');
+    expect(raw?.payload.ciphertext).not.toContain('gpt-5-mini');
   });
 
   it('bewaart standaard afspraakwaarschuwing versleuteld en begrensd', async () => {
