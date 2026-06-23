@@ -25,6 +25,7 @@ import {
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   EMBRYO_STATUS_LABELS,
   formatBytes,
+  maakImagingContextSamenvatting,
   zoekDossierDocumenten,
 } from './domain/dossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
@@ -892,6 +893,7 @@ function renderImagingRepositoryItem(
 ): string {
   const soortLabel = imagingSoortLabel(item.soort);
   const tijdlijnKoppeling = renderImagingTijdlijnKoppeling(item.tijdlijnKoppeling);
+  const contextSamenvatting = maakImagingContextSamenvatting(item);
   const preview =
     item.mimeType?.startsWith('image/') && item.document.inhoudBase64
       ? `<figure class="linked-note">
@@ -918,6 +920,8 @@ function renderImagingRepositoryItem(
             : ''
         }
         ${tijdlijnKoppeling}
+        <p class="linked-note">${escapeHtml(contextSamenvatting.titel)}: ${escapeHtml(contextSamenvatting.notitie)}</p>
+        <p class="small-print">${escapeHtml(contextSamenvatting.waarschuwing)}</p>
         ${preview}
       </div>
     </li>
