@@ -71,6 +71,12 @@ export interface Medicatie {
   instructie?: string;
   actief: boolean;
   voorraadAantal?: number;
+  instructieVideo?: {
+    bestandsNaam: string;
+    mimeType?: string;
+    grootteBytes: number;
+    inhoudBase64: string;
+  };
 }
 
 export interface DoseLog {

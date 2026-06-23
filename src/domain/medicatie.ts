@@ -15,6 +15,7 @@ export type MedicatieInput = {
   instructie?: string;
   actief: boolean;
   voorraadAantal?: number;
+  instructieVideo?: Medicatie['instructieVideo'];
 };
 
 export type DoseLogInput = {
@@ -39,6 +40,7 @@ export function maakMedicatie(id: string, input: MedicatieInput): Medicatie {
     instructie: normaliseerOptioneleTekst(input.instructie),
     actief: input.actief,
     voorraadAantal: normaliseerVoorraadAantal(input.voorraadAantal),
+    instructieVideo: normaliseerInstructieVideo(input.instructieVideo),
   };
 }
 
@@ -140,4 +142,16 @@ function normaliseerOptioneleTekst(value: string | undefined): string | undefine
 function normaliseerVoorraadAantal(value: number | undefined): number | undefined {
   if (value === undefined || !Number.isFinite(value)) return undefined;
   return Math.max(0, Math.floor(value));
+}
+
+function normaliseerInstructieVideo(
+  value: Medicatie['instructieVideo'],
+): Medicatie['instructieVideo'] {
+  if (!value?.bestandsNaam || !value.inhoudBase64) return undefined;
+  return {
+    bestandsNaam: value.bestandsNaam.trim(),
+    mimeType: normaliseerOptioneleTekst(value.mimeType),
+    grootteBytes: Math.max(0, Math.floor(value.grootteBytes)),
+    inhoudBase64: value.inhoudBase64,
+  };
 }

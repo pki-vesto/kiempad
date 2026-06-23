@@ -1965,6 +1965,15 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
         Instructie
         <textarea name="instructie" rows="3">${escapeHtml(medicatie?.instructie ?? '')}</textarea>
       </label>
+      <label>
+        Lokale instructievideo
+        <input name="instructieVideo" type="file" accept="video/*" />
+      </label>
+      ${
+        medicatie?.instructieVideo
+          ? `<p class="small-print">Huidige video: ${escapeHtml(medicatie.instructieVideo.bestandsNaam)} · ${escapeHtml(formatBytes(medicatie.instructieVideo.grootteBytes))}</p>`
+          : ''
+      }
       <div class="form-grid">
         <label>
           Schema startdatum
@@ -2041,6 +2050,7 @@ function renderMedicatieList(bundles: MedicatieBundle[]): string {
                 <small>${escapeHtml(beschrijfMedicatieDosis(bundle.medicatie))}</small>
                 <p class="linked-note">Voorraad: ${escapeHtml(beschrijfMedicatieVoorraad(bundle.medicatie))}</p>
                 ${bundle.medicatie.instructie ? `<p class="linked-note">Instructie: ${escapeHtml(bundle.medicatie.instructie)}</p>` : ''}
+                ${renderMedicatieInstructieVideo(bundle.medicatie)}
                 <p class="linked-note">${bundle.doseLogs.length} geplande log(s)</p>
                 ${renderDoseLogHistory(bundle.doseLogs)}
               </div>
@@ -2049,6 +2059,18 @@ function renderMedicatieList(bundles: MedicatieBundle[]): string {
         )
         .join('')}
     </ol>
+  `;
+}
+
+function renderMedicatieInstructieVideo(medicatie: Medicatie): string {
+  const video = medicatie.instructieVideo;
+  if (!video) return '';
+
+  return `
+    <figure class="linked-note">
+      <video controls preload="metadata" src="data:${escapeAttribute(video.mimeType ?? 'video/mp4')};base64,${escapeAttribute(video.inhoudBase64)}"></video>
+      <figcaption>Lokale instructievideo: ${escapeHtml(video.bestandsNaam)} · ${escapeHtml(formatBytes(video.grootteBytes))}</figcaption>
+    </figure>
   `;
 }
 

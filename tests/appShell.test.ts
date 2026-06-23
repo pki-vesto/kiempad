@@ -173,6 +173,12 @@ describe('app shell', () => {
             instructie: 'ochtend en avond',
             actief: true,
             voorraadAantal: 6,
+            instructieVideo: {
+              bestandsNaam: 'injectie.mp4',
+              mimeType: 'video/mp4',
+              grootteBytes: 1024,
+              inhoudBase64: 'dmlkZW8=',
+            },
           },
           doseLogs: [
             {
@@ -196,6 +202,10 @@ describe('app shell', () => {
     expect(html).toContain('name="voorraadAantal" type="number"');
     expect(html).toContain('value="6"');
     expect(html).toContain('Voorraad: 6 doses over');
+    expect(html).toContain('name="instructieVideo" type="file" accept="video/*"');
+    expect(html).toContain('Huidige video: injectie.mp4');
+    expect(html).toContain('data:video/mp4;base64,dmlkZW8=');
+    expect(html).toContain('Lokale instructievideo: injectie.mp4');
     expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');
     expect(html).toContain('aria-label="Verwijder medicatie: Progesteron"');

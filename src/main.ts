@@ -1244,19 +1244,44 @@ async function saveMedicatieFromForm(
   if (!(target instanceof HTMLFormElement) || !state.medicatieStore) return;
 
   const data = new FormData(target);
+  const medicatieId = optionalString(data.get('id'));
+  const existingVideo = medicatieId
+    ? state.medicatie.find((bundle) => bundle.medicatie.id === medicatieId)?.medicatie
+        .instructieVideo
+    : undefined;
+  const videoFile = data.get('instructieVideo');
+
+  let instructieVideo = existingVideo;
+  if (videoFile instanceof File && videoFile.size > 0) {
+    if (videoFile.type && !videoFile.type.startsWith('video/')) {
+      state.medicatieImportError = 'Kies een lokaal videobestand als instructievideo.';
+      render(root, state);
+      return;
+    }
+
+    instructieVideo = {
+      bestandsNaam: videoFile.name,
+      mimeType: videoFile.type || undefined,
+      grootteBytes: videoFile.size,
+      inhoudBase64: await fileToBase64(videoFile),
+    };
+  }
+
   await state.medicatieStore.save({
-    id: optionalString(data.get('id')),
+    id: medicatieId,
     naam: String(data.get('naam') ?? ''),
     vorm: parseMedicatieVorm(data.get('vorm')),
     voorgeschrevenDosis: optionalString(data.get('voorgeschrevenDosis')),
     instructie: optionalString(data.get('instructie')),
     actief: data.get('actief') !== 'false',
     voorraadAantal: optionalNonNegativeNumber(data.get('voorraadAantal')),
+    instructieVideo,
     schemaStartDatum: optionalString(data.get('schemaStartDatum')),
     schemaTijdstip: optionalString(data.get('schemaTijdstip')),
     schemaAantalDagen: Number(data.get('schemaAantalDagen') ?? 0),
   });
 
+  state.medicatieImportError = undefined;
   await reloadAndRender(root, state);
 }
 

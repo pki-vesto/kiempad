@@ -589,6 +589,17 @@ h2 {
   color: var(--text-soft);
 }
 
+.phase-item figure {
+  margin: 0 0 8px;
+}
+
+.phase-item img,
+.phase-item video {
+  display: block;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
 .empty-state {
   margin: 0;
   color: var(--text-muted);
