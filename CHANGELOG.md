@@ -19,6 +19,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
     (`src/domain/vergoeding.ts` + Vitest-test).
 - `PRODUCT_BACKLOG.md` met 100+ concrete, afvinkbare doelen, gekoppeld aan de roadmap.
 - `docs/adr/0006-repo-publiek.md` — beslissing om de repo publiek te maken.
+- `CODEX_BUILD_PROMPT.md` — bouwopdracht voor Codex (`/goal`) om Kiempad op basis van
+  de 174 doelen gefaseerd (F1 eerst) te bouwen.
 
 ### Changed
 - Repo **publiek** gemaakt (ADR-0006) i.v.m. de GitHub Actions-billingblokkade op

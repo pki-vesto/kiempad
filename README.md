@@ -118,6 +118,7 @@ duidelijke foutmeldingen. Zie [`PRIVACY.md`](PRIVACY.md).
 | Kennisbank-inhoud & NL-bronnen | [`docs/KENNISBANK.md`](docs/KENNISBANK.md) |
 | Operationeel/runbook | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) |
 | Werkwijze/bijdragen | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| Bouwopdracht voor Codex (`/goal`) | [`CODEX_BUILD_PROMPT.md`](CODEX_BUILD_PROMPT.md) |
 
 De **canonieke bron** voor wat we bouwen is `PRODUCT_BACKLOG.md` (de doelen) samen
 met `ROADMAP.md` (de volgorde). Documenten gaan vóór losse aantekeningen.
