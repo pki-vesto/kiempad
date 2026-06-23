@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G234 PFIP knowledge graph: privacytest borgt dat graph-opbouw, voorstellen,
+  inzichten, filters en index-rebuild lokaal blijven zonder fetch, XHR of
+  sendBeacon.
 - G233 PFIP knowledge graph: trajectscherm toont een rebuildrapport voor de
   graph-index uit lokale kluisrecords met bronrecordtelling, controlehash en
   dataverliescontrole zonder opslagwrites.
