@@ -162,9 +162,10 @@ Conventies:
 | id | string | enkel record |
 | profielen | `{ peter, partner }` | namen/voorkeuren |
 | gedeeldeModus | boolean | |
-| ai | `{ ingeschakeld, provider?, model? }` | sleutel staat versleuteld, niet hier in klare tekst |
+| ai | `{ ingeschakeld, provider?, model?, apiKey?, laatsteOptInOp? }` | API-sleutel staat alleen in het versleutelde lokale settingsrecord, niet in repo/.env |
 | herinneringStandaarden | object | bv. standaard waarschuwtijd |
 | taal | string | default `nl` |
+| toonNotificatieDetailsOpVergrendelscherm | boolean | default `false` |
 
 ## Opslag & versleuteling (kort)
 

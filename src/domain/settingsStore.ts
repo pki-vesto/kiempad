@@ -1,5 +1,6 @@
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import {
+  type AiSettings,
   APP_SETTINGS_ID,
   type AppSettings,
   DEFAULT_APP_SETTINGS,
@@ -26,6 +27,17 @@ export class SettingsStore {
       ...DEFAULT_APP_SETTINGS,
       ...(await this.get()),
       toonNotificatieDetailsOpVergrendelscherm: allowed,
+    });
+  }
+
+  async setAiSettings(input: Partial<AiSettings>): Promise<AppSettings> {
+    const current = await this.get();
+    return this.save({
+      ...current,
+      ai: {
+        ...current.ai,
+        ...input,
+      },
     });
   }
 }

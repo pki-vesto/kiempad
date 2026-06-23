@@ -181,6 +181,11 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#ai-settings-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveAiSettingsFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelectorAll<HTMLButtonElement>('[data-kennis-id]').forEach((button) => {
     button.addEventListener('click', () => {
       const itemId = button.dataset.kennisId;
@@ -189,6 +194,28 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
       void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
     });
   });
+}
+
+async function saveAiSettingsFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.settingsStore) return;
+
+  const data = new FormData(target);
+  const ingeschakeld = data.get('aiIngeschakeld') === 'true';
+  const apiKey = optionalString(data.get('aiApiKey')) ?? state.settings.ai.apiKey;
+
+  await state.settingsStore.setAiSettings({
+    ingeschakeld,
+    provider: optionalString(data.get('aiProvider')),
+    model: optionalString(data.get('aiModel')),
+    apiKey,
+    laatsteOptInOp: ingeschakeld ? new Date().toISOString() : state.settings.ai.laatsteOptInOp,
+  });
+
+  await reloadAndRender(root, state);
 }
 
 function bindVraagControls(root: HTMLElement, state: RuntimeState): void {

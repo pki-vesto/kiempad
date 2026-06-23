@@ -253,6 +253,15 @@ describe('app shell', () => {
     expect(html).toContain('Markeer geverifieerd');
   });
 
+  it('rendert lokale AI-instellingen standaard uit zonder netwerkactie', () => {
+    const html = renderAppShell('kennis');
+
+    expect(html).toContain('AI-instelling');
+    expect(html).toContain('id="ai-settings-form"');
+    expect(html).toContain('value="false" selected');
+    expect(html).toContain('Bewaar AI-instelling');
+  });
+
   it('rendert notificatieprivacy standaard als generiek', () => {
     const html = renderAppShell('herinneringen', {
       trajecten: [],

@@ -154,7 +154,13 @@ export interface SettingsRecord {
   id: string;
   profielen?: { peter?: string; partner?: string };
   gedeeldeModus?: boolean;
-  ai?: { ingeschakeld: boolean; provider?: string; model?: string };
+  ai?: {
+    ingeschakeld: boolean;
+    provider?: string;
+    model?: string;
+    apiKey?: string;
+    laatsteOptInOp?: IsoDate;
+  };
   herinneringStandaarden?: Record<string, unknown>;
   taal?: string;
   toonNotificatieDetailsOpVergrendelscherm: boolean;

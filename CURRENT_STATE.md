@@ -67,6 +67,9 @@
 - **G158 snelle invoer:** startscherm bevat een compacte invoerroute voor afspraak,
   medicatie of vraag met alleen een korte tekst als verplicht veld; records worden via
   de bestaande versleutelde stores opgeslagen met veilige defaults.
+- **G095/G096/G100/G125 AI opt-in fundament:** AI staat standaard uit, een domeinguard
+  blokkeert toekomstige AI-verzoeken zonder expliciete opt-in en expliciete actie, en
+  provider/model/API-sleutel worden via het versleutelde lokale settingsrecord bewaard.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -77,7 +80,7 @@
 
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
-- Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
+- Kosten, symptomen, research + AI-samenvatting, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
@@ -99,11 +102,12 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
-  seedt en toont conceptkennis lokaal met bron- en verificatielabels. De app heeft
-  een PWA-manifest en service worker voor offline gebruik na de eerste load.
+  seedt en toont conceptkennis lokaal met bron- en verificatielabels en lokale
+  AI-opt-ininstellingen. De app heeft een PWA-manifest en service worker voor offline
+  gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (71 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (76 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -111,8 +115,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **F2-scope kiezen**: kosten/vergoedingen, symptomen of back-up/export.
-2. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
+1. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
+2. **AI-samenvatting** pas verder bouwen met payload-preview, dataminimalisatie en
+   waarschuwingslabels.
 3. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
 
 ## 7. Permanente onderhoudsregel

@@ -241,6 +241,10 @@ function renderKennisScreen(state: AppShellState): string {
         <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
         <p>${state.kennisItems.length} item(s) lokaal beschikbaar.</p>
       </div>
+      <div class="summary-panel">
+        <h2>AI-instelling</h2>
+        ${renderAiSettingsForm(state.settings)}
+      </div>
       <div class="timeline-panel">
         ${Object.entries(KENNIS_CATEGORIE_LABELS)
           .map(([categorie, label]) =>
@@ -249,6 +253,33 @@ function renderKennisScreen(state: AppShellState): string {
           .join('')}
       </div>
     </section>
+  `;
+}
+
+function renderAiSettingsForm(settings: AppSettings): string {
+  return `
+    <form id="ai-settings-form" class="data-form compact-form">
+      <label>
+        AI
+        <select name="aiIngeschakeld">
+          ${renderOption('false', 'Uit', String(settings.ai.ingeschakeld))}
+          ${renderOption('true', 'Aan na expliciete actie', String(settings.ai.ingeschakeld))}
+        </select>
+      </label>
+      <label>
+        Provider
+        <input name="aiProvider" value="${escapeAttribute(settings.ai.provider ?? '')}" autocomplete="off" />
+      </label>
+      <label>
+        Model
+        <input name="aiModel" value="${escapeAttribute(settings.ai.model ?? '')}" autocomplete="off" />
+      </label>
+      <label>
+        API-sleutel
+        <input name="aiApiKey" type="password" value="" placeholder="${settings.ai.apiKey ? 'Opgeslagen; laat leeg om te bewaren' : ''}" autocomplete="off" />
+      </label>
+      <button type="submit">Bewaar AI-instelling</button>
+    </form>
   `;
 }
 
