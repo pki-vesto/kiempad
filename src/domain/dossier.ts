@@ -22,7 +22,14 @@ export type DossierDocumentInput = {
       : never;
   };
   notitie?: string;
+  ocr?: DossierOcrInput;
   uploadedAt?: string;
+};
+
+export type DossierOcrInput = {
+  explicieteLokaleVerwerking: boolean;
+  tekst?: string;
+  verwerktOp?: string;
 };
 
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
@@ -70,6 +77,17 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
   const categorie = input.categorie ?? 'onderzoek';
   const uploadProfiel = bepaalDossierUploadProfiel(input);
+  const ocr = maakDossierOcrResultaat(
+    {
+      categorie,
+      uploadProfiel,
+      bestandsNaam,
+      mimeType,
+      grootteBytes: input.grootteBytes,
+    },
+    input.ocr,
+    uploadedAt,
+  );
 
   if (!datum) throw new Error('Datum is verplicht voor een dossierdocument.');
   if (!titel) throw new Error('Titel is verplicht voor een dossierdocument.');
@@ -96,10 +114,12 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     analyse: analyseerDossierDocument({
       categorie,
       uploadProfiel,
+      ocr,
       bestandsNaam,
       mimeType,
       grootteBytes: input.grootteBytes,
     }),
+    ocr,
     uploadedAt,
   };
 }
@@ -116,6 +136,7 @@ export function sorteerDossierDocumenten(items: readonly DossierDocument[]): Dos
 function analyseerDossierDocument(input: {
   categorie: DossierDocument['categorie'];
   uploadProfiel?: DossierDocument['uploadProfiel'];
+  ocr?: DossierDocument['ocr'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -125,9 +146,10 @@ function analyseerDossierDocument(input: {
   const profielLabel = input.uploadProfiel
     ? DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]
     : 'Onbekend profiel';
+  const ocrFragment = input.ocr ? ` Lokale OCR-status: ${beschrijfOcrStatus(input.ocr)}.` : '';
 
   return {
-    samenvatting: `${DOSSIER_CATEGORIE_LABELS[input.categorie]} opgeslagen als ${typeLabel}; uploadprofiel ${profielLabel}; ${formatBytes(input.grootteBytes)}. Analyse is lokaal en niet-medisch.`,
+    samenvatting: `${DOSSIER_CATEGORIE_LABELS[input.categorie]} opgeslagen als ${typeLabel}; uploadprofiel ${profielLabel}; ${formatBytes(input.grootteBytes)}. Analyse is lokaal en niet-medisch.${ocrFragment}`,
     signalen,
   };
 }
@@ -135,6 +157,7 @@ function analyseerDossierDocument(input: {
 function bepaalSignalen(input: {
   categorie: DossierDocument['categorie'];
   uploadProfiel?: DossierDocument['uploadProfiel'];
+  ocr?: DossierDocument['ocr'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -172,6 +195,10 @@ function bepaalSignalen(input: {
 
   if (input.uploadProfiel) {
     signalen.push(`Uploadprofiel: ${DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]}.`);
+  }
+  if (input.ocr) {
+    signalen.push('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');
+    signalen.push(input.ocr.waarschuwing);
   }
   if (input.mimeType?.startsWith('image/')) {
     signalen.push('Bestandstype is beeldmateriaal.');
@@ -222,6 +249,74 @@ export function bepaalDossierUploadProfiel(
   if (input.categorie === 'onderzoek') return 'onderzoek';
 
   return undefined;
+}
+
+export function maakDossierOcrResultaat(
+  document: Pick<
+    DossierDocumentInput,
+    'categorie' | 'uploadProfiel' | 'bestandsNaam' | 'mimeType' | 'grootteBytes'
+  >,
+  input: DossierOcrInput | undefined,
+  fallbackVerwerktOp = new Date().toISOString(),
+): DossierDocument['ocr'] {
+  if (!input?.explicieteLokaleVerwerking) return undefined;
+
+  const bron = bepaalOcrBron(document);
+  const tekst = input.tekst?.trim();
+  const verwerktOp = input.verwerktOp?.trim() || fallbackVerwerktOp;
+
+  if (tekst) {
+    return {
+      status: 'tekst_uitgelezen',
+      bron,
+      explicieteLokaleVerwerking: true,
+      tekst,
+      waarschuwing:
+        'Tekst is lokaal uit het bestand gelezen; controleer altijd of de inhoud klopt.',
+      verwerktOp,
+    };
+  }
+
+  if (bron === 'pdf' || bron === 'afbeelding') {
+    return {
+      status: 'wacht_op_lokale_ocr',
+      bron,
+      explicieteLokaleVerwerking: true,
+      waarschuwing:
+        'PDF of afbeelding is klaargezet voor lokale OCR; er is geen cloudverwerking gestart.',
+      verwerktOp,
+    };
+  }
+
+  return {
+    status: 'niet_ondersteund',
+    bron,
+    explicieteLokaleVerwerking: true,
+    waarschuwing:
+      'Dit bestandstype heeft nog geen lokale OCR-route; het originele bestand blijft wel bewaard.',
+    verwerktOp,
+  };
+}
+
+function bepaalOcrBron(
+  document: Pick<DossierDocumentInput, 'categorie' | 'uploadProfiel' | 'mimeType'>,
+): NonNullable<DossierDocument['ocr']>['bron'] {
+  if (document.mimeType?.startsWith('text/')) return 'tekstbestand';
+  if (document.mimeType === 'application/pdf' || document.uploadProfiel === 'pdf') return 'pdf';
+  if (
+    document.mimeType?.startsWith('image/') ||
+    document.uploadProfiel === 'afbeelding' ||
+    document.categorie === 'beeld'
+  ) {
+    return 'afbeelding';
+  }
+  return 'onbekend';
+}
+
+function beschrijfOcrStatus(ocr: NonNullable<DossierDocument['ocr']>): string {
+  if (ocr.status === 'tekst_uitgelezen') return 'tekst lokaal uitgelezen';
+  if (ocr.status === 'wacht_op_lokale_ocr') return 'klaargezet voor lokale OCR';
+  return 'niet ondersteund';
 }
 
 function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocument['embryo'] {

@@ -712,6 +712,10 @@ function renderDossierScreen(state: AppShellState): string {
             Bestanden
             <input name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required />
           </label>
+          <label class="check-row">
+            <input name="lokaleOcr" type="checkbox" value="ja" />
+            Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
+          </label>
           <label>
             Koppel aan afspraak
             <select name="afspraakId">
@@ -732,7 +736,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Upload naar dossier</button>
         </form>
-        <p class="small-print">Bestanden, gespreksverslagen en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
         <h2>Embryokwaliteit vastleggen</h2>
@@ -818,6 +822,7 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
         ${renderEmbryoDetails(document)}
+        ${renderDossierOcrDetails(document)}
         ${renderDossierImagePreview(document)}
         <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
         <ul class="compact-list">
@@ -826,6 +831,30 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
         ${document.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(document.notitie)}</p>` : ''}
       </div>
     </li>
+  `;
+}
+
+function renderDossierOcrDetails(document: DossierDocument): string {
+  if (!document.ocr) return '';
+  const status =
+    document.ocr.status === 'tekst_uitgelezen'
+      ? 'Tekst lokaal uitgelezen'
+      : document.ocr.status === 'wacht_op_lokale_ocr'
+        ? 'Klaargezet voor lokale OCR'
+        : 'OCR-route niet ondersteund';
+  const details = [
+    `OCR: ${status}`,
+    `Bron: ${document.ocr.bron}`,
+    `Verwerkt: ${document.ocr.verwerktOp}`,
+  ];
+  const tekstPreview = document.ocr.tekst
+    ? `<p class="linked-note">OCR-tekst: ${escapeHtml(kortTekstAf(document.ocr.tekst, 180))}</p>`
+    : '';
+
+  return `
+    <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
+    <p class="linked-note">${escapeHtml(document.ocr.waarschuwing)}</p>
+    ${tekstPreview}
   `;
 }
 
@@ -2507,6 +2536,11 @@ function renderOption(value: string, label: string, current?: string): string {
 
 function formatEuro(value: number): string {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(value);
+}
+
+function kortTekstAf(value: string, maxLength: number): string {
+  const singleLine = value.replace(/\s+/g, ' ').trim();
+  return singleLine.length > maxLength ? `${singleLine.slice(0, maxLength - 3)}...` : singleLine;
 }
 
 function escapeHtml(value: string): string {

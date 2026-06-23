@@ -79,6 +79,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'datum',
     'titel',
     'categorie',
+    'uploadProfiel',
     'bestandsNaam',
     'mimeType',
     'grootteBytes',
@@ -88,6 +89,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'embryo',
     'notitie',
     'analyse',
+    'ocr',
     'uploadedAt',
   ],
   Settings: [

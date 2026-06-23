@@ -334,6 +334,7 @@ async function saveDossierDocumentsFromForm(
     const afspraakId = optionalString(data.get('afspraakId'));
     const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
+    const lokaleOcr = data.get('lokaleOcr') === 'ja';
 
     for (const file of files) {
       await state.dossierStore.save({
@@ -348,15 +349,21 @@ async function saveDossierDocumentsFromForm(
         afspraakId,
         trajectId,
         notitie,
+        ocr: lokaleOcr
+          ? {
+              explicieteLokaleVerwerking: true,
+              tekst: await leesTekstbestandVoorOcr(file),
+            }
+          : undefined,
       });
     }
 
     await state.eventLogStore?.record({
       categorie: 'systeem',
       gebeurtenis: 'Dossierdocumenten toegevoegd',
-      detail: `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld opgeslagen.`,
+      detail: `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld opgeslagen${lokaleOcr ? ' met lokale OCR-pipeline.' : '.'}`,
     });
-    state.dossierStatus = `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld toegevoegd.`;
+    state.dossierStatus = `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld toegevoegd${lokaleOcr ? ' en klaargezet voor lokale OCR.' : '.'}`;
     state.dossierError = undefined;
     target.reset();
     await reloadAndRender(root, state);
@@ -1902,6 +1909,11 @@ async function fileToBase64(file: File): Promise<string> {
   }
 
   return btoa(binary);
+}
+
+async function leesTekstbestandVoorOcr(file: File): Promise<string | undefined> {
+  if (!file.type.startsWith('text/')) return undefined;
+  return file.text();
 }
 
 function textToBase64(value: string): string {

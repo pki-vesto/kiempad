@@ -3,6 +3,7 @@ import {
   bepaalDossierUploadProfiel,
   formatBytes,
   maakDossierDocument,
+  maakDossierOcrResultaat,
   sorteerDossierDocumenten,
 } from '../src/domain/dossier';
 
@@ -107,6 +108,100 @@ describe('dossier', () => {
         categorie: 'onderzoek',
       }),
     ).toBe('behandelverslag');
+  });
+
+  it('maakt OCR-resultaten alleen na expliciete lokale verwerking', () => {
+    expect(
+      maakDossierOcrResultaat(
+        {
+          bestandsNaam: 'uitslag.txt',
+          mimeType: 'text/plain',
+          grootteBytes: 128,
+          categorie: 'onderzoek',
+        },
+        undefined,
+      ),
+    ).toBeUndefined();
+
+    expect(
+      maakDossierOcrResultaat(
+        {
+          bestandsNaam: 'uitslag.txt',
+          mimeType: 'text/plain',
+          grootteBytes: 128,
+          categorie: 'onderzoek',
+        },
+        {
+          explicieteLokaleVerwerking: true,
+          tekst: ' AMH 1,2 ',
+          verwerktOp: '2026-06-23T15:00:00.000Z',
+        },
+      ),
+    ).toMatchObject({
+      status: 'tekst_uitgelezen',
+      bron: 'tekstbestand',
+      explicieteLokaleVerwerking: true,
+      tekst: 'AMH 1,2',
+      verwerktOp: '2026-06-23T15:00:00.000Z',
+    });
+  });
+
+  it('zet PDF en afbeeldingen klaar voor lokale OCR zonder cloudverwerking', () => {
+    const pdf = maakDossierOcrResultaat(
+      {
+        bestandsNaam: 'fertiliteitsrapport.pdf',
+        mimeType: 'application/pdf',
+        grootteBytes: 2048,
+        categorie: 'onderzoek',
+      },
+      { explicieteLokaleVerwerking: true, verwerktOp: '2026-06-23T15:00:00.000Z' },
+    );
+    const afbeelding = maakDossierOcrResultaat(
+      {
+        bestandsNaam: 'echo.jpg',
+        mimeType: 'image/jpeg',
+        grootteBytes: 4096,
+        categorie: 'beeld',
+      },
+      { explicieteLokaleVerwerking: true, verwerktOp: '2026-06-23T15:00:00.000Z' },
+    );
+
+    expect(pdf).toMatchObject({
+      status: 'wacht_op_lokale_ocr',
+      bron: 'pdf',
+      waarschuwing:
+        'PDF of afbeelding is klaargezet voor lokale OCR; er is geen cloudverwerking gestart.',
+    });
+    expect(afbeelding).toMatchObject({
+      status: 'wacht_op_lokale_ocr',
+      bron: 'afbeelding',
+    });
+  });
+
+  it('neemt OCR-status op in de lokale dossieranalyse', () => {
+    const document = maakDossierDocument('doc-ocr', {
+      datum: '2026-06-01',
+      categorie: 'onderzoek',
+      bestandsNaam: 'uitslag.txt',
+      mimeType: 'text/plain',
+      grootteBytes: 32,
+      inhoudBase64: 'QU1I',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'AMH 1,2',
+        verwerktOp: '2026-06-23T15:00:00.000Z',
+      },
+    });
+
+    expect(document.ocr).toMatchObject({
+      status: 'tekst_uitgelezen',
+      bron: 'tekstbestand',
+      tekst: 'AMH 1,2',
+    });
+    expect(document.analyse.samenvatting).toContain('Lokale OCR-status: tekst lokaal uitgelezen.');
+    expect(document.analyse.signalen).toContain(
+      'Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.',
+    );
   });
 
   it('bewaart gespreksverslagen met afspraak- en trajectkoppeling', () => {

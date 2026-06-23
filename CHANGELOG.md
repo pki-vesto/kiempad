@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G181 PFIP dossier-ingest: dossieruploads hebben een expliciete lokale
+  OCR-opt-in. Tekstbestanden worden direct op het toestel uitgelezen; PDF's en
+  afbeeldingen krijgen een versleutelde lokale OCR-wachtstatus zonder
+  cloudverwerking of medisch advies.
 - G180 PFIP dossier-ingest: dossieruploads hebben nu expliciete uploadprofielen
   voor onderzoeken, labuitslagen, fertiliteitsrapporten, ziekenhuisdocumenten,
   behandelverslagen, PDF's en afbeeldingen; Kiempad toont het profiel in de lokale
