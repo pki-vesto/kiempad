@@ -2,6 +2,7 @@ import './styles.css';
 import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
+import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import { HerinneringStore } from './domain/herinneringStore';
 import { KennisStore } from './domain/kennisStore';
 import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
@@ -55,6 +56,8 @@ type RuntimeState = {
   kennisItems: KennisItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
+  aiPreview?: AiSamenvattingPayload;
+  aiError?: string;
   error?: string;
 };
 
@@ -74,6 +77,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     kennisItems: state.kennisItems,
     settings: state.settings,
     notificaties: state.notificaties,
+    aiPreview: state.aiPreview,
+    aiError: state.aiError,
   });
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
@@ -103,6 +108,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.vragen = [];
     state.kennisItems = [];
     state.settings = DEFAULT_APP_SETTINGS;
+    state.aiPreview = undefined;
+    state.aiError = undefined;
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
@@ -181,6 +188,16 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#ai-preview-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    saveAiPreviewFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#ai-summary-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveAiSummaryFromForm(event.currentTarget, root, state);
+  });
+
   root.querySelector('#ai-settings-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveAiSettingsFromForm(event.currentTarget, root, state);
@@ -194,6 +211,44 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
       void state.kennisStore.markVerified(itemId, true).then(() => reloadAndRender(root, state));
     });
   });
+}
+
+function saveAiPreviewFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (!(target instanceof HTMLFormElement)) return;
+
+  const data = new FormData(target);
+  state.aiPreview = maakAiSamenvattingPayload(
+    String(data.get('aiBronTekst') ?? ''),
+    String(data.get('aiBron') ?? ''),
+  );
+  state.aiError = undefined;
+  render(root, state);
+}
+
+async function saveAiSummaryFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.kennisStore) return;
+
+  const data = new FormData(target);
+  try {
+    await state.kennisStore.saveAiSamenvatting({
+      titel: String(data.get('aiTitel') ?? ''),
+      samenvatting: String(data.get('aiSamenvatting') ?? ''),
+      bron: String(data.get('aiSamenvattingBron') ?? ''),
+    });
+    state.aiError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.aiError = error instanceof Error ? error.message : 'AI-samenvatting bewaren is mislukt.';
+    render(root, state);
+  }
 }
 
 async function saveAiSettingsFromForm(
