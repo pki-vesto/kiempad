@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G026/G027 meerdere pogingen: trajectscherm kan een nieuwe poging toevoegen naast het
+  bewerken van de eerste poging en toont alle pogingen met pogingnummer.
 - G139/G140/G141 back-up export/import: back-upscherm toegevoegd voor
   `.kiempad-export` downloads en checksum-gecontroleerde import van versleutelde
   records plus kluismetadata.

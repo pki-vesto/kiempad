@@ -413,6 +413,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveTrajectFromForm(event.currentTarget, root, state);
   });
+  root.querySelector('#traject-new-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveTrajectFromForm(event.currentTarget, root, state);
+  });
 
   root.querySelectorAll<HTMLButtonElement>('.phase-button').forEach((button) => {
     button.addEventListener('click', () => {

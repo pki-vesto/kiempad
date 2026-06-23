@@ -946,6 +946,11 @@ function renderTrajectScreen(state: AppShellState): string {
       <div class="form-panel">
         <h2>${selected ? 'Traject bewerken' : 'Traject aanmaken'}</h2>
         ${renderTrajectForm(selected?.traject)}
+        ${
+          selected
+            ? `<h2 class="section-subheading">Nieuwe poging</h2>${renderTrajectForm(undefined, 'traject-new-form', 'Voeg poging toe')}`
+            : ''
+        }
       </div>
       <div class="timeline-panel">
         <div class="panel-heading">
@@ -961,14 +966,19 @@ function renderTrajectScreen(state: AppShellState): string {
             ? renderTimeline(selected)
             : '<p class="empty-state">Nog geen traject. Maak links een poging aan om de vaste fasen te tonen.</p>'
         }
+        ${state.trajecten.length > 0 ? renderTrajectList(state.trajecten) : ''}
       </div>
     </section>
   `;
 }
 
-function renderTrajectForm(traject?: Traject): string {
+function renderTrajectForm(
+  traject?: Traject,
+  formId = 'traject-form',
+  submitLabel?: string,
+): string {
   return `
-    <form id="traject-form" class="data-form">
+    <form id="${formId}" class="data-form">
       <input type="hidden" name="id" value="${escapeAttribute(traject?.id ?? '')}" />
       <label>
         Naam
@@ -1008,8 +1018,29 @@ function renderTrajectForm(traject?: Traject): string {
         Notitie
         <textarea name="notitie" rows="4">${escapeHtml(traject?.notitie ?? '')}</textarea>
       </label>
-      <button type="submit">${traject ? 'Bewaar traject' : 'Maak traject aan'}</button>
+      <button type="submit">${submitLabel ?? (traject ? 'Bewaar traject' : 'Maak traject aan')}</button>
     </form>
+  `;
+}
+
+function renderTrajectList(items: TrajectMetFasen[]): string {
+  return `
+    <h2 class="section-subheading">Alle pogingen</h2>
+    <ol class="phase-list">
+      ${items
+        .map(
+          (item) => `
+            <li class="phase-item">
+              <div>
+                <h3>${escapeHtml(item.traject.naam)}</h3>
+                <p>Poging ${item.traject.pogingNummer} · ${item.traject.status}</p>
+                <small>${item.traject.startDatum}</small>
+              </div>
+            </li>
+          `,
+        )
+        .join('')}
+    </ol>
   `;
 }
 
