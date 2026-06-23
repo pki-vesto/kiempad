@@ -347,6 +347,76 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verwijder afspraak: Echo controle"');
   });
 
+  it('rendert graphweergave per traject met relatietype- en periodefilters', () => {
+    const html = renderAppShell('traject', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Echo controle',
+            datumTijd: '2026-06-24T09:30',
+            type: 'echo',
+            trajectId: 'traject-1',
+          },
+        },
+      ],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-24',
+          titel: 'Echo verslag',
+          categorie: 'onderzoek',
+          bestandsNaam: 'echo.pdf',
+          grootteBytes: 512,
+          inhoudBase64: 'base64',
+          trajectId: 'traject-1',
+          analyse: { samenvatting: 'Echo vastgelegd.', signalen: [] },
+          metadata: { bronbestand: 'echo.pdf', trajectId: 'traject-1', extractieBronnen: [] },
+          uploadedAt: '2026-06-24T10:00:00.000Z',
+        } as DossierDocument,
+      ],
+      graphFilter: {
+        trajectId: 'traject-1',
+        relatieType: 'hoort_bij_behandeling',
+        datumVanaf: '2026-06-01',
+        datumTot: '2026-06-30',
+      },
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Knowledge graph');
+    expect(html).toContain('id="graph-filter-form"');
+    expect(html).toContain('name="graphRelatieType"');
+    expect(html).toContain('Hoort bij behandeling');
+    expect(html).toContain('name="graphDatumVanaf" type="date" value="2026-06-01"');
+    expect(html).toContain('name="graphDatumTot" type="date" value="2026-06-30"');
+    expect(html).toContain('Nodes');
+    expect(html).toContain('Relaties');
+    expect(html).toContain('Afspraak hoort bij traject');
+    expect(html).toContain('Echo controle -> Poging 1');
+    expect(html).toContain('Document hoort bij traject');
+    expect(html).toContain('Echo verslag -> Poging 1');
+    expect(html).toContain('geen causaliteit');
+  });
+
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {
     const html = renderAppShell('medicatie', {
       trajecten: [],

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 230 |
+| ☑ klaar | 231 |
 | ◐ bezig | 0 |
-| ☐ open | 13 |
+| ☐ open | 12 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -369,7 +369,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G228 | PFIP knowledge graph: lokaal graph-model voor relaties tussen documenten, embryo's, behandelingen, gesprekken, research en aanbevelingen | P0 | F4 | ☑ |
 | G229 | PFIP knowledge graph: graph-relaties automatisch voorstellen en handmatig laten bevestigen | P0 | F4 | ☑ |
 | G230 | PFIP knowledge graph: contextuele inzichten genereren met bronpad en onzekerheidslabel | P0 | F4 | ☑ |
-| G231 | PFIP knowledge graph: graphweergave per traject met filters op type relatie en periode | P2 | F4 | ☐ |
+| G231 | PFIP knowledge graph: graphweergave per traject met filters op type relatie en periode | P2 | F4 | ☑ |
 | G232 | PFIP knowledge graph: relatie tussen research en persoonlijk dossier tonen zonder causale claims | P0 | F4 | ☐ |
 | G233 | PFIP knowledge graph: index rebuild vanuit versleutelde records zonder dataverlies | P1 | F4 | ☐ |
 | G234 | PFIP knowledge graph: privacytest dat graphberekening lokaal blijft | P0 | F4 | ☐ |
