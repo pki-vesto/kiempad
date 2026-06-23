@@ -52,6 +52,7 @@ import {
 import type {
   Afspraak,
   CostItem,
+  CycleData,
   Decision,
   DoseLog,
   DossierDocument,
@@ -211,6 +212,7 @@ export type AppShellState = {
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
   symptomLogs?: SymptomLog[];
+  cycleData?: CycleData[];
   mentalCheckIns?: MentalCheckIn[];
   decisions?: Decision[];
   kosten?: CostItem[];
@@ -761,6 +763,7 @@ function renderDossierImagePreview(document: DossierDocument): string {
 
 function renderWelzijnScreen(state: AppShellState): string {
   const logs = state.symptomLogs ?? [];
+  const cycleData = state.cycleData ?? [];
   const checkIns = state.mentalCheckIns ?? [];
   const perDag = symptomenPerDag(logs);
   const overzicht = berekenWelzijnOverzicht(logs, checkIns);
@@ -772,6 +775,8 @@ function renderWelzijnScreen(state: AppShellState): string {
         ${renderMentalCheckInForm()}
         <h2 class="section-subheading">Symptoomlog toevoegen</h2>
         ${renderSymptomLogForm()}
+        <h2 class="section-subheading">Cyclusmeting toevoegen</h2>
+        ${renderCycleDataForm()}
       </div>
       <div class="timeline-panel">
         ${renderWelzijnOverzicht(overzicht)}
@@ -786,6 +791,12 @@ function renderWelzijnScreen(state: AppShellState): string {
           perDag.length > 0
             ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
             : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
+        }
+        <h2 class="section-subheading">Cyclusmetingen</h2>
+        ${
+          cycleData.length > 0
+            ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
         }
       </div>
     </section>
@@ -886,6 +897,38 @@ function renderSymptomLogForm(): string {
       </label>
       <button type="submit">Bewaar symptoomlog</button>
     </form>
+  `;
+}
+
+function renderCycleDataForm(): string {
+  return `
+    <form id="cycle-data-form" class="data-form">
+      <label>
+        Datum
+        <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+      </label>
+      <label>
+        Meting
+        <input name="meting" autocomplete="off" placeholder="Temperatuur, bloeding..." required />
+      </label>
+      <label>
+        Waarde
+        <input name="waarde" autocomplete="off" placeholder="36,8 of licht" required />
+      </label>
+      <p class="small-print">Feitelijke registratie zonder interpretatie of medisch advies.</p>
+      <button type="submit">Bewaar cyclusmeting</button>
+    </form>
+  `;
+}
+
+function renderCycleDataItem(item: CycleData): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.datum)}</h3>
+        <p>${escapeHtml(item.meting)}: ${escapeHtml(String(item.waarde))}</p>
+      </div>
+    </li>
   `;
 }
 

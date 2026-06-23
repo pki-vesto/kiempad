@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G107 CycleData: welzijnscherm kan feitelijke cyclusmetingen zoals temperatuur of
+  bloeding versleuteld lokaal vastleggen en terug tonen.
 - G056 injectie-instructie: medicatie kan naast instructietekst een lokale
   instructievideo als versleutelde bijlage tonen, zonder externe embed of tracking.
 - G054 medicatievoorraad: medicaties kunnen een optionele resterende
