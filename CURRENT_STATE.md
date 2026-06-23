@@ -222,16 +222,15 @@
   opties, voors/tegens, keuze en onderbouwing.
 - G116 vraagkoppeling: afwegingen kunnen optioneel aan een bestaande vraag voor de
   arts worden gekoppeld en tonen die vraag bij de beslisnotitie.
-- G179 Tailscale-publicatie: optionele compose-stack en runbook voor een aparte
-  Kiempad HTTPS-node zijn voorbereid, inclusief deploy- en smoke-scripts;
-  daadwerkelijke tailnet-aanmelding/deploy staat nog open op issue #101.
+- **G179 Tailscale-publicatie:** Kiempad draait live op de aparte Tailscale-node
+  `kiempad` via Tailscale Serve HTTPS op `https://kiempad.tail9d0c71.ts.net`.
+  De lokale fallbackpoort op de host is `127.0.0.1:8098`; de containerstack blijft
+  stateless en bewaart geen gezondheidsdata.
 
 ## 3. Nog Niet Gebouwd
 
-F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
-
-- Kosten, research + AI-providercall, gedeelde modus.
-- Tailscale-publicatie via aparte HTTPS-node.
+F1 (MVP) en alle huidige backlogdoelen zijn afgevinkt. Mogelijke latere uitbreidingen
+komen uit roadmap/visie en krijgen eerst een nieuw doel of issue.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
@@ -264,9 +263,12 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   eigen-risicostand voor 2026; het trajectscherm toont de vergoede-pogingen-teller.
   Het back-upscherm kan versleutelde exportbestanden downloaden,
   checksum-gecontroleerd importeren, syncpakketten verwerken en optioneel
-  WebAuthn/biometrie als PRF-keywrap koppelen.
+  WebAuthn/biometrie als PRF-keywrap koppelen. De app is gepubliceerd via een aparte
+  Tailscale HTTPS-node (`https://kiempad.tail9d0c71.ts.net`) met lokale fallback op
+  `127.0.0.1:8098`.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
-- Geen externe diensten actief; geen data verzonden.
+- Tailscale Serve publiceert alleen de statische PWA binnen de tailnet; er draait geen
+  Kiempad-backend en er wordt geen gezondheidsdata naar de server verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
   `npm run test`, `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
@@ -276,10 +278,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **AI-samenvatting** pas verder bouwen met een expliciete provider-aanroep achter
-   de bestaande opt-in, preview en safety helpers.
-2. **Publicatie via Tailscale** op een aparte HTTPS-node uitwerken, vergelijkbaar met
-   Shred en Healthcore.
+1. Nieuwe doelen alleen toevoegen als ze uit roadmap/visie of expliciete wensen komen.
+2. Tailscale-publicatie periodiek smoken met
+   `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
 ## 7. Permanente onderhoudsregel
 

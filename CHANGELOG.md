@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G179 Tailscale-publicatie: Kiempad draait live op de aparte Tailscale-node
+  `kiempad` via Tailscale Serve HTTPS op `https://kiempad.tail9d0c71.ts.net`,
+  met lokale fallback op `127.0.0.1:8098`.
 - G121 WebAuthn/biometrie: back-upscherm kan lokaal WebAuthn PRF koppelen als
   optioneel ontgrendelgemak; vergrendelde kluis kan daarna via PRF-keywrap openen
   zonder passphrase op te slaan en met passphrase als fallback.
