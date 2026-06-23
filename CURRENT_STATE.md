@@ -19,19 +19,22 @@
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
   metadata, additieve schema-opzet en tests voor crypto/opslag/privacy.
+- **M1.3 traject & fasen:** traject aanmaken/bewerken/verwijderen via de
+  versleutelde repository, status en notitie bewaren, vaste IVF/ICSI-fasen in
+  volgorde tonen, huidige fase markeren, fase-toelichtingen tonen, tijdlijnoverzicht
+  en startscherm-volgende-stap.
 
 ## 2. Gedeeltelijk Gebouwd
 
-- De hoofdschermen tonen nu nog inhoudelijke lege-staten; echte trajecten, afspraken,
-  medicatie, vragen en kennisitems worden in volgende F1-mijlpalen op de versleutelde
-  repository-laag aangesloten.
+- Agenda, medicatie, herinneringen, vragen en kennisitems tonen nog inhoudelijke
+  lege-staten; traject/fasen is aangesloten op de versleutelde repository-laag.
 
 ## 3. Nog Niet Gebouwd
 
 De rest van F1 (MVP) en later, o.a.:
 
-- Inhoudelijke UI-workflows voor traject, agenda, medicatie/DoseLog, herinneringen,
-  vragen en kennisbank.
+- Inhoudelijke UI-workflows voor agenda, medicatie/DoseLog, herinneringen, vragen en
+  kennisbank.
 - PWA-/service-worker-runtime.
 - Kosten, symptomen, research + AI, gedeelde modus, back-up/export.
 - Sync, PDF, ICS, trends.
@@ -49,9 +52,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 - **Client-side runtime aanwezig.** Lokaal te starten met `npm run dev`; de app-shell
   toont eerst een passphrase-kluis en navigeert na ontgrendelen via hash-routes.
+  Het trajectscherm kan nu een poging met fasen lokaal versleuteld beheren.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run test`
-  (13 passing), `npm run build` en `npm audit --audit-level=high`.
+  (19 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -59,7 +63,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. **Trajectoverzicht/fasen** en **agenda** aansluiten op de versleutelde opslag.
+1. **Agenda & afspraken** aansluiten op trajecten en de versleutelde opslag.
 2. **Medicatie/injectieschema + herinneringen** (de "niet missen"-kern).
 3. **Vragen voor de arts** en basis-kennisbank.
 

@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.3 traject & fasen: versleuteld traject aanmaken/bewerken/verwijderen, status en
+  notitie bewaren, vaste fasevolgorde met concepttoelichtingen, huidige fase markeren,
+  tijdlijnweergave, startscherm-volgende-stap en domein-/storetests (G019-G025, G028,
+  G159).
 - M1.2 versleutelde opslagfundering: PBKDF2 + salt, niet-exporteerbare AES-256-GCM
   sessiesleutel, verifier-based passphrase unlock, auto-lock, IndexedDB repository
   voor versleutelde records, geen-herstel-uitleg, CI-auditstap en crypto/opslag/

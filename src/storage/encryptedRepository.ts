@@ -38,6 +38,10 @@ export class EncryptedRecordRepository<T> {
     return index;
   }
 
+  async saveWithId(value: T & { id: string }): Promise<ClearRecordIndex> {
+    return this.save(value, value.id);
+  }
+
   async get(id: string): Promise<SavedRecord<T> | undefined> {
     const record = await this.driver.getRecord(id);
     if (!record || record.type !== this.type) return undefined;

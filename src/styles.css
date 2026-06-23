@@ -201,6 +201,25 @@ h2 {
   line-height: 1.6;
 }
 
+.priority-panel {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.inline-action {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 40px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #2f6f73;
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .summary-panel {
   border: 1px solid #d8ded5;
   background: #ffffff;
@@ -278,6 +297,132 @@ h2 {
   font-size: 0.92rem;
 }
 
+.traject-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
+  gap: 16px;
+}
+
+.form-panel,
+.timeline-panel {
+  padding: 22px;
+  border: 1px solid #d8ded5;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.data-form {
+  display: grid;
+  gap: 14px;
+}
+
+.data-form label {
+  display: grid;
+  gap: 7px;
+  color: #334236;
+  font-weight: 800;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.data-form input,
+.data-form select,
+.data-form textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #aeb9ae;
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: #1f2b24;
+  font: inherit;
+  font-weight: 500;
+}
+
+.data-form textarea {
+  resize: vertical;
+}
+
+.data-form button,
+.phase-button,
+.danger-button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.data-form button,
+.phase-button {
+  background: #2f6f73;
+  color: #ffffff;
+}
+
+.danger-button {
+  border: 1px solid #b85d4f;
+  background: #fff2ef;
+  color: #7a2c22;
+}
+
+.phase-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phase-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid #d8ded5;
+  border-radius: 8px;
+  background: #fbfcf8;
+}
+
+.phase-item.current {
+  border-color: #2f6f73;
+  background: #e6f0ec;
+}
+
+.phase-item h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.phase-item p {
+  margin: 0 0 8px;
+  color: #465148;
+  line-height: 1.45;
+}
+
+.phase-item small {
+  color: #5d695f;
+}
+
+.empty-state {
+  margin: 0;
+  color: #465148;
+  line-height: 1.6;
+}
+
 @media (max-width: 760px) {
   .app-shell {
     padding: 14px;
@@ -318,6 +463,25 @@ h2 {
 
   .workspace {
     grid-template-columns: 1fr;
+  }
+
+  .traject-layout,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-heading,
+  .phase-item {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-heading {
+    display: grid;
+  }
+
+  .danger-button,
+  .phase-button {
+    width: 100%;
   }
 }
 
