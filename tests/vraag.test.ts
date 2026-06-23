@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  beantwoordeVragenPerAfspraak,
   herprioriteerVraag,
   maakVraag,
   markeerVraagBeantwoord,
@@ -104,5 +105,43 @@ describe('vraag domeinregels', () => {
     expect(
       openstaandeVragenVoorAfspraak(result?.vragen ?? [], 'first').map((vraag) => vraag.id),
     ).toEqual(['vraag-1']);
+  });
+
+  it('groepeert beantwoorde vragen als verslag per afspraak', () => {
+    const verslagen = beantwoordeVragenPerAfspraak(
+      [
+        {
+          id: 'afspraak-1',
+          titel: 'Consult',
+          datumTijd: '2026-06-24T09:00',
+          type: 'consult',
+        },
+        {
+          id: 'afspraak-2',
+          titel: 'Echo',
+          datumTijd: '2026-06-25T09:00',
+          type: 'echo',
+        },
+      ],
+      [
+        {
+          id: 'vraag-1',
+          vraag: 'Wat is de volgende stap?',
+          voorAfspraakId: 'afspraak-1',
+          beantwoord: true,
+          antwoord: 'Nog een echo plannen.',
+        },
+        {
+          id: 'vraag-2',
+          vraag: 'Open vraag',
+          voorAfspraakId: 'afspraak-1',
+          beantwoord: false,
+        },
+      ],
+    );
+
+    expect(verslagen).toHaveLength(1);
+    expect(verslagen[0]?.afspraak.id).toBe('afspraak-1');
+    expect(verslagen[0]?.vragen.map((vraag) => vraag.id)).toEqual(['vraag-1']);
   });
 });
