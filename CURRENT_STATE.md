@@ -53,6 +53,9 @@
 - **G133 datamodel-sync:** `src/domain/types.ts` bevat nu interfaces voor alle
   entiteiten uit `DATAMODEL.md`, inclusief later-modules, met een sync-test op
   entiteiten en kernvelden.
+- **G173 dependency-security update:** range-compatible npm-updates toegepast
+  (`vite` naar 8.1.0 via lockfile) en audit blijft schoon; TypeScript 6 is als
+  major buiten de huidige range bewust niet meegenomen.
 
 ## 2. Gedeeltelijk Gebouwd
 
