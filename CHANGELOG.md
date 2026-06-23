@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G220 PFIP daily recommendations: startscherm toont een lokaal dagelijks
+  aanbevelingsoverzicht met aparte blokken voor vrouw, man en samen, zonder
+  diagnose, behandelkeuze of medisch advies.
 - G219 PFIP research intelligence: researchkaarten tonen of herverificatie
   ongepland, actueel of verouderd is, met jaarlijkse herverificatieplanning na
   handmatige verificatie.
