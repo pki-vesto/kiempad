@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G223 PFIP daily recommendations: dagoverzicht genereert een lokale
+  behandelvoorbereiding uit afspraken, medicatieplanning, open vragen en
+  consultactiepunten, zonder diagnose, dosering of behandelkeuze.
 - G222 PFIP daily recommendations: dagelijks overzicht toont voeding- en
   supplementnotities als checklist met bron en disclaimer, zonder voedings- of
   supplementadvies.

@@ -3,6 +3,7 @@ import { doseLogsVoorDag } from './medicatie';
 import { TRAJECT_FASE_LABELS } from './traject';
 import type {
   Afspraak,
+  ConsultVerslag,
   CycleData,
   DoseLog,
   DossierDocument,
@@ -41,6 +42,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
   afspraken: readonly Afspraak[];
   medicatie: readonly { medicatie: Medicatie; doseLogs: DoseLog[] }[];
   vragen: readonly Vraag[];
+  consultVerslagen?: readonly ConsultVerslag[];
   trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
   dossierDocuments?: readonly DossierDocument[];
   cycleData?: readonly CycleData[];
@@ -54,6 +56,12 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
   );
   const vragenOpen = openstaandeVragen(input.vragen);
   const leefstijlContext = bouwLeefstijlContextAanbeveling(input);
+  const behandelvoorbereiding = bouwBehandelvoorbereiding({
+    afspraak,
+    doseLogsVandaag,
+    vragenOpen,
+    consultVerslagen: input.consultVerslagen ?? [],
+  });
 
   return {
     vrouw: [
@@ -110,6 +118,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
           },
         ],
       },
+      ...(behandelvoorbereiding ? [behandelvoorbereiding] : []),
       afspraak
         ? {
             id: 'samen-volgende-afspraak',
@@ -146,6 +155,64 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
           },
     ],
+  };
+}
+
+function bouwBehandelvoorbereiding(input: {
+  afspraak: Afspraak | undefined;
+  doseLogsVandaag: readonly { doseLog: DoseLog; medicatie: Medicatie }[];
+  vragenOpen: readonly Vraag[];
+  consultVerslagen: readonly ConsultVerslag[];
+}): DailyRecommendation | undefined {
+  const actiepunten = input.consultVerslagen.flatMap((verslag) =>
+    (verslag.actiepunten ?? []).map((actiepunt) => ({
+      ...actiepunt,
+      verslagTitel: verslag.titel,
+    })),
+  );
+
+  const checklist = [
+    input.afspraak
+      ? {
+          label: `Afspraak: controleer ${input.afspraak.titel} op ${input.afspraak.datumTijd.replace('T', ' ')}${input.afspraak.voorbereiding ? ` en neem de vastgelegde voorbereiding mee: ${input.afspraak.voorbereiding}` : '.'}`,
+          bron: 'Agenda',
+          disclaimer: 'Alleen lokale voorbereiding; volg de instructies van de kliniek.',
+        }
+      : undefined,
+    input.doseLogsVandaag.length > 0
+      ? {
+          label: `Medicatie: check ${input.doseLogsVandaag.length} gepland(e) medicatiemoment(en) voor vandaag in het lokale schema.`,
+          bron: 'Medicatieplanning vandaag',
+          disclaimer: 'Kiempad berekent geen medicatie en geen hoeveelheid.',
+        }
+      : undefined,
+    input.vragenOpen.length > 0
+      ? {
+          label: `Open vragen: neem ${input.vragenOpen.length} open vraag/vragen mee naar de voorbereiding.`,
+          bron: 'Vragenlijst',
+          disclaimer: 'Conceptvragen; controleer zelf wat je met de kliniek bespreekt.',
+        }
+      : undefined,
+    actiepunten.length > 0
+      ? {
+          label: `Actiepunten: verwerk ${actiepunten.length} conceptactiepunt(en) uit consultverslagen, waaronder "${actiepunten[0]?.tekst}" uit ${actiepunten[0]?.verslagTitel}.`,
+          bron: 'Consultverslagen',
+          disclaimer: 'Lokale conceptactiepunten; geen medisch advies of behandelkeuze.',
+        }
+      : undefined,
+  ].filter((item): item is DailyRecommendationChecklistItem => Boolean(item));
+
+  if (checklist.length === 0) return undefined;
+
+  return {
+    id: 'samen-behandelvoorbereiding',
+    owner: 'samen',
+    titel: 'Behandelvoorbereiding',
+    detail:
+      'Bundel vandaag alleen bestaande afspraken, medicatiemomenten en open actiepunten als voorbereiding.',
+    bron: 'Agenda, medicatie, vragenlijst en consultverslagen',
+    waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    checklist,
   };
 }
 

@@ -148,6 +148,15 @@ describe('app shell', () => {
 
     expect(html).toContain('Medicatieschema controleren');
     expect(html).toContain('1 gepland(e) medicatiemoment(en) vandaag');
+    expect(html).toContain('Behandelvoorbereiding');
+    expect(html).toContain(`Afspraak: controleer Echo controle op ${vandaag} 09:30.`);
+    expect(html).toContain(
+      'Medicatie: check 1 gepland(e) medicatiemoment(en) voor vandaag in het lokale schema.',
+    );
+    expect(html).toContain('Open vragen: neem 1 open vraag/vragen mee naar de voorbereiding.');
+    expect(html).toContain('Bron: Agenda');
+    expect(html).toContain('Bron: Medicatieplanning vandaag');
+    expect(html).toContain('Bron: Vragenlijst');
     expect(html).toContain('Volgende afspraak voorbereiden');
     expect(html).toContain(`Echo controle staat gepland op ${vandaag} 09:30.`);
     expect(html).toContain('Open vragen ordenen');
