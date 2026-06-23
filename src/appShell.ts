@@ -18,6 +18,7 @@ import { bepaalBackupReminder } from './domain/backupReminder';
 import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
+  bouwImagingRepository,
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   EMBRYO_STATUS_LABELS,
@@ -679,6 +680,7 @@ function renderDossierScreen(state: AppShellState): string {
   const matchMap = new Map(
     zoekResultaten.map((resultaat) => [resultaat.document.id, resultaat.matches]),
   );
+  const imagingItems = bouwImagingRepository(zichtbareDocumenten);
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
   const afspraakOpties = state.afspraken
@@ -820,6 +822,12 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde lokale kluis.</p>`
             : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
         }
+        <h2>Imaging-repository</h2>
+        ${
+          imagingItems.length > 0
+            ? `<ol class="phase-list">${imagingItems.map(renderImagingRepositoryItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.</p>'
+        }
         <h2>Dossierindex</h2>
         ${
           indexItems.length > 0
@@ -835,6 +843,39 @@ function renderDossierScreen(state: AppShellState): string {
       </div>
     </section>
   `;
+}
+
+function renderImagingRepositoryItem(
+  item: ReturnType<typeof bouwImagingRepository>[number],
+): string {
+  const soortLabel = imagingSoortLabel(item.soort);
+  const preview =
+    item.mimeType?.startsWith('image/') && item.document.inhoudBase64
+      ? `<figure class="linked-note">
+          <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale imaging-preview van ${escapeAttribute(item.titel)}" loading="lazy" />
+          <figcaption>Lokale preview; dit beeld blijft op dit toestel.</figcaption>
+        </figure>`
+      : '';
+
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.titel)}</h3>
+        <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(item.bronbestand)}</p>
+        ${preview}
+      </div>
+    </li>
+  `;
+}
+
+function imagingSoortLabel(
+  soort: ReturnType<typeof bouwImagingRepository>[number]['soort'],
+): string {
+  if (soort === 'echo') return 'Echo';
+  if (soort === 'foto') return 'Foto';
+  if (soort === 'scan') return 'Scan';
+  if (soort === 'embryo_afbeelding') return 'Embryo-afbeelding';
+  return 'Overig beeld';
 }
 
 function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number]): string {

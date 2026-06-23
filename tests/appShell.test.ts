@@ -687,6 +687,9 @@ describe('app shell', () => {
 
     expect(html).toContain('Echo 6 weken');
     expect(html).toContain('Foto/echo');
+    expect(html).toContain('Imaging-repository');
+    expect(html).toContain('2026-05-02 · Echo · echo-foto-6-weken.jpg');
+    expect(html).toContain('alt="Lokale imaging-preview van Echo 6 weken"');
     expect(html).toContain('data:image/jpeg;base64,anBn');
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
     expect(html).toContain('Lokale preview; dit beeld blijft op dit toestel.');

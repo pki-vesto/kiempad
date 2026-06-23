@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G188 PFIP imaging: het dossierscherm heeft een aparte imaging-repository voor
+  echo's, foto's, scans en embryo-afbeeldingen met lokale preview na ontgrendeling.
 - G187 PFIP dossier-ingest: privacytest bewaakt dat lokale OCR- en
   metadata-extractie zonder OCR-opt-in geen `fetch`, `XMLHttpRequest` of
   `sendBeacon` start.
