@@ -161,7 +161,7 @@ F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 - Kosten, symptomen, research + AI-providercall, gedeelde modus.
 - Dossieruploads voor historische onderzoeken, foto's/echo's, gespreksverslagen en
   embryokwaliteit.
-- Sync, PDF, ICS, trends.
+- Tailscale-publicatie via aparte HTTPS-node, plus sync, PDF, ICS en trends.
 
 Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
@@ -208,6 +208,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 2. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
 3. **Dossieruploads** voor onderzoeken, beeldmateriaal, gespreksverslagen en
    embryokwaliteit local-first ontwerpen en toevoegen.
+4. **Publicatie via Tailscale** op een aparte HTTPS-node uitwerken, vergelijkbaar met
+   Shred en Healthcore.
 
 ## 7. Permanente onderhoudsregel
 

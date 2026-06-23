@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G179 publicatiedoel toegevoegd: Kiempad via Tailscale op een aparte HTTPS-node
+  publiceren, vergelijkbaar met Shred en Healthcore.
 - G113 voors/tegens: beslisnotities kunnen per optie argumenten voor en tegen
   vastleggen en terug tonen.
 - G112 beslisnotities: afwegingenscherm kan onderwerp, datum en opties als

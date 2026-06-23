@@ -30,8 +30,8 @@
 |---|---|
 | ☑ klaar | 151 |
 | ◐ bezig | 0 |
-| ☐ open | 27 |
-| **Totaal** | **178** |
+| ☐ open | 28 |
+| **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -306,11 +306,17 @@
 | G177 | Gespreksverslagen uploaden en koppelen aan relevante afspraken of trajecten | P2 | F2 | ☐ |
 | G178 | Embryokwaliteit uploaden of vastleggen per embryo, poging of terugplaatsing | P2 | F2 | ☐ |
 
+## 19. Publicatie & infrastructuur
+
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G179 | App publiceren via Tailscale op een aparte node met HTTPS, vergelijkbaar met Shred en Healthcore | P2 | F2 | ☐ |
+
 ---
 
 ## Telling
 
-- **Totaal doelen: 178** (id's G001 t/m G178, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 179** (id's G001 t/m G179, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
