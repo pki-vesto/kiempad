@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G105 symptoomlog toevoegen: nieuw welzijnscherm bewaart symptoomlogs met datum,
+  eigenaar, symptoom, intensiteit en notitie versleuteld lokaal.
 - G082 eigen kennisitems: kennisscherm kan handmatige kennisitems toevoegen en
   bestaande eigen items bewerken met titel, inhoud, bron en categorie.
 - G081 kennisbank zoeken/filteren: kennisscherm filtert lokale kennisitems op zoekterm

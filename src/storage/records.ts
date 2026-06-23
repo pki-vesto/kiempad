@@ -10,6 +10,7 @@ export type StoredRecordType =
   | 'vraag'
   | 'kennis_item'
   | 'cost_item'
+  | 'symptom_log'
   | 'settings'
   | 'system';
 

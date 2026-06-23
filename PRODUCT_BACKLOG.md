@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 144 |
+| ☑ klaar | 145 |
 | ◐ bezig | 0 |
-| ☐ open | 34 |
+| ☐ open | 33 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -191,7 +191,7 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G105 | SymptomLog toevoegen (datum, symptoom, intensiteit, notitie) | P2 | F2 | ☐ |
+| G105 | SymptomLog toevoegen (datum, symptoom, intensiteit, notitie) | P2 | F2 | ☑ |
 | G106 | Symptomen per dag/over tijd tonen | P2 | F2 | ☐ |
 | G107 | CycleData vastleggen (bv. temperatuur/bloeding) | P3 | F3 | ☐ |
 | G108 | Mentale check-in (stemming) met privé notitie | P2 | F2 | ☐ |
