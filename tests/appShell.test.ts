@@ -1192,7 +1192,26 @@ describe('app shell', () => {
   });
 
   it('rendert lokale AI-instellingen standaard uit zonder netwerkactie', () => {
-    const html = renderAppShell('kennis');
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-eigen',
+          titel: 'Eigen artikel embryo-cultuur',
+          inhoud: 'Lokale notitie bij gevonden artikel.',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          categorie: 'research',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
 
     expect(html).toContain('Research opslaan');
     expect(html).toContain('id="research-item-form"');
@@ -1200,6 +1219,14 @@ describe('app shell', () => {
     expect(html).toContain('name="researchBron" type="url"');
     expect(html).toContain('name="researchNotitie"');
     expect(html).toContain('Bewaar research');
+    expect(html).toContain('Researchbronnen');
+    expect(html).toContain('Seedbron');
+    expect(html).toContain('ESHRE richtlijnen en updates');
+    expect(html).toContain('PubMed fertility research zoekstart');
+    expect(html).toContain('Lokale cache');
+    expect(html).toContain('Eigen artikel embryo-cultuur');
+    expect(html).toContain('https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain('Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.');
     expect(html).toContain('AI-instelling');
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');
