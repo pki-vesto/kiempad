@@ -169,6 +169,23 @@ export interface EventLog {
   detail?: string;
 }
 
+export interface DossierDocument {
+  id: string;
+  datum: IsoDate;
+  titel: string;
+  categorie: 'onderzoek' | 'beeld' | 'gespreksverslag' | 'embryo' | 'overig';
+  bestandsNaam: string;
+  mimeType?: string;
+  grootteBytes: number;
+  inhoudBase64: string;
+  notitie?: string;
+  analyse: {
+    samenvatting: string;
+    signalen: string[];
+  };
+  uploadedAt: IsoDate;
+}
+
 export interface SettingsRecord {
   id: string;
   profielen?: { peter?: string; partner?: string };

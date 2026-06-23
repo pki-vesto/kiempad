@@ -22,6 +22,7 @@ Medicatie/Afspraak/eigen ──< Herinnering (n)
 SymptomLog (n)        CycleData (n)
 CostItem (n)          Decision (n)
 EventLog (n)          KennisItem (n)        (kennisbank; deels vaste inhoud)
+DossierDocument (n)   (historische onderzoeken en latere dossierbijlagen)
 ```
 
 Conventies:
@@ -180,6 +181,21 @@ Conventies:
 EventLog-records worden versleuteld lokaal opgeslagen en verlaten het toestel niet
 via de app. Ze zijn bedoeld voor transparantie over kluis-, back-up-, AI- en
 systeemgebeurtenissen.
+
+### DossierDocument (historisch onderzoek)
+| veld | type | opmerking |
+|---|---|---|
+| id | string | |
+| datum | IsoDate | datum van onderzoek/document |
+| titel | string | herkenbare lokale titel |
+| categorie | `onderzoek` \| `beeld` \| `gespreksverslag` \| `embryo` \| `overig` | G175 gebruikt primair `onderzoek` |
+| bestandsNaam | string | originele bestandsnaam |
+| mimeType | string? | browser-bestandstype indien bekend |
+| grootteBytes | number | originele bestandsgrootte |
+| inhoudBase64 | string | bestandsinhoud, versleuteld opgeslagen in recordpayload |
+| notitie | string? | lokale toelichting |
+| analyse | `{ samenvatting, signalen[] }` | lokale, niet-medische analyse van naam/type/grootte |
+| uploadedAt | IsoDate | moment van lokaal toevoegen |
 
 ### Settings
 | veld | type | opmerking |

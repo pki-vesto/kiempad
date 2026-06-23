@@ -10,6 +10,7 @@ import {
 import type { AfspraakBundle } from './domain/agendaStore';
 import type { AiSamenvattingPayload } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
+import { DOSSIER_CATEGORIE_LABELS, formatBytes } from './domain/dossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
@@ -51,6 +52,7 @@ import type {
   CostItem,
   Decision,
   DoseLog,
+  DossierDocument,
   EventLog,
   Herinnering,
   KennisItem,
@@ -79,6 +81,7 @@ type ScreenId =
   | 'medicatie'
   | 'herinneringen'
   | 'vragen'
+  | 'dossier'
   | 'kennis'
   | 'welzijn'
   | 'afwegingen'
@@ -139,6 +142,13 @@ export const SCREENS: readonly Screen[] = [
     emptyState: 'Nog geen vragen. Hier komt straks de consultvoorbereiding.',
   },
   {
+    id: 'dossier',
+    label: 'Dossier',
+    title: 'Dossier',
+    intro: 'Upload historische onderzoeken en bewaar lokale bestandsanalyse versleuteld.',
+    emptyState: 'Nog geen dossierdocumenten vastgelegd.',
+  },
+  {
     id: 'kennis',
     label: 'Kennis',
     title: 'Kennisbank',
@@ -195,6 +205,7 @@ export type AppShellState = {
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
+  dossierDocuments?: DossierDocument[];
   kennisItems: KennisItem[];
   kennisFilter?: KennisFilter;
   symptomLogs?: SymptomLog[];
@@ -208,6 +219,8 @@ export type AppShellState = {
   aiError?: string;
   backupStatus?: string;
   backupError?: string;
+  dossierStatus?: string;
+  dossierError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   inAppFallbackNotifications?: InAppFallbackNotification[];
@@ -221,6 +234,7 @@ export function renderAppShell(
     medicatie: [],
     herinneringen: [],
     vragen: [],
+    dossierDocuments: [],
     kennisItems: [],
     kosten: [],
     settings: DEFAULT_APP_SETTINGS,
@@ -307,6 +321,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
+  if (activeId === 'dossier') return renderDossierScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
   if (activeId === 'welzijn') return renderWelzijnScreen(state);
   if (activeId === 'afwegingen') return renderAfwegingenScreen(state);
@@ -535,6 +550,73 @@ function renderBackupScreen(state: AppShellState): string {
         ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
       </div>
     </section>
+  `;
+}
+
+function renderDossierScreen(state: AppShellState): string {
+  const documenten = state.dossierDocuments ?? [];
+
+  return `
+    <section class="traject-layout" aria-label="Dossier beheren">
+      <div class="form-panel">
+        <h2>Historische onderzoeken uploaden</h2>
+        <form id="dossier-upload-form" class="data-form">
+          <label>
+            Datum onderzoek
+            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+          </label>
+          <label>
+            Titel of reeksnaam
+            <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: bloeduitslagen voorjaar" />
+          </label>
+          <label>
+            Categorie
+            <select name="categorie">
+              ${Object.entries(DOSSIER_CATEGORIE_LABELS)
+                .map(([value, label]) => renderOption(value, label, 'onderzoek'))
+                .join('')}
+            </select>
+          </label>
+          <label>
+            Bestanden
+            <input name="dossierBestanden" type="file" multiple required />
+          </label>
+          <label>
+            Notitie
+            <textarea name="notitie" rows="4"></textarea>
+          </label>
+          <button type="submit">Upload naar dossier</button>
+        </form>
+        <p class="small-print">Bestanden en analyse blijven versleuteld lokaal. De analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
+        ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
+      </div>
+      <div class="timeline-panel">
+        <h2>Historische onderzoeken</h2>
+        ${
+          documenten.length > 0
+            ? `<ol class="phase-list">${documenten.map(renderDossierDocument).join('')}</ol>`
+            : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderDossierDocument(document: DossierDocument): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(document.titel)}</h3>
+        <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
+        <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
+        <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
+        <ul class="compact-list">
+          ${document.analyse.signalen.map((signaal) => `<li>${escapeHtml(signaal)}</li>`).join('')}
+        </ul>
+        ${document.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(document.notitie)}</p>` : ''}
+      </div>
+    </li>
   `;
 }
 

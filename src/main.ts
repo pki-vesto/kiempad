@@ -5,6 +5,7 @@ import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
+import { DossierStore } from './domain/dossierStore';
 import { EventLogStore } from './domain/eventLogStore';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
@@ -24,6 +25,7 @@ import type {
   CostItem,
   Decision,
   DoseLog,
+  DossierDocument,
   EventLog,
   Fase,
   Herinnering,
@@ -64,6 +66,7 @@ type RuntimeState = {
   kennisStore?: KennisStore;
   kostenStore?: KostenStore;
   decisionStore?: DecisionStore;
+  dossierStore?: DossierStore;
   eventLogStore?: EventLogStore;
   symptomenStore?: SymptomenStore;
   mentaleCheckInStore?: MentaleCheckInStore;
@@ -78,6 +81,7 @@ type RuntimeState = {
   symptomLogs: SymptomLog[];
   mentalCheckIns: MentalCheckIn[];
   decisions: Decision[];
+  dossierDocuments: DossierDocument[];
   kosten: CostItem[];
   eventLogs: EventLog[];
   settings: AppSettings;
@@ -86,6 +90,8 @@ type RuntimeState = {
   aiError?: string;
   backupStatus?: string;
   backupError?: string;
+  dossierStatus?: string;
+  dossierError?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   error?: string;
@@ -104,6 +110,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatie: state.medicatie,
     herinneringen: state.herinneringen,
     vragen: state.vragen,
+    dossierDocuments: state.dossierDocuments,
     kennisItems: state.kennisItems,
     kennisFilter: state.kennisFilter,
     symptomLogs: state.symptomLogs,
@@ -117,6 +124,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     aiError: state.aiError,
     backupStatus: state.backupStatus,
     backupError: state.backupError,
+    dossierStatus: state.dossierStatus,
+    dossierError: state.dossierError,
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     inAppFallbackNotifications: buildInAppFallbackNotifications(
@@ -132,6 +141,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindMedicatieControls(root, state);
   bindHerinneringControls(root, state);
   bindVraagControls(root, state);
+  bindDossierControls(root, state);
   bindKennisControls(root, state);
   bindWelzijnControls(root, state);
   bindAfwegingControls(root, state);
@@ -152,6 +162,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kennisStore = undefined;
     state.kostenStore = undefined;
     state.decisionStore = undefined;
+    state.dossierStore = undefined;
     state.eventLogStore = undefined;
     state.symptomenStore = undefined;
     state.mentaleCheckInStore = undefined;
@@ -166,6 +177,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.symptomLogs = [];
     state.mentalCheckIns = [];
     state.decisions = [];
+    state.dossierDocuments = [];
     state.kosten = [];
     state.eventLogs = [];
     state.settings = DEFAULT_APP_SETTINGS;
@@ -173,6 +185,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.aiError = undefined;
     state.backupStatus = undefined;
     state.backupError = undefined;
+    state.dossierStatus = undefined;
+    state.dossierError = undefined;
     state.medicatieImportStatus = undefined;
     state.medicatieImportError = undefined;
     clearScheduledNotifications();
@@ -201,6 +215,7 @@ async function mount(): Promise<void> {
     symptomLogs: [],
     mentalCheckIns: [],
     decisions: [],
+    dossierDocuments: [],
     kosten: [],
     eventLogs: [],
     settings: DEFAULT_APP_SETTINGS,
@@ -220,6 +235,66 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void importBackupFromForm(event.currentTarget, root, state);
   });
+}
+
+function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#dossier-upload-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveDossierDocumentsFromForm(event.currentTarget, root, state);
+  });
+}
+
+async function saveDossierDocumentsFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+
+  const data = new FormData(target);
+  const files = data
+    .getAll('dossierBestanden')
+    .filter((file): file is File => file instanceof File && file.size > 0);
+
+  if (files.length === 0) {
+    state.dossierError = 'Kies minimaal één onderzoeksbestand.';
+    render(root, state);
+    return;
+  }
+
+  try {
+    const datum = String(data.get('datum') ?? '');
+    const titel = optionalString(data.get('titel'));
+    const categorie = parseDossierCategorie(data.get('categorie'));
+    const notitie = optionalString(data.get('notitie'));
+
+    for (const file of files) {
+      await state.dossierStore.save({
+        datum,
+        titel: titel ?? file.name,
+        categorie,
+        bestandsNaam: file.name,
+        mimeType: file.type || undefined,
+        grootteBytes: file.size,
+        inhoudBase64: await fileToBase64(file),
+        notitie,
+      });
+    }
+
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Historische onderzoeken toegevoegd',
+      detail: `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld opgeslagen.`,
+    });
+    state.dossierStatus = `${files.length} onderzoeksbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld toegevoegd.`;
+    state.dossierError = undefined;
+    target.reset();
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Dossierdocumenten uploaden is mislukt.';
+    render(root, state);
+  }
 }
 
 async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<void> {
@@ -276,6 +351,7 @@ async function importBackupFromForm(
     state.kennisStore = undefined;
     state.kostenStore = undefined;
     state.decisionStore = undefined;
+    state.dossierStore = undefined;
     state.eventLogStore = undefined;
     state.symptomenStore = undefined;
     state.mentaleCheckInStore = undefined;
@@ -290,6 +366,7 @@ async function importBackupFromForm(
     state.symptomLogs = [];
     state.mentalCheckIns = [];
     state.decisions = [];
+    state.dossierDocuments = [];
     state.kosten = [];
     state.eventLogs = [];
     state.settings = DEFAULT_APP_SETTINGS;
@@ -297,6 +374,8 @@ async function importBackupFromForm(
     state.aiError = undefined;
     state.backupStatus = `Back-up geïmporteerd (${result.records} records, ${result.meta} metadata-items). Ontgrendel opnieuw.`;
     state.backupError = undefined;
+    state.dossierStatus = undefined;
+    state.dossierError = undefined;
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Back-up importeren is mislukt.';
   }
@@ -325,6 +404,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.kennisStore = createKennisStore(state);
         state.kostenStore = createKostenStore(state);
         state.decisionStore = createDecisionStore(state);
+        state.dossierStore = createDossierStore(state);
         state.eventLogStore = createEventLogStore(state);
         state.symptomenStore = createSymptomenStore(state);
         state.mentaleCheckInStore = createMentaleCheckInStore(state);
@@ -340,6 +420,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.symptomLogs = await state.symptomenStore.list();
         state.mentalCheckIns = await state.mentaleCheckInStore.list();
         state.decisions = await state.decisionStore.list();
+        state.dossierDocuments = await state.dossierStore.list();
         state.kosten = await state.kostenStore.list();
         await state.eventLogStore.record({
           categorie: 'kluis',
@@ -1124,6 +1205,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.decisionStore) {
     state.decisions = await state.decisionStore.list();
   }
+  if (state.dossierStore) {
+    state.dossierDocuments = await state.dossierStore.list();
+  }
   if (state.kostenStore) {
     state.kosten = await state.kostenStore.list();
   }
@@ -1188,6 +1272,12 @@ function createKostenStore(state: RuntimeState): KostenStore {
 function createDecisionStore(state: RuntimeState): DecisionStore {
   return new DecisionStore(
     new EncryptedRecordRepository<Decision>(state.driver, state.session, 'decision'),
+  );
+}
+
+function createDossierStore(state: RuntimeState): DossierStore {
+  return new DossierStore(
+    new EncryptedRecordRepository<DossierDocument>(state.driver, state.session, 'dossier_document'),
   );
 }
 
@@ -1322,6 +1412,20 @@ function parseKennisCategorie(value: FormDataEntryValue | null): KennisFilter['c
   return undefined;
 }
 
+function parseDossierCategorie(value: FormDataEntryValue | null): DossierDocument['categorie'] {
+  if (
+    value === 'onderzoek' ||
+    value === 'beeld' ||
+    value === 'gespreksverslag' ||
+    value === 'embryo' ||
+    value === 'overig'
+  ) {
+    return value;
+  }
+
+  return 'onderzoek';
+}
+
 function parseOwner(value: FormDataEntryValue | null): SymptomLog['owner'] {
   if (value === 'peter' || value === 'partner' || value === 'samen') return value;
   return 'samen';
@@ -1335,6 +1439,19 @@ function parseStemming(value: FormDataEntryValue | null): MentalCheckIn['stemmin
 function optionalString(value: FormDataEntryValue | null): string | undefined {
   const normalized = String(value ?? '').trim();
   return normalized ? normalized : undefined;
+}
+
+async function fileToBase64(file: File): Promise<string> {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+  let binary = '';
+  const chunkSize = 0x8000;
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    const chunk = bytes.subarray(index, index + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+
+  return btoa(binary);
 }
 
 function optionalPositiveNumber(value: FormDataEntryValue | null): number | undefined {
