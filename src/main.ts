@@ -5,6 +5,8 @@ import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { HerinneringStore } from './domain/herinneringStore';
 import { KennisStore } from './domain/kennisStore';
 import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
+import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
+import { SettingsStore } from './domain/settingsStore';
 import { maakTraject, type TrajectMetFasen } from './domain/traject';
 import { TrajectStore } from './domain/trajectStore';
 import type {
@@ -14,6 +16,7 @@ import type {
   Herinnering,
   KennisItem,
   Medicatie,
+  SettingsRecord,
   Traject,
   TrajectFase,
   Vraag,
@@ -42,12 +45,14 @@ type RuntimeState = {
   herinneringStore?: HerinneringStore;
   vraagStore?: VraagStore;
   kennisStore?: KennisStore;
+  settingsStore?: SettingsStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
+  settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
   error?: string;
 };
@@ -66,6 +71,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     herinneringen: state.herinneringen,
     vragen: state.vragen,
     kennisItems: state.kennisItems,
+    settings: state.settings,
     notificaties: state.notificaties,
   });
   bindTrajectControls(root, state);
@@ -74,7 +80,11 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindHerinneringControls(root, state);
   bindVraagControls(root, state);
   bindKennisControls(root, state);
-  scheduleLocalNotifications(state.herinneringen);
+  scheduleLocalNotifications(
+    state.herinneringen,
+    state.settings,
+    createNotificationDetailMap(state),
+  );
   root.querySelector('#lock-button')?.addEventListener('click', () => {
     state.session.lock();
     state.trajectStore = undefined;
@@ -83,12 +93,14 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.herinneringStore = undefined;
     state.vraagStore = undefined;
     state.kennisStore = undefined;
+    state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
     state.medicatie = [];
     state.herinneringen = [];
     state.vragen = [];
     state.kennisItems = [];
+    state.settings = DEFAULT_APP_SETTINGS;
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
@@ -112,6 +124,7 @@ async function mount(): Promise<void> {
     herinneringen: [],
     vragen: [],
     kennisItems: [],
+    settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
   };
 
@@ -138,7 +151,9 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.medicatieStore = createMedicatieStore(state);
         state.vraagStore = createVraagStore(state);
         state.kennisStore = createKennisStore(state);
+        state.settingsStore = createSettingsStore(state);
         await state.kennisStore.seedInitialItems();
+        state.settings = await state.settingsStore.get();
         state.trajecten = await state.trajectStore.list();
         state.afspraken = await state.agendaStore.list();
         state.medicatie = await state.medicatieStore.list();
@@ -191,7 +206,11 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
     void requestNotificationPermissionAndRegister()
       .then((status) => {
         state.notificaties = status;
-        scheduleLocalNotifications(state.herinneringen);
+        scheduleLocalNotifications(
+          state.herinneringen,
+          state.settings,
+          createNotificationDetailMap(state),
+        );
         render(root, state);
       })
       .catch(async () => {
@@ -201,6 +220,24 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
         }));
         render(root, state);
       });
+  });
+
+  root.querySelector('#notification-privacy-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement) || !state.settingsStore) return;
+
+    const data = new FormData(form);
+    const allowed = data.get('toonNotificatieDetailsOpVergrendelscherm') === 'true';
+    void state.settingsStore.setNotificationDetailsAllowed(allowed).then((settings) => {
+      state.settings = settings;
+      scheduleLocalNotifications(
+        state.herinneringen,
+        state.settings,
+        createNotificationDetailMap(state),
+      );
+      render(root, state);
+    });
   });
 }
 
@@ -398,6 +435,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.kennisStore) {
     state.kennisItems = await state.kennisStore.list();
   }
+  if (state.settingsStore) {
+    state.settings = await state.settingsStore.get();
+  }
   state.notificaties = await getNotificationRuntimeStatus();
   render(root, state);
 }
@@ -442,6 +482,31 @@ function createKennisStore(state: RuntimeState): KennisStore {
   return new KennisStore(
     new EncryptedRecordRepository<KennisItem>(state.driver, state.session, 'kennis_item'),
   );
+}
+
+function createSettingsStore(state: RuntimeState): SettingsStore {
+  return new SettingsStore(
+    new EncryptedRecordRepository<SettingsRecord>(state.driver, state.session, 'settings'),
+  );
+}
+
+function createNotificationDetailMap(state: RuntimeState): Record<string, string> {
+  const details: Record<string, string> = {};
+
+  for (const bundle of state.afspraken) {
+    if (bundle.herinnering) {
+      details[bundle.herinnering.id] = `Afspraak: ${bundle.afspraak.titel}`;
+      details[bundle.afspraak.id] = `Afspraak: ${bundle.afspraak.titel}`;
+    }
+  }
+
+  for (const bundle of state.medicatie) {
+    for (const doseLog of bundle.doseLogs) {
+      details[doseLog.id] = `Medicatie: ${bundle.medicatie.naam}`;
+    }
+  }
+
+  return details;
 }
 
 function parseMedicatieVorm(value: FormDataEntryValue | null): Medicatie['vorm'] {

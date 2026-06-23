@@ -14,6 +14,7 @@ import {
   MEDICATIE_VORM_LABELS,
 } from './domain/medicatie';
 import type { MedicatieBundle } from './domain/medicatieStore';
+import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import {
   bepaalHuidigeFase,
   bepaalVolgendeStap,
@@ -120,6 +121,7 @@ export type AppShellState = {
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
+  settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
 };
 
@@ -132,6 +134,7 @@ export function renderAppShell(
     herinneringen: [],
     vragen: [],
     kennisItems: [],
+    settings: DEFAULT_APP_SETTINGS,
     notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
   },
 ): string {
@@ -456,6 +459,16 @@ function renderHerinneringenScreen(state: AppShellState): string {
             : ''
         }
         <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
+        <form id="notification-privacy-form" class="data-form compact-form">
+          <label>
+            Inhoud op vergrendeld scherm
+            <select name="toonNotificatieDetailsOpVergrendelscherm">
+              ${renderOption('false', 'Altijd generieke tekst', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
+              ${renderOption('true', 'Details tonen na expliciete keuze', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
+            </select>
+          </label>
+          <button type="submit">Bewaar notificatieprivacy</button>
+        </form>
       </div>
       <div class="timeline-panel">
         <div class="panel-heading">

@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G066 notificatieprivacy: versleutelde lokale setting toegevoegd waarmee
+  notificaties standaard generiek blijven en details op het vergrendelscherm alleen
+  na expliciete keuze verschijnen.
 - M1.10 tests & kwaliteit: Biome toegevoegd voor consistente lint/format-checks,
   `npm run lint`/`npm run format:check` scripts toegevoegd en CI uitgebreid met de
   lint/format-gate naast typecheck, tests, audit en build (G165, G166).
