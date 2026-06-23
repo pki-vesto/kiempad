@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
+  bouwEenvoudigeResearchSamenvattingen,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwWetenschappelijkeResearchSamenvattingen,
@@ -106,6 +107,30 @@ describe('kennis domeinregels', () => {
     ]);
   });
 
+  it('bouwt eenvoudige samenvattingen per publicatie in begrijpelijk Nederlands', () => {
+    const item = maakResearchKennisItem('research-1', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
+    });
+
+    expect(bouwEenvoudigeResearchSamenvattingen([...INITIELE_KENNIS_ITEMS, item])).toEqual([
+      {
+        id: 'research-1',
+        titel: 'Artikel over embryo-cultuur',
+        publicatieDatum: '2026-05-10',
+        bron: 'https://voorbeeld.test/embryo-cultuur',
+        eenvoudigeSamenvatting:
+          'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
+      },
+    ]);
+  });
+
   it('filtert kennisitems op zoekterm en categorie', () => {
     const filtered = filterKennisItems(INITIELE_KENNIS_ITEMS, {
       zoekterm: 'eigen risico',
@@ -164,6 +189,17 @@ describe('kennis domeinregels', () => {
         wetenschappelijkeSamenvatting: 'Samenvatting met ongeldige datum.',
       }),
     ).toThrow('Publicatiedatum moet YYYY-MM-DD zijn');
+
+    expect(() =>
+      maakResearchKennisItem('research-ongeldig', {
+        titel: 'Artikel met te korte lekentekst',
+        bron: 'https://voorbeeld.test/artikel',
+        publicatieDatum: '2026-06-24',
+        notitie: 'Eigen notitie.',
+        wetenschappelijkeSamenvatting: 'Samenvatting met methode en beperkingen.',
+        eenvoudigeSamenvatting: 'Te kort.',
+      }),
+    ).toThrow('Eenvoudige samenvatting moet begrijpelijke context bevatten');
   });
 
   it('maakt eigen kennisitems in gekozen categorie', () => {

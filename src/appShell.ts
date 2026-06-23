@@ -56,9 +56,11 @@ import {
 } from './domain/herinnering';
 import {
   bepaalKennisKostenJaar,
+  bouwEenvoudigeResearchSamenvattingen,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwWetenschappelijkeResearchSamenvattingen,
+  type EenvoudigeResearchSamenvatting,
   filterKennisItems,
   KENNIS_CATEGORIE_LABELS,
   type KennisFilter,
@@ -1800,6 +1802,7 @@ function renderKennisScreen(state: AppShellState): string {
   const grouped = kennisItemsPerCategorie(filteredItems);
   const researchBronnen = bouwResearchBronnenCache(state.kennisItems);
   const researchSamenvattingen = bouwWetenschappelijkeResearchSamenvattingen(state.kennisItems);
+  const eenvoudigeResearchSamenvattingen = bouwEenvoudigeResearchSamenvattingen(state.kennisItems);
   const researchAggregatie = bouwResearchAggregatiePlan(
     researchBronnen,
     state.settings.researchNetwerk.ingeschakeld,
@@ -1826,6 +1829,9 @@ function renderKennisScreen(state: AppShellState): string {
       </div>
       <div class="summary-panel">
         ${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen)}
+      </div>
+      <div class="summary-panel">
+        ${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen)}
       </div>
       <div class="summary-panel">
         ${renderResearchNetworkSettingsForm(state.settings)}
@@ -2023,6 +2029,10 @@ function renderResearchItemForm(): string {
         Wetenschappelijke samenvatting
         <textarea name="researchWetenschappelijkeSamenvatting" rows="4" placeholder="Doel, methode, belangrijkste bevindingen en beperkingen; geen behandeladvies"></textarea>
       </label>
+      <label>
+        Eenvoudige samenvatting
+        <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone Nederlandse taal uit wat deze publicatie zegt en wat nog onzeker is"></textarea>
+      </label>
       <button type="submit">Bewaar research</button>
     </form>
   `;
@@ -2068,6 +2078,30 @@ function renderWetenschappelijkeResearchSamenvattingen(
             )
             .join('')}</ol>`
         : '<p class="empty-state">Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.</p>'
+    }
+  `;
+}
+
+function renderEenvoudigeResearchSamenvattingen(
+  samenvattingen: readonly EenvoudigeResearchSamenvatting[],
+): string {
+  return `
+    <h2>Eenvoudige samenvattingen</h2>
+    <p class="small-print">Begrijpelijke Nederlandse uitleg per publicatie, met bron en datum. Dit is geen diagnose of behandeladvies.</p>
+    ${
+      samenvattingen.length > 0
+        ? `<ol class="compact-list">${samenvattingen
+            .map(
+              (item) => `
+                <li>
+                  <strong>${escapeHtml(item.titel)}</strong>
+                  <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
+                  <small>${escapeHtml(item.eenvoudigeSamenvatting)}</small>
+                </li>
+              `,
+            )
+            .join('')}</ol>`
+        : '<p class="empty-state">Nog geen eenvoudige samenvattingen per publicatie vastgelegd.</p>'
     }
   `;
 }

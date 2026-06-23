@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G215 PFIP research intelligence: researchpublicaties kunnen naast de
+  wetenschappelijke samenvatting ook een eenvoudige Nederlandse lekensamenvatting
+  bewaren en tonen met bron en datum, zonder diagnose of behandeladvies.
 - G214 PFIP research intelligence: handmatige researchpublicaties kunnen een
   wetenschappelijke samenvatting met bron en publicatiedatum bewaren en tonen,
   lokaal versleuteld en zonder netwerkactie.

@@ -1220,6 +1220,7 @@ describe('app shell', () => {
     expect(html).toContain('name="researchPublicatieDatum" type="date"');
     expect(html).toContain('name="researchNotitie"');
     expect(html).toContain('name="researchWetenschappelijkeSamenvatting"');
+    expect(html).toContain('name="researchEenvoudigeSamenvatting"');
     expect(html).toContain('Bewaar research');
     expect(html).toContain('Researchbronnen');
     expect(html).toContain('Seedbron');
@@ -1231,6 +1232,8 @@ describe('app shell', () => {
     expect(html).toContain('Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.');
     expect(html).toContain('Wetenschappelijke samenvattingen');
     expect(html).toContain('Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.');
+    expect(html).toContain('Eenvoudige samenvattingen');
+    expect(html).toContain('Nog geen eenvoudige samenvattingen per publicatie vastgelegd.');
     expect(html).toContain('Researchaggregatie');
     expect(html).toContain('id="research-network-form"');
     expect(html).toContain('name="researchNetwerkIngeschakeld"');
@@ -1326,6 +1329,45 @@ describe('app shell', () => {
       'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
     );
     expect(html).toContain('Dit is geen behandeladvies');
+  });
+
+  it('rendert eenvoudige researchsamenvattingen met bron en publicatiedatum', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-eigen',
+          titel: 'Eigen artikel embryo-cultuur',
+          inhoud: 'Lokale notitie bij gevonden artikel.',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          categorie: 'research',
+          researchPublicatie: {
+            publicatieDatum: '2026-05-10',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            wetenschappelijkeSamenvatting:
+              'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+            eenvoudigeSamenvatting:
+              'Dit artikel legt uit welke labfactoren zijn bekeken. Het zegt niet welke behandeling jullie moeten kiezen.',
+          },
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('Eenvoudige samenvattingen');
+    expect(html).toContain('Eigen artikel embryo-cultuur');
+    expect(html).toContain('2026-05-10 · https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain(
+      'Dit artikel legt uit welke labfactoren zijn bekeken. Het zegt niet welke behandeling jullie moeten kiezen.',
+    );
+    expect(html).toContain('Dit is geen diagnose of behandeladvies');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {
