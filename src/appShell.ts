@@ -862,7 +862,7 @@ function renderKostenForm(selected?: CostItem): string {
       <button type="submit">${selected ? 'Werk kostenpost bij' : 'Bewaar kostenpost'}</button>
       ${
         selected
-          ? `<button class="danger-button delete-kosten" type="button" data-kosten-id="${escapeAttribute(selected.id)}">Verwijder kostenpost</button>`
+          ? `<button class="danger-button delete-kosten" type="button" data-kosten-id="${escapeAttribute(selected.id)}" aria-label="Verwijder kostenpost: ${escapeAttribute(selected.omschrijving)}">Verwijder kostenpost</button>`
           : ''
       }
     </form>
@@ -1014,7 +1014,7 @@ function renderKennisItem(item: KennisItem): string {
       ${
         item.geverifieerd_met_arts
           ? ''
-          : `<button class="phase-button" type="button" data-kennis-id="${item.id}">Markeer geverifieerd</button>`
+          : `<button class="phase-button" type="button" data-kennis-id="${item.id}" aria-label="Markeer kennisitem als geverifieerd: ${escapeAttribute(item.titel)}">Markeer geverifieerd</button>`
       }
       ${
         isEigenKennisItem(item)
@@ -1111,7 +1111,7 @@ function renderVragenScreen(state: AppShellState): string {
           <h2>Openstaand</h2>
           ${
             selected
-              ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}">Verwijder vraag</button>`
+              ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}" aria-label="Verwijder vraag: ${escapeAttribute(selected.vraag.vraag)}">Verwijder vraag</button>`
               : ''
           }
         </div>
@@ -1237,8 +1237,8 @@ function renderVragenList(bundles: VraagBundle[]): string {
                 ${bundle.vraag.antwoord ? `<p class="linked-note">Antwoord: ${escapeHtml(bundle.vraag.antwoord)}</p>` : ''}
               </div>
               <form class="question-priority-form compact-form" data-vraag-id="${escapeAttribute(bundle.vraag.id)}">
-                <button class="phase-button secondary" type="submit" name="richting" value="omhoog">Omhoog</button>
-                <button class="phase-button secondary" type="submit" name="richting" value="omlaag">Omlaag</button>
+                <button class="phase-button secondary" type="submit" name="richting" value="omhoog" aria-label="Verplaats vraag omhoog: ${escapeAttribute(bundle.vraag.vraag)}">Omhoog</button>
+                <button class="phase-button secondary" type="submit" name="richting" value="omlaag" aria-label="Verplaats vraag omlaag: ${escapeAttribute(bundle.vraag.vraag)}">Omlaag</button>
               </form>
             </li>
           `,
@@ -1366,11 +1366,12 @@ function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>)
   return `
     <ol class="phase-list">
       ${items
-        .map(
-          ({ herinnering, volgendMoment }) => `
+        .map(({ herinnering, volgendMoment }) => {
+          const titel = herinnering.titel ?? HERINNERING_BRON_LABELS[herinnering.bron.soort];
+          return `
             <li class="phase-item">
               <div>
-                <h3>${escapeHtml(herinnering.titel ?? HERINNERING_BRON_LABELS[herinnering.bron.soort])}</h3>
+                <h3>${escapeHtml(titel)}</h3>
                 <p>${formatDateTime(volgendMoment)} · ${HERHALING_LABELS[herinnering.herhaling ?? 'eenmalig']}</p>
                 <small>${herinnering.actief ? 'Actief' : 'Inactief'}</small>
               </div>
@@ -1383,16 +1384,16 @@ function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>)
                     ${renderOption('60', '1 uur')}
                   </select>
                 </label>
-                <button class="phase-button" type="submit" name="reminderAction" value="snooze">Snooze</button>
+                <button class="phase-button" type="submit" name="reminderAction" value="snooze" aria-label="Snooze herinnering: ${escapeAttribute(titel)}">Snooze</button>
                 <label>
                   Nieuw tijdstip
                   <input name="nieuwTijdstip" type="datetime-local" value="${escapeAttribute(volgendMoment)}" />
                 </label>
-                <button class="phase-button secondary" type="submit" name="reminderAction" value="reschedule">Plan opnieuw</button>
+                <button class="phase-button secondary" type="submit" name="reminderAction" value="reschedule" aria-label="Plan herinnering opnieuw: ${escapeAttribute(titel)}">Plan opnieuw</button>
               </form>
             </li>
-          `,
-        )
+          `;
+        })
         .join('')}
     </ol>
   `;
@@ -1449,7 +1450,7 @@ function renderAgendaScreen(state: AppShellState): string {
           <h2>Komende afspraken</h2>
           ${
             selected
-              ? `<button class="danger-button" id="delete-afspraak" type="button" data-afspraak-id="${selected.afspraak.id}">Verwijder afspraak</button>`
+              ? `<button class="danger-button" id="delete-afspraak" type="button" data-afspraak-id="${selected.afspraak.id}" aria-label="Verwijder afspraak: ${escapeAttribute(selected.afspraak.titel)}">Verwijder afspraak</button>`
               : ''
           }
         </div>
@@ -1656,7 +1657,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           <h2>Vandaag</h2>
           ${
             selected
-              ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}">Verwijder medicatie</button>`
+              ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}" aria-label="Verwijder medicatie: ${escapeAttribute(selected.medicatie.naam)}">Verwijder medicatie</button>`
               : ''
           }
         </div>
@@ -1751,12 +1752,14 @@ function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): str
           const medicatie = bundles.find(
             (bundle) => bundle.medicatie.id === doseLog.medicatieId,
           )?.medicatie;
+          const naam = medicatie?.naam ?? 'Onbekende medicatie';
+          const gepland = formatDateTime(doseLog.geplandOp);
           const missed = doseLogIsGemist(doseLog, now);
           return `
             <li class="phase-item${missed ? ' missed' : ''}">
               <div>
-                <h3>${escapeHtml(medicatie?.naam ?? 'Onbekende medicatie')}</h3>
-                <p>${formatDateTime(doseLog.geplandOp)} · ${doseLog.status}${missed ? ' · gemist' : ''}</p>
+                <h3>${escapeHtml(naam)}</h3>
+                <p>${gepland} · ${doseLog.status}${missed ? ' · gemist' : ''}</p>
                 <small>${escapeHtml(medicatie ? beschrijfMedicatieDosis(medicatie) : '')}</small>
                 ${
                   doseLog.notitie
@@ -1770,8 +1773,8 @@ function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): str
                   <input name="doseLogNotitie" value="${escapeAttribute(doseLog.notitie ?? '')}" placeholder="Bijwerking, plek injectie..." />
                 </label>
                 <div class="button-row">
-                  <button class="dose-button" type="submit" name="doseStatus" value="genomen">Genomen</button>
-                  <button class="dose-button secondary" type="submit" name="doseStatus" value="overgeslagen">Overgeslagen</button>
+                  <button class="dose-button" type="submit" name="doseStatus" value="genomen" aria-label="Markeer ${escapeAttribute(naam)} op ${escapeAttribute(gepland)} als genomen">Genomen</button>
+                  <button class="dose-button secondary" type="submit" name="doseStatus" value="overgeslagen" aria-label="Markeer ${escapeAttribute(naam)} op ${escapeAttribute(gepland)} als overgeslagen">Overgeslagen</button>
                 </div>
               </form>
             </li>
@@ -1855,7 +1858,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2>Fasen</h2>
           ${
             selected
-              ? `<button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}">Verwijder traject</button>`
+              ? `<button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}" aria-label="Verwijder traject: ${escapeAttribute(selected.traject.naam)}">Verwijder traject</button>`
               : ''
           }
         </div>
@@ -1964,7 +1967,7 @@ function renderTimeline(item: TrajectMetFasen): string {
                 <p>${escapeHtml(fase.toelichting ?? '')}</p>
                 <small>${renderPhaseDates(fase.startDatum, fase.eindDatum)}</small>
               </div>
-              <button class="phase-button" type="button" data-traject-id="${item.traject.id}" data-fase="${fase.fase}">
+              <button class="phase-button" type="button" data-traject-id="${item.traject.id}" data-fase="${fase.fase}" aria-label="${isCurrent ? 'Huidige fase' : 'Markeer fase als huidig'}: ${escapeAttribute(TRAJECT_FASE_LABELS[fase.fase])} voor ${escapeAttribute(item.traject.naam)}">
                 ${isCurrent ? 'Huidig' : 'Markeer'}
               </button>
             </li>

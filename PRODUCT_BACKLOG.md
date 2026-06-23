@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 155 |
+| ☑ klaar | 156 |
 | ◐ bezig | 1 |
-| ☐ open | 23 |
+| ☐ open | 22 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -264,7 +264,7 @@
 | G150 | Volledig offline bruikbaar na eerste laden | P1 | F1 | ☑ |
 | G151 | Startscherm met "waar staan we / wat is de volgende stap" | P1 | F1 | ☑ |
 | G152 | Toegankelijkheid: contrast, focus, toetsenbordnavigatie | P1 | F1 | ☑ |
-| G153 | Schermlezer-vriendelijke labels (ARIA) | P2 | F2 | ☐ |
+| G153 | Schermlezer-vriendelijke labels (ARIA) | P2 | F2 | ☑ |
 | G154 | Donkere modus | P3 | F2 | ☐ |
 | G155 | Nederlandstalige UI (default `nl`) | P1 | F1 | ☑ |
 | G156 | Lege-staten met vriendelijke uitleg i.p.v. lege schermen | P2 | F1 | ☑ |

@@ -145,6 +145,7 @@ describe('app shell', () => {
     expect(html).toContain('Afgelopen');
     expect(html).toContain('Geweest · Consult · 2020-01-02 10:00');
     expect(html).toContain('Terugblik: Besproken wat de volgende stap wordt.');
+    expect(html).toContain('aria-label="Verwijder afspraak: Echo controle"');
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {
@@ -187,6 +188,9 @@ describe('app shell', () => {
     expect(html).toContain('zoals kliniek: 2x per dag');
     expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');
+    expect(html).toContain('aria-label="Verwijder medicatie: Progesteron"');
+    expect(html).toContain('aria-label="Markeer Progesteron op 2026-06-23 08:00 als genomen"');
+    expect(html).toContain('aria-label="Markeer Progesteron op 2026-06-23 08:00 als overgeslagen"');
     expect(html).toContain('Notitie: plek links');
     expect(html).toContain('Historie van innames');
     expect(html).toContain('plek links');
@@ -243,7 +247,9 @@ describe('app shell', () => {
     expect(html).toContain('class="reminder-reschedule-form compact-form"');
     expect(html).toContain('data-herinnering-id="rem-1"');
     expect(html).toContain('Snooze');
+    expect(html).toContain('aria-label="Snooze herinnering: Medicatie"');
     expect(html).toContain('Plan opnieuw');
+    expect(html).toContain('aria-label="Plan herinnering opnieuw: Medicatie"');
     expect(html).toContain('generieke tekst');
     expect(html).toContain('In-app meldingen');
     expect(html).toContain('Browsernotificaties staan niet klaar');
@@ -369,6 +375,9 @@ describe('app shell', () => {
     expect(html).toContain('value="omhoog"');
     expect(html).toContain('value="omlaag"');
     expect(html).toContain('Verwijder vraag');
+    expect(html).toContain('aria-label="Verwijder vraag: Wat is de volgende stap?"');
+    expect(html).toContain('aria-label="Verplaats vraag omhoog: Wat is de volgende stap?"');
+    expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
     expect(html).toContain('Verslag per afspraak');
     expect(html).toContain('Wanneer horen we de uitslag?');
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
@@ -419,6 +428,9 @@ describe('app shell', () => {
     expect(html).toContain('Concept · niet geverifieerd');
     expect(html).toContain('Nog niet met behandelaar geverifieerd');
     expect(html).toContain('Markeer geverifieerd');
+    expect(html).toContain(
+      'aria-label="Markeer kennisitem als geverifieerd: Kosten 2026: eigen risico"',
+    );
     expect(html).toContain('Eigen kennis');
     expect(html).toContain('name="kennisId" value="eigen-1"');
     expect(html).toContain('Werk kennisitem bij');
@@ -594,6 +606,7 @@ describe('app shell', () => {
     expect(html).toContain('Eigen risico');
     expect(html).toContain('Werk kostenpost bij');
     expect(html).toContain('data-kosten-id="cost-1"');
+    expect(html).toContain('aria-label="Verwijder kostenpost: Apotheekfactuur"');
     expect(html).toContain('eigen polis en verzekeraar blijven leidend');
   });
 
@@ -793,7 +806,15 @@ describe('app shell', () => {
             pogingNummer: 1,
             teltMeeVoorVergoeding: true,
           },
-          fasen: [],
+          fasen: [
+            {
+              id: 'fase-1',
+              trajectId: 'traject-1',
+              fase: 'stimulatie',
+              startDatum: '2026-06-23',
+              toelichting: 'Stimulatie loopt.',
+            },
+          ],
         },
         {
           traject: {
@@ -822,5 +843,7 @@ describe('app shell', () => {
     expect(html).toContain('Poging 2 · gepland');
     expect(html).toContain('telt mee voor vergoeding');
     expect(html).toContain('telt nog niet mee');
+    expect(html).toContain('aria-label="Verwijder traject: Poging 1"');
+    expect(html).toContain('aria-label="Huidige fase: Stimulatie voor Poging 1"');
   });
 });

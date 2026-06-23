@@ -121,6 +121,9 @@
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
+- **G153 schermlezer-vriendelijke labels:** herhaalde acties voor verwijderen,
+  herordenen, innames markeren, herinneringen plannen, fase wijzigen en kennis
+  verifiëren hebben contextuele toegankelijke namen naast de zichtbare knoptekst.
 - **G126 lokaal gebeurtenissenlog:** Logboek-scherm toont kluis- en back-up
   gebeurtenissen uit versleutelde lokale EventLog-records; dit logboek blijft op het
   toestel en is niet gekoppeld aan export of externe diensten.
