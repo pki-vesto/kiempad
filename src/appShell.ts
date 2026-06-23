@@ -877,8 +877,20 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="embryoDag" type="number" min="1" max="7" step="1" />
           </label>
           <label>
+            Meetmoment
+            <input name="embryoMeetmoment" autocomplete="off" placeholder="Bijvoorbeeld: dag 3 cleavage of dag 5 blastocyst" />
+          </label>
+          <label>
             Kwaliteit volgens kliniek
             <input name="embryoKwaliteit" autocomplete="off" required placeholder="Bijvoorbeeld: 4AA of kliniektekst" />
+          </label>
+          <label>
+            Kliniekterminologie
+            <input name="embryoKliniekTerminologie" autocomplete="off" placeholder="Bijvoorbeeld: Gardner-score, morfologie of kliniektekst" />
+          </label>
+          <label>
+            Bron labterugkoppeling
+            <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
           </label>
           <label>
             Status
@@ -1166,6 +1178,11 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
     `Laatste datum: ${item.laatsteDatum}`,
     item.kwaliteiten.length > 0 ? `Kwaliteit: ${item.kwaliteiten.join(', ')}` : undefined,
     item.statussen.length > 0 ? `Status: ${item.statussen.join(', ')}` : undefined,
+    item.meetmomenten.length > 0 ? `Meetmoment: ${item.meetmomenten.join(', ')}` : undefined,
+    item.kliniekTerminologieen.length > 0
+      ? `Terminologie: ${item.kliniekTerminologieen.join(', ')}`
+      : undefined,
+    item.bronnen.length > 0 ? `Bron: ${item.bronnen.join(', ')}` : undefined,
     item.embryoIds.length > 0 ? `Embryo-id: ${item.embryoIds.join(', ')}` : undefined,
     item.embryoDagen.length > 0 ? `Embryodag: ${item.embryoDagen.join(', ')}` : undefined,
     item.laboratoriumContexten.length > 0
@@ -1440,8 +1457,13 @@ function renderEmbryoDetails(document: DossierDocument): string {
   const details = [
     `Embryo: ${document.embryo.label}`,
     document.embryo.dag ? `Dag ${document.embryo.dag}` : undefined,
+    document.embryo.meetmoment ? `Meetmoment: ${document.embryo.meetmoment}` : undefined,
     `Kwaliteit: ${document.embryo.kwaliteit}`,
+    document.embryo.kliniekTerminologie
+      ? `Terminologie: ${document.embryo.kliniekTerminologie}`
+      : undefined,
     status ? `Status: ${status}` : undefined,
+    document.embryo.bron ? `Bron: ${document.embryo.bron}` : undefined,
   ].filter((label): label is string => Boolean(label));
 
   return `<p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>`;

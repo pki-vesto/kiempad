@@ -15,6 +15,9 @@ export type DossierDocumentInput = {
     label: string;
     kwaliteit: string;
     dag?: number;
+    meetmoment?: string;
+    kliniekTerminologie?: string;
+    bron?: string;
     status?: DossierDocument['embryo'] extends infer Embryo
       ? Embryo extends { status?: infer Status }
         ? Status
@@ -853,6 +856,9 @@ function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocume
     kwaliteit,
     dag:
       input?.dag && Number.isFinite(input.dag) && input.dag > 0 ? Math.round(input.dag) : undefined,
+    meetmoment: input?.meetmoment?.trim() || undefined,
+    kliniekTerminologie: input?.kliniekTerminologie?.trim() || undefined,
+    bron: input?.bron?.trim() || undefined,
     status: input?.status,
   };
 }

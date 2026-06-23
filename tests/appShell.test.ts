@@ -927,7 +927,10 @@ describe('app shell', () => {
           embryo: {
             label: 'Embryo 1',
             dag: 5,
+            meetmoment: 'Dag 5 blastocyst',
             kwaliteit: '4AA',
+            kliniekTerminologie: 'Gardner-score',
+            bron: 'Labrapport',
             status: 'teruggeplaatst',
           },
           analyse: {
@@ -954,13 +957,21 @@ describe('app shell', () => {
 
     expect(html).toContain('id="embryo-quality-form"');
     expect(html).toContain('Embryokwaliteit vastleggen');
+    expect(html).toContain('name="embryoMeetmoment"');
     expect(html).toContain('Kwaliteit volgens kliniek');
+    expect(html).toContain('name="embryoKliniekTerminologie"');
+    expect(html).toContain('name="embryoBron"');
     expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
-    expect(html).toContain('Embryo: Embryo 1 · Dag 5 · Kwaliteit: 4AA · Status: Teruggeplaatst');
+    expect(html).toContain(
+      'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
+    );
     expect(html).toContain('Embryo-dossiers');
     expect(html).toContain('Laatste datum: 2026-05-04');
     expect(html).toContain('Kwaliteit: 4AA');
     expect(html).toContain('Status: teruggeplaatst');
+    expect(html).toContain('Meetmoment: Dag 5 blastocyst');
+    expect(html).toContain('Terminologie: Gardner-score');
+    expect(html).toContain('Bron: Labrapport');
     expect(html).toContain('Embryokwaliteit Embryo 1 · kwaliteit');
     expect(html).toContain('Kiempad berekent geen kansen en geeft geen medisch advies');
     expect(html).toContain('zonder kansberekening');

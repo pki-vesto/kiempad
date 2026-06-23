@@ -200,7 +200,7 @@ systeemgebeurtenissen.
 | inhoudBase64 | string | bestandsinhoud, versleuteld opgeslagen in recordpayload |
 | afspraakId | string? | optionele koppeling naar relevante afspraak |
 | trajectId | string? | optionele koppeling naar relevante poging/traject |
-| embryo | `{ label, kwaliteit, dag?, status? }?` | optionele kliniekterugkoppeling over embryokwaliteit, zonder kansberekening |
+| embryo | `{ label, kwaliteit, dag?, status?, meetmoment?, kliniekTerminologie?, bron? }?` | optionele kliniekterugkoppeling over embryokwaliteit per meetmoment, met kliniekterminologie en bron, zonder kansberekening |
 | beeldMetadata | `{ datum?, soort?, context?, bron?, trajectId?, afspraakId?, cyclusDag?, embryoLabel?, embryoId?, embryoDag?, laboratoriumContext? }?` | optionele beeldcontext voor foto's, echo's, scans en embryo-afbeeldingen; embryo-id, embryodag en labcontext koppelen uploads aan embryo-dossier en tijdlijn |
 | notitie | string? | lokale toelichting |
 | analyse | `{ samenvatting, signalen[] }` | lokale, niet-medische analyse van naam/type/grootte |

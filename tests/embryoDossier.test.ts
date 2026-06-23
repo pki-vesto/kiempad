@@ -17,6 +17,9 @@ describe('embryoDossier', () => {
         label: 'Embryo 1',
         kwaliteit: '4AA',
         dag: 5,
+        meetmoment: 'Dag 5 blastocyst',
+        kliniekTerminologie: 'Gardner-score',
+        bron: 'Labrapport',
         status: 'teruggeplaatst',
       },
     });
@@ -45,6 +48,9 @@ describe('embryoDossier', () => {
         laatsteDatum: '2026-06-13',
         kwaliteiten: ['4AA'],
         statussen: ['teruggeplaatst'],
+        meetmomenten: ['Dag 5 blastocyst'],
+        kliniekTerminologieen: ['Gardner-score'],
+        bronnen: ['Labrapport'],
         embryoIds: ['E1'],
         embryoDagen: [5],
         laboratoriumContexten: ['Labfoto dag 5'],
@@ -76,6 +82,9 @@ describe('embryoDossier', () => {
     expect(bouwEmbryoDossiers([beeld])).toEqual([
       expect.objectContaining({
         embryoLabel: 'E2',
+        meetmomenten: [],
+        kliniekTerminologieen: [],
+        bronnen: [],
         embryoIds: ['E2'],
         embryoDagen: [3],
         laboratoriumContexten: ['Incubatorbeeld dag 3'],
