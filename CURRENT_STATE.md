@@ -18,7 +18,8 @@
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
-  metadata, additieve schema-opzet en tests voor crypto/opslag/privacy.
+  metadata, opslagbrede schemaversie, additieve schema-opzet en tests voor
+  crypto/opslag/privacy.
 - **M1.3 traject & fasen:** traject aanmaken/bewerken/verwijderen via de
   versleutelde repository, status en notitie bewaren, vaste IVF/ICSI-fasen in
   volgorde tonen, huidige fase markeren, fase-toelichtingen tonen, tijdlijnoverzicht
@@ -124,6 +125,9 @@
 - **G153 schermlezer-vriendelijke labels:** herhaalde acties voor verwijderen,
   herordenen, innames markeren, herinneringen plannen, fase wijzigen en kennis
   verifiëren hebben contextuele toegankelijke namen naast de zichtbare knoptekst.
+- **G137 opslag-schemaversie:** kluismetadata bevat een `schema` record met de
+  huidige schemaversie; ontbrekende schemametadata wordt bij ontgrendelen aangevuld
+  en nieuwere schema's worden geweigerd.
 - **G126 lokaal gebeurtenissenlog:** Logboek-scherm toont kluis- en back-up
   gebeurtenissen uit versleutelde lokale EventLog-records; dit logboek blijft op het
   toestel en is niet gekoppeld aan export of externe diensten.

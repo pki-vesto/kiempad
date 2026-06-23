@@ -9,6 +9,7 @@ import {
 import { base64ToBytes, bytesToBase64, randomBytes } from './encoding';
 import type { EncryptedStorageDriver } from './records';
 import { nowIso } from './records';
+import { ensureStorageSchema } from './schema';
 
 const CRYPTO_META_KEY = 'crypto';
 
@@ -104,6 +105,7 @@ export class VaultSession {
       createdAt: nowIso(),
       verifier,
     });
+    await ensureStorageSchema(this.driver);
 
     this.key = key;
     this.touch();
@@ -122,6 +124,7 @@ export class VaultSession {
     }
 
     this.key = key;
+    await ensureStorageSchema(this.driver);
     this.touch();
   }
 }
