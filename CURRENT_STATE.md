@@ -166,6 +166,9 @@
 - **G197 PFIP consultsamenvatting:** Consultverslagen krijgen automatisch een
   lokale conceptsamenvatting uit ingevoerde tekst/notitie, inclusief bronnen en
   waarschuwing om te controleren met het originele consult.
+- **G198 PFIP consultactiepunten:** Consultverslagen extraheren lokale
+  conceptactiepunten uit tekst/notitie en labelen die als taak of vraag met
+  bronregel, zodat de gebruiker ze kan controleren.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -298,7 +301,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G197 nog 46 open doelen (G198-G243), gericht op dossier-ingest,
+heeft na G198 nog 45 open doelen (G199-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -348,8 +351,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G198: actiepunten uit consulten extraheren als lokale taken
-   of vragen.
+1. PFIP uitvoeren vanaf G199: vragenlijst genereren voor volgende afspraak op basis
+   van open punten.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

@@ -1133,6 +1133,7 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
             : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
         }
         ${renderConsultSamenvatting(verslag)}
+        ${renderConsultActiepunten(verslag)}
         ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
       </div>
     </li>
@@ -1149,6 +1150,27 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
       <strong>Conceptsamenvatting</strong>
       <p>${escapeHtml(verslag.samenvatting.tekst)}</p>
       <small>Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
+    </div>
+  `;
+}
+
+function renderConsultActiepunten(verslag: ConsultVerslag): string {
+  if (!verslag.actiepunten || verslag.actiepunten.length === 0) {
+    return '<p class="small-print">Nog geen lokale actiepunten herkend in dit consult.</p>';
+  }
+
+  return `
+    <div class="linked-note">
+      <strong>Conceptactiepunten</strong>
+      <ul class="compact-list">
+        ${verslag.actiepunten
+          .map(
+            (actiepunt) =>
+              `<li>${escapeHtml(actiepunt.soort === 'vraag' ? 'Vraag' : 'Taak')}: ${escapeHtml(actiepunt.tekst)} <small>Bron: ${escapeHtml(actiepunt.bron)}</small></li>`,
+          )
+          .join('')}
+      </ul>
+      <small>Concepten uit lokale consulttekst; controleer ze voordat je ze gebruikt.</small>
     </div>
   `;
 }
