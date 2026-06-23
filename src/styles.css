@@ -225,6 +225,16 @@ h2 {
   background: #ffffff;
 }
 
+.embedded-summary {
+  margin-bottom: 18px;
+}
+
+.question-list {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
 .policy-panel {
   border: 1px solid #d3c9b6;
   background: #fffaf1;

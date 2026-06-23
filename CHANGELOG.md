@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.7 vragen voor de arts: centrale versleutelde vragenopslag, vragen toevoegen/
+  bewerken/verwijderen, koppeling aan afspraken, beantwoordstatus met antwoordtekst
+  en overzicht van openstaande vragen voor de eerstvolgende afspraak (G067-G070).
 - M1.6 herinneringen & lokale notificaties: centrale versleutelde herinneringenopslag,
   afspraak- en medicatieherinneringen vanuit afspraken/DoseLogs, eenmalige/
   dagelijkse/wekelijkse herhalingslogica, herinneringenscherm met permissiestatus,

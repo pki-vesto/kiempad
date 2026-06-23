@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 74 |
+| ☑ klaar | 78 |
 | ◐ bezig | 0 |
-| ☐ open | 100 |
+| ☐ open | 96 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -133,10 +133,10 @@
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G067 | Vraag toevoegen/bewerken/verwijderen | P0 | F1 | ☐ |
-| G068 | Vraag koppelen aan een (komende) afspraak | P1 | F1 | ☐ |
-| G069 | Vragen markeren als beantwoord met antwoord-tekst | P1 | F1 | ☐ |
-| G070 | Overzicht "openstaande vragen voor volgende afspraak" | P1 | F1 | ☐ |
+| G067 | Vraag toevoegen/bewerken/verwijderen | P0 | F1 | ☑ |
+| G068 | Vraag koppelen aan een (komende) afspraak | P1 | F1 | ☑ |
+| G069 | Vragen markeren als beantwoord met antwoord-tekst | P1 | F1 | ☑ |
+| G070 | Overzicht "openstaande vragen voor volgende afspraak" | P1 | F1 | ☑ |
 | G071 | Vragen herordenen (prioriteit voor het consult) | P2 | F2 | ☐ |
 | G072 | Beantwoorde vragen teruglezen als verslag per afspraak | P2 | F2 | ☐ |
 

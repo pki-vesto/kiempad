@@ -18,6 +18,11 @@ import {
 } from './domain/medicatie';
 import type { MedicatieBundle } from './domain/medicatieStore';
 import {
+  openstaandeVragen,
+  volgendeAfspraakMetOpenVragen,
+} from './domain/vraag';
+import type { VraagBundle } from './domain/vraagStore';
+import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
   komendeHerinneringen,
@@ -112,6 +117,7 @@ export type AppShellState = {
   afspraken: AfspraakBundle[];
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
+  vragen: VraagBundle[];
   notificaties: NotificationRuntimeStatus;
 };
 
@@ -122,6 +128,7 @@ export function renderAppShell(
     afspraken: [],
     medicatie: [],
     herinneringen: [],
+    vragen: [],
     notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
   },
 ): string {
@@ -203,6 +210,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'agenda') return renderAgendaScreen(state);
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
+  if (activeId === 'vragen') return renderVragenScreen(state);
 
   return `
     <section class="workspace" aria-label="${screen.label}">
@@ -225,6 +233,7 @@ function renderStartScreen(state: AppShellState): string {
         <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
         <p>${escapeHtml(beschrijfVolgendeAfspraak(state.afspraken.map((bundle) => bundle.afspraak), new Date().toISOString().slice(0, 16)))}</p>
         <p>${escapeHtml(beschrijfVolgendeHerinnering(state.herinneringen))}</p>
+        <p>${escapeHtml(beschrijfOpenstaandeVragen(state))}</p>
         ${
           activeTraject
             ? `<a class="inline-action" href="#traject">Bekijk traject</a>`
@@ -234,6 +243,121 @@ function renderStartScreen(state: AppShellState): string {
       ${renderPolicyPanel()}
     </section>
   `;
+}
+
+function renderVragenScreen(state: AppShellState): string {
+  const selected = state.vragen[0];
+  const nextWithQuestions = volgendeAfspraakMetOpenVragen(
+    state.afspraken.map((bundle) => bundle.afspraak),
+    state.vragen.map((bundle) => bundle.vraag),
+    new Date().toISOString().slice(0, 16),
+  );
+
+  return `
+    <section class="traject-layout" aria-label="Vragen voor de arts beheren">
+      <div class="form-panel">
+        <h2>${selected ? 'Vraag bewerken' : 'Vraag toevoegen'}</h2>
+        ${renderVraagForm(selected, state.afspraken)}
+      </div>
+      <div class="timeline-panel">
+        <div class="panel-heading">
+          <h2>Openstaand</h2>
+          ${
+            selected
+              ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}">Verwijder vraag</button>`
+              : ''
+          }
+        </div>
+        ${
+          nextWithQuestions
+            ? renderOpenVragenVoorAfspraak(nextWithQuestions)
+            : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
+        }
+        <h2 class="section-subheading">Alle vragen</h2>
+        ${state.vragen.length > 0 ? renderVragenList(state.vragen) : '<p class="empty-state">Nog geen vragen. Voeg links een vraag toe voor het volgende contactmoment.</p>'}
+      </div>
+    </section>
+  `;
+}
+
+function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBundle[]): string {
+  const vraag = bundle?.vraag;
+
+  return `
+    <form id="vraag-form" class="data-form">
+      <input type="hidden" name="id" value="${escapeAttribute(vraag?.id ?? '')}" />
+      <label>
+        Vraag
+        <textarea name="vraag" rows="4" required>${escapeHtml(vraag?.vraag ?? '')}</textarea>
+      </label>
+      <label>
+        Koppel aan afspraak
+        <select name="voorAfspraakId">
+          <option value="">Geen koppeling</option>
+          ${afspraken
+            .map((item) =>
+              renderOption(
+                item.afspraak.id,
+                `${item.afspraak.titel} · ${formatDateTime(item.afspraak.datumTijd)}`,
+                vraag?.voorAfspraakId,
+              ),
+            )
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Status
+        <select name="beantwoord">
+          ${renderOption('false', 'Openstaand', vraag?.beantwoord ? 'true' : 'false')}
+          ${renderOption('true', 'Beantwoord', vraag?.beantwoord ? 'true' : 'false')}
+        </select>
+      </label>
+      <label>
+        Antwoord
+        <textarea name="antwoord" rows="4">${escapeHtml(vraag?.antwoord ?? '')}</textarea>
+      </label>
+      <button type="submit">${vraag ? 'Bewaar vraag' : 'Voeg vraag toe'}</button>
+    </form>
+  `;
+}
+
+function renderOpenVragenVoorAfspraak(item: { afspraak: Afspraak; vragen: VraagBundle['vraag'][] }): string {
+  return `
+    <div class="summary-panel embedded-summary">
+      <h3>${escapeHtml(item.afspraak.titel)}</h3>
+      <p>${formatDateTime(item.afspraak.datumTijd)}</p>
+      <ul class="question-list">
+        ${item.vragen.map((vraag) => `<li>${escapeHtml(vraag.vraag)}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+}
+
+function renderVragenList(bundles: VraagBundle[]): string {
+  return `
+    <ol class="phase-list">
+      ${bundles
+        .map(
+          (bundle) => `
+            <li class="phase-item">
+              <div>
+                <h3>${escapeHtml(bundle.vraag.vraag)}</h3>
+                <p>${bundle.vraag.beantwoord ? 'Beantwoord' : 'Openstaand'}${bundle.afspraak ? ` · ${escapeHtml(bundle.afspraak.titel)}` : ''}</p>
+                ${bundle.vraag.antwoord ? `<p class="linked-note">Antwoord: ${escapeHtml(bundle.vraag.antwoord)}</p>` : ''}
+              </div>
+            </li>
+          `,
+        )
+        .join('')}
+    </ol>
+  `;
+}
+
+function beschrijfOpenstaandeVragen(state: AppShellState): string {
+  const count = openstaandeVragen(state.vragen.map((bundle) => bundle.vraag)).length;
+  if (count === 0) return 'Geen openstaande vragen voor de arts.';
+
+  return `${count} openstaande vraag${count === 1 ? '' : 'en'} voor de arts.`;
 }
 
 function renderHerinneringenScreen(state: AppShellState): string {
