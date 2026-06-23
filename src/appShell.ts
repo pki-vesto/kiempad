@@ -47,6 +47,7 @@ import {
 import type {
   Afspraak,
   CostItem,
+  Decision,
   DoseLog,
   Herinnering,
   KennisItem,
@@ -77,6 +78,7 @@ type ScreenId =
   | 'vragen'
   | 'kennis'
   | 'welzijn'
+  | 'afwegingen'
   | 'kosten'
   | 'backup';
 
@@ -147,6 +149,13 @@ export const SCREENS: readonly Screen[] = [
     emptyState: 'Nog geen symptoomlogs vastgelegd.',
   },
   {
+    id: 'afwegingen',
+    label: 'Afwegingen',
+    title: 'Afwegingen',
+    intro: 'Bewaar onderwerpen en opties als rustige beslisnotities.',
+    emptyState: 'Nog geen beslisnotities vastgelegd.',
+  },
+  {
     id: 'kosten',
     label: 'Kosten',
     title: 'Kosten & vergoedingen',
@@ -179,6 +188,7 @@ export type AppShellState = {
   kennisFilter?: KennisFilter;
   symptomLogs?: SymptomLog[];
   mentalCheckIns?: MentalCheckIn[];
+  decisions?: Decision[];
   kosten?: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -287,6 +297,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'vragen') return renderVragenScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
   if (activeId === 'welzijn') return renderWelzijnScreen(state);
+  if (activeId === 'afwegingen') return renderAfwegingenScreen(state);
   if (activeId === 'kosten') return renderKostenScreen(state);
   if (activeId === 'backup') return renderBackupScreen(state);
 
@@ -298,6 +309,61 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
       </div>
       ${renderPolicyPanel()}
     </section>
+  `;
+}
+
+function renderAfwegingenScreen(state: AppShellState): string {
+  const decisions = state.decisions ?? [];
+
+  return `
+    <section class="traject-layout" aria-label="Afwegingen beheren">
+      <div class="form-panel">
+        <h2>Beslisnotitie toevoegen</h2>
+        ${renderDecisionForm()}
+      </div>
+      <div class="timeline-panel">
+        <h2>Beslisnotities</h2>
+        ${
+          decisions.length > 0
+            ? `<ol class="phase-list">${decisions.map(renderDecisionItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen beslisnotities vastgelegd.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderDecisionForm(): string {
+  return `
+    <form id="decision-form" class="data-form">
+      <label>
+        Datum
+        <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+      </label>
+      <label>
+        Onderwerp
+        <input name="onderwerp" autocomplete="off" required />
+      </label>
+      <label>
+        Opties
+        <textarea name="opties" rows="5" required placeholder="Een optie per regel"></textarea>
+      </label>
+      <button type="submit">Bewaar beslisnotitie</button>
+    </form>
+  `;
+}
+
+function renderDecisionItem(item: Decision): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.onderwerp)}</h3>
+        <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
+        <ul class="compact-list">
+          ${item.opties.map((optie) => `<li>${escapeHtml(optie.titel)}</li>`).join('')}
+        </ul>
+      </div>
+    </li>
   `;
 }
 

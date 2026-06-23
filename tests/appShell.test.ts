@@ -14,6 +14,7 @@ describe('app shell', () => {
     expect(normalizeScreenId('#start')).toBe('start');
     expect(normalizeScreenId('#/agenda')).toBe('agenda');
     expect(normalizeScreenId('#welzijn')).toBe('welzijn');
+    expect(normalizeScreenId('#afwegingen')).toBe('afwegingen');
     expect(normalizeScreenId('#/bestaat-niet')).toBe('start');
   });
 
@@ -593,6 +594,40 @@ describe('app shell', () => {
     expect(html).toContain('Werk kostenpost bij');
     expect(html).toContain('data-kosten-id="cost-1"');
     expect(html).toContain('eigen polis en verzekeraar blijven leidend');
+  });
+
+  it('rendert beslisnotities met onderwerp en opties', () => {
+    const html = renderAppShell('afwegingen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      decisions: [
+        {
+          id: 'decision-1',
+          onderwerp: 'Kliniek bellen?',
+          datum: '2026-06-23',
+          opties: [
+            { titel: 'Vandaag bellen', voors: [], tegens: [] },
+            { titel: 'Morgen afwachten', voors: [], tegens: [] },
+          ],
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Afwegingen');
+    expect(html).toContain('Beslisnotitie toevoegen');
+    expect(html).toContain('id="decision-form"');
+    expect(html).toContain('name="onderwerp"');
+    expect(html).toContain('name="opties"');
+    expect(html).toContain('Kliniek bellen?');
+    expect(html).toContain('2 opties');
+    expect(html).toContain('Vandaag bellen');
+    expect(html).toContain('Morgen afwachten');
   });
 
   it('rendert AI-payloadpreview en samenvatting-opslag in het kennisscherm', () => {

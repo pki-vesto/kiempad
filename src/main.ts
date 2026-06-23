@@ -3,6 +3,7 @@ import { normalizeScreenId, renderAppShell, renderVaultGate } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
+import { DecisionStore } from './domain/decisionStore';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
 import type { KennisFilter } from './domain/kennis';
@@ -19,6 +20,7 @@ import { TrajectStore } from './domain/trajectStore';
 import type {
   Afspraak,
   CostItem,
+  Decision,
   DoseLog,
   Fase,
   Herinnering,
@@ -58,6 +60,7 @@ type RuntimeState = {
   vraagStore?: VraagStore;
   kennisStore?: KennisStore;
   kostenStore?: KostenStore;
+  decisionStore?: DecisionStore;
   symptomenStore?: SymptomenStore;
   mentaleCheckInStore?: MentaleCheckInStore;
   settingsStore?: SettingsStore;
@@ -70,6 +73,7 @@ type RuntimeState = {
   kennisFilter?: KennisFilter;
   symptomLogs: SymptomLog[];
   mentalCheckIns: MentalCheckIn[];
+  decisions: Decision[];
   kosten: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
@@ -99,6 +103,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     kennisFilter: state.kennisFilter,
     symptomLogs: state.symptomLogs,
     mentalCheckIns: state.mentalCheckIns,
+    decisions: state.decisions,
     kosten: state.kosten,
     settings: state.settings,
     notificaties: state.notificaties,
@@ -123,6 +128,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindVraagControls(root, state);
   bindKennisControls(root, state);
   bindWelzijnControls(root, state);
+  bindAfwegingControls(root, state);
   bindKostenControls(root, state);
   bindBackupControls(root, state);
   scheduleLocalNotifications(
@@ -139,6 +145,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.vraagStore = undefined;
     state.kennisStore = undefined;
     state.kostenStore = undefined;
+    state.decisionStore = undefined;
     state.symptomenStore = undefined;
     state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
@@ -151,6 +158,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.kennisFilter = undefined;
     state.symptomLogs = [];
     state.mentalCheckIns = [];
+    state.decisions = [];
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -184,6 +192,7 @@ async function mount(): Promise<void> {
     kennisItems: [],
     symptomLogs: [],
     mentalCheckIns: [],
+    decisions: [],
     kosten: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
@@ -243,6 +252,7 @@ async function importBackupFromForm(
     state.vraagStore = undefined;
     state.kennisStore = undefined;
     state.kostenStore = undefined;
+    state.decisionStore = undefined;
     state.symptomenStore = undefined;
     state.mentaleCheckInStore = undefined;
     state.settingsStore = undefined;
@@ -255,6 +265,7 @@ async function importBackupFromForm(
     state.kennisFilter = undefined;
     state.symptomLogs = [];
     state.mentalCheckIns = [];
+    state.decisions = [];
     state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
@@ -288,6 +299,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.vraagStore = createVraagStore(state);
         state.kennisStore = createKennisStore(state);
         state.kostenStore = createKostenStore(state);
+        state.decisionStore = createDecisionStore(state);
         state.symptomenStore = createSymptomenStore(state);
         state.mentaleCheckInStore = createMentaleCheckInStore(state);
         state.settingsStore = createSettingsStore(state);
@@ -301,6 +313,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.kennisItems = await state.kennisStore.list();
         state.symptomLogs = await state.symptomenStore.list();
         state.mentalCheckIns = await state.mentaleCheckInStore.list();
+        state.decisions = await state.decisionStore.list();
         state.kosten = await state.kostenStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
@@ -514,6 +527,29 @@ function bindWelzijnControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveSymptomLogFromForm(event.currentTarget, root, state);
   });
+}
+
+function bindAfwegingControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#decision-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveDecisionFromForm(event.currentTarget, root, state);
+  });
+}
+
+async function saveDecisionFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.decisionStore) return;
+
+  const data = new FormData(target);
+  await state.decisionStore.save({
+    onderwerp: String(data.get('onderwerp') ?? ''),
+    datum: String(data.get('datum') ?? ''),
+    opties: String(data.get('opties') ?? '').split(/\r?\n/),
+  });
+  await reloadAndRender(root, state);
 }
 
 async function saveKostenFromForm(
@@ -988,6 +1024,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.mentaleCheckInStore) {
     state.mentalCheckIns = await state.mentaleCheckInStore.list();
   }
+  if (state.decisionStore) {
+    state.decisions = await state.decisionStore.list();
+  }
   if (state.kostenStore) {
     state.kosten = await state.kostenStore.list();
   }
@@ -1043,6 +1082,12 @@ function createKennisStore(state: RuntimeState): KennisStore {
 function createKostenStore(state: RuntimeState): KostenStore {
   return new KostenStore(
     new EncryptedRecordRepository<CostItem>(state.driver, state.session, 'cost_item'),
+  );
+}
+
+function createDecisionStore(state: RuntimeState): DecisionStore {
+  return new DecisionStore(
+    new EncryptedRecordRepository<Decision>(state.driver, state.session, 'decision'),
   );
 }
 

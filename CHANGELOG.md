@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G112 beslisnotities: afwegingenscherm kan onderwerp, datum en opties als
+  versleutelde lokale beslisnotitie bewaren en terug tonen.
 - G110 owner-markering: symptoomlogs en mentale check-ins tonen expliciete
   eigenaarlabels voor Peter, partner of samen.
 - G109 welzijn-overzicht zonder oordeel: welzijnscherm toont feitelijke aantallen,
