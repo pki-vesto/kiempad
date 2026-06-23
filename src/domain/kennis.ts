@@ -59,6 +59,37 @@ export type ResearchRelevantieVoorGebruiker = {
   waarschuwing: string;
 };
 
+export type ResearchTrendOnderwerp =
+  | 'ivf'
+  | 'icsi'
+  | 'embryo'
+  | 'leefstijl'
+  | 'mannelijke_factor'
+  | 'overig';
+
+export type ResearchTrendItem = {
+  id: string;
+  titel: string;
+  bron?: string;
+  publicatieDatum?: string;
+};
+
+export type ResearchTrendGroep = {
+  onderwerp: ResearchTrendOnderwerp;
+  label: string;
+  items: ResearchTrendItem[];
+  waarschuwing: string;
+};
+
+export const RESEARCH_TREND_LABELS: Record<ResearchTrendOnderwerp, string> = {
+  ivf: 'IVF',
+  icsi: 'ICSI',
+  embryo: 'Embryo',
+  leefstijl: 'Leefstijl',
+  mannelijke_factor: 'Mannelijke factor',
+  overig: 'Overig',
+};
+
 export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
   {
     id: 'seed-research-eshre',
@@ -319,6 +350,37 @@ export function bouwResearchRelevantieVoorGebruiker(
     );
 }
 
+export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTrendGroep[] {
+  const groepen = new Map<ResearchTrendOnderwerp, ResearchTrendItem[]>();
+
+  for (const item of sorteerKennisItems(items).filter(
+    (kennis) => kennis.categorie === 'research',
+  )) {
+    const onderwerpen = bepaalResearchTrendOnderwerpen(item);
+    for (const onderwerp of onderwerpen) {
+      groepen.set(onderwerp, [
+        ...(groepen.get(onderwerp) ?? []),
+        {
+          id: item.id,
+          titel: item.titel,
+          bron: item.researchPublicatie?.bron ?? item.bron,
+          publicatieDatum: item.researchPublicatie?.publicatieDatum,
+        },
+      ]);
+    }
+  }
+
+  return (Object.keys(RESEARCH_TREND_LABELS) as ResearchTrendOnderwerp[])
+    .map((onderwerp) => ({
+      onderwerp,
+      label: RESEARCH_TREND_LABELS[onderwerp],
+      items: groepen.get(onderwerp) ?? [],
+      waarschuwing:
+        'Trendgroepering is een lokale trefwoordindeling voor overzicht; dit is geen bewijsweging of behandeladvies.',
+    }))
+    .filter((groep) => groep.items.length > 0);
+}
+
 export function filterKennisItems(
   items: readonly KennisItem[],
   filter: KennisFilter = {},
@@ -491,6 +553,32 @@ function bevatBehandeladviesClaim(value: string): boolean {
   return /\b(moet(en)?\b.{0,40}\b(kiezen|starten|stoppen|gebruiken)|beste behandeling|dosering|diagnose)\b/i.test(
     value,
   );
+}
+
+function bepaalResearchTrendOnderwerpen(item: KennisItem): ResearchTrendOnderwerp[] {
+  const tekst = [
+    item.titel,
+    item.inhoud,
+    item.bron ?? '',
+    item.researchPublicatie?.wetenschappelijkeSamenvatting ?? '',
+    item.researchPublicatie?.eenvoudigeSamenvatting ?? '',
+    item.researchPublicatie?.relevantieVoorGebruiker ?? '',
+  ]
+    .join(' ')
+    .toLocaleLowerCase('nl-NL');
+  const onderwerpen: ResearchTrendOnderwerp[] = [];
+
+  if (/\bivf\b/.test(tekst)) onderwerpen.push('ivf');
+  if (/\bicsi\b/.test(tekst)) onderwerpen.push('icsi');
+  if (/\bembryo|embryo's|embryonaal|blastocyst\b/.test(tekst)) onderwerpen.push('embryo');
+  if (/\bleefstijl|voeding|beweging|slaap|supplement\b/.test(tekst)) {
+    onderwerpen.push('leefstijl');
+  }
+  if (/\bman(nelijke)? factor|sperma|zaadkwaliteit|semen\b/.test(tekst)) {
+    onderwerpen.push('mannelijke_factor');
+  }
+
+  return onderwerpen.length > 0 ? Array.from(new Set(onderwerpen)) : ['overig'];
 }
 
 function normaliseerResearchBron(bron: string): string {

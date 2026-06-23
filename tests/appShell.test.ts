@@ -1237,6 +1237,9 @@ describe('app shell', () => {
     expect(html).toContain('Nog geen eenvoudige samenvattingen per publicatie vastgelegd.');
     expect(html).toContain('Relevantie voor jullie context');
     expect(html).toContain('Nog geen relevantie per publicatie aan dossiercontext gekoppeld.');
+    expect(html).toContain('Researchtrends');
+    expect(html).toContain('Embryo');
+    expect(html).toContain('Eigen artikel embryo-cultuur · https://voorbeeld.test/embryo-cultuur');
     expect(html).toContain('Researchaggregatie');
     expect(html).toContain('id="research-network-form"');
     expect(html).toContain('name="researchNetwerkIngeschakeld"');
@@ -1424,6 +1427,58 @@ describe('app shell', () => {
     );
     expect(html).toContain('Context: Traject: Poging 1');
     expect(html).toContain('dit is geen diagnose, dosering of behandelkeuze');
+  });
+
+  it('rendert researchtrends gegroepeerd per onderwerp', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-ivf-embryo',
+          titel: 'IVF embryo-cultuur',
+          inhoud: 'Artikel over IVF en embryo-ontwikkeling.',
+          bron: 'https://voorbeeld.test/ivf-embryo',
+          categorie: 'research',
+          researchPublicatie: {
+            publicatieDatum: '2026-05-10',
+            bron: 'https://voorbeeld.test/ivf-embryo',
+            wetenschappelijkeSamenvatting:
+              'Beschrijft IVF-labfactoren en embryo-observaties zonder behandeladvies.',
+          },
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+        {
+          id: 'research-man-leefstijl',
+          titel: 'Mannelijke factor en leefstijl',
+          inhoud: 'Artikel over sperma, voeding en slaap.',
+          bron: 'https://voorbeeld.test/man-leefstijl',
+          categorie: 'research',
+          researchPublicatie: {
+            publicatieDatum: '2026-04-01',
+            bron: 'https://voorbeeld.test/man-leefstijl',
+            wetenschappelijkeSamenvatting:
+              'Beschrijft zaadkwaliteit, voeding en slaap als onderzoeksonderwerpen.',
+          },
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+
+    expect(html).toContain('Researchtrends');
+    expect(html).toContain('IVF');
+    expect(html).toContain('Embryo');
+    expect(html).toContain('Leefstijl');
+    expect(html).toContain('Mannelijke factor');
+    expect(html).toContain('IVF embryo-cultuur · 2026-05-10 · https://voorbeeld.test/ivf-embryo');
+    expect(html).toContain('Dit is geen bewijsweging of behandeladvies');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {
