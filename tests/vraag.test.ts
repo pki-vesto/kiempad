@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   beantwoordeVragenPerAfspraak,
+  genereerVragenlijstVoorVolgendeAfspraak,
   herprioriteerVraag,
   maakVraag,
   markeerVraagBeantwoord,
@@ -143,5 +144,71 @@ describe('vraag domeinregels', () => {
     expect(verslagen).toHaveLength(1);
     expect(verslagen[0]?.afspraak.id).toBe('afspraak-1');
     expect(verslagen[0]?.vragen.map((vraag) => vraag.id)).toEqual(['vraag-1']);
+  });
+
+  it('genereert een lokale vragenlijst voor de volgende afspraak uit open punten', () => {
+    const vragenlijst = genereerVragenlijstVoorVolgendeAfspraak(
+      [
+        {
+          id: 'next',
+          titel: 'Volgend consult',
+          datumTijd: '2026-06-24T09:00',
+          type: 'consult',
+        },
+      ],
+      [
+        {
+          id: 'vraag-1',
+          vraag: 'Wat is de volgende stap?',
+          beantwoord: false,
+          prioriteit: 1,
+        },
+        {
+          id: 'vraag-2',
+          vraag: 'Beantwoorde vraag',
+          beantwoord: true,
+          antwoord: 'Klaar',
+        },
+      ],
+      [
+        {
+          id: 'consult-1',
+          datum: '2026-06-20',
+          titel: 'Voorbereidend consult',
+          bron: 'handmatig',
+          tekst: 'Vraag aan arts: wanneer plannen we de controle?',
+          actiepunten: [
+            {
+              id: 'consult-1-actie-1',
+              soort: 'vraag',
+              status: 'concept',
+              tekst: 'Vraag aan arts: wanneer plannen we de controle?',
+              bron: 'consulttekst regel 1',
+              aangemaaktOp: '2026-06-20T10:00:00.000Z',
+            },
+          ],
+          uploadedAt: '2026-06-20T10:00:00.000Z',
+        },
+      ],
+      '2026-06-23T09:00',
+    );
+
+    expect(vragenlijst?.afspraak.id).toBe('next');
+    expect(vragenlijst?.items).toEqual([
+      {
+        id: 'vraag-vraag-1',
+        tekst: 'Wat is de volgende stap?',
+        bron: 'open_vraag',
+        bronLabel: 'open vraag zonder afspraak',
+        prioriteit: 1,
+      },
+      {
+        id: 'consult-consult-1-consult-1-actie-1',
+        tekst: 'Vraag aan arts: wanneer plannen we de controle?',
+        bron: 'consult_actiepunt',
+        bronLabel: 'Voorbereidend consult · consulttekst regel 1',
+      },
+    ]);
+    expect(vragenlijst?.waarschuwing).toContain('controleer de vragen');
   });
 });

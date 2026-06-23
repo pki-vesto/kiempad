@@ -87,6 +87,8 @@ import type {
 } from './domain/types';
 import {
   beantwoordeVragenPerAfspraak,
+  type GegenereerdeVragenlijst,
+  genereerVragenlijstVoorVolgendeAfspraak,
   openstaandeVragen,
   volgendeAfspraakMetOpenVragen,
 } from './domain/vraag';
@@ -1953,6 +1955,12 @@ function renderVragenScreen(state: AppShellState): string {
     state.afspraken.map((bundle) => bundle.afspraak),
     state.vragen.map((bundle) => bundle.vraag),
   );
+  const gegenereerdeVragenlijst = genereerVragenlijstVoorVolgendeAfspraak(
+    state.afspraken.map((bundle) => bundle.afspraak),
+    state.vragen.map((bundle) => bundle.vraag),
+    state.consultVerslagen ?? [],
+    new Date().toISOString().slice(0, 16),
+  );
 
   return `
     <section class="traject-layout" aria-label="Vragen voor de arts beheren">
@@ -1975,6 +1983,12 @@ function renderVragenScreen(state: AppShellState): string {
             ? renderOpenVragenVoorAfspraak(nextWithQuestions)
             : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
         }
+        <h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>
+        ${
+          gegenereerdeVragenlijst
+            ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
+            : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>'
+        }
         <h2 class="section-subheading">Alle vragen</h2>
         ${state.vragen.length > 0 ? renderVragenList(state.vragen) : '<p class="empty-state">Nog geen vragen. Voeg links een vraag toe voor het volgende contactmoment.</p>'}
         <h2 class="section-subheading">Verslag per afspraak</h2>
@@ -1985,6 +1999,28 @@ function renderVragenScreen(state: AppShellState): string {
         }
       </div>
     </section>
+  `;
+}
+
+function renderGegenereerdeVragenlijst(vragenlijst: GegenereerdeVragenlijst): string {
+  return `
+    <div class="summary-panel embedded-summary">
+      <h3>${escapeHtml(vragenlijst.afspraak.titel)}</h3>
+      <p>${formatDateTime(vragenlijst.afspraak.datumTijd)}</p>
+      <ol class="question-list">
+        ${vragenlijst.items
+          .map(
+            (item) => `
+              <li>
+                ${escapeHtml(item.tekst)}
+                <small>${escapeHtml(item.bron === 'open_vraag' ? 'Open vraag' : 'Consultactiepunt')} · ${escapeHtml(item.bronLabel)}</small>
+              </li>
+            `,
+          )
+          .join('')}
+      </ol>
+      <p class="small-print">${escapeHtml(vragenlijst.waarschuwing)}</p>
+    </div>
   `;
 }
 
