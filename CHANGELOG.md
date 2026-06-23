@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G194 PFIP imaging: imaging-items tonen previewstates voor vergrendeld,
+  thumbnail, volledige preview en geen preview; kleine ontgrendelde beelden krijgen
+  een lokale thumbnailweergave.
 - G193 PFIP imaging: beeldcontext krijgt een tekstuele contextnotitie met
   expliciete waarschuwing dat Kiempad het beeld niet medisch analyseert.
 - G192 PFIP imaging: het dossierscherm kan twee beeldmomenten feitelijk

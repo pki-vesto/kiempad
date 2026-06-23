@@ -281,12 +281,15 @@
   contextnotitie op basis van vastgelegde metadata en koppelingen, met expliciete
   waarschuwing dat Kiempad het beeld niet medisch analyseert en geen medisch advies
   geeft.
+- **G194 PFIP thumbnail- en previewstates:** imaging-items tonen of een beeld
+  vergrendeld is, een thumbnail heeft, volledige preview heeft of geen preview kan
+  tonen. Kleine ontgrendelde beelden krijgen een lokale thumbnail uit de kluis.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G193 nog 50 open doelen (G194-G243), gericht op dossier-ingest,
+heeft na G194 nog 49 open doelen (G195-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -336,8 +339,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G194: thumbnail- en previewstates voor versleutelde
-   beelden na ontgrendeling toevoegen.
+1. PFIP uitvoeren vanaf G195: imaging-repository koppelen aan lokale
+   back-up/export zonder extra plaintext of netwerkstap.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

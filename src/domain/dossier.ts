@@ -79,8 +79,14 @@ export type ImagingRepositoryItem = {
     cyclusDag?: number;
     embryoLabel?: string;
   };
+  previewState: ImagingPreviewState;
   mimeType?: string;
   document: DossierDocument;
+};
+
+export type ImagingPreviewState = {
+  status: 'locked' | 'thumbnail' | 'preview' | 'geen_preview';
+  label: string;
 };
 
 export type ImagingVergelijking = {
@@ -298,6 +304,7 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
       trajectId: document.beeldMetadata?.trajectId ?? document.trajectId,
       tijdlijnKoppeling: bouwImagingTijdlijnKoppeling(document),
+      previewState: bepaalImagingPreviewState(document, true),
       mimeType: document.mimeType,
       document,
     }));
@@ -424,6 +431,23 @@ export function bouwImagingTijdlijnKoppeling(
     afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
     cyclusDag: document.beeldMetadata?.cyclusDag,
     embryoLabel: document.beeldMetadata?.embryoLabel ?? document.embryo?.label,
+  };
+}
+
+export function bepaalImagingPreviewState(
+  document: DossierDocument,
+  ontgrendeld: boolean,
+): ImagingPreviewState {
+  if (!ontgrendeld) return { status: 'locked', label: 'Preview beschikbaar na ontgrendeling' };
+  if (!document.mimeType?.startsWith('image/') || !document.inhoudBase64) {
+    return { status: 'geen_preview', label: 'Geen beeldpreview beschikbaar' };
+  }
+  if (document.grootteBytes <= 512 * 1024) {
+    return { status: 'thumbnail', label: 'Thumbnail en preview beschikbaar' };
+  }
+  return {
+    status: 'preview',
+    label: 'Preview beschikbaar; thumbnail wordt niet verkleind opgeslagen',
   };
 }
 

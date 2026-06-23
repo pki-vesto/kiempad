@@ -736,6 +736,9 @@ describe('app shell', () => {
     expect(html).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
     expect(html).toContain('Kiempad interpreteert beelden niet medisch.');
     expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
+    expect(html).toContain('Previewstatus: Thumbnail en preview beschikbaar');
+    expect(html).toContain('alt="Lokale thumbnail van Echo 6 weken"');
+    expect(html).toContain('Thumbnail uit ontgrendelde lokale kluis.');
     expect(html).toContain(
       'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
     );

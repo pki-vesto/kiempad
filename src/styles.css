@@ -612,6 +612,12 @@ h2 {
   border-radius: 8px;
 }
 
+.imaging-thumbnail img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+}
+
 .empty-state {
   margin: 0;
   color: var(--text-muted);
