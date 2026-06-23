@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G187 PFIP dossier-ingest: privacytest bewaakt dat lokale OCR- en
+  metadata-extractie zonder OCR-opt-in geen `fetch`, `XMLHttpRequest` of
+  `sendBeacon` start.
 - G186 PFIP dossier-ingest: dossierdocumenten zijn lokaal doorzoekbaar op OCR-tekst,
   handmatige notities, metadata, bestandsnaam en tags binnen de ontgrendelde kluis.
 - G185 PFIP dossier-ingest: het dossierscherm toont een dossierindex met
