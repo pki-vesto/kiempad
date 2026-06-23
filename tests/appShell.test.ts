@@ -535,6 +535,15 @@ describe('app shell', () => {
           afspraakId: 'afspraak-1',
           trajectId: 'traject-1',
           notitie: 'Vraag over vervolgstap bewaren.',
+          samenvatting: {
+            status: 'concept',
+            methode: 'lokale_tekstheuristiek',
+            tekst: 'Afgesproken om bloeduitslagen mee te nemen.',
+            bronnen: ['consulttekst', 'notitie'],
+            waarschuwing:
+              'Concept op basis van lokaal ingevoerde tekst; controleer altijd met het originele consult en je kliniek.',
+            gegenereerdOp: '2026-06-23T15:05:00.000Z',
+          },
           uploadedAt: '2026-06-23T15:05:00.000Z',
         },
       ],
@@ -666,6 +675,9 @@ describe('app shell', () => {
     expect(html).toContain('Intakegesprek verslag');
     expect(html).toContain('Consultdatum: 2026-05-01 · Handmatig');
     expect(html).toContain('Afgesproken om bloeduitslagen mee te nemen.');
+    expect(html).toContain('Conceptsamenvatting');
+    expect(html).toContain('Bronnen: consulttekst, notitie');
+    expect(html).toContain('controleer altijd met het originele consult');
     expect(html).toContain('Notitie: Vraag over vervolgstap bewaren.');
     expect(html).toContain('1 dossierbestand lokaal versleuteld toegevoegd.');
     expect(html).not.toContain('cGRm');

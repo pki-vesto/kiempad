@@ -1132,9 +1132,24 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
             ? `<p>${escapeHtml(verslag.tekst)}</p>`
             : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
         }
+        ${renderConsultSamenvatting(verslag)}
         ${verslag.notitie ? `<p class="small-print">Notitie: ${escapeHtml(verslag.notitie)}</p>` : ''}
       </div>
     </li>
+  `;
+}
+
+function renderConsultSamenvatting(verslag: ConsultVerslag): string {
+  if (!verslag.samenvatting) {
+    return '<p class="small-print">Nog geen conceptsamenvatting: voeg consulttekst of notitie toe voor lokale samenvatting.</p>';
+  }
+
+  return `
+    <div class="linked-note">
+      <strong>Conceptsamenvatting</strong>
+      <p>${escapeHtml(verslag.samenvatting.tekst)}</p>
+      <small>Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
+    </div>
   `;
 }
 

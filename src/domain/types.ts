@@ -250,6 +250,14 @@ export interface ConsultVerslag {
   afspraakId?: string;
   trajectId?: string;
   notitie?: string;
+  samenvatting?: {
+    status: 'concept';
+    methode: 'lokale_tekstheuristiek';
+    tekst: string;
+    bronnen: string[];
+    waarschuwing: string;
+    gegenereerdOp: IsoDate;
+  };
   uploadedAt: IsoDate;
 }
 
