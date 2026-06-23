@@ -118,6 +118,9 @@
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
+- **G126 lokaal gebeurtenissenlog:** Logboek-scherm toont kluis- en back-up
+  gebeurtenissen uit versleutelde lokale EventLog-records; dit logboek blijft op het
+  toestel en is niet gekoppeld aan export of externe diensten.
 - **G026/G027 meerdere pogingen:** trajectscherm kan naast het bewerken van de eerste
   poging expliciet een nieuwe poging toevoegen en toont alle pogingen met
   pogingnummer voor vergoedingstelling.
@@ -165,7 +168,7 @@
 
 F1 (MVP) is afgevinkt. Resterende open doelen zitten in F2 en later, o.a.:
 
-- Kosten, symptomen, research + AI-providercall, gedeelde modus.
+- Kosten, research + AI-providercall, gedeelde modus.
 - Dossieruploads voor historische onderzoeken, foto's/echo's, gespreksverslagen en
   embryokwaliteit.
 - Tailscale-publicatie via aparte HTTPS-node, plus sync, PDF, ICS en trends.

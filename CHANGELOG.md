@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G126 lokaal gebeurtenissenlog: nieuw Logboek-scherm toont kluis- en back-up
+  gebeurtenissen uit een versleuteld lokaal EventLog-record dat het toestel niet
+  verlaat.
 - G179 Tailscale-publicatie: optionele compose-stack, Serve-config en runbook voor
   een aparte Kiempad HTTPS-node voorbereid, inclusief deploy- en smoke-scripts.
 - G115 beslisverslag: afwegingen tonen een terugleesbaar verslag met onderwerp,

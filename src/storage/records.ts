@@ -13,6 +13,7 @@ export type StoredRecordType =
   | 'symptom_log'
   | 'mental_check_in'
   | 'decision'
+  | 'event_log'
   | 'settings'
   | 'system';
 

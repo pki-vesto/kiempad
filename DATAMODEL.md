@@ -21,7 +21,7 @@ Medicatie/Afspraak/eigen ──< Herinnering (n)
 
 SymptomLog (n)        CycleData (n)
 CostItem (n)          Decision (n)
-KennisItem (n)        (kennisbank; deels vaste inhoud)
+EventLog (n)          KennisItem (n)        (kennisbank; deels vaste inhoud)
 ```
 
 Conventies:
@@ -167,6 +167,19 @@ Conventies:
 | keuze | string? | |
 | onderbouwing | string? | |
 | datum | IsoDate | |
+
+### EventLog (lokaal gebeurtenissenlog)
+| veld | type | opmerking |
+|---|---|---|
+| id | string | |
+| datum | IsoDate | datum-tijd van de gebeurtenis |
+| categorie | `kluis` \| `backup` \| `ai` \| `systeem` | privacyrelevante lokale categorie |
+| gebeurtenis | string | korte beschrijving |
+| detail | string? | optionele lokale toelichting |
+
+EventLog-records worden versleuteld lokaal opgeslagen en verlaten het toestel niet
+via de app. Ze zijn bedoeld voor transparantie over kluis-, back-up-, AI- en
+systeemgebeurtenissen.
 
 ### Settings
 | veld | type | opmerking |
