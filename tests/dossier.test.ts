@@ -1,5 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import { formatBytes, maakDossierDocument, sorteerDossierDocumenten } from '../src/domain/dossier';
+import {
+  bepaalDossierUploadProfiel,
+  formatBytes,
+  maakDossierDocument,
+  sorteerDossierDocumenten,
+} from '../src/domain/dossier';
 
 describe('dossier', () => {
   it('maakt een dossierdocument met lokale bestandsanalyse', () => {
@@ -10,6 +15,7 @@ describe('dossier', () => {
       datum: '2026-05-01',
       titel: '  Bloeduitslag mei  ',
       categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
       bestandsNaam: 'bloed-lab-uitslag.pdf',
       mimeType: 'application/pdf',
       grootteBytes: 2048,
@@ -22,6 +28,7 @@ describe('dossier', () => {
       datum: '2026-05-01',
       titel: 'Bloeduitslag mei',
       categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
       bestandsNaam: 'bloed-lab-uitslag.pdf',
       mimeType: 'application/pdf',
       grootteBytes: 2048,
@@ -30,7 +37,9 @@ describe('dossier', () => {
       uploadedAt: '2026-06-23T15:00:00.000Z',
     });
     expect(document.analyse.samenvatting).toContain('Onderzoek opgeslagen als PDF');
+    expect(document.analyse.samenvatting).toContain('uploadprofiel Labuitslag');
     expect(document.analyse.samenvatting).toContain('niet-medisch');
+    expect(document.analyse.signalen).toContain('Uploadprofiel: Labuitslag.');
     expect(document.analyse.signalen).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
     expect(document.analyse.signalen).toContain('Bestandstype is PDF.');
 
@@ -74,6 +83,30 @@ describe('dossier', () => {
     expect(document.analyse.signalen).toContain(
       'Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.',
     );
+  });
+
+  it('leidt uploadprofielen af uit bestandsnaam, bestandstype en categorie', () => {
+    expect(
+      bepaalDossierUploadProfiel({
+        bestandsNaam: 'fertiliteitsrapport-2026.pdf',
+        mimeType: 'application/pdf',
+        categorie: 'onderzoek',
+      }),
+    ).toBe('fertiliteitsrapport');
+    expect(
+      bepaalDossierUploadProfiel({
+        bestandsNaam: 'echo-foto.jpg',
+        mimeType: 'image/jpeg',
+        categorie: 'beeld',
+      }),
+    ).toBe('afbeelding');
+    expect(
+      bepaalDossierUploadProfiel({
+        bestandsNaam: 'behandelverslag-punctie.txt',
+        mimeType: 'text/plain',
+        categorie: 'onderzoek',
+      }),
+    ).toBe('behandelverslag');
   });
 
   it('bewaart gespreksverslagen met afspraak- en trajectkoppeling', () => {

@@ -4,6 +4,7 @@ export type DossierDocumentInput = {
   datum: string;
   titel?: string;
   categorie?: DossierDocument['categorie'];
+  uploadProfiel?: DossierDocument['uploadProfiel'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -32,6 +33,19 @@ export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], stri
   overig: 'Overig',
 };
 
+export const DOSSIER_UPLOAD_PROFIEL_LABELS: Record<
+  NonNullable<DossierDocument['uploadProfiel']>,
+  string
+> = {
+  onderzoek: 'Onderzoek',
+  labuitslag: 'Labuitslag',
+  fertiliteitsrapport: 'Fertiliteitsrapport',
+  ziekenhuisdocument: 'Ziekenhuisdocument',
+  behandelverslag: 'Behandelverslag',
+  pdf: 'PDF',
+  afbeelding: 'Afbeelding',
+};
+
 export const EMBRYO_STATUS_LABELS: Record<
   NonNullable<NonNullable<DossierDocument['embryo']>['status']>,
   string
@@ -55,6 +69,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const notitie = input.notitie?.trim();
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
   const categorie = input.categorie ?? 'onderzoek';
+  const uploadProfiel = bepaalDossierUploadProfiel(input);
 
   if (!datum) throw new Error('Datum is verplicht voor een dossierdocument.');
   if (!titel) throw new Error('Titel is verplicht voor een dossierdocument.');
@@ -69,6 +84,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     datum,
     titel,
     categorie,
+    uploadProfiel,
     bestandsNaam,
     mimeType: mimeType || undefined,
     grootteBytes: Math.floor(input.grootteBytes),
@@ -79,6 +95,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     notitie: notitie || undefined,
     analyse: analyseerDossierDocument({
       categorie,
+      uploadProfiel,
       bestandsNaam,
       mimeType,
       grootteBytes: input.grootteBytes,
@@ -98,21 +115,26 @@ export function sorteerDossierDocumenten(items: readonly DossierDocument[]): Dos
 
 function analyseerDossierDocument(input: {
   categorie: DossierDocument['categorie'];
+  uploadProfiel?: DossierDocument['uploadProfiel'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
 }): DossierDocument['analyse'] {
   const signalen = bepaalSignalen(input);
   const typeLabel = beschrijfBestandstype(input.mimeType);
+  const profielLabel = input.uploadProfiel
+    ? DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]
+    : 'Onbekend profiel';
 
   return {
-    samenvatting: `${DOSSIER_CATEGORIE_LABELS[input.categorie]} opgeslagen als ${typeLabel}; ${formatBytes(input.grootteBytes)}. Analyse is lokaal en niet-medisch.`,
+    samenvatting: `${DOSSIER_CATEGORIE_LABELS[input.categorie]} opgeslagen als ${typeLabel}; uploadprofiel ${profielLabel}; ${formatBytes(input.grootteBytes)}. Analyse is lokaal en niet-medisch.`,
     signalen,
   };
 }
 
 function bepaalSignalen(input: {
   categorie: DossierDocument['categorie'];
+  uploadProfiel?: DossierDocument['uploadProfiel'];
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
@@ -148,6 +170,9 @@ function bepaalSignalen(input: {
     if (pattern.test(lowerName)) signalen.push(label);
   }
 
+  if (input.uploadProfiel) {
+    signalen.push(`Uploadprofiel: ${DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]}.`);
+  }
   if (input.mimeType?.startsWith('image/')) {
     signalen.push('Bestandstype is beeldmateriaal.');
     signalen.push('Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.');
@@ -169,6 +194,34 @@ function bepaalSignalen(input: {
   }
 
   return signalen.length > 0 ? signalen : ['Geen automatische signalen gevonden.'];
+}
+
+export function bepaalDossierUploadProfiel(
+  input: Pick<DossierDocumentInput, 'uploadProfiel' | 'bestandsNaam' | 'mimeType' | 'categorie'>,
+): DossierDocument['uploadProfiel'] {
+  if (input.uploadProfiel) return input.uploadProfiel;
+
+  const lowerName = input.bestandsNaam.toLowerCase();
+  if (/\b(bloed|lab|uitslag|hormoon|amh|fsh|lh|estradiol)\b/.test(lowerName)) {
+    return 'labuitslag';
+  }
+  if (/\b(fertiliteit|fertiliteitsrapport|rapport|ivf|icsi|samenvatting)\b/.test(lowerName)) {
+    return 'fertiliteitsrapport';
+  }
+  if (/\b(ziekenhuis|kliniek|patientenportaal|pati[eë]ntendossier|epd)\b/.test(lowerName)) {
+    return 'ziekenhuisdocument';
+  }
+  if (
+    /\b(behandel|behandeling|protocol|stimulatie|punctie|terugplaatsing|transfer)\b/.test(lowerName)
+  ) {
+    return 'behandelverslag';
+  }
+  if (input.mimeType?.startsWith('image/')) return 'afbeelding';
+  if (input.mimeType === 'application/pdf') return 'pdf';
+  if (input.categorie === 'beeld') return 'afbeelding';
+  if (input.categorie === 'onderzoek') return 'onderzoek';
+
+  return undefined;
 }
 
 function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocument['embryo'] {

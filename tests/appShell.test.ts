@@ -531,6 +531,7 @@ describe('app shell', () => {
           datum: '2026-05-01',
           titel: 'Bloeduitslag mei',
           categorie: 'onderzoek',
+          uploadProfiel: 'labuitslag',
           bestandsNaam: 'bloed-lab-uitslag.pdf',
           mimeType: 'application/pdf',
           grootteBytes: 2048,
@@ -539,8 +540,13 @@ describe('app shell', () => {
           trajectId: 'traject-1',
           notitie: 'Historisch onderzoek',
           analyse: {
-            samenvatting: 'Onderzoek opgeslagen als PDF; 2 KB. Analyse is lokaal en niet-medisch.',
-            signalen: ['Bestandsnaam lijkt op laboratoriumuitslag.', 'Bestandstype is PDF.'],
+            samenvatting:
+              'Onderzoek opgeslagen als PDF; uploadprofiel Labuitslag; 2 KB. Analyse is lokaal en niet-medisch.',
+            signalen: [
+              'Uploadprofiel: Labuitslag.',
+              'Bestandsnaam lijkt op laboratoriumuitslag.',
+              'Bestandstype is PDF.',
+            ],
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -556,6 +562,14 @@ describe('app shell', () => {
     expect(html).toContain(
       'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
     );
+    expect(html).toContain('name="uploadProfiel"');
+    expect(html).toContain('Automatisch herkennen');
+    expect(html).toContain('Labuitslag');
+    expect(html).toContain('Fertiliteitsrapport');
+    expect(html).toContain('Ziekenhuisdocument');
+    expect(html).toContain('Behandelverslag');
+    expect(html).toContain('PDF');
+    expect(html).toContain('Afbeelding');
     expect(html).toContain('Bestanden, gespreksverslagen en analyse blijven versleuteld lokaal');
     expect(html).toContain('Koppel aan afspraak');
     expect(html).toContain('Intakegesprek · 2026-05-01 09:30');
@@ -565,7 +579,9 @@ describe('app shell', () => {
     expect(html).toContain('Bloeduitslag mei');
     expect(html).toContain('bloed-lab-uitslag.pdf');
     expect(html).toContain('Onderzoek');
+    expect(html).toContain('Labuitslag');
     expect(html).toContain('2 KB');
+    expect(html).toContain('Uploadprofiel: Labuitslag.');
     expect(html).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
     expect(html).toContain('Bestandstype is PDF.');
     expect(html).toContain('Afspraak: Intakegesprek (2026-05-01 09:30)');

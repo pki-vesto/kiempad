@@ -330,6 +330,7 @@ async function saveDossierDocumentsFromForm(
     const datum = String(data.get('datum') ?? '');
     const titel = optionalString(data.get('titel'));
     const categorie = parseDossierCategorie(data.get('categorie'));
+    const uploadProfiel = parseDossierUploadProfiel(data.get('uploadProfiel'));
     const afspraakId = optionalString(data.get('afspraakId'));
     const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
@@ -339,6 +340,7 @@ async function saveDossierDocumentsFromForm(
         datum,
         titel: titel ?? file.name,
         categorie,
+        uploadProfiel,
         bestandsNaam: file.name,
         mimeType: file.type || undefined,
         grootteBytes: file.size,
@@ -1834,6 +1836,24 @@ function parseDossierCategorie(value: FormDataEntryValue | null): DossierDocumen
   }
 
   return 'onderzoek';
+}
+
+function parseDossierUploadProfiel(
+  value: FormDataEntryValue | null,
+): DossierDocument['uploadProfiel'] {
+  if (
+    value === 'onderzoek' ||
+    value === 'labuitslag' ||
+    value === 'fertiliteitsrapport' ||
+    value === 'ziekenhuisdocument' ||
+    value === 'behandelverslag' ||
+    value === 'pdf' ||
+    value === 'afbeelding'
+  ) {
+    return value;
+  }
+
+  return undefined;
 }
 
 function parseEmbryoStatus(

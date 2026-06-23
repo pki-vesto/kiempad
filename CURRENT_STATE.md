@@ -226,12 +226,17 @@
   `kiempad` via Tailscale Serve HTTPS op `https://kiempad.tail9d0c71.ts.net`.
   De lokale fallbackpoort op de host is `127.0.0.1:8098`; de containerstack blijft
   stateless en bewaart geen gezondheidsdata.
+- **G180 PFIP dossier-uploadprofielen:** dossieruploads ondersteunen expliciete
+  profielen voor onderzoeken, labuitslagen, fertiliteitsrapporten,
+  ziekenhuisdocumenten, behandelverslagen, PDF's en afbeeldingen. Als de gebruiker
+  automatisch herkennen kiest, leidt Kiempad het profiel lokaal af uit bestandsnaam,
+  categorie of bestandstype en toont het profiel in de analyse.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft 64 extra open doelen toegevoegd (G180-G243), gericht op dossier-ingest,
+heeft na G180 nog 63 open doelen (G181-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -281,8 +286,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G180: medische dossier-ingest uitbreiden met uploadprofielen,
-   OCR, metadata-extractie, tijdlijnopbouw, indexering en lokale zoekfunctionaliteit.
+1. PFIP uitvoeren vanaf G181: medische dossier-ingest uitbreiden met OCR,
+   metadata-extractie, tijdlijnopbouw, indexering en lokale zoekfunctionaliteit.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
