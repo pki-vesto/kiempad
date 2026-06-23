@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G224 PFIP daily recommendations: dagoverzicht toont een cyclusdagcheck op basis
+  van lokale trajectfase en cyclusmetingen, zonder diagnose, dosering,
+  timingadvies of behandelkeuze.
 - G223 PFIP daily recommendations: dagoverzicht genereert een lokale
   behandelvoorbereiding uit afspraken, medicatieplanning, open vragen en
   consultactiepunten, zonder diagnose, dosering of behandelkeuze.

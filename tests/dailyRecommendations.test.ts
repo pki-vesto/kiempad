@@ -141,6 +141,27 @@ describe('dagelijkse aanbevelingen', () => {
     expect(overzicht.vrouw[0]?.detail).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
     expect(overzicht.vrouw[0]?.detail).toContain('recent dossierdocument Labuitslag op 2026-06-23');
     expect(overzicht.vrouw[0]?.detail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
+    expect(overzicht.vrouw[1]).toMatchObject({
+      id: 'vrouw-cyclus-dagcheck',
+      titel: 'Cyclusdagcheck',
+      bron: 'Trajectfase en lokale cyclusmetingen',
+    });
+    expect(overzicht.vrouw[1]?.checklist).toEqual([
+      {
+        label:
+          'Fase: gebruik cyclusfase Stimulatie alleen als context voor feitelijke dagnotities.',
+        bron: 'Trajectfase',
+        disclaimer: 'Geen diagnose, timingadvies of behandelkeuze.',
+      },
+      {
+        label: 'Meting: controleer cyclusdag van 2026-06-24 met waarde 7.',
+        bron: 'Lokale cyclusmetingen',
+        disclaimer: 'Kiempad interpreteert deze meting niet medisch.',
+      },
+    ]);
+    expect(
+      `${overzicht.vrouw[1]?.detail} ${overzicht.vrouw[1]?.checklist?.map((item) => item.disclaimer)}`,
+    ).not.toMatch(/\bdosering\b/i);
   });
 
   it('genereert behandelvoorbereiding uit afspraak, medicatie en open actiepunten', () => {

@@ -56,6 +56,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
   );
   const vragenOpen = openstaandeVragen(input.vragen);
   const leefstijlContext = bouwLeefstijlContextAanbeveling(input);
+  const cyclusContext = bouwCyclusAanbeveling(input);
   const behandelvoorbereiding = bouwBehandelvoorbereiding({
     afspraak,
     doseLogsVandaag,
@@ -66,6 +67,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
   return {
     vrouw: [
       ...(leefstijlContext ? [leefstijlContext] : []),
+      ...(cyclusContext ? [cyclusContext] : []),
       doseLogsVandaag.length > 0
         ? {
             id: 'vrouw-medicatie-vandaag',
@@ -216,6 +218,44 @@ function bouwBehandelvoorbereiding(input: {
   };
 }
 
+function bouwCyclusAanbeveling(input: {
+  datum: string;
+  trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
+  cycleData?: readonly CycleData[];
+}): DailyRecommendation | undefined {
+  const fase = beschrijfCyclusfase(input.trajecten ?? [], input.datum);
+  const meting = laatsteCyclusmeting(input.cycleData ?? []);
+  const checklist = [
+    fase
+      ? {
+          label: `Fase: gebruik ${fase} alleen als context voor feitelijke dagnotities.`,
+          bron: 'Trajectfase',
+          disclaimer: 'Geen diagnose, timingadvies of behandelkeuze.',
+        }
+      : undefined,
+    meting
+      ? {
+          label: `Meting: controleer ${meting.meting} van ${meting.datum} met waarde ${meting.waarde}.`,
+          bron: 'Lokale cyclusmetingen',
+          disclaimer: 'Kiempad interpreteert deze meting niet medisch.',
+        }
+      : undefined,
+  ].filter((item): item is DailyRecommendationChecklistItem => Boolean(item));
+
+  if (checklist.length === 0) return undefined;
+
+  return {
+    id: 'vrouw-cyclus-dagcheck',
+    owner: 'vrouw',
+    titel: 'Cyclusdagcheck',
+    detail:
+      'Bekijk cyclusfase en metingen alleen als feitelijke context voor wat je vandaag wilt vastleggen of vragen.',
+    bron: 'Trajectfase en lokale cyclusmetingen',
+    waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    checklist,
+  };
+}
+
 function bouwLeefstijlContextAanbeveling(input: {
   datum: string;
   trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
@@ -260,12 +300,16 @@ function beschrijfCyclusfase(
 }
 
 function beschrijfLaatsteCyclusmeting(items: readonly CycleData[]): string | undefined {
-  const laatste = [...items].sort(
-    (a, b) => b.datum.localeCompare(a.datum) || a.meting.localeCompare(b.meting),
-  )[0];
+  const laatste = laatsteCyclusmeting(items);
   if (!laatste) return undefined;
 
   return `laatste cyclusmeting ${laatste.meting} op ${laatste.datum}`;
+}
+
+function laatsteCyclusmeting(items: readonly CycleData[]): CycleData | undefined {
+  return [...items].sort(
+    (a, b) => b.datum.localeCompare(a.datum) || a.meting.localeCompare(b.meting),
+  )[0];
 }
 
 function beschrijfRecentDossierdocument(items: readonly DossierDocument[]): string | undefined {
