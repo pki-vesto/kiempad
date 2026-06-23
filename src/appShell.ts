@@ -61,6 +61,7 @@ import {
   volgendeAfspraakMetOpenVragen,
 } from './domain/vraag';
 import type { VraagBundle } from './domain/vraagStore';
+import { berekenWelzijnOverzicht, type WelzijnOverzicht } from './domain/welzijn';
 import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
 
 export const DISCLAIMER =
@@ -328,6 +329,7 @@ function renderWelzijnScreen(state: AppShellState): string {
   const logs = state.symptomLogs ?? [];
   const checkIns = state.mentalCheckIns ?? [];
   const perDag = symptomenPerDag(logs);
+  const overzicht = berekenWelzijnOverzicht(logs, checkIns);
 
   return `
     <section class="traject-layout" aria-label="Symptomen en welzijn">
@@ -338,6 +340,7 @@ function renderWelzijnScreen(state: AppShellState): string {
         ${renderSymptomLogForm()}
       </div>
       <div class="timeline-panel">
+        ${renderWelzijnOverzicht(overzicht)}
         <h2>Mentale check-ins</h2>
         ${
           checkIns.length > 0
@@ -351,6 +354,24 @@ function renderWelzijnScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
         }
       </div>
+    </section>
+  `;
+}
+
+function renderWelzijnOverzicht(overzicht: WelzijnOverzicht): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Welzijn-overzicht">
+      <h2>Welzijn-overzicht</h2>
+      <p class="small-print">Dit overzicht telt alleen wat lokaal is vastgelegd en geeft geen oordeel of score.</p>
+      <dl class="summary-list">
+        <div><dt>Symptoomlogs</dt><dd>${overzicht.symptomLogAantal}</dd></div>
+        <div><dt>Dagen met symptomen</dt><dd>${overzicht.symptomLogDagen}</dd></div>
+        <div><dt>Mentale check-ins</dt><dd>${overzicht.checkInAantal}</dd></div>
+        <div><dt>Laatst vastgelegd</dt><dd>${escapeHtml(overzicht.laatsteDatum ?? 'Nog niets')}</dd></div>
+        <div><dt>Stemming goed</dt><dd>${overzicht.stemmingVerdeling.goed}</dd></div>
+        <div><dt>Stemming oké</dt><dd>${overzicht.stemmingVerdeling.ok}</dd></div>
+        <div><dt>Stemming zwaar</dt><dd>${overzicht.stemmingVerdeling.zwaar}</dd></div>
+      </dl>
     </section>
   `;
 }

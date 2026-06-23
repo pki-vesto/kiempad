@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G109 welzijn-overzicht zonder oordeel: welzijnscherm toont feitelijke aantallen,
+  dagen en stemmingsverdeling zonder score-druk.
 - G108 mentale check-in: welzijnscherm bewaart stemming en privé notitie als
   versleutelde lokale check-in.
 - G106 symptomen per dag/over tijd: welzijnscherm groepeert symptoomlogs per datum
