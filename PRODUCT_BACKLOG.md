@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 161 |
+| ☑ klaar | 162 |
 | ◐ bezig | 1 |
-| ☐ open | 17 |
+| ☐ open | 16 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -293,7 +293,7 @@
 | G169 | ADR toegevoegd bij elke belangrijke keuze | P1 | F0 | ☑ |
 | G170 | Backlog-telling bijgewerkt bij statuswijziging | P2 | F0 | ☑ |
 | G171 | Kennisbank-inhoud periodiek verifiëren met behandelaars | P1 | F1 | ☑ |
-| G172 | Vergoedingscijfers jaarlijks herzien | P2 | F2 | ☐ |
+| G172 | Vergoedingscijfers jaarlijks herzien | P2 | F2 | ☑ |
 | G173 | Dependencies periodiek updaten (security) | P1 | F1 | ☑ |
 | G174 | Disclaimer-tekst review bij elke release | P1 | F1 | ☑ |
 

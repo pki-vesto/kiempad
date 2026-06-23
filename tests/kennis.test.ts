@@ -20,6 +20,11 @@ describe('kennis domeinregels', () => {
     expect(INITIELE_KENNIS_ITEMS.some((item) => item.categorie === 'leefstijl')).toBe(true);
     expect(INITIELE_KENNIS_ITEMS.some((item) => item.categorie === 'kosten')).toBe(true);
     expect(INITIELE_KENNIS_ITEMS.some((item) => item.inhoud.includes('2026'))).toBe(true);
+    expect(
+      INITIELE_KENNIS_ITEMS.filter((item) => item.categorie === 'kosten').every((item) =>
+        item.inhoud.includes('gecontroleerd op 2026-06-23'),
+      ),
+    ).toBe(true);
   });
 
   it('groepeert items per categorie', () => {

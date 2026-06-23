@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G172 vergoedingscijfers: NL 2026-kostenkennis en vergoedingconstanten zijn
+  herzien met verificatiedatum en bronverwijzingen naar Rijksoverheid,
+  Zorginstituut Nederland en Zilveren Kruis.
 - G178 embryokwaliteit: Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen en koppelen aan poging of terugplaatsing, zonder
   kansberekening.

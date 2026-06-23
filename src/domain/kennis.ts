@@ -48,8 +48,8 @@ export const INITIELE_KENNIS_ITEMS: readonly KennisItem[] = [
     id: 'seed-kosten-2026-vergoeding',
     titel: 'Kosten 2026: vergoeding op hoofdlijnen',
     inhoud:
-      'Concept voor Nederland 2026: de basisverzekering vergoedt volgens het kennisbankplan drie IVF-/ICSI-pogingen per zwangerschap voor vrouwen onder 43 jaar. Eigen polis en verzekeraar zijn leidend.',
-    bron: 'docs/KENNISBANK.md — Kosten NL 2026, te verifiëren met eigen polis/verzekeraar',
+      'Nederland 2026, gecontroleerd op 2026-06-23: de basisverzekering vergoedt in de geraadpleegde 2026-bronnen maximaal drie IVF-/ICSI-pogingen per doorgaande zwangerschap voor vrouwen onder 43 jaar. Eigen polis, contractering en verzekeraar blijven leidend.',
+    bron: 'docs/KENNISBANK.md — Kosten NL 2026; Rijksoverheid/Zorginstituut/Zilveren Kruis geraadpleegd op 2026-06-23',
     categorie: 'kosten',
     ai_gegenereerd: false,
     geverifieerd_met_arts: false,
@@ -58,8 +58,8 @@ export const INITIELE_KENNIS_ITEMS: readonly KennisItem[] = [
     id: 'seed-kosten-2026-eigen-risico',
     titel: 'Kosten 2026: eigen risico en pogingstelling',
     inhoud:
-      'Concept voor Nederland 2026: verplicht eigen risico is 385 euro; een poging telt volgens het kennisbankplan pas mee vanaf een geslaagde eicelpunctie.',
-    bron: 'docs/KENNISBANK.md — Kosten NL 2026, te verifiëren met eigen polis/verzekeraar',
+      'Nederland 2026, gecontroleerd op 2026-06-23: verplicht eigen risico is 385 euro. Voor IVF/ICSI telt een poging volgens de geraadpleegde 2026-verzekeraarsinformatie vanaf de punctie mee; controleer altijd eigen polis en verzekeraar.',
+    bron: 'docs/KENNISBANK.md — Kosten NL 2026; Rijksoverheid/Zorginstituut/Zilveren Kruis geraadpleegd op 2026-06-23',
     categorie: 'kosten',
     ai_gegenereerd: false,
     geverifieerd_met_arts: false,

@@ -35,11 +35,14 @@ Elk item: titel, inhoud, **bron**, categorie, en de markeringen `ai_gegenereerd`
 - Algemene, niet-belovende leefstijladviezen rond vruchtbaarheid; nadruk op "wat
   redelijk en haalbaar is", niet op schuld of garanties.
 
-### Kosten (NL, 2026 — te verifiëren met eigen polis/verzekeraar)
-- Basisverzekering vergoedt **3 IVF-/ICSI-pogingen per zwangerschap** voor vrouwen
-  **< 43 jaar**.
+### Kosten (NL, 2026 — gecontroleerd op 2026-06-23)
+- Basisverzekering vergoedt in de geraadpleegde 2026-bronnen **maximaal 3
+  IVF-/ICSI-pogingen per doorgaande zwangerschap** voor vrouwen **< 43 jaar**.
 - Verplicht **eigen risico 2026 = € 385**.
-- Een poging **telt pas mee** vanaf een **geslaagde eicelpunctie**.
+- Een IVF-/ICSI-poging telt volgens de geraadpleegde 2026-verzekeraarsinformatie
+  vanaf de punctie mee; ingevroren embryo's vallen binnen de poging waaruit ze
+  ontstonden zolang geen doorgaande zwangerschap is ontstaan.
+- Eigen polis, contractering, verwijzing/indicatie en verzekeraar blijven leidend.
 - (Deze regels zijn ook in code vastgelegd in
   [`../src/domain/vergoeding.ts`](../src/domain/vergoeding.ts).)
 
@@ -62,8 +65,12 @@ Elk item: titel, inhoud, **bron**, categorie, en de markeringen `ai_gegenereerd`
 - Review "Beyond BMI" — https://pmc.ncbi.nlm.nih.gov/articles/PMC7616016/
 
 **Kosten/vergoeding (NL 2026)**
-- Consumentenbond
-- Freya
+- Rijksoverheid — eigen risico zorgverzekering:
+  https://www.rijksoverheid.nl/vraag-en-antwoord/zorgverzekering/eigen-risico-zorgverzekering
+- Zorginstituut Nederland — eigen risico Zvw:
+  https://www.zorginstituutnederland.nl/verzekerde-zorg/e/eigen-risico-zvw
+- Zilveren Kruis — IVF en ICSI vergoeding 2026:
+  https://www.zilverenkruis.nl/consumenten/vergoedingen/ivf
 - Eigen polis / verzekeraar (leidend)
 
 **Research**
@@ -76,7 +83,7 @@ Elk item: titel, inhoud, **bron**, categorie, en de markeringen `ai_gegenereerd`
 
 ## Onderhoud
 
-- Vergoedingscijfers gelden voor **2026** en kunnen jaarlijks wijzigen — markeer het
-  jaartal bij kosten-items.
+- Vergoedingscijfers gelden voor **2026**, zijn voor G172 gecontroleerd op
+  **2026-06-23** en kunnen jaarlijks wijzigen — markeer het jaartal bij kosten-items.
 - Markeer items expliciet als geverifieerd zodra een behandelaar ze heeft bevestigd;
   tot die tijd blijven ze "concept".

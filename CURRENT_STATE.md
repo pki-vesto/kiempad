@@ -116,6 +116,9 @@
   die na geslaagde punctie meetellen voor vergoeding en toont resterend van 3.
 - **G084 kostenjaar-markering:** kostenkennisitems tonen automatisch het gevonden
   jaartal, zodat vergoedingsteksten zichtbaar tijdgebonden blijven.
+- **G172 vergoedingscijfers:** NL 2026-vergoedingsteksten zijn op 2026-06-23
+  herzien tegen Rijksoverheid, Zorginstituut Nederland en Zilveren Kruis; eigen
+  polis en verzekeraar blijven leidend.
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
@@ -235,8 +238,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 1. **AI-samenvatting** pas verder bouwen met een expliciete provider-aanroep achter
    de bestaande opt-in, preview en safety helpers.
-2. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
-3. **Publicatie via Tailscale** op een aparte HTTPS-node uitwerken, vergelijkbaar met
+2. **Publicatie via Tailscale** op een aparte HTTPS-node uitwerken, vergelijkbaar met
    Shred en Healthcore.
 
 ## 7. Permanente onderhoudsregel
