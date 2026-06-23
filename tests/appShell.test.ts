@@ -694,6 +694,9 @@ describe('app shell', () => {
     expect(html).toContain('name="beeldBron"');
     expect(html).toContain('name="beeldCyclusDag"');
     expect(html).toContain('name="beeldEmbryoLabel"');
+    expect(html).toContain('name="beeldEmbryoId"');
+    expect(html).toContain('name="beeldEmbryoDag"');
+    expect(html).toContain('name="beeldLaboratoriumContext"');
     expect(html).toContain('id="dossier-concept-preview"');
     expect(html).toContain('Kies bestanden om conceptrecords lokaal te controleren vóór opslag.');
     expect(html).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
@@ -807,6 +810,9 @@ describe('app shell', () => {
             trajectId: 'traject-beeld',
             cyclusDag: 9,
             embryoLabel: 'Embryo 1',
+            embryoId: 'E1',
+            embryoDag: 5,
+            laboratoriumContext: 'Labfoto dag 5',
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -864,7 +870,7 @@ describe('app shell', () => {
       'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
     );
     expect(html).toContain(
-      'Tijdlijnkoppeling: Poging: traject-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1',
+      'Tijdlijnkoppeling: Poging: traject-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1 · Embryo-id: E1 · Embryodag: 5 · Labcontext: Labfoto dag 5',
     );
     expect(html).toContain('Beeldcontextnotitie: Echo 6 weken');
     expect(html).toContain(

@@ -799,6 +799,18 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="beeldEmbryoLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo 1" />
           </label>
           <label>
+            Embryo-id
+            <input name="beeldEmbryoId" autocomplete="off" placeholder="Bijvoorbeeld: lab-id E1" />
+          </label>
+          <label>
+            Embryo dag
+            <input name="beeldEmbryoDag" type="number" min="1" max="7" step="1" />
+          </label>
+          <label>
+            Laboratoriumcontext
+            <input name="beeldLaboratoriumContext" autocomplete="off" placeholder="Bijvoorbeeld: labfoto dag 5 of incubatorbeeld" />
+          </label>
+          <label>
             Notitie
             <textarea name="notitie" rows="4"></textarea>
           </label>
@@ -1098,6 +1110,9 @@ function renderImagingTijdlijnKoppeling(
     koppeling.afspraakId ? `Afspraak: ${koppeling.afspraakId}` : undefined,
     koppeling.cyclusDag ? `Cyclusdag: ${koppeling.cyclusDag}` : undefined,
     koppeling.embryoLabel ? `Embryo: ${koppeling.embryoLabel}` : undefined,
+    koppeling.embryoId ? `Embryo-id: ${koppeling.embryoId}` : undefined,
+    koppeling.embryoDag ? `Embryodag: ${koppeling.embryoDag}` : undefined,
+    koppeling.laboratoriumContext ? `Labcontext: ${koppeling.laboratoriumContext}` : undefined,
   ].filter((value): value is string => Boolean(value));
 
   return details.length > 0
@@ -1151,6 +1166,11 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
     `Laatste datum: ${item.laatsteDatum}`,
     item.kwaliteiten.length > 0 ? `Kwaliteit: ${item.kwaliteiten.join(', ')}` : undefined,
     item.statussen.length > 0 ? `Status: ${item.statussen.join(', ')}` : undefined,
+    item.embryoIds.length > 0 ? `Embryo-id: ${item.embryoIds.join(', ')}` : undefined,
+    item.embryoDagen.length > 0 ? `Embryodag: ${item.embryoDagen.join(', ')}` : undefined,
+    item.laboratoriumContexten.length > 0
+      ? `Labcontext: ${item.laboratoriumContexten.join(', ')}`
+      : undefined,
   ].filter((detail): detail is string => Boolean(detail));
 
   return `

@@ -201,6 +201,7 @@ systeemgebeurtenissen.
 | afspraakId | string? | optionele koppeling naar relevante afspraak |
 | trajectId | string? | optionele koppeling naar relevante poging/traject |
 | embryo | `{ label, kwaliteit, dag?, status? }?` | optionele kliniekterugkoppeling over embryokwaliteit, zonder kansberekening |
+| beeldMetadata | `{ datum?, soort?, context?, bron?, trajectId?, afspraakId?, cyclusDag?, embryoLabel?, embryoId?, embryoDag?, laboratoriumContext? }?` | optionele beeldcontext voor foto's, echo's, scans en embryo-afbeeldingen; embryo-id, embryodag en labcontext koppelen uploads aan embryo-dossier en tijdlijn |
 | notitie | string? | lokale toelichting |
 | analyse | `{ samenvatting, signalen[] }` | lokale, niet-medische analyse van naam/type/grootte |
 | uploadedAt | IsoDate | moment van lokaal toevoegen |

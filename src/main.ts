@@ -451,6 +451,9 @@ async function saveDossierDocumentsFromForm(
     const beeldBron = optionalString(data.get('beeldBron'));
     const beeldCyclusDag = parsePositiveInteger(data.get('beeldCyclusDag'));
     const beeldEmbryoLabel = optionalString(data.get('beeldEmbryoLabel'));
+    const beeldEmbryoId = optionalString(data.get('beeldEmbryoId'));
+    const beeldEmbryoDag = parsePositiveInteger(data.get('beeldEmbryoDag'));
+    const beeldLaboratoriumContext = optionalString(data.get('beeldLaboratoriumContext'));
     const lokaleOcr = data.get('lokaleOcr') === 'ja';
     const conceptBevestigd = data.get('conceptBevestigd') === 'ja';
 
@@ -475,12 +478,21 @@ async function saveDossierDocumentsFromForm(
         trajectId,
         notitie,
         beeldMetadata:
-          beeldContext || beeldBron || beeldCyclusDag || beeldEmbryoLabel
+          beeldContext ||
+          beeldBron ||
+          beeldCyclusDag ||
+          beeldEmbryoLabel ||
+          beeldEmbryoId ||
+          beeldEmbryoDag ||
+          beeldLaboratoriumContext
             ? {
                 context: beeldContext,
                 bron: beeldBron,
                 cyclusDag: beeldCyclusDag,
                 embryoLabel: beeldEmbryoLabel,
+                embryoId: beeldEmbryoId,
+                embryoDag: beeldEmbryoDag,
+                laboratoriumContext: beeldLaboratoriumContext,
               }
             : undefined,
         ocr: lokaleOcr

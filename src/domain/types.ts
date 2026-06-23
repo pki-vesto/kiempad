@@ -225,6 +225,9 @@ export interface DossierDocument {
     trajectId?: string;
     cyclusDag?: number;
     embryoLabel?: string;
+    embryoId?: string;
+    embryoDag?: number;
+    laboratoriumContext?: string;
   };
   ocr?: {
     status: 'tekst_uitgelezen' | 'wacht_op_lokale_ocr' | 'niet_ondersteund';
