@@ -18,8 +18,9 @@ gezondheidsdata en is uitdrukkelijk privé en niet-distribueerbaar.
 
 ## Decision
 
-- Kiempad wordt **handmatig** ontwikkeld (met AI-assistentie zoals Claude Code), met
-  **menselijke review** vóór elke merge naar `main`.
+- ~~Kiempad wordt **handmatig** ontwikkeld met **menselijke review** vóór elke merge~~ —
+  **herzien:** Codex bouwt en merget autonoom, met **groene CI als merge-gate**, zie
+  [ADR-0007](0007-codex-autonoom-bouwen.md).
 - Kiempad wordt **niet** opgenomen in de Sentinel autonome build-/PR-/backlog-loops en
   niet in de publieke "factory"-status.
 - ~~De repo is **private** onder `pki-vesto`~~ — **herzien:** de repo is nu publiek,

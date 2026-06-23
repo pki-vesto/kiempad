@@ -25,4 +25,4 @@ labels: bug
 <!-- bv. src/domain/..., src/storage/..., src/ui/... -->
 
 ## Uitvoeringsvorm
-<!-- ADR-0005: handmatig met AI-assistentie, menselijk gereviewd. -->
+<!-- ADR-0007: Codex bouwt en merget autonoom via /goal; groene CI is de gate. -->

@@ -53,8 +53,9 @@ van medisch advies**, en is uitsluitend voor **privégebruik** (geen distributie
 
 ## 5. Governance-Grenzen
 
-- Kiempad valt **buiten** de Sentinel autonome build-/PR-governance. Wijzigingen gaan
-  **handmatig** (met AI-assistentie), met menselijke review. (ADR-0005)
+- **Codex bouwt en merget autonoom** via `/goal`, zonder tussentijdse menselijke
+  beslissingen; **groene CI is de harde merge-gate** (ADR-0007). Kiempad blijft wel
+  **buiten** de Sentinel autonome build-engine en de portfolio-PR-loops (ADR-0005).
 - De **publieke** repo onder `pki-vesto` is de enige plek voor code/docs;
   gezondheidsdata staat er niet in. Nooit secrets of databestanden in git (ADR-0006).
 - Medische inhoud in de kennisbank is **concept** tot een behandelaar het bevestigt.

@@ -6,10 +6,14 @@
 
 ## Execution form
 
-- Werk **handmatig met AI-assistentie** (Claude Code). Kiempad valt **buiten** de
-  Sentinel autonome build-/PR-governance (zie
-  [`docs/adr/0005-buiten-sentinel-governance.md`](docs/adr/0005-buiten-sentinel-governance.md)).
-- Elke wijziging is **menselijk gereviewd** voordat hij op `main` staat.
+- **Codex bouwt en merget autonoom** via `/goal` (zie
+  [`CODEX_BUILD_PROMPT.md`](CODEX_BUILD_PROMPT.md) en
+  [`docs/adr/0007-codex-autonoom-bouwen.md`](docs/adr/0007-codex-autonoom-bouwen.md)),
+  zonder tussentijdse menselijke beslissingen. **Groene CI is de merge-gate** die de
+  menselijke review vervangt.
+- Kiempad blijft wel **buiten** de Sentinel autonome build-engine en portfolio-PR-loops
+  ([`docs/adr/0005-buiten-sentinel-governance.md`](docs/adr/0005-buiten-sentinel-governance.md)).
+- Peter kan achteraf **steekproeven** en terugdraaien.
 
 ## Branch model
 
@@ -40,10 +44,12 @@ CI (`.github/workflows/ci.yml`) draait typecheck + tests op elke PR.
 
 ## Review process
 
-- Eén reviewer (de andere partner of een bewuste zelf-review met checklist).
-- Toets aan de **Definition Of Done** in [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) §8.
-- Bij twijfel over medische inhoud: markeren als concept en **niet** als
-  geverifieerd tonen tot een behandelaar het bevestigt.
+- **Geen verplichte menselijke reviewer.** Codex toetst zelf aan de **Definition Of
+  Done** in [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) §8 en merget bij **groene CI**.
+- Medische inhoud blijft altijd **concept**: `geverifieerd_met_arts` blijft `false` tot
+  een behandelaar het bevestigt; verzin nooit medische feiten of doseringen.
+- Bij twijfel die een hard principe raakt: kies de veilige optie en documenteer die in
+  de PR/ADR (niet wachten op Peter).
 
 ## Documentatiestijl
 
