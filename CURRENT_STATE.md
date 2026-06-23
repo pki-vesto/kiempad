@@ -70,6 +70,10 @@
 - **G095/G096/G100/G125 AI opt-in fundament:** AI staat standaard uit, een domeinguard
   blokkeert toekomstige AI-verzoeken zonder expliciete opt-in en expliciete actie, en
   provider/model/API-sleutel worden via het versleutelde lokale settingsrecord bewaard.
+- **G097/G098/G099 veilige AI-samenvattinglaag:** toekomstige AI-payloads worden
+  geminimaliseerd en gede-identificeerd, AI-samenvattingen worden als conceptkennis
+  met waarschuwing en bron gelabeld, en policy-tests blokkeren dosering, diagnose en
+  behandelkeuze-achtige output.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -107,7 +111,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (76 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (79 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -116,8 +120,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 ## 6. Hoogste Prioriteiten
 
 1. **Back-up/export** voorbereiden voordat er meer privédata wordt toegevoegd.
-2. **AI-samenvatting** pas verder bouwen met payload-preview, dataminimalisatie en
-   waarschuwingslabels.
+2. **AI-samenvatting** pas verder bouwen met expliciete preview en opslaan in de
+   kennisbank achter de bestaande opt-in en safety helpers.
 3. **Kosten/vergoedingen** actueel houden voor de NL 2026-context.
 
 ## 7. Permanente onderhoudsregel

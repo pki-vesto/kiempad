@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G097/G098/G099 veilige AI-samenvattinglaag: helpers toegevoegd voor
+  de-identificatie/minimalisatie van toekomstige AI-payloads, waarschuwing + bron bij
+  AI-samenvattingen als KennisItem en policy-tests tegen dosering, diagnose en
+  behandelkeuze.
 - G095/G096/G100/G125 AI opt-in fundament: AI staat standaard uit, toekomstige
   AI-verzoeken krijgen een expliciete opt-in/actie-guard en provider/model/API-sleutel
   worden alleen via het versleutelde lokale settingsrecord bewaard.
