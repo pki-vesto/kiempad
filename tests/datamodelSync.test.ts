@@ -50,7 +50,20 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
   CycleData: ['id', 'datum', 'meting', 'waarde'],
   CostItem: ['id', 'trajectId', 'omschrijving', 'bedrag', 'datum', 'categorie', 'vergoed'],
   Decision: ['id', 'onderwerp', 'opties', 'keuze', 'onderbouwing', 'datum'],
-  Settings: ['id', 'profielen', 'gedeeldeModus', 'ai', 'herinneringStandaarden', 'taal'],
+  Settings: [
+    'id',
+    'profielen',
+    'gedeeldeModus',
+    'ai',
+    'ingeschakeld',
+    'provider',
+    'model',
+    'apiKey',
+    'laatsteOptInOp',
+    'herinneringStandaarden',
+    'taal',
+    'toonNotificatieDetailsOpVergrendelscherm',
+  ],
 };
 
 describe('datamodel en TypeScript-types', () => {

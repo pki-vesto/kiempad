@@ -26,7 +26,7 @@ describe('notification runtime privacy', () => {
     expect(
       buildNotificationMessage(
         herinnering,
-        { toonNotificatieDetailsOpVergrendelscherm: true },
+        { ...DEFAULT_APP_SETTINGS, toonNotificatieDetailsOpVergrendelscherm: true },
         { 'afspraak-1': 'Afspraak: Echo controle' },
       ),
     ).toEqual({
@@ -38,6 +38,7 @@ describe('notification runtime privacy', () => {
   it('valt terug op generieke tekst als details ontbreken', () => {
     expect(
       buildNotificationMessage(herinnering, {
+        ...DEFAULT_APP_SETTINGS,
         toonNotificatieDetailsOpVergrendelscherm: true,
       }).body,
     ).toBe('Er staat een herinnering klaar.');

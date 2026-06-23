@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 106 |
+| ☑ klaar | 110 |
 | ◐ bezig | 0 |
-| ☐ open | 68 |
+| ☐ open | 64 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -176,12 +176,12 @@
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
 | G094 | Research-item (link/notitie/bron) opslaan in bibliotheek | P2 | F2 | ☐ |
-| G095 | AI-functie staat **standaard uit** (opt-in) | P0 | F2 | ☐ |
-| G096 | AI-samenvatting alleen op expliciet verzoek | P0 | F2 | ☐ |
+| G095 | AI-functie staat **standaard uit** (opt-in) | P0 | F2 | ☑ |
+| G096 | AI-samenvatting alleen op expliciet verzoek | P0 | F2 | ☑ |
 | G097 | Verstuurde tekst wordt geminimaliseerd/gede-identificeerd | P0 | F2 | ☐ |
 | G098 | AI-output draagt waarschuwingslabel + bron | P0 | F2 | ☐ |
 | G099 | AI geeft **nooit** dosering/diagnose/behandelkeuze (policy-test) | P0 | F2 | ☐ |
-| G100 | AI-API-sleutel versleuteld lokaal opgeslagen (niet in repo/.env) | P0 | F2 | ☐ |
+| G100 | AI-API-sleutel versleuteld lokaal opgeslagen (niet in repo/.env) | P0 | F2 | ☑ |
 | G101 | Vooraf zichtbaar **wat** er naar de AI wordt verstuurd | P1 | F2 | ☐ |
 | G102 | Keuze van provider/model in instellingen | P2 | F2 | ☐ |
 | G103 | AI-samenvatting opgeslagen als KennisItem met `ai_gegenereerd=true` | P1 | F2 | ☐ |
@@ -221,7 +221,7 @@
 | G122 | Automatische vergrendeling na inactiviteit | P1 | F1 | ☑ |
 | G123 | Geen tracking/analytics/advertenties/third-party scripts | P0 | F1 | ☑ |
 | G124 | Geen standaard uitgaand verkeer (privacy-rooktest in CI/handmatig) | P0 | F1 | ☑ |
-| G125 | Opt-in vereist voor elk uitgaand verkeer (AI/sync) | P0 | F2 | ☐ |
+| G125 | Opt-in vereist voor elk uitgaand verkeer (AI/sync) | P0 | F2 | ☑ |
 | G126 | Lokaal gebeurtenissenlog (verlaat toestel niet) | P2 | F2 | ☐ |
 | G127 | Duidelijke "geen herstel-achterdeur"-uitleg + back-up-aansporing | P1 | F1 | ☑ |
 | G128 | Minimale npm-dependencies; audit-stap in CI | P1 | F1 | ☑ |
