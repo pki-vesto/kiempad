@@ -43,6 +43,12 @@ export function komendeAfspraken(afspraken: readonly Afspraak[], vanafIso: strin
   return sorteerAfspraken(afspraken).filter((afspraak) => afspraak.datumTijd >= vanafIso);
 }
 
+export function afgelopenAfspraken(afspraken: readonly Afspraak[], voorIso: string): Afspraak[] {
+  return sorteerAfspraken(afspraken)
+    .filter((afspraak) => afspraak.datumTijd < voorIso)
+    .reverse();
+}
+
 export type AgendaGroep = {
   sleutel: string;
   label: string;

@@ -111,9 +111,19 @@ describe('app shell', () => {
           afspraak: {
             id: 'afspraak-2',
             titel: 'Consult',
-            datumTijd: '2026-07-02T10:00',
+            datumTijd: '2099-07-02T10:00',
             type: 'consult',
             trajectId: 'traject-1',
+          },
+        },
+        {
+          afspraak: {
+            id: 'afspraak-3',
+            titel: 'Terugblik consult',
+            datumTijd: '2020-01-02T10:00',
+            type: 'consult',
+            trajectId: 'traject-1',
+            notitie: 'Besproken wat de volgende stap wordt.',
           },
         },
       ],
@@ -122,13 +132,15 @@ describe('app shell', () => {
     expect(html).toContain('Echo controle');
     expect(html).toContain('Weekweergave');
     expect(html).toContain('Week 26 2026');
-    expect(html).toContain('Week 27 2026');
     expect(html).toContain('Maandweergave');
     expect(html).toContain('Juni 2026');
-    expect(html).toContain('Juli 2026');
+    expect(html).toContain('Juli 2099');
     expect(html).toContain('Vraag: Wanneer horen we de uitslag?');
     expect(html).toContain('Herinnering: 2026-06-24 08:30');
     expect(html).toContain('Traject: Poging 1');
+    expect(html).toContain('Afgelopen');
+    expect(html).toContain('Geweest · Consult · 2020-01-02 10:00');
+    expect(html).toContain('Terugblik: Besproken wat de volgende stap wordt.');
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {

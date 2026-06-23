@@ -86,6 +86,9 @@
   pogingnummer voor vergoedingstelling.
 - **G035 agenda week-/maandweergave:** agendascherm toont naast de chronologische
   afsprakenlijst compacte groeperingen per ISO-week en maand.
+- **G040 afgelopen afspraken:** agendascherm splitst afgelopen afspraken naar een
+  aparte "Afgelopen"-sectie, labelt ze als "Geweest" en toont bestaande notities als
+  terugblik.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -115,7 +118,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Het trajectscherm kan meerdere pogingen met pogingnummer en fasen lokaal versleuteld
   beheren; het startscherm biedt snelle invoer voor afspraak, medicatie en vraag; het
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren en toont
-  week-/maandgroeperingen; het
+  week-/maandgroeperingen plus afgelopen afspraken met terugblik; het
   medicatiescherm kan middelen en geplande DoseLogs versleuteld beheren; het
   herinneringenscherm toont komende lokale herinneringen en notificatiepermissie; het
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
@@ -125,7 +128,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (87 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (88 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G040 afgelopen afspraken: agendascherm toont afspraken uit het verleden apart als
+  "Geweest" en gebruikt de bestaande notitie als terugblik.
 - G035 agenda week-/maandweergave: agendascherm toont afspraken compact gegroepeerd
   per ISO-week en maand naast de bestaande chronologische lijst.
 - G026/G027 meerdere pogingen: trajectscherm kan een nieuwe poging toevoegen naast het

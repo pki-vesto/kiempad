@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  afgelopenAfspraken,
   afsprakenPerMaand,
   afsprakenPerWeek,
   beschrijfVolgendeAfspraak,
@@ -47,6 +48,26 @@ describe('agenda domeinregels', () => {
     expect(beschrijfVolgendeAfspraak(afspraken, '2026-06-23T00:00')).toBe(
       'Volgende op 2026-06-25 08:00.',
     );
+  });
+
+  it('toont afgelopen afspraken in omgekeerde datumvolgorde', () => {
+    const afspraken = [
+      maakAfspraak('oud', { titel: 'Oud', datumTijd: '2026-06-20T10:00', type: 'consult' }),
+      maakAfspraak('toekomst', {
+        titel: 'Toekomst',
+        datumTijd: '2026-07-02T10:00',
+        type: 'consult',
+      }),
+      maakAfspraak('recent', {
+        titel: 'Recent',
+        datumTijd: '2026-06-22T08:00',
+        type: 'echo',
+      }),
+    ];
+
+    expect(
+      afgelopenAfspraken(afspraken, '2026-06-23T00:00').map((afspraak) => afspraak.id),
+    ).toEqual(['recent', 'oud']);
   });
 
   it('groepeert afspraken per week en maand', () => {

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 121 |
+| ☑ klaar | 122 |
 | ◐ bezig | 0 |
-| ☐ open | 53 |
+| ☐ open | 52 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -91,7 +91,7 @@
 | G037 | Voorbereiding/notitie per afspraak | P1 | F1 | ☑ |
 | G038 | Vragen-voor-de-arts koppelen aan een afspraak | P1 | F1 | ☑ |
 | G039 | Herinnering instellen bij een afspraak | P1 | F1 | ☑ |
-| G040 | Afgelopen afspraken als "geweest" tonen met terugblik/notitie | P2 | F2 | ☐ |
+| G040 | Afgelopen afspraken als "geweest" tonen met terugblik/notitie | P2 | F2 | ☑ |
 | G041 | ICS-export van afspraken | P3 | F3 | ☐ |
 | G042 | ICS-import (lezen) van een kliniek-agenda | P3 | F3 | ☐ |
 

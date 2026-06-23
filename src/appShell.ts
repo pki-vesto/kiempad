@@ -1,6 +1,7 @@
 import {
   AFSPRAAK_TYPE_LABELS,
   type AgendaGroep,
+  afgelopenAfspraken,
   afsprakenPerMaand,
   afsprakenPerWeek,
   beschrijfVolgendeAfspraak,
@@ -686,6 +687,22 @@ function renderServiceWorkerLabel(status: NotificationRuntimeStatus['serviceWork
 
 function renderAgendaScreen(state: AppShellState): string {
   const selected = state.afspraken[0];
+  const now = new Date().toISOString().slice(0, 16);
+  const upcomingIds = new Set(
+    state.afspraken
+      .filter((bundle) => bundle.afspraak.datumTijd >= now)
+      .map((bundle) => bundle.afspraak.id),
+  );
+  const upcoming = state.afspraken.filter((bundle) => upcomingIds.has(bundle.afspraak.id));
+  const pastOrder = new Map(
+    afgelopenAfspraken(
+      state.afspraken.map((bundle) => bundle.afspraak),
+      now,
+    ).map((afspraak, index) => [afspraak.id, index]),
+  );
+  const past = state.afspraken
+    .filter((bundle) => pastOrder.has(bundle.afspraak.id))
+    .sort((a, b) => (pastOrder.get(a.afspraak.id) ?? 0) - (pastOrder.get(b.afspraak.id) ?? 0));
 
   return `
     <section class="traject-layout" aria-label="Agenda beheren">
@@ -710,7 +727,13 @@ function renderAgendaScreen(state: AppShellState): string {
               </div>`
             : ''
         }
-        ${state.afspraken.length > 0 ? renderAgendaList(state.afspraken, state.trajecten) : '<p class="empty-state">Nog geen afspraken. Maak links de eerste afspraak aan.</p>'}
+        ${upcoming.length > 0 ? renderAgendaList(upcoming, state.trajecten) : '<p class="empty-state">Geen komende afspraken. Maak links een nieuwe afspraak aan.</p>'}
+        <h2 class="section-subheading">Afgelopen</h2>
+        ${
+          past.length > 0
+            ? renderAfgelopenAgendaList(past, state.trajecten)
+            : '<p class="empty-state">Nog geen afgelopen afspraken.</p>'
+        }
       </div>
     </section>
   `;
@@ -796,6 +819,35 @@ function renderAgendaGroups(title: string, groups: AgendaGroep[]): string {
           .join('')}
       </ol>
     </section>
+  `;
+}
+
+function renderAfgelopenAgendaList(
+  bundles: AfspraakBundle[],
+  trajecten: TrajectMetFasen[],
+): string {
+  return `
+    <ol class="phase-list">
+      ${bundles
+        .map((bundle) => {
+          const traject = trajecten.find((item) => item.traject.id === bundle.afspraak.trajectId);
+          return `
+            <li class="phase-item">
+              <div>
+                <h3>${escapeHtml(bundle.afspraak.titel)}</h3>
+                <p>Geweest · ${AFSPRAAK_TYPE_LABELS[bundle.afspraak.type]} · ${formatDateTime(bundle.afspraak.datumTijd)}</p>
+                <small>${escapeHtml(renderAfspraakMeta(bundle.afspraak, traject?.traject.naam))}</small>
+                ${
+                  bundle.afspraak.notitie
+                    ? `<p class="linked-note">Terugblik: ${escapeHtml(bundle.afspraak.notitie)}</p>`
+                    : ''
+                }
+              </div>
+            </li>
+          `;
+        })
+        .join('')}
+    </ol>
   `;
 }
 
