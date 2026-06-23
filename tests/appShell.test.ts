@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { DISCLAIMER, SCREENS, normalizeScreenId, renderAppShell } from '../src/appShell';
+import {
+  DISCLAIMER,
+  SCREENS,
+  normalizeScreenId,
+  renderAppShell,
+  renderVaultGate,
+} from '../src/appShell';
 
 describe('app shell', () => {
   it('normaliseert onbekende routes naar het startscherm', () => {
@@ -28,5 +34,14 @@ describe('app shell', () => {
     expect(html).toContain(DISCLAIMER);
     expect(html).toContain('geen vervanging van medisch advies');
     expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
+  });
+
+  it('toont de passphrase-kluis met geen-herstel-uitleg', () => {
+    const html = renderVaultGate(false);
+
+    expect(html).toContain('Maak je lokale kluis aan');
+    expect(html).toContain('Geen herstel-achterdeur');
+    expect(html).toContain('Kiempad bewaart je passphrase niet');
+    expect(html).toContain('versleutelde back-up');
   });
 });
