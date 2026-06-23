@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G190 PFIP imaging: beelduploads kunnen beelddatum, lichaams-/trajectcontext,
+  bron, gekoppelde afspraak en traject als lokale beeldmetadata bewaren.
 - G189 PFIP imaging: beeldmateriaal krijgt een expliciete lokale classificatie
   naar echo, foto, scan, embryo-afbeelding of overig beeld.
 - G188 PFIP imaging: het dossierscherm heeft een aparte imaging-repository voor

@@ -217,6 +217,13 @@ export interface DossierDocument {
     bronbestand: string;
     extractieBronnen: string[];
   };
+  beeldMetadata?: {
+    datum: IsoDate;
+    context?: string;
+    bron: string;
+    afspraakId?: string;
+    trajectId?: string;
+  };
   ocr?: {
     status: 'tekst_uitgelezen' | 'wacht_op_lokale_ocr' | 'niet_ondersteund';
     bron: 'tekstbestand' | 'pdf' | 'afbeelding' | 'onbekend';

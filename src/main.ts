@@ -363,6 +363,8 @@ async function saveDossierDocumentsFromForm(
     const afspraakId = optionalString(data.get('afspraakId'));
     const trajectId = optionalString(data.get('trajectId'));
     const notitie = optionalString(data.get('notitie'));
+    const beeldContext = optionalString(data.get('beeldContext'));
+    const beeldBron = optionalString(data.get('beeldBron'));
     const lokaleOcr = data.get('lokaleOcr') === 'ja';
     const conceptBevestigd = data.get('conceptBevestigd') === 'ja';
 
@@ -386,6 +388,13 @@ async function saveDossierDocumentsFromForm(
         afspraakId,
         trajectId,
         notitie,
+        beeldMetadata:
+          beeldContext || beeldBron
+            ? {
+                context: beeldContext,
+                bron: beeldBron,
+              }
+            : undefined,
         ocr: lokaleOcr
           ? {
               explicieteLokaleVerwerking: true,
