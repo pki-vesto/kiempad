@@ -424,6 +424,26 @@ describe('app shell', () => {
           },
         },
       ],
+      consultVerslagen: [
+        {
+          id: 'consult-1',
+          datum: '2099-06-20',
+          titel: 'Voorbereidend consult',
+          bron: 'handmatig',
+          tekst: 'Vraag aan arts: wanneer plannen we de controle?',
+          actiepunten: [
+            {
+              id: 'consult-1-actie-1',
+              soort: 'vraag',
+              status: 'concept',
+              tekst: 'Vraag aan arts: wanneer plannen we de controle?',
+              bron: 'consulttekst regel 1',
+              aangemaaktOp: '2099-06-20T10:00:00.000Z',
+            },
+          ],
+          uploadedAt: '2099-06-20T10:00:00.000Z',
+        },
+      ],
     });
 
     expect(html).toContain('Wat is de volgende stap?');
@@ -439,6 +459,11 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verplaats vraag omhoog: Wat is de volgende stap?"');
     expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
     expect(html).toContain('Verslag per afspraak');
+    expect(html).toContain('Vragenlijst voor volgende afspraak');
+    expect(html).toContain('Vraag aan arts: wanneer plannen we de controle?');
+    expect(html).toContain('Consultactiepunt');
+    expect(html).toContain('Voorbereidend consult');
+    expect(html).toContain('controleer de vragen voordat je ze met je kliniek bespreekt');
     expect(html).toContain('Wanneer horen we de uitslag?');
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
   });

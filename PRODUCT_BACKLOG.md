@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 198 |
+| ☑ klaar | 199 |
 | ◐ bezig | 0 |
-| ☐ open | 45 |
+| ☐ open | 44 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -337,7 +337,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G196 | PFIP consult intelligence: consultverslagen als apart recordtype naast algemene dossierdocumenten | P0 | F3 | ☑ |
 | G197 | PFIP consult intelligence: automatische consultsamenvatting met bronverwijzing en conceptlabel | P0 | F4 | ☑ |
 | G198 | PFIP consult intelligence: actiepunten uit consulten extraheren als lokale taken of vragen | P0 | F3 | ☑ |
-| G199 | PFIP consult intelligence: vragenlijst genereren voor volgende afspraak op basis van open punten | P0 | F3 | ☐ |
+| G199 | PFIP consult intelligence: vragenlijst genereren voor volgende afspraak op basis van open punten | P0 | F3 | ☑ |
 | G200 | PFIP consult intelligence: behandelgeschiedenis reconstrueren uit consulten, afspraken en dossierdocumenten | P0 | F3 | ☐ |
 | G201 | PFIP consult intelligence: consultinzichten koppelen aan trajectfase, medicatie, embryo of onderzoek | P1 | F3 | ☐ |
 | G202 | PFIP consult intelligence: verschilweergave tussen consultsamenvatting en gebruiker-correctie | P2 | F4 | ☐ |

@@ -1,5 +1,5 @@
 import { komendeAfspraken } from './agenda';
-import type { Afspraak, Vraag } from './types';
+import type { Afspraak, ConsultVerslag, Vraag } from './types';
 
 export type VraagInput = {
   vraag: string;
@@ -7,6 +7,20 @@ export type VraagInput = {
   prioriteit?: number;
   beantwoord: boolean;
   antwoord?: string;
+};
+
+export type GegenereerdeVragenlijstItem = {
+  id: string;
+  tekst: string;
+  bron: 'open_vraag' | 'consult_actiepunt';
+  bronLabel: string;
+  prioriteit?: number;
+};
+
+export type GegenereerdeVragenlijst = {
+  afspraak: Afspraak;
+  items: GegenereerdeVragenlijstItem[];
+  waarschuwing: string;
 };
 
 export function maakVraag(id: string, input: VraagInput): Vraag {
@@ -58,6 +72,53 @@ export function volgendeAfspraakMetOpenVragen(
       vragen: openstaandeVragenVoorAfspraak(vragen, afspraak.id),
     }))
     .find((item) => item.vragen.length > 0);
+}
+
+export function genereerVragenlijstVoorVolgendeAfspraak(
+  afspraken: readonly Afspraak[],
+  vragen: readonly Vraag[],
+  consultVerslagen: readonly ConsultVerslag[],
+  vanafIso: string,
+): GegenereerdeVragenlijst | undefined {
+  const afspraak = komendeAfspraken(afspraken, vanafIso)[0];
+  if (!afspraak) return undefined;
+
+  const vraagItems = openstaandeVragen(vragen)
+    .filter((vraag) => !vraag.voorAfspraakId || vraag.voorAfspraakId === afspraak.id)
+    .map(
+      (vraag): GegenereerdeVragenlijstItem => ({
+        id: `vraag-${vraag.id}`,
+        tekst: vraag.vraag,
+        bron: 'open_vraag',
+        bronLabel: vraag.voorAfspraakId
+          ? `gekoppeld aan ${afspraak.titel}`
+          : 'open vraag zonder afspraak',
+        prioriteit: vraag.prioriteit,
+      }),
+    );
+
+  const consultItems = consultVerslagen.flatMap((verslag) =>
+    (verslag.actiepunten ?? [])
+      .filter((actiepunt) => actiepunt.soort === 'vraag')
+      .map(
+        (actiepunt): GegenereerdeVragenlijstItem => ({
+          id: `consult-${verslag.id}-${actiepunt.id}`,
+          tekst: actiepunt.tekst,
+          bron: 'consult_actiepunt',
+          bronLabel: `${verslag.titel} · ${actiepunt.bron}`,
+        }),
+      ),
+  );
+
+  const items = dedupVragenlijstItems([...vraagItems, ...consultItems]).slice(0, 12);
+  if (items.length === 0) return undefined;
+
+  return {
+    afspraak,
+    items,
+    waarschuwing:
+      'Lokale conceptvragenlijst; controleer de vragen voordat je ze met je kliniek bespreekt.',
+  };
 }
 
 export function beantwoordeVragenPerAfspraak(
@@ -121,4 +182,16 @@ function normaliseerPrioriteit(value: number | undefined): number | undefined {
 
 function vraagPrioriteit(vraag: Vraag): number {
   return vraag.prioriteit ?? Number.MAX_SAFE_INTEGER;
+}
+
+function dedupVragenlijstItems(
+  items: GegenereerdeVragenlijstItem[],
+): GegenereerdeVragenlijstItem[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = item.tekst.trim().toLocaleLowerCase('nl-NL');
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }

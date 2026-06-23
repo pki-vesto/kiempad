@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G199 PFIP consult intelligence: vragenscherm genereert lokaal een conceptvragenlijst
+  voor de eerstvolgende afspraak uit open vragen en consultactiepunten.
 - G198 PFIP consult intelligence: consultverslagen extraheren lokale
   conceptactiepunten als taak of vraag met bronregel, zonder netwerkverwerking.
 - G197 PFIP consult intelligence: consultverslagen krijgen automatisch een lokale
