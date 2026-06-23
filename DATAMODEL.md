@@ -188,7 +188,7 @@ systeemgebeurtenissen.
 | id | string | |
 | datum | IsoDate | datum van onderzoek/document |
 | titel | string | herkenbare lokale titel |
-| categorie | `onderzoek` \| `beeld` \| `gespreksverslag` \| `embryo` \| `overig` | G175 gebruikt primair `onderzoek` |
+| categorie | `onderzoek` \| `beeld` \| `gespreksverslag` \| `embryo` \| `overig` | `beeld` ondersteunt foto's, echo's en ander beeldmateriaal |
 | bestandsNaam | string | originele bestandsnaam |
 | mimeType | string? | browser-bestandstype indien bekend |
 | grootteBytes | number | originele bestandsgrootte |
