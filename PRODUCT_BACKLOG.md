@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 191 |
+| ☑ klaar | 192 |
 | ◐ bezig | 0 |
-| ☐ open | 52 |
+| ☐ open | 51 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -330,7 +330,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G189 | PFIP imaging: lokale beeldclassificatie naar echo, foto, scan, embryo of overig beeld | P1 | F3 | ☑ |
 | G190 | PFIP imaging: beeldmetadata vastleggen voor datum, lichaams-/trajectcontext, bron en gekoppelde afspraak | P1 | F3 | ☑ |
 | G191 | PFIP imaging: tijdlijnkoppeling voor beelden aan poging, afspraak, cyclusdag of embryo | P0 | F3 | ☑ |
-| G192 | PFIP imaging: vergelijking tussen twee beeldmomenten met notities zonder medische interpretatie | P1 | F3 | ☐ |
+| G192 | PFIP imaging: vergelijking tussen twee beeldmomenten met notities zonder medische interpretatie | P1 | F3 | ☑ |
 | G193 | PFIP imaging: AI-samenvatting van beeldcontext alleen als tekstuele gebruiker-notitie en met waarschuwing | P1 | F4 | ☐ |
 | G194 | PFIP imaging: thumbnail- en previewstates voor versleutelde beelden na ontgrendeling | P1 | F3 | ☐ |
 | G195 | PFIP imaging: beeldrepository filteren op type, datum, traject, afspraak en embryo | P1 | F3 | ☐ |

@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G192 PFIP imaging: het dossierscherm kan twee beeldmomenten feitelijk
+  vergelijken op datum, soort en context met expliciete waarschuwing dat Kiempad
+  geen medische beeldinterpretatie doet.
 - G191 PFIP imaging: beeldrecords tonen een tijdlijnkoppeling naar poging,
   afspraak, cyclusdag en embryo wanneer die lokaal is vastgelegd.
 - G190 PFIP imaging: beelduploads kunnen beelddatum, lichaams-/trajectcontext,

@@ -274,12 +274,15 @@
 - **G191 PFIP imaging-tijdlijnkoppeling:** beeldrecords kunnen aan poging,
   afspraak, cyclusdag en embryo gekoppeld worden. De imaging-repository toont de
   koppeling als tijdlijncontext zonder medische interpretatie.
+- **G192 PFIP beeldvergelijking:** bij minimaal twee beeldmomenten toont de
+  imaging-repository een feitelijke vergelijking op datum, beeldsoort en context.
+  De vergelijking bevat expliciet geen medische beeldinterpretatie.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G191 nog 52 open doelen (G192-G243), gericht op dossier-ingest,
+heeft na G192 nog 51 open doelen (G193-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -329,8 +332,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G192: vergelijking tussen twee beeldmomenten met notities
-   zonder medische interpretatie toevoegen.
+1. PFIP uitvoeren vanaf G193: AI-samenvatting van beeldcontext alleen als
+   tekstuele gebruiker-notitie en met waarschuwing toevoegen.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

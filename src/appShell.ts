@@ -19,6 +19,8 @@ import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
+  bouwImagingVergelijking,
+  classificeerBeeldLabel,
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   EMBRYO_STATUS_LABELS,
@@ -681,6 +683,7 @@ function renderDossierScreen(state: AppShellState): string {
     zoekResultaten.map((resultaat) => [resultaat.document.id, resultaat.matches]),
   );
   const imagingItems = bouwImagingRepository(zichtbareDocumenten);
+  const imagingVergelijking = bouwImagingVergelijking(zichtbareDocumenten);
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
   const afspraakOpties = state.afspraken
@@ -839,6 +842,7 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
         }
         <h2>Imaging-repository</h2>
+        ${renderImagingVergelijking(imagingVergelijking)}
         ${
           imagingItems.length > 0
             ? `<ol class="phase-list">${imagingItems.map(renderImagingRepositoryItem).join('')}</ol>`
@@ -857,6 +861,28 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
         }
       </div>
+    </section>
+  `;
+}
+
+function renderImagingVergelijking(
+  vergelijking: ReturnType<typeof bouwImagingVergelijking>,
+): string {
+  if (!vergelijking) {
+    return '<p class="small-print">Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.</p>';
+  }
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">
+      <h2>Beeldmomenten vergelijken</h2>
+      <dl class="summary-list">
+        <div><dt>Eerste beeld</dt><dd>${escapeHtml(vergelijking.links.datum)} · ${escapeHtml(vergelijking.links.titel)}</dd></div>
+        <div><dt>Tweede beeld</dt><dd>${escapeHtml(vergelijking.rechts.datum)} · ${escapeHtml(vergelijking.rechts.titel)}</dd></div>
+      </dl>
+      <ul class="compact-list">
+        ${vergelijking.notities.map((notitie) => `<li>${escapeHtml(notitie)}</li>`).join('')}
+      </ul>
+      <p class="small-print">${escapeHtml(vergelijking.waarschuwing)}</p>
     </section>
   `;
 }
@@ -916,11 +942,7 @@ function renderImagingTijdlijnKoppeling(
 function imagingSoortLabel(
   soort: ReturnType<typeof bouwImagingRepository>[number]['soort'],
 ): string {
-  if (soort === 'echo') return 'Echo';
-  if (soort === 'foto') return 'Foto';
-  if (soort === 'scan') return 'Scan';
-  if (soort === 'embryo_afbeelding') return 'Embryo-afbeelding';
-  return 'Overig beeld';
+  return classificeerBeeldLabel(soort);
 }
 
 function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number]): string {

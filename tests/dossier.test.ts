@@ -4,6 +4,7 @@ import {
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
+  bouwImagingVergelijking,
   classificeerDossierBeeld,
   extraheerDossierMetadata,
   formatBytes,
@@ -513,6 +514,42 @@ describe('dossier', () => {
     expect(classificeerDossierBeeld(maakBeeld('overig', 'Beeldbijlage', 'bijlage.jpg'))).toBe(
       'overig_beeld',
     );
+  });
+
+  it('bouwt een feitelijke beeldvergelijking zonder medische interpretatie', () => {
+    const oud = maakDossierDocument('img-oud', {
+      datum: '2026-05-01',
+      titel: 'Echo oud',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-oud.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 1024,
+      inhoudBase64: 'anBn',
+      beeldMetadata: { context: 'Follikelmeting links' },
+    });
+    const nieuw = maakDossierDocument('img-nieuw', {
+      datum: '2026-05-03',
+      titel: 'Echo nieuw',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-nieuw.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 1024,
+      inhoudBase64: 'anBn',
+      beeldMetadata: { context: 'Follikelmeting rechts' },
+    });
+
+    expect(bouwImagingVergelijking([oud])).toBeUndefined();
+    expect(bouwImagingVergelijking([oud, nieuw])).toMatchObject({
+      links: { id: 'img-nieuw', datum: '2026-05-03' },
+      rechts: { id: 'img-oud', datum: '2026-05-01' },
+      notities: [
+        'Vergelijking op datum: 2026-05-03 en 2026-05-01.',
+        'Soorten: Echo en Echo.',
+        'Context: Follikelmeting rechts / Follikelmeting links.',
+      ],
+      waarschuwing:
+        'Deze vergelijking toont alleen vastgelegde metadata en notities; Kiempad interpreteert beelden niet medisch.',
+    });
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {
