@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
   INITIELE_KENNIS_ITEMS,
   kennisItemsPerCategorie,
@@ -26,6 +27,18 @@ describe('kennis domeinregels', () => {
     expect(grouped.leefstijl.length).toBeGreaterThan(0);
     expect(grouped.kosten.length).toBeGreaterThan(0);
     expect(grouped.research.length).toBeGreaterThan(0);
+  });
+
+  it('markeert het jaartal alleen bij kostenkennis', () => {
+    const kostenItem = INITIELE_KENNIS_ITEMS.find((item) => item.categorie === 'kosten');
+    const faseItem = INITIELE_KENNIS_ITEMS.find((item) => item.categorie === 'fasen');
+
+    expect(kostenItem).toBeDefined();
+    expect(faseItem).toBeDefined();
+    if (!kostenItem || !faseItem) return;
+
+    expect(bepaalKennisKostenJaar(kostenItem)).toBe('2026');
+    expect(bepaalKennisKostenJaar(faseItem)).toBeUndefined();
   });
 
   it('maakt handmatige researchitems als concept zonder AI-label', () => {

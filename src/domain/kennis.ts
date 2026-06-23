@@ -135,6 +135,13 @@ export function berekenVolgendeKennisVerificatie(geverifieerdOp: string): string
   return date.toISOString().slice(0, 10);
 }
 
+export function bepaalKennisKostenJaar(item: KennisItem): string | undefined {
+  if (item.categorie !== 'kosten') return undefined;
+
+  const text = `${item.titel} ${item.inhoud} ${item.bron ?? ''}`;
+  return text.match(/\b20\d{2}\b/)?.[0];
+}
+
 export function sorteerKennisItems(items: readonly KennisItem[]): KennisItem[] {
   return [...items].sort((a, b) => {
     const categoryOrder =

@@ -340,11 +340,11 @@ describe('app shell', () => {
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       kennisItems: [
         {
-          id: 'kennis-1',
-          titel: 'Globale fasen',
-          inhoud: 'Conceptinhoud',
-          bron: 'docs/KENNISBANK.md',
-          categorie: 'fasen',
+          id: 'kosten-1',
+          titel: 'Kosten 2026: eigen risico',
+          inhoud: 'Conceptinhoud over vergoeding in 2026.',
+          bron: 'docs/KENNISBANK.md — Kosten NL 2026',
+          categorie: 'kosten',
           ai_gegenereerd: false,
           geverifieerd_met_arts: false,
           geverifieerdOp: undefined,
@@ -353,8 +353,9 @@ describe('app shell', () => {
       ],
     });
 
-    expect(html).toContain('Globale fasen');
+    expect(html).toContain('Kosten 2026: eigen risico');
     expect(html).toContain('Bron: docs/KENNISBANK.md');
+    expect(html).toContain('Kostenjaar 2026');
     expect(html).toContain('Niet AI-gegenereerd');
     expect(html).toContain('Concept · niet geverifieerd');
     expect(html).toContain('Nog niet met behandelaar geverifieerd');

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 137 |
+| ☑ klaar | 138 |
 | ◐ bezig | 0 |
-| ☐ open | 41 |
+| ☐ open | 40 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -155,7 +155,7 @@
 | G081 | Zoeken/filteren in de kennisbank | P2 | F2 | ☐ |
 | G082 | Eigen kennisitems toevoegen/bewerken | P2 | F2 | ☐ |
 | G083 | Item markeren als "geverifieerd" na bevestiging behandelaar | P1 | F1 | ☑ |
-| G084 | Jaartal-markering bij kosten-items (vergoeding wijzigt jaarlijks) | P2 | F2 | ☐ |
+| G084 | Jaartal-markering bij kosten-items (vergoeding wijzigt jaarlijks) | P2 | F2 | ☑ |
 
 ## 8. Kosten & vergoedingen
 
