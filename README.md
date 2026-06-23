@@ -93,8 +93,8 @@ Publicatie via een aparte Tailscale HTTPS-node is voorbereid met
   apparaat).
 - **AI (optioneel, opt-in):** alleen op expliciet verzoek; samenvatten van research
   met waarschuwingslabels en bronvermelding, **nooit** dosering/diagnose/behandelkeuze.
-- **Sync (later):** optionele end-to-end versleutelde sync tussen apparaten; de
-  server ziet enkel onleesbare blobs.
+- **Sync:** optionele end-to-end versleutelde syncpakketten tussen gekoppelde
+  apparaten; een relay of handmatige drager ziet enkel onleesbare blobs.
 
 Volledige uitwerking en afgewogen alternatieven: [`ARCHITECTURE.md`](ARCHITECTURE.md).
 

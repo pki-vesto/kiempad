@@ -56,6 +56,7 @@ import { importeerVersleuteldeExport, maakVersleuteldeExport } from './storage/b
 import { EncryptedRecordRepository } from './storage/encryptedRepository';
 import { openIndexedDbDriver } from './storage/indexedDbDriver';
 import type { EncryptedStorageDriver } from './storage/records';
+import { importeerVersleuteldSyncPakket, maakVersleuteldSyncPakket } from './storage/sync';
 import { VaultSession } from './storage/vaultSession';
 
 type RuntimeState = {
@@ -262,9 +263,18 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
     void exportBackup(root, state);
   });
 
+  root.querySelector('#export-sync')?.addEventListener('click', () => {
+    void exportSync(root, state);
+  });
+
   root.querySelector('#import-backup-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void importBackupFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#import-sync-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void importSyncFromForm(event.currentTarget, root, state);
   });
 }
 
@@ -431,6 +441,29 @@ async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<voi
   render(root, state);
 }
 
+async function exportSync(root: HTMLElement, state: RuntimeState): Promise<void> {
+  try {
+    const inhoud = await maakVersleuteldSyncPakket(state.driver);
+    const blob = new Blob([inhoud], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `kiempad-sync-${new Date().toISOString().slice(0, 10)}.kiempad-sync`;
+    link.click();
+    URL.revokeObjectURL(url);
+    state.backupStatus = 'Syncpakket met versleutelde records klaargezet voor download.';
+    state.backupError = undefined;
+    await state.eventLogStore?.record({
+      categorie: 'backup',
+      gebeurtenis: 'Versleuteld syncpakket klaargezet',
+      detail: 'Syncpakket bevat alleen encrypted records voor een gekoppeld apparaat.',
+    });
+  } catch (error: unknown) {
+    state.backupError = error instanceof Error ? error.message : 'Syncpakket maken is mislukt.';
+  }
+  render(root, state);
+}
+
 async function importBackupFromForm(
   target: EventTarget | null,
   root: HTMLElement,
@@ -490,6 +523,32 @@ async function importBackupFromForm(
   }
 
   render(root, state);
+}
+
+async function importSyncFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement)) return;
+  const file = new FormData(target).get('syncFile');
+  if (!(file instanceof File)) return;
+
+  try {
+    const result = await importeerVersleuteldSyncPakket(state.driver, await file.text());
+    await state.eventLogStore?.record({
+      categorie: 'backup',
+      gebeurtenis: 'Versleuteld syncpakket geïmporteerd',
+      detail: `${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`,
+    });
+    state.backupStatus = `Sync geïmporteerd: ${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`;
+    state.backupError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.backupError =
+      error instanceof Error ? error.message : 'Syncpakket importeren is mislukt.';
+    render(root, state);
+  }
 }
 
 function bindVaultForm(root: HTMLElement, state: RuntimeState): void {

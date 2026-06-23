@@ -570,6 +570,9 @@ function renderBackupScreen(state: AppShellState): string {
         <h2>Versleutelde export</h2>
         <button id="export-backup" class="phase-button" type="button">Download back-up</button>
         <p class="small-print">Het bestand bevat versleutelde records en kluismetadata; geen ontsleutelde gezondheidsdata.</p>
+        <h2 class="section-subheading">Syncpakket</h2>
+        <button id="export-sync" class="phase-button" type="button">Download syncpakket</button>
+        <p class="small-print">Voor apparaten die al via een versleutelde back-up aan dezelfde kluis zijn gekoppeld. Het pakket bevat alleen encrypted records.</p>
         <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
           <h2>${escapeHtml(reminder.titel)}</h2>
           <p>${escapeHtml(reminder.tekst)}</p>
@@ -584,6 +587,14 @@ function renderBackupScreen(state: AppShellState): string {
             <input name="backupFile" type="file" accept=".kiempad-export,application/json" required />
           </label>
           <button type="submit">Importeer back-up</button>
+        </form>
+        <h2 class="section-subheading">Sync importeren</h2>
+        <form id="import-sync-form" class="data-form">
+          <label>
+            Kiempad-syncpakket
+            <input name="syncFile" type="file" accept=".kiempad-sync,application/json" required />
+          </label>
+          <button type="submit">Importeer syncpakket</button>
         </form>
         ${state.backupStatus ? `<p class="linked-note">${escapeHtml(state.backupStatus)}</p>` : ''}
         ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
