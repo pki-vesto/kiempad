@@ -255,12 +255,16 @@
   OCR-tekst, handmatige notities, metadata, bestandsnamen en tags van de
   ontgrendelde kluis. Zoekresultaten tonen welke velden matchen en starten geen
   opslag- of netwerkstap.
+- **G187 PFIP privacytest OCR/extractie:** tests bewaken dat OCR- en
+  metadata-extractie zonder OCR-opt-in geen `fetch`, `XMLHttpRequest` of
+  `sendBeacon` gebruikt. De invariant dekt documentaanmaak, metadata-extractie,
+  OCR-resultaatvorming en lokale dossierzoekfunctie.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G186 nog 57 open doelen (G187-G243), gericht op dossier-ingest,
+heeft na G187 nog 56 open doelen (G188-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -310,8 +314,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G187: privacytests toevoegen die bewijzen dat OCR en
-   extractie geen netwerkverkeer starten zonder opt-in.
+1. PFIP uitvoeren vanaf G188: imaging-repository bouwen voor echo's, foto's, scans
+   en embryo-afbeeldingen als aparte dossierweergave.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
