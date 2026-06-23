@@ -118,6 +118,9 @@
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
+- **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
+  geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
+  succesvolle exportdatum versleuteld in settings.
 - **G126 lokaal gebeurtenissenlog:** Logboek-scherm toont kluis- en back-up
   gebeurtenissen uit versleutelde lokale EventLog-records; dit logboek blijft op het
   toestel en is niet gekoppeld aan export of externe diensten.

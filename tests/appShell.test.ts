@@ -710,9 +710,34 @@ describe('app shell', () => {
     expect(html).toContain('Back-up & import');
     expect(html).toContain('id="export-backup"');
     expect(html).toContain('Download back-up');
+    expect(html).toContain('Back-up herinnering');
+    expect(html).toContain('Maak regelmatig een back-up');
+    expect(html).toContain('Er is nog geen succesvolle back-updatum bekend');
+    expect(html).toContain('data-backup-reminder="missing"');
     expect(html).toContain('id="import-backup-form"');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
+  });
+
+  it('rendert de laatst bekende back-updatum en periodieke aanmoediging', () => {
+    const html = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        laatsteBackupOp: '2026-05-01T12:00:00.000Z',
+      },
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Tijd voor een nieuwe back-up');
+    expect(html).toContain('laatste bekende back-up is');
+    expect(html).toContain('Laatst bekend: 2026-05-01 12:00');
+    expect(html).toContain('data-backup-reminder="due"');
   });
 
   it('rendert het lokale gebeurtenissenlog zonder export-actie', () => {

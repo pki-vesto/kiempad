@@ -47,4 +47,11 @@ export class SettingsStore {
       afspraakWaarschuwingMinuten: minutes,
     });
   }
+
+  async setLaatsteBackupOp(datum: string): Promise<AppSettings> {
+    return this.save({
+      ...(await this.get()),
+      laatsteBackupOp: datum,
+    });
+  }
 }

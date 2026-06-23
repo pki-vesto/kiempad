@@ -9,6 +9,7 @@ import {
 } from './domain/agenda';
 import type { AfspraakBundle } from './domain/agendaStore';
 import type { AiSamenvattingPayload } from './domain/ai';
+import { bepaalBackupReminder } from './domain/backupReminder';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
@@ -507,12 +508,19 @@ function renderArgumentList(label: string, items: readonly string[]): string {
 }
 
 function renderBackupScreen(state: AppShellState): string {
+  const reminder = bepaalBackupReminder(state.settings.laatsteBackupOp);
+
   return `
     <section class="traject-layout" aria-label="Back-up en import">
       <div class="form-panel">
         <h2>Versleutelde export</h2>
         <button id="export-backup" class="phase-button" type="button">Download back-up</button>
         <p class="small-print">Het bestand bevat versleutelde records en kluismetadata; geen ontsleutelde gezondheidsdata.</p>
+        <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
+          <h2>${escapeHtml(reminder.titel)}</h2>
+          <p>${escapeHtml(reminder.tekst)}</p>
+          ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
+        </section>
       </div>
       <div class="timeline-panel">
         <h2>Import</h2>

@@ -224,7 +224,8 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
 
 async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<void> {
   try {
-    const inhoud = await maakVersleuteldeExport(state.driver);
+    const exportedAt = new Date().toISOString();
+    const inhoud = await maakVersleuteldeExport(state.driver, exportedAt);
     const blob = new Blob([inhoud], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -234,6 +235,9 @@ async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<voi
     URL.revokeObjectURL(url);
     state.backupStatus = 'Back-upbestand klaargezet voor download.';
     state.backupError = undefined;
+    if (state.settingsStore) {
+      state.settings = await state.settingsStore.setLaatsteBackupOp(exportedAt);
+    }
     await state.eventLogStore?.record({
       categorie: 'backup',
       gebeurtenis: 'Versleutelde back-up klaargezet',
