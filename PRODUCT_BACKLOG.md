@@ -30,8 +30,8 @@
 |---|---|
 | ☑ klaar | 179 |
 | ◐ bezig | 0 |
-| ☐ open | 0 |
-| **Totaal** | **179** |
+| ☐ open | 64 |
+| **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -312,11 +312,82 @@
 |---|---|---|---|---|
 | G179 | App publiceren via Tailscale op een aparte node met HTTPS, vergelijkbaar met Shred en Healthcore | P2 | F2 | ☑ |
 
+## 20. Personal Fertility Intelligence Platform
+
+Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md).
+
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G180 | PFIP dossier-ingest: uploadprofielen voor onderzoeken, labuitslagen, rapporten, ziekenhuisdocumenten, behandelverslagen, PDF's en afbeeldingen | P0 | F3 | ☐ |
+| G181 | PFIP dossier-ingest: client-side OCR-pipeline voor PDF's en afbeeldingen met expliciete lokale verwerking | P0 | F3 | ☐ |
+| G182 | PFIP dossier-ingest: metadata-extractie voor datum, instelling, documenttype, traject, arts en bronbestand | P0 | F3 | ☐ |
+| G183 | PFIP dossier-ingest: herkende documenten als conceptrecords laten bevestigen of corrigeren vóór opslag | P0 | F3 | ☐ |
+| G184 | PFIP dossier-ingest: medische documenttijdlijn automatisch opbouwen uit metadata en gebruiker-correcties | P0 | F3 | ☐ |
+| G185 | PFIP dossier-ingest: dossierindex met documenttype, bron, datum, traject en tags | P1 | F3 | ☐ |
+| G186 | PFIP dossier-ingest: full-text zoeken in OCR-tekst en handmatige notities binnen de lokale kluis | P1 | F3 | ☐ |
+| G187 | PFIP dossier-ingest: privacytest dat OCR en extractie geen netwerkverkeer starten zonder opt-in | P0 | F3 | ☐ |
+| G188 | PFIP imaging: imaging-repository voor echo's, foto's, scans en embryo-afbeeldingen als aparte dossierweergave | P0 | F3 | ☐ |
+| G189 | PFIP imaging: lokale beeldclassificatie naar echo, foto, scan, embryo of overig beeld | P1 | F3 | ☐ |
+| G190 | PFIP imaging: beeldmetadata vastleggen voor datum, lichaams-/trajectcontext, bron en gekoppelde afspraak | P1 | F3 | ☐ |
+| G191 | PFIP imaging: tijdlijnkoppeling voor beelden aan poging, afspraak, cyclusdag of embryo | P0 | F3 | ☐ |
+| G192 | PFIP imaging: vergelijking tussen twee beeldmomenten met notities zonder medische interpretatie | P1 | F3 | ☐ |
+| G193 | PFIP imaging: AI-samenvatting van beeldcontext alleen als tekstuele gebruiker-notitie en met waarschuwing | P1 | F4 | ☐ |
+| G194 | PFIP imaging: thumbnail- en previewstates voor versleutelde beelden na ontgrendeling | P1 | F3 | ☐ |
+| G195 | PFIP imaging: beeldrepository filteren op type, datum, traject, afspraak en embryo | P1 | F3 | ☐ |
+| G196 | PFIP consult intelligence: consultverslagen als apart recordtype naast algemene dossierdocumenten | P0 | F3 | ☐ |
+| G197 | PFIP consult intelligence: automatische consultsamenvatting met bronverwijzing en conceptlabel | P0 | F4 | ☐ |
+| G198 | PFIP consult intelligence: actiepunten uit consulten extraheren als lokale taken of vragen | P0 | F3 | ☐ |
+| G199 | PFIP consult intelligence: vragenlijst genereren voor volgende afspraak op basis van open punten | P0 | F3 | ☐ |
+| G200 | PFIP consult intelligence: behandelgeschiedenis reconstrueren uit consulten, afspraken en dossierdocumenten | P0 | F3 | ☐ |
+| G201 | PFIP consult intelligence: consultinzichten koppelen aan trajectfase, medicatie, embryo of onderzoek | P1 | F3 | ☐ |
+| G202 | PFIP consult intelligence: verschilweergave tussen consultsamenvatting en gebruiker-correctie | P2 | F4 | ☐ |
+| G203 | PFIP consult intelligence: safety-policy dat consult-AI geen diagnose of behandelkeuze adviseert | P0 | F3 | ☐ |
+| G204 | PFIP embryo tracking: embryo-dossier als eigen overzicht per embryo binnen een poging | P0 | F3 | ☐ |
+| G205 | PFIP embryo tracking: embryo uploads koppelen aan embryo-id, dag, poging en laboratoriumcontext | P0 | F3 | ☐ |
+| G206 | PFIP embryo tracking: kwaliteitsregistratie per meetmoment met kliniekterminologie en bron | P0 | F3 | ☐ |
+| G207 | PFIP embryo tracking: embryo-historie tonen van bevruchting tot terugplaatsing/invriezen/stop | P0 | F3 | ☐ |
+| G208 | PFIP embryo tracking: embryo's binnen dezelfde poging vergelijken zonder kansberekening | P1 | F3 | ☐ |
+| G209 | PFIP embryo tracking: embryo-tijdlijn integreren met afspraken, labrapporten en terugplaatsing | P0 | F3 | ☐ |
+| G210 | PFIP embryo tracking: behandelcontext tonen bij embryo, inclusief protocol, poging en relevante notities | P1 | F3 | ☐ |
+| G211 | PFIP embryo tracking: waarschuwing dat embryokwaliteit geen voorspelling of medisch advies is | P0 | F3 | ☐ |
+| G212 | PFIP research intelligence: bronnenlijst voor relevante fertiliteitsresearch met handmatige seed en lokale cache | P1 | F4 | ☐ |
+| G213 | PFIP research intelligence: researchaggregatie achter expliciete netwerk-opt-in | P0 | F4 | ☐ |
+| G214 | PFIP research intelligence: wetenschappelijke samenvatting per publicatie met bron en datum | P1 | F4 | ☐ |
+| G215 | PFIP research intelligence: eenvoudige lekensamenvatting per publicatie in begrijpelijk Nederlands | P0 | F4 | ☐ |
+| G216 | PFIP research intelligence: relevantie voor gebruiker koppelen aan dossiercontext zonder behandeladvies | P0 | F4 | ☐ |
+| G217 | PFIP research intelligence: trends groeperen per onderwerp zoals IVF, ICSI, embryo, leefstijl en mannelijke factor | P2 | F4 | ☐ |
+| G218 | PFIP research intelligence: bronverificatie en publicatiedatum zichtbaar bij iedere researchkaart | P0 | F4 | ☐ |
+| G219 | PFIP research intelligence: verouderde research markeren en periodieke herverificatie plannen | P1 | F4 | ☐ |
+| G220 | PFIP daily recommendations: dagelijks aanbevelingsoverzicht met scheiding vrouw, man en samen | P0 | F4 | ☐ |
+| G221 | PFIP daily recommendations: leefstijlaanbevelingen baseren op dossier, cyclusfase en behandelgeschiedenis | P0 | F4 | ☐ |
+| G222 | PFIP daily recommendations: voeding- en supplementnotities tonen als checklijst met bron en disclaimer | P0 | F4 | ☐ |
+| G223 | PFIP daily recommendations: behandelvoorbereiding genereren uit afspraken, medicatie en open actiepunten | P0 | F4 | ☐ |
+| G224 | PFIP daily recommendations: cyclusgerelateerde aanbevelingen tonen zonder diagnose of dosering | P0 | F4 | ☐ |
+| G225 | PFIP daily recommendations: mannelijke vruchtbaarheidsoptimalisatie als leefstijl- en voorbereidingskaart | P1 | F4 | ☐ |
+| G226 | PFIP daily recommendations: aanbevelingen uitlegbaar maken met gebruikte dossierbronnen | P0 | F4 | ☐ |
+| G227 | PFIP daily recommendations: gebruiker kan aanbevelingen afwijzen, bewaren of omzetten naar herinnering/vraag | P1 | F4 | ☐ |
+| G228 | PFIP knowledge graph: lokaal graph-model voor relaties tussen documenten, embryo's, behandelingen, gesprekken, research en aanbevelingen | P0 | F4 | ☐ |
+| G229 | PFIP knowledge graph: graph-relaties automatisch voorstellen en handmatig laten bevestigen | P0 | F4 | ☐ |
+| G230 | PFIP knowledge graph: contextuele inzichten genereren met bronpad en onzekerheidslabel | P0 | F4 | ☐ |
+| G231 | PFIP knowledge graph: graphweergave per traject met filters op type relatie en periode | P2 | F4 | ☐ |
+| G232 | PFIP knowledge graph: relatie tussen research en persoonlijk dossier tonen zonder causale claims | P0 | F4 | ☐ |
+| G233 | PFIP knowledge graph: index rebuild vanuit versleutelde records zonder dataverlies | P1 | F4 | ☐ |
+| G234 | PFIP knowledge graph: privacytest dat graphberekening lokaal blijft | P0 | F4 | ☐ |
+| G235 | PFIP knowledge graph: exporteerbare graph-samenvatting voor consultvoorbereiding | P2 | F4 | ☐ |
+| G236 | PFIP fertility timeline: centraal fertiliteitstraject-scherm met onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research | P0 | F3 | ☐ |
+| G237 | PFIP fertility timeline: tijdlijnitems normaliseren uit bestaande afspraken, dossierdocumenten, embryo's, vragen en medicatie | P0 | F3 | ☐ |
+| G238 | PFIP fertility timeline: filters voor type, traject, eigenaar, bron en periode | P1 | F3 | ☐ |
+| G239 | PFIP fertility timeline: detailpaneel per tijdlijnitem met bron, context en gekoppelde records | P1 | F3 | ☐ |
+| G240 | PFIP fertility timeline: belangrijke mijlpalen en ontbrekende context zichtbaar maken zonder oordeel | P1 | F3 | ☐ |
+| G241 | PFIP fertility timeline: complete trajectexport voor eigen consultvoorbereiding | P2 | F3 | ☐ |
+| G242 | PFIP fertility timeline: tijdlijn blijft bruikbaar offline en na import van back-up/syncpakket | P0 | F3 | ☐ |
+| G243 | PFIP fertility timeline: toegankelijk mobiel ontwerp voor één-scherm-overzicht van het volledige traject | P1 | F3 | ☐ |
+
 ---
 
 ## Telling
 
-- **Totaal doelen: 179** (id's G001 t/m G179, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 243** (id's G001 t/m G243, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
