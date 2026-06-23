@@ -7,6 +7,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G180 PFIP dossier-ingest: dossieruploads hebben nu expliciete uploadprofielen
+  voor onderzoeken, labuitslagen, fertiliteitsrapporten, ziekenhuisdocumenten,
+  behandelverslagen, PDF's en afbeeldingen; Kiempad toont het profiel in de lokale
+  analyse en leidt het af uit bestandsnaam, categorie of bestandstype als de
+  gebruiker automatisch herkennen kiest.
 - Personal Fertility Intelligence Platform epic toegevoegd met 64 extra uitvoerbare
   doelen (G180-G243) voor dossier-ingest, imaging, consult intelligence, embryo
   tracking, research intelligence, dagelijkse aanbevelingen, knowledge graph en

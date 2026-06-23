@@ -15,7 +15,12 @@ import {
   type OnDeviceAiCapability,
 } from './domain/ai';
 import { bepaalBackupReminder } from './domain/backupReminder';
-import { DOSSIER_CATEGORIE_LABELS, EMBRYO_STATUS_LABELS, formatBytes } from './domain/dossier';
+import {
+  DOSSIER_CATEGORIE_LABELS,
+  DOSSIER_UPLOAD_PROFIEL_LABELS,
+  EMBRYO_STATUS_LABELS,
+  formatBytes,
+} from './domain/dossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
@@ -695,6 +700,15 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           <label>
+            Uploadprofiel
+            <select name="uploadProfiel">
+              <option value="">Automatisch herkennen</option>
+              ${Object.entries(DOSSIER_UPLOAD_PROFIEL_LABELS)
+                .map(([value, label]) => renderOption(value, label))
+                .join('')}
+            </select>
+          </label>
+          <label>
             Bestanden
             <input name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required />
           </label>
@@ -792,12 +806,15 @@ function renderDossierDocument(document: DossierDocument, state: AppShellState):
     afspraak ? `Afspraak: ${afspraak.titel} (${formatDateTime(afspraak.datumTijd)})` : undefined,
     traject ? `Traject: ${traject.naam}` : undefined,
   ].filter((label): label is string => Boolean(label));
+  const uploadProfiel = document.uploadProfiel
+    ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+    : undefined;
 
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(document.titel)}</h3>
-        <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
+        <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])}${uploadProfiel ? ` · ${escapeHtml(uploadProfiel)}` : ''} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
         ${renderEmbryoDetails(document)}

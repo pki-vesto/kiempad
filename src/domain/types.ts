@@ -183,6 +183,14 @@ export interface DossierDocument {
   datum: IsoDate;
   titel: string;
   categorie: 'onderzoek' | 'beeld' | 'gespreksverslag' | 'embryo' | 'overig';
+  uploadProfiel?:
+    | 'onderzoek'
+    | 'labuitslag'
+    | 'fertiliteitsrapport'
+    | 'ziekenhuisdocument'
+    | 'behandelverslag'
+    | 'pdf'
+    | 'afbeelding';
   bestandsNaam: string;
   mimeType?: string;
   grootteBytes: number;
