@@ -555,14 +555,22 @@ function renderBackupScreen(state: AppShellState): string {
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
+  const afspraakOpties = state.afspraken
+    .map(({ afspraak }) =>
+      renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
+    )
+    .join('');
+  const trajectOpties = state.trajecten
+    .map(({ traject }) => renderOption(traject.id, traject.naam))
+    .join('');
 
   return `
     <section class="traject-layout" aria-label="Dossier beheren">
       <div class="form-panel">
-        <h2>Historische onderzoeken uploaden</h2>
+        <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form">
           <label>
-            Datum onderzoek
+            Datum document
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
           </label>
           <label>
@@ -582,12 +590,26 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required />
           </label>
           <label>
+            Koppel aan afspraak
+            <select name="afspraakId">
+              <option value="">Geen afspraak</option>
+              ${afspraakOpties}
+            </select>
+          </label>
+          <label>
+            Koppel aan traject
+            <select name="trajectId">
+              <option value="">Geen traject</option>
+              ${trajectOpties}
+            </select>
+          </label>
+          <label>
             Notitie
             <textarea name="notitie" rows="4"></textarea>
           </label>
           <button type="submit">Upload naar dossier</button>
         </form>
-        <p class="small-print">Bestanden en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        <p class="small-print">Bestanden, gespreksverslagen en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
       </div>
@@ -595,7 +617,7 @@ function renderDossierScreen(state: AppShellState): string {
         <h2>Historische onderzoeken</h2>
         ${
           documenten.length > 0
-            ? `<ol class="phase-list">${documenten.map(renderDossierDocument).join('')}</ol>`
+            ? `<ol class="phase-list">${documenten.map((document) => renderDossierDocument(document, state)).join('')}</ol>`
             : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
         }
       </div>
@@ -603,13 +625,25 @@ function renderDossierScreen(state: AppShellState): string {
   `;
 }
 
-function renderDossierDocument(document: DossierDocument): string {
+function renderDossierDocument(document: DossierDocument, state: AppShellState): string {
+  const afspraak = document.afspraakId
+    ? state.afspraken.find((item) => item.afspraak.id === document.afspraakId)?.afspraak
+    : undefined;
+  const traject = document.trajectId
+    ? state.trajecten.find((item) => item.traject.id === document.trajectId)?.traject
+    : undefined;
+  const koppelingen = [
+    afspraak ? `Afspraak: ${afspraak.titel} (${formatDateTime(afspraak.datumTijd)})` : undefined,
+    traject ? `Traject: ${traject.naam}` : undefined,
+  ].filter((label): label is string => Boolean(label));
+
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(document.titel)}</h3>
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
         <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
+        ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
         ${renderDossierImagePreview(document)}
         <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
         <ul class="compact-list">

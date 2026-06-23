@@ -193,6 +193,8 @@ systeemgebeurtenissen.
 | mimeType | string? | browser-bestandstype indien bekend |
 | grootteBytes | number | originele bestandsgrootte |
 | inhoudBase64 | string | bestandsinhoud, versleuteld opgeslagen in recordpayload |
+| afspraakId | string? | optionele koppeling naar relevante afspraak |
+| trajectId | string? | optionele koppeling naar relevante poging/traject |
 | notitie | string? | lokale toelichting |
 | analyse | `{ samenvatting, signalen[] }` | lokale, niet-medische analyse van naam/type/grootte |
 | uploadedAt | IsoDate | moment van lokaal toevoegen |

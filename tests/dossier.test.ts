@@ -76,6 +76,31 @@ describe('dossier', () => {
     );
   });
 
+  it('bewaart gespreksverslagen met afspraak- en trajectkoppeling', () => {
+    const document = maakDossierDocument('doc-gesprek', {
+      datum: '2026-05-03',
+      titel: 'Consultverslag',
+      categorie: 'gespreksverslag',
+      bestandsNaam: 'consult-verslag-intake.txt',
+      mimeType: 'text/plain',
+      grootteBytes: 1024,
+      inhoudBase64: 'dGVrc3Q=',
+      afspraakId: 'afspraak-1',
+      trajectId: 'traject-1',
+    });
+
+    expect(document).toMatchObject({
+      categorie: 'gespreksverslag',
+      afspraakId: 'afspraak-1',
+      trajectId: 'traject-1',
+    });
+    expect(document.analyse.samenvatting).toContain('Gespreksverslag opgeslagen als tekstbestand');
+    expect(document.analyse.signalen).toContain('Bestandsnaam lijkt op een gespreksverslag.');
+    expect(document.analyse.signalen).toContain(
+      'Gespreksverslag kan aan afspraak of traject gekoppeld worden.',
+    );
+  });
+
   it('sorteert dossierdocumenten aflopend op onderzoeksdatum', () => {
     const items = [
       maakDossierDocument('doc-1', {

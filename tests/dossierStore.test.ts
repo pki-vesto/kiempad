@@ -33,6 +33,8 @@ describe('DossierStore', () => {
       mimeType: 'application/pdf',
       grootteBytes: 2048,
       inhoudBase64: 'cGRmLWdlaGVpbQ==',
+      afspraakId: 'afspraak-1',
+      trajectId: 'traject-1',
       notitie: 'oude uitslag',
     });
     const raw = await driver.getRecord(saved.id);
@@ -40,6 +42,8 @@ describe('DossierStore', () => {
     expect(saved.analyse.signalen).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
     expect(raw?.type).toBe('dossier_document');
     expect(raw?.payload.ciphertext).not.toContain('Bloeduitslag');
+    expect(raw?.payload.ciphertext).not.toContain('afspraak-1');
+    expect(raw?.payload.ciphertext).not.toContain('traject-1');
     expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
     expect(await store.list()).toEqual([saved]);
   });
