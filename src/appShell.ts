@@ -2425,6 +2425,7 @@ function renderStartScreen(state: AppShellState): string {
     afspraken: state.afspraken.map((bundle) => bundle.afspraak),
     medicatie: state.medicatie,
     vragen: state.vragen.map((bundle) => bundle.vraag),
+    consultVerslagen: state.consultVerslagen ?? [],
     trajecten: state.trajecten,
     dossierDocuments: state.dossierDocuments ?? [],
     cycleData: state.cycleData ?? [],
