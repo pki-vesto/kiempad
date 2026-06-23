@@ -30,6 +30,13 @@ export class SettingsStore {
     });
   }
 
+  async setThema(thema: AppSettings['thema']): Promise<AppSettings> {
+    return this.save({
+      ...(await this.get()),
+      thema,
+    });
+  }
+
   async setAiSettings(input: Partial<AiSettings>): Promise<AppSettings> {
     const current = await this.get();
     return this.save({

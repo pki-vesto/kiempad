@@ -135,6 +135,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
       createNotificationDetailMap(state),
     ),
   });
+  bindThemeControls(root, state);
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
   bindAgendaControls(root, state);
@@ -192,6 +193,20 @@ function render(root: HTMLElement, state: RuntimeState): void {
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
+  });
+}
+
+function bindThemeControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#theme-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement) || !state.settingsStore) return;
+    const thema = parseThema(new FormData(form).get('thema'));
+
+    void state.settingsStore.setThema(thema).then((settings) => {
+      state.settings = settings;
+      render(root, state);
+    });
   });
 }
 
@@ -1516,6 +1531,10 @@ function parseEmbryoStatus(
   }
 
   return 'onbekend';
+}
+
+function parseThema(value: FormDataEntryValue | null): AppSettings['thema'] {
+  return value === 'donker' ? 'donker' : 'licht';
 }
 
 function parseOwner(value: FormDataEntryValue | null): SymptomLog['owner'] {

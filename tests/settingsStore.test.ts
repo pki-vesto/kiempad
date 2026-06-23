@@ -40,6 +40,18 @@ describe('SettingsStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('toonNotificatieDetailsOpVergrendelscherm');
   });
 
+  it('bewaart de thema-voorkeur versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.setThema('donker');
+    const raw = await driver.getRecord('app-settings');
+
+    expect(saved.thema).toBe('donker');
+    expect(raw?.type).toBe('settings');
+    expect(raw?.payload.ciphertext).not.toContain('donker');
+    expect(raw?.payload.ciphertext).not.toContain('thema');
+  });
+
   it('bewaart AI-provider, model en API-sleutel versleuteld', async () => {
     const { driver, store } = await setupStore();
 

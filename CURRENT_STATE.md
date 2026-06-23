@@ -128,6 +128,8 @@
 - **G153 schermlezer-vriendelijke labels:** herhaalde acties voor verwijderen,
   herordenen, innames markeren, herinneringen plannen, fase wijzigen en kennis
   verifiëren hebben contextuele toegankelijke namen naast de zichtbare knoptekst.
+- **G154 donkere modus:** topbar bevat een lokale themakeuze; de voorkeur wordt
+  versleuteld in settings bewaard en activeert een donker CSS-palet.
 - **G137 opslag-schemaversie:** kluismetadata bevat een `schema` record met de
   huidige schemaversie; ontbrekende schemametadata wordt bij ontgrendelen aangevuld
   en nieuwere schema's worden geweigerd.
@@ -210,7 +212,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 - **Client-side runtime aanwezig.** Lokaal te starten met `npm run dev`; de app-shell
   toont eerst een passphrase-kluis en navigeert na ontgrendelen via hash-routes.
   Het trajectscherm kan meerdere pogingen met pogingnummer en fasen lokaal versleuteld
-  beheren; het startscherm biedt snelle invoer voor afspraak, medicatie en vraag; het
+  beheren; het startscherm biedt snelle invoer voor afspraak, medicatie en vraag; de
+  topbar bewaart een lokale lichte/donkere thema-voorkeur; het
   agendascherm kan afspraken met voorbereiding, vraag en herinnering bewaren en toont
   week-/maandgroeperingen plus afgelopen afspraken met terugblik; het
   medicatiescherm kan middelen, geplande DoseLogs, notities per inname,

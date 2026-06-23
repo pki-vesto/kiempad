@@ -211,6 +211,7 @@ systeemgebeurtenissen.
 | laatsteBackupOp | IsoDate? | laatst bekende succesvolle versleutelde export |
 | herinneringStandaarden | object | bv. standaard waarschuwtijd |
 | taal | string | default `nl` |
+| thema | `licht` \| `donker` | lokale weergavevoorkeur, default `licht` |
 | toonNotificatieDetailsOpVergrendelscherm | boolean | default `false` |
 
 ## Opslag & versleuteling (kort)

@@ -10,6 +10,7 @@ export type AiSettings = {
 
 export type AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: boolean;
+  thema: 'licht' | 'donker';
   ai: AiSettings;
   afspraakWaarschuwingMinuten: number;
   laatsteBackupOp?: IsoDate;
@@ -17,6 +18,7 @@ export type AppSettings = {
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: false,
+  thema: 'licht',
   afspraakWaarschuwingMinuten: 30,
   ai: {
     ingeschakeld: false,
@@ -34,6 +36,7 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
     ...DEFAULT_APP_SETTINGS,
     ...value,
     afspraakWaarschuwingMinuten,
+    thema: value?.thema === 'donker' ? 'donker' : 'licht',
     laatsteBackupOp: normaliseerIsoDatum(value?.laatsteBackupOp),
     ai: {
       ...DEFAULT_APP_SETTINGS.ai,
