@@ -7,6 +7,7 @@ import {
   type FertilityGraphIndexRebuildInput,
   genereerFertilityGraphContextInzichten,
   herbouwFertilityGraphIndex,
+  maakFertilityGraphConsultSamenvattingExport,
   stelFertilityGraphRelatiesVoor,
 } from '../src/domain/fertilityKnowledgeGraph';
 import type { ConsultVerslag, DossierDocument, KennisItem } from '../src/domain/types';
@@ -489,5 +490,56 @@ describe('fertility knowledge graph', () => {
         }),
       ]),
     );
+  });
+
+  it('maakt een exporteerbare graph-samenvatting voor consultvoorbereiding', () => {
+    const rebuild = herbouwFertilityGraphIndex({
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          trajectId: 'traject-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-24T09:30',
+          type: 'echo',
+        },
+      ],
+      dossierDocuments: [],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+    const weergave = {
+      ...bouwFertilityGraphWeergavePerTraject(rebuild.graph, { trajectId: 'traject-1' }),
+      rebuildRapport: rebuild.rapport,
+    };
+
+    const exportBestand = maakFertilityGraphConsultSamenvattingExport(
+      weergave,
+      '2026-06-24T12:00:00.000Z',
+    );
+
+    expect(exportBestand).toMatchObject({
+      bestandsNaam: 'kiempad-graph-consult-traject-1.md',
+      mimeType: 'text/markdown',
+    });
+    expect(exportBestand.inhoud).toContain('# Kiempad graph-samenvatting');
+    expect(exportBestand.inhoud).toContain('Gegenereerd: 2026-06-24T12:00:00.000Z');
+    expect(exportBestand.inhoud).toContain('Echo controle -> Poging 1');
+    expect(exportBestand.inhoud).toContain('Bronpad: behandeling: Echo controle');
+    expect(exportBestand.inhoud).toContain(`Controlehash: ${rebuild.rapport.controleHash}`);
+    expect(exportBestand.inhoud).toContain('geen diagnose, causaliteit');
+    expect(exportBestand.inhoud).not.toMatch(/\badvies:|moet kiezen|kans op zwangerschap\b/i);
   });
 });

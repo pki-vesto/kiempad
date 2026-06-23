@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G235 PFIP knowledge graph: trajectscherm toont een exporteerbare
+  Markdown-samenvatting van de graph voor consultvoorbereiding met bronpad,
+  controlehash en medische waarschuwing.
 - G234 PFIP knowledge graph: privacytest borgt dat graph-opbouw, voorstellen,
   inzichten, filters en index-rebuild lokaal blijven zonder fetch, XHR of
   sendBeacon.

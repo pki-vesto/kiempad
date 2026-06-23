@@ -419,6 +419,10 @@ describe('app shell', () => {
     expect(html).toContain('Echo controle -> Poging 1');
     expect(html).toContain('Document hoort bij traject');
     expect(html).toContain('Echo verslag -> Poging 1');
+    expect(html).toContain('Graph-export consultvoorbereiding');
+    expect(html).toContain('kiempad-graph-consult-traject-1.md');
+    expect(html).toContain('Kiempad graph-samenvatting voor consultvoorbereiding');
+    expect(html).toContain('Gebruik dit als gespreksoverzicht');
     expect(html).toContain('geen causaliteit');
   });
 

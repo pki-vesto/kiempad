@@ -117,6 +117,13 @@ export type FertilityGraphIndexRebuildResultaat = {
   rapport: FertilityGraphIndexRebuildRapport;
 };
 
+export type FertilityGraphConsultSamenvattingExport = {
+  bestandsNaam: string;
+  mimeType: 'text/markdown';
+  inhoud: string;
+  waarschuwing: string;
+};
+
 const GRAPH_WAARSCHUWING =
   'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
 
@@ -519,6 +526,42 @@ export function bouwFertilityGraphWeergavePerTraject(
   };
 }
 
+export function maakFertilityGraphConsultSamenvattingExport(
+  weergave: FertilityGraphTrajectWeergave,
+  gegenereerdOp = new Date().toISOString(),
+): FertilityGraphConsultSamenvattingExport {
+  const nodes = new Map(weergave.nodes.map((node) => [node.id, node]));
+  const regels = [
+    '# Kiempad graph-samenvatting voor consultvoorbereiding',
+    '',
+    `Gegenereerd: ${gegenereerdOp}`,
+    `Traject: ${weergave.trajectId}`,
+    `Waarschuwing: ${weergave.waarschuwing}`,
+    '',
+    '## Relaties',
+    ...formatGraphExportRelaties(weergave.edges, nodes),
+    '',
+    '## Controle',
+    `Nodes: ${weergave.nodes.length}`,
+    `Relaties: ${weergave.edges.length}`,
+    weergave.rebuildRapport
+      ? `Bronrecords: ${weergave.rebuildRapport.bronRecordIds.length}`
+      : 'Bronrecords: niet opgenomen',
+    weergave.rebuildRapport
+      ? `Controlehash: ${weergave.rebuildRapport.controleHash}`
+      : 'Controlehash: niet opgenomen',
+    '',
+    'Gebruik dit als gespreksoverzicht. Het is geen diagnose, causaliteit, kansberekening, dosering of behandeladvies.',
+  ];
+
+  return {
+    bestandsNaam: `kiempad-graph-consult-${normaliseerGraphId(weergave.trajectId) || 'traject'}.md`,
+    mimeType: 'text/markdown',
+    inhoud: regels.join('\n'),
+    waarschuwing: GRAPH_WAARSCHUWING,
+  };
+}
+
 function trajectNodeId(id: string): string {
   return `traject:${id}`;
 }
@@ -618,6 +661,25 @@ function berekenGraphControleHash(
     hash = (hash * 31 + materiaal.charCodeAt(index)) >>> 0;
   }
   return hash.toString(16).padStart(8, '0');
+}
+
+function formatGraphExportRelaties(
+  edges: readonly FertilityGraphEdge[],
+  nodes: ReadonlyMap<string, FertilityGraphNode>,
+): string[] {
+  if (edges.length === 0) return ['Geen relaties binnen dit filter.'];
+
+  return edges.map((edge) => {
+    const from = nodes.get(edge.from);
+    const to = nodes.get(edge.to);
+    const titel = `${from?.titel ?? edge.from} -> ${to?.titel ?? edge.to}`;
+    const bronpad = [
+      from ? `${from.type}: ${from.titel}` : edge.from,
+      edge.label,
+      to ? `${to.type}: ${to.titel}` : edge.to,
+    ].join(' > ');
+    return `- ${titel} (${edge.label}). Bron: ${edge.bron}. Bronpad: ${bronpad}.`;
+  });
 }
 
 function normaliseerGraphId(value: string): string {
