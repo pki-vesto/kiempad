@@ -44,4 +44,51 @@ describe('app shell', () => {
     expect(html).toContain('Kiempad bewaart je passphrase niet');
     expect(html).toContain('versleutelde back-up');
   });
+
+  it('rendert agenda-afspraken met gekoppelde vraag en herinnering', () => {
+    const html = renderAppShell('agenda', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-23',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Echo controle',
+            datumTijd: '2026-06-24T09:30',
+            type: 'echo',
+            trajectId: 'traject-1',
+            locatie: 'Kliniek',
+          },
+          vraag: {
+            id: 'vraag-1',
+            vraag: 'Wanneer horen we de uitslag?',
+            voorAfspraakId: 'afspraak-1',
+            beantwoord: false,
+          },
+          herinnering: {
+            id: 'herinnering-1',
+            bron: { soort: 'afspraak', refId: 'afspraak-1' },
+            tijdstip: '2026-06-24T08:30',
+            actief: true,
+          },
+        },
+      ],
+    });
+
+    expect(html).toContain('Echo controle');
+    expect(html).toContain('Vraag: Wanneer horen we de uitslag?');
+    expect(html).toContain('Herinnering: 2026-06-24 08:30');
+    expect(html).toContain('Traject: Poging 1');
+  });
 });

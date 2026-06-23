@@ -7,6 +7,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- M1.4 agenda & afspraken: versleuteld afspraken aanmaken/bewerken/verwijderen,
+  afspraaktypes, komende-afsprakenlijst, trajectkoppeling, voorbereiding/notitie,
+  gekoppelde vraag voor de arts, afspraakherinnering als lokaal record en agenda-
+  domein/storetests (G031-G034, G036-G039).
 - M1.3 traject & fasen: versleuteld traject aanmaken/bewerken/verwijderen, status en
   notitie bewaren, vaste fasevolgorde met concepttoelichtingen, huidige fase markeren,
   tijdlijnweergave, startscherm-volgende-stap en domein-/storetests (G019-G025, G028,
