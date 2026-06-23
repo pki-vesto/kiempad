@@ -1,7 +1,13 @@
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId } from '../storage/records';
 import type { Afspraak, Vraag } from './types';
-import { maakVraag, markeerVraagBeantwoord, sorteerVragen, type VraagInput } from './vraag';
+import {
+  herprioriteerVraag,
+  maakVraag,
+  markeerVraagBeantwoord,
+  sorteerVragen,
+  type VraagInput,
+} from './vraag';
 
 export type VraagBundleInput = VraagInput & {
   id?: string;
@@ -46,5 +52,16 @@ export class VraagStore {
     if (!record) return;
 
     await this.vragen.saveWithId(markeerVraagBeantwoord(record.value, antwoord));
+  }
+
+  async movePriority(vraagId: string, richting: 'omhoog' | 'omlaag'): Promise<void> {
+    const records = await this.vragen.list();
+    const reordered = herprioriteerVraag(
+      records.map((record) => record.value),
+      vraagId,
+      richting,
+    );
+
+    await Promise.all(reordered.map((vraag) => this.vragen.saveWithId(vraag)));
   }
 }

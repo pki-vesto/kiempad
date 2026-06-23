@@ -444,6 +444,13 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
     void saveVraagFromForm(event.currentTarget, root, state);
   });
 
+  root.querySelectorAll<HTMLFormElement>('.question-priority-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void moveVraagPriorityFromForm(event.currentTarget, event.submitter, root, state);
+    });
+  });
+
   root.querySelector('#delete-vraag')?.addEventListener('click', (event) => {
     const button = event.currentTarget;
     if (!(button instanceof HTMLButtonElement)) return;
@@ -455,6 +462,23 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
 
     void state.vraagStore.delete(vraagId).then(() => reloadAndRender(root, state));
   });
+}
+
+async function moveVraagPriorityFromForm(
+  target: EventTarget | null,
+  submitter: HTMLElement | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.vraagStore) return;
+  const vraagId = target.dataset.vraagId;
+  if (!vraagId) return;
+  const richting =
+    submitter instanceof HTMLButtonElement ? submitter.value : new FormData(target).get('richting');
+  if (richting !== 'omhoog' && richting !== 'omlaag') return;
+
+  await state.vraagStore.movePriority(vraagId, richting);
+  await reloadAndRender(root, state);
 }
 
 function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
@@ -796,6 +820,7 @@ async function saveVraagFromForm(
     id: optionalString(data.get('id')),
     vraag: String(data.get('vraag') ?? ''),
     voorAfspraakId: optionalString(data.get('voorAfspraakId')),
+    prioriteit: optionalPositiveNumber(data.get('prioriteit')),
     beantwoord: data.get('beantwoord') === 'true',
     antwoord: optionalString(data.get('antwoord')),
   });
@@ -982,6 +1007,11 @@ function parseCostVergoed(value: FormDataEntryValue | null): CostItem['vergoed']
 function optionalString(value: FormDataEntryValue | null): string | undefined {
   const normalized = String(value ?? '').trim();
   return normalized ? normalized : undefined;
+}
+
+function optionalPositiveNumber(value: FormDataEntryValue | null): number | undefined {
+  const normalized = Number(String(value ?? '').trim());
+  return Number.isFinite(normalized) && normalized > 0 ? Math.round(normalized) : undefined;
 }
 
 void mount();

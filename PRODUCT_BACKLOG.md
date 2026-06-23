@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 140 |
+| ☑ klaar | 141 |
 | ◐ bezig | 0 |
-| ☐ open | 38 |
+| ☐ open | 37 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -137,7 +137,7 @@
 | G068 | Vraag koppelen aan een (komende) afspraak | P1 | F1 | ☑ |
 | G069 | Vragen markeren als beantwoord met antwoord-tekst | P1 | F1 | ☑ |
 | G070 | Overzicht "openstaande vragen voor volgende afspraak" | P1 | F1 | ☑ |
-| G071 | Vragen herordenen (prioriteit voor het consult) | P2 | F2 | ☐ |
+| G071 | Vragen herordenen (prioriteit voor het consult) | P2 | F2 | ☑ |
 | G072 | Beantwoorde vragen teruglezen als verslag per afspraak | P2 | F2 | ☐ |
 
 ## 7. Kennisbank

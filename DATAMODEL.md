@@ -103,6 +103,7 @@ Conventies:
 | id | string | |
 | vraag | string | |
 | voorAfspraakId | string? | → Afspraak |
+| prioriteit | number? | lagere waarde = hoger op consultlijst |
 | beantwoord | boolean | |
 | antwoord | string? | |
 

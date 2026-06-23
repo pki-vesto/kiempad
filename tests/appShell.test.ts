@@ -328,6 +328,7 @@ describe('app shell', () => {
             id: 'vraag-1',
             vraag: 'Wat is de volgende stap?',
             voorAfspraakId: 'afspraak-1',
+            prioriteit: 1,
             beantwoord: false,
           },
           afspraak: {
@@ -343,6 +344,11 @@ describe('app shell', () => {
     expect(html).toContain('Wat is de volgende stap?');
     expect(html).toContain('Consult');
     expect(html).toContain('Openstaand');
+    expect(html).toContain('Prioriteit 1');
+    expect(html).toContain('name="prioriteit" type="number"');
+    expect(html).toContain('class="question-priority-form compact-form"');
+    expect(html).toContain('value="omhoog"');
+    expect(html).toContain('value="omlaag"');
     expect(html).toContain('Verwijder vraag');
   });
 

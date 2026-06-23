@@ -685,6 +685,10 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
         </select>
       </label>
       <label>
+        Consultprioriteit
+        <input name="prioriteit" type="number" min="1" step="1" value="${escapeAttribute(String(vraag?.prioriteit ?? ''))}" />
+      </label>
+      <label>
         Status
         <select name="beantwoord">
           ${renderOption('false', 'Openstaand', vraag?.beantwoord ? 'true' : 'false')}
@@ -724,9 +728,13 @@ function renderVragenList(bundles: VraagBundle[]): string {
             <li class="phase-item">
               <div>
                 <h3>${escapeHtml(bundle.vraag.vraag)}</h3>
-                <p>${bundle.vraag.beantwoord ? 'Beantwoord' : 'Openstaand'}${bundle.afspraak ? ` · ${escapeHtml(bundle.afspraak.titel)}` : ''}</p>
+                <p>${bundle.vraag.beantwoord ? 'Beantwoord' : 'Openstaand'}${bundle.vraag.prioriteit ? ` · Prioriteit ${bundle.vraag.prioriteit}` : ''}${bundle.afspraak ? ` · ${escapeHtml(bundle.afspraak.titel)}` : ''}</p>
                 ${bundle.vraag.antwoord ? `<p class="linked-note">Antwoord: ${escapeHtml(bundle.vraag.antwoord)}</p>` : ''}
               </div>
+              <form class="question-priority-form compact-form" data-vraag-id="${escapeAttribute(bundle.vraag.id)}">
+                <button class="phase-button secondary" type="submit" name="richting" value="omhoog">Omhoog</button>
+                <button class="phase-button secondary" type="submit" name="richting" value="omlaag">Omlaag</button>
+              </form>
             </li>
           `,
         )

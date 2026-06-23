@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G071 vraagprioriteit: vragen kunnen met een consultprioriteit worden opgeslagen en
+  vanuit de vragenlijst omhoog of omlaag worden gezet.
 - G065 in-app fallbackmeldingen: herinneringenscherm toont komende meldingen in de
   app wanneer browsernotificaties niet klaar staan, met dezelfde privacyregels als
   OS-notificaties.

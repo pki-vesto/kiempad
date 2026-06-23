@@ -43,7 +43,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
   Medicatie: ['id', 'naam', 'vorm', 'voorgeschrevenDosis', 'instructie', 'actief'],
   DoseLog: ['id', 'medicatieId', 'geplandOp', 'genomenOp', 'status', 'notitie'],
   Herinnering: ['id', 'bron', 'titel', 'tijdstip', 'herhaling', 'actief'],
-  Vraag: ['id', 'vraag', 'voorAfspraakId', 'beantwoord', 'antwoord'],
+  Vraag: ['id', 'vraag', 'voorAfspraakId', 'prioriteit', 'beantwoord', 'antwoord'],
   KennisItem: [
     'id',
     'titel',
