@@ -80,6 +80,9 @@ Optioneel zelf-hosten van de statische build:
 docker compose up -d --build    # of: make up   — serveert op http://localhost:8088
 ```
 
+Publicatie via een aparte Tailscale HTTPS-node is voorbereid met
+`docker-compose.tailscale.yml`; zie [`docs/TAILSCALE_DEPLOY.md`](docs/TAILSCALE_DEPLOY.md).
+
 ## Architecture Summary
 
 - **Client-side PWA** in TypeScript (Vite). Geen verplichte backend voor de MVP.

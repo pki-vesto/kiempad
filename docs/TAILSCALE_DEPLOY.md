@@ -1,0 +1,125 @@
+# Kiempad via Tailscale HTTPS-node
+
+Doel: Kiempad publiceren op een **aparte Tailscale-node** met hostname `kiempad`,
+vergelijkbaar met Shred (`shred`) en Healthcore (`healthcore`), maar zonder backend
+of serverdata. De node serveert alleen de statische PWA-assets; alle Kiempad-data
+blijft lokaal en versleuteld in de browser.
+
+## Architectuur
+
+```
+Tailscale-device
+  │
+  │ https://kiempad.<tailnet>.ts.net
+  ▼
+kiempad-ts (tailscale/tailscale)
+  └─ Tailscale Serve HTTPS :443
+      └─ http://127.0.0.1:80
+          └─ kiempad-web (nginx, statische dist/)
+```
+
+Belangrijk:
+
+- Geen Tailscale Funnel. Kiempad blijft alleen bereikbaar voor apparaten in de
+  tailnet.
+- Geen applicatie-backend, serverdatabase of server-side gebruikersdata.
+- De container is stateless; IndexedDB-data blijft op het toestel.
+- Tailscale HTTPS gebruikt de MagicDNS-naam `kiempad.<tailnet>.ts.net`.
+
+Bronnen voor de gebruikte Tailscale-route:
+
+- `tailscale serve` deelt een lokale service binnen de tailnet en ondersteunt HTTPS
+  met automatisch geprovisioneerde TLS-certificaten.
+- Tailscale HTTPS vereist MagicDNS en HTTPS Certificates in de admin-console; de
+  node-naam en tailnetnaam komen in certificate-transparency logs terecht. Gebruik
+  daarom de niet-gevoelige machine name `kiempad`.
+- Funnel is bedoeld om services voor het publieke internet open te zetten; dat is
+  voor Kiempad expliciet niet de gewenste route.
+
+## Eenmalige Tailscale-voorbereiding
+
+In de Tailscale admin-console:
+
+1. Zet **MagicDNS** aan.
+2. Zet **HTTPS Certificates** aan.
+3. Maak een reusable auth key of ephemeral deployment key voor deze node.
+4. Houd de node-naam op `kiempad`; gebruik geen persoonsgegevens in machine names.
+
+## Deploy
+
+Vanaf de Kiempad-repo op de doelhost:
+
+```bash
+cd ~/kiempad
+TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+```
+
+Verwachte containers:
+
+- `kiempad-ts`
+- `kiempad-web`
+
+De Tailscale-container gebruikt `ts/serve.json`:
+
+- HTTPS listener op `:443`
+- proxy naar `http://127.0.0.1:80`
+
+Lokale fallback op de host:
+
+```bash
+curl -I http://127.0.0.1:8088
+```
+
+Tailnet-smoke vanaf een apparaat in de tailnet:
+
+```bash
+curl -I https://kiempad.<tailnet>.ts.net
+```
+
+In de Tailscale-container:
+
+```bash
+docker exec kiempad-ts tailscale status
+docker exec kiempad-ts tailscale serve status
+```
+
+## Beheer
+
+Update naar de nieuwste `main`:
+
+```bash
+git pull --ff-only
+TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+```
+
+Logs:
+
+```bash
+docker compose -f docker-compose.tailscale.yml logs -f tailscale
+docker compose -f docker-compose.tailscale.yml logs -f kiempad-web
+```
+
+Stoppen:
+
+```bash
+docker compose -f docker-compose.tailscale.yml down
+```
+
+Volledig loskoppelen van de tailnet:
+
+```bash
+docker compose -f docker-compose.tailscale.yml down -v
+```
+
+Daarna de node `kiempad` verwijderen uit de Tailscale admin-console.
+
+## Privacycontrole
+
+Controleer na deploy:
+
+- De app is alleen bereikbaar via Tailscale, niet via publieke DNS of port-forwarding.
+- `docker-compose.tailscale.yml` mount geen `data/`, `backups/` of `.env` met
+  gezondheidsdata.
+- Een nieuw apparaat ziet geen bestaande Kiempad-data totdat de gebruiker lokaal een
+  eigen kluis/back-up importeert.
+- Browser network tab toont geen externe requests buiten opt-in AI/sync.

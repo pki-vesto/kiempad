@@ -45,6 +45,18 @@ De container is **stateless** (geen gebruikersdata). Publiceren op de tailnet ka
 analoog aan de andere apps (eigen Tailscale-node / sidecar) als dat ooit gewenst is —
 houd hem dan privé/achter de tailnet.
 
+### Tailscale HTTPS-node
+
+Voor de Shred/Healthcore-achtige publicatieroute is er een aparte compose-stack:
+
+```bash
+TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+```
+
+Die stack maakt een eigen Tailscale-node `kiempad`, gebruikt Tailscale Serve voor
+HTTPS op `https://kiempad.<tailnet>.ts.net` en proxyt naar de statische nginx-PWA.
+Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
+
 ## Debugging
 
 - **Data niet leesbaar:** verkeerde passphrase, of opslag gewist. Er is geen
