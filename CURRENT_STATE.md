@@ -222,6 +222,10 @@
 - **G215 PFIP eenvoudige researchsamenvatting:** Researchpublicaties kunnen ook
   een eenvoudige Nederlandse samenvatting bewaren en tonen met bron en
   publicatiedatum, expliciet zonder diagnose of behandeladvies.
+- **G216 PFIP researchrelevantie zonder behandeladvies:** Researchpublicaties
+  kunnen een handmatige relevantienotitie bewaren die bij weergave wordt gekoppeld
+  aan lokale dossiercontextbronnen, met waarschuwing tegen diagnose, dosering en
+  behandelkeuze.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -354,7 +358,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G215 nog 28 open doelen (G216-G243), gericht op dossier-ingest,
+heeft na G216 nog 27 open doelen (G217-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -404,8 +408,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G216: relevantie voor gebruiker koppelen aan
-   dossiercontext zonder behandeladvies.
+1. PFIP uitvoeren vanaf G217: trends groeperen per onderwerp zoals IVF, ICSI,
+   embryo, leefstijl en mannelijke factor.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

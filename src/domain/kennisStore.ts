@@ -62,6 +62,7 @@ export class KennisStore {
     publicatieDatum?: string;
     wetenschappelijkeSamenvatting?: string;
     eenvoudigeSamenvatting?: string;
+    relevantieVoorGebruiker?: string;
   }): Promise<KennisItem> {
     const item = maakResearchKennisItem(generateRecordId(), input);
     await this.kennisItems.saveWithId(item);

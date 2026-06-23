@@ -5,6 +5,8 @@ import {
   bouwEenvoudigeResearchSamenvattingen,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
+  bouwResearchDossierContextBronnen,
+  bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
   filterKennisItems,
   INITIELE_KENNIS_ITEMS,
@@ -131,6 +133,47 @@ describe('kennis domeinregels', () => {
     ]);
   });
 
+  it('koppelt researchrelevantie aan lokale dossiercontext zonder behandeladvies', () => {
+    const item = maakResearchKennisItem('research-1', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
+      relevantieVoorGebruiker:
+        'Relevant als achtergrond bij het lopende ICSI-traject en het laatste labverslag.',
+    });
+    const contextBronnen = bouwResearchDossierContextBronnen({
+      trajecten: [{ id: 't1', naam: 'Poging 1', status: 'lopend' }],
+      consultVerslagen: [{ id: 'c1', titel: 'Labconsult', datum: '2026-06-12' }],
+      dossierDocuments: [
+        { id: 'd1', titel: 'Embryolabverslag', datum: '2026-06-10', categorie: 'lab' },
+      ],
+    });
+
+    expect(contextBronnen.map((bron) => bron.label)).toEqual([
+      'Traject: Poging 1',
+      'Consult: 2026-06-12 · Labconsult',
+      'Dossierdocument: 2026-06-10 · Embryolabverslag',
+    ]);
+    expect(bouwResearchRelevantieVoorGebruiker([item], contextBronnen)).toEqual([
+      {
+        id: 'research-1',
+        titel: 'Artikel over embryo-cultuur',
+        publicatieDatum: '2026-05-10',
+        bron: 'https://voorbeeld.test/embryo-cultuur',
+        relevantieVoorGebruiker:
+          'Relevant als achtergrond bij het lopende ICSI-traject en het laatste labverslag.',
+        dossierContextBronnen: contextBronnen,
+        waarschuwing:
+          'Relevantie is een contextnotitie voor het gesprek met de kliniek; dit is geen diagnose, dosering of behandelkeuze.',
+      },
+    ]);
+  });
+
   it('filtert kennisitems op zoekterm en categorie', () => {
     const filtered = filterKennisItems(INITIELE_KENNIS_ITEMS, {
       zoekterm: 'eigen risico',
@@ -200,6 +243,17 @@ describe('kennis domeinregels', () => {
         eenvoudigeSamenvatting: 'Te kort.',
       }),
     ).toThrow('Eenvoudige samenvatting moet begrijpelijke context bevatten');
+
+    expect(() =>
+      maakResearchKennisItem('research-ongeldig', {
+        titel: 'Artikel met behandeladvies',
+        bron: 'https://voorbeeld.test/artikel',
+        publicatieDatum: '2026-06-24',
+        notitie: 'Eigen notitie.',
+        wetenschappelijkeSamenvatting: 'Samenvatting met methode en beperkingen.',
+        relevantieVoorGebruiker: 'Jullie moeten deze behandeling kiezen.',
+      }),
+    ).toThrow('Relevantie voor gebruiker mag geen diagnose');
   });
 
   it('maakt eigen kennisitems in gekozen categorie', () => {

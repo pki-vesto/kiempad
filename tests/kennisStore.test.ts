@@ -80,6 +80,8 @@ describe('KennisStore', () => {
         'Gerandomiseerde studie met populatie, interventie en beperkingen samengevat.',
       eenvoudigeSamenvatting:
         'Dit artikel legt een onderzoeksvraag uit, maar bepaalt niet welke behandeling past.',
+      relevantieVoorGebruiker:
+        'Relevant als achtergrond bij het lopende traject en vragen aan de kliniek.',
     });
     const raw = await driver.getRecord(item.id);
 
@@ -95,6 +97,8 @@ describe('KennisStore', () => {
           'Gerandomiseerde studie met populatie, interventie en beperkingen samengevat.',
         eenvoudigeSamenvatting:
           'Dit artikel legt een onderzoeksvraag uit, maar bepaalt niet welke behandeling past.',
+        relevantieVoorGebruiker:
+          'Relevant als achtergrond bij het lopende traject en vragen aan de kliniek.',
       },
       ai_gegenereerd: false,
       geverifieerd_met_arts: false,
@@ -103,6 +107,7 @@ describe('KennisStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Artikel over stimulatie');
     expect(raw?.payload.ciphertext).not.toContain('Gerandomiseerde studie');
     expect(raw?.payload.ciphertext).not.toContain('bepaalt niet welke behandeling past');
+    expect(raw?.payload.ciphertext).not.toContain('vragen aan de kliniek');
     expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
   });
 
