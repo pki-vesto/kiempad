@@ -18,6 +18,7 @@ const entityInterfaceMap = {
   Decision: 'Decision',
   EventLog: 'EventLog',
   DossierDocument: 'DossierDocument',
+  ConsultVerslag: 'ConsultVerslag',
   Settings: 'SettingsRecord',
 } as const;
 
@@ -92,6 +93,21 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'metadata',
     'beeldMetadata',
     'ocr',
+    'uploadedAt',
+  ],
+  ConsultVerslag: [
+    'id',
+    'datum',
+    'titel',
+    'bron',
+    'bestandsNaam',
+    'mimeType',
+    'grootteBytes',
+    'inhoudBase64',
+    'tekst',
+    'afspraakId',
+    'trajectId',
+    'notitie',
     'uploadedAt',
   ],
   Settings: [

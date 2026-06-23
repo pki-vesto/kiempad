@@ -525,6 +525,19 @@ describe('app shell', () => {
       herinneringen: [],
       vragen: [],
       kennisItems: [],
+      consultVerslagen: [
+        {
+          id: 'consult-1',
+          datum: '2026-05-01',
+          titel: 'Intakegesprek verslag',
+          bron: 'handmatig',
+          tekst: 'Afgesproken om bloeduitslagen mee te nemen.',
+          afspraakId: 'afspraak-1',
+          trajectId: 'traject-1',
+          notitie: 'Vraag over vervolgstap bewaren.',
+          uploadedAt: '2026-06-23T15:05:00.000Z',
+        },
+      ],
       dossierDocuments: [
         {
           id: 'doc-1',
@@ -584,6 +597,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Dossier');
     expect(html).toContain('Dossierdocument uploaden');
+    expect(html).toContain('Consultverslag toevoegen');
+    expect(html).toContain('id="consult-verslag-form"');
+    expect(html).toContain('name="consultBestand" type="file" accept="application/pdf,text/*"');
+    expect(html).toContain('Tekst of samenvatting');
+    expect(html).toContain('Consultverslagen');
     expect(html).toContain('Dossier zoeken');
     expect(html).toContain('id="dossier-search-form"');
     expect(html).toContain('name="dossierZoekterm"');
@@ -645,6 +663,10 @@ describe('app shell', () => {
     expect(html).toContain('Afspraak: Intakegesprek (2026-05-01 09:30)');
     expect(html).toContain('Traject: Poging 1');
     expect(html).toContain('Notitie: Historisch onderzoek');
+    expect(html).toContain('Intakegesprek verslag');
+    expect(html).toContain('Consultdatum: 2026-05-01 · Handmatig');
+    expect(html).toContain('Afgesproken om bloeduitslagen mee te nemen.');
+    expect(html).toContain('Notitie: Vraag over vervolgstap bewaren.');
     expect(html).toContain('1 dossierbestand lokaal versleuteld toegevoegd.');
     expect(html).not.toContain('cGRm');
   });
