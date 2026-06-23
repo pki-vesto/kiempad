@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G030 trajecttrends: trajectscherm toont een lokaal overzicht over meerdere
+  pogingen met totalen, actief/archief, status/type-verdeling en periode.
 - G029 trajectarchief: trajecten kunnen uit de actieve lijst worden gearchiveerd en
   later hersteld zonder traject- of faserecords te verwijderen.
 - G116 vraagkoppeling: afwegingen kunnen aan een bestaande vraag voor de arts

@@ -43,6 +43,7 @@ import { OWNER_LABELS, type SymptomDagGroep, symptomenPerDag } from './domain/sy
 import {
   bepaalHuidigeFase,
   bepaalVolgendeStap,
+  berekenTrajectOverzicht,
   berekenVergoedePogingenTeller,
   TRAJECT_FASE_LABELS,
   type TrajectMetFasen,
@@ -2054,6 +2055,7 @@ function renderTrajectScreen(state: AppShellState): string {
   );
   const selected = actieveTrajecten[0];
   const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
+  const overzicht = berekenTrajectOverzicht(state.trajecten);
 
   return `
     <section class="traject-layout" aria-label="Traject beheren">
@@ -2075,6 +2077,7 @@ function renderTrajectScreen(state: AppShellState): string {
           </dl>
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
+        ${renderTrajectOverzicht(overzicht)}
         <div class="panel-heading">
           <h2>Fasen</h2>
           ${
@@ -2096,6 +2099,39 @@ function renderTrajectScreen(state: AppShellState): string {
       </div>
     </section>
   `;
+}
+
+function renderTrajectOverzicht(overzicht: ReturnType<typeof berekenTrajectOverzicht>): string {
+  if (overzicht.totaal === 0) return '';
+
+  return `
+    <section class="summary-panel embedded-summary" aria-label="Overzicht over meerdere pogingen">
+      <h2>Overzicht pogingen</h2>
+      <dl class="summary-list">
+        <div><dt>Totaal</dt><dd>${overzicht.totaal}</dd></div>
+        <div><dt>Actief</dt><dd>${overzicht.actief}</dd></div>
+        <div><dt>Archief</dt><dd>${overzicht.gearchiveerd}</dd></div>
+        <div><dt>Meetellend vergoeding</dt><dd>${overzicht.meetellendVoorVergoeding}</dd></div>
+      </dl>
+      <p class="small-print">Periode: ${escapeHtml(overzicht.eersteStartDatum ?? 'onbekend')} t/m ${escapeHtml(overzicht.laatsteStartDatum ?? 'onbekend')} · Status: ${renderTrajectStatusVerdeling(overzicht)} · Type: ${renderTrajectTypeVerdeling(overzicht)}</p>
+    </section>
+  `;
+}
+
+function renderTrajectStatusVerdeling(
+  overzicht: ReturnType<typeof berekenTrajectOverzicht>,
+): string {
+  return Object.entries(overzicht.perStatus)
+    .filter(([, count]) => count > 0)
+    .map(([status, count]) => `${status} ${count}`)
+    .join(', ');
+}
+
+function renderTrajectTypeVerdeling(overzicht: ReturnType<typeof berekenTrajectOverzicht>): string {
+  return Object.entries(overzicht.perType)
+    .filter(([, count]) => count > 0)
+    .map(([type, count]) => `${type.toUpperCase()} ${count}`)
+    .join(', ');
 }
 
 function renderTrajectForm(

@@ -3,6 +3,7 @@ import {
   archiveerTraject,
   bepaalHuidigeFase,
   bepaalVolgendeStap,
+  berekenTrajectOverzicht,
   berekenVergoedePogingenTeller,
   maakInitiëleFasen,
   maakTraject,
@@ -122,5 +123,49 @@ describe('traject en fasen', () => {
       notitie: 'Bewaren voor later.',
     });
     expect(archiveerTraject(traject, false).gearchiveerd).toBe(false);
+  });
+
+  it('maakt een compact overzicht over meerdere cycli', () => {
+    const trajecten = [
+      {
+        traject: maakTraject('traject-1', {
+          naam: 'Poging 1',
+          type: 'ivf',
+          startDatum: '2026-04-01',
+          status: 'afgerond',
+          pogingNummer: 1,
+          teltMeeVoorVergoeding: true,
+          gearchiveerd: true,
+        }),
+        fasen: [],
+      },
+      {
+        traject: maakTraject('traject-2', {
+          naam: 'Poging 2',
+          type: 'icsi',
+          startDatum: '2026-06-01',
+          status: 'lopend',
+          pogingNummer: 2,
+        }),
+        fasen: [],
+      },
+    ];
+
+    expect(berekenTrajectOverzicht(trajecten)).toMatchObject({
+      totaal: 2,
+      actief: 1,
+      gearchiveerd: 1,
+      meetellendVoorVergoeding: 1,
+      eersteStartDatum: '2026-04-01',
+      laatsteStartDatum: '2026-06-01',
+      perStatus: {
+        afgerond: 1,
+        lopend: 1,
+      },
+      perType: {
+        ivf: 1,
+        icsi: 1,
+      },
+    });
   });
 });

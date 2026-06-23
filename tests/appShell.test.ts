@@ -1075,6 +1075,12 @@ describe('app shell', () => {
     expect(html).toContain('Herstel');
     expect(html).toContain('aria-label="Herstel traject uit archief: Poging oud"');
     expect(html).toContain('Vergoede pogingen');
+    expect(html).toContain('Overzicht pogingen');
+    expect(html).toContain('Totaal');
+    expect(html).toContain('Actief');
+    expect(html).toContain('Periode: 2026-04-01 t/m 2026-08-01');
+    expect(html).toContain('Status: gepland 1, lopend 1, afgerond 1');
+    expect(html).toContain('Type: IVF 2, ICSI 1');
     expect(html).toContain('Meetellend');
     expect(html).toContain('1 van 3');
     expect(html).toContain('Resterend');

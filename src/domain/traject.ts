@@ -86,6 +86,17 @@ export type VergoedePogingenTeller = {
   maximum: number;
 };
 
+export type TrajectOverzicht = {
+  totaal: number;
+  actief: number;
+  gearchiveerd: number;
+  meetellendVoorVergoeding: number;
+  perStatus: Record<Traject['status'], number>;
+  perType: Record<Traject['type'], number>;
+  eersteStartDatum?: IsoDate;
+  laatsteStartDatum?: IsoDate;
+};
+
 export function berekenVergoedePogingenTeller(
   trajecten: readonly TrajectMetFasen[],
 ): VergoedePogingenTeller {
@@ -96,6 +107,31 @@ export function berekenVergoedePogingenTeller(
     meetellend,
     resterend,
     maximum: VERGOEDE_POGINGEN_PER_ZWANGERSCHAP,
+  };
+}
+
+export function berekenTrajectOverzicht(items: readonly TrajectMetFasen[]): TrajectOverzicht {
+  const perStatus = maakTelling(['gepland', 'lopend', 'afgerond', 'gepauzeerd', 'geannuleerd']);
+  const perType = maakTelling(['ivf', 'icsi', 'onbekend']);
+  const sorted = [...items].sort((a, b) =>
+    a.traject.startDatum.localeCompare(b.traject.startDatum),
+  );
+
+  for (const item of items) {
+    perStatus[item.traject.status] += 1;
+    perType[item.traject.type] += 1;
+  }
+
+  return {
+    totaal: items.length,
+    actief: items.filter((item) => item.traject.gearchiveerd !== true).length,
+    gearchiveerd: items.filter((item) => item.traject.gearchiveerd === true).length,
+    meetellendVoorVergoeding: items.filter((item) => item.traject.teltMeeVoorVergoeding === true)
+      .length,
+    perStatus,
+    perType,
+    eersteStartDatum: sorted[0]?.traject.startDatum,
+    laatsteStartDatum: sorted.at(-1)?.traject.startDatum,
   };
 }
 
@@ -152,4 +188,8 @@ export function bepaalVolgendeStap(item?: TrajectMetFasen): string {
 function normaliseerOptioneleTekst(value: string | undefined): string | undefined {
   const trimmed = value?.trim();
   return trimmed ? trimmed : undefined;
+}
+
+function maakTelling<T extends string>(keys: readonly T[]): Record<T, number> {
+  return Object.fromEntries(keys.map((key) => [key, 0])) as Record<T, number>;
 }

@@ -153,6 +153,8 @@
   pogingnummer voor vergoedingstelling.
 - **G029 trajectarchief:** trajecten kunnen uit de actieve lijst worden gearchiveerd
   en later hersteld zonder traject- of faserecords te verwijderen.
+- **G030 trajecttrends:** trajectscherm toont een lokaal overzicht over meerdere
+  pogingen met totalen, actief/archief, status/type-verdeling en periode.
 - **G035 agenda week-/maandweergave:** agendascherm toont naast de chronologische
   afsprakenlijst compacte groeperingen per ISO-week en maand.
 - **G040 afgelopen afspraken:** agendascherm splitst afgelopen afspraken naar een
