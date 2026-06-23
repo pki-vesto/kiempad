@@ -14,8 +14,7 @@
 ## Branch model
 
 - `main` is altijd in werkende staat.
-- Werk in korte feature-branches (`feat/...`, `fix/...`, `docs/...`); merge via PR in
-  de private repo.
+- Werk in korte feature-branches (`feat/...`, `fix/...`, `docs/...`); merge via PR.
 - Klein en gefaseerd, in lijn met [`ROADMAP.md`](ROADMAP.md).
 
 ## Commits

@@ -44,16 +44,19 @@ van medisch advies**, en is uitsluitend voor **privégebruik** (geen distributie
   gebruiker ze bewust aanzet, met dataminimalisatie. (ADR-0003)
 - **P4 — Markeer herkomst & verificatie.** Kennis/research toont `ai_gegenereerd` en
   `geverifieerd_met_arts`; AI-output draagt een waarschuwingslabel + bron.
-- **P5 — Privé blijven.** Repo is **private**; geen distributie (anders vervalt de
-  AVG-huishoudelijke uitzondering). (LICENSE, PRIVACY.md)
+- **P5 — Data privé.** Gezondheidsdata blijft **lokaal + versleuteld** en gaat **nooit**
+  de repo in; de app wordt **niet als product aan derden** uitgerold. De **repo
+  (code+docs) is publiek** (ADR-0006) — er staat geen persoonsdata in, dus de
+  AVG-huishoudelijke uitzondering voor de gegevensverwerking blijft gelden. (LICENSE,
+  PRIVACY.md)
 - **P6 — Disclaimer zichtbaar** in app én documentatie.
 
 ## 5. Governance-Grenzen
 
 - Kiempad valt **buiten** de Sentinel autonome build-/PR-governance. Wijzigingen gaan
   **handmatig** (met AI-assistentie), met menselijke review. (ADR-0005)
-- De **private** repo onder `pki-vesto` is de enige plek; geen mirrors of publieke
-  forks.
+- De **publieke** repo onder `pki-vesto` is de enige plek voor code/docs;
+  gezondheidsdata staat er niet in. Nooit secrets of databestanden in git (ADR-0006).
 - Medische inhoud in de kennisbank is **concept** tot een behandelaar het bevestigt.
 
 ## 6. Prioriteiten

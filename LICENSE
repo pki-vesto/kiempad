@@ -3,17 +3,19 @@ Kiempad — Persoonlijke licentie (alle rechten voorbehouden)
 Copyright (c) 2026 Peter & partner.
 
 Dit is een privéproject voor uitsluitend persoonlijk, huishoudelijk gebruik door
-de twee eigenaren. Het is GEEN open-sourceproject en GEEN product voor derden.
+de twee eigenaren. De broncode in deze repository is **publiek zichtbaar** (o.a.
+zodat CI/GitHub Actions werkt — zie docs/adr/0006-repo-publiek.md), maar dit is
+**geen open-sourceproject**: er wordt geen gebruiksrecht verleend.
 
 Niet toegestaan zonder uitdrukkelijke schriftelijke toestemming van de eigenaren:
-- distributie, publicatie of openbaarmaking van (delen van) de code of data;
-- gebruik door derden;
+- hergebruik, kopiëren, wijzigen of herdistribueren van (delen van) de code;
+- gebruik van de app door derden of als dienst voor derden;
 - commercieel gebruik.
 
-Reden: zodra de app of de bijbehorende gezondheidsdata wordt gedeeld of
-gedistribueerd, vervalt de huishoudelijke uitzondering van de AVG en gelden
-zwaardere verplichtingen. Zie PRIVACY.md. Het privé houden van dit project is
-een bewuste, harde randvoorwaarde.
+Gegevensbescherming: de app is local-first. **Gezondheidsdata blijft lokaal en
+versleuteld op het toestel** en staat **niet** in deze repository. Het publiceren
+van de broncode verwerkt geen persoonsgegevens; de huishoudelijke uitzondering van
+de AVG voor de gegevensverwerking blijft daarmee van toepassing. Zie PRIVACY.md.
 
 DISCLAIMER: Kiempad is een informatie- en organisatietool, GEEN medisch
 hulpmiddel en GEEN vervanging van medisch advies. De software wordt geleverd

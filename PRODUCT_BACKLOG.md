@@ -225,7 +225,7 @@
 | G126 | Lokaal gebeurtenissenlog (verlaat toestel niet) | P2 | F2 | ☐ |
 | G127 | Duidelijke "geen herstel-achterdeur"-uitleg + back-up-aansporing | P1 | F1 | ☐ |
 | G128 | Minimale npm-dependencies; audit-stap in CI | P1 | F1 | ☐ |
-| G129 | Repo blijft private; geen mirrors/forks | P0 | F0 | ☑ |
+| G129 | Geen secrets/persoonsdata in de (publieke) repo; data blijft local-first (ADR-0006) | P0 | F0 | ☑ |
 | G130 | Disclaimer zichtbaar in app én docs | P0 | F1 | ☐ |
 
 ## 13. Datamodel & opslag

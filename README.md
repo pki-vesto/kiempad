@@ -23,10 +23,12 @@
   zonder expliciete keuze.
 - **Status:** documentatie- en fundamentfase (v0.1). Zie
   [`CURRENT_STATE.md`](CURRENT_STATE.md) voor wat wél/niet gebouwd is.
-- **Plek in het ecosysteem:** eigen private repo onder `pki-vesto`, naast de andere
-  apps. Bewust **buiten** de Sentinel autonome build-governance: dit is een
-  privé-app die met de hand (met AI-assistentie) wordt gebouwd. Zie
-  [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md).
+- **Plek in het ecosysteem:** eigen **publieke** repo onder `pki-vesto`, naast de
+  andere apps. De **code en docs zijn publiek**; de **gezondheidsdata blijft
+  local-first en privé** en staat niet in de repo. Bewust **buiten** de Sentinel
+  autonome build-governance: dit is een persoonlijke app die met de hand (met
+  AI-assistentie) wordt gebouwd. Zie [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) en
+  [`docs/adr/0006-repo-publiek.md`](docs/adr/0006-repo-publiek.md).
 
 ## Concept
 

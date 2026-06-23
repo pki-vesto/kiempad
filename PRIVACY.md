@@ -9,15 +9,23 @@ Gezondheidsgegevens zijn onder de **AVG** "bijzondere persoonsgegevens" met extr
 bescherming. Kiempad behandelt **alle** inhoud als gevoelig en kiest standaard voor
 de meest privacy-vriendelijke optie.
 
-## Huishoudelijke uitzondering — en waarom de app privé blijft
+## Huishoudelijke uitzondering — wat publiek is en wat niet
 
 Voor **puur persoonlijk/huishoudelijk** gebruik door onszelf geldt in de praktijk de
-**huishoudelijke uitzondering** van de AVG. Die **vervalt** zodra de app of de data
-wordt **gedeeld of gedistribueerd**. Daarom:
+**huishoudelijke uitzondering** van de AVG. Die hangt aan het **verwerken van
+persoonsgegevens** — niet aan het publiceren van broncode. We maken daarom een scherp
+onderscheid:
 
-- De repo is **private**; de app wordt **niet** verspreid (zie [`LICENSE`](LICENSE)).
-- Geen externe gebruikers, geen accounts voor derden.
-- Dit is een **harde randvoorwaarde**, geen voorkeur.
+- **Wat publiek is:** de **broncode en documentatie** (de repo is openbaar, o.a. zodat
+  CI/GitHub Actions werkt — zie [`docs/adr/0006-repo-publiek.md`](docs/adr/0006-repo-publiek.md)).
+  Hierin staat **geen** persoonsgegevens of gezondheidsdata.
+- **Wat privé blijft:** alle **gezondheidsdata** blijft **local-first en versleuteld**
+  op het toestel; die gaat **niet** de repo in en wordt niet gedeeld of gedistribueerd.
+- De app wordt **niet als product aan derden** uitgerold; geen externe gebruikers of
+  accounts.
+- **Aandachtspunt:** de openbare docs maken wél kenbaar dat dit ons IVF/ICSI-traject
+  is. Dat is een bewust geaccepteerde keuze van de eigenaren; de onderliggende data
+  blijft privé.
 
 ## GDPR/AVG-principes zoals toegepast
 

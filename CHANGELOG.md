@@ -18,9 +18,14 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   - Domein-kernvormen (`src/domain/types.ts`) en eerste geteste domeinregel
     (`src/domain/vergoeding.ts` + Vitest-test).
 - `PRODUCT_BACKLOG.md` met 100+ concrete, afvinkbare doelen, gekoppeld aan de roadmap.
+- `docs/adr/0006-repo-publiek.md` — beslissing om de repo publiek te maken.
 
 ### Changed
-- (nog niets)
+- Repo **publiek** gemaakt (ADR-0006) i.v.m. de GitHub Actions-billingblokkade op
+  private repos. Docs aangepast zodat ze de publieke realiteit weerspiegelen
+  (`README`, `PRIVACY`, `MASTER_CONTEXT`, `SECURITY`, `CONTRIBUTING`, `LICENSE`,
+  `CURRENT_STATE`, ADR-0005, backlog G129). De **gezondheidsdata blijft local-first
+  en privé**; alleen code/docs zijn publiek.
 
 ### Fixed
 - (nog niets)

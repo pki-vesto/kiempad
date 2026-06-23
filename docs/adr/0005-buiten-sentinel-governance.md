@@ -4,7 +4,10 @@ Date: 2026-06-23
 
 ## Status
 
-Accepted.
+Geaccepteerd. De beslissing om de repo **private** te houden is herzien door
+[ADR-0006](0006-repo-publiek.md) (de repo is nu publiek); de rest van deze ADR —
+handmatige ontwikkeling, menselijke review, buiten Sentinel-governance — blijft van
+kracht.
 
 ## Context
 
@@ -19,8 +22,9 @@ gezondheidsdata en is uitdrukkelijk privé en niet-distribueerbaar.
   **menselijke review** vóór elke merge naar `main`.
 - Kiempad wordt **niet** opgenomen in de Sentinel autonome build-/PR-/backlog-loops en
   niet in de publieke "factory"-status.
-- De repo is **private** onder `pki-vesto` (afwijkend van de publieke siblings), omdat
-  hij AVG-bijzondere persoonsgegevens raakt.
+- ~~De repo is **private** onder `pki-vesto`~~ — **herzien:** de repo is nu publiek,
+  zie [ADR-0006](0006-repo-publiek.md). De gezondheidsdata blijft local-first en privé
+  (niet in de repo).
 
 ## Consequences
 

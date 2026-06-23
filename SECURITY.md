@@ -31,7 +31,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Versleuteling:** AES-256-GCM per record (uniek IV per record).
 - **AI-API-sleutel** (indien opt-in): versleuteld in de lokale opslag, **nooit** in de
   repo of in klare tekst; niet in `.env` committen (`.env` staat in `.gitignore`).
-- **Geen secrets in git.** `.env.example` bevat alleen lege placeholders.
+- **Geen secrets in git.** `.env.example` bevat alleen lege placeholders. De repo is
+  **publiek** (ADR-0006), dus dit is extra kritisch: nooit een secret of databestand
+  committen (`.gitignore` + review borgen dit).
 
 ## Authentication And Authorization
 
@@ -56,7 +58,7 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 
 Dit is een privé-app voor twee personen; er is geen extern meldkanaal nodig.
 Beveiligingsproblemen die we zelf vinden noteren we in
-[`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) (of als GitHub-issue in de private repo) en
+[`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) (of als GitHub-issue in de repo) en
 pakken we met voorrang op. Mocht er ooit toch breder gedeeld worden (niet de
 bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichten.
 
