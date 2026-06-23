@@ -50,6 +50,9 @@
 - **G066 notificatieprivacy:** OS-notificaties tonen standaard generieke tekst; details
   op het vergrendelscherm kunnen alleen na expliciete lokale keuze worden getoond, en
   die keuze wordt versleuteld opgeslagen.
+- **G133 datamodel-sync:** `src/domain/types.ts` bevat nu interfaces voor alle
+  entiteiten uit `DATAMODEL.md`, inclusief later-modules, met een sync-test op
+  entiteiten en kernvelden.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -87,7 +90,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (62 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (64 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

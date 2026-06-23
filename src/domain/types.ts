@@ -107,7 +107,53 @@ export interface KennisItem {
   geverifieerd_met_arts: boolean;
 }
 
+export interface SymptomLog {
+  id: string;
+  datum: IsoDate;
+  owner: Owner;
+  symptoom: string;
+  intensiteit?: number;
+  notitie?: string;
+}
+
+export interface CycleData {
+  id: string;
+  datum: IsoDate;
+  meting: string;
+  waarde: string | number;
+}
+
+export interface CostItem {
+  id: string;
+  trajectId?: string;
+  omschrijving: string;
+  bedrag: number;
+  datum: IsoDate;
+  categorie: 'medicatie' | 'behandeling' | 'reis' | 'overig';
+  vergoed: 'ja' | 'nee' | 'eigen_risico' | 'onbekend';
+}
+
+export type DecisionOption = {
+  titel: string;
+  voors: string[];
+  tegens: string[];
+};
+
+export interface Decision {
+  id: string;
+  onderwerp: string;
+  opties: DecisionOption[];
+  keuze?: string;
+  onderbouwing?: string;
+  datum: IsoDate;
+}
+
 export interface SettingsRecord {
   id: string;
+  profielen?: { peter?: string; partner?: string };
+  gedeeldeModus?: boolean;
+  ai?: { ingeschakeld: boolean; provider?: string; model?: string };
+  herinneringStandaarden?: Record<string, unknown>;
+  taal?: string;
   toonNotificatieDetailsOpVergrendelscherm: boolean;
 }

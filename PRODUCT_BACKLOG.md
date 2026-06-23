@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 97 |
+| ☑ klaar | 98 |
 | ◐ bezig | 0 |
-| ☐ open | 77 |
+| ☐ open | 76 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -234,7 +234,7 @@
 |---|---|---|---|---|
 | G131 | IndexedDB-opslaglaag met repository-interface | P0 | F1 | ☑ |
 | G132 | Records versleuteld; minimale klare-tekst indexvelden | P0 | F1 | ☑ |
-| G133 | Datamodel-types in code synchroon met `DATAMODEL.md` | P1 | F1 | ☐ |
+| G133 | Datamodel-types in code synchroon met `DATAMODEL.md` | P1 | F1 | ☑ |
 | G134 | UUID-id-generatie client-side | P1 | F1 | ☑ |
 | G135 | ISO-8601 datums/tijden als tekst opgeslagen | P1 | F1 | ☑ |
 | G136 | Additieve migratiestrategie (geen betekeniswijziging) | P1 | F1 | ☑ |
