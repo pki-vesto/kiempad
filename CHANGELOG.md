@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G229 PFIP knowledge graph: graph-relaties kunnen lokaal automatisch worden
+  voorgesteld op basis van datum, type en titelmatch en daarna handmatig worden
+  bevestigd.
 - G228 PFIP knowledge graph: nieuw lokaal fertility knowledge graph-model met
   nodes en feitelijke relaties voor behandelingen, documenten, embryo's,
   gesprekken, research en aanbevelingen.

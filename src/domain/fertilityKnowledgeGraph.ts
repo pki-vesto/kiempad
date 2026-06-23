@@ -41,6 +41,18 @@ export type FertilityKnowledgeGraph = {
   waarschuwing: string;
 };
 
+export type FertilityGraphRelatieVoorstel = {
+  id: string;
+  from: string;
+  to: string;
+  type: FertilityGraphEdgeType;
+  label: string;
+  reden: string;
+  bron: string;
+  status: 'voorgesteld';
+  waarschuwing: string;
+};
+
 const GRAPH_WAARSCHUWING =
   'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
 
@@ -249,6 +261,92 @@ export function bouwFertilityKnowledgeGraph(input: {
   };
 }
 
+export function stelFertilityGraphRelatiesVoor(
+  graph: FertilityKnowledgeGraph,
+): FertilityGraphRelatieVoorstel[] {
+  const bestaandeEdges = new Set(
+    graph.edges.map((edge) => `${edge.from}->${edge.type}->${edge.to}`),
+  );
+  const voorstellen: FertilityGraphRelatieVoorstel[] = [];
+  const nodes = graph.nodes;
+
+  const behandelingen = nodes.filter((node) => node.type === 'behandeling');
+  for (const node of nodes.filter((item) => item.type === 'document' || item.type === 'gesprek')) {
+    const match = vindDichtstbijzijndeBehandeling(node, behandelingen);
+    if (!match) continue;
+    const type: FertilityGraphEdgeType = match.id.startsWith('afspraak:')
+      ? 'hoort_bij_afspraak'
+      : 'hoort_bij_behandeling';
+    const key = `${node.id}->${type}->${match.id}`;
+    if (bestaandeEdges.has(key)) continue;
+    voorstellen.push({
+      id: `voorstel:${normaliseerGraphId(key)}`,
+      from: node.id,
+      to: match.id,
+      type,
+      label:
+        type === 'hoort_bij_afspraak'
+          ? `${node.type === 'gesprek' ? 'Gesprek' : 'Document'} mogelijk bij afspraak`
+          : `${node.type === 'gesprek' ? 'Gesprek' : 'Document'} mogelijk bij behandeling`,
+      reden: `Datum ${node.datum ?? 'onbekend'} ligt dicht bij ${match.titel}.`,
+      bron: 'Automatisch voorstel op basis van lokale datum en type',
+      status: 'voorgesteld',
+      waarschuwing: GRAPH_WAARSCHUWING,
+    });
+  }
+
+  const embryoNodes = nodes.filter((node) => node.type === 'embryo');
+  for (const document of nodes.filter((node) => node.type === 'document')) {
+    for (const embryo of embryoNodes) {
+      if (!titelLijktGerelateerd(document.titel, embryo.titel)) continue;
+      const key = `${document.id}->beschrijft_embryo->${embryo.id}`;
+      if (bestaandeEdges.has(key)) continue;
+      voorstellen.push({
+        id: `voorstel:${normaliseerGraphId(key)}`,
+        from: document.id,
+        to: embryo.id,
+        type: 'beschrijft_embryo',
+        label: 'Document mogelijk bij embryo',
+        reden: `Titel bevat embryo-label "${embryo.titel}".`,
+        bron: 'Automatisch voorstel op basis van lokale titelmatch',
+        status: 'voorgesteld',
+        waarschuwing: GRAPH_WAARSCHUWING,
+      });
+    }
+  }
+
+  return voorstellen.sort((a, b) => a.id.localeCompare(b.id));
+}
+
+export function bevestigFertilityGraphRelaties(
+  graph: FertilityKnowledgeGraph,
+  voorstellen: readonly FertilityGraphRelatieVoorstel[],
+  voorstelIds: readonly string[],
+): FertilityKnowledgeGraph {
+  const selectie = new Set(voorstelIds);
+  const nieuweEdges = voorstellen
+    .filter((voorstel) => selectie.has(voorstel.id))
+    .map(
+      (voorstel): FertilityGraphEdge => ({
+        id: `${voorstel.from}->${voorstel.type}->${voorstel.to}`,
+        from: voorstel.from,
+        to: voorstel.to,
+        type: voorstel.type,
+        label: `${voorstel.label} (bevestigd)`,
+        bron: `Handmatig bevestigd: ${voorstel.bron}`,
+        waarschuwing: GRAPH_WAARSCHUWING,
+      }),
+    );
+
+  const edges = new Map(graph.edges.map((edge) => [edge.id, edge]));
+  for (const edge of nieuweEdges) edges.set(edge.id, edge);
+
+  return {
+    ...graph,
+    edges: [...edges.values()].sort((a, b) => a.id.localeCompare(b.id)),
+  };
+}
+
 function trajectNodeId(id: string): string {
   return `traject:${id}`;
 }
@@ -279,6 +377,24 @@ function aanbevelingNodeId(id: string): string {
 
 function bronNodeId(bron: string): string {
   return `bron:${normaliseerGraphId(bron)}`;
+}
+
+function vindDichtstbijzijndeBehandeling(
+  node: FertilityGraphNode,
+  behandelingen: readonly FertilityGraphNode[],
+): FertilityGraphNode | undefined {
+  if (!node.datum) return undefined;
+  const nodeDay = node.datum.slice(0, 10);
+
+  return behandelingen
+    .filter((behandeling) => behandeling.datum?.slice(0, 10) === nodeDay)
+    .sort((a, b) => a.id.localeCompare(b.id))[0];
+}
+
+function titelLijktGerelateerd(titel: string, label: string): boolean {
+  const normalizedTitel = normaliseerGraphId(titel);
+  const normalizedLabel = normaliseerGraphId(label);
+  return Boolean(normalizedLabel) && normalizedTitel.includes(normalizedLabel);
 }
 
 function normaliseerGraphId(value: string): string {

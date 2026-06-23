@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { bouwDagelijksAanbevelingsoverzicht } from '../src/domain/dailyRecommendations';
-import { bouwFertilityKnowledgeGraph } from '../src/domain/fertilityKnowledgeGraph';
+import {
+  bevestigFertilityGraphRelaties,
+  bouwFertilityKnowledgeGraph,
+  stelFertilityGraphRelatiesVoor,
+} from '../src/domain/fertilityKnowledgeGraph';
 import type { ConsultVerslag, DossierDocument, KennisItem } from '../src/domain/types';
 
 describe('fertility knowledge graph', () => {
@@ -148,5 +152,106 @@ describe('fertility knowledge graph', () => {
       ]),
     );
     expect(graph.edges.every((edge) => edge.waarschuwing.includes('geen causaliteit'))).toBe(true);
+  });
+
+  it('stelt graph-relaties automatisch voor en bevestigt geselecteerde relaties handmatig', () => {
+    const embryoDocument = {
+      id: 'doc-embryo',
+      datum: '2026-06-24',
+      titel: 'Embryo A rapport',
+      categorie: 'embryo',
+      bestandsNaam: 'embryo-a.pdf',
+      grootteBytes: 1024,
+      inhoudBase64: 'base64',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo A',
+        kwaliteit: '4AA',
+      },
+      analyse: { samenvatting: 'Embryo A vastgelegd.', signalen: [] },
+      metadata: { bronbestand: 'embryo-a.pdf', extractieBronnen: [] },
+      uploadedAt: '2026-06-24T10:00:00.000Z',
+    } as DossierDocument;
+    const losseDocument = {
+      id: 'doc-los',
+      datum: '2026-06-24',
+      titel: 'Embryo A losse notitie',
+      categorie: 'overig',
+      bestandsNaam: 'notitie.txt',
+      grootteBytes: 128,
+      inhoudBase64: 'base64',
+      analyse: { samenvatting: 'Losse notitie zonder koppeling.', signalen: [] },
+      metadata: { documentDatum: '2026-06-24', bronbestand: 'notitie.txt', extractieBronnen: [] },
+      uploadedAt: '2026-06-24T11:00:00.000Z',
+    } as DossierDocument;
+    const graph = bouwFertilityKnowledgeGraph({
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-24T09:30',
+          type: 'echo',
+        },
+      ],
+      dossierDocuments: [embryoDocument, losseDocument],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+
+    const voorstellen = stelFertilityGraphRelatiesVoor(graph);
+
+    expect(voorstellen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          from: 'document:doc-los',
+          to: 'afspraak:afspraak-1',
+          type: 'hoort_bij_afspraak',
+          status: 'voorgesteld',
+          bron: 'Automatisch voorstel op basis van lokale datum en type',
+        }),
+        expect.objectContaining({
+          from: 'document:doc-los',
+          to: 'embryo:traject-1:embryo-a',
+          type: 'beschrijft_embryo',
+          bron: 'Automatisch voorstel op basis van lokale titelmatch',
+        }),
+      ]),
+    );
+    expect(
+      voorstellen.every((voorstel) => voorstel.waarschuwing.includes('geen causaliteit')),
+    ).toBe(true);
+
+    const geselecteerd = voorstellen.find(
+      (voorstel) => voorstel.from === 'document:doc-los' && voorstel.to === 'afspraak:afspraak-1',
+    );
+    expect(geselecteerd).toBeDefined();
+
+    const bevestigd = bevestigFertilityGraphRelaties(graph, voorstellen, [geselecteerd?.id ?? '']);
+
+    expect(bevestigd.edges).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: geselecteerd ? `${geselecteerd.from}->${geselecteerd.type}->${geselecteerd.to}` : '',
+          label: expect.stringContaining('(bevestigd)'),
+          bron: expect.stringContaining('Handmatig bevestigd'),
+        }),
+      ]),
+    );
+    expect(bevestigd.edges.every((edge) => edge.waarschuwing.includes('geen causaliteit'))).toBe(
+      true,
+    );
   });
 });
