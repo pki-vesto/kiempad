@@ -280,6 +280,9 @@
   afleiden uit ontsleutelde lokale kluisrecords en toont in het trajectscherm een
   rebuildrapport met bronrecordtelling, controlehash en dataverliescontrole zonder
   opslagwrites.
+- **G234 PFIP graph-privacytest:** De testset borgt dat graph-opbouw,
+  relatievoorstellen, contextinzichten, trajectfilters en index-rebuild geen fetch,
+  XHR of sendBeacon starten en dus lokaal blijven.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -412,7 +415,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G233 nog 10 open doelen (G234-G243), gericht op dossier-ingest,
+heeft na G234 nog 9 open doelen (G235-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -462,7 +465,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G234: privacytest dat graphberekening lokaal blijft.
+1. PFIP uitvoeren vanaf G235: exporteerbare graph-samenvatting voor
+   consultvoorbereiding.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 233 |
+| ☑ klaar | 234 |
 | ◐ bezig | 0 |
-| ☐ open | 10 |
+| ☐ open | 9 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -372,7 +372,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G231 | PFIP knowledge graph: graphweergave per traject met filters op type relatie en periode | P2 | F4 | ☑ |
 | G232 | PFIP knowledge graph: relatie tussen research en persoonlijk dossier tonen zonder causale claims | P0 | F4 | ☑ |
 | G233 | PFIP knowledge graph: index rebuild vanuit versleutelde records zonder dataverlies | P1 | F4 | ☑ |
-| G234 | PFIP knowledge graph: privacytest dat graphberekening lokaal blijft | P0 | F4 | ☐ |
+| G234 | PFIP knowledge graph: privacytest dat graphberekening lokaal blijft | P0 | F4 | ☑ |
 | G235 | PFIP knowledge graph: exporteerbare graph-samenvatting voor consultvoorbereiding | P2 | F4 | ☐ |
 | G236 | PFIP fertility timeline: centraal fertiliteitstraject-scherm met onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research | P0 | F3 | ☐ |
 | G237 | PFIP fertility timeline: tijdlijnitems normaliseren uit bestaande afspraken, dossierdocumenten, embryo's, vragen en medicatie | P0 | F3 | ☐ |
