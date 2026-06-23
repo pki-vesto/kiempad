@@ -13,8 +13,42 @@ export type AiSamenvattingPayload = {
   lengteVerstuurd: number;
 };
 
+export type OnDeviceAiCapabilityId = 'prompt' | 'summarizer' | 'translator' | 'language-detector';
+
+export type OnDeviceAiCapability = {
+  id: OnDeviceAiCapabilityId;
+  label: string;
+  globaalObject: string;
+  beschikbaar: boolean;
+  toelichting: string;
+};
+
 export const AI_SAMENVATTING_WAARSCHUWING =
   'AI-samenvatting: concept, niet geverifieerd door een behandelaar.';
+
+const ON_DEVICE_AI_CAPABILITIES: Array<Omit<OnDeviceAiCapability, 'beschikbaar' | 'toelichting'>> =
+  [
+    {
+      id: 'prompt',
+      label: 'Prompt API',
+      globaalObject: 'LanguageModel',
+    },
+    {
+      id: 'summarizer',
+      label: 'Summarizer API',
+      globaalObject: 'Summarizer',
+    },
+    {
+      id: 'translator',
+      label: 'Translator API',
+      globaalObject: 'Translator',
+    },
+    {
+      id: 'language-detector',
+      label: 'Language Detector API',
+      globaalObject: 'LanguageDetector',
+    },
+  ];
 
 export function aiVerzoekToegestaan(
   settings: AppSettings,
@@ -39,6 +73,34 @@ export function assertAiVerzoekToegestaan(settings: AppSettings, intent: AiReque
   if (!result.toegestaan) {
     throw new Error(result.reden);
   }
+}
+
+export function detecteerOnDeviceAiCapabilities(
+  scope: unknown = globalThis,
+): OnDeviceAiCapability[] {
+  const globals = isRecord(scope) ? scope : {};
+
+  return ON_DEVICE_AI_CAPABILITIES.map((capability) => {
+    const beschikbaar = capability.globaalObject in globals;
+
+    return {
+      ...capability,
+      beschikbaar,
+      toelichting: beschikbaar
+        ? 'Browser meldt dit API-object. Kiempad start geen sessie en downloadt geen model.'
+        : 'Niet gemeld door deze browsercontext.',
+    };
+  });
+}
+
+export function beschrijfOnDeviceAiStatus(capabilities: OnDeviceAiCapability[]): string {
+  const aantalBeschikbaar = capabilities.filter((capability) => capability.beschikbaar).length;
+
+  if (aantalBeschikbaar === 0) {
+    return 'Geen lokale browser-AI API-objecten gevonden.';
+  }
+
+  return `${aantalBeschikbaar} lokale browser-AI API-object(en) gevonden; nog geen sessie gestart.`;
 }
 
 export function maakAiSamenvattingPayload(
@@ -71,6 +133,10 @@ export function deidentificeerTekst(tekst: string): string {
     .replace(/[ \t]+/g, ' ')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 
 export function valideerAiOutputPolicy(tekst: string): void {

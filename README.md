@@ -93,6 +93,8 @@ Publicatie via een aparte Tailscale HTTPS-node is voorbereid met
   apparaat).
 - **AI (optioneel, opt-in):** alleen op expliciet verzoek; samenvatten van research
   met waarschuwingslabels en bronvermelding, **nooit** dosering/diagnose/behandelkeuze.
+  De on-device AI-verkenning toont alleen passief lokale browsermogelijkheden; Kiempad
+  start daarbij geen sessie en downloadt geen model.
 - **Sync:** optionele end-to-end versleutelde syncpakketten tussen gekoppelde
   apparaten; een relay of handmatige drager ziet enkel onleesbare blobs.
 

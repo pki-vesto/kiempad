@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G104 on-device AI-verkenning: kennisscherm toont passief welke lokale
+  browser-AI API-objecten beschikbaar lijken, zonder sessie, modeldownload,
+  provider-call of cloud-stap.
 - G143/G144/G145 sync: back-upscherm kan versleutelde syncpakketten downloaden en
   importeren; pakketten bevatten alleen encrypted records en gebruiken last-wins op
   `updatedAt` bij conflicten.

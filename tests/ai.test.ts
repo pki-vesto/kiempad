@@ -3,6 +3,8 @@ import {
   AI_SAMENVATTING_WAARSCHUWING,
   aiVerzoekToegestaan,
   assertAiVerzoekToegestaan,
+  beschrijfOnDeviceAiStatus,
+  detecteerOnDeviceAiCapabilities,
   maakAiSamenvattingKennisItem,
   maakAiSamenvattingPayload,
   valideerAiOutputPolicy,
@@ -80,5 +82,54 @@ describe('AI opt-in guard', () => {
     expect(() => valideerAiOutputPolicy('Neem 10 mg extra op dag 3.')).toThrow('doseringsadvies');
     expect(() => valideerAiOutputPolicy('Dit is waarschijnlijk OHSS.')).toThrow('diagnose');
     expect(() => valideerAiOutputPolicy('Mijn advies: kies voor ICSI.')).toThrow('behandelkeuze');
+  });
+
+  it('detecteert on-device browser-AI objecten zonder sessie of modeldownload te starten', () => {
+    const fakeScope = {
+      LanguageModel: {
+        create: () => {
+          throw new Error('create mag niet worden aangeroepen');
+        },
+      },
+      Summarizer: {
+        availability: () => {
+          throw new Error('availability mag niet worden aangeroepen');
+        },
+      },
+    };
+
+    const capabilities = detecteerOnDeviceAiCapabilities(fakeScope);
+
+    expect(capabilities).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'prompt',
+          globaalObject: 'LanguageModel',
+          beschikbaar: true,
+        }),
+        expect.objectContaining({
+          id: 'summarizer',
+          globaalObject: 'Summarizer',
+          beschikbaar: true,
+        }),
+        expect.objectContaining({
+          id: 'translator',
+          globaalObject: 'Translator',
+          beschikbaar: false,
+        }),
+      ]),
+    );
+    expect(beschrijfOnDeviceAiStatus(capabilities)).toBe(
+      '2 lokale browser-AI API-object(en) gevonden; nog geen sessie gestart.',
+    );
+  });
+
+  it('beschrijft ontbrekende on-device AI als lokale browserstatus', () => {
+    const capabilities = detecteerOnDeviceAiCapabilities({});
+
+    expect(capabilities.every((capability) => !capability.beschikbaar)).toBe(true);
+    expect(beschrijfOnDeviceAiStatus(capabilities)).toBe(
+      'Geen lokale browser-AI API-objecten gevonden.',
+    );
   });
 });

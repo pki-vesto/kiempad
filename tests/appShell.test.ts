@@ -820,6 +820,13 @@ describe('app shell', () => {
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');
     expect(html).toContain('Bewaar AI-instelling');
+    expect(html).toContain('On-device AI');
+    expect(html).toContain('Geen lokale browser-AI API-objecten gevonden.');
+    expect(html).toContain(
+      'Kiempad start geen AI-sessie, downloadt geen model en verstuurt niets.',
+    );
+    expect(html).toContain('LanguageModel');
+    expect(html).toContain('Summarizer');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {
