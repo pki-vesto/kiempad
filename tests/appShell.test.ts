@@ -220,11 +220,42 @@ describe('app shell', () => {
     expect(html).toContain('Notificaties aanzetten');
     expect(html).toContain('id="eigen-herinnering-form"');
     expect(html).toContain('Voeg herinnering toe');
+    expect(html).toContain('Standaard afspraakwaarschuwing');
+    expect(html).toContain('name="afspraakWaarschuwingMinuten"');
     expect(html).toContain('Water drinken');
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eenmalig');
     expect(html).toContain('Dagelijks');
     expect(html).toContain('generieke tekst');
+  });
+
+  it('vult nieuwe afspraakherinnering met standaard waarschuwtijd', () => {
+    const html = renderAppShell('agenda', {
+      trajecten: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        afspraakWaarschuwingMinuten: 45,
+      },
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Consult',
+            datumTijd: '2026-06-24T09:30',
+            type: 'consult',
+          },
+        },
+      ],
+    });
+
+    expect(html).toContain(
+      'name="herinneringTijdstip" type="datetime-local" value="2026-06-24T08:45"',
+    );
   });
 
   it('rendert vragen met afspraakkoppeling en antwoordstatus', () => {

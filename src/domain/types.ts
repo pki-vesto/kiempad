@@ -162,6 +162,7 @@ export interface SettingsRecord {
     apiKey?: string;
     laatsteOptInOp?: IsoDate;
   };
+  afspraakWaarschuwingMinuten?: number;
   herinneringStandaarden?: Record<string, unknown>;
   taal?: string;
   toonNotificatieDetailsOpVergrendelscherm: boolean;
