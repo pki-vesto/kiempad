@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G219 PFIP research intelligence: researchkaarten tonen of herverificatie
+  ongepland, actueel of verouderd is, met jaarlijkse herverificatieplanning na
+  handmatige verificatie.
 - G218 PFIP research intelligence: iedere researchkaart toont bronverificatie,
   publicatiedatum en researchbron, ook wanneer bron of datum nog ontbreekt.
 - G217 PFIP research intelligence: opgeslagen researchitems worden lokaal

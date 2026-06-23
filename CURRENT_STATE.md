@@ -233,6 +233,9 @@
 - **G218 PFIP researchkaart-bronmetadata:** Iedere researchkaart toont
   bronverificatie, publicatiedatum en researchbron, inclusief expliciete labels
   voor ontbrekende bron of onbekende publicatiedatum.
+- **G219 PFIP research-herverificatie:** Researchkaarten tonen of periodieke
+  herverificatie ongepland, actueel of verlopen is; handmatige verificatie plant
+  jaarlijks een nieuwe reviewdatum.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -365,7 +368,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G218 nog 25 open doelen (G219-G243), gericht op dossier-ingest,
+heeft na G219 nog 24 open doelen (G220-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -415,8 +418,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G219: verouderde research markeren en periodieke
-   herverificatie plannen.
+1. PFIP uitvoeren vanaf G220: dagelijks aanbevelingsoverzicht met scheiding
+   vrouw, man en samen.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

@@ -87,6 +87,13 @@ export type ResearchKaartMetadata = {
   publicatieDatum: string;
 };
 
+export type ResearchHerverificatieStatus = {
+  status: 'actueel' | 'herverificatie_nodig' | 'ongepland';
+  label: string;
+  volgendeHerverificatieOp?: string;
+  waarschuwing: string;
+};
+
 export const RESEARCH_TREND_LABELS: Record<ResearchTrendOnderwerp, string> = {
   ivf: 'IVF',
   icsi: 'ICSI',
@@ -398,6 +405,40 @@ export function bouwResearchKaartMetadata(item: KennisItem): ResearchKaartMetada
       ? 'Bronverificatie: bron vastgelegd voor handmatige controle'
       : 'Bronverificatie: bron ontbreekt',
     publicatieDatum: item.researchPublicatie?.publicatieDatum ?? 'Publicatiedatum onbekend',
+  };
+}
+
+export function bouwResearchHerverificatieStatus(
+  item: KennisItem,
+  vandaag = new Date().toISOString().slice(0, 10),
+): ResearchHerverificatieStatus | undefined {
+  if (item.categorie !== 'research') return undefined;
+
+  if (!item.geverifieerdOp || !item.volgendeVerificatieOp) {
+    return {
+      status: 'ongepland',
+      label: 'Herverificatie niet gepland',
+      waarschuwing:
+        'Markeer research pas na handmatige controle; verificatie plant daarna jaarlijkse herverificatie.',
+    };
+  }
+
+  if (item.volgendeVerificatieOp < vandaag) {
+    return {
+      status: 'herverificatie_nodig',
+      label: 'Verouderde research · herverificatie nodig',
+      volgendeHerverificatieOp: item.volgendeVerificatieOp,
+      waarschuwing:
+        'Controleer bron, publicatiedatum en relevantie opnieuw voordat je dit item gebruikt in consultvoorbereiding.',
+    };
+  }
+
+  return {
+    status: 'actueel',
+    label: `Research actueel tot ${item.volgendeVerificatieOp}`,
+    volgendeHerverificatieOp: item.volgendeVerificatieOp,
+    waarschuwing:
+      'Periodieke herverificatie is gepland; controleer dit opnieuw rond de reviewdatum.',
   };
 }
 
