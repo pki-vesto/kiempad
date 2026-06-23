@@ -6,6 +6,7 @@ import {
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
+  bouwResearchDossierRelaties,
   bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
@@ -175,6 +176,54 @@ describe('kennis domeinregels', () => {
           'Relevantie is een contextnotitie voor het gesprek met de kliniek; dit is geen diagnose, dosering of behandelkeuze.',
       },
     ]);
+  });
+
+  it('bouwt research-dossierrelaties met bronpad zonder causale claim', () => {
+    const item = maakResearchKennisItem('research-1', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
+      relevantieVoorGebruiker:
+        'Relevant als achtergrond bij het lopende ICSI-traject en het laatste labverslag.',
+    });
+    const contextBronnen = bouwResearchDossierContextBronnen({
+      trajecten: [{ id: 't1', naam: 'Poging 1', status: 'lopend' }],
+      consultVerslagen: [{ id: 'c1', titel: 'Labconsult', datum: '2026-06-12' }],
+      dossierDocuments: [
+        { id: 'd1', titel: 'Embryolabverslag', datum: '2026-06-10', categorie: 'lab' },
+      ],
+    });
+    const relevantie = bouwResearchRelevantieVoorGebruiker([item], contextBronnen);
+
+    const relaties = bouwResearchDossierRelaties(relevantie);
+
+    expect(relaties).toHaveLength(3);
+    expect(relaties[0]).toMatchObject({
+      id: 'research-1-traject-t1',
+      researchId: 'research-1',
+      researchTitel: 'Artikel over embryo-cultuur',
+      dossierContextBron: {
+        id: 'traject-t1',
+        label: 'Traject: Poging 1',
+        type: 'traject',
+      },
+      relatieLabel: 'Research is gekoppeld als bespreekcontext bij deze dossierbron.',
+      bronpad: [
+        'Research: Artikel over embryo-cultuur',
+        'Publicatie: 2026-05-10',
+        'Traject: Poging 1',
+      ],
+      onzekerheidslabel: 'contextrelatie_geen_causaliteit',
+    });
+    expect(relaties[0]?.waarschuwing).toContain('geen oorzaak');
+    expect(relaties[0]?.waarschuwing).toContain(
+      'geen oorzaak, diagnose, dosering of behandelkeuze',
+    );
   });
 
   it('groepeert researchtrends per onderwerp op basis van lokale trefwoorden', () => {

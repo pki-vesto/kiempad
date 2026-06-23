@@ -74,6 +74,7 @@ import {
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
+  bouwResearchDossierRelaties,
   bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
@@ -86,6 +87,7 @@ import {
   kennisItemsPerCategorie,
   type ResearchAggregatiePlan,
   type ResearchBron,
+  type ResearchDossierRelatie,
   type ResearchHerverificatieStatus,
   type ResearchKaartMetadata,
   type ResearchRelevantieVoorGebruiker,
@@ -1837,6 +1839,7 @@ function renderKennisScreen(state: AppShellState): string {
     state.kennisItems,
     researchDossierContextBronnen,
   );
+  const researchDossierRelaties = bouwResearchDossierRelaties(researchRelevantie);
   const researchTrendGroepen = groepeerResearchTrends(state.kennisItems);
   const researchAggregatie = bouwResearchAggregatiePlan(
     researchBronnen,
@@ -1870,6 +1873,9 @@ function renderKennisScreen(state: AppShellState): string {
       </div>
       <div class="summary-panel">
         ${renderResearchRelevantieVoorGebruiker(researchRelevantie)}
+      </div>
+      <div class="summary-panel">
+        ${renderResearchDossierRelaties(researchDossierRelaties)}
       </div>
       <div class="summary-panel">
         ${renderResearchTrendGroepen(researchTrendGroepen)}
@@ -2177,6 +2183,31 @@ function renderResearchRelevantieVoorGebruiker(
             )
             .join('')}</ol>`
         : '<p class="empty-state">Nog geen relevantie per publicatie aan dossiercontext gekoppeld.</p>'
+    }
+  `;
+}
+
+function renderResearchDossierRelaties(relaties: readonly ResearchDossierRelatie[]): string {
+  return `
+    <h2>Research-dossierrelaties</h2>
+    <p class="small-print">Herleidbare contextrelaties tussen opgeslagen research en lokale dossierbronnen. Dit is geen causaliteit, diagnose, dosering of behandelkeuze.</p>
+    ${
+      relaties.length > 0
+        ? `<ol class="compact-list">${relaties
+            .map(
+              (relatie) => `
+                <li>
+                  <strong>${escapeHtml(relatie.researchTitel)}</strong>
+                  <span>${escapeHtml(relatie.publicatieDatum)} · ${escapeHtml(relatie.dossierContextBron.label)}</span>
+                  <small>${escapeHtml(relatie.relatieLabel)}</small>
+                  <small>Bronpad: ${relatie.bronpad.map((stap) => escapeHtml(stap)).join(' > ')}</small>
+                  <small>Onzekerheid: contextrelatie, geen causaliteit.</small>
+                  <small>${escapeHtml(relatie.waarschuwing)}</small>
+                </li>
+              `,
+            )
+            .join('')}</ol>`
+        : '<p class="empty-state">Nog geen research-dossierrelaties beschikbaar.</p>'
     }
   `;
 }

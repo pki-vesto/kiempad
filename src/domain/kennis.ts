@@ -59,6 +59,19 @@ export type ResearchRelevantieVoorGebruiker = {
   waarschuwing: string;
 };
 
+export type ResearchDossierRelatie = {
+  id: string;
+  researchId: string;
+  researchTitel: string;
+  publicatieDatum: string;
+  bron: string;
+  dossierContextBron: ResearchDossierContextBron;
+  relatieLabel: string;
+  bronpad: string[];
+  onzekerheidslabel: 'contextrelatie_geen_causaliteit';
+  waarschuwing: string;
+};
+
 export type ResearchTrendOnderwerp =
   | 'ivf'
   | 'icsi'
@@ -361,6 +374,30 @@ export function bouwResearchRelevantieVoorGebruiker(
         b.publicatieDatum.localeCompare(a.publicatieDatum) ||
         a.titel.localeCompare(b.titel, 'nl-NL'),
     );
+}
+
+export function bouwResearchDossierRelaties(
+  relevantieItems: readonly ResearchRelevantieVoorGebruiker[],
+): ResearchDossierRelatie[] {
+  return relevantieItems.flatMap((item) =>
+    item.dossierContextBronnen.map((contextBron) => ({
+      id: `${item.id}-${contextBron.id}`,
+      researchId: item.id,
+      researchTitel: item.titel,
+      publicatieDatum: item.publicatieDatum,
+      bron: item.bron,
+      dossierContextBron: contextBron,
+      relatieLabel: 'Research is gekoppeld als bespreekcontext bij deze dossierbron.',
+      bronpad: [
+        `Research: ${item.titel}`,
+        `Publicatie: ${item.publicatieDatum}`,
+        contextBron.label,
+      ],
+      onzekerheidslabel: 'contextrelatie_geen_causaliteit',
+      waarschuwing:
+        'Deze relatie is alleen een contextrelatie voor consultvoorbereiding; dit bewijst geen oorzaak, diagnose, dosering of behandelkeuze.',
+    })),
+  );
 }
 
 export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTrendGroep[] {
