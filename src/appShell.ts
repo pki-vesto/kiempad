@@ -40,6 +40,7 @@ import {
   maakImagingContextSamenvatting,
   zoekDossierDocumenten,
 } from './domain/dossier';
+import { bouwEmbryoDossiers, type EmbryoDossierItem } from './domain/embryoDossier';
 import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
 import {
   HERHALING_LABELS,
@@ -707,6 +708,7 @@ function renderDossierScreen(state: AppShellState): string {
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
+  const embryoDossiers = bouwEmbryoDossiers(zichtbareDocumenten);
   const behandelGeschiedenis = reconstrueerBehandelGeschiedenis({
     afspraken: state.afspraken.map((bundle) => bundle.afspraak),
     consultVerslagen,
@@ -930,6 +932,12 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="compact-list">${indexItems.map(renderDossierIndexItem).join('')}</ol>`
             : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
         }
+        <h2>Embryo-dossiers</h2>
+        ${
+          embryoDossiers.length > 0
+            ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
+            : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
+        }
         <h2>Documenttijdlijn</h2>
         ${
           tijdlijn.length > 0
@@ -1132,6 +1140,33 @@ function renderBehandelGeschiedenisItem(item: BehandelGeschiedenisItem): string 
         <p class="linked-note">${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · Bron: ${escapeHtml(item.bron)}</p>
         <p>${escapeHtml(item.detail)}</p>
         ${koppelingen.length > 0 ? `<p class="small-print">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
+      </div>
+    </li>
+  `;
+}
+
+function renderEmbryoDossier(item: EmbryoDossierItem): string {
+  const details = [
+    item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+    `Laatste datum: ${item.laatsteDatum}`,
+    item.kwaliteiten.length > 0 ? `Kwaliteit: ${item.kwaliteiten.join(', ')}` : undefined,
+    item.statussen.length > 0 ? `Status: ${item.statussen.join(', ')}` : undefined,
+  ].filter((detail): detail is string => Boolean(detail));
+
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.embryoLabel)}</h3>
+        <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
+        <ul class="compact-list">
+          ${item.documenten
+            .map(
+              (document) =>
+                `<li>${escapeHtml(document.datum)} · ${escapeHtml(document.titel)} · ${escapeHtml(document.soort)} · Bron: ${escapeHtml(document.bron)}</li>`,
+            )
+            .join('')}
+        </ul>
+        <p class="small-print">${escapeHtml(item.waarschuwing)}</p>
       </div>
     </li>
   `;
