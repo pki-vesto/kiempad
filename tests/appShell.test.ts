@@ -375,6 +375,39 @@ describe('app shell', () => {
     expect(html).toContain('Bewaar AI-instelling');
   });
 
+  it('rendert kostenposten met categorie, vergoedstatus en CRUD-formulieren', () => {
+    const html = renderAppShell('kosten', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      kosten: [
+        {
+          id: 'cost-1',
+          omschrijving: 'Apotheekfactuur',
+          bedrag: 42.5,
+          datum: '2026-06-23',
+          categorie: 'medicatie',
+          vergoed: 'eigen_risico',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Kostenpost toevoegen');
+    expect(html).toContain('id="kosten-form"');
+    expect(html).toContain('Apotheekfactuur');
+    expect(html).toContain('€');
+    expect(html).toContain('Medicatie');
+    expect(html).toContain('Eigen risico');
+    expect(html).toContain('Werk kostenpost bij');
+    expect(html).toContain('data-kosten-id="cost-1"');
+    expect(html).toContain('eigen polis en verzekeraar blijven leidend');
+  });
+
   it('rendert AI-payloadpreview en samenvatting-opslag in het kennisscherm', () => {
     const html = renderAppShell('kennis', {
       trajecten: [],

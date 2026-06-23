@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G085/G086/G087 kostenbasis: kostenscherm kan kostenposten toevoegen, bewerken en
+  verwijderen met categorie en vergoedstatus, lokaal versleuteld opgeslagen.
 - G094 researchbibliotheek: kennisscherm kan handmatig researchitems met titel,
   bron/link en notitie als versleuteld conceptkennisitem bewaren.
 - G102 AI-provider/modelkeuze: kennisscherm toont provider- en modelvelden in de

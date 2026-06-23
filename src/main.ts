@@ -5,6 +5,7 @@ import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
 import { HerinneringStore } from './domain/herinneringStore';
 import { KennisStore } from './domain/kennisStore';
+import { KostenStore } from './domain/kostenStore';
 import { type MedicatieBundle, MedicatieStore } from './domain/medicatieStore';
 import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import { SettingsStore } from './domain/settingsStore';
@@ -13,6 +14,7 @@ import { maakTraject, type TrajectMetFasen } from './domain/traject';
 import { TrajectStore } from './domain/trajectStore';
 import type {
   Afspraak,
+  CostItem,
   DoseLog,
   Fase,
   Herinnering,
@@ -48,6 +50,7 @@ type RuntimeState = {
   herinneringStore?: HerinneringStore;
   vraagStore?: VraagStore;
   kennisStore?: KennisStore;
+  kostenStore?: KostenStore;
   settingsStore?: SettingsStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -55,6 +58,7 @@ type RuntimeState = {
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
+  kosten: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
@@ -80,6 +84,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     herinneringen: state.herinneringen,
     vragen: state.vragen,
     kennisItems: state.kennisItems,
+    kosten: state.kosten,
     settings: state.settings,
     notificaties: state.notificaties,
     aiPreview: state.aiPreview,
@@ -96,6 +101,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindHerinneringControls(root, state);
   bindVraagControls(root, state);
   bindKennisControls(root, state);
+  bindKostenControls(root, state);
   bindBackupControls(root, state);
   scheduleLocalNotifications(
     state.herinneringen,
@@ -110,6 +116,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.herinneringStore = undefined;
     state.vraagStore = undefined;
     state.kennisStore = undefined;
+    state.kostenStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
@@ -117,6 +124,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.herinneringen = [];
     state.vragen = [];
     state.kennisItems = [];
+    state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
     state.aiError = undefined;
@@ -147,6 +155,7 @@ async function mount(): Promise<void> {
     herinneringen: [],
     vragen: [],
     kennisItems: [],
+    kosten: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: await getNotificationRuntimeStatus(),
   };
@@ -204,6 +213,7 @@ async function importBackupFromForm(
     state.herinneringStore = undefined;
     state.vraagStore = undefined;
     state.kennisStore = undefined;
+    state.kostenStore = undefined;
     state.settingsStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
@@ -211,6 +221,7 @@ async function importBackupFromForm(
     state.herinneringen = [];
     state.vragen = [];
     state.kennisItems = [];
+    state.kosten = [];
     state.settings = DEFAULT_APP_SETTINGS;
     state.aiPreview = undefined;
     state.aiError = undefined;
@@ -242,6 +253,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.medicatieStore = createMedicatieStore(state);
         state.vraagStore = createVraagStore(state);
         state.kennisStore = createKennisStore(state);
+        state.kostenStore = createKostenStore(state);
         state.settingsStore = createSettingsStore(state);
         await state.kennisStore.seedInitialItems();
         state.settings = await state.settingsStore.get();
@@ -251,6 +263,7 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.herinneringen = await state.herinneringStore.list();
         state.vragen = await state.vraagStore.list();
         state.kennisItems = await state.kennisStore.list();
+        state.kosten = await state.kostenStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
         render(root, state);
@@ -373,6 +386,47 @@ async function saveAiSettingsFromForm(
     laatsteOptInOp: ingeschakeld ? new Date().toISOString() : state.settings.ai.laatsteOptInOp,
   });
 
+  await reloadAndRender(root, state);
+}
+
+function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelectorAll<HTMLFormElement>('.kosten-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveKostenFromForm(event.currentTarget, root, state);
+    });
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('.delete-kosten').forEach((button) => {
+    button.addEventListener('click', () => {
+      const kostenId = button.dataset.kostenId;
+      if (!kostenId || !state.kostenStore) return;
+
+      const confirmed = window.confirm(DELETE_CONFIRMATIONS.kosten);
+      if (!confirmed) return;
+
+      void state.kostenStore.delete(kostenId).then(() => reloadAndRender(root, state));
+    });
+  });
+}
+
+async function saveKostenFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.kostenStore) return;
+
+  const data = new FormData(target);
+  await state.kostenStore.save({
+    id: optionalString(data.get('id')),
+    trajectId: optionalString(data.get('trajectId')),
+    omschrijving: String(data.get('omschrijving') ?? ''),
+    datum: String(data.get('datum') ?? ''),
+    bedrag: Number(data.get('bedrag') ?? 0),
+    categorie: parseCostCategorie(data.get('categorie')),
+    vergoed: parseCostVergoed(data.get('vergoed')),
+  });
   await reloadAndRender(root, state);
 }
 
@@ -725,6 +779,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   if (state.kennisStore) {
     state.kennisItems = await state.kennisStore.list();
   }
+  if (state.kostenStore) {
+    state.kosten = await state.kostenStore.list();
+  }
   if (state.settingsStore) {
     state.settings = await state.settingsStore.get();
   }
@@ -771,6 +828,12 @@ function createVraagStore(state: RuntimeState): VraagStore {
 function createKennisStore(state: RuntimeState): KennisStore {
   return new KennisStore(
     new EncryptedRecordRepository<KennisItem>(state.driver, state.session, 'kennis_item'),
+  );
+}
+
+function createKostenStore(state: RuntimeState): KostenStore {
+  return new KostenStore(
+    new EncryptedRecordRepository<CostItem>(state.driver, state.session, 'cost_item'),
   );
 }
 
@@ -855,6 +918,22 @@ function parseTrajectStatus(value: FormDataEntryValue | null): Traject['status']
 function parseHerhaling(value: FormDataEntryValue | null): Herinnering['herhaling'] {
   if (value === 'dagelijks' || value === 'wekelijks' || value === 'eenmalig') return value;
   return 'eenmalig';
+}
+
+function parseCostCategorie(value: FormDataEntryValue | null): CostItem['categorie'] {
+  if (value === 'medicatie' || value === 'behandeling' || value === 'reis' || value === 'overig') {
+    return value;
+  }
+
+  return 'overig';
+}
+
+function parseCostVergoed(value: FormDataEntryValue | null): CostItem['vergoed'] {
+  if (value === 'ja' || value === 'nee' || value === 'eigen_risico' || value === 'onbekend') {
+    return value;
+  }
+
+  return 'onbekend';
 }
 
 function optionalString(value: FormDataEntryValue | null): string | undefined {

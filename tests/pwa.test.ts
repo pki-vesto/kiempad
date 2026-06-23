@@ -46,6 +46,7 @@ describe('destructieve acties', () => {
       'Weet je zeker dat je dit traject en de fasen wilt verwijderen?',
       'Weet je zeker dat je deze afspraak wilt verwijderen?',
       'Weet je zeker dat je deze medicatie en geplande logs wilt verwijderen?',
+      'Weet je zeker dat je deze kostenpost wilt verwijderen?',
     ]);
   });
 });
