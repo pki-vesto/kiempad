@@ -60,6 +60,7 @@ import {
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
+  bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
@@ -71,6 +72,7 @@ import {
   kennisItemsPerCategorie,
   type ResearchAggregatiePlan,
   type ResearchBron,
+  type ResearchHerverificatieStatus,
   type ResearchKaartMetadata,
   type ResearchRelevantieVoorGebruiker,
   type ResearchTrendGroep,
@@ -2344,6 +2346,7 @@ function renderKennisCategorie(label: string, items: KennisItem[]): string {
 function renderKennisItem(item: KennisItem): string {
   const kostenJaar = bepaalKennisKostenJaar(item);
   const researchMetadata = bouwResearchKaartMetadata(item);
+  const researchHerverificatie = bouwResearchHerverificatieStatus(item);
 
   return `
     <li class="phase-item">
@@ -2352,6 +2355,7 @@ function renderKennisItem(item: KennisItem): string {
         <p>${escapeHtml(item.inhoud)}</p>
         <small>Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</small>
         ${researchMetadata ? renderResearchKaartMetadata(researchMetadata) : ''}
+        ${researchHerverificatie ? renderResearchHerverificatieStatus(researchHerverificatie) : ''}
         ${
           item.geverifieerdOp
             ? `<p class="linked-note">Geverifieerd op ${escapeHtml(item.geverifieerdOp)} · review uiterlijk ${escapeHtml(item.volgendeVerificatieOp ?? 'onbekend')}</p>`
@@ -2377,6 +2381,13 @@ function renderKennisItem(item: KennisItem): string {
           : ''
       }
     </li>
+  `;
+}
+
+function renderResearchHerverificatieStatus(status: ResearchHerverificatieStatus): string {
+  return `
+    <p class="linked-note">${escapeHtml(status.label)}${status.volgendeHerverificatieOp ? ` · volgende herverificatie: ${escapeHtml(status.volgendeHerverificatieOp)}` : ''}</p>
+    <small>${escapeHtml(status.waarschuwing)}</small>
   `;
 }
 

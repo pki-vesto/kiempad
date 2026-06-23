@@ -1234,6 +1234,8 @@ describe('app shell', () => {
     expect(html).toContain('Bronverificatie: bron vastgelegd voor handmatige controle');
     expect(html).toContain('Publicatiedatum onbekend');
     expect(html).toContain('Researchbron');
+    expect(html).toContain('Herverificatie niet gepland');
+    expect(html).toContain('verificatie plant daarna jaarlijkse herverificatie');
     expect(html).toContain('Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.');
     expect(html).toContain('Wetenschappelijke samenvattingen');
     expect(html).toContain('Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.');
@@ -1341,6 +1343,41 @@ describe('app shell', () => {
       'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
     );
     expect(html).toContain('Dit is geen behandeladvies');
+  });
+
+  it('markeert verouderde researchkaarten met herverificatieplanning', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      kennisItems: [
+        {
+          id: 'research-eigen',
+          titel: 'Eigen artikel embryo-cultuur',
+          inhoud: 'Lokale notitie bij gevonden artikel.',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          categorie: 'research',
+          researchPublicatie: {
+            publicatieDatum: '2025-05-10',
+            bron: 'https://voorbeeld.test/embryo-cultuur',
+            wetenschappelijkeSamenvatting:
+              'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+          },
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: true,
+          geverifieerdOp: '2025-06-01',
+          volgendeVerificatieOp: '2026-06-01',
+        },
+      ],
+    });
+
+    expect(html).toContain('Verouderde research · herverificatie nodig');
+    expect(html).toContain('volgende herverificatie: 2026-06-01');
+    expect(html).toContain('Controleer bron, publicatiedatum en relevantie opnieuw');
   });
 
   it('rendert eenvoudige researchsamenvattingen met bron en publicatiedatum', () => {

@@ -6,6 +6,7 @@ import {
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
+  bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
   bouwWetenschappelijkeResearchSamenvattingen,
@@ -249,6 +250,37 @@ describe('kennis domeinregels', () => {
     if (!nietResearchItem) return;
 
     expect(bouwResearchKaartMetadata(nietResearchItem)).toBeUndefined();
+  });
+
+  it('markeert verouderde research en plant periodieke herverificatie', () => {
+    const researchItem = maakResearchKennisItem('research-publicatie', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+    });
+    const actueel = markeerKennisItemGeverifieerd(researchItem, true, '2026-06-24');
+    const verouderd = markeerKennisItemGeverifieerd(researchItem, true, '2025-06-01');
+
+    expect(bouwResearchHerverificatieStatus(researchItem, '2026-06-24')).toMatchObject({
+      status: 'ongepland',
+      label: 'Herverificatie niet gepland',
+    });
+    expect(bouwResearchHerverificatieStatus(actueel, '2026-06-24')).toMatchObject({
+      status: 'actueel',
+      label: 'Research actueel tot 2027-06-24',
+      volgendeHerverificatieOp: '2027-06-24',
+    });
+    expect(bouwResearchHerverificatieStatus(verouderd, '2026-06-24')).toMatchObject({
+      status: 'herverificatie_nodig',
+      label: 'Verouderde research · herverificatie nodig',
+      volgendeHerverificatieOp: '2026-06-01',
+    });
+    expect(bouwResearchHerverificatieStatus(actueel, '2026-06-24')?.waarschuwing).toContain(
+      'Periodieke herverificatie is gepland',
+    );
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
