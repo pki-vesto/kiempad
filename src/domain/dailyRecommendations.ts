@@ -1,6 +1,16 @@
 import { komendeAfspraken } from './agenda';
 import { doseLogsVoorDag } from './medicatie';
-import type { Afspraak, DoseLog, Medicatie, Vraag } from './types';
+import { TRAJECT_FASE_LABELS } from './traject';
+import type {
+  Afspraak,
+  CycleData,
+  DoseLog,
+  DossierDocument,
+  Fase,
+  Medicatie,
+  Traject,
+  Vraag,
+} from './types';
 import { openstaandeVragen } from './vraag';
 
 export type DailyRecommendationOwner = 'vrouw' | 'man' | 'samen';
@@ -24,6 +34,9 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
   afspraken: readonly Afspraak[];
   medicatie: readonly { medicatie: Medicatie; doseLogs: DoseLog[] }[];
   vragen: readonly Vraag[];
+  trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
+  dossierDocuments?: readonly DossierDocument[];
+  cycleData?: readonly CycleData[];
 }): DailyRecommendationOverview {
   const afspraak = komendeAfspraken(input.afspraken, `${input.datum}T00:00`)[0];
   const doseLogsVandaag = input.medicatie.flatMap((bundle) =>
@@ -33,9 +46,11 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
     })),
   );
   const vragenOpen = openstaandeVragen(input.vragen);
+  const leefstijlContext = bouwLeefstijlContextAanbeveling(input);
 
   return {
     vrouw: [
+      ...(leefstijlContext ? [leefstijlContext] : []),
       doseLogsVandaag.length > 0
         ? {
             id: 'vrouw-medicatie-vandaag',
@@ -104,4 +119,63 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
           },
     ],
   };
+}
+
+function bouwLeefstijlContextAanbeveling(input: {
+  datum: string;
+  trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
+  dossierDocuments?: readonly DossierDocument[];
+  cycleData?: readonly CycleData[];
+}): DailyRecommendation | undefined {
+  const context = [
+    beschrijfCyclusfase(input.trajecten ?? [], input.datum),
+    beschrijfLaatsteCyclusmeting(input.cycleData ?? []),
+    beschrijfRecentDossierdocument(input.dossierDocuments ?? []),
+  ].filter((regel): regel is string => Boolean(regel));
+
+  if (context.length === 0) return undefined;
+
+  return {
+    id: 'vrouw-leefstijl-context',
+    owner: 'vrouw',
+    titel: 'Leefstijlcontext nalopen',
+    detail: `Gebruik lokale context voor haalbare dagnotities: ${context.join('; ')}.`,
+    bron: 'Dossier, cyclusfase en behandelgeschiedenis',
+    waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+  };
+}
+
+function beschrijfCyclusfase(
+  trajecten: readonly { traject: Traject; fasen: Fase[] }[],
+  datum: string,
+): string | undefined {
+  const actief = trajecten.find((item) => item.traject.status === 'lopend') ?? trajecten[0];
+  if (!actief) return undefined;
+
+  const fase =
+    actief.fasen.find(
+      (item) =>
+        item.startDatum && item.startDatum <= datum && (!item.eindDatum || item.eindDatum >= datum),
+    ) ??
+    [...actief.fasen]
+      .filter((item) => item.startDatum && item.startDatum <= datum)
+      .sort((a, b) => (b.startDatum ?? '').localeCompare(a.startDatum ?? ''))[0];
+
+  return fase ? `cyclusfase ${TRAJECT_FASE_LABELS[fase.fase]}` : `traject ${actief.traject.naam}`;
+}
+
+function beschrijfLaatsteCyclusmeting(items: readonly CycleData[]): string | undefined {
+  const laatste = [...items].sort(
+    (a, b) => b.datum.localeCompare(a.datum) || a.meting.localeCompare(b.meting),
+  )[0];
+  if (!laatste) return undefined;
+
+  return `laatste cyclusmeting ${laatste.meting} op ${laatste.datum}`;
+}
+
+function beschrijfRecentDossierdocument(items: readonly DossierDocument[]): string | undefined {
+  const document = [...items].sort((a, b) => b.datum.localeCompare(a.datum))[0];
+  if (!document) return undefined;
+
+  return `recent dossierdocument ${document.titel} op ${document.datum}`;
 }
