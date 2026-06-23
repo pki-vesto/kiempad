@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G193 PFIP imaging: beeldcontext krijgt een tekstuele contextnotitie met
+  expliciete waarschuwing dat Kiempad het beeld niet medisch analyseert.
 - G192 PFIP imaging: het dossierscherm kan twee beeldmomenten feitelijk
   vergelijken op datum, soort en context met expliciete waarschuwing dat Kiempad
   geen medische beeldinterpretatie doet.

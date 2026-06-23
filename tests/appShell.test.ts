@@ -742,6 +742,10 @@ describe('app shell', () => {
     expect(html).toContain(
       'Tijdlijnkoppeling: Poging: traject-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1',
     );
+    expect(html).toContain('Beeldcontextnotitie: Echo 6 weken');
+    expect(html).toContain(
+      'Deze tekst vat alleen vastgelegde context samen. Kiempad analyseert het beeld niet en geeft geen medisch advies.',
+    );
     expect(html).toContain('alt="Lokale imaging-preview van Echo 6 weken"');
     expect(html).toContain('data:image/jpeg;base64,anBn');
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');

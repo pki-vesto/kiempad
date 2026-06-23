@@ -90,6 +90,13 @@ export type ImagingVergelijking = {
   waarschuwing: string;
 };
 
+export type ImagingContextSamenvatting = {
+  titel: string;
+  notitie: string;
+  waarschuwing: string;
+  bronnen: string[];
+};
+
 export type DossierBeeldClassificatie = ImagingRepositoryItem['soort'];
 
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
@@ -316,6 +323,36 @@ export function bouwImagingVergelijking(
     ],
     waarschuwing:
       'Deze vergelijking toont alleen vastgelegde metadata en notities; Kiempad interpreteert beelden niet medisch.',
+  };
+}
+
+export function maakImagingContextSamenvatting(
+  item: ImagingRepositoryItem,
+): ImagingContextSamenvatting {
+  const koppeling = item.tijdlijnKoppeling;
+  const bronnen = [
+    item.bronbestand,
+    item.context ? 'beeldcontext' : undefined,
+    koppeling.pogingId ? 'pogingkoppeling' : undefined,
+    koppeling.afspraakId ? 'afspraakkoppeling' : undefined,
+    koppeling.cyclusDag ? 'cyclusdag' : undefined,
+    koppeling.embryoLabel ? 'embryokoppeling' : undefined,
+  ].filter((bron): bron is string => Boolean(bron));
+  const contextregels = [
+    `${classificeerBeeldLabel(item.soort)} vastgelegd op ${item.datum}.`,
+    item.context ? `Contextnotitie: ${item.context}.` : undefined,
+    koppeling.pogingId ? `Gekoppeld aan poging/traject ${koppeling.pogingId}.` : undefined,
+    koppeling.afspraakId ? `Gekoppeld aan afspraak ${koppeling.afspraakId}.` : undefined,
+    koppeling.cyclusDag ? `Cyclusdag ${koppeling.cyclusDag}.` : undefined,
+    koppeling.embryoLabel ? `Gekoppeld aan ${koppeling.embryoLabel}.` : undefined,
+  ].filter((regel): regel is string => Boolean(regel));
+
+  return {
+    titel: `Beeldcontextnotitie: ${item.titel}`,
+    notitie: contextregels.join(' '),
+    waarschuwing:
+      'Deze tekst vat alleen vastgelegde context samen. Kiempad analyseert het beeld niet en geeft geen medisch advies.',
+    bronnen,
   };
 }
 

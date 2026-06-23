@@ -10,6 +10,7 @@ import {
   formatBytes,
   maakDossierDocument,
   maakDossierOcrResultaat,
+  maakImagingContextSamenvatting,
   sorteerDossierDocumenten,
   zoekDossierDocumenten,
 } from '../src/domain/dossier';
@@ -549,6 +550,44 @@ describe('dossier', () => {
       ],
       waarschuwing:
         'Deze vergelijking toont alleen vastgelegde metadata en notities; Kiempad interpreteert beelden niet medisch.',
+    });
+  });
+
+  it('maakt alleen een tekstuele beeldcontextnotitie met waarschuwing', () => {
+    const document = maakDossierDocument('img-samenvatting', {
+      datum: '2026-05-04',
+      titel: 'Echo follikelmeting',
+      categorie: 'beeld',
+      bestandsNaam: 'echo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 1024,
+      inhoudBase64: 'anBn',
+      afspraakId: 'afspraak-1',
+      trajectId: 'traject-1',
+      beeldMetadata: {
+        context: 'Follikelmeting links',
+        cyclusDag: 9,
+        embryoLabel: 'Embryo 1',
+      },
+    });
+    const item = bouwImagingRepository([document])[0];
+
+    expect(item).toBeDefined();
+    if (!item) throw new Error('Imaging-item ontbreekt.');
+    expect(maakImagingContextSamenvatting(item)).toEqual({
+      titel: 'Beeldcontextnotitie: Echo follikelmeting',
+      notitie:
+        'Echo vastgelegd op 2026-05-04. Contextnotitie: Follikelmeting links. Gekoppeld aan poging/traject traject-1. Gekoppeld aan afspraak afspraak-1. Cyclusdag 9. Gekoppeld aan Embryo 1.',
+      waarschuwing:
+        'Deze tekst vat alleen vastgelegde context samen. Kiempad analyseert het beeld niet en geeft geen medisch advies.',
+      bronnen: [
+        'echo.jpg',
+        'beeldcontext',
+        'pogingkoppeling',
+        'afspraakkoppeling',
+        'cyclusdag',
+        'embryokoppeling',
+      ],
     });
   });
 
