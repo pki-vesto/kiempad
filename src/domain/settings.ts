@@ -8,10 +8,16 @@ export type AiSettings = {
   laatsteOptInOp?: IsoDate;
 };
 
+export type ResearchNetworkSettings = {
+  ingeschakeld: boolean;
+  laatsteOptInOp?: IsoDate;
+};
+
 export type AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: boolean;
   thema: 'licht' | 'donker';
   ai: AiSettings;
+  researchNetwerk: ResearchNetworkSettings;
   afspraakWaarschuwingMinuten: number;
   laatsteBackupOp?: IsoDate;
 };
@@ -21,6 +27,9 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   thema: 'licht',
   afspraakWaarschuwingMinuten: 30,
   ai: {
+    ingeschakeld: false,
+  },
+  researchNetwerk: {
     ingeschakeld: false,
   },
 };
@@ -41,6 +50,10 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
     ai: {
       ...DEFAULT_APP_SETTINGS.ai,
       ...value?.ai,
+    },
+    researchNetwerk: {
+      ...DEFAULT_APP_SETTINGS.researchNetwerk,
+      ...value?.researchNetwerk,
     },
   };
 }

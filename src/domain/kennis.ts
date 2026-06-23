@@ -21,6 +21,12 @@ export type ResearchBron = {
   toelichting: string;
 };
 
+export type ResearchAggregatiePlan = {
+  status: 'uitgeschakeld' | 'klaar_voor_handmatige_start';
+  bronnen: ResearchBron[];
+  waarschuwing: string;
+};
+
 export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
   {
     id: 'seed-research-eshre',
@@ -144,6 +150,19 @@ export function bouwResearchBronnenCache(items: readonly KennisItem[]): Research
       herkomstVolgorde(a.herkomst) - herkomstVolgorde(b.herkomst) ||
       a.titel.localeCompare(b.titel, 'nl-NL'),
   );
+}
+
+export function bouwResearchAggregatiePlan(
+  bronnen: readonly ResearchBron[],
+  netwerkOptIn: boolean,
+): ResearchAggregatiePlan {
+  return {
+    status: netwerkOptIn ? 'klaar_voor_handmatige_start' : 'uitgeschakeld',
+    bronnen: netwerkOptIn ? [...bronnen] : [],
+    waarschuwing: netwerkOptIn
+      ? 'Netwerkresearch staat aan na expliciete opt-in. Kiempad haalt nog niet automatisch op; de gebruiker start aggregatie handmatig en controleert bronnen.'
+      : 'Netwerkresearch staat uit. Kiempad toont alleen handmatige seed en lokale cache en haalt geen publicaties op.',
+  };
 }
 
 export function filterKennisItems(
