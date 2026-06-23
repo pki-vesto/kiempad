@@ -45,6 +45,7 @@ Conventies:
 | status | `gepland` \| `lopend` \| `afgerond` \| `gepauzeerd` \| `geannuleerd` | |
 | pogingNummer | number | telt voor vergoeding pas na geslaagde punctie |
 | teltMeeVoorVergoeding | boolean? | handmatige markering na geslaagde punctie |
+| gearchiveerd | boolean? | verbergt traject uit actieve lijst zonder records/fasen te verwijderen |
 | notitie | string? | |
 
 ### Fase

@@ -44,6 +44,29 @@ describe('TrajectStore', () => {
     expect(listed[0]?.fasen).toHaveLength(9);
   });
 
+  it('archiveert en herstelt trajecten zonder fasen te verwijderen', async () => {
+    const { store } = await setupStore();
+    const created = await store.create({
+      naam: 'Poging 1',
+      type: 'ivf',
+      startDatum: '2026-06-23',
+      status: 'lopend',
+      pogingNummer: 1,
+    });
+
+    await store.archive(created.traject.id, true);
+    const archived = await store.list();
+
+    expect(archived[0]?.traject.gearchiveerd).toBe(true);
+    expect(archived[0]?.fasen).toHaveLength(created.fasen.length);
+
+    await store.archive(created.traject.id, false);
+    const restored = await store.list();
+
+    expect(restored[0]?.traject.gearchiveerd).toBe(false);
+    expect(restored[0]?.fasen).toHaveLength(created.fasen.length);
+  });
+
   it('wijzigt huidige fase en verwijdert traject plus bijbehorende fasen', async () => {
     const { driver, store } = await setupStore();
     const created = await store.create({

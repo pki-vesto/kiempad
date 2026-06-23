@@ -1051,11 +1051,29 @@ describe('app shell', () => {
           },
           fasen: [],
         },
+        {
+          traject: {
+            id: 'traject-3',
+            naam: 'Poging oud',
+            type: 'ivf',
+            startDatum: '2026-04-01',
+            status: 'afgerond',
+            pogingNummer: 0,
+            gearchiveerd: true,
+          },
+          fasen: [],
+        },
       ],
     });
 
     expect(html).toContain('id="traject-new-form"');
-    expect(html).toContain('Alle pogingen');
+    expect(html).toContain('Alle actieve pogingen');
+    expect(html).toContain('Archiveer traject');
+    expect(html).toContain('Archief');
+    expect(html).toContain('Poging oud');
+    expect(html).toContain('gearchiveerd');
+    expect(html).toContain('Herstel');
+    expect(html).toContain('aria-label="Herstel traject uit archief: Poging oud"');
     expect(html).toContain('Vergoede pogingen');
     expect(html).toContain('Meetellend');
     expect(html).toContain('1 van 3');

@@ -2048,7 +2048,11 @@ function renderDoseLogHistory(doseLogs: DoseLog[]): string {
 }
 
 function renderTrajectScreen(state: AppShellState): string {
-  const selected = state.trajecten[0];
+  const actieveTrajecten = state.trajecten.filter((item) => item.traject.gearchiveerd !== true);
+  const gearchiveerdeTrajecten = state.trajecten.filter(
+    (item) => item.traject.gearchiveerd === true,
+  );
+  const selected = actieveTrajecten[0];
   const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
 
   return `
@@ -2075,7 +2079,10 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2>Fasen</h2>
           ${
             selected
-              ? `<button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}" aria-label="Verwijder traject: ${escapeAttribute(selected.traject.naam)}">Verwijder traject</button>`
+              ? `<div class="button-row">
+                  <button class="phase-button archive-traject" type="button" data-traject-id="${escapeAttribute(selected.traject.id)}" data-gearchiveerd="true" aria-label="Archiveer traject: ${escapeAttribute(selected.traject.naam)}">Archiveer traject</button>
+                  <button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}" aria-label="Verwijder traject: ${escapeAttribute(selected.traject.naam)}">Verwijder traject</button>
+                </div>`
               : ''
           }
         </div>
@@ -2084,7 +2091,8 @@ function renderTrajectScreen(state: AppShellState): string {
             ? renderTimeline(selected)
             : '<p class="empty-state">Nog geen traject. Maak links een poging aan om de vaste fasen te tonen.</p>'
         }
-        ${state.trajecten.length > 0 ? renderTrajectList(state.trajecten) : ''}
+        ${actieveTrajecten.length > 0 ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen') : ''}
+        ${gearchiveerdeTrajecten.length > 0 ? renderTrajectList(gearchiveerdeTrajecten, 'Archief', true) : ''}
       </div>
     </section>
   `;
@@ -2148,19 +2156,28 @@ function renderTrajectForm(
   `;
 }
 
-function renderTrajectList(items: TrajectMetFasen[]): string {
+function renderTrajectList(
+  items: TrajectMetFasen[],
+  title = 'Alle pogingen',
+  archived = false,
+): string {
   return `
-    <h2 class="section-subheading">Alle pogingen</h2>
+    <h2 class="section-subheading">${title}</h2>
     <ol class="phase-list">
       ${items
         .map(
           (item) => `
-            <li class="phase-item">
+            <li class="phase-item${archived ? ' archived' : ''}">
               <div>
                 <h3>${escapeHtml(item.traject.naam)}</h3>
-                <p>Poging ${item.traject.pogingNummer} · ${item.traject.status} · ${item.traject.teltMeeVoorVergoeding ? 'telt mee voor vergoeding' : 'telt nog niet mee'}</p>
+                <p>Poging ${item.traject.pogingNummer} · ${item.traject.status} · ${item.traject.teltMeeVoorVergoeding ? 'telt mee voor vergoeding' : 'telt nog niet mee'}${item.traject.gearchiveerd ? ' · gearchiveerd' : ''}</p>
                 <small>${item.traject.startDatum}</small>
               </div>
+              ${
+                archived
+                  ? `<button class="phase-button archive-traject" type="button" data-traject-id="${escapeAttribute(item.traject.id)}" data-gearchiveerd="false" aria-label="Herstel traject uit archief: ${escapeAttribute(item.traject.naam)}">Herstel</button>`
+                  : ''
+              }
             </li>
           `,
         )

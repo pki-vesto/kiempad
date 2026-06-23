@@ -570,6 +570,10 @@ h2 {
   background: var(--surface-danger);
 }
 
+.phase-item.archived {
+  opacity: 0.82;
+}
+
 .phase-item h3 {
   margin: 0 0 6px;
   font-size: 1rem;

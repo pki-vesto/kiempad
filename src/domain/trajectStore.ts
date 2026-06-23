@@ -1,6 +1,7 @@
 import type { EncryptedRecordRepository } from '../storage/encryptedRepository';
 import { generateRecordId, nowIso } from '../storage/records';
 import {
+  archiveerTraject,
   maakInitiëleFasen,
   maakTraject,
   markeerHuidigeFase,
@@ -40,6 +41,12 @@ export class TrajectStore {
 
   async update(traject: Traject): Promise<void> {
     await this.trajecten.saveWithId(traject);
+  }
+
+  async archive(trajectId: string, gearchiveerd = true): Promise<void> {
+    const record = await this.trajecten.get(trajectId);
+    if (!record) throw new Error('Traject niet gevonden.');
+    await this.trajecten.saveWithId(archiveerTraject(record.value, gearchiveerd));
   }
 
   async delete(trajectId: string): Promise<void> {

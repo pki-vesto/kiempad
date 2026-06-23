@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 164 |
+| ☑ klaar | 165 |
 | ◐ bezig | 1 |
-| ☐ open | 14 |
+| ☐ open | 13 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -75,7 +75,7 @@
 | G026 | Meerdere trajecten/pogingen naast elkaar bewaren | P2 | F2 | ☑ |
 | G027 | Pogingnummer bijhouden t.b.v. vergoedingstelling | P2 | F2 | ☑ |
 | G028 | Notities per traject | P2 | F1 | ☑ |
-| G029 | Trajecten archiveren zonder te verwijderen | P3 | F3 | ☐ |
+| G029 | Trajecten archiveren zonder te verwijderen | P3 | F3 | ☑ |
 | G030 | Trends/overzicht over meerdere cycli | P3 | F3 | ☐ |
 
 ## 3. Agenda & afspraken

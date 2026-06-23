@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G029 trajectarchief: trajecten kunnen uit de actieve lijst worden gearchiveerd en
+  later hersteld zonder traject- of faserecords te verwijderen.
 - G116 vraagkoppeling: afwegingen kunnen aan een bestaande vraag voor de arts
   worden gekoppeld en tonen die context bij de beslisnotitie.
 - G154 donkere modus: topbar heeft een lokale themakeuze en settings bewaren de
