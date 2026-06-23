@@ -9,6 +9,7 @@ export type StoredRecordType =
   | 'herinnering'
   | 'vraag'
   | 'kennis_item'
+  | 'cost_item'
   | 'settings'
   | 'system';
 

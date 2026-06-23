@@ -16,6 +16,7 @@ import {
   localDateTimeIso,
 } from './domain/herinnering';
 import { KENNIS_CATEGORIE_LABELS, kennisItemsPerCategorie } from './domain/kennis';
+import { COST_CATEGORIE_LABELS, COST_VERGOED_LABELS } from './domain/kosten';
 import {
   beschrijfMedicatieDosis,
   doseLogIsGemist,
@@ -32,6 +33,7 @@ import {
 } from './domain/traject';
 import type {
   Afspraak,
+  CostItem,
   DoseLog,
   Herinnering,
   KennisItem,
@@ -54,6 +56,7 @@ type ScreenId =
   | 'herinneringen'
   | 'vragen'
   | 'kennis'
+  | 'kosten'
   | 'backup';
 
 type Screen = {
@@ -116,6 +119,13 @@ export const SCREENS: readonly Screen[] = [
     emptyState: 'Nog geen kennisitems in de app. De vaste inhoud wordt later lokaal geseed.',
   },
   {
+    id: 'kosten',
+    label: 'Kosten',
+    title: 'Kosten & vergoedingen',
+    intro: 'Bewaar kostenposten lokaal; eigen polis en verzekeraar blijven leidend.',
+    emptyState: 'Nog geen kostenposten vastgelegd.',
+  },
+  {
     id: 'backup',
     label: 'Back-up',
     title: 'Back-up & import',
@@ -138,6 +148,7 @@ export type AppShellState = {
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
   kennisItems: KennisItem[];
+  kosten?: CostItem[];
   settings: AppSettings;
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
@@ -157,6 +168,7 @@ export function renderAppShell(
     herinneringen: [],
     vragen: [],
     kennisItems: [],
+    kosten: [],
     settings: DEFAULT_APP_SETTINGS,
     notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
   },
@@ -242,6 +254,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
   if (activeId === 'kennis') return renderKennisScreen(state);
+  if (activeId === 'kosten') return renderKostenScreen(state);
   if (activeId === 'backup') return renderBackupScreen(state);
 
   return `
@@ -313,6 +326,91 @@ function renderKennisScreen(state: AppShellState): string {
           .join('')}
       </div>
     </section>
+  `;
+}
+
+function renderKostenScreen(state: AppShellState): string {
+  const kosten = state.kosten ?? [];
+  const totaal = kosten.reduce((sum, item) => sum + item.bedrag, 0);
+
+  return `
+    <section class="traject-layout" aria-label="Kosten en vergoedingen">
+      <div class="form-panel">
+        <h2>Kostenpost toevoegen</h2>
+        ${renderKostenForm()}
+      </div>
+      <div class="timeline-panel">
+        <h2>Lokale kostenbibliotheek</h2>
+        <p class="small-print">Totaal vastgelegd: ${formatEuro(totaal)}. Dit is geen financieel advies; eigen polis en verzekeraar blijven leidend.</p>
+        ${
+          kosten.length > 0
+            ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>'
+        }
+      </div>
+    </section>
+  `;
+}
+
+function renderKostenForm(selected?: CostItem): string {
+  return `
+    <form ${selected ? 'class="data-form compact-form kosten-form"' : 'id="kosten-form" class="data-form kosten-form"'}>
+      ${selected ? `<input type="hidden" name="id" value="${escapeAttribute(selected.id)}" />` : ''}
+      <label>
+        Omschrijving
+        <input name="omschrijving" value="${escapeAttribute(selected?.omschrijving ?? '')}" autocomplete="off" required />
+      </label>
+      <label>
+        Datum
+        <input name="datum" type="date" value="${escapeAttribute(selected?.datum ?? '')}" required />
+      </label>
+      <label>
+        Bedrag
+        <input name="bedrag" type="number" min="0" step="0.01" value="${selected?.bedrag ?? ''}" required />
+      </label>
+      <label>
+        Categorie
+        <select name="categorie">
+          ${Object.entries(COST_CATEGORIE_LABELS)
+            .map(([value, label]) => renderOption(value, label, selected?.categorie))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Vergoeding
+        <select name="vergoed">
+          ${Object.entries(COST_VERGOED_LABELS)
+            .map(([value, label]) => renderOption(value, label, selected?.vergoed))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Traject-id (optioneel)
+        <input name="trajectId" value="${escapeAttribute(selected?.trajectId ?? '')}" autocomplete="off" />
+      </label>
+      <button type="submit">${selected ? 'Werk kostenpost bij' : 'Bewaar kostenpost'}</button>
+      ${
+        selected
+          ? `<button class="danger-button delete-kosten" type="button" data-kosten-id="${escapeAttribute(selected.id)}">Verwijder kostenpost</button>`
+          : ''
+      }
+    </form>
+  `;
+}
+
+function renderKostenItem(item: CostItem): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.omschrijving)}</h3>
+        <p>${formatEuro(item.bedrag)} · ${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])} · ${escapeHtml(COST_VERGOED_LABELS[item.vergoed])}</p>
+        <small>${escapeHtml(item.datum)}${item.trajectId ? ` · Traject: ${escapeHtml(item.trajectId)}` : ''}</small>
+      </div>
+      <details>
+        <summary>Bewerk</summary>
+        ${renderKostenForm(item)}
+      </details>
+    </li>
   `;
 }
 
@@ -1302,6 +1400,10 @@ function renderPolicyPanel(): string {
 function renderOption(value: string, label: string, current?: string): string {
   const selected = value === current ? ' selected' : '';
   return `<option value="${value}"${selected}>${label}</option>`;
+}
+
+function formatEuro(value: number): string {
+  return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' }).format(value);
 }
 
 function escapeHtml(value: string): string {
