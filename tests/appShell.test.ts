@@ -6,6 +6,7 @@ import {
   renderVaultGate,
   SCREENS,
 } from '../src/appShell';
+import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 
 describe('app shell', () => {
   it('normaliseert onbekende routes naar het startscherm', () => {
@@ -78,6 +79,7 @@ describe('app shell', () => {
       herinneringen: [],
       vragen: [],
       kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       afspraken: [
         {
@@ -118,6 +120,7 @@ describe('app shell', () => {
       herinneringen: [],
       vragen: [],
       kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       medicatie: [
         {
@@ -154,6 +157,7 @@ describe('app shell', () => {
       medicatie: [],
       vragen: [],
       kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'default', serviceWorker: 'unregistered' },
       herinneringen: [
         {
@@ -178,6 +182,7 @@ describe('app shell', () => {
       medicatie: [],
       herinneringen: [],
       kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       afspraken: [
         {
@@ -220,6 +225,7 @@ describe('app shell', () => {
       medicatie: [],
       herinneringen: [],
       vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       kennisItems: [
         {
@@ -239,5 +245,23 @@ describe('app shell', () => {
     expect(html).toContain('Niet AI-gegenereerd');
     expect(html).toContain('Concept · niet geverifieerd');
     expect(html).toContain('Markeer geverifieerd');
+  });
+
+  it('rendert notificatieprivacy standaard als generiek', () => {
+    const html = renderAppShell('herinneringen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      vragen: [],
+      kennisItems: [],
+      herinneringen: [],
+      notificaties: { permission: 'granted', serviceWorker: 'ready' },
+      settings: DEFAULT_APP_SETTINGS,
+    });
+
+    expect(html).toContain('Inhoud op vergrendeld scherm');
+    expect(html).toContain('Altijd generieke tekst');
+    expect(html).toContain('Details tonen na expliciete keuze');
+    expect(html).toContain('value="false" selected');
   });
 });

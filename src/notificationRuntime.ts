@@ -1,4 +1,5 @@
 import { komendeHerinneringen, localDateTimeIso } from './domain/herinnering';
+import type { AppSettings } from './domain/settings';
 import type { Herinnering } from './domain/types';
 
 export type NotificationRuntimeStatus = {
@@ -8,6 +9,16 @@ export type NotificationRuntimeStatus = {
 
 const timers = new Map<string, number>();
 const MAX_TIMER_DELAY_MS = 24 * 60 * 60 * 1000;
+const GENERIC_NOTIFICATION = {
+  title: 'Kiempad herinnering',
+  body: 'Er staat een herinnering klaar.',
+};
+
+export type NotificationDetailMap = Record<string, string | undefined>;
+export type NotificationMessage = {
+  title: string;
+  body: string;
+};
 
 export async function getNotificationRuntimeStatus(): Promise<NotificationRuntimeStatus> {
   if (!('Notification' in globalThis)) {
@@ -51,6 +62,8 @@ export async function registerKiempadServiceWorker(): Promise<
 
 export function scheduleLocalNotifications(
   herinneringen: readonly Herinnering[],
+  settings: AppSettings,
+  details: NotificationDetailMap = {},
   vanaf = new Date(),
 ): void {
   clearScheduledNotifications();
@@ -66,7 +79,10 @@ export function scheduleLocalNotifications(
     if (delay < 0 || delay > MAX_TIMER_DELAY_MS) return;
 
     const timer = window.setTimeout(() => {
-      void notifyViaServiceWorker(item.herinnering.id);
+      void notifyViaServiceWorker(
+        item.herinnering.id,
+        buildNotificationMessage(item.herinnering, settings, details),
+      );
       timers.delete(item.herinnering.id);
     }, delay);
     timers.set(item.herinnering.id, timer);
@@ -80,15 +96,31 @@ export function clearScheduledNotifications(): void {
   timers.clear();
 }
 
-async function notifyViaServiceWorker(id: string): Promise<void> {
+export function buildNotificationMessage(
+  herinnering: Herinnering,
+  settings: AppSettings,
+  details: NotificationDetailMap = {},
+): NotificationMessage {
+  if (!settings.toonNotificatieDetailsOpVergrendelscherm) return GENERIC_NOTIFICATION;
+
+  const detail = details[herinnering.id] ?? details[herinnering.bron.refId ?? ''];
+  if (!detail) return GENERIC_NOTIFICATION;
+
+  return {
+    title: 'Kiempad herinnering',
+    body: detail,
+  };
+}
+
+async function notifyViaServiceWorker(id: string, message: NotificationMessage): Promise<void> {
   const registration = await navigator.serviceWorker.getRegistration('/kiempad-sw.js');
   if (!registration) return;
 
   const worker = registration.active ?? navigator.serviceWorker.controller;
   worker?.postMessage({
     type: 'KIEMPAD_NOTIFY',
-    title: 'Kiempad herinnering',
-    body: 'Er staat een herinnering klaar.',
+    title: message.title,
+    body: message.body,
     tag: `kiempad-herinnering-${id}`,
   });
 }

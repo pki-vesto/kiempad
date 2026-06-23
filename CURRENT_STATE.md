@@ -47,6 +47,9 @@
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.
 - **M1.10 tests & kwaliteit:** Biome lint/format-check toegevoegd, CI draait nu
   lint/format naast typecheck, tests, audit en build; groene CI blijft de merge-gate.
+- **G066 notificatieprivacy:** OS-notificaties tonen standaard generieke tekst; details
+  op het vergrendelscherm kunnen alleen na expliciete lokale keuze worden getoond, en
+  die keuze wordt versleuteld opgeslagen.
 
 ## 2. Gedeeltelijk Gebouwd
 
@@ -84,7 +87,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Geen externe diensten actief; geen data verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test` (56 passing), `npm run build` en `npm audit --audit-level=high`.
+  `npm run test` (62 passing), `npm run build` en `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat

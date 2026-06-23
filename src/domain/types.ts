@@ -106,3 +106,8 @@ export interface KennisItem {
   /** True zodra een behandelaar de inhoud heeft bevestigd. */
   geverifieerd_met_arts: boolean;
 }
+
+export interface SettingsRecord {
+  id: string;
+  toonNotificatieDetailsOpVergrendelscherm: boolean;
+}

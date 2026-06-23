@@ -1,0 +1,42 @@
+import { describe, expect, it } from 'vitest';
+import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
+import { SettingsStore } from '../src/domain/settingsStore';
+import type { SettingsRecord } from '../src/domain/types';
+import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
+import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
+import { VaultSession } from '../src/storage/vaultSession';
+
+async function setupStore(): Promise<{
+  driver: MemoryEncryptedStorageDriver;
+  store: SettingsStore;
+}> {
+  const driver = new MemoryEncryptedStorageDriver();
+  const session = new VaultSession(driver, { autoLockMs: 60_000 });
+  await session.initializeOrUnlock('settings store passphrase');
+
+  return {
+    driver,
+    store: new SettingsStore(
+      new EncryptedRecordRepository<SettingsRecord>(driver, session, 'settings'),
+    ),
+  };
+}
+
+describe('SettingsStore', () => {
+  it('geeft privacyveilige defaults zonder opgeslagen record', async () => {
+    const { store } = await setupStore();
+
+    expect(await store.get()).toEqual(DEFAULT_APP_SETTINGS);
+  });
+
+  it('bewaart notificatieprivacy versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.setNotificationDetailsAllowed(true);
+    const raw = await driver.getRecord('app-settings');
+
+    expect(saved.toonNotificatieDetailsOpVergrendelscherm).toBe(true);
+    expect(raw?.type).toBe('settings');
+    expect(raw?.payload.ciphertext).not.toContain('toonNotificatieDetailsOpVergrendelscherm');
+  });
+});
