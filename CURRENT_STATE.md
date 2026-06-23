@@ -244,12 +244,16 @@
   lokale conceptrecords met herkend uploadprofiel, bestandstype en grootte. Opslag
   vereist expliciete bevestiging dat datum, categorie, uploadprofiel en koppelingen
   zijn gecontroleerd of gecorrigeerd.
+- **G184 PFIP documenttijdlijn:** het dossierscherm bouwt automatisch een
+  documenttijdlijn uit herkende metadata en gebruiker-correcties. De tijdlijn
+  sorteert op de beste bekende documentdatum en toont of die uit metadata of uit
+  de formulierdatum komt.
 
 ## 3. Nog Niet Gebouwd
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G183 nog 60 open doelen (G184-G243), gericht op dossier-ingest,
+heeft na G184 nog 59 open doelen (G185-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -299,8 +303,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G184: medische dossier-ingest uitbreiden met
-   tijdlijnopbouw, indexering en lokale zoekfunctionaliteit.
+1. PFIP uitvoeren vanaf G185: medische dossier-ingest uitbreiden met indexering
+   en lokale zoekfunctionaliteit.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

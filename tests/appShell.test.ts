@@ -583,6 +583,7 @@ describe('app shell', () => {
 
     expect(html).toContain('Dossier');
     expect(html).toContain('Dossierdocument uploaden');
+    expect(html).toContain('Documenttijdlijn');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(
       'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
@@ -614,6 +615,7 @@ describe('app shell', () => {
     expect(html).toContain('Onderzoek');
     expect(html).toContain('Labuitslag');
     expect(html).toContain('Metadata: Datum: 2026-05-01');
+    expect(html).toContain('Tijdlijn: 2026-05-01 · Labuitslag · bron: formulierdatum');
     expect(html).toContain('Instelling: Erasmus MC');
     expect(html).toContain('Documenttype: Labuitslag');
     expect(html).toContain('Bronbestand: bloed-lab-uitslag.pdf');
