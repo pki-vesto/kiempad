@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G054 medicatievoorraad: medicaties kunnen een optionele resterende
+  dosisteller bewaren die lokaal verlaagt bij een genomen DoseLog.
 - G042 ICS-import: agendascherm kan een lokaal `.ics`-bestand van de kliniek lezen
   en afspraken als versleutelde lokale agenda-items opslaan.
 - G041 ICS-export: agendascherm kan alle lokale afspraken als `.ics`-bestand

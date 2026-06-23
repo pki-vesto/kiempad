@@ -84,6 +84,10 @@ export class MedicatieStore {
     const record = await this.doseLogRepository.get(doseLogId);
     if (!record) return;
 
+    if (status === 'genomen' && record.value.status !== 'genomen') {
+      await this.verlaagVoorraad(record.value.medicatieId);
+    }
+
     await this.doseLogRepository.saveWithId(
       markeerDoseLogGenomen(record.value, genomenOp, status, notitie),
     );
@@ -154,6 +158,19 @@ export class MedicatieStore {
     const existing = await this.findMedicatieReminder(doseLog.id);
     const reminder = maakMedicatieHerinnering(existing?.id ?? generateRecordId(), doseLog);
     await this.herinneringRepository.saveWithId(reminder);
+  }
+
+  private async verlaagVoorraad(medicatieId: string): Promise<void> {
+    const record = await this.medicatieRepository.get(medicatieId);
+    if (!record) return;
+
+    const voorraadAantal = record?.value.voorraadAantal;
+    if (voorraadAantal === undefined) return;
+
+    await this.medicatieRepository.saveWithId({
+      ...record.value,
+      voorraadAantal: Math.max(0, voorraadAantal - 1),
+    });
   }
 
   private async deleteMedicatieReminder(doseLogId: string): Promise<void> {

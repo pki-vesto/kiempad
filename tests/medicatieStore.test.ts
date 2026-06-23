@@ -32,6 +32,7 @@ describe('MedicatieStore', () => {
       voorgeschrevenDosis: 'zoals kliniek: 2x per dag',
       instructie: 'ochtend en avond',
       actief: true,
+      voorraadAantal: 12,
       schemaStartDatum: '2026-06-23',
       schemaAantalDagen: 2,
       schemaTijdstip: '08:00',
@@ -44,15 +45,17 @@ describe('MedicatieStore', () => {
       '2026-06-23T08:00',
       '2026-06-24T08:00',
     ]);
+    expect(saved.medicatie.voorraadAantal).toBe(12);
     expect((await driver.listRecords('herinnering')).length).toBe(2);
   });
 
-  it('markeert DoseLogs als genomen of overgeslagen', async () => {
+  it('markeert DoseLogs als genomen en verlaagt voorraad eenmalig', async () => {
     const { driver, store } = await setupStore();
     const saved = await store.save({
       naam: 'Injectie',
       vorm: 'injectie',
       actief: true,
+      voorraadAantal: 1,
       schemaStartDatum: '2026-06-23',
       schemaAantalDagen: 1,
       schemaTijdstip: '20:00',
@@ -72,8 +75,30 @@ describe('MedicatieStore', () => {
       genomenOp: '2026-06-23T20:02',
       notitie: 'plek links',
     });
+    expect(listed[0]?.medicatie.voorraadAantal).toBe(0);
     expect(rawDoseLog?.payload.ciphertext).not.toContain('plek links');
     expect(await driver.listRecords('herinnering')).toEqual([]);
+
+    await store.markDoseLog(saved.doseLogs[0]?.id ?? '', 'genomen', '2026-06-23T20:04');
+
+    expect((await store.list())[0]?.medicatie.voorraadAantal).toBe(0);
+  });
+
+  it('verlaagt voorraad niet bij overgeslagen DoseLogs', async () => {
+    const { store } = await setupStore();
+    const saved = await store.save({
+      naam: 'Tablet',
+      vorm: 'tablet',
+      actief: true,
+      voorraadAantal: 3,
+      schemaStartDatum: '2026-06-23',
+      schemaAantalDagen: 1,
+      schemaTijdstip: '08:00',
+    });
+
+    await store.markDoseLog(saved.doseLogs[0]?.id ?? '', 'overgeslagen', '2026-06-23T08:05');
+
+    expect((await store.list())[0]?.medicatie.voorraadAantal).toBe(3);
   });
 
   it('geeft dagoverzicht en verwijdert DoseLogs samen met medicatie', async () => {

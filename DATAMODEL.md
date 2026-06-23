@@ -78,6 +78,7 @@ Conventies:
 | voorgeschrevenDosis | string? | **zoals door de kliniek opgegeven**; de app berekent geen dosering |
 | instructie | string? | |
 | actief | boolean | |
+| voorraadAantal | number? | optionele teller met resterend aantal doses; geen doseringsadvies |
 
 ### DoseLog (inname/injectie)
 | veld | type | opmerking |

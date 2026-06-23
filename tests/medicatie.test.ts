@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   beschrijfMedicatieDosis,
+  beschrijfMedicatieVoorraad,
   doseLogIsGemist,
   doseLogsVoorDag,
   genereerDoseLogs,
@@ -17,6 +18,7 @@ describe('medicatie domeinregels', () => {
       voorgeschrevenDosis: '  volgens kliniek: 150 IE  ',
       instructie: '  avond  ',
       actief: true,
+      voorraadAantal: 4.8,
     });
 
     expect(medicatie).toEqual({
@@ -26,8 +28,15 @@ describe('medicatie domeinregels', () => {
       voorgeschrevenDosis: 'volgens kliniek: 150 IE',
       instructie: 'avond',
       actief: true,
+      voorraadAantal: 4,
     });
     expect(beschrijfMedicatieDosis(medicatie)).toBe('volgens kliniek: 150 IE');
+    expect(beschrijfMedicatieVoorraad(medicatie)).toBe('4 doses over');
+    expect(
+      beschrijfMedicatieVoorraad(
+        maakMedicatie('med-2', { naam: 'Progesteron', vorm: 'zetpil', actief: true }),
+      ),
+    ).toBe('Voorraad niet ingevuld.');
   });
 
   it('genereert DoseLogs per dag vanuit expliciete planning zonder dosis te berekenen', () => {

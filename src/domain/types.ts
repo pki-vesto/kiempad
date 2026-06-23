@@ -70,6 +70,7 @@ export interface Medicatie {
   voorgeschrevenDosis?: string;
   instructie?: string;
   actief: boolean;
+  voorraadAantal?: number;
 }
 
 export interface DoseLog {

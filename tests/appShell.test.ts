@@ -172,6 +172,7 @@ describe('app shell', () => {
             voorgeschrevenDosis: 'zoals kliniek: 2x per dag',
             instructie: 'ochtend en avond',
             actief: true,
+            voorraadAantal: 6,
           },
           doseLogs: [
             {
@@ -192,6 +193,9 @@ describe('app shell', () => {
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
     expect(html).toContain('zoals kliniek: 2x per dag');
+    expect(html).toContain('name="voorraadAantal" type="number"');
+    expect(html).toContain('value="6"');
+    expect(html).toContain('Voorraad: 6 doses over');
     expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');
     expect(html).toContain('aria-label="Verwijder medicatie: Progesteron"');

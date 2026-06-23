@@ -32,6 +32,7 @@ import {
 } from './domain/kosten';
 import {
   beschrijfMedicatieDosis,
+  beschrijfMedicatieVoorraad,
   doseLogIsGemist,
   doseLogsVoorDag,
   MEDICATIE_VORM_LABELS,
@@ -1957,6 +1958,10 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
         <input name="voorgeschrevenDosis" value="${escapeAttribute(medicatie?.voorgeschrevenDosis ?? '')}" placeholder="Neem exact over van de kliniek" />
       </label>
       <label>
+        Voorraad
+        <input name="voorraadAantal" type="number" min="0" step="1" value="${escapeAttribute(medicatie?.voorraadAantal?.toString() ?? '')}" placeholder="Aantal doses over" />
+      </label>
+      <label>
         Instructie
         <textarea name="instructie" rows="3">${escapeHtml(medicatie?.instructie ?? '')}</textarea>
       </label>
@@ -2034,6 +2039,7 @@ function renderMedicatieList(bundles: MedicatieBundle[]): string {
                 <h3>${escapeHtml(bundle.medicatie.naam)}</h3>
                 <p>${MEDICATIE_VORM_LABELS[bundle.medicatie.vorm]} · ${bundle.medicatie.actief ? 'actief' : 'inactief'}</p>
                 <small>${escapeHtml(beschrijfMedicatieDosis(bundle.medicatie))}</small>
+                <p class="linked-note">Voorraad: ${escapeHtml(beschrijfMedicatieVoorraad(bundle.medicatie))}</p>
                 ${bundle.medicatie.instructie ? `<p class="linked-note">Instructie: ${escapeHtml(bundle.medicatie.instructie)}</p>` : ''}
                 <p class="linked-note">${bundle.doseLogs.length} geplande log(s)</p>
                 ${renderDoseLogHistory(bundle.doseLogs)}
