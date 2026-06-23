@@ -1,6 +1,7 @@
-import type { Afspraak, Vraag } from './types';
+import type { Afspraak } from './types';
 
 export { maakAfspraakHerinnering } from './herinnering';
+export { maakAfspraakVraag } from './vraag';
 
 export const AFSPRAAK_TYPE_LABELS: Record<Afspraak['type'], string> = {
   echo: 'Echo',
@@ -31,15 +32,6 @@ export function maakAfspraak(id: string, input: AfspraakInput): Afspraak {
     locatie: normaliseerOptioneleTekst(input.locatie),
     voorbereiding: normaliseerOptioneleTekst(input.voorbereiding),
     notitie: normaliseerOptioneleTekst(input.notitie),
-  };
-}
-
-export function maakAfspraakVraag(id: string, afspraakId: string, vraag: string): Vraag {
-  return {
-    id,
-    vraag: vraag.trim(),
-    voorAfspraakId: afspraakId,
-    beantwoord: false,
   };
 }
 

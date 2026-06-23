@@ -4,6 +4,7 @@ import { AgendaStore, type AfspraakBundle } from './domain/agendaStore';
 import { HerinneringStore } from './domain/herinneringStore';
 import { MedicatieStore, type MedicatieBundle } from './domain/medicatieStore';
 import { TrajectStore } from './domain/trajectStore';
+import { VraagStore, type VraagBundle } from './domain/vraagStore';
 import type {
   Afspraak,
   DoseLog,
@@ -35,10 +36,12 @@ type RuntimeState = {
   agendaStore?: AgendaStore;
   medicatieStore?: MedicatieStore;
   herinneringStore?: HerinneringStore;
+  vraagStore?: VraagStore;
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
+  vragen: VraagBundle[];
   notificaties: NotificationRuntimeStatus;
   error?: string;
 };
@@ -55,12 +58,14 @@ function render(root: HTMLElement, state: RuntimeState): void {
     afspraken: state.afspraken,
     medicatie: state.medicatie,
     herinneringen: state.herinneringen,
+    vragen: state.vragen,
     notificaties: state.notificaties,
   });
   bindTrajectControls(root, state);
   bindAgendaControls(root, state);
   bindMedicatieControls(root, state);
   bindHerinneringControls(root, state);
+  bindVraagControls(root, state);
   scheduleLocalNotifications(state.herinneringen);
   root.querySelector('#lock-button')?.addEventListener('click', () => {
     state.session.lock();
@@ -68,10 +73,12 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.agendaStore = undefined;
     state.medicatieStore = undefined;
     state.herinneringStore = undefined;
+    state.vraagStore = undefined;
     state.trajecten = [];
     state.afspraken = [];
     state.medicatie = [];
     state.herinneringen = [];
+    state.vragen = [];
     clearScheduledNotifications();
     state.error = undefined;
     render(root, state);
@@ -92,6 +99,7 @@ async function mount(): Promise<void> {
     afspraken: [],
     medicatie: [],
     herinneringen: [],
+    vragen: [],
     notificaties: await getNotificationRuntimeStatus(),
   };
 
@@ -116,10 +124,12 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.agendaStore = createAgendaStore(state);
         state.herinneringStore = createHerinneringStore(state);
         state.medicatieStore = createMedicatieStore(state);
+        state.vraagStore = createVraagStore(state);
         state.trajecten = await state.trajectStore.list();
         state.afspraken = await state.agendaStore.list();
         state.medicatie = await state.medicatieStore.list();
         state.herinneringen = await state.herinneringStore.list();
+        state.vragen = await state.vraagStore.list();
         state.notificaties = await getNotificationRuntimeStatus();
         state.error = undefined;
         render(root, state);
@@ -128,6 +138,25 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         state.error = error instanceof Error ? error.message : 'Ontgrendelen is mislukt.';
         render(root, state);
       });
+  });
+}
+
+function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#vraag-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveVraagFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#delete-vraag')?.addEventListener('click', (event) => {
+    const button = event.currentTarget;
+    if (!(button instanceof HTMLButtonElement)) return;
+    const vraagId = button.dataset.vraagId;
+    if (!vraagId || !state.vraagStore) return;
+
+    const confirmed = window.confirm('Weet je zeker dat je deze vraag wilt verwijderen?');
+    if (!confirmed) return;
+
+    void state.vraagStore.delete(vraagId).then(() => reloadAndRender(root, state));
   });
 }
 
@@ -301,6 +330,25 @@ async function saveAfspraakFromForm(
   await reloadAndRender(root, state);
 }
 
+async function saveVraagFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.vraagStore) return;
+
+  const data = new FormData(target);
+  await state.vraagStore.save({
+    id: optionalString(data.get('id')),
+    vraag: String(data.get('vraag') ?? ''),
+    voorAfspraakId: optionalString(data.get('voorAfspraakId')),
+    beantwoord: data.get('beantwoord') === 'true',
+    antwoord: optionalString(data.get('antwoord')),
+  });
+
+  await reloadAndRender(root, state);
+}
+
 async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<void> {
   if (state.trajectStore) {
     state.trajecten = await state.trajectStore.list();
@@ -313,6 +361,9 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
   }
   if (state.herinneringStore) {
     state.herinneringen = await state.herinneringStore.list();
+  }
+  if (state.vraagStore) {
+    state.vragen = await state.vraagStore.list();
   }
   state.notificaties = await getNotificationRuntimeStatus();
   render(root, state);
@@ -344,6 +395,13 @@ function createMedicatieStore(state: RuntimeState): MedicatieStore {
 function createHerinneringStore(state: RuntimeState): HerinneringStore {
   return new HerinneringStore(
     new EncryptedRecordRepository<Herinnering>(state.driver, state.session, 'herinnering'),
+  );
+}
+
+function createVraagStore(state: RuntimeState): VraagStore {
+  return new VraagStore(
+    new EncryptedRecordRepository<Vraag>(state.driver, state.session, 'vraag'),
+    new EncryptedRecordRepository<Afspraak>(state.driver, state.session, 'afspraak'),
   );
 }
 

@@ -62,6 +62,7 @@ describe('app shell', () => {
       ],
       medicatie: [],
       herinneringen: [],
+      vragen: [],
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       afspraken: [
         {
@@ -100,6 +101,7 @@ describe('app shell', () => {
       trajecten: [],
       afspraken: [],
       herinneringen: [],
+      vragen: [],
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       medicatie: [
         {
@@ -134,6 +136,7 @@ describe('app shell', () => {
       trajecten: [],
       afspraken: [],
       medicatie: [],
+      vragen: [],
       notificaties: { permission: 'default', serviceWorker: 'unregistered' },
       herinneringen: [
         {
@@ -150,5 +153,45 @@ describe('app shell', () => {
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eenmalig');
     expect(html).toContain('generieke tekst');
+  });
+
+  it('rendert vragen met afspraakkoppeling en antwoordstatus', () => {
+    const html = renderAppShell('vragen', {
+      trajecten: [],
+      medicatie: [],
+      herinneringen: [],
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Consult',
+            datumTijd: '2099-06-24T09:00',
+            type: 'consult',
+          },
+        },
+      ],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-1',
+            vraag: 'Wat is de volgende stap?',
+            voorAfspraakId: 'afspraak-1',
+            beantwoord: false,
+          },
+          afspraak: {
+            id: 'afspraak-1',
+            titel: 'Consult',
+            datumTijd: '2099-06-24T09:00',
+            type: 'consult',
+          },
+        },
+      ],
+    });
+
+    expect(html).toContain('Wat is de volgende stap?');
+    expect(html).toContain('Consult');
+    expect(html).toContain('Openstaand');
+    expect(html).toContain('Verwijder vraag');
   });
 });
