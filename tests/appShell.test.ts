@@ -74,6 +74,7 @@ describe('app shell', () => {
             startDatum: '2026-06-23',
             status: 'lopend',
             pogingNummer: 1,
+            teltMeeVoorVergoeding: true,
           },
           fasen: [],
         },
@@ -498,6 +499,7 @@ describe('app shell', () => {
             startDatum: '2026-06-23',
             status: 'lopend',
             pogingNummer: 1,
+            teltMeeVoorVergoeding: true,
           },
           fasen: [],
         },
@@ -509,6 +511,7 @@ describe('app shell', () => {
             startDatum: '2026-08-01',
             status: 'gepland',
             pogingNummer: 2,
+            teltMeeVoorVergoeding: false,
           },
           fasen: [],
         },
@@ -517,7 +520,15 @@ describe('app shell', () => {
 
     expect(html).toContain('id="traject-new-form"');
     expect(html).toContain('Alle pogingen');
+    expect(html).toContain('Vergoede pogingen');
+    expect(html).toContain('Meetellend');
+    expect(html).toContain('1 van 3');
+    expect(html).toContain('Resterend');
+    expect(html).toContain('Telt mee na geslaagde punctie');
+    expect(html).toContain('Markeer een poging pas als meetellend na een geslaagde punctie');
     expect(html).toContain('Poging 1 · lopend');
     expect(html).toContain('Poging 2 · gepland');
+    expect(html).toContain('telt mee voor vergoeding');
+    expect(html).toContain('telt nog niet mee');
   });
 });

@@ -682,6 +682,7 @@ async function saveTrajectFromForm(
     startDatum: String(data.get('startDatum') ?? ''),
     status: parseTrajectStatus(data.get('status')),
     pogingNummer: Number(data.get('pogingNummer') ?? 1),
+    teltMeeVoorVergoeding: data.get('teltMeeVoorVergoeding') === 'true',
     notitie: String(data.get('notitie') ?? ''),
   };
 

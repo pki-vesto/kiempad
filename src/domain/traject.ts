@@ -1,4 +1,5 @@
 import type { Fase, IsoDate, Traject, TrajectFase } from './types';
+import { resterendeVergoedePogingen, VERGOEDE_POGINGEN_PER_ZWANGERSCHAP } from './vergoeding';
 
 export const TRAJECT_FASE_VOLGORDE: readonly TrajectFase[] = [
   'voorbereiding',
@@ -48,6 +49,7 @@ export type TrajectInput = {
   startDatum: IsoDate;
   status: Traject['status'];
   pogingNummer: number;
+  teltMeeVoorVergoeding?: boolean;
   notitie?: string;
 };
 
@@ -64,7 +66,27 @@ export function maakTraject(id: string, input: TrajectInput): Traject {
     startDatum: input.startDatum,
     status: input.status,
     pogingNummer: input.pogingNummer,
+    teltMeeVoorVergoeding: input.teltMeeVoorVergoeding === true,
     notitie: normaliseerOptioneleTekst(input.notitie),
+  };
+}
+
+export type VergoedePogingenTeller = {
+  meetellend: number;
+  resterend: number;
+  maximum: number;
+};
+
+export function berekenVergoedePogingenTeller(
+  trajecten: readonly TrajectMetFasen[],
+): VergoedePogingenTeller {
+  const meetellend = trajecten.filter((item) => item.traject.teltMeeVoorVergoeding === true).length;
+  const resterend = resterendeVergoedePogingen(meetellend);
+
+  return {
+    meetellend,
+    resterend,
+    maximum: VERGOEDE_POGINGEN_PER_ZWANGERSCHAP,
   };
 }
 

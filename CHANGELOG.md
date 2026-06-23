@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G090 vergoede-pogingen-teller: trajectscherm telt handmatig gemarkeerde pogingen
+  die na geslaagde punctie meetellen en toont resterend van drie vergoede pogingen.
 - G089/G092/G093 eigen-risicoteller: kostenscherm toont het gebruikte/resterende
   eigen risico voor 2026, verwijst naar eigen polis/verzekeraar en labelt het
   overzicht als geen financieel advies.

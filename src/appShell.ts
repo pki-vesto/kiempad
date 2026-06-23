@@ -32,6 +32,7 @@ import { type AppSettings, DEFAULT_APP_SETTINGS } from './domain/settings';
 import {
   bepaalHuidigeFase,
   bepaalVolgendeStap,
+  berekenVergoedePogingenTeller,
   TRAJECT_FASE_LABELS,
   type TrajectMetFasen,
 } from './domain/traject';
@@ -1265,6 +1266,7 @@ function renderDoseLogHistory(doseLogs: DoseLog[]): string {
 
 function renderTrajectScreen(state: AppShellState): string {
   const selected = state.trajecten[0];
+  const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
 
   return `
     <section class="traject-layout" aria-label="Traject beheren">
@@ -1278,6 +1280,14 @@ function renderTrajectScreen(state: AppShellState): string {
         }
       </div>
       <div class="timeline-panel">
+        <section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
+          <h2>Vergoede pogingen</h2>
+          <dl class="summary-list">
+            <div><dt>Meetellend</dt><dd>${vergoeding.meetellend} van ${vergoeding.maximum}</dd></div>
+            <div><dt>Resterend</dt><dd>${vergoeding.resterend}</dd></div>
+          </dl>
+          <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
+        </section>
         <div class="panel-heading">
           <h2>Fasen</h2>
           ${
@@ -1343,6 +1353,13 @@ function renderTrajectForm(
         Notitie
         <textarea name="notitie" rows="4">${escapeHtml(traject?.notitie ?? '')}</textarea>
       </label>
+      <label>
+        Vergoedingstelling
+        <select name="teltMeeVoorVergoeding">
+          ${renderOption('false', 'Telt nog niet mee', String(traject?.teltMeeVoorVergoeding === true))}
+          ${renderOption('true', 'Telt mee na geslaagde punctie', String(traject?.teltMeeVoorVergoeding === true))}
+        </select>
+      </label>
       <button type="submit">${submitLabel ?? (traject ? 'Bewaar traject' : 'Maak traject aan')}</button>
     </form>
   `;
@@ -1358,7 +1375,7 @@ function renderTrajectList(items: TrajectMetFasen[]): string {
             <li class="phase-item">
               <div>
                 <h3>${escapeHtml(item.traject.naam)}</h3>
-                <p>Poging ${item.traject.pogingNummer} · ${item.traject.status}</p>
+                <p>Poging ${item.traject.pogingNummer} · ${item.traject.status} · ${item.traject.teltMeeVoorVergoeding ? 'telt mee voor vergoeding' : 'telt nog niet mee'}</p>
                 <small>${item.traject.startDatum}</small>
               </div>
             </li>
