@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 122 |
+| ☑ klaar | 124 |
 | ◐ bezig | 0 |
-| ☐ open | 52 |
+| ☐ open | 50 |
 | **Totaal** | **174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -108,8 +108,8 @@
 | G049 | Inname afvinken (genomen/overgeslagen) met tijdstip | P0 | F1 | ☑ |
 | G050 | Dagoverzicht "wat moet ik vandaag innemen/injecteren" | P0 | F1 | ☑ |
 | G051 | Waarschuwing/markering bij gemiste inname | P1 | F1 | ☑ |
-| G052 | Notitie per inname (bv. bijwerking, plek injectie) | P2 | F2 | ☐ |
-| G053 | Historie van innames per medicatie | P2 | F2 | ☐ |
+| G052 | Notitie per inname (bv. bijwerking, plek injectie) | P2 | F2 | ☑ |
+| G053 | Historie van innames per medicatie | P2 | F2 | ☑ |
 | G054 | Voorraad/teller (nog X doses over) | P3 | F3 | ☐ |
 | G055 | Schema importeren vanaf een klinieklijstje (handmatig invoeren, gestructureerd) | P2 | F2 | ☐ |
 | G056 | Injectie-instructievideo/-tekst koppelen (lokaal, geen tracking) | P3 | F3 | ☐ |

@@ -51,11 +51,13 @@ export function markeerDoseLogGenomen(
   doseLog: DoseLog,
   genomenOp: string,
   status: 'genomen' | 'overgeslagen',
+  notitie?: string,
 ): DoseLog {
   return {
     ...doseLog,
     status,
     genomenOp,
+    notitie: normaliseerOptioneleTekst(notitie),
   };
 }
 

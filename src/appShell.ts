@@ -990,11 +990,22 @@ function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): str
                 <h3>${escapeHtml(medicatie?.naam ?? 'Onbekende medicatie')}</h3>
                 <p>${formatDateTime(doseLog.geplandOp)} · ${doseLog.status}${missed ? ' · gemist' : ''}</p>
                 <small>${escapeHtml(medicatie ? beschrijfMedicatieDosis(medicatie) : '')}</small>
+                ${
+                  doseLog.notitie
+                    ? `<p class="linked-note">Notitie: ${escapeHtml(doseLog.notitie)}</p>`
+                    : ''
+                }
               </div>
-              <div class="button-row">
-                <button class="dose-button" type="button" data-dose-log-id="${doseLog.id}" data-dose-status="genomen">Genomen</button>
-                <button class="dose-button secondary" type="button" data-dose-log-id="${doseLog.id}" data-dose-status="overgeslagen">Overgeslagen</button>
-              </div>
+              <form class="dose-log-form" data-dose-log-id="${doseLog.id}">
+                <label>
+                  Notitie
+                  <input name="doseLogNotitie" value="${escapeAttribute(doseLog.notitie ?? '')}" placeholder="Bijwerking, plek injectie..." />
+                </label>
+                <div class="button-row">
+                  <button class="dose-button" type="submit" name="doseStatus" value="genomen">Genomen</button>
+                  <button class="dose-button secondary" type="submit" name="doseStatus" value="overgeslagen">Overgeslagen</button>
+                </div>
+              </form>
             </li>
           `;
         })
@@ -1016,12 +1027,35 @@ function renderMedicatieList(bundles: MedicatieBundle[]): string {
                 <small>${escapeHtml(beschrijfMedicatieDosis(bundle.medicatie))}</small>
                 ${bundle.medicatie.instructie ? `<p class="linked-note">Instructie: ${escapeHtml(bundle.medicatie.instructie)}</p>` : ''}
                 <p class="linked-note">${bundle.doseLogs.length} geplande log(s)</p>
+                ${renderDoseLogHistory(bundle.doseLogs)}
               </div>
             </li>
           `,
         )
         .join('')}
     </ol>
+  `;
+}
+
+function renderDoseLogHistory(doseLogs: DoseLog[]): string {
+  if (doseLogs.length === 0) return '';
+
+  return `
+    <details class="dose-history">
+      <summary>Historie van innames</summary>
+      <ol class="compact-list">
+        ${doseLogs
+          .map(
+            (doseLog) => `
+              <li>
+                <span>${formatDateTime(doseLog.geplandOp)} · ${doseLog.status}</span>
+                ${doseLog.notitie ? `<small>${escapeHtml(doseLog.notitie)}</small>` : ''}
+              </li>
+            `,
+          )
+          .join('')}
+      </ol>
+    </details>
   `;
 }
 

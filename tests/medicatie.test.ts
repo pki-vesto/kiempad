@@ -63,10 +63,15 @@ describe('medicatie domeinregels', () => {
     expect(doseLogIsGemist(gepland, '2026-06-24T08:00')).toBe(true);
     expect(
       doseLogIsGemist(
-        markeerDoseLogGenomen(gepland, '2026-06-23T20:05', 'genomen'),
+        markeerDoseLogGenomen(gepland, '2026-06-23T20:05', 'genomen', ' linkerbeen '),
         '2026-06-24T08:00',
       ),
     ).toBe(false);
+    expect(
+      markeerDoseLogGenomen(gepland, '2026-06-23T20:05', 'genomen', ' linkerbeen '),
+    ).toMatchObject({
+      notitie: 'linkerbeen',
+    });
   });
 
   it('maakt een dagoverzicht in tijdvolgorde', () => {
