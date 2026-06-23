@@ -127,6 +127,9 @@
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
+- **G146 consult-PDF:** vragenscherm kan een lokaal printbaar consultoverzicht openen
+  met afspraken, vragen en medicatie; de browser kan dit zonder externe dienst als PDF
+  opslaan.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

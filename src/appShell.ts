@@ -1405,6 +1405,7 @@ function renderVragenScreen(state: AppShellState): string {
       <div class="timeline-panel">
         <div class="panel-heading">
           <h2>Openstaand</h2>
+          <button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>
           ${
             selected
               ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}" aria-label="Verwijder vraag: ${escapeAttribute(selected.vraag.vraag)}">Verwijder vraag</button>`

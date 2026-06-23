@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 172 |
+| ☑ klaar | 173 |
 | ◐ bezig | 1 |
-| ☐ open | 6 |
+| ☐ open | 5 |
 | **Totaal** | **179** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -252,7 +252,7 @@
 | G143 | E2E-versleutelde sync tussen apparaten | P3 | F3 | ☐ |
 | G144 | Sync-relay ziet enkel onleesbare blobs | P3 | F3 | ☐ |
 | G145 | Conflictafhandeling bij sync (laatste-wint of merge) | P3 | F3 | ☐ |
-| G146 | PDF-export voor het consult (lokaal gegenereerd) | P3 | F3 | ☐ |
+| G146 | PDF-export voor het consult (lokaal gegenereerd) | P3 | F3 | ☑ |
 
 ## 15. UX, toegankelijkheid & PWA
 

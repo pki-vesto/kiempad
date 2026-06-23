@@ -4,6 +4,7 @@ import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
 import { exporteerAfsprakenAlsIcs, importeerAfsprakenUitIcs } from './domain/agenda';
 import { type AfspraakBundle, AgendaStore } from './domain/agendaStore';
 import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/ai';
+import { maakConsultPrintHtml } from './domain/consultExport';
 import { CycleDataStore } from './domain/cycleDataStore';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
@@ -867,6 +868,10 @@ async function saveKostenFromForm(
 }
 
 function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#export-consult-pdf')?.addEventListener('click', () => {
+    exportConsultPdf(state);
+  });
+
   root.querySelector('#vraag-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveVraagFromForm(event.currentTarget, root, state);
@@ -890,6 +895,22 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
 
     void state.vraagStore.delete(vraagId).then(() => reloadAndRender(root, state));
   });
+}
+
+function exportConsultPdf(state: RuntimeState): void {
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) return;
+
+  printWindow.document.write(
+    maakConsultPrintHtml({
+      afspraken: state.afspraken.map((bundle) => bundle.afspraak),
+      vragen: state.vragen.map((bundle) => bundle.vraag),
+      medicatie: state.medicatie.map((bundle) => bundle.medicatie),
+    }),
+  );
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
 }
 
 async function moveVraagPriorityFromForm(
