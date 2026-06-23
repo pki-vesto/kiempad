@@ -94,6 +94,8 @@
   verzekeraar en labelt het overzicht als geen financieel advies.
 - **G090 vergoede-pogingen-teller:** trajectscherm telt handmatig gemarkeerde pogingen
   die na geslaagde punctie meetellen voor vergoeding en toont resterend van 3.
+- **G084 kostenjaar-markering:** kostenkennisitems tonen automatisch het gevonden
+  jaartal, zodat vergoedingsteksten zichtbaar tijdgebonden blijven.
 - **G139/G140/G141 back-up export/import:** back-upscherm downloadt een
   `.kiempad-export` met versleutelde records en kluismetadata, import zet die blobs
   terug en controleert vooraf de SHA-256-integriteitschecksum.
@@ -156,7 +158,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   vragenscherm kan consultvragen en antwoorden versleuteld beheren; het kennisscherm
   seedt en toont conceptkennis lokaal met bron- en verificatielabels, kan handmatige
   researchitems opslaan en biedt lokale AI-opt-ininstellingen, provider/modelkeuze,
-  payload-preview en AI-samenvatting-opslag; het kostenscherm bewaart kostenposten met
+  payload-preview en AI-samenvatting-opslag en markeert kostenkennis met jaartal; het kostenscherm bewaart kostenposten met
   categorie/vergoedstatus, toont een lokaal kostenoverzicht en bewaakt de
   eigen-risicostand voor 2026; het trajectscherm toont de vergoede-pogingen-teller.
   Het back-upscherm

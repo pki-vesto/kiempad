@@ -15,7 +15,11 @@ import {
   komendeHerinneringen,
   localDateTimeIso,
 } from './domain/herinnering';
-import { KENNIS_CATEGORIE_LABELS, kennisItemsPerCategorie } from './domain/kennis';
+import {
+  bepaalKennisKostenJaar,
+  KENNIS_CATEGORIE_LABELS,
+  kennisItemsPerCategorie,
+} from './domain/kennis';
 import {
   berekenKostenOverzicht,
   COST_CATEGORIE_LABELS,
@@ -535,6 +539,8 @@ function renderKennisCategorie(label: string, items: KennisItem[]): string {
 }
 
 function renderKennisItem(item: KennisItem): string {
+  const kostenJaar = bepaalKennisKostenJaar(item);
+
   return `
     <li class="phase-item">
       <div>
@@ -549,6 +555,7 @@ function renderKennisItem(item: KennisItem): string {
         <div class="label-row">
           <span class="status-pill">${item.ai_gegenereerd ? 'AI-gegenereerd' : 'Niet AI-gegenereerd'}</span>
           <span class="status-pill">${item.geverifieerd_met_arts ? 'Geverifieerd met arts' : 'Concept · niet geverifieerd'}</span>
+          ${kostenJaar ? `<span class="status-pill">Kostenjaar ${escapeHtml(kostenJaar)}</span>` : ''}
         </div>
       </div>
       ${
