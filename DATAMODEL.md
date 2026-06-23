@@ -130,6 +130,15 @@ Conventies:
 | intensiteit | number (1–5)? | |
 | notitie | string? | |
 
+### MentalCheckIn (later)
+| veld | type | opmerking |
+|---|---|---|
+| id | string | |
+| datum | IsoDate | |
+| owner | Owner | |
+| stemming | `goed` \| `ok` \| `zwaar` | korte check-in zonder score |
+| notitie | string? | privé notitie |
+
 ### CycleData (later)
 | veld | type | opmerking |
 |---|---|---|

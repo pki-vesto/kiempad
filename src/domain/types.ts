@@ -121,6 +121,14 @@ export interface SymptomLog {
   notitie?: string;
 }
 
+export interface MentalCheckIn {
+  id: string;
+  datum: IsoDate;
+  owner: Owner;
+  stemming: 'goed' | 'ok' | 'zwaar';
+  notitie?: string;
+}
+
 export interface CycleData {
   id: string;
   datum: IsoDate;

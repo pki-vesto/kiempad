@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 146 |
+| ☑ klaar | 147 |
 | ◐ bezig | 0 |
-| ☐ open | 32 |
+| ☐ open | 31 |
 | **Totaal** | **178** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -194,7 +194,7 @@
 | G105 | SymptomLog toevoegen (datum, symptoom, intensiteit, notitie) | P2 | F2 | ☑ |
 | G106 | Symptomen per dag/over tijd tonen | P2 | F2 | ☑ |
 | G107 | CycleData vastleggen (bv. temperatuur/bloeding) | P3 | F3 | ☐ |
-| G108 | Mentale check-in (stemming) met privé notitie | P2 | F2 | ☐ |
+| G108 | Mentale check-in (stemming) met privé notitie | P2 | F2 | ☑ |
 | G109 | Welzijn-overzicht zonder oordeel/score-druk | P2 | F2 | ☐ |
 | G110 | Owner-markering (peter/partner/samen) bij logs | P2 | F2 | ☐ |
 | G111 | Trends van symptomen/welzijn over meerdere cycli | P3 | F3 | ☐ |

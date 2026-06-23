@@ -432,6 +432,15 @@ describe('app shell', () => {
       kennisItems: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      mentalCheckIns: [
+        {
+          id: 'check-1',
+          datum: '2026-06-23',
+          owner: 'partner',
+          stemming: 'zwaar',
+          notitie: 'Veel spanning vandaag.',
+        },
+      ],
       symptomLogs: [
         {
           id: 'symptom-1',
@@ -451,6 +460,11 @@ describe('app shell', () => {
       ],
     });
 
+    expect(html).toContain('Mentale check-in');
+    expect(html).toContain('id="mental-check-in-form"');
+    expect(html).toContain('name="stemming"');
+    expect(html).toContain('Zwaar');
+    expect(html).toContain('Privé notitie: Veel spanning vandaag.');
     expect(html).toContain('Symptoomlog toevoegen');
     expect(html).toContain('id="symptom-log-form"');
     expect(html).toContain('name="intensiteit" type="number" min="1" max="5"');
