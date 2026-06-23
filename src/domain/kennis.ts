@@ -1,0 +1,103 @@
+import type { KennisItem } from './types';
+
+export const KENNIS_CATEGORIE_LABELS: Record<KennisItem['categorie'], string> = {
+  fasen: 'Fasen',
+  leefstijl: 'Leefstijl',
+  kosten: 'Kosten',
+  research: 'Research',
+  overig: 'Overig',
+};
+
+export const INITIELE_KENNIS_ITEMS: readonly KennisItem[] = [
+  {
+    id: 'seed-fasen-globaal',
+    titel: 'Globale fasen van IVF/ICSI',
+    inhoud:
+      'Concept: voorbereiding, stimulatie, punctie, lab/bevruchting, terugplaatsing, wachttijd, zwangerschapstest en uitslag. Exacte invulling kan per kliniek of protocol afwijken.',
+    bron: 'docs/KENNISBANK.md — Initiële inhoud: Fasen',
+    categorie: 'fasen',
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: false,
+  },
+  {
+    id: 'seed-fasen-ivf-icsi',
+    titel: 'IVF en ICSI op hoofdlijnen',
+    inhoud:
+      'Concept: IVF en ICSI verschillen op hoofdlijnen in de manier waarop de bevruchting in het lab plaatsvindt. Bespreek de betekenis voor jullie traject altijd met de kliniek.',
+    bron: 'docs/KENNISBANK.md — Initiële inhoud: Fasen',
+    categorie: 'fasen',
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: false,
+  },
+  {
+    id: 'seed-leefstijl-algemeen',
+    titel: 'Leefstijl zonder schuld of garanties',
+    inhoud:
+      'Concept: leefstijl rond vruchtbaarheid gaat over wat redelijk en haalbaar is. Kiempad geeft geen beloftes en vervangt geen advies van behandelaars.',
+    bron: 'docs/KENNISBANK.md — Initiële inhoud: Leefstijl',
+    categorie: 'leefstijl',
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: false,
+  },
+  {
+    id: 'seed-kosten-2026-vergoeding',
+    titel: 'Kosten 2026: vergoeding op hoofdlijnen',
+    inhoud:
+      'Concept voor Nederland 2026: de basisverzekering vergoedt volgens het kennisbankplan drie IVF-/ICSI-pogingen per zwangerschap voor vrouwen onder 43 jaar. Eigen polis en verzekeraar zijn leidend.',
+    bron: 'docs/KENNISBANK.md — Kosten NL 2026, te verifiëren met eigen polis/verzekeraar',
+    categorie: 'kosten',
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: false,
+  },
+  {
+    id: 'seed-kosten-2026-eigen-risico',
+    titel: 'Kosten 2026: eigen risico en pogingstelling',
+    inhoud:
+      'Concept voor Nederland 2026: verplicht eigen risico is 385 euro; een poging telt volgens het kennisbankplan pas mee vanaf een geslaagde eicelpunctie.',
+    bron: 'docs/KENNISBANK.md — Kosten NL 2026, te verifiëren met eigen polis/verzekeraar',
+    categorie: 'kosten',
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: false,
+  },
+  {
+    id: 'seed-research-bronnen',
+    titel: 'Researchbronnen verzamelen',
+    inhoud:
+      'Concept: begin met betrouwbare overzichtsbronnen en bewaar eigen gevonden artikelen apart. AI-samenvattingen blijven herkenbaar gelabeld.',
+    bron: 'docs/KENNISBANK.md — Bronnen: Research',
+    categorie: 'research',
+    ai_gegenereerd: false,
+    geverifieerd_met_arts: false,
+  },
+] as const;
+
+export function kennisItemsPerCategorie(
+  items: readonly KennisItem[],
+): Record<KennisItem['categorie'], KennisItem[]> {
+  return Object.keys(KENNIS_CATEGORIE_LABELS).reduce(
+    (grouped, categorie) => ({
+      ...grouped,
+      [categorie]: sorteerKennisItems(items.filter((item) => item.categorie === categorie)),
+    }),
+    {} as Record<KennisItem['categorie'], KennisItem[]>,
+  );
+}
+
+export function markeerKennisItemGeverifieerd(
+  item: KennisItem,
+  geverifieerd = true,
+): KennisItem {
+  return {
+    ...item,
+    geverifieerd_met_arts: geverifieerd,
+  };
+}
+
+export function sorteerKennisItems(items: readonly KennisItem[]): KennisItem[] {
+  return [...items].sort((a, b) => {
+    const categoryOrder =
+      Object.keys(KENNIS_CATEGORIE_LABELS).indexOf(a.categorie) -
+      Object.keys(KENNIS_CATEGORIE_LABELS).indexOf(b.categorie);
+    return categoryOrder || a.titel.localeCompare(b.titel);
+  });
+}

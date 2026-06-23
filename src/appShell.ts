@@ -23,13 +23,24 @@ import {
 } from './domain/vraag';
 import type { VraagBundle } from './domain/vraagStore';
 import {
+  KENNIS_CATEGORIE_LABELS,
+  kennisItemsPerCategorie,
+} from './domain/kennis';
+import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
   komendeHerinneringen,
   localDateTimeIso,
 } from './domain/herinnering';
 import type { NotificationRuntimeStatus } from './notificationRuntime';
-import type { Afspraak, DoseLog, Herinnering, Medicatie, Traject } from './domain/types';
+import type {
+  Afspraak,
+  DoseLog,
+  Herinnering,
+  KennisItem,
+  Medicatie,
+  Traject,
+} from './domain/types';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
@@ -118,6 +129,7 @@ export type AppShellState = {
   medicatie: MedicatieBundle[];
   herinneringen: Herinnering[];
   vragen: VraagBundle[];
+  kennisItems: KennisItem[];
   notificaties: NotificationRuntimeStatus;
 };
 
@@ -129,6 +141,7 @@ export function renderAppShell(
     medicatie: [],
     herinneringen: [],
     vragen: [],
+    kennisItems: [],
     notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
   },
 ): string {
@@ -211,6 +224,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'medicatie') return renderMedicatieScreen(state);
   if (activeId === 'herinneringen') return renderHerinneringenScreen(state);
   if (activeId === 'vragen') return renderVragenScreen(state);
+  if (activeId === 'kennis') return renderKennisScreen(state);
 
   return `
     <section class="workspace" aria-label="${screen.label}">
@@ -220,6 +234,64 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
       </div>
       ${renderPolicyPanel()}
     </section>
+  `;
+}
+
+function renderKennisScreen(state: AppShellState): string {
+  const grouped = kennisItemsPerCategorie(state.kennisItems);
+
+  return `
+    <section class="workspace" aria-label="Kennisbank">
+      <div class="summary-panel priority-panel">
+        <h2>Kennisbank</h2>
+        <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
+        <p>${state.kennisItems.length} item(s) lokaal beschikbaar.</p>
+      </div>
+      <div class="timeline-panel">
+        ${Object.entries(KENNIS_CATEGORIE_LABELS)
+          .map(([categorie, label]) =>
+            renderKennisCategorie(
+              label,
+              grouped[categorie as KennisItem['categorie']],
+            ),
+          )
+          .join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderKennisCategorie(label: string, items: KennisItem[]): string {
+  return `
+    <section class="knowledge-category" aria-label="${label}">
+      <h2>${label}</h2>
+      ${
+        items.length > 0
+          ? `<ol class="phase-list">${items.map(renderKennisItem).join('')}</ol>`
+          : '<p class="empty-state">Nog geen items in deze categorie.</p>'
+      }
+    </section>
+  `;
+}
+
+function renderKennisItem(item: KennisItem): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.titel)}</h3>
+        <p>${escapeHtml(item.inhoud)}</p>
+        <small>Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</small>
+        <div class="label-row">
+          <span class="status-pill">${item.ai_gegenereerd ? 'AI-gegenereerd' : 'Niet AI-gegenereerd'}</span>
+          <span class="status-pill">${item.geverifieerd_met_arts ? 'Geverifieerd met arts' : 'Concept · niet geverifieerd'}</span>
+        </div>
+      </div>
+      ${
+        item.geverifieerd_met_arts
+          ? ''
+          : `<button class="phase-button" type="button" data-kennis-id="${item.id}">Markeer geverifieerd</button>`
+      }
+    </li>
   `;
 }
 
