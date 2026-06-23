@@ -158,8 +158,8 @@
 - G115 beslisverslag: afwegingen zijn terugleesbaar als verslag met onderwerp, datum,
   opties, voors/tegens, keuze en onderbouwing.
 - G179 Tailscale-publicatie: optionele compose-stack en runbook voor een aparte
-  Kiempad HTTPS-node zijn voorbereid; daadwerkelijke tailnet-aanmelding/deploy staat
-  nog open op issue #101.
+  Kiempad HTTPS-node zijn voorbereid, inclusief deploy- en smoke-scripts;
+  daadwerkelijke tailnet-aanmelding/deploy staat nog open op issue #101.
 
 ## 3. Nog Niet Gebouwd
 

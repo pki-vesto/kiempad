@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import compose from '../docker-compose.tailscale.yml?raw';
 import deployDocs from '../docs/TAILSCALE_DEPLOY.md?raw';
+import packageJson from '../package.json?raw';
+import deployScript from '../scripts/deploy-tailscale.sh?raw';
+import smokeScript from '../scripts/smoke-tailscale.sh?raw';
 import serveConfigRaw from '../ts/serve.json?raw';
 
 describe('Tailscale publicatieconfiguratie', () => {
@@ -25,5 +28,21 @@ describe('Tailscale publicatieconfiguratie', () => {
     expect(deployDocs).toContain('Geen Tailscale Funnel');
     expect(deployDocs).toContain('Geen applicatie-backend');
     expect(deployDocs).toContain('IndexedDB');
+  });
+
+  it('biedt herhaalbare npm scripts voor deploy en smoke zonder auth key te loggen', () => {
+    const pkg = JSON.parse(packageJson) as { scripts: Record<string, string> };
+
+    expect(pkg.scripts['deploy:tailscale']).toBe('scripts/deploy-tailscale.sh');
+    expect(pkg.scripts['smoke:tailscale']).toBe('scripts/smoke-tailscale.sh');
+    expect(deployScript).toContain('TS_AUTHKEY ontbreekt');
+    expect(deployScript).toContain('docker compose -f "');
+    const composeFileExpansion = '"$' + '{compose_file}" up -d --build';
+    expect(deployScript).toContain(composeFileExpansion);
+    expect(deployScript).not.toContain('echo "${TS_AUTHKEY');
+    expect(smokeScript).toContain('KIEMPAD_TAILNET_URL');
+    expect(smokeScript).toContain('docker exec kiempad-ts tailscale serve status');
+    expect(deployDocs).toContain('npm run deploy:tailscale');
+    expect(deployDocs).toContain('npm run smoke:tailscale');
   });
 });
