@@ -37,7 +37,7 @@ describe('DossierStore', () => {
       trajectId: 'traject-1',
       embryo: {
         label: 'Embryo 1',
-        kwaliteit: '4AA',
+        kwaliteit: 'Gardner-score 4AA dag 5 blastocyst',
         status: 'teruggeplaatst',
       },
       notitie: 'oude uitslag',
@@ -50,7 +50,8 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('afspraak-1');
     expect(raw?.payload.ciphertext).not.toContain('traject-1');
     expect(raw?.payload.ciphertext).not.toContain('Embryo 1');
-    expect(raw?.payload.ciphertext).not.toContain('4AA');
+    expect(raw?.payload.ciphertext).not.toContain('Gardner-score');
+    expect(raw?.payload.ciphertext).not.toContain('dag 5 blastocyst');
     expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
     expect(await store.list()).toEqual([saved]);
   });
