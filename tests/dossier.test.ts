@@ -652,7 +652,13 @@ describe('dossier', () => {
       inhoudBase64: 'anBn',
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
-      beeldMetadata: { cyclusDag: 5, embryoLabel: 'Embryo 1' },
+      beeldMetadata: {
+        cyclusDag: 5,
+        embryoLabel: 'Embryo 1',
+        embryoId: 'E1',
+        embryoDag: 5,
+        laboratoriumContext: 'Labfoto dag 5',
+      },
     });
     const echoBeeld = maakDossierDocument('img-echo-filter', {
       datum: '2026-05-01',
@@ -682,6 +688,11 @@ describe('dossier', () => {
     expect(
       filterImagingRepository(repository, { embryoLabel: 'embryo 1' }).map((i) => i.id),
     ).toEqual(['img-embryo-filter']);
+    expect(repository[0]?.tijdlijnKoppeling).toMatchObject({
+      embryoId: 'E1',
+      embryoDag: 5,
+      laboratoriumContext: 'Labfoto dag 5',
+    });
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {

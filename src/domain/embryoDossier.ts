@@ -8,6 +8,9 @@ export type EmbryoDossierItem = {
   laatsteDatum: string;
   kwaliteiten: string[];
   statussen: string[];
+  embryoIds: string[];
+  embryoDagen: number[];
+  laboratoriumContexten: string[];
   documenten: {
     id: string;
     datum: string;
@@ -59,6 +62,19 @@ function bouwEmbryoDossier(
       .filter((status) => status !== undefined)
       .map((status) => status.toString()),
   );
+  const embryoIds = uniekeWaarden(
+    dossierDocumenten.map((document) => document.beeldMetadata?.embryoId).filter(isString),
+  );
+  const embryoDagen = uniekeNummers(
+    dossierDocumenten
+      .map((document) => document.beeldMetadata?.embryoDag ?? document.embryo?.dag)
+      .filter((dag): dag is number => Number.isFinite(dag)),
+  );
+  const laboratoriumContexten = uniekeWaarden(
+    dossierDocumenten
+      .map((document) => document.beeldMetadata?.laboratoriumContext)
+      .filter(isString),
+  );
 
   return {
     id: sleutel,
@@ -67,6 +83,9 @@ function bouwEmbryoDossier(
     laatsteDatum: bepaalDatum(dossierDocumenten[dossierDocumenten.length - 1] ?? eerste),
     kwaliteiten,
     statussen,
+    embryoIds,
+    embryoDagen,
+    laboratoriumContexten,
     documenten: dossierDocumenten.map((document) => ({
       id: document.id,
       datum: bepaalDatum(document),
@@ -80,7 +99,11 @@ function bouwEmbryoDossier(
 }
 
 function bepaalEmbryoLabel(document: DossierDocument): string | undefined {
-  return document.embryo?.label ?? document.beeldMetadata?.embryoLabel;
+  return (
+    document.embryo?.label ??
+    document.beeldMetadata?.embryoLabel ??
+    document.beeldMetadata?.embryoId
+  );
 }
 
 function bepaalDatum(document: DossierDocument | undefined): string {
@@ -108,6 +131,10 @@ function normaliseerLabel(label: string): string {
 
 function uniekeWaarden(values: string[]): string[] {
   return [...new Set(values)];
+}
+
+function uniekeNummers(values: number[]): number[] {
+  return [...new Set(values)].sort((a, b) => a - b);
 }
 
 function isString(value: string | undefined): value is string {

@@ -32,6 +32,9 @@ export type DossierBeeldMetadataInput = {
   bron?: string;
   cyclusDag?: number;
   embryoLabel?: string;
+  embryoId?: string;
+  embryoDag?: number;
+  laboratoriumContext?: string;
 };
 
 export type DossierOcrInput = {
@@ -78,6 +81,9 @@ export type ImagingRepositoryItem = {
     afspraakId?: string;
     cyclusDag?: number;
     embryoLabel?: string;
+    embryoId?: string;
+    embryoDag?: number;
+    laboratoriumContext?: string;
   };
   previewState: ImagingPreviewState;
   mimeType?: string;
@@ -437,9 +443,15 @@ export function maakBeeldMetadata(
   const afspraakId = document.afspraakId?.trim();
   const trajectId = document.trajectId?.trim();
   const embryoLabel = input?.embryoLabel?.trim();
+  const embryoId = input?.embryoId?.trim();
+  const laboratoriumContext = input?.laboratoriumContext?.trim();
   const cyclusDag =
     input?.cyclusDag && Number.isFinite(input.cyclusDag) && input.cyclusDag > 0
       ? Math.round(input.cyclusDag)
+      : undefined;
+  const embryoDag =
+    input?.embryoDag && Number.isFinite(input.embryoDag) && input.embryoDag > 0
+      ? Math.round(input.embryoDag)
       : undefined;
 
   return {
@@ -450,6 +462,9 @@ export function maakBeeldMetadata(
     trajectId: trajectId || undefined,
     cyclusDag,
     embryoLabel: embryoLabel || undefined,
+    embryoId: embryoId || undefined,
+    embryoDag,
+    laboratoriumContext: laboratoriumContext || undefined,
   };
 }
 
@@ -461,6 +476,9 @@ export function bouwImagingTijdlijnKoppeling(
     afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
     cyclusDag: document.beeldMetadata?.cyclusDag,
     embryoLabel: document.beeldMetadata?.embryoLabel ?? document.embryo?.label,
+    embryoId: document.beeldMetadata?.embryoId,
+    embryoDag: document.beeldMetadata?.embryoDag,
+    laboratoriumContext: document.beeldMetadata?.laboratoriumContext,
   };
 }
 

@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G205 PFIP embryo tracking: embryo-uploads kunnen worden gekoppeld aan
+  embryo-id, embryodag, poging en laboratoriumcontext en verschijnen zo in de
+  imaging-tijdlijn en het embryo-dossier.
 - G204 PFIP embryo tracking: dossierscherm toont een embryo-dossier per embryo
   binnen een poging met kwaliteit, status en gekoppelde documenten.
 - G203 PFIP consult intelligence: consult-AI-output wordt expliciet gefilterd tegen
