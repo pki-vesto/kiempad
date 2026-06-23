@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G115 beslisverslag: afwegingen tonen een terugleesbaar verslag met onderwerp,
+  datum, opties, voors/tegens, keuze en onderbouwing.
 - G114 keuzevastlegging: beslisnotities kunnen een gemaakte keuze met datum en
   onderbouwing lokaal versleuteld bewaren en terug tonen.
 - G179 publicatiedoel toegevoegd: Kiempad via Tailscale op een aparte HTTPS-node

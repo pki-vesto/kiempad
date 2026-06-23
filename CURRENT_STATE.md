@@ -155,6 +155,8 @@
   versleuteld bewaren en terug tonen.
 - G114 keuzevastlegging: beslisnotities kunnen een gemaakte keuze met datum en
   onderbouwing lokaal versleuteld bewaren en terug tonen.
+- G115 beslisverslag: afwegingen zijn terugleesbaar als verslag met onderwerp, datum,
+  opties, voors/tegens, keuze en onderbouwing.
 
 ## 3. Nog Niet Gebouwd
 

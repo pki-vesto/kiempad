@@ -371,6 +371,7 @@ function renderDecisionItem(item: Decision): string {
         <ul class="compact-list">
           ${item.opties.map(renderDecisionOption).join('')}
         </ul>
+        ${renderDecisionReport(item)}
         ${renderDecisionChoiceForm(item)}
       </div>
     </li>
@@ -413,6 +414,31 @@ function renderDecisionChoiceForm(item: Decision): string {
       </label>
       <button type="submit">Bewaar keuze</button>
     </form>
+  `;
+}
+
+function renderDecisionReport(item: Decision): string {
+  return `
+    <section class="linked-note" aria-label="Beslisverslag ${escapeAttribute(item.onderwerp)}">
+      <h4>Beslisverslag</h4>
+      <p>Onderwerp: ${escapeHtml(item.onderwerp)}</p>
+      <p>Datum: ${escapeHtml(item.datum)}</p>
+      <ol class="compact-list">
+        ${item.opties.map(renderDecisionReportOption).join('')}
+      </ol>
+      <p>Gemaakte keuze: ${escapeHtml(item.keuze ?? 'Nog niet vastgelegd')}</p>
+      <p>Onderbouwing: ${escapeHtml(item.onderbouwing ?? 'Nog niet vastgelegd')}</p>
+    </section>
+  `;
+}
+
+function renderDecisionReportOption(optie: Decision['opties'][number]): string {
+  return `
+    <li>
+      <strong>${escapeHtml(optie.titel)}</strong>
+      <span>Voors: ${optie.voors.length > 0 ? optie.voors.map(escapeHtml).join('; ') : 'Geen voors vastgelegd'}</span>
+      <span>Tegens: ${optie.tegens.length > 0 ? optie.tegens.map(escapeHtml).join('; ') : 'Geen tegens vastgelegd'}</span>
+    </li>
   `;
 }
 
