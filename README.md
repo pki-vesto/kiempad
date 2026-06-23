@@ -81,7 +81,8 @@ docker compose up -d --build    # of: make up   — serveert op http://localhost
 ```
 
 Publicatie via een aparte Tailscale HTTPS-node is voorbereid met
-`docker-compose.tailscale.yml`; zie [`docs/TAILSCALE_DEPLOY.md`](docs/TAILSCALE_DEPLOY.md).
+`docker-compose.tailscale.yml` en `npm run deploy:tailscale`; zie
+[`docs/TAILSCALE_DEPLOY.md`](docs/TAILSCALE_DEPLOY.md).
 
 ## Architecture Summary
 

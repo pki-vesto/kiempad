@@ -8,7 +8,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 
 ### Added
 - G179 Tailscale-publicatie: optionele compose-stack, Serve-config en runbook voor
-  een aparte Kiempad HTTPS-node voorbereid.
+  een aparte Kiempad HTTPS-node voorbereid, inclusief deploy- en smoke-scripts.
 - G115 beslisverslag: afwegingen tonen een terugleesbaar verslag met onderwerp,
   datum, opties, voors/tegens, keuze en onderbouwing.
 - G114 keuzevastlegging: beslisnotities kunnen een gemaakte keuze met datum en

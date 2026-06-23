@@ -51,7 +51,7 @@ Vanaf de Kiempad-repo op de doelhost:
 
 ```bash
 cd ~/kiempad
-TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
 ```
 
 Verwachte containers:
@@ -76,6 +76,12 @@ Tailnet-smoke vanaf een apparaat in de tailnet:
 curl -I https://kiempad.<tailnet>.ts.net
 ```
 
+Gecombineerde smoke:
+
+```bash
+KIEMPAD_TAILNET_URL=https://kiempad.<tailnet>.ts.net npm run smoke:tailscale
+```
+
 In de Tailscale-container:
 
 ```bash
@@ -89,7 +95,7 @@ Update naar de nieuwste `main`:
 
 ```bash
 git pull --ff-only
-TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
 ```
 
 Logs:

@@ -50,11 +50,12 @@ houd hem dan privé/achter de tailnet.
 Voor de Shred/Healthcore-achtige publicatieroute is er een aparte compose-stack:
 
 ```bash
-TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
 ```
 
 Die stack maakt een eigen Tailscale-node `kiempad`, gebruikt Tailscale Serve voor
 HTTPS op `https://kiempad.<tailnet>.ts.net` en proxyt naar de statische nginx-PWA.
+Controleer daarna met `KIEMPAD_TAILNET_URL=https://kiempad.<tailnet>.ts.net npm run smoke:tailscale`.
 Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
 
 ## Debugging
