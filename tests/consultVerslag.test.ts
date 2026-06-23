@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CONSULT_AI_SAFETY_POLICY,
   extraheerConsultActiepunten,
   maakConsultSamenvatting,
   maakConsultVerslag,
@@ -33,6 +34,7 @@ describe('consultVerslag', () => {
       bronnen: ['consulttekst'],
     });
     expect(verslag.samenvatting?.waarschuwing).toContain('controleer altijd');
+    expect(verslag.samenvatting?.waarschuwing).toContain('geen diagnose');
     expect(verslag.actiepunten).toEqual([
       {
         id: 'consult-1-actie-1',
@@ -88,6 +90,25 @@ describe('consultVerslag', () => {
     expect(samenvatting?.tekst).toContain('Afgesproken');
     expect(samenvatting?.tekst).toContain('Vraag blijft open');
     expect(samenvatting?.waarschuwing).toContain('lokaal ingevoerde tekst');
+    expect(samenvatting?.waarschuwing).toContain(CONSULT_AI_SAFETY_POLICY);
+  });
+
+  it('filtert onveilige consult-AI-output zonder originele tekst te blokkeren', () => {
+    const verslag = maakConsultVerslag('consult-policy', {
+      datum: '2026-06-12',
+      titel: 'Policy consult',
+      tekst:
+        'Mijn advies: kies voor ICSI behandeling. Afgesproken om het originele consult met de arts te controleren.',
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    });
+
+    expect(verslag.tekst).toContain('kies voor ICSI');
+    expect(verslag.samenvatting?.tekst).not.toContain('kies voor ICSI');
+    expect(verslag.samenvatting?.tekst).toContain('originele consult');
+    expect(verslag.samenvatting?.waarschuwing).toContain('geen diagnose');
+    expect(verslag.actiepunten?.map((actiepunt) => actiepunt.tekst).join(' ')).not.toContain(
+      'kies voor ICSI',
+    );
   });
 
   it('extraheert concepttaken en conceptvragen met lokale bronverwijzing', () => {

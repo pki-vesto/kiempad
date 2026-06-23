@@ -1,4 +1,8 @@
+import { valideerAiOutputPolicy } from './ai';
 import type { ConsultVerslag } from './types';
+
+export const CONSULT_AI_SAFETY_POLICY =
+  'Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze; controleer altijd met de kliniek.';
 
 export type ConsultVerslagInput = {
   datum: string;
@@ -148,18 +152,19 @@ export function maakConsultSamenvatting(
   if (!input.tekst && !input.notitie) return undefined;
 
   const kernzinnen = selecteerKernzinnen(`${input.tekst ?? ''}\n${input.notitie ?? ''}`);
+  const veiligeKernzinnen = kernzinnen.filter(isVeiligeConsultAiTekst);
   const tekst =
-    kernzinnen.length > 0
-      ? kernzinnen.join(' ')
+    veiligeKernzinnen.length > 0
+      ? veiligeKernzinnen.join(' ')
       : `Conceptsamenvatting voor ${input.titel}: raadpleeg de originele consulttekst.`;
+  valideerAiOutputPolicy(tekst);
 
   return {
     status: 'concept',
     methode: 'lokale_tekstheuristiek',
     tekst,
     bronnen,
-    waarschuwing:
-      'Concept op basis van lokaal ingevoerde tekst; controleer altijd met het originele consult en je kliniek.',
+    waarschuwing: `Concept op basis van lokaal ingevoerde tekst. ${CONSULT_AI_SAFETY_POLICY}`,
     gegenereerdOp: input.uploadedAt,
   };
 }
@@ -181,14 +186,22 @@ export function extraheerConsultActiepunten(
     ...(input.notitie ? maakBronRegels(input.notitie, 'notitie') : []),
   ];
   const kandidaten = bronregels.filter((regel) => isActiepuntKandidaat(regel.tekst));
-  const actiepunten = kandidaten.slice(0, 8).map((regel, index) => ({
-    id: `${input.id}-actie-${index + 1}`,
-    soort: bepaalActiepuntSoort(regel.tekst),
-    status: 'concept' as const,
-    tekst: normaliseerActiepuntTekst(regel.tekst),
-    bron: `${regel.bron} regel ${regel.regelNummer}`,
-    aangemaaktOp: input.uploadedAt,
-  }));
+  const actiepunten = kandidaten
+    .map((regel) => ({
+      soort: bepaalActiepuntSoort(regel.tekst),
+      tekst: normaliseerActiepuntTekst(regel.tekst),
+      bron: `${regel.bron} regel ${regel.regelNummer}`,
+    }))
+    .filter((actiepunt) => isVeiligeConsultAiTekst(actiepunt.tekst))
+    .slice(0, 8)
+    .map((actiepunt, index) => ({
+      id: `${input.id}-actie-${index + 1}`,
+      soort: actiepunt.soort,
+      status: 'concept' as const,
+      tekst: actiepunt.tekst,
+      bron: actiepunt.bron,
+      aangemaaktOp: input.uploadedAt,
+    }));
 
   return actiepunten.length > 0 ? actiepunten : undefined;
 }
@@ -248,4 +261,13 @@ function normaliseerDiffTekst(tekst: string): string {
     .replace(/\s+/g, ' ')
     .trim()
     .toLocaleLowerCase('nl-NL');
+}
+
+function isVeiligeConsultAiTekst(tekst: string): boolean {
+  try {
+    valideerAiOutputPolicy(tekst);
+    return true;
+  } catch {
+    return false;
+  }
 }

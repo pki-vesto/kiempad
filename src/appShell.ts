@@ -847,7 +847,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar consultverslag</button>
         </form>
-        <p class="small-print">Consultverslagen worden als eigen recordtype versleuteld lokaal bewaard. Kiempad vat hier nog niets medisch samen en geeft geen behandeladvies.</p>
+        <p class="small-print">Consultverslagen worden als eigen recordtype versleuteld lokaal bewaard. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         <h2>Embryokwaliteit vastleggen</h2>
         <form id="embryo-quality-form" class="data-form">
           <label>

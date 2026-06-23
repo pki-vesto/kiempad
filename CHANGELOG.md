@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G203 PFIP consult intelligence: consult-AI-output wordt expliciet gefilterd tegen
+  diagnose, doseringsadvies en behandelkeuze.
 - G202 PFIP consult intelligence: consultverslagen kunnen een gebruikerscorrectie
   op de conceptsamenvatting tonen met lokale verschilweergave.
 - G201 PFIP consult intelligence: consultverslagen tonen lokale koppelingen naar
