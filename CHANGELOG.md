@@ -7,6 +7,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148/G175 UI-herstel (Dossier): het dossierscherm is van een dichte twee-koloms
+  indeling omgebouwd naar één kolom; de drie invoerformulieren (document uploaden,
+  consultverslag, embryokwaliteit) staan nu samen achter één "Toevoegen aan
+  dossier"-uitklap (opent automatisch bij upload-feedback), zodat het scherm leidt
+  met de dossierinhoud (zoeken, consultverslagen, imaging, embryo-dossiers,
+  documenttijdlijn, behandelgeschiedenis). Alle form-id's en de
+  bestand→conceptpreview-binding blijven gelijk.
 - G148 UI-herstel (Agenda): het agendascherm is mobiel-first omgebouwd — het
   leidt nu met "Komende afspraken" (week-/maandweergave + lijst) en "Afgelopen",
   met het afspraakformulier en de ICS-import achter uitklappen (de import opent
