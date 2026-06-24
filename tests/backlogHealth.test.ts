@@ -425,61 +425,7 @@ describe('backlog health', () => {
   });
 
   it('houdt het JSON-report contract gelijk aan de consumer notes', () => {
-    const report = buildBacklogHealthReport({
-      backlogMarkdown: `
-| ID | Doel | Prio | Fase | Status |
-|---|---|---|---|---|
-| G245 | Missing issue example | P1 | F4 | ☐ |
-| G246 | Non-open issue example | P1 | F4 | ☐ |
-| G247 | Completed open issue example | P1 | F4 | ☑ |
-`,
-      executionGoalsMarkdown: `${buildExecutionFixture(['G245', 'G246'])}
-
-### G247 — Completed open issue example
-
-- **Epic:** Continuous Evolution
-- **Problem:** Fixture problem.
-- **Desired Outcome:** Fixture outcome.
-- **User Value:** Fixture value.
-- **Acceptance Criteria:** Fixture criteria.
-- **Priority:** P1
-- **Complexity:** S
-- **Related Components:** tests
-- **Status:** ☑ klaar
-`,
-      issueSnapshotJson: JSON.stringify([
-        {
-          number: 300,
-          title: 'G300 duplicate source',
-          state: 'OPEN',
-          url: 'https://github.com/pki-vesto/kiempad/issues/300',
-          body: 'niet opnemen',
-          token: 'niet opnemen',
-        },
-        {
-          number: 301,
-          title: 'G300 duplicate source copy',
-          state: 'OPEN',
-          url: 'https://github.com/pki-vesto/kiempad/issues/301',
-          body: 'ook niet opnemen',
-        },
-        {
-          number: 246,
-          title: 'G246 non-open issue',
-          state: 'CLOSED',
-          url: 'https://github.com/pki-vesto/kiempad/issues/246',
-          body: 'niet opnemen',
-        },
-        {
-          number: 247,
-          title: 'G247 completed but open issue',
-          state: 'OPEN',
-          url: 'https://github.com/pki-vesto/kiempad/issues/247',
-          body: 'niet opnemen',
-        },
-      ]),
-      issueSnapshotLimit: 500,
-    });
+    const report = buildRepresentativeIssueSnapshotContractReport();
 
     const issueSnapshot = report.issueSnapshot;
     expect(issueSnapshot).toBeDefined();
@@ -653,6 +599,66 @@ function buildExecutionFixture(openGoalIds: string[]): string {
 - **Status:** ☐ open`,
     )
     .join('\n\n')}`;
+}
+
+function buildRepresentativeIssueSnapshotContractReport(): ReturnType<
+  typeof buildBacklogHealthReport
+> {
+  return buildBacklogHealthReport({
+    backlogMarkdown: `
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G245 | Missing issue example | P1 | F4 | ☐ |
+| G246 | Non-open issue example | P1 | F4 | ☐ |
+| G247 | Completed open issue example | P1 | F4 | ☑ |
+`,
+    executionGoalsMarkdown: `${buildExecutionFixture(['G245', 'G246'])}
+
+### G247 — Completed open issue example
+
+- **Epic:** Continuous Evolution
+- **Problem:** Fixture problem.
+- **Desired Outcome:** Fixture outcome.
+- **User Value:** Fixture value.
+- **Acceptance Criteria:** Fixture criteria.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **Status:** ☑ klaar
+`,
+    issueSnapshotJson: JSON.stringify([
+      {
+        number: 300,
+        title: 'G300 duplicate source',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/300',
+        body: 'niet opnemen',
+        token: 'niet opnemen',
+      },
+      {
+        number: 301,
+        title: 'G300 duplicate source copy',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/301',
+        body: 'ook niet opnemen',
+      },
+      {
+        number: 246,
+        title: 'G246 non-open issue',
+        state: 'CLOSED',
+        url: 'https://github.com/pki-vesto/kiempad/issues/246',
+        body: 'niet opnemen',
+      },
+      {
+        number: 247,
+        title: 'G247 completed but open issue',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/247',
+        body: 'niet opnemen',
+      },
+    ]),
+    issueSnapshotLimit: 500,
+  });
 }
 
 function extractIssueSnapshotIssueKeys(issueSnapshot: {
