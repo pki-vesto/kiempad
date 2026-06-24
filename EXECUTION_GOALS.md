@@ -1,0 +1,1243 @@
+# Kiempad — EXECUTION_GOALS
+
+> Tweede-generatie doelcatalogus voor continue evolutie na afronding van G001-G243.
+> `PRODUCT_BACKLOG.md` blijft de canonieke statuslijst; dit bestand bevat de rijke
+> uitvoeringsdetails die nodig zijn om doelen te prioriteren, issues te maken en werk
+> autonoom te blijven uitvoeren.
+
+## Actieve Epics
+
+- **Continuous Evolution:** Doelen, issues, roadmapdekking en governance blijven actief en controleerbaar.
+- **Onboarding & Daily Use:** Dagelijks gebruik, consultvoorbereiding en rustige invoer worden sneller en menselijker.
+- **Reliability & Operations:** Offline werking, back-up, sync, Tailscale en herstel worden aantoonbaar robuuster.
+- **AI & Research:** Opt-in AI en researchworkflows worden bruikbaarder zonder de medische of privacygrens te overschrijden.
+- **Security & DevEx:** Security, toegankelijkheid, architectuur en ontwikkelkwaliteit blijven meetbaar en onderhoudbaar.
+
+## Future Roadmap Horizon
+
+**F5 — Continuous Personal Fertility Operations.** Kiempad groeit van complete
+fertility intelligence naar een duurzaam dagelijks besturingssysteem voor rust,
+voorbereiding, herstelbaarheid, lokale automatisering, veilige research en
+aantoonbare privacy. Niet-doelen blijven gelijk: geen medisch hulpmiddel, geen
+derdenproduct, geen tracking, geen standaard cloud, geen dosering, diagnose of
+behandelkeuze.
+
+## Goal Quality Contract
+
+Elk doel hieronder bevat: Goal ID, Problem, Desired Outcome, User Value, Acceptance
+Criteria, Priority, Complexity en Related Components. Doelen zijn atomair, testbaar,
+uitvoerbaar en meetbaar.
+
+## Goals
+
+### G244 — Goal Expansion Engine
+
+- **Epic:** Continuous Evolution
+- **Problem:** Goal catalog is empty after PFIP completion.
+- **Desired Outcome:** Create the second-generation execution catalog with at least 100 active goals, 3 epics and a future horizon.
+- **User Value:** Kiempad keeps evolving instead of stopping after the initial epic.
+- **Acceptance Criteria:** EXECUTION_GOALS.md exists; backlog has 100 open goals after G244; goal schema includes all required fields; GitHub issues are seeded.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Documentation & maintenance
+- **Status:** ☑ klaar
+
+### G245 — Backlog Health Dashboard
+
+- **Epic:** Continuous Evolution
+- **Problem:** Open goals can drift from GitHub Issues and docs.
+- **Desired Outcome:** Add an automated local report that compares backlog, execution catalog and open issues.
+- **User Value:** The maintainer sees drift before work starts.
+- **Acceptance Criteria:** Report lists missing issue links, duplicate IDs and status mismatches; tests cover parsing; no network is required for local mode.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Docs, tests, GitHub Issues
+- **Status:** ☐ open
+
+### G246 — Goal Scoring Model
+
+- **Epic:** Continuous Evolution
+- **Problem:** Selecting the next goal is subjective.
+- **Desired Outcome:** Define a scoring rubric for user value, risk, privacy and implementation effort.
+- **User Value:** Highest-value work is easier to choose consistently.
+- **Acceptance Criteria:** Rubric is documented; every active goal has score fields; next-goal selection can be reproduced.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, backlog
+- **Status:** ☐ open
+
+### G247 — Goal Template CLI
+
+- **Epic:** Continuous Evolution
+- **Problem:** Adding goals manually is slow and error-prone.
+- **Desired Outcome:** Create a local script that appends goals with required fields and updates counts.
+- **User Value:** Goal expansion stays fast while preserving quality.
+- **Acceptance Criteria:** CLI validates ID ordering; rejects missing fields; updates PRODUCT_BACKLOG and EXECUTION_GOALS together.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Scripts, docs
+- **Status:** ☐ open
+
+### G248 — Issue Sync Script
+
+- **Epic:** Continuous Evolution
+- **Problem:** Creating issues by hand risks omissions.
+- **Desired Outcome:** Add a GitHub CLI helper that creates missing issues from active execution goals.
+- **User Value:** The remote issue tracker stays aligned with local planning.
+- **Acceptance Criteria:** Script supports dry-run; skips existing titles; emits created issue URLs; no secrets are stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Scripts, GitHub CLI
+- **Status:** ☐ open
+
+### G249 — Roadmap Coverage Matrix
+
+- **Epic:** Continuous Evolution
+- **Problem:** Roadmap coverage is hard to audit after many goals.
+- **Desired Outcome:** Map active goals to roadmap phases and vision success criteria.
+- **User Value:** Planning stays tied to the product vision.
+- **Acceptance Criteria:** Matrix shows goals per phase and success criterion; gaps are highlighted; tests verify all active goals map to a phase.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** ROADMAP, EXECUTION_GOALS
+- **Status:** ☐ open
+
+### G250 — Goal Completion Audit Checklist
+
+- **Epic:** Continuous Evolution
+- **Problem:** Completion can be claimed from weak evidence.
+- **Desired Outcome:** Document a requirement-by-requirement audit checklist for every goal.
+- **User Value:** Merged work is easier to trust.
+- **Acceptance Criteria:** Checklist covers requirements, evidence, tests, PR state and docs; PR template references it.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Docs, PR template
+- **Status:** ☐ open
+
+### G251 — Architecture Decision Backlog
+
+- **Epic:** Continuous Evolution
+- **Problem:** Architectural changes may land without ADR follow-up.
+- **Desired Outcome:** Track active goals that require ADR review before implementation.
+- **User Value:** Important choices stay visible and reversible.
+- **Acceptance Criteria:** Execution catalog has ADR-needed marker; docs list pending ADR topics; maintenance test verifies marker values.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** ADR, docs
+- **Status:** ☐ open
+
+### G252 — User Workflow Gap Review
+
+- **Epic:** Continuous Evolution
+- **Problem:** Workflow gaps are discovered ad hoc.
+- **Desired Outcome:** Create a periodic review document for onboarding, daily use, consult prep, backup and recovery.
+- **User Value:** User friction is converted into concrete goals.
+- **Acceptance Criteria:** Review has workflow sections, gap severity, linked goals and next review date.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Docs, app shell
+- **Status:** ☐ open
+
+### G253 — Operational Runbook Refresh
+
+- **Epic:** Continuous Evolution
+- **Problem:** Runbook can lag behind Tailscale, CI and backup workflows.
+- **Desired Outcome:** Refresh the runbook with current smoke, deploy and recovery commands.
+- **User Value:** Operational work is repeatable under stress.
+- **Acceptance Criteria:** Runbook includes local dev, CI, Tailscale smoke, backup import and issue triage steps.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** docs/RUNBOOK.md
+- **Status:** ☐ open
+
+### G254 — Goal Aging Signals
+
+- **Epic:** Continuous Evolution
+- **Problem:** Old goals can remain open without review.
+- **Desired Outcome:** Add review cadence metadata and aging indicators to active goals.
+- **User Value:** The backlog stays fresh and intentional.
+- **Acceptance Criteria:** Goals include review cadence; stale goals are detectable by a local check.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** EXECUTION_GOALS, tests
+- **Status:** ☐ open
+
+### G255 — Release Notes Generator
+
+- **Epic:** Continuous Evolution
+- **Problem:** Changelog updates are manual and repetitive.
+- **Desired Outcome:** Generate draft release notes from completed goals and PR titles.
+- **User Value:** Releases become easier to summarize.
+- **Acceptance Criteria:** Script groups changes by epic; preserves manual edits; tests cover markdown output.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** CHANGELOG, scripts
+- **Status:** ☐ open
+
+### G256 — Goal Dependency Mapping
+
+- **Epic:** Continuous Evolution
+- **Problem:** Some goals depend on unbuilt primitives.
+- **Desired Outcome:** Represent dependencies between active goals.
+- **User Value:** Work can be sequenced with fewer dead ends.
+- **Acceptance Criteria:** Each dependent goal lists blockers; validation detects references to unknown IDs.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** EXECUTION_GOALS
+- **Status:** ☐ open
+
+### G257 — Autonomy Guardrails Doc
+
+- **Epic:** Continuous Evolution
+- **Problem:** Continuous execution needs explicit local-first guardrails.
+- **Desired Outcome:** Document what autonomous work may and may not do in Kiempad.
+- **User Value:** Velocity increases without violating privacy or medical boundaries.
+- **Acceptance Criteria:** Doc covers network, AI, data, GitHub, Tailscale and medical policy constraints.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs
+- **Status:** ☐ open
+
+### G258 — Goal Search Index
+
+- **Epic:** Continuous Evolution
+- **Problem:** Finding a goal by capability is cumbersome.
+- **Desired Outcome:** Add a searchable local index for active and completed goals.
+- **User Value:** Planning and audits take less time.
+- **Acceptance Criteria:** Index supports ID, epic, component and keyword; no external search service is used.
+- **Priority:** P3
+- **Complexity:** M
+- **Related Components:** Docs, app shell or script
+- **Status:** ☐ open
+
+### G259 — Backlog Statistics Test
+
+- **Epic:** Continuous Evolution
+- **Problem:** The existing count test does not validate active goal minimums.
+- **Desired Outcome:** Extend maintenance tests to require at least 100 open active goals when evolution mode is active.
+- **User Value:** The backlog cannot silently run dry.
+- **Acceptance Criteria:** Test parses PRODUCT_BACKLOG and EXECUTION_GOALS; fails below 100 active goals.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, PRODUCT_BACKLOG
+- **Status:** ☐ open
+
+### G260 — Vision Traceability Tags
+
+- **Epic:** Continuous Evolution
+- **Problem:** Goals may lose traceability to vision success criteria.
+- **Desired Outcome:** Add explicit vision tags to every active goal.
+- **User Value:** Every goal has a clear reason to exist.
+- **Acceptance Criteria:** All active goals list one or more vision criteria; tests reject empty tags.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** EXECUTION_GOALS, VISIE
+- **Status:** ☐ open
+
+### G261 — Next Horizon Roadmap
+
+- **Epic:** Continuous Evolution
+- **Problem:** The roadmap has no explicit post-PFIP horizon.
+- **Desired Outcome:** Add a future horizon for continuous personal fertility operations.
+- **User Value:** Longer-term work has direction without becoming a product for others.
+- **Acceptance Criteria:** Roadmap includes horizon theme, milestones, non-goals and linked active epics.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** ROADMAP, EXECUTION_GOALS
+- **Status:** ☐ open
+
+### G262 — Issue Label Taxonomy
+
+- **Epic:** Continuous Evolution
+- **Problem:** Issue labels may become inconsistent as goals grow.
+- **Desired Outcome:** Define labels for epic, priority, complexity, risk and component.
+- **User Value:** Issue triage becomes easier.
+- **Acceptance Criteria:** Taxonomy is documented; issue sync helper can apply labels when available.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** GitHub Issues, docs
+- **Status:** ☐ open
+
+### G263 — Monthly Goal Review Ritual
+
+- **Epic:** Continuous Evolution
+- **Problem:** There is no repeatable cadence for pruning or replacing goals.
+- **Desired Outcome:** Document a monthly local review ritual for completed, stale and new goals.
+- **User Value:** The catalog remains useful over time.
+- **Acceptance Criteria:** Ritual includes inputs, decisions, outputs and required doc updates.
+- **Priority:** P3
+- **Complexity:** S
+- **Related Components:** Docs
+- **Status:** ☐ open
+
+### G264 — First Run Guided Setup
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** First use can feel like an empty technical shell.
+- **Desired Outcome:** Guide through vault creation, privacy boundary, first traject, first afspraak and backup reminder.
+- **User Value:** Peter and partner can start safely without reading docs first.
+- **Acceptance Criteria:** Setup appears only before first data; steps are skippable; no data leaves device; tests cover completed setup state.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** App shell, vault, settings
+- **Status:** ☐ open
+
+### G265 — Daily Command Center
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Daily tasks are spread across screens.
+- **Desired Outcome:** Create a single start view for today: appointments, medication, questions, reminders and context.
+- **User Value:** The app becomes useful in the first minute each day.
+- **Acceptance Criteria:** Today view groups tasks by urgency; shows empty states; never generates medical advice.
+- **Priority:** P0
+- **Complexity:** L
+- **Related Components:** Start screen, agenda, medication, questions
+- **Status:** ☐ open
+
+### G266 — Partner Handoff Mode
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Shared use lacks a lightweight handoff summary.
+- **Desired Outcome:** Show a local handoff summary for what changed since last check-in.
+- **User Value:** Both partners stay aligned without messaging sensitive data.
+- **Acceptance Criteria:** Summary includes new records, upcoming items and unanswered questions; local only.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Settings, start screen
+- **Status:** ☐ open
+
+### G267 — Consult Prep Wizard
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Consult preparation requires manually visiting multiple screens.
+- **Desired Outcome:** Create a guided consult prep flow that gathers questions, timeline highlights and exports.
+- **User Value:** Consults become calmer and better prepared.
+- **Acceptance Criteria:** Wizard creates a local prep packet; user can edit questions; no diagnosis or treatment advice.
+- **Priority:** P0
+- **Complexity:** L
+- **Related Components:** Questions, timeline, graph, export
+- **Status:** ☐ open
+
+### G268 — After Consult Capture Flow
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** After a consult, notes and actions can be scattered.
+- **Desired Outcome:** Offer a quick post-consult flow for summary, answered questions and action points.
+- **User Value:** Important outcomes are captured while fresh.
+- **Acceptance Criteria:** Flow links to appointment; supports unanswered carry-over; stores records encrypted.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult records, questions, actions
+- **Status:** ☐ open
+
+### G269 — Medication Day Timeline
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Medication events are list-based rather than day-timeline based.
+- **Desired Outcome:** Show a compact day timeline of planned, taken and missed medication events.
+- **User Value:** Timing becomes easier to scan.
+- **Acceptance Criteria:** Timeline uses prescribed text only; no dosing inference; keyboard accessible.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Medication, reminders
+- **Status:** ☐ open
+
+### G270 — Question Inbox Zero
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Open questions can accumulate without triage.
+- **Desired Outcome:** Add triage states: nieuw, meenemen, beantwoord, parkeren.
+- **User Value:** The question list stays actionable.
+- **Acceptance Criteria:** States are local; filters exist; answered state keeps answer text and date.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Questions
+- **Status:** ☐ open
+
+### G271 — Timeline Quick Add
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Adding timeline context requires choosing the right screen first.
+- **Desired Outcome:** Allow quick add from the timeline for note, question, document or appointment.
+- **User Value:** Context can be captured at the moment it appears.
+- **Acceptance Criteria:** Quick add routes to existing stores; defaults are safe; no duplicate storage model.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Timeline, quick entry
+- **Status:** ☐ open
+
+### G272 — Dossier Import Checklist
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Historical uploads can feel overwhelming.
+- **Desired Outcome:** Provide a checklist for importing past labs, scans, consults and embryo reports.
+- **User Value:** The historical dossier becomes complete step by step.
+- **Acceptance Criteria:** Checklist progress is local; links to upload profiles; no file content leaves device.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, onboarding
+- **Status:** ☐ open
+
+### G273 — Empty State Action Shortcuts
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Some empty states explain but do not help act.
+- **Desired Outcome:** Add direct action buttons to important empty states.
+- **User Value:** New users can move forward faster.
+- **Acceptance Criteria:** Shortcuts exist for traject, afspraak, medicatie, vraag, dossier and backup empty states.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** App shell UX
+- **Status:** ☐ open
+
+### G274 — Gentle Reminder Review
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Reminder text may feel technical or repetitive.
+- **Desired Outcome:** Review reminder wording for calm, clear Dutch language.
+- **User Value:** Notifications support without increasing stress.
+- **Acceptance Criteria:** Copy remains generic on lock screen; tests keep privacy boundary intact.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Notifications, UX copy
+- **Status:** ☐ open
+
+### G275 — Weekly Review Screen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** There is no weekly reflection workflow.
+- **Desired Outcome:** Add a local weekly review of upcoming appointments, open questions, costs and backups.
+- **User Value:** The couple can reset context once per week.
+- **Acceptance Criteria:** Review is factual; has print/export option; no scoring or judgment.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Agenda, timeline, costs, wellbeing
+- **Status:** ☐ open
+
+### G276 — Stress-Light Mode
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Some days need less detail on screen.
+- **Desired Outcome:** Add a mode that reduces dense medical detail on start screen while keeping access available.
+- **User Value:** The app remains usable on emotionally heavy days.
+- **Acceptance Criteria:** Mode hides detail by default; does not delete data; can be toggled locally.
+- **Priority:** P3
+- **Complexity:** M
+- **Related Components:** Settings, UI
+- **Status:** ☐ open
+
+### G277 — Timeline Story Mode
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** The full journey can be hard to understand as records.
+- **Desired Outcome:** Offer a narrative, factual story view of the traject.
+- **User Value:** The user can understand the journey without reading every record.
+- **Acceptance Criteria:** Story cites records; avoids causality and advice; exportable as markdown.
+- **Priority:** P3
+- **Complexity:** L
+- **Related Components:** Timeline, export
+- **Status:** ☐ open
+
+### G278 — Cost Entry From Appointment
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Costs often relate to appointments but entry is separate.
+- **Desired Outcome:** Allow adding a cost item from an appointment context.
+- **User Value:** Cost tracking becomes less manual.
+- **Acceptance Criteria:** Cost item links to appointment and traject; financial disclaimer remains visible.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Agenda, costs
+- **Status:** ☐ open
+
+### G279 — Backup Nudge Personalization
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Backup reminders are generic.
+- **Desired Outcome:** Let the user choose backup reminder cadence locally.
+- **User Value:** Backups fit the couple’s routine.
+- **Acceptance Criteria:** Cadence stored encrypted; missing backup warning still appears; defaults remain privacy-safe.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Backup, settings
+- **Status:** ☐ open
+
+### G280 — Search Everywhere
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Search is split by screen.
+- **Desired Outcome:** Create a local global search across non-binary decrypted records after unlock.
+- **User Value:** Information is easier to retrieve under time pressure.
+- **Acceptance Criteria:** Search covers titles, notes, OCR text and questions; local only; snippets avoid base64.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** Dossier, questions, knowledge, timeline
+- **Status:** ☐ open
+
+### G281 — Print-Friendly Daily Brief
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Daily context cannot be shared as a simple sheet.
+- **Desired Outcome:** Generate a local print-friendly daily brief.
+- **User Value:** Consult or partner prep can happen offline on paper.
+- **Acceptance Criteria:** Brief includes today items and questions; excludes secrets; no advice language.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Start screen, export
+- **Status:** ☐ open
+
+### G282 — Keyboard-First Data Entry
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Repeated entry is slower with mouse-heavy forms.
+- **Desired Outcome:** Improve keyboard flow and submit behavior in high-use forms.
+- **User Value:** Data capture becomes faster.
+- **Acceptance Criteria:** Tab order is logical; labels are explicit; tests cover key form IDs.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Forms, accessibility
+- **Status:** ☐ open
+
+### G283 — Microcopy Consistency Pass
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Different screens use slightly different terminology.
+- **Desired Outcome:** Standardize Dutch labels for traject, poging, afspraak, dossier and consult.
+- **User Value:** The app feels more coherent.
+- **Acceptance Criteria:** Terminology glossary exists; key screens use glossary terms; tests cover core labels.
+- **Priority:** P3
+- **Complexity:** S
+- **Related Components:** UI copy
+- **Status:** ☐ open
+
+### G284 — Service Worker Update UX
+
+- **Epic:** Reliability & Operations
+- **Problem:** Users may run stale app code unknowingly.
+- **Desired Outcome:** Show a calm update-available prompt when a new service worker is ready.
+- **User Value:** Updates become explicit and less surprising.
+- **Acceptance Criteria:** Prompt appears only when update is waiting; reload is user-initiated; tests mock service worker states.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** PWA, service worker
+- **Status:** ☐ open
+
+### G285 — Offline Smoke Test Script
+
+- **Epic:** Reliability & Operations
+- **Problem:** Offline behavior can regress without a browser smoke.
+- **Desired Outcome:** Add a local Playwright smoke for offline load after first visit.
+- **User Value:** Local-first promise is verified end to end.
+- **Acceptance Criteria:** Smoke installs SW, goes offline, reloads app shell, verifies no network fallback error.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** PWA, tests
+- **Status:** ☐ open
+
+### G286 — Backup Restore Drill
+
+- **Epic:** Reliability & Operations
+- **Problem:** Backups are only useful if restore is practiced.
+- **Desired Outcome:** Add a scripted restore drill using memory or test drivers.
+- **User Value:** Recovery confidence increases.
+- **Acceptance Criteria:** Drill exports, imports, unlocks and verifies representative records.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Backup, tests, runbook
+- **Status:** ☐ open
+
+### G287 — Tailscale Smoke Automation
+
+- **Epic:** Reliability & Operations
+- **Problem:** Tailscale smoke is manual.
+- **Desired Outcome:** Automate local and tailnet URL smoke checks with clear diagnostics.
+- **User Value:** Deployment regressions are caught quickly.
+- **Acceptance Criteria:** Script checks HTTPS URL, cache headers, service worker and app shell marker.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Tailscale, scripts
+- **Status:** ☐ open
+
+### G288 — Data Integrity Report
+
+- **Epic:** Reliability & Operations
+- **Problem:** Broken links between records are hard to spot.
+- **Desired Outcome:** Build a local integrity report for orphaned traject, afspraak, embryo and dossier links.
+- **User Value:** The dossier stays trustworthy.
+- **Acceptance Criteria:** Report is read-only; lists broken references; offers manual navigation, not auto-repair.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** Storage, domain stores
+- **Status:** ☐ open
+
+### G289 — Duplicate Detection
+
+- **Epic:** Reliability & Operations
+- **Problem:** Imports can create duplicate records.
+- **Desired Outcome:** Detect likely duplicates by title, date, source and file metadata.
+- **User Value:** The user can clean up clutter safely.
+- **Acceptance Criteria:** Duplicates are suggestions only; no automatic deletion; tests cover false-positive-safe behavior.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Dossier, consults, agenda
+- **Status:** ☐ open
+
+### G290 — Import Preview Before Commit
+
+- **Epic:** Reliability & Operations
+- **Problem:** Imports may surprise users.
+- **Desired Outcome:** Preview incoming records and conflicts before applying import.
+- **User Value:** The user stays in control of data changes.
+- **Acceptance Criteria:** Preview shows counts and types; apply requires confirmation; encrypted payload remains unreadable until unlocked.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** Backup, sync, dossier
+- **Status:** ☐ open
+
+### G291 — Sync Conflict Explanation
+
+- **Epic:** Reliability & Operations
+- **Problem:** Last-wins conflict handling is invisible.
+- **Desired Outcome:** Show a human-readable sync conflict summary after import.
+- **User Value:** Skipped or overwritten records are understandable.
+- **Acceptance Criteria:** Summary lists counts by type and timestamp; no sensitive lock-screen leakage.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Sync
+- **Status:** ☐ open
+
+### G292 — Performance Budget Test
+
+- **Epic:** Reliability & Operations
+- **Problem:** Bundle size can grow unnoticed.
+- **Desired Outcome:** Add a budget check for JS/CSS output size.
+- **User Value:** The app remains fast on mobile.
+- **Acceptance Criteria:** Budget thresholds documented; CI fails on major regression; emergency override documented.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Build, CI
+- **Status:** ☐ open
+
+### G293 — Large Dossier Rendering Guard
+
+- **Epic:** Reliability & Operations
+- **Problem:** Large historical dossiers may slow rendering.
+- **Desired Outcome:** Add pagination or incremental rendering for large dossier/timeline lists.
+- **User Value:** The app stays responsive with years of records.
+- **Acceptance Criteria:** Tests cover 500+ synthetic records; UI exposes count and paging without losing filters.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, timeline
+- **Status:** ☐ open
+
+### G294 — IndexedDB Quota Warning
+
+- **Epic:** Reliability & Operations
+- **Problem:** Users may hit browser storage limits unexpectedly.
+- **Desired Outcome:** Estimate local storage usage and warn when high.
+- **User Value:** The user can back up before storage trouble.
+- **Acceptance Criteria:** Warning is local; explains browser-specific limits; no telemetry.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Storage, backup
+- **Status:** ☐ open
+
+### G295 — Error Boundary Screen
+
+- **Epic:** Reliability & Operations
+- **Problem:** Runtime render errors can leave a blank screen.
+- **Desired Outcome:** Add a friendly local error boundary with recovery actions.
+- **User Value:** Failures become recoverable.
+- **Acceptance Criteria:** Boundary offers reload, lock, backup docs link; never sends reports automatically.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell
+- **Status:** ☐ open
+
+### G296 — Form Draft Persistence
+
+- **Epic:** Reliability & Operations
+- **Problem:** Long notes can be lost on navigation.
+- **Desired Outcome:** Persist local encrypted drafts for long consult/dossier forms.
+- **User Value:** Data entry becomes less fragile.
+- **Acceptance Criteria:** Drafts are scoped per form; can be discarded; auto-cleared after save.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Forms, storage
+- **Status:** ☐ open
+
+### G297 — Event Log Filters
+
+- **Epic:** Reliability & Operations
+- **Problem:** The event log can become noisy.
+- **Desired Outcome:** Add filters by category, date and event type.
+- **User Value:** Operational history is easier to inspect.
+- **Acceptance Criteria:** Filters are local session state; empty state explains no matches.
+- **Priority:** P3
+- **Complexity:** S
+- **Related Components:** Event log
+- **Status:** ☐ open
+
+### G298 — Runbook Command Verification
+
+- **Epic:** Reliability & Operations
+- **Problem:** Documented commands can drift.
+- **Desired Outcome:** Test that key runbook commands exist in package scripts or Makefile.
+- **User Value:** Docs stay executable.
+- **Acceptance Criteria:** Maintenance test parses command snippets and validates known commands.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** docs/RUNBOOK, tests
+- **Status:** ☐ open
+
+### G299 — Import Error Taxonomy
+
+- **Epic:** Reliability & Operations
+- **Problem:** Import errors are inconsistent across flows.
+- **Desired Outcome:** Standardize import error messages by type: format, integrity, vault mismatch, parse.
+- **User Value:** Troubleshooting becomes easier.
+- **Acceptance Criteria:** Errors are Dutch, actionable and covered by tests.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Backup, sync, dossier
+- **Status:** ☐ open
+
+### G300 — Local Diagnostics Export
+
+- **Epic:** Reliability & Operations
+- **Problem:** Debugging app problems may require unsafe screenshots.
+- **Desired Outcome:** Create a diagnostics export with versions, counts and settings flags but no health content.
+- **User Value:** Support and self-debugging are safer.
+- **Acceptance Criteria:** Export excludes record payloads and free-text health notes; tests verify omissions.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Diagnostics, export
+- **Status:** ☐ open
+
+### G301 — Recovery Mode Unlock Help
+
+- **Epic:** Reliability & Operations
+- **Problem:** Unlock failures can be stressful.
+- **Desired Outcome:** Improve unlock failure guidance with passphrase, WebAuthn and backup recovery steps.
+- **User Value:** The user has clear next actions.
+- **Acceptance Criteria:** Copy is calm; no backdoor promise; links to backup docs.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Vault UX
+- **Status:** ☐ open
+
+### G302 — Notification Delivery Audit
+
+- **Epic:** Reliability & Operations
+- **Problem:** Users need confidence reminders are scheduled.
+- **Desired Outcome:** Show last scheduling attempt and upcoming notification audit.
+- **User Value:** Missed reminders are easier to diagnose.
+- **Acceptance Criteria:** Audit is local; lock-screen text remains generic; tests cover permission states.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Notifications, event log
+- **Status:** ☐ open
+
+### G303 — Browser Compatibility Matrix
+
+- **Epic:** Reliability & Operations
+- **Problem:** Feature support differs by browser.
+- **Desired Outcome:** Document tested browser support for PWA, WebAuthn, notifications and storage.
+- **User Value:** Expectations are realistic.
+- **Acceptance Criteria:** Matrix includes Chrome, Safari, Firefox where known; unknowns are explicit.
+- **Priority:** P3
+- **Complexity:** S
+- **Related Components:** Docs, PWA
+- **Status:** ☐ open
+
+### G304 — On-Device Summarizer Adapter
+
+- **Epic:** AI & Research
+- **Problem:** On-device AI detection exists but no adapter contract.
+- **Desired Outcome:** Define and implement a local summarizer adapter when browser support exists.
+- **User Value:** Summaries can avoid cloud when available.
+- **Acceptance Criteria:** Adapter never starts without explicit action; falls back clearly; tests mock browser API.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** AI, knowledge
+- **Status:** ☐ open
+
+### G305 — AI Prompt Registry
+
+- **Epic:** AI & Research
+- **Problem:** AI prompts can drift from safety policy.
+- **Desired Outcome:** Centralize AI prompt templates with policy tests.
+- **User Value:** AI features remain auditable.
+- **Acceptance Criteria:** Registry includes purpose, inputs, forbidden outputs and tests for diagnosis/dosing/treatment choice.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** AI, docs, tests
+- **Status:** ☐ open
+
+### G306 — Research Source Importer
+
+- **Epic:** AI & Research
+- **Problem:** Research entries are manual.
+- **Desired Outcome:** Import bibliographic metadata from pasted DOI/PMID/URL text without network by default.
+- **User Value:** Research capture becomes faster.
+- **Acceptance Criteria:** Parser works offline for pasted metadata; network lookup requires opt-in.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** Research, knowledge
+- **Status:** ☐ open
+
+### G307 — Research Reading Queue
+
+- **Epic:** AI & Research
+- **Problem:** Interesting papers can be saved but not triaged.
+- **Desired Outcome:** Add reading states: te lezen, gelezen, bespreken, archiveren.
+- **User Value:** Research becomes manageable.
+- **Acceptance Criteria:** States are local; filters exist; source and date remain visible.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Knowledge
+- **Status:** ☐ open
+
+### G308 — Research-to-Question Suggestions
+
+- **Epic:** AI & Research
+- **Problem:** Research relevance is hard to turn into consult questions.
+- **Desired Outcome:** Suggest draft questions from saved research relevance notes.
+- **User Value:** The user can discuss research safely with clinicians.
+- **Acceptance Criteria:** Suggestions are questions only; no treatment recommendation; user must confirm before saving.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, questions
+- **Status:** ☐ open
+
+### G309 — Evidence Strength Labels
+
+- **Epic:** AI & Research
+- **Problem:** Research cards lack a simple evidence context.
+- **Desired Outcome:** Add user-entered evidence type labels such as guideline, review, study or note.
+- **User Value:** Research is easier to interpret cautiously.
+- **Acceptance Criteria:** Labels are descriptive, not scoring; no automatic medical ranking.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** Research
+- **Status:** ☐ open
+
+### G310 — Research Update Reminder
+
+- **Epic:** AI & Research
+- **Problem:** Saved research can become stale.
+- **Desired Outcome:** Create reminders to revisit important research items.
+- **User Value:** Consult prep stays current.
+- **Acceptance Criteria:** Reminder is manual/opt-in per item; herverificatie status visible.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Research, reminders
+- **Status:** ☐ open
+
+### G311 — Local Citation Formatter
+
+- **Epic:** AI & Research
+- **Problem:** Research exports need consistent citations.
+- **Desired Outcome:** Format saved research sources consistently in Markdown exports.
+- **User Value:** Consult packets look cleaner.
+- **Acceptance Criteria:** Formatter handles title, source, date, URL; missing fields are explicit.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Research export
+- **Status:** ☐ open
+
+### G312 — AI Output Diff Review
+
+- **Epic:** AI & Research
+- **Problem:** AI summaries need careful human correction.
+- **Desired Outcome:** Show a diff between generated summary and user-edited version.
+- **User Value:** The user can see what changed before saving.
+- **Acceptance Criteria:** Diff is local; generated text remains concept; no hidden overwrite.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** AI summaries, knowledge
+- **Status:** ☐ open
+
+### G313 — Sensitive Text Redaction Preview
+
+- **Epic:** AI & Research
+- **Problem:** Payload minimization needs visible redaction.
+- **Desired Outcome:** Highlight what personal identifiers are removed before optional AI calls.
+- **User Value:** Trust in opt-in AI increases.
+- **Acceptance Criteria:** Preview shows redacted fields; tests cover names, dates and IDs where applicable.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** AI payloads
+- **Status:** ☐ open
+
+### G314 — Cloud AI Cost Warning
+
+- **Epic:** AI & Research
+- **Problem:** External AI can have cost implications.
+- **Desired Outcome:** Show a clear cost/privacy warning before enabling a cloud provider.
+- **User Value:** The user makes an informed opt-in choice.
+- **Acceptance Criteria:** Warning requires explicit confirmation; setting remains encrypted.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** AI settings
+- **Status:** ☐ open
+
+### G315 — AI Provider Health Check
+
+- **Epic:** AI & Research
+- **Problem:** Provider configuration errors are discovered late.
+- **Desired Outcome:** Add an explicit user-triggered provider check with minimal payload.
+- **User Value:** Setup becomes less frustrating.
+- **Acceptance Criteria:** Check sends no health data; shows success/failure; disabled by default.
+- **Priority:** P3
+- **Complexity:** M
+- **Related Components:** AI settings
+- **Status:** ☐ open
+
+### G316 — Research Topic Map
+
+- **Epic:** AI & Research
+- **Problem:** Research trends are lists, not a map.
+- **Desired Outcome:** Show a local topic map of saved research themes.
+- **User Value:** Patterns become visible without claims.
+- **Acceptance Criteria:** Map groups by keyword; no evidence weighting; accessible list fallback exists.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Knowledge graph, research
+- **Status:** ☐ open
+
+### G317 — Question Safety Classifier
+
+- **Epic:** AI & Research
+- **Problem:** User-drafted questions may accidentally ask app for advice.
+- **Desired Outcome:** Detect and reframe app-generated suggestions as clinician questions.
+- **User Value:** The app stays inside support boundaries.
+- **Acceptance Criteria:** Classifier flags dosing/diagnosis/treatment-choice phrasing; suggestions remain editable.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Questions, AI policy
+- **Status:** ☐ open
+
+### G318 — Local Research Full Text Index
+
+- **Epic:** AI & Research
+- **Problem:** Research notes are not deeply searchable.
+- **Desired Outcome:** Add local full-text indexing for saved research text.
+- **User Value:** Research retrieval becomes faster.
+- **Acceptance Criteria:** Index is derived after unlock; stored encrypted or rebuilt; no network.
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** Knowledge, storage
+- **Status:** ☐ open
+
+### G319 — Research Export Packet
+
+- **Epic:** AI & Research
+- **Problem:** Research context is separate from consult export.
+- **Desired Outcome:** Generate a research packet with simple summaries, citations and user relevance notes.
+- **User Value:** The clinician discussion can be better prepared.
+- **Acceptance Criteria:** Packet includes warnings; excludes recommendations; Markdown only.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Research, export
+- **Status:** ☐ open
+
+### G320 — Prompt Regression Suite
+
+- **Epic:** AI & Research
+- **Problem:** Safety tests may miss prompt drift.
+- **Desired Outcome:** Add prompt regression fixtures for all AI-assisted flows.
+- **User Value:** Unsafe output patterns are caught early.
+- **Acceptance Criteria:** Fixtures cover consult, research, image context and daily recommendations.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** AI tests
+- **Status:** ☐ open
+
+### G321 — On-Device Capability Explainer
+
+- **Epic:** AI & Research
+- **Problem:** Detected browser AI capabilities are technical.
+- **Desired Outcome:** Explain local AI capability status in plain Dutch.
+- **User Value:** The user understands what local AI can and cannot do.
+- **Acceptance Criteria:** Text distinguishes detection from enabled use; no model download starts.
+- **Priority:** P3
+- **Complexity:** S
+- **Related Components:** AI UI
+- **Status:** ☐ open
+
+### G322 — Research Network Audit Log
+
+- **Epic:** AI & Research
+- **Problem:** Network-enabled research actions need traceability.
+- **Desired Outcome:** Log explicit network research actions locally.
+- **User Value:** The user can review when external lookups happened.
+- **Acceptance Criteria:** Event log records timestamp, source domain and action type; no payload body stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research opt-in, event log
+- **Status:** ☐ open
+
+### G323 — AI Data Retention Controls
+
+- **Epic:** AI & Research
+- **Problem:** Generated AI concepts can accumulate.
+- **Desired Outcome:** Add controls to list and delete AI-generated concept records.
+- **User Value:** The user can manage generated content.
+- **Acceptance Criteria:** Filter by ai_gegenereerd; delete requires confirmation; verified human records unaffected.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** AI settings, knowledge
+- **Status:** ☐ open
+
+### G324 — Content Security Policy
+
+- **Epic:** Security & DevEx
+- **Problem:** The PWA lacks an explicit CSP.
+- **Desired Outcome:** Add a strict CSP compatible with local-first operation.
+- **User Value:** Accidental third-party execution risk decreases.
+- **Acceptance Criteria:** CSP blocks remote scripts by default; tests verify no forbidden external origins.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Build, index.html
+- **Status:** ☐ open
+
+### G325 — Dependency Review Cadence
+
+- **Epic:** Security & DevEx
+- **Problem:** Dependency updates are ad hoc.
+- **Desired Outcome:** Document and script a monthly dependency review flow.
+- **User Value:** Security maintenance becomes routine.
+- **Acceptance Criteria:** Flow includes npm outdated, audit, lockfile diff and test gate.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, package
+- **Status:** ☐ open
+
+### G326 — Secrets Scan Test
+
+- **Epic:** Security & DevEx
+- **Problem:** Public repo must not contain secrets.
+- **Desired Outcome:** Add a lightweight secrets pattern scan for docs and source.
+- **User Value:** Accidental credential commits are caught.
+- **Acceptance Criteria:** Test flags common API key patterns; allowlist is explicit and minimal.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Tests, repo
+- **Status:** ☐ open
+
+### G327 — Sensitive Fixture Policy
+
+- **Epic:** Security & DevEx
+- **Problem:** Tests could accidentally use real health data.
+- **Desired Outcome:** Document and enforce synthetic-only fixtures.
+- **User Value:** Privacy remains protected in public code.
+- **Acceptance Criteria:** Docs state fixture rules; test filenames and sample names avoid real patient data.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Tests, docs
+- **Status:** ☐ open
+
+### G328 — Storage Schema Migration Harness
+
+- **Epic:** Security & DevEx
+- **Problem:** Future schema migrations need safe testing.
+- **Desired Outcome:** Build a harness for old encrypted record fixtures and additive migrations.
+- **User Value:** Data survival becomes verifiable.
+- **Acceptance Criteria:** Harness loads versioned fixtures; migration tests prove no payload loss.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** Storage, tests
+- **Status:** ☐ open
+
+### G329 — Domain Boundary Lint
+
+- **Epic:** Security & DevEx
+- **Problem:** UI/storage concerns can leak into domain modules.
+- **Desired Outcome:** Add a static test that domain modules avoid DOM and network APIs.
+- **User Value:** The architecture stays clean.
+- **Acceptance Criteria:** Test scans src/domain for forbidden imports and globals.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Architecture, tests
+- **Status:** ☐ open
+
+### G330 — Accessibility Regression Smoke
+
+- **Epic:** Security & DevEx
+- **Problem:** Accessibility can regress without browser checks.
+- **Desired Outcome:** Add automated checks for focus order, labels and contrast on core screens.
+- **User Value:** The app remains usable under stress and on mobile.
+- **Acceptance Criteria:** Smoke covers start, traject, agenda, dossier, backup; failures are actionable.
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** UI tests
+- **Status:** ☐ open
+
+### G331 — Mobile Viewport Screenshot Gate
+
+- **Epic:** Security & DevEx
+- **Problem:** Mobile layout regressions are hard to see in unit tests.
+- **Desired Outcome:** Add screenshot smoke for key mobile screens.
+- **User Value:** Small-screen usability is protected.
+- **Acceptance Criteria:** Screenshots cover 390px width; checks verify no horizontal overflow.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** UI tests
+- **Status:** ☐ open
+
+### G332 — Markdown Export Sanitizer
+
+- **Epic:** Security & DevEx
+- **Problem:** User text in Markdown exports may break structure.
+- **Desired Outcome:** Escape or normalize risky Markdown/control characters in exports.
+- **User Value:** Exports remain readable and safe to share manually.
+- **Acceptance Criteria:** Tests cover headings, links, tables and HTML-like text.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Exports
+- **Status:** ☐ open
+
+### G333 — Audit Event Retention Policy
+
+- **Epic:** Security & DevEx
+- **Problem:** Event logs can grow indefinitely.
+- **Desired Outcome:** Define retention/export guidance for local audit events.
+- **User Value:** Operational history stays useful without clutter.
+- **Acceptance Criteria:** Policy is documented; UI explains manual cleanup or archive path.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Event log, docs
+- **Status:** ☐ open
+
+### G334 — Form Validation Library Cleanup
+
+- **Epic:** Security & DevEx
+- **Problem:** Validation rules are repeated across forms.
+- **Desired Outcome:** Introduce a small local validation helper for common fields.
+- **User Value:** Forms become easier to maintain.
+- **Acceptance Criteria:** Helper covers required text, date, number and ID references; no new dependency unless justified.
+- **Priority:** P2
+- **Complexity:** L
+- **Related Components:** Forms
+- **Status:** ☐ open
+
+### G335 — Typed Route Registry
+
+- **Epic:** Security & DevEx
+- **Problem:** Screen IDs and nav metadata are loosely coupled.
+- **Desired Outcome:** Create a typed registry for routes, titles and nav labels.
+- **User Value:** Navigation changes become safer.
+- **Acceptance Criteria:** Registry drives nav and screen metadata; tests verify every route renders.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** App shell
+- **Status:** ☐ open
+
+### G336 — Store Factory Refactor
+
+- **Epic:** Security & DevEx
+- **Problem:** Runtime store initialization is repetitive.
+- **Desired Outcome:** Extract store initialization/reset helpers.
+- **User Value:** Main runtime becomes easier to reason about.
+- **Acceptance Criteria:** Refactor preserves behavior; tests cover lock, unlock and import reset.
+- **Priority:** P3
+- **Complexity:** L
+- **Related Components:** main.ts, stores
+- **Status:** ☐ open
+
+### G337 — Event Log Privacy Test
+
+- **Epic:** Security & DevEx
+- **Problem:** Event logs might store sensitive free text.
+- **Desired Outcome:** Add tests that event log details stay generic for high-risk actions.
+- **User Value:** Operational metadata does not become a second dossier.
+- **Acceptance Criteria:** Tests cover backup, AI, notification and import events.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Event log tests
+- **Status:** ☐ open
+
+### G338 — Tailscale Deploy Drift Check
+
+- **Epic:** Security & DevEx
+- **Problem:** Deployment config can drift from docs.
+- **Desired Outcome:** Compare docker-compose and Tailscale docs for port/domain consistency.
+- **User Value:** Self-hosting remains predictable.
+- **Acceptance Criteria:** Check validates documented port, service name and smoke command.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** Tailscale docs, scripts
+- **Status:** ☐ open
+
+### G339 — Public Repo Privacy Review
+
+- **Epic:** Security & DevEx
+- **Problem:** Public code needs recurring privacy review.
+- **Desired Outcome:** Add a checklist for public repo privacy before releases.
+- **User Value:** Sensitive project context stays out of commits.
+- **Acceptance Criteria:** Checklist covers docs, fixtures, screenshots, env files and generated assets.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, tests
+- **Status:** ☐ open
+
+### G340 — Build Provenance Notes
+
+- **Epic:** Security & DevEx
+- **Problem:** Build artifacts lack provenance notes.
+- **Desired Outcome:** Document how CI builds relate to deployed static assets.
+- **User Value:** Deployment audits become easier.
+- **Acceptance Criteria:** Docs mention commit SHA, build command and smoke steps.
+- **Priority:** P3
+- **Complexity:** S
+- **Related Components:** Docs, CI
+- **Status:** ☐ open
+
+### G341 — CSS Token Audit
+
+- **Epic:** Security & DevEx
+- **Problem:** Theme changes can reintroduce one-note palettes or poor contrast.
+- **Desired Outcome:** Add a documented CSS token audit and optional test hooks.
+- **User Value:** Visual quality remains consistent.
+- **Acceptance Criteria:** Audit lists color tokens, contrast expectations and mobile constraints.
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Styles
+- **Status:** ☐ open
+
+### G342 — No External Asset Test
+
+- **Epic:** Security & DevEx
+- **Problem:** External images/fonts/scripts could undermine privacy.
+- **Desired Outcome:** Test built assets and HTML for remote URL references.
+- **User Value:** The app remains self-contained.
+- **Acceptance Criteria:** Build output scan rejects http(s) asset URLs unless explicitly allowlisted.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** PWA, tests
+- **Status:** ☐ open
+
+### G343 — Type Coverage Ratchet
+
+- **Epic:** Security & DevEx
+- **Problem:** Type safety can erode with broad unknowns.
+- **Desired Outcome:** Track and reduce unsafe casts in app/domain code.
+- **User Value:** Maintenance risk decreases.
+- **Acceptance Criteria:** Report counts any/unknown casts; ratchet prevents increases outside tests.
+- **Priority:** P2
+- **Complexity:** M
+- **Related Components:** TypeScript
+- **Status:** ☐ open
+
+### G344 — Future Sync Relay Threat Model
+
+- **Epic:** Security & DevEx
+- **Problem:** A future relay needs threat modeling before implementation.
+- **Desired Outcome:** Write a threat model for encrypted sync relay options.
+- **User Value:** Future sync work starts from privacy constraints.
+- **Acceptance Criteria:** Threat model covers metadata leakage, auth, replay, retention and non-goals.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Architecture, security docs
+- **Status:** ☐ open

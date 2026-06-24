@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import changelog from '../CHANGELOG.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
+import executionGoals from '../EXECUTION_GOALS.md?raw';
 import privacy from '../PRIVACY.md?raw';
 import backlog from '../PRODUCT_BACKLOG.md?raw';
 import readme from '../README.md?raw';
@@ -16,9 +17,38 @@ describe('onderhoudsdocumentatie', () => {
   });
 
   it('houdt CURRENT_STATE en CHANGELOG actueel voor de laatste onderhoudschecks', () => {
-    for (const goal of ['G167', 'G168', 'G170', 'G174']) {
+    for (const goal of ['G167', 'G168', 'G170', 'G174', 'G244']) {
       expect(currentState).toContain(goal);
       expect(changelog).toContain(goal);
+    }
+  });
+
+  it('houdt een rijke execution-goalcatalogus met minimaal 100 actieve doelen', () => {
+    const openGoals = countGoalStatuses()['☐'] ?? 0;
+    const goalSections = executionGoals.match(/^### G\d+ — .+$/gm) ?? [];
+    const openExecutionGoals = executionGoals.match(/^- \*\*Status:\*\* ☐ open$/gm) ?? [];
+    const activeEpics = executionGoals.match(/^- \*\*.+:\*\* .+$/gm) ?? [];
+
+    expect(openGoals).toBeGreaterThanOrEqual(100);
+    expect(openExecutionGoals).toHaveLength(openGoals);
+    expect(goalSections.length).toBeGreaterThanOrEqual(openGoals);
+    expect(activeEpics.length).toBeGreaterThanOrEqual(3);
+    expect(executionGoals).toContain('F5 — Continuous Personal Fertility Operations');
+
+    for (const section of executionGoals.split('\n### ').slice(1)) {
+      for (const field of [
+        'Epic',
+        'Problem',
+        'Desired Outcome',
+        'User Value',
+        'Acceptance Criteria',
+        'Priority',
+        'Complexity',
+        'Related Components',
+        'Status',
+      ]) {
+        expect(`### ${section}`).toContain(`- **${field}:**`);
+      }
     }
   });
 
