@@ -378,10 +378,13 @@ describe('onderhoudsdocumentatie', () => {
       'Backlog-health contractmatrix ontbreekt',
       'beide markercomments',
       'tests/backlogHealth.test.ts',
-      'issue-snapshot of ruwe GitHub-output',
       'opnieuw draaien van de docs-/contracttests',
     ]) {
       expect(recoveryParagraph).toContain(requiredTerm);
+    }
+
+    for (const forbiddenRecoveryArtifact of ['issue-snapshot', 'ruwe GitHub-output']) {
+      expect(recoveryParagraph).toContain(forbiddenRecoveryArtifact);
     }
 
     for (const requiredTerm of [
