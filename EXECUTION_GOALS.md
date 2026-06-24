@@ -3042,4 +3042,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G459 — Backlog Health JSON Contract Recovery Artifact Docs Hint Mixed Fixture Declaration Spacing
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static value now sits near the mixed error-reason fixture, but the mixed fixture declarations still sit tightly together.
+- **Desired Outcome:** Review whether spacing around the dynamic, representative and mixed fixtures can make the declaration flow clearer.
+- **User Value:** Maintainers can distinguish dynamic fixtures, representative static value and mixed fixture composition at a glance.
+- **Acceptance Criteria:** Mixed fixture declaration spacing is reviewed and, if useful, adjusted without weakening type fixtures; existing representative static, dynamic and mixed error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
