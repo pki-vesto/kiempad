@@ -50,6 +50,8 @@ type BacklogHealthArtifactDocsHintDynamicErrorReason =
 type BacklogHealthArtifactDocsHintErrorReason =
   | BacklogHealthArtifactDocsHintStaticErrorReason
   | BacklogHealthArtifactDocsHintDynamicErrorReason;
+type RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason =
+  BacklogHealthArtifactDocsHintStaticErrorReason;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS = {
   missingLabel: 'label ontbreekt',
   missingTerm: 'term ontbreekt',
@@ -63,7 +65,7 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceTerm,
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintStaticErrorReason>;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ERROR_REASON =
-  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel satisfies BacklogHealthArtifactDocsHintStaticErrorReason;
+  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel satisfies RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_DYNAMIC_ERROR_REASON_TYPE_FIXTURES = [
   'label is te generiek: hint',
   'term is te kort: labels',

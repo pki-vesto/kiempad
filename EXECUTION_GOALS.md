@@ -2846,4 +2846,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G445 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Alias Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static reason type fixture now uses a shorter alias for readability, but that alias has no focused fixture showing it maps to the static reason contract.
+- **Desired Outcome:** Add a focused type-level fixture for the representative static reason type alias.
+- **User Value:** Maintainers can keep the representative static type guard readable without weakening its contract.
+- **Acceptance Criteria:** Type fixture proves the representative static reason alias satisfies the static reason contract; existing static selection, literal and shared fixture tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
