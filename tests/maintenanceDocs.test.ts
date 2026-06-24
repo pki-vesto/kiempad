@@ -562,6 +562,15 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('bouwt backlog-health recovery artifactlabel-uitleg dynamische foutredenen', () => {
+    expect(buildBacklogHealthArtifactDocsHintGenericLabelReason('hint')).toBe(
+      'label is te generiek: hint',
+    );
+    expect(buildBacklogHealthArtifactDocsHintShortTermReason('labels')).toBe(
+      'term is te kort: labels',
+    );
+  });
+
   it('houdt backlog-health recovery artifactlabel-uitleg foutredenen stabiel', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS).toEqual({
       missingLabel: 'label ontbreekt',

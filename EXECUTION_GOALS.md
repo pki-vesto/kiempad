@@ -2692,4 +2692,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G434 — Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Reason Type Narrowing
+
+- **Epic:** Continuous Evolution
+- **Problem:** Dynamic artifact docs hint reason helpers now have focused fixtures, but the shared reason type still accepts any string and cannot distinguish static from generated reason text.
+- **Desired Outcome:** Introduce a small template-literal type for dynamic artifact docs hint reasons and use it as the helper return contract.
+- **User Value:** Maintainers get stronger compile-time feedback when changing dynamic diagnostic wording.
+- **Acceptance Criteria:** Dynamic label and term reason helpers return a named template-literal reason type; existing builder, helper and validation fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
