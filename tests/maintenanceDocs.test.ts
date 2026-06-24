@@ -40,6 +40,12 @@ type NormalizedBacklogHealthArtifactDocsHint = {
   term: string;
 };
 type BacklogHealthArtifactDocsHintErrorReason = string;
+const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS = {
+  missingLabel: 'label ontbreekt',
+  missingTerm: 'term ontbreekt',
+  whitespaceLabel: 'label bevat alleen whitespace',
+  whitespaceTerm: 'term bevat alleen whitespace',
+} as const satisfies Record<string, BacklogHealthArtifactDocsHintErrorReason>;
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
@@ -543,9 +549,11 @@ describe('onderhoudsdocumentatie', () => {
   });
 
   it('bouwt backlog-health recovery artifactlabel-uitleg fouten met stabiele prefix', () => {
-    expect(buildBacklogHealthArtifactDocsHintError('label ontbreekt')).toBe(
-      'Backlog-health artifact docs hint label ontbreekt.',
-    );
+    expect(
+      buildBacklogHealthArtifactDocsHintError(
+        BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
+      ),
+    ).toBe('Backlog-health artifact docs hint label ontbreekt.');
   });
 
   it('documenteert autonomy guardrail evidence per domein', () => {
@@ -769,16 +777,32 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
     const normalizedDocsHint = normalizeBacklogHealthArtifactDocsHint(docsHint);
 
     if (normalizedDocsHint.rawLabel.length === 0) {
-      throw new Error(buildBacklogHealthArtifactDocsHintError('label ontbreekt'));
+      throw new Error(
+        buildBacklogHealthArtifactDocsHintError(
+          BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
+        ),
+      );
     }
     if (normalizedDocsHint.rawTerm.length === 0) {
-      throw new Error(buildBacklogHealthArtifactDocsHintError('term ontbreekt'));
+      throw new Error(
+        buildBacklogHealthArtifactDocsHintError(
+          BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingTerm,
+        ),
+      );
     }
     if (normalizedDocsHint.label.length === 0) {
-      throw new Error(buildBacklogHealthArtifactDocsHintError('label bevat alleen whitespace'));
+      throw new Error(
+        buildBacklogHealthArtifactDocsHintError(
+          BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceLabel,
+        ),
+      );
     }
     if (normalizedDocsHint.term.length === 0) {
-      throw new Error(buildBacklogHealthArtifactDocsHintError('term bevat alleen whitespace'));
+      throw new Error(
+        buildBacklogHealthArtifactDocsHintError(
+          BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceTerm,
+        ),
+      );
     }
     if (normalizedDocsHint.label.length <= 8) {
       throw new Error(

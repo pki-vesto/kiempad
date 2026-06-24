@@ -2636,4 +2636,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G430 — Backlog Health JSON Contract Recovery Artifact Docs Hint Error Reason Constants Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint validation now uses shared reason constants, but the constants themselves have no focused fixture proving their stable Dutch diagnostic text.
+- **Desired Outcome:** Add a focused fixture for the artifact docs hint error reason constants.
+- **User Value:** Maintainers get a direct signal if future edits weaken common diagnostic reason wording.
+- **Acceptance Criteria:** Tests assert the shared reason constants include the expected labels for missing and whitespace metadata; existing builder and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
