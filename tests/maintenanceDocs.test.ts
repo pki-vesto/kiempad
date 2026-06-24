@@ -357,6 +357,9 @@ describe('onderhoudsdocumentatie', () => {
       'top-level velden',
       'nested issuevelden',
       'Werk die matrix bij',
+      'backlog-health-json-contract-matrix:start',
+      'backlog-health-json-contract-matrix:end',
+      'documentatie en contractmatrix synchroon',
     ]) {
       expect(contractCoverage).toContain(requiredTerm);
     }

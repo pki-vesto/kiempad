@@ -2286,4 +2286,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G405 — Backlog Health JSON Contract Marker Negative Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The contract matrix marker parser is documented, but there is no negative fixture proving missing markers fail with a clear error.
+- **Desired Outcome:** Add a small parser-level negative fixture for missing contract matrix markers.
+- **User Value:** Maintainers get immediate feedback if marker anchors are accidentally removed during test refactors.
+- **Acceptance Criteria:** Tests cover missing-marker failure with a clear message; marker docs remain covered; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

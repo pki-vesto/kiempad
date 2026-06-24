@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 304 |
+| ☑ klaar | 305 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **404** |
+| **Totaal** | **405** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -549,13 +549,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G401 | Backlog Health JSON Contract Matrix Drift Hint | P1 | F4 | ☑ |
 | G402 | Backlog Health JSON Contract Matrix Docs Symmetry | P1 | F4 | ☑ |
 | G403 | Backlog Health JSON Contract Matrix Section Parser | P1 | F4 | ☑ |
-| G404 | Backlog Health JSON Contract Matrix Marker Docs | P1 | F4 | ☐ |
+| G404 | Backlog Health JSON Contract Matrix Marker Docs | P1 | F4 | ☑ |
+| G405 | Backlog Health JSON Contract Marker Negative Fixture | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 404** (id's G001 t/m G404, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 405** (id's G001 t/m G405, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

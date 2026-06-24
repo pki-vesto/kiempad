@@ -113,3 +113,8 @@ De JSON-contractvorm wordt bewaakt in `tests/backlogHealth.test.ts`. De test
 `documenteert issue-snapshotvelden met een compacte contractmatrix` controleert per
 `issueSnapshot`-groep de top-level velden en nested issuevelden. Werk die matrix bij
 wanneer de velden in deze referentie bewust veranderen.
+
+Laat de markercomments `backlog-health-json-contract-matrix:start` en
+`backlog-health-json-contract-matrix:end` rond de matrixgroepverwachting staan; de
+onderhoudstest gebruikt die anchors om documentatie en contractmatrix synchroon te
+houden.

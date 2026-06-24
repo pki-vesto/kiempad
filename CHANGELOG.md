@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G404 Continuous Evolution: de backlog-health JSON-reference documenteert nu de
+  contractmatrix start-/endmarkers die onderhoudstests gebruiken.
 - G403 Continuous Evolution: de backlog-health docs/matrix-symmetrietest gebruikt nu
   stabiele contractmatrixmarkers in plaats van een brede testtekst-regex.
 - G402 Continuous Evolution: onderhoudstests vergelijken nu de gedocumenteerde
