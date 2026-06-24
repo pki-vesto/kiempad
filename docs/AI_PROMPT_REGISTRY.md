@@ -23,3 +23,22 @@ Iedere prompt moet expliciet verbieden:
 
 `valideerAiPromptRegistry()` bewaakt deze grenzen in tests. Nieuwe prompts horen eerst
 in de registry en krijgen pas daarna UI- of providerkoppeling.
+
+## Regressiesuite
+
+`listAiPromptRegressionFixtures()` levert vaste regressiefixtures voor alle
+AI-assisted flows die Kiempad moet bewaken:
+
+- consult;
+- research;
+- image-context;
+- daily-recommendations.
+
+Registry-prompts worden automatisch als fixture opgenomen. Image-context en dagelijkse
+aanbevelingen hebben aparte boundary-fixtures, omdat deze flows nu lokaal en
+policy-guarded zijn maar geen providerprompt mogen starten. De regressiesuite bewaakt:
+
+- elke verplichte flow heeft minstens één fixture;
+- prompttekst vraagt geen diagnose, dosering of behandelkeuze;
+- veilige voorbeeldoutput blijft door de outputpolicy komen;
+- verboden voorbeeldoutput wordt door de outputpolicy geweigerd.

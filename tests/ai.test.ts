@@ -7,11 +7,13 @@ import {
   deidentificeerTekstMetRedacties,
   detecteerOnDeviceAiCapabilities,
   getAiPromptTemplate,
+  listAiPromptRegressionFixtures,
   listAiPromptTemplates,
   maakAiSamenvattingKennisItem,
   maakAiSamenvattingPayload,
   valideerAiOutputPolicy,
   valideerAiPromptRegistry,
+  valideerAiPromptRegressionSuite,
 } from '../src/domain/ai';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 
@@ -223,5 +225,64 @@ describe('AI opt-in guard', () => {
         getAiPromptTemplate('research-samenvatting'),
       ]),
     ).toThrow('Dubbele AI prompt template');
+  });
+
+  it('heeft regressiefixtures voor alle AI-assisted flows', () => {
+    const fixtures = listAiPromptRegressionFixtures();
+
+    expect(() => valideerAiPromptRegressionSuite(fixtures)).not.toThrow();
+    expect(new Set(fixtures.map((fixture) => fixture.flow))).toEqual(
+      new Set(['consult', 'research', 'image-context', 'daily-recommendations']),
+    );
+    expect(fixtures.map((fixture) => fixture.id)).toEqual(
+      expect.arrayContaining([
+        'registry-research-samenvatting',
+        'registry-consult-samenvatting',
+        'registry-research-naar-consultvragen',
+        'image-context-local-metadata-only',
+        'daily-recommendations-local-context-only',
+      ]),
+    );
+  });
+
+  it('vangt promptdrift en ontbrekende flowdekking in regressiefixtures', () => {
+    const fixtures = listAiPromptRegressionFixtures();
+
+    expect(() =>
+      valideerAiPromptRegressionSuite(
+        fixtures.filter((fixture) => fixture.flow !== 'image-context'),
+      ),
+    ).toThrow('image-context');
+
+    expect(() =>
+      valideerAiPromptRegressionSuite([
+        ...fixtures,
+        {
+          id: 'unsafe-treatment-choice',
+          flow: 'consult',
+          scenario: 'Onveilige drift',
+          promptTekst: 'Adviseer welke behandeling, IVF of ICSI, voor deze gebruiker het beste is.',
+          veiligeOutputVoorbeelden: ['Vraag de kliniek welke opties besproken kunnen worden.'],
+          verbodenOutputVoorbeelden: ['Mijn advies: kies voor ICSI.'],
+        },
+      ]),
+    ).toThrow('verboden medische output');
+  });
+
+  it('weigert regressiefixtures waarvan verboden voorbeelden niet door de outputpolicy vallen', () => {
+    const fixtures = listAiPromptRegressionFixtures();
+    const fixture = fixtures[0];
+    if (!fixture) throw new Error('Regressiefixtures ontbreken.');
+    const rest = fixtures.slice(1);
+
+    expect(() =>
+      valideerAiPromptRegressionSuite([
+        {
+          ...fixture,
+          verbodenOutputVoorbeelden: ['Maak een lijstje met neutrale consultvragen.'],
+        },
+        ...rest,
+      ]),
+    ).toThrow('laat verboden output door');
   });
 });

@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 256 |
+| ☑ klaar | 257 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **356** |
+| **Totaal** | **357** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -465,7 +465,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G317 | Question Safety Classifier | P1 | F4 | ☐ |
 | G318 | Local Research Full Text Index | P2 | F4 | ☐ |
 | G319 | Research Export Packet | P2 | F4 | ☐ |
-| G320 | Prompt Regression Suite | P0 | F4 | ☐ |
+| G320 | Prompt Regression Suite | P0 | F4 | ☑ |
 | G321 | On-Device Capability Explainer | P3 | F4 | ☐ |
 | G322 | Research Network Audit Log | P1 | F4 | ☐ |
 | G323 | AI Data Retention Controls | P1 | F4 | ☐ |
@@ -502,12 +502,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G354 | Secrets Scan Baseline Review | P1 | F4 | ☐ |
 | G355 | Prompt Registry UI Exposure | P1 | F4 | ☐ |
 | G356 | Redaction Pattern Baseline Review | P1 | F4 | ☐ |
+| G357 | Prompt Regression Coverage Report | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 356** (id's G001 t/m G356, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 357** (id's G001 t/m G357, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

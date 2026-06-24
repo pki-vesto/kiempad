@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G320 AI & Research: promptregressiesuite met fixtures voor consult, research,
+  image-context en dagelijkse aanbevelingen bewaakt promptdrift en verboden output.
 - G313 AI & Research: AI payload-preview toont welke persoonlijke velden lokaal
   zijn verwijderd, inclusief aantallen en vervanglabels zonder originele waarden.
 - G305 AI & Research: centrale AI prompt registry met doel, versie, inputcontract,
