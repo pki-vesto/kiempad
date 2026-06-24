@@ -3126,4 +3126,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G465 — Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Fixture Test Placement
+
+- **Epic:** Continuous Evolution
+- **Problem:** The broad static fixture test now precedes alias checks, but the dynamic fixture completeness test may still be separated from the dynamic reason builder checks.
+- **Desired Outcome:** Review whether the dynamic fixture completeness test should move closer to dynamic reason coverage or remain with static and alias fixture completeness checks.
+- **User Value:** Maintainers can follow dynamic reason coverage without scanning back and forth through the recovery artifact docs hint cluster.
+- **Acceptance Criteria:** Dynamic fixture test placement is reviewed and, if useful, adjusted without weakening assertions; dynamic builder, dynamic fixture and mixed error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
