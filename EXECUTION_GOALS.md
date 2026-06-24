@@ -3112,4 +3112,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G464 — Backlog Health JSON Contract Recovery Artifact Docs Hint Broad Static Fixture Test Placement
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias comment boundary is now leaner, but the broad static fixture completeness test may still sit close enough to alias tests that the scan order is worth reviewing.
+- **Desired Outcome:** Review whether the broad static fixture completeness test should stay after alias checks or move closer to related static coverage.
+- **User Value:** Maintainers can follow static, alias and mixed fixture coverage in a predictable order.
+- **Acceptance Criteria:** Broad static fixture test placement is reviewed and, if useful, adjusted without weakening assertions; representative static, alias and broad static error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

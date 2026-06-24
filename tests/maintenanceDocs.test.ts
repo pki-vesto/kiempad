@@ -633,7 +633,6 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
-  // Static alias checks bridge the representative static reason and the broad static fixture.
   it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische aliaswaarden expliciet', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES).toEqual([
       'label ontbreekt',
