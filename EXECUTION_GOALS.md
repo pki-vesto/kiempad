@@ -838,7 +838,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** AI, docs, tests
 - **Score:** 115
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G306 — Research Source Importer
 
@@ -1475,4 +1475,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Secrets scan, tests, docs
 - **Score:** 104
+- **Status:** ☐ open
+
+### G355 — Prompt Registry UI Exposure
+
+- **Epic:** AI & Research
+- **Problem:** The prompt registry is centralized and tested, but currently only visible in source and docs.
+- **Desired Outcome:** Provide a read-only prompt registry overview with purpose, version, inputs and forbidden outputs.
+- **User Value:** AI behavior becomes easier to audit before any provider integration is used.
+- **Acceptance Criteria:** UI or generated markdown lists every prompt id, version, purpose and required inputs; forbidden output policy is visible for each prompt; overview remains read-only and starts no AI/provider/network action; tests verify every registry prompt appears in the overview.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** AI registry, app shell, docs
+- **Score:** 95
 - **Status:** ☐ open

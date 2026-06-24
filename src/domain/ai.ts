@@ -13,6 +13,28 @@ export type AiSamenvattingPayload = {
   lengteVerstuurd: number;
 };
 
+export type AiPromptId =
+  | 'research-samenvatting'
+  | 'consult-samenvatting'
+  | 'research-naar-consultvragen';
+
+export type AiPromptInputField = {
+  naam: string;
+  verplicht: boolean;
+  beschrijving: string;
+};
+
+export type AiPromptTemplate = {
+  id: AiPromptId;
+  versie: string;
+  doel: string;
+  inputVelden: AiPromptInputField[];
+  systeemInstructie: string;
+  gebruikersTemplate: string;
+  verbodenOutput: readonly string[];
+  veiligheidslabels: readonly string[];
+};
+
 export type OnDeviceAiCapabilityId = 'prompt' | 'summarizer' | 'translator' | 'language-detector';
 
 export type OnDeviceAiCapability = {
@@ -25,6 +47,92 @@ export type OnDeviceAiCapability = {
 
 export const AI_SAMENVATTING_WAARSCHUWING =
   'AI-samenvatting: concept, niet geverifieerd door een behandelaar.';
+
+const AI_FORBIDDEN_OUTPUTS = [
+  'Geen diagnose of waarschijnlijkheidsdiagnose.',
+  'Geen dosering, medicatieschema of aanpassing van medicatie.',
+  'Geen behandelkeuze, behandeladvies of rangorde tussen IVF/ICSI/terugplaatsing/punctie.',
+] as const;
+
+const AI_SAFETY_LABELS = [
+  'concept',
+  'bronvermelding-verplicht',
+  'artsverificatie-verplicht',
+  'geen-medisch-advies',
+] as const;
+
+export const AI_PROMPT_REGISTRY: readonly AiPromptTemplate[] = [
+  {
+    id: 'research-samenvatting',
+    versie: '2026-06-24',
+    doel: 'Vat een opgeslagen researchtekst samen als conceptkennis voor leken.',
+    inputVelden: [
+      {
+        naam: 'bron',
+        verplicht: true,
+        beschrijving: 'Bronverwijzing of URL van de publicatie.',
+      },
+      {
+        naam: 'tekst',
+        verplicht: true,
+        beschrijving: 'Gede-identificeerde en geminimaliseerde researchtekst.',
+      },
+    ],
+    systeemInstructie:
+      'Je schrijft een Nederlandstalige conceptsamenvatting voor consultvoorbereiding. ' +
+      'Gebruik begrijpelijke taal, benoem onzekerheid en verwijs naar de bron.',
+    gebruikersTemplate:
+      'Bron: {{bron}}\n\nTekst:\n{{tekst}}\n\nGeef een wetenschappelijke samenvatting, eenvoudige samenvatting en relevantie voor de gebruiker.',
+    verbodenOutput: AI_FORBIDDEN_OUTPUTS,
+    veiligheidslabels: AI_SAFETY_LABELS,
+  },
+  {
+    id: 'consult-samenvatting',
+    versie: '2026-06-24',
+    doel: 'Maak een feitelijke conceptsamenvatting uit consultnotities.',
+    inputVelden: [
+      {
+        naam: 'consultTekst',
+        verplicht: true,
+        beschrijving: 'Gede-identificeerde consulttekst of eigen notitie.',
+      },
+      {
+        naam: 'bron',
+        verplicht: true,
+        beschrijving: 'Lokale bron of documenttitel van het consultverslag.',
+      },
+    ],
+    systeemInstructie:
+      'Je ordent consultinformatie feitelijk. Maak geen medische interpretatie en voeg niets toe dat niet in de bron staat.',
+    gebruikersTemplate:
+      'Bron: {{bron}}\n\nConsulttekst:\n{{consultTekst}}\n\nVat samen in: kernpunten, actiepunten, open vragen.',
+    verbodenOutput: AI_FORBIDDEN_OUTPUTS,
+    veiligheidslabels: AI_SAFETY_LABELS,
+  },
+  {
+    id: 'research-naar-consultvragen',
+    versie: '2026-06-24',
+    doel: 'Zet researchrelevantie om naar conceptvragen voor de behandelaar.',
+    inputVelden: [
+      {
+        naam: 'researchSamenvatting',
+        verplicht: true,
+        beschrijving: 'Bewaarde researchsamenvatting met bron.',
+      },
+      {
+        naam: 'persoonlijkeContext',
+        verplicht: false,
+        beschrijving: 'Optionele lokale context die al door de gebruiker is vastgelegd.',
+      },
+    ],
+    systeemInstructie:
+      'Je formuleert alleen neutrale vragen voor een behandelaar. Geef geen advies en trek geen conclusie voor de gebruiker.',
+    gebruikersTemplate:
+      'Research:\n{{researchSamenvatting}}\n\nContext:\n{{persoonlijkeContext}}\n\nMaak veilige consultvragen die de gebruiker kan controleren.',
+    verbodenOutput: AI_FORBIDDEN_OUTPUTS,
+    veiligheidslabels: AI_SAFETY_LABELS,
+  },
+];
 
 const ON_DEVICE_AI_CAPABILITIES: Array<Omit<OnDeviceAiCapability, 'beschikbaar' | 'toelichting'>> =
   [
@@ -66,6 +174,46 @@ export function aiVerzoekToegestaan(
   }
 
   return { toegestaan: true };
+}
+
+export function listAiPromptTemplates(): AiPromptTemplate[] {
+  return [...AI_PROMPT_REGISTRY];
+}
+
+export function getAiPromptTemplate(id: AiPromptId): AiPromptTemplate {
+  const template = AI_PROMPT_REGISTRY.find((item) => item.id === id);
+  if (!template) throw new Error(`Onbekende AI prompt template: ${id}`);
+  return template;
+}
+
+export function valideerAiPromptRegistry(
+  templates: readonly AiPromptTemplate[] = AI_PROMPT_REGISTRY,
+): void {
+  const ids = new Set<AiPromptId>();
+  for (const template of templates) {
+    if (ids.has(template.id)) {
+      throw new Error(`Dubbele AI prompt template: ${template.id}`);
+    }
+    ids.add(template.id);
+
+    if (template.inputVelden.length === 0) {
+      throw new Error(`AI prompt template ${template.id} heeft geen inputcontract.`);
+    }
+    for (const required of ['diagnose', 'dosering', 'behandelkeuze']) {
+      const containsRequiredPolicy = template.verbodenOutput.some((regel) =>
+        regel.toLowerCase().includes(required),
+      );
+      if (!containsRequiredPolicy) {
+        throw new Error(`AI prompt template ${template.id} mist beleid voor ${required}.`);
+      }
+    }
+    for (const label of ['concept', 'bronvermelding-verplicht', 'geen-medisch-advies']) {
+      if (!template.veiligheidslabels.includes(label)) {
+        throw new Error(`AI prompt template ${template.id} mist veiligheidslabel ${label}.`);
+      }
+    }
+    assertPromptTextDoesNotRequestForbiddenOutput(template);
+  }
 }
 
 export function assertAiVerzoekToegestaan(settings: AppSettings, intent: AiRequestIntent): void {
@@ -161,6 +309,19 @@ export function valideerAiOutputPolicy(tekst: string): void {
     if (regel.patroon.test(tekst)) {
       throw new Error(regel.fout);
     }
+  }
+}
+
+function assertPromptTextDoesNotRequestForbiddenOutput(template: AiPromptTemplate): void {
+  const text = `${template.systeemInstructie}\n${template.gebruikersTemplate}`;
+  const forbiddenRequests = [
+    /\b(adviseer|bepaal|kies)\b[\s\S]{0,80}\b(behandeling|ivf|icsi|terugplaatsing|punctie)\b/i,
+    /\b(geef|bepaal|bereken)\b[\s\S]{0,80}\b(dosering|dosis|medicatieschema)\b/i,
+    /\b(stel|geef)\b[\s\S]{0,80}\bdiagnose\b/i,
+  ];
+
+  if (forbiddenRequests.some((pattern) => pattern.test(text))) {
+    throw new Error(`AI prompt template ${template.id} vraagt verboden medische output.`);
   }
 }
 

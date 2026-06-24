@@ -104,6 +104,7 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
   met waarschuwingslabels en bronvermelding, **nooit** dosering/diagnose/behandelkeuze.
   De on-device AI-verkenning toont alleen passief lokale browsermogelijkheden; Kiempad
   start daarbij geen sessie en downloadt geen model.
+  Promptcontracten staan centraal in [`docs/AI_PROMPT_REGISTRY.md`](docs/AI_PROMPT_REGISTRY.md).
 - **Sync:** optionele end-to-end versleutelde syncpakketten tussen gekoppelde
   apparaten; een relay of handmatige drager ziet enkel onleesbare blobs.
 

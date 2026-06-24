@@ -5,9 +5,12 @@ import {
   assertAiVerzoekToegestaan,
   beschrijfOnDeviceAiStatus,
   detecteerOnDeviceAiCapabilities,
+  getAiPromptTemplate,
+  listAiPromptTemplates,
   maakAiSamenvattingKennisItem,
   maakAiSamenvattingPayload,
   valideerAiOutputPolicy,
+  valideerAiPromptRegistry,
 } from '../src/domain/ai';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 
@@ -131,5 +134,51 @@ describe('AI opt-in guard', () => {
     expect(beschrijfOnDeviceAiStatus(capabilities)).toBe(
       'Geen lokale browser-AI API-objecten gevonden.',
     );
+  });
+
+  it('registreert AI-prompts met doel, inputcontract en veiligheidsbeleid', () => {
+    const templates = listAiPromptTemplates();
+
+    expect(templates.map((template) => template.id)).toEqual([
+      'research-samenvatting',
+      'consult-samenvatting',
+      'research-naar-consultvragen',
+    ]);
+    expect(() => valideerAiPromptRegistry()).not.toThrow();
+    for (const template of templates) {
+      expect(template.doel.length).toBeGreaterThan(20);
+      expect(template.inputVelden.some((field) => field.verplicht)).toBe(true);
+      expect(template.verbodenOutput.join(' ')).toContain('diagnose');
+      expect(template.verbodenOutput.join(' ')).toContain('dosering');
+      expect(template.verbodenOutput.join(' ')).toContain('behandelkeuze');
+      expect(template.veiligheidslabels).toEqual(
+        expect.arrayContaining(['concept', 'bronvermelding-verplicht', 'geen-medisch-advies']),
+      );
+      expect(`${template.systeemInstructie}\n${template.gebruikersTemplate}`).not.toMatch(
+        /\b(adviseer|bepaal|kies)\b[\s\S]{0,80}\b(behandeling|ivf|icsi|terugplaatsing|punctie)\b/i,
+      );
+    }
+  });
+
+  it('haalt prompttemplates centraal op en weigert policy-drift', () => {
+    expect(getAiPromptTemplate('research-samenvatting')).toMatchObject({
+      id: 'research-samenvatting',
+      versie: '2026-06-24',
+    });
+
+    expect(() =>
+      valideerAiPromptRegistry([
+        {
+          ...getAiPromptTemplate('research-samenvatting'),
+          verbodenOutput: ['Geen diagnose.'],
+        },
+      ]),
+    ).toThrow('dosering');
+    expect(() =>
+      valideerAiPromptRegistry([
+        getAiPromptTemplate('research-samenvatting'),
+        getAiPromptTemplate('research-samenvatting'),
+      ]),
+    ).toThrow('Dubbele AI prompt template');
   });
 });
