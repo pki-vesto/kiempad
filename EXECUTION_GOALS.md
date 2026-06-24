@@ -2790,4 +2790,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G441 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Constant Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static artifact docs hint reason now has a named constant, but that constant has no focused fixture proving which static reason it selects.
+- **Desired Outcome:** Add a focused fixture for the representative static artifact docs hint reason constant.
+- **User Value:** Maintainers can change the representative static value deliberately and get a precise test failure when it changes unintentionally.
+- **Acceptance Criteria:** Tests assert the representative static reason constant equals the intended missing-label static reason; shared fixture and composition test continue to use the named constant; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
