@@ -3541,32 +3541,30 @@ function renderMedicatieScreen(state: AppShellState): string {
     today,
   );
 
-  return `
-    <section class="traject-layout" aria-label="Medicatie beheren">
-      <div class="form-panel">
-        <h2>${selected ? 'Medicatie bewerken' : 'Medicatie toevoegen'}</h2>
-        ${renderMedicatieForm(selected?.medicatie)}
-        <h2 class="section-subheading">Schema importeren</h2>
-        ${renderMedicatieImportForm(state)}
-      </div>
-      <div class="timeline-panel">
-        <div class="panel-heading">
-          <h2>Vandaag</h2>
-          ${
-            selected
-              ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}" aria-label="Verwijder medicatie: ${escapeAttribute(selected.medicatie.naam)}">Verwijder medicatie</button>`
-              : ''
-          }
-        </div>
-        ${todayLogs.length > 0 ? renderDoseLogList(todayLogs, state.medicatie) : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>'}
-        <h2 class="section-subheading">Middelen</h2>
-        ${state.medicatie.length > 0 ? renderMedicatieList(state.medicatie) : '<p class="empty-state">Nog geen medicatie. Voeg links een middel toe zoals de kliniek het voorschrijft.</p>'}
-        <div class="section-subheading">
-          ${renderPolicyPanel()}
-        </div>
-      </div>
-    </section>
-  `;
+  const deleteMedicatieButton = selected
+    ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}" aria-label="Verwijder medicatie: ${escapeAttribute(selected.medicatie.naam)}">Verwijder medicatie</button>`
+    : '';
+
+  return sectionStack(
+    [
+      `<div class="panel-heading"><h2>Vandaag</h2>${deleteMedicatieButton}</div>`,
+      todayLogs.length > 0
+        ? renderDoseLogList(todayLogs, state.medicatie)
+        : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>',
+      '<h2 class="section-subheading">Middelen</h2>',
+      state.medicatie.length > 0
+        ? renderMedicatieList(state.medicatie)
+        : '<p class="empty-state">Nog geen medicatie. Voeg hieronder een middel toe zoals de kliniek het voorschrijft.</p>',
+      disclosure({
+        summary: selected ? 'Medicatie bewerken' : 'Medicatie toevoegen',
+        open: !selected,
+        body: renderMedicatieForm(selected?.medicatie),
+      }),
+      disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) }),
+      renderPolicyPanel(),
+    ],
+    { ariaLabel: 'Medicatie beheren' },
+  );
 }
 
 function renderMedicatieImportForm(state: AppShellState): string {

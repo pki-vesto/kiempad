@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel (Medicatie): het medicatiescherm is mobiel-first omgebouwd —
+  het leidt nu met "Vandaag" (geplande innames/injecties) en "Middelen", met het
+  toevoeg-/bewerk-formulier en de schema-import achter uitklappen, en de
+  niet-medisch-disclaimer onderaan. Alle bindingen blijven gelijk: de dose-log-
+  formulieren (`name="doseLogNotitie"`, `doseStatus`), `id="medicatie-import-form"`
+  en de verwijder-knop (`data-medicatie-id`).
 - G148/G243 UI-herstel (Traject): het trajectscherm is van een dichte
   twee-koloms vorm-/tijdlijnindeling omgebouwd naar een mobiel-first
   enkelkolomsstroom — het traject- en poging-formulier staan nu achter een
