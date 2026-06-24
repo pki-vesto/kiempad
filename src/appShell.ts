@@ -2824,6 +2824,7 @@ function renderVragenScreen(state: AppShellState): string {
             ? renderOpenVragenVoorAfspraak(nextWithQuestions)
             : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
         }
+        ${renderConsultPrepWizard(gegenereerdeVragenlijst)}
         <h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>
         ${
           gegenereerdeVragenlijst
@@ -2841,6 +2842,65 @@ function renderVragenScreen(state: AppShellState): string {
       </div>
     </section>
   `;
+}
+
+function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefined): string {
+  if (!vragenlijst) {
+    return `
+      <section class="policy-panel embedded-summary" aria-label="Consult Prep Wizard">
+        <h2>Consult Prep Wizard</h2>
+        <p class="empty-state">Voeg een komende afspraak en open vragen toe om een lokaal prep-packet te maken.</p>
+        <p class="small-print">Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.</p>
+      </section>
+    `;
+  }
+
+  const vragenTekst = vragenlijst.items.map((item) => `- ${item.tekst}`).join('\n');
+  const packet = maakConsultPrepPacket(vragenlijst, vragenTekst);
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Consult Prep Wizard">
+      <h2>Consult Prep Wizard</h2>
+      <ol class="setup-steps compact-list">
+        <li><strong>1. Afspraak:</strong> controleer ${escapeHtml(vragenlijst.afspraak.titel)} op ${escapeHtml(formatDateTime(vragenlijst.afspraak.datumTijd))}.</li>
+        <li><strong>2. Vragen:</strong> bewerk de conceptvragen voordat je ze meeneemt.</li>
+        <li><strong>3. Context:</strong> open de trajectexports voor timeline- en graphcontext.</li>
+        <li><strong>4. Packet:</strong> gebruik de Markdown alleen als eigen voorbereiding.</li>
+      </ol>
+      <label>
+        Bewerkbare vragen
+        <textarea name="consultPrepQuestions" rows="7">${escapeHtml(vragenTekst)}</textarea>
+      </label>
+      <label>
+        Lokaal prep-packet
+        <textarea readonly rows="10">${escapeHtml(packet)}</textarea>
+      </label>
+      <a class="inline-action" href="#traject">Open timeline en graph exports</a>
+      <p class="small-print">${escapeHtml(vragenlijst.waarschuwing)} Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.</p>
+    </section>
+  `;
+}
+
+function maakConsultPrepPacket(vragenlijst: GegenereerdeVragenlijst, vragenTekst: string): string {
+  return [
+    '# Kiempad consult prep packet',
+    '',
+    `Afspraak: ${vragenlijst.afspraak.titel}`,
+    `Tijdstip: ${formatDateTime(vragenlijst.afspraak.datumTijd)}`,
+    '',
+    '## Bewerkbare vragen',
+    vragenTekst || '- Nog geen vragen geselecteerd.',
+    '',
+    '## Context om lokaal te controleren',
+    '- Timeline-export op het trajectscherm.',
+    '- Graph-export op het trajectscherm.',
+    '- Alleen eigen dossier- en consultnotities; geen externe verzending.',
+    '',
+    '## Veiligheidsgrens',
+    '- Geen diagnose.',
+    '- Geen dosering.',
+    '- Geen behandeladvies of behandelkeuze.',
+  ].join('\n');
 }
 
 function renderGegenereerdeVragenlijst(vragenlijst: GegenereerdeVragenlijst): string {

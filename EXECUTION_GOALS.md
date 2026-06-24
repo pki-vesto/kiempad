@@ -344,7 +344,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** L
 - **Related Components:** Questions, timeline, graph, export
 - **Score:** 110
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G268 — After Consult Capture Flow
 
@@ -1526,5 +1526,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Start screen, settings, app shell tests
+- **Score:** 98
+- **Status:** ☐ open
+
+### G359 — Consult Prep Packet Persistence
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** The consult prep wizard creates a local packet, but it is not yet saveable as a reusable local preparation record.
+- **Desired Outcome:** Let users save an edited consult prep packet locally and link it to the appointment.
+- **User Value:** Final consult preparation remains available after navigation or refresh without copying text manually.
+- **Acceptance Criteria:** Saved packet stays encrypted/local; packet links to an appointment; edited questions are preserved; export still includes no diagnosis, dosage or treatment-choice advice.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Questions, storage, export
 - **Score:** 98
 - **Status:** ☐ open
