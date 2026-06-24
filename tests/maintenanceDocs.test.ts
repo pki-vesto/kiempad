@@ -605,6 +605,7 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  // Mixed fixture checks prove the aggregate keeps static and dynamic reason coverage.
   it('houdt backlog-health recovery artifactlabel-uitleg foutredentype representatief', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASON_TYPE_FIXTURES).toEqual([
       'label ontbreekt',
@@ -620,6 +621,7 @@ describe('onderhoudsdocumentatie', () => {
     ]);
   });
 
+  // Representative static checks keep the selected bridge value stable.
   it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische foutreden stabiel', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ERROR_REASON).toBe(
       BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
