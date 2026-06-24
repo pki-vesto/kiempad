@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { bouwFertilityTimeline, filterFertilityTimeline } from '../src/domain/fertilityTimeline';
+import {
+  bouwFertilityTimeline,
+  filterFertilityTimeline,
+  maakFertilityTimelineTrajectExport,
+} from '../src/domain/fertilityTimeline';
 import type { DossierDocument, KennisItem } from '../src/domain/types';
 
 describe('fertility timeline', () => {
@@ -341,5 +345,74 @@ describe('fertility timeline', () => {
     expect(
       filterFertilityTimeline(timeline, { eigenaar: 'vrouw' }).items.map((item) => item.id),
     ).toEqual(['aanbeveling-vrouw-1']);
+  });
+
+  it('maakt een complete Markdown-trajectexport voor consultvoorbereiding', () => {
+    const timeline = bouwFertilityTimeline({
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          titel: 'Punctie',
+          datumTijd: '2026-06-24T09:30',
+          type: 'punctie',
+          trajectId: 'traject-1',
+        },
+      ],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-23',
+          titel: 'Labuitslag',
+          categorie: 'onderzoek',
+          bestandsNaam: 'lab.pdf',
+          grootteBytes: 512,
+          inhoudBase64: 'base64',
+          trajectId: 'traject-1',
+          analyse: { samenvatting: 'Labwaarden geregistreerd.', signalen: [] },
+          metadata: {
+            documentDatum: '2026-06-23',
+            documenttype: 'Labuitslag',
+            bronbestand: 'lab.pdf',
+            trajectId: 'traject-1',
+            extractieBronnen: [],
+          },
+          uploadedAt: '2026-06-23T10:00:00.000Z',
+        } as DossierDocument,
+      ],
+      consultVerslagen: [],
+      vragen: [],
+      medicatie: [],
+      kennisItems: [],
+    });
+
+    const exportBestand = maakFertilityTimelineTrajectExport(timeline, '2026-06-24T12:00:00.000Z');
+
+    expect(exportBestand).toMatchObject({
+      bestandsNaam: 'kiempad-trajectexport-2026-06-24.md',
+      mimeType: 'text/markdown',
+    });
+    expect(exportBestand.inhoud).toContain('# Kiempad trajectexport voor consultvoorbereiding');
+    expect(exportBestand.inhoud).toContain('Gegenereerd: 2026-06-24T12:00:00.000Z');
+    expect(exportBestand.inhoud).toContain('## Belangrijke mijlpalen');
+    expect(exportBestand.inhoud).toContain('Punctie');
+    expect(exportBestand.inhoud).toContain('## Volledige fertility timeline');
+    expect(exportBestand.inhoud).toContain('Labuitslag');
+    expect(exportBestand.inhoud).toContain('Gekoppelde records: Dossierrecord: Labuitslag');
+    expect(exportBestand.inhoud).toContain('Timeline-items: 3');
+    expect(exportBestand.inhoud).toContain('geen diagnose, kansberekening');
+    expect(exportBestand.inhoud).not.toMatch(/\badvies:|moet kiezen|dosering aanpassen\b/i);
   });
 });

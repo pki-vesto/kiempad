@@ -69,6 +69,13 @@ export type FertilityTimelineContextSignaal = {
   detail: string;
 };
 
+export type FertilityTimelineTrajectExport = {
+  bestandsNaam: string;
+  mimeType: 'text/markdown';
+  inhoud: string;
+  waarschuwing: string;
+};
+
 export type FertilityTimelineFilter = {
   soort?: FertilityTimelineItemSoort;
   datumVanaf?: string;
@@ -392,6 +399,41 @@ export function filterFertilityTimeline(
   );
 }
 
+export function maakFertilityTimelineTrajectExport(
+  timeline: FertilityTimeline,
+  gegenereerdOp = new Date().toISOString(),
+): FertilityTimelineTrajectExport {
+  const regels = [
+    '# Kiempad trajectexport voor consultvoorbereiding',
+    '',
+    `Gegenereerd: ${gegenereerdOp}`,
+    `Waarschuwing: ${timeline.waarschuwing}`,
+    '',
+    '## Belangrijke mijlpalen',
+    ...formatMijlpalenVoorExport(timeline),
+    '',
+    '## Ontbrekende context',
+    ...formatContextSignalenVoorExport(timeline),
+    '',
+    '## Volledige fertility timeline',
+    ...formatTimelineItemsVoorExport(timeline),
+    '',
+    '## Controle',
+    `Timeline-items: ${timeline.items.length}`,
+    `Mijlpalen: ${timeline.mijlpalen.length}`,
+    `Contextsignalen: ${timeline.contextSignalen.length}`,
+    '',
+    'Gebruik dit als gespreksoverzicht. Het is geen diagnose, kansberekening, dosering of behandeladvies.',
+  ];
+
+  return {
+    bestandsNaam: `kiempad-trajectexport-${normaliseerTimelineExportId(gegenereerdOp.slice(0, 10))}.md`,
+    mimeType: 'text/markdown',
+    inhoud: regels.join('\n'),
+    waarschuwing: timeline.waarschuwing,
+  };
+}
+
 function soortVolgorde(soort: FertilityTimelineItemSoort): number {
   return [
     'behandeling',
@@ -403,6 +445,46 @@ function soortVolgorde(soort: FertilityTimelineItemSoort): number {
     'research',
     'aanbeveling',
   ].indexOf(soort);
+}
+
+function formatMijlpalenVoorExport(timeline: FertilityTimeline): string[] {
+  if (timeline.mijlpalen.length === 0) return ['- Geen mijlpalen opgenomen.'];
+
+  return timeline.mijlpalen.map((item) => `- ${item.datum} · ${item.titel}\n  ${item.detail}`);
+}
+
+function formatContextSignalenVoorExport(timeline: FertilityTimeline): string[] {
+  if (timeline.contextSignalen.length === 0) return ['- Geen ontbrekende context zichtbaar.'];
+
+  return timeline.contextSignalen.map((item) => `- ${item.titel}: ${item.detail}`);
+}
+
+function formatTimelineItemsVoorExport(timeline: FertilityTimeline): string[] {
+  if (timeline.items.length === 0) return ['- Geen timeline-items opgenomen.'];
+
+  return timeline.items.map((item) => {
+    const records =
+      item.gekoppeldeRecords.length > 0
+        ? item.gekoppeldeRecords
+            .map((record) => `${record.label} (${record.soort}:${record.id})`)
+            .join('; ')
+        : 'geen gekoppelde records';
+    return [
+      `- ${item.datum} · ${item.label} · ${item.titel}`,
+      `  Bron: ${item.bron}`,
+      `  Context: ${item.context}`,
+      `  Detail: ${item.detail}`,
+      `  Gekoppelde records: ${records}`,
+    ].join('\n');
+  });
+}
+
+function normaliseerTimelineExportId(value: string): string {
+  return value
+    .trim()
+    .toLocaleLowerCase('nl-NL')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 function maakFertilityTimelineResultaat(

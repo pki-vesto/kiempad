@@ -301,6 +301,10 @@
 - **G240 PFIP timeline-mijlpalen:** De centrale timeline toont belangrijke
   mijlpalen en neutrale signalen voor ontbrekende datum-, bron- of trajectcontext,
   zonder automatische correctie of oordeel.
+- **G241 PFIP timeline-trajectexport:** Het trajectscherm toont een complete
+  ongefilterde Markdown-export van de centrale fertility timeline voor eigen
+  consultvoorbereiding, inclusief mijlpalen, contextsignalen, records en
+  waarschuwing.
 - **G178 embryokwaliteit:** Dossier-scherm kan embryokwaliteit als lokale
   kliniekterugkoppeling vastleggen per embryo en koppelen aan poging of
   terugplaatsing, zonder kansberekening.
@@ -433,7 +437,7 @@
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
-heeft na G240 nog 3 open doelen (G241-G243), gericht op dossier-ingest,
+heeft na G241 nog 2 open doelen (G242-G243), gericht op dossier-ingest,
 imaging, consult intelligence, embryo tracking, research intelligence, dagelijkse
 aanbevelingen, een fertility knowledge graph en een volledige fertility timeline.
 
@@ -483,8 +487,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. PFIP uitvoeren vanaf G241: complete trajectexport voor eigen
-   consultvoorbereiding.
+1. PFIP uitvoeren vanaf G242: tijdlijn blijft bruikbaar offline en na import van
+   back-up/syncpakket.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

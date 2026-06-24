@@ -505,6 +505,10 @@ describe('app shell', () => {
     expect(html).toContain('name="timelineEigenaar"');
     expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
+    expect(html).toContain('Timeline-export consultvoorbereiding');
+    expect(html).toContain('kiempad-trajectexport-');
+    expect(html).toContain('# Kiempad trajectexport voor consultvoorbereiding');
+    expect(html).toContain('Volledige ongefilterde Markdown-export');
     expect(html).toContain('Belangrijke mijlpalen');
     expect(html).toContain('Ontbrekende context');
     expect(html).toContain('Geen ontbrekende context zichtbaar in de huidige timelinefilter.');
@@ -517,7 +521,11 @@ describe('app shell', () => {
     expect(html).toContain('<dt>Record-ID</dt><dd>doc-1</dd>');
     expect(html).toContain('Dossierrecord: Echo verslag');
     expect(html).toContain('Traject: traject-1');
-    expect(html).not.toContain('Behandelvoorbereiding');
+    const timelineListStart = html.indexOf('<ol class="compact-list timeline-list">');
+    const timelineListEnd = html.indexOf('</ol>', timelineListStart);
+    const timelineListHtml = html.slice(timelineListStart, timelineListEnd);
+    expect(timelineListHtml).not.toContain('Behandelvoorbereiding');
+    expect(html).toContain('Behandelvoorbereiding');
     expect(html).toContain('id="graph-filter-form"');
     expect(html).toContain('name="graphRelatieType"');
     expect(html).toContain('Hoort bij behandeling');
