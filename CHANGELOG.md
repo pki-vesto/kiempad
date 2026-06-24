@@ -7,6 +7,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel (Agenda): het agendascherm is mobiel-first omgebouwd — het
+  leidt nu met "Komende afspraken" (week-/maandweergave + lijst) en "Afgelopen",
+  met het afspraakformulier en de ICS-import achter uitklappen (de import opent
+  automatisch bij import-feedback). `id="afspraak-form"`, `id="ics-import-form"`,
+  `id="export-ics"` en de verwijder-knop (`data-afspraak-id`) blijven gelijk.
 - G148 UI-herstel (Medicatie): het medicatiescherm is mobiel-first omgebouwd —
   het leidt nu met "Vandaag" (geplande innames/injecties) en "Middelen", met het
   toevoeg-/bewerk-formulier en de schema-import achter uitklappen, en de
