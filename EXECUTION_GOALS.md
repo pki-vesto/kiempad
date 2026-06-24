@@ -305,7 +305,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** App shell, vault, settings
 - **Score:** 118
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G265 — Daily Command Center
 
@@ -1410,4 +1410,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Docs, PR template, maintenance tests
 - **Score:** 103
+- **Status:** ☐ open
+
+### G350 — First Run Setup Progress Persistence
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** The first-run setup can be completed or skipped, but it does not yet show step-level progress for traject, afspraak or backup preparation.
+- **Desired Outcome:** Persist and display lightweight setup progress from local records/settings.
+- **User Value:** New users can resume setup calmly and avoid wondering what is still missing.
+- **Acceptance Criteria:** Setup steps show local progress based on existing records/settings; progress uses only local encrypted state after unlock; skipped/completed setup remains respected; tests cover empty, partial and completed progress states.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, settings, onboarding tests
+- **Score:** 98
 - **Status:** ☐ open

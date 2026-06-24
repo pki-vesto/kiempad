@@ -73,4 +73,22 @@ export class SettingsStore {
       laatsteBackupOp: datum,
     });
   }
+
+  async setFirstRunSetupCompleted(datum: string): Promise<AppSettings> {
+    return this.save({
+      ...(await this.get()),
+      firstRunSetup: {
+        voltooidOp: datum,
+      },
+    });
+  }
+
+  async setFirstRunSetupSkipped(datum: string): Promise<AppSettings> {
+    return this.save({
+      ...(await this.get()),
+      firstRunSetup: {
+        overgeslagenOp: datum,
+      },
+    });
+  }
 }

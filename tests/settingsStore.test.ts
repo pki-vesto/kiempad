@@ -115,4 +115,18 @@ describe('SettingsStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('2026-06-23');
     expect(raw?.payload.ciphertext).not.toContain('laatsteBackupOp');
   });
+
+  it('bewaart eerste-run setupstatus versleuteld en skippable', async () => {
+    const { driver, store } = await setupStore();
+
+    const completed = await store.setFirstRunSetupCompleted('2026-06-24T08:00:00.000Z');
+    const skipped = await store.setFirstRunSetupSkipped('2026-06-24T09:00:00.000Z');
+    const raw = await driver.getRecord('app-settings');
+
+    expect(completed.firstRunSetup).toEqual({ voltooidOp: '2026-06-24T08:00:00.000Z' });
+    expect(skipped.firstRunSetup).toEqual({ overgeslagenOp: '2026-06-24T09:00:00.000Z' });
+    expect(raw?.type).toBe('settings');
+    expect(raw?.payload.ciphertext).not.toContain('firstRunSetup');
+    expect(raw?.payload.ciphertext).not.toContain('2026-06-24');
+  });
 });

@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 249 |
+| ☑ klaar | 250 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **349** |
+| **Totaal** | **350** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -409,7 +409,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G261 | Next Horizon Roadmap | P1 | F4 | ☐ |
 | G262 | Issue Label Taxonomy | P2 | F4 | ☐ |
 | G263 | Monthly Goal Review Ritual | P3 | F4 | ☐ |
-| G264 | First Run Guided Setup | P0 | F4 | ☐ |
+| G264 | First Run Guided Setup | P0 | F4 | ☑ |
 | G265 | Daily Command Center | P0 | F4 | ☐ |
 | G266 | Partner Handoff Mode | P1 | F4 | ☐ |
 | G267 | Consult Prep Wizard | P0 | F4 | ☐ |
@@ -495,12 +495,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G347 | External Asset CI Gate | P0 | F4 | ☑ |
 | G348 | External Asset Allowlist Governance | P1 | F4 | ☐ |
 | G349 | Completion Audit Evidence Markers | P1 | F4 | ☐ |
+| G350 | First Run Setup Progress Persistence | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 349** (id's G001 t/m G349, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 350** (id's G001 t/m G350, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

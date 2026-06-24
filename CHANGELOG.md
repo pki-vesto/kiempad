@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G264 Onboarding & Daily Use: eerste-run setupkaart verschijnt alleen vóór de eerste
+  gebruikersdata, is lokaal skippable/af te ronden en gidst naar kluis, privacy,
+  traject, afspraak en back-up.
 - G250 Continuous Evolution: completion-audit checklist documenteert bewijs per
   requirement en is gekoppeld aan DoD, contributing, PR-template en onderhoudstest.
 - G347 Security & DevEx: CI draait `npm run assets:check` na de productiebuild en

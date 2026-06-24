@@ -192,6 +192,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     ),
   });
   bindThemeControls(root, state);
+  bindFirstRunSetupControls(root, state);
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
   bindDailyRecommendationControls(root, state);
@@ -271,6 +272,30 @@ function bindThemeControls(root: HTMLElement, state: RuntimeState): void {
     const thema = parseThema(new FormData(form).get('thema'));
 
     void state.settingsStore.setThema(thema).then((settings) => {
+      state.settings = settings;
+      render(root, state);
+    });
+  });
+}
+
+function bindFirstRunSetupControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelector('#first-run-complete-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!state.settingsStore) return;
+
+    void state.settingsStore
+      .setFirstRunSetupCompleted(new Date().toISOString())
+      .then((settings) => {
+        state.settings = settings;
+        render(root, state);
+      });
+  });
+
+  root.querySelector('#first-run-skip-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (!state.settingsStore) return;
+
+    void state.settingsStore.setFirstRunSetupSkipped(new Date().toISOString()).then((settings) => {
       state.settings = settings;
       render(root, state);
     });

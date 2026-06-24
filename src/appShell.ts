@@ -2488,6 +2488,7 @@ function renderStartScreen(state: AppShellState): string {
 
   return `
     <section class="workspace" aria-label="Startoverzicht">
+      ${renderFirstRunSetup(state)}
       <div class="summary-panel priority-panel">
         <h2>Waar staan we?</h2>
         <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
@@ -2515,6 +2516,54 @@ function renderStartScreen(state: AppShellState): string {
       </div>
     </section>
   `;
+}
+
+function renderFirstRunSetup(state: AppShellState): string {
+  if (!shouldShowFirstRunSetup(state)) return '';
+
+  return `
+    <section class="summary-panel setup-panel" aria-labelledby="first-run-setup-title">
+      <p class="eyebrow">Eerste keer</p>
+      <h2 id="first-run-setup-title">Richt Kiempad rustig in</h2>
+      <p>Deze stappen blijven lokaal op dit toestel. Kiempad verstuurt niets en maakt geen medische keuzes.</p>
+      <ol class="compact-list setup-steps">
+        <li><strong>Kluis:</strong> je lokale versleutelde kluis is ontgrendeld.</li>
+        <li><strong>Privacygrens:</strong> data blijft lokaal; AI, researchnetwerk en sync blijven opt-in.</li>
+        <li><strong>Traject:</strong> <a href="#traject">maak de eerste poging of cyclus aan</a>.</li>
+        <li><strong>Afspraak:</strong> <a href="#agenda">leg de eerste afspraak vast</a>.</li>
+        <li><strong>Back-up:</strong> <a href="#backup">zet een versleutelde back-up op je checklist</a>.</li>
+      </ol>
+      <div class="button-row">
+        <form id="first-run-complete-form">
+          <button type="submit">Setup afgerond</button>
+        </form>
+        <form id="first-run-skip-form">
+          <button class="secondary-button" type="submit">Later doen</button>
+        </form>
+      </div>
+      <p class="small-print">Je kunt alle stappen ook handmatig via de navigatie doen.</p>
+    </section>
+  `;
+}
+
+function shouldShowFirstRunSetup(state: AppShellState): boolean {
+  const setup = state.settings.firstRunSetup;
+  if (setup.voltooidOp || setup.overgeslagenOp) return false;
+
+  return (
+    state.trajecten.length === 0 &&
+    state.afspraken.length === 0 &&
+    state.medicatie.length === 0 &&
+    state.herinneringen.length === 0 &&
+    state.vragen.length === 0 &&
+    (state.dossierDocuments ?? []).length === 0 &&
+    (state.consultVerslagen ?? []).length === 0 &&
+    (state.symptomLogs ?? []).length === 0 &&
+    (state.cycleData ?? []).length === 0 &&
+    (state.mentalCheckIns ?? []).length === 0 &&
+    (state.decisions ?? []).length === 0 &&
+    (state.kosten ?? []).length === 0
+  );
 }
 
 const DAILY_RECOMMENDATION_OWNER_LABELS: Record<DailyRecommendationOwner, string> = {
