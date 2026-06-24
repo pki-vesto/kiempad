@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G401 Continuous Evolution: de backlog-health JSON-contractmatrix heeft nu een
+  herbruikbare drift-hint die bij veldwijzigingen expliciet naar docs en matrix samen
+  verwijst.
 - G400 Continuous Evolution: de backlog-health JSON-reference verwijst nu naar de
   matrix-backed contracttest in `tests/backlogHealth.test.ts`.
 - G399 Continuous Evolution: de backlog-health JSON-contracttest bevat nu een
