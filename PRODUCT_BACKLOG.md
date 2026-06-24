@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 271 |
+| ☑ klaar | 272 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **371** |
+| **Totaal** | **372** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -396,7 +396,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G248 | Issue Sync Script | P1 | F4 | ☐ |
 | G249 | Roadmap Coverage Matrix | P1 | F4 | ☐ |
 | G250 | Goal Completion Audit Checklist | P0 | F4 | ☑ |
-| G251 | Architecture Decision Backlog | P1 | F4 | ☐ |
+| G251 | Architecture Decision Backlog | P1 | F4 | ☑ |
 | G252 | User Workflow Gap Review | P1 | F4 | ☐ |
 | G253 | Operational Runbook Refresh | P2 | F4 | ☐ |
 | G254 | Goal Aging Signals | P2 | F4 | ☐ |
@@ -517,12 +517,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G369 | Dependency Evidence Generator Dry Run | P1 | F4 | ☐ |
 | G370 | Sensitive Fixture Review Evidence Snapshot | P1 | F4 | ☐ |
 | G371 | Event Log Detail Review Evidence Snapshot | P1 | F4 | ☐ |
+| G372 | ADR Review Evidence Template | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 371** (id's G001 t/m G371, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 372** (id's G001 t/m G372, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
