@@ -2468,4 +2468,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G418 — Backlog Health JSON Contract Recovery Artifact Docs Hint Term Negative Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Invalid artifact docs hint labels now fail clearly, but short or generic hint terms still lack a dedicated negative fixture.
+- **Desired Outcome:** Add a negative fixture for invalid artifact docs hint terms.
+- **User Value:** Maintainers keep both diagnostic labels and the actual checked wording meaningful.
+- **Acceptance Criteria:** Tests cover an invalid docs hint term with a clear message; positive docs hint fixture remains; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
