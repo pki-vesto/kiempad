@@ -2678,4 +2678,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G433 — Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Reason Helper Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Dynamic artifact docs hint reason builders are now shared helpers, but their exact interpolation output is only covered indirectly through validation failures.
+- **Desired Outcome:** Add focused fixtures for the dynamic label and term artifact docs hint reason helpers.
+- **User Value:** Maintainers get immediate feedback if a future refactor weakens dynamic diagnostic text before it reaches the full error builder.
+- **Acceptance Criteria:** Tests assert helper output for representative label and term values; validation branches continue to use the shared helpers; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
