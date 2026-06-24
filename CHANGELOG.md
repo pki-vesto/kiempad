@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G390 Continuous Evolution: `backlog:health --json` bevat nu
+  `issueSnapshot.nonOpenIssueLinks` voor gesloten of anders niet-open issuekoppelingen.
 - G389 Continuous Evolution: `backlog:health --json` bevat nu
   `issueSnapshot.missingIssueLinks` voor ontbrekende GitHub Issue-koppelingen.
 - G388 Continuous Evolution: `backlog:health --json` bevat nu gesanitized
