@@ -111,7 +111,8 @@ bijvoorbeeld `npm run backlog:health -- --issues-json /tmp/kiempad-issues.json -
 Bij een dubbele goal-id in de snapshot: controleer eerst oude gesloten verzamelissues
 en hernoem titels die nog een `G###` patroon bevatten; exporteer geen issue bodies.
 Gebruik `--json` wanneer automation de gesanitized
-`issueSnapshot.duplicateIssues` groepen wil lezen.
+`issueSnapshot.duplicateIssues` groepen of `issueSnapshot.missingIssueLinks` wil
+lezen.
 
 Optioneel zelf-hosten van de statische build:
 

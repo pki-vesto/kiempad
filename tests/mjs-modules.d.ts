@@ -38,6 +38,7 @@ declare module '*.mjs' {
     summary: Record<string, unknown>;
     issueSnapshot?: {
       duplicateIssues: Array<{ id: string; issues: Array<Record<string, unknown>> }>;
+      missingIssueLinks: Array<{ id: string; title: string }>;
     };
     findings: Array<Record<string, unknown>>;
   };
