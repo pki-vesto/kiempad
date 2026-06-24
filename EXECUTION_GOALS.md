@@ -2888,4 +2888,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G448 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Placement
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture now has a boundary comment, but its placement still sits between the broad static fixture and the representative static constant, which may obscure the intended reading order.
+- **Desired Outcome:** Review whether the alias fixture should be grouped closer to the representative static constant while preserving the contract and readability.
+- **User Value:** Maintainers can follow the fixture flow from static reasons to representative alias without scanning around unrelated fixtures.
+- **Acceptance Criteria:** Static alias fixture placement is reviewed and, if useful, adjusted for clearer reading order; the alias still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

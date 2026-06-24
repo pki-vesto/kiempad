@@ -64,6 +64,7 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceLabel,
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceTerm,
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintStaticErrorReason>;
+// Keeps the representative alias contract visible apart from the broad static fixture.
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES = [
   ...BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES,
 ] as const satisfies ReadonlyArray<RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason>;
