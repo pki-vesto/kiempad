@@ -2874,4 +2874,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G447 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Comment Boundary
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture now follows the surrounding error-reason naming pattern, but the growing fixture cluster has no local boundary note explaining why the alias fixture exists separately from the static fixture.
+- **Desired Outcome:** Add a minimal local comment or structure boundary that clarifies the alias fixture purpose without adding noise.
+- **User Value:** Maintainers can understand the fixture cluster quickly and avoid collapsing the alias guard into the broader static fixture by accident.
+- **Acceptance Criteria:** A concise boundary note or structure makes the static alias fixture purpose clear; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
