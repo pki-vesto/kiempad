@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
+import prTemplate from '../.github/PULL_REQUEST_TEMPLATE.md?raw';
 import changelog from '../CHANGELOG.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
+import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
+import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
 import backlog from '../PRODUCT_BACKLOG.md?raw';
 import readme from '../README.md?raw';
@@ -63,6 +66,26 @@ describe('onderhoudsdocumentatie', () => {
       expect(normalized).toMatch(/geen (vervanging van )?medisch advies/i);
       expect(normalized).toMatch(/kliniek/i);
     }
+  });
+
+  it('verankert de goal-completion-audit in de autonome mergeflow', () => {
+    for (const requiredTerm of [
+      'requirements',
+      'evidence',
+      'tests',
+      'PR-status',
+      'Documentatie en backlog',
+      'GitHub-status',
+    ]) {
+      expect(goalCompletionAudit).toContain(requiredTerm);
+    }
+
+    expect(goalCompletionAudit).toContain('`MASTER_CONTEXT.md` sectie 4');
+    expect(goalCompletionAudit).toContain('minimaal 100 actieve doelen');
+    expect(goalCompletionAudit).toContain('Closes #');
+    expect(goalCompletionAudit).toContain('`main` groen');
+    expect(masterContext).toContain('docs/GOAL_COMPLETION_AUDIT.md');
+    expect(prTemplate).toContain('docs/GOAL_COMPLETION_AUDIT.md');
   });
 });
 

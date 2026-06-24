@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G250 Continuous Evolution: completion-audit checklist documenteert bewijs per
+  requirement en is gekoppeld aan DoD, contributing, PR-template en onderhoudstest.
 - G347 Security & DevEx: CI draait `npm run assets:check` na de productiebuild en
   documenteert de lokale asset-scan in README, contributing en runbook.
 - G342 Security & DevEx: lokale externe-asset-scan met `npm run assets:check`

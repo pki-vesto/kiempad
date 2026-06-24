@@ -10,9 +10,14 @@ Doel(en):
 
 ## Validatie
 - [ ] `npm run typecheck` → groen
+- [ ] `npm run lint` → groen
 - [ ] `npm run test` → groen (nieuwe logica heeft tests)
+- [ ] `npm run build` → groen
+- [ ] `npm run assets:check` → groen na build
+- [ ] `npm audit --audit-level=high` → groen
 - [ ] Privacy/policy gerespecteerd (geen nieuwe uitgaande dataroute zonder opt-in; niets medisch-besluitvormends — MASTER_CONTEXT §4)
 - [ ] Docs bijgewerkt: CURRENT_STATE.md, betreffende G-id(s) in PRODUCT_BACKLOG.md, CHANGELOG.md, en bij een keuze een ADR
+- [ ] Completion audit uitgevoerd: [`docs/GOAL_COMPLETION_AUDIT.md`](docs/GOAL_COMPLETION_AUDIT.md)
 
 ## Scope / resterend
 <!-- Bewust buiten scope gelaten / vervolg. -->
