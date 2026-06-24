@@ -32,3 +32,64 @@ gh issue list --state all --limit 500 --json number,title,state,url > /tmp/kiemp
 npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500 --json
 rm -f /tmp/kiempad-issues.json
 ```
+
+## Example Fixture
+
+Onderstaand voorbeeld is synthetisch en bevat alleen de gesanitized velden die
+automation mag gebruiken:
+
+```json
+{
+  "issueSnapshot": {
+    "duplicateIssues": [
+      {
+        "id": "G244",
+        "issues": [
+          {
+            "number": 244,
+            "title": "G244 Continuous Evolution: Goal Catalog Refresh",
+            "state": "OPEN",
+            "url": "https://github.com/pki-vesto/kiempad/issues/244"
+          },
+          {
+            "number": 344,
+            "title": "G244 Continuous Evolution: Duplicate Goal Catalog Refresh",
+            "state": "OPEN",
+            "url": "https://github.com/pki-vesto/kiempad/issues/344"
+          }
+        ]
+      }
+    ],
+    "missingIssueLinks": [
+      {
+        "id": "G245",
+        "title": "Backlog issue seeding dry-run"
+      }
+    ],
+    "nonOpenIssueLinks": [
+      {
+        "id": "G246",
+        "title": "Open backlog goal with closed issue",
+        "issue": {
+          "number": 246,
+          "title": "G246 Continuous Evolution: Closed Drift Example",
+          "state": "CLOSED",
+          "url": "https://github.com/pki-vesto/kiempad/issues/246"
+        }
+      }
+    ],
+    "completedGoalOpenIssues": [
+      {
+        "id": "G247",
+        "title": "Completed backlog goal with open issue",
+        "issue": {
+          "number": 247,
+          "title": "G247 Continuous Evolution: Open Completion Drift Example",
+          "state": "OPEN",
+          "url": "https://github.com/pki-vesto/kiempad/issues/247"
+        }
+      }
+    ]
+  }
+}
+```

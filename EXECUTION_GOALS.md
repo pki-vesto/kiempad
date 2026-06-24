@@ -2132,4 +2132,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G394 — Backlog Health JSON Example Fixture Sync Test
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON example fixture is useful for automation, but it can drift from the documented CLI flags and sanitized issue-field boundary.
+- **Desired Outcome:** Add a focused maintenance check that keeps the example fixture aligned with the reference commands and allowed issue fields.
+- **User Value:** Maintainers can trust the copied example as the report evolves without manually auditing the documentation each time.
+- **Acceptance Criteria:** Tests assert the example fixture remains parseable JSON, includes the same issue-snapshot groups as the reference, aligns with the documented 500-limit command, and excludes issue bodies, tokens or local snapshot paths from the fixture body.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

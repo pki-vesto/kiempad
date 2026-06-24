@@ -280,6 +280,36 @@ describe('onderhoudsdocumentatie', () => {
     expect(readme).toContain('docs/BACKLOG_HEALTH_JSON_REFERENCE.md');
   });
 
+  it('documenteert een gesanitized backlog-health JSON-example fixture', () => {
+    const exampleMatch = backlogHealthJsonReference.match(
+      /## Example Fixture[\s\S]*?```json\n(?<json>[\s\S]*?)\n```/,
+    );
+
+    expect(exampleMatch?.groups?.json).toBeTruthy();
+
+    const example = JSON.parse(exampleMatch?.groups?.json ?? '{}') as {
+      issueSnapshot?: {
+        duplicateIssues?: unknown[];
+        missingIssueLinks?: unknown[];
+        nonOpenIssueLinks?: unknown[];
+        completedGoalOpenIssues?: unknown[];
+      };
+    };
+
+    expect(example.issueSnapshot?.duplicateIssues).toHaveLength(1);
+    expect(example.issueSnapshot?.missingIssueLinks).toHaveLength(1);
+    expect(example.issueSnapshot?.nonOpenIssueLinks).toHaveLength(1);
+    expect(example.issueSnapshot?.completedGoalOpenIssues).toHaveLength(1);
+
+    const exampleJson = exampleMatch?.groups?.json ?? '';
+    for (const allowedField of ['"number"', '"title"', '"state"', '"url"']) {
+      expect(exampleJson).toContain(allowedField);
+    }
+    for (const forbiddenField of ['"body"', '"token"', '"snapshot"', '"authKey"']) {
+      expect(exampleJson).not.toContain(forbiddenField);
+    }
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
