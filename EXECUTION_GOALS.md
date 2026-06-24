@@ -3014,4 +3014,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G457 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Declaration Order
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias declaration area now has clearer spacing, but the representative static constant and alias fixture order may still be worth reviewing for scan flow.
+- **Desired Outcome:** Review whether declaration order should place the alias fixture before or after the representative value for clearer reading.
+- **User Value:** Maintainers can follow the static reason fixture flow without re-reading long constant names.
+- **Acceptance Criteria:** Static alias declaration order is reviewed and, if useful, adjusted without weakening type fixtures; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
