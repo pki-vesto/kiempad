@@ -2930,4 +2930,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G451 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Shared Equality
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias assertion now shows explicit expected values, but no longer separately proves those values stay equal to the broad static fixture list.
+- **Desired Outcome:** Review whether a second shared-equality assertion is useful or whether the explicit expected values provide enough coverage.
+- **User Value:** Maintainers can balance direct contract evidence with duplication control in the fixture cluster.
+- **Acceptance Criteria:** Static alias shared-equality coverage is reviewed and, if useful, added without weakening the explicit expected-value assertion; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
