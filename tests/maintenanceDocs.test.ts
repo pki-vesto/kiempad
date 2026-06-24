@@ -319,6 +319,30 @@ describe('onderhoudsdocumentatie', () => {
     ]);
   });
 
+  it('documenteert consumer notes voor de backlog-health JSON-example fixture', () => {
+    const consumerNotes = extractMarkdownSection(backlogHealthJsonReference, 'Consumer Notes');
+
+    for (const requiredTerm of [
+      'stabiele rapportsecties',
+      'voorbeelddata volledig',
+      'één synthetische rij',
+      'productie-output kan',
+      '`id`',
+      '`issues`',
+      '`issue`',
+      '`number`',
+      '`title`',
+      '`state`',
+      '`url`',
+      'Issue bodies, tokens, auth keys',
+      'lokale snapshotpaden',
+      'number,title,state,url',
+      'verwijder `/tmp/kiempad-issues.json`',
+    ]) {
+      expect(consumerNotes).toContain(requiredTerm);
+    }
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
@@ -491,6 +515,12 @@ function extractCompletionAuditMarkerBlock(document: string): string {
   );
   if (!match?.groups?.block) throw new Error('Completion audit markerblok ontbreekt.');
   return match.groups.block;
+}
+
+function extractMarkdownSection(document: string, heading: string): string {
+  const match = document.match(new RegExp(`## ${heading}\\n(?<section>[\\s\\S]*?)(\\n## |$)`));
+  if (!match?.groups?.section) throw new Error(`Sectie ontbreekt: ${heading}`);
+  return match.groups.section;
 }
 
 function extractAdrReviewEvidenceIndexGoals(): string[] {

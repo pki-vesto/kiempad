@@ -2160,4 +2160,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G396 — Backlog Health JSON Consumer Notes CLI Coverage
+
+- **Epic:** Continuous Evolution
+- **Problem:** Consumer notes explain how automation should treat the JSON fixture, but CLI output examples are still only indirectly covered by maintenance-doc tests.
+- **Desired Outcome:** Add focused test coverage that ties the documented consumer guidance to the actual `backlog:health --json` output contract.
+- **User Value:** Maintainers get earlier failures when the CLI JSON report drifts away from the documented consumer boundary.
+- **Acceptance Criteria:** Tests validate the JSON report keeps the documented issue-snapshot groups and sanitized issue fields; docs remain free of issue bodies, tokens and committed snapshot files.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
