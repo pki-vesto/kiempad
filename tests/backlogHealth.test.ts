@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildActiveGoalDriftFindings,
   buildBacklogHealthReport,
+  buildIssueSnapshotCommand,
   formatBacklogHealthMarkdown,
   ISSUE_SNAPSHOT_CLEANUP_COMMAND,
   ISSUE_SNAPSHOT_COMMAND,
@@ -82,6 +83,9 @@ describe('backlog health', () => {
   it('documenteert en bewaakt de veilige issue-snapshotvorm zonder issue bodies', () => {
     expect(ISSUE_SNAPSHOT_COMMAND).toBe(
       'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json',
+    );
+    expect(buildIssueSnapshotCommand(500)).toBe(
+      'gh issue list --state all --limit 500 --json number,title,state,url > /tmp/kiempad-issues.json',
     );
     expect(ISSUE_SNAPSHOT_CLEANUP_COMMAND).toBe('rm -f /tmp/kiempad-issues.json');
     expect(ISSUE_SNAPSHOT_FRESHNESS_COMMAND).toBe('stat -c %y /tmp/kiempad-issues.json');
@@ -262,6 +266,42 @@ describe('backlog health', () => {
       ),
     });
     expect(customThresholdReport.findings).toEqual([]);
+  });
+
+  it('maakt de issue-snapshotlimiet configureerbaar in de commandoguidance', () => {
+    expect(
+      readNumberArg(
+        ['node', 'scripts/backlog-health.mjs', '--issue-snapshot-limit', '500'],
+        '--issue-snapshot-limit',
+        ISSUE_SNAPSHOT_LIMIT,
+      ),
+    ).toBe(500);
+
+    const reportWithoutSnapshot = buildBacklogHealthReport({
+      backlogMarkdown: backlog,
+      executionGoalsMarkdown: executionGoals,
+      issueSnapshotLimit: 500,
+    });
+    const markdownWithoutSnapshot = formatBacklogHealthMarkdown(reportWithoutSnapshot);
+    expect(markdownWithoutSnapshot).toContain('gh issue list --state all --limit 500');
+    expect(markdownWithoutSnapshot).toContain('--issue-snapshot-limit 500');
+    expect(markdownWithoutSnapshot).toContain('commandoguidance gebruikt --limit 500');
+
+    const reportAtCustomLimit = buildBacklogHealthReport({
+      backlogMarkdown: backlog,
+      executionGoalsMarkdown: executionGoals,
+      issueSnapshotJson: JSON.stringify(
+        Array.from({ length: 500 }, (_, index) => ({
+          number: index + 1,
+          title: `G${String(index + 300).padStart(3, '0')} issue`,
+          state: 'OPEN',
+        })),
+      ),
+      issueSnapshotLimit: 500,
+    });
+    expect(formatBacklogHealthMarkdown(reportAtCustomLimit)).toContain(
+      'raakt --limit 500; verhoog de limiet met --issue-snapshot-limit',
+    );
   });
 });
 

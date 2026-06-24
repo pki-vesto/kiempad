@@ -8,11 +8,15 @@ const STATUS_LABELS = {
   '☐': 'open',
 };
 
-export const ISSUE_SNAPSHOT_COMMAND =
-  'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_CLEANUP_COMMAND = 'rm -f /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_FRESHNESS_COMMAND = 'stat -c %y /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_LIMIT = 200;
+
+export function buildIssueSnapshotCommand(limit = ISSUE_SNAPSHOT_LIMIT) {
+  return `gh issue list --state all --limit ${limit} --json number,title,state,url > /tmp/kiempad-issues.json`;
+}
+
+export const ISSUE_SNAPSHOT_COMMAND = buildIssueSnapshotCommand();
 
 export function parseBacklog(markdown) {
   const goals = [];
@@ -241,6 +245,7 @@ export function buildBacklogHealthReport(input) {
       openBacklogGoals: backlog.goals.filter((goal) => goal.status === '☐').length,
       issueSnapshotGoals: issueSnapshot?.byGoalId.size,
       issueSnapshotItems: issueSnapshot?.totalIssues,
+      issueSnapshotLimit: input.issueSnapshotLimit ?? ISSUE_SNAPSHOT_LIMIT,
       findings: findings.length,
     },
     findings,
@@ -248,6 +253,7 @@ export function buildBacklogHealthReport(input) {
 }
 
 export function formatBacklogHealthMarkdown(report) {
+  const issueSnapshotLimit = report.summary.issueSnapshotLimit ?? ISSUE_SNAPSHOT_LIMIT;
   const lines = [
     '# Kiempad backlog health',
     '',
@@ -256,14 +262,14 @@ export function formatBacklogHealthMarkdown(report) {
     `- Open backlog goals: ${report.summary.openBacklogGoals}`,
     `- Issue snapshot goals: ${
       report.summary.issueSnapshotGoals ??
-      `niet meegegeven (optioneel: \`${ISSUE_SNAPSHOT_COMMAND}\` en daarna \`npm run backlog:health -- --issues-json /tmp/kiempad-issues.json\`)`
+      `niet meegegeven (optioneel: \`${buildIssueSnapshotCommand(issueSnapshotLimit)}\` en daarna \`npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit ${issueSnapshotLimit}\`)`
     }`,
     `- Issue snapshot limit: ${
       report.summary.issueSnapshotItems === undefined
-        ? `snapshot niet meegegeven; standaardcommando gebruikt --limit ${ISSUE_SNAPSHOT_LIMIT}`
-        : report.summary.issueSnapshotItems >= ISSUE_SNAPSHOT_LIMIT
-          ? `snapshot bevat ${report.summary.issueSnapshotItems} issues en raakt --limit ${ISSUE_SNAPSHOT_LIMIT}; verhoog de limiet als oudere goal-issues ontbreken`
-          : `snapshot bevat ${report.summary.issueSnapshotItems} issues, onder --limit ${ISSUE_SNAPSHOT_LIMIT}`
+        ? `snapshot niet meegegeven; commandoguidance gebruikt --limit ${issueSnapshotLimit}`
+        : report.summary.issueSnapshotItems >= issueSnapshotLimit
+          ? `snapshot bevat ${report.summary.issueSnapshotItems} issues en raakt --limit ${issueSnapshotLimit}; verhoog de limiet met --issue-snapshot-limit als oudere goal-issues ontbreken`
+          : `snapshot bevat ${report.summary.issueSnapshotItems} issues, onder --limit ${issueSnapshotLimit}`
     }`,
     `- Issue snapshot freshness: maak de snapshot direct voor validatie en controleer eventueel met \`${ISSUE_SNAPSHOT_FRESHNESS_COMMAND}\``,
     `- Issue snapshot cleanup: \`${ISSUE_SNAPSHOT_CLEANUP_COMMAND}\` na lokale validatie`,
@@ -304,11 +310,17 @@ function main() {
   const executionPath = readArg(process.argv, '--execution', 'EXECUTION_GOALS.md');
   const issuesPath = readArg(process.argv, '--issues-json', undefined);
   const activeGoalMinimum = readNumberArg(process.argv, '--minimum-open-goals', 100);
+  const issueSnapshotLimit = readNumberArg(
+    process.argv,
+    '--issue-snapshot-limit',
+    ISSUE_SNAPSHOT_LIMIT,
+  );
   const report = buildBacklogHealthReport({
     backlogMarkdown: fs.readFileSync(backlogPath, 'utf8'),
     executionGoalsMarkdown: fs.readFileSync(executionPath, 'utf8'),
     issueSnapshotJson: issuesPath ? fs.readFileSync(issuesPath, 'utf8') : undefined,
     activeGoalMinimum,
+    issueSnapshotLimit,
   });
   const json = process.argv.includes('--json');
   process.stdout.write(json ? `${JSON.stringify(report, null, 2)}\n` : formatBacklogHealthMarkdown(report));
