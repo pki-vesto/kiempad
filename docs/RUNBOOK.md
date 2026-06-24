@@ -20,7 +20,8 @@ de lokale data versleuteld wordt.
 - **Build/typecheck:** `npm run typecheck` (geen TS-fouten).
 - **Tests:** `npm run test` (Vitest groen).
 - **Asset-privacy:** `npm run build && npm run assets:check` (geen externe
-  image/font/script/manifest-URL's in bron- of buildassets).
+  image/font/script/manifest-URL's in bron- of buildassets; allowlist-governance staat
+  in [`docs/EXTERNAL_ASSET_ALLOWLIST.md`](EXTERNAL_ASSET_ALLOWLIST.md)).
 - **CSP:** `index.html` blokkeert remote scripts standaard; bij dev-HMR zijn alleen
   lokale websocketverbindingen naar `localhost`/`127.0.0.1` toegestaan.
 - **Secrets:** `npm run secrets:check` scant docs/source op gangbare API keys,

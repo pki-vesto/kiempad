@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G348 Security & DevEx: externe-asset allowlist-governance met rationale per
+  toegestane URL, documentatie voor uitzonderingen en tests die ontbrekende rationale
+  afwijzen.
 - G339 Security & DevEx: public-repo privacy reviewchecklist voor release-PR's,
   fixtures, screenshots, env-bestanden en generated assets, verankerd in contributing,
   PR-template en onderhoudstest.

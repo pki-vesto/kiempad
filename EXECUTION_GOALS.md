@@ -1397,7 +1397,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Tests, docs, asset scanner
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G349 — Completion Audit Evidence Markers
 
@@ -1604,5 +1604,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, docs, CI
+- **Score:** 97
+- **Status:** ☐ open
+
+### G365 — External Asset Allowlist Review Evidence
+
+- **Epic:** Security & DevEx
+- **Problem:** External asset allowlist governance is documented and tested, but completed reviews do not yet leave structured evidence.
+- **Desired Outcome:** Add a lightweight evidence template or helper for recording allowlist review date, entries, rationale checks and asset-scan results.
+- **User Value:** Future maintainers can audit why remote-asset exceptions remain safe without re-reading history.
+- **Acceptance Criteria:** Evidence format records date, reviewed entries, rationale status and `npm run assets:check` result; docs explain when to write evidence; tests cover the evidence schema/template; no private URLs or tokens are stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Docs, asset scanner, maintenance tests
 - **Score:** 97
 - **Status:** ☐ open

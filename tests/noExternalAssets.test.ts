@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { scanAssetText } from '../scripts/check-no-external-assets.mjs';
+import {
+  ALLOWED_REMOTE_ASSET_URLS,
+  scanAssetText,
+  validateAssetAllowlist,
+} from '../scripts/check-no-external-assets.mjs';
 
 describe('external asset scan', () => {
   it('weigert externe asset-URL-loaders in HTML, CSS, manifest en importerende JS', () => {
@@ -67,5 +71,17 @@ describe('external asset scan', () => {
         'export const bronnen = ["https://pubmed.ncbi.nlm.nih.gov/12345"];',
       ),
     ).toEqual([]);
+  });
+
+  it('vereist een concrete rationale voor iedere externe asset-allowlist entry', () => {
+    expect(validateAssetAllowlist(ALLOWED_REMOTE_ASSET_URLS)).toEqual([]);
+    expect(
+      validateAssetAllowlist([
+        {
+          url: 'https://cdn.example.test/font.woff2',
+          reason: '',
+        },
+      ]),
+    ).toEqual(['Allowlist-entry https://cdn.example.test/font.woff2 mist een concrete rationale.']);
   });
 });

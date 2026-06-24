@@ -3,9 +3,47 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
-const ALLOWED_URLS = new Set(['http://www.w3.org/2000/svg']);
+export const ALLOWED_REMOTE_ASSET_URLS = Object.freeze([
+  {
+    url: 'http://www.w3.org/2000/svg',
+    reason:
+      'Technische SVG namespace; dit is geen netwerkload en is nodig voor geldige inline SVG.',
+  },
+]);
+
+const ALLOWED_URLS = createAllowedUrlSet();
 const TEXT_EXTENSIONS = new Set(['.css', '.html', '.js', '.svg', '.webmanifest']);
 const REMOTE_URL_PATTERN = /https?:\/\/[^,\s]+/gi;
+
+export function validateAssetAllowlist(entries = ALLOWED_REMOTE_ASSET_URLS) {
+  const findings = [];
+  const seen = new Set();
+
+  for (const entry of entries) {
+    if (!entry || typeof entry.url !== 'string' || !/^https?:\/\//i.test(entry.url)) {
+      findings.push('Allowlist-entry mist een geldige http(s)-URL.');
+      continue;
+    }
+    if (seen.has(entry.url)) {
+      findings.push(`Allowlist-entry ${entry.url} is dubbel opgenomen.`);
+    }
+    seen.add(entry.url);
+    if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
+      findings.push(`Allowlist-entry ${entry.url} mist een concrete rationale.`);
+    }
+  }
+
+  return findings;
+}
+
+function createAllowedUrlSet(entries = ALLOWED_REMOTE_ASSET_URLS) {
+  const findings = validateAssetAllowlist(entries);
+  if (findings.length > 0) {
+    throw new Error(`Ongeldige externe-asset allowlist:\n${findings.join('\n')}`);
+  }
+
+  return new Set(entries.map((entry) => entry.url));
+}
 
 export function scanAssetText(filePath, text) {
   const findings = [];

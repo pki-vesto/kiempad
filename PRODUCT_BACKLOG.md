@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 264 |
+| ☑ klaar | 265 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **364** |
+| **Totaal** | **365** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -493,7 +493,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☐ |
 | G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
 | G347 | External Asset CI Gate | P0 | F4 | ☑ |
-| G348 | External Asset Allowlist Governance | P1 | F4 | ☐ |
+| G348 | External Asset Allowlist Governance | P1 | F4 | ☑ |
 | G349 | Completion Audit Evidence Markers | P1 | F4 | ☐ |
 | G350 | First Run Setup Progress Persistence | P1 | F4 | ☐ |
 | G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
@@ -510,12 +510,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G362 | Sensitive Fixture Allowlist Review | P1 | F4 | ☐ |
 | G363 | Event Log Detail Allowlist Governance | P1 | F4 | ☐ |
 | G364 | Public Repo Privacy Review Automation Hook | P1 | F4 | ☐ |
+| G365 | External Asset Allowlist Review Evidence | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 364** (id's G001 t/m G364, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 365** (id's G001 t/m G365, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
