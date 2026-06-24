@@ -99,6 +99,13 @@ describe('app shell', () => {
     expect(html).toContain('id="first-run-skip-form"');
     expect(html).toContain('data blijft lokaal');
     expect(html).toContain('href="#backup"');
+    expect(html).toContain('aria-label="Vandaag command center"');
+    expect(html).toContain('Nu eerst');
+    expect(html).toContain('Later vandaag');
+    expect(html).toContain('Context');
+    expect(html).toContain('Geen urgente taken voor vandaag.');
+    expect(html).toContain('Geen extra taken later vandaag.');
+    expect(html).toContain('Nog geen traject- of dossiercontext voor vandaag.');
     expect(html).toContain('Volgende stap');
     expect(html).toContain('Snelle invoer');
     expect(html).toContain('id="quick-entry-form"');
@@ -145,6 +152,99 @@ describe('app shell', () => {
     expect(html).toContain('Vragen:');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('toont een dagelijks command center met urgentie, later-vandaag en context', () => {
+    const html = renderAppShell(
+      'start',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-1',
+              type: 'icsi',
+              naam: 'Poging 1',
+              pogingNummer: 1,
+              status: 'lopend',
+              startDatum: '2026-06-20',
+            },
+            fasen: [],
+          },
+        ],
+        afspraken: [
+          {
+            afspraak: {
+              id: 'afspraak-1',
+              titel: 'Echo controle',
+              datumTijd: '2026-06-24T10:30',
+              type: 'echo',
+              trajectId: 'traject-1',
+            },
+          },
+          {
+            afspraak: {
+              id: 'afspraak-2',
+              titel: 'Bloedprik',
+              datumTijd: '2026-06-24T14:00',
+              type: 'bloedprik',
+              trajectId: 'traject-1',
+            },
+          },
+        ],
+        medicatie: [
+          {
+            medicatie: {
+              id: 'med-1',
+              naam: 'Progesteron',
+              vorm: 'zetpil',
+              actief: true,
+            },
+            doseLogs: [
+              {
+                id: 'dose-1',
+                medicatieId: 'med-1',
+                geplandOp: '2026-06-24T23:00',
+                status: 'gepland',
+              },
+              {
+                id: 'dose-2',
+                medicatieId: 'med-1',
+                geplandOp: '2026-06-24T23:30',
+                status: 'gepland',
+              },
+            ],
+          },
+        ],
+        herinneringen: [
+          {
+            id: 'rem-1',
+            bron: { soort: 'eigen' },
+            titel: 'Bel kliniek',
+            tijdstip: '2026-06-24T18:00',
+            actief: true,
+          },
+        ],
+        vragen: [
+          {
+            vraag: {
+              id: 'vraag-1',
+              vraag: 'Wanneer horen we de uitslag?',
+              beantwoord: false,
+            },
+          },
+        ],
+      }),
+    );
+
+    expect(html).toContain('Afspraak vandaag: Echo controle om 2026-06-24 10:30');
+    expect(html).toContain('Medicatie vandaag: Progesteron om 2026-06-24 23:00');
+    expect(html).toContain('Herinnering vandaag: Bel kliniek om 2026-06-24 18:00');
+    expect(html).toContain('1 latere afspraak/afspraken vandaag');
+    expect(html).toContain('1 later(e) medicatiemoment(en)');
+    expect(html).toContain('1 open vraag/vragen voor consultvoorbereiding');
+    expect(html).toContain('Traject: Poging 1');
+    expect(html).toContain('Kiempad geeft geen medisch advies');
+    expect(html).not.toMatch(/\b(behandeladvies|kansberekening)\b/i);
   });
 
   it('verbergt de eerste-run setup zodra setup is afgerond of eerste data bestaat', () => {

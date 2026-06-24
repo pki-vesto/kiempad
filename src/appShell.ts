@@ -2510,6 +2510,7 @@ function renderStartScreen(state: AppShellState): string {
   return `
     <section class="workspace" aria-label="Startoverzicht">
       ${renderFirstRunSetup(state)}
+      ${renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date()))}
       <div class="summary-panel priority-panel">
         <h2>Waar staan we?</h2>
         <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
@@ -2535,6 +2536,96 @@ function renderStartScreen(state: AppShellState): string {
         <h2>Snelle invoer</h2>
         ${renderQuickEntryForm()}
       </div>
+    </section>
+  `;
+}
+
+function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: string): string {
+  const afsprakenVandaag = state.afspraken
+    .map((bundle) => bundle.afspraak)
+    .filter((afspraak) => afspraak.datumTijd.startsWith(`${vandaag}T`))
+    .sort((a, b) => a.datumTijd.localeCompare(b.datumTijd));
+  const doseLogsVandaag = state.medicatie.flatMap((bundle) =>
+    doseLogsVoorDag(bundle.doseLogs, vandaag).map((doseLog) => ({
+      doseLog,
+      medicatie: bundle.medicatie,
+    })),
+  );
+  const gemisteDoses = doseLogsVandaag.filter((item) => doseLogIsGemist(item.doseLog, nuIso));
+  const geplandeDoses = doseLogsVandaag.filter(
+    (item) => item.doseLog.status === 'gepland' && !doseLogIsGemist(item.doseLog, nuIso),
+  );
+  const herinneringenVandaag = komendeHerinneringen(state.herinneringen, nuIso).filter((item) =>
+    item.volgendMoment.startsWith(`${vandaag}T`),
+  );
+  const vragenOpen = openstaandeVragen(state.vragen.map((bundle) => bundle.vraag));
+  const urgentItems = [
+    ...gemisteDoses
+      .slice(0, 2)
+      .map(
+        (item) =>
+          `Gemist medicatiemoment: ${item.medicatie.naam} om ${formatDateTime(item.doseLog.geplandOp)}`,
+      ),
+    afsprakenVandaag[0]
+      ? `Afspraak vandaag: ${afsprakenVandaag[0].titel} om ${formatDateTime(afsprakenVandaag[0].datumTijd)}`
+      : undefined,
+    geplandeDoses[0]
+      ? `Medicatie vandaag: ${geplandeDoses[0].medicatie.naam} om ${formatDateTime(geplandeDoses[0].doseLog.geplandOp)}`
+      : undefined,
+    herinneringenVandaag[0]
+      ? `Herinnering vandaag: ${herinneringenVandaag[0].herinnering.titel ?? 'Herinnering'} om ${formatDateTime(herinneringenVandaag[0].volgendMoment)}`
+      : undefined,
+  ].filter((item): item is string => Boolean(item));
+  const laterItems = [
+    afsprakenVandaag.length > 1
+      ? `${afsprakenVandaag.length - 1} latere afspraak/afspraken vandaag`
+      : undefined,
+    geplandeDoses.length > 1
+      ? `${geplandeDoses.length - 1} later(e) medicatiemoment(en)`
+      : undefined,
+    herinneringenVandaag.length > 1
+      ? `${herinneringenVandaag.length - 1} latere herinnering(en)`
+      : undefined,
+    vragenOpen.length > 0
+      ? `${vragenOpen.length} open vraag/vragen voor consultvoorbereiding`
+      : undefined,
+  ].filter((item): item is string => Boolean(item));
+  const contextItems = [
+    state.trajecten[0] ? `Traject: ${state.trajecten[0].traject.naam}` : undefined,
+    state.dossierDocuments?.[0]
+      ? `Laatste dossiercontext: ${state.dossierDocuments[0].titel}`
+      : undefined,
+    state.consultVerslagen?.[0]
+      ? `Laatste consultcontext: ${state.consultVerslagen[0].titel}`
+      : undefined,
+  ].filter((item): item is string => Boolean(item));
+
+  return `
+    <section class="summary-panel command-center" aria-label="Vandaag command center">
+      <h2>Vandaag</h2>
+      <p class="small-print">Een lokaal takenoverzicht op basis van agenda, medicatie, vragen, herinneringen en context. Kiempad geeft geen medisch advies.</p>
+      <div class="dashboard-grid">
+        ${renderDailyCommandGroup('Nu eerst', urgentItems, 'Geen urgente taken voor vandaag.')}
+        ${renderDailyCommandGroup('Later vandaag', laterItems, 'Geen extra taken later vandaag.')}
+        ${renderDailyCommandGroup('Context', contextItems, 'Nog geen traject- of dossiercontext voor vandaag.')}
+      </div>
+    </section>
+  `;
+}
+
+function renderDailyCommandGroup(
+  titel: string,
+  items: readonly string[],
+  emptyState: string,
+): string {
+  return `
+    <section class="policy-panel embedded-summary">
+      <h3>${escapeHtml(titel)}</h3>
+      ${
+        items.length > 0
+          ? `<ul class="compact-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+          : `<p class="empty-state">${escapeHtml(emptyState)}</p>`
+      }
     </section>
   `;
 }
