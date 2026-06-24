@@ -2496,4 +2496,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G420 — Backlog Health JSON Contract Recovery Artifact Docs Hint Whitespace Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Empty artifact docs hint terms now fail clearly, but whitespace-only labels or terms can still pass the explicit empty guard and rely on length semantics.
+- **Desired Outcome:** Add a negative fixture for whitespace-only artifact docs hint labels or terms.
+- **User Value:** Maintainers get clear feedback when hint metadata is accidentally blanked with spaces during edits.
+- **Acceptance Criteria:** Tests cover a whitespace-only docs hint label or term with a clear message; positive docs hint fixture remains; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
