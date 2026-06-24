@@ -3,9 +3,11 @@ import {
   buildActiveGoalDriftFindings,
   buildBacklogHealthReport,
   buildIssueSnapshotCommand,
+  buildIssueSnapshotValidationCommand,
   formatBacklogHealthMarkdown,
   ISSUE_SNAPSHOT_CLEANUP_COMMAND,
   ISSUE_SNAPSHOT_COMMAND,
+  ISSUE_SNAPSHOT_EXAMPLE_LIMIT,
   ISSUE_SNAPSHOT_FRESHNESS_COMMAND,
   ISSUE_SNAPSHOT_LIMIT,
   parseBacklog,
@@ -89,7 +91,11 @@ describe('backlog health', () => {
     );
     expect(ISSUE_SNAPSHOT_CLEANUP_COMMAND).toBe('rm -f /tmp/kiempad-issues.json');
     expect(ISSUE_SNAPSHOT_FRESHNESS_COMMAND).toBe('stat -c %y /tmp/kiempad-issues.json');
+    expect(ISSUE_SNAPSHOT_EXAMPLE_LIMIT).toBe(500);
     expect(ISSUE_SNAPSHOT_LIMIT).toBe(200);
+    expect(buildIssueSnapshotValidationCommand(500)).toBe(
+      'npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500',
+    );
 
     const parsed = parseIssueSnapshot(
       JSON.stringify([
@@ -148,6 +154,17 @@ describe('backlog health', () => {
         findings: [],
       }),
     ).toContain('Issue snapshot freshness: maak de snapshot direct voor validatie');
+    expect(
+      formatBacklogHealthMarkdown({
+        summary: {
+          backlogGoals: 1,
+          executionGoals: 1,
+          openBacklogGoals: 1,
+          findings: 0,
+        },
+        findings: [],
+      }),
+    ).toContain('Issue snapshot hoger-limiet voorbeeld');
     expect(
       formatBacklogHealthMarkdown({
         summary: {
