@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G394 Continuous Evolution: de onderhoudstest houdt de backlog-health JSON-example
+  fixture nu synchroon met de referentievelden, `500`-limietcommando's en
+  gesanitized issue-key boundary.
 - G393 Continuous Evolution: `docs/BACKLOG_HEALTH_JSON_REFERENCE.md` bevat nu een
   synthetische gesanitized JSON-example fixture met duplicate, missing, non-open en
   completed/open issuegroepen voor automation consumers.
