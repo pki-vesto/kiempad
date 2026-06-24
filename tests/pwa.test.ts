@@ -48,7 +48,7 @@ describe('PWA baseline', () => {
   });
 
   it('cachet de app-shell en ondersteunt navigatiefallback in de service worker', () => {
-    expect(serviceWorker).toContain('kiempad-m1-9-v1');
+    expect(serviceWorker).toContain('kiempad-ui-restore-v2');
     expect(serviceWorker).toContain(
       "cache.addAll(['/', '/index.html', '/manifest.webmanifest', '/kiempad-icon.svg'])",
     );
