@@ -36,18 +36,25 @@ describe('onderhoudsdocumentatie', () => {
   });
 
   it('houdt een rijke execution-goalcatalogus met minimaal 100 actieve doelen', () => {
-    const openGoals = countGoalStatuses()['☐'] ?? 0;
-    const goalSections = executionGoals.match(/^### G\d+ — .+$/gm) ?? [];
-    const openExecutionGoals = executionGoals.match(/^- \*\*Status:\*\* ☐ open$/gm) ?? [];
+    const backlogGoals = parseBacklogGoalRows();
+    const executionGoalSections = parseExecutionGoalSections();
+    const openBacklogGoalIds = backlogGoals
+      .filter((goal) => goal.status === '☐')
+      .map((goal) => goal.id)
+      .sort();
+    const openExecutionGoalIds = executionGoalSections
+      .filter((goal) => goal.status === '☐ open')
+      .map((goal) => goal.id)
+      .sort();
     const activeEpics = executionGoals.match(/^- \*\*.+:\*\* .+$/gm) ?? [];
 
-    expect(openGoals).toBeGreaterThanOrEqual(100);
-    expect(openExecutionGoals).toHaveLength(openGoals);
-    expect(goalSections.length).toBeGreaterThanOrEqual(openGoals);
+    expect(openBacklogGoalIds.length).toBeGreaterThanOrEqual(100);
+    expect(openExecutionGoalIds).toEqual(openBacklogGoalIds);
+    expect(executionGoalSections.length).toBeGreaterThanOrEqual(openBacklogGoalIds.length);
     expect(activeEpics.length).toBeGreaterThanOrEqual(3);
     expect(executionGoals).toContain('F5 — Continuous Personal Fertility Operations');
 
-    for (const section of executionGoals.split('\n### ').slice(1)) {
+    for (const section of executionGoalSections) {
       for (const field of [
         'Epic',
         'Problem',
@@ -60,7 +67,7 @@ describe('onderhoudsdocumentatie', () => {
         'ADR Needed',
         'Status',
       ]) {
-        expect(`### ${section}`).toContain(`- **${field}:**`);
+        expect(section.raw).toContain(`- **${field}:**`);
       }
     }
   });
@@ -257,11 +264,35 @@ function extractBacklogSummary(): Record<string, number> {
 
 function countGoalStatuses(): Record<string, number> {
   const counts = { '☑': 0, '◐': 0, '☐': 0 };
-  for (const line of backlog.split('\n')) {
-    const status = line.match(/^\| G\d+ \|.*\| (☑|◐|☐) \|$/)?.[1] as keyof typeof counts;
-    if (status) counts[status] += 1;
+  for (const goal of parseBacklogGoalRows()) {
+    counts[goal.status] += 1;
   }
   return counts;
+}
+
+function parseBacklogGoalRows(): Array<{ id: string; status: '☑' | '◐' | '☐' }> {
+  return backlog
+    .split('\n')
+    .map((line) => {
+      const match = line.match(/^\| (?<id>G\d+) \|.*\| (?<status>☑|◐|☐) \|$/);
+      return match?.groups
+        ? { id: match.groups.id, status: match.groups.status as '☑' | '◐' | '☐' }
+        : undefined;
+    })
+    .filter((goal): goal is { id: string; status: '☑' | '◐' | '☐' } => Boolean(goal));
+}
+
+function parseExecutionGoalSections(): Array<{ id: string; status: string; raw: string }> {
+  return executionGoals
+    .split('\n### ')
+    .slice(1)
+    .map((section) => {
+      const raw = `### ${section}`;
+      const id = raw.match(/^### (?<id>G\d+) — .+$/m)?.groups?.id;
+      const status = raw.match(/^- \*\*Status:\*\* (?<status>[☑◐☐] .+)$/m)?.groups?.status;
+      if (!id || !status) throw new Error(`Execution goal mist id of status: ${raw}`);
+      return { id, status, raw };
+    });
 }
 
 function extractExecutionGoalAdrMarkers(): Array<{ id: string; value: string }> {
