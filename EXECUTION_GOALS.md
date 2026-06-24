@@ -2258,4 +2258,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G403 — Backlog Health JSON Contract Matrix Section Parser
+
+- **Epic:** Continuous Evolution
+- **Problem:** The docs/matrix symmetry check extracts matrix groups from a broad regex over the test body, which could become brittle if the test wording changes.
+- **Desired Outcome:** Add a tighter parser or marker for the contract matrix section so future maintenance checks are less sensitive to unrelated test text.
+- **User Value:** Maintainers can refactor nearby tests without breaking the docs symmetry check accidentally.
+- **Acceptance Criteria:** Tests use a focused parser or stable marker for the contract matrix groups; symmetry coverage remains; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G402 Continuous Evolution: onderhoudstests vergelijken nu de gedocumenteerde
+  `issueSnapshot`-groepen met de backlog-health contractmatrixgroepen.
 - G401 Continuous Evolution: de backlog-health JSON-contractmatrix heeft nu een
   herbruikbare drift-hint die bij veldwijzigingen expliciet naar docs en matrix samen
   verwijst.
