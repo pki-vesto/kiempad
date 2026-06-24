@@ -2230,4 +2230,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G401 — Backlog Health JSON Contract Matrix Drift Hint
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON reference now points to the contract matrix, but failed matrix assertions do not yet include a human-readable drift hint in the test source.
+- **Desired Outcome:** Add a concise helper or assertion message that explains how to update docs and the matrix together when JSON fields intentionally change.
+- **User Value:** Maintainers get clearer next steps when contract tests fail during backlog-health evolution.
+- **Acceptance Criteria:** Tests include a reusable drift hint or assertion label for contract-matrix failures; docs remain linked to the matrix; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

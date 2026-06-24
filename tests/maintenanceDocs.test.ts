@@ -343,6 +343,24 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('verwijst vanuit de backlog-health JSON-reference naar de contractmatrix-test', () => {
+    const contractCoverage = extractMarkdownSection(
+      backlogHealthJsonReference,
+      'Contract Coverage',
+    );
+
+    for (const requiredTerm of [
+      'tests/backlogHealth.test.ts',
+      'documenteert issue-snapshotvelden met een compacte contractmatrix',
+      '`issueSnapshot`-groep',
+      'top-level velden',
+      'nested issuevelden',
+      'Werk die matrix bij',
+    ]) {
+      expect(contractCoverage).toContain(requiredTerm);
+    }
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
