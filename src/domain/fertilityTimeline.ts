@@ -49,7 +49,24 @@ export type FertilityTimelineRecordKoppeling = {
 
 export type FertilityTimeline = {
   items: FertilityTimelineItem[];
+  mijlpalen: FertilityTimelineMijlpaal[];
+  contextSignalen: FertilityTimelineContextSignaal[];
   waarschuwing: string;
+};
+
+export type FertilityTimelineMijlpaal = {
+  id: string;
+  itemId: string;
+  datum: string;
+  titel: string;
+  detail: string;
+};
+
+export type FertilityTimelineContextSignaal = {
+  id: string;
+  itemId: string;
+  titel: string;
+  detail: string;
 };
 
 export type FertilityTimelineFilter = {
@@ -293,25 +310,24 @@ export function bouwFertilityTimeline(input: {
       }),
     );
 
-  return {
-    items: [
-      ...trajectItems,
-      ...afspraakItems,
-      ...documentItems,
-      ...embryoItems,
-      ...consultItems,
-      ...vraagItems,
-      ...medicatieItems,
-      ...researchItems,
-      ...aanbevelingItems,
-    ].sort(
-      (a, b) =>
-        a.datum.localeCompare(b.datum) ||
-        soortVolgorde(a.soort) - soortVolgorde(b.soort) ||
-        a.titel.localeCompare(b.titel, 'nl-NL'),
-    ),
-    waarschuwing: FERTILITY_TIMELINE_WAARSCHUWING,
-  };
+  const items = [
+    ...trajectItems,
+    ...afspraakItems,
+    ...documentItems,
+    ...embryoItems,
+    ...consultItems,
+    ...vraagItems,
+    ...medicatieItems,
+    ...researchItems,
+    ...aanbevelingItems,
+  ].sort(
+    (a, b) =>
+      a.datum.localeCompare(b.datum) ||
+      soortVolgorde(a.soort) - soortVolgorde(b.soort) ||
+      a.titel.localeCompare(b.titel, 'nl-NL'),
+  );
+
+  return maakFertilityTimelineResultaat(items);
 }
 
 function maakKoppeling(
@@ -362,9 +378,8 @@ export function filterFertilityTimeline(
   filter: FertilityTimelineFilter = {},
 ): FertilityTimeline {
   const bronFilter = filter.bron?.trim().toLocaleLowerCase('nl-NL');
-  return {
-    ...timeline,
-    items: timeline.items.filter((item) => {
+  return maakFertilityTimelineResultaat(
+    timeline.items.filter((item) => {
       if (filter.soort && item.soort !== filter.soort) return false;
       if (filter.datumVanaf && item.datum.slice(0, 10) < filter.datumVanaf) return false;
       if (filter.datumTot && item.datum.slice(0, 10) > filter.datumTot) return false;
@@ -373,7 +388,8 @@ export function filterFertilityTimeline(
       if (bronFilter && !item.bron.toLocaleLowerCase('nl-NL').includes(bronFilter)) return false;
       return true;
     }),
-  };
+    timeline.waarschuwing,
+  );
 }
 
 function soortVolgorde(soort: FertilityTimelineItemSoort): number {
@@ -387,4 +403,79 @@ function soortVolgorde(soort: FertilityTimelineItemSoort): number {
     'research',
     'aanbeveling',
   ].indexOf(soort);
+}
+
+function maakFertilityTimelineResultaat(
+  items: FertilityTimelineItem[],
+  waarschuwing = FERTILITY_TIMELINE_WAARSCHUWING,
+): FertilityTimeline {
+  return {
+    items,
+    mijlpalen: bouwMijlpalen(items),
+    contextSignalen: bouwContextSignalen(items),
+    waarschuwing,
+  };
+}
+
+function bouwMijlpalen(items: FertilityTimelineItem[]): FertilityTimelineMijlpaal[] {
+  return items
+    .filter((item) => itemIsMijlpaal(item))
+    .map((item) => ({
+      id: `mijlpaal-${item.id}`,
+      itemId: item.id,
+      datum: item.datum,
+      titel: item.titel,
+      detail: `${item.label} · bron: ${item.bron}`,
+    }));
+}
+
+function itemIsMijlpaal(item: FertilityTimelineItem): boolean {
+  if (item.soort === 'embryo' || item.soort === 'consult') return true;
+  if (item.soort === 'onderzoek') return true;
+  if (item.soort !== 'behandeling') return false;
+
+  const label = item.label.toLocaleLowerCase('nl-NL');
+  const titel = item.titel.toLocaleLowerCase('nl-NL');
+  return (
+    item.id.startsWith('behandeling-') ||
+    label.includes('punctie') ||
+    label.includes('terugplaatsing') ||
+    titel.includes('punctie') ||
+    titel.includes('terugplaatsing')
+  );
+}
+
+function bouwContextSignalen(items: FertilityTimelineItem[]): FertilityTimelineContextSignaal[] {
+  return items.flatMap((item) => {
+    const signalen: FertilityTimelineContextSignaal[] = [];
+    if (item.datum.startsWith('9999-')) {
+      signalen.push({
+        id: `context-datum-${item.id}`,
+        itemId: item.id,
+        titel: 'Datumcontext ontbreekt',
+        detail: `${item.titel} heeft nog geen concrete datum in de lokale timeline.`,
+      });
+    }
+    if (!item.bron.trim()) {
+      signalen.push({
+        id: `context-bron-${item.id}`,
+        itemId: item.id,
+        titel: 'Broncontext ontbreekt',
+        detail: `${item.titel} heeft nog geen bronvermelding in de lokale timeline.`,
+      });
+    }
+    if (itemHeeftTrajectContextNodig(item) && !item.trajectId) {
+      signalen.push({
+        id: `context-traject-${item.id}`,
+        itemId: item.id,
+        titel: 'Trajectkoppeling ontbreekt',
+        detail: `${item.titel} is nog niet gekoppeld aan een poging of traject.`,
+      });
+    }
+    return signalen;
+  });
+}
+
+function itemHeeftTrajectContextNodig(item: FertilityTimelineItem): boolean {
+  return item.soort === 'onderzoek' || item.soort === 'embryo' || item.soort === 'consult';
 }

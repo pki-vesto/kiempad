@@ -549,6 +549,25 @@ h2 {
   font-weight: 800;
 }
 
+.timeline-insight-panel {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-field);
+  background: var(--surface-subtle);
+}
+
+.timeline-insight-panel h3 {
+  margin: 0 0 8px;
+}
+
+.timeline-insight-list li {
+  display: grid;
+  justify-content: stretch;
+  gap: 4px;
+  background: var(--surface);
+}
+
 .linked-record-list {
   display: grid;
   gap: 6px;

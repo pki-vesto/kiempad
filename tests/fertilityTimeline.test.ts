@@ -180,7 +180,75 @@ describe('fertility timeline', () => {
         { soort: 'traject', id: 'traject-1', label: 'Traject: traject-1' },
       ]),
     });
+    expect(timeline.mijlpalen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ itemId: 'behandeling-traject-1', titel: 'Poging 1' }),
+        expect.objectContaining({ itemId: 'onderzoek-doc-embryo', titel: 'Embryorapport' }),
+        expect.objectContaining({ itemId: 'embryo-doc-embryo', titel: 'Embryo A' }),
+        expect.objectContaining({ itemId: 'consult-consult-1', titel: 'Labconsult' }),
+      ]),
+    );
+    expect(timeline.contextSignalen).toEqual([]);
     expect(timeline.waarschuwing).toContain('geen diagnose');
+  });
+
+  it('maakt ontbrekende context zichtbaar zonder oordeel of automatische correctie', () => {
+    const timeline = bouwFertilityTimeline({
+      trajecten: [],
+      afspraken: [],
+      dossierDocuments: [
+        {
+          id: 'doc-los',
+          datum: '2026-06-22',
+          titel: 'Los labrapport',
+          categorie: 'onderzoek',
+          bestandsNaam: 'lab.pdf',
+          grootteBytes: 1024,
+          inhoudBase64: 'base64',
+          analyse: { samenvatting: 'Labuitslag vastgelegd.', signalen: [] },
+          metadata: {
+            documentDatum: '2026-06-22',
+            documenttype: 'Labuitslag',
+            bronbestand: 'lab.pdf',
+            extractieBronnen: [],
+          },
+          uploadedAt: '2026-06-22T10:00:00.000Z',
+        } as DossierDocument,
+      ],
+      consultVerslagen: [],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-los',
+            vraag: 'Wat moet ik nog vragen?',
+            beantwoord: false,
+          },
+        },
+      ],
+      medicatie: [],
+      kennisItems: [],
+    });
+
+    expect(timeline.mijlpalen).toEqual([
+      expect.objectContaining({ itemId: 'onderzoek-doc-los', titel: 'Los labrapport' }),
+    ]);
+    expect(timeline.contextSignalen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'context-traject-onderzoek-doc-los',
+          titel: 'Trajectkoppeling ontbreekt',
+          detail: 'Los labrapport is nog niet gekoppeld aan een poging of traject.',
+        }),
+        expect.objectContaining({
+          id: 'context-datum-vraag-vraag-los',
+          titel: 'Datumcontext ontbreekt',
+          detail: 'Wat moet ik nog vragen? heeft nog geen concrete datum in de lokale timeline.',
+        }),
+      ]),
+    );
+    expect(timeline.contextSignalen.map((item) => item.detail).join(' ')).not.toMatch(
+      /slecht|risico|advies/i,
+    );
   });
 
   it('filtert tijdlijnitems op type, periode, traject en bron', () => {

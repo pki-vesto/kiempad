@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G240 PFIP fertility timeline: trajectscherm toont belangrijke mijlpalen en
+  ontbrekende contextsignalen neutraal, zonder automatische correctie of oordeel.
 - G239 PFIP fertility timeline: ieder tijdlijnitem heeft een detailpaneel met bron,
   feitelijke context, record-ID en gekoppelde lokale records.
 - G238 PFIP fertility timeline: trajectscherm heeft filters voor type, periode,
