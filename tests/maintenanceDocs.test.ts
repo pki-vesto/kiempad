@@ -612,6 +612,12 @@ describe('onderhoudsdocumentatie', () => {
     ]);
   });
 
+  it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische foutreden stabiel', () => {
+    expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ERROR_REASON).toBe(
+      BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
+    );
+  });
+
   it('houdt backlog-health recovery artifactlabel-uitleg statische foutredentypes compleet', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES).toEqual([
       'label ontbreekt',

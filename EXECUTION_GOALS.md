@@ -2804,4 +2804,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G442 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Literal Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static artifact docs hint reason constant now has a focused fixture against the named missing-label constant, but there is no literal fixture that shows the Dutch text users see when it changes.
+- **Desired Outcome:** Add a focused literal fixture for the representative static artifact docs hint reason.
+- **User Value:** Maintainers get a precise text-level failure if the representative static diagnostic wording changes unintentionally.
+- **Acceptance Criteria:** Tests assert the representative static reason constant equals the expected Dutch missing-label text; existing static selection, shared fixture and composition tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
