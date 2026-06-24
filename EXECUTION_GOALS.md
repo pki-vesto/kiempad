@@ -3070,4 +3070,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G461 — Backlog Health JSON Contract Recovery Artifact Docs Hint Mixed Fixture Test Labels
+
+- **Epic:** Continuous Evolution
+- **Problem:** The mixed fixture test cluster now has clearer spacing, but the mixed fixture test labels may still not clearly separate representative values from subtype composition.
+- **Desired Outcome:** Review and clarify the mixed fixture test labels so each assertion states its distinct contract.
+- **User Value:** Maintainers can quickly distinguish representative fixture coverage from subtype-composition coverage.
+- **Acceptance Criteria:** Mixed fixture test labels are reviewed and, if useful, clarified without weakening assertions; representative static, dynamic and mixed error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
