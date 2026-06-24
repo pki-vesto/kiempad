@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 282 |
+| ☑ klaar | 283 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **382** |
+| **Totaal** | **383** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -527,13 +527,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G379 | ADR Review Evidence Freshness Check | P1 | F4 | ☐ |
 | G380 | Backlog Health Issue Snapshot Default Gate | P1 | F4 | ☑ |
 | G381 | Backlog Health Snapshot Cleanup Reminder | P1 | F4 | ☑ |
-| G382 | Backlog Health Issue Snapshot Freshness Hint | P1 | F4 | ☐ |
+| G382 | Backlog Health Issue Snapshot Freshness Hint | P1 | F4 | ☑ |
+| G383 | Backlog Health Issue Snapshot Limit Warning | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 382** (id's G001 t/m G382, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 383** (id's G001 t/m G383, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

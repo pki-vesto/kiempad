@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G382 Continuous Evolution: backlog-health toont nu een freshness-hint voor
+  tijdelijke issue-snapshots en de docs nemen een `stat -c %y` timestampcheck op.
 - G381 Continuous Evolution: backlog-health toont nu een expliciete cleanup-reminder
   voor tijdelijke issue-snapshots en de docs nemen `rm -f /tmp/kiempad-issues.json`
   op in de optionele issue-driftflow.
