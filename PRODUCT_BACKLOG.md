@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 268 |
+| ☑ klaar | 269 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **368** |
+| **Totaal** | **369** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -506,7 +506,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G358 | Daily Command Center Personalization | P1 | F4 | ☐ |
 | G359 | Consult Prep Packet Persistence | P1 | F4 | ☐ |
 | G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☑ |
-| G361 | Dependency Review Evidence Snapshot | P1 | F4 | ☐ |
+| G361 | Dependency Review Evidence Snapshot | P1 | F4 | ☑ |
 | G362 | Sensitive Fixture Allowlist Review | P1 | F4 | ☐ |
 | G363 | Event Log Detail Allowlist Governance | P1 | F4 | ☐ |
 | G364 | Public Repo Privacy Review Automation Hook | P1 | F4 | ☐ |
@@ -514,12 +514,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G366 | Local CSP Violation Reproduction Fixture | P1 | F4 | ☐ |
 | G367 | Secrets Scan Review Evidence Snapshot | P1 | F4 | ☐ |
 | G368 | Recovery Diagnostics Visual Regression Fixture | P1 | F4 | ☐ |
+| G369 | Dependency Evidence Generator Dry Run | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 368** (id's G001 t/m G368, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 369** (id's G001 t/m G369, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

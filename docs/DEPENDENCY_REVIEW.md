@@ -26,6 +26,25 @@ De helper `npm run deps:review` print deze checklist. Gebruik
 outdated` mag daarbij met exitcode 1 melden dat er updates beschikbaar zijn; dat is
 input voor de review, geen testfalen.
 
+## Evidence snapshots
+
+Leg afgeronde reviews vast met
+[`docs/DEPENDENCY_REVIEW_EVIDENCE_TEMPLATE.md`](DEPENDENCY_REVIEW_EVIDENCE_TEMPLATE.md).
+Ingevulde snapshots horen onder `docs/evidence/dependency-review/YYYY-MM-DD.md`.
+
+Een snapshot bevat alleen samenvattingen:
+
+- reviewdatum en reviewer;
+- `npm outdated`-samenvatting;
+- `npm audit --audit-level=high`-resultaat;
+- lockfile-diffsamenvatting voor `package.json` en `package-lock.json`;
+- testgate-status voor typecheck, lint, test en build;
+- privacygate-status voor secrets- en asset-scan;
+- besluit en eventuele vervolgissues.
+
+Plak geen tokens, registry credentials, `.env`-waarden, volledige package metadata
+dumps of machine-specifieke paden in evidence.
+
 ## Reviewregels
 
 - Commit alleen doelgerichte package- en lockfilewijzigingen.

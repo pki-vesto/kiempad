@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import dependencyReviewDocs from '../docs/DEPENDENCY_REVIEW.md?raw';
+import dependencyReviewEvidenceTemplate from '../docs/DEPENDENCY_REVIEW_EVIDENCE_TEMPLATE.md?raw';
 import packageJson from '../package.json?raw';
 import dependencyReviewScript from '../scripts/dependency-review.mjs?raw';
 
@@ -12,6 +13,8 @@ describe('dependency review cadence', () => {
     expect(dependencyReviewDocs).toContain('npm run test');
     expect(dependencyReviewDocs).toContain('npm run build');
     expect(dependencyReviewDocs).toContain('local-first');
+    expect(dependencyReviewDocs).toContain('docs/DEPENDENCY_REVIEW_EVIDENCE_TEMPLATE.md');
+    expect(dependencyReviewDocs).toContain('docs/evidence/dependency-review/YYYY-MM-DD.md');
   });
 
   it('biedt een deps:review script met audit, lockfile diff en testgate', () => {
@@ -29,5 +32,28 @@ describe('dependency review cadence', () => {
     expect(dependencyReviewScript).toContain("['npm', 'run', 'test']");
     expect(dependencyReviewScript).toContain("['npm', 'run', 'build']");
     expect(dependencyReviewScript).toContain('npm run deps:review -- --run');
+  });
+
+  it('definieert een evidence snapshot schema zonder secrets op te slaan', () => {
+    for (const requiredTerm of [
+      'Datum',
+      'Reviewer',
+      'Scope',
+      'npm outdated',
+      'npm audit',
+      'Lockfile diff',
+      'Test gate',
+      'Privacy gate',
+      'Besluit',
+      'npm run secrets:check',
+      'npm run assets:check',
+      'git diff -- package.json package-lock.json',
+    ]) {
+      expect(dependencyReviewEvidenceTemplate).toContain(requiredTerm);
+    }
+
+    expect(dependencyReviewEvidenceTemplate).toMatch(/Plak geen tokens/i);
+    expect(dependencyReviewEvidenceTemplate).toMatch(/registry credentials/i);
+    expect(dependencyReviewEvidenceTemplate).toMatch(/volledige package metadata dumps/i);
   });
 });

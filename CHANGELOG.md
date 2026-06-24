@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G361 Security & DevEx: dependency-review evidence snapshot-template legt datum,
+  commands, lockfile-diff, testgate en privacygate vast zonder secrets of package
+  metadata dumps.
 - G360 Reliability & Operations: vergrendelde kluis toont een niet-gevoelige
   hersteldiagnose voor kluisaanwezigheid, WebAuthn-runtime/koppeling en
   back-upherinneringsstatus zonder recordinhoud.
