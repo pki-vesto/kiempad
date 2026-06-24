@@ -14,6 +14,25 @@ export const EVENT_CATEGORIE_LABELS: Record<EventLog['categorie'], string> = {
   systeem: 'Systeem',
 };
 
+export const EVENT_LOG_ALLOWED_DETAIL_EXAMPLES = Object.freeze([
+  {
+    value: 'Back-upbestand is lokaal als download aangeboden.',
+    reason: 'Generieke exportstatus zonder bestandsnaam, dossierinhoud of persoon.',
+  },
+  {
+    value: 'Conceptkennis lokaal opgeslagen zonder brontekst.',
+    reason: 'Generieke AI-status zonder prompt, bronfragment of samenvattingsinhoud.',
+  },
+  {
+    value: 'Generieke meldingen blijven standaard.',
+    reason: 'Notificatieprivacy-status zonder notificatie-inhoud of gezondheidscontext.',
+  },
+  {
+    value: '12 records en 3 metadata-items verwerkt.',
+    reason: 'Importtelling zonder recordtitels, categorieën, namen of dossierinhoud.',
+  },
+]);
+
 export function maakEventLog(id: string, input: EventLogInput): EventLog {
   const datum = (input.datum ?? new Date().toISOString()).trim();
   const gebeurtenis = input.gebeurtenis.trim();
@@ -54,8 +73,44 @@ export function isEventLogDetailPrivacySafe(input: {
 }): boolean {
   if (!input.detail) return true;
   if (!isHighRiskEvent(input)) return true;
+  if (EVENT_LOG_ALLOWED_DETAILS.has(input.detail.trim())) return true;
 
   return !EVENT_LOG_SENSITIVE_DETAIL_PATTERNS.some((pattern) => pattern.test(input.detail ?? ''));
+}
+
+export function validateEventLogDetailAllowlist(
+  entries = EVENT_LOG_ALLOWED_DETAIL_EXAMPLES,
+): string[] {
+  const findings: string[] = [];
+  const seen = new Set<string>();
+
+  for (const entry of entries) {
+    if (!entry || typeof entry.value !== 'string' || entry.value.trim() === '') {
+      findings.push('Allowlist-entry mist een exacte eventlogdetailwaarde.');
+      continue;
+    }
+    if (seen.has(entry.value)) {
+      findings.push(`Allowlist-entry ${entry.value} is dubbel opgenomen.`);
+    }
+    seen.add(entry.value);
+    if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
+      findings.push(`Allowlist-entry ${entry.value} mist een concrete rationale.`);
+    }
+    if (EVENT_LOG_SENSITIVE_DETAIL_PATTERNS.some((pattern) => pattern.test(entry.value))) {
+      findings.push(`Allowlist-entry ${entry.value} bevat gevoelige vrije tekst.`);
+    }
+  }
+
+  return findings;
+}
+
+function createAllowedDetailSet(entries = EVENT_LOG_ALLOWED_DETAIL_EXAMPLES): Set<string> {
+  const findings = validateEventLogDetailAllowlist(entries);
+  if (findings.length > 0) {
+    throw new Error(`Ongeldige eventlogdetail allowlist:\n${findings.join('\n')}`);
+  }
+
+  return new Set(entries.map((entry) => entry.value));
 }
 
 function isHighRiskEvent(input: {
@@ -80,3 +135,5 @@ const EVENT_LOG_SENSITIVE_DETAIL_PATTERNS = [
   /\b(?:vraag|antwoord|medicatie|afspraak|echo|embryo|labuitslag|symptoom)\s*:/i,
   /\b(?:progesteron|gonal|ovitrelle|fyremadel|decapeptyl|utrogestan)\b/i,
 ];
+
+const EVENT_LOG_ALLOWED_DETAILS = createAllowedDetailSet();

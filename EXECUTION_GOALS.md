@@ -1592,7 +1592,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Event log privacy, docs, tests
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G364 — Public Repo Privacy Review Automation Hook
 
@@ -1682,5 +1682,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Fixture scanner, docs, maintenance tests
+- **Score:** 97
+- **Status:** ☐ open
+
+### G371 — Event Log Detail Review Evidence Snapshot
+
+- **Epic:** Security & DevEx
+- **Problem:** Eventlog detail allowlist governance is documented, but reviews of allowed generic details do not yet leave structured evidence.
+- **Desired Outcome:** Add an evidence template for eventlog detail review date, allowlist entries, rationale status and rejected sensitive examples.
+- **User Value:** Operational logs remain auditable without becoming a shadow health dossier.
+- **Acceptance Criteria:** Evidence template records reviewed entries, rationale status, rejected examples and reviewer/date; docs explain where evidence lives; tests cover the template/schema; no health free text or user content is stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Event log privacy, docs, maintenance tests
 - **Score:** 97
 - **Status:** ☐ open
