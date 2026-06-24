@@ -477,6 +477,60 @@ describe('backlog health', () => {
     expect(report.summary.issueSnapshotLimit).toBe(500);
   });
 
+  it('documenteert issue-snapshotvelden met een compacte contractmatrix', () => {
+    const issueSnapshot = buildRepresentativeIssueSnapshotContractReport().issueSnapshot;
+
+    if (!issueSnapshot) throw new Error('Issue snapshot contract ontbreekt.');
+
+    const matrix = [
+      {
+        group: 'duplicateIssues',
+        row: issueSnapshot.duplicateIssues[0],
+        rowFields: ['id', 'issues'],
+        nestedIssueFields: extractIssueSnapshotIssueKeys({
+          duplicateIssues: issueSnapshot.duplicateIssues,
+          nonOpenIssueLinks: [],
+          completedGoalOpenIssues: [],
+        }),
+        expectedNestedIssueFields: ['id', 'number', 'state', 'title', 'url'],
+      },
+      {
+        group: 'missingIssueLinks',
+        row: issueSnapshot.missingIssueLinks[0],
+        rowFields: ['id', 'title'],
+        nestedIssueFields: [],
+        expectedNestedIssueFields: [],
+      },
+      {
+        group: 'nonOpenIssueLinks',
+        row: issueSnapshot.nonOpenIssueLinks[0],
+        rowFields: ['id', 'issue', 'title'],
+        nestedIssueFields: Object.keys(issueSnapshot.nonOpenIssueLinks[0]?.issue ?? {}).sort(),
+        expectedNestedIssueFields: ['number', 'state', 'title', 'url'],
+      },
+      {
+        group: 'completedGoalOpenIssues',
+        row: issueSnapshot.completedGoalOpenIssues[0],
+        rowFields: ['id', 'issue', 'title'],
+        nestedIssueFields: Object.keys(
+          issueSnapshot.completedGoalOpenIssues[0]?.issue ?? {},
+        ).sort(),
+        expectedNestedIssueFields: ['number', 'state', 'title', 'url'],
+      },
+    ];
+
+    for (const entry of matrix) {
+      expect(Object.keys(entry.row ?? {}).sort(), entry.group).toEqual(entry.rowFields);
+      expect(entry.nestedIssueFields, entry.group).toEqual(entry.expectedNestedIssueFields);
+    }
+    expect(matrix.map((entry) => entry.group)).toEqual([
+      'duplicateIssues',
+      'missingIssueLinks',
+      'nonOpenIssueLinks',
+      'completedGoalOpenIssues',
+    ]);
+  });
+
   it('maakt actieve-goal drift zichtbaar met kleine negatieve fixtures', () => {
     const belowMinimumFindings = buildActiveGoalDriftFindings(
       parseBacklog(buildBacklogFixture(['G244', 'G245'])),
