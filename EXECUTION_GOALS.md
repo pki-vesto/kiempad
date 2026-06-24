@@ -3084,4 +3084,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G462 — Backlog Health JSON Contract Recovery Artifact Docs Hint Mixed Fixture Comment Boundary
+
+- **Epic:** Continuous Evolution
+- **Problem:** The mixed fixture test labels are clearer, but the nearby comments may still duplicate what the test names already say.
+- **Desired Outcome:** Review whether the mixed fixture and representative static comments should be tightened, moved or removed to keep the cluster readable.
+- **User Value:** Maintainers can scan the recovery artifact docs hint test cluster without redundant prose.
+- **Acceptance Criteria:** Mixed fixture comment boundaries are reviewed and, if useful, adjusted without weakening assertions; representative static, dynamic and mixed error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
