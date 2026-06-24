@@ -1111,7 +1111,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** Tests, repo
 - **Score:** 117
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G327 — Sensitive Fixture Policy
 
@@ -1461,5 +1461,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** CSP, docs, security tests
+- **Score:** 104
+- **Status:** ☐ open
+
+### G354 — Secrets Scan Baseline Review
+
+- **Epic:** Security & DevEx
+- **Problem:** The first scanner covers common patterns, but future false positives or missed project-specific patterns need a deliberate review path.
+- **Desired Outcome:** Document scanner pattern ownership and add project-specific examples without weakening the allowlist.
+- **User Value:** Credential protection stays useful instead of becoming noisy or too broad to trust.
+- **Acceptance Criteria:** Document the current patterns and allowlist policy; add at least one project-specific negative test for placeholders that must remain allowed; add at least one project-specific positive test for a realistic forbidden Tailscale or AI key shape; keep the repository scan green without broad directory exclusions.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Secrets scan, tests, docs
 - **Score:** 104
 - **Status:** ☐ open

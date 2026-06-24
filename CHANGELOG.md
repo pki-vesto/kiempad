@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G326 Security & DevEx: `npm run secrets:check` scant docs/source op gangbare
+  credentialpatronen met een minimale expliciete allowlist en draait in CI.
 - G324 Security & DevEx: `index.html` bevat een local-first Content Security Policy
   die remote scripts blokkeert en alleen lokale data/blob media en lokale dev-websocket
   verbindingen toestaat.

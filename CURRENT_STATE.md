@@ -465,6 +465,9 @@
 - **G324 Content Security Policy:** `index.html` beperkt scripts, fonts, workers,
   manifest en netwerkverbindingen tot de eigen origin; data/blob media blijven
   toegestaan voor lokale previews en alleen lokale dev-websockets zijn toegestaan.
+- **G326 Secrets Scan Test:** `npm run secrets:check` scant repo-tekstbestanden op
+  gangbare API keys, Tailscale auth keys, GitHub tokens, AWS keys en private-keyblokken;
+  CI draait deze check vóór tests.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -519,8 +522,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G326 volgens `npm run goals:score`: Secrets
-   Scan Test heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G305 volgens `npm run goals:score`: AI Prompt
+   Registry heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

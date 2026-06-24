@@ -38,6 +38,8 @@ Voordat je merget:
 - `npm run build` — groen.
 - `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
   expliciet allowlisted.
+- `npm run secrets:check` — groen; alleen synthetische placeholders uit de expliciete
+  allowlist zijn toegestaan.
 - `npm audit --audit-level=high` — groen.
 - Privacy-/policy-regels uit [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) §4 gerespecteerd
   (geen nieuwe uitgaande dataroute zonder opt-in; niets medisch-besluitvormends).
@@ -48,8 +50,8 @@ Voordat je merget:
   [`docs/GOAL_COMPLETION_AUDIT.md`](docs/GOAL_COMPLETION_AUDIT.md): ieder requirement
   heeft direct bewijs voordat het doel op `☑ klaar` gaat.
 
-CI (`.github/workflows/ci.yml`) draait typecheck, lint, tests, audit, build en de
-externe-asset-scan op elke PR.
+CI (`.github/workflows/ci.yml`) draait typecheck, lint, secrets-scan, tests, audit,
+build en de externe-asset-scan op elke PR.
 
 ## Review process
 
