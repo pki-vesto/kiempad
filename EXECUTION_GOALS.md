@@ -786,7 +786,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Vault UX
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G302 — Notification Delivery Audit
 
@@ -1540,4 +1540,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** Questions, storage, export
 - **Score:** 98
+- **Status:** ☐ open
+
+### G360 — Recovery Mode Diagnostics Card
+
+- **Epic:** Reliability & Operations
+- **Problem:** Unlock help explains next actions, but users still cannot see local non-sensitive diagnostics such as vault presence, WebAuthn availability or backup reminder status before retrying.
+- **Desired Outcome:** Add a locked-state diagnostics card with non-sensitive status signals and no record content.
+- **User Value:** Users can distinguish wrong passphrase, unavailable WebAuthn and missing local vault context more calmly.
+- **Acceptance Criteria:** Card shows only non-sensitive local status; never reveals record counts or health content while locked; distinguishes WebAuthn unavailable vs not enrolled; tests cover locked state with and without vault metadata.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Vault UX, WebAuthn, backup guidance
+- **Score:** 104
 - **Status:** ☐ open

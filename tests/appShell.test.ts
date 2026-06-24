@@ -74,6 +74,21 @@ describe('app shell', () => {
     expect(html).toContain('Geen herstel-achterdeur');
     expect(html).toContain('Kiempad bewaart je passphrase niet');
     expect(html).toContain('versleutelde back-up');
+    expect(html).toContain('docs/RUNBOOK.md#debugging');
+    expect(html).toContain('docs/WEBAUTHN_UNLOCK.md');
+  });
+
+  it('toont kalme herstelhulp bij een bestaande kluis', () => {
+    const html = renderVaultGate(true, 'Ontgrendelen is mislukt.');
+
+    expect(html).toContain('Hulp bij ontgrendelen');
+    expect(html).toContain('Ontgrendelen is mislukt.');
+    expect(html).toContain('Controleer rustig de passphrase');
+    expect(html).toContain('toetsenbordindeling en hoofdletters');
+    expect(html).toContain('WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld');
+    expect(html).toContain('importeer daarna je versleutelde back-up');
+    expect(html).toContain('niet te herstellen via een achterdeur');
+    expect(html).not.toContain('reset je passphrase');
   });
 
   it('toont WebAuthn-ontgrendeling alleen bij een gekoppelde kluis', () => {

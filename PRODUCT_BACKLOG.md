@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 259 |
+| ☑ klaar | 260 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **359** |
+| **Totaal** | **360** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -446,7 +446,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G298 | Runbook Command Verification | P2 | F4 | ☐ |
 | G299 | Import Error Taxonomy | P2 | F4 | ☐ |
 | G300 | Local Diagnostics Export | P2 | F4 | ☐ |
-| G301 | Recovery Mode Unlock Help | P1 | F4 | ☐ |
+| G301 | Recovery Mode Unlock Help | P1 | F4 | ☑ |
 | G302 | Notification Delivery Audit | P2 | F4 | ☐ |
 | G303 | Browser Compatibility Matrix | P3 | F4 | ☐ |
 | G304 | On-Device Summarizer Adapter | P1 | F4 | ☐ |
@@ -505,12 +505,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G357 | Prompt Regression Coverage Report | P1 | F4 | ☐ |
 | G358 | Daily Command Center Personalization | P1 | F4 | ☐ |
 | G359 | Consult Prep Packet Persistence | P1 | F4 | ☐ |
+| G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 359** (id's G001 t/m G359, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 360** (id's G001 t/m G360, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

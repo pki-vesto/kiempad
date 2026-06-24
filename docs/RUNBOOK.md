@@ -80,6 +80,17 @@ Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
 - **AI doet niets:** AI staat default uit; controleer opt-in + sleutel in de
   instellingen (versleuteld opgeslagen, niet in `.env`).
 
+### Unlock recovery checklist
+
+1. Controleer rustig de passphrase, toetsenbordindeling, hoofdletters en eventuele
+   wachtwoordmanager-invoer.
+2. Gebruik WebAuthn/biometrie alleen als het eerder op dit toestel aan dezelfde kluis
+   is gekoppeld; het is ontgrendelgemak, geen herstel-achterdeur.
+3. Als lokale browseropslag leeg of beschadigd is, maak een nieuwe kluis en importeer
+   daarna de meest recente versleutelde `.kiempad-export` back-up.
+4. Zonder passphrase of bruikbare versleutelde back-up kan Kiempad lokale
+   gezondheidsdata niet herstellen.
+
 ## Rollback
 
 - **Code:** terug naar een eerdere commit op `main` (de app is client-side; geen
