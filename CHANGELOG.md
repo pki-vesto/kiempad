@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G327 Security & DevEx: synthetische-only fixture policy met
+  `npm run fixtures:check` voorkomt echte naam-, e-mail- en BSN-achtige testdata.
 - G325 Security & DevEx: `npm run deps:review` en dependency-reviewdocs leggen de
   maandelijkse updateflow vast met outdated, audit, lockfile-diff en testgate.
 - G301 Reliability & Operations: vergrendelde kluis toont kalme herstelhulp voor

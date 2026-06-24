@@ -74,6 +74,7 @@ npm run test         # of: make test  — Vitest unit-/integratietests
 npm run build        # productiebuild (statische PWA in dist/)
 npm run assets:check # controleert bron- en buildassets op externe asset-URL's
 npm run secrets:check # lichte scan op gangbare credentialpatronen
+npm run fixtures:check # scan testfixtures op niet-synthetische gevoelige data
 npm run smoke:offline # Playwright-smoke: eerste bezoek, offline reload via service worker
 npm run drill:backup # export/import/ontgrendel-drill met representatieve encrypted records
 ```

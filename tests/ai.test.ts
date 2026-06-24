@@ -54,8 +54,8 @@ describe('AI opt-in guard', () => {
   it('minimaliseert en de-identificeert tekst voor de AI-payload', () => {
     const payload = maakAiSamenvattingPayload(
       [
-        'Naam: Peter',
-        'E-mail: peter@example.com',
+        'Naam: Testpersoon A',
+        'E-mail: testpersoon@example.test',
         'Telefoon: +31 6 12345678',
         'Geboortedatum: 12-03-1984',
         'Patiëntnummer: ABCD-1234',
@@ -70,7 +70,7 @@ describe('AI opt-in guard', () => {
     expect(payload.tekst).toContain('[telefoon verwijderd]');
     expect(payload.tekst).toContain('Geboortedatum: [geboortedatum verwijderd]');
     expect(payload.tekst).toContain('Patiëntnummer: [id verwijderd]');
-    expect(payload.tekst).not.toContain('peter@example.com');
+    expect(payload.tekst).not.toContain('testpersoon@example.test');
     expect(payload.tekst).not.toContain('12-03-1984');
     expect(payload.tekst).not.toContain('ABCD-1234');
     expect(payload.redacties.map((redactie) => redactie.type)).toEqual([
@@ -86,7 +86,7 @@ describe('AI opt-in guard', () => {
 
   it('rapporteert redactie-aantallen zonder originele waarden terug te geven', () => {
     const resultaat = deidentificeerTekstMetRedacties(
-      'Naam: Peter\nNaam: Partner\nBSN: 123456789\nDossiernummer: DRILL-42',
+      'Naam: Testpersoon A\nNaam: Testpersoon B\nBSN: 111111111\nDossiernummer: TEST-0001',
     );
 
     expect(resultaat.redacties).toEqual([
@@ -104,8 +104,8 @@ describe('AI opt-in guard', () => {
         vervanging: '[id verwijderd]',
       },
     ]);
-    expect(JSON.stringify(resultaat.redacties)).not.toContain('Peter');
-    expect(JSON.stringify(resultaat.redacties)).not.toContain('123456789');
+    expect(JSON.stringify(resultaat.redacties)).not.toContain('Testpersoon A');
+    expect(JSON.stringify(resultaat.redacties)).not.toContain('111111111');
   });
 
   it('maakt AI-output herkenbaar als conceptkennis met bron', () => {

@@ -1124,7 +1124,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Tests, docs
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G328 — Storage Schema Migration Harness
 
@@ -1565,5 +1565,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, scripts, dependency review
+- **Score:** 104
+- **Status:** ☐ open
+
+### G362 — Sensitive Fixture Allowlist Review
+
+- **Epic:** Security & DevEx
+- **Problem:** The sensitive fixture scanner blocks common risky patterns, but future exceptions need explicit review so the scanner does not become noisy or too broad.
+- **Desired Outcome:** Add an allowlist governance path for fixture scanner exceptions with required rationale and tests.
+- **User Value:** Privacy protection remains strict while legitimate synthetic edge cases stay maintainable.
+- **Acceptance Criteria:** Fixture scanner allowlist entries require a documented rationale; tests fail when an allowlist item lacks a reason; docs explain review cadence; existing synthetic placeholders remain allowed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Fixture scanner, docs, tests
 - **Score:** 104
 - **Status:** ☐ open
