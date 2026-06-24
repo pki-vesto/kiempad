@@ -411,6 +411,17 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('faalt duidelijk wanneer de backlog-health recoveryparagraaf ontbreekt', () => {
+    expect(() =>
+      extractMarkdownParagraphContaining(
+        'Laat de markercomments rond de matrixgroepverwachting staan.',
+        'Backlog-health contractmatrix ontbreekt',
+      ),
+    ).toThrow(
+      'Paragraaf ontbreekt: Backlog-health contractmatrix ontbreekt. Herstel de recoveryparagraaf in Contract Coverage.',
+    );
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
@@ -593,7 +604,11 @@ function extractMarkdownSection(document: string, heading: string): string {
 
 function extractMarkdownParagraphContaining(section: string, term: string): string {
   const paragraph = section.split(/\n\n+/).find((candidate) => candidate.includes(term));
-  if (!paragraph) throw new Error(`Paragraaf ontbreekt: ${term}`);
+  if (!paragraph) {
+    throw new Error(
+      `Paragraaf ontbreekt: ${term}. Herstel de recoveryparagraaf in Contract Coverage.`,
+    );
+  }
   return paragraph;
 }
 

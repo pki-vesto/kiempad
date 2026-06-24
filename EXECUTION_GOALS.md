@@ -2356,4 +2356,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G410 — Backlog Health JSON Contract Recovery Paragraph Privacy Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The recovery paragraph negative fixture now fails clearly when guidance is missing, but it does not separately prove the paragraph keeps the privacy boundary against issue snapshots and raw GitHub output.
+- **Desired Outcome:** Add a focused assertion that the recovery paragraph preserves the no-snapshot/no-raw-output boundary.
+- **User Value:** Maintainers can restore marker guidance without accidentally normalizing committed snapshots or raw GitHub responses.
+- **Acceptance Criteria:** Tests isolate the recovery paragraph and assert the privacy boundary text within that paragraph; the missing-paragraph negative fixture remains; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
