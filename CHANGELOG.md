@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G267 Onboarding & Daily Use: vragenscherm heeft een lokale Consult Prep Wizard met
+  bewerkbare vragen, Markdown prep-packet en links naar timeline/graph-context.
 - G265 Onboarding & Daily Use: startscherm heeft een dagelijks command center dat
   afspraken, medicatie, vragen, herinneringen en context groepeert op urgentie.
 - G320 AI & Research: promptregressiesuite met fixtures voor consult, research,

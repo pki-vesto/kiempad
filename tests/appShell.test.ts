@@ -1010,11 +1010,18 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verplaats vraag omhoog: Wat is de volgende stap?"');
     expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
     expect(html).toContain('Verslag per afspraak');
+    expect(html).toContain('aria-label="Consult Prep Wizard"');
+    expect(html).toContain('Bewerkbare vragen');
+    expect(html).toContain('name="consultPrepQuestions"');
+    expect(html).toContain('Lokaal prep-packet');
+    expect(html).toContain('# Kiempad consult prep packet');
+    expect(html).toContain('Open timeline en graph exports');
     expect(html).toContain('Vragenlijst voor volgende afspraak');
     expect(html).toContain('Vraag aan arts: wanneer plannen we de controle?');
     expect(html).toContain('Consultactiepunt');
     expect(html).toContain('Voorbereidend consult');
     expect(html).toContain('controleer de vragen voordat je ze met je kliniek bespreekt');
+    expect(html).toContain('Geen behandeladvies of behandelkeuze.');
     expect(html).toContain('Wanneer horen we de uitslag?');
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
   });
