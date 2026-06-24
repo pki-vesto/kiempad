@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G245 Continuous Evolution: lokaal backlog-health rapport vergelijkt backlog,
+  execution catalogus en optionele issue-snapshot zonder netwerk.
 - G244 Continuous Evolution: tweede-generatie execution goal catalogus met 100 actieve doelen, 5 epics, F5-horizon en rijk doelenschema.
 - G243 PFIP fertility timeline: timeline heeft een toegankelijk mobiel
   overzicht met ankers naar items, mijlpalen, context en export.

@@ -52,7 +52,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Docs, tests, GitHub Issues
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G246 — Goal Scoring Model
 
@@ -1240,4 +1240,16 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Architecture, security docs
+- **Status:** ☐ open
+
+### G345 — Backlog Health Issue Snapshot Automation
+
+- **Epic:** Continuous Evolution
+- **Problem:** Backlog health can compare issues only after a manual issue JSON export.
+- **Desired Outcome:** Add a helper that exports a GitHub issue snapshot in the format expected by the local backlog health report.
+- **User Value:** Drift checks become easier to run before selecting the next goal.
+- **Acceptance Criteria:** Helper documents the exact `gh issue list` command; output can feed `npm run backlog:health -- --issues-json`; no secrets are stored; tests cover snapshot shape.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Scripts, GitHub Issues, docs
 - **Status:** ☐ open
