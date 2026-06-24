@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G265 Onboarding & Daily Use: startscherm heeft een dagelijks command center dat
+  afspraken, medicatie, vragen, herinneringen en context groepeert op urgentie.
 - G320 AI & Research: promptregressiesuite met fixtures voor consult, research,
   image-context en dagelijkse aanbevelingen bewaakt promptdrift en verboden output.
 - G313 AI & Research: AI payload-preview toont welke persoonlijke velden lokaal

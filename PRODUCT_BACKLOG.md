@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 257 |
+| ☑ klaar | 258 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **357** |
+| **Totaal** | **358** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -410,7 +410,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G262 | Issue Label Taxonomy | P2 | F4 | ☐ |
 | G263 | Monthly Goal Review Ritual | P3 | F4 | ☐ |
 | G264 | First Run Guided Setup | P0 | F4 | ☑ |
-| G265 | Daily Command Center | P0 | F4 | ☐ |
+| G265 | Daily Command Center | P0 | F4 | ☑ |
 | G266 | Partner Handoff Mode | P1 | F4 | ☐ |
 | G267 | Consult Prep Wizard | P0 | F4 | ☐ |
 | G268 | After Consult Capture Flow | P1 | F4 | ☐ |
@@ -503,12 +503,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G355 | Prompt Registry UI Exposure | P1 | F4 | ☐ |
 | G356 | Redaction Pattern Baseline Review | P1 | F4 | ☐ |
 | G357 | Prompt Regression Coverage Report | P1 | F4 | ☐ |
+| G358 | Daily Command Center Personalization | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 357** (id's G001 t/m G357, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 358** (id's G001 t/m G358, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

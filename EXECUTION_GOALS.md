@@ -318,7 +318,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** L
 - **Related Components:** Start screen, agenda, medication, questions
 - **Score:** 110
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G266 — Partner Handoff Mode
 
@@ -1514,4 +1514,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** AI tests, docs, maintenance scripts
 - **Score:** 102
+- **Status:** ☐ open
+
+### G358 — Daily Command Center Personalization
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** The daily command center now groups today’s tasks, but every user sees the same fixed order and no persistent preferences.
+- **Desired Outcome:** Allow local-only preferences for which command center groups appear first or are collapsed by default.
+- **User Value:** The start screen can match the user’s morning routine without adding cloud state or advice.
+- **Acceptance Criteria:** Preferences are stored locally with app settings; default order remains safe and complete; collapsed groups still expose counts; tests cover default and personalized ordering.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Start screen, settings, app shell tests
+- **Score:** 98
 - **Status:** ☐ open
