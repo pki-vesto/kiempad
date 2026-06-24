@@ -2314,4 +2314,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G407 — Backlog Health JSON Contract Marker Recovery Drift Hint
+
+- **Epic:** Continuous Evolution
+- **Problem:** The missing-marker recovery path is now documented, but the parser error and docs wording can drift because the recovery hint is duplicated as free text.
+- **Desired Outcome:** Centralize or explicitly align the marker recovery hint so parser errors and documentation stay consistent.
+- **User Value:** Maintainers see the same recovery action in failures and docs, reducing confusion during contract-test refactors.
+- **Acceptance Criteria:** Tests assert the parser error and documented recovery wording share the same marker names and recovery action; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

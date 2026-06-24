@@ -360,6 +360,11 @@ describe('onderhoudsdocumentatie', () => {
       'backlog-health-json-contract-matrix:start',
       'backlog-health-json-contract-matrix:end',
       'documentatie en contractmatrix synchroon',
+      'Backlog-health contractmatrix ontbreekt',
+      'beide markercomments',
+      'tests/backlogHealth.test.ts',
+      'issue-snapshot of ruwe GitHub-output',
+      'opnieuw draaien van de docs-/contracttests',
     ]) {
       expect(contractCoverage).toContain(requiredTerm);
     }
