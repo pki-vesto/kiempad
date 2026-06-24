@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
+  EVENT_LOG_ALLOWED_DETAIL_EXAMPLES,
   isEventLogDetailPrivacySafe,
   maakEventLog,
   sorteerEventLogs,
+  validateEventLogDetailAllowlist,
 } from '../src/domain/eventLog';
 
 describe('eventLog', () => {
@@ -97,6 +99,32 @@ describe('eventLog', () => {
       expect(isEventLogDetailPrivacySafe(event)).toBe(true);
       expect(() => maakEventLog('event-safe', event)).not.toThrow();
     }
+  });
+
+  it('vereist rationale voor eventlogdetail-allowlist entries', () => {
+    expect(validateEventLogDetailAllowlist(EVENT_LOG_ALLOWED_DETAIL_EXAMPLES)).toEqual([]);
+    expect(EVENT_LOG_ALLOWED_DETAIL_EXAMPLES.map((entry) => entry.value)).toEqual([
+      'Back-upbestand is lokaal als download aangeboden.',
+      'Conceptkennis lokaal opgeslagen zonder brontekst.',
+      'Generieke meldingen blijven standaard.',
+      '12 records en 3 metadata-items verwerkt.',
+    ]);
+    expect(
+      validateEventLogDetailAllowlist([
+        {
+          value: '18 records verwerkt.',
+          reason: '',
+        },
+      ]),
+    ).toEqual(['Allowlist-entry 18 records verwerkt. mist een concrete rationale.']);
+    expect(
+      validateEventLogDetailAllowlist([
+        {
+          value: 'Medicatie: Progesteron om 20:00.',
+          reason: 'Dit mag niet omdat eventlogs geen health free text mogen bewaren.',
+        },
+      ]),
+    ).toEqual(['Allowlist-entry Medicatie: Progesteron om 20:00. bevat gevoelige vrije tekst.']);
   });
 
   it('weigert gevoelige vrije tekst in high-risk eventlogdetails', () => {

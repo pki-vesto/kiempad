@@ -5,6 +5,7 @@ import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
+import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
@@ -166,6 +167,23 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(secretsScanBaseline).toMatch(/Verbreed geen directory-exclusions/i);
     expect(secretsScanBaseline).toMatch(/Plak geen\s+volledige tokens/i);
+  });
+
+  it('documenteert eventlogdetail privacy en allowlistgrenzen', () => {
+    for (const requiredTerm of [
+      'operationele metadata',
+      'geen tweede dossier',
+      '12 records en 3 metadata-items verwerkt',
+      'health free text',
+      'src/domain/eventLog.ts',
+      'tests/eventLog.test.ts',
+      'concrete rationale',
+    ]) {
+      expect(eventLogPrivacy).toContain(requiredTerm);
+    }
+
+    expect(eventLogPrivacy).toMatch(/namen, e-mailadressen, BSN/i);
+    expect(eventLogPrivacy).toMatch(/context in het versleutelde domeinrecord/i);
   });
 });
 

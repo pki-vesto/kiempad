@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G363 Security & DevEx: eventlogdetail allowlist-governance met rationale, docs voor
+  count/statusdetails en tests die health free text blijven afwijzen.
 - G362 Security & DevEx: gevoelige-fixture scanner heeft exact-match allowlist
   governance met verplichte rationale, reviewcadans en tests voor synthetische
   placeholders.
