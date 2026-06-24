@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 267 |
+| ☑ klaar | 268 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **367** |
+| **Totaal** | **368** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -505,7 +505,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G357 | Prompt Regression Coverage Report | P1 | F4 | ☐ |
 | G358 | Daily Command Center Personalization | P1 | F4 | ☐ |
 | G359 | Consult Prep Packet Persistence | P1 | F4 | ☐ |
-| G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☐ |
+| G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☑ |
 | G361 | Dependency Review Evidence Snapshot | P1 | F4 | ☐ |
 | G362 | Sensitive Fixture Allowlist Review | P1 | F4 | ☐ |
 | G363 | Event Log Detail Allowlist Governance | P1 | F4 | ☐ |
@@ -513,12 +513,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G365 | External Asset Allowlist Review Evidence | P1 | F4 | ☐ |
 | G366 | Local CSP Violation Reproduction Fixture | P1 | F4 | ☐ |
 | G367 | Secrets Scan Review Evidence Snapshot | P1 | F4 | ☐ |
+| G368 | Recovery Diagnostics Visual Regression Fixture | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 367** (id's G001 t/m G367, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 368** (id's G001 t/m G368, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -82,6 +82,12 @@ describe('app shell', () => {
     const html = renderVaultGate(true, 'Ontgrendelen is mislukt.');
 
     expect(html).toContain('Hulp bij ontgrendelen');
+    expect(html).toContain('Hersteldiagnose');
+    expect(html).toContain('data-vault-present="true"');
+    expect(html).toContain('Lokale kluismetadata gevonden.');
+    expect(html).toContain('Back-upherinnering');
+    expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
+    expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
     expect(html).toContain('Ontgrendelen is mislukt.');
     expect(html).toContain('Controleer rustig de passphrase');
     expect(html).toContain('toetsenbordindeling en hoofdletters');
@@ -89,6 +95,46 @@ describe('app shell', () => {
     expect(html).toContain('importeer daarna je versleutelde back-up');
     expect(html).toContain('niet te herstellen via een achterdeur');
     expect(html).not.toContain('reset je passphrase');
+  });
+
+  it('toont locked-state diagnostiek zonder recordinhoud of aantallen', () => {
+    const html = renderVaultGate(true, undefined, {
+      runtimeBeschikbaar: false,
+      reden: 'WebAuthn PRF niet beschikbaar in deze browser',
+      gekoppeld: false,
+    });
+
+    expect(html).toContain('Niet beschikbaar: WebAuthn PRF niet beschikbaar in deze browser');
+    expect(html).toContain('Niet gekoppeld op dit toestel.');
+    expect(html).toContain('Back-upherinnering');
+    expect(html).not.toMatch(/\b\d+\s+(records?|afspraken|vragen|dossier|embryo)/i);
+    expect(html).not.toContain('laatste bekende back-up is');
+    expect(html).not.toContain('Progesteron');
+    expect(html).not.toContain('Echo controle');
+  });
+
+  it('onderscheidt ontbrekende kluis van gekoppelde WebAuthn-diagnostiek', () => {
+    const noVaultHtml = renderVaultGate(false, undefined, {
+      runtimeBeschikbaar: true,
+      reden: 'Browser ondersteunt WebAuthn PRF',
+      gekoppeld: false,
+    });
+    const linkedHtml = renderVaultGate(true, undefined, {
+      runtimeBeschikbaar: true,
+      reden: 'Browser ondersteunt WebAuthn PRF',
+      gekoppeld: true,
+      label: 'Laptop biometrie',
+    });
+
+    expect(noVaultHtml).toContain('data-vault-present="false"');
+    expect(noVaultHtml).toContain('Geen lokale kluis op dit toestel gevonden.');
+    expect(noVaultHtml).toContain('Beschikbaar in deze browser.');
+    expect(noVaultHtml).toContain('Niet gekoppeld op dit toestel.');
+    expect(noVaultHtml).toContain(
+      'Nog niet ingesteld; maak na de eerste kluis een versleutelde back-up.',
+    );
+    expect(linkedHtml).toContain('data-vault-present="true"');
+    expect(linkedHtml).toContain('Gekoppeld: Laptop biometrie.');
   });
 
   it('toont WebAuthn-ontgrendeling alleen bij een gekoppelde kluis', () => {
