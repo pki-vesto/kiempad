@@ -20,6 +20,7 @@ declare module '*.mjs' {
     issues: unknown[];
     byGoalId: Map<string, Record<string, unknown>>;
     duplicates: string[];
+    duplicateIssues: Array<{ id: string; issues: Array<Record<string, unknown>> }>;
     totalIssues: number;
   };
   export function buildActiveGoalDriftFindings(

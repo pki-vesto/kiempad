@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G387 Continuous Evolution: duplicate issue-snapshotbevindingen tonen nu de
+  betrokken issue-nummers en URL's zonder issue bodies te bewaren.
 - G386 Continuous Evolution: backlog-health en docs geven nu hersteladvies voor
   dubbele goal-id's in issue-snapshottitels zonder issue bodies te exporteren.
 - G385 Continuous Evolution: backlog-health en README tonen nu een concreet
