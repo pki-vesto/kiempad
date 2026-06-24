@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G398 Continuous Evolution: de representatieve backlog-health JSON-contractfixture
+  heeft nu een expliciete in-memory/export guard die bodies, tokens en
+  snapshotpaden uit de reportserialisatie houdt.
 - G397 Continuous Evolution: de backlog-health JSON-contracttest gebruikt nu een
   compacte representatieve fixture-helper zodat toekomstige contractchecks minder
   inline markdown en issue-snapshotdata hoeven te kopiëren.

@@ -2202,4 +2202,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, scripts
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G399 — Backlog Health JSON Contract Fixture Field Matrix
+
+- **Epic:** Continuous Evolution
+- **Problem:** The contract fixture now proves sanitized in-memory output, but expected fields are still asserted through scattered object checks.
+- **Desired Outcome:** Add a compact field matrix for each issue-snapshot group so contract changes fail with clearer diagnostics.
+- **User Value:** Maintainers can see exactly which JSON group changed when future backlog-health automation evolves.
+- **Acceptance Criteria:** Tests validate expected top-level and nested fields per issue-snapshot group through a small matrix; no issue bodies, tokens or snapshot files are committed; backlog remains at 100 open goals.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, scripts
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
