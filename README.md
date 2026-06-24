@@ -72,6 +72,7 @@ niet leesbaar.
 npm run typecheck    # TypeScript-typecheck (tsc --noEmit)
 npm run test         # of: make test  — Vitest unit-/integratietests
 npm run build        # productiebuild (statische PWA in dist/)
+npm run assets:check # controleert bron- en buildassets op externe asset-URL's
 ```
 
 Optioneel zelf-hosten van de statische build:

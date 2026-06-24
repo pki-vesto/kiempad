@@ -33,14 +33,20 @@
 Voordat je merget:
 
 - `npm run typecheck` — groen.
+- `npm run lint` — groen.
 - `npm run test` — groen; nieuwe logica heeft tests.
+- `npm run build` — groen.
+- `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
+  expliciet allowlisted.
+- `npm audit --audit-level=high` — groen.
 - Privacy-/policy-regels uit [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) §4 gerespecteerd
   (geen nieuwe uitgaande dataroute zonder opt-in; niets medisch-besluitvormends).
 - Documentatie bijgewerkt: [`CURRENT_STATE.md`](CURRENT_STATE.md), de betreffende doelen
   in [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md), [`CHANGELOG.md`](CHANGELOG.md), en bij
   een keuze een ADR in [`docs/adr/`](docs/adr/).
 
-CI (`.github/workflows/ci.yml`) draait typecheck + tests op elke PR.
+CI (`.github/workflows/ci.yml`) draait typecheck, lint, tests, audit, build en de
+externe-asset-scan op elke PR.
 
 ## Review process
 

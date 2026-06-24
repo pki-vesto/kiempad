@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G347 Security & DevEx: CI draait `npm run assets:check` na de productiebuild en
+  documenteert de lokale asset-scan in README, contributing en runbook.
 - G342 Security & DevEx: lokale externe-asset-scan met `npm run assets:check`
   controleert bron- en buildassets op remote image/font/script/manifest-URL's.
 - G246 Continuous Evolution: reproduceerbaar goal scoring model met rubric,

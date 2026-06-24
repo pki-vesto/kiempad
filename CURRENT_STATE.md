@@ -71,7 +71,8 @@
   met cacheversie, standaard service-workerregistratie, concreter startscherm,
   skiplink/focusstijl, lege-staten en bevestigingsteksten voor verwijderen.
 - **M1.10 tests & kwaliteit:** Biome lint/format-check toegevoegd, CI draait nu
-  lint/format naast typecheck, tests, audit en build; groene CI blijft de merge-gate.
+  lint/format naast typecheck, tests, audit, build en externe-asset-scan; groene CI
+  blijft de merge-gate.
 - **G066 notificatieprivacy:** OS-notificaties tonen standaard generieke tekst; details
   op het vergrendelscherm kunnen alleen na expliciete lokale keuze worden getoond, en
   die keuze wordt versleuteld opgeslagen.
@@ -503,8 +504,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G347 volgens `npm run goals:score`: External
-   Asset CI Gate heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G250 volgens `npm run goals:score`: Goal
+   Completion Audit Checklist heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
