@@ -2594,4 +2594,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G427 — Backlog Health JSON Contract Recovery Artifact Docs Hint Error Builder Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint validation now uses a shared error-message builder, but the builder itself has no focused fixture proving the diagnostic prefix stays stable.
+- **Desired Outcome:** Add a focused fixture for the artifact docs hint error-message builder.
+- **User Value:** Maintainers get an immediate signal if future refactors weaken the shared diagnostic prefix.
+- **Acceptance Criteria:** Tests assert the builder output for at least one representative reason; existing positive and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

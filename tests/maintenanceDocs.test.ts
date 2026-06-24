@@ -762,28 +762,34 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
     const normalizedDocsHint = normalizeBacklogHealthArtifactDocsHint(docsHint);
 
     if (normalizedDocsHint.rawLabel.length === 0) {
-      throw new Error('Backlog-health artifact docs hint label ontbreekt.');
+      throw new Error(buildBacklogHealthArtifactDocsHintError('label ontbreekt'));
     }
     if (normalizedDocsHint.rawTerm.length === 0) {
-      throw new Error('Backlog-health artifact docs hint term ontbreekt.');
+      throw new Error(buildBacklogHealthArtifactDocsHintError('term ontbreekt'));
     }
     if (normalizedDocsHint.label.length === 0) {
-      throw new Error('Backlog-health artifact docs hint label bevat alleen whitespace.');
+      throw new Error(buildBacklogHealthArtifactDocsHintError('label bevat alleen whitespace'));
     }
     if (normalizedDocsHint.term.length === 0) {
-      throw new Error('Backlog-health artifact docs hint term bevat alleen whitespace.');
+      throw new Error(buildBacklogHealthArtifactDocsHintError('term bevat alleen whitespace'));
     }
     if (normalizedDocsHint.label.length <= 8) {
       throw new Error(
-        `Backlog-health artifact docs hint label is te generiek: ${normalizedDocsHint.label}.`,
+        buildBacklogHealthArtifactDocsHintError(
+          `label is te generiek: ${normalizedDocsHint.label}`,
+        ),
       );
     }
     if (normalizedDocsHint.term.length <= 8) {
       throw new Error(
-        `Backlog-health artifact docs hint term is te kort: ${normalizedDocsHint.term}.`,
+        buildBacklogHealthArtifactDocsHintError(`term is te kort: ${normalizedDocsHint.term}`),
       );
     }
   }
+}
+
+function buildBacklogHealthArtifactDocsHintError(reason: string): string {
+  return `Backlog-health artifact docs hint ${reason}.`;
 }
 
 function normalizeBacklogHealthArtifactDocsHint(
