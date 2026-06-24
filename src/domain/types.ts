@@ -301,6 +301,10 @@ export interface SettingsRecord {
     ingeschakeld: boolean;
     laatsteOptInOp?: IsoDate;
   };
+  firstRunSetup?: {
+    voltooidOp?: IsoDate;
+    overgeslagenOp?: IsoDate;
+  };
   afspraakWaarschuwingMinuten?: number;
   laatsteBackupOp?: IsoDate;
   herinneringStandaarden?: Record<string, unknown>;

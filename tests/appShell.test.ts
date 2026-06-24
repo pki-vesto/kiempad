@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  type AppShellState,
   DISCLAIMER,
   normalizeScreenId,
   renderAppShell,
@@ -8,6 +9,28 @@ import {
 } from '../src/appShell';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { DossierDocument } from '../src/domain/types';
+
+function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
+  return {
+    trajecten: [],
+    afspraken: [],
+    medicatie: [],
+    herinneringen: [],
+    vragen: [],
+    consultVerslagen: [],
+    dossierDocuments: [],
+    kennisItems: [],
+    kosten: [],
+    settings: DEFAULT_APP_SETTINGS,
+    notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    webAuthnStatus: {
+      runtimeBeschikbaar: false,
+      reden: 'Test',
+      gekoppeld: false,
+    },
+    ...overrides,
+  };
+}
 
 describe('app shell', () => {
   it('normaliseert onbekende routes naar het startscherm', () => {
@@ -71,6 +94,11 @@ describe('app shell', () => {
     const html = renderAppShell('start');
 
     expect(html).toContain('Waar staan we?');
+    expect(html).toContain('Richt Kiempad rustig in');
+    expect(html).toContain('id="first-run-complete-form"');
+    expect(html).toContain('id="first-run-skip-form"');
+    expect(html).toContain('data blijft lokaal');
+    expect(html).toContain('href="#backup"');
     expect(html).toContain('Volgende stap');
     expect(html).toContain('Snelle invoer');
     expect(html).toContain('id="quick-entry-form"');
@@ -117,6 +145,39 @@ describe('app shell', () => {
     expect(html).toContain('Vragen:');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('verbergt de eerste-run setup zodra setup is afgerond of eerste data bestaat', () => {
+    const completedHtml = renderAppShell(
+      'start',
+      makeStartState({
+        settings: {
+          ...DEFAULT_APP_SETTINGS,
+          firstRunSetup: { voltooidOp: '2026-06-24T08:00:00.000Z' },
+        },
+      }),
+    );
+    const withDataHtml = renderAppShell(
+      'start',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-1',
+              type: 'ivf',
+              naam: 'Poging 1',
+              pogingNummer: 1,
+              status: 'lopend',
+              startDatum: '2026-06-24',
+            },
+            fasen: [],
+          },
+        ],
+      }),
+    );
+
+    expect(completedHtml).not.toContain('Richt Kiempad rustig in');
+    expect(withDataHtml).not.toContain('Richt Kiempad rustig in');
   });
 
   it('toont status na een dagelijkse aanbevelingsactie', () => {

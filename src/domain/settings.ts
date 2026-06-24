@@ -13,11 +13,17 @@ export type ResearchNetworkSettings = {
   laatsteOptInOp?: IsoDate;
 };
 
+export type FirstRunSetupSettings = {
+  voltooidOp?: IsoDate;
+  overgeslagenOp?: IsoDate;
+};
+
 export type AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: boolean;
   thema: 'licht' | 'donker';
   ai: AiSettings;
   researchNetwerk: ResearchNetworkSettings;
+  firstRunSetup: FirstRunSetupSettings;
   afspraakWaarschuwingMinuten: number;
   laatsteBackupOp?: IsoDate;
 };
@@ -32,6 +38,7 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   researchNetwerk: {
     ingeschakeld: false,
   },
+  firstRunSetup: {},
 };
 
 export const APP_SETTINGS_ID = 'app-settings';
@@ -54,6 +61,10 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
     researchNetwerk: {
       ...DEFAULT_APP_SETTINGS.researchNetwerk,
       ...value?.researchNetwerk,
+    },
+    firstRunSetup: {
+      voltooidOp: normaliseerIsoDatum(value?.firstRunSetup?.voltooidOp),
+      overgeslagenOp: normaliseerIsoDatum(value?.firstRunSetup?.overgeslagenOp),
     },
   };
 }
