@@ -2398,4 +2398,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G413 — Backlog Health JSON Contract Recovery Artifact Label Docs Hint
+
+- **Epic:** Continuous Evolution
+- **Problem:** Missing forbidden artifact labels now fail clearly in tests, but the JSON reference does not explain that the recovery paragraph must preserve those artifact labels.
+- **Desired Outcome:** Document that the recovery paragraph must keep the issue-snapshot and raw GitHub output labels.
+- **User Value:** Maintainers understand why those labels are asserted and can edit recovery guidance without weakening the privacy boundary.
+- **Acceptance Criteria:** Docs mention the forbidden artifact labels in the recovery guidance; maintenance tests cover the wording; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
