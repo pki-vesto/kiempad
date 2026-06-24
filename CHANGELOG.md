@@ -7,6 +7,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel naar Claude Design: nieuwe canonieke UI-componentlaag
+  (`src/ui/components.ts` + `src/ui/escape.ts`) met herbruikbare, getokeniseerde
+  helpers (`pageHeader`, `card`, `actionCard`, `phaseHeroCard`, `timeline`,
+  `accordion`, `disclosure`, `statRow`, lege-/laad-/foutstaten) in de
+  Claude Design-taal. Basis voor het mobiel-first herstel van de
+  schermlayouts (G147/G148/G151/G156); puur presentatielaag, geen
+  gedrags- of datamodelwijziging. Inline-SVG iconen (CSP-veilig).
 - G404 Continuous Evolution: de backlog-health JSON-reference documenteert nu de
   contractmatrix start-/endmarkers die onderhoudstests gebruiken.
 - G403 Continuous Evolution: de backlog-health docs/matrix-symmetrietest gebruikt nu

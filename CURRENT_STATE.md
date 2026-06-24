@@ -149,6 +149,11 @@
   verifiëren hebben contextuele toegankelijke namen naast de zichtbare knoptekst.
 - **G154 donkere modus:** topbar bevat een lokale themakeuze; de voorkeur wordt
   versleuteld in settings bewaard en activeert een donker CSS-palet.
+- **G148 UI-componentlaag (Claude Design):** `src/ui/components.ts` levert
+  canonieke, getokeniseerde HTML-helpers (page-header, card, action-card,
+  phase-hero, timeline, accordion, disclosure, stat-row, lege-/laad-/foutstaten)
+  als basis voor het mobiel-first herstel van de schermlayouts. Pure
+  presentatielaag met inline-SVG iconen (CSP-veilig); geen gedragswijziging.
 - **G137 opslag-schemaversie:** kluismetadata bevat een `schema` record met de
   huidige schemaversie; ontbrekende schemametadata wordt bij ontgrendelen aangevuld
   en nieuwere schema's worden geweigerd.
