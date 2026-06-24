@@ -18,6 +18,8 @@ expliciet zijn.
 Gebruik [`ADR_REVIEW_EVIDENCE_TEMPLATE.md`](ADR_REVIEW_EVIDENCE_TEMPLATE.md) om die
 conclusie vast te leggen. Het template registreert goal-id, reviewer/datum,
 geraadpleegde ADR's, besluituitkomst, ADR-route, follow-up en evidencegrenzen.
+De huidige reviewstatus per ADR-needed goal staat in
+[`ADR_REVIEW_EVIDENCE_INDEX.md`](ADR_REVIEW_EVIDENCE_INDEX.md).
 
 ## Pending ADR Topics
 
@@ -36,5 +38,6 @@ geraadpleegde ADR's, besluituitkomst, ADR-route, follow-up en evidencegrenzen.
   `ADR Needed: yes`.
 - Sluit een ADR-needed doel pas als het PR-bewijs naar de relevante ADR-review wijst.
 - Gebruik het ADR-review evidence template voor ingevulde reviewbewijzen.
+- Houd de ADR-review evidence index synchroon met dezelfde `ADR Needed: yes` set.
 - Houd deze tabel synchroon met alle `ADR Needed: yes` entries in
   `EXECUTION_GOALS.md`.

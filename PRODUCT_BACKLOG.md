@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 278 |
+| ☑ klaar | 279 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **378** |
+| **Totaal** | **379** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -521,15 +521,16 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G373 | Autonomy Guardrail Evidence Checklist | P1 | F4 | ☑ |
 | G374 | Backlog Active Goal Drift Fixture | P1 | F4 | ☑ |
 | G375 | Completion Audit Marker Parser CLI | P1 | F4 | ☐ |
-| G376 | ADR Review Evidence Index | P1 | F4 | ☐ |
+| G376 | ADR Review Evidence Index | P1 | F4 | ☑ |
 | G377 | Autonomy Guardrail Evidence Parser | P1 | F4 | ☐ |
 | G378 | Backlog Active Goal Drift CLI Flag | P1 | F4 | ☐ |
+| G379 | ADR Review Evidence Freshness Check | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 378** (id's G001 t/m G378, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 379** (id's G001 t/m G379, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

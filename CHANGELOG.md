@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G376 Continuous Evolution: ADR-review evidence index toegevoegd voor alle huidige
+  `ADR Needed: yes` doelen, inclusief evidence location, decision outcome en follow-up
+  status met onderhoudstest die de index synchroon houdt.
 - G374 Continuous Evolution: backlog-health heeft nu een actieve-goal driftvalidator
   met negatieve fixtures voor minder dan het minimum, ontbrekende open execution goals
   en extra open execution goals zonder productiebacklog te dupliceren.

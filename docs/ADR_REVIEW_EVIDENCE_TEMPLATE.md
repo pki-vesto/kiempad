@@ -2,7 +2,6 @@
 
 Gebruik dit template wanneer een goal `ADR Needed: yes` heeft of wanneer tijdens een
 goal blijkt dat een architectuurkeuze expliciet beoordeeld moet worden. Bewaar ingevulde
-reviews in de PR-beschrijving of in een toekomstige `docs/reviews/`-map. Leg geen
 reviews in de PR-beschrijving of in een toekomstige `docs/reviews/`-map.
 
 Leg geen gevoelige gebruikersdata, tokens, providerpayloads of lokale dossierdetails
