@@ -114,6 +114,8 @@ Gebruik `--json` wanneer automation de gesanitized
 `issueSnapshot.duplicateIssues`, `issueSnapshot.missingIssueLinks` of
 `issueSnapshot.nonOpenIssueLinks` wil lezen. Voor afgeronde doelen met nog open
 issues staat dezelfde veilige issuevorm in `issueSnapshot.completedGoalOpenIssues`.
+Zie [`docs/BACKLOG_HEALTH_JSON_REFERENCE.md`](docs/BACKLOG_HEALTH_JSON_REFERENCE.md)
+voor de stabiele JSON-shape.
 
 Optioneel zelf-hosten van de statische build:
 

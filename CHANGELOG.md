@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G392 Continuous Evolution: `docs/BACKLOG_HEALTH_JSON_REFERENCE.md` documenteert
+  de gesanitized `backlog:health --json` issue-snapshotvelden voor automation.
 - G391 Continuous Evolution: `backlog:health --json` bevat nu
   `issueSnapshot.completedGoalOpenIssues` voor afgeronde doelen met nog open issues.
 - G390 Continuous Evolution: `backlog:health --json` bevat nu

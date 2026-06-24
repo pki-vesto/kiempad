@@ -10,6 +10,7 @@ import autonomyGuardrailEvidenceChecklist from '../docs/AUTONOMY_GUARDRAIL_EVIDE
 import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import codexAutonomyAdr from '../docs/adr/0007-codex-autonoom-bouwen.md?raw';
+import backlogHealthJsonReference from '../docs/BACKLOG_HEALTH_JSON_REFERENCE.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
@@ -256,6 +257,27 @@ describe('onderhoudsdocumentatie', () => {
     expect(codexAutonomyAdr).toContain('../AUTONOMY_GUARDRAILS.md');
     expect(goalCompletionAudit).toContain('docs/AUTONOMY_GUARDRAILS.md');
     expect(prTemplate).toContain('docs/AUTONOMY_GUARDRAILS.md');
+  });
+
+  it('documenteert de gesanitized backlog-health JSON-shape voor automation', () => {
+    for (const field of [
+      'issueSnapshot.duplicateIssues',
+      'issueSnapshot.missingIssueLinks',
+      'issueSnapshot.nonOpenIssueLinks',
+      'issueSnapshot.completedGoalOpenIssues',
+      'number',
+      'title',
+      'state',
+      'url',
+    ]) {
+      expect(backlogHealthJsonReference).toContain(field);
+    }
+
+    expect(backlogHealthJsonReference).toContain('number,title,state,url');
+    expect(backlogHealthJsonReference).toContain('--issue-snapshot-limit 500 --json');
+    expect(backlogHealthJsonReference).toContain('rm -f /tmp/kiempad-issues.json');
+    expect(backlogHealthJsonReference).toContain('issue bodies, tokens');
+    expect(readme).toContain('docs/BACKLOG_HEALTH_JSON_REFERENCE.md');
   });
 
   it('documenteert autonomy guardrail evidence per domein', () => {
