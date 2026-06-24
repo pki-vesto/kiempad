@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 import sensitiveFixturePolicy from '../docs/SENSITIVE_FIXTURE_POLICY.md?raw';
 import packageJson from '../package.json?raw';
 import {
+  ALLOWED_SENSITIVE_FIXTURE_EXAMPLES,
   scanSensitiveFixtureFiles,
   scanSensitiveFixtureText,
+  validateSensitiveFixtureAllowlist,
 } from '../scripts/check-sensitive-fixtures.mjs';
 
 describe('sensitive fixture policy', () => {
@@ -13,6 +15,9 @@ describe('sensitive fixture policy', () => {
     expect(sensitiveFixturePolicy).toContain('BSN: 111111111');
     expect(sensitiveFixturePolicy).toContain('npm run fixtures:check');
     expect(sensitiveFixturePolicy).toContain('geen echte patiënt');
+    expect(sensitiveFixturePolicy).toContain('Allowlist governance');
+    expect(sensitiveFixturePolicy).toContain('concrete rationale');
+    expect(sensitiveFixturePolicy).toContain('Review de allowlist maandelijks');
   });
 
   it('detecteert niet-synthetische fixturepatronen', () => {
@@ -44,5 +49,24 @@ describe('sensitive fixture policy', () => {
       'node scripts/check-sensitive-fixtures.mjs',
     );
     expect(scanSensitiveFixtureFiles()).toEqual([]);
+  });
+
+  it('vereist rationale voor iedere gevoelige-fixture allowlist entry', () => {
+    expect(validateSensitiveFixtureAllowlist(ALLOWED_SENSITIVE_FIXTURE_EXAMPLES)).toEqual([]);
+    expect(ALLOWED_SENSITIVE_FIXTURE_EXAMPLES.map((entry) => entry.value).sort()).toEqual([
+      'BSN: 111111111',
+      'E-mail: testpersoon@example.test',
+      'E-mail: testpersoon@voorbeeld.test',
+      'Naam: Testpersoon A',
+      'Naam: Testpersoon B',
+    ]);
+    expect(
+      validateSensitiveFixtureAllowlist([
+        {
+          value: 'Naam: Testpersoon C',
+          reason: '',
+        },
+      ]),
+    ).toEqual(['Allowlist-entry Naam: Testpersoon C mist een concrete rationale.']);
   });
 });

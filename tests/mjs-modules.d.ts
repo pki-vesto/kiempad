@@ -71,6 +71,10 @@ declare module '*.mjs' {
     filePath: string,
     text: string,
   ): Array<{ filePath: string; pattern: string; line: number; message: string }>;
+  export const ALLOWED_SENSITIVE_FIXTURE_EXAMPLES: Array<{ value: string; reason: string }>;
+  export function validateSensitiveFixtureAllowlist(
+    entries?: Array<{ value: string; reason: string }>,
+  ): string[];
   export function listSensitiveFixtureFiles(rootDir?: string): string[];
   export function scanSensitiveFixtureFiles(
     rootDir?: string,

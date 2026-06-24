@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G362 Security & DevEx: gevoelige-fixture scanner heeft exact-match allowlist
+  governance met verplichte rationale, reviewcadans en tests voor synthetische
+  placeholders.
 - G361 Security & DevEx: dependency-review evidence snapshot-template legt datum,
   commands, lockfile-diff, testgate en privacygate vast zonder secrets of package
   metadata dumps.
