@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 251 |
+| ☑ klaar | 252 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **351** |
+| **Totaal** | **352** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -431,7 +431,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G283 | Microcopy Consistency Pass | P3 | F4 | ☐ |
 | G284 | Service Worker Update UX | P1 | F4 | ☐ |
 | G285 | Offline Smoke Test Script | P0 | F4 | ☑ |
-| G286 | Backup Restore Drill | P0 | F4 | ☐ |
+| G286 | Backup Restore Drill | P0 | F4 | ☑ |
 | G287 | Tailscale Smoke Automation | P1 | F4 | ☐ |
 | G288 | Data Integrity Report | P1 | F4 | ☐ |
 | G289 | Duplicate Detection | P2 | F4 | ☐ |
@@ -497,12 +497,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G349 | Completion Audit Evidence Markers | P1 | F4 | ☐ |
 | G350 | First Run Setup Progress Persistence | P1 | F4 | ☐ |
 | G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
+| G352 | Backup Drill Fixture Expansion | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 351** (id's G001 t/m G351, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 352** (id's G001 t/m G352, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

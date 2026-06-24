@@ -459,6 +459,9 @@
 - **G285 Offline Smoke Test Script:** `npm run smoke:offline` gebruikt Playwright tegen
   de productiebuild om service-workerinstallatie, offline reload en app-shellweergave
   na eerste bezoek te controleren.
+- **G286 Backup Restore Drill:** `npm run drill:backup` gebruikt memory drivers om een
+  representatieve encrypted dataset te exporteren, importeren, opnieuw te ontgrendelen
+  en inhoudelijk te verifiëren zonder plaintext in het exportbestand.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -513,8 +516,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G286 volgens `npm run goals:score`: Backup
-   Restore Drill heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G324 volgens `npm run goals:score`: Content
+   Security Policy heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

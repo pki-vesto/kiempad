@@ -25,6 +25,8 @@ de lokale data versleuteld wordt.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.
+- **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
+  ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Opslag:** data leesbaar na ontgrendelen, onleesbaar zonder passphrase.
 - **Privacy-rook­test:** in de netwerk-tab is er **geen** verkeer naar derden tenzij
   je AI/sync bewust hebt aangezet.
@@ -80,5 +82,7 @@ Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
   migratie-risico op een server).
 - **Data:** importeer een eerdere **versleutelde back-up/export**. Data-migraties zijn
   additief; een oudere export blijft leesbaar.
+- **Restore oefenen:** draai `npm run drill:backup` na wijzigingen aan opslag, back-up
+  of datamodel om te bewaken dat export/import en ontgrendelen samen blijven werken.
 - **Docker:** `docker compose down` en eventueel een vorige image opnieuw bouwen/
   serveren.

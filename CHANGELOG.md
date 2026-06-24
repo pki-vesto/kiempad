@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G286 Reliability & Operations: `npm run drill:backup` voert een memory-driver
+  restore drill uit die exporteert, importeert, opnieuw ontgrendelt en representatieve
+  encrypted records verifieert.
 - G285 Reliability & Operations: `npm run smoke:offline` start Vite preview, laat de
   service worker installeren en verifieert met Playwright dat de app-shell offline
   herlaadt.

@@ -14,6 +14,7 @@
     "assets:check": "node scripts/check-no-external-assets.mjs",
     "backlog:health": "node scripts/backlog-health.mjs",
     "goals:score": "node scripts/goal-score.mjs",
+    "drill:backup": "vitest run tests/backupRestoreDrill.test.ts",
     "smoke:offline": "node scripts/offline-smoke.mjs",
     "deploy:tailscale": "scripts/deploy-tailscale.sh",
     "smoke:tailscale": "scripts/smoke-tailscale.sh",
