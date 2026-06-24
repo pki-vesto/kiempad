@@ -253,6 +253,56 @@ describe('backlog health', () => {
     });
   });
 
+  it('exposeert dubbele issuegroepen in JSON-compatibele reportvorm zonder bodies', () => {
+    const issueSnapshot = JSON.stringify([
+      {
+        number: 291,
+        title: 'G244 Continuous Evolution: Goal Expansion Engine',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/291',
+        body: 'niet opnemen',
+      },
+      {
+        number: 999,
+        title: 'G244 duplicate title',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/999',
+        body: 'ook niet opnemen',
+      },
+    ]);
+
+    const report = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244']),
+      issueSnapshotJson: issueSnapshot,
+    });
+
+    expect(report.issueSnapshot).toEqual({
+      duplicateIssues: [
+        {
+          id: 'G244',
+          issues: [
+            {
+              id: 'G244',
+              number: 291,
+              title: 'G244 Continuous Evolution: Goal Expansion Engine',
+              state: 'OPEN',
+              url: 'https://github.com/pki-vesto/kiempad/issues/291',
+            },
+            {
+              id: 'G244',
+              number: 999,
+              title: 'G244 duplicate title',
+              state: 'OPEN',
+              url: 'https://github.com/pki-vesto/kiempad/issues/999',
+            },
+          ],
+        },
+      ],
+    });
+    expect(JSON.stringify(report)).not.toContain('niet opnemen');
+  });
+
   it('maakt actieve-goal drift zichtbaar met kleine negatieve fixtures', () => {
     const belowMinimumFindings = buildActiveGoalDriftFindings(
       parseBacklog(buildBacklogFixture(['G244', 'G245'])),

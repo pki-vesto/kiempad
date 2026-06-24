@@ -2062,4 +2062,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G389 — Backlog Health Missing Issue JSON Shape
+
+- **Epic:** Continuous Evolution
+- **Problem:** JSON automation can consume duplicate issue groups, but missing issue-link findings still require parsing generic finding text.
+- **Desired Outcome:** Add or document a stable JSON shape for missing issue-link goals in backlog-health reports.
+- **User Value:** Maintainers can build follow-up automation that opens or reconciles missing GitHub Issues without scraping markdown.
+- **Acceptance Criteria:** JSON-mode report exposes missing issue-link goal IDs in a structured sanitized field; tests cover the field; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
