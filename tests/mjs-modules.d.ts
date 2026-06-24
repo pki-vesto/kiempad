@@ -14,10 +14,16 @@ declare module '*.mjs' {
     byGoalId: Map<string, Record<string, unknown>>;
     duplicates: string[];
   };
+  export function buildActiveGoalDriftFindings(
+    backlog: { goals: Array<Record<string, unknown>> },
+    execution: { goals: Array<Record<string, unknown>> },
+    minimumOpenGoals?: number,
+  ): Array<Record<string, unknown>>;
   export function buildBacklogHealthReport(input: {
     backlogMarkdown: string;
     executionGoalsMarkdown: string;
     issueSnapshotJson?: string;
+    activeGoalMinimum?: number;
   }): {
     summary: Record<string, unknown>;
     findings: Array<Record<string, unknown>>;

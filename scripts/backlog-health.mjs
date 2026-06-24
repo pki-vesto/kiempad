@@ -96,6 +96,50 @@ export function parseIssueSnapshot(jsonText) {
   return { issues, byGoalId, duplicates };
 }
 
+export function buildActiveGoalDriftFindings(backlog, execution, minimumOpenGoals = 100) {
+  const findings = [];
+  const openBacklogGoalIds = backlog.goals
+    .filter((goal) => goal.status === '☐')
+    .map((goal) => goal.id)
+    .sort();
+  const openExecutionGoalIds = execution.goals
+    .filter((goal) => goal.status === '☐')
+    .map((goal) => goal.id)
+    .sort();
+  const openExecutionGoalSet = new Set(openExecutionGoalIds);
+  const openBacklogGoalSet = new Set(openBacklogGoalIds);
+
+  if (openBacklogGoalIds.length < minimumOpenGoals) {
+    findings.push({
+      type: 'active-goal-minimum',
+      id: 'ACTIVE-GOALS',
+      detail: `Active backlog heeft ${openBacklogGoalIds.length} open doelen; minimaal ${minimumOpenGoals} vereist.`,
+    });
+  }
+
+  for (const id of openBacklogGoalIds) {
+    if (!openExecutionGoalSet.has(id)) {
+      findings.push({
+        type: 'active-goal-missing-execution',
+        id,
+        detail: 'Open goal staat in PRODUCT_BACKLOG.md maar ontbreekt als open goal in EXECUTION_GOALS.md.',
+      });
+    }
+  }
+
+  for (const id of openExecutionGoalIds) {
+    if (!openBacklogGoalSet.has(id)) {
+      findings.push({
+        type: 'active-goal-extra-execution',
+        id,
+        detail: 'Open goal staat in EXECUTION_GOALS.md maar ontbreekt als open goal in PRODUCT_BACKLOG.md.',
+      });
+    }
+  }
+
+  return findings;
+}
+
 export function buildBacklogHealthReport(input) {
   const backlog = parseBacklog(input.backlogMarkdown);
   const execution = parseExecutionGoals(input.executionGoalsMarkdown);
@@ -141,6 +185,12 @@ export function buildBacklogHealthReport(input) {
         detail: 'Goal staat in EXECUTION_GOALS.md maar mist in PRODUCT_BACKLOG.md.',
       });
     }
+  }
+
+  if (input.activeGoalMinimum !== undefined) {
+    findings.push(
+      ...buildActiveGoalDriftFindings(backlog, execution, Number(input.activeGoalMinimum)),
+    );
   }
 
   if (issueSnapshot) {
@@ -226,6 +276,7 @@ function main() {
     backlogMarkdown: fs.readFileSync(backlogPath, 'utf8'),
     executionGoalsMarkdown: fs.readFileSync(executionPath, 'utf8'),
     issueSnapshotJson: issuesPath ? fs.readFileSync(issuesPath, 'utf8') : undefined,
+    activeGoalMinimum: 100,
   });
   const json = process.argv.includes('--json');
   process.stdout.write(json ? `${JSON.stringify(report, null, 2)}\n` : formatBacklogHealthMarkdown(report));

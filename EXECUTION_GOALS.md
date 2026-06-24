@@ -1866,7 +1866,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, backlog health
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G375 — Completion Audit Marker Parser CLI
 
@@ -1908,4 +1908,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, PR template, tests
 - **ADR Needed:** no
 - **Score:** 97
+- **Status:** ☐ open
+
+### G378 — Backlog Active Goal Drift CLI Flag
+
+- **Epic:** Continuous Evolution
+- **Problem:** Active-goal drift is checked by the default backlog health CLI, but maintainers cannot yet tune the active-goal minimum for local experiments.
+- **Desired Outcome:** Add an explicit CLI flag for the active-goal minimum and document when to use the default versus a custom threshold.
+- **User Value:** Backlog health checks stay strict in normal use while test fixtures and temporary audits remain reproducible.
+- **Acceptance Criteria:** CLI accepts a minimum-open-goals flag; default remains 100; tests cover default and custom values; docs mention the flag without weakening the permanent backlog rule.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
