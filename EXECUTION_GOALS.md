@@ -2580,4 +2580,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G426 — Backlog Health JSON Contract Recovery Artifact Docs Hint Error Builder
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint validation now has explicit normalized fixtures, but each error message is still assembled inline inside the assertion helper.
+- **Desired Outcome:** Extract a small error-message builder for artifact docs hint validation failures.
+- **User Value:** Maintainers can evolve diagnostic wording consistently without duplicating message prefixes.
+- **Acceptance Criteria:** Assertion helper uses a shared error-message builder for docs hint failures; existing positive and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
