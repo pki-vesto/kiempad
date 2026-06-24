@@ -1640,6 +1640,25 @@ a.action-card:active {
   }
 }
 
+/* Start: command-center / recommendations groups + next-step action cards */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dashboard-grid .embedded-summary {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.action-card-list {
+  display: grid;
+  gap: 10px;
+}
+
 @media (max-width: 760px) {
   .app-shell {
     padding: 14px 14px 88px;
@@ -1711,6 +1730,10 @@ a.action-card:active {
   }
 
   .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
 
