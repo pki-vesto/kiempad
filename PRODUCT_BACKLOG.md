@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 272 |
+| ☑ klaar | 273 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **372** |
+| **Totaal** | **373** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -402,7 +402,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G254 | Goal Aging Signals | P2 | F4 | ☐ |
 | G255 | Release Notes Generator | P2 | F4 | ☐ |
 | G256 | Goal Dependency Mapping | P2 | F4 | ☐ |
-| G257 | Autonomy Guardrails Doc | P1 | F4 | ☐ |
+| G257 | Autonomy Guardrails Doc | P1 | F4 | ☑ |
 | G258 | Goal Search Index | P3 | F4 | ☐ |
 | G259 | Backlog Statistics Test | P1 | F4 | ☐ |
 | G260 | Vision Traceability Tags | P2 | F4 | ☐ |
@@ -518,12 +518,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G370 | Sensitive Fixture Review Evidence Snapshot | P1 | F4 | ☐ |
 | G371 | Event Log Detail Review Evidence Snapshot | P1 | F4 | ☐ |
 | G372 | ADR Review Evidence Template | P1 | F4 | ☐ |
+| G373 | Autonomy Guardrail Evidence Checklist | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 372** (id's G001 t/m G372, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 373** (id's G001 t/m G373, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

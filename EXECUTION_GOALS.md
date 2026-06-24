@@ -228,7 +228,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G258 — Goal Search Index
 
@@ -1836,6 +1836,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** ADR backlog, docs, tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G373 — Autonomy Guardrail Evidence Checklist
+
+- **Epic:** Continuous Evolution
+- **Problem:** Autonomy guardrails are documented, but PR evidence can still omit which guardrails were checked.
+- **Desired Outcome:** Add an evidence checklist or template that records network, AI, data, GitHub, Tailscale and medical guardrail review per autonomous PR.
+- **User Value:** Autonomous merges remain reviewable and policy drift is easier to catch.
+- **Acceptance Criteria:** Template covers all guardrail domains; PR or docs flow explains when to fill it; maintenance test verifies template headings; no sensitive user data is stored.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, PR template, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

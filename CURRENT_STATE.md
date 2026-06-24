@@ -471,6 +471,10 @@
 - **G305 AI Prompt Registry:** `src/domain/ai.ts` bevat een centrale
   `AI_PROMPT_REGISTRY` met promptdoel, versie, inputcontract, veiligheidslabels en
   verboden output; tests bewaken diagnose-, dosering- en behandelkeuzegrenzen.
+- **G257 Autonomy Guardrails Doc:** `docs/AUTONOMY_GUARDRAILS.md` legt vast wat
+  autonome PR's wel en niet mogen doen voor netwerk, AI, data, GitHub, Tailscale en
+  medisch beleid; ADR-0007, de completion audit, PR-template en onderhoudstest
+  verwijzen ernaar.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -525,8 +529,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G257 volgens `npm run goals:score`: Autonomy
-   Guardrails Doc heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G259 volgens `npm run goals:score`: Backlog
+   Statistics Test heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

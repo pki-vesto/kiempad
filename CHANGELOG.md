@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G257 Continuous Evolution: autonomyguardrails documenteren de grenzen voor netwerk,
+  AI, data, GitHub, Tailscale en medisch beleid en zijn gekoppeld aan ADR-0007,
+  completion audit, PR-template en onderhoudstest.
 - G251 Continuous Evolution: execution goals hebben een `ADR Needed` marker,
   `docs/ADR_BACKLOG.md` bewaakt pending ADR-topics en een onderhoudstest valideert
   markerwaarden.

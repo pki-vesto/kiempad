@@ -25,6 +25,8 @@ voor; dat past niet meer bij deze werkwijze.
 - De **harde regels** blijven onverkort gelden (privacy/local-first ADR-0002, opt-in AI
   ADR-0003, niet-medisch ADR-0004, geen secrets in de publieke repo ADR-0006). Autonomie
   heft deze **niet** op.
+- De operationele grens staat in [`../AUTONOMY_GUARDRAILS.md`](../AUTONOMY_GUARDRAILS.md):
+  iedere autonome PR toetst netwerk, AI, data, GitHub, Tailscale en medisch beleid.
 - **Bij twijfel kiest Codex de veilige optie** en documenteert die in de PR/ADR, in
   plaats van te wachten op Peter. Medische inhoud blijft altijd "concept"
   (`geverifieerd_met_arts` blijft `false` tot een arts bevestigt); Codex verzint **geen**
