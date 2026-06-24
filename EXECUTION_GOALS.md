@@ -2818,4 +2818,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G443 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static artifact docs hint reason now has constant and literal fixtures, but there is no focused type-level fixture proving it still satisfies the static reason subtype.
+- **Desired Outcome:** Add a focused type-level fixture for the representative static artifact docs hint reason constant.
+- **User Value:** Maintainers get compile-time feedback if the representative static fixture ever drifts outside the allowed static reason contract.
+- **Acceptance Criteria:** A type fixture asserts the representative static reason constant satisfies `BacklogHealthArtifactDocsHintStaticErrorReason`; existing static selection, shared fixture and composition tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
