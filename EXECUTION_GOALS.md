@@ -2188,4 +2188,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, scripts
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G398 — Backlog Health JSON Contract Fixture Export Guard
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative JSON contract fixture is now reusable in tests, but there is no guard preventing future helpers from writing snapshots or exporting raw fixture payloads.
+- **Desired Outcome:** Add a small test or helper assertion that the representative contract fixture stays in-memory and never creates committed or temporary snapshot artifacts.
+- **User Value:** Maintainers can expand contract tests without accidentally leaking raw issue payloads or creating cleanup work.
+- **Acceptance Criteria:** Tests assert the representative contract helper returns sanitized in-memory data only; no issue bodies, tokens or snapshot files are committed; backlog remains at 100 open goals.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, scripts
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
