@@ -2860,4 +2860,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G446 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Naming
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static alias fixture now proves the alias maps to the static reason contract, but the fixture name is long and could drift from the surrounding static fixture naming pattern.
+- **Desired Outcome:** Review and tighten the representative static alias fixture naming while preserving the type-level contract.
+- **User Value:** Maintainers can scan the artifact docs hint fixture area without losing the compile-time guard.
+- **Acceptance Criteria:** Alias fixture naming follows the surrounding static fixture pattern; the alias still satisfies the representative static reason contract; existing static alias, static selection and shared fixture tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
