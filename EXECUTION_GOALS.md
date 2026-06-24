@@ -2272,4 +2272,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G404 — Backlog Health JSON Contract Matrix Marker Docs
+
+- **Epic:** Continuous Evolution
+- **Problem:** The contract matrix parser now relies on stable markers, but the JSON reference does not mention the marker names maintainers should preserve.
+- **Desired Outcome:** Document the contract matrix markers in the JSON reference and cover the note with maintenance tests.
+- **User Value:** Maintainers can refactor contract tests without accidentally deleting the parser anchors.
+- **Acceptance Criteria:** Docs mention the start/end marker names and the linked test file; maintenance tests cover the marker note; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

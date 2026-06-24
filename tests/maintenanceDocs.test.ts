@@ -606,7 +606,7 @@ function extractBacklogHealthReferenceGroups(): string[] {
 
 function extractBacklogHealthContractMatrixGroups(): string[] {
   const matrixTest = backlogHealthTest.match(
-    /documenteert issue-snapshotvelden met een compacte contractmatrix[\s\S]+?expect\(matrix\.map\(\(entry\) => entry\.group\)\)\.toEqual\(\[(?<groups>[\s\S]+?)\]\);/,
+    /\/\/ backlog-health-json-contract-matrix:start(?<groups>[\s\S]+?)\/\/ backlog-health-json-contract-matrix:end/,
   )?.groups?.groups;
 
   if (!matrixTest) throw new Error('Backlog-health contractmatrix ontbreekt.');

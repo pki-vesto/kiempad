@@ -531,12 +531,14 @@ describe('backlog health', () => {
         entry.expectedNestedIssueFields,
       );
     }
+    // backlog-health-json-contract-matrix:start
     expect(matrix.map((entry) => entry.group)).toEqual([
       'duplicateIssues',
       'missingIssueLinks',
       'nonOpenIssueLinks',
       'completedGoalOpenIssues',
     ]);
+    // backlog-health-json-contract-matrix:end
   });
 
   it('maakt actieve-goal drift zichtbaar met kleine negatieve fixtures', () => {
