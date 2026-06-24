@@ -2762,4 +2762,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G439 — Backlog Health JSON Contract Recovery Artifact Docs Hint Type Fixture Composition Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The shared artifact docs hint reason type fixture now composes subtype fixture values, but there is no focused assertion that proves the shared fixture keeps that composition boundary.
+- **Desired Outcome:** Add a focused fixture that compares the shared reason type fixture against the selected static subtype value plus all dynamic subtype values.
+- **User Value:** Maintainers get a clear failure if future edits reintroduce duplicated shared fixture literals or drop dynamic subtype coverage.
+- **Acceptance Criteria:** Tests assert the shared reason type fixture equals a composition of subtype fixture values; existing shared, static and dynamic type fixture tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
