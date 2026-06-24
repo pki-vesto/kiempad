@@ -1978,4 +1978,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G383 — Backlog Health Issue Snapshot Limit Warning
+
+- **Epic:** Continuous Evolution
+- **Problem:** The documented issue snapshot command uses `--limit 200`, but maintainers may not notice when the repository approaches that snapshot ceiling.
+- **Desired Outcome:** Add a lightweight warning or documented guardrail for issue snapshot limits so issue drift validation does not silently miss older goals.
+- **User Value:** Backlog and GitHub issue validation remains trustworthy as the goal catalog grows.
+- **Acceptance Criteria:** Backlog health docs or output explains the snapshot limit risk; tests cover the warning text or helper behavior; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
