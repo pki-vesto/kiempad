@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G339 Security & DevEx: public-repo privacy reviewchecklist voor release-PR's,
+  fixtures, screenshots, env-bestanden en generated assets, verankerd in contributing,
+  PR-template en onderhoudstest.
 - G337 Security & DevEx: eventlogdetails voor back-up, AI, notificaties en import
   worden getest op generieke inhoud zodat gevoelige vrije tekst niet in operationele
   metadata terechtkomt.

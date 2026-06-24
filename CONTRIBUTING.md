@@ -49,6 +49,10 @@ Voordat je merget:
 - Completion audit uitgevoerd volgens
   [`docs/GOAL_COMPLETION_AUDIT.md`](docs/GOAL_COMPLETION_AUDIT.md): ieder requirement
   heeft direct bewijs voordat het doel op `☑ klaar` gaat.
+- Public repo privacy review uitgevoerd volgens
+  [`docs/PUBLIC_REPO_PRIVACY_REVIEW.md`](docs/PUBLIC_REPO_PRIVACY_REVIEW.md) wanneer
+  releases, screenshots, fixtures, env-bestanden, generated assets of themawijzigingen
+  geraakt worden.
 
 CI (`.github/workflows/ci.yml`) draait typecheck, lint, secrets-scan, tests, audit,
 build en de externe-asset-scan op elke PR.

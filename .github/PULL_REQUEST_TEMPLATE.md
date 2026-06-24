@@ -18,6 +18,7 @@ Doel(en):
 - [ ] Privacy/policy gerespecteerd (geen nieuwe uitgaande dataroute zonder opt-in; niets medisch-besluitvormends — MASTER_CONTEXT §4)
 - [ ] Docs bijgewerkt: CURRENT_STATE.md, betreffende G-id(s) in PRODUCT_BACKLOG.md, CHANGELOG.md, en bij een keuze een ADR
 - [ ] Completion audit uitgevoerd: [`docs/GOAL_COMPLETION_AUDIT.md`](docs/GOAL_COMPLETION_AUDIT.md)
+- [ ] Public repo privacy review uitgevoerd indien van toepassing: [`docs/PUBLIC_REPO_PRIVACY_REVIEW.md`](docs/PUBLIC_REPO_PRIVACY_REVIEW.md)
 
 ## Scope / resterend
 <!-- Bewust buiten scope gelaten / vervolg. -->

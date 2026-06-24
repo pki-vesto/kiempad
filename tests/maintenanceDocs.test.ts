@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import prTemplate from '../.github/PULL_REQUEST_TEMPLATE.md?raw';
 import changelog from '../CHANGELOG.md?raw';
+import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
+import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
 import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
@@ -86,6 +88,27 @@ describe('onderhoudsdocumentatie', () => {
     expect(goalCompletionAudit).toContain('`main` groen');
     expect(masterContext).toContain('docs/GOAL_COMPLETION_AUDIT.md');
     expect(prTemplate).toContain('docs/GOAL_COMPLETION_AUDIT.md');
+  });
+
+  it('houdt de public repo privacy review compleet voor releasechecks', () => {
+    for (const requiredTerm of [
+      'Docs',
+      'Fixtures',
+      'Screenshots',
+      'Env Files',
+      'Generated Assets',
+      'npm run secrets:check',
+      'npm run fixtures:check',
+      'npm run build && npm run assets:check',
+    ]) {
+      expect(publicRepoPrivacyReview).toContain(requiredTerm);
+    }
+
+    expect(publicRepoPrivacyReview).toMatch(/geen screenshots uit echte portals/i);
+    expect(publicRepoPrivacyReview).toMatch(/Tailscale auth keys/i);
+    expect(publicRepoPrivacyReview).toMatch(/alleen synthetische data/i);
+    expect(contributing).toContain('docs/PUBLIC_REPO_PRIVACY_REVIEW.md');
+    expect(prTemplate).toContain('docs/PUBLIC_REPO_PRIVACY_REVIEW.md');
   });
 });
 

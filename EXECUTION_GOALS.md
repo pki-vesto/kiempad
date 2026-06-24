@@ -1280,7 +1280,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Docs, tests
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G340 — Build Provenance Notes
 
@@ -1592,4 +1592,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Event log privacy, docs, tests
 - **Score:** 104
+- **Status:** ☐ open
+
+### G364 — Public Repo Privacy Review Automation Hook
+
+- **Epic:** Security & DevEx
+- **Problem:** The public repo privacy checklist is documented, but maintainers still need to remember when changed files require it.
+- **Desired Outcome:** Add a local helper or CI-friendly dry-run that flags PRs touching docs, fixtures, screenshots, env examples or generated assets so the review checklist is explicitly acknowledged.
+- **User Value:** Public releases are less likely to miss privacy review when sensitive file classes change.
+- **Acceptance Criteria:** Helper classifies changed files by review category; dry-run output names the required checklist sections; tests cover docs, fixture, screenshot, env and generated-asset paths; no file contents or secrets are printed.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Scripts, docs, CI
+- **Score:** 97
 - **Status:** ☐ open
