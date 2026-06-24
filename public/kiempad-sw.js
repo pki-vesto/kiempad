@@ -1,7 +1,7 @@
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
-      .open('kiempad-m1-9-v1')
+      .open('kiempad-ui-restore-v2')
       .then((cache) =>
         cache.addAll(['/', '/index.html', '/manifest.webmanifest', '/kiempad-icon.svg']),
       )
@@ -15,7 +15,7 @@ self.addEventListener('activate', (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys.filter((key) => key !== 'kiempad-m1-9-v1').map((key) => caches.delete(key)),
+          keys.filter((key) => key !== 'kiempad-ui-restore-v2').map((key) => caches.delete(key)),
         ),
       )
       .then(() => self.clients.claim()),
@@ -31,7 +31,7 @@ self.addEventListener('fetch', (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open('kiempad-m1-9-v1').then((cache) => cache.put('/index.html', copy));
+          caches.open('kiempad-ui-restore-v2').then((cache) => cache.put('/index.html', copy));
           return response;
         })
         .catch(() => caches.match('/index.html')),
@@ -45,7 +45,7 @@ self.addEventListener('fetch', (event) => {
         cached ??
         fetch(request).then((response) => {
           const copy = response.clone();
-          caches.open('kiempad-m1-9-v1').then((cache) => cache.put(request, copy));
+          caches.open('kiempad-ui-restore-v2').then((cache) => cache.put(request, copy));
           return response;
         }),
     ),
