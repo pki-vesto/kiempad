@@ -478,6 +478,9 @@
 - **G259 Backlog Statistics Test:** `tests/maintenanceDocs.test.ts` parseert open G-id's
   uit `PRODUCT_BACKLOG.md` en `EXECUTION_GOALS.md`, vereist minimaal 100 actieve doelen
   en faalt als beide actieve catalogi niet dezelfde open doelen bevatten.
+- **G349 Completion Audit Evidence Markers:** `docs/GOAL_COMPLETION_AUDIT.md` en de
+  PR-template bevatten een herkenbaar `completion-audit` markerblok met requirements-,
+  test-, policy- en GitHub-evidence; de onderhoudstest bewaakt headings en velden.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -532,8 +535,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G349 volgens `npm run goals:score`: Completion
-   Audit Evidence Markers heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G372 volgens `npm run goals:score`: ADR Review
+   Evidence Template heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

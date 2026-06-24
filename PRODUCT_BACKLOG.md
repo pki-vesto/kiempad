@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 274 |
+| ☑ klaar | 275 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **374** |
+| **Totaal** | **375** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -494,7 +494,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
 | G347 | External Asset CI Gate | P0 | F4 | ☑ |
 | G348 | External Asset Allowlist Governance | P1 | F4 | ☑ |
-| G349 | Completion Audit Evidence Markers | P1 | F4 | ☐ |
+| G349 | Completion Audit Evidence Markers | P1 | F4 | ☑ |
 | G350 | First Run Setup Progress Persistence | P1 | F4 | ☐ |
 | G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
 | G352 | Backup Drill Fixture Expansion | P1 | F4 | ☐ |
@@ -520,12 +520,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G372 | ADR Review Evidence Template | P1 | F4 | ☐ |
 | G373 | Autonomy Guardrail Evidence Checklist | P1 | F4 | ☐ |
 | G374 | Backlog Active Goal Drift Fixture | P1 | F4 | ☐ |
+| G375 | Completion Audit Marker Parser CLI | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 374** (id's G001 t/m G374, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 375** (id's G001 t/m G375, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
