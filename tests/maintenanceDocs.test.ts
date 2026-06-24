@@ -4,6 +4,7 @@ import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
+import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
@@ -109,6 +110,22 @@ describe('onderhoudsdocumentatie', () => {
     expect(publicRepoPrivacyReview).toMatch(/alleen synthetische data/i);
     expect(contributing).toContain('docs/PUBLIC_REPO_PRIVACY_REVIEW.md');
     expect(prTemplate).toContain('docs/PUBLIC_REPO_PRIVACY_REVIEW.md');
+  });
+
+  it('documenteert externe asset allowlist-governance met rationale-eis', () => {
+    for (const requiredTerm of [
+      'npm run build && npm run assets:check',
+      'geen netwerkverzoek',
+      'scripts/check-no-external-assets.mjs',
+      'tests/noExternalAssets.test.ts',
+      'rationale',
+      'http://www.w3.org/2000/svg',
+    ]) {
+      expect(externalAssetAllowlist).toContain(requiredTerm);
+    }
+
+    expect(externalAssetAllowlist).toMatch(/CDN's voor JavaScript, CSS, fonts of afbeeldingen/i);
+    expect(externalAssetAllowlist).toMatch(/nieuw\s+architectuurbesluit/i);
   });
 });
 

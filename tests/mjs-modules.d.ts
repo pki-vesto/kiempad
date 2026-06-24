@@ -47,6 +47,10 @@ declare module '*.mjs' {
     filePath: string,
     text: string,
   ): Array<{ filePath: string; url: string; context: string }>;
+  export const ALLOWED_REMOTE_ASSET_URLS: Array<{ url: string; reason: string }>;
+  export function validateAssetAllowlist(
+    entries?: Array<{ url: string; reason: string }>,
+  ): string[];
   export function listScannableAssetFiles(rootDir: string, extraFiles?: string[]): string[];
   export function scanAssetFiles(
     rootDir?: string,

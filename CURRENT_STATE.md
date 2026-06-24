@@ -525,8 +525,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G348 volgens `npm run goals:score`: External
-   Asset Allowlist Governance heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G353 volgens `npm run goals:score`: CSP
+   Violation Reporting Plan heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
