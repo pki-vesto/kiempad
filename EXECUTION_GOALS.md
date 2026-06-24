@@ -2524,4 +2524,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G422 — Backlog Health JSON Contract Recovery Artifact Docs Hint Normalization Helper
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint validation now trims labels and terms inline, but the normalization logic is embedded inside the assertion helper.
+- **Desired Outcome:** Extract a small normalization helper for artifact docs hint labels and terms.
+- **User Value:** Maintainers can evolve diagnostics without duplicating trim semantics across future fixtures.
+- **Acceptance Criteria:** Tests cover the normalized helper behavior through the existing assertion fixtures; assertion helper uses the shared normalization helper; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

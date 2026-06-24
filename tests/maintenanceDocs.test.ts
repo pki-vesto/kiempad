@@ -501,6 +501,22 @@ describe('onderhoudsdocumentatie', () => {
     ).toThrow('Backlog-health artifact docs hint label bevat alleen whitespace.');
   });
 
+  it('faalt duidelijk wanneer een backlog-health recovery artifactlabel-uitleg label met padding te generiek blijft', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryArtifactDocsHintLabels([
+        { label: '   hint   ', term: 'onderhoudstests gebruiken die labels' },
+      ]),
+    ).toThrow('Backlog-health artifact docs hint label is te generiek: hint.');
+  });
+
+  it('faalt duidelijk wanneer een backlog-health recovery artifactlabel-uitleg term met padding te kort blijft', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryArtifactDocsHintLabels([
+        { label: 'maintenance tests label usage', term: '   labels   ' },
+      ]),
+    ).toThrow('Backlog-health artifact docs hint term is te kort: labels.');
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
@@ -734,11 +750,11 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
     if (term.length === 0) {
       throw new Error('Backlog-health artifact docs hint term bevat alleen whitespace.');
     }
-    if (docsHint.label.length <= 8) {
-      throw new Error(`Backlog-health artifact docs hint label is te generiek: ${docsHint.label}.`);
+    if (label.length <= 8) {
+      throw new Error(`Backlog-health artifact docs hint label is te generiek: ${label}.`);
     }
-    if (docsHint.term.length <= 8) {
-      throw new Error(`Backlog-health artifact docs hint term is te kort: ${docsHint.term}.`);
+    if (term.length <= 8) {
+      throw new Error(`Backlog-health artifact docs hint term is te kort: ${term}.`);
     }
   }
 }
