@@ -555,7 +555,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
   if (activeId === 'backup') return renderBackupScreen(state);
 
   return `
-    <section class="workspace" aria-label="${screen.label}">
+    <section class="section-stack" aria-label="${screen.label}">
       <div class="summary-panel">
         <h2>Volgende stap</h2>
         <p>${screen.emptyState}</p>
@@ -1920,7 +1920,7 @@ function renderKennisScreen(state: AppShellState): string {
   );
 
   return `
-    <section class="workspace" aria-label="Kennisbank">
+    <section class="section-stack" aria-label="Kennisbank">
       <div class="summary-panel priority-panel">
         <h2>Kennisbank</h2>
         <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>

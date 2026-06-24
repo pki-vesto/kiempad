@@ -7,6 +7,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148/G355 UI-herstel (Kennis + afronding): het kennisbankscherm is
+  enkelkoloms gemaakt; daarmee gebruikt geen enkel scherm nog de oude twee-koloms
+  `traject-layout`/`workspace`-indeling. Nieuwe `docs/UI_GUIDELINES.md` legt de
+  canonieke componenten en verboden template-patronen vast om toekomstige drift
+  te voorkomen. Hiermee is de volledige UI in lijn met het Claude Design-prototype.
 - G148 UI-herstel (Vragen, Herinneringen, Back-up): deze schermen zijn
   enkelkoloms mobiel-first gemaakt. Vragen leidt nu met de openstaande vragen,
   consult-prep en lijsten, met het vraagformulier achter een uitklap;
