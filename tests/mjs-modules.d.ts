@@ -28,6 +28,7 @@ declare module '*.mjs' {
     summary: Record<string, unknown>;
     findings: Array<Record<string, unknown>>;
   };
+  export function readNumberArg(argv: string[], flag: string, fallback: number): number;
   export function formatBacklogHealthMarkdown(report: {
     summary: Record<string, unknown>;
     findings: Array<Record<string, unknown>>;

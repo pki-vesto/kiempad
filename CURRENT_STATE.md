@@ -495,6 +495,9 @@
 - **G376 ADR Review Evidence Index:** `docs/ADR_REVIEW_EVIDENCE_INDEX.md` koppelt alle
   huidige `ADR Needed: yes` doelen aan evidence location, decision outcome en follow-up
   status; de onderhoudstest vergelijkt de index met de ADR-needed marker set.
+- **G378 Backlog Active Goal Drift CLI Flag:** `npm run backlog:health` accepteert
+  `--minimum-open-goals` voor lokale fixtures/experimenten, met default 100 en
+  documentatie die de permanente 100-open-doelenregel behoudt.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -549,8 +552,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G378 volgens `npm run goals:score`: Backlog
-   Active Goal Drift CLI Flag heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G380 volgens `npm run goals:score`: Backlog
+   Health Issue Snapshot Default Gate heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

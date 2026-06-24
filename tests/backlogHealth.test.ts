@@ -6,6 +6,7 @@ import {
   parseBacklog,
   parseExecutionGoals,
   parseIssueSnapshot,
+  readNumberArg,
 } from '../scripts/backlog-health.mjs';
 
 const backlog = `
@@ -140,6 +141,43 @@ describe('backlog health', () => {
           'Open goal staat in EXECUTION_GOALS.md maar ontbreekt als open goal in PRODUCT_BACKLOG.md.',
       },
     ]);
+  });
+
+  it('ondersteunt een expliciete minimum-open-goals CLI-drempel met default 100', () => {
+    expect(readNumberArg(['node', 'scripts/backlog-health.mjs'], '--minimum-open-goals', 100)).toBe(
+      100,
+    );
+    expect(
+      readNumberArg(
+        ['node', 'scripts/backlog-health.mjs', '--minimum-open-goals', '2'],
+        '--minimum-open-goals',
+        100,
+      ),
+    ).toBe(2);
+
+    const defaultThresholdReport = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244', 'G245']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244', 'G245']),
+      activeGoalMinimum: readNumberArg(
+        ['node', 'scripts/backlog-health.mjs'],
+        '--minimum-open-goals',
+        100,
+      ),
+    });
+    expect(defaultThresholdReport.findings).toContainEqual(
+      expect.objectContaining({ type: 'active-goal-minimum' }),
+    );
+
+    const customThresholdReport = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244', 'G245']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244', 'G245']),
+      activeGoalMinimum: readNumberArg(
+        ['node', 'scripts/backlog-health.mjs', '--minimum-open-goals', '2'],
+        '--minimum-open-goals',
+        100,
+      ),
+    });
+    expect(customThresholdReport.findings).toEqual([]);
   });
 });
 

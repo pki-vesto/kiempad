@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G378 Continuous Evolution: `npm run backlog:health` ondersteunt nu
+  `--minimum-open-goals` met default 100, inclusief tests voor default/custom waarden
+  en docs die de permanente 100-open-doelenregel behouden.
 - G376 Continuous Evolution: ADR-review evidence index toegevoegd voor alle huidige
   `ADR Needed: yes` doelen, inclusief evidence location, decision outcome en follow-up
   status met onderhoudstest die de index synchroon houdt.
