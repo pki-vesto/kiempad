@@ -2958,4 +2958,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G453 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Test Cluster
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias assertions now have clearer labels, but they sit between representative static reason tests and the broad static completeness test without an explicit local cluster boundary.
+- **Desired Outcome:** Review whether the static alias assertions should be grouped with a small local structure or ordering adjustment.
+- **User Value:** Maintainers can scan the representative static checks, alias checks and broad static checks without mixing their purposes.
+- **Acceptance Criteria:** Static alias test cluster structure is reviewed and, if useful, adjusted without weakening assertions; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

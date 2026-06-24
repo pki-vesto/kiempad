@@ -630,7 +630,7 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
-  it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische alias gelijk aan het statische contract', () => {
+  it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische aliaswaarden expliciet', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES).toEqual([
       'label ontbreekt',
       'term ontbreekt',
@@ -639,7 +639,7 @@ describe('onderhoudsdocumentatie', () => {
     ]);
   });
 
-  it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische alias gelijk aan de statische fixture', () => {
+  it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische alias synchroon met de statische fixture', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES).toEqual(
       BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES,
     );
