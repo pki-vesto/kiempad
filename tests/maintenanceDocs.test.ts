@@ -66,7 +66,7 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintStaticErrorReason>;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ERROR_REASON =
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel satisfies RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason;
-// Keeps the representative alias contract visible apart from the broad static fixture.
+// Bridges the representative static reason and the broad static fixture.
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES = [
   ...BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES,
 ] as const satisfies ReadonlyArray<RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason>;
@@ -630,7 +630,7 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
-  // Static alias checks bridge the representative reason and the broad static fixture.
+  // Static alias checks bridge the representative static reason and the broad static fixture.
   it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische aliaswaarden expliciet', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES).toEqual([
       'label ontbreekt',
