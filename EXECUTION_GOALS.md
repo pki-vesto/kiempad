@@ -1085,7 +1085,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** Build, index.html
 - **Score:** 117
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G325 — Dependency Review Cadence
 
@@ -1449,4 +1449,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** Storage, backup, tests
 - **Score:** 97
+- **Status:** ☐ open
+
+### G353 — CSP Violation Reporting Plan
+
+- **Epic:** Security & DevEx
+- **Problem:** Kiempad has a strict local-first CSP, but no documented plan for diagnosing CSP violations without leaking local health data.
+- **Desired Outcome:** Document a no-telemetry CSP violation workflow and decide whether local-only browser diagnostics are enough.
+- **User Value:** Security regressions can be debugged without introducing reporting endpoints or sensitive telemetry.
+- **Acceptance Criteria:** Document why CSP reports are not sent to a remote endpoint by default; list local debugging steps for CSP violations in dev/prod preview; clarify what is required before enabling any report endpoint; add a maintenance test or doc reference preserving the no-remote-reporting stance.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** CSP, docs, security tests
+- **Score:** 104
 - **Status:** ☐ open

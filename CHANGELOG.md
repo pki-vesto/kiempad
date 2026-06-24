@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G324 Security & DevEx: `index.html` bevat een local-first Content Security Policy
+  die remote scripts blokkeert en alleen lokale data/blob media en lokale dev-websocket
+  verbindingen toestaat.
 - G286 Reliability & Operations: `npm run drill:backup` voert een memory-driver
   restore drill uit die exporteert, importeert, opnieuw ontgrendelt en representatieve
   encrypted records verifieert.

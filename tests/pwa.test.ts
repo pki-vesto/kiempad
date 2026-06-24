@@ -11,6 +11,23 @@ describe('PWA baseline', () => {
     expect(indexHtml).toContain('name="theme-color"');
   });
 
+  it('heeft een local-first Content Security Policy zonder remote scripts', () => {
+    const csp = indexHtml.match(
+      /http-equiv="Content-Security-Policy"[\s\S]*?content="([^"]+)"/,
+    )?.[1];
+
+    expect(csp).toBeDefined();
+    expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("script-src 'self'");
+    expect(csp).toContain("connect-src 'self' ws://localhost:* ws://127.0.0.1:*");
+    expect(csp).toContain("img-src 'self' data: blob:");
+    expect(csp).toContain("media-src 'self' data: blob:");
+    expect(csp).toContain("object-src 'none'");
+    expect(csp).toContain("base-uri 'none'");
+    expect(csp).not.toMatch(/script-src[^;]*(https?:|data:|blob:|'unsafe-inline'|'unsafe-eval')/);
+    expect(csp).not.toMatch(/connect-src[^;]*https?:\/\//);
+  });
+
   it('heeft een installeerbaar manifest met icon', () => {
     const manifest = JSON.parse(manifestText) as {
       name: string;

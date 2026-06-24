@@ -462,6 +462,9 @@
 - **G286 Backup Restore Drill:** `npm run drill:backup` gebruikt memory drivers om een
   representatieve encrypted dataset te exporteren, importeren, opnieuw te ontgrendelen
   en inhoudelijk te verifiëren zonder plaintext in het exportbestand.
+- **G324 Content Security Policy:** `index.html` beperkt scripts, fonts, workers,
+  manifest en netwerkverbindingen tot de eigen origin; data/blob media blijven
+  toegestaan voor lokale previews en alleen lokale dev-websockets zijn toegestaan.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -516,8 +519,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G324 volgens `npm run goals:score`: Content
-   Security Policy heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G326 volgens `npm run goals:score`: Secrets
+   Scan Test heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
