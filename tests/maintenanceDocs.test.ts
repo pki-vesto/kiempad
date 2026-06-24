@@ -281,33 +281,42 @@ describe('onderhoudsdocumentatie', () => {
   });
 
   it('documenteert een gesanitized backlog-health JSON-example fixture', () => {
-    const exampleMatch = backlogHealthJsonReference.match(
-      /## Example Fixture[\s\S]*?```json\n(?<json>[\s\S]*?)\n```/,
-    );
-
-    expect(exampleMatch?.groups?.json).toBeTruthy();
-
-    const example = JSON.parse(exampleMatch?.groups?.json ?? '{}') as {
-      issueSnapshot?: {
-        duplicateIssues?: unknown[];
-        missingIssueLinks?: unknown[];
-        nonOpenIssueLinks?: unknown[];
-        completedGoalOpenIssues?: unknown[];
-      };
-    };
+    const { example, exampleJson } = extractBacklogHealthJsonExample();
 
     expect(example.issueSnapshot?.duplicateIssues).toHaveLength(1);
     expect(example.issueSnapshot?.missingIssueLinks).toHaveLength(1);
     expect(example.issueSnapshot?.nonOpenIssueLinks).toHaveLength(1);
     expect(example.issueSnapshot?.completedGoalOpenIssues).toHaveLength(1);
 
-    const exampleJson = exampleMatch?.groups?.json ?? '';
     for (const allowedField of ['"number"', '"title"', '"state"', '"url"']) {
       expect(exampleJson).toContain(allowedField);
     }
     for (const forbiddenField of ['"body"', '"token"', '"snapshot"', '"authKey"']) {
       expect(exampleJson).not.toContain(forbiddenField);
     }
+  });
+
+  it('houdt de backlog-health JSON-example fixture synchroon met de referentie', () => {
+    const { example, exampleJson } = extractBacklogHealthJsonExample();
+    const referencedSnapshotGroups = Array.from(
+      backlogHealthJsonReference.matchAll(/`issueSnapshot\.(?<field>[A-Za-z]+)`/g),
+      (match) => match.groups?.field,
+    ).filter((field): field is string => Boolean(field));
+
+    expect(Object.keys(example.issueSnapshot ?? {}).sort()).toEqual(
+      referencedSnapshotGroups.sort(),
+    );
+    expect(backlogHealthJsonReference).toContain(
+      'gh issue list --state all --limit 500 --json number,title,state,url',
+    );
+    expect(backlogHealthJsonReference).toContain('--issue-snapshot-limit 500 --json');
+    expect(exampleJson).not.toContain('/tmp/kiempad-issues.json');
+    expect(extractBacklogHealthExampleIssueKeys(example)).toEqual([
+      'number',
+      'state',
+      'title',
+      'url',
+    ]);
   });
 
   it('documenteert autonomy guardrail evidence per domein', () => {
@@ -502,4 +511,42 @@ function extractExecutionGoalAdrMarkers(): Array<{ id: string; value: string }> 
       if (!id || !value) throw new Error(`ADR Needed marker ontbreekt in ${id ?? section}`);
       return { id, value };
     });
+}
+
+type BacklogHealthJsonExample = {
+  issueSnapshot?: {
+    duplicateIssues?: Array<{ issues?: Array<Record<string, unknown>> }>;
+    missingIssueLinks?: unknown[];
+    nonOpenIssueLinks?: Array<{ issue?: Record<string, unknown> }>;
+    completedGoalOpenIssues?: Array<{ issue?: Record<string, unknown> }>;
+  };
+};
+
+function extractBacklogHealthJsonExample(): {
+  example: BacklogHealthJsonExample;
+  exampleJson: string;
+} {
+  const exampleMatch = backlogHealthJsonReference.match(
+    /## Example Fixture[\s\S]*?```json\n(?<json>[\s\S]*?)\n```/,
+  );
+  const exampleJson = exampleMatch?.groups?.json;
+
+  if (!exampleJson) throw new Error('Backlog-health JSON example fixture ontbreekt.');
+
+  return {
+    example: JSON.parse(exampleJson) as BacklogHealthJsonExample,
+    exampleJson,
+  };
+}
+
+function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {
+  const issueObjects = [
+    ...(example.issueSnapshot?.duplicateIssues?.flatMap((group) => group.issues ?? []) ?? []),
+    ...(example.issueSnapshot?.nonOpenIssueLinks?.map((entry) => entry.issue).filter(Boolean) ??
+      []),
+    ...(example.issueSnapshot?.completedGoalOpenIssues
+      ?.map((entry) => entry.issue)
+      .filter(Boolean) ?? []),
+  ];
+  return [...new Set(issueObjects.flatMap((issue) => Object.keys(issue ?? {})))].sort();
 }

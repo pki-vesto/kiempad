@@ -2146,4 +2146,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G395 — Backlog Health JSON Example Fixture Consumer Notes
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON example fixture is parseable and synchronized, but automation users still need concise notes on which fields are stable and which report sections are intentionally partial examples.
+- **Desired Outcome:** Add short consumer guidance beside the fixture that explains stable fields, omitted fields and how automation should treat arrays as examples rather than exhaustive production data.
+- **User Value:** Maintainers can copy the fixture with fewer incorrect assumptions about completeness or sensitive fields.
+- **Acceptance Criteria:** Docs explain the fixture consumer boundary, tests cover the presence of the guidance, and no issue bodies, tokens or local snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
