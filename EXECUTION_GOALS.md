@@ -2244,4 +2244,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G402 — Backlog Health JSON Contract Matrix Docs Symmetry
+
+- **Epic:** Continuous Evolution
+- **Problem:** The contract matrix now has a drift hint, but the docs do not assert that every documented issue-snapshot group appears in the matrix test source.
+- **Desired Outcome:** Add a maintenance assertion that documented issue-snapshot groups and the matrix test groups stay symmetric.
+- **User Value:** Maintainers get faster feedback when documentation and contract tests diverge.
+- **Acceptance Criteria:** Tests compare documented issue-snapshot group names against the matrix groups; no issue bodies, tokens or snapshot files are committed; backlog remains at 100 open goals.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

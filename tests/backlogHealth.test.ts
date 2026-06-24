@@ -49,6 +49,9 @@ const executionGoals = `
 - **Status:** ☐ open
 `;
 
+const JSON_CONTRACT_DRIFT_HINT =
+  'Backlog-health JSON contract drift: update docs/BACKLOG_HEALTH_JSON_REFERENCE.md and the issue-snapshot field matrix together when fields intentionally change.';
+
 describe('backlog health', () => {
   it('parseert backlog en execution-goals zonder netwerk', () => {
     expect(parseBacklog(backlog).goals).toEqual([
@@ -520,8 +523,13 @@ describe('backlog health', () => {
     ];
 
     for (const entry of matrix) {
-      expect(Object.keys(entry.row ?? {}).sort(), entry.group).toEqual(entry.rowFields);
-      expect(entry.nestedIssueFields, entry.group).toEqual(entry.expectedNestedIssueFields);
+      expect(
+        Object.keys(entry.row ?? {}).sort(),
+        `${entry.group}: ${JSON_CONTRACT_DRIFT_HINT}`,
+      ).toEqual(entry.rowFields);
+      expect(entry.nestedIssueFields, `${entry.group}: ${JSON_CONTRACT_DRIFT_HINT}`).toEqual(
+        entry.expectedNestedIssueFields,
+      );
     }
     expect(matrix.map((entry) => entry.group)).toEqual([
       'duplicateIssues',
