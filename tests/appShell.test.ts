@@ -594,7 +594,7 @@ describe('app shell', () => {
           afspraak: {
             id: 'afspraak-1',
             titel: 'Echo controle',
-            datumTijd: '2026-06-24T09:30',
+            datumTijd: '2099-06-24T09:30',
             type: 'echo',
             trajectId: 'traject-1',
             locatie: 'Kliniek',
@@ -608,7 +608,7 @@ describe('app shell', () => {
           herinnering: {
             id: 'herinnering-1',
             bron: { soort: 'afspraak', refId: 'afspraak-1' },
-            tijdstip: '2026-06-24T08:30',
+            tijdstip: '2099-06-24T08:30',
             actief: true,
           },
         },
@@ -641,12 +641,12 @@ describe('app shell', () => {
     expect(html).toContain('id="ics-import-form"');
     expect(html).toContain('accept=".ics,text/calendar,text/plain"');
     expect(html).toContain('Weekweergave');
-    expect(html).toContain('Week 26 2026');
+    expect(html).toContain('Week 26 2099');
     expect(html).toContain('Maandweergave');
-    expect(html).toContain('Juni 2026');
+    expect(html).toContain('Juni 2099');
     expect(html).toContain('Juli 2099');
     expect(html).toContain('Vraag: Wanneer horen we de uitslag?');
-    expect(html).toContain('Herinnering: 2026-06-24 08:30');
+    expect(html).toContain('Herinnering: 2099-06-24 08:30');
     expect(html).toContain('Traject: Poging 1');
     expect(html).toContain('Afgelopen');
     expect(html).toContain('Geweest · Consult · 2020-01-02 10:00');
