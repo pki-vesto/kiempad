@@ -5,6 +5,7 @@ import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import adrBacklog from '../docs/ADR_BACKLOG.md?raw';
 import adrReviewEvidenceTemplate from '../docs/ADR_REVIEW_EVIDENCE_TEMPLATE.md?raw';
+import autonomyGuardrailEvidenceChecklist from '../docs/AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md?raw';
 import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import codexAutonomyAdr from '../docs/adr/0007-codex-autonoom-bouwen.md?raw';
@@ -231,6 +232,38 @@ describe('onderhoudsdocumentatie', () => {
     expect(codexAutonomyAdr).toContain('../AUTONOMY_GUARDRAILS.md');
     expect(goalCompletionAudit).toContain('docs/AUTONOMY_GUARDRAILS.md');
     expect(prTemplate).toContain('docs/AUTONOMY_GUARDRAILS.md');
+  });
+
+  it('documenteert autonomy guardrail evidence per domein', () => {
+    for (const requiredHeading of [
+      '### Network Guardrail',
+      '### AI Guardrail',
+      '### Data Guardrail',
+      '### GitHub Guardrail',
+      '### Tailscale Guardrail',
+      '### Medical Policy Guardrail',
+      '### Sensitive Data Boundary',
+    ]) {
+      expect(autonomyGuardrailEvidenceChecklist).toContain(requiredHeading);
+      expect(prTemplate).toContain(requiredHeading);
+    }
+
+    for (const requiredField of [
+      'Impact:',
+      'Evidence:',
+      'Result:',
+      'User data excluded:',
+      'Secrets excluded:',
+      'Runtime payloads excluded:',
+    ]) {
+      expect(autonomyGuardrailEvidenceChecklist).toContain(`- ${requiredField}`);
+      expect(prTemplate).toContain(`- ${requiredField}`);
+    }
+
+    expect(autonomyGuardrailEvidenceChecklist).toContain('zonder gezondheidsdata');
+    expect(autonomyGuardrailEvidenceChecklist).toContain('geen nieuwe netwerkroute');
+    expect(autonomyGuardrailEvidenceChecklist).toContain('medische grens blijft ongewijzigd');
+    expect(autonomyGuardrails).toContain('AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md');
   });
 
   it('houdt de public repo privacy review compleet voor releasechecks', () => {

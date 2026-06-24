@@ -24,6 +24,43 @@ Doel(en):
 ## Scope / resterend
 <!-- Bewust buiten scope gelaten / vervolg. -->
 
+## Autonomy Guardrail Evidence
+<!-- Gebruik docs/AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md voor de volledige invulinstructie. -->
+### Network Guardrail
+- Impact:
+- Evidence:
+- Result:
+
+### AI Guardrail
+- Impact:
+- Evidence:
+- Result:
+
+### Data Guardrail
+- Impact:
+- Evidence:
+- Result:
+
+### GitHub Guardrail
+- Impact:
+- Evidence:
+- Result:
+
+### Tailscale Guardrail
+- Impact:
+- Evidence:
+- Result:
+
+### Medical Policy Guardrail
+- Impact:
+- Evidence:
+- Result:
+
+### Sensitive Data Boundary
+- User data excluded:
+- Secrets excluded:
+- Runtime payloads excluded:
+
 ## Completion Audit Evidence
 <!-- completion-audit:start -->
 ### Requirements Evidence

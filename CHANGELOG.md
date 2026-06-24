@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G373 Continuous Evolution: autonomy guardrail evidence checklist toegevoegd voor
+  netwerk, AI, data, GitHub, Tailscale, medisch beleid en gevoelige-datagrenzen,
+  gekoppeld aan guardrails, PR-template en onderhoudstest.
 - G372 Continuous Evolution: ADR-review evidence template toegevoegd met goal-id,
   reviewer/datum, geraadpleegde ADR's, decision outcome, ADR-route, follow-up en
   evidencegrenzen; ADR-backlog en onderhoudstest borgen het schema.
