@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 344 |
+| ☑ klaar | 345 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **444** |
+| **Totaal** | **445** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -589,13 +589,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G441 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Constant Fixture | P1 | F4 | ☑ |
 | G442 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Literal Fixture | P1 | F4 | ☑ |
 | G443 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Fixture | P1 | F4 | ☑ |
-| G444 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Fixture Formatting | P1 | F4 | ☐ |
+| G444 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Fixture Formatting | P1 | F4 | ☑ |
+| G445 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Alias Fixture | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 444** (id's G001 t/m G444, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 445** (id's G001 t/m G445, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
