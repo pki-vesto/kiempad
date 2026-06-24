@@ -3,6 +3,7 @@ import {
   buildActiveGoalDriftFindings,
   buildBacklogHealthReport,
   formatBacklogHealthMarkdown,
+  ISSUE_SNAPSHOT_CLEANUP_COMMAND,
   ISSUE_SNAPSHOT_COMMAND,
   parseBacklog,
   parseExecutionGoals,
@@ -80,6 +81,7 @@ describe('backlog health', () => {
     expect(ISSUE_SNAPSHOT_COMMAND).toBe(
       'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json',
     );
+    expect(ISSUE_SNAPSHOT_CLEANUP_COMMAND).toBe('rm -f /tmp/kiempad-issues.json');
 
     const parsed = parseIssueSnapshot(
       JSON.stringify([
@@ -115,6 +117,17 @@ describe('backlog health', () => {
         findings: [],
       }),
     ).toContain('npm run backlog:health -- --issues-json /tmp/kiempad-issues.json');
+    expect(
+      formatBacklogHealthMarkdown({
+        summary: {
+          backlogGoals: 1,
+          executionGoals: 1,
+          openBacklogGoals: 1,
+          findings: 0,
+        },
+        findings: [],
+      }),
+    ).toContain('Issue snapshot cleanup: `rm -f /tmp/kiempad-issues.json`');
   });
 
   it('herkent dubbele issue-goal-id en open issue bij afgeronde backlogstatus', () => {

@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G381 Continuous Evolution: backlog-health toont nu een expliciete cleanup-reminder
+  voor tijdelijke issue-snapshots en de docs nemen `rm -f /tmp/kiempad-issues.json`
+  op in de optionele issue-driftflow.
 - G380 Continuous Evolution: backlog-health documenteert nu de veilige
   issue-snapshotflow met exact `gh issue list` commando zonder issue bodies, sanitizet
   snapshotdata en vermeldt de optionele `--issues-json` route wanneer die ontbreekt.

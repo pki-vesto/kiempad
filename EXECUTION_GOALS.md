@@ -1964,4 +1964,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, scripts, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G382 — Backlog Health Issue Snapshot Freshness Hint
+
+- **Epic:** Continuous Evolution
+- **Problem:** Local issue snapshots are safe and temporary, but stale snapshots can still be reused accidentally during backlog drift checks.
+- **Desired Outcome:** Add a lightweight freshness hint or timestamp workflow for backlog-health issue snapshots without storing issue bodies.
+- **User Value:** Maintainers can trust issue drift validation results are based on a recent local export.
+- **Acceptance Criteria:** Backlog health docs or output explains how to identify a fresh issue snapshot; tests cover the freshness hint or helper behavior; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

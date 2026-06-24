@@ -10,6 +10,7 @@ const STATUS_LABELS = {
 
 export const ISSUE_SNAPSHOT_COMMAND =
   'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json';
+export const ISSUE_SNAPSHOT_CLEANUP_COMMAND = 'rm -f /tmp/kiempad-issues.json';
 
 export function parseBacklog(markdown) {
   const goals = [];
@@ -254,6 +255,7 @@ export function formatBacklogHealthMarkdown(report) {
       report.summary.issueSnapshotGoals ??
       `niet meegegeven (optioneel: \`${ISSUE_SNAPSHOT_COMMAND}\` en daarna \`npm run backlog:health -- --issues-json /tmp/kiempad-issues.json\`)`
     }`,
+    `- Issue snapshot cleanup: \`${ISSUE_SNAPSHOT_CLEANUP_COMMAND}\` na lokale validatie`,
     `- Bevindingen: ${report.summary.findings}`,
     '',
     '## Bevindingen',

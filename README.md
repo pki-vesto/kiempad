@@ -90,10 +90,11 @@ Optionele GitHub issue-driftcheck zonder issue bodies:
 ```bash
 gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json
 npm run backlog:health -- --issues-json /tmp/kiempad-issues.json
+rm -f /tmp/kiempad-issues.json
 ```
 
 Bewaar deze snapshot niet in de repo; hij bevat alleen issue-nummer, titel, state en
-URL.
+URL. Ruim `/tmp/kiempad-issues.json` na lokale validatie direct op.
 
 Optioneel zelf-hosten van de statische build:
 
