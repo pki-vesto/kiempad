@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G400 Continuous Evolution: de backlog-health JSON-reference verwijst nu naar de
+  matrix-backed contracttest in `tests/backlogHealth.test.ts`.
 - G399 Continuous Evolution: de backlog-health JSON-contracttest bevat nu een
   compacte field-matrix voor alle issue-snapshotgroepen en hun nested issuevelden.
 - G398 Continuous Evolution: de representatieve backlog-health JSON-contractfixture

@@ -106,3 +106,10 @@ automation mag gebruiken:
   uitgesloten van de fixture en horen niet in commits.
 - Maak tijdelijke snapshots altijd opnieuw met `number,title,state,url`, valideer ze
   direct en verwijder `/tmp/kiempad-issues.json` na gebruik.
+
+## Contract Coverage
+
+De JSON-contractvorm wordt bewaakt in `tests/backlogHealth.test.ts`. De test
+`documenteert issue-snapshotvelden met een compacte contractmatrix` controleert per
+`issueSnapshot`-groep de top-level velden en nested issuevelden. Werk die matrix bij
+wanneer de velden in deze referentie bewust veranderen.
