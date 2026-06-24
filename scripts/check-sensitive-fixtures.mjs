@@ -6,6 +6,31 @@ import process from 'node:process';
 const DEFAULT_FIXTURE_DIRS = ['tests'];
 const SKIPPED_DIRS = new Set(['.git', 'dist', 'node_modules']);
 
+export const ALLOWED_SENSITIVE_FIXTURE_EXAMPLES = Object.freeze([
+  {
+    value: 'Naam: Testpersoon A',
+    reason: 'Synthetische naamfixture voor redactie- en displaytests.',
+  },
+  {
+    value: 'Naam: Testpersoon B',
+    reason: 'Tweede synthetische naamfixture voor vergelijkings- en lijsttests.',
+  },
+  {
+    value: 'E-mail: testpersoon@example.test',
+    reason: 'Synthetisch e-mailadres op gereserveerd testdomein.',
+  },
+  {
+    value: 'E-mail: testpersoon@voorbeeld.test',
+    reason: 'Nederlandstalig synthetisch e-mailadres op gereserveerd testdomein.',
+  },
+  {
+    value: 'BSN: 111111111',
+    reason: 'Duidelijk synthetische BSN-achtige redactiefixture.',
+  },
+]);
+
+const ALLOWED_FIXTURE_VALUES = createAllowedFixtureSet();
+
 const FIXTURE_PATTERNS = [
   {
     name: 'non-synthetic-email',
@@ -29,6 +54,7 @@ export function scanSensitiveFixtureText(filePath, text) {
   for (const { name, pattern, message } of FIXTURE_PATTERNS) {
     pattern.lastIndex = 0;
     for (const match of text.matchAll(pattern)) {
+      if (ALLOWED_FIXTURE_VALUES.has(match[0])) continue;
       findings.push({
         filePath,
         pattern: name,
@@ -38,6 +64,38 @@ export function scanSensitiveFixtureText(filePath, text) {
     }
   }
   return findings;
+}
+
+export function validateSensitiveFixtureAllowlist(
+  entries = ALLOWED_SENSITIVE_FIXTURE_EXAMPLES,
+) {
+  const findings = [];
+  const seen = new Set();
+
+  for (const entry of entries) {
+    if (!entry || typeof entry.value !== 'string' || entry.value.trim() === '') {
+      findings.push('Allowlist-entry mist een exacte fixturewaarde.');
+      continue;
+    }
+    if (seen.has(entry.value)) {
+      findings.push(`Allowlist-entry ${entry.value} is dubbel opgenomen.`);
+    }
+    seen.add(entry.value);
+    if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
+      findings.push(`Allowlist-entry ${entry.value} mist een concrete rationale.`);
+    }
+  }
+
+  return findings;
+}
+
+function createAllowedFixtureSet(entries = ALLOWED_SENSITIVE_FIXTURE_EXAMPLES) {
+  const findings = validateSensitiveFixtureAllowlist(entries);
+  if (findings.length > 0) {
+    throw new Error(`Ongeldige gevoelige-fixture allowlist:\n${findings.join('\n')}`);
+  }
+
+  return new Set(entries.map((entry) => entry.value));
 }
 
 export function listSensitiveFixtureFiles(rootDir = process.cwd()) {

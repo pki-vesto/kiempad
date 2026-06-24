@@ -1579,7 +1579,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Fixture scanner, docs, tests
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G363 — Event Log Detail Allowlist Governance
 
@@ -1669,5 +1669,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dependency review script, docs, tests
+- **Score:** 97
+- **Status:** ☐ open
+
+### G370 — Sensitive Fixture Review Evidence Snapshot
+
+- **Epic:** Security & DevEx
+- **Problem:** Fixture allowlist governance is documented, but completed reviews do not yet leave structured evidence.
+- **Desired Outcome:** Add an evidence template for fixture scanner review date, allowlist entries, rationale status and `npm run fixtures:check` result.
+- **User Value:** Public-repo testdata hygiene remains auditable without storing real patient data.
+- **Acceptance Criteria:** Evidence template records reviewed patterns, allowlist entries, command result and reviewer/date; docs explain where evidence lives; tests cover the template/schema; no real names, emails, BSN or portal content are stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Fixture scanner, docs, maintenance tests
 - **Score:** 97
 - **Status:** ☐ open
