@@ -162,7 +162,15 @@ import {
   type WelzijnTrendPeriode,
 } from './domain/welzijn';
 import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
-import { pageHeader } from './ui/components';
+import {
+  actionCard,
+  card,
+  disclosure,
+  pageHeader,
+  phaseHeroCard,
+  sectionStack,
+  statusMessage,
+} from './ui/components';
 import { escapeAttribute, escapeHtml } from './ui/escape';
 
 export const DISCLAIMER =
@@ -2577,37 +2585,46 @@ function renderStartScreen(state: AppShellState): string {
     cycleData: state.cycleData ?? [],
   });
 
-  return `
-    <section class="workspace" aria-label="Startoverzicht">
-      ${renderFirstRunSetup(state)}
-      ${renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date()))}
-      <div class="summary-panel priority-panel">
-        <h2>Waar staan we?</h2>
-        <p>${escapeHtml(bepaalVolgendeStap(activeTraject))}</p>
-        ${
-          activeTraject
-            ? `<a class="inline-action" href="#traject">Bekijk traject</a>`
-            : `<a class="inline-action" href="#traject">Traject aanmaken</a>`
-        }
-      </div>
-      <div class="summary-panel">
-        <h2>Volgende stap</h2>
-        <ul class="start-list">
-          <li><strong>Afspraak:</strong> ${escapeHtml(nextAppointment)}</li>
-          <li><strong>Herinnering:</strong> ${escapeHtml(nextReminder)}</li>
-          <li><strong>Vragen:</strong> ${escapeHtml(openQuestions)}</li>
-        </ul>
-      </div>
-      <div class="summary-panel">
-        ${state.dailyRecommendationStatus ? `<p class="status-message">${escapeHtml(state.dailyRecommendationStatus)}</p>` : ''}
-        ${renderDailyRecommendations(dailyRecommendations)}
-      </div>
-      <div class="summary-panel">
-        <h2>Snelle invoer</h2>
-        ${renderQuickEntryForm()}
-      </div>
-    </section>
-  `;
+  return sectionStack(
+    [
+      renderFirstRunSetup(state),
+      phaseHeroCard({
+        eyebrow: 'Waar staan we?',
+        phaseLabel: activeTraject ? 'Jullie traject' : 'Welkom bij Kiempad',
+        subtitle: bepaalVolgendeStap(activeTraject),
+        cta: { href: '#traject', label: activeTraject ? 'Bekijk traject' : 'Traject aanmaken' },
+      }),
+      renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
+      card({
+        title: 'Volgende stap',
+        body: `<div class="action-card-list">${actionCard({
+          title: nextAppointment,
+          subtitle: 'Volgende afspraak',
+          href: '#agenda',
+          iconName: 'calendar',
+        })}${actionCard({
+          title: nextReminder,
+          subtitle: 'Herinnering',
+          href: '#herinneringen',
+          iconName: 'bell',
+          tone: 'amber',
+        })}${actionCard({
+          title: openQuestions,
+          subtitle: 'Vragen voor de arts',
+          href: '#vragen',
+          iconName: 'question',
+          tone: 'category',
+        })}</div>`,
+      }),
+      card({
+        body: `${
+          state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
+        }${renderDailyRecommendations(dailyRecommendations)}`,
+      }),
+      disclosure({ summary: 'Snelle invoer', body: renderQuickEntryForm() }),
+    ],
+    { ariaLabel: 'Startoverzicht' },
+  );
 }
 
 function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: string): string {

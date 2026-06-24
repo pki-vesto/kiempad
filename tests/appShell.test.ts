@@ -212,9 +212,9 @@ describe('app shell', () => {
     expect(html).toContain('Kiempad adviseert geen supplement en geen hoeveelheid.');
     expect(html).toContain('Vragenlijst nalopen');
     expect(html).toContain('Kiempad geeft geen medisch advies');
-    expect(html).toContain('Afspraak:');
-    expect(html).toContain('Herinnering:');
-    expect(html).toContain('Vragen:');
+    expect(html).toContain('Volgende afspraak');
+    expect(html).toContain('Herinnering');
+    expect(html).toContain('Vragen voor de arts');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
   });

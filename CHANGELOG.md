@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G151 UI-herstel (Startscherm): het startscherm is mobiel-first heropgebouwd met
+  de componentlaag — een rustige "Waar staan we?"-fasehero (CTA naar Traject),
+  het command center, "Volgende stap" als tikbare actiekaarten (agenda/
+  herinneringen/vragen) en "Snelle invoer" achter een uitklap. Command-center- en
+  aanbevelingsgroepen staan in een responsief raster zonder kaart-in-kaart. Alle
+  form-id's, `aria-current` en command-center-teksten blijven gelijk.
 - G148 UI-herstel (shell): hoofdnavigatie heeft nu per scherm een inline-SVG
   icoon en is op mobiel een vaste, horizontaal scrollbare onderbalk (icoon boven
   label); de generieke `.hero` is vervangen door een rustiger `pageHeader`
