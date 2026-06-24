@@ -2328,4 +2328,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G408 — Backlog Health JSON Contract Marker Recovery Paragraph Guard
+
+- **Epic:** Continuous Evolution
+- **Problem:** The marker recovery action is now aligned between the parser error and docs, but the docs test still checks scattered terms instead of proving the recovery paragraph remains present as a cohesive instruction.
+- **Desired Outcome:** Add a focused maintenance helper or assertion that extracts the recovery paragraph and verifies it as a single instruction block.
+- **User Value:** Maintainers can edit surrounding contract coverage text without accidentally weakening the recovery guidance.
+- **Acceptance Criteria:** Tests extract or otherwise isolate the recovery paragraph; assertions cover the missing-marker error, both markers, recovery action and privacy boundary in that paragraph; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
