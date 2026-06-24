@@ -12,6 +12,7 @@ import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/
 import { maakConsultPrintHtml } from './domain/consultExport';
 import { ConsultVerslagStore } from './domain/consultVerslagStore';
 import { CycleDataStore } from './domain/cycleDataStore';
+import type { DailyRecommendationOwner } from './domain/dailyRecommendations';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
 import {
@@ -27,6 +28,10 @@ import type {
   FertilityGraphEdgeType,
   FertilityGraphTrajectFilter,
 } from './domain/fertilityKnowledgeGraph';
+import type {
+  FertilityTimelineFilter,
+  FertilityTimelineItemSoort,
+} from './domain/fertilityTimeline';
 import { localDateTimeIso } from './domain/herinnering';
 import { HerinneringStore } from './domain/herinneringStore';
 import type { KennisFilter } from './domain/kennis';
@@ -127,6 +132,7 @@ type RuntimeState = {
   dossierZoekterm?: string;
   imagingFilter?: ImagingRepositoryFilter;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
+  timelineFilter?: FertilityTimelineFilter;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -171,6 +177,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     dossierZoekterm: state.dossierZoekterm,
     imagingFilter: state.imagingFilter,
     graphFilter: state.graphFilter,
+    timelineFilter: state.timelineFilter,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
@@ -244,6 +251,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.dossierError = undefined;
     state.dossierZoekterm = undefined;
     state.imagingFilter = undefined;
+    state.timelineFilter = undefined;
     state.agendaImportStatus = undefined;
     state.agendaImportError = undefined;
     state.medicatieImportStatus = undefined;
@@ -1465,6 +1473,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     applyGraphFilterFromForm(event.currentTarget, root, state);
   });
+  root.querySelector('#timeline-filter-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applyTimelineFilterFromForm(event.currentTarget, root, state);
+  });
   root.querySelector('#traject-new-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveTrajectFromForm(event.currentTarget, root, state);
@@ -1518,6 +1530,24 @@ function applyGraphFilterFromForm(
     relatieType: parseGraphRelatieType(data.get('graphRelatieType')),
     datumVanaf: optionalString(data.get('graphDatumVanaf')),
     datumTot: optionalString(data.get('graphDatumTot')),
+  };
+  render(root, state);
+}
+
+function applyTimelineFilterFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (!(target instanceof HTMLFormElement)) return;
+  const data = new FormData(target);
+  state.timelineFilter = {
+    soort: parseTimelineSoort(data.get('timelineSoort')),
+    datumVanaf: optionalString(data.get('timelineDatumVanaf')),
+    datumTot: optionalString(data.get('timelineDatumTot')),
+    trajectId: optionalString(data.get('timelineTrajectId')),
+    eigenaar: parseTimelineEigenaar(data.get('timelineEigenaar')),
+    bron: optionalString(data.get('timelineBron')),
   };
   render(root, state);
 }
@@ -2165,6 +2195,32 @@ function parseGraphRelatieType(
     return value;
   }
 
+  return undefined;
+}
+
+function parseTimelineSoort(
+  value: FormDataEntryValue | null,
+): FertilityTimelineItemSoort | undefined {
+  if (
+    value === 'behandeling' ||
+    value === 'onderzoek' ||
+    value === 'consult' ||
+    value === 'embryo' ||
+    value === 'vraag' ||
+    value === 'medicatie' ||
+    value === 'aanbeveling' ||
+    value === 'research'
+  ) {
+    return value;
+  }
+
+  return undefined;
+}
+
+function parseTimelineEigenaar(
+  value: FormDataEntryValue | null,
+): DailyRecommendationOwner | undefined {
+  if (value === 'vrouw' || value === 'man' || value === 'samen') return value;
   return undefined;
 }
 

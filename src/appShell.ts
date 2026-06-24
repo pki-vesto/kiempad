@@ -65,7 +65,13 @@ import {
   herbouwFertilityGraphIndex,
   maakFertilityGraphConsultSamenvattingExport,
 } from './domain/fertilityKnowledgeGraph';
-import { bouwFertilityTimeline, type FertilityTimeline } from './domain/fertilityTimeline';
+import {
+  bouwFertilityTimeline,
+  type FertilityTimeline,
+  type FertilityTimelineFilter,
+  type FertilityTimelineItemSoort,
+  filterFertilityTimeline,
+} from './domain/fertilityTimeline';
 import {
   HERHALING_LABELS,
   HERINNERING_BRON_LABELS,
@@ -310,6 +316,7 @@ export type AppShellState = {
   dossierZoekterm?: string;
   imagingFilter?: ImagingRepositoryFilter;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
+  timelineFilter?: FertilityTimelineFilter;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -3444,7 +3451,10 @@ function renderTrajectScreen(state: AppShellState): string {
   const selected = actieveTrajecten[0];
   const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
   const overzicht = berekenTrajectOverzicht(state.trajecten);
-  const fertilityTimeline = bouwFertilityTimelineVoorState(state);
+  const fertilityTimeline = filterFertilityTimeline(
+    bouwFertilityTimelineVoorState(state),
+    state.timelineFilter,
+  );
   const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
 
   return `
@@ -3468,7 +3478,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
         ${renderTrajectOverzicht(overzicht)}
-        ${renderFertilityTimeline(fertilityTimeline)}
+        ${renderFertilityTimeline(fertilityTimeline, state.timelineFilter)}
         ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
         <div class="panel-heading">
           <h2>Fasen</h2>
@@ -3527,11 +3537,26 @@ function bouwFertilityTimelineVoorState(state: AppShellState): FertilityTimeline
   });
 }
 
-function renderFertilityTimeline(timeline: FertilityTimeline): string {
+const FERTILITY_TIMELINE_SOORT_LABELS: Record<FertilityTimelineItemSoort, string> = {
+  behandeling: 'Behandeling',
+  onderzoek: 'Onderzoek',
+  consult: 'Consult',
+  embryo: 'Embryo',
+  vraag: 'Vraag',
+  medicatie: 'Medicatie',
+  aanbeveling: 'Aanbeveling',
+  research: 'Research',
+};
+
+function renderFertilityTimeline(
+  timeline: FertilityTimeline,
+  filter: FertilityTimelineFilter = {},
+): string {
   return `
     <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline">
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research vanuit lokale records.</p>
+      ${renderFertilityTimelineFilterForm(filter)}
       ${
         timeline.items.length > 0
           ? `<ol class="compact-list">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
@@ -3542,12 +3567,55 @@ function renderFertilityTimeline(timeline: FertilityTimeline): string {
   `;
 }
 
+function renderFertilityTimelineFilterForm(filter: FertilityTimelineFilter): string {
+  return `
+    <form id="timeline-filter-form" class="data-form compact-form">
+      <label>
+        Type
+        <select name="timelineSoort">
+          <option value="">Alle types</option>
+          ${Object.entries(FERTILITY_TIMELINE_SOORT_LABELS)
+            .map(([value, label]) => renderOption(value, label, filter.soort))
+            .join('')}
+        </select>
+      </label>
+      <label>
+        Vanaf
+        <input name="timelineDatumVanaf" type="date" value="${escapeAttribute(filter.datumVanaf ?? '')}" />
+      </label>
+      <label>
+        Tot
+        <input name="timelineDatumTot" type="date" value="${escapeAttribute(filter.datumTot ?? '')}" />
+      </label>
+      <label>
+        Traject
+        <input name="timelineTrajectId" value="${escapeAttribute(filter.trajectId ?? '')}" autocomplete="off" />
+      </label>
+      <label>
+        Eigenaar
+        <select name="timelineEigenaar">
+          <option value="">Alle eigenaren</option>
+          ${renderOption('vrouw', 'Vrouw', filter.eigenaar)}
+          ${renderOption('man', 'Man', filter.eigenaar)}
+          ${renderOption('samen', 'Samen', filter.eigenaar)}
+        </select>
+      </label>
+      <label>
+        Bron
+        <input name="timelineBron" value="${escapeAttribute(filter.bron ?? '')}" autocomplete="off" />
+      </label>
+      <button type="submit">Filter timeline</button>
+    </form>
+  `;
+}
+
 function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): string {
   return `
     <li>
       <strong>${escapeHtml(item.titel)}</strong>
       <span>${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · ${escapeHtml(item.bron)}</span>
       <small>${escapeHtml(item.detail)}</small>
+      ${item.eigenaar ? `<small>Eigenaar: ${escapeHtml(item.eigenaar)}</small>` : ''}
       ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
     </li>
   `;

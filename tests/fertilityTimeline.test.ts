@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bouwFertilityTimeline } from '../src/domain/fertilityTimeline';
+import { bouwFertilityTimeline, filterFertilityTimeline } from '../src/domain/fertilityTimeline';
 import type { DossierDocument, KennisItem } from '../src/domain/types';
 
 describe('fertility timeline', () => {
@@ -167,5 +167,97 @@ describe('fertility timeline', () => {
       ]),
     );
     expect(timeline.waarschuwing).toContain('geen diagnose');
+  });
+
+  it('filtert tijdlijnitems op type, periode, traject en bron', () => {
+    const timeline = bouwFertilityTimeline({
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'icsi',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-21T09:30',
+          type: 'echo',
+          trajectId: 'traject-1',
+        },
+      ],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-22',
+          titel: 'Bloeduitslag',
+          categorie: 'onderzoek',
+          bestandsNaam: 'bloed.pdf',
+          grootteBytes: 1024,
+          inhoudBase64: 'base64',
+          trajectId: 'traject-1',
+          analyse: { samenvatting: 'Labuitslag vastgelegd.', signalen: [] },
+          metadata: {
+            documentDatum: '2026-06-22',
+            documenttype: 'Labuitslag',
+            trajectId: 'traject-1',
+            bronbestand: 'bloed.pdf',
+            extractieBronnen: [],
+          },
+          uploadedAt: '2026-06-22T10:00:00.000Z',
+        } as DossierDocument,
+      ],
+      consultVerslagen: [],
+      vragen: [],
+      medicatie: [],
+      kennisItems: [],
+      aanbevelingen: {
+        vrouw: [
+          {
+            id: 'vrouw-1',
+            owner: 'vrouw',
+            titel: 'Vrouwelijke voorbereiding',
+            detail: 'Bereid vragen voor.',
+            bron: 'Vragenlijst',
+            waarschuwing: 'Geen behandeladvies.',
+          },
+        ],
+        man: [
+          {
+            id: 'man-1',
+            owner: 'man',
+            titel: 'Mannelijke voorbereiding',
+            detail: 'Noteer observaties.',
+            bron: 'Vragenlijst',
+            waarschuwing: 'Geen behandeladvies.',
+          },
+        ],
+        samen: [],
+      },
+      aanbevelingenDatum: '2026-06-23',
+    });
+
+    expect(
+      filterFertilityTimeline(timeline, {
+        soort: 'onderzoek',
+        datumVanaf: '2026-06-21',
+        datumTot: '2026-06-23',
+        trajectId: 'traject-1',
+        bron: 'bloed',
+      }).items.map((item) => item.id),
+    ).toEqual(['onderzoek-doc-1']);
+    expect(
+      filterFertilityTimeline(timeline, { bron: 'agenda' }).items.map((item) => item.id),
+    ).toEqual(['afspraak-afspraak-1']);
+    expect(
+      filterFertilityTimeline(timeline, { eigenaar: 'vrouw' }).items.map((item) => item.id),
+    ).toEqual(['aanbeveling-vrouw-1']);
   });
 });
