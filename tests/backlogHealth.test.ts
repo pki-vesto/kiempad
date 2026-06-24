@@ -195,10 +195,15 @@ describe('backlog health', () => {
 
     expect(report.findings).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ type: 'duplicate-id', id: 'G244' }),
+        expect.objectContaining({
+          type: 'duplicate-id',
+          id: 'G244',
+          detail: expect.stringContaining('hernoem oude titels'),
+        }),
         expect.objectContaining({ type: 'status-mismatch', id: 'G244' }),
       ]),
     );
+    expect(formatBacklogHealthMarkdown(report)).toContain('geen G### patroon meer bevatten');
     expect(parseIssueSnapshot(issueSnapshot).byGoalId.get('G245')).toMatchObject({
       number: 292,
       state: 'OPEN',

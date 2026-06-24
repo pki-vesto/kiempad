@@ -46,7 +46,8 @@ Voordat je merget:
   geen issue bodies. Raakt de snapshot precies 200 issues, verhoog dan de
   `--limit` en geef dezelfde waarde mee met `--issue-snapshot-limit` voordat je de
   driftcheck als volledig beschouwt, bijvoorbeeld `--limit 500` samen met
-  `--issue-snapshot-limit 500`.
+  `--issue-snapshot-limit 500`. Bij dubbele goal-id's in de snapshot: controleer
+  oude gesloten verzamelissuetitels en verwijder daar het `G###` patroon.
 - `npm run build` — groen.
 - `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
   expliciet allowlisted.

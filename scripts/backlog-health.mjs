@@ -172,7 +172,12 @@ export function buildBacklogHealthReport(input) {
     findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in EXECUTION_GOALS.md.' });
   }
   for (const id of issueSnapshot?.duplicates ?? []) {
-    findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in issue snapshot.' });
+    findings.push({
+      type: 'duplicate-id',
+      id,
+      detail:
+        'Dubbele goal-id in issue snapshot; controleer gesloten verzamelissuetitels en hernoem oude titels zodat ze geen G### patroon meer bevatten.',
+    });
   }
 
   for (const goal of backlog.goals.filter((item) => Number(item.id.slice(1)) >= 244)) {

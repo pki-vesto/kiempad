@@ -108,6 +108,8 @@ URL. Maak hem direct voor validatie, controleer de timestamp bij twijfel en ruim
 200 issues bevat, raakt hij de standaardlimiet; verhoog dan de `--limit` voordat je
 op de issue-driftcheck vertrouwt en geef dezelfde waarde mee aan backlog-health,
 bijvoorbeeld `npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500`.
+Bij een dubbele goal-id in de snapshot: controleer eerst oude gesloten verzamelissues
+en hernoem titels die nog een `G###` patroon bevatten; exporteer geen issue bodies.
 
 Optioneel zelf-hosten van de statische build:
 
