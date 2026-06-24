@@ -2384,4 +2384,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G412 — Backlog Health JSON Contract Recovery Artifact Label Negative Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The recovery paragraph now uses named forbidden artifact labels, but there is no negative fixture proving the label assertion fails clearly when one forbidden artifact term is removed.
+- **Desired Outcome:** Add a parser-level negative fixture for missing forbidden artifact labels in the recovery paragraph.
+- **User Value:** Maintainers get clear feedback if future edits weaken the privacy boundary while leaving the paragraph present.
+- **Acceptance Criteria:** Tests cover a missing forbidden artifact label with a clear label-specific message; assertions remain scoped to the recovery paragraph; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

@@ -29,6 +29,10 @@ const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contrac
 const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION = `herstel beide markercomments ${BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER} en ${BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER} rond dezelfde issueSnapshot-matrixgroepverwachting in tests/backlogHealth.test.ts`;
 const BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR = `Backlog-health contractmatrix ontbreekt: ${BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION}.`;
+const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
+  { label: 'issue snapshots', term: 'issue-snapshot' },
+  { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
+] as const;
 
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
@@ -383,8 +387,8 @@ describe('onderhoudsdocumentatie', () => {
       expect(recoveryParagraph).toContain(requiredTerm);
     }
 
-    for (const forbiddenRecoveryArtifact of ['issue-snapshot', 'ruwe GitHub-output']) {
-      expect(recoveryParagraph).toContain(forbiddenRecoveryArtifact);
+    for (const forbiddenArtifact of BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS) {
+      expect(recoveryParagraph, forbiddenArtifact.label).toContain(forbiddenArtifact.term);
     }
 
     for (const requiredTerm of [
