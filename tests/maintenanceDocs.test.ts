@@ -477,6 +477,14 @@ describe('onderhoudsdocumentatie', () => {
     ).toThrow('Backlog-health artifact docs hint term is te kort: labels.');
   });
 
+  it('faalt duidelijk wanneer een backlog-health recovery artifactlabel-uitleg term leeg is', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryArtifactDocsHintLabels([
+        { label: 'maintenance tests label usage', term: '' },
+      ]),
+    ).toThrow('Backlog-health artifact docs hint term ontbreekt.');
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
@@ -695,6 +703,12 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
   docsHints: ReadonlyArray<{ label: string; term: string }>,
 ): void {
   for (const docsHint of docsHints) {
+    if (docsHint.label.length === 0) {
+      throw new Error('Backlog-health artifact docs hint label ontbreekt.');
+    }
+    if (docsHint.term.length === 0) {
+      throw new Error('Backlog-health artifact docs hint term ontbreekt.');
+    }
     if (docsHint.label.length <= 8) {
       throw new Error(`Backlog-health artifact docs hint label is te generiek: ${docsHint.label}.`);
     }
