@@ -424,6 +424,94 @@ describe('backlog health', () => {
     expect(JSON.stringify(report)).not.toContain('niet opnemen');
   });
 
+  it('houdt het JSON-report contract gelijk aan de consumer notes', () => {
+    const report = buildBacklogHealthReport({
+      backlogMarkdown: `
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G245 | Missing issue example | P1 | F4 | ☐ |
+| G246 | Non-open issue example | P1 | F4 | ☐ |
+| G247 | Completed open issue example | P1 | F4 | ☑ |
+`,
+      executionGoalsMarkdown: `${buildExecutionFixture(['G245', 'G246'])}
+
+### G247 — Completed open issue example
+
+- **Epic:** Continuous Evolution
+- **Problem:** Fixture problem.
+- **Desired Outcome:** Fixture outcome.
+- **User Value:** Fixture value.
+- **Acceptance Criteria:** Fixture criteria.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **Status:** ☑ klaar
+`,
+      issueSnapshotJson: JSON.stringify([
+        {
+          number: 300,
+          title: 'G300 duplicate source',
+          state: 'OPEN',
+          url: 'https://github.com/pki-vesto/kiempad/issues/300',
+          body: 'niet opnemen',
+          token: 'niet opnemen',
+        },
+        {
+          number: 301,
+          title: 'G300 duplicate source copy',
+          state: 'OPEN',
+          url: 'https://github.com/pki-vesto/kiempad/issues/301',
+          body: 'ook niet opnemen',
+        },
+        {
+          number: 246,
+          title: 'G246 non-open issue',
+          state: 'CLOSED',
+          url: 'https://github.com/pki-vesto/kiempad/issues/246',
+          body: 'niet opnemen',
+        },
+        {
+          number: 247,
+          title: 'G247 completed but open issue',
+          state: 'OPEN',
+          url: 'https://github.com/pki-vesto/kiempad/issues/247',
+          body: 'niet opnemen',
+        },
+      ]),
+      issueSnapshotLimit: 500,
+    });
+
+    const issueSnapshot = report.issueSnapshot;
+    expect(issueSnapshot).toBeDefined();
+
+    if (!issueSnapshot) throw new Error('Issue snapshot contract ontbreekt.');
+
+    expect(Object.keys(issueSnapshot).sort()).toEqual([
+      'completedGoalOpenIssues',
+      'duplicateIssues',
+      'missingIssueLinks',
+      'nonOpenIssueLinks',
+    ]);
+    expect(issueSnapshot.duplicateIssues).toHaveLength(1);
+    expect(issueSnapshot.missingIssueLinks).toEqual([
+      { id: 'G245', title: 'Missing issue example' },
+    ]);
+    expect(issueSnapshot.nonOpenIssueLinks).toHaveLength(1);
+    expect(issueSnapshot.completedGoalOpenIssues).toHaveLength(1);
+
+    const reportJson = JSON.stringify(report);
+    for (const forbidden of ['body', 'token', 'niet opnemen', '/tmp/kiempad-issues.json']) {
+      expect(reportJson).not.toContain(forbidden);
+    }
+    expect(extractIssueSnapshotIssueKeys(issueSnapshot)).toEqual([
+      'id',
+      'number',
+      'state',
+      'title',
+      'url',
+    ]);
+  });
+
   it('maakt actieve-goal drift zichtbaar met kleine negatieve fixtures', () => {
     const belowMinimumFindings = buildActiveGoalDriftFindings(
       parseBacklog(buildBacklogFixture(['G244', 'G245'])),
@@ -565,4 +653,17 @@ function buildExecutionFixture(openGoalIds: string[]): string {
 - **Status:** ☐ open`,
     )
     .join('\n\n')}`;
+}
+
+function extractIssueSnapshotIssueKeys(issueSnapshot: {
+  duplicateIssues: Array<{ issues: Array<Record<string, unknown>> }>;
+  nonOpenIssueLinks: Array<{ issue: Record<string, unknown> }>;
+  completedGoalOpenIssues: Array<{ issue: Record<string, unknown> }>;
+}): string[] {
+  const issueObjects = [
+    ...issueSnapshot.duplicateIssues.flatMap((group) => group.issues),
+    ...issueSnapshot.nonOpenIssueLinks.map((entry) => entry.issue),
+    ...issueSnapshot.completedGoalOpenIssues.map((entry) => entry.issue),
+  ];
+  return [...new Set(issueObjects.flatMap((issue) => Object.keys(issue)))].sort();
 }

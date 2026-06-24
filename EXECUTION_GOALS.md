@@ -2174,4 +2174,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G397 — Backlog Health JSON Contract Fixture Helper
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON contract test now builds a representative report inline, but future tests could duplicate bulky backlog and issue fixtures.
+- **Desired Outcome:** Extract or document a compact test helper for representative backlog-health issue-snapshot JSON contract fixtures.
+- **User Value:** Maintainers can extend contract coverage without copying large markdown snippets or accidentally weakening the privacy boundary.
+- **Acceptance Criteria:** Tests use a small helper for representative issue-snapshot contract fixtures; helper keeps bodies/tokens out of expected report output; backlog/docs remain at 100 open goals.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, scripts
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
