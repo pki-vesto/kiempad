@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G251 Continuous Evolution: execution goals hebben een `ADR Needed` marker,
+  `docs/ADR_BACKLOG.md` bewaakt pending ADR-topics en een onderhoudstest valideert
+  markerwaarden.
 - G363 Security & DevEx: eventlogdetail allowlist-governance met rationale, docs voor
   count/statusdetails en tests die health free text blijven afwijzen.
 - G362 Security & DevEx: gevoelige-fixture scanner heeft exact-match allowlist

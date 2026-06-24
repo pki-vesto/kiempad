@@ -3,6 +3,7 @@ import prTemplate from '../.github/PULL_REQUEST_TEMPLATE.md?raw';
 import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
+import adrBacklog from '../docs/ADR_BACKLOG.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
@@ -54,11 +55,35 @@ describe('onderhoudsdocumentatie', () => {
         'Priority',
         'Complexity',
         'Related Components',
+        'ADR Needed',
         'Status',
       ]) {
         expect(`### ${section}`).toContain(`- **${field}:**`);
       }
     }
+  });
+
+  it('houdt ADR-needed markers expliciet en synchroon met de ADR-backlog', () => {
+    const adrMarkers = extractExecutionGoalAdrMarkers();
+
+    expect([...new Set(adrMarkers.map((entry) => entry.value))].sort()).toEqual(['no', 'yes']);
+    for (const marker of adrMarkers) {
+      expect(['yes', 'no']).toContain(marker.value);
+    }
+
+    const adrNeededGoals = adrMarkers
+      .filter((entry) => entry.value === 'yes')
+      .map((entry) => entry.id)
+      .sort();
+
+    expect(adrNeededGoals).toEqual(['G266', 'G304', 'G315', 'G323', 'G344']);
+    for (const goalId of adrNeededGoals) {
+      expect(adrBacklog).toContain(goalId);
+    }
+
+    expect(adrBacklog).toContain('EXECUTION_GOALS.md');
+    expect(adrBacklog).toContain('ADR Needed: yes');
+    expect(adrBacklog).toContain('Pending ADR Topics');
   });
 
   it('houdt de disclaimer-grens consistent in app en kerndocumenten', () => {
@@ -202,4 +227,16 @@ function countGoalStatuses(): Record<string, number> {
     if (status) counts[status] += 1;
   }
   return counts;
+}
+
+function extractExecutionGoalAdrMarkers(): Array<{ id: string; value: string }> {
+  return executionGoals
+    .split('\n### ')
+    .slice(1)
+    .map((section) => {
+      const id = section.match(/^(G\d+)/)?.[1];
+      const value = section.match(/^- \*\*ADR Needed:\*\* (yes|no)$/m)?.[1];
+      if (!id || !value) throw new Error(`ADR Needed marker ontbreekt in ${id ?? section}`);
+      return { id, value };
+    });
 }

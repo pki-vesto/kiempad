@@ -25,8 +25,8 @@ behandelkeuze.
 ## Goal Quality Contract
 
 Elk doel hieronder bevat: Goal ID, Problem, Desired Outcome, User Value, Acceptance
-Criteria, Priority, Complexity en Related Components. Doelen zijn atomair, testbaar,
-uitvoerbaar en meetbaar.
+Criteria, Priority, Complexity, Related Components en ADR Needed. Doelen zijn
+atomair, testbaar, uitvoerbaar en meetbaar.
 
 ## Goal Scoring Rubric
 
@@ -44,6 +44,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Documentation & maintenance
+- **ADR Needed:** no
 - **Score:** 116
 - **Status:** ☑ klaar
 
@@ -57,6 +58,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Docs, tests, GitHub Issues
+- **ADR Needed:** no
 - **Score:** 116
 - **Status:** ☑ klaar
 
@@ -70,6 +72,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, backlog
+- **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☑ klaar
 
@@ -83,6 +86,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Scripts, docs
+- **ADR Needed:** no
 - **Score:** 76
 - **Status:** ☐ open
 
@@ -96,6 +100,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, GitHub CLI
+- **ADR Needed:** no
 - **Score:** 96
 - **Status:** ☐ open
 
@@ -109,6 +114,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** ROADMAP, EXECUTION_GOALS
+- **ADR Needed:** no
 - **Score:** 96
 - **Status:** ☐ open
 
@@ -122,6 +128,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** S
 - **Related Components:** Docs, PR template
+- **ADR Needed:** no
 - **Score:** 123
 - **Status:** ☑ klaar
 
@@ -135,8 +142,9 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** ADR, docs
+- **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G252 — User Workflow Gap Review
 
@@ -148,6 +156,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Docs, app shell
+- **ADR Needed:** no
 - **Score:** 96
 - **Status:** ☐ open
 
@@ -161,6 +170,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** docs/RUNBOOK.md
+- **ADR Needed:** no
 - **Score:** 83
 - **Status:** ☐ open
 
@@ -174,6 +184,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** EXECUTION_GOALS, tests
+- **ADR Needed:** no
 - **Score:** 83
 - **Status:** ☐ open
 
@@ -187,6 +198,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** CHANGELOG, scripts
+- **ADR Needed:** no
 - **Score:** 76
 - **Status:** ☐ open
 
@@ -200,6 +212,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** EXECUTION_GOALS
+- **ADR Needed:** no
 - **Score:** 76
 - **Status:** ☐ open
 
@@ -213,6 +226,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs
+- **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
 
@@ -226,6 +240,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** M
 - **Related Components:** Docs, app shell or script
+- **ADR Needed:** no
 - **Score:** 56
 - **Status:** ☐ open
 
@@ -239,6 +254,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, PRODUCT_BACKLOG
+- **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
 
@@ -252,6 +268,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** EXECUTION_GOALS, VISIE
+- **ADR Needed:** no
 - **Score:** 83
 - **Status:** ☐ open
 
@@ -265,6 +282,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** ROADMAP, EXECUTION_GOALS
+- **ADR Needed:** no
 - **Score:** 96
 - **Status:** ☐ open
 
@@ -278,6 +296,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** GitHub Issues, docs
+- **ADR Needed:** no
 - **Score:** 83
 - **Status:** ☐ open
 
@@ -291,6 +310,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Docs
+- **ADR Needed:** no
 - **Score:** 63
 - **Status:** ☐ open
 
@@ -304,6 +324,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** App shell, vault, settings
+- **ADR Needed:** no
 - **Score:** 118
 - **Status:** ☑ klaar
 
@@ -317,6 +338,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** L
 - **Related Components:** Start screen, agenda, medication, questions
+- **ADR Needed:** no
 - **Score:** 110
 - **Status:** ☑ klaar
 
@@ -330,6 +352,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Settings, start screen
+- **ADR Needed:** yes
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -343,6 +366,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** L
 - **Related Components:** Questions, timeline, graph, export
+- **ADR Needed:** no
 - **Score:** 110
 - **Status:** ☑ klaar
 
@@ -356,6 +380,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Consult records, questions, actions
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -369,6 +394,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Medication, reminders
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -382,6 +408,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Questions
+- **ADR Needed:** no
 - **Score:** 85
 - **Status:** ☐ open
 
@@ -395,6 +422,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Timeline, quick entry
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -408,6 +436,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, onboarding
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -421,6 +450,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** App shell UX
+- **ADR Needed:** no
 - **Score:** 85
 - **Status:** ☐ open
 
@@ -434,6 +464,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Notifications, UX copy
+- **ADR Needed:** no
 - **Score:** 85
 - **Status:** ☐ open
 
@@ -447,6 +478,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Agenda, timeline, costs, wellbeing
+- **ADR Needed:** no
 - **Score:** 78
 - **Status:** ☐ open
 
@@ -460,6 +492,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** M
 - **Related Components:** Settings, UI
+- **ADR Needed:** no
 - **Score:** 58
 - **Status:** ☐ open
 
@@ -473,6 +506,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** L
 - **Related Components:** Timeline, export
+- **ADR Needed:** no
 - **Score:** 50
 - **Status:** ☐ open
 
@@ -486,6 +520,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Agenda, costs
+- **ADR Needed:** no
 - **Score:** 85
 - **Status:** ☐ open
 
@@ -499,6 +534,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Backup, settings
+- **ADR Needed:** no
 - **Score:** 85
 - **Status:** ☐ open
 
@@ -512,6 +548,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Dossier, questions, knowledge, timeline
+- **ADR Needed:** no
 - **Score:** 90
 - **Status:** ☐ open
 
@@ -525,6 +562,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Start screen, export
+- **ADR Needed:** no
 - **Score:** 78
 - **Status:** ☐ open
 
@@ -538,6 +576,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Forms, accessibility
+- **ADR Needed:** no
 - **Score:** 78
 - **Status:** ☐ open
 
@@ -551,6 +590,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** UI copy
+- **ADR Needed:** no
 - **Score:** 65
 - **Status:** ☐ open
 
@@ -564,6 +604,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** PWA, service worker
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -577,6 +618,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** PWA, tests
+- **ADR Needed:** no
 - **Score:** 117
 - **Status:** ☑ klaar
 
@@ -590,6 +632,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Backup, tests, runbook
+- **ADR Needed:** no
 - **Score:** 117
 - **Status:** ☑ klaar
 
@@ -603,6 +646,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Tailscale, scripts
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -616,6 +660,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Storage, domain stores
+- **ADR Needed:** no
 - **Score:** 89
 - **Status:** ☐ open
 
@@ -629,6 +674,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Dossier, consults, agenda
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -642,6 +688,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Backup, sync, dossier
+- **ADR Needed:** no
 - **Score:** 89
 - **Status:** ☐ open
 
@@ -655,6 +702,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Sync
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -668,6 +716,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Build, CI
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -681,6 +730,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, timeline
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -694,6 +744,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Storage, backup
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -707,6 +758,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** App shell
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -720,6 +772,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Forms, storage
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -733,6 +786,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Event log
+- **ADR Needed:** no
 - **Score:** 64
 - **Status:** ☐ open
 
@@ -746,6 +800,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** docs/RUNBOOK, tests
+- **ADR Needed:** no
 - **Score:** 84
 - **Status:** ☐ open
 
@@ -759,6 +814,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Backup, sync, dossier
+- **ADR Needed:** no
 - **Score:** 84
 - **Status:** ☐ open
 
@@ -772,6 +828,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Diagnostics, export
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -785,6 +842,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Vault UX
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -798,6 +856,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Notifications, event log
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -811,6 +870,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Docs, PWA
+- **ADR Needed:** no
 - **Score:** 64
 - **Status:** ☐ open
 
@@ -824,6 +884,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** AI, knowledge
+- **ADR Needed:** yes
 - **Score:** 87
 - **Status:** ☐ open
 
@@ -837,6 +898,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** AI, docs, tests
+- **ADR Needed:** no
 - **Score:** 115
 - **Status:** ☑ klaar
 
@@ -850,6 +912,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Research, knowledge
+- **ADR Needed:** no
 - **Score:** 87
 - **Status:** ☐ open
 
@@ -863,6 +926,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Knowledge
+- **ADR Needed:** no
 - **Score:** 75
 - **Status:** ☐ open
 
@@ -876,6 +940,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Research, questions
+- **ADR Needed:** no
 - **Score:** 95
 - **Status:** ☐ open
 
@@ -889,6 +954,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Research
+- **ADR Needed:** no
 - **Score:** 87
 - **Status:** ☐ open
 
@@ -902,6 +968,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Research, reminders
+- **ADR Needed:** no
 - **Score:** 82
 - **Status:** ☐ open
 
@@ -915,6 +982,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Research export
+- **ADR Needed:** no
 - **Score:** 82
 - **Status:** ☐ open
 
@@ -928,6 +996,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** AI summaries, knowledge
+- **ADR Needed:** no
 - **Score:** 95
 - **Status:** ☐ open
 
@@ -941,6 +1010,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** AI payloads
+- **ADR Needed:** no
 - **Score:** 115
 - **Status:** ☑ klaar
 
@@ -954,6 +1024,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** AI settings
+- **ADR Needed:** no
 - **Score:** 82
 - **Status:** ☐ open
 
@@ -967,6 +1038,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** M
 - **Related Components:** AI settings
+- **ADR Needed:** yes
 - **Score:** 55
 - **Status:** ☐ open
 
@@ -980,6 +1052,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Knowledge graph, research
+- **ADR Needed:** no
 - **Score:** 75
 - **Status:** ☐ open
 
@@ -993,6 +1066,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Questions, AI policy
+- **ADR Needed:** no
 - **Score:** 95
 - **Status:** ☐ open
 
@@ -1006,6 +1080,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** L
 - **Related Components:** Knowledge, storage
+- **ADR Needed:** no
 - **Score:** 67
 - **Status:** ☐ open
 
@@ -1019,6 +1094,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Research, export
+- **ADR Needed:** no
 - **Score:** 75
 - **Status:** ☐ open
 
@@ -1032,6 +1108,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** AI tests
+- **ADR Needed:** no
 - **Score:** 115
 - **Status:** ☑ klaar
 
@@ -1045,6 +1122,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** AI UI
+- **ADR Needed:** no
 - **Score:** 62
 - **Status:** ☐ open
 
@@ -1058,6 +1136,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Research opt-in, event log
+- **ADR Needed:** no
 - **Score:** 95
 - **Status:** ☐ open
 
@@ -1071,6 +1150,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** AI settings, knowledge
+- **ADR Needed:** yes
 - **Score:** 95
 - **Status:** ☐ open
 
@@ -1084,6 +1164,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Build, index.html
+- **ADR Needed:** no
 - **Score:** 117
 - **Status:** ☑ klaar
 
@@ -1097,6 +1178,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, package
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1110,6 +1192,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Tests, repo
+- **ADR Needed:** no
 - **Score:** 117
 - **Status:** ☑ klaar
 
@@ -1123,6 +1206,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Tests, docs
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1136,6 +1220,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Storage, tests
+- **ADR Needed:** no
 - **Score:** 89
 - **Status:** ☐ open
 
@@ -1149,6 +1234,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Architecture, tests
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -1162,6 +1248,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** UI tests
+- **ADR Needed:** no
 - **Score:** 89
 - **Status:** ☐ open
 
@@ -1175,6 +1262,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** UI tests
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -1188,6 +1276,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Exports
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1201,6 +1290,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Event log, docs
+- **ADR Needed:** no
 - **Score:** 84
 - **Status:** ☐ open
 
@@ -1214,6 +1304,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** L
 - **Related Components:** Forms
+- **ADR Needed:** no
 - **Score:** 69
 - **Status:** ☐ open
 
@@ -1227,6 +1318,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** App shell
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -1240,6 +1332,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** L
 - **Related Components:** main.ts, stores
+- **ADR Needed:** no
 - **Score:** 49
 - **Status:** ☐ open
 
@@ -1253,6 +1346,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Event log tests
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1266,6 +1360,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Tailscale docs, scripts
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -1279,6 +1374,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, tests
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1292,6 +1388,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Docs, CI
+- **ADR Needed:** no
 - **Score:** 64
 - **Status:** ☐ open
 
@@ -1305,6 +1402,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Styles
+- **ADR Needed:** no
 - **Score:** 84
 - **Status:** ☐ open
 
@@ -1318,6 +1416,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** S
 - **Related Components:** PWA, tests
+- **ADR Needed:** no
 - **Score:** 124
 - **Status:** ☑ klaar
 
@@ -1331,6 +1430,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** TypeScript
+- **ADR Needed:** no
 - **Score:** 77
 - **Status:** ☐ open
 
@@ -1344,6 +1444,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Architecture, security docs
+- **ADR Needed:** yes
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1357,6 +1458,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, GitHub Issues, docs
+- **ADR Needed:** no
 - **Score:** 96
 - **Status:** ☐ open
 
@@ -1370,6 +1472,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, GitHub Issues, docs
+- **ADR Needed:** no
 - **Score:** 96
 - **Status:** ☐ open
 
@@ -1383,6 +1486,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P0
 - **Complexity:** S
 - **Related Components:** CI, PWA, tests
+- **ADR Needed:** no
 - **Score:** 124
 - **Status:** ☑ klaar
 
@@ -1396,6 +1500,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Tests, docs, asset scanner
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1409,6 +1514,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, PR template, maintenance tests
+- **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
 
@@ -1422,6 +1528,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** App shell, settings, onboarding tests
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -1435,6 +1542,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** PWA, Playwright smoke, docs
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1448,6 +1556,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Storage, backup, tests
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1461,6 +1570,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** CSP, docs, security tests
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1474,6 +1584,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Secrets scan, tests, docs
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1487,6 +1598,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** AI registry, app shell, docs
+- **ADR Needed:** no
 - **Score:** 95
 - **Status:** ☐ open
 
@@ -1500,6 +1612,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** AI payloads, privacy tests, docs
+- **ADR Needed:** no
 - **Score:** 102
 - **Status:** ☐ open
 
@@ -1513,6 +1626,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** AI tests, docs, maintenance scripts
+- **ADR Needed:** no
 - **Score:** 102
 - **Status:** ☐ open
 
@@ -1526,6 +1640,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Start screen, settings, app shell tests
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -1539,6 +1654,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Questions, storage, export
+- **ADR Needed:** no
 - **Score:** 98
 - **Status:** ☐ open
 
@@ -1552,6 +1668,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Vault UX, WebAuthn, backup guidance
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1565,6 +1682,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, scripts, dependency review
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1578,6 +1696,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Fixture scanner, docs, tests
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1591,6 +1710,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Event log privacy, docs, tests
+- **ADR Needed:** no
 - **Score:** 104
 - **Status:** ☑ klaar
 
@@ -1604,6 +1724,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, docs, CI
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1617,6 +1738,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Docs, asset scanner, maintenance tests
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1630,6 +1752,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** CSP docs, tests, dev tooling
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1643,6 +1766,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Secrets scan, docs, maintenance tests
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1656,6 +1780,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Vault UX, visual tests, docs
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1669,6 +1794,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dependency review script, docs, tests
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1682,6 +1808,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Fixture scanner, docs, maintenance tests
+- **ADR Needed:** no
 - **Score:** 97
 - **Status:** ☐ open
 
@@ -1695,5 +1822,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Event log privacy, docs, maintenance tests
+- **ADR Needed:** no
 - **Score:** 97
+- **Status:** ☐ open
+
+### G372 — ADR Review Evidence Template
+
+- **Epic:** Continuous Evolution
+- **Problem:** ADR-needed goals are now marked, but completed ADR reviews do not yet have a structured evidence format.
+- **Desired Outcome:** Add a template for recording ADR review date, reviewed goal, decision, ADR route and follow-up requirements.
+- **User Value:** Architecture-sensitive work remains auditable and reversible over time.
+- **Acceptance Criteria:** Template records goal id, reviewer/date, existing ADRs consulted, decision outcome and follow-up; docs explain where evidence lives; maintenance test covers the template schema; no sensitive user data is stored.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** ADR backlog, docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
