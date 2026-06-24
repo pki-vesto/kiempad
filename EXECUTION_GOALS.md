@@ -2944,4 +2944,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G452 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Assertion Labels
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture now has both explicit expected-value and shared-equality assertions, but their test names are long and very similar.
+- **Desired Outcome:** Review and clarify the static alias assertion labels so each test communicates its distinct contract.
+- **User Value:** Maintainers can quickly distinguish direct value coverage from shared fixture equality coverage.
+- **Acceptance Criteria:** Static alias assertion labels are reviewed and, if useful, clarified without weakening either assertion; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
