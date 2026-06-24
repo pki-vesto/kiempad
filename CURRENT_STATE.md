@@ -525,8 +525,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G313 volgens `npm run goals:score`: Sensitive
-   Text Redaction Preview heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G320 volgens `npm run goals:score`: Prompt
+   Regression Suite heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

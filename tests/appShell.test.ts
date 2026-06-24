@@ -2141,11 +2141,21 @@ describe('app shell', () => {
         bron: 'https://voorbeeld.test/artikel',
         lengteOrigineel: 80,
         lengteVerstuurd: 24,
+        redacties: [
+          {
+            type: 'naam',
+            label: 'Naam/patiëntnaam',
+            aantal: 1,
+            vervanging: '[naam verwijderd]',
+          },
+        ],
       },
     });
 
     expect(html).toContain('id="ai-preview-form"');
     expect(html).toContain('Payload-preview');
+    expect(html).toContain('Verwijderde velden');
+    expect(html).toContain('Naam/patiëntnaam: 1x vervangen door [naam verwijderd]');
     expect(html).toContain('Naam: [naam verwijderd]');
     expect(html).toContain('24 van 80 tekens');
     expect(html).toContain('id="ai-summary-form"');

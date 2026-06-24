@@ -942,7 +942,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** AI payloads
 - **Score:** 115
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G314 — Cloud AI Cost Warning
 
@@ -1488,4 +1488,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** AI registry, app shell, docs
 - **Score:** 95
+- **Status:** ☐ open
+
+### G356 — Redaction Pattern Baseline Review
+
+- **Epic:** AI & Research
+- **Problem:** Redaction preview covers common identifiers, but future AI inputs may need broader localized patterns and clearer ownership.
+- **Desired Outcome:** Document and expand the redaction pattern baseline with examples, limits and maintenance ownership.
+- **User Value:** Users can trust opt-in AI previews as document, consult and research inputs evolve.
+- **Acceptance Criteria:** Docs list current redaction patterns and limits; tests add at least one negative non-sensitive date/source case and one new positive identifier case; preview remains local and does not show raw redacted values.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** AI payloads, privacy tests, docs
+- **Score:** 102
 - **Status:** ☐ open
