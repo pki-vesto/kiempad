@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G372 Continuous Evolution: ADR-review evidence template toegevoegd met goal-id,
+  reviewer/datum, geraadpleegde ADR's, decision outcome, ADR-route, follow-up en
+  evidencegrenzen; ADR-backlog en onderhoudstest borgen het schema.
 - G349 Continuous Evolution: completion-audit evidence markers zijn toegevoegd aan
   `docs/GOAL_COMPLETION_AUDIT.md` en de PR-template, met ingevuld voorbeeld en
   onderhoudstest voor verplichte markerheadings en velden.

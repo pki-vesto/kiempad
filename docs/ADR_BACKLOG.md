@@ -15,6 +15,10 @@ Een `yes`-doel hoeft niet altijd een nieuwe ADR op te leveren. De review mag ook
 vastleggen dat een bestaande ADR voldoende is, maar die conclusie moet in PR of docs
 expliciet zijn.
 
+Gebruik [`ADR_REVIEW_EVIDENCE_TEMPLATE.md`](ADR_REVIEW_EVIDENCE_TEMPLATE.md) om die
+conclusie vast te leggen. Het template registreert goal-id, reviewer/datum,
+geraadpleegde ADR's, besluituitkomst, ADR-route, follow-up en evidencegrenzen.
+
 ## Pending ADR Topics
 
 | Goal | Topic | Waarom ADR-review nodig is | Waarschijnlijke ADR-route |
@@ -31,5 +35,6 @@ expliciet zijn.
   AI-providerintegratie, sync-relay of autonome governance krijgen standaard
   `ADR Needed: yes`.
 - Sluit een ADR-needed doel pas als het PR-bewijs naar de relevante ADR-review wijst.
+- Gebruik het ADR-review evidence template voor ingevulde reviewbewijzen.
 - Houd deze tabel synchroon met alle `ADR Needed: yes` entries in
   `EXECUTION_GOALS.md`.
