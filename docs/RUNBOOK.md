@@ -19,6 +19,8 @@ de lokale data versleuteld wordt.
 
 - **Build/typecheck:** `npm run typecheck` (geen TS-fouten).
 - **Tests:** `npm run test` (Vitest groen).
+- **Asset-privacy:** `npm run build && npm run assets:check` (geen externe
+  image/font/script/manifest-URL's in bron- of buildassets).
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
 - **Opslag:** data leesbaar na ontgrendelen, onleesbaar zonder passphrase.
 - **Privacy-rook­test:** in de netwerk-tab is er **geen** verkeer naar derden tenzij

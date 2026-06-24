@@ -1384,4 +1384,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** CI, PWA, tests
 - **Score:** 124
+- **Status:** ☑ klaar
+
+### G348 — External Asset Allowlist Governance
+
+- **Epic:** Security & DevEx
+- **Problem:** The scanner has a minimal built-in allowlist, but future exceptions need an explicit governance path.
+- **Desired Outcome:** Document and test how external asset allowlist exceptions are reviewed and maintained.
+- **User Value:** Kiempad remains self-contained by default while unavoidable technical namespaces or assets stay auditable.
+- **Acceptance Criteria:** Documentation explains when an external asset URL may be allowlisted; scanner tests verify every allowlisted URL has a reason; adding an allowlist entry without a documented reason fails a local test.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Tests, docs, asset scanner
+- **Score:** 104
 - **Status:** ☐ open

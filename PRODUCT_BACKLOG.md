@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 247 |
+| ☑ klaar | 248 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **347** |
+| **Totaal** | **348** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -492,13 +492,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G344 | Future Sync Relay Threat Model | P1 | F4 | ☐ |
 | G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☐ |
 | G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
-| G347 | External Asset CI Gate | P0 | F4 | ☐ |
+| G347 | External Asset CI Gate | P0 | F4 | ☑ |
+| G348 | External Asset Allowlist Governance | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 347** (id's G001 t/m G347, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 348** (id's G001 t/m G348, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
