@@ -506,6 +506,13 @@ describe('app shell', () => {
     expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
     expect(html).toContain('Echo verslag');
+    expect(html).toContain('class="compact-list timeline-list"');
+    expect(html).toContain('class="timeline-detail-panel"');
+    expect(html).toContain('<dt>Bron</dt><dd>echo.pdf</dd>');
+    expect(html).toContain('<dt>Context</dt><dd>Categorie Onderzoek</dd>');
+    expect(html).toContain('<dt>Record-ID</dt><dd>doc-1</dd>');
+    expect(html).toContain('Dossierrecord: Echo verslag');
+    expect(html).toContain('Traject: traject-1');
     expect(html).not.toContain('Behandelvoorbereiding');
     expect(html).toContain('id="graph-filter-form"');
     expect(html).toContain('name="graphRelatieType"');

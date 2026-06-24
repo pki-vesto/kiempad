@@ -70,6 +70,7 @@ import {
   type FertilityTimeline,
   type FertilityTimelineFilter,
   type FertilityTimelineItemSoort,
+  type FertilityTimelineRecordKoppeling,
   filterFertilityTimeline,
 } from './domain/fertilityTimeline';
 import {
@@ -3559,7 +3560,7 @@ function renderFertilityTimeline(
       ${renderFertilityTimelineFilterForm(filter)}
       ${
         timeline.items.length > 0
-          ? `<ol class="compact-list">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
+          ? `<ol class="compact-list timeline-list">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
           : '<p class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
@@ -3617,9 +3618,47 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
       <small>${escapeHtml(item.detail)}</small>
       ${item.eigenaar ? `<small>Eigenaar: ${escapeHtml(item.eigenaar)}</small>` : ''}
       ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
+      <details class="timeline-detail-panel">
+        <summary>Details</summary>
+        <dl class="summary-list">
+          <div><dt>Bron</dt><dd>${escapeHtml(item.bron)}</dd></div>
+          <div><dt>Context</dt><dd>${escapeHtml(item.context)}</dd></div>
+          <div><dt>Record-ID</dt><dd>${escapeHtml(item.recordId)}</dd></div>
+        </dl>
+        ${
+          item.gekoppeldeRecords.length > 0
+            ? `<ul class="linked-record-list">
+                ${item.gekoppeldeRecords
+                  .map(
+                    (record) => `
+                      <li>
+                        <span>${escapeHtml(FERTILITY_TIMELINE_RECORD_LABELS[record.soort])}</span>
+                        <strong>${escapeHtml(record.label)}</strong>
+                        <small>${escapeHtml(record.id)}</small>
+                      </li>
+                    `,
+                  )
+                  .join('')}
+              </ul>`
+            : '<p class="empty-state">Geen gekoppelde records.</p>'
+        }
+      </details>
     </li>
   `;
 }
+
+const FERTILITY_TIMELINE_RECORD_LABELS: Record<FertilityTimelineRecordKoppeling['soort'], string> =
+  {
+    traject: 'Traject',
+    afspraak: 'Afspraak',
+    dossier: 'Dossierrecord',
+    consult: 'Consultverslag',
+    vraag: 'Vraag',
+    medicatie: 'Medicatie',
+    doseLog: 'Medicatiemoment',
+    kennis: 'Kennisitem',
+    aanbeveling: 'Aanbeveling',
+  };
 
 function bouwTrajectGraphWeergave(
   state: AppShellState,

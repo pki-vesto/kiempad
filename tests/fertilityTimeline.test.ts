@@ -166,6 +166,20 @@ describe('fertility timeline', () => {
         expect.objectContaining({ titel: 'Consultvraag voorbereiden', soort: 'aanbeveling' }),
       ]),
     );
+    expect(timeline.items.find((item) => item.id === 'onderzoek-doc-embryo')).toMatchObject({
+      context: 'Categorie Embryokwaliteit · documenttype Embryorapport',
+      gekoppeldeRecords: expect.arrayContaining([
+        { soort: 'dossier', id: 'doc-embryo', label: 'Dossierrecord: Embryorapport' },
+        { soort: 'traject', id: 'traject-1', label: 'Traject: traject-1' },
+      ]),
+    });
+    expect(timeline.items.find((item) => item.id === 'afspraak-afspraak-1')).toMatchObject({
+      context: 'Afspraaktype Echo.',
+      gekoppeldeRecords: expect.arrayContaining([
+        { soort: 'afspraak', id: 'afspraak-1', label: 'Afspraak: Echo controle' },
+        { soort: 'traject', id: 'traject-1', label: 'Traject: traject-1' },
+      ]),
+    });
     expect(timeline.waarschuwing).toContain('geen diagnose');
   });
 
