@@ -2440,4 +2440,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G416 — Backlog Health JSON Contract Recovery Artifact Docs Hint Label Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The artifact docs hint terms are now centralized, but their labels are not asserted, so future diagnostics could become generic again.
+- **Desired Outcome:** Add a focused assertion that each artifact docs hint constant has a meaningful diagnostic label.
+- **User Value:** Maintainers get actionable failure messages when recovery guidance drifts.
+- **Acceptance Criteria:** Tests assert the docs hint constants include stable labels and terms; helper errors remain term-specific; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

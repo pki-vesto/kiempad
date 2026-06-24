@@ -33,6 +33,10 @@ const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
 ] as const;
+const BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS = [
+  { label: 'maintenance tests label usage', term: 'onderhoudstests gebruiken die labels' },
+  { label: 'recovery fixes boundary', term: 'recoveryfixes' },
+] as const;
 
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
@@ -651,12 +655,12 @@ function expectBacklogHealthRecoveryForbiddenArtifactLabels(recoveryParagraph: s
 }
 
 function expectBacklogHealthRecoveryArtifactDocsHint(recoveryParagraph: string): void {
-  const docsHint = 'onderhoudstests gebruiken die labels';
-  if (!recoveryParagraph.includes(docsHint)) {
-    throw new Error(`Backlog-health recoveryparagraaf mist artifact-label uitleg: ${docsHint}.`);
-  }
-  if (!recoveryParagraph.includes('recoveryfixes')) {
-    throw new Error('Backlog-health recoveryparagraaf mist artifact-label uitleg: recoveryfixes.');
+  for (const docsHint of BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS) {
+    if (!recoveryParagraph.includes(docsHint.term)) {
+      throw new Error(
+        `Backlog-health recoveryparagraaf mist artifact-label uitleg: ${docsHint.term}.`,
+      );
+    }
   }
 }
 
