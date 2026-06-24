@@ -1,14 +1,19 @@
 import { AFSPRAAK_TYPE_LABELS } from './agenda';
 import type { DailyRecommendationOverview } from './dailyRecommendations';
 import { DOSSIER_CATEGORIE_LABELS } from './dossier';
+import { MEDICATIE_VORM_LABELS } from './medicatie';
+import type { MedicatieBundle } from './medicatieStore';
 import type { TrajectMetFasen } from './traject';
 import type { Afspraak, ConsultVerslag, DossierDocument, KennisItem } from './types';
+import type { VraagBundle } from './vraagStore';
 
 export type FertilityTimelineItemSoort =
   | 'behandeling'
   | 'onderzoek'
   | 'consult'
   | 'embryo'
+  | 'vraag'
+  | 'medicatie'
   | 'aanbeveling'
   | 'research';
 
@@ -37,6 +42,8 @@ export function bouwFertilityTimeline(input: {
   afspraken: readonly Afspraak[];
   dossierDocuments: readonly DossierDocument[];
   consultVerslagen: readonly ConsultVerslag[];
+  vragen?: readonly VraagBundle[];
+  medicatie?: readonly MedicatieBundle[];
   kennisItems: readonly KennisItem[];
   aanbevelingen?: DailyRecommendationOverview;
   aanbevelingenDatum?: string;
@@ -126,6 +133,52 @@ export function bouwFertilityTimeline(input: {
     }),
   );
 
+  const vraagItems = (input.vragen ?? []).map(
+    (bundle): FertilityTimelineItem => ({
+      id: `vraag-${bundle.vraag.id}`,
+      datum: bundle.afspraak?.datumTijd ?? '9999-12-31',
+      soort: 'vraag',
+      titel: bundle.vraag.vraag,
+      label: bundle.vraag.beantwoord ? 'Vraag beantwoord' : 'Open vraag',
+      detail: bundle.vraag.beantwoord
+        ? `Antwoord: ${bundle.vraag.antwoord ?? 'zonder tekst'}`
+        : 'Nog open voor consultvoorbereiding.',
+      bron: bundle.afspraak ? `Vragenlijst bij ${bundle.afspraak.titel}` : 'Vragenlijst',
+      trajectId: bundle.afspraak?.trajectId,
+      recordId: bundle.vraag.id,
+    }),
+  );
+
+  const medicatieItems = (input.medicatie ?? []).flatMap((bundle): FertilityTimelineItem[] => {
+    const eersteDoseLog = bundle.doseLogs[0];
+    const medicatieItem: FertilityTimelineItem = {
+      id: `medicatie-${bundle.medicatie.id}`,
+      datum: eersteDoseLog?.geplandOp ?? '9999-12-31',
+      soort: 'medicatie',
+      titel: bundle.medicatie.naam,
+      label: MEDICATIE_VORM_LABELS[bundle.medicatie.vorm],
+      detail: bundle.medicatie.actief
+        ? 'Medicatie actief vastgelegd.'
+        : 'Medicatie niet actief vastgelegd.',
+      bron: 'Medicatie',
+      recordId: bundle.medicatie.id,
+    };
+    const doseLogItems = bundle.doseLogs.map(
+      (doseLog): FertilityTimelineItem => ({
+        id: `dose-log-${doseLog.id}`,
+        datum: doseLog.geplandOp,
+        soort: 'medicatie',
+        titel: bundle.medicatie.naam,
+        label: `Medicatiemoment · ${doseLog.status}`,
+        detail: doseLog.notitie ?? 'Gepland medicatiemoment uit lokaal schema.',
+        bron: 'Medicatieplanning',
+        recordId: doseLog.id,
+      }),
+    );
+
+    return [medicatieItem, ...doseLogItems];
+  });
+
   const researchItems = input.kennisItems
     .filter((item) => item.categorie === 'research')
     .map(
@@ -166,6 +219,8 @@ export function bouwFertilityTimeline(input: {
       ...documentItems,
       ...embryoItems,
       ...consultItems,
+      ...vraagItems,
+      ...medicatieItems,
       ...researchItems,
       ...aanbevelingItems,
     ].sort(
@@ -179,7 +234,14 @@ export function bouwFertilityTimeline(input: {
 }
 
 function soortVolgorde(soort: FertilityTimelineItemSoort): number {
-  return ['behandeling', 'onderzoek', 'embryo', 'consult', 'research', 'aanbeveling'].indexOf(
-    soort,
-  );
+  return [
+    'behandeling',
+    'onderzoek',
+    'embryo',
+    'consult',
+    'vraag',
+    'medicatie',
+    'research',
+    'aanbeveling',
+  ].indexOf(soort);
 }
