@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G305 AI & Research: centrale AI prompt registry met doel, versie, inputcontract,
+  veiligheidslabels, verboden output en policytests voor diagnose/dosering/behandelkeuze.
 - G326 Security & DevEx: `npm run secrets:check` scant docs/source op gangbare
   credentialpatronen met een minimale expliciete allowlist en draait in CI.
 - G324 Security & DevEx: `index.html` bevat een local-first Content Security Policy
