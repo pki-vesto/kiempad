@@ -446,6 +446,9 @@
   `PRODUCT_BACKLOG.md`, `EXECUTION_GOALS.md` en optioneel een vooraf geëxporteerde
   GitHub issue-snapshot, zodat ontbrekende issue-links, dubbele goal-id's en
   statusdrift zichtbaar worden zonder netwerkverplichting.
+- **G246 Goal Scoring Model:** `EXECUTION_GOALS.md` bevat een reproduceerbare
+  scoringrubric en scorevelden; `npm run goals:score` rangschikt open doelen op
+  prioriteit, complexiteit, epic-modifier en Goal ID.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -499,8 +502,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G246: goal scoring model voor reproduceerbare
-   prioritering.
+1. Continuous Evolution uitvoeren vanaf G342 volgens `npm run goals:score`: No
+   External Asset Test heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

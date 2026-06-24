@@ -26,4 +26,21 @@ declare module '*.mjs' {
     summary: Record<string, unknown>;
     findings: Array<Record<string, unknown>>;
   }): string;
+  export function scoreGoal(goal: { fields: Record<string, unknown> }): number;
+  export function rankExecutionGoals(markdown: string): Array<{
+    id: string;
+    title: string;
+    fields: Record<string, unknown>;
+    score: number;
+    status?: string;
+  }>;
+  export function formatGoalScoreMarkdown(
+    rankedGoals: Array<{
+      id: string;
+      title: string;
+      fields: Record<string, unknown>;
+      score: number;
+    }>,
+    limit?: number,
+  ): string;
 }
