@@ -441,6 +441,8 @@
 
 ## 3. Nog Niet Gebouwd
 
+- **G244 Continuous Evolution catalogus:** `EXECUTION_GOALS.md` definieert de tweede-generatie doelcatalogus met 5 actieve epics, F5-horizon en 100 open doelen (G245-G344) met probleem, gewenste uitkomst, gebruikerswaarde, acceptatiecriteria, prioriteit, complexiteit en componenten.
+
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
 is volledig verwerkt in de backlog (G180-G243 afgerond), gericht op dossier-ingest,
@@ -493,8 +495,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Nieuwe PFIP- of stabiliteitsdoelen bepalen nu de volgende slice; de huidige
-   G180-G243 PFIP-epic is afgevinkt.
+1. Continuous Evolution uitvoeren vanaf G245: backlog health dashboard voor drift tussen backlog, execution catalogus en GitHub Issues.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

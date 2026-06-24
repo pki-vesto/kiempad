@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G244 Continuous Evolution: tweede-generatie execution goal catalogus met 100 actieve doelen, 5 epics, F5-horizon en rijk doelenschema.
 - G243 PFIP fertility timeline: timeline heeft een toegankelijk mobiel
   overzicht met ankers naar items, mijlpalen, context en export.
 - G242 PFIP fertility timeline: timeline-opbouw, filtering en export blijven offline;

@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 243 |
+| ☑ klaar | 244 |
 | ◐ bezig | 0 |
-| ☐ open | 0 |
-| **Totaal** | **243** |
+| ☐ open | 100 |
+| **Totaal** | **344** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -383,11 +383,119 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G242 | PFIP fertility timeline: tijdlijn blijft bruikbaar offline en na import van back-up/syncpakket | P0 | F3 | ☑ |
 | G243 | PFIP fertility timeline: toegankelijk mobiel ontwerp voor één-scherm-overzicht van het volledige traject | P1 | F3 | ☑ |
 
+## 21. Continuous Evolution & Goal Expansion
+
+Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcatalogus en issue-seeding; G245-G344 blijven actief zodat de backlog niet opdroogt.
+
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G244 | Goal Expansion Engine | P0 | F4 | ☑ |
+| G245 | Backlog Health Dashboard | P0 | F4 | ☐ |
+| G246 | Goal Scoring Model | P1 | F4 | ☐ |
+| G247 | Goal Template CLI | P2 | F4 | ☐ |
+| G248 | Issue Sync Script | P1 | F4 | ☐ |
+| G249 | Roadmap Coverage Matrix | P1 | F4 | ☐ |
+| G250 | Goal Completion Audit Checklist | P0 | F4 | ☐ |
+| G251 | Architecture Decision Backlog | P1 | F4 | ☐ |
+| G252 | User Workflow Gap Review | P1 | F4 | ☐ |
+| G253 | Operational Runbook Refresh | P2 | F4 | ☐ |
+| G254 | Goal Aging Signals | P2 | F4 | ☐ |
+| G255 | Release Notes Generator | P2 | F4 | ☐ |
+| G256 | Goal Dependency Mapping | P2 | F4 | ☐ |
+| G257 | Autonomy Guardrails Doc | P1 | F4 | ☐ |
+| G258 | Goal Search Index | P3 | F4 | ☐ |
+| G259 | Backlog Statistics Test | P1 | F4 | ☐ |
+| G260 | Vision Traceability Tags | P2 | F4 | ☐ |
+| G261 | Next Horizon Roadmap | P1 | F4 | ☐ |
+| G262 | Issue Label Taxonomy | P2 | F4 | ☐ |
+| G263 | Monthly Goal Review Ritual | P3 | F4 | ☐ |
+| G264 | First Run Guided Setup | P0 | F4 | ☐ |
+| G265 | Daily Command Center | P0 | F4 | ☐ |
+| G266 | Partner Handoff Mode | P1 | F4 | ☐ |
+| G267 | Consult Prep Wizard | P0 | F4 | ☐ |
+| G268 | After Consult Capture Flow | P1 | F4 | ☐ |
+| G269 | Medication Day Timeline | P1 | F4 | ☐ |
+| G270 | Question Inbox Zero | P2 | F4 | ☐ |
+| G271 | Timeline Quick Add | P1 | F4 | ☐ |
+| G272 | Dossier Import Checklist | P1 | F4 | ☐ |
+| G273 | Empty State Action Shortcuts | P2 | F4 | ☐ |
+| G274 | Gentle Reminder Review | P2 | F4 | ☐ |
+| G275 | Weekly Review Screen | P2 | F4 | ☐ |
+| G276 | Stress-Light Mode | P3 | F4 | ☐ |
+| G277 | Timeline Story Mode | P3 | F4 | ☐ |
+| G278 | Cost Entry From Appointment | P2 | F4 | ☐ |
+| G279 | Backup Nudge Personalization | P2 | F4 | ☐ |
+| G280 | Search Everywhere | P1 | F4 | ☐ |
+| G281 | Print-Friendly Daily Brief | P2 | F4 | ☐ |
+| G282 | Keyboard-First Data Entry | P2 | F4 | ☐ |
+| G283 | Microcopy Consistency Pass | P3 | F4 | ☐ |
+| G284 | Service Worker Update UX | P1 | F4 | ☐ |
+| G285 | Offline Smoke Test Script | P0 | F4 | ☐ |
+| G286 | Backup Restore Drill | P0 | F4 | ☐ |
+| G287 | Tailscale Smoke Automation | P1 | F4 | ☐ |
+| G288 | Data Integrity Report | P1 | F4 | ☐ |
+| G289 | Duplicate Detection | P2 | F4 | ☐ |
+| G290 | Import Preview Before Commit | P1 | F4 | ☐ |
+| G291 | Sync Conflict Explanation | P2 | F4 | ☐ |
+| G292 | Performance Budget Test | P2 | F4 | ☐ |
+| G293 | Large Dossier Rendering Guard | P1 | F4 | ☐ |
+| G294 | IndexedDB Quota Warning | P2 | F4 | ☐ |
+| G295 | Error Boundary Screen | P1 | F4 | ☐ |
+| G296 | Form Draft Persistence | P2 | F4 | ☐ |
+| G297 | Event Log Filters | P3 | F4 | ☐ |
+| G298 | Runbook Command Verification | P2 | F4 | ☐ |
+| G299 | Import Error Taxonomy | P2 | F4 | ☐ |
+| G300 | Local Diagnostics Export | P2 | F4 | ☐ |
+| G301 | Recovery Mode Unlock Help | P1 | F4 | ☐ |
+| G302 | Notification Delivery Audit | P2 | F4 | ☐ |
+| G303 | Browser Compatibility Matrix | P3 | F4 | ☐ |
+| G304 | On-Device Summarizer Adapter | P1 | F4 | ☐ |
+| G305 | AI Prompt Registry | P0 | F4 | ☐ |
+| G306 | Research Source Importer | P1 | F4 | ☐ |
+| G307 | Research Reading Queue | P2 | F4 | ☐ |
+| G308 | Research-to-Question Suggestions | P1 | F4 | ☐ |
+| G309 | Evidence Strength Labels | P1 | F4 | ☐ |
+| G310 | Research Update Reminder | P2 | F4 | ☐ |
+| G311 | Local Citation Formatter | P2 | F4 | ☐ |
+| G312 | AI Output Diff Review | P1 | F4 | ☐ |
+| G313 | Sensitive Text Redaction Preview | P0 | F4 | ☐ |
+| G314 | Cloud AI Cost Warning | P2 | F4 | ☐ |
+| G315 | AI Provider Health Check | P3 | F4 | ☐ |
+| G316 | Research Topic Map | P2 | F4 | ☐ |
+| G317 | Question Safety Classifier | P1 | F4 | ☐ |
+| G318 | Local Research Full Text Index | P2 | F4 | ☐ |
+| G319 | Research Export Packet | P2 | F4 | ☐ |
+| G320 | Prompt Regression Suite | P0 | F4 | ☐ |
+| G321 | On-Device Capability Explainer | P3 | F4 | ☐ |
+| G322 | Research Network Audit Log | P1 | F4 | ☐ |
+| G323 | AI Data Retention Controls | P1 | F4 | ☐ |
+| G324 | Content Security Policy | P0 | F4 | ☐ |
+| G325 | Dependency Review Cadence | P1 | F4 | ☐ |
+| G326 | Secrets Scan Test | P0 | F4 | ☐ |
+| G327 | Sensitive Fixture Policy | P1 | F4 | ☐ |
+| G328 | Storage Schema Migration Harness | P1 | F4 | ☐ |
+| G329 | Domain Boundary Lint | P2 | F4 | ☐ |
+| G330 | Accessibility Regression Smoke | P1 | F4 | ☐ |
+| G331 | Mobile Viewport Screenshot Gate | P2 | F4 | ☐ |
+| G332 | Markdown Export Sanitizer | P1 | F4 | ☐ |
+| G333 | Audit Event Retention Policy | P2 | F4 | ☐ |
+| G334 | Form Validation Library Cleanup | P2 | F4 | ☐ |
+| G335 | Typed Route Registry | P2 | F4 | ☐ |
+| G336 | Store Factory Refactor | P3 | F4 | ☐ |
+| G337 | Event Log Privacy Test | P1 | F4 | ☐ |
+| G338 | Tailscale Deploy Drift Check | P2 | F4 | ☐ |
+| G339 | Public Repo Privacy Review | P1 | F4 | ☐ |
+| G340 | Build Provenance Notes | P3 | F4 | ☐ |
+| G341 | CSS Token Audit | P2 | F4 | ☐ |
+| G342 | No External Asset Test | P0 | F4 | ☐ |
+| G343 | Type Coverage Ratchet | P2 | F4 | ☐ |
+| G344 | Future Sync Relay Threat Model | P1 | F4 | ☐ |
+
 ---
 
 ## Telling
 
-- **Totaal doelen: 243** (id's G001 t/m G243, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 344** (id's G001 t/m G344, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
