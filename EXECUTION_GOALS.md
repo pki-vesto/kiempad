@@ -3028,4 +3028,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G458 — Backlog Health JSON Contract Recovery Artifact Docs Hint Representative Static Fixture Grouping
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture now sits with the broad static fixture, but the representative static value is separated from the mixed error-reason fixture that consumes it.
+- **Desired Outcome:** Review whether the representative static value should be grouped closer to the mixed error-reason fixture or remain near static declarations.
+- **User Value:** Maintainers can see why the representative static value exists without tracing long constant names across the declaration cluster.
+- **Acceptance Criteria:** Representative static fixture grouping is reviewed and, if useful, adjusted without weakening type fixtures; existing representative static, alias and mixed error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
