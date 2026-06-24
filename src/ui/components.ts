@@ -1,0 +1,273 @@
+// Canonical UI component helpers for Kiempad (Claude Design language).
+//
+// These are pure functions returning HTML-template strings — same paradigm as
+// appShell.ts, no framework. Screens compose from these primitives instead of
+// bespoke markup so the product reads as a focused, mobile-first, card-and-hero
+// experience rather than a dense admin dashboard.
+//
+// Convention: `body` / `children` parameters are RAW HTML (already built by the
+// caller). Every other text parameter (title, label, subtitle, message, …) is
+// PLAIN TEXT and is escaped inside the helper.
+
+import { escapeAttribute, escapeHtml } from './escape';
+
+export type Tone = 'sage' | 'amber' | 'category' | 'ai' | 'info';
+export type CardVariant = 'default' | 'raised' | 'subtle' | 'active' | 'warning' | 'danger';
+export type StepState = 'done' | 'current' | 'todo' | 'missed';
+
+export type IconName =
+  | 'sprout'
+  | 'pill'
+  | 'calendar'
+  | 'file'
+  | 'question'
+  | 'book'
+  | 'heart'
+  | 'chevron'
+  | 'check'
+  | 'plus'
+  | 'bell';
+
+const ICONS: Record<IconName, string> = {
+  sprout:
+    '<path d="M12 21v-7"/><path d="M12 14c0-3 2.2-5 5-5 .2 2.8-2 5-5 5z"/><path d="M12 14c0-2.6-1.9-4.4-4.3-4.4C7.5 12 9.5 14 12 14z"/>',
+  pill: '<rect x="3" y="9" width="18" height="6" rx="3"/><path d="M12 9v6"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/>',
+  file: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+  question:
+    '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 17h.01"/>',
+  book: '<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M5 16h13"/>',
+  heart:
+    '<path d="M12 20s-7-4.6-7-9.3A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 3.7C19 15.4 12 20 12 20z"/>',
+  chevron: '<path d="M9 6l6 6-6 6"/>',
+  check: '<path d="M5 12l5 5L19 7"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  bell: '<path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 21h4"/>',
+};
+
+/** Inline SVG icon (stroke = currentColor). CSP-safe: no external request. */
+export function icon(name: IconName): string {
+  return `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
+}
+
+/** Focused page header: small eyebrow/date + serif title + optional intro. */
+export function pageHeader(opts: {
+  title: string;
+  eyebrow?: string;
+  date?: string;
+  intro?: string;
+  titleId?: string;
+}): string {
+  const idAttr = opts.titleId ? ` id="${escapeAttribute(opts.titleId)}"` : '';
+  const meta = opts.date ?? opts.eyebrow;
+  return `<header class="page-header">
+    ${meta ? `<p class="page-header__eyebrow">${escapeHtml(meta)}</p>` : ''}
+    <h1${idAttr} class="page-header__title">${escapeHtml(opts.title)}</h1>
+    ${opts.intro ? `<p class="page-header__intro">${escapeHtml(opts.intro)}</p>` : ''}
+  </header>`;
+}
+
+/** Vertical single-column stack — replaces the dense 2-column grids. */
+export function sectionStack(
+  children: string[],
+  opts: { className?: string; ariaLabel?: string } = {},
+): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  return `<div class="section-stack${cls}"${label}>${children.join('')}</div>`;
+}
+
+/** Rounded surface card. `body` is raw HTML. */
+export function card(opts: {
+  body: string;
+  title?: string;
+  titleTag?: 'h2' | 'h3';
+  eyebrow?: string;
+  variant?: CardVariant;
+  ariaLabel?: string;
+  className?: string;
+}): string {
+  const tag = opts.titleTag ?? 'h2';
+  const variant = opts.variant && opts.variant !== 'default' ? ` kp-card--${opts.variant}` : '';
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const head =
+    (opts.eyebrow ? `<p class="kp-card__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : '') +
+    (opts.title ? `<${tag} class="kp-card__title">${escapeHtml(opts.title)}</${tag}>` : '');
+  return `<section class="kp-card${variant}${cls}"${label}>${head}${opts.body}</section>`;
+}
+
+/** Next-step / navigation card: tinted icon tile + title + subtitle + chevron. */
+export function actionCard(opts: {
+  title: string;
+  href?: string;
+  subtitle?: string;
+  iconName?: IconName;
+  tone?: Tone;
+  chevron?: boolean;
+  ariaLabel?: string;
+}): string {
+  const tone = opts.tone ? ` action-card--${opts.tone}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const tile = opts.iconName
+    ? `<span class="action-card__tile" aria-hidden="true">${icon(opts.iconName)}</span>`
+    : '';
+  const text = `<span class="action-card__text"><span class="action-card__title">${escapeHtml(opts.title)}</span>${
+    opts.subtitle ? `<span class="action-card__subtitle">${escapeHtml(opts.subtitle)}</span>` : ''
+  }</span>`;
+  const chevron =
+    opts.chevron === false
+      ? ''
+      : `<span class="action-card__chevron" aria-hidden="true">${icon('chevron')}</span>`;
+  const inner = `${tile}${text}${chevron}`;
+  if (opts.href) {
+    return `<a class="action-card${tone}" href="${escapeAttribute(opts.href)}"${label}>${inner}</a>`;
+  }
+  return `<div class="action-card${tone}"${label}>${inner}</div>`;
+}
+
+/** Signature current-phase hero: dark-sage card, serif label, segmented dots. */
+export function phaseHeroCard(opts: {
+  phaseLabel: string;
+  eyebrow?: string;
+  subtitle?: string;
+  steps?: { label: string; state: StepState }[];
+  cta?: { href: string; label: string };
+}): string {
+  const dots = (opts.steps ?? [])
+    .map(
+      (s) =>
+        `<span class="phase-hero__dot" data-state="${escapeAttribute(s.state)}"><span class="sr-only">${escapeHtml(
+          s.label,
+        )}</span></span>`,
+    )
+    .join('');
+  return `<section class="phase-hero" aria-label="Huidige fase">
+    ${opts.eyebrow ? `<p class="phase-hero__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : ''}
+    <p class="phase-hero__label">${escapeHtml(opts.phaseLabel)}</p>
+    ${opts.subtitle ? `<p class="phase-hero__subtitle">${escapeHtml(opts.subtitle)}</p>` : ''}
+    ${dots ? `<div class="phase-hero__dots" role="presentation">${dots}</div>` : ''}
+    ${
+      opts.cta
+        ? `<a class="phase-hero__cta" href="${escapeAttribute(opts.cta.href)}">${escapeHtml(opts.cta.label)}</a>`
+        : ''
+    }
+  </section>`;
+}
+
+/** Scannable stat row (totaal / vergoed / eigen risico, etc.). */
+export function statRow(
+  items: { label: string; value: string; tone?: 'default' | 'success' | 'warning' | 'danger' }[],
+): string {
+  const cells = items
+    .map((it) => {
+      const tone = it.tone && it.tone !== 'default' ? ` stat--${it.tone}` : '';
+      return `<div class="stat${tone}"><span class="stat__value">${escapeHtml(
+        it.value,
+      )}</span><span class="stat__label">${escapeHtml(it.label)}</span></div>`;
+    })
+    .join('');
+  return `<div class="stat-row">${cells}</div>`;
+}
+
+/** Vertical dot/line timeline with a highlighted current item. `body` is raw HTML. */
+export function timeline(
+  items: { title: string; meta?: string; state?: StepState; body?: string }[],
+  opts: { id?: string; ariaLabel?: string } = {},
+): string {
+  const idAttr = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const rows = items
+    .map(
+      (it) => `<li class="kp-timeline__item" data-state="${escapeAttribute(it.state ?? 'future')}">
+      <span class="kp-timeline__rail" aria-hidden="true"><span class="kp-timeline__dot"></span></span>
+      <div class="kp-timeline__body">
+        <p class="kp-timeline__title">${escapeHtml(it.title)}</p>
+        ${it.meta ? `<p class="kp-timeline__meta">${escapeHtml(it.meta)}</p>` : ''}
+        ${it.body ?? ''}
+      </div>
+    </li>`,
+    )
+    .join('');
+  return `<ol class="kp-timeline"${idAttr}${label}>${rows}</ol>`;
+}
+
+/** Expandable accordion (knowledge): coloured category eyebrow + body. `body` is raw HTML. */
+export function accordion(
+  items: {
+    summary: string;
+    body: string;
+    category?: { label: string; tone: Tone };
+    open?: boolean;
+    className?: string;
+  }[],
+): string {
+  return items
+    .map((it) => {
+      const open = it.open ? ' open' : '';
+      const cls = it.className ? ` ${it.className}` : '';
+      const cat = it.category
+        ? `<span class="kp-accordion__cat" data-tone="${escapeAttribute(it.category.tone)}">${escapeHtml(
+            it.category.label,
+          )}</span>`
+        : '';
+      return `<details class="kp-accordion${cls}"${open}>
+      <summary class="kp-accordion__summary">${cat}<span class="kp-accordion__title">${escapeHtml(
+        it.summary,
+      )}</span><span class="kp-accordion__chevron" aria-hidden="true">${icon('chevron')}</span></summary>
+      <div class="kp-accordion__body">${it.body}</div>
+    </details>`;
+    })
+    .join('');
+}
+
+/** Progressive-disclosure wrapper: collapses a secondary form behind a toggle. `body` is raw HTML. */
+export function disclosure(opts: {
+  summary: string;
+  body: string;
+  open?: boolean;
+  id?: string;
+}): string {
+  const open = opts.open ? ' open' : '';
+  const idAttr = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
+  return `<details class="kp-disclosure"${idAttr}${open}>
+    <summary class="kp-disclosure__summary"><span class="kp-disclosure__plus" aria-hidden="true">${icon(
+      'plus',
+    )}</span>${escapeHtml(opts.summary)}</summary>
+    <div class="kp-disclosure__body">${opts.body}</div>
+  </details>`;
+}
+
+/** Empty state with optional call to action. */
+export function emptyState(opts: {
+  message: string;
+  cta?: { href: string; label: string };
+}): string {
+  const cta = opts.cta
+    ? `<a class="inline-action" href="${escapeAttribute(opts.cta.href)}">${escapeHtml(opts.cta.label)}</a>`
+    : '';
+  return `<div class="empty-state kp-empty"><p>${escapeHtml(opts.message)}</p>${cta}</div>`;
+}
+
+/** Loading skeleton (shimmer disabled under prefers-reduced-motion via CSS). */
+export function loadingSkeleton(
+  opts: { lines?: number; variant?: 'card' | 'list' | 'text' } = {},
+): string {
+  const lines = Math.max(1, opts.lines ?? 3);
+  const variant = opts.variant ?? 'text';
+  const blocks = Array.from(
+    { length: lines },
+    () => '<span class="kp-skeleton__line"></span>',
+  ).join('');
+  return `<div class="kp-skeleton kp-skeleton--${variant}" aria-hidden="true">${blocks}</div>`;
+}
+
+/** Error banner (role=alert), reuses the existing .form-error token styling. */
+export function errorBanner(message: string): string {
+  return `<p class="form-error" role="alert">${escapeHtml(message)}</p>`;
+}
+
+/** Neutral status / success message. */
+export function statusMessage(message: string): string {
+  return `<p class="status-message" role="status">${escapeHtml(message)}</p>`;
+}

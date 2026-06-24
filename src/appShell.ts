@@ -162,6 +162,7 @@ import {
   type WelzijnTrendPeriode,
 } from './domain/welzijn';
 import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
+import { escapeAttribute, escapeHtml } from './ui/escape';
 
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
@@ -4362,15 +4363,4 @@ function kortTekstAf(value: string, maxLength: number): string {
   return singleLine.length > maxLength ? `${singleLine.slice(0, maxLength - 3)}...` : singleLine;
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
-}
-
-function escapeAttribute(value: string): string {
-  return escapeHtml(value);
-}
+// escapeHtml / escapeAttribute now live in ./ui/escape (imported at top).
