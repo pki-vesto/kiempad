@@ -1950,4 +1950,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, docs, GitHub Issues
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G381 — Backlog Health Snapshot Cleanup Reminder
+
+- **Epic:** Continuous Evolution
+- **Problem:** Issue snapshots are documented as temporary files, but maintainers can still forget to remove local snapshot artifacts after validation.
+- **Desired Outcome:** Add a lightweight cleanup reminder or helper for temporary backlog-health issue snapshots.
+- **User Value:** Local issue validation remains safe and does not leave stale GitHub metadata lying around.
+- **Acceptance Criteria:** Docs or helper explains cleanup after `--issues-json`; tests cover the reminder text or helper output; no issue bodies, tokens or snapshots are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, scripts, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

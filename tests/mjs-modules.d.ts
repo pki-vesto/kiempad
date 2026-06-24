@@ -1,4 +1,5 @@
 declare module '*.mjs' {
+  export const ISSUE_SNAPSHOT_COMMAND: string;
   export function parseBacklog(markdown: string): {
     goals: Array<Record<string, unknown>>;
     byId: Map<string, Record<string, unknown>>;

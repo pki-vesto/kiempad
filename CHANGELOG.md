@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G380 Continuous Evolution: backlog-health documenteert nu de veilige
+  issue-snapshotflow met exact `gh issue list` commando zonder issue bodies, sanitizet
+  snapshotdata en vermeldt de optionele `--issues-json` route wanneer die ontbreekt.
 - G378 Continuous Evolution: `npm run backlog:health` ondersteunt nu
   `--minimum-open-goals` met default 100, inclusief tests voor default/custom waarden
   en docs die de permanente 100-open-doelenregel behouden.

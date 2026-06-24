@@ -38,6 +38,10 @@ Voordat je merget:
 - `npm run backlog:health` — groen; standaard minimaal 100 open doelen. Alleen voor
   lokale fixtures of experimenten mag tijdelijk
   `npm run backlog:health -- --minimum-open-goals <n>` worden gebruikt.
+  Optioneel vóór merge: exporteer issues met
+  `gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json`
+  en draai `npm run backlog:health -- --issues-json /tmp/kiempad-issues.json`.
+  Commit deze snapshot niet en exporteer geen issue bodies.
 - `npm run build` — groen.
 - `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
   expliciet allowlisted.

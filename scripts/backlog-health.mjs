@@ -8,6 +8,9 @@ const STATUS_LABELS = {
   '☐': 'open',
 };
 
+export const ISSUE_SNAPSHOT_COMMAND =
+  'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json';
+
 export function parseBacklog(markdown) {
   const goals = [];
   const seen = new Map();
@@ -75,6 +78,7 @@ export function parseExecutionGoals(markdown) {
 export function parseIssueSnapshot(jsonText) {
   const issues = JSON.parse(jsonText);
   if (!Array.isArray(issues)) throw new Error('Issue snapshot moet een JSON-array zijn.');
+  const sanitizedIssues = [];
   const byGoalId = new Map();
   const duplicates = [];
 
@@ -89,11 +93,12 @@ export function parseIssueSnapshot(jsonText) {
       state: String(issue.state ?? '').toUpperCase(),
       url: issue.url ? String(issue.url) : undefined,
     };
+    sanitizedIssues.push(normalized);
     if (byGoalId.has(id)) duplicates.push(id);
     byGoalId.set(id, normalized);
   }
 
-  return { issues, byGoalId, duplicates };
+  return { issues: sanitizedIssues, byGoalId, duplicates };
 }
 
 export function buildActiveGoalDriftFindings(backlog, execution, minimumOpenGoals = 100) {
@@ -245,7 +250,10 @@ export function formatBacklogHealthMarkdown(report) {
     `- Backlog goals: ${report.summary.backlogGoals}`,
     `- Execution goals: ${report.summary.executionGoals}`,
     `- Open backlog goals: ${report.summary.openBacklogGoals}`,
-    `- Issue snapshot goals: ${report.summary.issueSnapshotGoals ?? 'niet meegegeven'}`,
+    `- Issue snapshot goals: ${
+      report.summary.issueSnapshotGoals ??
+      `niet meegegeven (optioneel: \`${ISSUE_SNAPSHOT_COMMAND}\` en daarna \`npm run backlog:health -- --issues-json /tmp/kiempad-issues.json\`)`
+    }`,
     `- Bevindingen: ${report.summary.findings}`,
     '',
     '## Bevindingen',

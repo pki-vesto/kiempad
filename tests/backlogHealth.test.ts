@@ -3,6 +3,7 @@ import {
   buildActiveGoalDriftFindings,
   buildBacklogHealthReport,
   formatBacklogHealthMarkdown,
+  ISSUE_SNAPSHOT_COMMAND,
   parseBacklog,
   parseExecutionGoals,
   parseIssueSnapshot,
@@ -73,6 +74,47 @@ describe('backlog health', () => {
       },
     ]);
     expect(formatBacklogHealthMarkdown(report)).toContain('G245 · missing-issue-link');
+  });
+
+  it('documenteert en bewaakt de veilige issue-snapshotvorm zonder issue bodies', () => {
+    expect(ISSUE_SNAPSHOT_COMMAND).toBe(
+      'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json',
+    );
+
+    const parsed = parseIssueSnapshot(
+      JSON.stringify([
+        {
+          number: 463,
+          title: 'G380 Continuous Evolution: Backlog Health Issue Snapshot Default Gate',
+          state: 'OPEN',
+          url: 'https://github.com/pki-vesto/kiempad/issues/463',
+          body: 'niet opslaan',
+        },
+      ]),
+    );
+
+    expect(parsed.issues).toEqual([
+      {
+        id: 'G380',
+        number: 463,
+        title: 'G380 Continuous Evolution: Backlog Health Issue Snapshot Default Gate',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/463',
+      },
+    ]);
+    expect(JSON.stringify(parsed)).not.toContain('niet opslaan');
+
+    expect(
+      formatBacklogHealthMarkdown({
+        summary: {
+          backlogGoals: 1,
+          executionGoals: 1,
+          openBacklogGoals: 1,
+          findings: 0,
+        },
+        findings: [],
+      }),
+    ).toContain('npm run backlog:health -- --issues-json /tmp/kiempad-issues.json');
   });
 
   it('herkent dubbele issue-goal-id en open issue bij afgeronde backlogstatus', () => {
