@@ -234,6 +234,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.vragen = [];
     state.kennisItems = [];
     state.kennisFilter = undefined;
+    state.timelineFilter = undefined;
     state.symptomLogs = [];
     state.cycleData = [];
     state.mentalCheckIns = [];
@@ -781,6 +782,7 @@ async function importSyncFromForm(
     });
     state.backupStatus = `Sync geïmporteerd: ${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`;
     state.backupError = undefined;
+    state.timelineFilter = undefined;
     await reloadAndRender(root, state);
   } catch (error: unknown) {
     state.backupError =

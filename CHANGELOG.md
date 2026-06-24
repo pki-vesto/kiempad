@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G242 PFIP fertility timeline: timeline-opbouw, filtering en export blijven offline;
+  back-upimport houdt timeline-records bruikbaar en import reset timelinefilters.
 - G241 PFIP fertility timeline: trajectscherm toont een complete ongefilterde
   Markdown-export van de fertility timeline voor eigen consultvoorbereiding.
 - G240 PFIP fertility timeline: trajectscherm toont belangrijke mijlpalen en
