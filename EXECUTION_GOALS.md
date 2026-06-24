@@ -123,7 +123,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Docs, PR template
 - **Score:** 123
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G251 — Architecture Decision Backlog
 
@@ -1397,4 +1397,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Tests, docs, asset scanner
 - **Score:** 104
+- **Status:** ☐ open
+
+### G349 — Completion Audit Evidence Markers
+
+- **Epic:** Continuous Evolution
+- **Problem:** The completion audit checklist is documented, but its evidence remains free-form and hard to validate automatically.
+- **Desired Outcome:** Define a structured evidence marker format for PR descriptions or local audit reports.
+- **User Value:** Future autonomous work becomes easier to review and less likely to mark goals done from weak evidence.
+- **Acceptance Criteria:** Define a structured evidence marker format; document one filled example; add a maintenance test or parser that recognizes required marker headings.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, PR template, maintenance tests
+- **Score:** 103
 - **Status:** ☐ open

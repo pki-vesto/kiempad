@@ -44,6 +44,9 @@ Voordat je merget:
 - Documentatie bijgewerkt: [`CURRENT_STATE.md`](CURRENT_STATE.md), de betreffende doelen
   in [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md), [`CHANGELOG.md`](CHANGELOG.md), en bij
   een keuze een ADR in [`docs/adr/`](docs/adr/).
+- Completion audit uitgevoerd volgens
+  [`docs/GOAL_COMPLETION_AUDIT.md`](docs/GOAL_COMPLETION_AUDIT.md): ieder requirement
+  heeft direct bewijs voordat het doel op `☑ klaar` gaat.
 
 CI (`.github/workflows/ci.yml`) draait typecheck, lint, tests, audit, build en de
 externe-asset-scan op elke PR.

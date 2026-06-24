@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 248 |
+| ☑ klaar | 249 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **348** |
+| **Totaal** | **349** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -395,7 +395,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G247 | Goal Template CLI | P2 | F4 | ☐ |
 | G248 | Issue Sync Script | P1 | F4 | ☐ |
 | G249 | Roadmap Coverage Matrix | P1 | F4 | ☐ |
-| G250 | Goal Completion Audit Checklist | P0 | F4 | ☐ |
+| G250 | Goal Completion Audit Checklist | P0 | F4 | ☑ |
 | G251 | Architecture Decision Backlog | P1 | F4 | ☐ |
 | G252 | User Workflow Gap Review | P1 | F4 | ☐ |
 | G253 | Operational Runbook Refresh | P2 | F4 | ☐ |
@@ -494,12 +494,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
 | G347 | External Asset CI Gate | P0 | F4 | ☑ |
 | G348 | External Asset Allowlist Governance | P1 | F4 | ☐ |
+| G349 | Completion Audit Evidence Markers | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 348** (id's G001 t/m G348, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 349** (id's G001 t/m G349, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

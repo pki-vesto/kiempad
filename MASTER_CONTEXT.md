@@ -84,3 +84,6 @@ Een wijziging is "done" als:
 - `CURRENT_STATE.md` en de betreffende doelen in `PRODUCT_BACKLOG.md` bijgewerkt; bij
   een keuze een ADR toegevoegd/aangepast.
 - `CHANGELOG.md` bijgewerkt.
+- Completion audit uitgevoerd volgens
+  [`docs/GOAL_COMPLETION_AUDIT.md`](docs/GOAL_COMPLETION_AUDIT.md), met direct bewijs
+  per requirement voordat een doel als klaar geldt.
