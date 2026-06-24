@@ -7,6 +7,11 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel (Afwegingen, Kosten, Logboek, Welzijn): deze schermen zijn van
+  een twee-koloms indeling omgebouwd naar mobiel-first enkelkolomsstroom; ze
+  leiden nu met de inhoud (lijsten/overzichten) en hebben de invoerformulieren
+  achter een uitklap (open wanneer er nog niets is vastgelegd). Alle form-id's
+  (o.a. `kosten-form`) en lijststrings blijven gelijk.
 - G148/G175 UI-herstel (Dossier): het dossierscherm is van een dichte twee-koloms
   indeling omgebouwd naar één kolom; de drie invoerformulieren (document uploaden,
   consultverslag, embryokwaliteit) staan nu samen achter één "Toevoegen aan

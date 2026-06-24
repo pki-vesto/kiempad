@@ -568,23 +568,19 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
 function renderLogboekScreen(state: AppShellState): string {
   const logs = state.eventLogs ?? [];
 
-  return `
-    <section class="workspace" aria-label="Lokaal gebeurtenissenlog">
-      <div class="summary-panel">
-        <h2>Gebeurtenissen</h2>
-        <p>Dit logboek blijft op dit toestel en wordt alleen versleuteld lokaal opgeslagen.</p>
-        <p>${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.</p>
-      </div>
-      <div class="timeline-panel">
-        <h2>Recente gebeurtenissen</h2>
-        ${
-          logs.length > 0
-            ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>'
-        }
-      </div>
-    </section>
-  `;
+  return sectionStack(
+    [
+      card({
+        title: 'Gebeurtenissen',
+        body: `<p>Dit logboek blijft op dit toestel en wordt alleen versleuteld lokaal opgeslagen.</p><p>${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.</p>`,
+      }),
+      '<h2>Recente gebeurtenissen</h2>',
+      logs.length > 0
+        ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
+        : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>',
+    ],
+    { ariaLabel: 'Lokaal gebeurtenissenlog' },
+  );
 }
 
 function renderEventLogItem(item: EventLog): string {
@@ -602,22 +598,20 @@ function renderEventLogItem(item: EventLog): string {
 function renderAfwegingenScreen(state: AppShellState): string {
   const decisions = state.decisions ?? [];
 
-  return `
-    <section class="traject-layout" aria-label="Afwegingen beheren">
-      <div class="form-panel">
-        <h2>Beslisnotitie toevoegen</h2>
-        ${renderDecisionForm(state)}
-      </div>
-      <div class="timeline-panel">
-        <h2>Beslisnotities</h2>
-        ${
-          decisions.length > 0
-            ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionItem(decision, state)).join('')}</ol>`
-            : '<p class="empty-state">Nog geen beslisnotities vastgelegd.</p>'
-        }
-      </div>
-    </section>
-  `;
+  return sectionStack(
+    [
+      '<h2>Beslisnotities</h2>',
+      decisions.length > 0
+        ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionItem(decision, state)).join('')}</ol>`
+        : '<p class="empty-state">Nog geen beslisnotities vastgelegd.</p>',
+      disclosure({
+        summary: 'Beslisnotitie toevoegen',
+        open: decisions.length === 0,
+        body: renderDecisionForm(state),
+      }),
+    ],
+    { ariaLabel: 'Afwegingen beheren' },
+  );
 }
 
 function renderDecisionForm(state: AppShellState): string {
@@ -1698,40 +1692,30 @@ function renderWelzijnScreen(state: AppShellState): string {
   const overzicht = berekenWelzijnOverzicht(logs, checkIns);
   const trends = berekenWelzijnTrends(logs, checkIns);
 
-  return `
-    <section class="traject-layout" aria-label="Symptomen en welzijn">
-      <div class="form-panel">
-        <h2>Mentale check-in</h2>
-        ${renderMentalCheckInForm()}
-        <h2 class="section-subheading">Symptoomlog toevoegen</h2>
-        ${renderSymptomLogForm()}
-        <h2 class="section-subheading">Cyclusmeting toevoegen</h2>
-        ${renderCycleDataForm()}
-      </div>
-      <div class="timeline-panel">
-        ${renderWelzijnOverzicht(overzicht)}
-        ${renderWelzijnTrends(trends)}
-        <h2>Mentale check-ins</h2>
-        ${
-          checkIns.length > 0
-            ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
-        }
-        <h2 class="section-subheading">Symptoomlogboek</h2>
-        ${
-          perDag.length > 0
-            ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
-            : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
-        }
-        <h2 class="section-subheading">Cyclusmetingen</h2>
-        ${
-          cycleData.length > 0
-            ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
-        }
-      </div>
-    </section>
-  `;
+  return sectionStack(
+    [
+      renderWelzijnOverzicht(overzicht),
+      renderWelzijnTrends(trends),
+      '<h2>Mentale check-ins</h2>',
+      checkIns.length > 0
+        ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
+        : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>',
+      '<h2 class="section-subheading">Symptoomlogboek</h2>',
+      perDag.length > 0
+        ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
+        : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>',
+      '<h2 class="section-subheading">Cyclusmetingen</h2>',
+      cycleData.length > 0
+        ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
+        : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>',
+      disclosure({
+        summary: 'Vastleggen: check-in, symptoom of cyclusmeting',
+        open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,
+        body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm()}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm()}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
+      }),
+    ],
+    { ariaLabel: 'Symptomen en welzijn' },
+  );
 }
 
 function renderWelzijnTrends(trends: WelzijnTrendPeriode[]): string {
@@ -2056,32 +2040,30 @@ function renderKostenScreen(state: AppShellState): string {
   const kosten = state.kosten ?? [];
   const overzicht = berekenKostenOverzicht(kosten);
 
-  return `
-    <section class="traject-layout" aria-label="Kosten en vergoedingen">
-      <div class="form-panel">
-        <h2>Kostenpost toevoegen</h2>
-        ${renderKostenForm()}
-      </div>
-      <div class="timeline-panel">
-        <h2>Lokale kostenbibliotheek</h2>
-        <dl class="summary-list">
-          <div><dt>Totaal</dt><dd>${formatEuro(overzicht.totaal)}</dd></div>
-          <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
-          <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
-          <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
-          <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
-          <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
-          <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
-        </dl>
-        <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
-        ${
-          kosten.length > 0
-            ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>'
-        }
-      </div>
-    </section>
-  `;
+  return sectionStack(
+    [
+      '<h2>Lokale kostenbibliotheek</h2>',
+      `<dl class="summary-list">
+        <div><dt>Totaal</dt><dd>${formatEuro(overzicht.totaal)}</dd></div>
+        <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
+        <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
+        <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
+        <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
+        <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
+        <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
+      </dl>`,
+      '<p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>',
+      kosten.length > 0
+        ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
+        : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>',
+      disclosure({
+        summary: 'Kostenpost toevoegen',
+        open: kosten.length === 0,
+        body: renderKostenForm(),
+      }),
+    ],
+    { ariaLabel: 'Kosten en vergoedingen' },
+  );
 }
 
 function renderKostenForm(selected?: CostItem): string {
