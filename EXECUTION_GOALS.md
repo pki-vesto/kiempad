@@ -1254,7 +1254,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Event log tests
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G338 — Tailscale Deploy Drift Check
 
@@ -1578,5 +1578,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Fixture scanner, docs, tests
+- **Score:** 104
+- **Status:** ☐ open
+
+### G363 — Event Log Detail Allowlist Governance
+
+- **Epic:** Security & DevEx
+- **Problem:** Event log privacy validation blocks sensitive patterns, but future generic detail exceptions need documented ownership to avoid weakening privacy.
+- **Desired Outcome:** Add an allowlist rationale mechanism or documented review path for event-log detail exceptions.
+- **User Value:** Operational logs remain useful without becoming a second dossier.
+- **Acceptance Criteria:** Allowlist entries require documented rationale; tests cover allowed generic and rejected sensitive examples; docs explain when event detail may include counts/status; no health free text is allowed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Event log privacy, docs, tests
 - **Score:** 104
 - **Status:** ☐ open
