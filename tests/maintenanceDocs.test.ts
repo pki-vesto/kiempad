@@ -39,13 +39,23 @@ type NormalizedBacklogHealthArtifactDocsHint = {
   label: string;
   term: string;
 };
-type BacklogHealthArtifactDocsHintErrorReason = string;
+type BacklogHealthArtifactDocsHintStaticErrorReason =
+  | 'label ontbreekt'
+  | 'term ontbreekt'
+  | 'label bevat alleen whitespace'
+  | 'term bevat alleen whitespace';
+type BacklogHealthArtifactDocsHintDynamicErrorReason =
+  | `label is te generiek: ${string}`
+  | `term is te kort: ${string}`;
+type BacklogHealthArtifactDocsHintErrorReason =
+  | BacklogHealthArtifactDocsHintStaticErrorReason
+  | BacklogHealthArtifactDocsHintDynamicErrorReason;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS = {
   missingLabel: 'label ontbreekt',
   missingTerm: 'term ontbreekt',
   whitespaceLabel: 'label bevat alleen whitespace',
   whitespaceTerm: 'term bevat alleen whitespace',
-} as const satisfies Record<string, BacklogHealthArtifactDocsHintErrorReason>;
+} as const satisfies Record<string, BacklogHealthArtifactDocsHintStaticErrorReason>;
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
@@ -847,13 +857,13 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
 
 function buildBacklogHealthArtifactDocsHintGenericLabelReason(
   label: string,
-): BacklogHealthArtifactDocsHintErrorReason {
+): BacklogHealthArtifactDocsHintDynamicErrorReason {
   return `label is te generiek: ${label}`;
 }
 
 function buildBacklogHealthArtifactDocsHintShortTermReason(
   term: string,
-): BacklogHealthArtifactDocsHintErrorReason {
+): BacklogHealthArtifactDocsHintDynamicErrorReason {
   return `term is te kort: ${term}`;
 }
 

@@ -2706,4 +2706,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G435 — Backlog Health JSON Contract Recovery Artifact Docs Hint Error Reason Type Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Static and dynamic artifact docs hint reason types are now narrowed, but the type contract itself has no focused compile-time fixture.
+- **Desired Outcome:** Add a small type-level fixture that proves representative static and dynamic reason strings satisfy the shared reason contract.
+- **User Value:** Maintainers get a faster signal when future diagnostic wording changes accidentally fall outside the intended reason contract.
+- **Acceptance Criteria:** Tests or type fixtures assert representative static, generic-label and short-term reasons satisfy the shared reason type; existing builder, helper and validation fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
