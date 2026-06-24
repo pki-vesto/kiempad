@@ -1894,7 +1894,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ADR backlog, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G377 — Autonomy Guardrail Evidence Parser
 
@@ -1922,4 +1922,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☐ open
+
+### G379 — ADR Review Evidence Freshness Check
+
+- **Epic:** Continuous Evolution
+- **Problem:** ADR review evidence can be indexed but still become stale when ADR-needed goals or decision outcomes change.
+- **Desired Outcome:** Add a maintenance check that flags stale pending evidence, missing review dates or outdated follow-up statuses for ADR-needed goals.
+- **User Value:** Architecture-sensitive decisions stay current as autonomous work evolves.
+- **Acceptance Criteria:** Check identifies pending evidence older than a documented threshold, missing review dates and follow-up statuses that are not allowed values; docs define freshness rules; no sensitive user data is stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** ADR backlog, docs, maintenance tests
+- **ADR Needed:** no
+- **Score:** 97
 - **Status:** ☐ open

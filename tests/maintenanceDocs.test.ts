@@ -4,6 +4,7 @@ import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import adrBacklog from '../docs/ADR_BACKLOG.md?raw';
+import adrReviewEvidenceIndex from '../docs/ADR_REVIEW_EVIDENCE_INDEX.md?raw';
 import adrReviewEvidenceTemplate from '../docs/ADR_REVIEW_EVIDENCE_TEMPLATE.md?raw';
 import autonomyGuardrailEvidenceChecklist from '../docs/AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md?raw';
 import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
@@ -129,6 +130,29 @@ describe('onderhoudsdocumentatie', () => {
     expect(adrReviewEvidenceTemplate).toContain('G344');
     expect(adrBacklog).toContain('ADR_REVIEW_EVIDENCE_TEMPLATE.md');
     expect(adrBacklog).toContain('goal-id, reviewer/datum');
+  });
+
+  it('houdt ADR-review evidence index synchroon met ADR-needed goals', () => {
+    const adrNeededGoals = extractExecutionGoalAdrMarkers()
+      .filter((entry) => entry.value === 'yes')
+      .map((entry) => entry.id)
+      .sort();
+    const indexedGoals = extractAdrReviewEvidenceIndexGoals();
+
+    expect(indexedGoals).toEqual(adrNeededGoals);
+    for (const goalId of adrNeededGoals) {
+      expect(adrReviewEvidenceIndex).toContain(`| ${goalId} |`);
+      expect(adrReviewEvidenceIndex).toContain(
+        'pending: use `docs/ADR_REVIEW_EVIDENCE_TEMPLATE.md`',
+      );
+      expect(adrReviewEvidenceIndex).toContain('pending review');
+      expect(adrReviewEvidenceIndex).toContain('required before implementation');
+    }
+
+    expect(adrReviewEvidenceIndex).toContain('Geen gebruikersdata, tokens');
+    expect(adrReviewEvidenceIndex).toContain('Decision outcome');
+    expect(adrBacklog).toContain('ADR_REVIEW_EVIDENCE_INDEX.md');
+    expect(adrBacklog).toContain('ADR-review evidence index synchroon');
   });
 
   it('houdt de disclaimer-grens consistent in app en kerndocumenten', () => {
@@ -406,6 +430,14 @@ function extractCompletionAuditMarkerBlock(document: string): string {
   );
   if (!match?.groups?.block) throw new Error('Completion audit markerblok ontbreekt.');
   return match.groups.block;
+}
+
+function extractAdrReviewEvidenceIndexGoals(): string[] {
+  return adrReviewEvidenceIndex
+    .split('\n')
+    .map((line) => line.match(/^\| (?<id>G\d+) \|/)?.groups?.id)
+    .filter((id): id is string => Boolean(id))
+    .sort();
 }
 
 function extractExecutionGoalAdrMarkers(): Array<{ id: string; value: string }> {
