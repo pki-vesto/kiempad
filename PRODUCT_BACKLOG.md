@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 244 |
+| ☑ klaar | 245 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **344** |
+| **Totaal** | **345** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -385,12 +385,12 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 
 ## 21. Continuous Evolution & Goal Expansion
 
-Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcatalogus en issue-seeding; G245-G344 blijven actief zodat de backlog niet opdroogt.
+Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcatalogus en issue-seeding; G246-G345 blijven actief zodat de backlog niet opdroogt.
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
 | G244 | Goal Expansion Engine | P0 | F4 | ☑ |
-| G245 | Backlog Health Dashboard | P0 | F4 | ☐ |
+| G245 | Backlog Health Dashboard | P0 | F4 | ☑ |
 | G246 | Goal Scoring Model | P1 | F4 | ☐ |
 | G247 | Goal Template CLI | P2 | F4 | ☐ |
 | G248 | Issue Sync Script | P1 | F4 | ☐ |
@@ -490,12 +490,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G342 | No External Asset Test | P0 | F4 | ☐ |
 | G343 | Type Coverage Ratchet | P2 | F4 | ☐ |
 | G344 | Future Sync Relay Threat Model | P1 | F4 | ☐ |
+| G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 344** (id's G001 t/m G344, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 345** (id's G001 t/m G345, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

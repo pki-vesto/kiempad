@@ -1,0 +1,239 @@
+#!/usr/bin/env node
+import fs from 'node:fs';
+import process from 'node:process';
+
+const STATUS_LABELS = {
+  '☑': 'klaar',
+  '◐': 'bezig',
+  '☐': 'open',
+};
+
+export function parseBacklog(markdown) {
+  const goals = [];
+  const seen = new Map();
+  const duplicates = [];
+
+  for (const line of markdown.split('\n')) {
+    const match = line.match(
+      /^\| (?<id>G\d+) \| (?<title>.+?) \| (?<priority>P\d) \| (?<phase>F\d) \| (?<status>☑|◐|☐) \|$/,
+    );
+    if (!match?.groups) continue;
+
+    const goal = {
+      id: match.groups.id,
+      title: match.groups.title,
+      priority: match.groups.priority,
+      phase: match.groups.phase,
+      status: match.groups.status,
+      statusLabel: STATUS_LABELS[match.groups.status],
+    };
+    goals.push(goal);
+    if (seen.has(goal.id)) duplicates.push(goal.id);
+    seen.set(goal.id, goal);
+  }
+
+  return { goals, byId: seen, duplicates };
+}
+
+export function parseExecutionGoals(markdown) {
+  const goals = [];
+  const seen = new Map();
+  const duplicates = [];
+  const sections = markdown.split('\n### ').slice(1);
+
+  for (const section of sections) {
+    const normalized = `### ${section}`;
+    const header = normalized.match(/^### (?<id>G\d+) — (?<title>.+)$/m);
+    if (!header?.groups) continue;
+    const fields = {};
+    for (const line of normalized.split('\n')) {
+      const field = line.match(/^- \*\*(?<key>[^:]+):\*\* (?<value>.*)$/);
+      if (field?.groups) fields[field.groups.key] = field.groups.value;
+    }
+    const status = fields.Status?.startsWith('☑')
+      ? '☑'
+      : fields.Status?.startsWith('◐')
+        ? '◐'
+        : fields.Status?.startsWith('☐')
+          ? '☐'
+          : undefined;
+    const goal = {
+      id: header.groups.id,
+      title: header.groups.title,
+      fields,
+      status,
+      statusLabel: status ? STATUS_LABELS[status] : undefined,
+    };
+    goals.push(goal);
+    if (seen.has(goal.id)) duplicates.push(goal.id);
+    seen.set(goal.id, goal);
+  }
+
+  return { goals, byId: seen, duplicates };
+}
+
+export function parseIssueSnapshot(jsonText) {
+  const issues = JSON.parse(jsonText);
+  if (!Array.isArray(issues)) throw new Error('Issue snapshot moet een JSON-array zijn.');
+  const byGoalId = new Map();
+  const duplicates = [];
+
+  for (const issue of issues) {
+    const title = String(issue.title ?? '');
+    const id = title.match(/\bG\d+\b/)?.[0];
+    if (!id) continue;
+    const normalized = {
+      id,
+      number: Number(issue.number),
+      title,
+      state: String(issue.state ?? '').toUpperCase(),
+      url: issue.url ? String(issue.url) : undefined,
+    };
+    if (byGoalId.has(id)) duplicates.push(id);
+    byGoalId.set(id, normalized);
+  }
+
+  return { issues, byGoalId, duplicates };
+}
+
+export function buildBacklogHealthReport(input) {
+  const backlog = parseBacklog(input.backlogMarkdown);
+  const execution = parseExecutionGoals(input.executionGoalsMarkdown);
+  const issueSnapshot = input.issueSnapshotJson
+    ? parseIssueSnapshot(input.issueSnapshotJson)
+    : undefined;
+  const findings = [];
+
+  for (const id of backlog.duplicates) {
+    findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in PRODUCT_BACKLOG.md.' });
+  }
+  for (const id of execution.duplicates) {
+    findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in EXECUTION_GOALS.md.' });
+  }
+  for (const id of issueSnapshot?.duplicates ?? []) {
+    findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in issue snapshot.' });
+  }
+
+  for (const goal of backlog.goals.filter((item) => Number(item.id.slice(1)) >= 244)) {
+    const executionGoal = execution.byId.get(goal.id);
+    if (!executionGoal) {
+      findings.push({
+        type: 'missing-definition',
+        id: goal.id,
+        detail: 'Goal staat in PRODUCT_BACKLOG.md maar mist in EXECUTION_GOALS.md.',
+      });
+      continue;
+    }
+    if (executionGoal.status && executionGoal.status !== goal.status) {
+      findings.push({
+        type: 'status-mismatch',
+        id: goal.id,
+        detail: `Backlog heeft ${goal.statusLabel}; execution catalogus heeft ${executionGoal.statusLabel}.`,
+      });
+    }
+  }
+
+  for (const goal of execution.goals) {
+    if (!backlog.byId.has(goal.id)) {
+      findings.push({
+        type: 'missing-definition',
+        id: goal.id,
+        detail: 'Goal staat in EXECUTION_GOALS.md maar mist in PRODUCT_BACKLOG.md.',
+      });
+    }
+  }
+
+  if (issueSnapshot) {
+    for (const goal of backlog.goals.filter((item) => item.status === '☐')) {
+      const issue = issueSnapshot.byGoalId.get(goal.id);
+      if (!issue) {
+        findings.push({
+          type: 'missing-issue-link',
+          id: goal.id,
+          detail: 'Open goal heeft geen gekoppelde GitHub Issue in de snapshot.',
+        });
+        continue;
+      }
+      if (issue.state !== 'OPEN') {
+        findings.push({
+          type: 'status-mismatch',
+          id: goal.id,
+          detail: `Open goal heeft issue #${issue.number} met state ${issue.state}.`,
+        });
+      }
+    }
+
+    for (const issue of issueSnapshot.byGoalId.values()) {
+      const goal = backlog.byId.get(issue.id);
+      if (!goal) continue;
+      if (issue.state === 'OPEN' && goal.status === '☑') {
+        findings.push({
+          type: 'status-mismatch',
+          id: issue.id,
+          detail: `Issue #${issue.number} is open maar backlog staat op klaar.`,
+        });
+      }
+    }
+  }
+
+  return {
+    summary: {
+      backlogGoals: backlog.goals.length,
+      executionGoals: execution.goals.length,
+      openBacklogGoals: backlog.goals.filter((goal) => goal.status === '☐').length,
+      issueSnapshotGoals: issueSnapshot?.byGoalId.size,
+      findings: findings.length,
+    },
+    findings,
+  };
+}
+
+export function formatBacklogHealthMarkdown(report) {
+  const lines = [
+    '# Kiempad backlog health',
+    '',
+    `- Backlog goals: ${report.summary.backlogGoals}`,
+    `- Execution goals: ${report.summary.executionGoals}`,
+    `- Open backlog goals: ${report.summary.openBacklogGoals}`,
+    `- Issue snapshot goals: ${report.summary.issueSnapshotGoals ?? 'niet meegegeven'}`,
+    `- Bevindingen: ${report.summary.findings}`,
+    '',
+    '## Bevindingen',
+  ];
+
+  if (report.findings.length === 0) {
+    lines.push('', 'Geen drift gevonden.');
+  } else {
+    lines.push(
+      '',
+      ...report.findings.map((finding) => `- ${finding.id} · ${finding.type}: ${finding.detail}`),
+    );
+  }
+
+  return `${lines.join('\n')}\n`;
+}
+
+function readArg(flag, fallback) {
+  const index = process.argv.indexOf(flag);
+  return index >= 0 ? process.argv[index + 1] : fallback;
+}
+
+function main() {
+  const backlogPath = readArg('--backlog', 'PRODUCT_BACKLOG.md');
+  const executionPath = readArg('--execution', 'EXECUTION_GOALS.md');
+  const issuesPath = readArg('--issues-json', undefined);
+  const report = buildBacklogHealthReport({
+    backlogMarkdown: fs.readFileSync(backlogPath, 'utf8'),
+    executionGoalsMarkdown: fs.readFileSync(executionPath, 'utf8'),
+    issueSnapshotJson: issuesPath ? fs.readFileSync(issuesPath, 'utf8') : undefined,
+  });
+  const json = process.argv.includes('--json');
+  process.stdout.write(json ? `${JSON.stringify(report, null, 2)}\n` : formatBacklogHealthMarkdown(report));
+  if (report.findings.length > 0 && !process.argv.includes('--allow-findings')) {
+    process.exitCode = 1;
+  }
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main();
+}
