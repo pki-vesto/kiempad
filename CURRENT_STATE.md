@@ -484,6 +484,10 @@
 - **G372 ADR Review Evidence Template:** `docs/ADR_REVIEW_EVIDENCE_TEMPLATE.md` legt
   vast hoe ADR-needed goals hun goal-id, reviewer/datum, geraadpleegde ADR's,
   besluituitkomst, ADR-route, follow-up en evidencegrenzen vastleggen.
+- **G373 Autonomy Guardrail Evidence Checklist:**
+  `docs/AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md` en de PR-template leggen per
+  autonome PR evidence vast voor netwerk, AI, data, GitHub, Tailscale, medisch beleid
+  en gevoelige-datagrenzen.
 
 F1 (MVP) en de oorspronkelijke 179 doelen zijn afgevinkt. De nieuwe hoge-prioriteit
 epic [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md)
@@ -538,8 +542,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G373 volgens `npm run goals:score`: Autonomy
-   Guardrail Evidence Checklist heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G374 volgens `npm run goals:score`: Backlog
+   Active Goal Drift Fixture heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

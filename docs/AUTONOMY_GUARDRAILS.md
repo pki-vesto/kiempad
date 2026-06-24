@@ -5,6 +5,10 @@ Kiempad mag autonoom worden doorontwikkeld volgens
 local-first, privacy- en medische grenzen. Deze guardrails zijn de minimumcheck voor
 elk autonoom doel en elke self-merge.
 
+Gebruik [`AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md`](AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md)
+om per PR kort bewijs vast te leggen voor netwerk, AI, data, GitHub, Tailscale en
+medisch beleid.
+
 ## Beslisregel
 
 1. Kies de veiligste lokale route wanneer een doel op meerdere manieren uitvoerbaar is.
@@ -88,6 +92,8 @@ elk autonoom doel en elke self-merge.
 - Lees het doel en issue voordat de implementatie start.
 - Controleer deze guardrails bij netwerk, AI, data, GitHub, Tailscale en medische
   impact.
+- Vul de autonomy guardrail evidence checklist in wanneer de PR beleid, docs, tooling,
+  runtimegedrag of deployment raakt.
 - Draai de lokale validatie die bij de wijziging past en noteer die in de PR.
 - Werk docs en backlog bij voordat het doel als klaar wordt gemarkeerd.
 - Merge pas na groene CI en verifieer daarna issue-status, `main` CI en backlog-health.

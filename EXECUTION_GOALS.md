@@ -1852,7 +1852,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, PR template, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G374 — Backlog Active Goal Drift Fixture
 
@@ -1894,4 +1894,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ADR backlog, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☐ open
+
+### G377 — Autonomy Guardrail Evidence Parser
+
+- **Epic:** Continuous Evolution
+- **Problem:** Autonomy guardrail evidence has a checklist, but completeness is still reviewed manually.
+- **Desired Outcome:** Add a local parser or maintenance helper that validates all guardrail domains and fields in a Markdown evidence block.
+- **User Value:** Autonomous PRs can be checked for guardrail evidence before merge without network calls.
+- **Acceptance Criteria:** Parser validates network, AI, data, GitHub, Tailscale, medical and sensitive-data sections; tests cover missing headings and missing fields; output does not print full PR bodies or sensitive content.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** scripts, PR template, tests
+- **ADR Needed:** no
+- **Score:** 97
 - **Status:** ☐ open
