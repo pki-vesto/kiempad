@@ -428,16 +428,35 @@ export function renderVaultGate(
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
         ${error ? `<p class="form-error" role="alert">${error}</p>` : ''}
-        <aside class="policy-panel" aria-labelledby="recovery-title">
-          <h2 id="recovery-title">Geen herstel-achterdeur</h2>
-          <p>
-            Kiempad bewaart je passphrase niet. Zonder passphrase is versleutelde data
-            niet te herstellen. Maak straks regelmatig een versleutelde back-up.
-          </p>
-        </aside>
+        ${renderVaultRecoveryHelp(hasVault)}
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
+  `;
+}
+
+function renderVaultRecoveryHelp(hasVault: boolean): string {
+  return `
+    <aside class="policy-panel" aria-labelledby="recovery-title">
+      <h2 id="recovery-title">${hasVault ? 'Hulp bij ontgrendelen' : 'Geen herstel-achterdeur'}</h2>
+      <p>
+        Kiempad bewaart je passphrase niet. Zonder passphrase is versleutelde data
+        niet te herstellen via een achterdeur.
+      </p>
+      ${
+        hasVault
+          ? `<ol class="compact-list">
+              <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
+              <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld.</li>
+              <li>Als de lokale opslag leeg of beschadigd is: maak een nieuwe kluis en importeer daarna je versleutelde back-up.</li>
+            </ol>`
+          : '<p>Maak straks regelmatig een versleutelde back-up en bewaar je passphrase apart van dit toestel.</p>'
+      }
+      <p class="small-print">
+        Lees ook <a href="docs/RUNBOOK.md#debugging">unlock- en back-upstappen</a>
+        en <a href="docs/WEBAUTHN_UNLOCK.md">WebAuthn-grenzen</a>.
+      </p>
+    </aside>
   `;
 }
 

@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G301 Reliability & Operations: vergrendelde kluis toont kalme herstelhulp voor
+  passphrase, WebAuthn en versleutelde back-up met links naar runbook en WebAuthn-docs.
 - G267 Onboarding & Daily Use: vragenscherm heeft een lokale Consult Prep Wizard met
   bewerkbare vragen, Markdown prep-packet en links naar timeline/graph-context.
 - G265 Onboarding & Daily Use: startscherm heeft een dagelijks command center dat
