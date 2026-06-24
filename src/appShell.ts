@@ -2311,11 +2311,32 @@ function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): s
         ? `<div class="policy-panel embedded-summary" aria-label="AI payload-preview">
             <h3>Payload-preview</h3>
             <p class="small-print">${preview.lengteVerstuurd} van ${preview.lengteOrigineel} tekens na minimalisatie.</p>
+            ${renderAiRedactionPreview(preview)}
             <pre class="payload-preview">${escapeHtml(preview.tekst)}</pre>
           </div>`
         : ''
     }
     ${error ? `<p class="form-error" role="alert">${escapeHtml(error)}</p>` : ''}
+  `;
+}
+
+function renderAiRedactionPreview(preview: AiSamenvattingPayload): string {
+  if (preview.redacties.length === 0) {
+    return '<p class="small-print">Geen persoonlijke identifiers herkend in deze preview.</p>';
+  }
+
+  return `
+    <section class="linked-note" aria-label="Verwijderde persoonlijke velden">
+      <h4>Verwijderde velden</h4>
+      <ul class="compact-list">
+        ${preview.redacties
+          .map(
+            (redactie) =>
+              `<li>${escapeHtml(redactie.label)}: ${redactie.aantal}x vervangen door ${escapeHtml(redactie.vervanging)}</li>`,
+          )
+          .join('')}
+      </ul>
+    </section>
   `;
 }
 

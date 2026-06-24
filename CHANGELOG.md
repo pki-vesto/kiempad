@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G313 AI & Research: AI payload-preview toont welke persoonlijke velden lokaal
+  zijn verwijderd, inclusief aantallen en vervanglabels zonder originele waarden.
 - G305 AI & Research: centrale AI prompt registry met doel, versie, inputcontract,
   veiligheidslabels, verboden output en policytests voor diagnose/dosering/behandelkeuze.
 - G326 Security & DevEx: `npm run secrets:check` scant docs/source op gangbare

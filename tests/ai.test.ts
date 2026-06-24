@@ -4,6 +4,7 @@ import {
   aiVerzoekToegestaan,
   assertAiVerzoekToegestaan,
   beschrijfOnDeviceAiStatus,
+  deidentificeerTekstMetRedacties,
   detecteerOnDeviceAiCapabilities,
   getAiPromptTemplate,
   listAiPromptTemplates,
@@ -50,17 +51,59 @@ describe('AI opt-in guard', () => {
 
   it('minimaliseert en de-identificeert tekst voor de AI-payload', () => {
     const payload = maakAiSamenvattingPayload(
-      'Naam: Peter\nE-mail: peter@example.com\nTelefoon: +31 6 12345678\nVraag over artikel.',
+      [
+        'Naam: Peter',
+        'E-mail: peter@example.com',
+        'Telefoon: +31 6 12345678',
+        'Geboortedatum: 12-03-1984',
+        'Patiëntnummer: ABCD-1234',
+        'Vraag over artikel.',
+      ].join('\n'),
       'https://voorbeeld.test/artikel',
-      120,
+      240,
     );
 
     expect(payload.tekst).toContain('Naam: [naam verwijderd]');
     expect(payload.tekst).toContain('[e-mail verwijderd]');
     expect(payload.tekst).toContain('[telefoon verwijderd]');
+    expect(payload.tekst).toContain('Geboortedatum: [geboortedatum verwijderd]');
+    expect(payload.tekst).toContain('Patiëntnummer: [id verwijderd]');
     expect(payload.tekst).not.toContain('peter@example.com');
-    expect(payload.lengteVerstuurd).toBeLessThanOrEqual(120);
+    expect(payload.tekst).not.toContain('12-03-1984');
+    expect(payload.tekst).not.toContain('ABCD-1234');
+    expect(payload.redacties.map((redactie) => redactie.type)).toEqual([
+      'email',
+      'telefoon',
+      'naam',
+      'geboortedatum',
+      'patientnummer',
+    ]);
+    expect(payload.lengteVerstuurd).toBeLessThanOrEqual(240);
     expect(payload.bron).toBe('https://voorbeeld.test/artikel');
+  });
+
+  it('rapporteert redactie-aantallen zonder originele waarden terug te geven', () => {
+    const resultaat = deidentificeerTekstMetRedacties(
+      'Naam: Peter\nNaam: Partner\nBSN: 123456789\nDossiernummer: DRILL-42',
+    );
+
+    expect(resultaat.redacties).toEqual([
+      {
+        type: 'naam',
+        label: 'Naam/patiëntnaam',
+        aantal: 2,
+        vervanging: '[naam verwijderd]',
+      },
+      { type: 'bsn', label: 'BSN', aantal: 1, vervanging: '[bsn verwijderd]' },
+      {
+        type: 'patientnummer',
+        label: 'Patiënt-/dossiernummer',
+        aantal: 1,
+        vervanging: '[id verwijderd]',
+      },
+    ]);
+    expect(JSON.stringify(resultaat.redacties)).not.toContain('Peter');
+    expect(JSON.stringify(resultaat.redacties)).not.toContain('123456789');
   });
 
   it('maakt AI-output herkenbaar als conceptkennis met bron', () => {

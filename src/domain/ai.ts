@@ -11,6 +11,22 @@ export type AiSamenvattingPayload = {
   bron: string;
   lengteOrigineel: number;
   lengteVerstuurd: number;
+  redacties: AiRedactie[];
+};
+
+export type AiRedactieType =
+  | 'naam'
+  | 'email'
+  | 'telefoon'
+  | 'bsn'
+  | 'geboortedatum'
+  | 'patientnummer';
+
+export type AiRedactie = {
+  type: AiRedactieType;
+  label: string;
+  aantal: number;
+  vervanging: string;
 };
 
 export type AiPromptId =
@@ -256,31 +272,80 @@ export function maakAiSamenvattingPayload(
   bron: string,
   maxTekens = 2_000,
 ): AiSamenvattingPayload {
-  const geminimaliseerd = deidentificeerTekst(tekst).slice(0, maxTekens).trim();
+  const redactieResultaat = deidentificeerTekstMetRedacties(tekst);
+  const geminimaliseerd = redactieResultaat.tekst.slice(0, maxTekens).trim();
 
   return {
     tekst: geminimaliseerd,
     bron: bron.trim(),
     lengteOrigineel: tekst.length,
     lengteVerstuurd: geminimaliseerd.length,
+    redacties: redactieResultaat.redacties,
   };
 }
 
 export function deidentificeerTekst(tekst: string): string {
-  return tekst
-    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, '[e-mail verwijderd]')
-    .replace(/(?:\+31|0)[\d\s-]{8,}\b/g, '[telefoon verwijderd]')
+  return deidentificeerTekstMetRedacties(tekst).tekst;
+}
+
+export function deidentificeerTekstMetRedacties(tekst: string): {
+  tekst: string;
+  redacties: AiRedactie[];
+} {
+  const redacties = new Map<AiRedactieType, AiRedactie>();
+  const addRedactie = (type: AiRedactieType, label: string, vervanging: string) => {
+    const existing = redacties.get(type);
+    redacties.set(type, {
+      type,
+      label,
+      vervanging,
+      aantal: (existing?.aantal ?? 0) + 1,
+    });
+  };
+
+  const redacted = tekst
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, () => {
+      addRedactie('email', 'E-mailadres', '[e-mail verwijderd]');
+      return '[e-mail verwijderd]';
+    })
+    .replace(/(?:\+31|0)[\d\s-]{8,}\b/g, () => {
+      addRedactie('telefoon', 'Telefoonnummer', '[telefoon verwijderd]');
+      return '[telefoon verwijderd]';
+    })
     .replace(/\b(?:naam|patient|patiënt)\s*:\s*[^\n,.]+/gi, (match) => {
       const [label] = match.split(':');
+      addRedactie('naam', 'Naam/patiëntnaam', '[naam verwijderd]');
       return `${label}: [naam verwijderd]`;
     })
     .replace(/\b(?:bsn|burgerservicenummer)\s*:\s*\d{8,9}\b/gi, (match) => {
       const [label] = match.split(':');
+      addRedactie('bsn', 'BSN', '[bsn verwijderd]');
       return `${label}: [bsn verwijderd]`;
     })
+    .replace(
+      /\b(?:geboortedatum|geboorte datum|dob)\s*:\s*[0-9]{1,4}[-/][0-9]{1,2}[-/][0-9]{1,4}\b/gi,
+      (match) => {
+        const [label] = match.split(':');
+        addRedactie('geboortedatum', 'Geboortedatum', '[geboortedatum verwijderd]');
+        return `${label}: [geboortedatum verwijderd]`;
+      },
+    )
+    .replace(
+      /\b(?:patientnummer|patiëntnummer|dossiernummer|id)\s*:\s*[A-Z0-9-]{4,}\b/gi,
+      (match) => {
+        const [label] = match.split(':');
+        addRedactie('patientnummer', 'Patiënt-/dossiernummer', '[id verwijderd]');
+        return `${label}: [id verwijderd]`;
+      },
+    )
     .replace(/[ \t]+/g, ' ')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
+
+  return {
+    tekst: redacted,
+    redacties: [...redacties.values()],
+  };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
