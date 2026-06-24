@@ -2720,4 +2720,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G436 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Reason Type Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The shared artifact docs hint reason type now has a representative fixture, but the static reason subtype still lacks a focused fixture that locks the allowed Dutch static wording set.
+- **Desired Outcome:** Add a focused static reason type fixture that enumerates every allowed static artifact docs hint reason.
+- **User Value:** Maintainers can change static diagnostic wording deliberately without accidentally widening or weakening the static reason contract.
+- **Acceptance Criteria:** Tests or type fixtures assert every static artifact docs hint reason satisfies the static subtype; existing shared reason type, builder and validation fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
