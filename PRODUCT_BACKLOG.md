@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 320 |
+| ☑ klaar | 321 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **420** |
+| **Totaal** | **421** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -565,13 +565,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G417 | Backlog Health JSON Contract Recovery Artifact Docs Hint Label Negative Fixture | P1 | F4 | ☑ |
 | G418 | Backlog Health JSON Contract Recovery Artifact Docs Hint Term Negative Fixture | P1 | F4 | ☑ |
 | G419 | Backlog Health JSON Contract Recovery Artifact Docs Hint Empty Fixture | P1 | F4 | ☑ |
-| G420 | Backlog Health JSON Contract Recovery Artifact Docs Hint Whitespace Fixture | P1 | F4 | ☐ |
+| G420 | Backlog Health JSON Contract Recovery Artifact Docs Hint Whitespace Fixture | P1 | F4 | ☑ |
+| G421 | Backlog Health JSON Contract Recovery Artifact Docs Hint Trimmed Length Fixture | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 420** (id's G001 t/m G420, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 421** (id's G001 t/m G421, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
