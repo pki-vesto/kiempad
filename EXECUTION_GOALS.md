@@ -2370,4 +2370,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G411 — Backlog Health JSON Contract Recovery Paragraph Artifact Label Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The recovery paragraph now preserves the privacy boundary, but the artifact labels for issue snapshots and raw GitHub output are still asserted as loose strings.
+- **Desired Outcome:** Make the recovery paragraph privacy assertions describe the forbidden artifact labels explicitly and consistently.
+- **User Value:** Maintainers can understand exactly which artifacts must stay out of recovery fixes and commits.
+- **Acceptance Criteria:** Tests use named forbidden artifact labels for issue snapshots and raw GitHub output; assertions remain scoped to the recovery paragraph; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
