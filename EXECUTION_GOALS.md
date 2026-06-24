@@ -2734,4 +2734,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G437 — Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Reason Type Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static artifact docs hint reason subtype now has a focused fixture, but the dynamic subtype still lacks a focused fixture that locks both allowed dynamic reason templates.
+- **Desired Outcome:** Add a focused dynamic reason type fixture that enumerates representative generic-label and short-term reason values.
+- **User Value:** Maintainers can evolve dynamic diagnostic wording deliberately without accidentally widening or weakening the dynamic reason contract.
+- **Acceptance Criteria:** Tests or type fixtures assert representative generic-label and short-term reason values satisfy the dynamic subtype; existing shared reason type, builder and validation fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
