@@ -1033,7 +1033,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** AI tests
 - **Score:** 115
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G321 — On-Device Capability Explainer
 
@@ -1500,5 +1500,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** AI payloads, privacy tests, docs
+- **Score:** 102
+- **Status:** ☐ open
+
+### G357 — Prompt Regression Coverage Report
+
+- **Epic:** AI & Research
+- **Problem:** Prompt regression fixtures are validated in tests, but maintainers do not have a compact report showing which flows and prompt ids are covered.
+- **Desired Outcome:** Add a local report or generated documentation that summarizes prompt regression fixture coverage by flow, prompt id and policy boundary.
+- **User Value:** AI safety coverage becomes easier to review before adding new prompts or provider integrations.
+- **Acceptance Criteria:** Report lists every regression fixture grouped by flow; flags registry prompts without a fixture; includes image-context and daily-recommendations boundary fixtures; runs without network or provider calls.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** AI tests, docs, maintenance scripts
 - **Score:** 102
 - **Status:** ☐ open

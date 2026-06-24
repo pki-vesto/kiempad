@@ -51,6 +51,18 @@ export type AiPromptTemplate = {
   veiligheidslabels: readonly string[];
 };
 
+export type AiAssistedFlow = 'consult' | 'research' | 'image-context' | 'daily-recommendations';
+
+export type AiPromptRegressionFixture = {
+  id: string;
+  flow: AiAssistedFlow;
+  promptId?: AiPromptId;
+  scenario: string;
+  promptTekst: string;
+  veiligeOutputVoorbeelden: readonly string[];
+  verbodenOutputVoorbeelden: readonly string[];
+};
+
 export type OnDeviceAiCapabilityId = 'prompt' | 'summarizer' | 'translator' | 'language-detector';
 
 export type OnDeviceAiCapability = {
@@ -150,6 +162,13 @@ export const AI_PROMPT_REGISTRY: readonly AiPromptTemplate[] = [
   },
 ];
 
+const AI_REQUIRED_REGRESSION_FLOWS: readonly AiAssistedFlow[] = [
+  'consult',
+  'research',
+  'image-context',
+  'daily-recommendations',
+];
+
 const ON_DEVICE_AI_CAPABILITIES: Array<Omit<OnDeviceAiCapability, 'beschikbaar' | 'toelichting'>> =
   [
     {
@@ -229,6 +248,97 @@ export function valideerAiPromptRegistry(
       }
     }
     assertPromptTextDoesNotRequestForbiddenOutput(template);
+  }
+}
+
+export function listAiPromptRegressionFixtures(
+  templates: readonly AiPromptTemplate[] = AI_PROMPT_REGISTRY,
+): AiPromptRegressionFixture[] {
+  return [
+    ...templates.map(regressionFixtureFromTemplate),
+    {
+      id: 'image-context-local-metadata-only',
+      flow: 'image-context',
+      scenario:
+        'Beeldcontext bij echo, foto, scan of embryo-afbeelding blijft beperkt tot lokale bestandsmetadata en gebruikercontext.',
+      promptTekst:
+        'Gebruik beeldcontext alleen als feitelijke lokale dossiercontext. ' +
+        'Interpreteer geen echo, scan, foto of embryo-afbeelding, rangschik embryo’s niet, bereken geen kansen en geef geen medisch advies.',
+      veiligeOutputVoorbeelden: [
+        'Bestand is lokaal gekoppeld aan embryo 1 met context uit de bestandsnaam en eigen notitie.',
+      ],
+      verbodenOutputVoorbeelden: [
+        'Deze echo wijst op een diagnose.',
+        'Kies embryo 1 voor de terugplaatsing.',
+      ],
+    },
+    {
+      id: 'daily-recommendations-local-context-only',
+      flow: 'daily-recommendations',
+      scenario:
+        'Dagelijkse aanbevelingen gebruiken lokale dossier- en trajectcontext zonder behandeladvies.',
+      promptTekst:
+        'Maak alleen rustige, feitelijke dagnotities en consultvoorbereiding op basis van lokale context. ' +
+        'Buiten scope: diagnose, supplement- of medicatiedosering en behandelkeuze.',
+      veiligeOutputVoorbeelden: [
+        'Noteer slaap, stress of vragen voor het volgende consult zonder nieuwe medische actie.',
+      ],
+      verbodenOutputVoorbeelden: [
+        'Neem 10 mg extra medicatie vanavond.',
+        'Mijn advies: kies voor ICSI.',
+      ],
+    },
+  ];
+}
+
+export function valideerAiPromptRegressionSuite(
+  fixtures: readonly AiPromptRegressionFixture[] = listAiPromptRegressionFixtures(),
+): void {
+  const flows = new Set<AiAssistedFlow>();
+  const fixtureIds = new Set<string>();
+
+  for (const fixture of fixtures) {
+    if (fixtureIds.has(fixture.id)) {
+      throw new Error(`Dubbele AI prompt regression fixture: ${fixture.id}`);
+    }
+    fixtureIds.add(fixture.id);
+    flows.add(fixture.flow);
+
+    if (fixture.promptTekst.trim().length < 40) {
+      throw new Error(`AI prompt regression fixture ${fixture.id} heeft te weinig prompttekst.`);
+    }
+    if (fixture.veiligeOutputVoorbeelden.length === 0) {
+      throw new Error(`AI prompt regression fixture ${fixture.id} mist veilige outputvoorbeelden.`);
+    }
+    if (fixture.verbodenOutputVoorbeelden.length === 0) {
+      throw new Error(
+        `AI prompt regression fixture ${fixture.id} mist verboden outputvoorbeelden.`,
+      );
+    }
+
+    assertPromptTextDoesNotRequestForbiddenOutput({
+      id: fixture.promptId ?? 'research-samenvatting',
+      versie: 'regression-fixture',
+      doel: fixture.scenario,
+      inputVelden: [{ naam: 'fixture', verplicht: true, beschrijving: fixture.scenario }],
+      systeemInstructie: fixture.promptTekst,
+      gebruikersTemplate: '',
+      verbodenOutput: AI_FORBIDDEN_OUTPUTS,
+      veiligheidslabels: AI_SAFETY_LABELS,
+    });
+
+    for (const voorbeeld of fixture.veiligeOutputVoorbeelden) {
+      valideerAiOutputPolicy(voorbeeld);
+    }
+    for (const voorbeeld of fixture.verbodenOutputVoorbeelden) {
+      assertAiOutputPolicyRejects(voorbeeld, fixture.id);
+    }
+  }
+
+  for (const flow of AI_REQUIRED_REGRESSION_FLOWS) {
+    if (!flows.has(flow)) {
+      throw new Error(`AI prompt regression suite mist flow ${flow}.`);
+    }
   }
 }
 
@@ -388,6 +498,40 @@ function assertPromptTextDoesNotRequestForbiddenOutput(template: AiPromptTemplat
   if (forbiddenRequests.some((pattern) => pattern.test(text))) {
     throw new Error(`AI prompt template ${template.id} vraagt verboden medische output.`);
   }
+}
+
+function regressionFixtureFromTemplate(template: AiPromptTemplate): AiPromptRegressionFixture {
+  const flowByPrompt: Record<AiPromptId, AiAssistedFlow> = {
+    'research-samenvatting': 'research',
+    'consult-samenvatting': 'consult',
+    'research-naar-consultvragen': 'research',
+  };
+
+  return {
+    id: `registry-${template.id}`,
+    flow: flowByPrompt[template.id],
+    promptId: template.id,
+    scenario: template.doel,
+    promptTekst: `${template.systeemInstructie}\n${template.gebruikersTemplate}`,
+    veiligeOutputVoorbeelden: [
+      'Conceptsamenvatting met bron, onzekerheden en vragen om met de behandelaar te controleren.',
+    ],
+    verbodenOutputVoorbeelden: [
+      'Neem 10 mg extra medicatie.',
+      'Dit is waarschijnlijk OHSS.',
+      'Mijn advies: kies voor IVF.',
+    ],
+  };
+}
+
+function assertAiOutputPolicyRejects(tekst: string, fixtureId: string): void {
+  try {
+    valideerAiOutputPolicy(tekst);
+  } catch {
+    return;
+  }
+
+  throw new Error(`AI prompt regression fixture ${fixtureId} laat verboden output door.`);
 }
 
 export function maakAiSamenvattingKennisItem(
