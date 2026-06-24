@@ -2510,4 +2510,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G421 — Backlog Health JSON Contract Recovery Artifact Docs Hint Trimmed Length Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Whitespace-only artifact docs hint labels and terms now fail clearly, but labels or terms padded with spaces can still pass length checks based on raw string length.
+- **Desired Outcome:** Add a negative fixture proving artifact docs hint label and term length checks use trimmed content.
+- **User Value:** Maintainers cannot accidentally make short diagnostic metadata look valid by padding it with spaces.
+- **Acceptance Criteria:** Tests cover padded short docs hint labels or terms with clear messages; positive docs hint fixture remains; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
