@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 246 |
+| ☑ klaar | 247 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **346** |
+| **Totaal** | **347** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -487,17 +487,18 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G339 | Public Repo Privacy Review | P1 | F4 | ☐ |
 | G340 | Build Provenance Notes | P3 | F4 | ☐ |
 | G341 | CSS Token Audit | P2 | F4 | ☐ |
-| G342 | No External Asset Test | P0 | F4 | ☐ |
+| G342 | No External Asset Test | P0 | F4 | ☑ |
 | G343 | Type Coverage Ratchet | P2 | F4 | ☐ |
 | G344 | Future Sync Relay Threat Model | P1 | F4 | ☐ |
 | G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☐ |
 | G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
+| G347 | External Asset CI Gate | P0 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 346** (id's G001 t/m G346, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 347** (id's G001 t/m G347, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

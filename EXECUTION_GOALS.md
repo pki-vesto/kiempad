@@ -1319,7 +1319,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** PWA, tests
 - **Score:** 124
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G343 — Type Coverage Ratchet
 
@@ -1371,4 +1371,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** Scripts, GitHub Issues, docs
 - **Score:** 96
+- **Status:** ☐ open
+
+### G347 — External Asset CI Gate
+
+- **Epic:** Security & DevEx
+- **Problem:** The external asset scanner exists locally but is not yet enforced by CI after build output exists.
+- **Desired Outcome:** Add the external asset check to CI after the production build.
+- **User Value:** Self-contained asset guarantees are enforced on every PR.
+- **Acceptance Criteria:** CI runs `npm run assets:check` after `npm run build`; docs mention the local command; failures show the offending file, context and URL.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** CI, PWA, tests
+- **Score:** 124
 - **Status:** ☐ open
