@@ -2916,4 +2916,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G450 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Expected Values
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias assertion is now grouped near the representative static assertions, but it compares against the broad static fixture rather than showing its expected static values directly.
+- **Desired Outcome:** Review whether the static alias assertion should include explicit expected values or keep delegating to the broad static fixture.
+- **User Value:** Maintainers can decide whether alias contract readability is better served by direct expected values or by shared fixture equality.
+- **Acceptance Criteria:** Static alias expected-value strategy is reviewed and, if useful, adjusted for clearer contract evidence; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
