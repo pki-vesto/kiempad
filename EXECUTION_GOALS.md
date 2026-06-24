@@ -2566,4 +2566,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G425 — Backlog Health JSON Contract Recovery Artifact Docs Hint Normalized Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The normalized artifact docs hint shape now has a named type alias, but there is no direct fixture that proves raw and trimmed fields are preserved as expected.
+- **Desired Outcome:** Add a focused fixture for normalized artifact docs hint raw and trimmed values.
+- **User Value:** Maintainers can refactor hint normalization without accidentally losing raw diagnostics or trimmed comparison semantics.
+- **Acceptance Criteria:** Tests assert normalized rawLabel/rawTerm and label/term values for padded metadata; existing positive and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
