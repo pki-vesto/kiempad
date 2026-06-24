@@ -1,13 +1,13 @@
 # Claude Design Prompt — Kiempad Thema
 
-Gebruik onderstaande prompt in Claude Design om een nieuw visueel thema voor Kiempad te
-maken zonder functionaliteit te verliezen.
+Gebruik onderstaande prompt in Claude Design om het gemergde Kiempad-thema te auditen,
+verfijnen en uitbreiden zonder functionaliteit te verliezen.
 
 ```text
-Je ontwerpt een nieuw thema voor Kiempad, een persoonlijke privacy-first PWA voor een
-Nederlands IVF/ICSI-traject van één stel. Ontwerp alleen de UI/UX-laag: geen nieuwe
-productclaims, geen medische adviezen, geen datamodelwijzigingen en geen externe
-diensten. Alle bestaande functionaliteit moet ondersteund blijven.
+Je werkt door op het gemergde thema van Kiempad, een persoonlijke privacy-first PWA
+voor een Nederlands IVF/ICSI-traject van één stel. Ontwerp alleen de UI/UX-laag:
+geen nieuwe productclaims, geen medische adviezen, geen datamodelwijzigingen en geen
+externe diensten. Alle bestaande functionaliteit moet ondersteund blijven.
 
 Context
 - Productnaam: Kiempad.
@@ -20,13 +20,17 @@ Context
 - Privacy-first en local-first: gezondheidsdata blijft lokaal en versleuteld in de
   browser. Geen analytics, tracking, externe fonts, externe afbeeldingen of externe
   scripts.
+- Huidige themabasis: een rustige naturalistische stijl met sage/groen als primaire
+  actiekleur, warme lichte surfaces, donkere modus, serif accenten voor merk/hero en
+  compacte werk-appnavigatie. Behoud deze richting tenzij een verbetering aantoonbaar
+  beter is voor leesbaarheid, toegankelijkheid of workflow.
 
 Ontwerpdoel
-Maak een compleet nieuw visueel thema dat rijker en consistenter voelt, maar de app
-functioneel en efficiënt houdt. Dit is een werk-app voor dagelijks gebruik tijdens een
-emotioneel traject, geen marketinglandingspagina. Prioriteer scanbaarheid,
-rust, duidelijke hiërarchie, goede touch targets, toegankelijke contrasten en
-professionele formulier- en datavisualisatie.
+Audit en verfijn het bestaande thema zodat het rijker, consistenter en robuuster
+voelt, maar de app functioneel en efficiënt houdt. Dit is een werk-app voor dagelijks
+gebruik tijdens een emotioneel traject, geen marketinglandingspagina. Prioriteer
+scanbaarheid, rust, duidelijke hiërarchie, goede touch targets, toegankelijke
+contrasten en professionele formulier- en datavisualisatie.
 
 Belangrijke stijlrichting
 - Vermijd een klinisch ziekenhuisgevoel en vermijd een te speelse fertility-app-look.
@@ -47,6 +51,9 @@ Technische randvoorwaarden
 - Geen frameworkwissel voorstellen.
 - Geen externe assets verplicht maken.
 - Houd alle data- en interactiestromen local-first.
+- Werk vanuit de bestaande `src/styles.css` tokens en de huidige light/dark
+  theme-structuur; benoem expliciet welke tokens behouden, aangepast of toegevoegd
+  moeten worden.
 - Alle formulieren, lege staten, foutmeldingen, successmeldingen, disabled states,
   focus states, hover states, loading/wachtstates en confirmation states moeten
   ontworpen zijn.
@@ -220,14 +227,16 @@ Privacy en veiligheid in de UI
 Deliverables
 Lever een designvoorstel op met:
 1. Een korte ontwerpvisie in het Nederlands.
-2. Design tokens: kleur, typografie, spacing, radius, schaduw, borders, focus.
-3. Light en dark mode.
-4. Componentrichtlijnen voor alle genoemde componenten.
-5. Per hoofdscherm een layoutbeschrijving voor desktop en mobiel.
-6. Concrete microcopy voor lege staten, foutmeldingen en privacywaarschuwingen.
-7. Interactiestates voor formulieren, uploads, import/export, WebAuthn, AI-preview,
+2. Een baseline-audit van het gemergde thema: wat behouden, wat aanscherpen, wat
+   ontbreekt.
+3. Design tokens: kleur, typografie, spacing, radius, schaduw, borders, focus.
+4. Light en dark mode.
+5. Componentrichtlijnen voor alle genoemde componenten.
+6. Per hoofdscherm een layoutbeschrijving voor desktop en mobiel.
+7. Concrete microcopy voor lege staten, foutmeldingen en privacywaarschuwingen.
+8. Interactiestates voor formulieren, uploads, import/export, WebAuthn, AI-preview,
    notificaties en sync.
-8. Een implementatiechecklist voor CSS/HTML-aanpassingen zonder functionaliteit te
+9. Een implementatiechecklist voor CSS/HTML-aanpassingen zonder functionaliteit te
    breken.
 
 Belangrijk: ontwerp geen nieuwe backend, geen medische beslisfunctionaliteit, geen
