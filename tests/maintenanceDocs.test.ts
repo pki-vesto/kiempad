@@ -61,6 +61,12 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASON_TYPE_FIXTURES = [
   'label is te generiek: hint',
   'term is te kort: labels',
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintErrorReason>;
+const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
+  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
+  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingTerm,
+  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceLabel,
+  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceTerm,
+] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintStaticErrorReason>;
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
@@ -591,6 +597,15 @@ describe('onderhoudsdocumentatie', () => {
       'label ontbreekt',
       'label is te generiek: hint',
       'term is te kort: labels',
+    ]);
+  });
+
+  it('houdt backlog-health recovery artifactlabel-uitleg statische foutredentypes compleet', () => {
+    expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES).toEqual([
+      'label ontbreekt',
+      'term ontbreekt',
+      'label bevat alleen whitespace',
+      'term bevat alleen whitespace',
     ]);
   });
 
