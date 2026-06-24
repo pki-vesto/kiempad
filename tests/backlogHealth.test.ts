@@ -458,6 +458,25 @@ describe('backlog health', () => {
     ]);
   });
 
+  it('houdt de representatieve JSON-contractfixture in-memory en gesanitized', () => {
+    const report = buildRepresentativeIssueSnapshotContractReport();
+    const serializedReport = JSON.stringify(report);
+
+    for (const forbidden of [
+      'body',
+      'token',
+      'niet opnemen',
+      'ook niet opnemen',
+      'issueSnapshotJson',
+      '/tmp/kiempad-issues.json',
+      'kiempad-issues.json',
+    ]) {
+      expect(serializedReport).not.toContain(forbidden);
+    }
+    expect(report.summary.issueSnapshotItems).toBe(4);
+    expect(report.summary.issueSnapshotLimit).toBe(500);
+  });
+
   it('maakt actieve-goal drift zichtbaar met kleine negatieve fixtures', () => {
     const belowMinimumFindings = buildActiveGoalDriftFindings(
       parseBacklog(buildBacklogFixture(['G244', 'G245'])),
