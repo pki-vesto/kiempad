@@ -21,6 +21,8 @@ de lokale data versleuteld wordt.
 - **Tests:** `npm run test` (Vitest groen).
 - **Asset-privacy:** `npm run build && npm run assets:check` (geen externe
   image/font/script/manifest-URL's in bron- of buildassets).
+- **CSP:** `index.html` blokkeert remote scripts standaard; bij dev-HMR zijn alleen
+  lokale websocketverbindingen naar `localhost`/`127.0.0.1` toegestaan.
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en

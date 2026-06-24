@@ -93,6 +93,8 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
 - **Client-side PWA** in TypeScript (Vite). Geen verplichte backend voor de MVP.
 - **Local-first opslag:** IndexedDB met **client-side versleuteling** (Web Crypto,
   AES-GCM; sleutel afgeleid van een passphrase).
+- **CSP:** `index.html` bevat een local-first Content Security Policy die scripts en
+  netwerkverbindingen standaard tot de eigen origin beperkt.
 - **Back-up:** versleutelde export/import als bestand (handmatig, op je eigen
   apparaat).
 - **Ontgrendelen:** passphrase als basis; optioneel WebAuthn/biometrie via lokale

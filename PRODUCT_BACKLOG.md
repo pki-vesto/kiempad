@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 252 |
+| ☑ klaar | 253 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **352** |
+| **Totaal** | **353** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -469,7 +469,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G321 | On-Device Capability Explainer | P3 | F4 | ☐ |
 | G322 | Research Network Audit Log | P1 | F4 | ☐ |
 | G323 | AI Data Retention Controls | P1 | F4 | ☐ |
-| G324 | Content Security Policy | P0 | F4 | ☐ |
+| G324 | Content Security Policy | P0 | F4 | ☑ |
 | G325 | Dependency Review Cadence | P1 | F4 | ☐ |
 | G326 | Secrets Scan Test | P0 | F4 | ☐ |
 | G327 | Sensitive Fixture Policy | P1 | F4 | ☐ |
@@ -498,12 +498,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G350 | First Run Setup Progress Persistence | P1 | F4 | ☐ |
 | G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
 | G352 | Backup Drill Fixture Expansion | P1 | F4 | ☐ |
+| G353 | CSP Violation Reporting Plan | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 352** (id's G001 t/m G352, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 353** (id's G001 t/m G353, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
