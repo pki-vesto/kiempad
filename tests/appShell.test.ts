@@ -483,15 +483,30 @@ describe('app shell', () => {
         datumVanaf: '2026-06-01',
         datumTot: '2026-06-30',
       },
+      timelineFilter: {
+        soort: 'onderzoek',
+        datumVanaf: '2026-06-01',
+        datumTot: '2026-06-30',
+        trajectId: 'traject-1',
+        bron: 'echo',
+      },
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
     expect(html).toContain('Knowledge graph');
     expect(html).toContain('Fertility timeline');
+    expect(html).toContain('id="timeline-filter-form"');
+    expect(html).toContain('name="timelineSoort"');
+    expect(html).toContain('value="onderzoek" selected');
+    expect(html).toContain('name="timelineDatumVanaf" type="date" value="2026-06-01"');
+    expect(html).toContain('name="timelineDatumTot" type="date" value="2026-06-30"');
+    expect(html).toContain('name="timelineTrajectId" value="traject-1"');
+    expect(html).toContain('name="timelineEigenaar"');
+    expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
     expect(html).toContain('Echo verslag');
-    expect(html).toContain('Behandelvoorbereiding');
+    expect(html).not.toContain('Behandelvoorbereiding');
     expect(html).toContain('id="graph-filter-form"');
     expect(html).toContain('name="graphRelatieType"');
     expect(html).toContain('Hoort bij behandeling');

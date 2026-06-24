@@ -1,5 +1,5 @@
 import { AFSPRAAK_TYPE_LABELS } from './agenda';
-import type { DailyRecommendationOverview } from './dailyRecommendations';
+import type { DailyRecommendationOverview, DailyRecommendationOwner } from './dailyRecommendations';
 import { DOSSIER_CATEGORIE_LABELS } from './dossier';
 import { MEDICATIE_VORM_LABELS } from './medicatie';
 import type { MedicatieBundle } from './medicatieStore';
@@ -25,6 +25,7 @@ export type FertilityTimelineItem = {
   label: string;
   detail: string;
   bron: string;
+  eigenaar?: DailyRecommendationOwner;
   trajectId?: string;
   recordId: string;
 };
@@ -32,6 +33,15 @@ export type FertilityTimelineItem = {
 export type FertilityTimeline = {
   items: FertilityTimelineItem[];
   waarschuwing: string;
+};
+
+export type FertilityTimelineFilter = {
+  soort?: FertilityTimelineItemSoort;
+  datumVanaf?: string;
+  datumTot?: string;
+  trajectId?: string;
+  eigenaar?: DailyRecommendationOwner;
+  bron?: string;
 };
 
 const FERTILITY_TIMELINE_WAARSCHUWING =
@@ -208,6 +218,7 @@ export function bouwFertilityTimeline(input: {
         label: 'Aanbeveling',
         detail: item.detail,
         bron: item.bron,
+        eigenaar: item.owner,
         recordId: item.id,
       }),
     );
@@ -230,6 +241,25 @@ export function bouwFertilityTimeline(input: {
         a.titel.localeCompare(b.titel, 'nl-NL'),
     ),
     waarschuwing: FERTILITY_TIMELINE_WAARSCHUWING,
+  };
+}
+
+export function filterFertilityTimeline(
+  timeline: FertilityTimeline,
+  filter: FertilityTimelineFilter = {},
+): FertilityTimeline {
+  const bronFilter = filter.bron?.trim().toLocaleLowerCase('nl-NL');
+  return {
+    ...timeline,
+    items: timeline.items.filter((item) => {
+      if (filter.soort && item.soort !== filter.soort) return false;
+      if (filter.datumVanaf && item.datum.slice(0, 10) < filter.datumVanaf) return false;
+      if (filter.datumTot && item.datum.slice(0, 10) > filter.datumTot) return false;
+      if (filter.trajectId && item.trajectId !== filter.trajectId) return false;
+      if (filter.eigenaar && item.eigenaar !== filter.eigenaar) return false;
+      if (bronFilter && !item.bron.toLocaleLowerCase('nl-NL').includes(bronFilter)) return false;
+      return true;
+    }),
   };
 }
 
