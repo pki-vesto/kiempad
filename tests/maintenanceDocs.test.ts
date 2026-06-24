@@ -556,6 +556,12 @@ describe('onderhoudsdocumentatie', () => {
     ).toBe('Backlog-health artifact docs hint label ontbreekt.');
   });
 
+  it('bouwt backlog-health recovery artifactlabel-uitleg fouten met dynamische waarden', () => {
+    expect(buildBacklogHealthArtifactDocsHintError('label is te generiek: hint')).toBe(
+      'Backlog-health artifact docs hint label is te generiek: hint.',
+    );
+  });
+
   it('houdt backlog-health recovery artifactlabel-uitleg foutredenen stabiel', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS).toEqual({
       missingLabel: 'label ontbreekt',
