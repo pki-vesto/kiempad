@@ -1,5 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
-import { maakEventLog, sorteerEventLogs } from '../src/domain/eventLog';
+import {
+  isEventLogDetailPrivacySafe,
+  maakEventLog,
+  sorteerEventLogs,
+} from '../src/domain/eventLog';
 
 describe('eventLog', () => {
   it('maakt een lokale logregel met getrimde velden en standaarddatum', () => {
@@ -63,5 +67,65 @@ describe('eventLog', () => {
         },
       ]).map((event) => event.id),
     ).toEqual(['event-2', 'event-3', 'event-1']);
+  });
+
+  it('houdt high-risk eventlogdetails generiek voor backup, AI, notificaties en import', () => {
+    const safeEvents = [
+      {
+        categorie: 'backup' as const,
+        gebeurtenis: 'Versleutelde back-up klaargezet',
+        detail: 'Back-upbestand is lokaal als download aangeboden.',
+      },
+      {
+        categorie: 'ai' as const,
+        gebeurtenis: 'AI-samenvatting lokaal bewaard',
+        detail: 'Conceptkennis lokaal opgeslagen zonder brontekst.',
+      },
+      {
+        categorie: 'systeem' as const,
+        gebeurtenis: 'Notificatieprivacy gewijzigd',
+        detail: 'Generieke meldingen blijven standaard.',
+      },
+      {
+        categorie: 'backup' as const,
+        gebeurtenis: 'Versleutelde back-up geïmporteerd',
+        detail: '12 records en 3 metadata-items verwerkt.',
+      },
+    ];
+
+    for (const event of safeEvents) {
+      expect(isEventLogDetailPrivacySafe(event)).toBe(true);
+      expect(() => maakEventLog('event-safe', event)).not.toThrow();
+    }
+  });
+
+  it('weigert gevoelige vrije tekst in high-risk eventlogdetails', () => {
+    const unsafeEvents = [
+      {
+        categorie: 'backup' as const,
+        gebeurtenis: 'Versleutelde back-up klaargezet',
+        detail: 'Bestand voor Naam: Testpersoon A is geëxporteerd.',
+      },
+      {
+        categorie: 'ai' as const,
+        gebeurtenis: 'AI-preview gemaakt',
+        detail: 'Prompt bevat E-mail: testpersoon@example.test.',
+      },
+      {
+        categorie: 'systeem' as const,
+        gebeurtenis: 'Notificatie verstuurd',
+        detail: 'Medicatie: Progesteron om 20:00.',
+      },
+      {
+        categorie: 'backup' as const,
+        gebeurtenis: 'Versleutelde back-up geïmporteerd',
+        detail: 'Dossiernummer: TEST-0001 verwerkt.',
+      },
+    ];
+
+    for (const event of unsafeEvents) {
+      expect(isEventLogDetailPrivacySafe(event)).toBe(false);
+      expect(() => maakEventLog('event-unsafe', event)).toThrow('gevoelige vrije tekst');
+    }
   });
 });

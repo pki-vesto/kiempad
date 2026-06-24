@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G337 Security & DevEx: eventlogdetails voor back-up, AI, notificaties en import
+  worden getest op generieke inhoud zodat gevoelige vrije tekst niet in operationele
+  metadata terechtkomt.
 - G327 Security & DevEx: synthetische-only fixture policy met
   `npm run fixtures:check` voorkomt echte naam-, e-mail- en BSN-achtige testdata.
 - G325 Security & DevEx: `npm run deps:review` en dependency-reviewdocs leggen de

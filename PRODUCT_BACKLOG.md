@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 262 |
+| ☑ klaar | 263 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **362** |
+| **Totaal** | **363** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -482,7 +482,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G334 | Form Validation Library Cleanup | P2 | F4 | ☐ |
 | G335 | Typed Route Registry | P2 | F4 | ☐ |
 | G336 | Store Factory Refactor | P3 | F4 | ☐ |
-| G337 | Event Log Privacy Test | P1 | F4 | ☐ |
+| G337 | Event Log Privacy Test | P1 | F4 | ☑ |
 | G338 | Tailscale Deploy Drift Check | P2 | F4 | ☐ |
 | G339 | Public Repo Privacy Review | P1 | F4 | ☐ |
 | G340 | Build Provenance Notes | P3 | F4 | ☐ |
@@ -508,12 +508,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☐ |
 | G361 | Dependency Review Evidence Snapshot | P1 | F4 | ☐ |
 | G362 | Sensitive Fixture Allowlist Review | P1 | F4 | ☐ |
+| G363 | Event Log Detail Allowlist Governance | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 362** (id's G001 t/m G362, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 363** (id's G001 t/m G363, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
