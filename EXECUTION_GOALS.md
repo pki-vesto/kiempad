@@ -2412,4 +2412,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G414 — Backlog Health JSON Contract Recovery Artifact Label Docs Negative Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON reference now explains why recovery artifact labels must remain, but there is no negative fixture proving that missing docs-hint wording fails clearly.
+- **Desired Outcome:** Add a parser-level negative fixture for missing artifact-label docs hint wording in the recovery paragraph.
+- **User Value:** Maintainers get direct feedback if future doc edits keep the labels but remove the explanation for why they matter.
+- **Acceptance Criteria:** Tests cover a missing artifact-label docs hint with a clear message; assertions remain scoped to the recovery paragraph; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
