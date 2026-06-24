@@ -2986,4 +2986,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G455 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Comment Duplication
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture comments now use aligned wording, but the declaration and assertion cluster comments may duplicate the same idea.
+- **Desired Outcome:** Review whether both comments are still needed or whether one local explanation is enough.
+- **User Value:** Maintainers get the context they need without repeated explanation in a dense fixture area.
+- **Acceptance Criteria:** Static alias comment duplication is reviewed and, if useful, reduced without losing the alias contract boundary; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
