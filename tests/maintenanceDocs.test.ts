@@ -39,6 +39,7 @@ type NormalizedBacklogHealthArtifactDocsHint = {
   label: string;
   term: string;
 };
+type BacklogHealthArtifactDocsHintErrorReason = string;
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
@@ -794,7 +795,9 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
   }
 }
 
-function buildBacklogHealthArtifactDocsHintError(reason: string): string {
+function buildBacklogHealthArtifactDocsHintError(
+  reason: BacklogHealthArtifactDocsHintErrorReason,
+): string {
   return `Backlog-health artifact docs hint ${reason}.`;
 }
 

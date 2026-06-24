@@ -2622,4 +2622,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G429 — Backlog Health JSON Contract Recovery Artifact Docs Hint Error Reason Constants
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint error reasons now have a named type, but repeated reason strings are still assembled inline at validation call sites.
+- **Desired Outcome:** Extract reusable constants for common artifact docs hint error reasons.
+- **User Value:** Maintainers can evolve validation reasons without duplicating Dutch diagnostic text across branches.
+- **Acceptance Criteria:** Common error reasons use named constants; existing builder fixture and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
