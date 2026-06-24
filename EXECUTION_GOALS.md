@@ -2748,4 +2748,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G438 — Backlog Health JSON Contract Recovery Artifact Docs Hint Type Fixture De-duplication
+
+- **Epic:** Continuous Evolution
+- **Problem:** Static and dynamic reason subtype fixtures are now focused, but the shared reason type fixture repeats representative literal values instead of reusing the subtype fixtures.
+- **Desired Outcome:** Build the shared reason type fixture from the static and dynamic subtype fixtures.
+- **User Value:** Maintainers can update reason contract fixtures in one place without accidentally letting the shared fixture drift from subtype coverage.
+- **Acceptance Criteria:** Shared artifact docs hint reason type fixture composes values from the static and dynamic subtype fixtures; existing shared, static and dynamic type fixture tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
