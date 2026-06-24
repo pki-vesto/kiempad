@@ -603,6 +603,13 @@ describe('onderhoudsdocumentatie', () => {
     ]);
   });
 
+  it('bouwt backlog-health recovery artifactlabel-uitleg foutredentype uit subtypes', () => {
+    expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASON_TYPE_FIXTURES).toEqual([
+      BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES[0],
+      ...BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_DYNAMIC_ERROR_REASON_TYPE_FIXTURES,
+    ]);
+  });
+
   it('houdt backlog-health recovery artifactlabel-uitleg statische foutredentypes compleet', () => {
     expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES).toEqual([
       'label ontbreekt',

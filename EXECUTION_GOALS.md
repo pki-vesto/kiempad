@@ -2776,4 +2776,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G440 — Backlog Health JSON Contract Recovery Artifact Docs Hint Type Fixture Static Selection Constant
+
+- **Epic:** Continuous Evolution
+- **Problem:** The shared reason type fixture composition now has a focused assertion, but the selected representative static subtype value is still addressed by a raw array index.
+- **Desired Outcome:** Introduce a named constant for the representative static artifact docs hint reason used by the shared type fixture.
+- **User Value:** Maintainers can understand and change the representative static fixture value without decoding positional array access.
+- **Acceptance Criteria:** Shared fixture and composition test use a named representative static reason constant instead of direct index access; existing shared, static and dynamic type fixture tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
