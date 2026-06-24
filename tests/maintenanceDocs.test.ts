@@ -822,16 +822,30 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
     if (normalizedDocsHint.label.length <= 8) {
       throw new Error(
         buildBacklogHealthArtifactDocsHintError(
-          `label is te generiek: ${normalizedDocsHint.label}`,
+          buildBacklogHealthArtifactDocsHintGenericLabelReason(normalizedDocsHint.label),
         ),
       );
     }
     if (normalizedDocsHint.term.length <= 8) {
       throw new Error(
-        buildBacklogHealthArtifactDocsHintError(`term is te kort: ${normalizedDocsHint.term}`),
+        buildBacklogHealthArtifactDocsHintError(
+          buildBacklogHealthArtifactDocsHintShortTermReason(normalizedDocsHint.term),
+        ),
       );
     }
   }
+}
+
+function buildBacklogHealthArtifactDocsHintGenericLabelReason(
+  label: string,
+): BacklogHealthArtifactDocsHintErrorReason {
+  return `label is te generiek: ${label}`;
+}
+
+function buildBacklogHealthArtifactDocsHintShortTermReason(
+  term: string,
+): BacklogHealthArtifactDocsHintErrorReason {
+  return `term is te kort: ${term}`;
 }
 
 function buildBacklogHealthArtifactDocsHintError(
