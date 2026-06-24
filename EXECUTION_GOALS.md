@@ -2832,4 +2832,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G444 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Selection Type Fixture Formatting
+
+- **Epic:** Continuous Evolution
+- **Problem:** The representative static artifact docs hint reason now has an inline type-level fixture, but the long `satisfies` expression is dense and can become hard to scan as the fixture area grows.
+- **Desired Outcome:** Format the representative static reason type fixture for readability without changing its type contract.
+- **User Value:** Maintainers can read the representative static reason contract quickly while keeping the compile-time guard.
+- **Acceptance Criteria:** Representative static reason type fixture remains a `satisfies BacklogHealthArtifactDocsHintStaticErrorReason` check with clearer formatting; existing static selection, literal and shared fixture tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
