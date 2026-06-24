@@ -7,6 +7,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148/G243 UI-herstel (Traject): het trajectscherm is van een dichte
+  twee-koloms vorm-/tijdlijnindeling omgebouwd naar een mobiel-first
+  enkelkolomsstroom — het traject- en poging-formulier staan nu achter een
+  uitklap, met daaronder de vergoedingsteller, het trajectoverzicht, de centrale
+  fertility-timeline en de fasen op volgorde. Alle form-id's
+  (`traject-form`/`traject-new-form`), de archiveer/verwijder-knoppen en de
+  fertility-timeline (overzichtsbalk + items) blijven ongewijzigd.
 - G151 UI-herstel (Startscherm): het startscherm is mobiel-first heropgebouwd met
   de componentlaag — een rustige "Waar staan we?"-fasehero (CTA naar Traject),
   het command center, "Volgende stap" als tikbare actiekaarten (agenda/
