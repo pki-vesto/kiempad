@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G325 Security & DevEx: `npm run deps:review` en dependency-reviewdocs leggen de
+  maandelijkse updateflow vast met outdated, audit, lockfile-diff en testgate.
 - G301 Reliability & Operations: vergrendelde kluis toont kalme herstelhulp voor
   passphrase, WebAuthn en versleutelde back-up met links naar runbook en WebAuthn-docs.
 - G267 Onboarding & Daily Use: vragenscherm heeft een lokale Consult Prep Wizard met

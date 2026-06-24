@@ -1098,7 +1098,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Docs, package
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G326 — Secrets Scan Test
 
@@ -1552,5 +1552,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Vault UX, WebAuthn, backup guidance
+- **Score:** 104
+- **Status:** ☐ open
+
+### G361 — Dependency Review Evidence Snapshot
+
+- **Epic:** Security & DevEx
+- **Problem:** The dependency review cadence exists, but completed monthly reviews do not yet leave a structured local evidence snapshot.
+- **Desired Outcome:** Add a helper or template that records dependency review date, commands, lockfile diff summary and gate results without storing secrets.
+- **User Value:** Security maintenance becomes auditable over time instead of relying on memory.
+- **Acceptance Criteria:** Evidence format includes npm outdated, audit, lockfile diff and test gate status; docs explain where snapshots live; no package metadata secrets or tokens are stored; tests cover the evidence schema/template.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, scripts, dependency review
 - **Score:** 104
 - **Status:** ☐ open

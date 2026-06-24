@@ -133,6 +133,7 @@ duidelijke foutmeldingen. Zie [`PRIVACY.md`](PRIVACY.md).
 | Beslissingen (ADR's) | [`docs/adr/`](docs/adr/) |
 | Kennisbank-inhoud & NL-bronnen | [`docs/KENNISBANK.md`](docs/KENNISBANK.md) |
 | Operationeel/runbook | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) |
+| Dependency review | [`docs/DEPENDENCY_REVIEW.md`](docs/DEPENDENCY_REVIEW.md) |
 | Werkwijze/bijdragen | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | Bouwopdracht voor Codex (`/goal`) | [`CODEX_BUILD_PROMPT.md`](CODEX_BUILD_PROMPT.md) |
 

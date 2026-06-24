@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 260 |
+| ☑ klaar | 261 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **360** |
+| **Totaal** | **361** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -470,7 +470,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G322 | Research Network Audit Log | P1 | F4 | ☐ |
 | G323 | AI Data Retention Controls | P1 | F4 | ☐ |
 | G324 | Content Security Policy | P0 | F4 | ☑ |
-| G325 | Dependency Review Cadence | P1 | F4 | ☐ |
+| G325 | Dependency Review Cadence | P1 | F4 | ☑ |
 | G326 | Secrets Scan Test | P0 | F4 | ☑ |
 | G327 | Sensitive Fixture Policy | P1 | F4 | ☐ |
 | G328 | Storage Schema Migration Harness | P1 | F4 | ☐ |
@@ -506,12 +506,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G358 | Daily Command Center Personalization | P1 | F4 | ☐ |
 | G359 | Consult Prep Packet Persistence | P1 | F4 | ☐ |
 | G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☐ |
+| G361 | Dependency Review Evidence Snapshot | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 360** (id's G001 t/m G360, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 361** (id's G001 t/m G361, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
