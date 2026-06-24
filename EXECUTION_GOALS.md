@@ -2034,4 +2034,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G387 — Backlog Health Issue Snapshot Duplicate Issue Listing
+
+- **Epic:** Continuous Evolution
+- **Problem:** Duplicate issue snapshot findings explain the likely remediation, but the report does not list the matching issue numbers involved.
+- **Desired Outcome:** Include duplicate issue numbers or URLs in the duplicate-id finding while keeping snapshot parsing body-free.
+- **User Value:** Maintainers can resolve duplicate title drift faster without manually searching GitHub.
+- **Acceptance Criteria:** Duplicate issue-snapshot findings include enough sanitized issue identifiers to locate the conflicting issues; tests cover the duplicate issue listing; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

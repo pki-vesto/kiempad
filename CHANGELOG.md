@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G386 Continuous Evolution: backlog-health en docs geven nu hersteladvies voor
+  dubbele goal-id's in issue-snapshottitels zonder issue bodies te exporteren.
 - G385 Continuous Evolution: backlog-health en README tonen nu een concreet
   hoger-limiet voorbeeld met `--limit 500` en `--issue-snapshot-limit 500`.
 - G384 Continuous Evolution: backlog-health ondersteunt nu `--issue-snapshot-limit`
