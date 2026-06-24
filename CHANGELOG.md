@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel (shell): hoofdnavigatie heeft nu per scherm een inline-SVG
+  icoon en is op mobiel een vaste, horizontaal scrollbare onderbalk (icoon boven
+  label); de generieke `.hero` is vervangen door een rustiger `pageHeader`
+  (serif-titel + intro). Puur presentatie; nav-hrefs/`aria-current` en alle
+  schermtitels blijven gelijk. Maakt de tijdgevoelige command-center-test
+  deterministisch met een vaste klok. (Vervolg op de UI-componentlaag.)
 - G148 UI-herstel naar Claude Design: nieuwe canonieke UI-componentlaag
   (`src/ui/components.ts` + `src/ui/escape.ts`) met herbruikbare, getokeniseerde
   helpers (`pageHeader`, `card`, `actionCard`, `phaseHeroCard`, `timeline`,

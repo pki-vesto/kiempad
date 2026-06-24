@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
@@ -33,6 +33,10 @@ function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
 }
 
 describe('app shell', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('normaliseert onbekende routes naar het startscherm', () => {
     expect(normalizeScreenId('')).toBe('start');
     expect(normalizeScreenId('#start')).toBe('start');
@@ -51,7 +55,7 @@ describe('app shell', () => {
     expect(html).toContain('href="#inhoud"');
     for (const screen of SCREENS) {
       expect(html).toContain(`href="#${screen.id}"`);
-      expect(html).toContain(`>${screen.label}</a>`);
+      expect(html).toContain(`>${screen.label}</span>`);
     }
 
     expect(html).toContain('href="#agenda" aria-current="page"');
@@ -216,6 +220,10 @@ describe('app shell', () => {
   });
 
   it('toont een dagelijks command center met urgentie, later-vandaag en context', () => {
+    // Vaste klok zodat de "vandaag/komend"-classificatie deterministisch is
+    // (anders valt de 18:00-herinnering na 18:00 lokale tijd weg).
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-24T09:00:00'));
     const html = renderAppShell(
       'start',
       makeStartState({
@@ -2351,7 +2359,7 @@ describe('app shell', () => {
   it('rendert het back-upscherm met export en import', () => {
     const html = renderAppShell('backup');
 
-    expect(html).toContain('Back-up & import');
+    expect(html).toContain('Back-up &amp; import');
     expect(html).toContain('id="export-backup"');
     expect(html).toContain('Download back-up');
     expect(html).toContain('id="export-sync"');
