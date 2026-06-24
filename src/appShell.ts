@@ -3562,13 +3562,14 @@ function renderFertilityTimeline(
     <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline">
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research vanuit lokale records.</p>
+      ${renderFertilityTimelineMobielOverzicht(timeline)}
       ${renderFertilityTimelineFilterForm(filter)}
       ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
       ${renderFertilityTimelineMijlpalen(timeline)}
       ${renderFertilityTimelineContextSignalen(timeline)}
       ${
         timeline.items.length > 0
-          ? `<ol class="compact-list timeline-list">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
+          ? `<ol id="fertility-timeline-items" class="compact-list timeline-list" aria-label="Timeline-items">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
           : '<p class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
@@ -3576,11 +3577,34 @@ function renderFertilityTimeline(
   `;
 }
 
+function renderFertilityTimelineMobielOverzicht(timeline: FertilityTimeline): string {
+  return `
+    <nav class="timeline-overview-bar" aria-label="Timeline overzicht">
+      <a href="#fertility-timeline-items">
+        <strong>${timeline.items.length}</strong>
+        <span>Items</span>
+      </a>
+      <a href="#fertility-timeline-mijlpalen">
+        <strong>${timeline.mijlpalen.length}</strong>
+        <span>Mijlpalen</span>
+      </a>
+      <a href="#fertility-timeline-context">
+        <strong>${timeline.contextSignalen.length}</strong>
+        <span>Context</span>
+      </a>
+      <a href="#fertility-timeline-export">
+        <strong>MD</strong>
+        <span>Export</span>
+      </a>
+    </nav>
+  `;
+}
+
 function renderFertilityTimelineTrajectExport(
   trajectExport: FertilityTimelineTrajectExport,
 ): string {
   return `
-    <section class="policy-panel embedded-summary" aria-label="Timeline-export consultvoorbereiding">
+    <section id="fertility-timeline-export" class="policy-panel embedded-summary timeline-export-panel" aria-label="Timeline-export consultvoorbereiding">
       <h3>Timeline-export consultvoorbereiding</h3>
       <p class="small-print">Volledige ongefilterde Markdown-export voor eigen consultvoorbereiding.</p>
       <label>
@@ -3598,7 +3622,7 @@ function renderFertilityTimelineTrajectExport(
 
 function renderFertilityTimelineMijlpalen(timeline: FertilityTimeline): string {
   return `
-    <section class="timeline-insight-panel" aria-label="Belangrijke mijlpalen">
+    <section id="fertility-timeline-mijlpalen" class="timeline-insight-panel" aria-label="Belangrijke mijlpalen">
       <h3>Belangrijke mijlpalen</h3>
       ${
         timeline.mijlpalen.length > 0
@@ -3622,7 +3646,7 @@ function renderFertilityTimelineMijlpalen(timeline: FertilityTimeline): string {
 
 function renderFertilityTimelineContextSignalen(timeline: FertilityTimeline): string {
   return `
-    <section class="timeline-insight-panel" aria-label="Ontbrekende context">
+    <section id="fertility-timeline-context" class="timeline-insight-panel" aria-label="Ontbrekende context">
       <h3>Ontbrekende context</h3>
       ${
         timeline.contextSignalen.length > 0

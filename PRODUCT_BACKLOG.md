@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 242 |
+| ☑ klaar | 243 |
 | ◐ bezig | 0 |
-| ☐ open | 1 |
+| ☐ open | 0 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -381,7 +381,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G240 | PFIP fertility timeline: belangrijke mijlpalen en ontbrekende context zichtbaar maken zonder oordeel | P1 | F3 | ☑ |
 | G241 | PFIP fertility timeline: complete trajectexport voor eigen consultvoorbereiding | P2 | F3 | ☑ |
 | G242 | PFIP fertility timeline: tijdlijn blijft bruikbaar offline en na import van back-up/syncpakket | P0 | F3 | ☑ |
-| G243 | PFIP fertility timeline: toegankelijk mobiel ontwerp voor één-scherm-overzicht van het volledige traject | P1 | F3 | ☐ |
+| G243 | PFIP fertility timeline: toegankelijk mobiel ontwerp voor één-scherm-overzicht van het volledige traject | P1 | F3 | ☑ |
 
 ---
 
