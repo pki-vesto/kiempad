@@ -1922,7 +1922,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G379 — ADR Review Evidence Freshness Check
 
@@ -1936,4 +1936,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ADR backlog, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 97
+- **Status:** ☐ open
+
+### G380 — Backlog Health Issue Snapshot Default Gate
+
+- **Epic:** Continuous Evolution
+- **Problem:** Backlog health can validate active goals by default, but GitHub issue snapshot validation still depends on manually passing an optional file.
+- **Desired Outcome:** Add a safe documented default workflow or helper that makes issue snapshot validation easy to run before merges without requiring network calls in tests.
+- **User Value:** Backlog and GitHub issue drift becomes easier to catch consistently.
+- **Acceptance Criteria:** Docs show the exact issue snapshot command; tests cover the documented JSON shape; backlog health output explains when issue snapshot data is omitted; no tokens or issue bodies are stored.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, docs, GitHub Issues
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

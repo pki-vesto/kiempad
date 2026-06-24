@@ -35,6 +35,9 @@ Voordat je merget:
 - `npm run typecheck` — groen.
 - `npm run lint` — groen.
 - `npm run test` — groen; nieuwe logica heeft tests.
+- `npm run backlog:health` — groen; standaard minimaal 100 open doelen. Alleen voor
+  lokale fixtures of experimenten mag tijdelijk
+  `npm run backlog:health -- --minimum-open-goals <n>` worden gebruikt.
 - `npm run build` — groen.
 - `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
   expliciet allowlisted.

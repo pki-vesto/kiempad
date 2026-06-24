@@ -263,20 +263,31 @@ export function formatBacklogHealthMarkdown(report) {
   return `${lines.join('\n')}\n`;
 }
 
-function readArg(flag, fallback) {
-  const index = process.argv.indexOf(flag);
-  return index >= 0 ? process.argv[index + 1] : fallback;
+function readArg(argv, flag, fallback) {
+  const index = argv.indexOf(flag);
+  return index >= 0 ? argv[index + 1] : fallback;
+}
+
+export function readNumberArg(argv, flag, fallback) {
+  const value = readArg(argv, flag, undefined);
+  if (value === undefined) return fallback;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 0) {
+    throw new Error(`${flag} moet een positief geheel getal zijn.`);
+  }
+  return parsed;
 }
 
 function main() {
-  const backlogPath = readArg('--backlog', 'PRODUCT_BACKLOG.md');
-  const executionPath = readArg('--execution', 'EXECUTION_GOALS.md');
-  const issuesPath = readArg('--issues-json', undefined);
+  const backlogPath = readArg(process.argv, '--backlog', 'PRODUCT_BACKLOG.md');
+  const executionPath = readArg(process.argv, '--execution', 'EXECUTION_GOALS.md');
+  const issuesPath = readArg(process.argv, '--issues-json', undefined);
+  const activeGoalMinimum = readNumberArg(process.argv, '--minimum-open-goals', 100);
   const report = buildBacklogHealthReport({
     backlogMarkdown: fs.readFileSync(backlogPath, 'utf8'),
     executionGoalsMarkdown: fs.readFileSync(executionPath, 'utf8'),
     issueSnapshotJson: issuesPath ? fs.readFileSync(issuesPath, 'utf8') : undefined,
-    activeGoalMinimum: 100,
+    activeGoalMinimum,
   });
   const json = process.argv.includes('--json');
   process.stdout.write(json ? `${JSON.stringify(report, null, 2)}\n` : formatBacklogHealthMarkdown(report));
