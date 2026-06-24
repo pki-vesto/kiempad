@@ -2,6 +2,7 @@ declare module '*.mjs' {
   export const ISSUE_SNAPSHOT_CLEANUP_COMMAND: string;
   export const ISSUE_SNAPSHOT_COMMAND: string;
   export const ISSUE_SNAPSHOT_FRESHNESS_COMMAND: string;
+  export const ISSUE_SNAPSHOT_LIMIT: number;
   export function parseBacklog(markdown: string): {
     goals: Array<Record<string, unknown>>;
     byId: Map<string, Record<string, unknown>>;
@@ -16,6 +17,7 @@ declare module '*.mjs' {
     issues: unknown[];
     byGoalId: Map<string, Record<string, unknown>>;
     duplicates: string[];
+    totalIssues: number;
   };
   export function buildActiveGoalDriftFindings(
     backlog: { goals: Array<Record<string, unknown>> },

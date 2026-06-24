@@ -6,6 +6,7 @@ import {
   ISSUE_SNAPSHOT_CLEANUP_COMMAND,
   ISSUE_SNAPSHOT_COMMAND,
   ISSUE_SNAPSHOT_FRESHNESS_COMMAND,
+  ISSUE_SNAPSHOT_LIMIT,
   parseBacklog,
   parseExecutionGoals,
   parseIssueSnapshot,
@@ -84,6 +85,7 @@ describe('backlog health', () => {
     );
     expect(ISSUE_SNAPSHOT_CLEANUP_COMMAND).toBe('rm -f /tmp/kiempad-issues.json');
     expect(ISSUE_SNAPSHOT_FRESHNESS_COMMAND).toBe('stat -c %y /tmp/kiempad-issues.json');
+    expect(ISSUE_SNAPSHOT_LIMIT).toBe(200);
 
     const parsed = parseIssueSnapshot(
       JSON.stringify([
@@ -106,6 +108,7 @@ describe('backlog health', () => {
         url: 'https://github.com/pki-vesto/kiempad/issues/463',
       },
     ]);
+    expect(parsed.totalIssues).toBe(1);
     expect(JSON.stringify(parsed)).not.toContain('niet opslaan');
 
     expect(
@@ -141,6 +144,19 @@ describe('backlog health', () => {
         findings: [],
       }),
     ).toContain('Issue snapshot freshness: maak de snapshot direct voor validatie');
+    expect(
+      formatBacklogHealthMarkdown({
+        summary: {
+          backlogGoals: 1,
+          executionGoals: 1,
+          openBacklogGoals: 1,
+          issueSnapshotGoals: 1,
+          issueSnapshotItems: 200,
+          findings: 0,
+        },
+        findings: [],
+      }),
+    ).toContain('raakt --limit 200');
   });
 
   it('herkent dubbele issue-goal-id en open issue bij afgeronde backlogstatus', () => {
