@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G388 Continuous Evolution: `backlog:health --json` bevat nu gesanitized
+  `issueSnapshot.duplicateIssues` groepen voor duplicate issue-snapshotdrift.
 - G387 Continuous Evolution: duplicate issue-snapshotbevindingen tonen nu de
   betrokken issue-nummers en URL's zonder issue bodies te bewaren.
 - G386 Continuous Evolution: backlog-health en docs geven nu hersteladvies voor

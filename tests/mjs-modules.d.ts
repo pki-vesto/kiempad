@@ -36,6 +36,9 @@ declare module '*.mjs' {
     issueSnapshotLimit?: number;
   }): {
     summary: Record<string, unknown>;
+    issueSnapshot?: {
+      duplicateIssues: Array<{ id: string; issues: Array<Record<string, unknown>> }>;
+    };
     findings: Array<Record<string, unknown>>;
   };
   export function readNumberArg(argv: string[], flag: string, fallback: number): number;

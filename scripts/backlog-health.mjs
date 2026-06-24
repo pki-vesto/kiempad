@@ -278,6 +278,11 @@ export function buildBacklogHealthReport(input) {
       issueSnapshotLimit: input.issueSnapshotLimit ?? ISSUE_SNAPSHOT_LIMIT,
       findings: findings.length,
     },
+    issueSnapshot: issueSnapshot
+      ? {
+          duplicateIssues: issueSnapshot.duplicateIssues,
+        }
+      : undefined,
     findings,
   };
 }
