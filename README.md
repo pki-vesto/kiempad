@@ -96,7 +96,9 @@ rm -f /tmp/kiempad-issues.json
 
 Bewaar deze snapshot niet in de repo; hij bevat alleen issue-nummer, titel, state en
 URL. Maak hem direct voor validatie, controleer de timestamp bij twijfel en ruim
-`/tmp/kiempad-issues.json` na lokale validatie direct op.
+`/tmp/kiempad-issues.json` na lokale validatie direct op. Als de snapshot precies
+200 issues bevat, raakt hij de standaardlimiet; verhoog dan de `--limit` voordat je
+op de issue-driftcheck vertrouwt.
 
 Optioneel zelf-hosten van de statische build:
 

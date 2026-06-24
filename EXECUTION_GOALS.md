@@ -1992,4 +1992,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G384 — Backlog Health Issue Snapshot Limit CLI Flag
+
+- **Epic:** Continuous Evolution
+- **Problem:** The issue snapshot limit warning explains when the limit is hit, but the snapshot command itself is still a hard-coded documentation string.
+- **Desired Outcome:** Add a small helper or documented CLI flag that makes the issue snapshot limit configurable in the generated command guidance.
+- **User Value:** Maintainers can safely scale issue drift validation without hand-editing commands when the repository grows.
+- **Acceptance Criteria:** Docs or backlog-health output shows how to choose a higher issue snapshot limit; tests cover the configurable limit guidance; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

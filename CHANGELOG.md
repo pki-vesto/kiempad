@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G383 Continuous Evolution: backlog-health meldt nu wanneer een issue-snapshot de
+  `--limit 200` grens raakt en de docs leggen uit wanneer de limiet verhoogd moet
+  worden.
 - G382 Continuous Evolution: backlog-health toont nu een freshness-hint voor
   tijdelijke issue-snapshots en de docs nemen een `stat -c %y` timestampcheck op.
 - G381 Continuous Evolution: backlog-health toont nu een expliciete cleanup-reminder

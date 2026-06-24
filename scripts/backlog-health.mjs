@@ -12,6 +12,7 @@ export const ISSUE_SNAPSHOT_COMMAND =
   'gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_CLEANUP_COMMAND = 'rm -f /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_FRESHNESS_COMMAND = 'stat -c %y /tmp/kiempad-issues.json';
+export const ISSUE_SNAPSHOT_LIMIT = 200;
 
 export function parseBacklog(markdown) {
   const goals = [];
@@ -100,7 +101,7 @@ export function parseIssueSnapshot(jsonText) {
     byGoalId.set(id, normalized);
   }
 
-  return { issues: sanitizedIssues, byGoalId, duplicates };
+  return { issues: sanitizedIssues, byGoalId, duplicates, totalIssues: issues.length };
 }
 
 export function buildActiveGoalDriftFindings(backlog, execution, minimumOpenGoals = 100) {
@@ -239,6 +240,7 @@ export function buildBacklogHealthReport(input) {
       executionGoals: execution.goals.length,
       openBacklogGoals: backlog.goals.filter((goal) => goal.status === '☐').length,
       issueSnapshotGoals: issueSnapshot?.byGoalId.size,
+      issueSnapshotItems: issueSnapshot?.totalIssues,
       findings: findings.length,
     },
     findings,
@@ -255,6 +257,13 @@ export function formatBacklogHealthMarkdown(report) {
     `- Issue snapshot goals: ${
       report.summary.issueSnapshotGoals ??
       `niet meegegeven (optioneel: \`${ISSUE_SNAPSHOT_COMMAND}\` en daarna \`npm run backlog:health -- --issues-json /tmp/kiempad-issues.json\`)`
+    }`,
+    `- Issue snapshot limit: ${
+      report.summary.issueSnapshotItems === undefined
+        ? `snapshot niet meegegeven; standaardcommando gebruikt --limit ${ISSUE_SNAPSHOT_LIMIT}`
+        : report.summary.issueSnapshotItems >= ISSUE_SNAPSHOT_LIMIT
+          ? `snapshot bevat ${report.summary.issueSnapshotItems} issues en raakt --limit ${ISSUE_SNAPSHOT_LIMIT}; verhoog de limiet als oudere goal-issues ontbreken`
+          : `snapshot bevat ${report.summary.issueSnapshotItems} issues, onder --limit ${ISSUE_SNAPSHOT_LIMIT}`
     }`,
     `- Issue snapshot freshness: maak de snapshot direct voor validatie en controleer eventueel met \`${ISSUE_SNAPSHOT_FRESHNESS_COMMAND}\``,
     `- Issue snapshot cleanup: \`${ISSUE_SNAPSHOT_CLEANUP_COMMAND}\` na lokale validatie`,
