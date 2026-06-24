@@ -64,6 +64,9 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceLabel,
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.whitespaceTerm,
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintStaticErrorReason>;
+const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ALIAS_TYPE_FIXTURES = [
+  ...BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES,
+] as const satisfies ReadonlyArray<RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason>;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ERROR_REASON =
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel satisfies RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_DYNAMIC_ERROR_REASON_TYPE_FIXTURES = [
@@ -633,6 +636,12 @@ describe('onderhoudsdocumentatie', () => {
       'label bevat alleen whitespace',
       'term bevat alleen whitespace',
     ]);
+  });
+
+  it('houdt backlog-health recovery artifactlabel-uitleg representatieve statische alias gelijk aan het statische contract', () => {
+    expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ALIAS_TYPE_FIXTURES).toEqual(
+      BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES,
+    );
   });
 
   it('houdt backlog-health recovery artifactlabel-uitleg dynamische foutredentypes compleet', () => {
