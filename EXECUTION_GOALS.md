@@ -3098,4 +3098,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G463 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Comment Boundary
+
+- **Epic:** Continuous Evolution
+- **Problem:** The mixed and representative static comment boundaries are tighter, but the static alias comment may still overlap with the adjacent test names.
+- **Desired Outcome:** Review whether the static alias comment should be tightened, moved or removed to keep the alias cluster readable.
+- **User Value:** Maintainers can scan static alias coverage without redundant prose between nearby tests.
+- **Acceptance Criteria:** Static alias comment boundaries are reviewed and, if useful, adjusted without weakening assertions; representative static, alias and broad static error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
