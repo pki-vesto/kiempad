@@ -2048,4 +2048,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G388 — Backlog Health Issue Snapshot Duplicate JSON Shape
+
+- **Epic:** Continuous Evolution
+- **Problem:** Duplicate issue listings are visible in markdown output, but automation users also need a stable JSON shape for duplicate issue groups.
+- **Desired Outcome:** Document or test the JSON output shape for duplicate issue snapshot groups.
+- **User Value:** Future automation can consume duplicate issue details without scraping markdown.
+- **Acceptance Criteria:** JSON-mode report exposes sanitized duplicate issue group data; tests cover the JSON-compatible shape; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

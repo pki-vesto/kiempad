@@ -182,8 +182,18 @@ describe('backlog health', () => {
 
   it('herkent dubbele issue-goal-id en open issue bij afgeronde backlogstatus', () => {
     const issueSnapshot = JSON.stringify([
-      { number: 291, title: 'G244 Continuous Evolution: Goal Expansion Engine', state: 'OPEN' },
-      { number: 999, title: 'G244 duplicate title', state: 'OPEN' },
+      {
+        number: 291,
+        title: 'G244 Continuous Evolution: Goal Expansion Engine',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/291',
+      },
+      {
+        number: 999,
+        title: 'G244 duplicate title',
+        state: 'OPEN',
+        url: 'https://github.com/pki-vesto/kiempad/issues/999',
+      },
       { number: 292, title: 'G245 Continuous Evolution: Backlog Health Dashboard', state: 'OPEN' },
     ]);
 
@@ -203,7 +213,40 @@ describe('backlog health', () => {
         expect.objectContaining({ type: 'status-mismatch', id: 'G244' }),
       ]),
     );
+    expect(report.findings).toContainEqual(
+      expect.objectContaining({
+        id: 'G244',
+        detail: expect.stringContaining('#291 (https://github.com/pki-vesto/kiempad/issues/291)'),
+      }),
+    );
+    expect(report.findings).toContainEqual(
+      expect.objectContaining({
+        id: 'G244',
+        detail: expect.stringContaining('#999 (https://github.com/pki-vesto/kiempad/issues/999)'),
+      }),
+    );
     expect(formatBacklogHealthMarkdown(report)).toContain('geen G### patroon meer bevatten');
+    expect(parseIssueSnapshot(issueSnapshot).duplicateIssues).toEqual([
+      {
+        id: 'G244',
+        issues: [
+          {
+            id: 'G244',
+            number: 291,
+            title: 'G244 Continuous Evolution: Goal Expansion Engine',
+            state: 'OPEN',
+            url: 'https://github.com/pki-vesto/kiempad/issues/291',
+          },
+          {
+            id: 'G244',
+            number: 999,
+            title: 'G244 duplicate title',
+            state: 'OPEN',
+            url: 'https://github.com/pki-vesto/kiempad/issues/999',
+          },
+        ],
+      },
+    ]);
     expect(parseIssueSnapshot(issueSnapshot).byGoalId.get('G245')).toMatchObject({
       number: 292,
       state: 'OPEN',

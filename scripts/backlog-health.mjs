@@ -92,6 +92,7 @@ export function parseIssueSnapshot(jsonText) {
   if (!Array.isArray(issues)) throw new Error('Issue snapshot moet een JSON-array zijn.');
   const sanitizedIssues = [];
   const byGoalId = new Map();
+  const byGoalIdIssues = new Map();
   const duplicates = [];
 
   for (const issue of issues) {
@@ -106,11 +107,25 @@ export function parseIssueSnapshot(jsonText) {
       url: issue.url ? String(issue.url) : undefined,
     };
     sanitizedIssues.push(normalized);
+    const matchingIssues = byGoalIdIssues.get(id) ?? [];
+    matchingIssues.push(normalized);
+    byGoalIdIssues.set(id, matchingIssues);
     if (byGoalId.has(id)) duplicates.push(id);
     byGoalId.set(id, normalized);
   }
 
-  return { issues: sanitizedIssues, byGoalId, duplicates, totalIssues: issues.length };
+  const duplicateIssues = [...new Set(duplicates)].map((id) => ({
+    id,
+    issues: byGoalIdIssues.get(id) ?? [],
+  }));
+
+  return {
+    issues: sanitizedIssues,
+    byGoalId,
+    duplicates,
+    duplicateIssues,
+    totalIssues: issues.length,
+  };
 }
 
 export function buildActiveGoalDriftFindings(backlog, execution, minimumOpenGoals = 100) {
@@ -172,11 +187,16 @@ export function buildBacklogHealthReport(input) {
     findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in EXECUTION_GOALS.md.' });
   }
   for (const id of issueSnapshot?.duplicates ?? []) {
+    const issueRefs =
+      issueSnapshot?.duplicateIssues
+        ?.find((duplicate) => duplicate.id === id)
+        ?.issues.map((issue) => `#${issue.number}${issue.url ? ` (${issue.url})` : ''}`)
+        .join(', ') ?? 'onbekend';
     findings.push({
       type: 'duplicate-id',
       id,
       detail:
-        'Dubbele goal-id in issue snapshot; controleer gesloten verzamelissuetitels en hernoem oude titels zodat ze geen G### patroon meer bevatten.',
+        `Dubbele goal-id in issue snapshot: ${issueRefs}; controleer gesloten verzamelissuetitels en hernoem oude titels zodat ze geen G### patroon meer bevatten.`,
     });
   }
 
