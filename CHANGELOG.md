@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G374 Continuous Evolution: backlog-health heeft nu een actieve-goal driftvalidator
+  met negatieve fixtures voor minder dan het minimum, ontbrekende open execution goals
+  en extra open execution goals zonder productiebacklog te dupliceren.
 - G373 Continuous Evolution: autonomy guardrail evidence checklist toegevoegd voor
   netwerk, AI, data, GitHub, Tailscale, medisch beleid en gevoelige-datagrenzen,
   gekoppeld aan guardrails, PR-template en onderhoudstest.

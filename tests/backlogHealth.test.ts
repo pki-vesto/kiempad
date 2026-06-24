@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  buildActiveGoalDriftFindings,
   buildBacklogHealthReport,
   formatBacklogHealthMarkdown,
   parseBacklog,
@@ -97,4 +98,73 @@ describe('backlog health', () => {
       state: 'OPEN',
     });
   });
+
+  it('maakt actieve-goal drift zichtbaar met kleine negatieve fixtures', () => {
+    const belowMinimumFindings = buildActiveGoalDriftFindings(
+      parseBacklog(buildBacklogFixture(['G244', 'G245'])),
+      parseExecutionGoals(buildExecutionFixture(['G244', 'G245'])),
+      3,
+    );
+    expect(belowMinimumFindings).toEqual([
+      {
+        type: 'active-goal-minimum',
+        id: 'ACTIVE-GOALS',
+        detail: 'Active backlog heeft 2 open doelen; minimaal 3 vereist.',
+      },
+    ]);
+
+    const missingExecutionFindings = buildActiveGoalDriftFindings(
+      parseBacklog(buildBacklogFixture(['G244', 'G245'])),
+      parseExecutionGoals(buildExecutionFixture(['G244'])),
+      1,
+    );
+    expect(missingExecutionFindings).toEqual([
+      {
+        type: 'active-goal-missing-execution',
+        id: 'G245',
+        detail:
+          'Open goal staat in PRODUCT_BACKLOG.md maar ontbreekt als open goal in EXECUTION_GOALS.md.',
+      },
+    ]);
+
+    const extraExecutionFindings = buildActiveGoalDriftFindings(
+      parseBacklog(buildBacklogFixture(['G244'])),
+      parseExecutionGoals(buildExecutionFixture(['G244', 'G245'])),
+      1,
+    );
+    expect(extraExecutionFindings).toEqual([
+      {
+        type: 'active-goal-extra-execution',
+        id: 'G245',
+        detail:
+          'Open goal staat in EXECUTION_GOALS.md maar ontbreekt als open goal in PRODUCT_BACKLOG.md.',
+      },
+    ]);
+  });
 });
+
+function buildBacklogFixture(openGoalIds: string[]): string {
+  return [
+    '| ID | Doel | Prio | Fase | Status |',
+    '|---|---|---|---|---|',
+    ...openGoalIds.map((id) => `| ${id} | Fixture ${id} | P1 | F4 | ☐ |`),
+  ].join('\n');
+}
+
+function buildExecutionFixture(openGoalIds: string[]): string {
+  return `\n${openGoalIds
+    .map(
+      (id) => `### ${id} — Fixture ${id}
+
+- **Epic:** Continuous Evolution
+- **Problem:** Fixture problem.
+- **Desired Outcome:** Fixture outcome.
+- **User Value:** Fixture value.
+- **Acceptance Criteria:** Fixture criteria.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **Status:** ☐ open`,
+    )
+    .join('\n\n')}`;
+}
