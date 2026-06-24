@@ -527,6 +527,20 @@ describe('onderhoudsdocumentatie', () => {
     ).toThrow('Backlog-health artifact docs hint term is te kort: labels.');
   });
 
+  it('normaliseert backlog-health recovery artifactlabel-uitleg met raw en getrimde waarden', () => {
+    expect(
+      normalizeBacklogHealthArtifactDocsHint({
+        label: '   maintenance tests label usage   ',
+        term: '   onderhoudstests gebruiken die labels   ',
+      }),
+    ).toEqual({
+      rawLabel: '   maintenance tests label usage   ',
+      rawTerm: '   onderhoudstests gebruiken die labels   ',
+      label: 'maintenance tests label usage',
+      term: 'onderhoudstests gebruiken die labels',
+    });
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
