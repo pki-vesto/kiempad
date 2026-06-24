@@ -43,4 +43,12 @@ declare module '*.mjs' {
     }>,
     limit?: number,
   ): string;
+  export function scanAssetText(
+    filePath: string,
+    text: string,
+  ): Array<{ filePath: string; url: string; context: string }>;
+  export function listScannableAssetFiles(rootDir: string, extraFiles?: string[]): string[];
+  export function scanAssetFiles(
+    rootDir?: string,
+  ): Array<{ filePath: string; url: string; context: string }>;
 }

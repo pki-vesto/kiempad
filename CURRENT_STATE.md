@@ -494,7 +494,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 - Tailscale Serve publiceert alleen de statische PWA binnen de tailnet; er draait geen
   Kiempad-backend en er wordt geen gezondheidsdata naar de server verzonden.
 - **Validatie:** lokaal geverifieerd groen — `npm run typecheck`, `npm run lint`,
-  `npm run test`, `npm run build` en `npm audit --audit-level=high`.
+  `npm run test`, `npm run build`, `npm run assets:check` en
+  `npm audit --audit-level=high`.
 - **CI:** de workflow (`.github/workflows/ci.yml`) draait nu — de repo is **publiek**
   gemaakt (ADR-0006), waardoor de Actions-billingblokkade voor private repos vervalt.
   Code/docs zijn publiek; de **gezondheidsdata blijft local-first en privé** (staat
@@ -502,8 +503,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. Continuous Evolution uitvoeren vanaf G342 volgens `npm run goals:score`: No
-   External Asset Test heeft nu de hoogste score.
+1. Continuous Evolution uitvoeren vanaf G347 volgens `npm run goals:score`: External
+   Asset CI Gate heeft nu de hoogste score.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

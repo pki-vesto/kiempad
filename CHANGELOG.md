@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G342 Security & DevEx: lokale externe-asset-scan met `npm run assets:check`
+  controleert bron- en buildassets op remote image/font/script/manifest-URL's.
 - G246 Continuous Evolution: reproduceerbaar goal scoring model met rubric,
   scorevelden en `npm run goals:score`.
 - G245 Continuous Evolution: lokaal backlog-health rapport vergelijkt backlog,
