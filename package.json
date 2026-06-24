@@ -14,6 +14,7 @@
     "assets:check": "node scripts/check-no-external-assets.mjs",
     "backlog:health": "node scripts/backlog-health.mjs",
     "goals:score": "node scripts/goal-score.mjs",
+    "smoke:offline": "node scripts/offline-smoke.mjs",
     "deploy:tailscale": "scripts/deploy-tailscale.sh",
     "smoke:tailscale": "scripts/smoke-tailscale.sh",
     "test": "vitest run",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.1",
+    "@playwright/test": "^1.61.1",
     "typescript": "^5.5.0",
     "vite": "^8.0.16",
     "vite-plugin-pwa": "^1.3.0",

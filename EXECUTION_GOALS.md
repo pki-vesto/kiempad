@@ -578,7 +578,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** PWA, tests
 - **Score:** 117
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G286 — Backup Restore Drill
 
@@ -1423,4 +1423,17 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** App shell, settings, onboarding tests
 - **Score:** 98
+- **Status:** ☐ open
+
+### G351 — Offline Smoke CI Artifact
+
+- **Epic:** Reliability & Operations
+- **Problem:** Offline smoke failures can be hard to diagnose from text output alone.
+- **Desired Outcome:** Capture small diagnostics such as console messages, failed requests or an optional failure screenshot.
+- **User Value:** Offline regressions become faster to debug without manually reproducing every failure.
+- **Acceptance Criteria:** Offline smoke records console/page errors and failed request context on failure; optional screenshot or HTML snapshot is written only on failure; docs mention where diagnostics are stored; no sensitive local vault data is captured.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** PWA, Playwright smoke, docs
+- **Score:** 97
 - **Status:** ☐ open

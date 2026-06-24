@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G285 Reliability & Operations: `npm run smoke:offline` start Vite preview, laat de
+  service worker installeren en verifieert met Playwright dat de app-shell offline
+  herlaadt.
 - G264 Onboarding & Daily Use: eerste-run setupkaart verschijnt alleen vóór de eerste
   gebruikersdata, is lokaal skippable/af te ronden en gidst naar kluis, privacy,
   traject, afspraak en back-up.
