@@ -55,7 +55,10 @@ declare module '*.mjs' {
   export function scanAssetFiles(
     rootDir?: string,
   ): Array<{ filePath: string; url: string; context: string }>;
-  export const ALLOWED_SECRET_EXAMPLES: Set<string>;
+  export const ALLOWED_SECRET_EXAMPLES: Array<{ value: string; reason: string }>;
+  export function validateSecretAllowlist(
+    entries?: Array<{ value: string; reason: string }>,
+  ): string[];
   export function scanSecretText(
     filePath: string,
     text: string,

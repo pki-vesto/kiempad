@@ -27,7 +27,8 @@ de lokale data versleuteld wordt.
   violation-diagnose blijft lokaal zonder report-endpoint; zie
   [`docs/CSP_VIOLATION_WORKFLOW.md`](CSP_VIOLATION_WORKFLOW.md).
 - **Secrets:** `npm run secrets:check` scant docs/source op gangbare API keys,
-  Tailscale auth keys, GitHub tokens, AWS keys en private-keyblokken.
+  Tailscale auth keys, GitHub tokens, AWS keys en private-keyblokken. Pattern ownership
+  en allowlistbeleid staan in [`docs/SECRETS_SCAN_BASELINE.md`](SECRETS_SCAN_BASELINE.md).
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en

@@ -1475,7 +1475,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Secrets scan, tests, docs
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G355 — Prompt Registry UI Exposure
 
@@ -1630,5 +1630,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** CSP docs, tests, dev tooling
+- **Score:** 97
+- **Status:** ☐ open
+
+### G367 — Secrets Scan Review Evidence Snapshot
+
+- **Epic:** Security & DevEx
+- **Problem:** The secrets scan baseline is documented and tested, but completed reviews do not yet leave a structured evidence snapshot.
+- **Desired Outcome:** Add an evidence template or helper for recording scanner baseline review date, patterns, allowlist rationale status and `npm run secrets:check` result.
+- **User Value:** Public-repo credential hygiene becomes auditable over time without storing secrets.
+- **Acceptance Criteria:** Evidence format records reviewed patterns, allowlist entries, command result and reviewer/date; docs explain where evidence lives; tests cover the template/schema; no secret values beyond approved placeholders are stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Secrets scan, docs, maintenance tests
 - **Score:** 97
 - **Status:** ☐ open

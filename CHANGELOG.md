@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G354 Security & DevEx: secrets-scan baseline documenteert pattern ownership en
+  allowlistbeleid; tests dekken toegestane placeholders en verboden AI-/Tailscale-key
+  vormen.
 - G353 Security & DevEx: CSP violation workflow documenteert lokale diagnose zonder
   remote report-endpoints, met dev/prod-previewstappen en tests tegen `report-uri` en
   `report-to`.
