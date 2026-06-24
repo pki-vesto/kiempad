@@ -456,10 +456,17 @@ describe('onderhoudsdocumentatie', () => {
       { label: 'recovery fixes boundary', term: 'recoveryfixes' },
     ]);
 
-    for (const docsHint of BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS) {
-      expect(docsHint.label.length).toBeGreaterThan(8);
-      expect(docsHint.term.length).toBeGreaterThan(8);
-    }
+    expectBacklogHealthRecoveryArtifactDocsHintLabels(
+      BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS,
+    );
+  });
+
+  it('faalt duidelijk wanneer een backlog-health recovery artifactlabel-uitleg label te generiek is', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryArtifactDocsHintLabels([
+        { label: 'hint', term: 'onderhoudstests gebruiken die labels' },
+      ]),
+    ).toThrow('Backlog-health artifact docs hint label is te generiek: hint.');
   });
 
   it('documenteert autonomy guardrail evidence per domein', () => {
@@ -672,6 +679,19 @@ function expectBacklogHealthRecoveryArtifactDocsHint(recoveryParagraph: string):
       throw new Error(
         `Backlog-health recoveryparagraaf mist artifact-label uitleg: ${docsHint.term}.`,
       );
+    }
+  }
+}
+
+function expectBacklogHealthRecoveryArtifactDocsHintLabels(
+  docsHints: ReadonlyArray<{ label: string; term: string }>,
+): void {
+  for (const docsHint of docsHints) {
+    if (docsHint.label.length <= 8) {
+      throw new Error(`Backlog-health artifact docs hint label is te generiek: ${docsHint.label}.`);
+    }
+    if (docsHint.term.length <= 8) {
+      throw new Error(`Backlog-health artifact docs hint term is te kort: ${docsHint.term}.`);
     }
   }
 }
