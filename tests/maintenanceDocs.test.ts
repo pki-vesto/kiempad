@@ -556,6 +556,15 @@ describe('onderhoudsdocumentatie', () => {
     ).toBe('Backlog-health artifact docs hint label ontbreekt.');
   });
 
+  it('houdt backlog-health recovery artifactlabel-uitleg foutredenen stabiel', () => {
+    expect(BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS).toEqual({
+      missingLabel: 'label ontbreekt',
+      missingTerm: 'term ontbreekt',
+      whitespaceLabel: 'label bevat alleen whitespace',
+      whitespaceTerm: 'term bevat alleen whitespace',
+    });
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
