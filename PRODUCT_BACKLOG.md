@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 253 |
+| ☑ klaar | 254 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **353** |
+| **Totaal** | **354** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -471,7 +471,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G323 | AI Data Retention Controls | P1 | F4 | ☐ |
 | G324 | Content Security Policy | P0 | F4 | ☑ |
 | G325 | Dependency Review Cadence | P1 | F4 | ☐ |
-| G326 | Secrets Scan Test | P0 | F4 | ☐ |
+| G326 | Secrets Scan Test | P0 | F4 | ☑ |
 | G327 | Sensitive Fixture Policy | P1 | F4 | ☐ |
 | G328 | Storage Schema Migration Harness | P1 | F4 | ☐ |
 | G329 | Domain Boundary Lint | P2 | F4 | ☐ |
@@ -499,12 +499,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
 | G352 | Backup Drill Fixture Expansion | P1 | F4 | ☐ |
 | G353 | CSP Violation Reporting Plan | P1 | F4 | ☐ |
+| G354 | Secrets Scan Baseline Review | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 353** (id's G001 t/m G353, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 354** (id's G001 t/m G354, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

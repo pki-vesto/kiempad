@@ -24,6 +24,8 @@ jobs:
         run: npm run typecheck
       - name: Lint and format
         run: npm run lint
+      - name: Secrets scan
+        run: npm run secrets:check
       - name: Test
         run: npm run test
       - name: Security audit

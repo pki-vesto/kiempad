@@ -33,7 +33,7 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   repo of in klare tekst; niet in `.env` committen (`.env` staat in `.gitignore`).
 - **Geen secrets in git.** `.env.example` bevat alleen lege placeholders. De repo is
   **publiek** (ADR-0006), dus dit is extra kritisch: nooit een secret of databestand
-  committen (`.gitignore` + review borgen dit).
+  committen (`.gitignore`, `npm run secrets:check` en review borgen dit).
 
 ## Authentication And Authorization
 
@@ -75,4 +75,4 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 - [x] Opt-in voor sync; E2E-syncpakket bevat alleen versleutelde blobs.
 - [ ] Opt-in voor AI; TLS voor eventuele externe provider.
 - [ ] Versleutelde back-up/export; veilig sleutelbeheer voor een eventuele AI-sleutel.
-- [ ] `.env` en data/back-ups buiten git (`.gitignore`).
+- [x] `.env` en data/back-ups buiten git (`.gitignore`) plus lichte secrets-scan in CI.
