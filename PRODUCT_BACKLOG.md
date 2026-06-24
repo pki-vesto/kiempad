@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 266 |
+| ☑ klaar | 267 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **366** |
+| **Totaal** | **367** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -499,7 +499,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
 | G352 | Backup Drill Fixture Expansion | P1 | F4 | ☐ |
 | G353 | CSP Violation Reporting Plan | P1 | F4 | ☑ |
-| G354 | Secrets Scan Baseline Review | P1 | F4 | ☐ |
+| G354 | Secrets Scan Baseline Review | P1 | F4 | ☑ |
 | G355 | Prompt Registry UI Exposure | P1 | F4 | ☐ |
 | G356 | Redaction Pattern Baseline Review | P1 | F4 | ☐ |
 | G357 | Prompt Regression Coverage Report | P1 | F4 | ☐ |
@@ -512,12 +512,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G364 | Public Repo Privacy Review Automation Hook | P1 | F4 | ☐ |
 | G365 | External Asset Allowlist Review Evidence | P1 | F4 | ☐ |
 | G366 | Local CSP Violation Reproduction Fixture | P1 | F4 | ☐ |
+| G367 | Secrets Scan Review Evidence Snapshot | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 366** (id's G001 t/m G366, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 367** (id's G001 t/m G367, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

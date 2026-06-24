@@ -8,6 +8,7 @@ import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
+import secretsScanBaseline from '../docs/SECRETS_SCAN_BASELINE.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
 import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
@@ -146,6 +147,25 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(cspViolationWorkflow).toMatch(/lokale browserdiagnostiek/i);
     expect(cspViolationWorkflow).toMatch(/Kopieer geen volledige lokale URL's/i);
+  });
+
+  it('documenteert secrets-scan baseline en allowlistbeleid', () => {
+    for (const requiredTerm of [
+      'npm run secrets:check',
+      'scripts/check-secrets.mjs',
+      'tests/secretsScan.test.ts',
+      'generic-sk-api-key',
+      'anthropic-api-key',
+      'tailscale-auth-key',
+      'private-key-block',
+      'exact-match',
+      'concrete rationale',
+    ]) {
+      expect(secretsScanBaseline).toContain(requiredTerm);
+    }
+
+    expect(secretsScanBaseline).toMatch(/Verbreed geen directory-exclusions/i);
+    expect(secretsScanBaseline).toMatch(/Plak geen\s+volledige tokens/i);
   });
 });
 
