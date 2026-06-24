@@ -469,6 +469,14 @@ describe('onderhoudsdocumentatie', () => {
     ).toThrow('Backlog-health artifact docs hint label is te generiek: hint.');
   });
 
+  it('faalt duidelijk wanneer een backlog-health recovery artifactlabel-uitleg term te kort is', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryArtifactDocsHintLabels([
+        { label: 'maintenance tests label usage', term: 'labels' },
+      ]),
+    ).toThrow('Backlog-health artifact docs hint term is te kort: labels.');
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',

@@ -2482,4 +2482,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G419 — Backlog Health JSON Contract Recovery Artifact Docs Hint Empty Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Short artifact docs hint terms now fail clearly, but empty labels or terms can still rely on the same length guard without a dedicated fixture.
+- **Desired Outcome:** Add a negative fixture for empty artifact docs hint labels or terms.
+- **User Value:** Maintainers get clear feedback if hint metadata is accidentally blanked out during refactors.
+- **Acceptance Criteria:** Tests cover an empty docs hint label or term with a clear message; positive docs hint fixture remains; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
