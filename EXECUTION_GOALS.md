@@ -2650,4 +2650,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G431 — Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Reason Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** Static artifact docs hint error reasons now have a focused fixture, but dynamic reasons for too-short labels or terms are still only covered indirectly through negative fixtures.
+- **Desired Outcome:** Add a focused fixture for dynamic artifact docs hint error reasons.
+- **User Value:** Maintainers get clearer coverage when changing generated diagnostic text that includes the invalid label or term value.
+- **Acceptance Criteria:** Tests assert builder output for a representative dynamic reason with an embedded value; existing builder, constants and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
