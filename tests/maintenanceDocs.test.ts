@@ -25,6 +25,11 @@ import readme from '../README.md?raw';
 import { DISCLAIMER } from '../src/appShell';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
 
+const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contract-matrix:start';
+const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
+const BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION = `herstel beide markercomments ${BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER} en ${BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER} rond dezelfde issueSnapshot-matrixgroepverwachting in tests/backlogHealth.test.ts`;
+const BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR = `Backlog-health contractmatrix ontbreekt: ${BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION}.`;
+
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
     const summary = extractBacklogSummary();
@@ -349,6 +354,7 @@ describe('onderhoudsdocumentatie', () => {
       backlogHealthJsonReference,
       'Contract Coverage',
     );
+    const normalizedContractCoverage = normalizeMarkdownText(contractCoverage);
 
     for (const requiredTerm of [
       'tests/backlogHealth.test.ts',
@@ -368,6 +374,19 @@ describe('onderhoudsdocumentatie', () => {
     ]) {
       expect(contractCoverage).toContain(requiredTerm);
     }
+
+    for (const requiredTerm of [
+      BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER,
+      BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER,
+    ]) {
+      expect(BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR).toContain(requiredTerm);
+      expect(contractCoverage).toContain(requiredTerm);
+    }
+
+    expect(BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR).toContain(
+      BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION,
+    );
+    expect(normalizedContractCoverage).toContain(BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION);
   });
 
   it('houdt gedocumenteerde issue-snapshotgroepen synchroon met de contractmatrix', () => {
@@ -379,7 +398,7 @@ describe('onderhoudsdocumentatie', () => {
 
   it('faalt duidelijk wanneer backlog-health contractmatrixmarkers ontbreken', () => {
     expect(() => extractBacklogHealthContractMatrixGroups('const matrix = [];')).toThrow(
-      'Backlog-health contractmatrix ontbreekt: behoud backlog-health-json-contract-matrix:start en backlog-health-json-contract-matrix:end.',
+      BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR,
     );
   });
 
@@ -563,6 +582,10 @@ function extractMarkdownSection(document: string, heading: string): string {
   return match.groups.section;
 }
 
+function normalizeMarkdownText(markdown: string): string {
+  return markdown.replaceAll('`', '').replace(/\s+/g, ' ').trim();
+}
+
 function extractAdrReviewEvidenceIndexGoals(): string[] {
   return adrReviewEvidenceIndex
     .split('\n')
@@ -624,9 +647,7 @@ function extractBacklogHealthContractMatrixGroups(source = backlogHealthTest): s
   )?.groups?.groups;
 
   if (!matrixTest) {
-    throw new Error(
-      'Backlog-health contractmatrix ontbreekt: behoud backlog-health-json-contract-matrix:start en backlog-health-json-contract-matrix:end.',
-    );
+    throw new Error(BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR);
   }
 
   return Array.from(matrixTest.matchAll(/'(?<group>[A-Za-z]+)'/g), (match) => match.groups?.group)
