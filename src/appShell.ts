@@ -162,6 +162,7 @@ import {
   type WelzijnTrendPeriode,
 } from './domain/welzijn';
 import type { InAppFallbackNotification, NotificationRuntimeStatus } from './notificationRuntime';
+import { pageHeader } from './ui/components';
 import { escapeAttribute, escapeHtml } from './ui/escape';
 
 export const DISCLAIMER =
@@ -393,11 +394,7 @@ export function renderAppShell(
       </nav>
 
       <main class="content" id="inhoud" tabindex="-1">
-        <section class="hero" aria-labelledby="screen-title">
-          <p class="eyebrow">MVP basis</p>
-          <h1 id="screen-title">${activeScreen.title}</h1>
-          <p>${activeScreen.intro}</p>
-        </section>
+        ${pageHeader({ title: activeScreen.title, intro: activeScreen.intro, titleId: 'screen-title' })}
 
         ${screenContent}
       </main>
@@ -504,7 +501,34 @@ function renderVaultWebAuthnUnlock(status?: WebAuthnViewStatus): string {
 function renderNavItem(screen: Screen, activeId: ScreenId): string {
   const isActive = screen.id === activeId;
   const ariaCurrent = isActive ? ' aria-current="page"' : '';
-  return `<a href="#${screen.id}"${ariaCurrent}>${screen.label}</a>`;
+  return `<a class="nav-item" href="#${screen.id}"${ariaCurrent}><span class="nav-item__ico" aria-hidden="true">${navIcon(
+    screen.id,
+  )}</span><span class="nav-item__label">${escapeHtml(screen.label)}</span></a>`;
+}
+
+const NAV_ICON_PATHS: Record<ScreenId, string> = {
+  start: '<path d="M4 11.5 12 5l8 6.5"/><path d="M6 10v9h12v-9"/>',
+  traject:
+    '<path d="M6 5v9a4 4 0 0 0 8 0V8"/><circle cx="6" cy="5" r="1.7"/><circle cx="14" cy="6.5" r="1.7"/><circle cx="14" cy="18" r="1.7"/>',
+  agenda: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/>',
+  medicatie: '<rect x="3" y="9" width="18" height="6" rx="3"/><path d="M12 9v6"/>',
+  herinneringen: '<path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 21h4"/>',
+  vragen:
+    '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 17h.01"/>',
+  dossier: '<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>',
+  kennis: '<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"/><path d="M5 16h13"/>',
+  welzijn:
+    '<path d="M12 20s-7-4.6-7-9.3A3.7 3.7 0 0 1 12 7a3.7 3.7 0 0 1 7 3.7C19 15.4 12 20 12 20z"/>',
+  afwegingen:
+    '<path d="M12 4v16M5 8h14"/><path d="M5 8l-2 5a3 3 0 0 0 6 0z"/><path d="M19 8l-2 5a3 3 0 0 0 6 0z"/>',
+  kosten: '<circle cx="12" cy="12" r="8"/><path d="M14.6 9.6a3.5 3.5 0 1 0 0 4.8M8 11h5M8 13h4"/>',
+  logboek:
+    '<path d="M8 5h11M8 12h11M8 19h11"/><circle cx="4.5" cy="5" r="0.8"/><circle cx="4.5" cy="12" r="0.8"/><circle cx="4.5" cy="19" r="0.8"/>',
+  backup: '<path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/>',
+};
+
+function navIcon(id: ScreenId): string {
+  return `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NAV_ICON_PATHS[id]}</svg>`;
 }
 
 function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {

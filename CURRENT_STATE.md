@@ -154,6 +154,11 @@
   phase-hero, timeline, accordion, disclosure, stat-row, lege-/laad-/foutstaten)
   als basis voor het mobiel-first herstel van de schermlayouts. Pure
   presentatielaag met inline-SVG iconen (CSP-veilig); geen gedragswijziging.
+- **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
+  inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
+  (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
+  vervangen door een rustiger `pageHeader` (serif-titel + intro). Schermtitels,
+  nav-hrefs en `aria-current` blijven ongewijzigd.
 - **G137 opslag-schemaversie:** kluismetadata bevat een `schema` record met de
   huidige schemaversie; ontbrekende schemametadata wordt bij ontgrendelen aangevuld
   en nieuwere schema's worden geweigerd.

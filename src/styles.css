@@ -468,6 +468,7 @@ h3 {
   flex: 1 1 auto;
   align-items: center;
   justify-content: center;
+  gap: 7px;
   padding: 8px 14px;
   border-radius: var(--radius-pill);
   background: transparent;
@@ -488,6 +489,11 @@ h3 {
 .primary-nav a[aria-current="page"] {
   background: var(--surface-active);
   color: var(--accent);
+}
+
+.nav-item__ico {
+  display: inline-flex;
+  flex: 0 0 auto;
 }
 
 .content {
@@ -1670,8 +1676,12 @@ a.action-card:active {
     bottom: 0;
     left: 0;
     margin: 0;
+    gap: 2px;
     flex-wrap: nowrap;
-    padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
     border: 0;
     border-top: 1px solid var(--border);
     border-radius: 0;
@@ -1679,12 +1689,21 @@ a.action-card:active {
     box-shadow: 0 -4px 16px rgba(46, 58, 48, 0.06);
   }
 
+  .primary-nav::-webkit-scrollbar {
+    display: none;
+  }
+
   .primary-nav a {
-    min-height: 44px;
-    flex: 1 1 0;
-    padding: 6px 4px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 60px;
+    min-height: 50px;
+    padding: 6px 8px;
     border-radius: var(--radius-tile);
-    font-size: 0.82rem;
+    font-size: 0.68rem;
+    scroll-snap-align: start;
+    scroll-margin: 8px;
   }
 
   .hero {
@@ -1741,7 +1760,8 @@ a.action-card:active {
 
 @media (max-width: 420px) {
   .primary-nav a {
-    font-size: 0.74rem;
+    min-width: 56px;
+    font-size: 0.64rem;
   }
 
   .timeline-overview-bar {
