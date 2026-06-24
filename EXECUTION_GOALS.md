@@ -591,7 +591,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** M
 - **Related Components:** Backup, tests, runbook
 - **Score:** 117
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G287 — Tailscale Smoke Automation
 
@@ -1435,5 +1435,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** PWA, Playwright smoke, docs
+- **Score:** 97
+- **Status:** ☐ open
+
+### G352 — Backup Drill Fixture Expansion
+
+- **Epic:** Reliability & Operations
+- **Problem:** The backup restore drill verifies core records, but future restore confidence improves if more domains and edge cases are included.
+- **Desired Outcome:** Expand the drill with additional representative record types and edge states.
+- **User Value:** Back-up restore confidence increases for real Kiempad usage, not just the smallest dataset.
+- **Acceptance Criteria:** Drill covers at least three additional domains such as cost, mental check-in, consultverslag or event log; includes one archived or completed record state; report still avoids plaintext health content; tests verify the expanded record list and counts.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Storage, backup, tests
 - **Score:** 97
 - **Status:** ☐ open
