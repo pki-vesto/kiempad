@@ -66,7 +66,6 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintStaticErrorReason>;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_REPRESENTATIVE_STATIC_ERROR_REASON =
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel satisfies RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason;
-// Bridges the representative static reason and the broad static fixture.
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ALIAS_ERROR_REASON_TYPE_FIXTURES = [
   ...BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES,
 ] as const satisfies ReadonlyArray<RepresentativeBacklogHealthArtifactDocsHintStaticErrorReason>;
