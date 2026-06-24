@@ -29,6 +29,10 @@ const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contrac
 const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION = `herstel beide markercomments ${BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER} en ${BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER} rond dezelfde issueSnapshot-matrixgroepverwachting in tests/backlogHealth.test.ts`;
 const BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR = `Backlog-health contractmatrix ontbreekt: ${BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION}.`;
+type BacklogHealthArtifactDocsHint = {
+  label: string;
+  term: string;
+};
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
@@ -36,7 +40,7 @@ const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
 const BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS = [
   { label: 'maintenance tests label usage', term: 'onderhoudstests gebruiken die labels' },
   { label: 'recovery fixes boundary', term: 'recoveryfixes' },
-] as const;
+] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHint>;
 
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
@@ -732,7 +736,7 @@ function expectBacklogHealthRecoveryArtifactDocsHint(recoveryParagraph: string):
 }
 
 function expectBacklogHealthRecoveryArtifactDocsHintLabels(
-  docsHints: ReadonlyArray<{ label: string; term: string }>,
+  docsHints: ReadonlyArray<BacklogHealthArtifactDocsHint>,
 ): void {
   for (const docsHint of docsHints) {
     const normalizedDocsHint = normalizeBacklogHealthArtifactDocsHint(docsHint);
@@ -762,7 +766,7 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
   }
 }
 
-function normalizeBacklogHealthArtifactDocsHint(docsHint: { label: string; term: string }): {
+function normalizeBacklogHealthArtifactDocsHint(docsHint: BacklogHealthArtifactDocsHint): {
   rawLabel: string;
   rawTerm: string;
   label: string;

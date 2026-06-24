@@ -2552,4 +2552,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G424 — Backlog Health JSON Contract Recovery Artifact Docs Hint Normalized Type Alias
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint metadata now has a named type alias, but the normalized helper return shape is still an inline object type.
+- **Desired Outcome:** Add a named type alias for normalized artifact docs hint metadata and use it as the normalization helper return type.
+- **User Value:** Maintainers get a clear contract for both raw and normalized docs hint metadata when extending diagnostics.
+- **Acceptance Criteria:** Normalization helper return type uses a named alias; existing positive and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
