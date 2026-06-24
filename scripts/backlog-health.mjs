@@ -179,6 +179,7 @@ export function buildBacklogHealthReport(input) {
     ? parseIssueSnapshot(input.issueSnapshotJson)
     : undefined;
   const findings = [];
+  const missingIssueLinks = [];
 
   for (const id of backlog.duplicates) {
     findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in PRODUCT_BACKLOG.md.' });
@@ -239,6 +240,10 @@ export function buildBacklogHealthReport(input) {
     for (const goal of backlog.goals.filter((item) => item.status === '☐')) {
       const issue = issueSnapshot.byGoalId.get(goal.id);
       if (!issue) {
+        missingIssueLinks.push({
+          id: goal.id,
+          title: goal.title,
+        });
         findings.push({
           type: 'missing-issue-link',
           id: goal.id,
@@ -281,6 +286,7 @@ export function buildBacklogHealthReport(input) {
     issueSnapshot: issueSnapshot
       ? {
           duplicateIssues: issueSnapshot.duplicateIssues,
+          missingIssueLinks,
         }
       : undefined,
     findings,

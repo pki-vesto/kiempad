@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G389 Continuous Evolution: `backlog:health --json` bevat nu
+  `issueSnapshot.missingIssueLinks` voor ontbrekende GitHub Issue-koppelingen.
 - G388 Continuous Evolution: `backlog:health --json` bevat nu gesanitized
   `issueSnapshot.duplicateIssues` groepen voor duplicate issue-snapshotdrift.
 - G387 Continuous Evolution: duplicate issue-snapshotbevindingen tonen nu de

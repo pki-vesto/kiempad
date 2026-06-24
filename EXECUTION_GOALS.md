@@ -2076,4 +2076,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G390 — Backlog Health Closed Issue JSON Shape
+
+- **Epic:** Continuous Evolution
+- **Problem:** JSON automation can see missing issue links, but closed-issue status mismatches still require parsing generic finding text.
+- **Desired Outcome:** Add or document a stable JSON shape for open backlog goals whose linked issue is not open.
+- **User Value:** Maintainers can automate reopening or triaging closed issue drift without scraping markdown.
+- **Acceptance Criteria:** JSON-mode report exposes sanitized closed/non-open issue mismatch data; tests cover the field; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

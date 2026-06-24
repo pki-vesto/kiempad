@@ -299,7 +299,38 @@ describe('backlog health', () => {
           ],
         },
       ],
+      missingIssueLinks: [],
     });
+    expect(JSON.stringify(report)).not.toContain('niet opnemen');
+  });
+
+  it('exposeert ontbrekende issue-links in JSON-compatibele reportvorm zonder bodies', () => {
+    const report = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244', 'G245']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244', 'G245']),
+      issueSnapshotJson: JSON.stringify([
+        {
+          number: 244,
+          title: 'G244 existing issue',
+          state: 'OPEN',
+          url: 'https://github.com/pki-vesto/kiempad/issues/244',
+          body: 'niet opnemen',
+        },
+      ]),
+    });
+
+    expect(report.issueSnapshot?.missingIssueLinks).toEqual([
+      {
+        id: 'G245',
+        title: 'Fixture G245',
+      },
+    ]);
+    expect(report.findings).toContainEqual(
+      expect.objectContaining({
+        type: 'missing-issue-link',
+        id: 'G245',
+      }),
+    );
     expect(JSON.stringify(report)).not.toContain('niet opnemen');
   });
 
