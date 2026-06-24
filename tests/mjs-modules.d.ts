@@ -60,4 +60,12 @@ declare module '*.mjs' {
   export function scanSecretFiles(
     rootDir?: string,
   ): Array<{ filePath: string; pattern: string; line: number; preview: string }>;
+  export function scanSensitiveFixtureText(
+    filePath: string,
+    text: string,
+  ): Array<{ filePath: string; pattern: string; line: number; message: string }>;
+  export function listSensitiveFixtureFiles(rootDir?: string): string[];
+  export function scanSensitiveFixtureFiles(
+    rootDir?: string,
+  ): Array<{ filePath: string; pattern: string; line: number; message: string }>;
 }

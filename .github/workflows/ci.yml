@@ -26,6 +26,8 @@ jobs:
         run: npm run lint
       - name: Secrets scan
         run: npm run secrets:check
+      - name: Sensitive fixture scan
+        run: npm run fixtures:check
       - name: Test
         run: npm run test
       - name: Security audit

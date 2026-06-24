@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "assets:check": "node scripts/check-no-external-assets.mjs",
     "secrets:check": "node scripts/check-secrets.mjs",
+    "fixtures:check": "node scripts/check-sensitive-fixtures.mjs",
     "deps:review": "node scripts/dependency-review.mjs",
     "backlog:health": "node scripts/backlog-health.mjs",
     "goals:score": "node scripts/goal-score.mjs",
