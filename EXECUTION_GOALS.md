@@ -2608,4 +2608,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G428 — Backlog Health JSON Contract Recovery Artifact Docs Hint Error Reason Type
+
+- **Epic:** Continuous Evolution
+- **Problem:** The artifact docs hint error builder now has a direct fixture, but its reason argument is still an unconstrained string.
+- **Desired Outcome:** Add a narrow type alias for artifact docs hint error reasons.
+- **User Value:** Maintainers get a clearer contract for allowed diagnostic reason text when extending hint validation.
+- **Acceptance Criteria:** Error builder accepts a named reason type; existing builder fixture and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

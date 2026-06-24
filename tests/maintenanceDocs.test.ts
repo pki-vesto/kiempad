@@ -541,6 +541,12 @@ describe('onderhoudsdocumentatie', () => {
     });
   });
 
+  it('bouwt backlog-health recovery artifactlabel-uitleg fouten met stabiele prefix', () => {
+    expect(buildBacklogHealthArtifactDocsHintError('label ontbreekt')).toBe(
+      'Backlog-health artifact docs hint label ontbreekt.',
+    );
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
