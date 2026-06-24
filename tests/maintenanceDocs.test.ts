@@ -372,6 +372,12 @@ describe('onderhoudsdocumentatie', () => {
     expect(matrixGroups).toEqual(documentedGroups);
   });
 
+  it('faalt duidelijk wanneer backlog-health contractmatrixmarkers ontbreken', () => {
+    expect(() => extractBacklogHealthContractMatrixGroups('const matrix = [];')).toThrow(
+      'Backlog-health contractmatrix ontbreekt: behoud backlog-health-json-contract-matrix:start en backlog-health-json-contract-matrix:end.',
+    );
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
@@ -607,12 +613,16 @@ function extractBacklogHealthReferenceGroups(): string[] {
     .sort();
 }
 
-function extractBacklogHealthContractMatrixGroups(): string[] {
-  const matrixTest = backlogHealthTest.match(
+function extractBacklogHealthContractMatrixGroups(source = backlogHealthTest): string[] {
+  const matrixTest = source.match(
     /\/\/ backlog-health-json-contract-matrix:start(?<groups>[\s\S]+?)\/\/ backlog-health-json-contract-matrix:end/,
   )?.groups?.groups;
 
-  if (!matrixTest) throw new Error('Backlog-health contractmatrix ontbreekt.');
+  if (!matrixTest) {
+    throw new Error(
+      'Backlog-health contractmatrix ontbreekt: behoud backlog-health-json-contract-matrix:start en backlog-health-json-contract-matrix:end.',
+    );
+  }
 
   return Array.from(matrixTest.matchAll(/'(?<group>[A-Za-z]+)'/g), (match) => match.groups?.group)
     .filter((group): group is string => Boolean(group))

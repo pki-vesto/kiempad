@@ -2300,4 +2300,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G406 — Backlog Health JSON Contract Marker Error Docs
+
+- **Epic:** Continuous Evolution
+- **Problem:** Missing contract matrix markers now fail clearly in tests, but the JSON reference does not document the exact recovery path for that failure.
+- **Desired Outcome:** Document how maintainers should restore the start/end markers when the marker parser fails.
+- **User Value:** Maintainers can recover quickly from accidental marker deletion during backlog-health test refactors.
+- **Acceptance Criteria:** Docs mention the missing-marker failure and recovery action; tests cover the wording; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
