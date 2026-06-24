@@ -26,6 +26,8 @@ describe('PWA baseline', () => {
     expect(csp).toContain("base-uri 'none'");
     expect(csp).not.toMatch(/script-src[^;]*(https?:|data:|blob:|'unsafe-inline'|'unsafe-eval')/);
     expect(csp).not.toMatch(/connect-src[^;]*https?:\/\//);
+    expect(csp).not.toMatch(/\breport-uri\b/i);
+    expect(csp).not.toMatch(/\breport-to\b/i);
   });
 
   it('heeft een installeerbaar manifest met icon', () => {

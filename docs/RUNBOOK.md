@@ -23,7 +23,9 @@ de lokale data versleuteld wordt.
   image/font/script/manifest-URL's in bron- of buildassets; allowlist-governance staat
   in [`docs/EXTERNAL_ASSET_ALLOWLIST.md`](EXTERNAL_ASSET_ALLOWLIST.md)).
 - **CSP:** `index.html` blokkeert remote scripts standaard; bij dev-HMR zijn alleen
-  lokale websocketverbindingen naar `localhost`/`127.0.0.1` toegestaan.
+  lokale websocketverbindingen naar `localhost`/`127.0.0.1` toegestaan. CSP
+  violation-diagnose blijft lokaal zonder report-endpoint; zie
+  [`docs/CSP_VIOLATION_WORKFLOW.md`](CSP_VIOLATION_WORKFLOW.md).
 - **Secrets:** `npm run secrets:check` scant docs/source op gangbare API keys,
   Tailscale auth keys, GitHub tokens, AWS keys en private-keyblokken.
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
