@@ -3000,4 +3000,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G456 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Declaration Density
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture declaration area is now comment-light, but the cluster still has several long constant names packed together.
+- **Desired Outcome:** Review whether the static alias declaration area can be made easier to scan without adding comments back.
+- **User Value:** Maintainers can understand the fixture declarations quickly while keeping the contract explicit.
+- **Acceptance Criteria:** Static alias declaration density is reviewed and, if useful, adjusted without weakening type fixtures; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
