@@ -450,6 +450,18 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('houdt backlog-health recovery artifactlabel-uitleg diagnostisch gelabeld', () => {
+    expect(BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS).toEqual([
+      { label: 'maintenance tests label usage', term: 'onderhoudstests gebruiken die labels' },
+      { label: 'recovery fixes boundary', term: 'recoveryfixes' },
+    ]);
+
+    for (const docsHint of BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS) {
+      expect(docsHint.label.length).toBeGreaterThan(8);
+      expect(docsHint.term.length).toBeGreaterThan(8);
+    }
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
