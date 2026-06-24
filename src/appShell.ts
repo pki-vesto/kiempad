@@ -3770,50 +3770,49 @@ function renderTrajectScreen(state: AppShellState): string {
   const fertilityTimelineExport = maakFertilityTimelineTrajectExport(volledigeFertilityTimeline);
   const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
 
-  return `
-    <section class="traject-layout" aria-label="Traject beheren">
-      <div class="form-panel">
-        <h2>${selected ? 'Traject bewerken' : 'Traject aanmaken'}</h2>
-        ${renderTrajectForm(selected?.traject)}
-        ${
-          selected
-            ? `<h2 class="section-subheading">Nieuwe poging</h2>${renderTrajectForm(undefined, 'traject-new-form', 'Voeg poging toe')}`
-            : ''
-        }
-      </div>
-      <div class="timeline-panel">
-        <section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
-          <h2>Vergoede pogingen</h2>
-          <dl class="summary-list">
-            <div><dt>Meetellend</dt><dd>${vergoeding.meetellend} van ${vergoeding.maximum}</dd></div>
-            <div><dt>Resterend</dt><dd>${vergoeding.resterend}</dd></div>
-          </dl>
-          <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
-        </section>
-        ${renderTrajectOverzicht(overzicht)}
-        ${renderFertilityTimeline(fertilityTimeline, state.timelineFilter, fertilityTimelineExport)}
-        ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
-        <div class="panel-heading">
-          <h2>Fasen</h2>
-          ${
-            selected
-              ? `<div class="button-row">
-                  <button class="phase-button archive-traject" type="button" data-traject-id="${escapeAttribute(selected.traject.id)}" data-gearchiveerd="true" aria-label="Archiveer traject: ${escapeAttribute(selected.traject.naam)}">Archiveer traject</button>
-                  <button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}" aria-label="Verwijder traject: ${escapeAttribute(selected.traject.naam)}">Verwijder traject</button>
-                </div>`
-              : ''
-          }
-        </div>
-        ${
-          selected
-            ? renderTimeline(selected)
-            : '<p class="empty-state">Nog geen traject. Maak links een poging aan om de vaste fasen te tonen.</p>'
-        }
-        ${actieveTrajecten.length > 0 ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen') : ''}
-        ${gearchiveerdeTrajecten.length > 0 ? renderTrajectList(gearchiveerdeTrajecten, 'Archief', true) : ''}
-      </div>
-    </section>
-  `;
+  const trajectFormsBody = `${renderTrajectForm(selected?.traject)}${
+    selected
+      ? `<h2 class="section-subheading">Nieuwe poging</h2>${renderTrajectForm(undefined, 'traject-new-form', 'Voeg poging toe')}`
+      : ''
+  }`;
+  const fasenButtons = selected
+    ? `<div class="button-row">
+          <button class="phase-button archive-traject" type="button" data-traject-id="${escapeAttribute(selected.traject.id)}" data-gearchiveerd="true" aria-label="Archiveer traject: ${escapeAttribute(selected.traject.naam)}">Archiveer traject</button>
+          <button class="danger-button" id="delete-traject" type="button" data-traject-id="${selected.traject.id}" aria-label="Verwijder traject: ${escapeAttribute(selected.traject.naam)}">Verwijder traject</button>
+        </div>`
+    : '';
+
+  return sectionStack(
+    [
+      disclosure({
+        summary: selected ? 'Traject bewerken of poging toevoegen' : 'Traject aanmaken',
+        open: !selected,
+        body: trajectFormsBody,
+      }),
+      `<section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
+        <h2>Vergoede pogingen</h2>
+        <dl class="summary-list">
+          <div><dt>Meetellend</dt><dd>${vergoeding.meetellend} van ${vergoeding.maximum}</dd></div>
+          <div><dt>Resterend</dt><dd>${vergoeding.resterend}</dd></div>
+        </dl>
+        <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
+      </section>`,
+      renderTrajectOverzicht(overzicht),
+      renderFertilityTimeline(fertilityTimeline, state.timelineFilter, fertilityTimelineExport),
+      graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : '',
+      `<div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>`,
+      selected
+        ? renderTimeline(selected)
+        : '<p class="empty-state">Nog geen traject. Maak hierboven een poging aan om de vaste fasen te tonen.</p>',
+      actieveTrajecten.length > 0
+        ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen')
+        : '',
+      gearchiveerdeTrajecten.length > 0
+        ? renderTrajectList(gearchiveerdeTrajecten, 'Archief', true)
+        : '',
+    ],
+    { ariaLabel: 'Traject beheren' },
+  );
 }
 
 const FERTILITY_GRAPH_RELATIE_LABELS: Record<FertilityGraphEdgeType, string> = {
