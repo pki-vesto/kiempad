@@ -256,7 +256,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, PRODUCT_BACKLOG
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G260 — Vision Traceability Tags
 
@@ -1850,6 +1850,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, PR template, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G374 — Backlog Active Goal Drift Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The active-goal minimum is now tested against current docs, but there is no small negative fixture proving the check fails when backlog and execution IDs drift.
+- **Desired Outcome:** Add a focused fixture or helper test that demonstrates missing, extra and below-minimum active goal states without editing production backlog files.
+- **User Value:** Future maintainers can refactor backlog tests without weakening the 100-active-goal safety net.
+- **Acceptance Criteria:** Test fixture covers fewer than 100 open goals, missing execution IDs and extra execution IDs; failure messages identify the affected condition; production backlog content is not duplicated in fixtures.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests, backlog health
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

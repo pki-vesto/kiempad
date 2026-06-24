@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G259 Continuous Evolution: onderhoudstest parseert nu open G-id's uit zowel
+  `PRODUCT_BACKLOG.md` als `EXECUTION_GOALS.md`, vereist minimaal 100 actieve doelen en
+  faalt wanneer de actieve catalogi op ID-niveau uit elkaar lopen.
 - G257 Continuous Evolution: autonomyguardrails documenteren de grenzen voor netwerk,
   AI, data, GitHub, Tailscale en medisch beleid en zijn gekoppeld aan ADR-0007,
   completion audit, PR-template en onderhoudstest.
