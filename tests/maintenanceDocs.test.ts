@@ -383,14 +383,12 @@ describe('onderhoudsdocumentatie', () => {
       'beide markercomments',
       'tests/backlogHealth.test.ts',
       'opnieuw draaien van de docs-/contracttests',
-      'artifact-labels',
-      'onderhoudstests gebruiken die labels',
-      'recoveryfixes',
     ]) {
       expect(recoveryParagraph).toContain(requiredTerm);
     }
 
     expectBacklogHealthRecoveryForbiddenArtifactLabels(recoveryParagraph);
+    expectBacklogHealthRecoveryArtifactDocsHint(recoveryParagraph);
 
     for (const requiredTerm of [
       BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER,
@@ -436,6 +434,16 @@ describe('onderhoudsdocumentatie', () => {
         'Maak geen issue-snapshot onderdeel van de fix.',
       ),
     ).toThrow('Backlog-health recoveryparagraaf mist forbidden artifact label: raw GitHub output.');
+  });
+
+  it('faalt duidelijk wanneer de backlog-health recovery artifactlabel-uitleg ontbreekt', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryArtifactDocsHint(
+        'Laat de artifact-labels issue-snapshot en ruwe GitHub-output in deze recoveryparagraaf staan.',
+      ),
+    ).toThrow(
+      'Backlog-health recoveryparagraaf mist artifact-label uitleg: onderhoudstests gebruiken die labels.',
+    );
   });
 
   it('documenteert autonomy guardrail evidence per domein', () => {
@@ -639,6 +647,16 @@ function expectBacklogHealthRecoveryForbiddenArtifactLabels(recoveryParagraph: s
         `Backlog-health recoveryparagraaf mist forbidden artifact label: ${forbiddenArtifact.label}.`,
       );
     }
+  }
+}
+
+function expectBacklogHealthRecoveryArtifactDocsHint(recoveryParagraph: string): void {
+  const docsHint = 'onderhoudstests gebruiken die labels';
+  if (!recoveryParagraph.includes(docsHint)) {
+    throw new Error(`Backlog-health recoveryparagraaf mist artifact-label uitleg: ${docsHint}.`);
+  }
+  if (!recoveryParagraph.includes('recoveryfixes')) {
+    throw new Error('Backlog-health recoveryparagraaf mist artifact-label uitleg: recoveryfixes.');
   }
 }
 

@@ -2426,4 +2426,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G415 — Backlog Health JSON Contract Recovery Artifact Docs Hint Constant
+
+- **Epic:** Continuous Evolution
+- **Problem:** The artifact-label docs hint now has a negative fixture, but the hint text is still duplicated as free-form literals inside the maintenance test.
+- **Desired Outcome:** Centralize the artifact-label docs hint terms so positive and negative assertions cannot drift.
+- **User Value:** Maintainers can evolve the recovery guidance with clearer, single-source expectations.
+- **Acceptance Criteria:** Tests use named constants for artifact-label docs hint terms; positive and negative assertions reference the same constants; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
