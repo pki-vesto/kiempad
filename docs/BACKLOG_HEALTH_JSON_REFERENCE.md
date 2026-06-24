@@ -93,3 +93,16 @@ automation mag gebruiken:
   }
 }
 ```
+
+## Consumer Notes
+
+- Beschouw de vier `issueSnapshot.*` arrays als stabiele rapportsecties, maar niet
+  als bewijs dat de voorbeelddata volledig is.
+- Het voorbeeld toont per sectie bewust één synthetische rij; productie-output kan
+  nul, één of meerdere rijen per sectie bevatten.
+- Automation mag alleen rekenen op `id`, lokale backlog `title`, `issues` en
+  `issue` plus de gesanitized issuevelden `number`, `title`, `state` en `url`.
+- Issue bodies, tokens, auth keys, lokale snapshotpaden en ruwe GitHub responses zijn
+  uitgesloten van de fixture en horen niet in commits.
+- Maak tijdelijke snapshots altijd opnieuw met `number,title,state,url`, valideer ze
+  direct en verwijder `/tmp/kiempad-issues.json` na gebruik.
