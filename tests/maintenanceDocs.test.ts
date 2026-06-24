@@ -4,6 +4,7 @@ import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
+import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
@@ -126,6 +127,25 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(externalAssetAllowlist).toMatch(/CDN's voor JavaScript, CSS, fonts of afbeeldingen/i);
     expect(externalAssetAllowlist).toMatch(/nieuw\s+architectuurbesluit/i);
+  });
+
+  it('bewaart de no-telemetry CSP violation workflow', () => {
+    for (const requiredTerm of [
+      'geen CSP reports naar een remote endpoint',
+      'geen `report-uri`',
+      'geen `report-to`',
+      'npm run dev',
+      'npm run build',
+      'npm run smoke:offline',
+      'npm run assets:check',
+      'nieuwe ADR',
+      'expliciete opt-in',
+    ]) {
+      expect(cspViolationWorkflow).toContain(requiredTerm);
+    }
+
+    expect(cspViolationWorkflow).toMatch(/lokale browserdiagnostiek/i);
+    expect(cspViolationWorkflow).toMatch(/Kopieer geen volledige lokale URL's/i);
   });
 });
 

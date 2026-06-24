@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G353 Security & DevEx: CSP violation workflow documenteert lokale diagnose zonder
+  remote report-endpoints, met dev/prod-previewstappen en tests tegen `report-uri` en
+  `report-to`.
 - G348 Security & DevEx: externe-asset allowlist-governance met rationale per
   toegestane URL, documentatie voor uitzonderingen en tests die ontbrekende rationale
   afwijzen.

@@ -1462,7 +1462,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** CSP, docs, security tests
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G354 — Secrets Scan Baseline Review
 
@@ -1617,5 +1617,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Docs, asset scanner, maintenance tests
+- **Score:** 97
+- **Status:** ☐ open
+
+### G366 — Local CSP Violation Reproduction Fixture
+
+- **Epic:** Security & DevEx
+- **Problem:** The CSP violation workflow is documented, but maintainers do not yet have a tiny local fixture for reproducing blocked asset categories without touching production UI.
+- **Desired Outcome:** Add a test-only or docs-only fixture that demonstrates blocked script, connect and asset cases with sanitized output.
+- **User Value:** CSP regressions become easier to reproduce without adding telemetry or real user data.
+- **Acceptance Criteria:** Fixture never ships in production build; docs explain how to use it locally; tests verify it stays isolated from app runtime; no remote request is actually made during automated tests.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** CSP docs, tests, dev tooling
 - **Score:** 97
 - **Status:** ☐ open
