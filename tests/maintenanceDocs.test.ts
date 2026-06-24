@@ -33,6 +33,12 @@ type BacklogHealthArtifactDocsHint = {
   label: string;
   term: string;
 };
+type NormalizedBacklogHealthArtifactDocsHint = {
+  rawLabel: string;
+  rawTerm: string;
+  label: string;
+  term: string;
+};
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
@@ -766,12 +772,9 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
   }
 }
 
-function normalizeBacklogHealthArtifactDocsHint(docsHint: BacklogHealthArtifactDocsHint): {
-  rawLabel: string;
-  rawTerm: string;
-  label: string;
-  term: string;
-} {
+function normalizeBacklogHealthArtifactDocsHint(
+  docsHint: BacklogHealthArtifactDocsHint,
+): NormalizedBacklogHealthArtifactDocsHint {
   return {
     rawLabel: docsHint.label,
     rawTerm: docsHint.term,
