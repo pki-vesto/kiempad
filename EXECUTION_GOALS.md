@@ -1566,7 +1566,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Docs, scripts, dependency review
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G362 — Sensitive Fixture Allowlist Review
 
@@ -1656,5 +1656,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Vault UX, visual tests, docs
+- **Score:** 97
+- **Status:** ☐ open
+
+### G369 — Dependency Evidence Generator Dry Run
+
+- **Epic:** Security & DevEx
+- **Problem:** The dependency review evidence template is manual, so command summaries can still be copied inconsistently.
+- **Desired Outcome:** Add a dry-run helper that prints a sanitized dependency-review evidence draft from local command statuses.
+- **User Value:** Monthly dependency reviews become faster while preserving the no-secret evidence boundary.
+- **Acceptance Criteria:** Helper runs in dry-run mode without writing files by default; output includes date, reviewed commands and placeholder lockfile summary; tests verify no package metadata dumps or env values are printed; docs explain how to save the draft.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dependency review script, docs, tests
 - **Score:** 97
 - **Status:** ☐ open
