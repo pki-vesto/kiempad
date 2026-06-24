@@ -2216,4 +2216,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, scripts
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G400 — Backlog Health JSON Contract Matrix Docs Link
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON contract field matrix exists in tests, but documentation readers cannot easily discover that the reference is backed by a matrix-style contract test.
+- **Desired Outcome:** Link or mention the contract matrix test from the JSON reference so maintainers know where to update tests when fields change.
+- **User Value:** Maintainers can evolve the JSON contract with less guesswork and fewer missed doc/test updates.
+- **Acceptance Criteria:** Docs mention the matrix-backed contract coverage and point to the relevant test file; tests cover the doc reference; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
