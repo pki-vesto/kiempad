@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G360 Reliability & Operations: vergrendelde kluis toont een niet-gevoelige
+  hersteldiagnose voor kluisaanwezigheid, WebAuthn-runtime/koppeling en
+  back-upherinneringsstatus zonder recordinhoud.
 - G354 Security & DevEx: secrets-scan baseline documenteert pattern ownership en
   allowlistbeleid; tests dekken toegestane placeholders en verboden AI-/Tailscale-key
   vormen.

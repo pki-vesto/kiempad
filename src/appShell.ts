@@ -428,10 +428,36 @@ export function renderVaultGate(
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
         ${error ? `<p class="form-error" role="alert">${error}</p>` : ''}
+        ${renderVaultDiagnostics(hasVault, webAuthnStatus)}
         ${renderVaultRecoveryHelp(hasVault)}
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
+  `;
+}
+
+function renderVaultDiagnostics(hasVault: boolean, webAuthnStatus?: WebAuthnViewStatus): string {
+  const webAuthnRuntime = webAuthnStatus?.runtimeBeschikbaar
+    ? 'Beschikbaar in deze browser.'
+    : `Niet beschikbaar: ${webAuthnStatus?.reden ?? 'browserstatus nog niet bepaald.'}`;
+  const webAuthnEnrollment = webAuthnStatus?.gekoppeld
+    ? `Gekoppeld${webAuthnStatus.label ? `: ${webAuthnStatus.label}` : ''}.`
+    : 'Niet gekoppeld op dit toestel.';
+  const backupStatus = hasVault
+    ? 'Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.'
+    : 'Nog niet ingesteld; maak na de eerste kluis een versleutelde back-up.';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Hersteldiagnose" data-vault-present="${hasVault ? 'true' : 'false'}">
+      <h2>Hersteldiagnose</h2>
+      <dl class="definition-list">
+        <div><dt>Kluis</dt><dd>${hasVault ? 'Lokale kluismetadata gevonden.' : 'Geen lokale kluis op dit toestel gevonden.'}</dd></div>
+        <div><dt>WebAuthn runtime</dt><dd>${escapeHtml(webAuthnRuntime)}</dd></div>
+        <div><dt>WebAuthn koppeling</dt><dd>${escapeHtml(webAuthnEnrollment)}</dd></div>
+        <div><dt>Back-upherinnering</dt><dd>${backupStatus}</dd></div>
+      </dl>
+      <p class="small-print">Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.</p>
+    </section>
   `;
 }
 

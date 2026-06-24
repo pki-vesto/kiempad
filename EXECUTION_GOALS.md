@@ -1553,7 +1553,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Complexity:** S
 - **Related Components:** Vault UX, WebAuthn, backup guidance
 - **Score:** 104
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G361 — Dependency Review Evidence Snapshot
 
@@ -1643,5 +1643,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Secrets scan, docs, maintenance tests
+- **Score:** 97
+- **Status:** ☐ open
+
+### G368 — Recovery Diagnostics Visual Regression Fixture
+
+- **Epic:** Reliability & Operations
+- **Problem:** The locked-state diagnostics card is tested as HTML, but visual regressions could still make recovery states hard to scan on small screens.
+- **Desired Outcome:** Add a screenshot or DOM fixture that verifies the recovery diagnostics layout across missing vault, WebAuthn unavailable and WebAuthn linked states.
+- **User Value:** Users can read recovery status clearly while locked without exposing private data.
+- **Acceptance Criteria:** Fixture covers at least three locked-state diagnostics variants; verification asserts no overlap or clipped text; fixture contains no record counts or health content; docs mention how to refresh it.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Vault UX, visual tests, docs
 - **Score:** 97
 - **Status:** ☐ open
