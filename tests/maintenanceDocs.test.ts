@@ -383,6 +383,9 @@ describe('onderhoudsdocumentatie', () => {
       'beide markercomments',
       'tests/backlogHealth.test.ts',
       'opnieuw draaien van de docs-/contracttests',
+      'artifact-labels',
+      'onderhoudstests gebruiken die labels',
+      'recoveryfixes',
     ]) {
       expect(recoveryParagraph).toContain(requiredTerm);
     }
