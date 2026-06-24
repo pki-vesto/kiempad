@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G396 Continuous Evolution: `tests/backlogHealth.test.ts` valideert nu het
+  `backlog:health --json` consumer-contract voor alle issue-snapshotgroepen,
+  toegestane issuevelden en uitgesloten bodies/tokens/snapshotpaden.
 - G395 Continuous Evolution: `docs/BACKLOG_HEALTH_JSON_REFERENCE.md` bevat nu
   consumer notes voor de JSON-example fixture met stabiele velden, synthetische
   voorbeeldgrenzen en snapshot-cleanupregels.
