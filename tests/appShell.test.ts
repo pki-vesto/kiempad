@@ -505,6 +505,10 @@ describe('app shell', () => {
     expect(html).toContain('name="timelineEigenaar"');
     expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
+    expect(html).toContain('Belangrijke mijlpalen');
+    expect(html).toContain('Ontbrekende context');
+    expect(html).toContain('Geen ontbrekende context zichtbaar in de huidige timelinefilter.');
+    expect(html).toContain('Deze signalen corrigeren niets automatisch');
     expect(html).toContain('Echo verslag');
     expect(html).toContain('class="compact-list timeline-list"');
     expect(html).toContain('class="timeline-detail-panel"');

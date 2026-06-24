@@ -3558,12 +3558,63 @@ function renderFertilityTimeline(
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research vanuit lokale records.</p>
       ${renderFertilityTimelineFilterForm(filter)}
+      ${renderFertilityTimelineMijlpalen(timeline)}
+      ${renderFertilityTimelineContextSignalen(timeline)}
       ${
         timeline.items.length > 0
           ? `<ol class="compact-list timeline-list">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
           : '<p class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderFertilityTimelineMijlpalen(timeline: FertilityTimeline): string {
+  return `
+    <section class="timeline-insight-panel" aria-label="Belangrijke mijlpalen">
+      <h3>Belangrijke mijlpalen</h3>
+      ${
+        timeline.mijlpalen.length > 0
+          ? `<ol class="compact-list timeline-insight-list">
+              ${timeline.mijlpalen
+                .map(
+                  (item) => `
+                    <li>
+                      <strong>${escapeHtml(item.titel)}</strong>
+                      <span>${escapeHtml(item.datum)} · ${escapeHtml(item.detail)}</span>
+                    </li>
+                  `,
+                )
+                .join('')}
+            </ol>`
+          : '<p class="empty-state">Nog geen mijlpalen in de huidige timelinefilter.</p>'
+      }
+    </section>
+  `;
+}
+
+function renderFertilityTimelineContextSignalen(timeline: FertilityTimeline): string {
+  return `
+    <section class="timeline-insight-panel" aria-label="Ontbrekende context">
+      <h3>Ontbrekende context</h3>
+      ${
+        timeline.contextSignalen.length > 0
+          ? `<ol class="compact-list timeline-insight-list">
+              ${timeline.contextSignalen
+                .map(
+                  (item) => `
+                    <li>
+                      <strong>${escapeHtml(item.titel)}</strong>
+                      <span>${escapeHtml(item.detail)}</span>
+                    </li>
+                  `,
+                )
+                .join('')}
+            </ol>`
+          : '<p class="empty-state">Geen ontbrekende context zichtbaar in de huidige timelinefilter.</p>'
+      }
+      <p class="small-print">Deze signalen corrigeren niets automatisch en geven geen oordeel over kwaliteit of uitkomst.</p>
     </section>
   `;
 }
