@@ -4,6 +4,7 @@ import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import adrBacklog from '../docs/ADR_BACKLOG.md?raw';
+import adrReviewEvidenceTemplate from '../docs/ADR_REVIEW_EVIDENCE_TEMPLATE.md?raw';
 import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import codexAutonomyAdr from '../docs/adr/0007-codex-autonoom-bouwen.md?raw';
@@ -93,6 +94,40 @@ describe('onderhoudsdocumentatie', () => {
     expect(adrBacklog).toContain('EXECUTION_GOALS.md');
     expect(adrBacklog).toContain('ADR Needed: yes');
     expect(adrBacklog).toContain('Pending ADR Topics');
+  });
+
+  it('documenteert het ADR-review evidence template schema', () => {
+    for (const requiredHeading of [
+      '# ADR Review Evidence Template',
+      '## Goal',
+      '## Existing ADRs Consulted',
+      '## Decision Outcome',
+      '## Follow-up Requirements',
+      '## Evidence Boundary',
+      '## Voorbeeld',
+    ]) {
+      expect(adrReviewEvidenceTemplate).toContain(requiredHeading);
+    }
+
+    for (const requiredField of [
+      'Goal ID:',
+      'Reviewer:',
+      'Review date:',
+      'Existing ADRs Consulted',
+      'Outcome: existing ADR sufficient | update existing ADR | create new ADR | defer goal',
+      'ADR route:',
+      'Required before implementation:',
+      'Required before merge:',
+      'Sensitive data excluded:',
+      'Network/AI/data impact checked:',
+    ]) {
+      expect(adrReviewEvidenceTemplate).toContain(requiredField);
+    }
+
+    expect(adrReviewEvidenceTemplate).toContain('Leg geen gevoelige gebruikersdata');
+    expect(adrReviewEvidenceTemplate).toContain('G344');
+    expect(adrBacklog).toContain('ADR_REVIEW_EVIDENCE_TEMPLATE.md');
+    expect(adrBacklog).toContain('goal-id, reviewer/datum');
   });
 
   it('houdt de disclaimer-grens consistent in app en kerndocumenten', () => {

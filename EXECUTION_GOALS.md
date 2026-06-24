@@ -1838,7 +1838,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ADR backlog, docs, tests
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G373 — Autonomy Guardrail Evidence Checklist
 
@@ -1880,4 +1880,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, PR template, tests
 - **ADR Needed:** no
 - **Score:** 97
+- **Status:** ☐ open
+
+### G376 — ADR Review Evidence Index
+
+- **Epic:** Continuous Evolution
+- **Problem:** ADR review evidence now has a template, but completed reviews do not yet have an index that shows which ADR-needed goals have evidence.
+- **Desired Outcome:** Add an index or checklist that maps ADR-needed goals to their evidence location, decision outcome and follow-up state.
+- **User Value:** Architecture-sensitive work remains traceable after several autonomous PRs.
+- **Acceptance Criteria:** Index lists all current `ADR Needed: yes` goals; each row has evidence location, decision outcome and follow-up status; maintenance test verifies the yes-goal set matches the index; no sensitive user data is stored.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** ADR backlog, docs, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

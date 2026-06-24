@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 275 |
+| ☑ klaar | 276 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **375** |
+| **Totaal** | **376** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -517,16 +517,17 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G369 | Dependency Evidence Generator Dry Run | P1 | F4 | ☐ |
 | G370 | Sensitive Fixture Review Evidence Snapshot | P1 | F4 | ☐ |
 | G371 | Event Log Detail Review Evidence Snapshot | P1 | F4 | ☐ |
-| G372 | ADR Review Evidence Template | P1 | F4 | ☐ |
+| G372 | ADR Review Evidence Template | P1 | F4 | ☑ |
 | G373 | Autonomy Guardrail Evidence Checklist | P1 | F4 | ☐ |
 | G374 | Backlog Active Goal Drift Fixture | P1 | F4 | ☐ |
 | G375 | Completion Audit Marker Parser CLI | P1 | F4 | ☐ |
+| G376 | ADR Review Evidence Index | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 375** (id's G001 t/m G375, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 376** (id's G001 t/m G376, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
