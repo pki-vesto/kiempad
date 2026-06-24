@@ -735,28 +735,45 @@ function expectBacklogHealthRecoveryArtifactDocsHintLabels(
   docsHints: ReadonlyArray<{ label: string; term: string }>,
 ): void {
   for (const docsHint of docsHints) {
-    const label = docsHint.label.trim();
-    const term = docsHint.term.trim();
+    const normalizedDocsHint = normalizeBacklogHealthArtifactDocsHint(docsHint);
 
-    if (docsHint.label.length === 0) {
+    if (normalizedDocsHint.rawLabel.length === 0) {
       throw new Error('Backlog-health artifact docs hint label ontbreekt.');
     }
-    if (docsHint.term.length === 0) {
+    if (normalizedDocsHint.rawTerm.length === 0) {
       throw new Error('Backlog-health artifact docs hint term ontbreekt.');
     }
-    if (label.length === 0) {
+    if (normalizedDocsHint.label.length === 0) {
       throw new Error('Backlog-health artifact docs hint label bevat alleen whitespace.');
     }
-    if (term.length === 0) {
+    if (normalizedDocsHint.term.length === 0) {
       throw new Error('Backlog-health artifact docs hint term bevat alleen whitespace.');
     }
-    if (label.length <= 8) {
-      throw new Error(`Backlog-health artifact docs hint label is te generiek: ${label}.`);
+    if (normalizedDocsHint.label.length <= 8) {
+      throw new Error(
+        `Backlog-health artifact docs hint label is te generiek: ${normalizedDocsHint.label}.`,
+      );
     }
-    if (term.length <= 8) {
-      throw new Error(`Backlog-health artifact docs hint term is te kort: ${term}.`);
+    if (normalizedDocsHint.term.length <= 8) {
+      throw new Error(
+        `Backlog-health artifact docs hint term is te kort: ${normalizedDocsHint.term}.`,
+      );
     }
   }
+}
+
+function normalizeBacklogHealthArtifactDocsHint(docsHint: { label: string; term: string }): {
+  rawLabel: string;
+  rawTerm: string;
+  label: string;
+  term: string;
+} {
+  return {
+    rawLabel: docsHint.label,
+    rawTerm: docsHint.term,
+    label: docsHint.label.trim(),
+    term: docsHint.term.trim(),
+  };
 }
 
 function extractAdrReviewEvidenceIndexGoals(): string[] {

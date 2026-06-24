@@ -2538,4 +2538,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G423 — Backlog Health JSON Contract Recovery Artifact Docs Hint Type Alias
+
+- **Epic:** Continuous Evolution
+- **Problem:** Artifact docs hint validation now has a normalization helper, but the docs hint shape is still repeated as inline `{ label: string; term: string }` object types.
+- **Desired Outcome:** Add a named type alias for artifact docs hint metadata and use it in the constants, normalization helper and assertion helper.
+- **User Value:** Maintainers get one clear contract for hint metadata when adding future recovery diagnostics.
+- **Acceptance Criteria:** Artifact docs hint constants and helpers share a named type alias; existing positive and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
