@@ -71,7 +71,9 @@ import {
   type FertilityTimelineFilter,
   type FertilityTimelineItemSoort,
   type FertilityTimelineRecordKoppeling,
+  type FertilityTimelineTrajectExport,
   filterFertilityTimeline,
+  maakFertilityTimelineTrajectExport,
 } from './domain/fertilityTimeline';
 import {
   HERHALING_LABELS,
@@ -3452,10 +3454,12 @@ function renderTrajectScreen(state: AppShellState): string {
   const selected = actieveTrajecten[0];
   const vergoeding = berekenVergoedePogingenTeller(state.trajecten);
   const overzicht = berekenTrajectOverzicht(state.trajecten);
+  const volledigeFertilityTimeline = bouwFertilityTimelineVoorState(state);
   const fertilityTimeline = filterFertilityTimeline(
-    bouwFertilityTimelineVoorState(state),
+    volledigeFertilityTimeline,
     state.timelineFilter,
   );
+  const fertilityTimelineExport = maakFertilityTimelineTrajectExport(volledigeFertilityTimeline);
   const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
 
   return `
@@ -3479,7 +3483,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
         ${renderTrajectOverzicht(overzicht)}
-        ${renderFertilityTimeline(fertilityTimeline, state.timelineFilter)}
+        ${renderFertilityTimeline(fertilityTimeline, state.timelineFilter, fertilityTimelineExport)}
         ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
         <div class="panel-heading">
           <h2>Fasen</h2>
@@ -3552,12 +3556,14 @@ const FERTILITY_TIMELINE_SOORT_LABELS: Record<FertilityTimelineItemSoort, string
 function renderFertilityTimeline(
   timeline: FertilityTimeline,
   filter: FertilityTimelineFilter = {},
+  trajectExport?: FertilityTimelineTrajectExport,
 ): string {
   return `
     <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline">
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research vanuit lokale records.</p>
       ${renderFertilityTimelineFilterForm(filter)}
+      ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
       ${renderFertilityTimelineMijlpalen(timeline)}
       ${renderFertilityTimelineContextSignalen(timeline)}
       ${
@@ -3566,6 +3572,26 @@ function renderFertilityTimeline(
           : '<p class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderFertilityTimelineTrajectExport(
+  trajectExport: FertilityTimelineTrajectExport,
+): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Timeline-export consultvoorbereiding">
+      <h3>Timeline-export consultvoorbereiding</h3>
+      <p class="small-print">Volledige ongefilterde Markdown-export voor eigen consultvoorbereiding.</p>
+      <label>
+        Bestandsnaam
+        <input readonly value="${escapeAttribute(trajectExport.bestandsNaam)}" />
+      </label>
+      <label>
+        Markdown
+        <textarea readonly rows="10">${escapeHtml(trajectExport.inhoud)}</textarea>
+      </label>
+      <small>${escapeHtml(trajectExport.waarschuwing)}</small>
     </section>
   `;
 }
