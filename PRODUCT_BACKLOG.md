@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 291 |
+| ☑ klaar | 292 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **391** |
+| **Totaal** | **392** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -536,13 +536,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G388 | Backlog Health Issue Snapshot Duplicate JSON Shape | P1 | F4 | ☑ |
 | G389 | Backlog Health Missing Issue JSON Shape | P1 | F4 | ☑ |
 | G390 | Backlog Health Closed Issue JSON Shape | P1 | F4 | ☑ |
-| G391 | Backlog Health Completed Goal Open Issue JSON Shape | P1 | F4 | ☐ |
+| G391 | Backlog Health Completed Goal Open Issue JSON Shape | P1 | F4 | ☑ |
+| G392 | Backlog Health JSON Shape Reference | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 391** (id's G001 t/m G391, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 392** (id's G001 t/m G392, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

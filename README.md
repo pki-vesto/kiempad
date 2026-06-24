@@ -112,7 +112,8 @@ Bij een dubbele goal-id in de snapshot: controleer eerst oude gesloten verzameli
 en hernoem titels die nog een `G###` patroon bevatten; exporteer geen issue bodies.
 Gebruik `--json` wanneer automation de gesanitized
 `issueSnapshot.duplicateIssues`, `issueSnapshot.missingIssueLinks` of
-`issueSnapshot.nonOpenIssueLinks` wil lezen.
+`issueSnapshot.nonOpenIssueLinks` wil lezen. Voor afgeronde doelen met nog open
+issues staat dezelfde veilige issuevorm in `issueSnapshot.completedGoalOpenIssues`.
 
 Optioneel zelf-hosten van de statische build:
 

@@ -301,6 +301,7 @@ describe('backlog health', () => {
       ],
       missingIssueLinks: [],
       nonOpenIssueLinks: [],
+      completedGoalOpenIssues: [],
     });
     expect(JSON.stringify(report)).not.toContain('niet opnemen');
   });
@@ -358,6 +359,58 @@ describe('backlog health', () => {
           number: 244,
           title: 'G244 existing issue',
           state: 'CLOSED',
+          url: 'https://github.com/pki-vesto/kiempad/issues/244',
+        },
+      },
+    ]);
+    expect(report.findings).toContainEqual(
+      expect.objectContaining({
+        type: 'status-mismatch',
+        id: 'G244',
+      }),
+    );
+    expect(JSON.stringify(report)).not.toContain('niet opnemen');
+  });
+
+  it('exposeert afgeronde doelen met open issues in JSON-compatibele reportvorm zonder bodies', () => {
+    const report = buildBacklogHealthReport({
+      backlogMarkdown: `
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G244 | Fixture G244 | P1 | F4 | ☑ |
+`,
+      executionGoalsMarkdown: `
+### G244 — Fixture G244
+
+- **Epic:** Continuous Evolution
+- **Problem:** Fixture problem.
+- **Desired Outcome:** Fixture outcome.
+- **User Value:** Fixture value.
+- **Acceptance Criteria:** Fixture criteria.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **Status:** ☑ klaar
+`,
+      issueSnapshotJson: JSON.stringify([
+        {
+          number: 244,
+          title: 'G244 still open issue',
+          state: 'OPEN',
+          url: 'https://github.com/pki-vesto/kiempad/issues/244',
+          body: 'niet opnemen',
+        },
+      ]),
+    });
+
+    expect(report.issueSnapshot?.completedGoalOpenIssues).toEqual([
+      {
+        id: 'G244',
+        title: 'Fixture G244',
+        issue: {
+          number: 244,
+          title: 'G244 still open issue',
+          state: 'OPEN',
           url: 'https://github.com/pki-vesto/kiempad/issues/244',
         },
       },
