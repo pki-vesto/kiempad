@@ -28,6 +28,10 @@ Elk doel hieronder bevat: Goal ID, Problem, Desired Outcome, User Value, Accepta
 Criteria, Priority, Complexity en Related Components. Doelen zijn atomair, testbaar,
 uitvoerbaar en meetbaar.
 
+## Goal Scoring Rubric
+
+Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2=60, P3=40. Complexiteit: S=15, M=8, L=0. Epic-modifier: Onboarding & Daily Use=10, Reliability & Operations=9, Security & DevEx=9, Continuous Evolution=8, AI & Research=7. Hoogste score wint; bij gelijke score wordt op prioriteit en daarna Goal ID gesorteerd.
+
 ## Goals
 
 ### G244 — Goal Expansion Engine
@@ -40,6 +44,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Documentation & maintenance
+- **Score:** 116
 - **Status:** ☑ klaar
 
 ### G245 — Backlog Health Dashboard
@@ -52,6 +57,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Docs, tests, GitHub Issues
+- **Score:** 116
 - **Status:** ☑ klaar
 
 ### G246 — Goal Scoring Model
@@ -64,7 +70,8 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, backlog
-- **Status:** ☐ open
+- **Score:** 103
+- **Status:** ☑ klaar
 
 ### G247 — Goal Template CLI
 
@@ -76,6 +83,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Scripts, docs
+- **Score:** 76
 - **Status:** ☐ open
 
 ### G248 — Issue Sync Script
@@ -88,6 +96,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, GitHub CLI
+- **Score:** 96
 - **Status:** ☐ open
 
 ### G249 — Roadmap Coverage Matrix
@@ -100,6 +109,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** ROADMAP, EXECUTION_GOALS
+- **Score:** 96
 - **Status:** ☐ open
 
 ### G250 — Goal Completion Audit Checklist
@@ -112,6 +122,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** S
 - **Related Components:** Docs, PR template
+- **Score:** 123
 - **Status:** ☐ open
 
 ### G251 — Architecture Decision Backlog
@@ -124,6 +135,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** ADR, docs
+- **Score:** 103
 - **Status:** ☐ open
 
 ### G252 — User Workflow Gap Review
@@ -136,6 +148,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Docs, app shell
+- **Score:** 96
 - **Status:** ☐ open
 
 ### G253 — Operational Runbook Refresh
@@ -148,6 +161,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** docs/RUNBOOK.md
+- **Score:** 83
 - **Status:** ☐ open
 
 ### G254 — Goal Aging Signals
@@ -160,6 +174,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** EXECUTION_GOALS, tests
+- **Score:** 83
 - **Status:** ☐ open
 
 ### G255 — Release Notes Generator
@@ -172,6 +187,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** CHANGELOG, scripts
+- **Score:** 76
 - **Status:** ☐ open
 
 ### G256 — Goal Dependency Mapping
@@ -184,6 +200,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** EXECUTION_GOALS
+- **Score:** 76
 - **Status:** ☐ open
 
 ### G257 — Autonomy Guardrails Doc
@@ -196,6 +213,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs
+- **Score:** 103
 - **Status:** ☐ open
 
 ### G258 — Goal Search Index
@@ -208,6 +226,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** M
 - **Related Components:** Docs, app shell or script
+- **Score:** 56
 - **Status:** ☐ open
 
 ### G259 — Backlog Statistics Test
@@ -220,6 +239,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, PRODUCT_BACKLOG
+- **Score:** 103
 - **Status:** ☐ open
 
 ### G260 — Vision Traceability Tags
@@ -232,6 +252,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** EXECUTION_GOALS, VISIE
+- **Score:** 83
 - **Status:** ☐ open
 
 ### G261 — Next Horizon Roadmap
@@ -244,6 +265,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** ROADMAP, EXECUTION_GOALS
+- **Score:** 96
 - **Status:** ☐ open
 
 ### G262 — Issue Label Taxonomy
@@ -256,6 +278,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** GitHub Issues, docs
+- **Score:** 83
 - **Status:** ☐ open
 
 ### G263 — Monthly Goal Review Ritual
@@ -268,6 +291,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Docs
+- **Score:** 63
 - **Status:** ☐ open
 
 ### G264 — First Run Guided Setup
@@ -280,6 +304,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** App shell, vault, settings
+- **Score:** 118
 - **Status:** ☐ open
 
 ### G265 — Daily Command Center
@@ -292,6 +317,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** L
 - **Related Components:** Start screen, agenda, medication, questions
+- **Score:** 110
 - **Status:** ☐ open
 
 ### G266 — Partner Handoff Mode
@@ -304,6 +330,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Settings, start screen
+- **Score:** 98
 - **Status:** ☐ open
 
 ### G267 — Consult Prep Wizard
@@ -316,6 +343,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** L
 - **Related Components:** Questions, timeline, graph, export
+- **Score:** 110
 - **Status:** ☐ open
 
 ### G268 — After Consult Capture Flow
@@ -328,6 +356,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Consult records, questions, actions
+- **Score:** 98
 - **Status:** ☐ open
 
 ### G269 — Medication Day Timeline
@@ -340,6 +369,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Medication, reminders
+- **Score:** 98
 - **Status:** ☐ open
 
 ### G270 — Question Inbox Zero
@@ -352,6 +382,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Questions
+- **Score:** 85
 - **Status:** ☐ open
 
 ### G271 — Timeline Quick Add
@@ -364,6 +395,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Timeline, quick entry
+- **Score:** 98
 - **Status:** ☐ open
 
 ### G272 — Dossier Import Checklist
@@ -376,6 +408,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, onboarding
+- **Score:** 98
 - **Status:** ☐ open
 
 ### G273 — Empty State Action Shortcuts
@@ -388,6 +421,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** App shell UX
+- **Score:** 85
 - **Status:** ☐ open
 
 ### G274 — Gentle Reminder Review
@@ -400,6 +434,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Notifications, UX copy
+- **Score:** 85
 - **Status:** ☐ open
 
 ### G275 — Weekly Review Screen
@@ -412,6 +447,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Agenda, timeline, costs, wellbeing
+- **Score:** 78
 - **Status:** ☐ open
 
 ### G276 — Stress-Light Mode
@@ -424,6 +460,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** M
 - **Related Components:** Settings, UI
+- **Score:** 58
 - **Status:** ☐ open
 
 ### G277 — Timeline Story Mode
@@ -436,6 +473,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** L
 - **Related Components:** Timeline, export
+- **Score:** 50
 - **Status:** ☐ open
 
 ### G278 — Cost Entry From Appointment
@@ -448,6 +486,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Agenda, costs
+- **Score:** 85
 - **Status:** ☐ open
 
 ### G279 — Backup Nudge Personalization
@@ -460,6 +499,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Backup, settings
+- **Score:** 85
 - **Status:** ☐ open
 
 ### G280 — Search Everywhere
@@ -472,6 +512,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Dossier, questions, knowledge, timeline
+- **Score:** 90
 - **Status:** ☐ open
 
 ### G281 — Print-Friendly Daily Brief
@@ -484,6 +525,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Start screen, export
+- **Score:** 78
 - **Status:** ☐ open
 
 ### G282 — Keyboard-First Data Entry
@@ -496,6 +538,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Forms, accessibility
+- **Score:** 78
 - **Status:** ☐ open
 
 ### G283 — Microcopy Consistency Pass
@@ -508,6 +551,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** UI copy
+- **Score:** 65
 - **Status:** ☐ open
 
 ### G284 — Service Worker Update UX
@@ -520,6 +564,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** PWA, service worker
+- **Score:** 97
 - **Status:** ☐ open
 
 ### G285 — Offline Smoke Test Script
@@ -532,6 +577,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** PWA, tests
+- **Score:** 117
 - **Status:** ☐ open
 
 ### G286 — Backup Restore Drill
@@ -544,6 +590,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Backup, tests, runbook
+- **Score:** 117
 - **Status:** ☐ open
 
 ### G287 — Tailscale Smoke Automation
@@ -556,6 +603,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Tailscale, scripts
+- **Score:** 97
 - **Status:** ☐ open
 
 ### G288 — Data Integrity Report
@@ -568,6 +616,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Storage, domain stores
+- **Score:** 89
 - **Status:** ☐ open
 
 ### G289 — Duplicate Detection
@@ -580,6 +629,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Dossier, consults, agenda
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G290 — Import Preview Before Commit
@@ -592,6 +642,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Backup, sync, dossier
+- **Score:** 89
 - **Status:** ☐ open
 
 ### G291 — Sync Conflict Explanation
@@ -604,6 +655,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Sync
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G292 — Performance Budget Test
@@ -616,6 +668,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Build, CI
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G293 — Large Dossier Rendering Guard
@@ -628,6 +681,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, timeline
+- **Score:** 97
 - **Status:** ☐ open
 
 ### G294 — IndexedDB Quota Warning
@@ -640,6 +694,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Storage, backup
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G295 — Error Boundary Screen
@@ -652,6 +707,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** App shell
+- **Score:** 97
 - **Status:** ☐ open
 
 ### G296 — Form Draft Persistence
@@ -664,6 +720,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Forms, storage
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G297 — Event Log Filters
@@ -676,6 +733,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Event log
+- **Score:** 64
 - **Status:** ☐ open
 
 ### G298 — Runbook Command Verification
@@ -688,6 +746,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** docs/RUNBOOK, tests
+- **Score:** 84
 - **Status:** ☐ open
 
 ### G299 — Import Error Taxonomy
@@ -700,6 +759,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Backup, sync, dossier
+- **Score:** 84
 - **Status:** ☐ open
 
 ### G300 — Local Diagnostics Export
@@ -712,6 +772,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Diagnostics, export
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G301 — Recovery Mode Unlock Help
@@ -724,6 +785,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Vault UX
+- **Score:** 104
 - **Status:** ☐ open
 
 ### G302 — Notification Delivery Audit
@@ -736,6 +798,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Notifications, event log
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G303 — Browser Compatibility Matrix
@@ -748,6 +811,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Docs, PWA
+- **Score:** 64
 - **Status:** ☐ open
 
 ### G304 — On-Device Summarizer Adapter
@@ -760,6 +824,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** AI, knowledge
+- **Score:** 87
 - **Status:** ☐ open
 
 ### G305 — AI Prompt Registry
@@ -772,6 +837,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** AI, docs, tests
+- **Score:** 115
 - **Status:** ☐ open
 
 ### G306 — Research Source Importer
@@ -784,6 +850,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Research, knowledge
+- **Score:** 87
 - **Status:** ☐ open
 
 ### G307 — Research Reading Queue
@@ -796,6 +863,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Knowledge
+- **Score:** 75
 - **Status:** ☐ open
 
 ### G308 — Research-to-Question Suggestions
@@ -808,6 +876,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Research, questions
+- **Score:** 95
 - **Status:** ☐ open
 
 ### G309 — Evidence Strength Labels
@@ -820,6 +889,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Research
+- **Score:** 87
 - **Status:** ☐ open
 
 ### G310 — Research Update Reminder
@@ -832,6 +902,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Research, reminders
+- **Score:** 82
 - **Status:** ☐ open
 
 ### G311 — Local Citation Formatter
@@ -844,6 +915,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Research export
+- **Score:** 82
 - **Status:** ☐ open
 
 ### G312 — AI Output Diff Review
@@ -856,6 +928,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** AI summaries, knowledge
+- **Score:** 95
 - **Status:** ☐ open
 
 ### G313 — Sensitive Text Redaction Preview
@@ -868,6 +941,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** AI payloads
+- **Score:** 115
 - **Status:** ☐ open
 
 ### G314 — Cloud AI Cost Warning
@@ -880,6 +954,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** AI settings
+- **Score:** 82
 - **Status:** ☐ open
 
 ### G315 — AI Provider Health Check
@@ -892,6 +967,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** M
 - **Related Components:** AI settings
+- **Score:** 55
 - **Status:** ☐ open
 
 ### G316 — Research Topic Map
@@ -904,6 +980,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Knowledge graph, research
+- **Score:** 75
 - **Status:** ☐ open
 
 ### G317 — Question Safety Classifier
@@ -916,6 +993,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Questions, AI policy
+- **Score:** 95
 - **Status:** ☐ open
 
 ### G318 — Local Research Full Text Index
@@ -928,6 +1006,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** L
 - **Related Components:** Knowledge, storage
+- **Score:** 67
 - **Status:** ☐ open
 
 ### G319 — Research Export Packet
@@ -940,6 +1019,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Research, export
+- **Score:** 75
 - **Status:** ☐ open
 
 ### G320 — Prompt Regression Suite
@@ -952,6 +1032,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** AI tests
+- **Score:** 115
 - **Status:** ☐ open
 
 ### G321 — On-Device Capability Explainer
@@ -964,6 +1045,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** AI UI
+- **Score:** 62
 - **Status:** ☐ open
 
 ### G322 — Research Network Audit Log
@@ -976,6 +1058,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Research opt-in, event log
+- **Score:** 95
 - **Status:** ☐ open
 
 ### G323 — AI Data Retention Controls
@@ -988,6 +1071,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** AI settings, knowledge
+- **Score:** 95
 - **Status:** ☐ open
 
 ### G324 — Content Security Policy
@@ -1000,6 +1084,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Build, index.html
+- **Score:** 117
 - **Status:** ☐ open
 
 ### G325 — Dependency Review Cadence
@@ -1012,6 +1097,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, package
+- **Score:** 104
 - **Status:** ☐ open
 
 ### G326 — Secrets Scan Test
@@ -1024,6 +1110,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Tests, repo
+- **Score:** 117
 - **Status:** ☐ open
 
 ### G327 — Sensitive Fixture Policy
@@ -1036,6 +1123,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Tests, docs
+- **Score:** 104
 - **Status:** ☐ open
 
 ### G328 — Storage Schema Migration Harness
@@ -1048,6 +1136,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** Storage, tests
+- **Score:** 89
 - **Status:** ☐ open
 
 ### G329 — Domain Boundary Lint
@@ -1060,6 +1149,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Architecture, tests
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G330 — Accessibility Regression Smoke
@@ -1072,6 +1162,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** L
 - **Related Components:** UI tests
+- **Score:** 89
 - **Status:** ☐ open
 
 ### G331 — Mobile Viewport Screenshot Gate
@@ -1084,6 +1175,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** UI tests
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G332 — Markdown Export Sanitizer
@@ -1096,6 +1188,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Exports
+- **Score:** 97
 - **Status:** ☐ open
 
 ### G333 — Audit Event Retention Policy
@@ -1108,6 +1201,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Event log, docs
+- **Score:** 84
 - **Status:** ☐ open
 
 ### G334 — Form Validation Library Cleanup
@@ -1120,6 +1214,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** L
 - **Related Components:** Forms
+- **Score:** 69
 - **Status:** ☐ open
 
 ### G335 — Typed Route Registry
@@ -1132,6 +1227,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** App shell
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G336 — Store Factory Refactor
@@ -1144,6 +1240,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** L
 - **Related Components:** main.ts, stores
+- **Score:** 49
 - **Status:** ☐ open
 
 ### G337 — Event Log Privacy Test
@@ -1156,6 +1253,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Event log tests
+- **Score:** 104
 - **Status:** ☐ open
 
 ### G338 — Tailscale Deploy Drift Check
@@ -1168,6 +1266,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** Tailscale docs, scripts
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G339 — Public Repo Privacy Review
@@ -1180,6 +1279,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Docs, tests
+- **Score:** 104
 - **Status:** ☐ open
 
 ### G340 — Build Provenance Notes
@@ -1192,6 +1292,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P3
 - **Complexity:** S
 - **Related Components:** Docs, CI
+- **Score:** 64
 - **Status:** ☐ open
 
 ### G341 — CSS Token Audit
@@ -1204,6 +1305,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** S
 - **Related Components:** Styles
+- **Score:** 84
 - **Status:** ☐ open
 
 ### G342 — No External Asset Test
@@ -1216,6 +1318,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P0
 - **Complexity:** S
 - **Related Components:** PWA, tests
+- **Score:** 124
 - **Status:** ☐ open
 
 ### G343 — Type Coverage Ratchet
@@ -1228,6 +1331,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P2
 - **Complexity:** M
 - **Related Components:** TypeScript
+- **Score:** 77
 - **Status:** ☐ open
 
 ### G344 — Future Sync Relay Threat Model
@@ -1240,6 +1344,7 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Architecture, security docs
+- **Score:** 97
 - **Status:** ☐ open
 
 ### G345 — Backlog Health Issue Snapshot Automation
@@ -1252,4 +1357,18 @@ uitvoerbaar en meetbaar.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Scripts, GitHub Issues, docs
+- **Score:** 96
+- **Status:** ☐ open
+
+### G346 — Goal Score Issue Annotation
+
+- **Epic:** Continuous Evolution
+- **Problem:** Goal scores are visible locally but not yet reflected in GitHub issue triage.
+- **Desired Outcome:** Add a workflow or helper that annotates issue bodies or labels with the current local score output.
+- **User Value:** Remote issue triage can follow the same reproducible priority model as the local catalog.
+- **Acceptance Criteria:** Helper reads `npm run goals:score -- --json`; updates only matching goal issues after explicit command; dry-run is supported; no secrets are stored.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Scripts, GitHub Issues, docs
+- **Score:** 96
 - **Status:** ☐ open

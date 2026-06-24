@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G246 Continuous Evolution: reproduceerbaar goal scoring model met rubric,
+  scorevelden en `npm run goals:score`.
 - G245 Continuous Evolution: lokaal backlog-health rapport vergelijkt backlog,
   execution catalogus en optionele issue-snapshot zonder netwerk.
 - G244 Continuous Evolution: tweede-generatie execution goal catalogus met 100 actieve doelen, 5 epics, F5-horizon en rijk doelenschema.

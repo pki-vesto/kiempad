@@ -28,10 +28,10 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 245 |
+| ☑ klaar | 246 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
-| **Totaal** | **345** |
+| **Totaal** | **346** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -391,7 +391,7 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 |---|---|---|---|---|
 | G244 | Goal Expansion Engine | P0 | F4 | ☑ |
 | G245 | Backlog Health Dashboard | P0 | F4 | ☑ |
-| G246 | Goal Scoring Model | P1 | F4 | ☐ |
+| G246 | Goal Scoring Model | P1 | F4 | ☑ |
 | G247 | Goal Template CLI | P2 | F4 | ☐ |
 | G248 | Issue Sync Script | P1 | F4 | ☐ |
 | G249 | Roadmap Coverage Matrix | P1 | F4 | ☐ |
@@ -491,12 +491,13 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G343 | Type Coverage Ratchet | P2 | F4 | ☐ |
 | G344 | Future Sync Relay Threat Model | P1 | F4 | ☐ |
 | G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☐ |
+| G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 345** (id's G001 t/m G345, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 346** (id's G001 t/m G346, doorlopend genummerd) — ruim boven het
   minimum van 100.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
