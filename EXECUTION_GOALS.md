@@ -2118,4 +2118,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests, scripts
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G393 — Backlog Health JSON Example Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The JSON shape reference lists stable fields, but there is no compact example fixture that shows the report shape for automation consumers.
+- **Desired Outcome:** Add a small sanitized example JSON snippet or fixture for backlog-health issue snapshot drift.
+- **User Value:** Maintainers can copy and validate automation against a representative report without running GitHub commands.
+- **Acceptance Criteria:** Docs or tests include a sanitized example containing duplicate, missing, non-open and completed/open issue groups; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
