@@ -2972,4 +2972,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G454 — Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Fixture Comment Alignment
+
+- **Epic:** Continuous Evolution
+- **Problem:** The static alias fixture now has comments near both the fixture declaration and the assertion cluster, but their wording may drift from each other.
+- **Desired Outcome:** Review whether the fixture-level and test-level comments use aligned language for the alias contract.
+- **User Value:** Maintainers get one consistent explanation for why the static alias fixture exists and how it is validated.
+- **Acceptance Criteria:** Static alias fixture comments are reviewed and, if useful, aligned without adding noise; the alias fixture still satisfies the representative static reason contract; existing maintenance-docs and backlog-health tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
