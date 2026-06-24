@@ -862,8 +862,10 @@ function renderDossierScreen(state: AppShellState): string {
     .join('');
 
   return `
-    <section class="traject-layout" aria-label="Dossier beheren">
-      <div class="form-panel">
+    <section class="section-stack" aria-label="Dossier beheren">
+      <details class="kp-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''}>
+        <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
+        <div class="kp-disclosure__body">
         <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form">
           <label>
@@ -1059,8 +1061,8 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit">Bewaar embryokwaliteit</button>
         </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
-      </div>
-      <div class="timeline-panel">
+        </div>
+      </details>
         <h2>Dossier zoeken</h2>
         <form id="dossier-search-form" class="data-form">
           <label>
@@ -1113,7 +1115,6 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${behandelGeschiedenis.map(renderBehandelGeschiedenisItem).join('')}</ol>`
             : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
         }
-      </div>
     </section>
   `;
 }
