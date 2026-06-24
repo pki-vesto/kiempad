@@ -98,7 +98,8 @@ Bewaar deze snapshot niet in de repo; hij bevat alleen issue-nummer, titel, stat
 URL. Maak hem direct voor validatie, controleer de timestamp bij twijfel en ruim
 `/tmp/kiempad-issues.json` na lokale validatie direct op. Als de snapshot precies
 200 issues bevat, raakt hij de standaardlimiet; verhoog dan de `--limit` voordat je
-op de issue-driftcheck vertrouwt.
+op de issue-driftcheck vertrouwt en geef dezelfde waarde mee aan backlog-health,
+bijvoorbeeld `npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500`.
 
 Optioneel zelf-hosten van de statische build:
 

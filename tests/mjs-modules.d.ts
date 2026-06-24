@@ -3,6 +3,7 @@ declare module '*.mjs' {
   export const ISSUE_SNAPSHOT_COMMAND: string;
   export const ISSUE_SNAPSHOT_FRESHNESS_COMMAND: string;
   export const ISSUE_SNAPSHOT_LIMIT: number;
+  export function buildIssueSnapshotCommand(limit?: number): string;
   export function parseBacklog(markdown: string): {
     goals: Array<Record<string, unknown>>;
     byId: Map<string, Record<string, unknown>>;
@@ -29,6 +30,7 @@ declare module '*.mjs' {
     executionGoalsMarkdown: string;
     issueSnapshotJson?: string;
     activeGoalMinimum?: number;
+    issueSnapshotLimit?: number;
   }): {
     summary: Record<string, unknown>;
     findings: Array<Record<string, unknown>>;

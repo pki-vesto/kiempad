@@ -44,7 +44,8 @@ Voordat je merget:
   `npm run backlog:health -- --issues-json /tmp/kiempad-issues.json`. Ruim daarna
   op met `rm -f /tmp/kiempad-issues.json`. Commit deze snapshot niet en exporteer
   geen issue bodies. Raakt de snapshot precies 200 issues, verhoog dan de
-  `--limit` voordat je de driftcheck als volledig beschouwt.
+  `--limit` en geef dezelfde waarde mee met `--issue-snapshot-limit` voordat je de
+  driftcheck als volledig beschouwt.
 - `npm run build` — groen.
 - `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
   expliciet allowlisted.

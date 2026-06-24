@@ -2006,4 +2006,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G385 — Backlog Health Issue Snapshot Limit Example
+
+- **Epic:** Continuous Evolution
+- **Problem:** The configurable issue snapshot limit is available, but maintainers may still miss a concrete higher-limit example for large repositories.
+- **Desired Outcome:** Add a clear example workflow that uses a higher issue snapshot limit consistently in export and backlog-health validation.
+- **User Value:** Maintainers can copy a safe command sequence when the default 200 issue limit is insufficient.
+- **Acceptance Criteria:** Docs or output includes a higher-limit example; tests cover the example text or command guidance; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, scripts, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
