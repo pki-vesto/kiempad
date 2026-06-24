@@ -300,6 +300,7 @@ describe('backlog health', () => {
         },
       ],
       missingIssueLinks: [],
+      nonOpenIssueLinks: [],
     });
     expect(JSON.stringify(report)).not.toContain('niet opnemen');
   });
@@ -329,6 +330,42 @@ describe('backlog health', () => {
       expect.objectContaining({
         type: 'missing-issue-link',
         id: 'G245',
+      }),
+    );
+    expect(JSON.stringify(report)).not.toContain('niet opnemen');
+  });
+
+  it('exposeert niet-open issues in JSON-compatibele reportvorm zonder bodies', () => {
+    const report = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244']),
+      issueSnapshotJson: JSON.stringify([
+        {
+          number: 244,
+          title: 'G244 existing issue',
+          state: 'CLOSED',
+          url: 'https://github.com/pki-vesto/kiempad/issues/244',
+          body: 'niet opnemen',
+        },
+      ]),
+    });
+
+    expect(report.issueSnapshot?.nonOpenIssueLinks).toEqual([
+      {
+        id: 'G244',
+        title: 'Fixture G244',
+        issue: {
+          number: 244,
+          title: 'G244 existing issue',
+          state: 'CLOSED',
+          url: 'https://github.com/pki-vesto/kiempad/issues/244',
+        },
+      },
+    ]);
+    expect(report.findings).toContainEqual(
+      expect.objectContaining({
+        type: 'status-mismatch',
+        id: 'G244',
       }),
     );
     expect(JSON.stringify(report)).not.toContain('niet opnemen');

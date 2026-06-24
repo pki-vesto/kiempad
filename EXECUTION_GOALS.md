@@ -2090,4 +2090,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G391 — Backlog Health Completed Goal Open Issue JSON Shape
+
+- **Epic:** Continuous Evolution
+- **Problem:** JSON automation can inspect open backlog goals with closed issues, but completed backlog goals with still-open issues are only represented as generic findings.
+- **Desired Outcome:** Add or document a stable JSON shape for completed backlog goals whose linked GitHub Issue is still open.
+- **User Value:** Maintainers can automate issue closure checks without scraping markdown.
+- **Acceptance Criteria:** JSON-mode report exposes sanitized completed-goal/open-issue mismatch data; tests cover the field; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

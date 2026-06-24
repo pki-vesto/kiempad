@@ -39,6 +39,11 @@ declare module '*.mjs' {
     issueSnapshot?: {
       duplicateIssues: Array<{ id: string; issues: Array<Record<string, unknown>> }>;
       missingIssueLinks: Array<{ id: string; title: string }>;
+      nonOpenIssueLinks: Array<{
+        id: string;
+        title: string;
+        issue: Record<string, unknown>;
+      }>;
     };
     findings: Array<Record<string, unknown>>;
   };
