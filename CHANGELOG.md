@@ -7,6 +7,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel (Vragen, Herinneringen, Back-up): deze schermen zijn
+  enkelkoloms mobiel-first gemaakt. Vragen leidt nu met de openstaande vragen,
+  consult-prep en lijsten, met het vraagformulier achter een uitklap;
+  Herinneringen en Back-up zijn van twee kolommen naar één kolom gebracht. Alle
+  bindingen blijven gelijk (`export-consult-pdf`, `delete-vraag`,
+  `notification-privacy-form`, `warning-default-form`, `import-backup-form`,
+  `import-sync-form`, `export-backup`, `export-sync`).
 - G148 UI-herstel (Afwegingen, Kosten, Logboek, Welzijn): deze schermen zijn van
   een twee-koloms indeling omgebouwd naar mobiel-first enkelkolomsstroom; ze
   leiden nu met de inhoud (lijsten/overzichten) en hebben de invoerformulieren

@@ -763,8 +763,7 @@ function renderBackupScreen(state: AppShellState): string {
   const reminder = bepaalBackupReminder(state.settings.laatsteBackupOp);
 
   return `
-    <section class="traject-layout" aria-label="Back-up en import">
-      <div class="form-panel">
+    <section class="section-stack" aria-label="Back-up en import">
         <h2>Versleutelde export</h2>
         <button id="export-backup" class="phase-button" type="button">Download back-up</button>
         <p class="small-print">Het bestand bevat versleutelde records en kluismetadata; geen ontsleutelde gezondheidsdata.</p>
@@ -777,8 +776,6 @@ function renderBackupScreen(state: AppShellState): string {
           ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
         </section>
         ${renderWebAuthnSettings(state.webAuthnStatus)}
-      </div>
-      <div class="timeline-panel">
         <h2>Import</h2>
         <form id="import-backup-form" class="data-form">
           <label>
@@ -797,7 +794,6 @@ function renderBackupScreen(state: AppShellState): string {
         </form>
         ${state.backupStatus ? `<p class="linked-note">${escapeHtml(state.backupStatus)}</p>` : ''}
         ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
-      </div>
     </section>
   `;
 }
@@ -2873,45 +2869,37 @@ function renderVragenScreen(state: AppShellState): string {
     new Date().toISOString().slice(0, 16),
   );
 
-  return `
-    <section class="traject-layout" aria-label="Vragen voor de arts beheren">
-      <div class="form-panel">
-        <h2>${selected ? 'Vraag bewerken' : 'Vraag toevoegen'}</h2>
-        ${renderVraagForm(selected, state.afspraken)}
-      </div>
-      <div class="timeline-panel">
-        <div class="panel-heading">
-          <h2>Openstaand</h2>
-          <button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>
-          ${
-            selected
-              ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}" aria-label="Verwijder vraag: ${escapeAttribute(selected.vraag.vraag)}">Verwijder vraag</button>`
-              : ''
-          }
-        </div>
-        ${
-          nextWithQuestions
-            ? renderOpenVragenVoorAfspraak(nextWithQuestions)
-            : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
-        }
-        ${renderConsultPrepWizard(gegenereerdeVragenlijst)}
-        <h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>
-        ${
-          gegenereerdeVragenlijst
-            ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
-            : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>'
-        }
-        <h2 class="section-subheading">Alle vragen</h2>
-        ${state.vragen.length > 0 ? renderVragenList(state.vragen) : '<p class="empty-state">Nog geen vragen. Voeg links een vraag toe voor het volgende contactmoment.</p>'}
-        <h2 class="section-subheading">Verslag per afspraak</h2>
-        ${
-          vraagVerslagen.length > 0
-            ? renderVraagVerslagen(vraagVerslagen)
-            : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>'
-        }
-      </div>
-    </section>
-  `;
+  const deleteVraagButton = selected
+    ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}" aria-label="Verwijder vraag: ${escapeAttribute(selected.vraag.vraag)}">Verwijder vraag</button>`
+    : '';
+
+  return sectionStack(
+    [
+      `<div class="panel-heading"><h2>Openstaand</h2><button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>${deleteVraagButton}</div>`,
+      nextWithQuestions
+        ? renderOpenVragenVoorAfspraak(nextWithQuestions)
+        : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>',
+      renderConsultPrepWizard(gegenereerdeVragenlijst),
+      '<h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>',
+      gegenereerdeVragenlijst
+        ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
+        : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>',
+      '<h2 class="section-subheading">Alle vragen</h2>',
+      state.vragen.length > 0
+        ? renderVragenList(state.vragen)
+        : '<p class="empty-state">Nog geen vragen. Voeg hieronder een vraag toe voor het volgende contactmoment.</p>',
+      '<h2 class="section-subheading">Verslag per afspraak</h2>',
+      vraagVerslagen.length > 0
+        ? renderVraagVerslagen(vraagVerslagen)
+        : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>',
+      disclosure({
+        summary: selected ? 'Vraag bewerken' : 'Vraag toevoegen',
+        open: !selected,
+        body: renderVraagForm(selected, state.afspraken),
+      }),
+    ],
+    { ariaLabel: 'Vragen voor de arts beheren' },
+  );
 }
 
 function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefined): string {
@@ -3122,8 +3110,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
   const fallback = state.inAppFallbackNotifications ?? [];
 
   return `
-    <section class="traject-layout" aria-label="Herinneringen beheren">
-      <div class="form-panel">
+    <section class="section-stack" aria-label="Herinneringen beheren">
         <h2>Notificaties</h2>
         <div class="notification-status">
           <p><strong>Toestemming:</strong> ${renderPermissionLabel(state.notificaties.permission)}</p>
@@ -3160,8 +3147,6 @@ function renderHerinneringenScreen(state: AppShellState): string {
         </form>
         <h2 class="section-subheading">Eigen herinnering</h2>
         ${renderEigenHerinneringForm()}
-      </div>
-      <div class="timeline-panel">
         <div class="panel-heading">
           <h2>Komende herinneringen</h2>
         </div>
@@ -3171,7 +3156,6 @@ function renderHerinneringenScreen(state: AppShellState): string {
             ? renderHerinneringenList(komende)
             : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
         }
-      </div>
     </section>
   `;
 }
