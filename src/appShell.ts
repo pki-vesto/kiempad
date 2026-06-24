@@ -3318,42 +3318,45 @@ function renderAgendaScreen(state: AppShellState): string {
     .filter((bundle) => pastOrder.has(bundle.afspraak.id))
     .sort((a, b) => (pastOrder.get(a.afspraak.id) ?? 0) - (pastOrder.get(b.afspraak.id) ?? 0));
 
-  return `
-    <section class="traject-layout" aria-label="Agenda beheren">
-      <div class="form-panel">
-        <h2>${selected ? 'Afspraak bewerken' : 'Afspraak aanmaken'}</h2>
-        ${renderAfspraakForm(selected, state.trajecten, state.settings)}
-        <h2 class="section-subheading">ICS importeren</h2>
-        ${renderAgendaImportForm(state)}
-      </div>
-      <div class="timeline-panel">
-        <div class="panel-heading">
-          <h2>Komende afspraken</h2>
-          ${state.afspraken.length > 0 ? '<button class="phase-button" id="export-ics" type="button">Download ICS</button>' : ''}
-          ${
-            selected
-              ? `<button class="danger-button" id="delete-afspraak" type="button" data-afspraak-id="${selected.afspraak.id}" aria-label="Verwijder afspraak: ${escapeAttribute(selected.afspraak.titel)}">Verwijder afspraak</button>`
-              : ''
-          }
-        </div>
-        ${
-          state.afspraken.length > 0
-            ? `<div class="agenda-overview">
-                ${renderAgendaGroups('Weekweergave', afsprakenPerWeek(state.afspraken.map((bundle) => bundle.afspraak)))}
-                ${renderAgendaGroups('Maandweergave', afsprakenPerMaand(state.afspraken.map((bundle) => bundle.afspraak)))}
-              </div>`
-            : ''
-        }
-        ${upcoming.length > 0 ? renderAgendaList(upcoming, state.trajecten) : '<p class="empty-state">Geen komende afspraken. Maak links een nieuwe afspraak aan.</p>'}
-        <h2 class="section-subheading">Afgelopen</h2>
-        ${
-          past.length > 0
-            ? renderAfgelopenAgendaList(past, state.trajecten)
-            : '<p class="empty-state">Nog geen afgelopen afspraken.</p>'
-        }
-      </div>
-    </section>
-  `;
+  const exportIcsButton =
+    state.afspraken.length > 0
+      ? '<button class="phase-button" id="export-ics" type="button">Download ICS</button>'
+      : '';
+  const deleteAfspraakButton = selected
+    ? `<button class="danger-button" id="delete-afspraak" type="button" data-afspraak-id="${selected.afspraak.id}" aria-label="Verwijder afspraak: ${escapeAttribute(selected.afspraak.titel)}">Verwijder afspraak</button>`
+    : '';
+  const agendaOverview =
+    state.afspraken.length > 0
+      ? `<div class="agenda-overview">
+          ${renderAgendaGroups('Weekweergave', afsprakenPerWeek(state.afspraken.map((bundle) => bundle.afspraak)))}
+          ${renderAgendaGroups('Maandweergave', afsprakenPerMaand(state.afspraken.map((bundle) => bundle.afspraak)))}
+        </div>`
+      : '';
+
+  return sectionStack(
+    [
+      `<div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>`,
+      agendaOverview,
+      upcoming.length > 0
+        ? renderAgendaList(upcoming, state.trajecten)
+        : '<p class="empty-state">Geen komende afspraken. Maak hieronder een nieuwe afspraak aan.</p>',
+      '<h2 class="section-subheading">Afgelopen</h2>',
+      past.length > 0
+        ? renderAfgelopenAgendaList(past, state.trajecten)
+        : '<p class="empty-state">Nog geen afgelopen afspraken.</p>',
+      disclosure({
+        summary: selected ? 'Afspraak bewerken' : 'Afspraak aanmaken',
+        open: !selected,
+        body: renderAfspraakForm(selected, state.trajecten, state.settings),
+      }),
+      disclosure({
+        summary: 'ICS importeren',
+        open: Boolean(state.agendaImportStatus || state.agendaImportError),
+        body: renderAgendaImportForm(state),
+      }),
+    ],
+    { ariaLabel: 'Agenda beheren' },
+  );
 }
 
 function renderAgendaImportForm(state: AppShellState): string {
