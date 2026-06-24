@@ -2664,4 +2664,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G432 — Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Reason Helper
+
+- **Epic:** Continuous Evolution
+- **Problem:** Dynamic artifact docs hint reasons now have direct fixture coverage, but dynamic reason strings for invalid label and term values are still assembled inline inside validation branches.
+- **Desired Outcome:** Extract small helper functions for dynamic label and term artifact docs hint error reasons.
+- **User Value:** Maintainers can evolve generated diagnostic text without duplicating interpolation patterns.
+- **Acceptance Criteria:** Validation branches use shared helpers for dynamic label and term reasons; existing builder, constants and negative fixtures remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
