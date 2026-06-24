@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G239 PFIP fertility timeline: ieder tijdlijnitem heeft een detailpaneel met bron,
+  feitelijke context, record-ID en gekoppelde lokale records.
 - G238 PFIP fertility timeline: trajectscherm heeft filters voor type, periode,
   traject, eigenaar en bron; runtime bewaart het filter lokaal in de sessie.
 - G237 PFIP fertility timeline: tijdlijn normaliseert nu ook vragen,

@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 238 |
+| ☑ klaar | 239 |
 | ◐ bezig | 0 |
-| ☐ open | 5 |
+| ☐ open | 4 |
 | **Totaal** | **243** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -377,7 +377,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 | G236 | PFIP fertility timeline: centraal fertiliteitstraject-scherm met onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research | P0 | F3 | ☑ |
 | G237 | PFIP fertility timeline: tijdlijnitems normaliseren uit bestaande afspraken, dossierdocumenten, embryo's, vragen en medicatie | P0 | F3 | ☑ |
 | G238 | PFIP fertility timeline: filters voor type, traject, eigenaar, bron en periode | P1 | F3 | ☑ |
-| G239 | PFIP fertility timeline: detailpaneel per tijdlijnitem met bron, context en gekoppelde records | P1 | F3 | ☐ |
+| G239 | PFIP fertility timeline: detailpaneel per tijdlijnitem met bron, context en gekoppelde records | P1 | F3 | ☑ |
 | G240 | PFIP fertility timeline: belangrijke mijlpalen en ontbrekende context zichtbaar maken zonder oordeel | P1 | F3 | ☐ |
 | G241 | PFIP fertility timeline: complete trajectexport voor eigen consultvoorbereiding | P2 | F3 | ☐ |
 | G242 | PFIP fertility timeline: tijdlijn blijft bruikbaar offline en na import van back-up/syncpakket | P0 | F3 | ☐ |

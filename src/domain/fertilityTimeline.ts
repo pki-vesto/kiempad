@@ -24,10 +24,27 @@ export type FertilityTimelineItem = {
   titel: string;
   label: string;
   detail: string;
+  context: string;
   bron: string;
+  gekoppeldeRecords: FertilityTimelineRecordKoppeling[];
   eigenaar?: DailyRecommendationOwner;
   trajectId?: string;
   recordId: string;
+};
+
+export type FertilityTimelineRecordKoppeling = {
+  soort:
+    | 'traject'
+    | 'afspraak'
+    | 'dossier'
+    | 'consult'
+    | 'vraag'
+    | 'medicatie'
+    | 'doseLog'
+    | 'kennis'
+    | 'aanbeveling';
+  id: string;
+  label: string;
 };
 
 export type FertilityTimeline = {
@@ -66,7 +83,11 @@ export function bouwFertilityTimeline(input: {
       titel: bundle.traject.naam,
       label: `Behandeling · ${bundle.traject.type.toUpperCase()}`,
       detail: `Status: ${bundle.traject.status}. Poging ${bundle.traject.pogingNummer}.`,
+      context: `Poging ${bundle.traject.pogingNummer} · ${bundle.traject.type.toUpperCase()} · status ${bundle.traject.status}.`,
       bron: 'Traject',
+      gekoppeldeRecords: [
+        maakKoppeling('traject', bundle.traject.id, `Traject: ${bundle.traject.naam}`),
+      ],
       trajectId: bundle.traject.id,
       recordId: bundle.traject.id,
     }),
@@ -80,7 +101,14 @@ export function bouwFertilityTimeline(input: {
       titel: afspraak.titel,
       label: AFSPRAAK_TYPE_LABELS[afspraak.type],
       detail: afspraak.voorbereiding ?? afspraak.notitie ?? 'Afspraak vastgelegd.',
+      context: afspraak.locatie
+        ? `Afspraaktype ${AFSPRAAK_TYPE_LABELS[afspraak.type]} · locatie ${afspraak.locatie}.`
+        : `Afspraaktype ${AFSPRAAK_TYPE_LABELS[afspraak.type]}.`,
       bron: 'Agenda',
+      gekoppeldeRecords: [
+        maakKoppeling('afspraak', afspraak.id, `Afspraak: ${afspraak.titel}`),
+        ...maakTrajectKoppeling(afspraak.trajectId),
+      ],
       trajectId: afspraak.trajectId,
       recordId: afspraak.id,
     }),
@@ -94,7 +122,13 @@ export function bouwFertilityTimeline(input: {
       titel: document.titel,
       label: document.metadata.documenttype ?? DOSSIER_CATEGORIE_LABELS[document.categorie],
       detail: document.analyse.samenvatting,
+      context: beschrijfDocumentContext(document),
       bron: document.metadata.bronbestand ?? document.bestandsNaam,
+      gekoppeldeRecords: [
+        maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
+        ...maakTrajectKoppeling(document.metadata.trajectId ?? document.trajectId),
+        ...maakAfspraakKoppeling(document.afspraakId),
+      ],
       trajectId: document.metadata.trajectId ?? document.trajectId,
       recordId: document.id,
     }),
@@ -117,7 +151,15 @@ export function bouwFertilityTimeline(input: {
         detail: document.embryo?.kwaliteit
           ? `Kwaliteit geregistreerd: ${document.embryo.kwaliteit}.`
           : 'Embryo gekoppeld aan dossierrecord.',
+        context: beschrijfEmbryoContext(document),
         bron: document.embryo?.bron ?? document.beeldMetadata?.bron ?? document.bestandsNaam,
+        gekoppeldeRecords: [
+          maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
+          ...maakTrajectKoppeling(
+            document.metadata.trajectId ?? document.trajectId ?? document.beeldMetadata?.trajectId,
+          ),
+          ...maakAfspraakKoppeling(document.afspraakId ?? document.beeldMetadata?.afspraakId),
+        ],
         trajectId:
           document.metadata.trajectId ?? document.trajectId ?? document.beeldMetadata?.trajectId,
         recordId: document.id,
@@ -137,7 +179,12 @@ export function bouwFertilityTimeline(input: {
         verslag.tekst ??
         verslag.notitie ??
         'Consultverslag vastgelegd.',
+      context: `Consultbron ${verslag.bron}${verslag.actiepunten?.length ? ` · ${verslag.actiepunten.length} actiepunt(en)` : ''}.`,
       bron: verslag.bestandsNaam ? `Consultupload: ${verslag.bestandsNaam}` : 'Consulttekst',
+      gekoppeldeRecords: [
+        maakKoppeling('consult', verslag.id, `Consultverslag: ${verslag.titel}`),
+        ...maakTrajectKoppeling(verslag.trajectId),
+      ],
       trajectId: verslag.trajectId,
       recordId: verslag.id,
     }),
@@ -153,7 +200,15 @@ export function bouwFertilityTimeline(input: {
       detail: bundle.vraag.beantwoord
         ? `Antwoord: ${bundle.vraag.antwoord ?? 'zonder tekst'}`
         : 'Nog open voor consultvoorbereiding.',
+      context: bundle.afspraak
+        ? `Vraag gekoppeld aan afspraak ${bundle.afspraak.titel}.`
+        : 'Vraag zonder afspraakkoppeling.',
       bron: bundle.afspraak ? `Vragenlijst bij ${bundle.afspraak.titel}` : 'Vragenlijst',
+      gekoppeldeRecords: [
+        maakKoppeling('vraag', bundle.vraag.id, 'Vraag voor consult'),
+        ...maakAfspraakKoppeling(bundle.afspraak?.id),
+        ...maakTrajectKoppeling(bundle.afspraak?.trajectId),
+      ],
       trajectId: bundle.afspraak?.trajectId,
       recordId: bundle.vraag.id,
     }),
@@ -170,7 +225,11 @@ export function bouwFertilityTimeline(input: {
       detail: bundle.medicatie.actief
         ? 'Medicatie actief vastgelegd.'
         : 'Medicatie niet actief vastgelegd.',
+      context: `Medicatieregistratie · vorm ${MEDICATIE_VORM_LABELS[bundle.medicatie.vorm]}.`,
       bron: 'Medicatie',
+      gekoppeldeRecords: [
+        maakKoppeling('medicatie', bundle.medicatie.id, `Medicatie: ${bundle.medicatie.naam}`),
+      ],
       recordId: bundle.medicatie.id,
     };
     const doseLogItems = bundle.doseLogs.map(
@@ -181,7 +240,12 @@ export function bouwFertilityTimeline(input: {
         titel: bundle.medicatie.naam,
         label: `Medicatiemoment · ${doseLog.status}`,
         detail: doseLog.notitie ?? 'Gepland medicatiemoment uit lokaal schema.',
+        context: `Medicatiemoment voor ${bundle.medicatie.naam} · status ${doseLog.status}.`,
         bron: 'Medicatieplanning',
+        gekoppeldeRecords: [
+          maakKoppeling('doseLog', doseLog.id, `Medicatiemoment: ${bundle.medicatie.naam}`),
+          maakKoppeling('medicatie', bundle.medicatie.id, `Medicatie: ${bundle.medicatie.naam}`),
+        ],
         recordId: doseLog.id,
       }),
     );
@@ -202,7 +266,11 @@ export function bouwFertilityTimeline(input: {
           item.researchPublicatie?.eenvoudigeSamenvatting ??
           item.researchPublicatie?.wetenschappelijkeSamenvatting ??
           item.inhoud,
+        context: item.researchPublicatie?.relevantieVoorGebruiker
+          ? `Relevantie: ${item.researchPublicatie.relevantieVoorGebruiker}`
+          : 'Researchnotitie uit de lokale kennisbank.',
         bron: item.researchPublicatie?.bron ?? item.bron ?? 'Kennisbank',
+        gekoppeldeRecords: [maakKoppeling('kennis', item.id, `Kennisitem: ${item.titel}`)],
         recordId: item.id,
       }),
     );
@@ -217,7 +285,9 @@ export function bouwFertilityTimeline(input: {
         titel: item.titel,
         label: 'Aanbeveling',
         detail: item.detail,
+        context: `Dagelijkse aanbeveling voor ${item.owner}; gebaseerd op lokale contextregels.`,
         bron: item.bron,
+        gekoppeldeRecords: [maakKoppeling('aanbeveling', item.id, `Aanbeveling: ${item.titel}`)],
         eigenaar: item.owner,
         recordId: item.id,
       }),
@@ -242,6 +312,49 @@ export function bouwFertilityTimeline(input: {
     ),
     waarschuwing: FERTILITY_TIMELINE_WAARSCHUWING,
   };
+}
+
+function maakKoppeling(
+  soort: FertilityTimelineRecordKoppeling['soort'],
+  id: string,
+  label: string,
+): FertilityTimelineRecordKoppeling {
+  return { soort, id, label };
+}
+
+function maakTrajectKoppeling(trajectId: string | undefined): FertilityTimelineRecordKoppeling[] {
+  return trajectId ? [maakKoppeling('traject', trajectId, `Traject: ${trajectId}`)] : [];
+}
+
+function maakAfspraakKoppeling(afspraakId: string | undefined): FertilityTimelineRecordKoppeling[] {
+  return afspraakId ? [maakKoppeling('afspraak', afspraakId, `Afspraak: ${afspraakId}`)] : [];
+}
+
+function beschrijfDocumentContext(document: DossierDocument): string {
+  const onderdelen = [
+    `Categorie ${DOSSIER_CATEGORIE_LABELS[document.categorie]}`,
+    document.metadata.documenttype ? `documenttype ${document.metadata.documenttype}` : undefined,
+    document.metadata.extractieBronnen.length > 0
+      ? `metadata uit ${document.metadata.extractieBronnen.join(', ')}`
+      : undefined,
+  ].filter((item): item is string => Boolean(item));
+
+  return onderdelen.join(' · ') || 'Dossierrecord uit lokale kluis.';
+}
+
+function beschrijfEmbryoContext(document: DossierDocument): string {
+  const onderdelen = [
+    document.embryo?.dag ? `dag ${document.embryo.dag}` : undefined,
+    document.embryo?.meetmoment ?? document.beeldMetadata?.laboratoriumContext,
+    document.embryo?.status ? `status ${document.embryo.status}` : undefined,
+    document.embryo?.kliniekTerminologie
+      ? `terminologie ${document.embryo.kliniekTerminologie}`
+      : undefined,
+  ].filter((item): item is string => Boolean(item));
+
+  return onderdelen.length > 0
+    ? onderdelen.join(' · ')
+    : 'Embryo-informatie gekoppeld aan lokaal dossierrecord.';
 }
 
 export function filterFertilityTimeline(
