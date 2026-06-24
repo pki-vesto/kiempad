@@ -118,3 +118,9 @@ Laat de markercomments `backlog-health-json-contract-matrix:start` en
 `backlog-health-json-contract-matrix:end` rond de matrixgroepverwachting staan; de
 onderhoudstest gebruikt die anchors om documentatie en contractmatrix synchroon te
 houden.
+
+Als de onderhoudstest faalt met `Backlog-health contractmatrix ontbreekt`, herstel
+dan beide markercomments rond dezelfde `issueSnapshot`-matrixgroepverwachting in
+`tests/backlogHealth.test.ts`. Maak daarbij geen issue-snapshot of ruwe GitHub-output
+onderdeel van de fix; de recovery is alleen het terugzetten van de anchors en het
+opnieuw draaien van de docs-/contracttests.
