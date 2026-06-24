@@ -45,7 +45,8 @@ Voordat je merget:
   op met `rm -f /tmp/kiempad-issues.json`. Commit deze snapshot niet en exporteer
   geen issue bodies. Raakt de snapshot precies 200 issues, verhoog dan de
   `--limit` en geef dezelfde waarde mee met `--issue-snapshot-limit` voordat je de
-  driftcheck als volledig beschouwt.
+  driftcheck als volledig beschouwt, bijvoorbeeld `--limit 500` samen met
+  `--issue-snapshot-limit 500`.
 - `npm run build` — groen.
 - `npm run assets:check` — groen na de build; geen externe asset-URL's tenzij
   expliciet allowlisted.

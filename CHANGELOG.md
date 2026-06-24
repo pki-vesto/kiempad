@@ -7,6 +7,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G385 Continuous Evolution: backlog-health en README tonen nu een concreet
+  hoger-limiet voorbeeld met `--limit 500` en `--issue-snapshot-limit 500`.
 - G384 Continuous Evolution: backlog-health ondersteunt nu `--issue-snapshot-limit`
   in de gegenereerde issue-snapshotguidance zodat grotere issue-exporten expliciet
   gevalideerd kunnen worden.

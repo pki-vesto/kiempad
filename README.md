@@ -94,6 +94,14 @@ npm run backlog:health -- --issues-json /tmp/kiempad-issues.json
 rm -f /tmp/kiempad-issues.json
 ```
 
+Grotere issuehistorie valideren:
+
+```bash
+gh issue list --state all --limit 500 --json number,title,state,url > /tmp/kiempad-issues.json
+npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500
+rm -f /tmp/kiempad-issues.json
+```
+
 Bewaar deze snapshot niet in de repo; hij bevat alleen issue-nummer, titel, state en
 URL. Maak hem direct voor validatie, controleer de timestamp bij twijfel en ruim
 `/tmp/kiempad-issues.json` na lokale validatie direct op. Als de snapshot precies

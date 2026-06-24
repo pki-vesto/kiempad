@@ -2020,4 +2020,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, scripts, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G386 — Backlog Health Issue Snapshot Duplicate Title Guidance
+
+- **Epic:** Continuous Evolution
+- **Problem:** Issue snapshot validation can detect duplicate goal IDs, but maintainers need explicit guidance for old aggregate issue titles that accidentally contain goal IDs.
+- **Desired Outcome:** Document or surface a short remediation hint for duplicate goal IDs found in issue snapshot titles.
+- **User Value:** Maintainers can quickly fix false duplicate drift without storing issue bodies or guessing which issue title to edit.
+- **Acceptance Criteria:** Backlog health output or docs includes duplicate issue-title remediation guidance; tests cover the guidance text; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** scripts, docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
