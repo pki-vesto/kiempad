@@ -23,6 +23,7 @@ import privacy from '../PRIVACY.md?raw';
 import backlog from '../PRODUCT_BACKLOG.md?raw';
 import readme from '../README.md?raw';
 import { DISCLAIMER } from '../src/appShell';
+import backlogHealthTest from './backlogHealth.test.ts?raw';
 
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
@@ -361,6 +362,13 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('houdt gedocumenteerde issue-snapshotgroepen synchroon met de contractmatrix', () => {
+    const documentedGroups = extractBacklogHealthReferenceGroups();
+    const matrixGroups = extractBacklogHealthContractMatrixGroups();
+
+    expect(matrixGroups).toEqual(documentedGroups);
+  });
+
   it('documenteert autonomy guardrail evidence per domein', () => {
     for (const requiredHeading of [
       '### Network Guardrail',
@@ -585,6 +593,27 @@ function extractBacklogHealthJsonExample(): {
     example: JSON.parse(exampleJson) as BacklogHealthJsonExample,
     exampleJson,
   };
+}
+
+function extractBacklogHealthReferenceGroups(): string[] {
+  return Array.from(
+    backlogHealthJsonReference.matchAll(/`issueSnapshot\.(?<field>[A-Za-z]+)`/g),
+    (match) => match.groups?.field,
+  )
+    .filter((field): field is string => Boolean(field))
+    .sort();
+}
+
+function extractBacklogHealthContractMatrixGroups(): string[] {
+  const matrixTest = backlogHealthTest.match(
+    /documenteert issue-snapshotvelden met een compacte contractmatrix[\s\S]+?expect\(matrix\.map\(\(entry\) => entry\.group\)\)\.toEqual\(\[(?<groups>[\s\S]+?)\]\);/,
+  )?.groups?.groups;
+
+  if (!matrixTest) throw new Error('Backlog-health contractmatrix ontbreekt.');
+
+  return Array.from(matrixTest.matchAll(/'(?<group>[A-Za-z]+)'/g), (match) => match.groups?.group)
+    .filter((group): group is string => Boolean(group))
+    .sort();
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {
