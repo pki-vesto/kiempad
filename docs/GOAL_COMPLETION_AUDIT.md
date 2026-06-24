@@ -29,6 +29,8 @@ docs.
 
 4. **Privacy en medisch beleid toetsen**
    - Bevestig dat `MASTER_CONTEXT.md` sectie 4 blijft gelden.
+   - Controleer [`docs/AUTONOMY_GUARDRAILS.md`](AUTONOMY_GUARDRAILS.md) voor netwerk,
+     AI, data, GitHub, Tailscale en medische impact.
    - Nieuwe uitgaande dataroutes vereisen expliciete opt-in en documentatie.
    - De app mag geen diagnose, dosering of behandelkeuze toevoegen.
 

@@ -4,7 +4,9 @@ import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
 import adrBacklog from '../docs/ADR_BACKLOG.md?raw';
+import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
+import codexAutonomyAdr from '../docs/adr/0007-codex-autonoom-bouwen.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
@@ -117,6 +119,39 @@ describe('onderhoudsdocumentatie', () => {
     expect(goalCompletionAudit).toContain('`main` groen');
     expect(masterContext).toContain('docs/GOAL_COMPLETION_AUDIT.md');
     expect(prTemplate).toContain('docs/GOAL_COMPLETION_AUDIT.md');
+  });
+
+  it('documenteert autonomieguardrails voor local-first self-merge', () => {
+    for (const requiredHeading of [
+      '## Netwerk',
+      '## AI',
+      '## Data',
+      '## GitHub',
+      '## Tailscale',
+      '## Medisch Beleid',
+      '## Verificatie per Autonome PR',
+    ]) {
+      expect(autonomyGuardrails).toContain(requiredHeading);
+    }
+
+    for (const requiredTerm of [
+      'geen nieuwe netwerkcalls',
+      'expliciete lokale opt-in',
+      'Gezondheidsdata blijft local-first',
+      'Groene CI is de harde merge-gate',
+      'aparte Tailscale HTTPS-node',
+      'geen medisch hulpmiddel',
+      'geen diagnose',
+      'geen dosering',
+      'geen behandelkeuze',
+    ]) {
+      expect(autonomyGuardrails).toContain(requiredTerm);
+    }
+
+    expect(autonomyGuardrails).toMatch(/Auth keys worden buiten de repo beheerd/i);
+    expect(codexAutonomyAdr).toContain('../AUTONOMY_GUARDRAILS.md');
+    expect(goalCompletionAudit).toContain('docs/AUTONOMY_GUARDRAILS.md');
+    expect(prTemplate).toContain('docs/AUTONOMY_GUARDRAILS.md');
   });
 
   it('houdt de public repo privacy review compleet voor releasechecks', () => {
