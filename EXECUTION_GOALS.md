@@ -3056,4 +3056,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G460 — Backlog Health JSON Contract Recovery Artifact Docs Hint Mixed Fixture Test Cluster Spacing
+
+- **Epic:** Continuous Evolution
+- **Problem:** The mixed fixture declarations now have clearer spacing, but the related mixed-fixture tests still sit tightly near representative static tests.
+- **Desired Outcome:** Review whether spacing or ordering around the mixed-fixture tests can make the test flow clearer.
+- **User Value:** Maintainers can distinguish mixed error-reason composition checks from representative static checks quickly.
+- **Acceptance Criteria:** Mixed fixture test cluster spacing is reviewed and, if useful, adjusted without weakening assertions; existing representative static, dynamic and mixed error-reason tests remain green; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
