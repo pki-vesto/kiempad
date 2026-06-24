@@ -387,9 +387,7 @@ describe('onderhoudsdocumentatie', () => {
       expect(recoveryParagraph).toContain(requiredTerm);
     }
 
-    for (const forbiddenArtifact of BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS) {
-      expect(recoveryParagraph, forbiddenArtifact.label).toContain(forbiddenArtifact.term);
-    }
+    expectBacklogHealthRecoveryForbiddenArtifactLabels(recoveryParagraph);
 
     for (const requiredTerm of [
       BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER,
@@ -427,6 +425,14 @@ describe('onderhoudsdocumentatie', () => {
     ).toThrow(
       'Paragraaf ontbreekt: Backlog-health contractmatrix ontbreekt. Herstel de recoveryparagraaf in Contract Coverage.',
     );
+  });
+
+  it('faalt duidelijk wanneer een backlog-health recovery artifactlabel ontbreekt', () => {
+    expect(() =>
+      expectBacklogHealthRecoveryForbiddenArtifactLabels(
+        'Maak geen issue-snapshot onderdeel van de fix.',
+      ),
+    ).toThrow('Backlog-health recoveryparagraaf mist forbidden artifact label: raw GitHub output.');
   });
 
   it('documenteert autonomy guardrail evidence per domein', () => {
@@ -621,6 +627,16 @@ function extractMarkdownParagraphContaining(section: string, term: string): stri
 
 function normalizeMarkdownText(markdown: string): string {
   return markdown.replaceAll('`', '').replace(/\s+/g, ' ').trim();
+}
+
+function expectBacklogHealthRecoveryForbiddenArtifactLabels(recoveryParagraph: string): void {
+  for (const forbiddenArtifact of BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS) {
+    if (!recoveryParagraph.includes(forbiddenArtifact.term)) {
+      throw new Error(
+        `Backlog-health recoveryparagraaf mist forbidden artifact label: ${forbiddenArtifact.label}.`,
+      );
+    }
+  }
 }
 
 function extractAdrReviewEvidenceIndexGoals(): string[] {
