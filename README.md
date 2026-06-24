@@ -85,6 +85,16 @@ voor lokale experimenten of kleine fixtures een tijdelijke custom drempel, bijvo
 `npm run backlog:health -- --minimum-open-goals 2`; de permanente backlogregel blijft
 minimaal 100 open doelen.
 
+Optionele GitHub issue-driftcheck zonder issue bodies:
+
+```bash
+gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json
+npm run backlog:health -- --issues-json /tmp/kiempad-issues.json
+```
+
+Bewaar deze snapshot niet in de repo; hij bevat alleen issue-nummer, titel, state en
+URL.
+
 Optioneel zelf-hosten van de statische build:
 
 ```bash
