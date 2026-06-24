@@ -181,6 +181,7 @@ export function buildBacklogHealthReport(input) {
   const findings = [];
   const missingIssueLinks = [];
   const nonOpenIssueLinks = [];
+  const completedGoalOpenIssues = [];
 
   for (const id of backlog.duplicates) {
     findings.push({ type: 'duplicate-id', id, detail: 'Dubbele goal-id in PRODUCT_BACKLOG.md.' });
@@ -275,6 +276,16 @@ export function buildBacklogHealthReport(input) {
       const goal = backlog.byId.get(issue.id);
       if (!goal) continue;
       if (issue.state === 'OPEN' && goal.status === '☑') {
+        completedGoalOpenIssues.push({
+          id: goal.id,
+          title: goal.title,
+          issue: {
+            number: issue.number,
+            title: issue.title,
+            state: issue.state,
+            url: issue.url,
+          },
+        });
         findings.push({
           type: 'status-mismatch',
           id: issue.id,
@@ -299,6 +310,7 @@ export function buildBacklogHealthReport(input) {
           duplicateIssues: issueSnapshot.duplicateIssues,
           missingIssueLinks,
           nonOpenIssueLinks,
+          completedGoalOpenIssues,
         }
       : undefined,
     findings,

@@ -44,6 +44,11 @@ declare module '*.mjs' {
         title: string;
         issue: Record<string, unknown>;
       }>;
+      completedGoalOpenIssues: Array<{
+        id: string;
+        title: string;
+        issue: Record<string, unknown>;
+      }>;
     };
     findings: Array<Record<string, unknown>>;
   };

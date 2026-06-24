@@ -2104,4 +2104,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G392 — Backlog Health JSON Shape Reference
+
+- **Epic:** Continuous Evolution
+- **Problem:** Backlog-health JSON automation fields now exist, but maintainers must infer their stable shape from tests or source code.
+- **Desired Outcome:** Add a concise reference for the sanitized backlog-health JSON report fields used by automation.
+- **User Value:** Maintainers and future automation can rely on documented field names without reading implementation details.
+- **Acceptance Criteria:** Docs list the stable JSON fields for issue snapshot drift; tests or maintenance checks cover the reference; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests, scripts
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
