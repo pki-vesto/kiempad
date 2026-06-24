@@ -7,6 +7,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G349 Continuous Evolution: completion-audit evidence markers zijn toegevoegd aan
+  `docs/GOAL_COMPLETION_AUDIT.md` en de PR-template, met ingevuld voorbeeld en
+  onderhoudstest voor verplichte markerheadings en velden.
 - G259 Continuous Evolution: onderhoudstest parseert nu open G-id's uit zowel
   `PRODUCT_BACKLOG.md` als `EXECUTION_GOALS.md`, vereist minimaal 100 actieve doelen en
   faalt wanneer de actieve catalogi op ID-niveau uit elkaar lopen.

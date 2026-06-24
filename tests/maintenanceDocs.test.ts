@@ -128,6 +128,43 @@ describe('onderhoudsdocumentatie', () => {
     expect(prTemplate).toContain('docs/GOAL_COMPLETION_AUDIT.md');
   });
 
+  it('herkent completion-audit evidence markers in docs en PR-template', () => {
+    const requiredHeadings = [
+      '### Requirements Evidence',
+      '### Test Evidence',
+      '### Policy Evidence',
+      '### GitHub Evidence',
+    ];
+
+    for (const document of [goalCompletionAudit, prTemplate]) {
+      const markerBlock = extractCompletionAuditMarkerBlock(document);
+      for (const heading of requiredHeadings) {
+        expect(markerBlock).toContain(heading);
+      }
+      for (const field of [
+        'Requirement:',
+        'Evidence:',
+        'Strength:',
+        'Commands:',
+        'Result:',
+        'Coverage:',
+        'Privacy:',
+        'Medical:',
+        'Network/AI:',
+        'Issue:',
+        'PR:',
+        'Main CI:',
+        'Backlog:',
+      ]) {
+        expect(markerBlock).toContain(`- ${field}`);
+      }
+    }
+
+    expect(goalCompletionAudit).toContain('### Filled Example');
+    expect(goalCompletionAudit).toContain('Direct docs plus maintenance test');
+    expect(goalCompletionAudit).toContain('replacement goal added to keep 100 open goals');
+  });
+
   it('documenteert autonomieguardrails voor local-first self-merge', () => {
     for (const requiredHeading of [
       '## Netwerk',
@@ -293,6 +330,14 @@ function parseExecutionGoalSections(): Array<{ id: string; status: string; raw: 
       if (!id || !status) throw new Error(`Execution goal mist id of status: ${raw}`);
       return { id, status, raw };
     });
+}
+
+function extractCompletionAuditMarkerBlock(document: string): string {
+  const match = document.match(
+    /<!-- completion-audit:start -->(?<block>[\s\S]+?)<!-- completion-audit:end -->/,
+  );
+  if (!match?.groups?.block) throw new Error('Completion audit markerblok ontbreekt.');
+  return match.groups.block;
 }
 
 function extractExecutionGoalAdrMarkers(): Array<{ id: string; value: string }> {

@@ -24,6 +24,30 @@ Doel(en):
 ## Scope / resterend
 <!-- Bewust buiten scope gelaten / vervolg. -->
 
+## Completion Audit Evidence
+<!-- completion-audit:start -->
+### Requirements Evidence
+- Requirement:
+- Evidence:
+- Strength:
+
+### Test Evidence
+- Commands:
+- Result:
+- Coverage:
+
+### Policy Evidence
+- Privacy:
+- Medical:
+- Network/AI:
+
+### GitHub Evidence
+- Issue:
+- PR:
+- Main CI:
+- Backlog:
+<!-- completion-audit:end -->
+
 ## Uitvoeringsvorm
 <!-- ADR-0007: Codex bouwt en merget autonoom via /goal; groene CI is de merge-gate. -->
 - [ ] Codex `/goal` — autonoom gebouwd, self-merge bij groene CI

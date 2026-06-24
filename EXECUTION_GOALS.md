@@ -1516,7 +1516,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, PR template, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G350 — First Run Setup Progress Persistence
 
@@ -1866,4 +1866,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests, backlog health
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☐ open
+
+### G375 — Completion Audit Marker Parser CLI
+
+- **Epic:** Continuous Evolution
+- **Problem:** Completion audit markers now have a documented format, but maintainers still inspect marker completeness manually.
+- **Desired Outcome:** Add a local dry-run helper that parses PR text or a Markdown file and reports missing completion-audit marker sections and fields.
+- **User Value:** Autonomous PR evidence becomes easier to validate before merge without network calls.
+- **Acceptance Criteria:** Helper reads a local Markdown file; validates start/end markers, required headings and required fields; tests cover complete and incomplete marker blocks; output never prints secrets or full PR bodies.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** scripts, PR template, tests
+- **ADR Needed:** no
+- **Score:** 97
 - **Status:** ☐ open
