@@ -56,11 +56,6 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS = {
   whitespaceLabel: 'label bevat alleen whitespace',
   whitespaceTerm: 'term bevat alleen whitespace',
 } as const satisfies Record<string, BacklogHealthArtifactDocsHintStaticErrorReason>;
-const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASON_TYPE_FIXTURES = [
-  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
-  'label is te generiek: hint',
-  'term is te kort: labels',
-] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintErrorReason>;
 const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES = [
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingLabel,
   BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASONS.missingTerm,
@@ -71,6 +66,10 @@ const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_DYNAMIC_ERROR_REASON_TYPE_FIXTURES = [
   'label is te generiek: hint',
   'term is te kort: labels',
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintDynamicErrorReason>;
+const BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_ERROR_REASON_TYPE_FIXTURES = [
+  BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_STATIC_ERROR_REASON_TYPE_FIXTURES[0],
+  ...BACKLOG_HEALTH_ARTIFACT_DOCS_HINT_DYNAMIC_ERROR_REASON_TYPE_FIXTURES,
+] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHintErrorReason>;
 const BACKLOG_HEALTH_RECOVERY_FORBIDDEN_ARTIFACT_LABELS = [
   { label: 'issue snapshots', term: 'issue-snapshot' },
   { label: 'raw GitHub output', term: 'ruwe GitHub-output' },
