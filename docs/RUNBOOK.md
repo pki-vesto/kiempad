@@ -22,6 +22,9 @@ de lokale data versleuteld wordt.
 - **Asset-privacy:** `npm run build && npm run assets:check` (geen externe
   image/font/script/manifest-URL's in bron- of buildassets).
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
+- **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
+  via Vite preview, laat de service worker installeren, schakelt Playwright offline en
+  herlaadt de app-shell.
 - **Opslag:** data leesbaar na ontgrendelen, onleesbaar zonder passphrase.
 - **Privacy-rook­test:** in de netwerk-tab is er **geen** verkeer naar derden tenzij
   je AI/sync bewust hebt aangezet.

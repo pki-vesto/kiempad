@@ -73,6 +73,7 @@ npm run typecheck    # TypeScript-typecheck (tsc --noEmit)
 npm run test         # of: make test  — Vitest unit-/integratietests
 npm run build        # productiebuild (statische PWA in dist/)
 npm run assets:check # controleert bron- en buildassets op externe asset-URL's
+npm run smoke:offline # Playwright-smoke: eerste bezoek, offline reload via service worker
 ```
 
 Optioneel zelf-hosten van de statische build:
