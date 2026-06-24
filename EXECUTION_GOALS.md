@@ -2342,4 +2342,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ klaar
+
+### G409 — Backlog Health JSON Contract Marker Recovery Paragraph Negative Fixture
+
+- **Epic:** Continuous Evolution
+- **Problem:** The recovery paragraph is now extracted as a cohesive instruction, but there is no negative fixture proving the paragraph extractor fails clearly when the recovery paragraph is removed.
+- **Desired Outcome:** Add a parser-level negative fixture for missing recovery paragraph guidance.
+- **User Value:** Maintainers get immediate feedback if future doc edits accidentally remove the recovery instructions.
+- **Acceptance Criteria:** Tests cover the missing recovery paragraph failure with a clear message; the positive paragraph guard remains in place; no issue bodies, tokens or snapshot files are committed.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** docs, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

@@ -354,7 +354,11 @@ describe('onderhoudsdocumentatie', () => {
       backlogHealthJsonReference,
       'Contract Coverage',
     );
-    const normalizedContractCoverage = normalizeMarkdownText(contractCoverage);
+    const recoveryParagraph = extractMarkdownParagraphContaining(
+      contractCoverage,
+      'Backlog-health contractmatrix ontbreekt',
+    );
+    const normalizedRecoveryParagraph = normalizeMarkdownText(recoveryParagraph);
 
     for (const requiredTerm of [
       'tests/backlogHealth.test.ts',
@@ -366,13 +370,18 @@ describe('onderhoudsdocumentatie', () => {
       'backlog-health-json-contract-matrix:start',
       'backlog-health-json-contract-matrix:end',
       'documentatie en contractmatrix synchroon',
+    ]) {
+      expect(contractCoverage).toContain(requiredTerm);
+    }
+
+    for (const requiredTerm of [
       'Backlog-health contractmatrix ontbreekt',
       'beide markercomments',
       'tests/backlogHealth.test.ts',
       'issue-snapshot of ruwe GitHub-output',
       'opnieuw draaien van de docs-/contracttests',
     ]) {
-      expect(contractCoverage).toContain(requiredTerm);
+      expect(recoveryParagraph).toContain(requiredTerm);
     }
 
     for (const requiredTerm of [
@@ -386,7 +395,7 @@ describe('onderhoudsdocumentatie', () => {
     expect(BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR).toContain(
       BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION,
     );
-    expect(normalizedContractCoverage).toContain(BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION);
+    expect(normalizedRecoveryParagraph).toContain(BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION);
   });
 
   it('houdt gedocumenteerde issue-snapshotgroepen synchroon met de contractmatrix', () => {
@@ -580,6 +589,12 @@ function extractMarkdownSection(document: string, heading: string): string {
   const match = document.match(new RegExp(`## ${heading}\\n(?<section>[\\s\\S]*?)(\\n## |$)`));
   if (!match?.groups?.section) throw new Error(`Sectie ontbreekt: ${heading}`);
   return match.groups.section;
+}
+
+function extractMarkdownParagraphContaining(section: string, term: string): string {
+  const paragraph = section.split(/\n\n+/).find((candidate) => candidate.includes(term));
+  if (!paragraph) throw new Error(`Paragraaf ontbreekt: ${term}`);
+  return paragraph;
 }
 
 function normalizeMarkdownText(markdown: string): string {
