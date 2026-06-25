@@ -24,8 +24,9 @@ gezondheidsdata en is uitdrukkelijk privé en niet-distribueerbaar.
 - Kiempad wordt **niet** opgenomen in de Sentinel autonome build-/PR-/backlog-loops en
   niet in de publieke "factory"-status.
 - ~~De repo is **private** onder `pki-vesto`~~ — **herzien:** de repo is nu publiek,
-  zie [ADR-0006](0006-repo-publiek.md). De gezondheidsdata blijft local-first en privé
-  (niet in de repo).
+  zie [ADR-0006](0006-repo-publiek.md). De gezondheidsdata blijft encrypted en privé:
+  centrale opslag bevat alleen encrypted envelopes, legacy fallback blijft lokaal
+  versleuteld, en niets daarvan hoort in de repo.
 
 ## Consequences
 

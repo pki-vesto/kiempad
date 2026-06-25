@@ -61,8 +61,9 @@ vast.
 - Review date: 2026-06-24
 
 ## Existing ADRs Consulted
-- ADR: ADR-0002 local-first versleutelde opslag
-- Relevant rule: gezondheidsdata blijft lokaal en versleuteld.
+- ADR: ADR-0009 centrale versleutelde data-architectuur
+- Relevant rule: gezondheidsdata blijft client-side versleuteld; centrale opslag ziet
+  alleen encrypted envelopes en minimale technische metadata.
 - Coverage: onvoldoende voor relaymetadata, auth en replayrisico.
 
 ## Decision Outcome

@@ -1,8 +1,9 @@
 # Dependency Review Cadence
 
 Kiempad reviewt dependencies maandelijks en direct na relevante security advisories.
-De app blijft local-first; dependency updates mogen geen tracking, externe assets of
-nieuwe runtime-backends introduceren.
+De app blijft privacy-first met centrale encrypted opslag als primaire route;
+dependency updates mogen geen tracking, externe assets of plaintext runtime-backends
+introduceren.
 
 ## Maandelijkse flow
 
@@ -51,6 +52,6 @@ dumps of machine-specifieke paden in evidence.
 - High-severity audit findings blokkeren merge, tenzij expliciet gedocumenteerd waarom
   ze niet van toepassing zijn.
 - Lockfile-diffs worden gelezen voordat ze worden gecommit.
-- Nieuwe dependencies moeten passen bij de local-first architectuur en mogen geen
-  externe asset- of telemetryplicht toevoegen.
+- Nieuwe dependencies moeten passen bij de centrale encrypted architectuur en mogen
+  geen externe asset-, telemetry- of plaintext backendplicht toevoegen.
 - PR's blijven pas mergebaar na groene CI en lokale validatie.

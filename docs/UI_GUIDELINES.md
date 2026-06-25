@@ -12,8 +12,9 @@ De bron van waarheid is het Claude Design-prototype (`Kiempad-prototype.dc.html`
   stop secundaire invoer achter een uitklap (`disclosure`).
 - **Rustig en warm, niet klinisch.** Lora (serif) voor koppen, Figtree (sans) voor
   tekst; sage-groen + warme aardtinten; ruime witruimte.
-- **Privacy-/local-first zichtbaar maar rustig.** Geen externe assets (CSP + asset-
-  scan); iconen zijn inline SVG.
+- **Privacy en encrypted opslag zichtbaar maar rustig.** Geen externe assets (CSP +
+  asset-scan); iconen zijn inline SVG. Centrale modus benoemt de centrale encrypted
+  dataset, legacy fallback benoemt lokale encrypted opslag.
 - **Toegankelijk by default.** WCAG AA-contrast, zichtbare focus, ≥44px touch
   targets, gekoppelde labels, status nooit alleen via kleur, `prefers-reduced-motion`.
 

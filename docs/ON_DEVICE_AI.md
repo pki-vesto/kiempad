@@ -1,6 +1,6 @@
 # On-device AI-verkenning
 
-G104 onderzoekt browser-AI zonder Kiempad van local-first af te halen.
+G104 onderzoekt browser-AI zonder de centrale encrypted privacygrens te verzwakken.
 
 ## Wat de app doet
 

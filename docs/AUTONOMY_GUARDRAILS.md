@@ -2,8 +2,8 @@
 
 Kiempad mag autonoom worden doorontwikkeld volgens
 [`ADR-0007`](adr/0007-codex-autonoom-bouwen.md), maar autonomie verandert niets aan de
-local-first, privacy- en medische grenzen. Deze guardrails zijn de minimumcheck voor
-elk autonoom doel en elke self-merge.
+encrypted-data, privacy- en medische grenzen. Deze guardrails zijn de minimumcheck
+voor elk autonoom doel en elke self-merge.
 
 Gebruik [`AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md`](AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md)
 om per PR kort bewijs vast te leggen voor netwerk, AI, data, GitHub, Tailscale en
@@ -11,7 +11,7 @@ medisch beleid.
 
 ## Beslisregel
 
-1. Kies de veiligste lokale route wanneer een doel op meerdere manieren uitvoerbaar is.
+1. Kies de veiligste encrypted route wanneer een doel op meerdere manieren uitvoerbaar is.
 2. Voeg geen nieuwe uitgaande dataroute, cloudopslag of remote analyse toe zonder
    expliciete opt-in, documentatie en een passende ADR wanneer het beleid verandert.
 3. Markeer werk alleen klaar als het doel, het issue, tests, documentatie en backlog
@@ -43,7 +43,10 @@ medisch beleid.
 
 ## Data
 
-- Gezondheidsdata blijft local-first, versleuteld en buiten de publieke repo.
+- Gezondheidsdata blijft client-side versleuteld en buiten de publieke repo. Nieuwe
+  data gebruikt primair de centrale encrypted dataset; legacy IndexedDB is fallback.
+- Centrale backends, logs en persistence mogen geen plaintext medische/fertiliteitsdata
+  bevatten, alleen encrypted envelopes en minimale technische metadata.
 - Testdata, fixtures, screenshots en docs gebruiken alleen synthetische voorbeelden.
 - Back-ups en exports mogen geen plaintext gezondheidsdata in logs, command output,
   PR's of issues plaatsen.
@@ -67,8 +70,9 @@ medisch beleid.
 
 - Kiempad blijft via een aparte Tailscale HTTPS-node gepubliceerd, zonder publieke
   Funnel, publieke DNS of port-forwarding.
-- Tailscale publiceert alleen de statische PWA binnen de tailnet; er draait geen
-  Kiempad-backend die gezondheidsdata verwerkt.
+- Tailscale publiceert Kiempad alleen binnen de tailnet. Een centrale Kiempad-backend
+  mag uitsluitend encrypted envelopes verwerken en mag geen plaintext gezondheidsdata
+  loggen of bewaren.
 - Auth keys worden buiten de repo beheerd en nooit uit andere apps gekopieerd naar
   documentatie, logs, issues of PR's.
 - Wijzigingen aan hostname, poort, Serve-config of deploymentpad vereisen update van

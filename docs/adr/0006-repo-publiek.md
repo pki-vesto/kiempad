@@ -1,4 +1,4 @@
-# ADR-0006: Repo publiek; gezondheidsdata blijft local-first en privé
+# ADR-0006: Repo publiek; gezondheidsdata blijft encrypted en privé
 
 Date: 2026-06-23
 
@@ -14,15 +14,18 @@ ADR-0005 koos voor een **private** repo. In de praktijk blokkeert de GitHub
 Actions-billing/spending-limit van de `pki-vesto`-org echter CI op **private** repos
 (de job start niet). De siblings (sentinel, health-core, nova-studio, berry, shred)
 zijn daarom publiek. Belangrijk: de repo bevat **alleen code en documentatie** —
-**geen** persoonsgegevens of gezondheidsdata (die zijn local-first en versleuteld op
-het toestel, en staan niet in git).
+**geen** persoonsgegevens of gezondheidsdata. Die staan client-side versleuteld in de
+actieve encrypted dataset: primair centraal als encrypted envelopes met minimale
+technische metadata, of bij legacy fallback lokaal versleuteld. Ze staan niet in git.
 
 ## Decision
 
 - De repo `pki-vesto/kiempad` is **publiek**, zodat CI/GitHub Actions werkt en de repo
   consistent is met de andere apps.
-- **Gezondheidsdata blijft local-first, versleuteld en privé**; die gaat **nooit** de
-  repo in (zie `.gitignore`: `.env`, `data/`, back-ups).
+- **Gezondheidsdata blijft versleuteld en privé**; die gaat **nooit** de repo in (zie
+  `.gitignore`: `.env`, `data/`, back-ups). De centrale Kiempad-backend mag alleen
+  encrypted envelopes en minimale technische metadata bewaren, geen plaintext
+  medische/fertiliteitsinhoud.
 - De app wordt **niet als product aan derden** uitgerold; geen externe gebruikers.
 - De licentie blijft **alle rechten voorbehouden** (zie `LICENSE`): publiek zichtbaar
   is niet hetzelfde als herbruikbaar.
