@@ -109,6 +109,18 @@ describe('central file persistence snapshot validation', () => {
     expect((await stat(filePath)).mode & 0o777).toBe(0o600);
   });
 
+  it('maakt nieuwe centrale persistencedirectories private aan', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'kiempad-central-file-private-parent-'));
+    cleanupDirectories.push(directory);
+    const privateDirectory = join(directory, 'nested', 'central');
+    const filePath = join(privateDirectory, 'central-db.json');
+
+    await new JsonFileCentralDatabasePersistence(filePath).save(createValidSnapshot());
+
+    expect((await stat(privateDirectory)).mode & 0o777).toBe(0o700);
+    expect((await stat(filePath)).mode & 0o777).toBe(0o600);
+  });
+
   it('overschrijft of verwijdert geen bestaand tijdelijk snapshotbestand bij suffix-collision', async () => {
     const { directory, filePath } = await createPersistenceFile();
     const existingTemporaryPath = `${filePath}.collision.tmp`;

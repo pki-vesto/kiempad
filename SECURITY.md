@@ -114,7 +114,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   snapshotbestand voor replacement en flushen dat bestand vóór atomische replacement.
   Na replacement wordt de parent-directory best-effort gesynct; bij write-, flush-
   of replace-fouten worden alleen zelf aangemaakte tijdelijke bestanden best-effort
-  verwijderd. Tijdelijke en finale snapshotbestanden worden met private `0600`
+  verwijderd. Nieuw aangemaakte persistence-directories krijgen private `0700`
+  permissies; tijdelijke en finale snapshotbestanden worden met private `0600`
   permissies geschreven.
 - **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en

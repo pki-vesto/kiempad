@@ -50,7 +50,7 @@ export async function startCentralBackendFromEnv(
   const allowedUserIds = parseAllowedUserIds(env.KIEMPAD_CENTRAL_ALLOWED_USER_IDS);
   const allowedOrigins = parseAllowedOrigins(env.KIEMPAD_CENTRAL_ALLOWED_ORIGINS);
 
-  await mkdir(dirname(persistenceFile), { recursive: true });
+  await mkdir(dirname(persistenceFile), { recursive: true, mode: 0o700 });
   const server = await createCentralNodeHttpServer({
     persistenceFile,
     sessionTtlMs,
