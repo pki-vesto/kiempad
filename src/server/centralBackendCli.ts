@@ -19,6 +19,14 @@ const DEFAULT_PORT = 8099;
 const DEFAULT_SESSION_TTL_MS = 60 * 60 * 1000;
 const DEFAULT_PERSISTENCE_FILE = 'data/central/kiempad-central-db.json';
 const DEFAULT_ALLOWED_USER_ID = 'kiempad-private-user';
+const DEFAULT_ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173',
+  'http://localhost:4174',
+  'http://127.0.0.1:4174',
+];
 
 export async function startCentralBackendFromEnv(
   env: NodeJS.ProcessEnv = process.env,
@@ -34,12 +42,14 @@ export async function startCentralBackendFromEnv(
     env.KIEMPAD_CENTRAL_PERSISTENCE_FILE?.trim() || DEFAULT_PERSISTENCE_FILE,
   );
   const allowedUserIds = parseAllowedUserIds(env.KIEMPAD_CENTRAL_ALLOWED_USER_IDS);
+  const allowedOrigins = parseCsvList(env.KIEMPAD_CENTRAL_ALLOWED_ORIGINS, DEFAULT_ALLOWED_ORIGINS);
 
   await mkdir(dirname(persistenceFile), { recursive: true });
   const server = await createCentralNodeHttpServer({
     persistenceFile,
     sessionTtlMs,
     allowedUserIds,
+    allowedOrigins,
   });
   const actualPort = await listen(server, host, port);
   const url = `http://${host}:${actualPort}`;
@@ -60,11 +70,15 @@ export async function startCentralBackendFromEnv(
 }
 
 function parseAllowedUserIds(value: string | undefined): string[] {
+  return parseCsvList(value, [DEFAULT_ALLOWED_USER_ID]);
+}
+
+function parseCsvList(value: string | undefined, fallback: readonly string[]): string[] {
   const parsed = value
     ?.split(',')
-    .map((userId) => userId.trim())
+    .map((item) => item.trim())
     .filter(Boolean);
-  return parsed && parsed.length > 0 ? parsed : [DEFAULT_ALLOWED_USER_ID];
+  return parsed && parsed.length > 0 ? parsed : [...fallback];
 }
 
 function parsePort(value: string | undefined, fallback: number): number {

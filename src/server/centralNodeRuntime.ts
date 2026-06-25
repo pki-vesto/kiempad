@@ -9,14 +9,16 @@ export type CentralNodeRuntimeOptions = {
   persistenceFile: string;
   sessionTtlMs?: number;
   allowedUserIds?: readonly string[];
+  allowedOrigins?: readonly string[];
 };
 
 export async function createCentralNodeHttpServer(
   options: CentralNodeRuntimeOptions,
 ): Promise<Server> {
   const api = await createCentralNodeHttpApi(options);
+  const corsPolicy = createCorsPolicy(options.allowedOrigins);
   return createServer((request, response) => {
-    void handleCentralNodeRequest(api, request, response);
+    void handleCentralNodeRequest(api, request, response, corsPolicy);
   });
 }
 
@@ -36,7 +38,14 @@ export async function handleCentralNodeRequest(
   api: CentralEncryptedHttpApi,
   request: IncomingMessage,
   response: ServerResponse,
+  corsPolicy: CentralCorsPolicy = createCorsPolicy(),
 ): Promise<void> {
+  const corsResult = applyCorsHeaders(request, response, corsPolicy);
+  if (request.method === 'OPTIONS') {
+    sendPreflightResponse(response, corsResult);
+    return;
+  }
+
   const method = normalizeMethod(request.method);
   if (!method) {
     sendJson(response, 405, { error: 'method-not-allowed' });
@@ -99,4 +108,53 @@ function sendJson(response: ServerResponse, status: number, body: unknown): void
 
   response.setHeader('content-type', 'application/json; charset=utf-8');
   response.end(JSON.stringify(body));
+}
+
+export type CentralCorsPolicy = {
+  allowedOrigins: ReadonlySet<string>;
+};
+
+export function createCorsPolicy(allowedOrigins: readonly string[] = []): CentralCorsPolicy {
+  return {
+    allowedOrigins: new Set(allowedOrigins.map((origin) => origin.trim()).filter(Boolean)),
+  };
+}
+
+function applyCorsHeaders(
+  request: IncomingMessage,
+  response: ServerResponse,
+  corsPolicy: CentralCorsPolicy,
+): 'allowed' | 'disallowed' | 'not-cors' {
+  const origin = request.headers.origin;
+  if (typeof origin !== 'string' || !origin.trim()) return 'not-cors';
+
+  response.setHeader('vary', appendVaryOrigin(response.getHeader('vary')));
+  if (!corsPolicy.allowedOrigins.has(origin)) return 'disallowed';
+
+  response.setHeader('access-control-allow-origin', origin);
+  return 'allowed';
+}
+
+function sendPreflightResponse(
+  response: ServerResponse,
+  corsResult: 'allowed' | 'disallowed' | 'not-cors',
+): void {
+  if (corsResult !== 'allowed') {
+    sendJson(response, 403, { error: 'cors-origin-not-allowed' });
+    return;
+  }
+
+  response.statusCode = 204;
+  response.setHeader('access-control-allow-methods', 'DELETE, GET, POST, PUT');
+  response.setHeader('access-control-allow-headers', 'authorization, content-type');
+  response.setHeader('access-control-max-age', '600');
+  response.end();
+}
+
+function appendVaryOrigin(existing: number | string | string[] | undefined): string {
+  const values = Array.isArray(existing) ? existing.join(', ') : String(existing ?? '');
+  if (values.split(',').some((value) => value.trim().toLowerCase() === 'origin')) {
+    return values;
+  }
+  return values.trim() ? `${values}, Origin` : 'Origin';
 }

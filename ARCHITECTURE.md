@@ -98,6 +98,9 @@ en blijft ook centraal **versleuteld at rest**.
   HTTP/fetch calls en blijft compatibel met de bestaande encrypted repositories.
   De backend-CLI configureert standaard `kiempad-private-user` als enige toegestane
   sessie-owner; `KIEMPAD_CENTRAL_ALLOWED_USER_IDS` kan dit server-side uitbreiden.
+  CORS/preflight wordt alleen aan de Node HTTP-boundary afgehandeld via
+  `KIEMPAD_CENTRAL_ALLOWED_ORIGINS`; de storage- en API-domainlagen blijven
+  origin-agnostisch.
 - **Client bootstrap:** `openClientStorage` kiest bij
   `VITE_KIEMPAD_CENTRAL_API_URL` de centrale fetch-driver en vraagt een opaque
   sessietoken aan. Ontbreekt die URL, dan opent de app expliciet de legacy

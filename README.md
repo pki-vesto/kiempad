@@ -150,7 +150,9 @@ valt de app niet stilletjes terug naar lokaal.
 De backend staat standaard alleen `kiempad-private-user` toe voor sessie-uitgifte.
 Gebruik `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user` om die server-side
 owner-policy expliciet te zetten; de `VITE_...USER_ID` in de frontend is geen
-autoriteit.
+autoriteit. Browserclients moeten daarnaast vanaf een toegestane origin komen; voor
+lokale ontwikkeling zijn `http://localhost:5173`, `http://127.0.0.1:5173` en
+previewpoorten standaard toegestaan via `KIEMPAD_CENTRAL_ALLOWED_ORIGINS`.
 
 Voor een containerwrapper:
 
