@@ -91,6 +91,22 @@ describe('central file persistence snapshot validation', () => {
     await expect(readdir(directory)).resolves.toEqual(['central-db.json']);
   });
 
+  it('schrijft tijdelijke en finale snapshotbestanden met private permissies', async () => {
+    const { filePath } = await createPersistenceFile();
+    let temporaryMode: number | undefined;
+    const persistence = new JsonFileCentralDatabasePersistence(filePath, {
+      async syncFile(file, temporaryPath) {
+        temporaryMode = (await stat(temporaryPath)).mode & 0o777;
+        await file.sync();
+      },
+    });
+
+    await persistence.save(createValidSnapshot());
+
+    expect(temporaryMode).toBe(0o600);
+    expect((await stat(filePath)).mode & 0o777).toBe(0o600);
+  });
+
   it('laat een directory-fsync fout de succesvolle snapshot replacement niet breken', async () => {
     const { filePath } = await createPersistenceFile();
     const snapshot = createValidSnapshot();
