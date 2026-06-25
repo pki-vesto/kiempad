@@ -157,6 +157,11 @@ De volume `kiempad_central_data` wordt gemount op `/data`. Bescherm dit volume e
 de host waarop het draait: het hoort alleen encrypted envelopes te bevatten, maar
 owner/indexmetadata blijft wel gevoelig.
 
+De Tailscale publicatiestack (`docker-compose.tailscale.yml`) start dezelfde centrale
+backend als `kiempad-central-api` in de network namespace van de `kiempad` node.
+Daar routeert nginx `/api/*` naar deze backend en bouwt de PWA met
+`VITE_KIEMPAD_CENTRAL_API_URL=https://kiempad.tail9d0c71.ts.net/api`.
+
 HTTPS hoort vóór deze container te termineren via Tailscale Serve of een reverse
 proxy. Voeg de uiteindelijke PWA-origin, bijvoorbeeld
 `https://kiempad.tail9d0c71.ts.net`, expliciet toe aan

@@ -105,9 +105,9 @@ De PWA hoeft niet gehost te worden, maar kan op een eigen knooppunt:
 docker compose up -d --build     # of: make up  — serveert op http://localhost:8088
 ```
 
-De container is **stateless** (geen gebruikersdata). Publiceren op de tailnet kan
-analoog aan de andere apps (eigen Tailscale-node / sidecar) als dat ooit gewenst is —
-houd hem dan privé/achter de tailnet.
+De losse webcontainer is **stateless**. De Tailscale-publicatiestack hieronder voegt
+de centrale encrypted API toe op dezelfde node en bewaart alleen encrypted envelopes
+plus owner/indexmetadata in een Docker-volume.
 
 ### Tailscale HTTPS-node
 
@@ -118,7 +118,8 @@ TS_AUTHKEY=tskey-auth-... npm run deploy:tailscale
 ```
 
 Die stack maakt een eigen Tailscale-node `kiempad`, gebruikt Tailscale Serve voor
-HTTPS op `https://kiempad.tail9d0c71.ts.net` en proxyt naar de statische nginx-PWA.
+HTTPS op `https://kiempad.tail9d0c71.ts.net`, proxyt naar de nginx-PWA en routeert
+`/api/*` naar `kiempad-central-api`.
 De live lokale fallbackpoort is `127.0.0.1:8098`, omdat Shred al `8088` gebruikt.
 Controleer daarna met
 `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
