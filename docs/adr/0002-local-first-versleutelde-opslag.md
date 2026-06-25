@@ -4,7 +4,9 @@ Date: 2026-06-23
 
 ## Status
 
-Accepted.
+Accepted for legacy/local compatibility. Superseded as the primary storage model for
+new data by
+[`ADR-0009: Centrale versleutelde data-architectuur`](0009-centrale-versleutelde-data-architectuur.md).
 
 ## Context
 

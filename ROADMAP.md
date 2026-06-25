@@ -27,7 +27,8 @@ datamodel-schets, keuzes vastgelegd als ADR's.
 
 **Doel:** dagelijks bruikbaar overzicht + de dingen die je niet mag missen.
 
-- **Versleutelde lokale opslag** (passphrase → sleutel, AES-GCM, IndexedDB).
+- **Centrale encrypted opslag** (passphrase → sleutel, AES-GCM payloads, centrale
+  user-scoped database; lokale vault alleen legacy/fallback).
 - **Trajectoverzicht & fasen** — waar zitten we, wat is de volgende stap.
 - **Agenda & afspraken** — afspraken vastleggen en zien.
 - **Medicatie- & injectieschema** — middelen, voorgeschreven dosis (zoals door de
@@ -37,7 +38,7 @@ datamodel-schets, keuzes vastgelegd als ADR's.
 - **Basis-kennisbank** — vaste NL-inhoud over fasen/leefstijl/kosten met disclaimer.
 - **Disclaimer** zichtbaar in de app.
 - **Mijlpaal M1:** een volledige cyclus is te plannen, te volgen en geen inname
-  wordt gemist; alle data staat versleuteld lokaal.
+  wordt gemist; alle gevoelige data staat versleuteld at rest.
 
 ## F2 — Nice-to-have
 
@@ -48,7 +49,7 @@ datamodel-schets, keuzes vastgelegd als ADR's.
 - **Symptoom-/cyclus-logging.**
 - **Research-bibliotheek** + **AI-samenvatting** (opt-in, met waarborgen).
 - **Dossieruploads** voor onderzoeken, beeldmateriaal, gespreksverslagen en
-  embryokwaliteit, lokaal versleuteld en koppelbaar aan trajectcontext.
+  embryokwaliteit, centraal encrypted en koppelbaar aan trajectcontext.
 - **Gedeelde modus** voor beide partners (twee profielen, één dataset).
 - **Afwegingen/beslisnotities** (Decision-entiteit).
 - **Mentale check-in.**
@@ -60,7 +61,7 @@ datamodel-schets, keuzes vastgelegd als ADR's.
 
 **Doel:** comfort en continuïteit over apparaten en cycli.
 
-- **E2E-versleutelde sync** tussen apparaten.
+- **Multi-device continuiteit** via centrale encrypted records tussen apparaten.
 - **PDF-export** voor het consult.
 - **Agenda-integratie (ICS).**
 - **Trends over meerdere cycli.**
@@ -75,7 +76,8 @@ datamodel-schets, keuzes vastgelegd als ADR's.
 
 ## 90-dagen plan (indicatief)
 
-- **Dag 1–14:** F0 afronden + opslag/versleuteling (F1-fundament) werkend.
+- **Dag 1–14:** F0 afronden + centrale encrypted opslag/versleuteling
+  (F1-fundament) werkend.
 - **Dag 15–45:** F1 traject/agenda/medicatie/herinneringen/vragen + kennisbank.
 - **Dag 46–90:** F1 afmaken + verfijnen, eerste F2-items (kosten, back-up/export).
 

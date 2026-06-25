@@ -1,0 +1,56 @@
+# ADR-0009: Centrale versleutelde data-architectuur
+
+Date: 2026-06-25
+
+## Status
+
+Accepted.
+
+## Context
+
+Kiempad begon als local-first PWA met een versleutelde IndexedDB-kluis per toestel.
+Dat gaf een sterke privacybasis, maar past niet meer bij de nieuwe eis dat data
+veilig beschikbaar moet zijn op meerdere apparaten zonder dat gebruikers per toestel
+een nieuwe kluis moeten opbouwen.
+
+Bestaande lokale kluizen hoeven niet gemigreerd te worden. De lokale kluis blijft
+alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
+
+## Decision
+
+- Nieuwe Kiempad-data gebruikt een **centrale encrypted database** als primaire
+  opslagrichting.
+- De centrale database bewaart per record alleen minimale clear indexvelden
+  (`id`, `type`, timestamps, schemaversie), de eigenaar (`ownerUserId`),
+  servermetadata en een versleutelde payload (`EncryptionEnvelope`).
+- Vrije tekst, medische/fertiliteitsinhoud, bijlagen, consultdata en andere
+  gevoelige velden mogen niet centraal in plaintext worden opgeslagen.
+- Toegang loopt via een expliciete **centrale sessie** (`userId`, `sessionId`,
+  geldigheid). De database accepteert alleen actieve sessies en dwingt
+  user-isolatie af.
+- De bestaande encryptielaag (`AES-256-GCM` envelopes) en repositoryvorm blijven
+  herbruikbaar via `CentralUserStorageDriver`.
+- Sleutelmetadata hoort bij de centrale gebruiker, niet bij een afzonderlijk
+  apparaat. Een tweede apparaat kan met dezelfde passphrase dezelfde centrale
+  encrypted records openen zonder lokale vault-hercreatie.
+
+## Consequences
+
+- Multi-device continuiteit wordt een primair architectuurpad.
+- De server/database blijft blind voor medische inhoud zolang de client payloads
+  correct versleutelt.
+- Er is nu een server-side access boundary nodig: auth/sessionvalidatie,
+  owner-scoping en veilige foutafhandeling.
+- Key recovery blijft beperkt: zonder juiste passphrase/keywrap is centrale data
+  niet ontsleutelbaar. Er komt geen herstelachterdeur.
+- ADR-0002 blijft geldig als beschrijving van de oude lokale kluis, maar is niet
+  langer het primaire model voor nieuwe data.
+
+## Implementation Notes
+
+- `src/storage/centralDatabase.ts` definieert het centrale databasecontract,
+  `MemoryCentralEncryptedDatabase` voor tests/prototype en
+  `CentralUserStorageDriver` als adapter naar het bestaande encrypted-storage
+  contract.
+- Productie-implementatie kan dezelfde interface later koppelen aan een echte
+  backend/API/database zonder domeinstores direct aan serverdetails te binden.

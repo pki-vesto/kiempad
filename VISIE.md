@@ -38,8 +38,8 @@ Kiempad slaagt als:
    betalen we zelf.
 5. We **belangrijke informatie en afwegingen terugvinden** wanneer we ze nodig
    hebben, met bron en — waar relevant — de markering of een arts het bevestigde.
-6. We erop **vertrouwen dat onze data privé blijft**: lokaal, versleuteld, niets naar
-   buiten zonder dat we daar bewust voor kiezen.
+6. We erop **vertrouwen dat onze data privé blijft**: centraal beschikbaar waar nodig,
+   maar versleuteld at rest en niets naar derden zonder dat we daar bewust voor kiezen.
 
 ## Wat de app moet helpen oplossen (kernproblemen)
 
@@ -53,13 +53,13 @@ Kiempad slaagt als:
 
 **In scope (MVP):** trajectoverzicht/fasen · agenda & afspraken · medicatie- en
 injectieschema · herinneringen · vragen-voor-de-arts · basis-kennisbank ·
-versleutelde lokale opslag · zichtbare disclaimer.
+centrale encrypted opslag · zichtbare disclaimer.
 
 **In scope (later, nice-to-have):** symptoom-/cyclus-logging · kosten-/vergoedingen-
 overzicht · research-bibliotheek met AI-samenvatting · gedeelde modus voor beide
 partners · afwegingen/beslisnotities · mentale check-in.
 
-**In scope (toekomst):** E2E-versleutelde sync tussen apparaten · PDF-export voor het
+**In scope (toekomst):** verdere multi-device syncverfijning · PDF-export voor het
 consult · agenda-integratie (ICS) · trends over meerdere cycli.
 
 De volledige, gefaseerde uitwerking staat in [`ROADMAP.md`](ROADMAP.md); de concrete,
