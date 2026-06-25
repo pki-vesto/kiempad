@@ -899,7 +899,7 @@ function renderBackupScreen(state: AppShellState): string {
           <p>${escapeHtml(reminder.tekst)}</p>
           ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
         </section>
-        ${renderWebAuthnSettings(state.webAuthnStatus)}
+        ${renderWebAuthnSettings(state)}
         <h2>Import</h2>
         <form id="import-backup-form" class="data-form">
           <label>
@@ -922,19 +922,23 @@ function renderBackupScreen(state: AppShellState): string {
   `;
 }
 
-function renderWebAuthnSettings(status?: WebAuthnViewStatus): string {
+function renderWebAuthnSettings(state: AppShellState): string {
+  const status = state.webAuthnStatus;
   if (!status) return '';
+  const central = isCentralStorage(state);
+  const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale kluis';
+  const keyLabel = central ? 'datasetsleutel' : 'kluissleutel';
 
   return `
     <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn">
       <h2>Biometrie/WebAuthn</h2>
-      <p>Optioneel ontgrendelgemak op dit toestel. Je passphrase blijft nodig als fallback en voor herstel via back-up.</p>
+      <p>Optioneel ontgrendelgemak op dit toestel voor je ${datasetLabel}. Je passphrase blijft nodig als fallback en voor herstel via back-up.</p>
       <dl class="summary-list">
         <div><dt>Status</dt><dd>${status.gekoppeld ? `Gekoppeld: ${escapeHtml(status.label ?? 'WebAuthn/biometrie')}` : 'Niet gekoppeld'}</dd></div>
         <div><dt>Browser</dt><dd>${escapeHtml(status.reden)}</dd></div>
       </dl>
       <button id="webauthn-enroll" class="phase-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>${status.gekoppeld ? 'WebAuthn opnieuw koppelen' : 'Koppel WebAuthn'}</button>
-      <p class="small-print">Kiempad gebruikt alleen lokale WebAuthn PRF-output om een kluissleutel versleuteld te bewaren; er gaat niets naar een server.</p>
+      <p class="small-print">Kiempad gebruikt alleen lokale WebAuthn PRF-output om de ${keyLabel} versleuteld te bewaren; er gaat geen PRF-output of passphrase naar een server.</p>
       ${status.status ? `<p class="linked-note">${escapeHtml(status.status)}</p>` : ''}
       ${status.error ? `<p class="form-error" role="alert">${escapeHtml(status.error)}</p>` : ''}
     </section>

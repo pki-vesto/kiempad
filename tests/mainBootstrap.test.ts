@@ -27,4 +27,15 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('centrale apparaten openen normaal dezelfde API-dataset');
     expect(mainSource).toContain('Recordpakket geïmporteerd in centrale dataset');
   });
+
+  it('houdt WebAuthn enrollment-labels storage-mode bewust', () => {
+    expect(mainSource).toContain('Kiempad centrale encrypted dataset');
+    expect(mainSource).toContain('Kiempad legacy lokale kluis');
+    expect(mainSource).toContain(
+      'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
+    );
+    expect(mainSource).toContain(
+      'Lokale PRF-keywrap toegevoegd voor centrale encrypted dataset; passphrase blijft fallback.',
+    );
+  });
 });
