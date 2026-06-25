@@ -13,6 +13,7 @@ import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import codexAutonomyAdr from '../docs/adr/0007-codex-autonoom-bouwen.md?raw';
 import backlogHealthJsonReference from '../docs/BACKLOG_HEALTH_JSON_REFERENCE.md?raw';
+import centralEncryptedBackend from '../docs/CENTRAL_ENCRYPTED_BACKEND.md?raw';
 import claudeDesignPrompt from '../docs/CLAUDE_DESIGN_PROMPT.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
@@ -30,6 +31,7 @@ import privacy from '../PRIVACY.md?raw';
 import backlog from '../PRODUCT_BACKLOG.md?raw';
 import readme from '../README.md?raw';
 import roadmap from '../ROADMAP.md?raw';
+import security from '../SECURITY.md?raw';
 import { DISCLAIMER } from '../src/appShell';
 import vision from '../VISION.md?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
@@ -301,6 +303,26 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(privacy).not.toContain('alle **gezondheidsdata** blijft **local-first');
     expect(privacy).not.toContain('data leeft lokaal');
+  });
+
+  it('documenteert row-store persistence als encrypted centrale databasegrens', () => {
+    for (const requiredTerm of [
+      'JsonTableCentralDatabasePersistence',
+      'KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store',
+      'KIEMPAD_CENTRAL_PERSISTENCE_DIR',
+      'manifest.json',
+      'JSONL-rijbestanden',
+      'AES-256-GCM',
+      '0600',
+      '0700',
+    ]) {
+      expect(centralEncryptedBackend).toContain(requiredTerm);
+    }
+
+    expect(readme).toContain('KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store');
+    expect(runbook).toContain('KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store');
+    expect(security).toContain('KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store');
+    expect(centralEncryptedBackend).not.toContain('plaintext databasegrens');
   });
 
   it('verankert de goal-completion-audit in de autonome mergeflow', () => {

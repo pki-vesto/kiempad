@@ -21,6 +21,12 @@ Voor centrale multi-device opslag:
 KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
 ```
 
+Gebruik row-store persistence als je metadata- en recordrijen apart wilt bewaren:
+
+```bash
+KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store KIEMPAD_CENTRAL_PERSISTENCE_DIR=/tmp/kiempad-central-rows npm run backend:central
+```
+
 Zet daarna in `.env`:
 
 ```bash

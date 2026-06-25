@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -64,6 +64,50 @@ describe('central backend CLI runtime', () => {
     expect(persistedText).not.toContain('cli runtime passphrase');
   });
 
+  it('start met row-store persistence vanuit env-config', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'kiempad-central-cli-row-store-'));
+    cleanupCallbacks.push(() => rm(directory, { recursive: true, force: true }));
+    const persistenceDirectory = join(directory, 'central-rows');
+
+    const runtime = await startCentralBackendFromEnv({
+      KIEMPAD_CENTRAL_HOST: '127.0.0.1',
+      KIEMPAD_CENTRAL_PORT: '0',
+      KIEMPAD_CENTRAL_PERSISTENCE_MODE: 'row-store',
+      KIEMPAD_CENTRAL_PERSISTENCE_DIR: persistenceDirectory,
+      KIEMPAD_CENTRAL_SESSION_TTL_MS: '60000',
+      KIEMPAD_CENTRAL_ALLOWED_USER_IDS: 'row-user',
+    });
+    cleanupCallbacks.push(runtime.close);
+
+    expect(runtime.persistenceMode).toBe('row-store');
+    expect(runtime.persistencePath).toBe(persistenceDirectory);
+    expect((await stat(persistenceDirectory)).mode & 0o777).toBe(0o700);
+
+    const ticket = await issueCentralFetchSession(runtime.url, { userId: 'row-user' });
+    const driver = new CentralFetchApiClientDriver(runtime.url, ticket.token);
+    const vault = new VaultSession(driver, { autoLockMs: 60_000 });
+    await vault.initializeOrUnlock('row-store runtime passphrase');
+
+    await new EncryptedRecordRepository<CliRecord>(driver, vault, 'dossier_document').saveWithId({
+      id: 'row-record',
+      titel: 'Row-store backend bewijs',
+      medischDetail: 'plaintext mag niet in row-store staan',
+    });
+
+    const persistedText = (
+      await Promise.all(
+        (
+          await readdir(persistenceDirectory)
+        ).map((file) => readFile(join(persistenceDirectory, file), 'utf8')),
+      )
+    ).join('\n');
+    expect(persistedText).toContain('"ownerUserId":"row-user"');
+    expect(persistedText).toContain('"alg":"AES-256-GCM"');
+    expect(persistedText).not.toContain('Row-store backend bewijs');
+    expect(persistedText).not.toContain('plaintext mag niet in row-store staan');
+    expect(persistedText).not.toContain('row-store runtime passphrase');
+  });
+
   it('weigert ongeldige env-config voordat de listener start', async () => {
     await expect(
       startCentralBackendFromEnv({
@@ -88,6 +132,12 @@ describe('central backend CLI runtime', () => {
         KIEMPAD_CENTRAL_ALLOWED_USER_IDS: ' , ',
       }),
     ).rejects.toThrow('Centrale sessie-allowlist vereist minimaal één user id.');
+
+    await expect(
+      startCentralBackendFromEnv({
+        KIEMPAD_CENTRAL_PERSISTENCE_MODE: 'sqlite',
+      }),
+    ).rejects.toThrow('KIEMPAD_CENTRAL_PERSISTENCE_MODE');
   });
 
   it('staat standaard alleen de private Kiempad-user toe voor sessie-uitgifte', async () => {
