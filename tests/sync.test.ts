@@ -103,7 +103,7 @@ describe('versleutelde syncpakketten', () => {
     ).rejects.toThrow('Syncpakketintegriteit');
   });
 
-  it('weigert syncpakketten van een andere kluis', async () => {
+  it('weigert syncpakketten van een andere dataset', async () => {
     const { sourceDriver } = await setupSyncedDrivers();
     const otherDriver = new MemoryEncryptedStorageDriver();
     const otherSession = new VaultSession(otherDriver, { autoLockMs: 60_000 });
@@ -111,7 +111,10 @@ describe('versleutelde syncpakketten', () => {
 
     const syncText = await maakVersleuteldSyncPakket(sourceDriver, '2026-06-23T12:00:00.000Z');
     await expect(importeerVersleuteldSyncPakket(otherDriver, syncText)).rejects.toThrow(
-      'andere Kiempad-kluis',
+      'andere Kiempad-dataset',
+    );
+    await expect(importeerVersleuteldSyncPakket(otherDriver, syncText)).rejects.not.toThrow(
+      'apparaten te koppelen',
     );
   });
 });

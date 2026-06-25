@@ -56,7 +56,7 @@ export async function importeerVersleuteldSyncPakket(
   const localVault = await syncVaultFingerprint(driver);
   if (JSON.stringify(localVault) !== JSON.stringify(file.vault)) {
     throw new Error(
-      'Syncpakket hoort bij een andere Kiempad-kluis. Gebruik eerst een versleutelde back-up om apparaten te koppelen.',
+      'Syncpakket hoort bij een andere Kiempad-dataset. Import is alleen bedoeld voor dezelfde encrypted dataset; gebruik een volledige versleutelde back-up/export als je een dataset opnieuw wilt opzetten.',
     );
   }
 
