@@ -2497,7 +2497,9 @@ describe('app shell', () => {
     expect(html).toContain('Biometrie/WebAuthn');
     expect(html).toContain('id="webauthn-enroll"');
     expect(html).toContain('Niet gekoppeld');
-    expect(html).toContain('niets naar een server');
+    expect(html).toContain('Optioneel ontgrendelgemak op dit toestel voor je legacy lokale kluis');
+    expect(html).toContain('kluissleutel versleuteld te bewaren');
+    expect(html).toContain('geen PRF-output of passphrase naar een server');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
     expect(html).toContain('.kiempad-sync');
@@ -2530,6 +2532,39 @@ describe('app shell', () => {
     expect(html).toContain('Importeer recordpakket');
     expect(html).not.toContain('via een versleutelde back-up aan dezelfde kluis');
     expect(html).not.toContain('Download syncpakket');
+  });
+
+  it('rendert WebAuthn-copy voor de centrale encrypted dataset', () => {
+    const html = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      storageMode: 'central-api',
+      webAuthnStatus: {
+        runtimeBeschikbaar: true,
+        reden: 'Browser meldt WebAuthn',
+        gekoppeld: true,
+        label: 'Kiempad centrale encrypted dataset',
+        status:
+          'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
+      },
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Gekoppeld: Kiempad centrale encrypted dataset');
+    expect(html).toContain(
+      'Optioneel ontgrendelgemak op dit toestel voor je centrale encrypted dataset',
+    );
+    expect(html).toContain('datasetsleutel versleuteld te bewaren');
+    expect(html).toContain('geen PRF-output of passphrase naar een server');
+    expect(html).toContain(
+      'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
+    );
+    expect(html).not.toContain('Gekoppeld: Kiempad lokale kluis');
   });
 
   it('rendert de laatst bekende back-updatum en periodieke aanmoediging', () => {

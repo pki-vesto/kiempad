@@ -906,25 +906,35 @@ async function unlockWithWebAuthn(root: HTMLElement, state: RuntimeState): Promi
 
 async function enrollWebAuthnUnlock(root: HTMLElement, state: RuntimeState): Promise<void> {
   try {
-    const enrollment = await koppelWebAuthnPrf('Kiempad lokale kluis');
+    const label =
+      state.storageMode === 'central-api'
+        ? 'Kiempad centrale encrypted dataset'
+        : 'Kiempad legacy lokale kluis';
+    const enrollment = await koppelWebAuthnPrf(label);
     const metadata = await state.session.enableWebAuthnUnlock({
       credentialId: enrollment.credentialId,
       prfSalt: enrollment.prfSalt,
       prfSecret: enrollment.prfSecret,
-      label: 'Kiempad lokale kluis',
+      label,
     });
 
     state.webAuthnStatus = {
       ...(await buildWebAuthnStatus(state.session)),
       gekoppeld: true,
       label: metadata.label,
-      status: 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak.',
+      status:
+        state.storageMode === 'central-api'
+          ? 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.'
+          : 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je legacy lokale kluis.',
       error: undefined,
     };
     await state.eventLogStore?.record({
       categorie: 'kluis',
       gebeurtenis: 'WebAuthn ontgrendelgemak gekoppeld',
-      detail: 'Lokale PRF-keywrap toegevoegd; passphrase blijft fallback.',
+      detail:
+        state.storageMode === 'central-api'
+          ? 'Lokale PRF-keywrap toegevoegd voor centrale encrypted dataset; passphrase blijft fallback.'
+          : 'Lokale PRF-keywrap toegevoegd voor legacy lokale kluis; passphrase blijft fallback.',
     });
     state.eventLogs = (await state.eventLogStore?.list()) ?? state.eventLogs;
   } catch (error: unknown) {
