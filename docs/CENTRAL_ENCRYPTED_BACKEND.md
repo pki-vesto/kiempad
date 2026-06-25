@@ -122,7 +122,10 @@ fetches doet. Zet deze API niet direct publiek op internet.
 ## Security Boundary
 
 - Clients sturen geen ownerclaims per recordrequest. Alleen het opaque bearer token
-  gaat mee.
+  gaat mee. De Node HTTP-boundary accepteert alleen strikt gevormde
+  `Authorization: Bearer <token>` headers; malformed, lege of unsupported
+  Authorization headers worden behandeld als ontbrekende credentials en krijgen de
+  bestaande `401` auth-fout.
 - Browserclients sturen centrale API-requests zonder ambient credentials en zonder
   browsercache (`credentials: omit`, `cache: no-store`).
 - Browserclients accepteren alleen JSON-mediasoorten voor succesvolle centrale

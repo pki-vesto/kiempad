@@ -43,6 +43,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Centrale API-sessies** gebruiken opaque tokens. De client levert geen
   `userId`/ownerclaim per recordrequest aan; de server resolveert het token naar een
   actieve `CentralAuthSession` en weigert forged, verlopen of ingetrokken tokens.
+  De Node HTTP-boundary accepteert alleen strikt gevormde
+  `Authorization: Bearer <token>` headers; malformed, lege of unsupported
+  Authorization headers worden behandeld als ontbrekende credentials.
   Sessie-uitgifte is daarnaast beperkt tot server-side toegestane user ids; de
   frontend-configuratie is geen autoriteit. Een expliciet geconfigureerde
   user-allowlist moet minimaal één niet-lege user id bevatten en faalt anders
