@@ -290,13 +290,14 @@ function parseEncryptedRecordBody(body: unknown): EncryptedRecord {
   }
 
   if (
-    typeof body.createdAt !== 'string' ||
-    typeof body.updatedAt !== 'string' ||
-    typeof body.schemaVersion !== 'number' ||
+    !isIsoTimestamp(body.createdAt) ||
+    !isIsoTimestamp(body.updatedAt) ||
+    !isPositiveInteger(body.schemaVersion) ||
     !isRecord(body.payload) ||
+    body.payload.v !== 1 ||
     body.payload.alg !== 'AES-256-GCM' ||
-    typeof body.payload.iv !== 'string' ||
-    typeof body.payload.ciphertext !== 'string'
+    !isNonEmptyString(body.payload.iv) ||
+    !isNonEmptyString(body.payload.ciphertext)
   ) {
     throw new CentralHttpBadRequestError('Record-body mist encrypted envelope.');
   }
@@ -320,4 +321,18 @@ function extractErrorMessage(body: unknown): string {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
+}
+
+function isIsoTimestamp(value: unknown): value is string {
+  if (typeof value !== 'string' || !value.trim()) return false;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString() === value;
+}
+
+function isPositiveInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value > 0;
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
 }

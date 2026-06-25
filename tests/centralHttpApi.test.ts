@@ -174,6 +174,48 @@ describe('central encrypted HTTP API contract', () => {
     ).rejects.toBeInstanceOf(CentralHttpBadRequestError);
   });
 
+  it('weigert malformed recordbodies vóór centrale database-mutatie', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const token = await issueToken(api, 'user-peter');
+    const validRecord = {
+      id: 'malformed-http-record',
+      type: 'traject',
+      createdAt: '2026-06-25T08:00:00.000Z',
+      updatedAt: '2026-06-25T08:00:01.000Z',
+      schemaVersion: 1,
+      payload: {
+        v: 1,
+        alg: 'AES-256-GCM',
+        iv: 'encrypted-iv',
+        ciphertext: 'encrypted-ciphertext',
+      },
+    };
+
+    for (const body of [
+      { ...validRecord, createdAt: '2026-06-25T08:00:00Z' },
+      { ...validRecord, updatedAt: 'niet-een-datum' },
+      { ...validRecord, schemaVersion: 0 },
+      { ...validRecord, schemaVersion: 1.5 },
+      { ...validRecord, payload: { ...validRecord.payload, v: 2 } },
+      { ...validRecord, payload: { ...validRecord.payload, iv: '' } },
+      { ...validRecord, payload: { ...validRecord.payload, ciphertext: '' } },
+    ]) {
+      await expect(
+        api.handle({
+          method: 'PUT',
+          path: `/records/${validRecord.id}`,
+          token,
+          body,
+        }),
+      ).resolves.toMatchObject({ status: 400 });
+    }
+
+    expect(database.unsafeDumpRecordsForTest()).toEqual([]);
+  });
+
   it('weigert absolute of protocol-relative API-paden aan de HTTP-contractgrens', async () => {
     const api = new CentralEncryptedHttpApi(
       new CentralEncryptedApiServer(
