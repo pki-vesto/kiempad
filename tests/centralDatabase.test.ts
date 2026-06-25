@@ -187,6 +187,28 @@ describe('central encrypted database architecture', () => {
     expect(database.unsafeDumpMetaForTest()).toEqual([]);
   });
 
+  it('houdt centrale keymetadata owner-scoped bij dezelfde technische metakey', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const ownerCrypto = createCryptoMeta('owner');
+    const partnerCrypto = createCryptoMeta('partner');
+
+    await database.putMeta(userA, 'crypto', ownerCrypto);
+    await database.putMeta(userB, 'crypto', partnerCrypto);
+
+    await expect(database.getMeta(userA, 'crypto')).resolves.toEqual(ownerCrypto);
+    await expect(database.getMeta(userB, 'crypto')).resolves.toEqual(partnerCrypto);
+    await expect(database.listMeta(userA)).resolves.toEqual([
+      { key: 'crypto', value: ownerCrypto },
+    ]);
+    await expect(database.listMeta(userB)).resolves.toEqual([
+      { key: 'crypto', value: partnerCrypto },
+    ]);
+    expect(database.unsafeDumpMetaForTest()).toEqual([
+      expect.objectContaining({ ownerUserId: userA.userId, key: 'crypto', value: ownerCrypto }),
+      expect.objectContaining({ ownerUserId: userB.userId, key: 'crypto', value: partnerCrypto }),
+    ]);
+  });
+
   it('weigert malformed centrale recordwrites vóór runtime-mutatie', async () => {
     const database = new MemoryCentralEncryptedDatabase();
 
@@ -246,6 +268,29 @@ function createEncryptedRecord(id: string): EncryptedRecord {
       alg: 'AES-256-GCM',
       iv: `encrypted-iv-${id}`,
       ciphertext: `encrypted-ciphertext-${id}`,
+    },
+  };
+}
+
+function createCryptoMeta(label: string): {
+  version: 1;
+  kdf: string;
+  iterations: number;
+  salt: string;
+  createdAt: string;
+  verifier: EncryptedRecord['payload'];
+} {
+  return {
+    version: 1,
+    kdf: 'PBKDF2-SHA256',
+    iterations: 310_000,
+    salt: `salt-${label}`,
+    createdAt: '2026-06-25T08:00:00.000Z',
+    verifier: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `encrypted-verifier-iv-${label}`,
+      ciphertext: `encrypted-verifier-ciphertext-${label}`,
     },
   };
 }

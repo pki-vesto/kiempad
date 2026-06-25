@@ -32,7 +32,9 @@ owner/indexmetadata en encrypted envelopes.
   centrale runtime-state.
   Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
   `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
-  persistence geweigerd.
+  persistence geweigerd. Die technische metadata is owner-scoped: dezelfde metakey
+  kan voor meerdere users bestaan, maar `getMeta` en `listMeta` tonen alleen waarden
+  binnen de actieve centrale sessie en blijven na persistence-restart gescheiden.
 - `JsonFileCentralDatabasePersistence` is de eerste concrete server-side adapter.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op

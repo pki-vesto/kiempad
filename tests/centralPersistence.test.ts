@@ -29,6 +29,12 @@ const testSession: CentralAuthSession = {
   issuedAt: '2026-06-25T08:00:00.000Z',
 };
 
+const partnerSession: CentralAuthSession = {
+  userId: 'user-partner',
+  sessionId: 'session-partner',
+  issuedAt: '2026-06-25T08:00:00.000Z',
+};
+
 describe('central encrypted database persistence', () => {
   it('laadt encrypted records en keymetadata opnieuw na een serverrestart', async () => {
     const persistence = new MemoryCentralDatabasePersistence();
@@ -160,6 +166,29 @@ describe('central encrypted database persistence', () => {
     await expect(
       wrongKeyVault.initializeOrUnlock('verkeerde persisted passphrase'),
     ).rejects.toThrow('Passphrase klopt niet');
+  });
+
+  it('behoudt owner-scoped keymetadata met dezelfde metakey na reload', async () => {
+    const persistence = new MemoryCentralDatabasePersistence();
+    const database = await PersistedCentralEncryptedDatabase.open(persistence);
+    const ownerCrypto = createCryptoMeta('owner');
+    const partnerCrypto = createCryptoMeta('partner');
+
+    await database.putMeta(testSession, 'crypto', ownerCrypto);
+    await database.putMeta(partnerSession, 'crypto', partnerCrypto);
+
+    const reopened = await PersistedCentralEncryptedDatabase.open(persistence);
+
+    await expect(reopened.getMeta(testSession, 'crypto')).resolves.toEqual(ownerCrypto);
+    await expect(reopened.getMeta(partnerSession, 'crypto')).resolves.toEqual(partnerCrypto);
+    await expect(reopened.listMeta(testSession)).resolves.toEqual([
+      { key: 'crypto', value: ownerCrypto },
+    ]);
+    await expect(reopened.listMeta(partnerSession)).resolves.toEqual([
+      { key: 'crypto', value: partnerCrypto },
+    ]);
+    expect(persistence.unsafeSerializedSnapshotForTest()).toContain('"ownerUserId":"user-peter"');
+    expect(persistence.unsafeSerializedSnapshotForTest()).toContain('"ownerUserId":"user-partner"');
   });
 
   it('maakt een gefaalde record-save niet zichtbaar in de draaiende centrale runtime', async () => {
@@ -372,5 +401,28 @@ function createSchemaMeta(): {
     version: 1,
     createdAt: '2026-06-25T08:00:00.000Z',
     updatedAt: '2026-06-25T08:00:01.000Z',
+  };
+}
+
+function createCryptoMeta(label: string): {
+  version: 1;
+  kdf: string;
+  iterations: number;
+  salt: string;
+  createdAt: string;
+  verifier: EncryptedRecord['payload'];
+} {
+  return {
+    version: 1,
+    kdf: 'PBKDF2-SHA256',
+    iterations: 310_000,
+    salt: `salt-${label}`,
+    createdAt: '2026-06-25T08:00:00.000Z',
+    verifier: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `encrypted-verifier-iv-${label}`,
+      ciphertext: `encrypted-verifier-ciphertext-${label}`,
+    },
   };
 }
