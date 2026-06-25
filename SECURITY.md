@@ -110,11 +110,12 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   file-backed snapshots worden geladen of opgeslagen. Centrale metadata is beperkt
   tot `crypto`, `schema` en `webauthn-unlock`; dossierinhoud hoort in encrypted
   records, niet in vrije meta-values.
-  File-backed saves gebruiken een tijdelijk snapshotbestand voor replacement en
-  flushen dat bestand vóór atomische replacement. Na replacement wordt de
-  parent-directory best-effort gesynct; bij write-, flush- of replace-fouten wordt
-  het tijdelijke bestand best-effort verwijderd. Tijdelijke en finale
-  snapshotbestanden worden met private `0600` permissies geschreven.
+  File-backed saves gebruiken een random, exclusief aangemaakt tijdelijk
+  snapshotbestand voor replacement en flushen dat bestand vóór atomische replacement.
+  Na replacement wordt de parent-directory best-effort gesynct; bij write-, flush-
+  of replace-fouten worden alleen zelf aangemaakte tijdelijke bestanden best-effort
+  verwijderd. Tijdelijke en finale snapshotbestanden worden met private `0600`
+  permissies geschreven.
 - **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
   deployment hardening horen bij de productiehost. Request bodies worden begrensd
