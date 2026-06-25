@@ -147,7 +147,10 @@ type RuntimeState = {
 
 function render(root: HTMLElement, state: RuntimeState): void {
   if (!state.session.isUnlocked()) {
-    root.innerHTML = renderVaultGate(state.hasVault, state.error, state.webAuthnStatus);
+    root.innerHTML = renderVaultGate(state.hasVault, state.error, state.webAuthnStatus, {
+      storageMode: state.storageMode,
+      storageLabel: state.storageLabel,
+    });
     bindVaultForm(root, state);
     bindWebAuthnUnlock(root, state);
     return;
