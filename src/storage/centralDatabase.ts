@@ -66,9 +66,7 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
 
   constructor(snapshot?: CentralDatabaseSnapshot) {
     if (!snapshot) return;
-    if (snapshot.version !== 1) {
-      throw new Error('Onbekende centrale database snapshotversie.');
-    }
+    assertValidCentralDatabaseSnapshot(snapshot);
 
     for (const entry of snapshot.meta) {
       this.meta.set(metaKey(entry.ownerUserId, entry.key), cloneJson(entry));
@@ -158,10 +156,12 @@ export class MemoryCentralDatabasePersistence implements CentralDatabasePersiste
   private snapshot: CentralDatabaseSnapshot | undefined;
 
   async load(): Promise<CentralDatabaseSnapshot | undefined> {
+    if (this.snapshot) assertValidCentralDatabaseSnapshot(this.snapshot);
     return this.snapshot ? cloneJson(this.snapshot) : undefined;
   }
 
   async save(snapshot: CentralDatabaseSnapshot): Promise<void> {
+    assertValidCentralDatabaseSnapshot(snapshot);
     this.snapshot = cloneJson(snapshot);
   }
 
@@ -271,6 +271,97 @@ export function assertActiveCentralSession(session: CentralAuthSession): void {
   if (session.expiresAt && Date.parse(session.expiresAt) <= Date.now()) {
     throw new CentralSessionError();
   }
+}
+
+const STORED_RECORD_TYPES = new Set<StoredRecordType>([
+  'traject',
+  'fase',
+  'afspraak',
+  'medicatie',
+  'dose_log',
+  'herinnering',
+  'vraag',
+  'kennis_item',
+  'cost_item',
+  'symptom_log',
+  'cycle_data',
+  'mental_check_in',
+  'decision',
+  'event_log',
+  'dossier_document',
+  'consult_verslag',
+  'settings',
+  'system',
+]);
+
+export function assertValidCentralDatabaseSnapshot(
+  snapshot: unknown,
+): asserts snapshot is CentralDatabaseSnapshot {
+  if (!isRecord(snapshot) || snapshot.version !== 1) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+  if (typeof snapshot.exportedAt !== 'string' || !snapshot.exportedAt.trim()) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+  if (!Array.isArray(snapshot.meta) || !Array.isArray(snapshot.records)) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+
+  for (const entry of snapshot.meta) {
+    assertValidCentralStorageMeta(entry);
+  }
+  for (const record of snapshot.records) {
+    assertValidCentralEncryptedRecord(record);
+  }
+}
+
+function assertValidCentralStorageMeta(entry: unknown): asserts entry is CentralStorageMeta {
+  if (!isRecord(entry)) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+  if (
+    !isNonEmptyString(entry.ownerUserId) ||
+    !isNonEmptyString(entry.key) ||
+    !isNonEmptyString(entry.updatedAt)
+  ) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+}
+
+function assertValidCentralEncryptedRecord(
+  record: unknown,
+): asserts record is CentralEncryptedRecord {
+  if (!isRecord(record)) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+  if (
+    !isNonEmptyString(record.ownerUserId) ||
+    !isNonEmptyString(record.id) ||
+    !isNonEmptyString(record.createdAt) ||
+    !isNonEmptyString(record.updatedAt) ||
+    !isNonEmptyString(record.storedAt) ||
+    typeof record.schemaVersion !== 'number' ||
+    !Number.isFinite(record.schemaVersion) ||
+    typeof record.serverVersion !== 'number' ||
+    !Number.isFinite(record.serverVersion) ||
+    typeof record.type !== 'string' ||
+    !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
+    !isRecord(record.payload) ||
+    record.payload.v !== 1 ||
+    record.payload.alg !== 'AES-256-GCM' ||
+    !isNonEmptyString(record.payload.iv) ||
+    !isNonEmptyString(record.payload.ciphertext)
+  ) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 
 function metaKey(userId: string, key: string): string {
