@@ -169,7 +169,8 @@ describe('app shell', () => {
     expect(html).toContain('Richt Kiempad rustig in');
     expect(html).toContain('id="first-run-complete-form"');
     expect(html).toContain('id="first-run-skip-form"');
-    expect(html).toContain('data blijft lokaal');
+    expect(html).toContain('legacy lokale kluis');
+    expect(html).toContain('Configureer de centrale API');
     expect(html).toContain('href="#backup"');
     expect(html).toContain('aria-label="Vandaag command center"');
     expect(html).toContain('Nu eerst');
@@ -226,6 +227,20 @@ describe('app shell', () => {
     expect(html).toContain('Vragen voor de arts');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('beschrijft centrale encrypted opslag als primaire eerste setup wanneer actief', () => {
+    const html = renderAppShell(
+      'start',
+      makeStartState({
+        storageMode: 'central-api',
+        storageLabel: 'Centrale encrypted API',
+      }),
+    );
+
+    expect(html).toContain('client-side versleuteld en centraal bewaard');
+    expect(html).toContain('centrale encrypted dataset');
+    expect(html).not.toContain('Configureer de centrale API');
   });
 
   it('toont een dagelijks command center met urgentie, later-vandaag en context', () => {
@@ -785,7 +800,7 @@ describe('app shell', () => {
     expect(html).toContain('Nodes');
     expect(html).toContain('Relaties');
     expect(html).toContain('Graph-index rebuild');
-    expect(html).toContain('Opnieuw opgebouwd uit lokale kluisrecords');
+    expect(html).toContain('Opnieuw opgebouwd uit ontgrendelde encrypted datasetrecords');
     expect(html).toContain('Bronrecords');
     expect(html).toContain('Controlehash');
     expect(html).toContain('originele versleutelde records worden niet overschreven');
@@ -1505,7 +1520,7 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
     expect(html).toContain('Previewstatus: Thumbnail en preview beschikbaar');
     expect(html).toContain('alt="Lokale thumbnail van Echo 6 weken"');
-    expect(html).toContain('Thumbnail uit ontgrendelde lokale kluis.');
+    expect(html).toContain('Thumbnail uit ontgrendelde encrypted dataset.');
     expect(html).toContain(
       'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
     );

@@ -32,6 +32,16 @@ Start de centrale backend op localhost:
 KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
 ```
 
+Koppel de PWA in `.env` aan deze backend:
+
+```bash
+VITE_KIEMPAD_CENTRAL_API_URL=http://127.0.0.1:8099
+VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
+```
+
+`VITE_KIEMPAD_CENTRAL_USER_ID` is geen secret; het is de private owner-scope voor
+deze één-stel-app. De passphrase blijft de sleutel voor de encrypted payloads.
+
 Standaardwaarden:
 
 - `KIEMPAD_CENTRAL_HOST=127.0.0.1`

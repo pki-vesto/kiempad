@@ -418,7 +418,7 @@ describe('fertility knowledge graph', () => {
     expect(weergave.waarschuwing).toContain('geen causaliteit');
   });
 
-  it('herbouwt de graph-index uit ontsleutelde kluisrecords zonder bronrecords te wijzigen', () => {
+  it('herbouwt de graph-index uit ontsleutelde datasetrecords zonder bronrecords te wijzigen', () => {
     const document = {
       id: 'doc-1',
       datum: '2026-06-24',
@@ -478,7 +478,7 @@ describe('fertility knowledge graph', () => {
       nodeAantal: resultaat.graph.nodes.length,
       relatieAantal: resultaat.graph.edges.length,
       dataverliesControle:
-        'Index is opnieuw afgeleid uit ontsleutelde kluisrecords; originele versleutelde records worden niet overschreven.',
+        'Index is opnieuw afgeleid uit ontsleutelde datasetrecords; originele versleutelde records worden niet overschreven.',
     });
     expect(resultaat.rapport.controleHash).toMatch(/^[0-9a-f]{8}$/);
     expect(resultaat.graph.edges).toEqual(

@@ -1,9 +1,10 @@
 # CSP Violation Workflow
 
-Kiempad gebruikt een local-first Content Security Policy in `index.html`. CSP
+Kiempad gebruikt een strikte Content Security Policy in `index.html`. CSP
 overtredingen kunnen wijzen op een regressie in scripts, assets, connecties of
 browserextensies. De diagnose blijft standaard lokaal: Kiempad verstuurt geen CSP
-reports naar een remote endpoint.
+reports naar een remote endpoint. `connect-src` staat de eigen origin en lokale
+development-endpoints toe voor Vite, service worker en de centrale encrypted backend.
 
 Kernregel: geen CSP reports naar een remote endpoint.
 

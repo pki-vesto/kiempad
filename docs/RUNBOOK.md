@@ -1,7 +1,7 @@
 # Kiempad — RUNBOOK
 
-> Praktische, operationele handleiding. Kiempad is local-first; "operations" is
-> bewust klein.
+> Praktische, operationele handleiding. Kiempad gebruikt centrale encrypted opslag
+> voor nieuwe multi-device data; legacy lokale opslag blijft fallback.
 
 ## Local run
 
@@ -13,7 +13,22 @@ npm run dev              # of: make dev  — Vite dev-server (poort uit KIEMPAD_
 
 Open de app in de browser; "installeer" hem als PWA voor offline gebruik en
 notificaties. Bij eerste start kies je een **passphrase** (zie SECURITY.md) waarmee
-de lokale data versleuteld wordt.
+de payloads client-side versleuteld worden.
+
+Voor centrale multi-device opslag:
+
+```bash
+KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
+```
+
+Zet daarna in `.env`:
+
+```bash
+VITE_KIEMPAD_CENTRAL_API_URL=http://127.0.0.1:8099
+VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
+```
+
+Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
 
 ## Health checks
 
@@ -36,8 +51,8 @@ de lokale data versleuteld wordt.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Opslag:** data leesbaar na ontgrendelen, onleesbaar zonder passphrase.
-- **Privacy-rook­test:** in de netwerk-tab is er **geen** verkeer naar derden tenzij
-  je AI/sync bewust hebt aangezet.
+- **Privacy-rook­test:** in de netwerk-tab is er alleen verkeer naar de eigen
+  centrale API en geen verkeer naar derden, tenzij je AI bewust hebt aangezet.
 
 ## Core workflow demo
 

@@ -95,6 +95,11 @@ en blijft ook centraal **versleuteld at rest**.
   aan `node:http`, `MemoryCentralSessionStore` en file-backed
   `JsonFileCentralDatabasePersistence`. `CentralFetchApiClientDriver` gebruikt echte
   HTTP/fetch calls en blijft compatibel met de bestaande encrypted repositories.
+- **Client bootstrap:** `openClientStorage` kiest bij
+  `VITE_KIEMPAD_CENTRAL_API_URL` de centrale fetch-driver en vraagt een opaque
+  sessietoken aan. Ontbreekt die URL, dan opent de app expliciet de legacy
+  IndexedDB-driver. Bij een geconfigureerde maar falende centrale sessie is er geen
+  stille lokale fallback, zodat nieuwe data niet per ongeluk weer device-only wordt.
 - **Versleuteling:** **AES-256-GCM** per record. De client versleutelt payloads voor
   persistente opslag; de centrale laag ziet alleen encrypted envelopes plus minimale
   indexmetadata.

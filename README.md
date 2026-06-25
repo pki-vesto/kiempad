@@ -136,6 +136,17 @@ De centrale encrypted API kan lokaal apart gestart worden:
 KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
 ```
 
+Koppel de PWA aan die API via `.env`:
+
+```bash
+VITE_KIEMPAD_CENTRAL_API_URL=http://127.0.0.1:8099
+VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
+```
+
+Als `VITE_KIEMPAD_CENTRAL_API_URL` ontbreekt, start de app bewust in de legacy
+lokale IndexedDB-kluis. Als de centrale URL wel gezet is maar sessie-uitgifte faalt,
+valt de app niet stilletjes terug naar lokaal.
+
 Voor een containerwrapper:
 
 ```bash
@@ -148,7 +159,7 @@ Details en beveiligingsnotities staan in
 ## Architecture Summary
 
 - **Client-side PWA** in TypeScript (Vite), met een centrale encrypted data-API als
-  nieuwe opslagrichting.
+  primaire opslagrichting wanneer `VITE_KIEMPAD_CENTRAL_API_URL` is ingesteld.
 - **Centrale encrypted opslag/API:** minimale server-side indexmetadata plus
   **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
   een passphrase). API-toegang loopt via opaque sessietokens; de server resolveert
@@ -160,10 +171,11 @@ Details en beveiligingsnotities staan in
 - **Node backend boundary:** `createCentralNodeHttpServer` wiret de centrale API,
   sessies en file-backed persistence over `node:http`; zie
   [`docs/CENTRAL_ENCRYPTED_BACKEND.md`](docs/CENTRAL_ENCRYPTED_BACKEND.md).
-- **CSP:** `index.html` bevat een local-first Content Security Policy die scripts en
-  netwerkverbindingen standaard tot de eigen origin beperkt.
+- **CSP:** `index.html` bevat een strikte Content Security Policy die scripts tot de
+  eigen origin beperkt en alleen de eigen origin plus localhost-connecties toestaat.
 - **Legacy/back-up:** lokale IndexedDB-vault en versleutelde export/import blijven
-  beschikbaar als compatibiliteit en fallback.
+  beschikbaar als expliciete legacy/fallback wanneer geen centrale API is
+  geconfigureerd.
 - **Ontgrendelen:** passphrase als basis; optioneel WebAuthn/biometrie via lokale
   PRF-keywrap als gemak op ondersteunde HTTPS/localhost-browsers.
 - **AI (optioneel, opt-in):** alleen op expliciet verzoek; samenvatten van research

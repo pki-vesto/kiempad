@@ -340,6 +340,8 @@ export type AppShellState = {
   dailyRecommendationStatus?: string;
   webAuthnStatus?: WebAuthnViewStatus;
   inAppFallbackNotifications?: InAppFallbackNotification[];
+  storageMode?: 'central-api' | 'legacy-indexeddb';
+  storageLabel?: string;
 };
 
 export type WebAuthnViewStatus = {
@@ -374,6 +376,10 @@ export function renderAppShell(
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
   const screenContent = renderScreenContent(activeId, activeScreen, state);
+  const storageStatus =
+    state.storageMode === 'central-api'
+      ? 'Centrale encrypted opslag'
+      : 'Legacy lokaal · geen tracking';
 
   return `
     <div class="app-shell" data-theme="${escapeAttribute(state.settings.thema)}">
@@ -387,7 +393,7 @@ export function renderAppShell(
             <small>IVF/ICSI overzicht</small>
           </span>
         </a>
-        <p class="status-pill">Local-first · geen tracking</p>
+        <p class="status-pill">${storageStatus}</p>
         <form id="theme-form" class="theme-form" aria-label="Weergavethema">
           <label>
             Thema
@@ -1076,7 +1082,7 @@ function renderDossierScreen(state: AppShellState): string {
         </form>
         ${
           zoekterm
-            ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde lokale kluis.</p>`
+            ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde encrypted dataset.</p>`
             : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
         }
         <h2>Consultverslagen</h2>
@@ -1218,7 +1224,7 @@ function renderImagingRepositoryItem(
     item.previewState.status === 'thumbnail' && item.mimeType?.startsWith('image/')
       ? `<figure class="linked-note imaging-thumbnail">
           <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale thumbnail van ${escapeAttribute(item.titel)}" loading="lazy" />
-          <figcaption>Thumbnail uit ontgrendelde lokale kluis.</figcaption>
+          <figcaption>Thumbnail uit ontgrendelde encrypted dataset.</figcaption>
         </figure>`
       : '';
   const preview =
@@ -2806,15 +2812,16 @@ function renderDailyCommandGroup(
 
 function renderFirstRunSetup(state: AppShellState): string {
   if (!shouldShowFirstRunSetup(state)) return '';
+  const central = state.storageMode === 'central-api';
 
   return `
     <section class="summary-panel setup-panel" aria-labelledby="first-run-setup-title">
       <p class="eyebrow">Eerste keer</p>
       <h2 id="first-run-setup-title">Richt Kiempad rustig in</h2>
-      <p>Deze stappen blijven lokaal op dit toestel. Kiempad verstuurt niets en maakt geen medische keuzes.</p>
+      <p>${central ? 'Deze stappen worden client-side versleuteld en centraal bewaard voor gekoppelde apparaten.' : 'Deze stappen blijven in de legacy lokale kluis op dit toestel. Configureer de centrale API voor multi-device continuiteit.'} Kiempad maakt geen medische keuzes.</p>
       <ol class="compact-list setup-steps">
-        <li><strong>Kluis:</strong> je lokale versleutelde kluis is ontgrendeld.</li>
-        <li><strong>Privacygrens:</strong> data blijft lokaal; AI, researchnetwerk en sync blijven opt-in.</li>
+        <li><strong>Dataset:</strong> je ${central ? 'centrale encrypted dataset' : 'legacy lokale encrypted dataset'} is ontgrendeld.</li>
+        <li><strong>Privacygrens:</strong> medische inhoud blijft versleuteld; AI en researchnetwerk blijven opt-in.</li>
         <li><strong>Traject:</strong> <a href="#traject">maak de eerste poging of cyclus aan</a>.</li>
         <li><strong>Afspraak:</strong> <a href="#agenda">leg de eerste afspraak vast</a>.</li>
         <li><strong>Back-up:</strong> <a href="#backup">zet een versleutelde back-up op je checklist</a>.</li>
@@ -4233,7 +4240,7 @@ function renderGraphIndexRebuildRapport(rapport: FertilityGraphIndexRebuildRappo
     <section class="policy-panel embedded-summary" aria-label="Graph-index rebuild">
       <h3>Graph-index rebuild</h3>
       <dl class="summary-list">
-        <div><dt>Status</dt><dd>Opnieuw opgebouwd uit lokale kluisrecords</dd></div>
+        <div><dt>Status</dt><dd>Opnieuw opgebouwd uit ontgrendelde encrypted datasetrecords</dd></div>
         <div><dt>Bronrecords</dt><dd>${rapport.bronRecordIds.length}</dd></div>
         <div><dt>Controlehash</dt><dd>${escapeHtml(rapport.controleHash)}</dd></div>
         <div><dt>Voorstellen</dt><dd>${rapport.voorstelAantal}</dd></div>
