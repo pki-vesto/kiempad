@@ -70,7 +70,9 @@ geen stille legacy fallback. De sessie-TTL komt alleen uit serverconfiguratie
 TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij nieuwe
 sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie. De fetch-client
 gebruikt voor centrale API-requests expliciet `credentials: omit` en
-`cache: no-store`; authenticatie loopt alleen via bearer tokens.
+`cache: no-store`; authenticatie loopt alleen via bearer tokens. Succesvolle
+fetch-responses moeten een `application/json` of `+json` mediatype hebben en
+parsebaar JSON bevatten; anders faalt de client als centrale API-contractfout.
 
 Standaardwaarden:
 
@@ -116,6 +118,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   gaat mee.
 - Browserclients sturen centrale API-requests zonder ambient credentials en zonder
   browsercache (`credentials: omit`, `cache: no-store`).
+- Browserclients accepteren alleen JSON-mediasoorten voor succesvolle centrale
+  fetch-responses en mappen non-JSON of malformed JSON success responses naar een
+  centrale API-contractfout.
 - Browserrequests met een `Origin` buiten `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` worden
   `403` vóór body parsing en vóór API-side effects. Requests zonder `Origin` blijven
   bruikbaar voor lokale/server-side tooling.
