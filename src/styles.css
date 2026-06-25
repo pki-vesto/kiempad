@@ -1115,6 +1115,69 @@ h2 {
   gap: 16px;
 }
 
+.start-command-layout {
+  gap: 18px;
+}
+
+.start-command-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 0 2px;
+}
+
+.start-command-header__date {
+  margin: 0 0 6px;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+
+.start-command-header h1 {
+  max-width: none;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.start-command-header p:last-child {
+  max-width: 58ch;
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.partner-orbits {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-width: 68px;
+  min-height: 48px;
+  padding-top: 4px;
+}
+
+.partner-orbits span {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--page-bg);
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.partner-orbits span + span {
+  margin-left: -11px;
+  background: var(--category);
+}
+
+.daily-command-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) repeat(2, minmax(180px, 0.8fr));
+  gap: 12px;
+}
+
+.daily-command-actions .panel-heading {
+  margin-bottom: 12px;
+}
+
 .page-header {
   margin-bottom: 4px;
 }
@@ -1210,6 +1273,13 @@ a.action-card:hover {
 
 a.action-card:active {
   transform: scale(0.99);
+}
+
+.start-next-step-board .action-card,
+.daily-command-actions .action-card {
+  min-height: 68px;
+  padding: 16px;
+  background: var(--surface-raised);
 }
 
 .action-card__tile {
@@ -1665,6 +1735,61 @@ a.action-card:active {
   gap: 10px;
 }
 
+.daily-recommendation-list {
+  display: grid;
+  gap: 12px;
+}
+
+.daily-recommendation-list .embedded-summary {
+  min-height: 0;
+  margin: 0;
+}
+
+.daily-recommendation-items {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.daily-recommendation-item {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-tile);
+  background: var(--surface-raised);
+}
+
+.daily-recommendation-item > strong {
+  color: var(--text-strong);
+}
+
+.daily-recommendation-item > span,
+.daily-recommendation-item small {
+  overflow-wrap: anywhere;
+}
+
+.daily-recommendation-action-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 8px;
+}
+
+.daily-recommendation-action-form label {
+  flex: 1 1 180px;
+  min-width: min(100%, 180px);
+}
+
+.daily-recommendation-action-form .phase-button {
+  flex: 0 1 auto;
+  width: auto;
+  min-height: 36px;
+  padding: 7px 12px;
+}
+
 /* Desktop: left sidebar (brand + controls + vertical nav) | content */
 @media (min-width: 900px) {
   .app-shell {
@@ -1809,6 +1934,14 @@ a.action-card:active {
   }
 
   .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .start-command-header {
+    align-items: start;
+  }
+
+  .daily-command-board {
     grid-template-columns: 1fr;
   }
 

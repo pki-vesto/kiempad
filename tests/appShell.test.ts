@@ -158,6 +158,12 @@ describe('app shell', () => {
   it('rendert het startscherm met concrete volgende-stapblokken en lege-staten', () => {
     const html = renderAppShell('start');
 
+    expect(html).toContain('class="section-stack start-command-layout"');
+    expect(html).toContain('class="start-command-header"');
+    expect(html).toContain('aria-label="Gedeelde modus"');
+    expect(html).toContain('class="daily-command-board"');
+    expect(html).not.toContain('class="page-header"');
+    expect(html).not.toContain('Vandaag op Kiempad');
     expect(html).toContain('Welkom bij Kiempad');
     expect(html).toContain('Richt Kiempad rustig in');
     expect(html).toContain('id="first-run-complete-form"');
@@ -176,6 +182,8 @@ describe('app shell', () => {
     expect(html).toContain('id="quick-entry-form"');
     expect(html).toContain('name="quickText" required');
     expect(html).toContain('Dagelijkse aanbevelingen');
+    expect(html).toContain('class="daily-recommendation-list"');
+    expect(html).toContain('class="daily-recommendation-items"');
     expect(html).toContain('Dagelijkse aanbevelingen Vrouw');
     expect(html).toContain('Dagelijkse aanbevelingen Man');
     expect(html).toContain('Dagelijkse aanbevelingen Samen');

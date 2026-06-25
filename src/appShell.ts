@@ -407,7 +407,15 @@ export function renderAppShell(
       </div>
 
       <main class="content" id="inhoud" tabindex="-1">
-        ${pageHeader({ title: activeScreen.title, intro: activeScreen.intro, titleId: 'screen-title' })}
+        ${
+          activeId === 'start'
+            ? ''
+            : pageHeader({
+                title: activeScreen.title,
+                intro: activeScreen.intro,
+                titleId: 'screen-title',
+              })
+        }
 
         ${screenContent}
       </main>
@@ -2584,7 +2592,7 @@ function renderStartScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      renderFirstRunSetup(state),
+      renderStartCommandHeader(state),
       phaseHeroCard(
         huidigeFase
           ? {
@@ -2606,27 +2614,8 @@ function renderStartScreen(state: AppShellState): string {
             },
       ),
       renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
-      card({
-        title: 'Volgende stap',
-        body: `<div class="action-card-list">${actionCard({
-          title: nextAppointment,
-          subtitle: 'Volgende afspraak',
-          href: '#agenda',
-          iconName: 'calendar',
-        })}${actionCard({
-          title: nextReminder,
-          subtitle: 'Herinnering',
-          href: '#herinneringen',
-          iconName: 'bell',
-          tone: 'amber',
-        })}${actionCard({
-          title: openQuestions,
-          subtitle: 'Vragen voor de arts',
-          href: '#vragen',
-          iconName: 'question',
-          tone: 'category',
-        })}</div>`,
-      }),
+      renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
+      renderFirstRunSetup(state),
       card({
         body: `${
           state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
@@ -2634,8 +2623,67 @@ function renderStartScreen(state: AppShellState): string {
       }),
       disclosure({ summary: 'Snelle invoer', body: renderQuickEntryForm() }),
     ],
-    { ariaLabel: 'Startoverzicht' },
+    { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartCommandHeader(state: AppShellState): string {
+  const activeTraject = state.trajecten[0];
+  const huidigeFase = activeTraject ? bepaalHuidigeFase(activeTraject.fasen) : undefined;
+  const dateLabel = new Intl.DateTimeFormat('nl-NL', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  }).format(new Date());
+  const title = activeTraject ? 'Hoi Peter & partner' : 'Welkom bij Kiempad';
+  const subtitle = huidigeFase
+    ? `${activeTraject?.traject.naam ?? 'Traject'} · ${TRAJECT_FASE_LABELS[huidigeFase.fase]}`
+    : activeTraject
+      ? activeTraject.traject.naam
+      : 'Maak rustig de eerste cyclus aan; daarna wordt dit jullie dagelijkse command center.';
+
+  return `
+    <header class="start-command-header" aria-labelledby="screen-title">
+      <div>
+        <p class="start-command-header__date">${escapeHtml(dateLabel)}</p>
+        <h1 id="screen-title">${escapeHtml(title)}</h1>
+        <p>${escapeHtml(subtitle)}</p>
+      </div>
+      <div class="partner-orbits" aria-label="Gedeelde modus">
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+  `;
+}
+
+function renderStartNextStepBoard(
+  nextAppointment: string,
+  nextReminder: string,
+  openQuestions: string,
+): string {
+  return card({
+    title: 'Volgende stap',
+    className: 'start-next-step-board',
+    body: `<div class="action-card-list">${actionCard({
+      title: nextAppointment,
+      subtitle: 'Volgende afspraak',
+      href: '#agenda',
+      iconName: 'calendar',
+    })}${actionCard({
+      title: nextReminder,
+      subtitle: 'Herinnering',
+      href: '#herinneringen',
+      iconName: 'bell',
+      tone: 'amber',
+    })}${actionCard({
+      title: openQuestions,
+      subtitle: 'Vragen voor de arts',
+      href: '#vragen',
+      iconName: 'question',
+      tone: 'category',
+    })}</div>`,
+  });
 }
 
 function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: string): string {
@@ -2702,11 +2750,39 @@ function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: 
     <section class="summary-panel command-center" aria-label="Vandaag command center">
       <h2>Vandaag</h2>
       <p class="small-print">Een lokaal takenoverzicht op basis van agenda, medicatie, vragen, herinneringen en context. Kiempad geeft geen medisch advies.</p>
-      <div class="dashboard-grid">
-        ${renderDailyCommandGroup('Nu eerst', urgentItems, 'Geen urgente taken voor vandaag.')}
+      <div class="daily-command-board">
+        ${renderDailyCommandActions(urgentItems)}
         ${renderDailyCommandGroup('Later vandaag', laterItems, 'Geen extra taken later vandaag.')}
         ${renderDailyCommandGroup('Context', contextItems, 'Nog geen traject- of dossiercontext voor vandaag.')}
       </div>
+    </section>
+  `;
+}
+
+function renderDailyCommandActions(items: readonly string[]): string {
+  return `
+    <section class="policy-panel embedded-summary daily-command-actions">
+      <div class="panel-heading">
+        <h3>Nu eerst</h3>
+        <span class="status-pill">${items.length > 0 ? `${items.length} open` : 'Rustig'}</span>
+      </div>
+      ${
+        items.length > 0
+          ? `<div class="action-card-list">${items
+              .map((item, index) => {
+                const isAppointment = item.includes('Afspraak');
+                const isMedication = item.includes('Medicatie') || item.includes('medicatie');
+                return actionCard({
+                  title: item,
+                  subtitle: index === 0 ? 'Hoogste aandacht' : 'Vandaag',
+                  href: isAppointment ? '#agenda' : isMedication ? '#medicatie' : '#herinneringen',
+                  iconName: isAppointment ? 'calendar' : isMedication ? 'pill' : 'bell',
+                  tone: index === 0 ? 'sage' : 'info',
+                });
+              })
+              .join('')}</div>`
+          : '<p class="empty-state">Geen urgente taken voor vandaag.</p>'
+      }
     </section>
   `;
 }
@@ -2786,7 +2862,7 @@ function renderDailyRecommendations(overview: DailyRecommendationOverview): stri
   return `
     <h2>Dagelijkse aanbevelingen</h2>
     <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
-    <div class="dashboard-grid">
+    <div class="daily-recommendation-list">
       ${(['vrouw', 'man', 'samen'] as const)
         .map((owner) => renderDailyRecommendationGroup(owner, overview[owner]))
         .join('')}
@@ -2801,7 +2877,7 @@ function renderDailyRecommendationGroup(
   return `
     <section class="policy-panel embedded-summary" aria-label="Dagelijkse aanbevelingen ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}">
       <h3>${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}</h3>
-      <ol class="compact-list">
+      <ol class="daily-recommendation-items">
         ${items.map(renderDailyRecommendationItem).join('')}
       </ol>
     </section>
@@ -2810,7 +2886,7 @@ function renderDailyRecommendationGroup(
 
 function renderDailyRecommendationItem(item: DailyRecommendation): string {
   return `
-    <li>
+    <li class="daily-recommendation-item">
       <strong>${escapeHtml(item.titel)}</strong>
       <span>${escapeHtml(item.detail)}</span>
       ${
