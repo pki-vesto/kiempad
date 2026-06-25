@@ -5,6 +5,7 @@
 > roadmap is daarom productgericht en gefaseerd, **MVP eerst**. De fasenummers hier
 > (F0–F4) komen één-op-één terug als de `fase`-kolom in
 > [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md).
+> De product- en platformrichting staat in [`VISION.md`](VISION.md).
 
 ## 0. Kernprincipe
 
