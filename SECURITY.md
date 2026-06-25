@@ -46,7 +46,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   Sessie-uitgifte is daarnaast beperkt tot server-side toegestane user ids; de
   frontend-configuratie is geen autoriteit.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
-  `401`, cross-user recordtoegang wordt `403`, malformed payloads worden `400`.
+  `401`, record-id's buiten de owner-namespace gedragen zich als ontbrekende records
+  (`404`) en malformed payloads worden `400`.
 - Eén-stel-app: geen rollenmodel naar buiten. In de **gedeelde modus** zijn er twee
   profielen (`peter`/`partner`) op dezelfde, gezamenlijk versleutelde dataset —
   vertrouwensgrens ligt bij het stel, niet tussen de partners.
@@ -95,8 +96,8 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
   serveraccount en geen passphrase-opslag.
 - [x] Auto-lock na inactiviteit.
 - [x] Geen tracking/analytics/ads; geen third-party scripts.
-- [x] Centrale encrypted database-foundation met per-user isolatie en encrypted
-  recordpayloads.
+- [x] Centrale encrypted database-foundation met owner+record-id namespacing,
+  per-user isolatie en encrypted recordpayloads.
 - [x] Opaque centrale API-sessietokens met expiry/revoke en server-side tokenresolutie.
 - [x] HTTP-style centraal API-contract met veilige statuscodes en clientdriver voor
   encrypted storage access.

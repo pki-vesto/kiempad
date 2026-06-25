@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  CentralAccessDeniedError,
   type CentralAuthSession,
   CentralSessionError,
   CentralUserStorageDriver,
@@ -92,7 +91,7 @@ describe('central encrypted database architecture', () => {
     });
   });
 
-  it('weigert centrale recordtoegang voor een andere gebruiker', async () => {
+  it('houdt centrale record-id namespaces per gebruiker gescheiden', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const ownerDriver = new CentralUserStorageDriver(database, userA);
     const ownerSession = new VaultSession(ownerDriver, { autoLockMs: 60_000 });
@@ -116,9 +115,33 @@ describe('central encrypted database architecture', () => {
       'traject',
     );
 
-    await expect(otherRepository.get('traject-private')).rejects.toBeInstanceOf(
-      CentralAccessDeniedError,
-    );
+    await expect(otherRepository.get('traject-private')).resolves.toBeUndefined();
+
+    await otherRepository.saveWithId({
+      id: 'traject-private',
+      naam: 'Zelfde id, andere gebruiker',
+      notitie: 'eigen namespace',
+    });
+
+    await expect(otherRepository.get('traject-private')).resolves.toMatchObject({
+      value: {
+        id: 'traject-private',
+        naam: 'Zelfde id, andere gebruiker',
+        notitie: 'eigen namespace',
+      },
+    });
+    await expect(
+      new EncryptedRecordRepository<TestTraject>(ownerDriver, ownerSession, 'traject').get(
+        'traject-private',
+      ),
+    ).resolves.toMatchObject({
+      value: {
+        id: 'traject-private',
+        naam: 'Alleen eigenaar',
+        notitie: 'niet zichtbaar voor andere gebruiker',
+      },
+    });
+    expect(database.unsafeDumpRecordsForTest()).toHaveLength(2);
   });
 
   it('faalt veilig bij verkeerde sleutel, vergrendelde sessie en verlopen centrale sessie', async () => {

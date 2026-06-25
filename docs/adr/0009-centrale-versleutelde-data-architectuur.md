@@ -62,7 +62,7 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
   `CentralEncryptedApiClientDriver`.
 - `src/storage/centralHttpApi.ts` definieert het HTTP-style API-contract:
   sessie-uitgifte/intrekken, metadata, encrypted records en veilige statuscodes voor
-  unauthorized, forbidden en malformed requests.
+  unauthorized, ontbrekende records binnen de owner-namespace en malformed requests.
 - `src/server/centralNodeRuntime.ts` en `src/server/centralFilePersistence.ts`
   leveren de eerste concrete Node backend boundary met `node:http` en file-backed
   encrypted snapshots. `src/storage/centralFetchClient.ts` is de fetch-based client

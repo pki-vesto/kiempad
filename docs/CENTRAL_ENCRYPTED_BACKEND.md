@@ -88,7 +88,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Clients sturen geen ownerclaims per recordrequest. Alleen het opaque bearer token
   gaat mee.
 - Forged, verlopen of ingetrokken tokens worden `401`.
-- Cross-user recordtoegang wordt `403`.
+- Records worden server-side op owner+record-id genamespaced; een record-id buiten
+  de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
 - Malformed JSON of ongeldige recordpayloads worden `400`.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,

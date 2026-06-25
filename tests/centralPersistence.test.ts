@@ -6,7 +6,6 @@ import {
   MemoryCentralSessionStore,
 } from '../src/storage/centralApi';
 import {
-  CentralAccessDeniedError,
   MemoryCentralDatabasePersistence,
   PersistedCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
@@ -70,7 +69,7 @@ describe('central encrypted database persistence', () => {
     });
   });
 
-  it('behoudt user-isolatie en verkeerde-sleutel falen na reload', async () => {
+  it('behoudt user-isolatie en owner-namespaced record-id collisions na reload', async () => {
     const persistence = new MemoryCentralDatabasePersistence();
     const server = new CentralEncryptedApiServer(
       await PersistedCentralEncryptedDatabase.open(persistence),
@@ -81,9 +80,23 @@ describe('central encrypted database persistence', () => {
     const ownerVault = new VaultSession(ownerDriver, { autoLockMs: 60_000 });
     await ownerVault.initializeOrUnlock('owner persisted passphrase');
     await new EncryptedRecordRepository<TestRecord>(ownerDriver, ownerVault, 'traject').saveWithId({
-      id: 'owner-persistent-record',
+      id: 'shared-persistent-record-id',
       titel: 'Eigen persistent record',
       gevoeligeNotitie: 'niet voor andere gebruiker',
+    });
+
+    const partnerTicket = await server.issueSession({ userId: 'user-partner' });
+    const partnerDriver = new CentralEncryptedApiClientDriver(server, partnerTicket.token);
+    const partnerVault = new VaultSession(partnerDriver, { autoLockMs: 60_000 });
+    await partnerVault.initializeOrUnlock('andere persisted passphrase');
+    await new EncryptedRecordRepository<TestRecord>(
+      partnerDriver,
+      partnerVault,
+      'traject',
+    ).saveWithId({
+      id: 'shared-persistent-record-id',
+      titel: 'Partner persistent record',
+      gevoeligeNotitie: 'eigen centrale namespace',
     });
 
     const restartedServer = new CentralEncryptedApiServer(
@@ -100,9 +113,32 @@ describe('central encrypted database persistence', () => {
       'traject',
     );
 
-    await expect(otherRepository.get('owner-persistent-record')).rejects.toBeInstanceOf(
-      CentralAccessDeniedError,
+    await expect(otherRepository.get('shared-persistent-record-id')).resolves.toMatchObject({
+      value: {
+        id: 'shared-persistent-record-id',
+        titel: 'Partner persistent record',
+        gevoeligeNotitie: 'eigen centrale namespace',
+      },
+    });
+
+    const ownerReloadTicket = await restartedServer.issueSession({ userId: 'user-peter' });
+    const ownerReloadDriver = new CentralEncryptedApiClientDriver(
+      restartedServer,
+      ownerReloadTicket.token,
     );
+    const ownerReloadVault = new VaultSession(ownerReloadDriver, { autoLockMs: 60_000 });
+    await ownerReloadVault.initializeOrUnlock('owner persisted passphrase');
+    await expect(
+      new EncryptedRecordRepository<TestRecord>(ownerReloadDriver, ownerReloadVault, 'traject').get(
+        'shared-persistent-record-id',
+      ),
+    ).resolves.toMatchObject({
+      value: {
+        id: 'shared-persistent-record-id',
+        titel: 'Eigen persistent record',
+        gevoeligeNotitie: 'niet voor andere gebruiker',
+      },
+    });
 
     const wrongKeyTicket = await restartedServer.issueSession({ userId: 'user-peter' });
     const wrongKeyDriver = new CentralEncryptedApiClientDriver(
