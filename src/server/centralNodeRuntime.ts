@@ -51,6 +51,10 @@ export async function handleCentralNodeRequest(
     sendPreflightResponse(response, corsResult);
     return;
   }
+  if (corsResult === 'disallowed') {
+    sendJson(response, 403, { error: 'cors-origin-not-allowed' });
+    return;
+  }
 
   const method = normalizeMethod(request.method);
   if (!method) {

@@ -94,6 +94,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
 
 - Clients sturen geen ownerclaims per recordrequest. Alleen het opaque bearer token
   gaat mee.
+- Browserrequests met een `Origin` buiten `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` worden
+  `403` vóór body parsing en vóór API-side effects. Requests zonder `Origin` blijven
+  bruikbaar voor lokale/server-side tooling.
 - Forged, verlopen of ingetrokken tokens worden `401`.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.

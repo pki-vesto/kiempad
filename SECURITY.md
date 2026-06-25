@@ -78,7 +78,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   standaard alleen op `127.0.0.1`; HTTPS hoort via Tailscale Serve of een reverse
   proxy voor de API te eindigen. Browser-CORS wordt met een exacte
   `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` allowlist afgehandeld; gebruik geen wildcard
-  voor deze API. Centrale API-responses krijgen `Cache-Control: no-store`,
+  voor deze API. Origins buiten de allowlist worden server-side `403` vóór body
+  parsing en API-side effects. Centrale API-responses krijgen `Cache-Control: no-store`,
   `Pragma: no-cache`, `X-Content-Type-Options: nosniff` en
   `Referrer-Policy: no-referrer` aan de Node HTTP-boundary.
 - **Persistence volume:** behandel `data/central/` of `/data` als gevoelig. De

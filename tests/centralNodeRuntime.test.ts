@@ -203,6 +203,59 @@ describe('central encrypted Node backend runtime', () => {
     await rm(directory, { recursive: true, force: true });
   });
 
+  it('weigert actual requests van niet-toegestane origins vóór sessie-uitgifte of persistence', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, {
+      allowedOrigins: ['http://localhost:5173'],
+    });
+
+    const response = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: {
+        origin: 'https://evil.example',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+
+    expect(response.status).toBe(403);
+    expect(response.headers.get('access-control-allow-origin')).toBeNull();
+    expect(await response.json()).toEqual({ error: 'cors-origin-not-allowed' });
+    await expect(readFile(persistenceFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
+  it('laat actual requests van toegestane origins en no-origin tooling requests door', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, {
+      allowedOrigins: ['http://localhost:5173'],
+    });
+
+    const allowedResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: {
+        origin: 'http://localhost:5173',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+    expect(allowedResponse.status).toBe(201);
+    expect(allowedResponse.headers.get('access-control-allow-origin')).toBe(
+      'http://localhost:5173',
+    );
+
+    const toolingResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+    expect(toolingResponse.status).toBe(201);
+    expect(toolingResponse.headers.get('access-control-allow-origin')).toBeNull();
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
   it('zet no-store security headers op sessies, preflight en 204 API responses', async () => {
     const { directory, persistenceFile } = await createTempPersistence();
     const server = await startRuntime(persistenceFile, {
