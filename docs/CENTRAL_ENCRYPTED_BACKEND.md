@@ -14,9 +14,10 @@ owner/indexmetadata en encrypted envelopes.
   - `GET|PUT|DELETE /records/:id`
   - `GET /records?type=...`
   De contractlaag accepteert alleen origin-form paden; absolute of
-  protocol-relative URL's worden als ongeldig API-pad geweigerd. `PUT /records/:id`
-  valideert recordbody's vóór database-mutatie op canonieke ISO-timestamps,
-  positieve `schemaVersion` en een complete `AES-256-GCM` envelope.
+  protocol-relative URL's en malformed percent-encoded paden worden als ongeldig
+  API-pad geweigerd. `PUT /records/:id` valideert recordbody's vóór
+  database-mutatie op canonieke ISO-timestamps, positieve `schemaVersion` en een
+  complete `AES-256-GCM` envelope.
 - `CentralEncryptedApiServer` resolveert opaque tokens naar actieve sessies.
 - `PersistedCentralEncryptedDatabase` bewaart encrypted database snapshots via een
   `CentralDatabasePersistence` adapter. Muterende operaties lopen door een interne
@@ -121,6 +122,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Forged, verlopen of ingetrokken tokens worden `401`.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
+- Malformed API-paden, inclusief malformed percent-encoding in path segments, worden
+  `400` en bereiken geen database-mutatie.
 - Request bodies moeten `Content-Type: application/json` of een `+json` mediatype
   gebruiken; andere non-empty bodytypes worden `415` vóór JSON parsing en API-side
   effects.

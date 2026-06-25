@@ -238,4 +238,38 @@ describe('central encrypted HTTP API contract', () => {
       api.handle({ method: 'GET', path: '/records/known-id', token }),
     ).resolves.toMatchObject({ status: 404 });
   });
+
+  it('weigert malformed encoded API-paden als clientfout zonder database-mutatie', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const token = await issueToken(api, 'user-peter');
+
+    await expect(api.handle({ method: 'GET', path: '/records/%E0%A4%A', token })).resolves.toEqual({
+      status: 400,
+      body: { error: 'Centraal Kiempad API-pad bevat ongeldige encoding.' },
+    });
+    await expect(
+      api.handle({
+        method: 'PUT',
+        path: '/records/%E0%A4%A',
+        token,
+        body: {
+          id: 'malformed-path-record',
+          type: 'traject',
+          createdAt: '2026-06-25T08:00:00.000Z',
+          updatedAt: '2026-06-25T08:00:01.000Z',
+          schemaVersion: 1,
+          payload: {
+            v: 1,
+            alg: 'AES-256-GCM',
+            iv: 'encrypted-iv',
+            ciphertext: 'encrypted-ciphertext',
+          },
+        },
+      }),
+    ).resolves.toMatchObject({ status: 400 });
+    expect(database.unsafeDumpRecordsForTest()).toEqual([]);
+  });
 });

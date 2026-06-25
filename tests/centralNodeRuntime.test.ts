@@ -172,6 +172,27 @@ describe('central encrypted Node backend runtime', () => {
     await rm(directory, { recursive: true, force: true });
   });
 
+  it('weigert malformed encoded API-paden met 400 zonder runtime 500 of persistence write', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile);
+    const ticket = await issueCentralFetchSession(server.baseUrl, {
+      userId: 'user-peter',
+    });
+
+    const response = await fetch(`${server.baseUrl}/records/%E0%A4%A`, {
+      headers: { authorization: `Bearer ${ticket.token}` },
+    });
+
+    expect(response.status).toBe(400);
+    expectSecurityHeaders(response);
+    expect(await response.json()).toEqual({
+      error: 'Centraal Kiempad API-pad bevat ongeldige encoding.',
+    });
+    await expect(readFile(persistenceFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
   it('accepteert centrale API request bodies onder de ingestelde limiet', async () => {
     const { directory, persistenceFile } = await createTempPersistence();
     const server = await startRuntime(persistenceFile, { maxRequestBodyBytes: 1024 });

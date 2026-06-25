@@ -80,7 +80,7 @@ export class CentralEncryptedHttpApi {
 
   private async route(request: CentralHttpRequest): Promise<CentralHttpResponse> {
     const { pathname, searchParams } = parseApiPath(request.path);
-    const segments = pathname.split('/').filter(Boolean).map(decodeURIComponent);
+    const segments = parsePathSegments(pathname);
 
     if (request.method === 'POST' && pathname === '/sessions') {
       const ticket = await this.server.issueSession(parseSessionIssueInput(request.body));
@@ -260,6 +260,14 @@ function parseApiPath(path: string): URL {
   } catch (_error) {
     if (_error instanceof CentralHttpBadRequestError) throw _error;
     throw new CentralHttpBadRequestError('Ongeldig centraal Kiempad API-pad.');
+  }
+}
+
+function parsePathSegments(pathname: string): string[] {
+  try {
+    return pathname.split('/').filter(Boolean).map(decodeURIComponent);
+  } catch (_error) {
+    throw new CentralHttpBadRequestError('Centraal Kiempad API-pad bevat ongeldige encoding.');
   }
 }
 
