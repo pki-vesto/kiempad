@@ -18,7 +18,8 @@ owner/indexmetadata en encrypted envelopes.
   `CentralDatabasePersistence` adapter.
 - `JsonFileCentralDatabasePersistence` is de eerste concrete server-side adapter.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
-  medische/fertiliteitsinhoud.
+  medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
+  ownermetadata, bekende recordtypes, servermetadata en `AES-256-GCM` envelopes.
 - `createCentralNodeHttpServer` in `src/server/centralNodeRuntime.ts` wiret de
   persistence, session store, database, API-server en `node:http` samen.
 - `src/server/centralBackendCli.ts` is het startbare Node-entrypoint voor lokale
@@ -92,6 +93,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
 - Malformed JSON of ongeldige recordpayloads worden `400`.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
+- File-backed snapshots met ontbrekende owner/servermetadata, onbekende recordtypes
+  of plaintext/malformed payloads worden geweigerd vóór de database ze opent.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.

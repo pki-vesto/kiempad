@@ -5,6 +5,7 @@ import type {
   CentralDatabasePersistence,
   CentralDatabaseSnapshot,
 } from '../storage/centralDatabase';
+import { assertValidCentralDatabaseSnapshot } from '../storage/centralDatabase';
 
 export class JsonFileCentralDatabasePersistence implements CentralDatabasePersistence {
   constructor(private readonly filePath: string) {}
@@ -32,10 +33,8 @@ export class JsonFileCentralDatabasePersistence implements CentralDatabasePersis
 }
 
 function parseSnapshot(text: string): CentralDatabaseSnapshot {
-  const parsed = JSON.parse(text) as CentralDatabaseSnapshot;
-  if (parsed.version !== 1 || !Array.isArray(parsed.records) || !Array.isArray(parsed.meta)) {
-    throw new Error('Ongeldige centrale database snapshot.');
-  }
+  const parsed = JSON.parse(text) as unknown;
+  assertValidCentralDatabaseSnapshot(parsed);
   return parsed;
 }
 
