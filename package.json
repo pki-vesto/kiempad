@@ -19,6 +19,7 @@
     "goals:score": "node scripts/goal-score.mjs",
     "drill:backup": "vitest run tests/backupRestoreDrill.test.ts",
     "smoke:offline": "node scripts/offline-smoke.mjs",
+    "smoke:central": "node scripts/central-browser-smoke.mjs",
     "backend:central": "tsx src/server/centralBackendCli.ts",
     "deploy:tailscale": "scripts/deploy-tailscale.sh",
     "smoke:tailscale": "scripts/smoke-tailscale.sh",

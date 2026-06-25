@@ -54,6 +54,10 @@ Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.
+- **Centrale browser smoke:** `npm run smoke:central` start een tijdelijke centrale
+  backend, bouwt de PWA met `VITE_KIEMPAD_CENTRAL_API_URL`, opent de app in
+  Playwright en verifieert dat een UI-write als encrypted settings-record in de
+  centrale persistence staat.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Opslag:** data leesbaar na ontgrendelen, onleesbaar zonder passphrase.
