@@ -126,7 +126,10 @@ en blijft ook centraal **versleuteld at rest**.
   herstelachterdeur: zonder passphrase/keywrap blijft data onleesbaar.
 - **Legacy/local compatibility:** de oude IndexedDB-kluis blijft als legacy of offline
   fallback bestaan. Bestaande lokale kluizen hoeven niet gemigreerd te worden; nieuwe
-  gebruikers horen het centrale encrypted pad te gebruiken.
+  gebruikers horen het centrale encrypted pad te gebruiken. Copy die opslaglocatie
+  beschrijft is storage-mode bewust: centrale modus noemt de centrale encrypted
+  dataset, terwijl echte on-device verwerking zoals OCR, browser-AI, notificaties en
+  downloads expliciet lokaal mag blijven heten.
 
 Detail en bedreigingsmodel: [`SECURITY.md`](SECURITY.md). Beslissingen:
 [`docs/adr/0002-local-first-versleutelde-opslag.md`](docs/adr/0002-local-first-versleutelde-opslag.md)

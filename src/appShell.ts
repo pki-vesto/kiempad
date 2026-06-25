@@ -376,6 +376,8 @@ export function renderAppShell(
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
   const screenContent = renderScreenContent(activeId, activeScreen, state);
+  const screenTitle = storageAwareScreenTitle(activeScreen, state);
+  const screenIntro = storageAwareScreenIntro(activeScreen, state);
   const storageStatus =
     state.storageMode === 'central-api'
       ? 'Centrale encrypted opslag'
@@ -417,8 +419,8 @@ export function renderAppShell(
           activeId === 'start'
             ? ''
             : pageHeader({
-                title: activeScreen.title,
-                intro: activeScreen.intro,
+                title: screenTitle,
+                intro: screenIntro,
                 titleId: 'screen-title',
               })
         }
@@ -427,6 +429,41 @@ export function renderAppShell(
       </main>
     </div>
   `;
+}
+
+function isCentralStorage(state: AppShellState): boolean {
+  return state.storageMode === 'central-api';
+}
+
+function storageAwareScreenTitle(screen: Screen, state: AppShellState): string {
+  if (screen.id === 'logboek' && isCentralStorage(state)) return 'Gebeurtenissenlog';
+  return screen.title;
+}
+
+function storageAwareScreenIntro(screen: Screen, state: AppShellState): string {
+  if (screen.id === 'dossier') {
+    return isCentralStorage(state)
+      ? 'Upload historische onderzoeken en bewaar bestandsanalyse in je centrale encrypted dataset.'
+      : 'Upload historische onderzoeken en bewaar bestandsanalyse in de legacy lokale encrypted dataset.';
+  }
+  if (screen.id === 'logboek') {
+    return isCentralStorage(state)
+      ? 'Bekijk privacyrelevante gebeurtenissen uit je centrale encrypted dataset.'
+      : screen.intro;
+  }
+  return screen.intro;
+}
+
+function beschrijfEncryptedRecordLocatie(state: AppShellState): string {
+  return isCentralStorage(state)
+    ? 'centraal encrypted bewaard voor gekoppelde apparaten'
+    : 'in de legacy lokale encrypted dataset op dit toestel bewaard';
+}
+
+function beschrijfOntgrendeldeDataset(state: AppShellState): string {
+  return isCentralStorage(state)
+    ? 'ontgrendelde centrale encrypted dataset'
+    : 'ontgrendelde legacy lokale encrypted dataset';
 }
 
 export function renderVaultGate(
@@ -608,19 +645,24 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
 
 function renderLogboekScreen(state: AppShellState): string {
   const logs = state.eventLogs ?? [];
+  const body = isCentralStorage(state)
+    ? `Dit logboek staat in je centrale encrypted dataset en toont alleen privacyrelevante gebeurtenisdetails. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`
+    : `Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
 
   return sectionStack(
     [
       card({
         title: 'Gebeurtenissen',
-        body: `<p>Dit logboek blijft op dit toestel en wordt alleen versleuteld lokaal opgeslagen.</p><p>${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.</p>`,
+        body: `<p>${body}</p>`,
       }),
       '<h2>Recente gebeurtenissen</h2>',
       logs.length > 0
         ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
         : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>',
     ],
-    { ariaLabel: 'Lokaal gebeurtenissenlog' },
+    {
+      ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Legacy lokaal gebeurtenissenlog',
+    },
   );
 }
 
@@ -987,7 +1029,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Upload naar dossier</button>
         </form>
-        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse blijven versleuteld lokaal. Foto’s, echo’s en andere beelden worden als lokale dossierbijlage bewaard; de analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
         <h2>Consultverslag toevoegen</h2>
@@ -1032,7 +1074,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar consultverslag</button>
         </form>
-        <p class="small-print">Consultverslagen worden als eigen recordtype versleuteld lokaal bewaard. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
+        <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         <h2>Embryokwaliteit vastleggen</h2>
         <form id="embryo-quality-form" class="data-form">
           <label>
@@ -1100,12 +1142,12 @@ function renderDossierScreen(state: AppShellState): string {
             Zoek in notities en OCR-tekst
             <input name="dossierZoekterm" autocomplete="off" value="${escapeAttribute(zoekterm)}" placeholder="Bijvoorbeeld: AMH, Erasmus MC of consult" />
           </label>
-          <button type="submit">Zoek lokaal</button>
+          <button type="submit">Zoek in dataset</button>
         </form>
         ${
           zoekterm
             ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde encrypted dataset.</p>`
-            : '<p class="small-print">Zoeken gebruikt alleen lokaal ontgrendelde dossierdata, inclusief OCR-tekst en handmatige notities.</p>'
+            : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
         <h2>Consultverslagen</h2>
         ${
@@ -3903,7 +3945,12 @@ function renderTrajectScreen(state: AppShellState): string {
         <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
       </section>`,
       renderTrajectOverzicht(overzicht),
-      renderFertilityTimeline(fertilityTimeline, state.timelineFilter, fertilityTimelineExport),
+      renderFertilityTimeline(
+        state,
+        fertilityTimeline,
+        state.timelineFilter,
+        fertilityTimelineExport,
+      ),
       graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : '',
       `<div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>`,
       selected
@@ -3966,14 +4013,19 @@ const FERTILITY_TIMELINE_SOORT_LABELS: Record<FertilityTimelineItemSoort, string
 };
 
 function renderFertilityTimeline(
+  state: AppShellState,
   timeline: FertilityTimeline,
   filter: FertilityTimelineFilter = {},
   trajectExport?: FertilityTimelineTrajectExport,
 ): string {
+  const bronBeschrijving = isCentralStorage(state)
+    ? 'vanuit je ontgrendelde centrale encrypted dataset'
+    : 'vanuit de legacy lokale encrypted dataset';
+
   return `
     <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline">
       <h2>Fertility timeline</h2>
-      <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research vanuit lokale records.</p>
+      <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research ${bronBeschrijving}.</p>
       ${renderFertilityTimelineMobielOverzicht(timeline)}
       ${renderFertilityTimelineFilterForm(filter)}
       ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
