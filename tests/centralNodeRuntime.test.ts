@@ -155,6 +155,23 @@ describe('central encrypted Node backend runtime', () => {
     await rm(directory, { recursive: true, force: true });
   });
 
+  it('weigert niet-JSON request bodies met 415 vóór sessie-uitgifte of persistence', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile);
+
+    const response = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: { 'content-type': 'text/plain' },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+
+    expect(response.status).toBe(415);
+    expect(await response.json()).toEqual({ error: 'unsupported-media-type' });
+    await expect(readFile(persistenceFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
   it('accepteert centrale API request bodies onder de ingestelde limiet', async () => {
     const { directory, persistenceFile } = await createTempPersistence();
     const server = await startRuntime(persistenceFile, { maxRequestBodyBytes: 1024 });

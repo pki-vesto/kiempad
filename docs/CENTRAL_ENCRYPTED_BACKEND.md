@@ -100,6 +100,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Forged, verlopen of ingetrokken tokens worden `401`.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
+- Request bodies moeten `Content-Type: application/json` of een `+json` mediatype
+  gebruiken; andere non-empty bodytypes worden `415` vóór JSON parsing en API-side
+  effects.
 - Malformed JSON of ongeldige recordpayloads worden `400`.
 - Oversized JSON bodies boven `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` worden `413`
   voordat ze naar de centrale API-laag gaan.
