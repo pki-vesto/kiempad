@@ -142,7 +142,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   bruikbaar voor lokale/server-side tooling. De allowlist wordt bij runtime-start
   gevalideerd als exacte originlijst zonder wildcard, credentials, pad, query of
   fragment.
-- Forged, verlopen of ingetrokken tokens worden `401`.
+- Forged, verlopen of ingetrokken tokens worden `401`, ook bij
+  `DELETE /sessions/current`; sessie-intrekking vereist dus eerst een geldig actief
+  token.
 - Sessie-expiry gebruikt alleen server-side TTL-configuratie; clients kunnen geen
   TTL verlengen of verkorten via sessie-aanvragen.
 - Een expliciet geconfigureerde lege user-allowlist wordt geweigerd; alleen een
