@@ -61,7 +61,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   canonieke `issuedAt`/`expiresAt` timestamps voordat de bearer wordt gebruikt. Een
   geconfigureerde centrale API-URL moet
   een absolute `http`/`https` URL zonder embedded credentials, query of fragment
-  zijn; ongeldige configuratie faalt gesloten zonder lokale fallback. De in-memory
+  zijn; de fetch-client valideert dezelfde URL-boundary ook voor directe callers en
+  normaliseert toegestane padprefixes zonder trailing slash. Ongeldige configuratie
+  faalt gesloten zonder lokale fallback. De in-memory
   sessiestore verwijdert verlopen sessies bij nieuwe sessie-uitgifte en bij
   tokenresolutie. De centrale fetch-client stuurt geen ambient browsercredentials
   mee en gebruikt geen browsercache

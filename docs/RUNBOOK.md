@@ -30,7 +30,8 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 
 `VITE_KIEMPAD_CENTRAL_API_URL` moet een absolute `http`/`https` URL zijn zonder
 credentials, query of fragment. Een ongeldige geconfigureerde centrale URL stopt de
-bootstrap en opent geen legacy lokale kluis.
+bootstrap en opent geen legacy lokale kluis. Een padprefix zoals `/api` mag; de
+fetch-client normaliseert trailing slashes voordat hij requests opbouwt.
 
 De backend staat standaard alleen `kiempad-private-user` toe. Zet
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS` op de backendhost als de server-side owner-scope
