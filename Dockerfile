@@ -8,12 +8,15 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci || npm install
 COPY . .
+ARG VITE_KIEMPAD_CENTRAL_API_URL=
+ARG VITE_KIEMPAD_CENTRAL_USER_ID=
+ENV VITE_KIEMPAD_CENTRAL_API_URL=${VITE_KIEMPAD_CENTRAL_API_URL}
+ENV VITE_KIEMPAD_CENTRAL_USER_ID=${VITE_KIEMPAD_CENTRAL_USER_ID}
 RUN npm run build
 
 # --- serve ---
 FROM nginx:1.27-alpine AS serve
 COPY --from=build /app/dist /usr/share/nginx/html
 # SPA-fallback zodat client-side routing werkt.
-RUN printf 'server {\n  listen 80;\n  root /usr/share/nginx/html;\n  location / { try_files $uri $uri/ /index.html; }\n}\n' \
-    > /etc/nginx/conf.d/default.conf
+COPY deploy/nginx/default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80

@@ -1,13 +1,13 @@
 # Optional tailnet publication stack.
 #
-# This creates a dedicated Tailscale node named `kiempad` and exposes the
-# stateless PWA over HTTPS at https://kiempad.<tailnet>.ts.net. Tailscale
-# terminates TLS and proxies plain HTTP to the nginx static file server in the
-# same network namespace. The app container stores no user data; Kiempad data
-# remains encrypted in the browser's IndexedDB on each device.
+# This creates a dedicated Tailscale node named `kiempad` and exposes the PWA plus
+# the central encrypted API over HTTPS at https://kiempad.<tailnet>.ts.net.
+# Tailscale terminates TLS and proxies plain HTTP to the nginx static file server
+# in the same network namespace. nginx routes /api/* to the central API container;
+# the backend stores only encrypted envelopes and owner/indexmetadata.
 #
 # Usage:
-#   TS_AUTHKEY=tskey-auth-... docker compose -f docker-compose.tailscale.yml up -d --build
+#   TS_AUTHKEY=<tailscale-auth-key> docker compose -f docker-compose.tailscale.yml up -d --build
 #
 # Prerequisites in the Tailscale admin console:
 #   - MagicDNS enabled.
@@ -31,13 +31,42 @@ services:
       - "127.0.0.1:${KIEMPAD_TAILSCALE_LOCAL_PORT:-8088}:80"
 
   kiempad-web:
-    build: .
+    build:
+      context: .
+      args:
+        VITE_KIEMPAD_CENTRAL_API_URL: ${KIEMPAD_TAILNET_URL:-https://kiempad.tail9d0c71.ts.net}/api
+        VITE_KIEMPAD_CENTRAL_USER_ID: ${KIEMPAD_CENTRAL_USER_ID:-kiempad-private-user}
     image: kiempad-web:latest
     container_name: kiempad-web
     restart: unless-stopped
     network_mode: service:tailscale
     depends_on:
       - tailscale
+      - kiempad-central-api
+
+  kiempad-central-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: kiempad-central-api:latest
+    container_name: kiempad-central-api
+    restart: unless-stopped
+    network_mode: service:tailscale
+    depends_on:
+      - tailscale
+    environment:
+      KIEMPAD_CENTRAL_HOST: 0.0.0.0
+      KIEMPAD_CENTRAL_PORT: 8099
+      KIEMPAD_CENTRAL_PERSISTENCE_MODE: ${KIEMPAD_CENTRAL_PERSISTENCE_MODE:-row-store}
+      KIEMPAD_CENTRAL_PERSISTENCE_DIR: /data/central-rows
+      KIEMPAD_CENTRAL_PERSISTENCE_FILE: /data/kiempad-central-db.json
+      KIEMPAD_CENTRAL_SESSION_TTL_MS: ${KIEMPAD_CENTRAL_SESSION_TTL_MS:-3600000}
+      KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES: ${KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES:-26214400}
+      KIEMPAD_CENTRAL_ALLOWED_USER_IDS: ${KIEMPAD_CENTRAL_ALLOWED_USER_IDS:-kiempad-private-user}
+      KIEMPAD_CENTRAL_ALLOWED_ORIGINS: ${KIEMPAD_CENTRAL_ALLOWED_ORIGINS:-https://kiempad.tail9d0c71.ts.net}
+    volumes:
+      - central_data:/data
 
 volumes:
   ts_state:
+  central_data:

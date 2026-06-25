@@ -1,10 +1,10 @@
 # Kiempad via Tailscale HTTPS-node
 
 Doel: Kiempad publiceren op een **aparte Tailscale-node** met hostname `kiempad`,
-vergelijkbaar met Shred (`shred`) en Healthcore (`healthcore`). De bestaande
-Tailscale-stack in dit document serveert de statische PWA-assets. De centrale
-encrypted backend heeft een aparte runtime en Compose-wrapper; zie
-[`CENTRAL_ENCRYPTED_BACKEND.md`](CENTRAL_ENCRYPTED_BACKEND.md).
+vergelijkbaar met Shred (`shred`) en Healthcore (`healthcore`). Deze stack serveert
+de PWA en de centrale encrypted API op dezelfde HTTPS-node. De API hangt onder
+`/api`, zodat gekoppelde apparaten dezelfde centrale encrypted dataset kunnen openen
+zonder aparte publieke backend-origin.
 
 Actuele productie-URL: `https://kiempad.tail9d0c71.ts.net`.
 Lokale fallback op de host: `http://127.0.0.1:8098`.
@@ -20,18 +20,25 @@ kiempad-ts (tailscale/tailscale)
   └─ Tailscale Serve HTTPS :443
       └─ http://127.0.0.1:80
           └─ kiempad-web (nginx, statische dist/)
+              ├─ /       → PWA-assets
+              └─ /api/*  → http://127.0.0.1:8099/*
+                            └─ kiempad-central-api
 ```
 
-Belangrijk voor deze statische PWA-stack:
+Belangrijk voor deze Tailscale-stack:
 
 - Geen Tailscale Funnel. Kiempad blijft alleen bereikbaar voor apparaten in de
   tailnet.
-- Geen backendcontainer in `docker-compose.tailscale.yml`.
-- De webcontainer is stateless; centrale encrypted opslag draait alleen als de
-  aparte backendruntime expliciet wordt gestart.
+- `docker-compose.tailscale.yml` start naast `kiempad-web` ook
+  `kiempad-central-api`.
+- De webcontainer blijft stateless; de centrale API gebruikt alleen het Docker-volume
+  `central_data` voor encrypted envelopes en owner/indexmetadata.
 - Tailscale HTTPS gebruikt de MagicDNS-naam `kiempad.<tailnet>.ts.net`.
-- Als de PWA rechtstreeks naar een aparte centrale API-origin fetcht, voeg dan de
-  PWA-URL toe aan `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` op die backend.
+- De PWA wordt voor deze stack gebouwd met
+  `VITE_KIEMPAD_CENTRAL_API_URL=https://kiempad.tail9d0c71.ts.net/api`.
+- nginx stript de `/api` prefix voordat requests naar de centrale API gaan; de
+  backend blijft dus het normale `/sessions`, `/meta/*` en `/records/*` contract
+  gebruiken.
 
 Bronnen voor de gebruikte Tailscale-route:
 
@@ -78,11 +85,30 @@ Verwachte containers:
 
 - `kiempad-ts`
 - `kiempad-web`
+- `kiempad-central-api`
 
 De Tailscale-container gebruikt `ts/serve.json`:
 
 - HTTPS listener op `:443`
 - proxy naar `http://127.0.0.1:80`
+
+De webcontainer gebruikt `deploy/nginx/default.conf`:
+
+- `/` serveert de PWA-assets;
+- `/api/*` proxyt naar `http://127.0.0.1:8099/*`;
+- de centrale backendpoort wordt niet als hostpoort gepubliceerd.
+
+De centrale API gebruikt standaard:
+
+- `KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store`
+- `KIEMPAD_CENTRAL_PERSISTENCE_DIR=/data/central-rows`
+- `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user`
+- `KIEMPAD_CENTRAL_ALLOWED_ORIGINS=https://kiempad.tail9d0c71.ts.net`
+
+Als je `KIEMPAD_CENTRAL_USER_ID` voor de frontend wijzigt, zet dan ook
+`KIEMPAD_CENTRAL_ALLOWED_USER_IDS` op dezelfde server-side owner-scope.
+Zie [`CENTRAL_ENCRYPTED_BACKEND.md`](CENTRAL_ENCRYPTED_BACKEND.md) voor het volledige
+centrale API-contract, persistencegrenzen en security boundary.
 
 Lokale fallback op de host:
 
@@ -126,6 +152,7 @@ Logs:
 ```bash
 docker compose -f docker-compose.tailscale.yml logs -f tailscale
 docker compose -f docker-compose.tailscale.yml logs -f kiempad-web
+docker compose -f docker-compose.tailscale.yml logs -f kiempad-central-api
 ```
 
 Stoppen:
@@ -147,11 +174,14 @@ Daarna de node `kiempad` verwijderen uit de Tailscale admin-console.
 Controleer na deploy:
 
 - De app is alleen bereikbaar via Tailscale, niet via publieke DNS of port-forwarding.
-- `docker-compose.tailscale.yml` mount geen `data/`, `backups/` of `.env` met
-  gezondheidsdata.
-- Als `VITE_KIEMPAD_CENTRAL_API_URL` naar de centrale encrypted backend wijst en de
-  backend hetzelfde persistence-volume gebruikt, opent een nieuw apparaat na
-  passphrase-ontgrendeling dezelfde centrale encrypted dataset via de API.
+- `docker-compose.tailscale.yml` mount geen `.env`, `backups/` of hostpad met
+  gezondheidsdata. Alleen het Docker-volume `central_data` bewaart centrale
+  encrypted envelopes en owner/indexmetadata.
+- De build gebruikt `VITE_KIEMPAD_CENTRAL_API_URL` met `/api` op dezelfde HTTPS-node;
+  een nieuw apparaat opent na passphrase-ontgrendeling dezelfde centrale encrypted
+  dataset via de API. Daarmee gebruikt ieder gekoppeld apparaat dezelfde centrale
+  encrypted dataset via de API.
+- Kort: gekoppelde apparaten gebruiken dezelfde centrale encrypted dataset via de API.
 - Zonder centrale API-URL gebruikt de PWA expliciet de legacy lokale IndexedDB-kluis;
   dat fallbackpad deelt geen nieuwe data tussen apparaten.
 - Browser network tab toont geen externe requests buiten opt-in AI/sync.

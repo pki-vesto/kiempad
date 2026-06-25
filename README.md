@@ -129,8 +129,10 @@ docker compose up -d --build    # of: make up   — serveert op http://localhost
 ```
 
 Publicatie via een aparte Tailscale HTTPS-node draait op
-`https://kiempad.tail9d0c71.ts.net`; beheer loopt via
-`docker-compose.tailscale.yml` en `npm run deploy:tailscale`; zie
+`https://kiempad.tail9d0c71.ts.net`; dezelfde node publiceert de centrale encrypted
+API onder `/api`, zodat gekoppelde apparaten dezelfde centrale dataset kunnen
+ontgrendelen. Beheer loopt via `docker-compose.tailscale.yml` en
+`npm run deploy:tailscale`; zie
 [`docs/TAILSCALE_DEPLOY.md`](docs/TAILSCALE_DEPLOY.md).
 
 De centrale encrypted API kan lokaal apart gestart worden:

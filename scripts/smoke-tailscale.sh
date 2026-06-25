@@ -34,8 +34,19 @@ if [[ "$(docker inspect -f '{{.State.Running}}' kiempad-web 2>/dev/null || true)
   fail "Container kiempad-web draait niet. Start eerst met: TS_AUTHKEY=... npm run deploy:tailscale"
 fi
 
+if [[ "$(docker inspect -f '{{.State.Running}}' kiempad-central-api 2>/dev/null || true)" != "true" ]]; then
+  fail "Container kiempad-central-api draait niet. Start eerst met: TS_AUTHKEY=... npm run deploy:tailscale"
+fi
+
 echo "Lokale fallback check: ${local_url}"
 curl -fsSI "${local_url}" >/dev/null
+
+echo "Centrale API via same-node /api proxy:"
+curl -fsS \
+  -X POST \
+  -H 'content-type: application/json' \
+  --data '{"userId":"kiempad-private-user"}' \
+  "${local_url%/}/api/sessions" >/dev/null
 
 echo "Tailscale status:"
 docker exec kiempad-ts tailscale status
