@@ -48,7 +48,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   niet door `POST /sessions` bodies worden verlengd. Bij tokenverloop mag de
   centrale fetch-client één nieuw token aanvragen voor dezelfde configured
   user-scope; refresh bewaart geen passphrase of serversecret in de frontend en valt
-  niet terug naar legacy lokale opslag.
+  niet terug naar legacy lokale opslag. De in-memory sessiestore verwijdert verlopen
+  sessies bij nieuwe sessie-uitgifte en bij tokenresolutie.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
   `401`, record-id's buiten de owner-namespace gedragen zich als ontbrekende records
   (`404`) en malformed payloads worden `400`.
