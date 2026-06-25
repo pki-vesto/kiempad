@@ -72,6 +72,11 @@ export async function handleCentralNodeRequest(
     return;
   }
 
+  if (hasRequestBody(request) && !hasJsonContentType(request)) {
+    sendJson(response, 415, { error: 'unsupported-media-type' });
+    return;
+  }
+
   const body = await readJsonBody(request, maxRequestBodyBytes);
   if (body === REQUEST_BODY_TOO_LARGE) {
     sendJson(response, 413, { error: 'request-body-too-large' });
@@ -143,6 +148,22 @@ function readBearerToken(request: IncomingMessage): string | undefined {
   if (typeof header !== 'string') return undefined;
   const [scheme, token] = header.split(' ');
   return scheme?.toLowerCase() === 'bearer' ? token : undefined;
+}
+
+function hasRequestBody(request: IncomingMessage): boolean {
+  const contentLength = request.headers['content-length'];
+  if (typeof contentLength === 'string' && Number.parseInt(contentLength, 10) > 0) {
+    return true;
+  }
+  return request.headers['transfer-encoding'] !== undefined;
+}
+
+function hasJsonContentType(request: IncomingMessage): boolean {
+  const contentType = request.headers['content-type'];
+  if (typeof contentType !== 'string') return false;
+
+  const mediaType = contentType.split(';', 1)[0]?.trim().toLowerCase();
+  return mediaType === 'application/json' || mediaType?.endsWith('+json') === true;
 }
 
 function sendJson(response: ServerResponse, status: number, body: unknown): void {
