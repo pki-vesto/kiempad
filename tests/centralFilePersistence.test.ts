@@ -1,6 +1,6 @@
 import { mkdir, mkdtemp, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { JsonFileCentralDatabasePersistence } from '../src/server/centralFilePersistence';
@@ -67,6 +67,56 @@ describe('central file persistence snapshot validation', () => {
     ).rejects.toThrow();
 
     await expect(readdir(directory)).resolves.toEqual(['central-db-directory']);
+  });
+
+  it('synct het tijdelijke snapshotbestand vóór replacement en de directory erna', async () => {
+    const { directory, filePath } = await createPersistenceFile();
+    const syncEvents: string[] = [];
+    const persistence = new JsonFileCentralDatabasePersistence(filePath, {
+      async syncFile(file, temporaryPath) {
+        syncEvents.push(`file:${basename(temporaryPath)}`);
+        await file.sync();
+      },
+      async syncDirectory(directoryPath) {
+        syncEvents.push(`directory:${directoryPath}`);
+      },
+    });
+
+    await persistence.save(createValidSnapshot());
+
+    expect(syncEvents).toEqual([
+      expect.stringMatching(/^file:central-db\.json\.\d+\.\d+\.tmp$/),
+      `directory:${directory}`,
+    ]);
+    await expect(readdir(directory)).resolves.toEqual(['central-db.json']);
+  });
+
+  it('laat een directory-fsync fout de succesvolle snapshot replacement niet breken', async () => {
+    const { filePath } = await createPersistenceFile();
+    const snapshot = createValidSnapshot();
+    const persistence = new JsonFileCentralDatabasePersistence(filePath, {
+      async syncDirectory() {
+        throw new Error('directory fsync unavailable');
+      },
+    });
+
+    await persistence.save(snapshot);
+
+    await expect(persistence.load()).resolves.toEqual(snapshot);
+  });
+
+  it('ruimt tijdelijke snapshotbestanden op wanneer file sync faalt', async () => {
+    const { directory, filePath } = await createPersistenceFile();
+    const persistence = new JsonFileCentralDatabasePersistence(filePath, {
+      async syncFile() {
+        throw new Error('temporary snapshot fsync failed');
+      },
+    });
+
+    await expect(persistence.save(createValidSnapshot())).rejects.toThrow(
+      'temporary snapshot fsync failed',
+    );
+    await expect(readdir(directory)).resolves.toEqual([]);
   });
 
   it('weigert onbekende recordtypes en incomplete ownermetadata', async () => {
