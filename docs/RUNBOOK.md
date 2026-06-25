@@ -30,7 +30,9 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 
 De backend staat standaard alleen `kiempad-private-user` toe. Zet
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS` op de backendhost als de server-side owner-scope
-bewust anders moet zijn. De frontend user-id alleen geeft geen toegang.
+bewust anders moet zijn. De frontend user-id alleen geeft geen toegang. Zet
+`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` als de PWA vanaf een andere browser-origin draait
+dan de backend; lokale Vite/preview origins zijn standaard toegestaan.
 
 Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
 

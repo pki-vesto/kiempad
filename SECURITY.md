@@ -67,7 +67,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
   deployment hardening horen bij de productiehost. De containerwrapper publiceert
   standaard alleen op `127.0.0.1`; HTTPS hoort via Tailscale Serve of een reverse
-  proxy voor de API te eindigen.
+  proxy voor de API te eindigen. Browser-CORS wordt met een exacte
+  `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` allowlist afgehandeld; gebruik geen wildcard
+  voor deze API.
 - **Persistence volume:** behandel `data/central/` of `/data` als gevoelig. De
   payloads zijn encrypted, maar owner/indexmetadata en gebruikspatronen mogen niet
   publiek worden.

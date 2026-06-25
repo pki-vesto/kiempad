@@ -109,6 +109,65 @@ describe('central encrypted Node backend runtime', () => {
 
     await rm(directory, { recursive: true, force: true });
   });
+
+  it('handelt CORS preflight en browser-origin responses af voor toegestane origins', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, {
+      allowedOrigins: ['http://localhost:5173'],
+    });
+
+    const preflightResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'OPTIONS',
+      headers: {
+        origin: 'http://localhost:5173',
+        'access-control-request-method': 'POST',
+        'access-control-request-headers': 'content-type',
+      },
+    });
+    expect(preflightResponse.status).toBe(204);
+    expect(preflightResponse.headers.get('access-control-allow-origin')).toBe(
+      'http://localhost:5173',
+    );
+    expect(preflightResponse.headers.get('access-control-allow-methods')).toContain('POST');
+    expect(preflightResponse.headers.get('access-control-allow-headers')).toContain('content-type');
+    expect(preflightResponse.headers.get('vary')).toContain('Origin');
+
+    const sessionResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: {
+        origin: 'http://localhost:5173',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+    expect(sessionResponse.status).toBe(201);
+    expect(sessionResponse.headers.get('access-control-allow-origin')).toBe(
+      'http://localhost:5173',
+    );
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
+  it('weigert CORS preflight voor niet-toegestane origins zonder sessie uit te geven', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, {
+      allowedOrigins: ['http://localhost:5173'],
+    });
+
+    const preflightResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'OPTIONS',
+      headers: {
+        origin: 'https://evil.example',
+        'access-control-request-method': 'POST',
+        'access-control-request-headers': 'content-type',
+      },
+    });
+    expect(preflightResponse.status).toBe(403);
+    expect(preflightResponse.headers.get('access-control-allow-origin')).toBeNull();
+    expect(await preflightResponse.json()).toEqual({ error: 'cors-origin-not-allowed' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
 });
 
 async function createTempPersistence(): Promise<{ directory: string; persistenceFile: string }> {
@@ -116,11 +175,18 @@ async function createTempPersistence(): Promise<{ directory: string; persistence
   return { directory, persistenceFile: join(directory, 'central-db.json') };
 }
 
-async function startRuntime(persistenceFile: string): Promise<{
+async function startRuntime(
+  persistenceFile: string,
+  options: { allowedOrigins?: readonly string[] } = {},
+): Promise<{
   baseUrl: string;
   close: () => Promise<void>;
 }> {
-  const server = await createCentralNodeHttpServer({ persistenceFile, sessionTtlMs: 60_000 });
+  const server = await createCentralNodeHttpServer({
+    persistenceFile,
+    sessionTtlMs: 60_000,
+    allowedOrigins: options.allowedOrigins,
+  });
   await listen(server);
   const address = server.address();
   if (!address || typeof address === 'string') {

@@ -16,11 +16,15 @@ describe('central backend deploy wrapper', () => {
 
     expect(dockerfile).toContain('KIEMPAD_CENTRAL_PERSISTENCE_FILE=/data/kiempad-central-db.json');
     expect(dockerfile).toContain('KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user');
+    expect(dockerfile).toContain('KIEMPAD_CENTRAL_ALLOWED_ORIGINS=http://localhost:5173');
     expect(dockerfile).toContain('CMD ["npm", "run", "backend:central"]');
     expect(compose).toContain('kiempad-central-api:');
     expect(compose).toContain(`"127.0.0.1:$${'{KIEMPAD_CENTRAL_LOCAL_PORT:-8099}'}:8099"`);
     expect(compose).toContain(
       `KIEMPAD_CENTRAL_ALLOWED_USER_IDS: $${'{KIEMPAD_CENTRAL_ALLOWED_USER_IDS:-kiempad-private-user}'}`,
+    );
+    expect(compose).toContain(
+      `KIEMPAD_CENTRAL_ALLOWED_ORIGINS: $${'{KIEMPAD_CENTRAL_ALLOWED_ORIGINS:-http://localhost:5173'}`,
     );
     expect(compose).toContain('kiempad_central_data:/data');
   });

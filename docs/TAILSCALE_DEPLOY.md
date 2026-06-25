@@ -30,6 +30,8 @@ Belangrijk voor deze statische PWA-stack:
 - De webcontainer is stateless; centrale encrypted opslag draait alleen als de
   aparte backendruntime expliciet wordt gestart.
 - Tailscale HTTPS gebruikt de MagicDNS-naam `kiempad.<tailnet>.ts.net`.
+- Als de PWA rechtstreeks naar een aparte centrale API-origin fetcht, voeg dan de
+  PWA-URL toe aan `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` op die backend.
 
 Bronnen voor de gebruikte Tailscale-route:
 

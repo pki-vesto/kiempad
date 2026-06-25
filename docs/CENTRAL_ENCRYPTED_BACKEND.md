@@ -42,7 +42,9 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 `VITE_KIEMPAD_CENTRAL_USER_ID` is geen secret; het is de private owner-scope voor
 deze één-stel-app. De backend moet dezelfde id toestaan via
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS`; die server-side allowlist is de autoriteit. De
-passphrase blijft de sleutel voor de encrypted payloads.
+passphrase blijft de sleutel voor de encrypted payloads. Als de PWA en API op
+verschillende origins draaien, moet de PWA-origin ook in
+`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan.
 
 Standaardwaarden:
 
@@ -51,6 +53,7 @@ Standaardwaarden:
 - `KIEMPAD_CENTRAL_PERSISTENCE_FILE=data/central/kiempad-central-db.json`
 - `KIEMPAD_CENTRAL_SESSION_TTL_MS=3600000`
 - `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user`
+- `KIEMPAD_CENTRAL_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173,http://localhost:4174,http://127.0.0.1:4174`
 
 Gebruik `KIEMPAD_CENTRAL_PORT=0` alleen voor tests; Node kiest dan een vrije poort
 en de CLI logt de effectieve URL.
@@ -75,7 +78,10 @@ de host waarop het draait: het hoort alleen encrypted envelopes te bevatten, maa
 owner/indexmetadata blijft wel gevoelig.
 
 HTTPS hoort vóór deze container te termineren via Tailscale Serve of een reverse
-proxy. Zet deze API niet direct publiek op internet.
+proxy. Voeg de uiteindelijke PWA-origin, bijvoorbeeld
+`https://kiempad.tail9d0c71.ts.net`, expliciet toe aan
+`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` als de browser rechtstreeks naar deze API-origin
+fetches doet. Zet deze API niet direct publiek op internet.
 
 ## Security Boundary
 
