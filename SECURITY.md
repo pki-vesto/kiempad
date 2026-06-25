@@ -81,7 +81,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   voor deze API. Origins buiten de allowlist worden server-side `403` vóór body
   parsing en API-side effects. Centrale API-responses krijgen `Cache-Control: no-store`,
   `Pragma: no-cache`, `X-Content-Type-Options: nosniff` en
-  `Referrer-Policy: no-referrer` aan de Node HTTP-boundary.
+  `Referrer-Policy: no-referrer` aan de Node HTTP-boundary. Onverwachte
+  runtimefouten aan die boundary worden alleen als generieke
+  `central-runtime-error` teruggegeven, zonder exceptionbericht of stacktrace.
 - **Persistence volume:** behandel `data/central/` of `/data` als gevoelig. De
   payloads zijn encrypted, maar owner/indexmetadata en gebruikspatronen mogen niet
   publiek worden.

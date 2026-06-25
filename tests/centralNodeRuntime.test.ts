@@ -4,7 +4,10 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { createCentralNodeHttpServer } from '../src/server/centralNodeRuntime';
+import {
+  createCentralNodeHttpServer,
+  createCentralNodeHttpServerFromApi,
+} from '../src/server/centralNodeRuntime';
 import { CentralSessionError } from '../src/storage/centralDatabase';
 import {
   CentralFetchApiClientDriver,
@@ -108,6 +111,31 @@ describe('central encrypted Node backend runtime', () => {
     );
 
     await rm(directory, { recursive: true, force: true });
+  });
+
+  it('mapt onverwachte handlerfouten naar veilige 500 zonder foutdetails', async () => {
+    const server = createCentralNodeHttpServerFromApi({
+      handle: async () => {
+        throw new Error('secret central stack marker');
+      },
+    });
+    await listen(server);
+    const address = server.address();
+    if (!address || typeof address === 'string') {
+      throw new Error('Expected TCP listener address.');
+    }
+    cleanupCallbacks.push(closeServer(server));
+
+    const response = await fetch(`http://127.0.0.1:${address.port}/meta/crypto`, {
+      headers: { authorization: 'Bearer fake-token' },
+    });
+    const text = await response.text();
+
+    expect(response.status).toBe(500);
+    expectSecurityHeaders(response);
+    expect(JSON.parse(text)).toEqual({ error: 'central-runtime-error' });
+    expect(text).not.toContain('secret central stack marker');
+    expect(text).not.toContain('stack');
   });
 
   it('weigert oversized centrale API request bodies met 413 zonder persistence write', async () => {
@@ -345,6 +373,23 @@ async function listen(server: Server): Promise<void> {
       resolve();
     });
   });
+}
+
+function closeServer(server: Server): () => Promise<void> {
+  let closed = false;
+  return async () => {
+    if (closed) return;
+    await new Promise<void>((resolve, reject) => {
+      server.close((error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        closed = true;
+        resolve();
+      });
+    });
+  };
 }
 
 function expectSecurityHeaders(response: Response): void {

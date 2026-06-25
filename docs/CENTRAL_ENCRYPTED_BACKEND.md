@@ -103,6 +103,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Malformed JSON of ongeldige recordpayloads worden `400`.
 - Oversized JSON bodies boven `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` worden `413`
   voordat ze naar de centrale API-laag gaan.
+- Onverwachte fouten aan de Node HTTP-boundary worden een generieke
+  `500 {"error":"central-runtime-error"}` zonder exceptionbericht of stacktrace.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
 - File-backed snapshots met ontbrekende owner/servermetadata, onbekende recordtypes
   of plaintext/malformed payloads worden geweigerd vóór de database ze opent.
