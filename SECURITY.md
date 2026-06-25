@@ -58,7 +58,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   user-scope; refresh bewaart geen passphrase of serversecret in de frontend en valt
   niet terug naar legacy lokale opslag. Session tickets uit `POST /sessions` worden
   client-side gevalideerd op niet-lege tokenwaarde, verwachte user-scope en
-  canonieke `issuedAt`/`expiresAt` timestamps voordat de bearer wordt gebruikt. Een
+  canonieke `issuedAt`/`expiresAt` timestamps voordat de bearer wordt gebruikt.
+  Bearerwaarden uit bootstrap, tickets en refresh-callbacks moeten niet-leeg en
+  whitespace-vrij zijn voordat de fetch-client ze in Authorization headers zet. Een
   geconfigureerde centrale API-URL moet
   een absolute `http`/`https` URL zonder embedded credentials, query of fragment
   zijn; de fetch-client valideert dezelfde URL-boundary ook voor directe callers en

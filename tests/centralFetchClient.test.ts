@@ -4,6 +4,7 @@ import {
   CentralFetchApiClientDriver,
   issueCentralFetchSession,
   normalizeCentralFetchBaseUrl,
+  normalizeCentralFetchBearerToken,
 } from '../src/storage/centralFetchClient';
 import { CentralHttpBadRequestError } from '../src/storage/centralHttpApi';
 
@@ -121,6 +122,17 @@ describe('central fetch client', () => {
     }
   });
 
+  it('weigert malformed bearer tokens voordat centrale fetch requests worden verstuurd', async () => {
+    for (const token of ['', '   ', 'token met spatie', 'token\tmet-tab']) {
+      expect(() => normalizeCentralFetchBearerToken(token)).toThrow(
+        'central-fetch-invalid-bearer-token',
+      );
+      expect(
+        () => new CentralFetchApiClientDriver('https://central.test', token, failUnexpectedFetch),
+      ).toThrow('central-fetch-invalid-bearer-token');
+    }
+  });
+
   it('weigert succesvolle centrale fetch responses zonder JSON content-type', async () => {
     const fetcher = vi.fn(async (): Promise<Response> => {
       return new Response('<html>not the central API</html>', {
@@ -188,6 +200,12 @@ describe('central fetch client', () => {
     for (const ticket of [
       {
         token: '',
+        userId: 'kiempad-private-user',
+        issuedAt: '2026-06-25T09:00:00.000Z',
+        expiresAt: '2026-06-25T10:00:00.000Z',
+      },
+      {
+        token: 'token met spatie',
         userId: 'kiempad-private-user',
         issuedAt: '2026-06-25T09:00:00.000Z',
         expiresAt: '2026-06-25T10:00:00.000Z',
@@ -295,6 +313,28 @@ describe('central fetch client', () => {
     await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralSessionError);
     expect(refreshSession).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('weigert malformed refresh tokens voordat de retry request wordt verstuurd', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response(JSON.stringify({ error: 'unauthorized' }), {
+        status: 401,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+    const refreshSession = vi.fn(async () => ({ token: 'malformed refreshed token' }));
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'expired-token',
+      fetcher,
+      refreshSession,
+    );
+
+    const request = driver.listMeta();
+    await expect(request).rejects.toThrow('central-fetch-invalid-bearer-token');
+    await expect(request).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+    expect(refreshSession).toHaveBeenCalledTimes(1);
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
   it('laat refresh-fouten centraal falen zonder lokale fallback of stille retry', async () => {

@@ -143,7 +143,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   genormaliseerd voordat requests worden opgebouwd.
 - Browserclients valideren `POST /sessions` tickets vóór gebruik; malformed tickets,
   user-scope mismatches of niet-canonieke/ongeldige timestamps worden centrale
-  API-contractfouten.
+  API-contractfouten. Bearer tokens uit bootstrap, tickets en refresh-callbacks
+  moeten niet-leeg en whitespace-vrij zijn voordat ze in Authorization headers
+  worden gezet.
 - Browserclients accepteren alleen JSON-mediasoorten voor succesvolle centrale
   fetch-responses en mappen non-JSON of malformed JSON success responses naar een
   centrale API-contractfout.
