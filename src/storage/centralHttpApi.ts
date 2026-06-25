@@ -29,6 +29,7 @@ type ErrorResponseBody = {
   error: string;
 };
 
+const API_BASE_URL = 'https://kiempad.local';
 const STORED_RECORD_TYPES = new Set<StoredRecordType>([
   'traject',
   'fase',
@@ -252,8 +253,12 @@ function requireToken(request: CentralHttpRequest): CentralSessionToken {
 
 function parseApiPath(path: string): URL {
   try {
-    return new URL(path, 'https://kiempad.local');
+    if (!path.startsWith('/') || path.startsWith('//')) {
+      throw new CentralHttpBadRequestError('Centraal Kiempad API-pad moet origin-form zijn.');
+    }
+    return new URL(path, API_BASE_URL);
   } catch (_error) {
+    if (_error instanceof CentralHttpBadRequestError) throw _error;
     throw new CentralHttpBadRequestError('Ongeldig centraal Kiempad API-pad.');
   }
 }
