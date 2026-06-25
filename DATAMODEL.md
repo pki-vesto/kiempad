@@ -257,6 +257,9 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
   consultdata en notities blijven in de encrypted payload.
 - User-isolatie is onderdeel van de opslaglaag: centrale reads/writes vereisen een
   geldige sessie en records van een andere gebruiker worden geweigerd.
+- Centrale persistence gebruikt een snapshot/adaptercontract met dezelfde grenzen:
+  owner/indexmetadata en encrypted envelopes mogen duurzaam worden bewaard; plaintext
+  medische/fertiliteitsinhoud, passphrases en raw keys niet.
 - De opslagmetadata bevat een `schema` record met de huidige schemaversie. De app
   vult ontbrekende schemametadata bij ontgrendelen aan en weigert data met een
   nieuwer schema dan deze app ondersteunt.

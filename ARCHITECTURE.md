@@ -75,6 +75,11 @@ en blijft ook centraal **versleuteld at rest**.
 - **Server-side datamodel:** `CentralEncryptedRecord` bevat `ownerUserId`, minimale
   clear indexvelden, `serverVersion`, `storedAt` en een `EncryptionEnvelope`.
   `CentralEncryptedDatabase` dwingt actieve sessies en user-isolatie af.
+- **Duurzame databasegrens:** `CentralDatabaseSnapshot` serialiseert alleen
+  encrypted records en user-scoped metadata. `PersistedCentralEncryptedDatabase`
+  flushes writes naar een `CentralDatabasePersistence` adapter, zodat productie later
+  file, SQLite, Postgres of een andere serverdatabase kan gebruiken zonder
+  domeinstores te wijzigen.
 - **API/storage-abstraction:** `CentralEncryptedApiServer` vormt de centrale
   servicegrens. `MemoryCentralSessionStore` geeft opaque sessietokens uit en
   resolveert die server-side naar een `CentralAuthSession`; forged, verlopen of
@@ -125,9 +130,10 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
 - **Statische hosting:** de build kan via Docker Compose op een eigen knooppunt
   (bv. de tailnet, zoals de andere apps) worden geserveerd.
 - **Centrale data-API:** productiehosting krijgt een kleine backend/API rond
-  `CentralEncryptedApiServer` en het `CentralEncryptedDatabase`-contract. Die backend
-  bewaart geen plaintext medische payloads en moet opaque sessies, owner-scoping en
-  veilige foutafhandeling afdwingen.
+  `CentralEncryptedApiServer`, `CentralEncryptedDatabase` en
+  `CentralDatabasePersistence`. Die backend bewaart geen plaintext medische payloads
+  en moet opaque sessies, owner-scoping, duurzame encrypted persistence en veilige
+  foutafhandeling afdwingen.
 
 ## 7. Kostenraming
 
@@ -135,7 +141,8 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
   hardware/tailnet.
 - **AI (opt-in):** alleen bij gebruik; verbruik onder de eigen abonnements-/API-sleutel
   van de gebruiker, met goedkope modellen voor samenvatten. Default uit ⇒ €0.
-- **Centrale opslag:** minimale opslag van onleesbare blobs plus indexmetadata.
+- **Centrale opslag:** minimale opslag van onleesbare blobs plus indexmetadata via
+  een persistence adapter.
 - Geen licenties, geen betaalde diensten in de MVP.
 
 ## 8. Toekomstige Architectuur

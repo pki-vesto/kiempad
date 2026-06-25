@@ -138,6 +138,9 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
   **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
   een passphrase). API-toegang loopt via opaque sessietokens; de server resolveert
   tokens naar user-scoped sessies.
+- **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
+  owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
+  zonder client key.
 - **CSP:** `index.html` bevat een local-first Content Security Policy die scripts en
   netwerkverbindingen standaard tot de eigen origin beperkt.
 - **Legacy/back-up:** lokale IndexedDB-vault en versleutelde export/import blijven
