@@ -18,8 +18,10 @@ import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
+import onboarding from '../docs/ONBOARDING.md?raw';
 import personalFertilityIntelligencePlatform from '../docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
+import runbook from '../docs/RUNBOOK.md?raw';
 import secretsScanBaseline from '../docs/SECRETS_SCAN_BASELINE.md?raw';
 import tailscaleDeploy from '../docs/TAILSCALE_DEPLOY.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
@@ -110,6 +112,28 @@ describe('onderhoudsdocumentatie', () => {
       expect(currentState).toContain(goal);
       expect(changelog).toContain(goal);
     }
+  });
+
+  it('documenteert centrale onboarding zonder lokale vault-hercreatie', () => {
+    for (const requiredTerm of [
+      '# Onboarding - centrale encrypted dataset',
+      'centrale encrypted dataset als primaire route',
+      'VITE_KIEMPAD_CENTRAL_API_URL',
+      'VITE_KIEMPAD_CENTRAL_USER_ID',
+      'backend bewaart alleen encrypted envelopes',
+      'Tweede apparaat',
+      'geen nieuwe lokale kluis',
+      'geen stille legacy fallback',
+      'Legacy IndexedDB',
+      'geen herstelachterdeur',
+      'npm run smoke:central',
+    ]) {
+      expect(onboarding).toContain(requiredTerm);
+    }
+
+    expect(readme).toContain('docs/ONBOARDING.md');
+    expect(runbook).toContain('ONBOARDING.md');
+    expect(onboarding).not.toContain('start een nieuwe lokale kluis per toestel');
   });
 
   it('houdt een rijke execution-goalcatalogus met minimaal 100 actieve doelen', () => {
