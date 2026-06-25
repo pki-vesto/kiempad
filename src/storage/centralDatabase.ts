@@ -172,7 +172,7 @@ export class MemoryCentralDatabasePersistence implements CentralDatabasePersiste
 
 export class PersistedCentralEncryptedDatabase implements CentralEncryptedDatabase {
   private constructor(
-    private readonly database: MemoryCentralEncryptedDatabase,
+    private database: MemoryCentralEncryptedDatabase,
     private readonly persistence: CentralDatabasePersistence,
   ) {}
 
@@ -190,8 +190,7 @@ export class PersistedCentralEncryptedDatabase implements CentralEncryptedDataba
   }
 
   async putMeta<T>(session: CentralAuthSession, key: string, value: T): Promise<void> {
-    await this.database.putMeta(session, key, value);
-    await this.flush();
+    await this.commit((database) => database.putMeta(session, key, value));
   }
 
   async listMeta(session: CentralAuthSession): Promise<StorageMeta[]> {
@@ -203,13 +202,11 @@ export class PersistedCentralEncryptedDatabase implements CentralEncryptedDataba
   }
 
   async putRecord(session: CentralAuthSession, record: EncryptedRecord): Promise<void> {
-    await this.database.putRecord(session, record);
-    await this.flush();
+    await this.commit((database) => database.putRecord(session, record));
   }
 
   async deleteRecord(session: CentralAuthSession, id: string): Promise<void> {
-    await this.database.deleteRecord(session, id);
-    await this.flush();
+    await this.commit((database) => database.deleteRecord(session, id));
   }
 
   async listRecords(
@@ -223,8 +220,13 @@ export class PersistedCentralEncryptedDatabase implements CentralEncryptedDataba
     return this.database.unsafeDumpRecordsForTest();
   }
 
-  private async flush(): Promise<void> {
-    await this.persistence.save(this.database.exportSnapshot());
+  private async commit(
+    mutate: (database: MemoryCentralEncryptedDatabase) => Promise<void>,
+  ): Promise<void> {
+    const nextDatabase = new MemoryCentralEncryptedDatabase(this.database.exportSnapshot());
+    await mutate(nextDatabase);
+    await this.persistence.save(nextDatabase.exportSnapshot());
+    this.database = nextDatabase;
   }
 }
 
