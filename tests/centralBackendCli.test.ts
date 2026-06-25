@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -29,7 +29,8 @@ describe('central backend CLI runtime', () => {
   it('start vanuit env-config en bewaart alleen encrypted envelopes', async () => {
     const directory = await mkdtemp(join(tmpdir(), 'kiempad-central-cli-'));
     cleanupCallbacks.push(() => rm(directory, { recursive: true, force: true }));
-    const persistenceFile = join(directory, 'central-db.json');
+    const persistenceDirectory = join(directory, 'central-data');
+    const persistenceFile = join(persistenceDirectory, 'central-db.json');
 
     const runtime = await startCentralBackendFromEnv({
       KIEMPAD_CENTRAL_HOST: '127.0.0.1',
@@ -42,6 +43,7 @@ describe('central backend CLI runtime', () => {
 
     expect(runtime.url).toBe(`http://127.0.0.1:${runtime.port}`);
     expect(runtime.persistenceFile).toBe(persistenceFile);
+    expect((await stat(persistenceDirectory)).mode & 0o777).toBe(0o700);
 
     const ticket = await issueCentralFetchSession(runtime.url, { userId: 'cli-user' });
     const driver = new CentralFetchApiClientDriver(runtime.url, ticket.token);

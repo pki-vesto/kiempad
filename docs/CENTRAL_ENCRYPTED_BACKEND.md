@@ -46,7 +46,8 @@ owner/indexmetadata en encrypted envelopes.
   aangemaakt tijdelijk snapshotpad, flushen dat bestand vóór replacement, vervangen
   daarna atomisch het doelbestand, syncen de parent-directory best-effort en ruimen
   alleen zelf aangemaakte tijdelijke bestanden best-effort op als write, flush of
-  replace faalt. Tijdelijke en finale snapshotbestanden worden met private `0600`
+  replace faalt. Nieuw aangemaakte persistence-directories krijgen private `0700`
+  permissies; tijdelijke en finale snapshotbestanden worden met private `0600`
   permissies geschreven.
 - `createCentralNodeHttpServer` in `src/server/centralNodeRuntime.ts` wiret de
   persistence, session store, database, API-server en `node:http` samen.
@@ -200,8 +201,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
   flushen die vóór atomische replacement en syncen de parent-directory best-effort
   na succesvolle replacement. Mislukte saves ruimen alleen zelf aangemaakte
   tijdelijke snapshotbestanden best-effort op voordat de oorspronkelijke fout
-  teruggaat naar de caller. Zowel tijdelijke als finale snapshotbestanden houden
-  `0600` file-permissies.
+  teruggaat naar de caller. Nieuw aangemaakte persistence-directories houden `0700`
+  permissies; tijdelijke en finale snapshotbestanden houden `0600` file-permissies.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.
