@@ -259,6 +259,51 @@ describe('app shell', () => {
     expect(html).not.toContain('Configureer de centrale API');
   });
 
+  it('beschrijft dossierrecords als centraal encrypted wanneer centrale storage actief is', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        storageLabel: 'Centrale encrypted API',
+      }),
+    );
+
+    expect(html).toContain('bewaar bestandsanalyse in je centrale encrypted dataset');
+    expect(html).toContain(
+      'Bestanden, gespreksverslagen, OCR-status en analyse worden centraal encrypted bewaard voor gekoppelde apparaten.',
+    );
+    expect(html).toContain(
+      'Consultverslagen worden als eigen recordtype centraal encrypted bewaard voor gekoppelde apparaten.',
+    );
+    expect(html).toContain('Zoek in dataset');
+    expect(html).toContain('Zoeken gebruikt alleen de ontgrendelde centrale encrypted dataset');
+    expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
+    expect(html).not.toContain('blijven versleuteld lokaal');
+    expect(html).not.toContain('versleuteld lokaal bewaard');
+  });
+
+  it('beschrijft logboek en timeline vanuit centrale encrypted dataset wanneer actief', () => {
+    const logboekHtml = renderAppShell(
+      'logboek',
+      makeStartState({
+        storageMode: 'central-api',
+        eventLogs: [],
+      }),
+    );
+    const trajectHtml = renderAppShell(
+      'traject',
+      makeStartState({
+        storageMode: 'central-api',
+      }),
+    );
+
+    expect(logboekHtml).toContain('Gebeurtenissenlog');
+    expect(logboekHtml).toContain('Dit logboek staat in je centrale encrypted dataset');
+    expect(logboekHtml).not.toContain('Lokaal logboek');
+    expect(trajectHtml).toContain('vanuit je ontgrendelde centrale encrypted dataset');
+    expect(trajectHtml).not.toContain('vanuit lokale records');
+  });
+
   it('toont een dagelijks command center met urgentie, later-vandaag en context', () => {
     // Vaste klok zodat de "vandaag/komend"-classificatie deterministisch is
     // (anders valt de 18:00-herinnering na 18:00 lokale tijd weg).
@@ -1334,7 +1379,7 @@ describe('app shell', () => {
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
       ],
-      dossierStatus: '1 dossierbestand lokaal versleuteld toegevoegd.',
+      dossierStatus: '1 dossierbestand in de legacy lokale encrypted dataset opgeslagen.',
       dossierZoekterm: 'erasmus',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -1381,7 +1426,7 @@ describe('app shell', () => {
     expect(html).toContain('PDF');
     expect(html).toContain('Afbeelding');
     expect(html).toContain(
-      'Bestanden, gespreksverslagen, OCR-status en analyse blijven versleuteld lokaal',
+      'Bestanden, gespreksverslagen, OCR-status en analyse worden in de legacy lokale encrypted dataset op dit toestel bewaard',
     );
     expect(html).toContain('Koppel aan afspraak');
     expect(html).toContain('Intakegesprek · 2026-05-01 09:30');
@@ -1433,7 +1478,7 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-01T09:30 · Consult · Bron: Agenda');
     expect(html).toContain('2026-05-01 · Consultverslag · Bron: Consulttekst');
     expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
-    expect(html).toContain('1 dossierbestand lokaal versleuteld toegevoegd.');
+    expect(html).toContain('1 dossierbestand in de legacy lokale encrypted dataset opgeslagen.');
     expect(html).not.toContain('cGRm');
   });
 
@@ -2468,8 +2513,9 @@ describe('app shell', () => {
 
     expect(html).toContain('Lokaal logboek');
     expect(html).toContain('Recente gebeurtenissen');
-    expect(html).toContain('Dit logboek blijft op dit toestel');
-    expect(html).toContain('alleen versleuteld lokaal opgeslagen');
+    expect(html).toContain(
+      'Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel',
+    );
     expect(html).toContain('1 gebeurtenis vastgelegd');
     expect(html).toContain('Versleutelde back-up klaargezet');
     expect(html).toContain('2026-06-23 15:00');

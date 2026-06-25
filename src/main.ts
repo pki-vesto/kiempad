@@ -470,9 +470,9 @@ async function saveConsultVerslagFromForm(
     await state.eventLogStore?.record({
       categorie: 'systeem',
       gebeurtenis: 'Consultverslag toegevoegd',
-      detail: 'Consultverslag lokaal versleuteld als apart recordtype opgeslagen.',
+      detail: `Consultverslag ${beschrijfRecordOpslag(state)} als apart recordtype.`,
     });
-    state.dossierStatus = 'Consultverslag lokaal versleuteld toegevoegd.';
+    state.dossierStatus = `Consultverslag ${beschrijfRecordOpslag(state)}.`;
     state.dossierError = undefined;
     target.reset();
     await reloadAndRender(root, state);
@@ -569,9 +569,9 @@ async function saveDossierDocumentsFromForm(
     await state.eventLogStore?.record({
       categorie: 'systeem',
       gebeurtenis: 'Dossierdocumenten toegevoegd',
-      detail: `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld opgeslagen${lokaleOcr ? ' met lokale OCR-pipeline.' : '.'}`,
+      detail: `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} ${beschrijfRecordOpslag(state)}${lokaleOcr ? ' met lokale OCR-pipeline.' : '.'}`,
     });
-    state.dossierStatus = `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} lokaal versleuteld toegevoegd${lokaleOcr ? ' en klaargezet voor lokale OCR.' : '.'}`;
+    state.dossierStatus = `${files.length} dossierbestand${files.length === 1 ? '' : 'en'} ${beschrijfRecordOpslag(state)}${lokaleOcr ? ' en klaargezet voor lokale OCR.' : '.'}`;
     state.dossierError = undefined;
     target.reset();
     await reloadAndRender(root, state);
@@ -683,9 +683,9 @@ async function saveEmbryoQualityFromForm(
     await state.eventLogStore?.record({
       categorie: 'systeem',
       gebeurtenis: 'Embryokwaliteit vastgelegd',
-      detail: 'Embryokwaliteit lokaal versleuteld als dossierdocument opgeslagen.',
+      detail: `Embryokwaliteit ${beschrijfRecordOpslag(state)} als dossierdocument.`,
     });
-    state.dossierStatus = 'Embryokwaliteit lokaal versleuteld toegevoegd.';
+    state.dossierStatus = `Embryokwaliteit ${beschrijfRecordOpslag(state)}.`;
     state.dossierError = undefined;
     target.reset();
     await reloadAndRender(root, state);
@@ -694,6 +694,12 @@ async function saveEmbryoQualityFromForm(
       error instanceof Error ? error.message : 'Embryokwaliteit vastleggen is mislukt.';
     render(root, state);
   }
+}
+
+function beschrijfRecordOpslag(state: RuntimeState): string {
+  return state.storageMode === 'central-api'
+    ? 'centraal encrypted opgeslagen'
+    : 'in de legacy lokale encrypted dataset opgeslagen';
 }
 
 async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<void> {
