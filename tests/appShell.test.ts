@@ -1628,8 +1628,51 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale imaging-preview van Echo 6 weken"');
     expect(html).toContain('data:image/jpeg;base64,anBn');
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
-    expect(html).toContain('Lokale preview; dit beeld blijft op dit toestel.');
+    expect(html).toContain('Lokale preview uit de legacy lokale encrypted dataset op dit toestel.');
     expect(html).toContain('Bestandstype is beeldmateriaal.');
+  });
+
+  it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      storageMode: 'central-api',
+      dossierDocuments: [
+        {
+          id: 'doc-centraal-beeld',
+          datum: '2026-05-02',
+          titel: 'Centrale echo',
+          categorie: 'beeld',
+          bestandsNaam: 'centrale-echo.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 2048,
+          inhoudBase64: 'anBn',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; 2 KB. Analyse is lokaal en niet-medisch.',
+            signalen: ['Bestandstype is beeldmateriaal.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'centrale-echo.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('alt="Lokale imaging-preview van Centrale echo"');
+    expect(html).toContain('alt="Lokale preview van Centrale echo"');
+    expect(html).toContain('Lokale preview uit de ontgrendelde centrale encrypted dataset.');
+    expect(html).not.toContain('dit beeld blijft op dit toestel');
   });
 
   it('rendert embryokwaliteit met traject- en terugplaatsingskoppeling', () => {

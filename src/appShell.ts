@@ -1205,7 +1205,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderImagingVergelijking(imagingVergelijking)}
         ${
           imagingItems.length > 0
-            ? `<ol class="phase-list">${imagingItems.map(renderImagingRepositoryItem).join('')}</ol>`
+            ? `<ol class="phase-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
             : '<p class="empty-state">Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.</p>'
         }
         <h2>Dossierindex</h2>
@@ -1325,6 +1325,7 @@ function renderImagingVergelijking(
 
 function renderImagingRepositoryItem(
   item: ReturnType<typeof bouwImagingRepository>[number],
+  state: AppShellState,
 ): string {
   const soortLabel = imagingSoortLabel(item.soort);
   const tijdlijnKoppeling = renderImagingTijdlijnKoppeling(item.tijdlijnKoppeling);
@@ -1340,7 +1341,7 @@ function renderImagingRepositoryItem(
     item.mimeType?.startsWith('image/') && item.document.inhoudBase64
       ? `<figure class="linked-note">
           <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale imaging-preview van ${escapeAttribute(item.titel)}" loading="lazy" />
-          <figcaption>Lokale preview; dit beeld blijft op dit toestel.</figcaption>
+          <figcaption>${escapeHtml(beschrijfPreviewLocatie(state))}</figcaption>
         </figure>`
       : '';
 
@@ -1719,7 +1720,7 @@ function renderDossierDocument(
         ${renderDossierMetadata(document)}
         ${renderEmbryoDetails(document)}
         ${renderDossierOcrDetails(document)}
-        ${renderDossierImagePreview(document)}
+        ${renderDossierImagePreview(document, state)}
         <p class="linked-note">${escapeHtml(document.analyse.samenvatting)}</p>
         <ul class="compact-list">
           ${document.analyse.signalen.map((signaal) => `<li>${escapeHtml(signaal)}</li>`).join('')}
@@ -1797,15 +1798,21 @@ function renderEmbryoDetails(document: DossierDocument): string {
   return `<p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>`;
 }
 
-function renderDossierImagePreview(document: DossierDocument): string {
+function renderDossierImagePreview(document: DossierDocument, state: AppShellState): string {
   if (document.categorie !== 'beeld' || !document.mimeType?.startsWith('image/')) return '';
 
   return `
     <figure class="linked-note">
       <img src="data:${escapeAttribute(document.mimeType)};base64,${escapeAttribute(document.inhoudBase64)}" alt="Lokale preview van ${escapeAttribute(document.titel)}" loading="lazy" />
-      <figcaption>Lokale preview; dit beeld blijft op dit toestel.</figcaption>
+      <figcaption>${escapeHtml(beschrijfPreviewLocatie(state))}</figcaption>
     </figure>
   `;
+}
+
+function beschrijfPreviewLocatie(state: AppShellState): string {
+  return isCentralStorage(state)
+    ? 'Lokale preview uit de ontgrendelde centrale encrypted dataset.'
+    : 'Lokale preview uit de legacy lokale encrypted dataset op dit toestel.';
 }
 
 function renderWelzijnScreen(state: AppShellState): string {
