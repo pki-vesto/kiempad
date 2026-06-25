@@ -325,6 +325,20 @@ describe('onderhoudsdocumentatie', () => {
     expect(centralEncryptedBackend).not.toContain('plaintext databasegrens');
   });
 
+  it('documenteert centrale sessietokens zonder raw bearer-token opslag', () => {
+    for (const requiredTerm of [
+      'SHA-256-fingerprint',
+      'bearer tokens',
+      'het ruwe token staat alleen in het uitgegeven sessieticket',
+      'wordt niet als interne `sessionId` of map-key bewaard',
+    ]) {
+      expect(centralEncryptedBackend).toContain(requiredTerm);
+    }
+
+    expect(security).toContain('SHA-256-fingerprints van bearer tokens');
+    expect(security).toContain('Centrale sessiestore indexeert bearer tokens alleen');
+  });
+
   it('verankert de goal-completion-audit in de autonome mergeflow', () => {
     for (const requiredTerm of [
       'requirements',

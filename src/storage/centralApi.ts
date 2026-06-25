@@ -58,9 +58,10 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
     const issuedAt = nowIso();
     const expiresAt = new Date(Date.now() + this.ttlMs).toISOString();
     const token = createOpaqueSessionToken();
-    this.sessions.set(token, {
+    const tokenFingerprint = await fingerprintSessionToken(token);
+    this.sessions.set(tokenFingerprint, {
       userId,
-      sessionId: token,
+      sessionId: tokenFingerprint,
       issuedAt,
       expiresAt,
     });
@@ -69,13 +70,13 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
   }
 
   async resolve(token: CentralSessionToken): Promise<CentralAuthSession> {
-    const session = this.sessions.get(token);
+    const session = this.sessions.get(await fingerprintSessionToken(token));
     if (!session) {
       throw new CentralSessionError();
     }
 
     if (Date.parse(session.expiresAt ?? '') <= Date.now()) {
-      this.sessions.delete(token);
+      this.sessions.delete(await fingerprintSessionToken(token));
       throw new CentralSessionError();
     }
 
@@ -83,11 +84,15 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
   }
 
   async revoke(token: CentralSessionToken): Promise<void> {
-    this.sessions.delete(token);
+    this.sessions.delete(await fingerprintSessionToken(token));
   }
 
   unsafeSessionCountForTest(): number {
     return this.sessions.size;
+  }
+
+  unsafeSessionFingerprintsForTest(): string[] {
+    return Array.from(this.sessions.keys());
   }
 
   private pruneExpiredSessions(): void {
@@ -201,4 +206,9 @@ export class CentralEncryptedApiClientDriver implements EncryptedStorageDriver {
 
 function createOpaqueSessionToken(): CentralSessionToken {
   return `kiempad-session-${bytesToBase64(randomBytes(32))}`;
+}
+
+async function fingerprintSessionToken(token: CentralSessionToken): Promise<string> {
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', new TextEncoder().encode(token));
+  return `sha256:${bytesToBase64(new Uint8Array(digest))}`;
 }

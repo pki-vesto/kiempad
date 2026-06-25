@@ -84,6 +84,25 @@ describe('central encrypted API service', () => {
     expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
   });
 
+  it('bewaart centrale sessietokens alleen als hashfingerprint in de sessiestore', async () => {
+    const sessionStore = new MemoryCentralSessionStore();
+    const ticket = await sessionStore.issue({ userId: 'user-peter' });
+
+    expect(sessionStore.unsafeSessionFingerprintsForTest()).toHaveLength(1);
+    expect(sessionStore.unsafeSessionFingerprintsForTest()).not.toContain(ticket.token);
+    expect(JSON.stringify(sessionStore.unsafeSessionFingerprintsForTest())).not.toContain(
+      ticket.token,
+    );
+    expect(sessionStore.unsafeSessionFingerprintsForTest()[0]).toMatch(/^sha256:/);
+
+    await expect(sessionStore.resolve(ticket.token)).resolves.toMatchObject({
+      userId: 'user-peter',
+      sessionId: expect.stringMatching(/^sha256:/),
+    });
+    await sessionStore.revoke(ticket.token);
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
+  });
+
   it('vereist een geldig actief token voordat een centrale sessie wordt ingetrokken', async () => {
     const sessionStore = new MemoryCentralSessionStore();
     const server = new CentralEncryptedApiServer(
