@@ -81,7 +81,9 @@ en blijft ook centraal **versleuteld at rest**.
   encrypted records en user-scoped metadata. `PersistedCentralEncryptedDatabase`
   flushes writes naar een `CentralDatabasePersistence` adapter, zodat productie later
   file, SQLite, Postgres of een andere serverdatabase kan gebruiken zonder
-  domeinstores te wijzigen.
+  domeinstores te wijzigen. Centrale metadata is geen vrije plaintext opslaglaag:
+  alleen technische keys voor `crypto`, `schema` en `webauthn-unlock` worden
+  geaccepteerd en gevalideerd vóór persistence.
 - **API/storage-abstraction:** `CentralEncryptedApiServer` vormt de centrale
   servicegrens. `MemoryCentralSessionStore` geeft opaque sessietokens uit en
   resolveert die server-side naar een `CentralAuthSession`; forged, verlopen,

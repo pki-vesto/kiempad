@@ -144,6 +144,34 @@ describe('central file persistence snapshot validation', () => {
     );
   });
 
+  it('weigert onbekende of malformed centrale metadata vóór load en save', async () => {
+    const { filePath } = await createPersistenceFile();
+    const unknownMetaSnapshot = createValidSnapshot();
+    unknownMetaSnapshot.meta[0] = {
+      ownerUserId: 'user-peter',
+      key: 'dossier-samenvatting',
+      value: { plaintext: 'gevoelige metadata hoort niet centraal in cleartext' },
+      updatedAt: '2026-06-25T08:00:01.000Z',
+    };
+    await writeFile(filePath, JSON.stringify(unknownMetaSnapshot), 'utf8');
+
+    await expect(new JsonFileCentralDatabasePersistence(filePath).load()).rejects.toThrow(
+      'Ongeldige centrale database snapshot',
+    );
+
+    const malformedSchemaSnapshot = createValidSnapshot();
+    malformedSchemaSnapshot.meta[0] = {
+      ownerUserId: 'user-peter',
+      key: 'schema',
+      value: { version: 1 },
+      updatedAt: '2026-06-25T08:00:01.000Z',
+    };
+
+    await expect(
+      new JsonFileCentralDatabasePersistence(filePath).save(malformedSchemaSnapshot),
+    ).rejects.toThrow('Ongeldige centrale database snapshot');
+  });
+
   it('weigert dubbele logical record- en metakeys binnen dezelfde ownernamespace', async () => {
     const { filePath } = await createPersistenceFile();
     const duplicateRecordSnapshot = createValidSnapshot();
@@ -289,7 +317,11 @@ function createValidSnapshot(): CentralDatabaseSnapshot {
       {
         ownerUserId: 'user-peter',
         key: 'schema',
-        value: { version: 1 },
+        value: {
+          version: 1,
+          createdAt: '2026-06-25T08:00:00.000Z',
+          updatedAt: '2026-06-25T08:00:01.000Z',
+        },
         updatedAt: '2026-06-25T08:00:01.000Z',
       },
     ],

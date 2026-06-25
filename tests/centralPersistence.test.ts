@@ -175,7 +175,7 @@ describe('central encrypted database persistence', () => {
   it('maakt een gefaalde meta-save niet zichtbaar in de draaiende centrale runtime', async () => {
     const database = await PersistedCentralEncryptedDatabase.open(new RejectingPersistence());
 
-    await expect(database.putMeta(testSession, 'schema', { version: 2 })).rejects.toThrow(
+    await expect(database.putMeta(testSession, 'schema', createSchemaMeta())).rejects.toThrow(
       'central persistence unavailable',
     );
 
@@ -335,3 +335,15 @@ type PendingSave = {
   snapshot: CentralDatabaseSnapshot;
   release: () => void;
 };
+
+function createSchemaMeta(): {
+  version: number;
+  createdAt: string;
+  updatedAt: string;
+} {
+  return {
+    version: 1,
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt: '2026-06-25T08:00:01.000Z',
+  };
+}
