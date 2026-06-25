@@ -74,7 +74,8 @@ describe('app shell', () => {
   it('toont de passphrase-kluis met geen-herstel-uitleg', () => {
     const html = renderVaultGate(false);
 
-    expect(html).toContain('Maak je lokale kluis aan');
+    expect(html).toContain('Start je centrale encrypted dataset');
+    expect(html).toContain('Centrale encrypted opslag');
     expect(html).toContain('Geen herstel-achterdeur');
     expect(html).toContain('Kiempad bewaart je passphrase niet');
     expect(html).toContain('versleutelde back-up');
@@ -88,7 +89,7 @@ describe('app shell', () => {
     expect(html).toContain('Hulp bij ontgrendelen');
     expect(html).toContain('Hersteldiagnose');
     expect(html).toContain('data-vault-present="true"');
-    expect(html).toContain('Lokale kluismetadata gevonden.');
+    expect(html).toContain('Encrypted datasetmetadata gevonden.');
     expect(html).toContain('Back-upherinnering');
     expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
     expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
@@ -131,11 +132,11 @@ describe('app shell', () => {
     });
 
     expect(noVaultHtml).toContain('data-vault-present="false"');
-    expect(noVaultHtml).toContain('Geen lokale kluis op dit toestel gevonden.');
+    expect(noVaultHtml).toContain('Geen encrypted dataset voor deze sessie gevonden.');
     expect(noVaultHtml).toContain('Beschikbaar in deze browser.');
     expect(noVaultHtml).toContain('Niet gekoppeld op dit toestel.');
     expect(noVaultHtml).toContain(
-      'Nog niet ingesteld; maak na de eerste kluis een versleutelde back-up.',
+      'Nog niet ingesteld; start eerst je encrypted dataset en maak daarna een versleutelde back-up.',
     );
     expect(linkedHtml).toContain('data-vault-present="true"');
     expect(linkedHtml).toContain('Gekoppeld: Laptop biometrie.');
