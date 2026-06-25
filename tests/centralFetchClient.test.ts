@@ -21,6 +21,8 @@ describe('central fetch client', () => {
 
       if (input.endsWith('/sessions')) {
         expect(init?.method).toBe('POST');
+        expect(init?.credentials).toBe('omit');
+        expect(init?.cache).toBe('no-store');
         return Promise.resolve(
           new Response(
             JSON.stringify({
@@ -35,6 +37,8 @@ describe('central fetch client', () => {
       }
 
       expect(input).toBe('https://central.test/meta/crypto');
+      expect(init?.credentials).toBe('omit');
+      expect(init?.cache).toBe('no-store');
       return Promise.resolve(
         new Response(JSON.stringify({ value: { version: 1 } }), {
           status: 200,
@@ -53,10 +57,32 @@ describe('central fetch client', () => {
     expect(fetchStub).toHaveBeenCalledTimes(2);
   });
 
+  it('gebruikt geen ambient credentials of browsercache bij centrale sessie-uitgifte', async () => {
+    const fetcher = vi.fn(async (_input: string, init?: RequestInit): Promise<Response> => {
+      expect(init?.credentials).toBe('omit');
+      expect(init?.cache).toBe('no-store');
+      return new Response(
+        JSON.stringify({
+          token: 'central-token',
+          userId: 'kiempad-private-user',
+          issuedAt: '2026-06-25T09:00:00.000Z',
+          expiresAt: '2026-06-25T10:00:00.000Z',
+        }),
+        { status: 201, headers: { 'content-type': 'application/json' } },
+      );
+    });
+
+    await expect(
+      issueCentralFetchSession('https://central.test', { userId: 'kiempad-private-user' }, fetcher),
+    ).resolves.toMatchObject({ token: 'central-token' });
+  });
+
   it('ververst een verlopen centraal sessietoken eenmalig en hergebruikt daarna het nieuwe token', async () => {
     const seenTokens: string[] = [];
     const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {
       expect(input).toBe('https://central.test/meta/crypto');
+      expect(init?.credentials).toBe('omit');
+      expect(init?.cache).toBe('no-store');
       const token = new Headers(init?.headers).get('authorization')?.replace(/^Bearer\s+/i, '');
       seenTokens.push(token ?? '');
 

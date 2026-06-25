@@ -74,6 +74,8 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
     const response = await this.fetcher(`${this.baseUrl}${path}`, {
       ...options,
       method: options.method ?? 'GET',
+      credentials: 'omit',
+      cache: 'no-store',
       headers: {
         authorization: `Bearer ${this.token}`,
         ...(options.body ? { 'content-type': 'application/json' } : {}),
@@ -115,6 +117,8 @@ export async function issueCentralFetchSession(
 ): Promise<{ token: string; userId: string; issuedAt: string; expiresAt: string }> {
   const response = await fetcher(`${baseUrl}/sessions`, {
     method: 'POST',
+    credentials: 'omit',
+    cache: 'no-store',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(input),
   });
