@@ -81,6 +81,63 @@ describe('central file persistence snapshot validation', () => {
       'Ongeldige centrale database snapshot',
     );
   });
+
+  it('weigert dubbele logical record- en metakeys binnen dezelfde ownernamespace', async () => {
+    const { filePath } = await createPersistenceFile();
+    const duplicateRecordSnapshot = createValidSnapshot();
+    const duplicateRecord = duplicateRecordSnapshot.records[0];
+    if (!duplicateRecord) throw new Error('Expected record fixture.');
+    duplicateRecordSnapshot.records.push({
+      ...duplicateRecord,
+      updatedAt: '2026-06-25T08:00:05.000Z',
+      storedAt: '2026-06-25T08:00:06.000Z',
+      serverVersion: 2,
+    });
+    await writeFile(filePath, JSON.stringify(duplicateRecordSnapshot), 'utf8');
+
+    await expect(new JsonFileCentralDatabasePersistence(filePath).load()).rejects.toThrow(
+      'Ongeldige centrale database snapshot',
+    );
+
+    const duplicateMetaSnapshot = createValidSnapshot();
+    const duplicateMeta = duplicateMetaSnapshot.meta[0];
+    if (!duplicateMeta) throw new Error('Expected meta fixture.');
+    duplicateMetaSnapshot.meta.push({
+      ...duplicateMeta,
+      updatedAt: '2026-06-25T08:00:07.000Z',
+    });
+    await writeFile(filePath, JSON.stringify(duplicateMetaSnapshot), 'utf8');
+
+    await expect(new JsonFileCentralDatabasePersistence(filePath).load()).rejects.toThrow(
+      'Ongeldige centrale database snapshot',
+    );
+  });
+
+  it('staat dezelfde record- en metakey toe voor verschillende owners', async () => {
+    const { filePath } = await createPersistenceFile();
+    const snapshot = createValidSnapshot();
+    const baseMeta = snapshot.meta[0];
+    if (!baseMeta) throw new Error('Expected meta fixture.');
+    snapshot.meta.push({
+      ...baseMeta,
+      ownerUserId: 'user-partner',
+      updatedAt: '2026-06-25T08:00:05.000Z',
+    });
+    const baseRecord = snapshot.records[0];
+    if (!baseRecord) throw new Error('Expected record fixture.');
+    snapshot.records.push({
+      ...baseRecord,
+      ownerUserId: 'user-partner',
+      updatedAt: '2026-06-25T08:00:06.000Z',
+      storedAt: '2026-06-25T08:00:07.000Z',
+      serverVersion: 1,
+    });
+
+    const persistence = new JsonFileCentralDatabasePersistence(filePath);
+    await persistence.save(snapshot);
+
+    await expect(persistence.load()).resolves.toEqual(snapshot);
+  });
 });
 
 async function createPersistenceFile(): Promise<{ directory: string; filePath: string }> {

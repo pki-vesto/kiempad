@@ -307,12 +307,24 @@ export function assertValidCentralDatabaseSnapshot(
     throw new Error('Ongeldige centrale database snapshot.');
   }
 
+  const seenMetaKeys = new Set<string>();
+  const seenRecordKeys = new Set<string>();
+
   for (const entry of snapshot.meta) {
     assertValidCentralStorageMeta(entry);
+    assertUniqueSnapshotKey(seenMetaKeys, metaKey(entry.ownerUserId, entry.key));
   }
   for (const record of snapshot.records) {
     assertValidCentralEncryptedRecord(record);
+    assertUniqueSnapshotKey(seenRecordKeys, recordKey(record.ownerUserId, record.id));
   }
+}
+
+function assertUniqueSnapshotKey(seenKeys: Set<string>, key: string): void {
+  if (seenKeys.has(key)) {
+    throw new Error('Ongeldige centrale database snapshot.');
+  }
+  seenKeys.add(key);
 }
 
 function assertValidCentralStorageMeta(entry: unknown): asserts entry is CentralStorageMeta {
