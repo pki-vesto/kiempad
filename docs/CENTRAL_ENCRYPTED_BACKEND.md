@@ -28,8 +28,9 @@ owner/indexmetadata en encrypted envelopes.
   `AES-256-GCM` envelopes.
   De file-backed adapter valideert dezelfde snapshotgrens ook vóór hij een nieuwe
   snapshot naar disk schrijft. Saves schrijven eerst naar een tijdelijk snapshotpad,
-  vervangen daarna atomisch het doelbestand en ruimen het tijdelijke bestand
-  best-effort op als write of replace faalt.
+  flushen dat bestand vóór replacement, vervangen daarna atomisch het doelbestand,
+  syncen de parent-directory best-effort en ruimen het tijdelijke bestand
+  best-effort op als write, flush of replace faalt.
 - `createCentralNodeHttpServer` in `src/server/centralNodeRuntime.ts` wiret de
   persistence, session store, database, API-server en `node:http` samen.
 - `src/server/centralBackendCli.ts` is het startbare Node-entrypoint voor lokale
@@ -128,8 +129,10 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - File-backed snapshots met ontbrekende owner/servermetadata, malformed timestamps,
   ongeldige versies, onbekende recordtypes, dubbele owner-scoped record-/metakeys of
   plaintext/malformed payloads worden geweigerd vóór de database ze opent of naar
-  disk schrijft. Mislukte file-backed saves ruimen tijdelijke snapshotbestanden
-  best-effort op voordat de oorspronkelijke fout teruggaat naar de caller.
+  disk schrijft. File-backed saves flushen het tijdelijke snapshotbestand vóór
+  atomische replacement en syncen de parent-directory best-effort na succesvolle
+  replacement. Mislukte saves ruimen tijdelijke snapshotbestanden best-effort op
+  voordat de oorspronkelijke fout teruggaat naar de caller.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.
