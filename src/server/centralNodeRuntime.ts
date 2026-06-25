@@ -14,15 +14,25 @@ export type CentralNodeRuntimeOptions = {
 };
 
 const DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
+type CentralNodeHttpApi = Pick<CentralEncryptedHttpApi, 'handle'>;
 
 export async function createCentralNodeHttpServer(
   options: CentralNodeRuntimeOptions,
 ): Promise<Server> {
   const api = await createCentralNodeHttpApi(options);
+  return createCentralNodeHttpServerFromApi(api, options);
+}
+
+export function createCentralNodeHttpServerFromApi(
+  api: CentralNodeHttpApi,
+  options: Pick<CentralNodeRuntimeOptions, 'allowedOrigins' | 'maxRequestBodyBytes'> = {},
+): Server {
   const corsPolicy = createCorsPolicy(options.allowedOrigins);
   const maxRequestBodyBytes = options.maxRequestBodyBytes ?? DEFAULT_MAX_REQUEST_BODY_BYTES;
   return createServer((request, response) => {
-    void handleCentralNodeRequest(api, request, response, corsPolicy, maxRequestBodyBytes);
+    void handleCentralNodeRequest(api, request, response, corsPolicy, maxRequestBodyBytes).catch(
+      () => sendUnhandledCentralError(response),
+    );
   });
 }
 
@@ -39,7 +49,7 @@ export async function createCentralNodeHttpApi(
 }
 
 export async function handleCentralNodeRequest(
-  api: CentralEncryptedHttpApi,
+  api: CentralNodeHttpApi,
   request: IncomingMessage,
   response: ServerResponse,
   corsPolicy: CentralCorsPolicy = createCorsPolicy(),
@@ -79,6 +89,17 @@ export async function handleCentralNodeRequest(
     body,
   });
   sendJson(response, apiResponse.status, apiResponse.body);
+}
+
+function sendUnhandledCentralError(response: ServerResponse): void {
+  if (response.writableEnded) return;
+  if (response.headersSent) {
+    response.end();
+    return;
+  }
+
+  applySecurityHeaders(response);
+  sendJson(response, 500, { error: 'central-runtime-error' });
 }
 
 function normalizeMethod(method: string | undefined): CentralHttpMethod | undefined {
