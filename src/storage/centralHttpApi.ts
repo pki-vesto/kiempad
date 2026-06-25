@@ -265,7 +265,6 @@ function parseSessionIssueInput(body: unknown): CentralSessionIssueInput {
 
   return {
     userId: body.userId,
-    ttlMs: typeof body.ttlMs === 'number' ? body.ttlMs : undefined,
   };
 }
 

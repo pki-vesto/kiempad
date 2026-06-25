@@ -44,10 +44,11 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   `userId`/ownerclaim per recordrequest aan; de server resolveert het token naar een
   actieve `CentralAuthSession` en weigert forged, verlopen of ingetrokken tokens.
   Sessie-uitgifte is daarnaast beperkt tot server-side toegestane user ids; de
-  frontend-configuratie is geen autoriteit. Bij tokenverloop mag de centrale
-  fetch-client één nieuw token aanvragen voor dezelfde configured user-scope; refresh
-  bewaart geen passphrase of serversecret in de frontend en valt niet terug naar
-  legacy lokale opslag.
+  frontend-configuratie is geen autoriteit. Sessie-TTL is serverconfiguratie en kan
+  niet door `POST /sessions` bodies worden verlengd. Bij tokenverloop mag de
+  centrale fetch-client één nieuw token aanvragen voor dezelfde configured
+  user-scope; refresh bewaart geen passphrase of serversecret in de frontend en valt
+  niet terug naar legacy lokale opslag.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
   `401`, record-id's buiten de owner-namespace gedragen zich als ontbrekende records
   (`404`) en malformed payloads worden `400`.

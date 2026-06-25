@@ -175,8 +175,8 @@ Details en beveiligingsnotities staan in
   tokens naar user-scoped sessies en geeft alleen sessies uit voor server-side
   toegestane users. De fetch-client kan een verlopen token één keer vernieuwen voor
   dezelfde centrale user-scope zonder passphrase of secrets in de frontend op te
-  slaan. Het HTTP-style contract heeft `/sessions`, `/meta/*` en `/records/*`
-  endpoints met veilige foutmapping.
+  slaan; sessie-TTL blijft serverconfiguratie. Het HTTP-style contract heeft
+  `/sessions`, `/meta/*` en `/records/*` endpoints met veilige foutmapping.
 - **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
   owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
   zonder client key.
