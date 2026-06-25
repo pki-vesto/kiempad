@@ -71,7 +71,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   `AES-256-GCM` envelope.
 - **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
-  deployment hardening horen bij de productiehost. De containerwrapper publiceert
+  deployment hardening horen bij de productiehost. Request bodies worden begrensd
+  met `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` en te grote payloads krijgen `413`
+  voordat ze de centrale API-laag bereiken. De containerwrapper publiceert
   standaard alleen op `127.0.0.1`; HTTPS hoort via Tailscale Serve of een reverse
   proxy voor de API te eindigen. Browser-CORS wordt met een exacte
   `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` allowlist afgehandeld; gebruik geen wildcard

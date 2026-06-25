@@ -68,6 +68,12 @@ describe('central backend CLI runtime', () => {
         KIEMPAD_CENTRAL_PORT: 'not-a-port',
       }),
     ).rejects.toThrow('KIEMPAD_CENTRAL_PORT');
+
+    await expect(
+      startCentralBackendFromEnv({
+        KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES: '0',
+      }),
+    ).rejects.toThrow('KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES');
   });
 
   it('staat standaard alleen de private Kiempad-user toe voor sessie-uitgifte', async () => {

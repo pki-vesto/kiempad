@@ -17,6 +17,7 @@ export type CentralBackendRuntime = {
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 8099;
 const DEFAULT_SESSION_TTL_MS = 60 * 60 * 1000;
+const DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
 const DEFAULT_PERSISTENCE_FILE = 'data/central/kiempad-central-db.json';
 const DEFAULT_ALLOWED_USER_ID = 'kiempad-private-user';
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -38,6 +39,11 @@ export async function startCentralBackendFromEnv(
     DEFAULT_SESSION_TTL_MS,
     'KIEMPAD_CENTRAL_SESSION_TTL_MS',
   );
+  const maxRequestBodyBytes = parsePositiveInteger(
+    env.KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES,
+    DEFAULT_MAX_REQUEST_BODY_BYTES,
+    'KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES',
+  );
   const persistenceFile = resolve(
     env.KIEMPAD_CENTRAL_PERSISTENCE_FILE?.trim() || DEFAULT_PERSISTENCE_FILE,
   );
@@ -50,6 +56,7 @@ export async function startCentralBackendFromEnv(
     sessionTtlMs,
     allowedUserIds,
     allowedOrigins,
+    maxRequestBodyBytes,
   });
   const actualPort = await listen(server, host, port);
   const url = `http://${host}:${actualPort}`;
