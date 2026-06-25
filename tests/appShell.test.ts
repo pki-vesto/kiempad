@@ -84,13 +84,32 @@ describe('app shell', () => {
     expect(html).toContain('docs/WEBAUTHN_UNLOCK.md');
   });
 
+  it('toont legacy fallback expliciet als lokale encrypted dataset', () => {
+    const html = renderVaultGate(false, undefined, undefined, {
+      storageMode: 'legacy-indexeddb',
+      storageLabel: 'Legacy lokale IndexedDB-kluis <script>',
+    });
+
+    expect(html).toContain('Start je legacy lokale encrypted dataset');
+    expect(html).toContain('Legacy lokale encrypted opslag');
+    expect(html).toContain('legacy fallback bewaart alleen versleutelde payloads op dit toestel');
+    expect(html).toContain('Legacy lokale IndexedDB-kluis &lt;script&gt;');
+    expect(html).toContain('Geen legacy lokale encrypted dataset voor deze sessie gevonden.');
+    expect(html).not.toContain('Start je centrale encrypted dataset');
+    expect(html).not.toContain('Legacy lokale IndexedDB-kluis <script>');
+  });
+
   it('toont kalme herstelhulp bij een bestaande kluis', () => {
-    const html = renderVaultGate(true, 'Ontgrendelen is mislukt <script>');
+    const html = renderVaultGate(true, 'Ontgrendelen is mislukt <script>', undefined, {
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+    });
 
     expect(html).toContain('Hulp bij ontgrendelen');
     expect(html).toContain('Hersteldiagnose');
     expect(html).toContain('data-vault-present="true"');
-    expect(html).toContain('Encrypted datasetmetadata gevonden.');
+    expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
+    expect(html).toContain('Centrale encrypted API');
     expect(html).toContain('Back-upherinnering');
     expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
     expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
@@ -98,10 +117,24 @@ describe('app shell', () => {
     expect(html).not.toContain('Ontgrendelen is mislukt <script>');
     expect(html).toContain('Controleer rustig de passphrase');
     expect(html).toContain('toetsenbordindeling en hoofdletters');
-    expect(html).toContain('WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld');
-    expect(html).toContain('importeer daarna je versleutelde back-up');
+    expect(html).toContain('centrale backend en gebruikersscope dezelfde dataset openen');
+    expect(html).toContain('je passphrase blijft de herstelroute');
+    expect(html).not.toContain('Als de legacy lokale opslag leeg of beschadigd is');
     expect(html).toContain('niet te herstellen via een achterdeur');
     expect(html).not.toContain('reset je passphrase');
+  });
+
+  it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {
+    const html = renderVaultGate(true, undefined, undefined, {
+      storageMode: 'legacy-indexeddb',
+      storageLabel: 'Legacy lokale IndexedDB-kluis',
+    });
+
+    expect(html).toContain('Ontgrendel Kiempad');
+    expect(html).toContain('Legacy lokale encrypted datasetmetadata gevonden.');
+    expect(html).toContain('Als de legacy lokale opslag leeg of beschadigd is');
+    expect(html).toContain('importeer daarna je versleutelde back-up');
+    expect(html).not.toContain('centrale backend en gebruikersscope');
   });
 
   it('toont een veilige centrale bootstrapfout zonder lokale fallback', () => {
@@ -148,11 +181,11 @@ describe('app shell', () => {
     });
 
     expect(noVaultHtml).toContain('data-vault-present="false"');
-    expect(noVaultHtml).toContain('Geen encrypted dataset voor deze sessie gevonden.');
+    expect(noVaultHtml).toContain('Geen centrale encrypted dataset voor deze sessie gevonden.');
     expect(noVaultHtml).toContain('Beschikbaar in deze browser.');
     expect(noVaultHtml).toContain('Niet gekoppeld op dit toestel.');
     expect(noVaultHtml).toContain(
-      'Nog niet ingesteld; start eerst je encrypted dataset en maak daarna een versleutelde back-up.',
+      'Nog niet ingesteld; start eerst je centrale encrypted dataset en maak daarna een versleutelde back-up.',
     );
     expect(linkedHtml).toContain('data-vault-present="true"');
     expect(linkedHtml).toContain('Gekoppeld: Laptop biometrie.');

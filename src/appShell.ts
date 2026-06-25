@@ -353,6 +353,11 @@ export type WebAuthnViewStatus = {
   error?: string;
 };
 
+type VaultGateOptions = {
+  storageMode?: 'central-api' | 'legacy-indexeddb';
+  storageLabel?: string;
+};
+
 export function renderAppShell(
   activeId: ScreenId,
   state: AppShellState = {
@@ -470,17 +475,23 @@ export function renderVaultGate(
   hasVault: boolean,
   error?: string,
   webAuthnStatus?: WebAuthnViewStatus,
+  options: VaultGateOptions = {},
 ): string {
-  const title = hasVault ? 'Ontgrendel Kiempad' : 'Start je centrale encrypted dataset';
+  const central = options.storageMode !== 'legacy-indexeddb';
+  const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale encrypted dataset';
+  const eyebrow = central ? 'Centrale encrypted opslag' : 'Legacy lokale encrypted opslag';
+  const title = hasVault ? 'Ontgrendel Kiempad' : `Start je ${datasetLabel}`;
   const button = hasVault ? 'Ontgrendel' : 'Dataset starten';
   const help = hasVault
-    ? 'Voer je passphrase in om de sleutel tijdelijk in het geheugen te laden.'
-    : 'Kies een passphrase. Kiempad gebruikt die om je sleutel af te leiden; centrale opslag bewaart alleen versleutelde payloads.';
+    ? `Voer je passphrase in om de sleutel voor je ${datasetLabel} tijdelijk in het geheugen te laden.`
+    : central
+      ? 'Kies een passphrase. Kiempad gebruikt die om je sleutel af te leiden; centrale opslag bewaart alleen versleutelde payloads.'
+      : 'Kies een passphrase. Kiempad gebruikt die om je sleutel af te leiden; deze legacy fallback bewaart alleen versleutelde payloads op dit toestel.';
 
   return `
     <main class="vault-gate" aria-labelledby="vault-title">
       <section class="vault-card">
-        <p class="eyebrow">Centrale encrypted opslag</p>
+        <p class="eyebrow">${eyebrow}</p>
         <h1 id="vault-title">${title}</h1>
         <p>${help}</p>
         <form id="vault-form" class="vault-form">
@@ -490,8 +501,8 @@ export function renderVaultGate(
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
         ${error ? `<p class="form-error" role="alert">${escapeHtml(error)}</p>` : ''}
-        ${renderVaultDiagnostics(hasVault, webAuthnStatus)}
-        ${renderVaultRecoveryHelp(hasVault)}
+        ${renderVaultDiagnostics(hasVault, webAuthnStatus, options)}
+        ${renderVaultRecoveryHelp(hasVault, options)}
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
@@ -520,7 +531,15 @@ export function renderStorageBootstrapError(error: string): string {
   `;
 }
 
-function renderVaultDiagnostics(hasVault: boolean, webAuthnStatus?: WebAuthnViewStatus): string {
+function renderVaultDiagnostics(
+  hasVault: boolean,
+  webAuthnStatus?: WebAuthnViewStatus,
+  options: VaultGateOptions = {},
+): string {
+  const central = options.storageMode !== 'legacy-indexeddb';
+  const datasetStatus = hasVault
+    ? `${central ? 'Centrale encrypted' : 'Legacy lokale encrypted'} datasetmetadata gevonden.`
+    : `Geen ${central ? 'centrale encrypted' : 'legacy lokale encrypted'} dataset voor deze sessie gevonden.`;
   const webAuthnRuntime = webAuthnStatus?.runtimeBeschikbaar
     ? 'Beschikbaar in deze browser.'
     : `Niet beschikbaar: ${webAuthnStatus?.reden ?? 'browserstatus nog niet bepaald.'}`;
@@ -529,13 +548,14 @@ function renderVaultDiagnostics(hasVault: boolean, webAuthnStatus?: WebAuthnView
     : 'Niet gekoppeld op dit toestel.';
   const backupStatus = hasVault
     ? 'Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.'
-    : 'Nog niet ingesteld; start eerst je encrypted dataset en maak daarna een versleutelde back-up.';
+    : `Nog niet ingesteld; start eerst je ${central ? 'centrale encrypted' : 'legacy lokale encrypted'} dataset en maak daarna een versleutelde back-up.`;
 
   return `
     <section class="policy-panel embedded-summary" aria-label="Hersteldiagnose" data-vault-present="${hasVault ? 'true' : 'false'}">
       <h2>Hersteldiagnose</h2>
       <dl class="definition-list">
-        <div><dt>Dataset</dt><dd>${hasVault ? 'Encrypted datasetmetadata gevonden.' : 'Geen encrypted dataset voor deze sessie gevonden.'}</dd></div>
+        <div><dt>Opslagmodus</dt><dd>${escapeHtml(options.storageLabel ?? (central ? 'Centrale encrypted opslag' : 'Legacy lokale IndexedDB-kluis'))}</dd></div>
+        <div><dt>Dataset</dt><dd>${datasetStatus}</dd></div>
         <div><dt>WebAuthn runtime</dt><dd>${escapeHtml(webAuthnRuntime)}</dd></div>
         <div><dt>WebAuthn koppeling</dt><dd>${escapeHtml(webAuthnEnrollment)}</dd></div>
         <div><dt>Back-upherinnering</dt><dd>${backupStatus}</dd></div>
@@ -545,7 +565,20 @@ function renderVaultDiagnostics(hasVault: boolean, webAuthnStatus?: WebAuthnView
   `;
 }
 
-function renderVaultRecoveryHelp(hasVault: boolean): string {
+function renderVaultRecoveryHelp(hasVault: boolean, options: VaultGateOptions = {}): string {
+  const central = options.storageMode !== 'legacy-indexeddb';
+  const existingHelp = central
+    ? `<ol class="compact-list">
+              <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
+              <li>Controleer of de centrale backend en gebruikersscope dezelfde dataset openen als op je andere apparaat.</li>
+              <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld; je passphrase blijft de herstelroute.</li>
+            </ol>`
+    : `<ol class="compact-list">
+              <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
+              <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld.</li>
+              <li>Als de legacy lokale opslag leeg of beschadigd is: start een nieuwe encrypted dataset en importeer daarna je versleutelde back-up.</li>
+            </ol>`;
+
   return `
     <aside class="policy-panel" aria-labelledby="recovery-title">
       <h2 id="recovery-title">${hasVault ? 'Hulp bij ontgrendelen' : 'Geen herstel-achterdeur'}</h2>
@@ -555,11 +588,7 @@ function renderVaultRecoveryHelp(hasVault: boolean): string {
       </p>
       ${
         hasVault
-          ? `<ol class="compact-list">
-              <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
-              <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld.</li>
-              <li>Als de legacy lokale opslag leeg of beschadigd is: start een nieuwe encrypted dataset en importeer daarna je versleutelde back-up.</li>
-            </ol>`
+          ? existingHelp
           : '<p>Maak straks regelmatig een versleutelde back-up en bewaar je passphrase apart van je apparaten.</p>'
       }
       <p class="small-print">

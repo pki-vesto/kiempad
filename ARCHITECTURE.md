@@ -129,7 +129,10 @@ en blijft ook centraal **versleuteld at rest**.
   gebruikers horen het centrale encrypted pad te gebruiken. Copy die opslaglocatie
   beschrijft is storage-mode bewust: centrale modus noemt de centrale encrypted
   dataset, terwijl echte on-device verwerking zoals OCR, browser-AI, notificaties en
-  downloads expliciet lokaal mag blijven heten.
+  downloads expliciet lokaal mag blijven heten. Ook de vergrendelde onboarding- en
+  herstelgate krijgt de actieve storage-mode door, zodat centrale gebruikers geen
+  legacy-herstelroute als primair pad zien en legacy fallback niet als centrale
+  opslag wordt voorgesteld.
 
 Detail en bedreigingsmodel: [`SECURITY.md`](SECURITY.md). Beslissingen:
 [`docs/adr/0002-local-first-versleutelde-opslag.md`](docs/adr/0002-local-first-versleutelde-opslag.md)
