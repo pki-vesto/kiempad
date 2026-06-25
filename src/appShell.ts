@@ -2094,7 +2094,7 @@ function renderKennisScreen(state: AppShellState): string {
       </div>
       <div class="summary-panel">
         <h2>AI-instelling</h2>
-        ${renderAiSettingsForm(state.settings)}
+        ${renderAiSettingsForm(state.settings, state.storageMode)}
         ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
       </div>
       <div class="summary-panel">
@@ -2552,7 +2552,15 @@ function renderAiSummaryForm(preview?: AiSamenvattingPayload): string {
   `;
 }
 
-function renderAiSettingsForm(settings: AppSettings): string {
+function renderAiSettingsForm(
+  settings: AppSettings,
+  storageMode: AppShellState['storageMode'],
+): string {
+  const central = storageMode === 'central-api';
+  const storageCopy = central
+    ? 'Provider, model en API-sleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.'
+    : 'Provider, model en API-sleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.';
+
   return `
     <form id="ai-settings-form" class="data-form compact-form">
       <label>
@@ -2574,6 +2582,7 @@ function renderAiSettingsForm(settings: AppSettings): string {
         API-sleutel
         <input name="aiApiKey" type="password" value="" placeholder="${settings.ai.apiKey ? 'Opgeslagen; laat leeg om te bewaren' : ''}" autocomplete="off" />
       </label>
+      <p class="small-print">${storageCopy}</p>
       <button type="submit">Bewaar AI-instelling</button>
     </form>
   `;
