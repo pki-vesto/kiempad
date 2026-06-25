@@ -873,15 +873,27 @@ function renderArgumentList(label: string, items: readonly string[]): string {
 
 function renderBackupScreen(state: AppShellState): string {
   const reminder = bepaalBackupReminder(state.settings.laatsteBackupOp);
+  const central = isCentralStorage(state);
+  const backupCopy = central
+    ? 'Het bestand bevat encrypted records en centrale datasetmetadata; geen ontsleutelde gezondheidsdata. Gebruik dit als noodexport naast de centrale encrypted backend.'
+    : 'Het bestand bevat versleutelde records en legacy kluismetadata; geen ontsleutelde gezondheidsdata.';
+  const syncTitle = central ? 'Optioneel recordpakket' : 'Syncpakket';
+  const syncButton = central ? 'Download recordpakket' : 'Download syncpakket';
+  const syncCopy = central
+    ? 'Gekoppelde apparaten openen normaal dezelfde centrale encrypted dataset via de centrale API. Dit pakket is alleen voor handmatige encrypted recordoverdracht binnen dezelfde dataset.'
+    : 'Voor apparaten die al via een versleutelde back-up aan dezelfde legacy lokale kluis zijn gekoppeld. Het pakket bevat alleen encrypted records.';
+  const syncImportTitle = central ? 'Recordpakket importeren' : 'Sync importeren';
+  const syncImportLabel = central ? 'Kiempad-recordpakket' : 'Kiempad-syncpakket';
+  const syncImportButton = central ? 'Importeer recordpakket' : 'Importeer syncpakket';
 
   return `
     <section class="section-stack" aria-label="Back-up en import">
         <h2>Versleutelde export</h2>
         <button id="export-backup" class="phase-button" type="button">Download back-up</button>
-        <p class="small-print">Het bestand bevat versleutelde records en kluismetadata; geen ontsleutelde gezondheidsdata.</p>
-        <h2 class="section-subheading">Syncpakket</h2>
-        <button id="export-sync" class="phase-button" type="button">Download syncpakket</button>
-        <p class="small-print">Voor apparaten die al via een versleutelde back-up aan dezelfde kluis zijn gekoppeld. Het pakket bevat alleen encrypted records.</p>
+        <p class="small-print">${backupCopy}</p>
+        <h2 class="section-subheading">${syncTitle}</h2>
+        <button id="export-sync" class="phase-button" type="button">${syncButton}</button>
+        <p class="small-print">${syncCopy}</p>
         <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
           <h2>${escapeHtml(reminder.titel)}</h2>
           <p>${escapeHtml(reminder.tekst)}</p>
@@ -896,13 +908,13 @@ function renderBackupScreen(state: AppShellState): string {
           </label>
           <button type="submit">Importeer back-up</button>
         </form>
-        <h2 class="section-subheading">Sync importeren</h2>
+        <h2 class="section-subheading">${syncImportTitle}</h2>
         <form id="import-sync-form" class="data-form">
           <label>
-            Kiempad-syncpakket
+            ${syncImportLabel}
             <input name="syncFile" type="file" accept=".kiempad-sync,application/json" required />
           </label>
-          <button type="submit">Importeer syncpakket</button>
+          <button type="submit">${syncImportButton}</button>
         </form>
         ${state.backupStatus ? `<p class="linked-note">${escapeHtml(state.backupStatus)}</p>` : ''}
         ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}

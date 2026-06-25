@@ -72,6 +72,10 @@ Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
   starten.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
+- **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale
+  encrypted dataset via de centrale API. Een `.kiempad-sync` bestand is in centrale
+  modus alleen een handmatige encrypted recordoverdracht binnen dezelfde dataset, niet
+  de primaire manier om apparaten te koppelen.
 - **Opslag:** data leesbaar na ontgrendelen, onleesbaar zonder passphrase.
 - **Privacy-rook­test:** in de netwerk-tab is er alleen verkeer naar de eigen
   centrale API en geen verkeer naar derden, tenzij je AI bewust hebt aangezet.

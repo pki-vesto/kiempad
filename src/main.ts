@@ -724,7 +724,10 @@ async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<voi
     await state.eventLogStore?.record({
       categorie: 'backup',
       gebeurtenis: 'Versleutelde back-up klaargezet',
-      detail: 'Back-upbestand is lokaal als download aangeboden.',
+      detail:
+        state.storageMode === 'central-api'
+          ? 'Centrale encrypted noodexport lokaal als download aangeboden.'
+          : 'Legacy lokale encrypted back-up als download aangeboden.',
     });
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Back-up maken is mislukt.';
@@ -742,12 +745,18 @@ async function exportSync(root: HTMLElement, state: RuntimeState): Promise<void>
     link.download = `kiempad-sync-${new Date().toISOString().slice(0, 10)}.kiempad-sync`;
     link.click();
     URL.revokeObjectURL(url);
-    state.backupStatus = 'Syncpakket met versleutelde records klaargezet voor download.';
+    state.backupStatus =
+      state.storageMode === 'central-api'
+        ? 'Encrypted recordpakket voor dezelfde centrale dataset klaargezet voor download.'
+        : 'Syncpakket met versleutelde records klaargezet voor download.';
     state.backupError = undefined;
     await state.eventLogStore?.record({
       categorie: 'backup',
       gebeurtenis: 'Versleuteld syncpakket klaargezet',
-      detail: 'Syncpakket bevat alleen encrypted records voor een gekoppeld apparaat.',
+      detail:
+        state.storageMode === 'central-api'
+          ? 'Recordpakket bevat alleen encrypted records; centrale apparaten openen normaal dezelfde API-dataset.'
+          : 'Syncpakket bevat alleen encrypted records voor een gekoppeld apparaat.',
     });
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Syncpakket maken is mislukt.';
@@ -833,7 +842,10 @@ async function importSyncFromForm(
       gebeurtenis: 'Versleuteld syncpakket geïmporteerd',
       detail: `${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`,
     });
-    state.backupStatus = `Sync geïmporteerd: ${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`;
+    state.backupStatus =
+      state.storageMode === 'central-api'
+        ? `Recordpakket geïmporteerd in centrale dataset: ${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`
+        : `Sync geïmporteerd: ${result.imported} record(s) bijgewerkt, ${result.skippedOlderOrEqual} ouder of gelijk overgeslagen.`;
     state.backupError = undefined;
     state.timelineFilter = undefined;
     await reloadAndRender(root, state);

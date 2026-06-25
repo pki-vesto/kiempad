@@ -2487,6 +2487,7 @@ describe('app shell', () => {
     expect(html).toContain('id="export-sync"');
     expect(html).toContain('Download syncpakket');
     expect(html).toContain('Het pakket bevat alleen encrypted records');
+    expect(html).toContain('dezelfde legacy lokale kluis');
     expect(html).toContain('Back-up herinnering');
     expect(html).toContain('Maak regelmatig een back-up');
     expect(html).toContain('Er is nog geen succesvolle back-updatum bekend');
@@ -2500,6 +2501,35 @@ describe('app shell', () => {
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
     expect(html).toContain('.kiempad-sync');
+  });
+
+  it('rendert centrale back-upcopy zonder syncpakket als primaire device-koppeling', () => {
+    const html = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('encrypted records en centrale datasetmetadata');
+    expect(html).toContain('noodexport naast de centrale encrypted backend');
+    expect(html).toContain('Optioneel recordpakket');
+    expect(html).toContain('Download recordpakket');
+    expect(html).toContain(
+      'Gekoppelde apparaten openen normaal dezelfde centrale encrypted dataset via de centrale API.',
+    );
+    expect(html).toContain('handmatige encrypted recordoverdracht binnen dezelfde dataset');
+    expect(html).toContain('Recordpakket importeren');
+    expect(html).toContain('Kiempad-recordpakket');
+    expect(html).toContain('Importeer recordpakket');
+    expect(html).not.toContain('via een versleutelde back-up aan dezelfde kluis');
+    expect(html).not.toContain('Download syncpakket');
   });
 
   it('rendert de laatst bekende back-updatum en periodieke aanmoediging', () => {

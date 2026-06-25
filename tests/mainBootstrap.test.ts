@@ -18,4 +18,13 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('storageMode: state.storageMode');
     expect(mainSource).toContain('storageLabel: state.storageLabel');
   });
+
+  it('houdt back-up en sync-statussen storage-mode bewust', () => {
+    expect(mainSource).toContain('Centrale encrypted noodexport lokaal als download aangeboden.');
+    expect(mainSource).toContain(
+      'Encrypted recordpakket voor dezelfde centrale dataset klaargezet voor download.',
+    );
+    expect(mainSource).toContain('centrale apparaten openen normaal dezelfde API-dataset');
+    expect(mainSource).toContain('Recordpakket geïmporteerd in centrale dataset');
+  });
 });
