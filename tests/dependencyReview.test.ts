@@ -12,9 +12,12 @@ describe('dependency review cadence', () => {
     expect(dependencyReviewDocs).toContain('git diff -- package.json package-lock.json');
     expect(dependencyReviewDocs).toContain('npm run test');
     expect(dependencyReviewDocs).toContain('npm run build');
-    expect(dependencyReviewDocs).toContain('local-first');
+    expect(dependencyReviewDocs).toContain('centrale encrypted opslag');
     expect(dependencyReviewDocs).toContain('docs/DEPENDENCY_REVIEW_EVIDENCE_TEMPLATE.md');
     expect(dependencyReviewDocs).toContain('docs/evidence/dependency-review/YYYY-MM-DD.md');
+    expect(dependencyReviewDocs).toContain(
+      'geen tracking, externe assets of plaintext runtime-backends',
+    );
   });
 
   it('biedt een deps:review script met audit, lockfile diff en testgate', () => {

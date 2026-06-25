@@ -17,9 +17,11 @@ Context
   kosten, afwegingen, back-up/sync en lokale beveiliging.
 - Grondhouding: warm, rustig, helder, niet-klinisch, volwassen, betrouwbaar.
 - Kiempad is geen medisch hulpmiddel. Toon de disclaimer consequent waar nodig.
-- Privacy-first en local-first: gezondheidsdata blijft lokaal en versleuteld in de
-  browser. Geen analytics, tracking, externe fonts, externe afbeeldingen of externe
-  scripts.
+- Privacy-first met centrale encrypted opslag als primaire route: gezondheidsdata
+  blijft client-side versleuteld in de actieve dataset. In centrale modus ziet de
+  backend alleen encrypted envelopes en minimale technische metadata; legacy fallback
+  bewaart records lokaal versleuteld. Geen analytics, tracking, externe fonts,
+  externe afbeeldingen of externe scripts.
 - Huidige themabasis: een rustige naturalistische stijl met sage/groen als primaire
   actiekleur, warme lichte surfaces, donkere modus, serif accenten voor merk/hero en
   compacte werk-appnavigatie. Behoud deze richting tenzij een verbetering aantoonbaar
@@ -50,7 +52,9 @@ Technische randvoorwaarden
 - Ontwerp moet te vertalen zijn naar CSS tokens/classes en bestaande componenten.
 - Geen frameworkwissel voorstellen.
 - Geen externe assets verplicht maken.
-- Houd alle data- en interactiestromen local-first.
+- Houd alle data- en interactiestromen storage-mode bewust: centrale modus gebruikt de
+  centrale encrypted dataset/API voor multi-device continuïteit; legacy fallback is
+  lokale encrypted IndexedDB.
 - Werk vanuit de bestaande `src/styles.css` tokens en de huidige light/dark
   theme-structuur; benoem expliciet welke tokens behouden, aangepast of toegevoegd
   moeten worden.
@@ -59,13 +63,14 @@ Technische randvoorwaarden
   ontworpen zijn.
 
 Bestaande hoofdstructuur
-De app heeft een passphrase-kluis vóór toegang en daarna een app-shell met topbar,
+De app heeft een passphrase-gate vóór toegang en daarna een app-shell met topbar,
 themakeuze, vergrendelknop, skiplink, primaire navigatie en hash-routes.
 
 Ontwerp deze hoofdschermen volledig:
-1. Kluisdeur
-   - Nieuwe kluis aanmaken met passphrase.
-   - Bestaande kluis ontgrendelen met passphrase.
+1. Ontgrendelgate
+   - Centrale encrypted dataset starten met passphrase.
+   - Bestaande centrale encrypted dataset ontgrendelen met passphrase.
+   - Legacy lokale encrypted dataset alleen als fallback/compatibiliteit benoemen.
    - WebAuthn/biometrie-ontgrendeling als gekoppeld.
    - Geen herstel-achterdeur uitleg.
    - Foutmelding bij verkeerde passphrase.
@@ -168,7 +173,7 @@ Ontwerp deze hoofdschermen volledig:
    - Geen financieel advies; eigen polis en verzekeraar blijven leidend.
 
 13. Logboek
-   - Lokale gebeurtenissen: kluis, back-up, systeem.
+   - Gebeurtenissen: dataset/kluis, back-up, systeem.
    - Recente gebeurtenissen met categorie, datum/tijd en detail.
    - In centrale modus staat het logboek in de centrale encrypted dataset; in legacy fallback blijft het op het toestel.
 
@@ -218,7 +223,7 @@ Accessibility
 - Respecteer reduced motion.
 
 Privacy en veiligheid in de UI
-- Maak local-first zichtbaar maar niet schreeuwerig.
+- Maak centrale encrypted opslag en legacy fallback zichtbaar maar niet schreeuwerig.
 - Geen passphrase of API-sleutel terug tonen.
 - File previews alleen na ontgrendeling.
 - Duidelijke copy voor: geen herstel-achterdeur, versleutelde back-up, geen medisch
@@ -240,7 +245,8 @@ Lever een designvoorstel op met:
 9. Een implementatiechecklist voor CSS/HTML-aanpassingen zonder functionaliteit te
    breken.
 
-Belangrijk: ontwerp geen nieuwe backend, geen medische beslisfunctionaliteit, geen
-kansberekeningen, geen cloudsync en geen externe tracking. Het thema moet alle
-bestaande Kiempad-functionaliteit ondersteunen.
+Belangrijk: ontwerp geen plaintext backend, geen medische beslisfunctionaliteit, geen
+kansberekeningen, geen externe cloudsync buiten de bestaande centrale encrypted
+Kiempad-route en geen externe tracking. Het thema moet alle bestaande
+Kiempad-functionaliteit ondersteunen.
 ```

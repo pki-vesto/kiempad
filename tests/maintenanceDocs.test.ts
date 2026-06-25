@@ -11,6 +11,7 @@ import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
 import codexAutonomyAdr from '../docs/adr/0007-codex-autonoom-bouwen.md?raw';
 import backlogHealthJsonReference from '../docs/BACKLOG_HEALTH_JSON_REFERENCE.md?raw';
+import claudeDesignPrompt from '../docs/CLAUDE_DESIGN_PROMPT.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
@@ -235,6 +236,22 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('documenteert privacybeleid als centrale encrypted opslag zonder plaintext backend', () => {
+    const normalizedPrivacy = privacy.replace(/\s+/g, ' ');
+    for (const requiredTerm of [
+      'centrale encrypted backend',
+      'encrypted envelopes',
+      'minimale technische metadata',
+      'legacy fallback',
+      'geen plaintext medische inhoud',
+    ]) {
+      expect(normalizedPrivacy).toContain(requiredTerm);
+    }
+
+    expect(privacy).not.toContain('alle **gezondheidsdata** blijft **local-first');
+    expect(privacy).not.toContain('data leeft lokaal');
+  });
+
   it('verankert de goal-completion-audit in de autonome mergeflow', () => {
     for (const requiredTerm of [
       'requirements',
@@ -292,7 +309,7 @@ describe('onderhoudsdocumentatie', () => {
     expect(goalCompletionAudit).toContain('replacement goal added to keep 100 open goals');
   });
 
-  it('documenteert autonomieguardrails voor local-first self-merge', () => {
+  it('documenteert autonomieguardrails voor centrale encrypted self-merge', () => {
     for (const requiredHeading of [
       '## Netwerk',
       '## AI',
@@ -308,7 +325,9 @@ describe('onderhoudsdocumentatie', () => {
     for (const requiredTerm of [
       'geen nieuwe netwerkcalls',
       'expliciete lokale opt-in',
-      'Gezondheidsdata blijft local-first',
+      'Gezondheidsdata blijft client-side versleuteld',
+      'centrale encrypted dataset',
+      'geen plaintext medische/fertiliteitsdata',
       'Groene CI is de harde merge-gate',
       'aparte Tailscale HTTPS-node',
       'geen medisch hulpmiddel',
@@ -323,6 +342,22 @@ describe('onderhoudsdocumentatie', () => {
     expect(codexAutonomyAdr).toContain('../AUTONOMY_GUARDRAILS.md');
     expect(goalCompletionAudit).toContain('docs/AUTONOMY_GUARDRAILS.md');
     expect(prTemplate).toContain('docs/AUTONOMY_GUARDRAILS.md');
+  });
+
+  it('stuurt Claude Design op storage-mode bewuste centrale encrypted UX', () => {
+    for (const requiredTerm of [
+      'centrale encrypted opslag als primaire route',
+      'backend alleen encrypted envelopes',
+      'storage-mode bewust',
+      'centrale encrypted dataset/API',
+      'legacy fallback',
+      'ontwerp geen plaintext backend',
+    ]) {
+      expect(claudeDesignPrompt).toContain(requiredTerm);
+    }
+
+    expect(claudeDesignPrompt).not.toContain('Houd alle data- en interactiestromen local-first');
+    expect(claudeDesignPrompt).not.toContain('Maak local-first zichtbaar');
   });
 
   it('documenteert de gesanitized backlog-health JSON-shape voor automation', () => {

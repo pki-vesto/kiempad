@@ -1,7 +1,8 @@
 # External Asset Allowlist Governance
 
-Kiempad is local-first. Externe image-, font-, script- en manifest-URL's zijn daarom
-standaard verboden in broncode en buildassets. De gate is:
+Kiempad is privacy-first met centrale encrypted opslag als primaire route. Externe
+image-, font-, script- en manifest-URL's zijn daarom standaard verboden in broncode
+en buildassets. De gate is:
 
 ```bash
 npm run build && npm run assets:check
