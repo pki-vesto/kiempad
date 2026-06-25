@@ -103,7 +103,10 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
 function normalizeAllowedUserIds(userIds: readonly string[] | undefined): Set<string> | undefined {
   if (!userIds) return undefined;
   const normalized = userIds.map((userId) => userId.trim()).filter(Boolean);
-  return normalized.length > 0 ? new Set(normalized) : undefined;
+  if (normalized.length === 0) {
+    throw new Error('Centrale sessie-allowlist vereist minimaal één user id.');
+  }
+  return new Set(normalized);
 }
 
 export class CentralEncryptedApiServer {

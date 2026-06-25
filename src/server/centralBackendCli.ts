@@ -77,7 +77,8 @@ export async function startCentralBackendFromEnv(
 }
 
 function parseAllowedUserIds(value: string | undefined): string[] {
-  return parseCsvList(value, [DEFAULT_ALLOWED_USER_ID]);
+  if (value === undefined) return [DEFAULT_ALLOWED_USER_ID];
+  return parseCsvList(value, []);
 }
 
 function parseCsvList(value: string | undefined, fallback: readonly string[]): string[] {
