@@ -60,8 +60,11 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 `VITE_KIEMPAD_CENTRAL_USER_ID` is geen secret; het is de private owner-scope voor
 deze één-stel-app. De backend moet dezelfde id toestaan via
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS`; die server-side allowlist is de autoriteit. De
-passphrase blijft de sleutel voor de encrypted payloads. Als de PWA en API op
-verschillende origins draaien, moet de PWA-origin ook in
+passphrase blijft de sleutel voor de encrypted payloads.
+`VITE_KIEMPAD_CENTRAL_API_URL` moet een absolute `http`/`https` URL zijn zonder
+embedded credentials, query of fragment; een ongeldige geconfigureerde centrale URL
+faalt gesloten en opent geen legacy lokale kluis. Als de PWA en API op verschillende
+origins draaien, moet de PWA-origin ook in
 `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan. De centrale fetch-client vernieuwt een
 verlopen bearer token maximaal één keer via `POST /sessions` voor dezelfde
 configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
