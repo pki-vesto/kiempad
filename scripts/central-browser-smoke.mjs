@@ -62,30 +62,16 @@ async function runSmoke() {
 
     const browser = await chromium.launch({ headless: true });
     try {
-      const context = await browser.newContext({ serviceWorkers: 'block' });
-      const page = await context.newPage();
-      const pageErrors = [];
-      page.on('pageerror', (error) => pageErrors.push(error.message));
-
-      await page.goto(previewUrl, { waitUntil: 'networkidle' });
-      await waitForAppBootstrap(page, pageErrors);
-      await page.locator('#passphrase').fill(passphrase);
-      await page.locator('#vault-form button[type="submit"]').click();
-      await page.locator('.app-shell').waitFor({ timeout: 10_000 });
-
-      const unlockedText = await page.locator('body').innerText();
-      if (!unlockedText.includes('Centrale encrypted opslag')) {
-        throw new Error('App-shell toont niet dat centrale encrypted opslag actief is.');
-      }
-      if (unlockedText.includes('Legacy lokaal')) {
-        throw new Error('App-shell viel terug naar legacy lokale opslag.');
-      }
-
-      await page.locator('#first-run-complete-form button[type="submit"]').click();
+      const firstPage = await openSmokePage(browser, previewUrl);
+      await unlockCentralDataset(firstPage, { expectedGateTitle: 'Start je centrale encrypted dataset' });
+      await firstPage.locator('#first-run-complete-form button[type="submit"]').click();
       await expectPersistenceWrite(persistenceFile);
 
-      if (pageErrors.length > 0) {
-        throw new Error(`Paginafout tijdens centrale smoke: ${pageErrors.join('; ')}`);
+      const secondPage = await openSmokePage(browser, previewUrl);
+      await assertSecondDeviceUnlockGate(secondPage);
+      await unlockCentralDataset(secondPage, { expectedGateTitle: 'Ontgrendel Kiempad' });
+      if (await secondPage.locator('#first-run-complete-form').count()) {
+        throw new Error('Tweede schone browsercontext zag first-run setup ondanks centrale settings.');
       }
     } finally {
       await browser.close();
@@ -100,6 +86,49 @@ async function runSmoke() {
   process.stdout.write(
     `Centrale browser smoke geslaagd: ${previewUrl} gebruikte ${backendUrl} met encrypted persistence.\n`,
   );
+}
+
+async function openSmokePage(browser, previewUrl) {
+  const context = await browser.newContext({ serviceWorkers: 'block' });
+  const page = await context.newPage();
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+  page.smokePageErrors = pageErrors;
+
+  await page.goto(previewUrl, { waitUntil: 'networkidle' });
+  await waitForAppBootstrap(page, pageErrors);
+  return page;
+}
+
+async function assertSecondDeviceUnlockGate(page) {
+  const title = await page.locator('#vault-title').innerText();
+  if (title.includes('Start je centrale encrypted dataset')) {
+    throw new Error('Tweede schone browsercontext moest de centrale dataset opnieuw starten.');
+  }
+  if (title !== 'Ontgrendel Kiempad') {
+    throw new Error(`Tweede schone browsercontext toont onverwachte vault-titel: ${title}`);
+  }
+}
+
+async function unlockCentralDataset(page, options) {
+  const title = await page.locator('#vault-title').innerText();
+  if (title !== options.expectedGateTitle) {
+    throw new Error(`Onverwachte vault-titel: ${title}`);
+  }
+  await page.locator('#passphrase').fill(passphrase);
+  await page.locator('#vault-form button[type="submit"]').click();
+  await page.locator('.app-shell').waitFor({ timeout: 10_000 });
+
+  const unlockedText = await page.locator('body').innerText();
+  if (!unlockedText.includes('Centrale encrypted opslag')) {
+    throw new Error('App-shell toont niet dat centrale encrypted opslag actief is.');
+  }
+  if (unlockedText.includes('Legacy lokaal')) {
+    throw new Error('App-shell viel terug naar legacy lokale opslag.');
+  }
+  if (page.smokePageErrors?.length > 0) {
+    throw new Error(`Paginafout tijdens centrale smoke: ${page.smokePageErrors.join('; ')}`);
+  }
 }
 
 async function waitForAppBootstrap(page, pageErrors) {
