@@ -146,7 +146,8 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 
 Als `VITE_KIEMPAD_CENTRAL_API_URL` ontbreekt, start de app bewust in de legacy
 lokale IndexedDB-kluis. Als de centrale URL wel gezet is maar sessie-uitgifte faalt,
-valt de app niet stilletjes terug naar lokaal.
+valt de app niet stilletjes terug naar lokaal; de PWA toont dan een centrale
+bootstrapfout met backend/env-controlepunten.
 
 De backend staat standaard alleen `kiempad-private-user` toe voor sessie-uitgifte.
 Gebruik `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user` om die server-side

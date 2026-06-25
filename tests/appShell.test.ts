@@ -4,6 +4,7 @@ import {
   DISCLAIMER,
   normalizeScreenId,
   renderAppShell,
+  renderStorageBootstrapError,
   renderVaultGate,
   SCREENS,
 } from '../src/appShell';
@@ -84,7 +85,7 @@ describe('app shell', () => {
   });
 
   it('toont kalme herstelhulp bij een bestaande kluis', () => {
-    const html = renderVaultGate(true, 'Ontgrendelen is mislukt.');
+    const html = renderVaultGate(true, 'Ontgrendelen is mislukt <script>');
 
     expect(html).toContain('Hulp bij ontgrendelen');
     expect(html).toContain('Hersteldiagnose');
@@ -93,13 +94,28 @@ describe('app shell', () => {
     expect(html).toContain('Back-upherinnering');
     expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
     expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
-    expect(html).toContain('Ontgrendelen is mislukt.');
+    expect(html).toContain('Ontgrendelen is mislukt &lt;script&gt;');
+    expect(html).not.toContain('Ontgrendelen is mislukt <script>');
     expect(html).toContain('Controleer rustig de passphrase');
     expect(html).toContain('toetsenbordindeling en hoofdletters');
     expect(html).toContain('WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld');
     expect(html).toContain('importeer daarna je versleutelde back-up');
     expect(html).toContain('niet te herstellen via een achterdeur');
     expect(html).not.toContain('reset je passphrase');
+  });
+
+  it('toont een veilige centrale bootstrapfout zonder lokale fallback', () => {
+    const html = renderStorageBootstrapError('API offline <script>alert(1)</script>');
+
+    expect(html).toContain('Kiempad kan centrale opslag niet starten');
+    expect(html).toContain('role="alert"');
+    expect(html).toContain('API offline &lt;script&gt;alert(1)&lt;/script&gt;');
+    expect(html).toContain('VITE_KIEMPAD_CENTRAL_API_URL');
+    expect(html).toContain('KIEMPAD_CENTRAL_ALLOWED_USER_IDS');
+    expect(html).toContain('KIEMPAD_CENTRAL_ALLOWED_ORIGINS');
+    expect(html).toContain('niet stilletjes terug naar legacy lokale opslag');
+    expect(html).not.toContain('<script>alert(1)</script>');
+    expect(html).not.toContain('id="vault-form"');
   });
 
   it('toont locked-state diagnostiek zonder recordinhoud of aantallen', () => {

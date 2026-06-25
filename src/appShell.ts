@@ -452,9 +452,31 @@ export function renderVaultGate(
           <button type="submit">${button}</button>
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
-        ${error ? `<p class="form-error" role="alert">${error}</p>` : ''}
+        ${error ? `<p class="form-error" role="alert">${escapeHtml(error)}</p>` : ''}
         ${renderVaultDiagnostics(hasVault, webAuthnStatus)}
         ${renderVaultRecoveryHelp(hasVault)}
+        <p class="small-print">${DISCLAIMER}</p>
+      </section>
+    </main>
+  `;
+}
+
+export function renderStorageBootstrapError(error: string): string {
+  return `
+    <main class="vault-gate" aria-labelledby="bootstrap-error-title">
+      <section class="vault-card">
+        <p class="eyebrow">Centrale encrypted opslag</p>
+        <h1 id="bootstrap-error-title">Kiempad kan centrale opslag niet starten</h1>
+        <p class="form-error" role="alert">${escapeHtml(error)}</p>
+        <section class="policy-panel embedded-summary" aria-label="Controlepunten">
+          <h2>Controleer eerst</h2>
+          <ol class="compact-list">
+            <li>Of de centrale backend draait.</li>
+            <li>Of <code>VITE_KIEMPAD_CENTRAL_API_URL</code> naar de juiste URL wijst.</li>
+            <li>Of <code>KIEMPAD_CENTRAL_ALLOWED_USER_IDS</code> en <code>KIEMPAD_CENTRAL_ALLOWED_ORIGINS</code> deze client toestaan.</li>
+          </ol>
+        </section>
+        <p class="small-print">Kiempad valt bij een geconfigureerde centrale API niet stilletjes terug naar legacy lokale opslag.</p>
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
