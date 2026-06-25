@@ -80,6 +80,12 @@ describe('central backend CLI runtime', () => {
         KIEMPAD_CENTRAL_ALLOWED_ORIGINS: 'https://kiempad.example.test/path',
       }),
     ).rejects.toThrow('KIEMPAD_CENTRAL_ALLOWED_ORIGINS');
+
+    await expect(
+      startCentralBackendFromEnv({
+        KIEMPAD_CENTRAL_ALLOWED_USER_IDS: ' , ',
+      }),
+    ).rejects.toThrow('Centrale sessie-allowlist vereist minimaal één user id.');
   });
 
   it('staat standaard alleen de private Kiempad-user toe voor sessie-uitgifte', async () => {

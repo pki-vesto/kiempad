@@ -105,6 +105,15 @@ describe('central encrypted API service', () => {
     expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
   });
 
+  it('faalt gesloten bij een expliciet lege centrale user-allowlist', async () => {
+    expect(() => new MemoryCentralSessionStore({ allowedUserIds: [] })).toThrow(
+      'Centrale sessie-allowlist vereist minimaal één user id.',
+    );
+    expect(() => new MemoryCentralSessionStore({ allowedUserIds: [' ', '\t'] })).toThrow(
+      'Centrale sessie-allowlist vereist minimaal één user id.',
+    );
+  });
+
   it('ruimt verlopen centrale sessies op bij nieuwe sessie-uitgifte', async () => {
     const sessionStore = new MemoryCentralSessionStore({ ttlMs: -1 });
     const prunedTicket = await sessionStore.issue({ userId: 'user-peter' });

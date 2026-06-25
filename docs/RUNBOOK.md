@@ -34,7 +34,9 @@ bootstrap en opent geen legacy lokale kluis.
 
 De backend staat standaard alleen `kiempad-private-user` toe. Zet
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS` op de backendhost als de server-side owner-scope
-bewust anders moet zijn. De frontend user-id alleen geeft geen toegang. Zet
+bewust anders moet zijn. Als je deze allowlist expliciet zet, moet hij minimaal één
+niet-lege user-id bevatten; een lege allowlist stopt de backend. De frontend user-id
+alleen geeft geen toegang. Zet
 `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` als de PWA vanaf een andere browser-origin draait
 dan de backend; lokale Vite/preview origins zijn standaard toegestaan. Gebruik
 alleen exacte `http`/`https` origins zonder wildcard, credentials, pad, query of

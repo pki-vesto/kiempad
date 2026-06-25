@@ -59,8 +59,10 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 
 `VITE_KIEMPAD_CENTRAL_USER_ID` is geen secret; het is de private owner-scope voor
 deze één-stel-app. De backend moet dezelfde id toestaan via
-`KIEMPAD_CENTRAL_ALLOWED_USER_IDS`; die server-side allowlist is de autoriteit. De
-passphrase blijft de sleutel voor de encrypted payloads.
+`KIEMPAD_CENTRAL_ALLOWED_USER_IDS`; die server-side allowlist is de autoriteit. Als
+de allowlist expliciet geconfigureerd wordt, moet hij minimaal één niet-lege user id
+bevatten, anders faalt de runtime gesloten. De passphrase blijft de sleutel voor de
+encrypted payloads.
 `VITE_KIEMPAD_CENTRAL_API_URL` moet een absolute `http`/`https` URL zijn zonder
 embedded credentials, query of fragment; een ongeldige geconfigureerde centrale URL
 faalt gesloten en opent geen legacy lokale kluis. Als de PWA en API op verschillende
@@ -134,6 +136,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Forged, verlopen of ingetrokken tokens worden `401`.
 - Sessie-expiry gebruikt alleen server-side TTL-configuratie; clients kunnen geen
   TTL verlengen of verkorten via sessie-aanvragen.
+- Een expliciet geconfigureerde lege user-allowlist wordt geweigerd; alleen een
+  ontbrekende allowlist-configuratie gebruikt de standaard private user.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
 - Malformed API-paden, inclusief malformed percent-encoding in path segments, worden
