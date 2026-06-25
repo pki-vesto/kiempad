@@ -45,6 +45,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Centrale API-sessies** gebruiken opaque tokens. De client levert geen
   `userId`/ownerclaim per recordrequest aan; de server resolveert het token naar een
   actieve `CentralAuthSession` en weigert forged, verlopen of ingetrokken tokens.
+  De in-memory sessiestore bewaart alleen SHA-256-fingerprints van bearer tokens als
+  interne session index; het ruwe token wordt alleen in het sessieticket aan de
+  client teruggegeven.
   Ook sessie-intrekking vereist eerst zo'n geldige actieve sessie; een forged of al
   ingetrokken token krijgt geen succesvolle revoke-response.
   De Node HTTP-boundary accepteert alleen strikt gevormde
@@ -166,6 +169,7 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 - [x] Centrale encrypted database-foundation met owner+record-id namespacing,
   per-user isolatie en encrypted recordpayloads.
 - [x] Opaque centrale API-sessietokens met expiry/revoke en server-side tokenresolutie.
+- [x] Centrale sessiestore indexeert bearer tokens alleen als SHA-256-fingerprint.
 - [x] HTTP-style centraal API-contract met veilige statuscodes en clientdriver voor
   encrypted storage access.
 - [x] Node HTTP backend boundary met file-backed encrypted persistence en

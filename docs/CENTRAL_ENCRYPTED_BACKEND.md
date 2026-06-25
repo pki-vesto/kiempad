@@ -19,6 +19,9 @@ owner/indexmetadata en encrypted envelopes.
   database-mutatie op canonieke ISO-timestamps, positieve `schemaVersion` en een
   complete `AES-256-GCM` envelope.
 - `CentralEncryptedApiServer` resolveert opaque tokens naar actieve sessies.
+  `MemoryCentralSessionStore` indexeert sessies intern met een SHA-256-fingerprint
+  van het bearer token; het ruwe token staat alleen in het uitgegeven sessieticket en
+  wordt niet als interne `sessionId` of map-key bewaard.
 - `PersistedCentralEncryptedDatabase` bewaart encrypted database snapshots via een
   `CentralDatabasePersistence` adapter. Muterende operaties lopen door een interne
   write-queue, bouwen eerst een tijdelijke database-state vanaf de laatst
@@ -167,6 +170,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   `Authorization: Bearer <token>` headers; malformed, lege of unsupported
   Authorization headers worden behandeld als ontbrekende credentials en krijgen de
   bestaande `401` auth-fout.
+- De centrale sessiestore bewaart bearer tokens niet als raw interne sleutel.
+  Resolutie en intrekking hashen het aangeboden token en vergelijken alleen de
+  SHA-256-fingerprint met actieve sessies.
 - Browserclients sturen centrale API-requests zonder ambient credentials en zonder
   browsercache (`credentials: omit`, `cache: no-store`).
 - Browserclients gebruiken alleen gevalideerde absolute `http`/`https` centrale
