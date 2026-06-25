@@ -17,6 +17,7 @@ import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
 import secretsScanBaseline from '../docs/SECRETS_SCAN_BASELINE.md?raw';
+import tailscaleDeploy from '../docs/TAILSCALE_DEPLOY.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
 import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
@@ -703,6 +704,17 @@ describe('onderhoudsdocumentatie', () => {
     expect(autonomyGuardrailEvidenceChecklist).toContain('geen nieuwe netwerkroute');
     expect(autonomyGuardrailEvidenceChecklist).toContain('medische grens blijft ongewijzigd');
     expect(autonomyGuardrails).toContain('AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md');
+  });
+
+  it('documenteert Tailscale deploy als centrale multi-device route wanneer API is geconfigureerd', () => {
+    expect(tailscaleDeploy).toContain('aparte Tailscale-node');
+    expect(tailscaleDeploy).toContain('VITE_KIEMPAD_CENTRAL_API_URL');
+    expect(tailscaleDeploy).toContain('dezelfde centrale encrypted dataset via de API');
+    expect(tailscaleDeploy).toContain('legacy lokale IndexedDB-kluis');
+    expect(tailscaleDeploy).toContain('fallbackpad deelt geen nieuwe data tussen apparaten');
+    expect(tailscaleDeploy).not.toContain(
+      'Een nieuw apparaat ziet geen bestaande Kiempad-data totdat de gebruiker lokaal een eigen kluis/back-up importeert.',
+    );
   });
 
   it('houdt de public repo privacy review compleet voor releasechecks', () => {
