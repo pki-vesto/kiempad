@@ -146,8 +146,8 @@ async function readJsonBody(
 function readBearerToken(request: IncomingMessage): string | undefined {
   const header = request.headers.authorization;
   if (typeof header !== 'string') return undefined;
-  const [scheme, token] = header.split(' ');
-  return scheme?.toLowerCase() === 'bearer' ? token : undefined;
+  const match = /^[\t ]*Bearer[\t ]+([^\t ]+)[\t ]*$/i.exec(header);
+  return match?.[1];
 }
 
 function hasRequestBody(request: IncomingMessage): boolean {

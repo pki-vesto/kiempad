@@ -137,6 +137,40 @@ describe('central encrypted Node backend runtime', () => {
     await rm(directory, { recursive: true, force: true });
   });
 
+  it('accepteert alleen strikt gevormde bearer Authorization headers', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile);
+    const ticket = await issueCentralFetchSession(server.baseUrl, {
+      userId: 'user-peter',
+    });
+
+    const lowerCaseBearerResponse = await fetch(`${server.baseUrl}/meta/strict-bearer`, {
+      method: 'PUT',
+      headers: {
+        authorization: `bearer ${ticket.token}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ value: { ok: true } }),
+    });
+    expect(lowerCaseBearerResponse.status).toBe(204);
+
+    for (const authorization of [
+      `Bearer ${ticket.token} extra`,
+      'Bearer',
+      'Bearer   ',
+      `Basic ${ticket.token}`,
+    ]) {
+      const response = await fetch(`${server.baseUrl}/meta/strict-bearer`, {
+        headers: { authorization },
+      });
+
+      expect(response.status).toBe(401);
+      expectSecurityHeaders(response);
+    }
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
   it('mapt onverwachte handlerfouten naar veilige 500 zonder foutdetails', async () => {
     const server = createCentralNodeHttpServerFromApi({
       handle: async () => {
