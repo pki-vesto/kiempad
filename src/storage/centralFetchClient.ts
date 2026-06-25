@@ -10,6 +10,13 @@ import type {
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
 
+type CentralFetchSessionTicket = {
+  token: string;
+  userId: string;
+  issuedAt: string;
+  expiresAt: string;
+};
+
 export type CentralFetchSessionRefresher = () => Promise<{
   token: CentralSessionToken;
 }>;
@@ -114,7 +121,7 @@ export async function issueCentralFetchSession(
   baseUrl: string,
   input: { userId: string },
   fetcher: FetchLike = defaultFetch,
-): Promise<{ token: string; userId: string; issuedAt: string; expiresAt: string }> {
+): Promise<CentralFetchSessionTicket> {
   const response = await fetcher(`${baseUrl}/sessions`, {
     method: 'POST',
     credentials: 'omit',
@@ -125,12 +132,7 @@ export async function issueCentralFetchSession(
   if (response.status !== 201) {
     throw new CentralHttpBadRequestError(await readErrorMessage(response));
   }
-  return parseJsonResponse<{
-    token: string;
-    userId: string;
-    issuedAt: string;
-    expiresAt: string;
-  }>(response);
+  return parseSessionTicket(await parseJsonResponse<unknown>(response), input.userId);
 }
 
 const defaultFetch: FetchLike = (input, init) => globalThis.fetch(input, init);
@@ -163,4 +165,37 @@ function hasJsonContentType(response: Response): boolean {
 
   const mediaType = contentType.split(';', 1)[0]?.trim().toLowerCase();
   return mediaType === 'application/json' || mediaType?.endsWith('+json') === true;
+}
+
+function parseSessionTicket(body: unknown, expectedUserId: string): CentralFetchSessionTicket {
+  if (!isRecord(body)) {
+    throw new CentralHttpBadRequestError('central-fetch-invalid-session-ticket');
+  }
+
+  const { token, userId, issuedAt, expiresAt } = body;
+  if (
+    !isNonEmptyString(token) ||
+    userId !== expectedUserId ||
+    !isIsoTimestamp(issuedAt) ||
+    !isIsoTimestamp(expiresAt) ||
+    Date.parse(expiresAt) <= Date.parse(issuedAt)
+  ) {
+    throw new CentralHttpBadRequestError('central-fetch-invalid-session-ticket');
+  }
+
+  return { token, userId, issuedAt, expiresAt };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isIsoTimestamp(value: unknown): value is string {
+  if (typeof value !== 'string' || !value.trim()) return false;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString() === value;
 }

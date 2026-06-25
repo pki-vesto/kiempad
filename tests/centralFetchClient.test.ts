@@ -140,6 +140,57 @@ describe('central fetch client', () => {
     ).rejects.toThrow('central-fetch-invalid-json-response');
   });
 
+  it('weigert malformed centrale sessietickets voordat het token gebruikt kan worden', async () => {
+    for (const ticket of [
+      {
+        token: '',
+        userId: 'kiempad-private-user',
+        issuedAt: '2026-06-25T09:00:00.000Z',
+        expiresAt: '2026-06-25T10:00:00.000Z',
+      },
+      {
+        token: 'central-token',
+        userId: 'andere-user',
+        issuedAt: '2026-06-25T09:00:00.000Z',
+        expiresAt: '2026-06-25T10:00:00.000Z',
+      },
+      {
+        token: 'central-token',
+        userId: 'kiempad-private-user',
+        issuedAt: '2026-06-25T09:00:00Z',
+        expiresAt: '2026-06-25T10:00:00.000Z',
+      },
+      {
+        token: 'central-token',
+        userId: 'kiempad-private-user',
+        issuedAt: '2026-06-25T10:00:00.000Z',
+        expiresAt: '2026-06-25T10:00:00.000Z',
+      },
+    ]) {
+      const fetcher = vi.fn(async (): Promise<Response> => {
+        return new Response(JSON.stringify(ticket), {
+          status: 201,
+          headers: { 'content-type': 'application/json' },
+        });
+      });
+
+      await expect(
+        issueCentralFetchSession(
+          'https://central.test',
+          { userId: 'kiempad-private-user' },
+          fetcher,
+        ),
+      ).rejects.toThrow('central-fetch-invalid-session-ticket');
+      await expect(
+        issueCentralFetchSession(
+          'https://central.test',
+          { userId: 'kiempad-private-user' },
+          fetcher,
+        ),
+      ).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+    }
+  });
+
   it('ververst een verlopen centraal sessietoken eenmalig en hergebruikt daarna het nieuwe token', async () => {
     const seenTokens: string[] = [];
     const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {

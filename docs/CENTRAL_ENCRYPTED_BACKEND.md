@@ -77,7 +77,9 @@ development-defaults; als de variabele expliciet leeg of whitespace-only is, sta
 de backend met geen toegestane browser-origins. De centrale fetch-client vernieuwt
 een verlopen bearer token maximaal één
 keer via `POST /sessions` voor dezelfde configured user-scope; als dat faalt blijft
-het een centrale opslagfout en is er geen stille legacy fallback. De sessie-TTL komt
+het een centrale opslagfout en is er geen stille legacy fallback. Een sessieticket
+uit `POST /sessions` wordt client-side pas gebruikt als token, user-scope en
+canonieke `issuedAt`/`expiresAt` timestamps geldig zijn. De sessie-TTL komt
 alleen uit serverconfiguratie
 (`KIEMPAD_CENTRAL_SESSION_TTL_MS`); de sessiestore en `POST /sessions` negeren
 client-owned TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij
@@ -134,6 +136,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   bestaande `401` auth-fout.
 - Browserclients sturen centrale API-requests zonder ambient credentials en zonder
   browsercache (`credentials: omit`, `cache: no-store`).
+- Browserclients valideren `POST /sessions` tickets vóór gebruik; malformed tickets,
+  user-scope mismatches of niet-canonieke/ongeldige timestamps worden centrale
+  API-contractfouten.
 - Browserclients accepteren alleen JSON-mediasoorten voor succesvolle centrale
   fetch-responses en mappen non-JSON of malformed JSON success responses naar een
   centrale API-contractfout.
