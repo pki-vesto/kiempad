@@ -2049,6 +2049,9 @@ describe('app shell', () => {
     expect(html).toContain('AI-instelling');
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');
+    expect(html).toContain(
+      'Provider, model en API-sleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.',
+    );
     expect(html).toContain('Bewaar AI-instelling');
     expect(html).toContain('On-device AI');
     expect(html).toContain('Geen lokale browser-AI API-objecten gevonden.');
@@ -2057,6 +2060,35 @@ describe('app shell', () => {
     );
     expect(html).toContain('LanguageModel');
     expect(html).toContain('Summarizer');
+  });
+
+  it('rendert centrale AI-instellingen als client-side encrypted settings zonder sleutel te tonen', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        ai: {
+          ingeschakeld: true,
+          provider: 'OpenAI',
+          model: 'gpt-5-mini',
+          apiKey: 'sk-test-secret',
+          laatsteOptInOp: '2026-06-23T12:00:00.000Z',
+        },
+      },
+      storageMode: 'central-api',
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain(
+      'Provider, model en API-sleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.',
+    );
+    expect(html).toContain('Opgeslagen; laat leeg om te bewaren');
+    expect(html).not.toContain('sk-test-secret');
   });
 
   it('zet researchaggregatie pas klaar in de UI na netwerk-opt-in', () => {

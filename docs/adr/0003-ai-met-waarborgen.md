@@ -24,7 +24,9 @@ De AI-functie is **standaard uit** en uitsluitend **opt-in**. Wanneer aangezet:
 - Geeft **nooit** dosering, diagnose of behandelkeuze.
 - Resultaten worden opgeslagen als `KennisItem` met `ai_gegenereerd = true`; pas na
   bevestiging door een behandelaar wordt `geverifieerd_met_arts = true`.
-- De API-sleutel staat **versleuteld** in de lokale opslag (niet in de repo/`.env`).
+- De API-sleutel staat **client-side versleuteld** in de actieve encrypted dataset:
+  centraal als encrypted settings-record of, bij legacy fallback, lokaal versleuteld
+  (niet in de repo/`.env` en niet als plaintext in de backend).
 
 ## Consequences
 

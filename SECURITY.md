@@ -30,8 +30,10 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Sleutelafleiding:** PBKDF2 (hoge iteratietelling) of Argon2id, met per-installatie
   **salt**.
 - **Versleuteling:** AES-256-GCM per record (uniek IV per record).
-- **AI-API-sleutel** (indien opt-in): versleuteld in de lokale opslag, **nooit** in de
-  repo of in klare tekst; niet in `.env` committen (`.env` staat in `.gitignore`).
+- **AI-API-sleutel** (indien opt-in): client-side versleuteld in de actieve encrypted
+  dataset. In centrale modus ziet de backend alleen een encrypted settings-record;
+  legacy fallback bewaart dit lokaal versleuteld. De sleutel staat **nooit** in de
+  repo, `.env` of in klare tekst.
 - **Geen secrets in git.** `.env.example` bevat alleen lege placeholders. De repo is
   **publiek** (ADR-0006), dus dit is extra kritisch: nooit een secret of databestand
   committen (`.gitignore`, `npm run secrets:check` en review borgen dit).
