@@ -889,12 +889,12 @@ async function unlockWithWebAuthn(root: HTMLElement, state: RuntimeState): Promi
   try {
     const metadata = await state.session.getWebAuthnUnlockMetadata();
     if (!metadata) {
-      throw new Error('WebAuthn-ontgrendeling is niet ingesteld voor deze kluis.');
+      throw new Error('WebAuthn-ontgrendeling is niet ingesteld voor deze Kiempad-dataset.');
     }
 
     const prfSecret = await vraagWebAuthnPrfSecret(metadata);
     await state.session.unlockWithWebAuthnPrf(prfSecret);
-    await loadUnlockedState(state, 'Kluis ontgrendeld met WebAuthn');
+    await loadUnlockedState(state, 'Dataset ontgrendeld met WebAuthn');
     state.error = undefined;
     render(root, state);
   } catch (error: unknown) {

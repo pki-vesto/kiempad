@@ -22,7 +22,7 @@ export async function ensureStorageSchema(
 
   if (existingVersion && existingVersion > CURRENT_SCHEMA_VERSION) {
     throw new Error(
-      `Deze Kiempad-kluis gebruikt opslagschema ${existingVersion}; deze app ondersteunt schema ${CURRENT_SCHEMA_VERSION}.`,
+      `Deze Kiempad-dataset gebruikt opslagschema ${existingVersion}; deze app ondersteunt schema ${CURRENT_SCHEMA_VERSION}.`,
     );
   }
 

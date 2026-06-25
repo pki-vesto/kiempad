@@ -134,11 +134,12 @@ Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
 
 1. Controleer rustig de passphrase, toetsenbordindeling, hoofdletters en eventuele
    wachtwoordmanager-invoer.
-2. Gebruik WebAuthn/biometrie alleen als het eerder op dit toestel aan dezelfde kluis
-   is gekoppeld; het is ontgrendelgemak, geen herstel-achterdeur.
-3. Als lokale browseropslag leeg of beschadigd is, maak een nieuwe kluis en importeer
-   daarna de meest recente versleutelde `.kiempad-export` back-up.
-4. Zonder passphrase of bruikbare versleutelde back-up kan Kiempad lokale
+2. Gebruik WebAuthn/biometrie alleen als het eerder op dit toestel aan dezelfde
+   Kiempad-dataset is gekoppeld; het is ontgrendelgemak, geen herstel-achterdeur.
+3. Als de centrale dataset niet bereikbaar is of legacy browseropslag leeg/beschadigd
+   is, start een nieuwe encrypted dataset en importeer daarna de meest recente
+   versleutelde `.kiempad-export` back-up.
+4. Zonder passphrase of bruikbare versleutelde back-up kan Kiempad encrypted
    gezondheidsdata niet herstellen.
 
 ## Rollback

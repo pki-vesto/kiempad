@@ -49,7 +49,7 @@ export function bepaalWebAuthnRuntimeStatus(
 }
 
 export async function koppelWebAuthnPrf(
-  label = 'Kiempad lokale kluis',
+  label = 'Kiempad encrypted dataset',
 ): Promise<WebAuthnPrfEnrollment> {
   const status = bepaalWebAuthnRuntimeStatus();
   if (!status.beschikbaar) {
@@ -127,7 +127,7 @@ export async function vraagWebAuthnPrfSecret(
     } as PublicKeyCredentialRequestOptions,
   });
 
-  return extractPrfSecret(credential, 'WebAuthn PRF gaf geen sleutel voor deze kluis.');
+  return extractPrfSecret(credential, 'WebAuthn PRF gaf geen sleutel voor deze dataset.');
 }
 
 function assertPublicKeyCredential(credential: Credential | null): PublicKeyCredentialWithPrf {
