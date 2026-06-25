@@ -209,6 +209,47 @@ describe('central encrypted database persistence', () => {
       existingRecord,
     );
   });
+
+  it('serialiseert gelijktijdige centrale recordcommits zonder lost updates', async () => {
+    const persistence = new ControlledPersistence();
+    const database = await PersistedCentralEncryptedDatabase.open(persistence);
+
+    const firstCommit = database.putRecord(testSession, createEncryptedRecord('record-a'));
+    await persistence.waitForPendingSave();
+    const secondCommit = database.putRecord(testSession, createEncryptedRecord('record-b'));
+
+    persistence.releaseNextSave();
+    await persistence.waitForPendingSave();
+    persistence.releaseNextSave();
+    await Promise.all([firstCommit, secondCommit]);
+
+    await expect(database.listRecords(testSession)).resolves.toEqual([
+      expect.objectContaining({ id: 'record-a' }),
+      expect.objectContaining({ id: 'record-b' }),
+    ]);
+
+    const reopened = await PersistedCentralEncryptedDatabase.open(persistence);
+    await expect(reopened.listRecords(testSession)).resolves.toEqual([
+      expect.objectContaining({ id: 'record-a' }),
+      expect.objectContaining({ id: 'record-b' }),
+    ]);
+  });
+
+  it('laat een gefaalde queued commit latere centrale commits niet blokkeren', async () => {
+    const persistence = new FailOncePersistence();
+    const database = await PersistedCentralEncryptedDatabase.open(persistence);
+
+    await expect(
+      database.putRecord(testSession, createEncryptedRecord('failed-record')),
+    ).rejects.toThrow('central persistence unavailable once');
+    await expect(database.getRecord(testSession, 'failed-record')).resolves.toBeUndefined();
+
+    await database.putRecord(testSession, createEncryptedRecord('successful-record'));
+
+    await expect(database.listRecords(testSession)).resolves.toEqual([
+      expect.objectContaining({ id: 'successful-record' }),
+    ]);
+  });
 });
 
 class RejectingPersistence implements CentralDatabasePersistence {
@@ -238,3 +279,59 @@ function createEncryptedRecord(id: string): EncryptedRecord {
     },
   };
 }
+
+class ControlledPersistence implements CentralDatabasePersistence {
+  private snapshot: CentralDatabaseSnapshot | undefined;
+  private readonly pendingSaves: PendingSave[] = [];
+  private readonly waiters: Array<() => void> = [];
+
+  async load(): Promise<CentralDatabaseSnapshot | undefined> {
+    return this.snapshot ? structuredClone(this.snapshot) : undefined;
+  }
+
+  async save(snapshot: CentralDatabaseSnapshot): Promise<void> {
+    const pendingSave: PendingSave = {
+      snapshot: structuredClone(snapshot),
+      release: undefined as never,
+    };
+    const saveFinished = new Promise<void>((resolve) => {
+      pendingSave.release = resolve;
+    });
+    this.pendingSaves.push(pendingSave);
+    while (this.waiters.length > 0) {
+      this.waiters.shift()?.();
+    }
+    await saveFinished;
+    this.snapshot = pendingSave.snapshot;
+  }
+
+  async waitForPendingSave(): Promise<void> {
+    if (this.pendingSaves.length > 0) return;
+    await new Promise<void>((resolve) => {
+      this.waiters.push(resolve);
+    });
+  }
+
+  releaseNextSave(): void {
+    const pendingSave = this.pendingSaves.shift();
+    if (!pendingSave) throw new Error('Expected pending central persistence save.');
+    pendingSave.release();
+  }
+}
+
+class FailOncePersistence extends MemoryCentralDatabasePersistence {
+  private shouldFail = true;
+
+  override async save(snapshot: CentralDatabaseSnapshot): Promise<void> {
+    if (this.shouldFail) {
+      this.shouldFail = false;
+      throw new Error('central persistence unavailable once');
+    }
+    await super.save(snapshot);
+  }
+}
+
+type PendingSave = {
+  snapshot: CentralDatabaseSnapshot;
+  release: () => void;
+};

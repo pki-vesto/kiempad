@@ -171,6 +171,8 @@ export class MemoryCentralDatabasePersistence implements CentralDatabasePersiste
 }
 
 export class PersistedCentralEncryptedDatabase implements CentralEncryptedDatabase {
+  private writeQueue: Promise<void> = Promise.resolve();
+
   private constructor(
     private database: MemoryCentralEncryptedDatabase,
     private readonly persistence: CentralDatabasePersistence,
@@ -223,10 +225,14 @@ export class PersistedCentralEncryptedDatabase implements CentralEncryptedDataba
   private async commit(
     mutate: (database: MemoryCentralEncryptedDatabase) => Promise<void>,
   ): Promise<void> {
-    const nextDatabase = new MemoryCentralEncryptedDatabase(this.database.exportSnapshot());
-    await mutate(nextDatabase);
-    await this.persistence.save(nextDatabase.exportSnapshot());
-    this.database = nextDatabase;
+    const queuedCommit = this.writeQueue.then(async () => {
+      const nextDatabase = new MemoryCentralEncryptedDatabase(this.database.exportSnapshot());
+      await mutate(nextDatabase);
+      await this.persistence.save(nextDatabase.exportSnapshot());
+      this.database = nextDatabase;
+    });
+    this.writeQueue = queuedCommit.catch(() => undefined);
+    await queuedCommit;
   }
 }
 

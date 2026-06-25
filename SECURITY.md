@@ -71,9 +71,10 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Centrale encrypted database/API:** ziet uitsluitend minimale indexmetadata,
   owner/servermetadata en versleutelde blobs; compromittering van de database levert
   geen leesbare medische payloads op zonder sleutel. Muterende centrale writes
-  worden pas zichtbaar in de draaiende runtime nadat de persistence-save succesvol
-  is afgerond, zodat gefaalde commits geen onpersisted state kunnen lekken naar
-  latere reads.
+  worden geserialiseerd en pas zichtbaar in de draaiende runtime nadat de
+  persistence-save succesvol is afgerond, zodat parallelle writes geen lost updates
+  veroorzaken en gefaalde commits geen onpersisted state kunnen lekken naar latere
+  reads.
 - **Persistence adapter:** mag snapshots of database rijen bewaren met owner/index
   metadata en encrypted envelopes, maar nooit plaintext medische/fertiliteitsinhoud,
   passphrases of afgeleide raw keys. De centrale snapshotgrens valideert records en

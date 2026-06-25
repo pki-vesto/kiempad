@@ -19,11 +19,12 @@ owner/indexmetadata en encrypted envelopes.
   positieve `schemaVersion` en een complete `AES-256-GCM` envelope.
 - `CentralEncryptedApiServer` resolveert opaque tokens naar actieve sessies.
 - `PersistedCentralEncryptedDatabase` bewaart encrypted database snapshots via een
-  `CentralDatabasePersistence` adapter. Muterende operaties bouwen eerst een
-  tijdelijke database-state, saven die snapshot via de persistence adapter en maken
-  de nieuwe state pas zichtbaar in de runtime nadat die save succesvol is afgerond.
+  `CentralDatabasePersistence` adapter. Muterende operaties lopen door een interne
+  write-queue, bouwen eerst een tijdelijke database-state vanaf de laatst
+  gecommitte snapshot, saven die snapshot via de persistence adapter en maken de
+  nieuwe state pas zichtbaar in de runtime nadat die save succesvol is afgerond.
   Een mislukte save lekt daardoor geen onpersisted record-, meta- of delete-mutatie
-  naar latere reads in hetzelfde serverproces.
+  naar latere reads in hetzelfde serverproces en blokkeert latere commits niet.
 - `JsonFileCentralDatabasePersistence` is de eerste concrete server-side adapter.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
@@ -125,8 +126,10 @@ fetches doet. Zet deze API niet direct publiek op internet.
   effects.
 - Malformed JSON of ongeldige recordpayloads worden `400`; recordwrites bereiken de
   database pas na validatie van id, type, timestamps, schemaVersion en envelope.
-- Mutaties worden pas zichtbaar nadat de centrale persistence-save succesvol is
-  afgerond; gefaalde commits blijven dus ook in het draaiende proces onzichtbaar.
+- Mutaties worden geserialiseerd en pas zichtbaar nadat de centrale
+  persistence-save succesvol is afgerond; gefaalde commits blijven dus ook in het
+  draaiende proces onzichtbaar en veroorzaken geen lost updates voor parallelle
+  writes.
 - Oversized JSON bodies boven `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` worden `413`
   voordat ze naar de centrale API-laag gaan.
 - Onverwachte fouten aan de Node HTTP-boundary worden een generieke
