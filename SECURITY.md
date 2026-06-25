@@ -97,10 +97,11 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   met `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` en te grote payloads krijgen `413`
   voordat ze de centrale API-laag bereiken. De containerwrapper publiceert
   standaard alleen op `127.0.0.1`; HTTPS hoort via Tailscale Serve of een reverse
-  proxy voor de API te eindigen. Browser-CORS wordt met een exacte
+  proxy voor de API te eindigen. Browser-CORS wordt met een gevalideerde exacte
   `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` allowlist afgehandeld; gebruik geen wildcard
-  voor deze API. Origins buiten de allowlist worden server-side `403` vóór body
-  parsing en API-side effects. Non-empty request bodies zonder JSON mediatype worden
+  voor deze API, en configureer geen credentials, pad, query of fragment als origin.
+  Origins buiten de allowlist worden server-side `403` vóór body parsing en
+  API-side effects. Non-empty request bodies zonder JSON mediatype worden
   `415` vóór JSON parsing en API-side effects. Centrale API-responses krijgen
   `Cache-Control: no-store`, `Pragma: no-cache`, `X-Content-Type-Options: nosniff` en
   `Referrer-Policy: no-referrer` aan de Node HTTP-boundary. Onverwachte
