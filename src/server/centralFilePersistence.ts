@@ -1,4 +1,4 @@
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 
 import type {
@@ -25,11 +25,16 @@ export class JsonFileCentralDatabasePersistence implements CentralDatabasePersis
     assertValidCentralDatabaseSnapshot(snapshot);
     await mkdir(dirname(this.filePath), { recursive: true });
     const temporaryPath = `${this.filePath}.${process.pid}.${Date.now()}.tmp`;
-    await writeFile(temporaryPath, `${JSON.stringify(snapshot, null, 2)}\n`, {
-      encoding: 'utf8',
-      mode: 0o600,
-    });
-    await rename(temporaryPath, this.filePath);
+    try {
+      await writeFile(temporaryPath, `${JSON.stringify(snapshot, null, 2)}\n`, {
+        encoding: 'utf8',
+        mode: 0o600,
+      });
+      await rename(temporaryPath, this.filePath);
+    } catch (error) {
+      await removeTemporarySnapshot(temporaryPath);
+      throw error;
+    }
   }
 }
 
@@ -41,4 +46,12 @@ function parseSnapshot(text: string): CentralDatabaseSnapshot {
 
 function isNodeError(error: unknown): error is NodeJS.ErrnoException {
   return error instanceof Error && 'code' in error;
+}
+
+async function removeTemporarySnapshot(filePath: string): Promise<void> {
+  try {
+    await rm(filePath, { force: true });
+  } catch (_error) {
+    // Preserve the original persistence failure; cleanup is best-effort.
+  }
 }
