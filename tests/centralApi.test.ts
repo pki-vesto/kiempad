@@ -88,6 +88,21 @@ describe('central encrypted API service', () => {
     expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
   });
 
+  it('ruimt verlopen centrale sessies op bij nieuwe sessie-uitgifte', async () => {
+    const sessionStore = new MemoryCentralSessionStore({ ttlMs: 60_000 });
+    const expiredTicket = await sessionStore.issue({ userId: 'user-peter', ttlMs: -1 });
+    const activeTicket = await sessionStore.issue({ userId: 'user-peter' });
+
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
+    await expect(sessionStore.resolve(activeTicket.token)).resolves.toMatchObject({
+      userId: 'user-peter',
+    });
+    await expect(sessionStore.resolve(expiredTicket.token)).rejects.toBeInstanceOf(
+      CentralSessionError,
+    );
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
+  });
+
   it('houdt API-recordtoegang user-scoped zonder record-id bestaan te lekken', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const server = new CentralEncryptedApiServer(database, new MemoryCentralSessionStore());

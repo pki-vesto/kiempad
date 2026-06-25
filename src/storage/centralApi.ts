@@ -45,6 +45,8 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
   }
 
   async issue(input: CentralSessionIssueInput): Promise<CentralSessionTicket> {
+    this.pruneExpiredSessions();
+
     const userId = input.userId.trim();
     if (!userId) {
       throw new CentralSessionError('Centrale sessie vereist een user id.');
@@ -86,6 +88,15 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
 
   unsafeSessionCountForTest(): number {
     return this.sessions.size;
+  }
+
+  private pruneExpiredSessions(): void {
+    const now = Date.now();
+    for (const [token, session] of this.sessions) {
+      if (Date.parse(session.expiresAt ?? '') <= now) {
+        this.sessions.delete(token);
+      }
+    }
   }
 }
 

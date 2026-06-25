@@ -50,7 +50,8 @@ verlopen bearer token maximaal één keer via `POST /sessions` voor dezelfde
 configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
 geen stille legacy fallback. De sessie-TTL komt alleen uit serverconfiguratie
 (`KIEMPAD_CENTRAL_SESSION_TTL_MS`); `POST /sessions` accepteert geen client-owned
-TTL-beleid.
+TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij nieuwe
+sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie.
 
 Standaardwaarden:
 
