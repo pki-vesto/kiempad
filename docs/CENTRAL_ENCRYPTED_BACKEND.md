@@ -71,10 +71,10 @@ starten. De centrale fetch-client vernieuwt een verlopen bearer token maximaal Ã
 keer via `POST /sessions` voor dezelfde configured user-scope; als dat faalt blijft
 het een centrale opslagfout en is er geen stille legacy fallback. De sessie-TTL komt
 alleen uit serverconfiguratie
-(`KIEMPAD_CENTRAL_SESSION_TTL_MS`); `POST /sessions` accepteert geen client-owned
-TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij nieuwe
-sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie. De fetch-client
-gebruikt voor centrale API-requests expliciet `credentials: omit` en
+(`KIEMPAD_CENTRAL_SESSION_TTL_MS`); de sessiestore en `POST /sessions` negeren
+client-owned TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij
+nieuwe sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie. De
+fetch-client gebruikt voor centrale API-requests expliciet `credentials: omit` en
 `cache: no-store`; authenticatie loopt alleen via bearer tokens. Succesvolle
 fetch-responses moeten een `application/json` of `+json` mediatype hebben en
 parsebaar JSON bevatten; anders faalt de client als centrale API-contractfout.
@@ -132,6 +132,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
   gevalideerd als exacte originlijst zonder wildcard, credentials, pad, query of
   fragment.
 - Forged, verlopen of ingetrokken tokens worden `401`.
+- Sessie-expiry gebruikt alleen server-side TTL-configuratie; clients kunnen geen
+  TTL verlengen of verkorten via sessie-aanvragen.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
 - Malformed API-paden, inclusief malformed percent-encoding in path segments, worden

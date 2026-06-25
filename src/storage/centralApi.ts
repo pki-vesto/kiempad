@@ -56,7 +56,7 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
     }
 
     const issuedAt = nowIso();
-    const expiresAt = new Date(Date.now() + (input.ttlMs ?? this.ttlMs)).toISOString();
+    const expiresAt = new Date(Date.now() + this.ttlMs).toISOString();
     const token = createOpaqueSessionToken();
     this.sessions.set(token, {
       userId,
