@@ -92,8 +92,10 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   default uit. Gebruiker kiest provider/model en levert eigen sleutel.
 - **Centrale encrypted database/API:** ziet uitsluitend minimale indexmetadata,
   owner/servermetadata en versleutelde blobs; compromittering van de database levert
-  geen leesbare medische payloads op zonder sleutel. Muterende centrale writes
-  worden geserialiseerd en pas zichtbaar in de draaiende runtime nadat de
+  geen leesbare medische payloads op zonder sleutel. Recordwrites worden aan de
+  centrale databasegrens gevalideerd op bekende types, canonieke timestamps,
+  positieve schemaversie en `AES-256-GCM` envelopes vóór runtime-mutatie. Muterende
+  centrale writes worden geserialiseerd en pas zichtbaar in de draaiende runtime nadat de
   persistence-save succesvol is afgerond, zodat parallelle writes geen lost updates
   veroorzaken en gefaalde commits geen onpersisted state kunnen lekken naar latere
   reads.

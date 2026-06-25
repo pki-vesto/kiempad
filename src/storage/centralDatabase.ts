@@ -116,6 +116,7 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
 
   async putRecord(session: CentralAuthSession, record: EncryptedRecord): Promise<void> {
     assertActiveCentralSession(session);
+    assertValidEncryptedRecordInput(record);
     const storageKey = recordKey(session.userId, record.id);
     const existing = this.records.get(storageKey);
 
@@ -379,6 +380,23 @@ function assertValidCentralEncryptedRecord(
     record.payload.alg !== 'AES-256-GCM' ||
     !isNonEmptyString(record.payload.iv) ||
     !isNonEmptyString(record.payload.ciphertext)
+  ) {
+    throwInvalidCentralSnapshot();
+  }
+}
+
+function assertValidEncryptedRecordInput(record: unknown): asserts record is EncryptedRecord {
+  if (!isRecord(record)) {
+    throwInvalidCentralSnapshot();
+  }
+  if (
+    !isNonEmptyString(record.id) ||
+    !isIsoTimestamp(record.createdAt) ||
+    !isIsoTimestamp(record.updatedAt) ||
+    !isPositiveInteger(record.schemaVersion) ||
+    typeof record.type !== 'string' ||
+    !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
+    !isEncryptionEnvelope(record.payload)
   ) {
     throwInvalidCentralSnapshot();
   }

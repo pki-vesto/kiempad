@@ -26,6 +26,10 @@ owner/indexmetadata en encrypted envelopes.
   nieuwe state pas zichtbaar in de runtime nadat die save succesvol is afgerond.
   Een mislukte save lekt daardoor geen onpersisted record-, meta- of delete-mutatie
   naar latere reads in hetzelfde serverproces en blokkeert latere commits niet.
+  Recordwrites worden vóór runtime-mutatie gevalideerd op bekende recordtypes,
+  canonieke timestamps, positieve `schemaVersion` en complete `AES-256-GCM`
+  envelopes; malformed payloads bereiken dus ook via directe databasecalls geen
+  centrale runtime-state.
   Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
   `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
   persistence geweigerd.

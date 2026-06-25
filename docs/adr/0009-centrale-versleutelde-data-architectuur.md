@@ -23,6 +23,9 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - De centrale database bewaart per record alleen minimale clear indexvelden
   (`id`, `type`, timestamps, schemaversie), de eigenaar (`ownerUserId`),
   servermetadata en een versleutelde payload (`EncryptionEnvelope`).
+- Recordwrites worden aan de centrale databasegrens gevalideerd op bekende
+  recordtypes, canonieke timestamps, positieve schemaversie en complete
+  `AES-256-GCM` envelopes voordat runtime-state of persistence wordt geraakt.
 - Duurzame persistence loopt via een snapshot/adaptercontract. Een productieadapter
   mag owner/indexmetadata en encrypted envelopes opslaan, maar geen plaintext
   medische/fertiliteitsinhoud, passphrases of raw keys.

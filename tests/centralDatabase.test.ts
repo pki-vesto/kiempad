@@ -2,11 +2,13 @@ import { describe, expect, it } from 'vitest';
 
 import {
   type CentralAuthSession,
+  CentralDataValidationError,
   CentralSessionError,
   CentralUserStorageDriver,
   MemoryCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
+import type { EncryptedRecord } from '../src/storage/records';
 import { VaultSession } from '../src/storage/vaultSession';
 
 type TestTraject = {
@@ -185,6 +187,29 @@ describe('central encrypted database architecture', () => {
     expect(database.unsafeDumpMetaForTest()).toEqual([]);
   });
 
+  it('weigert malformed centrale recordwrites vóór runtime-mutatie', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+
+    for (const record of [
+      { ...createEncryptedRecord('bad-record'), payload: { plaintext: 'mag niet centraal' } },
+      { ...createEncryptedRecord('bad-record'), type: 'plaintext_note' },
+      { ...createEncryptedRecord('bad-record'), createdAt: '2026-06-25T08:00:00Z' },
+      { ...createEncryptedRecord('bad-record'), schemaVersion: 0 },
+      {
+        ...createEncryptedRecord('bad-record'),
+        payload: { ...createEncryptedRecord('x').payload, iv: '' },
+      },
+    ]) {
+      await expect(database.putRecord(userA, record as never)).rejects.toBeInstanceOf(
+        CentralDataValidationError,
+      );
+    }
+
+    expect(database.unsafeDumpRecordsForTest()).toEqual([]);
+    await expect(database.getRecord(userA, 'bad-record')).resolves.toBeUndefined();
+    await expect(database.listRecords(userA)).resolves.toEqual([]);
+  });
+
   it('accepteert geldige technische WebAuthn metadata centraal', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     await database.putMeta(userA, 'webauthn-unlock', {
@@ -208,3 +233,19 @@ describe('central encrypted database architecture', () => {
     });
   });
 });
+
+function createEncryptedRecord(id: string): EncryptedRecord {
+  return {
+    id,
+    type: 'traject',
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt: '2026-06-25T08:00:01.000Z',
+    schemaVersion: 1,
+    payload: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `encrypted-iv-${id}`,
+      ciphertext: `encrypted-ciphertext-${id}`,
+    },
+  };
+}
