@@ -23,14 +23,16 @@ export type CentralFetchSessionRefresher = () => Promise<{
 
 export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
   private readonly normalizedBaseUrl: string;
+  private token: CentralSessionToken;
 
   constructor(
     baseUrl: string,
-    private token: CentralSessionToken,
+    token: CentralSessionToken,
     private readonly fetcher: FetchLike = defaultFetch,
     private readonly refreshSession?: CentralFetchSessionRefresher,
   ) {
     this.normalizedBaseUrl = normalizeCentralFetchBaseUrl(baseUrl);
+    this.token = normalizeCentralFetchBearerToken(token);
   }
 
   async getMeta<T>(key: string): Promise<T | undefined> {
@@ -105,7 +107,7 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
   ): Promise<T | undefined> {
     if (response.status === 401 && allowRefresh && this.refreshSession) {
       const ticket = await this.refreshSession();
-      this.token = ticket.token;
+      this.token = normalizeCentralFetchBearerToken(ticket.token);
       return this.handleResponse<T>(await this.fetchWithToken(path, options), path, options, false);
     }
 
@@ -165,6 +167,13 @@ export function normalizeCentralFetchBaseUrl(value: string): string {
   return url.toString().replace(/\/+$/, '');
 }
 
+export function normalizeCentralFetchBearerToken(token: string): CentralSessionToken {
+  if (!isNonWhitespaceString(token)) {
+    throw new CentralHttpBadRequestError('central-fetch-invalid-bearer-token');
+  }
+  return token;
+}
+
 const defaultFetch: FetchLike = (input, init) => globalThis.fetch(input, init);
 
 async function readErrorMessage(response: Response): Promise<string> {
@@ -204,7 +213,7 @@ function parseSessionTicket(body: unknown, expectedUserId: string): CentralFetch
 
   const { token, userId, issuedAt, expiresAt } = body;
   if (
-    !isNonEmptyString(token) ||
+    !isNonWhitespaceString(token) ||
     userId !== expectedUserId ||
     !isIsoTimestamp(issuedAt) ||
     !isIsoTimestamp(expiresAt) ||
@@ -220,8 +229,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
-function isNonEmptyString(value: unknown): value is string {
-  return typeof value === 'string' && value.trim().length > 0;
+function isNonWhitespaceString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0 && !/\s/.test(value);
 }
 
 function isIsoTimestamp(value: unknown): value is string {
