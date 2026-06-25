@@ -120,6 +120,7 @@ export class CentralEncryptedApiServer {
   }
 
   async revokeSession(token: CentralSessionToken): Promise<void> {
+    await this.sessions.resolve(token);
     await this.sessions.revoke(token);
   }
 

@@ -43,6 +43,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Centrale API-sessies** gebruiken opaque tokens. De client levert geen
   `userId`/ownerclaim per recordrequest aan; de server resolveert het token naar een
   actieve `CentralAuthSession` en weigert forged, verlopen of ingetrokken tokens.
+  Ook sessie-intrekking vereist eerst zo'n geldige actieve sessie; een forged of al
+  ingetrokken token krijgt geen succesvolle revoke-response.
   De Node HTTP-boundary accepteert alleen strikt gevormde
   `Authorization: Bearer <token>` headers; malformed, lege of unsupported
   Authorization headers worden behandeld als ontbrekende credentials.
@@ -64,8 +66,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   mediatype of met malformed JSON worden als centrale API-contractfout behandeld,
   niet als raw parse-exception.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
-  `401`, record-id's buiten de owner-namespace gedragen zich als ontbrekende records
-  (`404`) en malformed payloads worden `400`. De centrale HTTP-contractlaag
+  `401`, inclusief sessie-intrekking; record-id's buiten de owner-namespace gedragen
+  zich als ontbrekende records (`404`) en malformed payloads worden `400`. De
+  centrale HTTP-contractlaag
   accepteert alleen origin-form API-paden, geen absolute of protocol-relative URL's,
   en wijst malformed percent-encoded paden af als `400`.
   Recordwrites worden vóór database-mutatie gevalideerd op id/type, canonieke

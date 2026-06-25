@@ -63,7 +63,9 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
   contract.
 - `src/storage/centralApi.ts` definieert de API/servicegrens:
   `MemoryCentralSessionStore`, `CentralEncryptedApiServer` en
-  `CentralEncryptedApiClientDriver`.
+  `CentralEncryptedApiClientDriver`. De servicegrens resolveert tokens ook vóór
+  sessie-intrekking, zodat forged of al ingetrokken tokens dezelfde unauthorized
+  route volgen als datarequests.
 - `src/storage/centralHttpApi.ts` definieert het HTTP-style API-contract:
   sessie-uitgifte/intrekken, metadata, encrypted records en veilige statuscodes voor
   unauthorized, ontbrekende records binnen de owner-namespace en malformed requests.

@@ -77,6 +77,24 @@ describe('central encrypted API service', () => {
     expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
   });
 
+  it('vereist een geldig actief token voordat een centrale sessie wordt ingetrokken', async () => {
+    const sessionStore = new MemoryCentralSessionStore();
+    const server = new CentralEncryptedApiServer(
+      new MemoryCentralEncryptedDatabase(),
+      sessionStore,
+    );
+    const ticket = await server.issueSession({ userId: 'user-peter' });
+
+    await expect(server.revokeSession('kiempad-session-forged')).rejects.toBeInstanceOf(
+      CentralSessionError,
+    );
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
+
+    await expect(server.revokeSession(ticket.token)).resolves.toBeUndefined();
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
+    await expect(server.revokeSession(ticket.token)).rejects.toBeInstanceOf(CentralSessionError);
+  });
+
   it('houdt centrale sessie-TTL server-owned en negeert ttlMs in directe issue input', async () => {
     const server = new CentralEncryptedApiServer(
       new MemoryCentralEncryptedDatabase(),

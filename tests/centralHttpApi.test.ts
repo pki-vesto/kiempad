@@ -77,11 +77,23 @@ describe('central encrypted HTTP API contract', () => {
     await expect(
       new CentralHttpApiClientDriver(api, 'forged-token').listRecords(),
     ).rejects.toBeInstanceOf(CentralSessionError);
+    await expect(
+      api.handle({ method: 'DELETE', path: '/sessions/current', token: 'forged-token' }),
+    ).resolves.toEqual({
+      status: 401,
+      body: { error: 'unauthorized' },
+    });
 
     await expect(
       api.handle({ method: 'DELETE', path: '/sessions/current', token }),
     ).resolves.toEqual({
       status: 204,
+    });
+    await expect(
+      api.handle({ method: 'DELETE', path: '/sessions/current', token }),
+    ).resolves.toEqual({
+      status: 401,
+      body: { error: 'unauthorized' },
     });
     await expect(new CentralHttpApiClientDriver(api, token).listRecords()).rejects.toBeInstanceOf(
       CentralSessionError,
