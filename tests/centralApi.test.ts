@@ -67,11 +67,28 @@ describe('central encrypted API service', () => {
       CentralSessionError,
     );
 
-    const expiredTicket = await server.issueSession({ userId: 'user-peter', ttlMs: -1 });
-    await expect(server.listRecords(expiredTicket.token)).rejects.toBeInstanceOf(
+    const expiredSessionStore = new MemoryCentralSessionStore({ ttlMs: -1 });
+    const expiredServer = new CentralEncryptedApiServer(database, expiredSessionStore);
+    const expiredTicket = await expiredServer.issueSession({ userId: 'user-peter' });
+    await expect(expiredServer.listRecords(expiredTicket.token)).rejects.toBeInstanceOf(
       CentralSessionError,
     );
+    expect(expiredSessionStore.unsafeSessionCountForTest()).toBe(0);
     expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
+  });
+
+  it('houdt centrale sessie-TTL server-owned en negeert ttlMs in directe issue input', async () => {
+    const server = new CentralEncryptedApiServer(
+      new MemoryCentralEncryptedDatabase(),
+      new MemoryCentralSessionStore({ ttlMs: 60_000 }),
+    );
+
+    const ticket = await server.issueSession({
+      userId: 'user-peter',
+      ttlMs: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    expect(Date.parse(ticket.expiresAt) - Date.parse(ticket.issuedAt)).toBe(60_000);
   });
 
   it('weigert sessie-uitgifte voor users buiten de server-side allowlist', async () => {
@@ -89,18 +106,18 @@ describe('central encrypted API service', () => {
   });
 
   it('ruimt verlopen centrale sessies op bij nieuwe sessie-uitgifte', async () => {
-    const sessionStore = new MemoryCentralSessionStore({ ttlMs: 60_000 });
-    const expiredTicket = await sessionStore.issue({ userId: 'user-peter', ttlMs: -1 });
-    const activeTicket = await sessionStore.issue({ userId: 'user-peter' });
+    const sessionStore = new MemoryCentralSessionStore({ ttlMs: -1 });
+    const prunedTicket = await sessionStore.issue({ userId: 'user-peter' });
+    const expiredTicket = await sessionStore.issue({ userId: 'user-peter' });
 
     expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
-    await expect(sessionStore.resolve(activeTicket.token)).resolves.toMatchObject({
-      userId: 'user-peter',
-    });
+    await expect(sessionStore.resolve(prunedTicket.token)).rejects.toBeInstanceOf(
+      CentralSessionError,
+    );
     await expect(sessionStore.resolve(expiredTicket.token)).rejects.toBeInstanceOf(
       CentralSessionError,
     );
-    expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
   });
 
   it('houdt API-recordtoegang user-scoped zonder record-id bestaan te lekken', async () => {
