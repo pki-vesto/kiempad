@@ -257,6 +257,12 @@ h3 {
   padding: 20px;
 }
 
+/* On mobile/tablet the sidebar wrapper is transparent (topbar + bottom-nav flow
+   as before); the desktop layout below turns it into a real left sidebar. */
+.app-sidebar {
+  display: contents;
+}
+
 .skip-link {
   position: fixed;
   z-index: 60;
@@ -1657,6 +1663,75 @@ a.action-card:active {
 .action-card-list {
   display: grid;
   gap: 10px;
+}
+
+/* Desktop: left sidebar (brand + controls + vertical nav) | content */
+@media (min-width: 900px) {
+  .app-shell {
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    gap: 0 30px;
+    align-items: start;
+    width: min(1260px, 100%);
+    padding: 24px;
+  }
+
+  .app-sidebar {
+    display: flex;
+    position: sticky;
+    top: 24px;
+    flex-direction: column;
+    gap: 14px;
+    max-height: calc(100vh - 48px);
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .brand {
+    gap: 11px;
+  }
+
+  .topbar .status-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .theme-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .theme-form button,
+  .lock-button {
+    width: 100%;
+  }
+
+  .primary-nav {
+    flex: 1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 4px;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .primary-nav a {
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    width: 100%;
+    border-radius: 10px;
+    text-align: left;
+  }
+
+  .content {
+    min-width: 0;
+  }
 }
 
 @media (max-width: 760px) {
