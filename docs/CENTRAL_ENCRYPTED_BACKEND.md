@@ -22,6 +22,8 @@ owner/indexmetadata en encrypted envelopes.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
   ownermetadata, bekende recordtypes, servermetadata en `AES-256-GCM` envelopes.
+  De file-backed adapter valideert dezelfde snapshotgrens ook vóór hij een nieuwe
+  snapshot naar disk schrijft.
 - `createCentralNodeHttpServer` in `src/server/centralNodeRuntime.ts` wiret de
   persistence, session store, database, API-server en `node:http` samen.
 - `src/server/centralBackendCli.ts` is het startbare Node-entrypoint voor lokale
@@ -113,7 +115,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
   `500 {"error":"central-runtime-error"}` zonder exceptionbericht of stacktrace.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
 - File-backed snapshots met ontbrekende owner/servermetadata, onbekende recordtypes
-  of plaintext/malformed payloads worden geweigerd vóór de database ze opent.
+  of plaintext/malformed payloads worden geweigerd vóór de database ze opent of naar
+  disk schrijft.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.
