@@ -40,7 +40,8 @@ alleen geeft geen toegang. Zet
 `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` als de PWA vanaf een andere browser-origin draait
 dan de backend; lokale Vite/preview origins zijn standaard toegestaan. Gebruik
 alleen exacte `http`/`https` origins zonder wildcard, credentials, pad, query of
-fragment.
+fragment. Ontbreekt deze variabele, dan gelden de lokale defaults; zet je hem
+expliciet leeg of whitespace-only, dan zijn er geen browser-origins toegestaan.
 
 Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
 

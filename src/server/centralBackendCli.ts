@@ -48,7 +48,7 @@ export async function startCentralBackendFromEnv(
     env.KIEMPAD_CENTRAL_PERSISTENCE_FILE?.trim() || DEFAULT_PERSISTENCE_FILE,
   );
   const allowedUserIds = parseAllowedUserIds(env.KIEMPAD_CENTRAL_ALLOWED_USER_IDS);
-  const allowedOrigins = parseCsvList(env.KIEMPAD_CENTRAL_ALLOWED_ORIGINS, DEFAULT_ALLOWED_ORIGINS);
+  const allowedOrigins = parseAllowedOrigins(env.KIEMPAD_CENTRAL_ALLOWED_ORIGINS);
 
   await mkdir(dirname(persistenceFile), { recursive: true });
   const server = await createCentralNodeHttpServer({
@@ -78,6 +78,11 @@ export async function startCentralBackendFromEnv(
 
 function parseAllowedUserIds(value: string | undefined): string[] {
   if (value === undefined) return [DEFAULT_ALLOWED_USER_ID];
+  return parseCsvList(value, []);
+}
+
+function parseAllowedOrigins(value: string | undefined): string[] {
+  if (value === undefined) return [...DEFAULT_ALLOWED_ORIGINS];
   return parseCsvList(value, []);
 }
 
