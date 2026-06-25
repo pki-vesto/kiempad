@@ -69,7 +69,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   standaard alleen op `127.0.0.1`; HTTPS hoort via Tailscale Serve of een reverse
   proxy voor de API te eindigen. Browser-CORS wordt met een exacte
   `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` allowlist afgehandeld; gebruik geen wildcard
-  voor deze API.
+  voor deze API. Centrale API-responses krijgen `Cache-Control: no-store`,
+  `Pragma: no-cache`, `X-Content-Type-Options: nosniff` en
+  `Referrer-Policy: no-referrer` aan de Node HTTP-boundary.
 - **Persistence volume:** behandel `data/central/` of `/data` als gevoelig. De
   payloads zijn encrypted, maar owner/indexmetadata en gebruikspatronen mogen niet
   publiek worden.
@@ -102,6 +104,7 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
   integratietests via echte HTTP/fetch calls.
 - [x] Startbaar centraal backendcommando en containerwrapper met host-local poort en
   persistent datavolume.
+- [x] Centrale Node API-responses met no-store/security headers.
 - [x] Centrale persistence snapshots zonder plaintext medische payloads, met
   restarttests voor retrieval, user-isolatie en verkeerde sleutel.
 - [x] Legacy lokale opslag blijft versleuteld; nieuwe opslagrichting is centrale

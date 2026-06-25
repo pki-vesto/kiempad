@@ -91,6 +91,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Cross-user recordtoegang wordt `403`.
 - Malformed JSON of ongeldige recordpayloads worden `400`.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
+- De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
+  `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
+  API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.
 
 ## Current Limitation
 
