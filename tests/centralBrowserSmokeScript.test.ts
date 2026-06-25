@@ -15,9 +15,14 @@ describe('central browser smoke script', () => {
     expect(centralBrowserSmokeScript).toContain('KIEMPAD_CENTRAL_ALLOWED_ORIGINS');
   });
 
-  it('faalt bij legacy fallback of plaintext centrale persistence', () => {
+  it('faalt bij legacy fallback, hercreatie op tweede device of plaintext centrale persistence', () => {
     expect(centralBrowserSmokeScript).toContain('Legacy lokaal');
     expect(centralBrowserSmokeScript).toContain('App-shell viel terug naar legacy lokale opslag.');
+    expect(centralBrowserSmokeScript).toContain('assertSecondDeviceUnlockGate');
+    expect(centralBrowserSmokeScript).toContain(
+      'Tweede schone browsercontext moest de centrale dataset opnieuw starten.',
+    );
+    expect(centralBrowserSmokeScript).toContain('Ontgrendel Kiempad');
     expect(centralBrowserSmokeScript).toContain('"type": "settings"');
     expect(centralBrowserSmokeScript).toContain('"alg": "AES-256-GCM"');
     expect(centralBrowserSmokeScript).toContain('firstRunSetup');
