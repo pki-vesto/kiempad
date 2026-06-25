@@ -17,6 +17,7 @@ import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
+import personalFertilityIntelligencePlatform from '../docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md?raw';
 import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
 import secretsScanBaseline from '../docs/SECRETS_SCAN_BASELINE.md?raw';
 import tailscaleDeploy from '../docs/TAILSCALE_DEPLOY.md?raw';
@@ -774,6 +775,42 @@ describe('onderhoudsdocumentatie', () => {
     expect(tailscaleDeploy).not.toContain(
       'Een nieuw apparaat ziet geen bestaande Kiempad-data totdat de gebruiker lokaal een eigen kluis/back-up importeert.',
     );
+  });
+
+  it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
+    for (const requiredCapability of [
+      'Historical Medical Record Ingestion',
+      'Imaging Repository',
+      'Consultation Intelligence',
+      'Embryo Tracking',
+      'Research Intelligence',
+      'Daily Recommendations',
+      'Fertility Knowledge Graph',
+      'Fertility Timeline',
+    ]) {
+      expect(personalFertilityIntelligencePlatform).toContain(requiredCapability);
+    }
+
+    for (const requiredTerm of [
+      '50+ extra uitvoerbare doelen',
+      'GitHub Issue-template',
+      'geen plaintext medische inhoud op de backend',
+      'OCR',
+      "Echo's",
+      'Gespreksverslagen',
+      'Embryokwaliteit',
+      'Wetenschappelijke samenvatting',
+      'Eenvoudige samenvatting',
+      'Relevantie voor gebruiker',
+      'Fertility knowledge graph schema',
+      'Complete fertility timeline',
+    ]) {
+      expect(personalFertilityIntelligencePlatform).toContain(requiredTerm);
+    }
+
+    const generatedIssueRows =
+      personalFertilityIntelligencePlatform.match(/^\| PFIP-\d{3} .+\|/gm) ?? [];
+    expect(generatedIssueRows.length).toBeGreaterThanOrEqual(50);
   });
 
   it('houdt de public repo privacy review compleet voor releasechecks', () => {
