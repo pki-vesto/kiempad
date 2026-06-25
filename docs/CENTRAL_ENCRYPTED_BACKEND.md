@@ -56,6 +56,7 @@ Standaardwaarden:
 - `KIEMPAD_CENTRAL_PORT=8099`
 - `KIEMPAD_CENTRAL_PERSISTENCE_FILE=data/central/kiempad-central-db.json`
 - `KIEMPAD_CENTRAL_SESSION_TTL_MS=3600000`
+- `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES=26214400`
 - `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user`
 - `KIEMPAD_CENTRAL_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173,http://localhost:4174,http://127.0.0.1:4174`
 
@@ -95,6 +96,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
 - Malformed JSON of ongeldige recordpayloads worden `400`.
+- Oversized JSON bodies boven `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` worden `413`
+  voordat ze naar de centrale API-laag gaan.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
 - File-backed snapshots met ontbrekende owner/servermetadata, onbekende recordtypes
   of plaintext/malformed payloads worden geweigerd vóór de database ze opent.

@@ -181,7 +181,8 @@ Details en beveiligingsnotities staan in
   owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
   zonder client key.
 - **Node backend boundary:** `createCentralNodeHttpServer` wiret de centrale API,
-  sessies en file-backed persistence over `node:http`; zie
+  sessies en file-backed persistence over `node:http`; oversized JSON requests
+  worden begrensd via `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES`; zie
   [`docs/CENTRAL_ENCRYPTED_BACKEND.md`](docs/CENTRAL_ENCRYPTED_BACKEND.md).
 - **CSP:** `index.html` bevat een strikte Content Security Policy die scripts tot de
   eigen origin beperkt en alleen de eigen origin plus localhost-connecties toestaat.

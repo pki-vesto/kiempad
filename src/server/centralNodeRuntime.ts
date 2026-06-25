@@ -10,15 +10,19 @@ export type CentralNodeRuntimeOptions = {
   sessionTtlMs?: number;
   allowedUserIds?: readonly string[];
   allowedOrigins?: readonly string[];
+  maxRequestBodyBytes?: number;
 };
+
+const DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
 
 export async function createCentralNodeHttpServer(
   options: CentralNodeRuntimeOptions,
 ): Promise<Server> {
   const api = await createCentralNodeHttpApi(options);
   const corsPolicy = createCorsPolicy(options.allowedOrigins);
+  const maxRequestBodyBytes = options.maxRequestBodyBytes ?? DEFAULT_MAX_REQUEST_BODY_BYTES;
   return createServer((request, response) => {
-    void handleCentralNodeRequest(api, request, response, corsPolicy);
+    void handleCentralNodeRequest(api, request, response, corsPolicy, maxRequestBodyBytes);
   });
 }
 
@@ -39,6 +43,7 @@ export async function handleCentralNodeRequest(
   request: IncomingMessage,
   response: ServerResponse,
   corsPolicy: CentralCorsPolicy = createCorsPolicy(),
+  maxRequestBodyBytes = DEFAULT_MAX_REQUEST_BODY_BYTES,
 ): Promise<void> {
   applySecurityHeaders(response);
   const corsResult = applyCorsHeaders(request, response, corsPolicy);
@@ -53,7 +58,11 @@ export async function handleCentralNodeRequest(
     return;
   }
 
-  const body = await readJsonBody(request);
+  const body = await readJsonBody(request, maxRequestBodyBytes);
+  if (body === REQUEST_BODY_TOO_LARGE) {
+    sendJson(response, 413, { error: 'request-body-too-large' });
+    return;
+  }
   if (body instanceof Error) {
     sendJson(response, 400, { error: 'invalid-json' });
     return;
@@ -75,12 +84,23 @@ function normalizeMethod(method: string | undefined): CentralHttpMethod | undefi
   return undefined;
 }
 
-async function readJsonBody(request: IncomingMessage): Promise<unknown> {
+const REQUEST_BODY_TOO_LARGE = Symbol('request-body-too-large');
+
+async function readJsonBody(
+  request: IncomingMessage,
+  maxRequestBodyBytes: number,
+): Promise<unknown | typeof REQUEST_BODY_TOO_LARGE> {
   if (request.method === 'GET' || request.method === 'DELETE') return undefined;
 
   const chunks: Buffer[] = [];
+  let byteLength = 0;
   for await (const chunk of request) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    byteLength += buffer.byteLength;
+    if (byteLength > maxRequestBodyBytes) {
+      return REQUEST_BODY_TOO_LARGE;
+    }
+    chunks.push(buffer);
   }
 
   const text = Buffer.concat(chunks).toString('utf8');

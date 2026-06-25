@@ -110,6 +110,39 @@ describe('central encrypted Node backend runtime', () => {
     await rm(directory, { recursive: true, force: true });
   });
 
+  it('weigert oversized centrale API request bodies met 413 zonder persistence write', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, { maxRequestBodyBytes: 32 });
+
+    const response = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ userId: 'user-peter', padding: 'x'.repeat(80) }),
+    });
+
+    expect(response.status).toBe(413);
+    expect(await response.json()).toEqual({ error: 'request-body-too-large' });
+    await expect(readFile(persistenceFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
+  it('accepteert centrale API request bodies onder de ingestelde limiet', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, { maxRequestBodyBytes: 1024 });
+
+    const response = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+
+    expect(response.status).toBe(201);
+    expect(await response.json()).toMatchObject({ userId: 'user-peter' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
   it('handelt CORS preflight en browser-origin responses af voor toegestane origins', async () => {
     const { directory, persistenceFile } = await createTempPersistence();
     const server = await startRuntime(persistenceFile, {
@@ -217,7 +250,7 @@ async function createTempPersistence(): Promise<{ directory: string; persistence
 
 async function startRuntime(
   persistenceFile: string,
-  options: { allowedOrigins?: readonly string[] } = {},
+  options: { allowedOrigins?: readonly string[]; maxRequestBodyBytes?: number } = {},
 ): Promise<{
   baseUrl: string;
   close: () => Promise<void>;
@@ -226,6 +259,7 @@ async function startRuntime(
     persistenceFile,
     sessionTtlMs: 60_000,
     allowedOrigins: options.allowedOrigins,
+    maxRequestBodyBytes: options.maxRequestBodyBytes,
   });
   await listen(server);
   const address = server.address();
