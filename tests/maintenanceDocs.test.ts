@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import prTemplate from '../.github/PULL_REQUEST_TEMPLATE.md?raw';
 import architecture from '../ARCHITECTURE.md?raw';
@@ -94,6 +95,7 @@ const BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS = [
   { label: 'maintenance tests label usage', term: 'onderhoudstests gebruiken die labels' },
   { label: 'recovery fixes boundary', term: 'recoveryfixes' },
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHint>;
+const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
@@ -383,6 +385,8 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(claudeDesignPrompt).not.toContain('Houd alle data- en interactiestromen local-first');
     expect(claudeDesignPrompt).not.toContain('Maak local-first zichtbaar');
+    expect(styles).toContain('central-encrypted aware');
+    expect(styles).not.toContain('Editorial, warm, local-first');
   });
 
   it('documenteert de gesanitized backlog-health JSON-shape voor automation', () => {
