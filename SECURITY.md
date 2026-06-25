@@ -61,6 +61,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Persistence adapter:** mag snapshots of database rijen bewaren met owner/index
   metadata en encrypted envelopes, maar nooit plaintext medische/fertiliteitsinhoud,
   passphrases of afgeleide raw keys.
+- **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
+  dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
+  deployment hardening horen bij de productiehost.
 - **Afhankelijkheden:** minimaliseer npm-dependencies; houd ze actueel; CI kan een
   audit-stap draaien.
 
@@ -86,6 +89,8 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 - [x] Opaque centrale API-sessietokens met expiry/revoke en server-side tokenresolutie.
 - [x] HTTP-style centraal API-contract met veilige statuscodes en clientdriver voor
   encrypted storage access.
+- [x] Node HTTP backend boundary met file-backed encrypted persistence en
+  integratietests via echte HTTP/fetch calls.
 - [x] Centrale persistence snapshots zonder plaintext medische payloads, met
   restarttests voor retrieval, user-isolatie en verkeerde sleutel.
 - [x] Legacy lokale opslag blijft versleuteld; nieuwe opslagrichting is centrale

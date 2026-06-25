@@ -142,6 +142,9 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
 - **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
   owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
   zonder client key.
+- **Node backend boundary:** `createCentralNodeHttpServer` wiret de centrale API,
+  sessies en file-backed persistence over `node:http`; zie
+  [`docs/CENTRAL_ENCRYPTED_BACKEND.md`](docs/CENTRAL_ENCRYPTED_BACKEND.md).
 - **CSP:** `index.html` bevat een local-first Content Security Policy die scripts en
   netwerkverbindingen standaard tot de eigen origin beperkt.
 - **Legacy/back-up:** lokale IndexedDB-vault en versleutelde export/import blijven

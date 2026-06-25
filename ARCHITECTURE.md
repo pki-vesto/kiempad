@@ -91,6 +91,10 @@ en blijft ook centraal **versleuteld at rest**.
   statuscodes voor bad request, unauthorized en forbidden. `CentralHttpApiClientDriver`
   gebruikt hetzelfde `EncryptedStorageDriver`-contract, zodat de app later naar
   echte `fetch`-calls kan zonder domeinstores te herschrijven.
+- **Node backend runtime:** `createCentralNodeHttpServer` koppelt het HTTP-contract
+  aan `node:http`, `MemoryCentralSessionStore` en file-backed
+  `JsonFileCentralDatabasePersistence`. `CentralFetchApiClientDriver` gebruikt echte
+  HTTP/fetch calls en blijft compatibel met de bestaande encrypted repositories.
 - **Versleuteling:** **AES-256-GCM** per record. De client versleutelt payloads voor
   persistente opslag; de centrale laag ziet alleen encrypted envelopes plus minimale
   indexmetadata.
@@ -140,6 +144,9 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
   request/response-contract. Die backend bewaart geen plaintext medische payloads en
   moet opaque sessies, owner-scoping, duurzame encrypted persistence en veilige
   foutafhandeling afdwingen.
+- **Backend runtime:** de eerste Node-runtime gebruikt `node:http` en een JSON-file
+  persistence adapter als concrete servergrens. Productie kan die file adapter later
+  vervangen door SQLite/Postgres zonder domeinstores te wijzigen.
 
 ## 7. Kostenraming
 
