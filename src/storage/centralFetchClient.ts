@@ -22,12 +22,16 @@ export type CentralFetchSessionRefresher = () => Promise<{
 }>;
 
 export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
+  private readonly normalizedBaseUrl: string;
+
   constructor(
-    private readonly baseUrl: string,
+    baseUrl: string,
     private token: CentralSessionToken,
     private readonly fetcher: FetchLike = defaultFetch,
     private readonly refreshSession?: CentralFetchSessionRefresher,
-  ) {}
+  ) {
+    this.normalizedBaseUrl = normalizeCentralFetchBaseUrl(baseUrl);
+  }
 
   async getMeta<T>(key: string): Promise<T | undefined> {
     const body = await this.request<{ value?: T }>(`/meta/${encodeURIComponent(key)}`);
@@ -78,7 +82,7 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
     path: string,
     options: RequestInit & { allowNotFound?: boolean },
   ): Promise<Response> {
-    const response = await this.fetcher(`${this.baseUrl}${path}`, {
+    const response = await this.fetcher(`${this.normalizedBaseUrl}${path}`, {
       ...options,
       method: options.method ?? 'GET',
       credentials: 'omit',
@@ -122,7 +126,7 @@ export async function issueCentralFetchSession(
   input: { userId: string },
   fetcher: FetchLike = defaultFetch,
 ): Promise<CentralFetchSessionTicket> {
-  const response = await fetcher(`${baseUrl}/sessions`, {
+  const response = await fetcher(`${normalizeCentralFetchBaseUrl(baseUrl)}/sessions`, {
     method: 'POST',
     credentials: 'omit',
     cache: 'no-store',
@@ -133,6 +137,32 @@ export async function issueCentralFetchSession(
     throw new CentralHttpBadRequestError(await readErrorMessage(response));
   }
   return parseSessionTicket(await parseJsonResponse<unknown>(response), input.userId);
+}
+
+export function normalizeCentralFetchBaseUrl(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) {
+    throw new CentralHttpBadRequestError('Centrale API-URL is ongeldig.');
+  }
+
+  let url: URL;
+  try {
+    url = new URL(trimmed);
+  } catch (_error) {
+    throw new CentralHttpBadRequestError('Centrale API-URL is ongeldig.');
+  }
+
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+    throw new CentralHttpBadRequestError('Centrale API-URL moet http of https gebruiken.');
+  }
+  if (url.username || url.password) {
+    throw new CentralHttpBadRequestError('Centrale API-URL mag geen credentials bevatten.');
+  }
+  if (url.search || url.hash) {
+    throw new CentralHttpBadRequestError('Centrale API-URL mag geen query of fragment bevatten.');
+  }
+
+  return url.toString().replace(/\/+$/, '');
 }
 
 const defaultFetch: FetchLike = (input, init) => globalThis.fetch(input, init);

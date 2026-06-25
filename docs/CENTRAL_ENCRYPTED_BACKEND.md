@@ -68,8 +68,10 @@ bevatten, anders faalt de runtime gesloten. De passphrase blijft de sleutel voor
 encrypted payloads.
 `VITE_KIEMPAD_CENTRAL_API_URL` moet een absolute `http`/`https` URL zijn zonder
 embedded credentials, query of fragment; een ongeldige geconfigureerde centrale URL
-faalt gesloten en opent geen legacy lokale kluis. Als de PWA en API op verschillende
-origins draaien, moet de PWA-origin ook in `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan.
+faalt gesloten en opent geen legacy lokale kluis. De centrale fetch-client past
+dezelfde validatie ook toe op directe low-level callers en normaliseert toegestane
+padprefixes zonder trailing slash. Als de PWA en API op verschillende origins
+draaien, moet de PWA-origin ook in `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan.
 Die allowlist accepteert alleen exacte `http`/`https` origins zonder wildcard,
 credentials, pad, query of fragment; ongeldige origins laten de runtime fail-fast
 starten. Als `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` ontbreekt, gebruikt de CLI lokale
@@ -136,6 +138,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   bestaande `401` auth-fout.
 - Browserclients sturen centrale API-requests zonder ambient credentials en zonder
   browsercache (`credentials: omit`, `cache: no-store`).
+- Browserclients gebruiken alleen gevalideerde absolute `http`/`https` centrale
+  base URLs zonder credentials, query of fragment; toegestane padprefixes worden
+  genormaliseerd voordat requests worden opgebouwd.
 - Browserclients valideren `POST /sessions` tickets vóór gebruik; malformed tickets,
   user-scope mismatches of niet-canonieke/ongeldige timestamps worden centrale
   API-contractfouten.

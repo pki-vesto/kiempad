@@ -3,6 +3,7 @@ import { CentralSessionError } from '../src/storage/centralDatabase';
 import {
   CentralFetchApiClientDriver,
   issueCentralFetchSession,
+  normalizeCentralFetchBaseUrl,
 } from '../src/storage/centralFetchClient';
 import { CentralHttpBadRequestError } from '../src/storage/centralHttpApi';
 
@@ -75,6 +76,49 @@ describe('central fetch client', () => {
     await expect(
       issueCentralFetchSession('https://central.test', { userId: 'kiempad-private-user' }, fetcher),
     ).resolves.toMatchObject({ token: 'central-token' });
+  });
+
+  it('normaliseert centrale fetch base URLs met padprefix zonder trailing slash', async () => {
+    expect(normalizeCentralFetchBaseUrl(' https://central.test/api/// ')).toBe(
+      'https://central.test/api',
+    );
+
+    const fetcher = vi.fn(async (input: string): Promise<Response> => {
+      expect(input).toBe('https://central.test/api/meta/crypto');
+      return new Response(JSON.stringify({ value: { version: 1 } }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+
+    const driver = new CentralFetchApiClientDriver(
+      ' https://central.test/api/// ',
+      'central-token',
+      fetcher,
+    );
+
+    await expect(driver.getMeta('crypto')).resolves.toEqual({ version: 1 });
+  });
+
+  it('weigert ongeldige centrale fetch base URLs aan de directe clientgrens', async () => {
+    const invalidUrls = [
+      '',
+      '/relative-api',
+      'not-a-url',
+      'ftp://central.test',
+      'https://user:secret@example.test',
+      'https://central.test?token=secret',
+      'https://central.test/#fragment',
+    ];
+
+    for (const baseUrl of invalidUrls) {
+      expect(() => new CentralFetchApiClientDriver(baseUrl, 'central-token')).toThrow(
+        /Centrale API-URL/,
+      );
+      await expect(
+        issueCentralFetchSession(baseUrl, { userId: 'kiempad-private-user' }, failUnexpectedFetch),
+      ).rejects.toThrow(/Centrale API-URL/);
+    }
   });
 
   it('weigert succesvolle centrale fetch responses zonder JSON content-type', async () => {
@@ -275,3 +319,7 @@ describe('central fetch client', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 });
+
+async function failUnexpectedFetch(): Promise<Response> {
+  throw new Error('Fetch should not be called when base URL validation fails.');
+}
