@@ -8,6 +8,7 @@ import { JsonFileCentralDatabasePersistence } from './centralFilePersistence';
 export type CentralNodeRuntimeOptions = {
   persistenceFile: string;
   sessionTtlMs?: number;
+  allowedUserIds?: readonly string[];
 };
 
 export async function createCentralNodeHttpServer(
@@ -24,7 +25,10 @@ export async function createCentralNodeHttpApi(
 ): Promise<CentralEncryptedHttpApi> {
   const persistence = new JsonFileCentralDatabasePersistence(options.persistenceFile);
   const database = await PersistedCentralEncryptedDatabase.open(persistence);
-  const sessions = new MemoryCentralSessionStore({ ttlMs: options.sessionTtlMs });
+  const sessions = new MemoryCentralSessionStore({
+    ttlMs: options.sessionTtlMs,
+    allowedUserIds: options.allowedUserIds,
+  });
   return new CentralEncryptedHttpApi(new CentralEncryptedApiServer(database, sessions));
 }
 

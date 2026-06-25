@@ -40,7 +40,9 @@ VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 ```
 
 `VITE_KIEMPAD_CENTRAL_USER_ID` is geen secret; het is de private owner-scope voor
-deze één-stel-app. De passphrase blijft de sleutel voor de encrypted payloads.
+deze één-stel-app. De backend moet dezelfde id toestaan via
+`KIEMPAD_CENTRAL_ALLOWED_USER_IDS`; die server-side allowlist is de autoriteit. De
+passphrase blijft de sleutel voor de encrypted payloads.
 
 Standaardwaarden:
 
@@ -48,6 +50,7 @@ Standaardwaarden:
 - `KIEMPAD_CENTRAL_PORT=8099`
 - `KIEMPAD_CENTRAL_PERSISTENCE_FILE=data/central/kiempad-central-db.json`
 - `KIEMPAD_CENTRAL_SESSION_TTL_MS=3600000`
+- `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user`
 
 Gebruik `KIEMPAD_CENTRAL_PORT=0` alleen voor tests; Node kiest dan een vrije poort
 en de CLI logt de effectieve URL.

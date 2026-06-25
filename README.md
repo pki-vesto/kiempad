@@ -147,6 +147,11 @@ Als `VITE_KIEMPAD_CENTRAL_API_URL` ontbreekt, start de app bewust in de legacy
 lokale IndexedDB-kluis. Als de centrale URL wel gezet is maar sessie-uitgifte faalt,
 valt de app niet stilletjes terug naar lokaal.
 
+De backend staat standaard alleen `kiempad-private-user` toe voor sessie-uitgifte.
+Gebruik `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user` om die server-side
+owner-policy expliciet te zetten; de `VITE_...USER_ID` in de frontend is geen
+autoriteit.
+
 Voor een containerwrapper:
 
 ```bash
@@ -163,8 +168,9 @@ Details en beveiligingsnotities staan in
 - **Centrale encrypted opslag/API:** minimale server-side indexmetadata plus
   **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
   een passphrase). API-toegang loopt via opaque sessietokens; de server resolveert
-  tokens naar user-scoped sessies. Het HTTP-style contract heeft `/sessions`,
-  `/meta/*` en `/records/*` endpoints met veilige foutmapping.
+  tokens naar user-scoped sessies en geeft alleen sessies uit voor server-side
+  toegestane users. Het HTTP-style contract heeft `/sessions`, `/meta/*` en
+  `/records/*` endpoints met veilige foutmapping.
 - **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
   owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
   zonder client key.

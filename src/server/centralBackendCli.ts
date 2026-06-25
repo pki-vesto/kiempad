@@ -18,6 +18,7 @@ const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 8099;
 const DEFAULT_SESSION_TTL_MS = 60 * 60 * 1000;
 const DEFAULT_PERSISTENCE_FILE = 'data/central/kiempad-central-db.json';
+const DEFAULT_ALLOWED_USER_ID = 'kiempad-private-user';
 
 export async function startCentralBackendFromEnv(
   env: NodeJS.ProcessEnv = process.env,
@@ -32,9 +33,14 @@ export async function startCentralBackendFromEnv(
   const persistenceFile = resolve(
     env.KIEMPAD_CENTRAL_PERSISTENCE_FILE?.trim() || DEFAULT_PERSISTENCE_FILE,
   );
+  const allowedUserIds = parseAllowedUserIds(env.KIEMPAD_CENTRAL_ALLOWED_USER_IDS);
 
   await mkdir(dirname(persistenceFile), { recursive: true });
-  const server = await createCentralNodeHttpServer({ persistenceFile, sessionTtlMs });
+  const server = await createCentralNodeHttpServer({
+    persistenceFile,
+    sessionTtlMs,
+    allowedUserIds,
+  });
   const actualPort = await listen(server, host, port);
   const url = `http://${host}:${actualPort}`;
 
@@ -51,6 +57,14 @@ export async function startCentralBackendFromEnv(
       closed = true;
     },
   };
+}
+
+function parseAllowedUserIds(value: string | undefined): string[] {
+  const parsed = value
+    ?.split(',')
+    .map((userId) => userId.trim())
+    .filter(Boolean);
+  return parsed && parsed.length > 0 ? parsed : [DEFAULT_ALLOWED_USER_ID];
 }
 
 function parsePort(value: string | undefined, fallback: number): number {

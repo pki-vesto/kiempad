@@ -75,6 +75,20 @@ describe('central encrypted API service', () => {
     expect(sessionStore.unsafeSessionCountForTest()).toBe(0);
   });
 
+  it('weigert sessie-uitgifte voor users buiten de server-side allowlist', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const sessionStore = new MemoryCentralSessionStore({ allowedUserIds: ['user-peter'] });
+    const server = new CentralEncryptedApiServer(database, sessionStore);
+
+    await expect(server.issueSession({ userId: 'user-peter' })).resolves.toMatchObject({
+      userId: 'user-peter',
+    });
+    await expect(server.issueSession({ userId: 'user-partner' })).rejects.toBeInstanceOf(
+      CentralSessionError,
+    );
+    expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
+  });
+
   it('houdt API-recordtoegang user-scoped, ook wanneer een andere gebruiker een geldig token heeft', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const server = new CentralEncryptedApiServer(database, new MemoryCentralSessionStore());

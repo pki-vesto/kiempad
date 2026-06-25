@@ -36,6 +36,7 @@ describe('central backend CLI runtime', () => {
       KIEMPAD_CENTRAL_PORT: '0',
       KIEMPAD_CENTRAL_PERSISTENCE_FILE: persistenceFile,
       KIEMPAD_CENTRAL_SESSION_TTL_MS: '60000',
+      KIEMPAD_CENTRAL_ALLOWED_USER_IDS: 'cli-user',
     });
     cleanupCallbacks.push(runtime.close);
 
@@ -67,5 +68,23 @@ describe('central backend CLI runtime', () => {
         KIEMPAD_CENTRAL_PORT: 'not-a-port',
       }),
     ).rejects.toThrow('KIEMPAD_CENTRAL_PORT');
+  });
+
+  it('staat standaard alleen de private Kiempad-user toe voor sessie-uitgifte', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'kiempad-central-cli-policy-'));
+    cleanupCallbacks.push(() => rm(directory, { recursive: true, force: true }));
+    const runtime = await startCentralBackendFromEnv({
+      KIEMPAD_CENTRAL_HOST: '127.0.0.1',
+      KIEMPAD_CENTRAL_PORT: '0',
+      KIEMPAD_CENTRAL_PERSISTENCE_FILE: join(directory, 'central-db.json'),
+    });
+    cleanupCallbacks.push(runtime.close);
+
+    await expect(
+      issueCentralFetchSession(runtime.url, { userId: 'kiempad-private-user' }),
+    ).resolves.toMatchObject({ userId: 'kiempad-private-user' });
+    await expect(issueCentralFetchSession(runtime.url, { userId: 'andere-user' })).rejects.toThrow(
+      'unauthorized',
+    );
   });
 });

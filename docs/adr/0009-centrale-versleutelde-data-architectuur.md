@@ -31,7 +31,8 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - Toegang loopt via een expliciete **centrale sessie** (`userId`, `sessionId`,
   geldigheid). API-clients gebruiken opaque sessietokens; de server resolveert die
   tokens naar een sessie en weigert forged, verlopen of ingetrokken tokens voordat
-  databasecalls plaatsvinden.
+  databasecalls plaatsvinden. Sessie-uitgifte is beperkt tot server-side toegestane
+  user ids; de frontend-user-id is geen autoriteit.
 - De bestaande encryptielaag (`AES-256-GCM` envelopes) en repositoryvorm blijven
   herbruikbaar via `CentralUserStorageDriver`.
 - Sleutelmetadata hoort bij de centrale gebruiker, niet bij een afzonderlijk

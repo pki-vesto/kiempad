@@ -82,10 +82,11 @@ en blijft ook centraal **versleuteld at rest**.
   domeinstores te wijzigen.
 - **API/storage-abstraction:** `CentralEncryptedApiServer` vormt de centrale
   servicegrens. `MemoryCentralSessionStore` geeft opaque sessietokens uit en
-  resolveert die server-side naar een `CentralAuthSession`; forged, verlopen of
-  ingetrokken tokens worden geweigerd voordat data wordt gelezen. De client gebruikt
-  `CentralEncryptedApiClientDriver`, dat het bestaande encrypted-storage contract
-  exposeert zonder ownervelden aan appcode te geven.
+  resolveert die server-side naar een `CentralAuthSession`; forged, verlopen,
+  ingetrokken tokens en users buiten de server-side allowlist worden geweigerd
+  voordat data wordt gelezen. De client gebruikt `CentralEncryptedApiClientDriver`,
+  dat het bestaande encrypted-storage contract exposeert zonder ownervelden aan
+  appcode te geven.
 - **HTTP/API-contract:** `CentralEncryptedHttpApi` definieert de request/response-laag
   boven de servicegrens: `/sessions`, `/meta/*` en `/records/*` met veilige
   statuscodes voor bad request, unauthorized en forbidden. `CentralHttpApiClientDriver`
@@ -95,6 +96,8 @@ en blijft ook centraal **versleuteld at rest**.
   aan `node:http`, `MemoryCentralSessionStore` en file-backed
   `JsonFileCentralDatabasePersistence`. `CentralFetchApiClientDriver` gebruikt echte
   HTTP/fetch calls en blijft compatibel met de bestaande encrypted repositories.
+  De backend-CLI configureert standaard `kiempad-private-user` als enige toegestane
+  sessie-owner; `KIEMPAD_CENTRAL_ALLOWED_USER_IDS` kan dit server-side uitbreiden.
 - **Client bootstrap:** `openClientStorage` kiest bij
   `VITE_KIEMPAD_CENTRAL_API_URL` de centrale fetch-driver en vraagt een opaque
   sessietoken aan. Ontbreekt die URL, dan opent de app expliciet de legacy

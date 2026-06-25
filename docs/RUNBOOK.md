@@ -28,6 +28,10 @@ VITE_KIEMPAD_CENTRAL_API_URL=http://127.0.0.1:8099
 VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 ```
 
+De backend staat standaard alleen `kiempad-private-user` toe. Zet
+`KIEMPAD_CENTRAL_ALLOWED_USER_IDS` op de backendhost als de server-side owner-scope
+bewust anders moet zijn. De frontend user-id alleen geeft geen toegang.
+
 Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
 
 ## Health checks
