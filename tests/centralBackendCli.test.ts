@@ -128,4 +128,29 @@ describe('central backend CLI runtime', () => {
     expect(response.status).toBe(204);
     expect(response.headers.get('access-control-allow-origin')).toBe('http://localhost:5173');
   });
+
+  it('behandelt expliciet lege CORS origins als geen toegestane browser-origins', async () => {
+    const directory = await mkdtemp(join(tmpdir(), 'kiempad-central-cli-cors-empty-'));
+    cleanupCallbacks.push(() => rm(directory, { recursive: true, force: true }));
+    const runtime = await startCentralBackendFromEnv({
+      KIEMPAD_CENTRAL_HOST: '127.0.0.1',
+      KIEMPAD_CENTRAL_PORT: '0',
+      KIEMPAD_CENTRAL_PERSISTENCE_FILE: join(directory, 'central-db.json'),
+      KIEMPAD_CENTRAL_ALLOWED_ORIGINS: ' , ',
+    });
+    cleanupCallbacks.push(runtime.close);
+
+    const response = await fetch(`${runtime.url}/sessions`, {
+      method: 'OPTIONS',
+      headers: {
+        origin: 'http://localhost:5173',
+        'access-control-request-method': 'POST',
+        'access-control-request-headers': 'content-type',
+      },
+    });
+
+    expect(response.status).toBe(403);
+    expect(response.headers.get('access-control-allow-origin')).toBeNull();
+    expect(await response.json()).toEqual({ error: 'cors-origin-not-allowed' });
+  });
 });

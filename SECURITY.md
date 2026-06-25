@@ -109,6 +109,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   proxy voor de API te eindigen. Browser-CORS wordt met een gevalideerde exacte
   `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` allowlist afgehandeld; gebruik geen wildcard
   voor deze API, en configureer geen credentials, pad, query of fragment als origin.
+  Een ontbrekende allowlist gebruikt lokale development-defaults; een expliciet lege
+  allowlist staat geen browser-origin toe.
   Origins buiten de allowlist worden server-side `403` vóór body parsing en
   API-side effects. Non-empty request bodies zonder JSON mediatype worden
   `415` vóór JSON parsing en API-side effects. Centrale API-responses krijgen

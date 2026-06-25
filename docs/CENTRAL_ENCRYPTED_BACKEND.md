@@ -72,7 +72,10 @@ faalt gesloten en opent geen legacy lokale kluis. Als de PWA en API op verschill
 origins draaien, moet de PWA-origin ook in `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan.
 Die allowlist accepteert alleen exacte `http`/`https` origins zonder wildcard,
 credentials, pad, query of fragment; ongeldige origins laten de runtime fail-fast
-starten. De centrale fetch-client vernieuwt een verlopen bearer token maximaal één
+starten. Als `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` ontbreekt, gebruikt de CLI lokale
+development-defaults; als de variabele expliciet leeg of whitespace-only is, start
+de backend met geen toegestane browser-origins. De centrale fetch-client vernieuwt
+een verlopen bearer token maximaal één
 keer via `POST /sessions` voor dezelfde configured user-scope; als dat faalt blijft
 het een centrale opslagfout en is er geen stille legacy fallback. De sessie-TTL komt
 alleen uit serverconfiguratie
