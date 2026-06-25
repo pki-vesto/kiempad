@@ -1,12 +1,16 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 
 import { CentralEncryptedApiServer, MemoryCentralSessionStore } from '../storage/centralApi';
-import { PersistedCentralEncryptedDatabase } from '../storage/centralDatabase';
+import {
+  type CentralDatabasePersistence,
+  PersistedCentralEncryptedDatabase,
+} from '../storage/centralDatabase';
 import { CentralEncryptedHttpApi, type CentralHttpMethod } from '../storage/centralHttpApi';
 import { JsonFileCentralDatabasePersistence } from './centralFilePersistence';
 
 export type CentralNodeRuntimeOptions = {
-  persistenceFile: string;
+  persistenceFile?: string;
+  persistence?: CentralDatabasePersistence;
   sessionTtlMs?: number;
   allowedUserIds?: readonly string[];
   allowedOrigins?: readonly string[];
@@ -47,13 +51,21 @@ function normalizeMaxRequestBodyBytes(value: number | undefined): number {
 export async function createCentralNodeHttpApi(
   options: CentralNodeRuntimeOptions,
 ): Promise<CentralEncryptedHttpApi> {
-  const persistence = new JsonFileCentralDatabasePersistence(options.persistenceFile);
+  const persistence =
+    options.persistence ?? new JsonFileCentralDatabasePersistence(requirePersistenceFile(options));
   const database = await PersistedCentralEncryptedDatabase.open(persistence);
   const sessions = new MemoryCentralSessionStore({
     ttlMs: options.sessionTtlMs,
     allowedUserIds: options.allowedUserIds,
   });
   return new CentralEncryptedHttpApi(new CentralEncryptedApiServer(database, sessions));
+}
+
+function requirePersistenceFile(options: CentralNodeRuntimeOptions): string {
+  if (!options.persistenceFile) {
+    throw new Error('Central node runtime vereist persistenceFile of persistence adapter.');
+  }
+  return options.persistenceFile;
 }
 
 export async function handleCentralNodeRequest(

@@ -117,6 +117,11 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   verwijderd. Nieuw aangemaakte persistence-directories krijgen private `0700`
   permissies; tijdelijke en finale snapshotbestanden worden met private `0600`
   permissies geschreven.
+- **Row-store persistence:** `KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store` bewaart
+  metadata en encrypted records als aparte manifest-gepinde rijen. Dezelfde
+  snapshotvalidatie geldt vóór load/save; directories zijn `0700` en manifest/row
+  files zijn `0600`. De row-store bevat geen plaintext medische/fertiliteitsinhoud,
+  passphrases of raw keys.
 - **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
   deployment hardening horen bij de productiehost. Request bodies worden begrensd
@@ -165,6 +170,8 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
   encrypted storage access.
 - [x] Node HTTP backend boundary met file-backed encrypted persistence en
   integratietests via echte HTTP/fetch calls.
+- [x] Opt-in row-store centrale persistence met manifest-commits en dezelfde
+  encrypted snapshotvalidatie.
 - [x] Startbaar centraal backendcommando en containerwrapper met host-local poort en
   persistent datavolume.
 - [x] Centrale Node API-responses met no-store/security headers.

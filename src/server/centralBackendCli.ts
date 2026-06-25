@@ -4,21 +4,27 @@ import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { createCentralNodeHttpServer } from './centralNodeRuntime';
+import { JsonTableCentralDatabasePersistence } from './centralTablePersistence';
 
 export type CentralBackendRuntime = {
   server: Server;
   host: string;
   port: number;
   url: string;
+  persistenceMode: CentralPersistenceMode;
+  persistencePath: string;
   persistenceFile: string;
   close: () => Promise<void>;
 };
+
+type CentralPersistenceMode = 'snapshot-file' | 'row-store';
 
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 8099;
 const DEFAULT_SESSION_TTL_MS = 60 * 60 * 1000;
 const DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
 const DEFAULT_PERSISTENCE_FILE = 'data/central/kiempad-central-db.json';
+const DEFAULT_PERSISTENCE_DIR = 'data/central/kiempad-central-rows';
 const DEFAULT_ALLOWED_USER_ID = 'kiempad-private-user';
 const DEFAULT_ALLOWED_ORIGINS = [
   'http://localhost:5173',
@@ -47,12 +53,25 @@ export async function startCentralBackendFromEnv(
   const persistenceFile = resolve(
     env.KIEMPAD_CENTRAL_PERSISTENCE_FILE?.trim() || DEFAULT_PERSISTENCE_FILE,
   );
+  const persistenceMode = parsePersistenceMode(env.KIEMPAD_CENTRAL_PERSISTENCE_MODE);
+  const persistenceDirectory = resolve(
+    env.KIEMPAD_CENTRAL_PERSISTENCE_DIR?.trim() || DEFAULT_PERSISTENCE_DIR,
+  );
   const allowedUserIds = parseAllowedUserIds(env.KIEMPAD_CENTRAL_ALLOWED_USER_IDS);
   const allowedOrigins = parseAllowedOrigins(env.KIEMPAD_CENTRAL_ALLOWED_ORIGINS);
 
-  await mkdir(dirname(persistenceFile), { recursive: true, mode: 0o700 });
+  const persistence =
+    persistenceMode === 'row-store'
+      ? new JsonTableCentralDatabasePersistence(persistenceDirectory)
+      : undefined;
+  const persistencePath = persistenceMode === 'row-store' ? persistenceDirectory : persistenceFile;
+  await mkdir(persistenceMode === 'row-store' ? persistenceDirectory : dirname(persistenceFile), {
+    recursive: true,
+    mode: 0o700,
+  });
   const server = await createCentralNodeHttpServer({
-    persistenceFile,
+    persistenceFile: persistenceMode === 'snapshot-file' ? persistenceFile : undefined,
+    persistence,
     sessionTtlMs,
     allowedUserIds,
     allowedOrigins,
@@ -67,6 +86,8 @@ export async function startCentralBackendFromEnv(
     host,
     port: actualPort,
     url,
+    persistenceMode,
+    persistencePath,
     persistenceFile,
     close: async () => {
       if (closed) return;
@@ -74,6 +95,12 @@ export async function startCentralBackendFromEnv(
       closed = true;
     },
   };
+}
+
+function parsePersistenceMode(value: string | undefined): CentralPersistenceMode {
+  if (!value?.trim()) return 'snapshot-file';
+  if (value === 'snapshot-file' || value === 'row-store') return value;
+  throw new Error('KIEMPAD_CENTRAL_PERSISTENCE_MODE moet snapshot-file of row-store zijn.');
 }
 
 function parseAllowedUserIds(value: string | undefined): string[] {
@@ -144,7 +171,8 @@ async function runCli(): Promise<void> {
   const runtime = await startCentralBackendFromEnv();
 
   console.log(`Kiempad central backend listening on ${runtime.url}`);
-  console.log(`Kiempad central backend persistence file: ${runtime.persistenceFile}`);
+  console.log(`Kiempad central backend persistence mode: ${runtime.persistenceMode}`);
+  console.log(`Kiempad central backend persistence path: ${runtime.persistencePath}`);
 
   const shutdown = (signal: NodeJS.Signals) => {
     void runtime

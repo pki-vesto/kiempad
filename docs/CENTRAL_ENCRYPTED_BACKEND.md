@@ -49,6 +49,16 @@ owner/indexmetadata en encrypted envelopes.
   replace faalt. Nieuw aangemaakte persistence-directories krijgen private `0700`
   permissies; tijdelijke en finale snapshotbestanden worden met private `0600`
   permissies geschreven.
+- `JsonTableCentralDatabasePersistence` is een opt-in row-store adapter achter
+  hetzelfde `CentralDatabasePersistence` contract. Deze adapter bewaart technische
+  metadata en encrypted records als aparte JSONL-rijbestanden en commit een
+  consistente snapshot via `manifest.json`. De backend laadt alleen de row files
+  waarnaar het manifest wijst en valideert daarna dezelfde centrale snapshotgrens:
+  ownermetadata, bekende recordtypes, canonieke timestamps, toegestane technische
+  metakeys, unieke owner-scoped record-/metakeys en complete `AES-256-GCM`
+  envelopes. Oude row files worden na een succesvolle commit best-effort opgeruimd.
+  Nieuw aangemaakte row-store directories krijgen private `0700` permissies;
+  manifest en row files worden met private `0600` permissies geschreven.
 - `createCentralNodeHttpServer` in `src/server/centralNodeRuntime.ts` wiret de
   persistence, session store, database, API-server en `node:http` samen.
 - `src/server/centralBackendCli.ts` is het startbare Node-entrypoint voor lokale
@@ -60,6 +70,14 @@ Start de centrale backend op localhost:
 
 ```bash
 KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
+```
+
+Voor database-achtige row-store persistence zonder extra runtime dependency:
+
+```bash
+KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store \
+KIEMPAD_CENTRAL_PERSISTENCE_DIR=/var/lib/kiempad/central-rows \
+npm run backend:central
 ```
 
 Koppel de PWA in `.env` aan deze backend:
@@ -106,7 +124,9 @@ Standaardwaarden:
 
 - `KIEMPAD_CENTRAL_HOST=127.0.0.1`
 - `KIEMPAD_CENTRAL_PORT=8099`
+- `KIEMPAD_CENTRAL_PERSISTENCE_MODE=snapshot-file`
 - `KIEMPAD_CENTRAL_PERSISTENCE_FILE=data/central/kiempad-central-db.json`
+- `KIEMPAD_CENTRAL_PERSISTENCE_DIR=data/central/kiempad-central-rows`
 - `KIEMPAD_CENTRAL_SESSION_TTL_MS=3600000`
 - `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES=26214400`
 - `KIEMPAD_CENTRAL_ALLOWED_USER_IDS=kiempad-private-user`
@@ -193,16 +213,19 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Onverwachte fouten aan de Node HTTP-boundary worden een generieke
   `500 {"error":"central-runtime-error"}` zonder exceptionbericht of stacktrace.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
-- File-backed snapshots met ontbrekende owner/servermetadata, malformed timestamps,
-  ongeldige versies, onbekende recordtypes, onbekende of malformed technische
-  metadata, dubbele owner-scoped record-/metakeys of plaintext/malformed payloads
-  worden geweigerd vóór de database ze opent of naar disk schrijft. File-backed
-  saves gebruiken random, exclusief aangemaakte tijdelijke snapshotbestanden,
-  flushen die vóór atomische replacement en syncen de parent-directory best-effort
-  na succesvolle replacement. Mislukte saves ruimen alleen zelf aangemaakte
-  tijdelijke snapshotbestanden best-effort op voordat de oorspronkelijke fout
-  teruggaat naar de caller. Nieuw aangemaakte persistence-directories houden `0700`
-  permissies; tijdelijke en finale snapshotbestanden houden `0600` file-permissies.
+- File-backed snapshots en row-store manifests met ontbrekende owner/servermetadata,
+  malformed timestamps, ongeldige versies, onbekende recordtypes, onbekende of
+  malformed technische metadata, dubbele owner-scoped record-/metakeys of
+  plaintext/malformed payloads worden geweigerd vóór de database ze opent of naar
+  disk schrijft. File-backed saves gebruiken random, exclusief aangemaakte
+  tijdelijke snapshotbestanden, flushen die vóór atomische replacement en syncen de
+  parent-directory best-effort na succesvolle replacement. Row-store saves schrijven
+  metadata- en recordrijen naar nieuwe exclusief aangemaakte row files en publiceren
+  daarna een nieuw manifest; een restart laadt alleen de manifest-gepinde
+  rijbestanden. Mislukte saves ruimen alleen zelf aangemaakte tijdelijke bestanden
+  best-effort op voordat de oorspronkelijke fout teruggaat naar de caller. Nieuw
+  aangemaakte persistence- en row-store directories houden `0700` permissies;
+  snapshot-, manifest- en row files houden `0600` file-permissies.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.
@@ -212,8 +235,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 
 ## Current Limitation
 
-De runtime is nu een geteste Node-boundary met startcommando en containerwrapper.
-Productie moet hier nog TLS-terminatie, host hardening, monitoring, backupbeleid en
-eventueel een sterkere databaseadapter omheen zetten. De contracten zijn bewust zo
-gehouden dat een latere SQLite/Postgres-adapter dezelfde storage- en API-laag kan
-blijven gebruiken.
+De runtime is nu een geteste Node-boundary met startcommando, containerwrapper,
+snapshotfile persistence en opt-in row-store persistence. Productie moet hier nog
+TLS-terminatie, host hardening, monitoring, backupbeleid en eventueel een externe
+SQLite/Postgres-adapter omheen zetten. De contracten zijn bewust zo gehouden dat zo'n
+adapter dezelfde storage- en API-laag kan blijven gebruiken.

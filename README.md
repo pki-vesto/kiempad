@@ -139,6 +139,12 @@ De centrale encrypted API kan lokaal apart gestart worden:
 KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
 ```
 
+Voor row-store persistence:
+
+```bash
+KIEMPAD_CENTRAL_PERSISTENCE_MODE=row-store KIEMPAD_CENTRAL_PERSISTENCE_DIR=/tmp/kiempad-central-rows npm run backend:central
+```
+
 Koppel de PWA aan die API via `.env`:
 
 ```bash
@@ -181,9 +187,9 @@ Het first-device en second-device onboardingpad staat in
   dezelfde centrale user-scope zonder passphrase of secrets in de frontend op te
   slaan; sessie-TTL blijft serverconfiguratie. Het HTTP-style contract heeft
   `/sessions`, `/meta/*` en `/records/*` endpoints met veilige foutmapping.
-- **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
-  owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
-  zonder client key.
+- **Duurzame centrale persistence:** server-side snapshotfile- of row-store adapters
+  bewaren alleen owner/indexmetadata en encrypted envelopes; medische payloads
+  blijven onleesbaar zonder client key.
 - **Node backend boundary:** `createCentralNodeHttpServer` wiret de centrale API,
   sessies en file-backed persistence over `node:http`; oversized JSON requests
   worden begrensd via `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES`; zie
