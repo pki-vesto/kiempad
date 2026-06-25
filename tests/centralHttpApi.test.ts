@@ -173,4 +173,27 @@ describe('central encrypted HTTP API contract', () => {
       new CentralHttpApiClientDriver(api, token).listRecords('not-a-type' as never),
     ).rejects.toBeInstanceOf(CentralHttpBadRequestError);
   });
+
+  it('weigert absolute of protocol-relative API-paden aan de HTTP-contractgrens', async () => {
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(
+        new MemoryCentralEncryptedDatabase(),
+        new MemoryCentralSessionStore(),
+      ),
+    );
+    const token = await issueToken(api, 'user-peter');
+
+    await expect(
+      api.handle({ method: 'GET', path: 'https://evil.example/records/known-id', token }),
+    ).resolves.toEqual({
+      status: 400,
+      body: { error: 'Centraal Kiempad API-pad moet origin-form zijn.' },
+    });
+    await expect(
+      api.handle({ method: 'GET', path: '//evil.example/records/known-id', token }),
+    ).resolves.toMatchObject({ status: 400 });
+    await expect(
+      api.handle({ method: 'GET', path: '/records/known-id', token }),
+    ).resolves.toMatchObject({ status: 404 });
+  });
 });

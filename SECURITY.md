@@ -52,7 +52,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   sessies bij nieuwe sessie-uitgifte en bij tokenresolutie.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
   `401`, record-id's buiten de owner-namespace gedragen zich als ontbrekende records
-  (`404`) en malformed payloads worden `400`.
+  (`404`) en malformed payloads worden `400`. De centrale HTTP-contractlaag
+  accepteert alleen origin-form API-paden, geen absolute of protocol-relative URL's.
 - Eén-stel-app: geen rollenmodel naar buiten. In de **gedeelde modus** zijn er twee
   profielen (`peter`/`partner`) op dezelfde, gezamenlijk versleutelde dataset —
   vertrouwensgrens ligt bij het stel, niet tussen de partners.

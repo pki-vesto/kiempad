@@ -13,6 +13,8 @@ owner/indexmetadata en encrypted envelopes.
   - `GET /meta`
   - `GET|PUT|DELETE /records/:id`
   - `GET /records?type=...`
+  De contractlaag accepteert alleen origin-form paden; absolute of
+  protocol-relative URL's worden als ongeldig API-pad geweigerd.
 - `CentralEncryptedApiServer` resolveert opaque tokens naar actieve sessies.
 - `PersistedCentralEncryptedDatabase` bewaart encrypted database snapshots via een
   `CentralDatabasePersistence` adapter.
