@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import datamodel from '../DATAMODEL.md?raw';
 import typesSource from '../src/domain/types.ts?raw';
+import centralDatabaseSource from '../src/storage/centralDatabase.ts?raw';
+import recordsSource from '../src/storage/records.ts?raw';
 
 const entityInterfaceMap = {
   Traject: 'Traject',
@@ -153,6 +155,52 @@ describe('datamodel en TypeScript-types', () => {
         expect(interfaceBody, `${interfaceName}.${field}`).toContain(field);
       }
     }
+  });
+
+  it('documenteert de centrale encrypted opslagvorm en legacy fallback', () => {
+    const normalizedDatamodel = datamodel.replace(/\s+/g, ' ');
+    const normalizedTypesSource = typesSource.replace(/\s+/g, ' ');
+
+    for (const requiredTerm of [
+      'centrale encrypted opslaglaag',
+      'lokale IndexedDB-kluis is legacy/compatibiliteit',
+      'EncryptedRecord',
+      'CentralEncryptedRecord',
+      'CentralStorageMeta',
+      'CentralDatabaseSnapshot',
+      'ownerUserId',
+      'storedAt',
+      'serverVersion',
+      'encrypted payload',
+      'plaintext datamodel',
+      'plaintext medische/fertiliteitsinhoud, passphrases en raw keys niet',
+    ]) {
+      expect(normalizedDatamodel).toContain(requiredTerm);
+    }
+
+    for (const requiredTerm of [
+      'centrale encrypted dataset',
+      'legacy fallback',
+      'encrypted envelopes',
+      'minimale technische',
+      'metadata, nooit plaintext medische of fertiliteitsinhoud',
+      'nooit plaintext medische of fertiliteitsinhoud',
+    ]) {
+      expect(normalizedTypesSource).toContain(requiredTerm);
+    }
+
+    expect(typesSource).not.toContain('uitsluitend\n * versleuteld lokaal opgeslagen');
+    expect(recordsSource).toContain('export type EncryptedRecord');
+    expect(recordsSource).toContain('payload: EncryptionEnvelope');
+    expect(centralDatabaseSource).toContain(
+      'export type CentralEncryptedRecord = EncryptedRecord &',
+    );
+    expect(centralDatabaseSource).toContain('ownerUserId: string');
+    expect(centralDatabaseSource).toContain('storedAt: string');
+    expect(centralDatabaseSource).toContain('serverVersion: number');
+    expect(centralDatabaseSource).toContain('export type CentralStorageMeta = StorageMeta &');
+    expect(centralDatabaseSource).toContain('assertValidCentralDatabaseSnapshot');
+    expect(centralDatabaseSource).toContain('recordKey(session.userId, record.id)');
   });
 });
 
