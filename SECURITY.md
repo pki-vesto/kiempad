@@ -56,15 +56,18 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   Bij tokenverloop mag de
   centrale fetch-client één nieuw token aanvragen voor dezelfde configured
   user-scope; refresh bewaart geen passphrase of serversecret in de frontend en valt
-  niet terug naar legacy lokale opslag. Een geconfigureerde centrale API-URL moet
+  niet terug naar legacy lokale opslag. Session tickets uit `POST /sessions` worden
+  client-side gevalideerd op niet-lege tokenwaarde, verwachte user-scope en
+  canonieke `issuedAt`/`expiresAt` timestamps voordat de bearer wordt gebruikt. Een
+  geconfigureerde centrale API-URL moet
   een absolute `http`/`https` URL zonder embedded credentials, query of fragment
   zijn; ongeldige configuratie faalt gesloten zonder lokale fallback. De in-memory
   sessiestore verwijdert verlopen sessies bij nieuwe sessie-uitgifte en bij
   tokenresolutie. De centrale fetch-client stuurt geen ambient browsercredentials
   mee en gebruikt geen browsercache
   (`credentials: omit`, `cache: no-store`). Succesvolle fetch-responses zonder JSON
-  mediatype of met malformed JSON worden als centrale API-contractfout behandeld,
-  niet als raw parse-exception.
+  mediatype, met malformed JSON of met een malformed sessieticket worden als
+  centrale API-contractfout behandeld, niet als raw parse-exception.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
   `401`, inclusief sessie-intrekking; record-id's buiten de owner-namespace gedragen
   zich als ontbrekende records (`404`) en malformed payloads worden `400`. De
