@@ -28,12 +28,20 @@ export function createCentralNodeHttpServerFromApi(
   options: Pick<CentralNodeRuntimeOptions, 'allowedOrigins' | 'maxRequestBodyBytes'> = {},
 ): Server {
   const corsPolicy = createCorsPolicy(options.allowedOrigins);
-  const maxRequestBodyBytes = options.maxRequestBodyBytes ?? DEFAULT_MAX_REQUEST_BODY_BYTES;
+  const maxRequestBodyBytes = normalizeMaxRequestBodyBytes(options.maxRequestBodyBytes);
   return createServer((request, response) => {
     void handleCentralNodeRequest(api, request, response, corsPolicy, maxRequestBodyBytes).catch(
       () => sendUnhandledCentralError(response),
     );
   });
+}
+
+function normalizeMaxRequestBodyBytes(value: number | undefined): number {
+  const normalized = value ?? DEFAULT_MAX_REQUEST_BODY_BYTES;
+  if (!Number.isFinite(normalized) || !Number.isInteger(normalized) || normalized <= 0) {
+    throw new Error('KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES moet een positieve integer zijn.');
+  }
+  return normalized;
 }
 
 export async function createCentralNodeHttpApi(

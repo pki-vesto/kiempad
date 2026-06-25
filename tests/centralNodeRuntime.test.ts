@@ -213,6 +213,18 @@ describe('central encrypted Node backend runtime', () => {
     await rm(directory, { recursive: true, force: true });
   });
 
+  it('faalt gesloten bij ongeldige directe request-body limietconfiguratie', () => {
+    const api = {
+      handle: async () => ({ status: 204 }),
+    };
+
+    for (const maxRequestBodyBytes of [0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => createCentralNodeHttpServerFromApi(api, { maxRequestBodyBytes })).toThrow(
+        'KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES moet een positieve integer zijn.',
+      );
+    }
+  });
+
   it('weigert niet-JSON request bodies met 415 vóór sessie-uitgifte of persistence', async () => {
     const { directory, persistenceFile } = await createTempPersistence();
     const server = await startRuntime(persistenceFile);

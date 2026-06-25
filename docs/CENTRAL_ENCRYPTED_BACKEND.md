@@ -201,6 +201,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.
+- `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` en directe
+  `maxRequestBodyBytes` runtime-opties moeten positieve integers zijn; ongeldige
+  waarden falen vóór de listener/API-boundary start.
 
 ## Current Limitation
 
