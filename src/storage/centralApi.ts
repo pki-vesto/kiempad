@@ -40,7 +40,7 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
   private readonly allowedUserIds: Set<string> | undefined;
 
   constructor(options: CentralSessionStoreOptions = {}) {
-    this.ttlMs = options.ttlMs ?? 60 * 60 * 1000;
+    this.ttlMs = normalizeSessionTtlMs(options.ttlMs);
     this.allowedUserIds = normalizeAllowedUserIds(options.allowedUserIds);
   }
 
@@ -98,6 +98,14 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
       }
     }
   }
+}
+
+function normalizeSessionTtlMs(ttlMs: number | undefined): number {
+  const normalized = ttlMs ?? 60 * 60 * 1000;
+  if (!Number.isFinite(normalized) || !Number.isInteger(normalized) || normalized <= 0) {
+    throw new Error('Centrale sessie-TTL vereist een positieve millisecondewaarde.');
+  }
+  return normalized;
 }
 
 function normalizeAllowedUserIds(userIds: readonly string[] | undefined): Set<string> | undefined {

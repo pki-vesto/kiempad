@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   CentralEncryptedApiClientDriver,
@@ -19,6 +19,10 @@ type TestRecord = {
 };
 
 describe('central encrypted API service', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('maakt encrypted records via een opaque API-token beschikbaar op een tweede apparaat', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const server = new CentralEncryptedApiServer(database, new MemoryCentralSessionStore());
@@ -67,9 +71,12 @@ describe('central encrypted API service', () => {
       CentralSessionError,
     );
 
-    const expiredSessionStore = new MemoryCentralSessionStore({ ttlMs: -1 });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-25T09:00:00.000Z'));
+    const expiredSessionStore = new MemoryCentralSessionStore({ ttlMs: 1 });
     const expiredServer = new CentralEncryptedApiServer(database, expiredSessionStore);
     const expiredTicket = await expiredServer.issueSession({ userId: 'user-peter' });
+    vi.setSystemTime(new Date('2026-06-25T09:00:00.002Z'));
     await expect(expiredServer.listRecords(expiredTicket.token)).rejects.toBeInstanceOf(
       CentralSessionError,
     );
@@ -109,6 +116,14 @@ describe('central encrypted API service', () => {
     expect(Date.parse(ticket.expiresAt) - Date.parse(ticket.issuedAt)).toBe(60_000);
   });
 
+  it('faalt gesloten bij ongeldige centrale sessie-TTL-configuratie', () => {
+    for (const ttlMs of [0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY]) {
+      expect(() => new MemoryCentralSessionStore({ ttlMs })).toThrow(
+        'Centrale sessie-TTL vereist een positieve millisecondewaarde.',
+      );
+    }
+  });
+
   it('weigert sessie-uitgifte voor users buiten de server-side allowlist', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const sessionStore = new MemoryCentralSessionStore({ allowedUserIds: ['user-peter'] });
@@ -133,14 +148,18 @@ describe('central encrypted API service', () => {
   });
 
   it('ruimt verlopen centrale sessies op bij nieuwe sessie-uitgifte', async () => {
-    const sessionStore = new MemoryCentralSessionStore({ ttlMs: -1 });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-25T09:00:00.000Z'));
+    const sessionStore = new MemoryCentralSessionStore({ ttlMs: 1 });
     const prunedTicket = await sessionStore.issue({ userId: 'user-peter' });
+    vi.setSystemTime(new Date('2026-06-25T09:00:00.002Z'));
     const expiredTicket = await sessionStore.issue({ userId: 'user-peter' });
 
     expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
     await expect(sessionStore.resolve(prunedTicket.token)).rejects.toBeInstanceOf(
       CentralSessionError,
     );
+    vi.setSystemTime(new Date('2026-06-25T09:00:00.004Z'));
     await expect(sessionStore.resolve(expiredTicket.token)).rejects.toBeInstanceOf(
       CentralSessionError,
     );
