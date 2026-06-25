@@ -2,6 +2,7 @@ import './styles.css';
 import {
   normalizeScreenId,
   renderAppShell,
+  renderStorageBootstrapError,
   renderVaultGate,
   type WebAuthnViewStatus,
 } from './appShell';
@@ -310,7 +311,13 @@ async function mount(): Promise<void> {
   const app = document.getElementById('app');
   if (!app) return;
 
-  const storage = await openClientStorage();
+  let storage: Awaited<ReturnType<typeof openClientStorage>>;
+  try {
+    storage = await openClientStorage();
+  } catch (error: unknown) {
+    app.innerHTML = renderStorageBootstrapError(formatStorageBootstrapError(error));
+    return;
+  }
   const driver = storage.driver;
   await registerKiempadServiceWorker().catch(() => undefined);
   const session = new VaultSession(driver);
@@ -341,6 +348,11 @@ async function mount(): Promise<void> {
 
   render(app, state);
   window.addEventListener('hashchange', () => render(app, state));
+}
+
+function formatStorageBootstrapError(error: unknown): string {
+  const detail = error instanceof Error ? error.message : 'Onbekende opslagfout.';
+  return `Centrale encrypted opslag kon niet worden geopend. ${detail}`;
 }
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {

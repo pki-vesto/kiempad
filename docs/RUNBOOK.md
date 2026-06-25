@@ -106,6 +106,10 @@ Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
 
 - **Data niet leesbaar:** verkeerde passphrase, of opslag gewist. Er is geen
   herstel-achterdeur (by design) — gebruik een versleutelde back-up.
+- **Centrale opslag start niet:** controleer of `npm run backend:central` draait,
+  of `VITE_KIEMPAD_CENTRAL_API_URL` naar die backend wijst, en of
+  `KIEMPAD_CENTRAL_ALLOWED_USER_IDS`/`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` de client
+  toestaan. De app valt bij centrale configuratie niet stil terug naar legacy lokaal.
 - **Herinneringen komen niet:** controleer notificatie-permissie van de browser/PWA
   en of de service worker actief is.
 - **AI doet niets:** AI staat default uit; controleer opt-in + sleutel in de
