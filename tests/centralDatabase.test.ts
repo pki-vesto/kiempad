@@ -171,4 +171,40 @@ describe('central encrypted database architecture', () => {
     });
     await expect(expiredDriver.listRecords()).rejects.toBeInstanceOf(CentralSessionError);
   });
+
+  it('weigert centrale metadata buiten de technische allowlist', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+
+    await expect(
+      database.putMeta(userA, 'dossier-samenvatting', {
+        notitie: 'plaintext fertiliteitsnotitie hoort in encrypted records',
+      }),
+    ).rejects.toThrow('Ongeldige centrale database snapshot');
+
+    await expect(database.listMeta(userA)).resolves.toEqual([]);
+    expect(database.unsafeDumpMetaForTest()).toEqual([]);
+  });
+
+  it('accepteert geldige technische WebAuthn metadata centraal', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    await database.putMeta(userA, 'webauthn-unlock', {
+      version: 1,
+      credentialId: 'credential-id',
+      prfSalt: 'base64-prf-salt',
+      label: 'WebAuthn/biometrie',
+      createdAt: '2026-06-25T08:00:00.000Z',
+      updatedAt: '2026-06-25T08:00:01.000Z',
+      wrapper: {
+        v: 1,
+        alg: 'AES-256-GCM',
+        iv: 'encrypted-iv',
+        ciphertext: 'encrypted-ciphertext',
+      },
+    });
+
+    await expect(database.getMeta(userA, 'webauthn-unlock')).resolves.toMatchObject({
+      version: 1,
+      credentialId: 'credential-id',
+    });
+  });
 });

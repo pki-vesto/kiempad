@@ -26,12 +26,15 @@ owner/indexmetadata en encrypted envelopes.
   nieuwe state pas zichtbaar in de runtime nadat die save succesvol is afgerond.
   Een mislukte save lekt daardoor geen onpersisted record-, meta- of delete-mutatie
   naar latere reads in hetzelfde serverproces en blokkeert latere commits niet.
+  Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
+  `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
+  persistence geweigerd.
 - `JsonFileCentralDatabasePersistence` is de eerste concrete server-side adapter.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
   ownermetadata, bekende recordtypes, canonieke ISO-timestamps, positieve integer
-  versies, servermetadata, dubbele logical keys binnen dezelfde ownernamespace en
-  `AES-256-GCM` envelopes.
+  versies, servermetadata, toegestane technische metakeys, dubbele logical keys
+  binnen dezelfde ownernamespace en `AES-256-GCM` envelopes.
   De file-backed adapter valideert dezelfde snapshotgrens ook vóór hij een nieuwe
   snapshot naar disk schrijft. Saves schrijven eerst naar een tijdelijk snapshotpad,
   flushen dat bestand vóór replacement, vervangen daarna atomisch het doelbestand,
@@ -150,6 +153,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   effects.
 - Malformed JSON of ongeldige recordpayloads worden `400`; recordwrites bereiken de
   database pas na validatie van id, type, timestamps, schemaVersion en envelope.
+- Metadatawrites zijn alleen toegestaan voor technische keys (`crypto`, `schema`,
+  `webauthn-unlock`) en moeten de verwachte technische vorm hebben; vrije
+  dossier- of fertiliteitsmetadata wordt `400` en bereikt geen persistence.
 - Mutaties worden geserialiseerd en pas zichtbaar nadat de centrale
   persistence-save succesvol is afgerond; gefaalde commits blijven dus ook in het
   draaiende proces onzichtbaar en veroorzaken geen lost updates voor parallelle
@@ -160,9 +166,10 @@ fetches doet. Zet deze API niet direct publiek op internet.
   `500 {"error":"central-runtime-error"}` zonder exceptionbericht of stacktrace.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
 - File-backed snapshots met ontbrekende owner/servermetadata, malformed timestamps,
-  ongeldige versies, onbekende recordtypes, dubbele owner-scoped record-/metakeys of
-  plaintext/malformed payloads worden geweigerd vóór de database ze opent of naar
-  disk schrijft. File-backed saves flushen het tijdelijke snapshotbestand vóór
+  ongeldige versies, onbekende recordtypes, onbekende of malformed technische
+  metadata, dubbele owner-scoped record-/metakeys of plaintext/malformed payloads
+  worden geweigerd vóór de database ze opent of naar disk schrijft. File-backed
+  saves flushen het tijdelijke snapshotbestand vóór
   atomische replacement en syncen de parent-directory best-effort na succesvolle
   replacement. Mislukte saves ruimen tijdelijke snapshotbestanden best-effort op
   voordat de oorspronkelijke fout teruggaat naar de caller.

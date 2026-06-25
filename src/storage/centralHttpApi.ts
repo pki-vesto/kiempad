@@ -3,7 +3,11 @@ import type {
   CentralSessionIssueInput,
   CentralSessionToken,
 } from './centralApi';
-import { CentralAccessDeniedError, CentralSessionError } from './centralDatabase';
+import {
+  CentralAccessDeniedError,
+  CentralDataValidationError,
+  CentralSessionError,
+} from './centralDatabase';
 import type {
   EncryptedRecord,
   EncryptedStorageDriver,
@@ -72,6 +76,9 @@ export class CentralEncryptedHttpApi {
         return { status: 403, body: { error: 'forbidden' } satisfies ErrorResponseBody };
       }
       if (error instanceof CentralHttpBadRequestError) {
+        return { status: 400, body: { error: error.message } satisfies ErrorResponseBody };
+      }
+      if (error instanceof CentralDataValidationError) {
         return { status: 400, body: { error: error.message } satisfies ErrorResponseBody };
       }
       return { status: 500, body: { error: 'central-api-error' } satisfies ErrorResponseBody };

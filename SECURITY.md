@@ -91,8 +91,11 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   metadata en encrypted envelopes, maar nooit plaintext medische/fertiliteitsinhoud,
   passphrases of afgeleide raw keys. De centrale snapshotgrens valideert records en
   weigert ontbrekende owner/servermetadata, malformed timestamps, ongeldige versies,
-  onbekende recordtypes, dubbele owner-scoped record-/metakeys en payloads zonder
-  `AES-256-GCM` envelope vóór file-backed snapshots worden geladen of opgeslagen.
+  onbekende recordtypes, onbekende of malformed technische metadata, dubbele
+  owner-scoped record-/metakeys en payloads zonder `AES-256-GCM` envelope vóór
+  file-backed snapshots worden geladen of opgeslagen. Centrale metadata is beperkt
+  tot `crypto`, `schema` en `webauthn-unlock`; dossierinhoud hoort in encrypted
+  records, niet in vrije meta-values.
   File-backed saves gebruiken een tijdelijk snapshotbestand voor replacement en
   flushen dat bestand vóór atomische replacement. Na replacement wordt de
   parent-directory best-effort gesynct; bij write-, flush- of replace-fouten wordt

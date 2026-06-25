@@ -166,8 +166,10 @@ describe('central encrypted HTTP API contract', () => {
     ).resolves.toMatchObject({ status: 400 });
 
     await expect(
-      new CentralHttpApiClientDriver(api, token).putMeta('crypto', undefined),
-    ).resolves.toBeUndefined();
+      new CentralHttpApiClientDriver(api, token).putMeta('dossier-samenvatting', {
+        plaintext: 'mag niet als centrale metadata worden opgeslagen',
+      }),
+    ).rejects.toBeInstanceOf(CentralHttpBadRequestError);
 
     await expect(
       new CentralHttpApiClientDriver(api, token).listRecords('not-a-type' as never),

@@ -26,6 +26,10 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - Duurzame persistence loopt via een snapshot/adaptercontract. Een productieadapter
   mag owner/indexmetadata en encrypted envelopes opslaan, maar geen plaintext
   medische/fertiliteitsinhoud, passphrases of raw keys.
+- Centrale metadata is beperkt tot expliciet toegestane technische metadata
+  (`crypto`, `schema`, `webauthn-unlock`) en wordt gevalideerd vóór database-mutatie
+  of snapshot load/save. Dossierinhoud hoort in encrypted records, niet in vrije
+  meta-values.
 - Vrije tekst, medische/fertiliteitsinhoud, bijlagen, consultdata en andere
   gevoelige velden mogen niet centraal in plaintext worden opgeslagen.
 - Toegang loopt via een expliciete **centrale sessie** (`userId`, `sessionId`,

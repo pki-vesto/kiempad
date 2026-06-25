@@ -144,13 +144,13 @@ describe('central encrypted Node backend runtime', () => {
       userId: 'user-peter',
     });
 
-    const lowerCaseBearerResponse = await fetch(`${server.baseUrl}/meta/strict-bearer`, {
+    const lowerCaseBearerResponse = await fetch(`${server.baseUrl}/meta/schema`, {
       method: 'PUT',
       headers: {
         authorization: `bearer ${ticket.token}`,
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ value: { ok: true } }),
+      body: JSON.stringify({ value: createSchemaMeta() }),
     });
     expect(lowerCaseBearerResponse.status).toBe(204);
 
@@ -160,7 +160,7 @@ describe('central encrypted Node backend runtime', () => {
       'Bearer   ',
       `Basic ${ticket.token}`,
     ]) {
-      const response = await fetch(`${server.baseUrl}/meta/strict-bearer`, {
+      const response = await fetch(`${server.baseUrl}/meta/schema`, {
         headers: { authorization },
       });
 
@@ -405,13 +405,13 @@ describe('central encrypted Node backend runtime', () => {
     expectSecurityHeaders(sessionResponse);
     const ticket = (await sessionResponse.json()) as { token: string };
 
-    const metaResponse = await fetch(`${server.baseUrl}/meta/security-smoke`, {
+    const metaResponse = await fetch(`${server.baseUrl}/meta/schema`, {
       method: 'PUT',
       headers: {
         authorization: `Bearer ${ticket.token}`,
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ value: { ok: true } }),
+      body: JSON.stringify({ value: createSchemaMeta() }),
     });
     expect(metaResponse.status).toBe(204);
     expectSecurityHeaders(metaResponse);
@@ -493,4 +493,16 @@ function expectSecurityHeaders(response: Response): void {
   expect(response.headers.get('pragma')).toBe('no-cache');
   expect(response.headers.get('x-content-type-options')).toBe('nosniff');
   expect(response.headers.get('referrer-policy')).toBe('no-referrer');
+}
+
+function createSchemaMeta(): {
+  version: number;
+  createdAt: string;
+  updatedAt: string;
+} {
+  return {
+    version: 1,
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt: '2026-06-25T08:00:01.000Z',
+  };
 }

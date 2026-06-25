@@ -50,6 +50,13 @@ export class CentralSessionError extends Error {
   }
 }
 
+export class CentralDataValidationError extends Error {
+  constructor(message = 'Ongeldige centrale database snapshot.') {
+    super(message);
+    this.name = 'CentralDataValidationError';
+  }
+}
+
 export interface CentralEncryptedDatabase {
   getMeta<T>(session: CentralAuthSession, key: string): Promise<T | undefined>;
   putMeta<T>(session: CentralAuthSession, key: string, value: T): Promise<void>;
@@ -83,12 +90,14 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
 
   async putMeta<T>(session: CentralAuthSession, key: string, value: T): Promise<void> {
     assertActiveCentralSession(session);
-    this.meta.set(metaKey(session.userId, key), {
+    const entry = {
       ownerUserId: session.userId,
       key,
       value,
       updatedAt: nowIso(),
-    });
+    };
+    assertValidCentralStorageMeta(entry);
+    this.meta.set(metaKey(session.userId, key), entry);
   }
 
   async listMeta(session: CentralAuthSession): Promise<StorageMeta[]> {
@@ -306,13 +315,13 @@ export function assertValidCentralDatabaseSnapshot(
   snapshot: unknown,
 ): asserts snapshot is CentralDatabaseSnapshot {
   if (!isRecord(snapshot) || snapshot.version !== 1) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
   if (!isIsoTimestamp(snapshot.exportedAt)) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
   if (!Array.isArray(snapshot.meta) || !Array.isArray(snapshot.records)) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
 
   const seenMetaKeys = new Set<string>();
@@ -330,29 +339,30 @@ export function assertValidCentralDatabaseSnapshot(
 
 function assertUniqueSnapshotKey(seenKeys: Set<string>, key: string): void {
   if (seenKeys.has(key)) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
   seenKeys.add(key);
 }
 
 function assertValidCentralStorageMeta(entry: unknown): asserts entry is CentralStorageMeta {
   if (!isRecord(entry)) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
   if (
     !isNonEmptyString(entry.ownerUserId) ||
     !isNonEmptyString(entry.key) ||
     !isIsoTimestamp(entry.updatedAt)
   ) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
+  assertValidCentralMetaValue(entry.key, entry.value);
 }
 
 function assertValidCentralEncryptedRecord(
   record: unknown,
 ): asserts record is CentralEncryptedRecord {
   if (!isRecord(record)) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
   if (
     !isNonEmptyString(record.ownerUserId) ||
@@ -370,7 +380,7 @@ function assertValidCentralEncryptedRecord(
     !isNonEmptyString(record.payload.iv) ||
     !isNonEmptyString(record.payload.ciphertext)
   ) {
-    throw new Error('Ongeldige centrale database snapshot.');
+    throwInvalidCentralSnapshot();
   }
 }
 
@@ -390,6 +400,80 @@ function isPositiveInteger(value: unknown): value is number {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
+}
+
+function assertValidCentralMetaValue(key: string, value: unknown): void {
+  if (key === 'crypto') {
+    assertValidCryptoMetadata(value);
+    return;
+  }
+  if (key === 'schema') {
+    assertValidSchemaMetadata(value);
+    return;
+  }
+  if (key === 'webauthn-unlock') {
+    assertValidWebAuthnUnlockMetadata(value);
+    return;
+  }
+
+  throwInvalidCentralSnapshot();
+}
+
+function assertValidCryptoMetadata(value: unknown): void {
+  if (!isRecord(value)) {
+    throwInvalidCentralSnapshot();
+  }
+  if (
+    value.version !== 1 ||
+    !isNonEmptyString(value.kdf) ||
+    !isPositiveInteger(value.iterations) ||
+    !isNonEmptyString(value.salt) ||
+    !isIsoTimestamp(value.createdAt) ||
+    !isEncryptionEnvelope(value.verifier)
+  ) {
+    throwInvalidCentralSnapshot();
+  }
+}
+
+function assertValidSchemaMetadata(value: unknown): void {
+  if (!isRecord(value)) {
+    throwInvalidCentralSnapshot();
+  }
+  if (
+    !isPositiveInteger(value.version) ||
+    !isIsoTimestamp(value.createdAt) ||
+    !isIsoTimestamp(value.updatedAt) ||
+    (value.previousVersion !== undefined && !isPositiveInteger(value.previousVersion))
+  ) {
+    throwInvalidCentralSnapshot();
+  }
+}
+
+function assertValidWebAuthnUnlockMetadata(value: unknown): void {
+  if (!isRecord(value)) {
+    throwInvalidCentralSnapshot();
+  }
+  if (
+    value.version !== 1 ||
+    !isNonEmptyString(value.credentialId) ||
+    !isNonEmptyString(value.prfSalt) ||
+    !isNonEmptyString(value.label) ||
+    !isIsoTimestamp(value.createdAt) ||
+    !isIsoTimestamp(value.updatedAt) ||
+    !isEncryptionEnvelope(value.wrapper)
+  ) {
+    throwInvalidCentralSnapshot();
+  }
+}
+
+function isEncryptionEnvelope(value: unknown): boolean {
+  return (
+    isRecord(value) &&
+    value.v === 1 &&
+    value.alg === 'AES-256-GCM' &&
+    isNonEmptyString(value.iv) &&
+    isNonEmptyString(value.ciphertext)
+  );
 }
 
 function metaKey(userId: string, key: string): string {
@@ -412,4 +496,8 @@ function stripCentralRecord(record: CentralEncryptedRecord): EncryptedRecord {
 
 function cloneJson<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function throwInvalidCentralSnapshot(): never {
+  throw new CentralDataValidationError();
 }
