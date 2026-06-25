@@ -158,7 +158,7 @@ describe('app shell', () => {
   it('rendert het startscherm met concrete volgende-stapblokken en lege-staten', () => {
     const html = renderAppShell('start');
 
-    expect(html).toContain('Waar staan we?');
+    expect(html).toContain('Welkom bij Kiempad');
     expect(html).toContain('Richt Kiempad rustig in');
     expect(html).toContain('id="first-run-complete-form"');
     expect(html).toContain('id="first-run-skip-form"');
@@ -663,6 +663,10 @@ describe('app shell', () => {
   });
 
   it('rendert graphweergave per traject met relatietype- en periodefilters', () => {
+    // Vaste klok: 'Behandelvoorbereiding' in de behandelgeschiedenis is
+    // datum-afhankelijk; zonder vaste klok valt de test om na de fixture-datum.
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-24T09:00:00'));
     const html = renderAppShell('traject', {
       trajecten: [
         {

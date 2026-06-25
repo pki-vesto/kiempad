@@ -128,7 +128,9 @@ import {
   bepaalVolgendeStap,
   berekenTrajectOverzicht,
   berekenVergoedePogingenTeller,
+  sorteerFasen,
   TRAJECT_FASE_LABELS,
+  TRAJECT_FASE_TOELICHTING,
   type TrajectMetFasen,
 } from './domain/traject';
 import type {
@@ -168,6 +170,7 @@ import {
   disclosure,
   pageHeader,
   phaseHeroCard,
+  type StepState,
   sectionStack,
   statusMessage,
 } from './ui/components';
@@ -375,9 +378,10 @@ export function renderAppShell(
   return `
     <div class="app-shell" data-theme="${escapeAttribute(state.settings.thema)}">
       <a class="skip-link" href="#inhoud">Ga naar inhoud</a>
+      <div class="app-sidebar">
       <header class="topbar">
         <a class="brand" href="#start" aria-label="Kiempad startscherm">
-          <span class="brand-mark" aria-hidden="true">K</span>
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7"/><path d="M12 14c0-3 2.2-5 5-5 .2 2.8-2 5-5 5z"/><path d="M12 14c0-2.6-1.9-4.4-4.3-4.4C7.5 12 9.5 14 12 14z"/></svg></span>
           <span>
             <strong>Kiempad</strong>
             <small>IVF/ICSI overzicht</small>
@@ -400,6 +404,7 @@ export function renderAppShell(
       <nav class="primary-nav" aria-label="Hoofdschermen">
         ${SCREENS.map((screen) => renderNavItem(screen, activeId)).join('')}
       </nav>
+      </div>
 
       <main class="content" id="inhoud" tabindex="-1">
         ${pageHeader({ title: activeScreen.title, intro: activeScreen.intro, titleId: 'screen-title' })}
@@ -2546,6 +2551,19 @@ function isEigenKennisItem(item: KennisItem): boolean {
 
 function renderStartScreen(state: AppShellState): string {
   const activeTraject = state.trajecten[0];
+  const sortedFasen = activeTraject ? sorteerFasen(activeTraject.fasen) : [];
+  const huidigeFase = activeTraject ? bepaalHuidigeFase(activeTraject.fasen) : undefined;
+  const faseSteps = sortedFasen.map((fase) => ({
+    label: TRAJECT_FASE_LABELS[fase.fase],
+    state: (fase.eindDatum
+      ? 'done'
+      : huidigeFase && fase.fase === huidigeFase.fase
+        ? 'current'
+        : 'todo') as StepState,
+  }));
+  const huidigeFaseIndex = huidigeFase
+    ? sortedFasen.findIndex((fase) => fase.fase === huidigeFase.fase) + 1
+    : 0;
   const vandaag = new Date().toISOString().slice(0, 10);
   const nextAppointment = beschrijfVolgendeAfspraak(
     state.afspraken.map((bundle) => bundle.afspraak),
@@ -2567,12 +2585,26 @@ function renderStartScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderFirstRunSetup(state),
-      phaseHeroCard({
-        eyebrow: 'Waar staan we?',
-        phaseLabel: activeTraject ? 'Jullie traject' : 'Welkom bij Kiempad',
-        subtitle: bepaalVolgendeStap(activeTraject),
-        cta: { href: '#traject', label: activeTraject ? 'Bekijk traject' : 'Traject aanmaken' },
-      }),
+      phaseHeroCard(
+        huidigeFase
+          ? {
+              eyebrow: `Huidige fase · ${huidigeFaseIndex} van ${sortedFasen.length}`,
+              phaseLabel: TRAJECT_FASE_LABELS[huidigeFase.fase],
+              subtitle: TRAJECT_FASE_TOELICHTING[huidigeFase.fase],
+              steps: faseSteps,
+              cta: { href: '#traject', label: 'Bekijk traject' },
+            }
+          : {
+              eyebrow: activeTraject ? 'Jullie traject' : 'Welkom',
+              phaseLabel: activeTraject ? activeTraject.traject.naam : 'Welkom bij Kiempad',
+              subtitle: bepaalVolgendeStap(activeTraject),
+              steps: faseSteps,
+              cta: {
+                href: '#traject',
+                label: activeTraject ? 'Bekijk traject' : 'Traject aanmaken',
+              },
+            },
+      ),
       renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
       card({
         title: 'Volgende stap',

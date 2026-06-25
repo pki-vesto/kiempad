@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G148 UI-herstel (sidebar + fasehero): op desktop is de navigatie nu een
+  linker zijbalk (rond kiemlogo + verticale nav), zoals het Claude Design-
+  prototype; op mobiel blijft de onderbalk. Het Vandaag-scherm toont nu een
+  echte fasehero — "Huidige fase · X van Y", de actuele fasenaam + toelichting
+  en voortgangsstippen — i.p.v. een generieke kop. Het merkicoon is een rond
+  kiem-SVG i.p.v. de letter "K".
 - G148/G355 UI-herstel (Kennis + afronding): het kennisbankscherm is
   enkelkoloms gemaakt; daarmee gebruikt geen enkel scherm nog de oude twee-koloms
   `traject-layout`/`workspace`-indeling. Nieuwe `docs/UI_GUIDELINES.md` legt de
