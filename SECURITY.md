@@ -56,6 +56,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Centrale encrypted database/API:** ziet uitsluitend minimale indexmetadata,
   owner/servermetadata en versleutelde blobs; compromittering van de database levert
   geen leesbare medische payloads op zonder sleutel.
+- **Persistence adapter:** mag snapshots of database rijen bewaren met owner/index
+  metadata en encrypted envelopes, maar nooit plaintext medische/fertiliteitsinhoud,
+  passphrases of afgeleide raw keys.
 - **Afhankelijkheden:** minimaliseer npm-dependencies; houd ze actueel; CI kan een
   audit-stap draaien.
 
@@ -79,6 +82,8 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 - [x] Centrale encrypted database-foundation met per-user isolatie en encrypted
   recordpayloads.
 - [x] Opaque centrale API-sessietokens met expiry/revoke en server-side tokenresolutie.
+- [x] Centrale persistence snapshots zonder plaintext medische payloads, met
+  restarttests voor retrieval, user-isolatie en verkeerde sleutel.
 - [x] Legacy lokale opslag blijft versleuteld; nieuwe opslagrichting is centrale
   encrypted persistence.
 - [x] Opt-in/centrale sync gebruikt encrypted blobs; backend/database bewaart geen

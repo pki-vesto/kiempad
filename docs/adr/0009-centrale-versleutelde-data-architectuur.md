@@ -23,6 +23,9 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - De centrale database bewaart per record alleen minimale clear indexvelden
   (`id`, `type`, timestamps, schemaversie), de eigenaar (`ownerUserId`),
   servermetadata en een versleutelde payload (`EncryptionEnvelope`).
+- Duurzame persistence loopt via een snapshot/adaptercontract. Een productieadapter
+  mag owner/indexmetadata en encrypted envelopes opslaan, maar geen plaintext
+  medische/fertiliteitsinhoud, passphrases of raw keys.
 - Vrije tekst, medische/fertiliteitsinhoud, bijlagen, consultdata en andere
   gevoelige velden mogen niet centraal in plaintext worden opgeslagen.
 - Toegang loopt via een expliciete **centrale sessie** (`userId`, `sessionId`,
@@ -56,5 +59,8 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - `src/storage/centralApi.ts` definieert de API/servicegrens:
   `MemoryCentralSessionStore`, `CentralEncryptedApiServer` en
   `CentralEncryptedApiClientDriver`.
+- `PersistedCentralEncryptedDatabase` en `CentralDatabasePersistence` definiëren de
+  duurzame databasegrens. Tests simuleren een serverrestart door dezelfde persistence
+  in een nieuwe API/database instantie te heropenen.
 - Productie-implementatie kan dezelfde interface later koppelen aan een echte
   backend/API/database zonder domeinstores direct aan serverdetails te binden.

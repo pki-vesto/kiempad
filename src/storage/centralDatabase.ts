@@ -24,6 +24,18 @@ export type CentralStorageMeta = StorageMeta & {
   updatedAt: string;
 };
 
+export type CentralDatabaseSnapshot = {
+  version: 1;
+  exportedAt: string;
+  meta: CentralStorageMeta[];
+  records: CentralEncryptedRecord[];
+};
+
+export interface CentralDatabasePersistence {
+  load(): Promise<CentralDatabaseSnapshot | undefined>;
+  save(snapshot: CentralDatabaseSnapshot): Promise<void>;
+}
+
 export class CentralAccessDeniedError extends Error {
   constructor(message = 'Geen toegang tot deze centrale Kiempad-data.') {
     super(message);
@@ -51,6 +63,20 @@ export interface CentralEncryptedDatabase {
 export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase {
   private readonly meta = new Map<string, CentralStorageMeta>();
   private readonly records = new Map<string, CentralEncryptedRecord>();
+
+  constructor(snapshot?: CentralDatabaseSnapshot) {
+    if (!snapshot) return;
+    if (snapshot.version !== 1) {
+      throw new Error('Onbekende centrale database snapshotversie.');
+    }
+
+    for (const entry of snapshot.meta) {
+      this.meta.set(metaKey(entry.ownerUserId, entry.key), cloneJson(entry));
+    }
+    for (const record of snapshot.records) {
+      this.records.set(record.id, cloneJson(record));
+    }
+  }
 
   async getMeta<T>(session: CentralAuthSession, key: string): Promise<T | undefined> {
     assertActiveCentralSession(session);
@@ -123,6 +149,89 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
   unsafeDumpMetaForTest(): CentralStorageMeta[] {
     return Array.from(this.meta.values());
   }
+
+  exportSnapshot(): CentralDatabaseSnapshot {
+    return {
+      version: 1,
+      exportedAt: nowIso(),
+      meta: cloneJson(Array.from(this.meta.values())),
+      records: cloneJson(Array.from(this.records.values())),
+    };
+  }
+}
+
+export class MemoryCentralDatabasePersistence implements CentralDatabasePersistence {
+  private snapshot: CentralDatabaseSnapshot | undefined;
+
+  async load(): Promise<CentralDatabaseSnapshot | undefined> {
+    return this.snapshot ? cloneJson(this.snapshot) : undefined;
+  }
+
+  async save(snapshot: CentralDatabaseSnapshot): Promise<void> {
+    this.snapshot = cloneJson(snapshot);
+  }
+
+  unsafeSerializedSnapshotForTest(): string {
+    return JSON.stringify(this.snapshot);
+  }
+}
+
+export class PersistedCentralEncryptedDatabase implements CentralEncryptedDatabase {
+  private constructor(
+    private readonly database: MemoryCentralEncryptedDatabase,
+    private readonly persistence: CentralDatabasePersistence,
+  ) {}
+
+  static async open(
+    persistence: CentralDatabasePersistence,
+  ): Promise<PersistedCentralEncryptedDatabase> {
+    return new PersistedCentralEncryptedDatabase(
+      new MemoryCentralEncryptedDatabase(await persistence.load()),
+      persistence,
+    );
+  }
+
+  async getMeta<T>(session: CentralAuthSession, key: string): Promise<T | undefined> {
+    return this.database.getMeta<T>(session, key);
+  }
+
+  async putMeta<T>(session: CentralAuthSession, key: string, value: T): Promise<void> {
+    await this.database.putMeta(session, key, value);
+    await this.flush();
+  }
+
+  async listMeta(session: CentralAuthSession): Promise<StorageMeta[]> {
+    return this.database.listMeta(session);
+  }
+
+  async getRecord(session: CentralAuthSession, id: string): Promise<EncryptedRecord | undefined> {
+    return this.database.getRecord(session, id);
+  }
+
+  async putRecord(session: CentralAuthSession, record: EncryptedRecord): Promise<void> {
+    await this.database.putRecord(session, record);
+    await this.flush();
+  }
+
+  async deleteRecord(session: CentralAuthSession, id: string): Promise<void> {
+    await this.database.deleteRecord(session, id);
+    await this.flush();
+  }
+
+  async listRecords(
+    session: CentralAuthSession,
+    type?: StoredRecordType,
+  ): Promise<EncryptedRecord[]> {
+    return this.database.listRecords(session, type);
+  }
+
+  unsafeDumpRecordsForTest(): CentralEncryptedRecord[] {
+    return this.database.unsafeDumpRecordsForTest();
+  }
+
+  private async flush(): Promise<void> {
+    await this.persistence.save(this.database.exportSnapshot());
+  }
 }
 
 export class CentralUserStorageDriver implements EncryptedStorageDriver {
@@ -188,4 +297,8 @@ function stripCentralRecord(record: CentralEncryptedRecord): EncryptedRecord {
     ...storedRecord
   } = record;
   return storedRecord;
+}
+
+function cloneJson<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
 }
