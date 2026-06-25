@@ -90,7 +90,9 @@ uit `POST /sessions` wordt client-side pas gebruikt als token, user-scope en
 canonieke `issuedAt`/`expiresAt` timestamps geldig zijn. De sessie-TTL komt
 alleen uit serverconfiguratie
 (`KIEMPAD_CENTRAL_SESSION_TTL_MS`); de sessiestore en `POST /sessions` negeren
-client-owned TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij
+client-owned TTL-beleid. Die TTL moet een positieve millisecondewaarde zijn; een
+ongeldige waarde laat de centrale runtime fail-fast starten in plaats van zwakke of
+direct verlopen sessies uit te geven. De in-memory sessiestore ruimt verlopen sessies op bij
 nieuwe sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie. De
 fetch-client gebruikt voor centrale API-requests expliciet `credentials: omit` en
 `cache: no-store`; authenticatie loopt alleen via bearer tokens. Succesvolle
