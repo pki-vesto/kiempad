@@ -45,6 +45,8 @@ fragment. Ontbreekt deze variabele, dan gelden de lokale defaults; zet je hem
 expliciet leeg of whitespace-only, dan zijn er geen browser-origins toegestaan.
 
 Zonder centrale API-URL gebruikt de PWA de legacy lokale IndexedDB-kluis.
+Zie [`docs/ONBOARDING.md`](ONBOARDING.md) voor het first-device en second-device
+pad zonder lokale vault-hercreatie.
 
 ## Health checks
 

@@ -166,6 +166,8 @@ docker compose -f docker-compose.central.yml up -d --build
 
 Details en beveiligingsnotities staan in
 [`docs/CENTRAL_ENCRYPTED_BACKEND.md`](docs/CENTRAL_ENCRYPTED_BACKEND.md).
+Het first-device en second-device onboardingpad staat in
+[`docs/ONBOARDING.md`](docs/ONBOARDING.md).
 
 ## Architecture Summary
 
@@ -223,6 +225,7 @@ duidelijke foutmeldingen. Zie [`PRIVACY.md`](PRIVACY.md).
 | Productinvarianten & werkafspraken | [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) |
 | Privacy & AVG | [`PRIVACY.md`](PRIVACY.md) |
 | Beveiliging | [`SECURITY.md`](SECURITY.md) |
+| Onboarding centrale opslag | [`docs/ONBOARDING.md`](docs/ONBOARDING.md) |
 | Beslissingen (ADR's) | [`docs/adr/`](docs/adr/) |
 | Kennisbank-inhoud & NL-bronnen | [`docs/KENNISBANK.md`](docs/KENNISBANK.md) |
 | Operationeel/runbook | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) |
