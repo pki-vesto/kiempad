@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import type { FileHandle } from 'node:fs/promises';
 import { mkdir, open, readFile, rename, rm } from 'node:fs/promises';
 import { dirname } from 'node:path';
@@ -11,6 +12,7 @@ import { assertValidCentralDatabaseSnapshot } from '../storage/centralDatabase';
 type JsonFileCentralDatabasePersistenceOptions = {
   syncFile?: (file: FileHandle, filePath: string) => Promise<void>;
   syncDirectory?: (directoryPath: string) => Promise<void>;
+  temporarySuffix?: () => string;
 };
 
 export class JsonFileCentralDatabasePersistence implements CentralDatabasePersistence {
@@ -34,20 +36,28 @@ export class JsonFileCentralDatabasePersistence implements CentralDatabasePersis
     assertValidCentralDatabaseSnapshot(snapshot);
     const directoryPath = dirname(this.filePath);
     await mkdir(directoryPath, { recursive: true });
-    const temporaryPath = `${this.filePath}.${process.pid}.${Date.now()}.tmp`;
+    const temporaryPath = `${this.filePath}.${createTemporarySuffix(this.options)}.tmp`;
+    let temporaryCreated = false;
     try {
       await writeSyncedSnapshot(
         temporaryPath,
         `${JSON.stringify(snapshot, null, 2)}\n`,
         this.options.syncFile ?? syncFileHandle,
+        () => {
+          temporaryCreated = true;
+        },
       );
       await rename(temporaryPath, this.filePath);
       await syncDirectoryBestEffort(directoryPath, this.options.syncDirectory ?? syncDirectory);
     } catch (error) {
-      await removeTemporarySnapshot(temporaryPath);
+      if (temporaryCreated) await removeTemporarySnapshot(temporaryPath);
       throw error;
     }
   }
+}
+
+function createTemporarySuffix(options: JsonFileCentralDatabasePersistenceOptions): string {
+  return options.temporarySuffix?.() ?? randomUUID();
 }
 
 function parseSnapshot(text: string): CentralDatabaseSnapshot {
@@ -72,8 +82,10 @@ async function writeSyncedSnapshot(
   filePath: string,
   snapshotText: string,
   syncFile: (file: FileHandle, filePath: string) => Promise<void>,
+  onCreated: () => void,
 ): Promise<void> {
-  const file = await open(filePath, 'w', 0o600);
+  const file = await open(filePath, 'wx', 0o600);
+  onCreated();
   try {
     await file.writeFile(snapshotText, { encoding: 'utf8' });
     await syncFile(file, filePath);

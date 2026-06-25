@@ -85,7 +85,9 @@ describe('central file persistence snapshot validation', () => {
     await persistence.save(createValidSnapshot());
 
     expect(syncEvents).toEqual([
-      expect.stringMatching(/^file:central-db\.json\.\d+\.\d+\.tmp$/),
+      expect.stringMatching(
+        /^file:central-db\.json\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.tmp$/,
+      ),
       `directory:${directory}`,
     ]);
     await expect(readdir(directory)).resolves.toEqual(['central-db.json']);
@@ -105,6 +107,23 @@ describe('central file persistence snapshot validation', () => {
 
     expect(temporaryMode).toBe(0o600);
     expect((await stat(filePath)).mode & 0o777).toBe(0o600);
+  });
+
+  it('overschrijft of verwijdert geen bestaand tijdelijk snapshotbestand bij suffix-collision', async () => {
+    const { directory, filePath } = await createPersistenceFile();
+    const existingTemporaryPath = `${filePath}.collision.tmp`;
+    await writeFile(existingTemporaryPath, 'bestaand tijdelijk bestand', { mode: 0o600 });
+    const persistence = new JsonFileCentralDatabasePersistence(filePath, {
+      temporarySuffix: () => 'collision',
+    });
+
+    await expect(persistence.save(createValidSnapshot())).rejects.toMatchObject({ code: 'EEXIST' });
+
+    await expect(readFile(existingTemporaryPath, 'utf8')).resolves.toBe(
+      'bestaand tijdelijk bestand',
+    );
+    await expect(stat(filePath)).rejects.toMatchObject({ code: 'ENOENT' });
+    await expect(readdir(directory)).resolves.toEqual(['central-db.json.collision.tmp']);
   });
 
   it('laat een directory-fsync fout de succesvolle snapshot replacement niet breken', async () => {
