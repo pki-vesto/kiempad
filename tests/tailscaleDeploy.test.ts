@@ -27,8 +27,8 @@ describe('Tailscale publicatieconfiguratie', () => {
     expect(deployDocs).toContain('https://kiempad.tail9d0c71.ts.net');
     expect(deployDocs).toContain('kiempad.<tailnet>.ts.net');
     expect(deployDocs).toContain('Geen Tailscale Funnel');
-    expect(deployDocs).toContain('Geen applicatie-backend');
-    expect(deployDocs).toContain('IndexedDB');
+    expect(deployDocs).toContain('Geen backendcontainer in `docker-compose.tailscale.yml`');
+    expect(deployDocs).toContain('CENTRAL_ENCRYPTED_BACKEND.md');
   });
 
   it('biedt herhaalbare npm scripts voor deploy en smoke zonder auth key te loggen', () => {

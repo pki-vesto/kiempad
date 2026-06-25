@@ -130,6 +130,21 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
 `docker-compose.tailscale.yml` en `npm run deploy:tailscale`; zie
 [`docs/TAILSCALE_DEPLOY.md`](docs/TAILSCALE_DEPLOY.md).
 
+De centrale encrypted API kan lokaal apart gestart worden:
+
+```bash
+KIEMPAD_CENTRAL_PERSISTENCE_FILE=/tmp/kiempad-central-db.json npm run backend:central
+```
+
+Voor een containerwrapper:
+
+```bash
+docker compose -f docker-compose.central.yml up -d --build
+```
+
+Details en beveiligingsnotities staan in
+[`docs/CENTRAL_ENCRYPTED_BACKEND.md`](docs/CENTRAL_ENCRYPTED_BACKEND.md).
+
 ## Architecture Summary
 
 - **Client-side PWA** in TypeScript (Vite), met een centrale encrypted data-API als

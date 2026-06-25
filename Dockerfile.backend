@@ -1,0 +1,16 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+ENV KIEMPAD_CENTRAL_HOST=0.0.0.0
+ENV KIEMPAD_CENTRAL_PORT=8099
+ENV KIEMPAD_CENTRAL_PERSISTENCE_FILE=/data/kiempad-central-db.json
+
+EXPOSE 8099
+
+CMD ["npm", "run", "backend:central"]
