@@ -59,7 +59,9 @@ configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
 geen stille legacy fallback. De sessie-TTL komt alleen uit serverconfiguratie
 (`KIEMPAD_CENTRAL_SESSION_TTL_MS`); `POST /sessions` accepteert geen client-owned
 TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij nieuwe
-sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie.
+sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie. De fetch-client
+gebruikt voor centrale API-requests expliciet `credentials: omit` en
+`cache: no-store`; authenticatie loopt alleen via bearer tokens.
 
 Standaardwaarden:
 
@@ -103,6 +105,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 
 - Clients sturen geen ownerclaims per recordrequest. Alleen het opaque bearer token
   gaat mee.
+- Browserclients sturen centrale API-requests zonder ambient credentials en zonder
+  browsercache (`credentials: omit`, `cache: no-store`).
 - Browserrequests met een `Origin` buiten `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` worden
   `403` vóór body parsing en vóór API-side effects. Requests zonder `Origin` blijven
   bruikbaar voor lokale/server-side tooling.
