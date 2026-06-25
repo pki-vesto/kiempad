@@ -86,6 +86,11 @@ en blijft ook centraal **versleuteld at rest**.
   ingetrokken tokens worden geweigerd voordat data wordt gelezen. De client gebruikt
   `CentralEncryptedApiClientDriver`, dat het bestaande encrypted-storage contract
   exposeert zonder ownervelden aan appcode te geven.
+- **HTTP/API-contract:** `CentralEncryptedHttpApi` definieert de request/response-laag
+  boven de servicegrens: `/sessions`, `/meta/*` en `/records/*` met veilige
+  statuscodes voor bad request, unauthorized en forbidden. `CentralHttpApiClientDriver`
+  gebruikt hetzelfde `EncryptedStorageDriver`-contract, zodat de app later naar
+  echte `fetch`-calls kan zonder domeinstores te herschrijven.
 - **Versleuteling:** **AES-256-GCM** per record. De client versleutelt payloads voor
   persistente opslag; de centrale laag ziet alleen encrypted envelopes plus minimale
   indexmetadata.
@@ -111,9 +116,9 @@ Alle externe koppelingen zijn **opt-in en uit by default**:
   dosering/diagnose/behandelkeuze. Beslissing:
   [`docs/adr/0003-ai-met-waarborgen.md`](docs/adr/0003-ai-met-waarborgen.md).
 - **Centrale encrypted sync/API:** gekoppelde apparaten gebruiken dezelfde centrale
-  encrypted database via opaque API-sessietokens en zien alleen data waarvoor hun
-  centrale sessie en key kloppen. Een backend ziet enkel **versleutelde blobs**; de
-  sleutel verlaat het toestel niet in plaintext.
+  encrypted database via opaque API-sessietokens en HTTP-style `/records` endpoints.
+  Ze zien alleen data waarvoor hun centrale sessie en key kloppen. Een backend ziet
+  enkel **versleutelde blobs**; de sleutel verlaat het toestel niet in plaintext.
 - **Agenda-export:** **ICS**-export/import van afspraken, lokaal gegenereerd.
 - **PDF-export:** lokaal gegenereerde samenvatting voor het consult.
 
@@ -131,8 +136,9 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
   (bv. de tailnet, zoals de andere apps) worden geserveerd.
 - **Centrale data-API:** productiehosting krijgt een kleine backend/API rond
   `CentralEncryptedApiServer`, `CentralEncryptedDatabase` en
-  `CentralDatabasePersistence`. Die backend bewaart geen plaintext medische payloads
-  en moet opaque sessies, owner-scoping, duurzame encrypted persistence en veilige
+  `CentralDatabasePersistence`, gepubliceerd via het `CentralEncryptedHttpApi`
+  request/response-contract. Die backend bewaart geen plaintext medische payloads en
+  moet opaque sessies, owner-scoping, duurzame encrypted persistence en veilige
   foutafhandeling afdwingen.
 
 ## 7. Kostenraming

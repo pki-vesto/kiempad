@@ -137,7 +137,8 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
 - **Centrale encrypted opslag/API:** minimale server-side indexmetadata plus
   **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
   een passphrase). API-toegang loopt via opaque sessietokens; de server resolveert
-  tokens naar user-scoped sessies.
+  tokens naar user-scoped sessies. Het HTTP-style contract heeft `/sessions`,
+  `/meta/*` en `/records/*` endpoints met veilige foutmapping.
 - **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
   owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
   zonder client key.

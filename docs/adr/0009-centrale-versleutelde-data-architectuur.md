@@ -59,6 +59,9 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - `src/storage/centralApi.ts` definieert de API/servicegrens:
   `MemoryCentralSessionStore`, `CentralEncryptedApiServer` en
   `CentralEncryptedApiClientDriver`.
+- `src/storage/centralHttpApi.ts` definieert het HTTP-style API-contract:
+  sessie-uitgifte/intrekken, metadata, encrypted records en veilige statuscodes voor
+  unauthorized, forbidden en malformed requests.
 - `PersistedCentralEncryptedDatabase` en `CentralDatabasePersistence` definiëren de
   duurzame databasegrens. Tests simuleren een serverrestart door dezelfde persistence
   in een nieuwe API/database instantie te heropenen.
