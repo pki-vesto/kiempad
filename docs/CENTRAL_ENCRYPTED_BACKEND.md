@@ -21,8 +21,9 @@ owner/indexmetadata en encrypted envelopes.
 - `JsonFileCentralDatabasePersistence` is de eerste concrete server-side adapter.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
-  ownermetadata, bekende recordtypes, servermetadata, dubbele logical keys binnen
-  dezelfde ownernamespace en `AES-256-GCM` envelopes.
+  ownermetadata, bekende recordtypes, canonieke ISO-timestamps, positieve integer
+  versies, servermetadata, dubbele logical keys binnen dezelfde ownernamespace en
+  `AES-256-GCM` envelopes.
   De file-backed adapter valideert dezelfde snapshotgrens ook vóór hij een nieuwe
   snapshot naar disk schrijft.
 - `createCentralNodeHttpServer` in `src/server/centralNodeRuntime.ts` wiret de
@@ -115,9 +116,10 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Onverwachte fouten aan de Node HTTP-boundary worden een generieke
   `500 {"error":"central-runtime-error"}` zonder exceptionbericht of stacktrace.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.
-- File-backed snapshots met ontbrekende owner/servermetadata, onbekende recordtypes
-  dubbele owner-scoped record-/metakeys of plaintext/malformed payloads worden
-  geweigerd vóór de database ze opent of naar disk schrijft.
+- File-backed snapshots met ontbrekende owner/servermetadata, malformed timestamps,
+  ongeldige versies, onbekende recordtypes, dubbele owner-scoped record-/metakeys of
+  plaintext/malformed payloads worden geweigerd vóór de database ze opent of naar
+  disk schrijft.
 - De Node HTTP-boundary zet `Cache-Control: no-store`, `Pragma: no-cache`,
   `X-Content-Type-Options: nosniff` en `Referrer-Policy: no-referrer` op centrale
   API-responses, inclusief sessietickets, errors, preflight en lege `204` responses.

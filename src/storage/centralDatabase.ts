@@ -300,7 +300,7 @@ export function assertValidCentralDatabaseSnapshot(
   if (!isRecord(snapshot) || snapshot.version !== 1) {
     throw new Error('Ongeldige centrale database snapshot.');
   }
-  if (typeof snapshot.exportedAt !== 'string' || !snapshot.exportedAt.trim()) {
+  if (!isIsoTimestamp(snapshot.exportedAt)) {
     throw new Error('Ongeldige centrale database snapshot.');
   }
   if (!Array.isArray(snapshot.meta) || !Array.isArray(snapshot.records)) {
@@ -334,7 +334,7 @@ function assertValidCentralStorageMeta(entry: unknown): asserts entry is Central
   if (
     !isNonEmptyString(entry.ownerUserId) ||
     !isNonEmptyString(entry.key) ||
-    !isNonEmptyString(entry.updatedAt)
+    !isIsoTimestamp(entry.updatedAt)
   ) {
     throw new Error('Ongeldige centrale database snapshot.');
   }
@@ -349,13 +349,11 @@ function assertValidCentralEncryptedRecord(
   if (
     !isNonEmptyString(record.ownerUserId) ||
     !isNonEmptyString(record.id) ||
-    !isNonEmptyString(record.createdAt) ||
-    !isNonEmptyString(record.updatedAt) ||
-    !isNonEmptyString(record.storedAt) ||
-    typeof record.schemaVersion !== 'number' ||
-    !Number.isFinite(record.schemaVersion) ||
-    typeof record.serverVersion !== 'number' ||
-    !Number.isFinite(record.serverVersion) ||
+    !isIsoTimestamp(record.createdAt) ||
+    !isIsoTimestamp(record.updatedAt) ||
+    !isIsoTimestamp(record.storedAt) ||
+    !isPositiveInteger(record.schemaVersion) ||
+    !isPositiveInteger(record.serverVersion) ||
     typeof record.type !== 'string' ||
     !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
     !isRecord(record.payload) ||
@@ -370,6 +368,16 @@ function assertValidCentralEncryptedRecord(
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isIsoTimestamp(value: unknown): value is string {
+  if (typeof value !== 'string' || !value.trim()) return false;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString() === value;
+}
+
+function isPositiveInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value > 0;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

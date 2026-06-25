@@ -138,6 +138,79 @@ describe('central file persistence snapshot validation', () => {
 
     await expect(persistence.load()).resolves.toEqual(snapshot);
   });
+
+  it('weigert snapshots met niet-canonieke of malformed timestamps', async () => {
+    const { filePath } = await createPersistenceFile();
+
+    for (const mutate of [
+      (snapshot: CentralDatabaseSnapshot) => {
+        snapshot.exportedAt = '25 juni 2026';
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const meta = snapshot.meta[0];
+        if (!meta) throw new Error('Expected meta fixture.');
+        meta.updatedAt = '2026-06-25 08:00:01';
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.createdAt = '2026-06-25T08:00:02Z';
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.updatedAt = 'not-a-date';
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.storedAt = '';
+      },
+    ]) {
+      const snapshot = createValidSnapshot();
+      mutate(snapshot);
+      await writeFile(filePath, JSON.stringify(snapshot), 'utf8');
+
+      await expect(new JsonFileCentralDatabasePersistence(filePath).load()).rejects.toThrow(
+        'Ongeldige centrale database snapshot',
+      );
+    }
+  });
+
+  it('weigert snapshots met non-positive of niet-integer versies vóór save', async () => {
+    const { filePath } = await createPersistenceFile();
+
+    for (const mutate of [
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.schemaVersion = 0;
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.schemaVersion = 1.5;
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.serverVersion = -1;
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.serverVersion = Number.POSITIVE_INFINITY;
+      },
+    ]) {
+      const snapshot = createValidSnapshot();
+      mutate(snapshot);
+
+      await expect(new JsonFileCentralDatabasePersistence(filePath).save(snapshot)).rejects.toThrow(
+        'Ongeldige centrale database snapshot',
+      );
+      await expect(stat(filePath)).rejects.toMatchObject({ code: 'ENOENT' });
+    }
+  });
 });
 
 async function createPersistenceFile(): Promise<{ directory: string; filePath: string }> {
