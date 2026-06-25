@@ -173,8 +173,10 @@ Details en beveiligingsnotities staan in
   **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
   een passphrase). API-toegang loopt via opaque sessietokens; de server resolveert
   tokens naar user-scoped sessies en geeft alleen sessies uit voor server-side
-  toegestane users. Het HTTP-style contract heeft `/sessions`, `/meta/*` en
-  `/records/*` endpoints met veilige foutmapping.
+  toegestane users. De fetch-client kan een verlopen token één keer vernieuwen voor
+  dezelfde centrale user-scope zonder passphrase of secrets in de frontend op te
+  slaan. Het HTTP-style contract heeft `/sessions`, `/meta/*` en `/records/*`
+  endpoints met veilige foutmapping.
 - **Duurzame centrale persistence:** server-side snapshots/adapters bewaren alleen
   owner/indexmetadata en encrypted envelopes; medische payloads blijven onleesbaar
   zonder client key.

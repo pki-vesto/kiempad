@@ -45,7 +45,10 @@ deze één-stel-app. De backend moet dezelfde id toestaan via
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS`; die server-side allowlist is de autoriteit. De
 passphrase blijft de sleutel voor de encrypted payloads. Als de PWA en API op
 verschillende origins draaien, moet de PWA-origin ook in
-`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan.
+`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan. De centrale fetch-client vernieuwt een
+verlopen bearer token maximaal één keer via `POST /sessions` voor dezelfde
+configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
+geen stille legacy fallback.
 
 Standaardwaarden:
 

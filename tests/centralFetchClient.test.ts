@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-
+import { CentralSessionError } from '../src/storage/centralDatabase';
 import {
   CentralFetchApiClientDriver,
   issueCentralFetchSession,
 } from '../src/storage/centralFetchClient';
+import { CentralHttpBadRequestError } from '../src/storage/centralHttpApi';
 
 describe('central fetch client', () => {
   afterEach(() => {
@@ -50,5 +51,87 @@ describe('central fetch client', () => {
 
     await expect(driver.getMeta('crypto')).resolves.toEqual({ version: 1 });
     expect(fetchStub).toHaveBeenCalledTimes(2);
+  });
+
+  it('ververst een verlopen centraal sessietoken eenmalig en hergebruikt daarna het nieuwe token', async () => {
+    const seenTokens: string[] = [];
+    const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {
+      expect(input).toBe('https://central.test/meta/crypto');
+      const token = new Headers(init?.headers).get('authorization')?.replace(/^Bearer\s+/i, '');
+      seenTokens.push(token ?? '');
+
+      if (token === 'expired-token') {
+        return new Response(JSON.stringify({ error: 'unauthorized' }), {
+          status: 401,
+          headers: { 'content-type': 'application/json' },
+        });
+      }
+
+      return new Response(JSON.stringify({ value: { version: 1, token } }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+    const refreshSession = vi.fn(async () => ({ token: 'fresh-token' }));
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'expired-token',
+      fetcher,
+      refreshSession,
+    );
+
+    await expect(driver.getMeta('crypto')).resolves.toEqual({
+      version: 1,
+      token: 'fresh-token',
+    });
+    await expect(driver.getMeta('crypto')).resolves.toEqual({
+      version: 1,
+      token: 'fresh-token',
+    });
+
+    expect(refreshSession).toHaveBeenCalledTimes(1);
+    expect(seenTokens).toEqual(['expired-token', 'fresh-token', 'fresh-token']);
+  });
+
+  it('probeert sessie-refresh niet eindeloos wanneer het nieuwe token ook unauthorized is', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response(JSON.stringify({ error: 'unauthorized' }), {
+        status: 401,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+    const refreshSession = vi.fn(async () => ({ token: 'still-invalid-token' }));
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'expired-token',
+      fetcher,
+      refreshSession,
+    );
+
+    await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralSessionError);
+    expect(refreshSession).toHaveBeenCalledTimes(1);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('laat refresh-fouten centraal falen zonder lokale fallback of stille retry', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response(JSON.stringify({ error: 'unauthorized' }), {
+        status: 401,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+    const refreshSession = vi.fn(async () => {
+      throw new CentralHttpBadRequestError('unauthorized');
+    });
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'expired-token',
+      fetcher,
+      refreshSession,
+    );
+
+    await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+    expect(refreshSession).toHaveBeenCalledTimes(1);
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 });
