@@ -149,6 +149,9 @@ Controleer na deploy:
 - De app is alleen bereikbaar via Tailscale, niet via publieke DNS of port-forwarding.
 - `docker-compose.tailscale.yml` mount geen `data/`, `backups/` of `.env` met
   gezondheidsdata.
-- Een nieuw apparaat ziet geen bestaande Kiempad-data totdat de gebruiker lokaal een
-  eigen kluis/back-up importeert.
+- Als `VITE_KIEMPAD_CENTRAL_API_URL` naar de centrale encrypted backend wijst en de
+  backend hetzelfde persistence-volume gebruikt, opent een nieuw apparaat na
+  passphrase-ontgrendeling dezelfde centrale encrypted dataset via de API.
+- Zonder centrale API-URL gebruikt de PWA expliciet de legacy lokale IndexedDB-kluis;
+  dat fallbackpad deelt geen nieuwe data tussen apparaten.
 - Browser network tab toont geen externe requests buiten opt-in AI/sync.
