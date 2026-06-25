@@ -362,7 +362,7 @@ function beschrijfDocumentContext(document: DossierDocument): string {
       : undefined,
   ].filter((item): item is string => Boolean(item));
 
-  return onderdelen.join(' · ') || 'Dossierrecord uit lokale kluis.';
+  return onderdelen.join(' · ') || 'Dossierrecord uit encrypted dataset.';
 }
 
 function beschrijfEmbryoContext(document: DossierDocument): string {

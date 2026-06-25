@@ -356,7 +356,7 @@ export function herbouwFertilityGraphIndex(
       inzichtAantal: inzichten.length,
       controleHash: berekenGraphControleHash(graph, bronRecordIds),
       dataverliesControle:
-        'Index is opnieuw afgeleid uit ontsleutelde kluisrecords; originele versleutelde records worden niet overschreven.',
+        'Index is opnieuw afgeleid uit ontsleutelde datasetrecords; originele versleutelde records worden niet overschreven.',
       waarschuwing: GRAPH_WAARSCHUWING,
     },
   };

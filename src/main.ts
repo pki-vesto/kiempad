@@ -76,8 +76,8 @@ import {
   scheduleLocalNotifications,
 } from './notificationRuntime';
 import { importeerVersleuteldeExport, maakVersleuteldeExport } from './storage/backup';
+import { type ClientStorageMode, openClientStorage } from './storage/clientStorage';
 import { EncryptedRecordRepository } from './storage/encryptedRepository';
-import { openIndexedDbDriver } from './storage/indexedDbDriver';
 import type { EncryptedStorageDriver } from './storage/records';
 import { importeerVersleuteldSyncPakket, maakVersleuteldSyncPakket } from './storage/sync';
 import { VaultSession } from './storage/vaultSession';
@@ -89,6 +89,8 @@ import {
 
 type RuntimeState = {
   driver: EncryptedStorageDriver;
+  storageMode: ClientStorageMode;
+  storageLabel: string;
   session: VaultSession;
   hasVault: boolean;
   trajectStore?: TrajectStore;
@@ -184,6 +186,8 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
     webAuthnStatus: state.webAuthnStatus,
+    storageMode: state.storageMode,
+    storageLabel: state.storageLabel,
     inAppFallbackNotifications: buildInAppFallbackNotifications(
       state.herinneringen,
       state.settings,
@@ -306,11 +310,14 @@ async function mount(): Promise<void> {
   const app = document.getElementById('app');
   if (!app) return;
 
-  const driver = await openIndexedDbDriver();
+  const storage = await openClientStorage();
+  const driver = storage.driver;
   await registerKiempadServiceWorker().catch(() => undefined);
   const session = new VaultSession(driver);
   const state: RuntimeState = {
     driver,
+    storageMode: storage.mode,
+    storageLabel: storage.label,
     session,
     hasVault: await session.hasVault(),
     trajecten: [],
