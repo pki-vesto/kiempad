@@ -88,6 +88,25 @@ describe('central encrypted HTTP API contract', () => {
     );
   });
 
+  it('houdt sessie-TTL server-owned en negeert ttlMs uit HTTP session bodies', async () => {
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(
+        new MemoryCentralEncryptedDatabase(),
+        new MemoryCentralSessionStore({ ttlMs: 60_000 }),
+      ),
+    );
+
+    const response = await api.handle({
+      method: 'POST',
+      path: '/sessions',
+      body: { userId: 'user-peter', ttlMs: 365 * 24 * 60 * 60 * 1000 },
+    });
+
+    expect(response.status).toBe(201);
+    const ticket = response.body as { issuedAt: string; expiresAt: string };
+    expect(Date.parse(ticket.expiresAt) - Date.parse(ticket.issuedAt)).toBe(60_000);
+  });
+
   it('mapt cross-user recordtoegang naar not found zonder plaintext of bestaan te lekken', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const api = new CentralEncryptedHttpApi(

@@ -110,7 +110,7 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
 
 export async function issueCentralFetchSession(
   baseUrl: string,
-  input: { userId: string; ttlMs?: number },
+  input: { userId: string },
   fetcher: FetchLike = defaultFetch,
 ): Promise<{ token: string; userId: string; issuedAt: string; expiresAt: string }> {
   const response = await fetcher(`${baseUrl}/sessions`, {

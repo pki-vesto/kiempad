@@ -48,7 +48,9 @@ verschillende origins draaien, moet de PWA-origin ook in
 `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan. De centrale fetch-client vernieuwt een
 verlopen bearer token maximaal één keer via `POST /sessions` voor dezelfde
 configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
-geen stille legacy fallback.
+geen stille legacy fallback. De sessie-TTL komt alleen uit serverconfiguratie
+(`KIEMPAD_CENTRAL_SESSION_TTL_MS`); `POST /sessions` accepteert geen client-owned
+TTL-beleid.
 
 Standaardwaarden:
 
