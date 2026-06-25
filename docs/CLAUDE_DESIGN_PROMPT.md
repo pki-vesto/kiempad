@@ -124,11 +124,11 @@ Ontwerp deze hoofdschermen volledig:
 8. Dossier
    - Meerdere historische onderzoeken uploaden.
    - Lokale niet-medische analyse van bestandsnaam, type en grootte.
-   - Foto's, echo's en beelden uploaden met lokale preview na ontgrendeling.
+   - Foto's, echo's en beelden uploaden met lokale preview uit de ontgrendelde dataset.
    - Gespreksverslagen uploaden en koppelen aan afspraak/traject.
    - Embryokwaliteit vastleggen per embryo/poging/terugplaatsing.
    - Embryostatus, dag, kwaliteit volgens kliniek, zonder kansberekening.
-   - Dossierbijlagen blijven lokaal versleuteld.
+   - Dossierbijlagen worden encrypted bewaard; in centrale modus horen ze bij de centrale encrypted dataset, in legacy fallback bij de lokale encrypted dataset.
 
 9. Kennis
    - Kennisitems per categorie: fasen, leefstijl, kosten, research.
@@ -170,13 +170,14 @@ Ontwerp deze hoofdschermen volledig:
 13. Logboek
    - Lokale gebeurtenissen: kluis, back-up, systeem.
    - Recente gebeurtenissen met categorie, datum/tijd en detail.
-   - Blijft lokaal op het toestel.
+   - In centrale modus staat het logboek in de centrale encrypted dataset; in legacy fallback blijft het op het toestel.
 
 14. Back-up en beveiliging
    - Versleutelde `.kiempad-export` downloaden/importeren.
    - Checksum-gecontroleerde import.
    - Back-upaanmoediging bij ontbrekende of oude back-up.
-   - `.kiempad-sync` pakket downloaden/importeren voor gekoppelde kluis.
+   - Centrale modus: multi-device continuïteit via de centrale encrypted API/dataset; `.kiempad-sync` is alleen optionele handmatige encrypted recordoverdracht.
+   - Legacy fallback: `.kiempad-sync` pakket downloaden/importeren voor een via back-up gekoppelde lokale kluis.
    - Conflicten last-wins op `updatedAt`.
    - WebAuthn/biometrie koppelen als optioneel lokaal ontgrendelgemak via PRF-keywrap.
    - Passphrase blijft fallback en herstelroute.
