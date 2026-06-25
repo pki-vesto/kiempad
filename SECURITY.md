@@ -63,7 +63,12 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   passphrases of afgeleide raw keys.
 - **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
-  deployment hardening horen bij de productiehost.
+  deployment hardening horen bij de productiehost. De containerwrapper publiceert
+  standaard alleen op `127.0.0.1`; HTTPS hoort via Tailscale Serve of een reverse
+  proxy voor de API te eindigen.
+- **Persistence volume:** behandel `data/central/` of `/data` als gevoelig. De
+  payloads zijn encrypted, maar owner/indexmetadata en gebruikspatronen mogen niet
+  publiek worden.
 - **Afhankelijkheden:** minimaliseer npm-dependencies; houd ze actueel; CI kan een
   audit-stap draaien.
 
@@ -91,6 +96,8 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
   encrypted storage access.
 - [x] Node HTTP backend boundary met file-backed encrypted persistence en
   integratietests via echte HTTP/fetch calls.
+- [x] Startbaar centraal backendcommando en containerwrapper met host-local poort en
+  persistent datavolume.
 - [x] Centrale persistence snapshots zonder plaintext medische payloads, met
   restarttests voor retrieval, user-isolatie en verkeerde sleutel.
 - [x] Legacy lokale opslag blijft versleuteld; nieuwe opslagrichting is centrale

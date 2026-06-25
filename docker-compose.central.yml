@@ -1,0 +1,18 @@
+services:
+  kiempad-central-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      KIEMPAD_CENTRAL_HOST: 0.0.0.0
+      KIEMPAD_CENTRAL_PORT: 8099
+      KIEMPAD_CENTRAL_PERSISTENCE_FILE: /data/kiempad-central-db.json
+      KIEMPAD_CENTRAL_SESSION_TTL_MS: ${KIEMPAD_CENTRAL_SESSION_TTL_MS:-3600000}
+    ports:
+      - "127.0.0.1:${KIEMPAD_CENTRAL_LOCAL_PORT:-8099}:8099"
+    restart: unless-stopped
+    volumes:
+      - kiempad_central_data:/data
+
+volumes:
+  kiempad_central_data:

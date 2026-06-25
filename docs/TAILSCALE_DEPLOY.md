@@ -1,9 +1,10 @@
 # Kiempad via Tailscale HTTPS-node
 
 Doel: Kiempad publiceren op een **aparte Tailscale-node** met hostname `kiempad`,
-vergelijkbaar met Shred (`shred`) en Healthcore (`healthcore`), maar zonder backend
-of serverdata. De node serveert alleen de statische PWA-assets; alle Kiempad-data
-blijft lokaal en versleuteld in de browser.
+vergelijkbaar met Shred (`shred`) en Healthcore (`healthcore`). De bestaande
+Tailscale-stack in dit document serveert de statische PWA-assets. De centrale
+encrypted backend heeft een aparte runtime en Compose-wrapper; zie
+[`CENTRAL_ENCRYPTED_BACKEND.md`](CENTRAL_ENCRYPTED_BACKEND.md).
 
 Actuele productie-URL: `https://kiempad.tail9d0c71.ts.net`.
 Lokale fallback op de host: `http://127.0.0.1:8098`.
@@ -21,12 +22,13 @@ kiempad-ts (tailscale/tailscale)
           └─ kiempad-web (nginx, statische dist/)
 ```
 
-Belangrijk:
+Belangrijk voor deze statische PWA-stack:
 
 - Geen Tailscale Funnel. Kiempad blijft alleen bereikbaar voor apparaten in de
   tailnet.
-- Geen applicatie-backend, serverdatabase of server-side gebruikersdata.
-- De container is stateless; IndexedDB-data blijft op het toestel.
+- Geen backendcontainer in `docker-compose.tailscale.yml`.
+- De webcontainer is stateless; centrale encrypted opslag draait alleen als de
+  aparte backendruntime expliciet wordt gestart.
 - Tailscale HTTPS gebruikt de MagicDNS-naam `kiempad.<tailnet>.ts.net`.
 
 Bronnen voor de gebruikte Tailscale-route:
