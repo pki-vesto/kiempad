@@ -6,16 +6,26 @@ import {
   MemoryCentralSessionStore,
 } from '../src/storage/centralApi';
 import {
+  type CentralAuthSession,
+  type CentralDatabasePersistence,
+  type CentralDatabaseSnapshot,
   MemoryCentralDatabasePersistence,
   PersistedCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
+import type { EncryptedRecord } from '../src/storage/records';
 import { VaultSession } from '../src/storage/vaultSession';
 
 type TestRecord = {
   id: string;
   titel: string;
   gevoeligeNotitie: string;
+};
+
+const testSession: CentralAuthSession = {
+  userId: 'user-peter',
+  sessionId: 'session-peter',
+  issuedAt: '2026-06-25T08:00:00.000Z',
 };
 
 describe('central encrypted database persistence', () => {
@@ -150,4 +160,81 @@ describe('central encrypted database persistence', () => {
       wrongKeyVault.initializeOrUnlock('verkeerde persisted passphrase'),
     ).rejects.toThrow('Passphrase klopt niet');
   });
+
+  it('maakt een gefaalde record-save niet zichtbaar in de draaiende centrale runtime', async () => {
+    const database = await PersistedCentralEncryptedDatabase.open(new RejectingPersistence());
+
+    await expect(
+      database.putRecord(testSession, createEncryptedRecord('failed-record')),
+    ).rejects.toThrow('central persistence unavailable');
+
+    await expect(database.getRecord(testSession, 'failed-record')).resolves.toBeUndefined();
+    await expect(database.listRecords(testSession)).resolves.toEqual([]);
+  });
+
+  it('maakt een gefaalde meta-save niet zichtbaar in de draaiende centrale runtime', async () => {
+    const database = await PersistedCentralEncryptedDatabase.open(new RejectingPersistence());
+
+    await expect(database.putMeta(testSession, 'schema', { version: 2 })).rejects.toThrow(
+      'central persistence unavailable',
+    );
+
+    await expect(database.getMeta(testSession, 'schema')).resolves.toBeUndefined();
+    await expect(database.listMeta(testSession)).resolves.toEqual([]);
+  });
+
+  it('maakt een gefaalde delete niet zichtbaar in de draaiende centrale runtime', async () => {
+    const existingRecord = createEncryptedRecord('existing-record');
+    const database = await PersistedCentralEncryptedDatabase.open(
+      new RejectingPersistence({
+        version: 1,
+        exportedAt: '2026-06-25T08:00:00.000Z',
+        meta: [],
+        records: [
+          {
+            ...existingRecord,
+            ownerUserId: testSession.userId,
+            storedAt: '2026-06-25T08:00:01.000Z',
+            serverVersion: 1,
+          },
+        ],
+      }),
+    );
+
+    await expect(database.deleteRecord(testSession, 'existing-record')).rejects.toThrow(
+      'central persistence unavailable',
+    );
+
+    await expect(database.getRecord(testSession, 'existing-record')).resolves.toEqual(
+      existingRecord,
+    );
+  });
 });
+
+class RejectingPersistence implements CentralDatabasePersistence {
+  constructor(private readonly snapshot?: CentralDatabaseSnapshot) {}
+
+  async load(): Promise<CentralDatabaseSnapshot | undefined> {
+    return this.snapshot ? structuredClone(this.snapshot) : undefined;
+  }
+
+  async save(): Promise<void> {
+    throw new Error('central persistence unavailable');
+  }
+}
+
+function createEncryptedRecord(id: string): EncryptedRecord {
+  return {
+    id,
+    type: 'traject',
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt: '2026-06-25T08:00:00.000Z',
+    schemaVersion: 1,
+    payload: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `iv-${id}`,
+      ciphertext: `ciphertext-${id}`,
+    },
+  };
+}
