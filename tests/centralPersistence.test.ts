@@ -9,6 +9,7 @@ import {
   type CentralAuthSession,
   type CentralDatabasePersistence,
   type CentralDatabaseSnapshot,
+  CentralDataValidationError,
   MemoryCentralDatabasePersistence,
   PersistedCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
@@ -172,6 +173,23 @@ describe('central encrypted database persistence', () => {
     await expect(database.listRecords(testSession)).resolves.toEqual([]);
   });
 
+  it('weigert malformed recordwrites vóór centrale persistence-save', async () => {
+    const persistence = new CountingPersistence();
+    const database = await PersistedCentralEncryptedDatabase.open(persistence);
+    const malformedRecord = {
+      ...createEncryptedRecord('malformed-record'),
+      payload: { plaintext: 'mag niet in centrale runtime state' },
+    } as never;
+
+    await expect(database.putRecord(testSession, malformedRecord)).rejects.toBeInstanceOf(
+      CentralDataValidationError,
+    );
+
+    expect(persistence.saveCount).toBe(0);
+    await expect(database.getRecord(testSession, 'malformed-record')).resolves.toBeUndefined();
+    await expect(database.listRecords(testSession)).resolves.toEqual([]);
+  });
+
   it('maakt een gefaalde meta-save niet zichtbaar in de draaiende centrale runtime', async () => {
     const database = await PersistedCentralEncryptedDatabase.open(new RejectingPersistence());
 
@@ -327,6 +345,15 @@ class FailOncePersistence extends MemoryCentralDatabasePersistence {
       this.shouldFail = false;
       throw new Error('central persistence unavailable once');
     }
+    await super.save(snapshot);
+  }
+}
+
+class CountingPersistence extends MemoryCentralDatabasePersistence {
+  saveCount = 0;
+
+  override async save(snapshot: CentralDatabaseSnapshot): Promise<void> {
+    this.saveCount += 1;
     await super.save(snapshot);
   }
 }

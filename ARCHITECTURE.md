@@ -76,7 +76,9 @@ en blijft ook centraal **versleuteld at rest**.
   clear indexvelden, `serverVersion`, `storedAt` en een `EncryptionEnvelope`.
   `CentralEncryptedDatabase` dwingt actieve sessies en user-isolatie af door records
   intern op owner+record-id te namespacen; dezelfde client-id mag dus per gebruiker
-  bestaan zonder cross-user write-block of existence leak.
+  bestaan zonder cross-user write-block of existence leak. Recordwrites worden ook
+  aan deze databasegrens gevalideerd op bekende recordtypes, canonieke timestamps,
+  positieve schemaversie en complete `AES-256-GCM` envelopes vóór runtime-mutatie.
 - **Duurzame databasegrens:** `CentralDatabaseSnapshot` serialiseert alleen
   encrypted records en user-scoped metadata. `PersistedCentralEncryptedDatabase`
   flushes writes naar een `CentralDatabasePersistence` adapter, zodat productie later
