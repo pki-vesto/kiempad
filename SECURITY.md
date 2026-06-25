@@ -14,8 +14,9 @@ symptomen, notities, research).
   passphrase.
 - **Andere apps / nieuwsgierige software op het toestel** → data versleuteld at rest;
   geen klare-tekst gevoelige velden.
-- **Afluisteren onderweg** → alles lokaal; bij opt-in verkeer (AI/sync) uitsluitend
-  over TLS, en bij sync end-to-end versleuteld.
+- **Afluisteren onderweg** → centrale opslag/API uitsluitend via TLS; payloads zijn
+  daarnaast client-side versleuteld, zodat de backend geen medische inhoud hoeft te
+  kunnen lezen.
 - **Ongewild lekken naar derden** → geen tracking, opt-in voor uitgaand verkeer,
   dataminimalisatie.
 
@@ -49,8 +50,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **AI-provider (opt-in):** verzonden tekst kan door de provider gelogd/gecached
   worden. Daarom: minimaliseren en de-identificeren, alleen op expliciet verzoek,
   default uit. Gebruiker kiest provider/model en levert eigen sleutel.
-- **Sync-relay:** ziet uitsluitend versleutelde blobs; compromittering van de relay
-  levert geen leesbare data op.
+- **Centrale encrypted database/API:** ziet uitsluitend minimale indexmetadata,
+  owner/servermetadata en versleutelde blobs; compromittering van de database levert
+  geen leesbare medische payloads op zonder sleutel.
 - **Afhankelijkheden:** minimaliseer npm-dependencies; houd ze actueel; CI kan een
   audit-stap draaien.
 
@@ -71,8 +73,12 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
   serveraccount en geen passphrase-opslag.
 - [x] Auto-lock na inactiviteit.
 - [x] Geen tracking/analytics/ads; geen third-party scripts.
-- [x] Geen standaard uitgaand verkeer; privacy-test borgt dat opslag lokaal blijft.
-- [x] Opt-in voor sync; E2E-syncpakket bevat alleen versleutelde blobs.
+- [x] Centrale encrypted database-foundation met per-user isolatie en encrypted
+  recordpayloads.
+- [x] Legacy lokale opslag blijft versleuteld; nieuwe opslagrichting is centrale
+  encrypted persistence.
+- [x] Opt-in/centrale sync gebruikt encrypted blobs; backend/database bewaart geen
+  plaintext medische payloads.
 - [ ] Opt-in voor AI; TLS voor eventuele externe provider.
 - [ ] Versleutelde back-up/export; veilig sleutelbeheer voor een eventuele AI-sleutel.
 - [x] `.env` en data/back-ups buiten git (`.gitignore`) plus lichte secrets-scan in CI.

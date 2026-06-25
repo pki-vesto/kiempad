@@ -18,14 +18,15 @@
   van **één stel** (Peter & partner).
 - **Voor wie:** uitsluitend dit stel. **Geen distributie, geen externe gebruikers.**
 - **Regio:** Nederland (vergoedingen, AVG-context, bronnen op NL afgestemd).
-- **Grondhouding:** privacy-first en **local-first** — gezondheidsdata blijft
-  **lokaal en versleuteld** op het toestel; standaard gaat er **niets** naar derden
-  zonder expliciete keuze.
+- **Grondhouding:** privacy-first en **centraal encrypted** — nieuwe data hoort
+  beschikbaar te zijn op gekoppelde apparaten, maar medische inhoud blijft
+  client-side versleuteld; standaard gaat er **niets** naar derden zonder expliciete
+  keuze.
 - **Status:** F1 is gestart met een eerste app-shell bovenop het fundament. Zie
   [`CURRENT_STATE.md`](CURRENT_STATE.md) voor wat wél/niet gebouwd is.
 - **Plek in het ecosysteem:** eigen **publieke** repo onder `pki-vesto`, naast de
   andere apps. De **code en docs zijn publiek**; de **gezondheidsdata blijft
-  local-first en privé** en staat niet in de repo. Bewust **buiten** de Sentinel
+  encrypted en privé** en staat niet in de repo. Bewust **buiten** de Sentinel
   autonome build-governance: dit is een persoonlijke app die met de hand (met
   AI-assistentie) wordt gebouwd. Zie [`MASTER_CONTEXT.md`](MASTER_CONTEXT.md) en
   [`docs/adr/0006-repo-publiek.md`](docs/adr/0006-repo-publiek.md).
@@ -41,8 +42,8 @@ Kiempad lost vijf concrete problemen op gedurende het traject:
 5. **Afwegingen** tussen opties gestructureerd vastleggen.
 
 De MVP richt zich op overzicht, agenda, het medicatie-/injectieschema met
-herinneringen, vragen-voor-de-arts en een basis-kennisbank — alles op een
-versleutelde, lokale opslag.
+herinneringen, vragen-voor-de-arts en een basis-kennisbank — met centrale encrypted
+opslag als nieuwe richting en de lokale vault als legacy/compatibiliteit.
 
 ## Setup (fresh checkout)
 
@@ -61,10 +62,11 @@ npm install
 npm run dev          # of: make dev   — start de Vite dev-server (PWA)
 ```
 
-De app draait volledig client-side. Bij eerste gebruik kies je een **wachtwoord
-(passphrase)**; daarvan wordt een sleutel afgeleid waarmee alle lokale data wordt
-versleuteld (zie [`SECURITY.md`](SECURITY.md)). Zonder dat wachtwoord is de data
-niet leesbaar.
+De app gebruikt een client-side encryptielaag. Bij eerste gebruik kies je een
+**wachtwoord (passphrase)**; daarvan wordt een sleutel afgeleid waarmee gevoelige
+payloads worden versleuteld (zie [`SECURITY.md`](SECURITY.md)). Zonder dat
+wachtwoord is de data niet leesbaar. Bestaande lokale vaults hoeven niet te worden
+gemigreerd; nieuwe data beweegt naar het centrale encrypted model.
 
 ## Tests & build
 
@@ -130,13 +132,15 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
 
 ## Architecture Summary
 
-- **Client-side PWA** in TypeScript (Vite). Geen verplichte backend voor de MVP.
-- **Local-first opslag:** IndexedDB met **client-side versleuteling** (Web Crypto,
-  AES-GCM; sleutel afgeleid van een passphrase).
+- **Client-side PWA** in TypeScript (Vite), met een centrale encrypted data-API als
+  nieuwe opslagrichting.
+- **Centrale encrypted opslag:** minimale server-side indexmetadata plus
+  **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
+  een passphrase).
 - **CSP:** `index.html` bevat een local-first Content Security Policy die scripts en
   netwerkverbindingen standaard tot de eigen origin beperkt.
-- **Back-up:** versleutelde export/import als bestand (handmatig, op je eigen
-  apparaat).
+- **Legacy/back-up:** lokale IndexedDB-vault en versleutelde export/import blijven
+  beschikbaar als compatibiliteit en fallback.
 - **Ontgrendelen:** passphrase als basis; optioneel WebAuthn/biometrie via lokale
   PRF-keywrap als gemak op ondersteunde HTTPS/localhost-browsers.
 - **AI (optioneel, opt-in):** alleen op expliciet verzoek; samenvatten van research
@@ -144,8 +148,8 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
   De on-device AI-verkenning toont alleen passief lokale browsermogelijkheden; Kiempad
   start daarbij geen sessie en downloadt geen model.
   Promptcontracten staan centraal in [`docs/AI_PROMPT_REGISTRY.md`](docs/AI_PROMPT_REGISTRY.md).
-- **Sync:** optionele end-to-end versleutelde syncpakketten tussen gekoppelde
-  apparaten; een relay of handmatige drager ziet enkel onleesbare blobs.
+- **Multi-device:** gekoppelde apparaten gebruiken dezelfde centrale encrypted
+  records; een backend/relay ziet enkel onleesbare blobs.
 
 Volledige uitwerking en afgewogen alternatieven: [`ARCHITECTURE.md`](ARCHITECTURE.md).
 

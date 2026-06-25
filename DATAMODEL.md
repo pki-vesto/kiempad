@@ -2,7 +2,8 @@
 
 > Entiteiten, velden en relaties. De stabiele kernvormen staan ook in code in
 > [`src/domain/types.ts`](src/domain/types.ts), zodat docs en implementatie niet
-> uit elkaar lopen. Alles wordt **versleuteld lokaal** opgeslagen (zie
+> uit elkaar lopen. Nieuwe data wordt via een **centrale encrypted opslaglaag**
+> bewaard; de oude lokale IndexedDB-kluis is legacy/compatibiliteit (zie
 > [`SECURITY.md`](SECURITY.md)). Dit is een eerste, verfijnbare schets.
 
 ## Overzicht & relaties
@@ -248,12 +249,18 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
 
 ## Opslag & versleuteling (kort)
 
-- Records worden als **versleutelde blobs** in IndexedDB bewaard; alleen
-  niet-gevoelige indexvelden (bv. `type`, `datum` voor sortering) staan in klare
-  tekst waar zoeken dat vereist — bewust minimaal.
+- Records worden als **versleutelde blobs** bewaard. In het centrale model bevat de
+  serverrij alleen `ownerUserId`, minimale indexvelden (`id`, `type`, timestamps,
+  schemaversie), servermetadata en de encrypted payload.
+- Alleen niet-gevoelige indexvelden staan in klare tekst waar zoeken/sorteren dat
+  vereist — bewust minimaal. Vrije tekst, medische/fertiliteitsinhoud, bijlagen,
+  consultdata en notities blijven in de encrypted payload.
+- User-isolatie is onderdeel van de opslaglaag: centrale reads/writes vereisen een
+  geldige sessie en records van een andere gebruiker worden geweigerd.
 - De opslagmetadata bevat een `schema` record met de huidige schemaversie. De app
-  vult ontbrekende schemametadata bij ontgrendelen aan en weigert een kluis met een
+  vult ontbrekende schemametadata bij ontgrendelen aan en weigert data met een
   nieuwer schema dan deze app ondersteunt.
 - Migraties zijn **additief**: velden komen erbij, betekenis van bestaande velden
   verandert niet (vgl. de "additive-only" lijn in het ecosysteem).
-- Export/back-up serialiseert alle records **versleuteld** naar één bestand.
+- Lokale export/back-up blijft mogelijk voor legacy/offline fallback en serialiseert
+  alle records **versleuteld** naar één bestand.
