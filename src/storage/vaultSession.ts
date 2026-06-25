@@ -14,6 +14,8 @@ import { ensureStorageSchema } from './schema';
 
 const CRYPTO_META_KEY = 'crypto';
 export const WEBAUTHN_META_KEY = 'webauthn-unlock';
+const WEBAUTHN_DATASET_KEY_PURPOSE = 'kiempad-webauthn-wrapped-dataset-key';
+const LEGACY_WEBAUTHN_VAULT_KEY_PURPOSE = 'kiempad-webauthn-wrapped-vault-key';
 
 type CryptoMetadata = {
   version: 1;
@@ -30,7 +32,7 @@ type VerifierPayload = {
 };
 
 type WrappedVaultKeyPayload = {
-  purpose: 'kiempad-webauthn-wrapped-vault-key';
+  purpose: typeof WEBAUTHN_DATASET_KEY_PURPOSE | typeof LEGACY_WEBAUTHN_VAULT_KEY_PURPOSE;
   version: 1;
   rawKey: string;
 };
@@ -120,7 +122,7 @@ export class VaultSession {
     const existing = await this.getWebAuthnUnlockMetadata();
     const wrapper = await encryptJson(
       {
-        purpose: 'kiempad-webauthn-wrapped-vault-key',
+        purpose: WEBAUTHN_DATASET_KEY_PURPOSE,
         version: 1,
         rawKey: bytesToBase64(this.rawKey),
       } satisfies WrappedVaultKeyPayload,
@@ -145,7 +147,7 @@ export class VaultSession {
     const metadata = await this.getWebAuthnUnlockMetadata();
     const cryptoMetadata = await this.driver.getMeta<CryptoMetadata>(CRYPTO_META_KEY);
     if (!metadata || !cryptoMetadata) {
-      throw new Error('WebAuthn-ontgrendeling is niet ingesteld voor deze kluis.');
+      throw new Error('WebAuthn-ontgrendeling is niet ingesteld voor deze Kiempad-dataset.');
     }
 
     const wrappingKey = await importAesKey(normalizePrfSecret(prfSecret));
@@ -153,11 +155,16 @@ export class VaultSession {
     try {
       payload = await decryptJson<WrappedVaultKeyPayload>(metadata.wrapper, wrappingKey);
     } catch (error) {
-      throw new Error('WebAuthn-verificatie past niet bij deze Kiempad-kluis.', { cause: error });
+      throw new Error('WebAuthn-verificatie past niet bij deze Kiempad-dataset.', {
+        cause: error,
+      });
     }
 
-    if (payload.purpose !== 'kiempad-webauthn-wrapped-vault-key') {
-      throw new Error('Ongeldige WebAuthn-kluisverificatie.');
+    if (
+      payload.purpose !== WEBAUTHN_DATASET_KEY_PURPOSE &&
+      payload.purpose !== LEGACY_WEBAUTHN_VAULT_KEY_PURPOSE
+    ) {
+      throw new Error('Ongeldige WebAuthn-datasetverificatie.');
     }
 
     const rawKey = base64ToBytes(payload.rawKey);
@@ -210,7 +217,7 @@ export class VaultSession {
     );
     const key = await importAesKey(rawKey);
 
-    await this.verifyVaultKey(key, metadata, 'Passphrase klopt niet voor deze Kiempad-kluis.');
+    await this.verifyVaultKey(key, metadata, 'Passphrase klopt niet voor deze Kiempad-dataset.');
 
     this.key = key;
     this.rawKey = rawKey;
@@ -221,12 +228,12 @@ export class VaultSession {
   private async verifyVaultKey(
     key: CryptoKey,
     metadata: CryptoMetadata,
-    failureMessage = 'WebAuthn-sleutel klopt niet voor deze Kiempad-kluis.',
+    failureMessage = 'WebAuthn-sleutel klopt niet voor deze Kiempad-dataset.',
   ): Promise<void> {
     try {
       const verifier = await decryptJson<VerifierPayload>(metadata.verifier, key);
       if (verifier.purpose !== 'kiempad-passphrase-verifier') {
-        throw new Error('Ongeldige kluisverificatie.');
+        throw new Error('Ongeldige datasetverificatie.');
       }
     } catch (error) {
       throw new Error(failureMessage, { cause: error });

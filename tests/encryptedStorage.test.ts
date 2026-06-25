@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { decryptJson, encryptJson, importAesKey } from '../src/storage/crypto';
 import { randomBytes } from '../src/storage/encoding';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
 import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
@@ -129,6 +130,14 @@ describe('encrypted storage', () => {
     });
     expect(JSON.stringify(metadata)).not.toContain('webauthn passphrase');
     expect(JSON.stringify(metadata)).not.toContain('blijft versleuteld');
+    expect(
+      await decryptJson<{ purpose: string }>(
+        metadata?.wrapper ?? failTest('WebAuthn metadata ontbreekt.'),
+        await importAesKey(prfSecret),
+      ),
+    ).toMatchObject({
+      purpose: 'kiempad-webauthn-wrapped-dataset-key',
+    });
 
     const webAuthnSession = new VaultSession(driver, { autoLockMs: 60_000 });
     await webAuthnSession.unlockWithWebAuthnPrf(prfSecret);
@@ -141,6 +150,43 @@ describe('encrypted storage', () => {
     await expect(webAuthnRepository.get(index.id)).resolves.toMatchObject({
       value: { naam: 'Poging 1', notitie: 'blijft versleuteld' },
     });
+  });
+
+  it('blijft legacy WebAuthn vault-key wrappers accepteren voor bestaande datasets', async () => {
+    const driver = new MemoryEncryptedStorageDriver();
+    const session = new VaultSession(driver, { autoLockMs: 60_000 });
+    await session.initializeOrUnlock('legacy webauthn passphrase');
+
+    const prfSecret = randomBytes(32);
+    await session.enableWebAuthnUnlock({
+      credentialId: 'credential-id',
+      prfSalt: randomBytes(32),
+      prfSecret,
+      label: 'Bestaande biometrie',
+    });
+    const metadata = await driver.getMeta<WebAuthnUnlockMetadata>('webauthn-unlock');
+    const existingMetadata = metadata ?? failTest('WebAuthn metadata ontbreekt.');
+    const wrappingKey = await importAesKey(prfSecret);
+    const payload = await decryptJson<{ purpose: string; version: 1; rawKey: string }>(
+      existingMetadata.wrapper,
+      wrappingKey,
+    );
+    await driver.putMeta<WebAuthnUnlockMetadata>('webauthn-unlock', {
+      ...existingMetadata,
+      wrapper: await encryptJson(
+        {
+          ...payload,
+          purpose: 'kiempad-webauthn-wrapped-vault-key',
+        },
+        wrappingKey,
+      ),
+    });
+    session.lock();
+
+    const legacySession = new VaultSession(driver, { autoLockMs: 60_000 });
+    await legacySession.unlockWithWebAuthnPrf(prfSecret);
+
+    expect(legacySession.isUnlocked()).toBe(true);
   });
 
   it('weigert WebAuthn-ontgrendeling met een andere PRF-output', async () => {
@@ -158,7 +204,7 @@ describe('encrypted storage', () => {
     const wrongSession = new VaultSession(driver, { autoLockMs: 60_000 });
 
     await expect(wrongSession.unlockWithWebAuthnPrf(randomBytes(32))).rejects.toThrow(
-      'WebAuthn-verificatie past niet bij deze Kiempad-kluis',
+      'WebAuthn-verificatie past niet bij deze Kiempad-dataset',
     );
   });
 
@@ -184,3 +230,7 @@ describe('encrypted storage', () => {
     }
   });
 });
+
+function failTest(message: string): never {
+  throw new Error(message);
+}
