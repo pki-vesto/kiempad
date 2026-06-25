@@ -144,6 +144,7 @@ describe('central encrypted Node backend runtime', () => {
     expect(sessionResponse.headers.get('access-control-allow-origin')).toBe(
       'http://localhost:5173',
     );
+    expectSecurityHeaders(sessionResponse);
 
     await rm(directory, { recursive: true, force: true });
   });
@@ -165,6 +166,45 @@ describe('central encrypted Node backend runtime', () => {
     expect(preflightResponse.status).toBe(403);
     expect(preflightResponse.headers.get('access-control-allow-origin')).toBeNull();
     expect(await preflightResponse.json()).toEqual({ error: 'cors-origin-not-allowed' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
+  it('zet no-store security headers op sessies, preflight en 204 API responses', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile, {
+      allowedOrigins: ['http://localhost:5173'],
+    });
+
+    const preflightResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'OPTIONS',
+      headers: {
+        origin: 'http://localhost:5173',
+        'access-control-request-method': 'POST',
+      },
+    });
+    expect(preflightResponse.status).toBe(204);
+    expectSecurityHeaders(preflightResponse);
+
+    const sessionResponse = await fetch(`${server.baseUrl}/sessions`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ userId: 'user-peter' }),
+    });
+    expect(sessionResponse.status).toBe(201);
+    expectSecurityHeaders(sessionResponse);
+    const ticket = (await sessionResponse.json()) as { token: string };
+
+    const metaResponse = await fetch(`${server.baseUrl}/meta/security-smoke`, {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${ticket.token}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ value: { ok: true } }),
+    });
+    expect(metaResponse.status).toBe(204);
+    expectSecurityHeaders(metaResponse);
 
     await rm(directory, { recursive: true, force: true });
   });
@@ -218,4 +258,11 @@ async function listen(server: Server): Promise<void> {
       resolve();
     });
   });
+}
+
+function expectSecurityHeaders(response: Response): void {
+  expect(response.headers.get('cache-control')).toBe('no-store');
+  expect(response.headers.get('pragma')).toBe('no-cache');
+  expect(response.headers.get('x-content-type-options')).toBe('nosniff');
+  expect(response.headers.get('referrer-policy')).toBe('no-referrer');
 }

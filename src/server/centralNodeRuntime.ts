@@ -40,6 +40,7 @@ export async function handleCentralNodeRequest(
   response: ServerResponse,
   corsPolicy: CentralCorsPolicy = createCorsPolicy(),
 ): Promise<void> {
+  applySecurityHeaders(response);
   const corsResult = applyCorsHeaders(request, response, corsPolicy);
   if (request.method === 'OPTIONS') {
     sendPreflightResponse(response, corsResult);
@@ -108,6 +109,13 @@ function sendJson(response: ServerResponse, status: number, body: unknown): void
 
   response.setHeader('content-type', 'application/json; charset=utf-8');
   response.end(JSON.stringify(body));
+}
+
+function applySecurityHeaders(response: ServerResponse): void {
+  response.setHeader('cache-control', 'no-store');
+  response.setHeader('pragma', 'no-cache');
+  response.setHeader('x-content-type-options', 'nosniff');
+  response.setHeader('referrer-policy', 'no-referrer');
 }
 
 export type CentralCorsPolicy = {
