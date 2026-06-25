@@ -1,4 +1,5 @@
 import { CentralFetchApiClientDriver, issueCentralFetchSession } from './centralFetchClient';
+import { CentralHttpBadRequestError } from './centralHttpApi';
 import { openIndexedDbDriver } from './indexedDbDriver';
 import type { EncryptedStorageDriver } from './records';
 
@@ -62,7 +63,25 @@ export async function openClientStorage(
 function normalizeBaseUrl(value: string | undefined): string | undefined {
   const trimmed = value?.trim();
   if (!trimmed) return undefined;
-  return trimmed.replace(/\/+$/, '');
+
+  let url: URL;
+  try {
+    url = new URL(trimmed);
+  } catch (_error) {
+    throw new CentralHttpBadRequestError('Centrale API-URL is ongeldig.');
+  }
+
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+    throw new CentralHttpBadRequestError('Centrale API-URL moet http of https gebruiken.');
+  }
+  if (url.username || url.password) {
+    throw new CentralHttpBadRequestError('Centrale API-URL mag geen credentials bevatten.');
+  }
+  if (url.search || url.hash) {
+    throw new CentralHttpBadRequestError('Centrale API-URL mag geen query of fragment bevatten.');
+  }
+
+  return url.toString().replace(/\/+$/, '');
 }
 
 function normalizeUserId(value: string | undefined): string {

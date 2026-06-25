@@ -85,6 +85,59 @@ describe('client storage bootstrap', () => {
     });
   });
 
+  it('normaliseert een geldige centrale API URL met padprefix zonder trailing slash', async () => {
+    const fetcher = vi.fn(async (input: string): Promise<Response> => {
+      expect(input).toBe('https://kiempad-central.test/api/sessions');
+      return new Response(
+        JSON.stringify({
+          token: 'central-token',
+          userId: 'peter-en-partner',
+          issuedAt: '2026-06-25T09:00:00.000Z',
+          expiresAt: '2026-06-25T10:00:00.000Z',
+        }),
+        { status: 201, headers: { 'content-type': 'application/json' } },
+      );
+    });
+
+    const storage = await openClientStorage({
+      env: {
+        VITE_KIEMPAD_CENTRAL_API_URL: ' https://kiempad-central.test/api/// ',
+        VITE_KIEMPAD_CENTRAL_USER_ID: 'peter-en-partner',
+      },
+      openLegacyDriver: failUnexpectedLegacyOpen,
+      fetcher,
+    });
+
+    expect(storage.mode).toBe('central-api');
+    expect(storage.centralBaseUrl).toBe('https://kiempad-central.test/api');
+  });
+
+  it('weigert ongeldige centrale API URLs zonder legacy fallback', async () => {
+    for (const centralApiUrl of [
+      '/relative-api',
+      'not-a-url',
+      'ftp://kiempad-central.test',
+      'https://user:secret@example.test',
+      'https://kiempad-central.test?token=secret',
+      'https://kiempad-central.test/#fragment',
+    ]) {
+      const openLegacyDriver = vi.fn(async () => new MemoryEncryptedStorageDriver());
+
+      await expect(
+        openClientStorage({
+          env: {
+            VITE_KIEMPAD_CENTRAL_API_URL: centralApiUrl,
+            VITE_KIEMPAD_CENTRAL_USER_ID: 'peter-en-partner',
+          },
+          openLegacyDriver,
+          fetcher: failUnexpectedFetch,
+        }),
+      ).rejects.toThrow(/Centrale API-URL/);
+
+      expect(openLegacyDriver).not.toHaveBeenCalled();
+    }
+  });
+
   it('valt niet stil terug naar lokaal als centrale sessie-uitgifte faalt', async () => {
     const openLegacyDriver = vi.fn(async () => new MemoryEncryptedStorageDriver());
 

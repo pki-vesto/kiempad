@@ -48,9 +48,12 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   niet door `POST /sessions` bodies worden verlengd. Bij tokenverloop mag de
   centrale fetch-client één nieuw token aanvragen voor dezelfde configured
   user-scope; refresh bewaart geen passphrase of serversecret in de frontend en valt
-  niet terug naar legacy lokale opslag. De in-memory sessiestore verwijdert verlopen
-  sessies bij nieuwe sessie-uitgifte en bij tokenresolutie. De centrale fetch-client
-  stuurt geen ambient browsercredentials mee en gebruikt geen browsercache
+  niet terug naar legacy lokale opslag. Een geconfigureerde centrale API-URL moet
+  een absolute `http`/`https` URL zonder embedded credentials, query of fragment
+  zijn; ongeldige configuratie faalt gesloten zonder lokale fallback. De in-memory
+  sessiestore verwijdert verlopen sessies bij nieuwe sessie-uitgifte en bij
+  tokenresolutie. De centrale fetch-client stuurt geen ambient browsercredentials
+  mee en gebruikt geen browsercache
   (`credentials: omit`, `cache: no-store`). Succesvolle fetch-responses zonder JSON
   mediatype of met malformed JSON worden als centrale API-contractfout behandeld,
   niet als raw parse-exception.

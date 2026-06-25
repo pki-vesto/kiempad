@@ -28,6 +28,10 @@ VITE_KIEMPAD_CENTRAL_API_URL=http://127.0.0.1:8099
 VITE_KIEMPAD_CENTRAL_USER_ID=kiempad-private-user
 ```
 
+`VITE_KIEMPAD_CENTRAL_API_URL` moet een absolute `http`/`https` URL zijn zonder
+credentials, query of fragment. Een ongeldige geconfigureerde centrale URL stopt de
+bootstrap en opent geen legacy lokale kluis.
+
 De backend staat standaard alleen `kiempad-private-user` toe. Zet
 `KIEMPAD_CENTRAL_ALLOWED_USER_IDS` op de backendhost als de server-side owner-scope
 bewust anders moet zijn. De frontend user-id alleen geeft geen toegang. Zet
