@@ -74,7 +74,7 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
       this.meta.set(metaKey(entry.ownerUserId, entry.key), cloneJson(entry));
     }
     for (const record of snapshot.records) {
-      this.records.set(record.id, cloneJson(record));
+      this.records.set(recordKey(record.ownerUserId, record.id), cloneJson(record));
     }
   }
 
@@ -102,20 +102,17 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
 
   async getRecord(session: CentralAuthSession, id: string): Promise<EncryptedRecord | undefined> {
     assertActiveCentralSession(session);
-    const record = this.records.get(id);
+    const record = this.records.get(recordKey(session.userId, id));
     if (!record) return undefined;
-    assertRecordOwner(session, record);
     return stripCentralRecord(record);
   }
 
   async putRecord(session: CentralAuthSession, record: EncryptedRecord): Promise<void> {
     assertActiveCentralSession(session);
-    const existing = this.records.get(record.id);
-    if (existing) {
-      assertRecordOwner(session, existing);
-    }
+    const storageKey = recordKey(session.userId, record.id);
+    const existing = this.records.get(storageKey);
 
-    this.records.set(record.id, {
+    this.records.set(storageKey, {
       ...record,
       ownerUserId: session.userId,
       storedAt: nowIso(),
@@ -125,10 +122,7 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
 
   async deleteRecord(session: CentralAuthSession, id: string): Promise<void> {
     assertActiveCentralSession(session);
-    const existing = this.records.get(id);
-    if (!existing) return;
-    assertRecordOwner(session, existing);
-    this.records.delete(id);
+    this.records.delete(recordKey(session.userId, id));
   }
 
   async listRecords(
@@ -279,14 +273,12 @@ export function assertActiveCentralSession(session: CentralAuthSession): void {
   }
 }
 
-function assertRecordOwner(session: CentralAuthSession, record: CentralEncryptedRecord): void {
-  if (record.ownerUserId !== session.userId) {
-    throw new CentralAccessDeniedError();
-  }
-}
-
 function metaKey(userId: string, key: string): string {
   return `${userId}::${key}`;
+}
+
+function recordKey(userId: string, id: string): string {
+  return `${userId}::${id}`;
 }
 
 function stripCentralRecord(record: CentralEncryptedRecord): EncryptedRecord {

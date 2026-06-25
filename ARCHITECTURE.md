@@ -74,7 +74,9 @@ en blijft ook centraal **versleuteld at rest**.
   mogen niet centraal in plaintext staan.
 - **Server-side datamodel:** `CentralEncryptedRecord` bevat `ownerUserId`, minimale
   clear indexvelden, `serverVersion`, `storedAt` en een `EncryptionEnvelope`.
-  `CentralEncryptedDatabase` dwingt actieve sessies en user-isolatie af.
+  `CentralEncryptedDatabase` dwingt actieve sessies en user-isolatie af door records
+  intern op owner+record-id te namespacen; dezelfde client-id mag dus per gebruiker
+  bestaan zonder cross-user write-block of existence leak.
 - **Duurzame databasegrens:** `CentralDatabaseSnapshot` serialiseert alleen
   encrypted records en user-scoped metadata. `PersistedCentralEncryptedDatabase`
   flushes writes naar een `CentralDatabasePersistence` adapter, zodat productie later
@@ -89,9 +91,10 @@ en blijft ook centraal **versleuteld at rest**.
   appcode te geven.
 - **HTTP/API-contract:** `CentralEncryptedHttpApi` definieert de request/response-laag
   boven de servicegrens: `/sessions`, `/meta/*` en `/records/*` met veilige
-  statuscodes voor bad request, unauthorized en forbidden. `CentralHttpApiClientDriver`
-  gebruikt hetzelfde `EncryptedStorageDriver`-contract, zodat de app later naar
-  echte `fetch`-calls kan zonder domeinstores te herschrijven.
+  statuscodes voor bad request, unauthorized en missing records buiten de
+  owner-namespace. `CentralHttpApiClientDriver` gebruikt hetzelfde
+  `EncryptedStorageDriver`-contract, zodat de app later naar echte `fetch`-calls kan
+  zonder domeinstores te herschrijven.
 - **Node backend runtime:** `createCentralNodeHttpServer` koppelt het HTTP-contract
   aan `node:http`, `MemoryCentralSessionStore` en file-backed
   `JsonFileCentralDatabasePersistence`. `CentralFetchApiClientDriver` gebruikt echte

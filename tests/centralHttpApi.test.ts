@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 
 import { CentralEncryptedApiServer, MemoryCentralSessionStore } from '../src/storage/centralApi';
 import {
-  CentralAccessDeniedError,
   CentralSessionError,
   MemoryCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
@@ -89,7 +88,7 @@ describe('central encrypted HTTP API contract', () => {
     );
   });
 
-  it('mapt cross-user recordtoegang naar forbidden zonder plaintext leakage', async () => {
+  it('mapt cross-user recordtoegang naar not found zonder plaintext of bestaan te lekken', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const api = new CentralEncryptedHttpApi(
       new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
@@ -109,10 +108,21 @@ describe('central encrypted HTTP API contract', () => {
     const otherVault = new VaultSession(otherDriver, { autoLockMs: 60_000 });
     await otherVault.initializeOrUnlock('andere http passphrase');
 
-    await expect(otherDriver.getRecord('owner-http-record')).rejects.toBeInstanceOf(
-      CentralAccessDeniedError,
-    );
+    await expect(
+      api.handle({ method: 'GET', path: '/records/owner-http-record', token: otherToken }),
+    ).resolves.toMatchObject({ status: 404 });
+    await expect(otherDriver.getRecord('owner-http-record')).resolves.toBeUndefined();
     await expect(otherDriver.listRecords('traject')).resolves.toEqual([]);
+    await new EncryptedRecordRepository<TestRecord>(otherDriver, otherVault, 'traject').saveWithId({
+      id: 'owner-http-record',
+      titel: 'Eigen HTTP record met dezelfde id',
+      gevoeligeNotitie: 'andere namespace',
+    });
+    await expect(otherDriver.getRecord('owner-http-record')).resolves.toMatchObject({
+      id: 'owner-http-record',
+      type: 'traject',
+    });
+    expect(database.unsafeDumpRecordsForTest()).toHaveLength(2);
     expect(JSON.stringify(database.unsafeDumpRecordsForTest())).not.toContain(
       'niet voor andere gebruiker',
     );

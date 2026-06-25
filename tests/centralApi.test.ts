@@ -6,7 +6,6 @@ import {
   MemoryCentralSessionStore,
 } from '../src/storage/centralApi';
 import {
-  CentralAccessDeniedError,
   CentralSessionError,
   MemoryCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
@@ -89,7 +88,7 @@ describe('central encrypted API service', () => {
     expect(sessionStore.unsafeSessionCountForTest()).toBe(1);
   });
 
-  it('houdt API-recordtoegang user-scoped, ook wanneer een andere gebruiker een geldig token heeft', async () => {
+  it('houdt API-recordtoegang user-scoped zonder record-id bestaan te lekken', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const server = new CentralEncryptedApiServer(database, new MemoryCentralSessionStore());
     const ownerTicket = await server.issueSession({ userId: 'user-peter' });
@@ -112,9 +111,21 @@ describe('central encrypted API service', () => {
       'traject',
     );
 
-    await expect(otherRepository.get('owner-record')).rejects.toBeInstanceOf(
-      CentralAccessDeniedError,
-    );
+    await expect(otherRepository.get('owner-record')).resolves.toBeUndefined();
     await expect(otherRepository.list()).resolves.toEqual([]);
+
+    await otherRepository.saveWithId({
+      id: 'owner-record',
+      titel: 'Eigen record met dezelfde id',
+      gevoeligeNotitie: 'andere gebruiker heeft eigen namespace',
+    });
+    await expect(otherRepository.get('owner-record')).resolves.toMatchObject({
+      value: {
+        id: 'owner-record',
+        titel: 'Eigen record met dezelfde id',
+        gevoeligeNotitie: 'andere gebruiker heeft eigen namespace',
+      },
+    });
+    expect(database.unsafeDumpRecordsForTest()).toHaveLength(2);
   });
 });
