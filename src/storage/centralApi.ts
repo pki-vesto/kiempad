@@ -29,18 +29,28 @@ export interface CentralSessionStore {
   revoke(token: CentralSessionToken): Promise<void>;
 }
 
+export type CentralSessionStoreOptions = {
+  ttlMs?: number;
+  allowedUserIds?: readonly string[];
+};
+
 export class MemoryCentralSessionStore implements CentralSessionStore {
   private readonly sessions = new Map<CentralSessionToken, CentralAuthSession>();
   private readonly ttlMs: number;
+  private readonly allowedUserIds: Set<string> | undefined;
 
-  constructor(options: { ttlMs?: number } = {}) {
+  constructor(options: CentralSessionStoreOptions = {}) {
     this.ttlMs = options.ttlMs ?? 60 * 60 * 1000;
+    this.allowedUserIds = normalizeAllowedUserIds(options.allowedUserIds);
   }
 
   async issue(input: CentralSessionIssueInput): Promise<CentralSessionTicket> {
     const userId = input.userId.trim();
     if (!userId) {
       throw new CentralSessionError('Centrale sessie vereist een user id.');
+    }
+    if (this.allowedUserIds && !this.allowedUserIds.has(userId)) {
+      throw new CentralSessionError('Centrale sessie is niet toegestaan voor deze gebruiker.');
     }
 
     const issuedAt = nowIso();
@@ -77,6 +87,12 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
   unsafeSessionCountForTest(): number {
     return this.sessions.size;
   }
+}
+
+function normalizeAllowedUserIds(userIds: readonly string[] | undefined): Set<string> | undefined {
+  if (!userIds) return undefined;
+  const normalized = userIds.map((userId) => userId.trim()).filter(Boolean);
+  return normalized.length > 0 ? new Set(normalized) : undefined;
 }
 
 export class CentralEncryptedApiServer {

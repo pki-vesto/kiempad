@@ -43,6 +43,8 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 - **Centrale API-sessies** gebruiken opaque tokens. De client levert geen
   `userId`/ownerclaim per recordrequest aan; de server resolveert het token naar een
   actieve `CentralAuthSession` en weigert forged, verlopen of ingetrokken tokens.
+  Sessie-uitgifte is daarnaast beperkt tot server-side toegestane user ids; de
+  frontend-configuratie is geen autoriteit.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
   `401`, cross-user recordtoegang wordt `403`, malformed payloads worden `400`.
 - Eén-stel-app: geen rollenmodel naar buiten. In de **gedeelde modus** zijn er twee
