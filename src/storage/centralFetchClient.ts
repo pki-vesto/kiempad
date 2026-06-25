@@ -10,11 +10,16 @@ import type {
 
 type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
 
+export type CentralFetchSessionRefresher = () => Promise<{
+  token: CentralSessionToken;
+}>;
+
 export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
   constructor(
     private readonly baseUrl: string,
-    private readonly token: CentralSessionToken,
+    private token: CentralSessionToken,
     private readonly fetcher: FetchLike = defaultFetch,
+    private readonly refreshSession?: CentralFetchSessionRefresher,
   ) {}
 
   async getMeta<T>(key: string): Promise<T | undefined> {
@@ -59,6 +64,13 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
     path: string,
     options: RequestInit & { allowNotFound?: boolean } = {},
   ): Promise<T | undefined> {
+    return this.handleResponse<T>(await this.fetchWithToken(path, options), path, options, true);
+  }
+
+  private async fetchWithToken(
+    path: string,
+    options: RequestInit & { allowNotFound?: boolean },
+  ): Promise<Response> {
     const response = await this.fetcher(`${this.baseUrl}${path}`, {
       ...options,
       method: options.method ?? 'GET',
@@ -68,6 +80,21 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
         ...options.headers,
       },
     });
+
+    return response;
+  }
+
+  private async handleResponse<T>(
+    response: Response,
+    path: string,
+    options: RequestInit & { allowNotFound?: boolean },
+    allowRefresh: boolean,
+  ): Promise<T | undefined> {
+    if (response.status === 401 && allowRefresh && this.refreshSession) {
+      const ticket = await this.refreshSession();
+      this.token = ticket.token;
+      return this.handleResponse<T>(await this.fetchWithToken(path, options), path, options, false);
+    }
 
     if (response.status === 204) return undefined;
     if (response.status === 404 && options.allowNotFound) return undefined;

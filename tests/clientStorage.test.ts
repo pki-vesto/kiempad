@@ -105,6 +105,58 @@ describe('client storage bootstrap', () => {
 
     expect(openLegacyDriver).not.toHaveBeenCalled();
   });
+
+  it('wiret centrale sessie-refresh met dezelfde user id zonder legacy fallback', async () => {
+    const openLegacyDriver = vi.fn(async () => new MemoryEncryptedStorageDriver());
+    const issuedSessionBodies: unknown[] = [];
+    const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {
+      const url = new URL(input);
+      if (url.pathname === '/sessions') {
+        const body = JSON.parse(String(init?.body ?? '{}')) as unknown;
+        issuedSessionBodies.push(body);
+        const token = issuedSessionBodies.length === 1 ? 'expired-token' : 'fresh-token';
+        return new Response(
+          JSON.stringify({
+            token,
+            userId: 'peter-en-partner',
+            issuedAt: '2026-06-25T09:00:00.000Z',
+            expiresAt: '2026-06-25T10:00:00.000Z',
+          }),
+          { status: 201, headers: { 'content-type': 'application/json' } },
+        );
+      }
+
+      const token = new Headers(init?.headers).get('authorization')?.replace(/^Bearer\s+/i, '');
+      if (token === 'expired-token') {
+        return new Response(JSON.stringify({ error: 'unauthorized' }), {
+          status: 401,
+          headers: { 'content-type': 'application/json' },
+        });
+      }
+
+      return new Response(JSON.stringify({ value: { ok: true } }), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+
+    const storage = await openClientStorage({
+      env: {
+        VITE_KIEMPAD_CENTRAL_API_URL: 'https://kiempad-central.test',
+        VITE_KIEMPAD_CENTRAL_USER_ID: 'peter-en-partner',
+      },
+      openLegacyDriver,
+      fetcher,
+    });
+
+    await expect(storage.driver.getMeta('crypto')).resolves.toEqual({ ok: true });
+
+    expect(issuedSessionBodies).toEqual([
+      { userId: 'peter-en-partner' },
+      { userId: 'peter-en-partner' },
+    ]);
+    expect(openLegacyDriver).not.toHaveBeenCalled();
+  });
 });
 
 function createInMemoryCentralHttpApi(): CentralEncryptedHttpApi {

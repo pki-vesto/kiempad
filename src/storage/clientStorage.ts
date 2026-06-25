@@ -49,7 +49,9 @@ export async function openClientStorage(
   );
 
   return {
-    driver: new CentralFetchApiClientDriver(centralBaseUrl, ticket.token, options.fetcher),
+    driver: new CentralFetchApiClientDriver(centralBaseUrl, ticket.token, options.fetcher, () =>
+      issueCentralFetchSession(centralBaseUrl, { userId: centralUserId }, options.fetcher),
+    ),
     mode: 'central-api',
     label: 'Centrale encrypted API',
     centralBaseUrl,
