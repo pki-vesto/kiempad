@@ -14,7 +14,9 @@ owner/indexmetadata en encrypted envelopes.
   - `GET|PUT|DELETE /records/:id`
   - `GET /records?type=...`
   De contractlaag accepteert alleen origin-form paden; absolute of
-  protocol-relative URL's worden als ongeldig API-pad geweigerd.
+  protocol-relative URL's worden als ongeldig API-pad geweigerd. `PUT /records/:id`
+  valideert recordbody's vóór database-mutatie op canonieke ISO-timestamps,
+  positieve `schemaVersion` en een complete `AES-256-GCM` envelope.
 - `CentralEncryptedApiServer` resolveert opaque tokens naar actieve sessies.
 - `PersistedCentralEncryptedDatabase` bewaart encrypted database snapshots via een
   `CentralDatabasePersistence` adapter.
@@ -110,7 +112,8 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Request bodies moeten `Content-Type: application/json` of een `+json` mediatype
   gebruiken; andere non-empty bodytypes worden `415` vóór JSON parsing en API-side
   effects.
-- Malformed JSON of ongeldige recordpayloads worden `400`.
+- Malformed JSON of ongeldige recordpayloads worden `400`; recordwrites bereiken de
+  database pas na validatie van id, type, timestamps, schemaVersion en envelope.
 - Oversized JSON bodies boven `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` worden `413`
   voordat ze naar de centrale API-laag gaan.
 - Onverwachte fouten aan de Node HTTP-boundary worden een generieke
