@@ -77,6 +77,69 @@ describe('central fetch client', () => {
     ).resolves.toMatchObject({ token: 'central-token' });
   });
 
+  it('weigert succesvolle centrale fetch responses zonder JSON content-type', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response('<html>not the central API</html>', {
+        status: 200,
+        headers: { 'content-type': 'text/html' },
+      });
+    });
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'central-token',
+      fetcher,
+    );
+
+    await expect(driver.listMeta()).rejects.toThrow('central-fetch-invalid-json-response');
+    await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+  });
+
+  it('weigert succesvolle centrale fetch responses met malformed JSON', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response('{not-json', {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      });
+    });
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'central-token',
+      fetcher,
+    );
+
+    await expect(driver.listMeta()).rejects.toThrow('central-fetch-invalid-json-response');
+    await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+  });
+
+  it('accepteert JSON subtype responses met charset voor centrale fetch data', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response(JSON.stringify({ value: { version: 1 } }), {
+        status: 200,
+        headers: { 'content-type': 'application/vnd.kiempad+json; charset=utf-8' },
+      });
+    });
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'central-token',
+      fetcher,
+    );
+
+    await expect(driver.getMeta('crypto')).resolves.toEqual({ version: 1 });
+  });
+
+  it('weigert centrale sessietickets met succesvolle non-JSON responses', async () => {
+    const fetcher = vi.fn(async (): Promise<Response> => {
+      return new Response('created', {
+        status: 201,
+        headers: { 'content-type': 'text/plain' },
+      });
+    });
+
+    await expect(
+      issueCentralFetchSession('https://central.test', { userId: 'kiempad-private-user' }, fetcher),
+    ).rejects.toThrow('central-fetch-invalid-json-response');
+  });
+
   it('ververst een verlopen centraal sessietoken eenmalig en hergebruikt daarna het nieuwe token', async () => {
     const seenTokens: string[] = [];
     const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {

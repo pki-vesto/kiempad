@@ -106,7 +106,7 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
       throw new CentralHttpBadRequestError(await readErrorMessage(response));
     }
 
-    return (await response.json()) as T;
+    return parseJsonResponse<T>(response);
   }
 }
 
@@ -125,21 +125,42 @@ export async function issueCentralFetchSession(
   if (response.status !== 201) {
     throw new CentralHttpBadRequestError(await readErrorMessage(response));
   }
-  return (await response.json()) as {
+  return parseJsonResponse<{
     token: string;
     userId: string;
     issuedAt: string;
     expiresAt: string;
-  };
+  }>(response);
 }
 
 const defaultFetch: FetchLike = (input, init) => globalThis.fetch(input, init);
 
 async function readErrorMessage(response: Response): Promise<string> {
   try {
+    if (!hasJsonContentType(response)) return 'central-fetch-error';
     const body = (await response.json()) as { error?: string };
     return body.error ?? 'central-fetch-error';
   } catch (_error) {
     return 'central-fetch-error';
   }
+}
+
+async function parseJsonResponse<T>(response: Response): Promise<T> {
+  if (!hasJsonContentType(response)) {
+    throw new CentralHttpBadRequestError('central-fetch-invalid-json-response');
+  }
+
+  try {
+    return (await response.json()) as T;
+  } catch (_error) {
+    throw new CentralHttpBadRequestError('central-fetch-invalid-json-response');
+  }
+}
+
+function hasJsonContentType(response: Response): boolean {
+  const contentType = response.headers.get('content-type');
+  if (!contentType) return false;
+
+  const mediaType = contentType.split(';', 1)[0]?.trim().toLowerCase();
+  return mediaType === 'application/json' || mediaType?.endsWith('+json') === true;
 }

@@ -51,7 +51,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   niet terug naar legacy lokale opslag. De in-memory sessiestore verwijdert verlopen
   sessies bij nieuwe sessie-uitgifte en bij tokenresolutie. De centrale fetch-client
   stuurt geen ambient browsercredentials mee en gebruikt geen browsercache
-  (`credentials: omit`, `cache: no-store`).
+  (`credentials: omit`, `cache: no-store`). Succesvolle fetch-responses zonder JSON
+  mediatype of met malformed JSON worden als centrale API-contractfout behandeld,
+  niet als raw parse-exception.
 - **HTTP API-fouten** lekken geen recordinhoud: forged/expired/revoked tokens worden
   `401`, record-id's buiten de owner-namespace gedragen zich als ontbrekende records
   (`404`) en malformed payloads worden `400`. De centrale HTTP-contractlaag
