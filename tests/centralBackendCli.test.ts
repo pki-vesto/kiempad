@@ -74,6 +74,12 @@ describe('central backend CLI runtime', () => {
         KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES: '0',
       }),
     ).rejects.toThrow('KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES');
+
+    await expect(
+      startCentralBackendFromEnv({
+        KIEMPAD_CENTRAL_ALLOWED_ORIGINS: 'https://kiempad.example.test/path',
+      }),
+    ).rejects.toThrow('KIEMPAD_CENTRAL_ALLOWED_ORIGINS');
   });
 
   it('staat standaard alleen de private Kiempad-user toe voor sessie-uitgifte', async () => {

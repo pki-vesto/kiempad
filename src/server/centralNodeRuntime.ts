@@ -190,8 +190,38 @@ export type CentralCorsPolicy = {
 
 export function createCorsPolicy(allowedOrigins: readonly string[] = []): CentralCorsPolicy {
   return {
-    allowedOrigins: new Set(allowedOrigins.map((origin) => origin.trim()).filter(Boolean)),
+    allowedOrigins: new Set(
+      allowedOrigins
+        .map((origin) => normalizeAllowedOrigin(origin))
+        .filter((origin): origin is string => Boolean(origin)),
+    ),
   };
+}
+
+function normalizeAllowedOrigin(origin: string): string | undefined {
+  const trimmed = origin.trim();
+  if (!trimmed) return undefined;
+
+  let parsed: URL;
+  try {
+    parsed = new URL(trimmed);
+  } catch (_error) {
+    throw new Error('KIEMPAD_CENTRAL_ALLOWED_ORIGINS bevat een ongeldige origin.');
+  }
+
+  if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+    throw new Error('KIEMPAD_CENTRAL_ALLOWED_ORIGINS ondersteunt alleen http/https origins.');
+  }
+  if (parsed.username || parsed.password) {
+    throw new Error('KIEMPAD_CENTRAL_ALLOWED_ORIGINS mag geen credentials bevatten.');
+  }
+  if (parsed.pathname !== '/' || parsed.search || parsed.hash) {
+    throw new Error(
+      'KIEMPAD_CENTRAL_ALLOWED_ORIGINS moet exacte origins zonder pad/query/fragment bevatten.',
+    );
+  }
+
+  return parsed.origin;
 }
 
 function applyCorsHeaders(

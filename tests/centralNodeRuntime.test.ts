@@ -7,6 +7,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import {
   createCentralNodeHttpServer,
   createCentralNodeHttpServerFromApi,
+  createCorsPolicy,
 } from '../src/server/centralNodeRuntime';
 import { CentralSessionError } from '../src/storage/centralDatabase';
 import {
@@ -32,6 +33,29 @@ afterEach(async () => {
 });
 
 describe('central encrypted Node backend runtime', () => {
+  it('normaliseert CORS allowlist naar exacte origins', async () => {
+    const policy = createCorsPolicy([' http://localhost:5173/ ', 'https://kiempad.example.test']);
+
+    expect([...policy.allowedOrigins]).toEqual([
+      'http://localhost:5173',
+      'https://kiempad.example.test',
+    ]);
+  });
+
+  it('weigert ongeldige CORS allowlist origins bij runtime policy-aanmaak', async () => {
+    for (const origin of [
+      '*',
+      '/relative-origin',
+      'ftp://kiempad.example.test',
+      'https://user:secret@example.test',
+      'https://kiempad.example.test/path',
+      'https://kiempad.example.test?token=secret',
+      'https://kiempad.example.test/#fragment',
+    ]) {
+      expect(() => createCorsPolicy([origin])).toThrow('KIEMPAD_CENTRAL_ALLOWED_ORIGINS');
+    }
+  });
+
   it('serveert encrypted records via echte HTTP en bewaart ze na serverrestart op disk', async () => {
     const { directory, persistenceFile } = await createTempPersistence();
     const firstServer = await startRuntime(persistenceFile);

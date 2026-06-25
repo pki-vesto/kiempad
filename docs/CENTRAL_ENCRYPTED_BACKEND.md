@@ -64,11 +64,13 @@ passphrase blijft de sleutel voor de encrypted payloads.
 `VITE_KIEMPAD_CENTRAL_API_URL` moet een absolute `http`/`https` URL zijn zonder
 embedded credentials, query of fragment; een ongeldige geconfigureerde centrale URL
 faalt gesloten en opent geen legacy lokale kluis. Als de PWA en API op verschillende
-origins draaien, moet de PWA-origin ook in
-`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan. De centrale fetch-client vernieuwt een
-verlopen bearer token maximaal één keer via `POST /sessions` voor dezelfde
-configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
-geen stille legacy fallback. De sessie-TTL komt alleen uit serverconfiguratie
+origins draaien, moet de PWA-origin ook in `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` staan.
+Die allowlist accepteert alleen exacte `http`/`https` origins zonder wildcard,
+credentials, pad, query of fragment; ongeldige origins laten de runtime fail-fast
+starten. De centrale fetch-client vernieuwt een verlopen bearer token maximaal één
+keer via `POST /sessions` voor dezelfde configured user-scope; als dat faalt blijft
+het een centrale opslagfout en is er geen stille legacy fallback. De sessie-TTL komt
+alleen uit serverconfiguratie
 (`KIEMPAD_CENTRAL_SESSION_TTL_MS`); `POST /sessions` accepteert geen client-owned
 TTL-beleid. De in-memory sessiestore ruimt verlopen sessies op bij nieuwe
 sessie-uitgifte en weigert verlopen tokens ook bij tokenresolutie. De fetch-client
@@ -126,7 +128,9 @@ fetches doet. Zet deze API niet direct publiek op internet.
   centrale API-contractfout.
 - Browserrequests met een `Origin` buiten `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` worden
   `403` vóór body parsing en vóór API-side effects. Requests zonder `Origin` blijven
-  bruikbaar voor lokale/server-side tooling.
+  bruikbaar voor lokale/server-side tooling. De allowlist wordt bij runtime-start
+  gevalideerd als exacte originlijst zonder wildcard, credentials, pad, query of
+  fragment.
 - Forged, verlopen of ingetrokken tokens worden `401`.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
