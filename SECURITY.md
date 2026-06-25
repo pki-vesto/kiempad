@@ -40,6 +40,9 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
 
 - **Ontgrendelen** met passphrase; optioneel biometrie/WebAuthn als gemak via een
   lokale WebAuthn PRF-keywrap. De passphrase blijft fallback en herstelroute.
+- **Centrale API-sessies** gebruiken opaque tokens. De client levert geen
+  `userId`/ownerclaim per recordrequest aan; de server resolveert het token naar een
+  actieve `CentralAuthSession` en weigert forged, verlopen of ingetrokken tokens.
 - Eén-stel-app: geen rollenmodel naar buiten. In de **gedeelde modus** zijn er twee
   profielen (`peter`/`partner`) op dezelfde, gezamenlijk versleutelde dataset —
   vertrouwensgrens ligt bij het stel, niet tussen de partners.
@@ -75,6 +78,7 @@ bedoeling), dan eerst een meldproces en heroverweging van de AVG-status inrichte
 - [x] Geen tracking/analytics/ads; geen third-party scripts.
 - [x] Centrale encrypted database-foundation met per-user isolatie en encrypted
   recordpayloads.
+- [x] Opaque centrale API-sessietokens met expiry/revoke en server-side tokenresolutie.
 - [x] Legacy lokale opslag blijft versleuteld; nieuwe opslagrichting is centrale
   encrypted persistence.
 - [x] Opt-in/centrale sync gebruikt encrypted blobs; backend/database bewaart geen

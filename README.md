@@ -134,9 +134,10 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
 
 - **Client-side PWA** in TypeScript (Vite), met een centrale encrypted data-API als
   nieuwe opslagrichting.
-- **Centrale encrypted opslag:** minimale server-side indexmetadata plus
+- **Centrale encrypted opslag/API:** minimale server-side indexmetadata plus
   **client-side versleutelde** payloads (Web Crypto, AES-GCM; sleutel afgeleid van
-  een passphrase).
+  een passphrase). API-toegang loopt via opaque sessietokens; de server resolveert
+  tokens naar user-scoped sessies.
 - **CSP:** `index.html` bevat een local-first Content Security Policy die scripts en
   netwerkverbindingen standaard tot de eigen origin beperkt.
 - **Legacy/back-up:** lokale IndexedDB-vault en versleutelde export/import blijven
@@ -149,7 +150,7 @@ Publicatie via een aparte Tailscale HTTPS-node draait op
   start daarbij geen sessie en downloadt geen model.
   Promptcontracten staan centraal in [`docs/AI_PROMPT_REGISTRY.md`](docs/AI_PROMPT_REGISTRY.md).
 - **Multi-device:** gekoppelde apparaten gebruiken dezelfde centrale encrypted
-  records; een backend/relay ziet enkel onleesbare blobs.
+  records via API-sessies; een backend/relay ziet enkel onleesbare blobs.
 
 Volledige uitwerking en afgewogen alternatieven: [`ARCHITECTURE.md`](ARCHITECTURE.md).
 

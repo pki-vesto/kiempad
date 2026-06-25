@@ -75,9 +75,12 @@ en blijft ook centraal **versleuteld at rest**.
 - **Server-side datamodel:** `CentralEncryptedRecord` bevat `ownerUserId`, minimale
   clear indexvelden, `serverVersion`, `storedAt` en een `EncryptionEnvelope`.
   `CentralEncryptedDatabase` dwingt actieve sessies en user-isolatie af.
-- **API/storage-abstraction:** `CentralUserStorageDriver` exposeert het bestaande
-  encrypted-storage contract boven een centrale database. Daardoor kunnen domeinstores
-  via dezelfde repositoryvorm werken terwijl de opslag centraal en user-scoped is.
+- **API/storage-abstraction:** `CentralEncryptedApiServer` vormt de centrale
+  servicegrens. `MemoryCentralSessionStore` geeft opaque sessietokens uit en
+  resolveert die server-side naar een `CentralAuthSession`; forged, verlopen of
+  ingetrokken tokens worden geweigerd voordat data wordt gelezen. De client gebruikt
+  `CentralEncryptedApiClientDriver`, dat het bestaande encrypted-storage contract
+  exposeert zonder ownervelden aan appcode te geven.
 - **Versleuteling:** **AES-256-GCM** per record. De client versleutelt payloads voor
   persistente opslag; de centrale laag ziet alleen encrypted envelopes plus minimale
   indexmetadata.
@@ -102,10 +105,10 @@ Alle externe koppelingen zijn **opt-in en uit by default**:
   AI-provider. Output krijgt een waarschuwingslabel + bronvermelding, en **nooit**
   dosering/diagnose/behandelkeuze. Beslissing:
   [`docs/adr/0003-ai-met-waarborgen.md`](docs/adr/0003-ai-met-waarborgen.md).
-- **Centrale encrypted sync:** gekoppelde apparaten gebruiken dezelfde centrale
-  encrypted database en zien alleen data waarvoor hun centrale sessie en key kloppen.
-  Een relay/backend ziet enkel **versleutelde blobs**; de sleutel verlaat het toestel
-  niet in plaintext.
+- **Centrale encrypted sync/API:** gekoppelde apparaten gebruiken dezelfde centrale
+  encrypted database via opaque API-sessietokens en zien alleen data waarvoor hun
+  centrale sessie en key kloppen. Een backend ziet enkel **versleutelde blobs**; de
+  sleutel verlaat het toestel niet in plaintext.
 - **Agenda-export:** **ICS**-export/import van afspraken, lokaal gegenereerd.
 - **PDF-export:** lokaal gegenereerde samenvatting voor het consult.
 
@@ -121,9 +124,10 @@ Samengevat hierboven (sectie 2). De volledige entiteiten, velden en relaties sta
   kan offline caches/local legacy alleen als compatibiliteit gebruiken.
 - **Statische hosting:** de build kan via Docker Compose op een eigen knooppunt
   (bv. de tailnet, zoals de andere apps) worden geserveerd.
-- **Centrale data-API:** productiehosting krijgt een kleine backend/API rond het
-  `CentralEncryptedDatabase`-contract. Die backend bewaart geen plaintext medische
-  payloads en moet sessies, owner-scoping en veilige foutafhandeling afdwingen.
+- **Centrale data-API:** productiehosting krijgt een kleine backend/API rond
+  `CentralEncryptedApiServer` en het `CentralEncryptedDatabase`-contract. Die backend
+  bewaart geen plaintext medische payloads en moet opaque sessies, owner-scoping en
+  veilige foutafhandeling afdwingen.
 
 ## 7. Kostenraming
 

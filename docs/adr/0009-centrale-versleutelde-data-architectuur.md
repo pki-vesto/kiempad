@@ -26,8 +26,9 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
 - Vrije tekst, medische/fertiliteitsinhoud, bijlagen, consultdata en andere
   gevoelige velden mogen niet centraal in plaintext worden opgeslagen.
 - Toegang loopt via een expliciete **centrale sessie** (`userId`, `sessionId`,
-  geldigheid). De database accepteert alleen actieve sessies en dwingt
-  user-isolatie af.
+  geldigheid). API-clients gebruiken opaque sessietokens; de server resolveert die
+  tokens naar een sessie en weigert forged, verlopen of ingetrokken tokens voordat
+  databasecalls plaatsvinden.
 - De bestaande encryptielaag (`AES-256-GCM` envelopes) en repositoryvorm blijven
   herbruikbaar via `CentralUserStorageDriver`.
 - Sleutelmetadata hoort bij de centrale gebruiker, niet bij een afzonderlijk
@@ -52,5 +53,8 @@ alleen relevant als legacy/compatibiliteitspad en voor offline fallback.
   `MemoryCentralEncryptedDatabase` voor tests/prototype en
   `CentralUserStorageDriver` als adapter naar het bestaande encrypted-storage
   contract.
+- `src/storage/centralApi.ts` definieert de API/servicegrens:
+  `MemoryCentralSessionStore`, `CentralEncryptedApiServer` en
+  `CentralEncryptedApiClientDriver`.
 - Productie-implementatie kan dezelfde interface later koppelen aan een echte
   backend/API/database zonder domeinstores direct aan serverdetails te binden.
