@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -41,6 +41,20 @@ describe('central file persistence snapshot validation', () => {
     await expect(new JsonFileCentralDatabasePersistence(filePath).load()).rejects.toThrow(
       'Ongeldige centrale database snapshot',
     );
+  });
+
+  it('weigert ongeldige snapshots vóór save zonder persistence file te maken', async () => {
+    const { filePath } = await createPersistenceFile();
+    const invalidSnapshot = createValidSnapshot();
+    invalidSnapshot.records[0] = {
+      ...invalidSnapshot.records[0],
+      payload: { plaintext: 'mag niet naar file-backed centrale persistence' },
+    } as never;
+
+    await expect(
+      new JsonFileCentralDatabasePersistence(filePath).save(invalidSnapshot),
+    ).rejects.toThrow('Ongeldige centrale database snapshot');
+    await expect(stat(filePath)).rejects.toMatchObject({ code: 'ENOENT' });
   });
 
   it('weigert onbekende recordtypes en incomplete ownermetadata', async () => {

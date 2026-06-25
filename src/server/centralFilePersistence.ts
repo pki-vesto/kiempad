@@ -22,6 +22,7 @@ export class JsonFileCentralDatabasePersistence implements CentralDatabasePersis
   }
 
   async save(snapshot: CentralDatabaseSnapshot): Promise<void> {
+    assertValidCentralDatabaseSnapshot(snapshot);
     await mkdir(dirname(this.filePath), { recursive: true });
     const temporaryPath = `${this.filePath}.${process.pid}.${Date.now()}.tmp`;
     await writeFile(temporaryPath, `${JSON.stringify(snapshot, null, 2)}\n`, {

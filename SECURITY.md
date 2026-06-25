@@ -71,7 +71,7 @@ ontgrendeld in het geheugen draait; gerichte aanvallen op de gebruiker zelf.
   metadata en encrypted envelopes, maar nooit plaintext medische/fertiliteitsinhoud,
   passphrases of afgeleide raw keys. De centrale snapshotgrens valideert records en
   weigert ontbrekende owner/servermetadata, onbekende recordtypes en payloads zonder
-  `AES-256-GCM` envelope.
+  `AES-256-GCM` envelope vóór file-backed snapshots worden geladen of opgeslagen.
 - **Node runtime:** verwerkt JSON over HTTP, accepteert bearer tokens, en gebruikt
   dezelfde veilige foutmapping als het in-process API-contract. TLS-terminatie en
   deployment hardening horen bij de productiehost. Request bodies worden begrensd
