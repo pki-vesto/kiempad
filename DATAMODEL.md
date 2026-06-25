@@ -4,7 +4,7 @@
 > [`src/domain/types.ts`](src/domain/types.ts), zodat docs en implementatie niet
 > uit elkaar lopen. Nieuwe data wordt via een **centrale encrypted opslaglaag**
 > bewaard; de oude lokale IndexedDB-kluis is legacy/compatibiliteit (zie
-> [`SECURITY.md`](SECURITY.md)). Dit is een eerste, verfijnbare schets.
+> [`SECURITY.md`](SECURITY.md)).
 
 ## Overzicht & relaties
 
@@ -176,18 +176,19 @@ Conventies:
 | onderbouwing | string? | |
 | datum | IsoDate | |
 
-### EventLog (lokaal gebeurtenissenlog)
+### EventLog (gebeurtenissenlog)
 | veld | type | opmerking |
 |---|---|---|
 | id | string | |
 | datum | IsoDate | datum-tijd van de gebeurtenis |
-| categorie | `kluis` \| `backup` \| `ai` \| `systeem` | privacyrelevante lokale categorie |
+| categorie | `kluis` \| `backup` \| `ai` \| `systeem` | privacyrelevante categorie |
 | gebeurtenis | string | korte beschrijving |
 | detail | string? | optionele lokale toelichting |
 
-EventLog-records worden versleuteld lokaal opgeslagen en verlaten het toestel niet
-via de app. Ze zijn bedoeld voor transparantie over kluis-, back-up-, AI- en
-systeemgebeurtenissen.
+EventLog-records worden in de actieve encrypted dataset opgeslagen: centraal als
+encrypted record met owner-scoping, of in legacy fallback in de lokale encrypted
+IndexedDB-kluis. Ze bevatten alleen korte technische/transparantie-informatie over
+kluis-, back-up-, AI- en systeemgebeurtenissen; medische inhoud hoort hier niet in.
 
 ### DossierDocument (historisch onderzoek)
 | veld | type | opmerking |
@@ -238,7 +239,7 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
 | id | string | enkel record |
 | profielen | `{ peter, partner }` | namen/voorkeuren |
 | gedeeldeModus | boolean | |
-| ai | `{ ingeschakeld, provider?, model?, apiKey?, laatsteOptInOp? }` | API-sleutel staat alleen in het versleutelde lokale settingsrecord, niet in repo/.env |
+| ai | `{ ingeschakeld, provider?, model?, apiKey?, laatsteOptInOp? }` | API-sleutel staat alleen in het versleutelde settingsrecord van de actieve dataset, niet in repo/.env |
 | researchNetwerk | `{ ingeschakeld, laatsteOptInOp? }` | expliciete opt-in voor researchaggregatie; default uit en geen automatische netwerkrequests |
 | afspraakWaarschuwingMinuten | number | standaard afspraakherinnering, default 30 minuten vooraf |
 | laatsteBackupOp | IsoDate? | laatst bekende succesvolle versleutelde export |
@@ -252,6 +253,15 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
 - Records worden als **versleutelde blobs** bewaard. In het centrale model bevat de
   serverrij alleen `ownerUserId`, minimale indexvelden (`id`, `type`, timestamps,
   schemaversie), servermetadata en de encrypted payload.
+- De gedeelde client-indexvorm is `EncryptedRecord`: `id`, `type`, `createdAt`,
+  `updatedAt`, `schemaVersion` en `payload`.
+- De centrale servervorm is `CentralEncryptedRecord`: alle velden van
+  `EncryptedRecord` plus `ownerUserId`, `storedAt` en `serverVersion`.
+- Centrale technische metadata gebruikt `CentralStorageMeta`: `ownerUserId`, `key`,
+  `value` en `updatedAt`.
+- De centrale snapshot is `CentralDatabaseSnapshot` met `version`, `exportedAt`,
+  `meta` en `records`; snapshots zijn alleen een adapter-/persistencevorm, geen
+  plaintext datamodel.
 - Alleen niet-gevoelige indexvelden staan in klare tekst waar zoeken/sorteren dat
   vereist — bewust minimaal. Vrije tekst, medische/fertiliteitsinhoud, bijlagen,
   consultdata en notities blijven in de encrypted payload.

@@ -1,14 +1,13 @@
 /**
  * Kiempad — kerntypes van het datamodel.
  *
- * Dit is een eerste, lichte schets die het datamodel uit DATAMODEL.md in code
- * vastlegt zodat de docs en de codebase niet uit elkaar lopen. Het is bewust nog
- * geen volledige implementatie — alleen de stabiele kernvormen. Verfijn samen met
- * DATAMODEL.md.
+ * Dit legt de stabiele kernvormen uit DATAMODEL.md in code vast zodat docs en
+ * implementatie niet uit elkaar lopen. Verfijn samen met DATAMODEL.md.
  *
- * Privacy: deze types beschrijven gevoelige gezondheidsdata. Ze worden uitsluitend
- * versleuteld lokaal opgeslagen (zie SECURITY.md). Niets hiervan verlaat het
- * toestel zonder expliciete keuze van de gebruiker.
+ * Privacy: deze types beschrijven gevoelige gezondheidsdata. Nieuwe data hoort in
+ * de centrale encrypted dataset; legacy fallback gebruikt de lokale encrypted
+ * IndexedDB-kluis. De backend bewaart alleen encrypted envelopes plus minimale technische
+ * metadata, nooit plaintext medische of fertiliteitsinhoud.
  */
 
 /** ISO-8601 datum (YYYY-MM-DD) of datum-tijd. Tekstueel opgeslagen voor stabiliteit. */
