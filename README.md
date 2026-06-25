@@ -78,6 +78,7 @@ npm run assets:check # controleert bron- en buildassets op externe asset-URL's
 npm run secrets:check # lichte scan op gangbare credentialpatronen
 npm run fixtures:check # scan testfixtures op niet-synthetische gevoelige data
 npm run smoke:offline # Playwright-smoke: eerste bezoek, offline reload via service worker
+npm run smoke:central # Playwright-smoke: PWA tegen echte centrale backend + encrypted persistence
 npm run drill:backup # export/import/ontgrendel-drill met representatieve encrypted records
 npm run backlog:health # bewaakt backlogdrift en vereist standaard minimaal 100 open doelen
 ```

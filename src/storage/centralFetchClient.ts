@@ -14,7 +14,7 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
   constructor(
     private readonly baseUrl: string,
     private readonly token: CentralSessionToken,
-    private readonly fetcher: FetchLike = fetch,
+    private readonly fetcher: FetchLike = defaultFetch,
   ) {}
 
   async getMeta<T>(key: string): Promise<T | undefined> {
@@ -84,7 +84,7 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
 export async function issueCentralFetchSession(
   baseUrl: string,
   input: { userId: string; ttlMs?: number },
-  fetcher: FetchLike = fetch,
+  fetcher: FetchLike = defaultFetch,
 ): Promise<{ token: string; userId: string; issuedAt: string; expiresAt: string }> {
   const response = await fetcher(`${baseUrl}/sessions`, {
     method: 'POST',
@@ -101,6 +101,8 @@ export async function issueCentralFetchSession(
     expiresAt: string;
   };
 }
+
+const defaultFetch: FetchLike = (input, init) => globalThis.fetch(input, init);
 
 async function readErrorMessage(response: Response): Promise<string> {
   try {
