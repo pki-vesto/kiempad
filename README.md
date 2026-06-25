@@ -16,6 +16,8 @@
 
 - **Wat:** een persoonlijke web-app (PWA) ter ondersteuning van het IVF/ICSI-traject
   van **één stel** (Peter & partner).
+- **Visie:** zie [`VISION.md`](VISION.md) voor de centrale product- en
+  architectuurvisie.
 - **Voor wie:** uitsluitend dit stel. **Geen distributie, geen externe gebruikers.**
 - **Regio:** Nederland (vergoedingen, AVG-context, bronnen op NL afgestemd).
 - **Grondhouding:** privacy-first en **centraal encrypted** — nieuwe data hoort

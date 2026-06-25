@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import prTemplate from '../.github/PULL_REQUEST_TEMPLATE.md?raw';
+import architecture from '../ARCHITECTURE.md?raw';
 import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
 import currentState from '../CURRENT_STATE.md?raw';
@@ -24,7 +25,9 @@ import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
 import backlog from '../PRODUCT_BACKLOG.md?raw';
 import readme from '../README.md?raw';
+import roadmap from '../ROADMAP.md?raw';
 import { DISCLAIMER } from '../src/appShell';
+import vision from '../VISION.md?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
 
 const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contract-matrix:start';
@@ -234,6 +237,27 @@ describe('onderhoudsdocumentatie', () => {
       expect(normalized).toMatch(/geen (vervanging van )?medisch advies/i);
       expect(normalized).toMatch(/kliniek/i);
     }
+  });
+
+  it('verankert VISION als centrale encrypted source of truth', () => {
+    for (const requiredTerm of [
+      'persoonlijke fertiliteitsassistent',
+      'centrale encrypted dataset',
+      'client-side met AES-GCM',
+      'geen plaintext medische',
+      'owner/indexmetadata',
+      'Legacy IndexedDB blijft alleen compatibiliteit/fallback',
+      'geen herstelachterdeur',
+      'lokale-only vaultgedrag niet langer het primaire model',
+    ]) {
+      expect(vision).toContain(requiredTerm);
+    }
+
+    for (const document of [readme, architecture, roadmap]) {
+      expect(document).toContain('VISION.md');
+    }
+
+    expect(vision).not.toContain('nieuwe lokale kluis per toestel');
   });
 
   it('documenteert privacybeleid als centrale encrypted opslag zonder plaintext backend', () => {

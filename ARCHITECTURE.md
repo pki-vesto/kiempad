@@ -7,6 +7,10 @@
 
 ## 1. Applicatiearchitectuur
 
+De product- en platformvisie staat in [`VISION.md`](VISION.md): Kiempad is een
+persoonlijke fertiliteitsassistent met centrale encrypted opslag als primaire route
+en legacy lokale opslag alleen als fallback/compatibiliteit.
+
 Kiempad is een **Progressive Web App (PWA)** in **TypeScript**, gebouwd met **Vite**.
 De client blijft verantwoordelijk voor UI, domeinlogica en encryptie; nieuwe data
 gaat via een kleine centrale encrypted data-API zodat gekoppelde apparaten dezelfde
