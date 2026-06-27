@@ -128,7 +128,7 @@ export function parseIssueSnapshot(jsonText) {
   };
 }
 
-export function buildActiveGoalDriftFindings(backlog, execution, minimumOpenGoals = 100) {
+export function buildActiveGoalDriftFindings(backlog, execution, minimumOpenGoals = 0) {
   const findings = [];
   const openBacklogGoalIds = backlog.goals
     .filter((goal) => goal.status === '☐')
@@ -375,7 +375,7 @@ function main() {
   const backlogPath = readArg(process.argv, '--backlog', 'PRODUCT_BACKLOG.md');
   const executionPath = readArg(process.argv, '--execution', 'EXECUTION_GOALS.md');
   const issuesPath = readArg(process.argv, '--issues-json', undefined);
-  const activeGoalMinimum = readNumberArg(process.argv, '--minimum-open-goals', 100);
+  const activeGoalMinimum = readNumberArg(process.argv, '--minimum-open-goals', 0);
   const issueSnapshotLimit = readNumberArg(
     process.argv,
     '--issue-snapshot-limit',

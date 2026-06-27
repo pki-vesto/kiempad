@@ -6,6 +6,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 
 ## [Unreleased]
 
+### Changed
+- G465/G378 Cleanup-governance: `backlog:health` heeft geen standaard
+  open-doelenvloer meer. Open backlog- en execution-goals moeten nog steeds exact
+  matchen en issue-drift blijft zichtbaar, maar afgeronde doelen hoeven niet meer
+  kunstmatig vervangen te worden om 100 open GitHub-items te behouden.
+
 ### Added
 - G148 UI-herstel (sidebar + fasehero): op desktop is de navigatie nu een
   linker zijbalk (rond kiemlogo + verticale nav), zoals het Claude Design-
@@ -136,8 +142,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   issue-snapshotflow met exact `gh issue list` commando zonder issue bodies, sanitizet
   snapshotdata en vermeldt de optionele `--issues-json` route wanneer die ontbreekt.
 - G378 Continuous Evolution: `npm run backlog:health` ondersteunt nu
-  `--minimum-open-goals` met default 100, inclusief tests voor default/custom waarden
-  en docs die de permanente 100-open-doelenregel behouden.
+  `--minimum-open-goals`, inclusief tests voor default/custom waarden en docs voor
+  tijdelijke minimumdrempels.
 - G376 Continuous Evolution: ADR-review evidence index toegevoegd voor alle huidige
   `ADR Needed: yes` doelen, inclusief evidence location, decision outcome en follow-up
   status met onderhoudstest die de index synchroon houdt.
@@ -154,8 +160,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   `docs/GOAL_COMPLETION_AUDIT.md` en de PR-template, met ingevuld voorbeeld en
   onderhoudstest voor verplichte markerheadings en velden.
 - G259 Continuous Evolution: onderhoudstest parseert nu open G-id's uit zowel
-  `PRODUCT_BACKLOG.md` als `EXECUTION_GOALS.md`, vereist minimaal 100 actieve doelen en
-  faalt wanneer de actieve catalogi op ID-niveau uit elkaar lopen.
+  `PRODUCT_BACKLOG.md` als `EXECUTION_GOALS.md` en faalt wanneer de actieve catalogi
+  op ID-niveau uit elkaar lopen.
 - G257 Continuous Evolution: autonomyguardrails documenteren de grenzen voor netwerk,
   AI, data, GitHub, Tailscale en medisch beleid en zijn gekoppeld aan ADR-0007,
   completion audit, PR-template en onderhoudstest.
@@ -228,7 +234,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   scorevelden en `npm run goals:score`.
 - G245 Continuous Evolution: lokaal backlog-health rapport vergelijkt backlog,
   execution catalogus en optionele issue-snapshot zonder netwerk.
-- G244 Continuous Evolution: tweede-generatie execution goal catalogus met 100 actieve doelen, 5 epics, F5-horizon en rijk doelenschema.
+- G244 Continuous Evolution: tweede-generatie execution goal catalogus met rijke actieve-goal seed, 5 epics, F5-horizon en rijk doelenschema.
 - G243 PFIP fertility timeline: timeline heeft een toegankelijk mobiel
   overzicht met ankers naar items, mijlpalen, context en export.
 - G242 PFIP fertility timeline: timeline-opbouw, filtering en export blijven offline;

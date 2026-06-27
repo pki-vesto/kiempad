@@ -38,9 +38,9 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 - **Epic:** Continuous Evolution
 - **Problem:** Goal catalog is empty after PFIP completion.
-- **Desired Outcome:** Create the second-generation execution catalog with at least 100 active goals, 3 epics and a future horizon.
+- **Desired Outcome:** Create the second-generation execution catalog with a rich active-goal seed, 3 epics and a future horizon.
 - **User Value:** Kiempad keeps evolving instead of stopping after the initial epic.
-- **Acceptance Criteria:** EXECUTION_GOALS.md exists; backlog has 100 open goals after G244; goal schema includes all required fields; GitHub issues are seeded.
+- **Acceptance Criteria:** EXECUTION_GOALS.md exists; backlog has a seeded active-goal set after G244; goal schema includes all required fields; GitHub issues are seeded.
 - **Priority:** P0
 - **Complexity:** M
 - **Related Components:** Documentation & maintenance
@@ -247,10 +247,10 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 ### G259 — Backlog Statistics Test
 
 - **Epic:** Continuous Evolution
-- **Problem:** The existing count test does not validate active goal minimums.
-- **Desired Outcome:** Extend maintenance tests to require at least 100 open active goals when evolution mode is active.
+- **Problem:** The existing count test does not validate active goal consistency.
+- **Desired Outcome:** Extend maintenance tests to require PRODUCT_BACKLOG.md and EXECUTION_GOALS.md to list the same open active goals when evolution mode is active.
 - **User Value:** The backlog cannot silently run dry.
-- **Acceptance Criteria:** Test parses PRODUCT_BACKLOG and EXECUTION_GOALS; fails below 100 active goals.
+- **Acceptance Criteria:** Test parses PRODUCT_BACKLOG and EXECUTION_GOALS; fails when open active goal IDs diverge.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, PRODUCT_BACKLOG
@@ -1857,10 +1857,10 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 ### G374 — Backlog Active Goal Drift Fixture
 
 - **Epic:** Continuous Evolution
-- **Problem:** The active-goal minimum is now tested against current docs, but there is no small negative fixture proving the check fails when backlog and execution IDs drift.
-- **Desired Outcome:** Add a focused fixture or helper test that demonstrates missing, extra and below-minimum active goal states without editing production backlog files.
-- **User Value:** Future maintainers can refactor backlog tests without weakening the 100-active-goal safety net.
-- **Acceptance Criteria:** Test fixture covers fewer than 100 open goals, missing execution IDs and extra execution IDs; failure messages identify the affected condition; production backlog content is not duplicated in fixtures.
+- **Problem:** Active-goal drift is now tested against current docs, but there is no small negative fixture proving the check fails when backlog and execution IDs drift.
+- **Desired Outcome:** Add a focused fixture or helper test that demonstrates missing, extra and opt-in below-minimum active goal states without editing production backlog files.
+- **User Value:** Future maintainers can refactor backlog tests without weakening drift detection.
+- **Acceptance Criteria:** Test fixture covers opt-in below-minimum open goals, missing execution IDs and extra execution IDs; failure messages identify the affected condition; production backlog content is not duplicated in fixtures.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, backlog health
@@ -1913,10 +1913,10 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 ### G378 — Backlog Active Goal Drift CLI Flag
 
 - **Epic:** Continuous Evolution
-- **Problem:** Active-goal drift is checked by the default backlog health CLI, but maintainers cannot yet tune the active-goal minimum for local experiments.
-- **Desired Outcome:** Add an explicit CLI flag for the active-goal minimum and document when to use the default versus a custom threshold.
-- **User Value:** Backlog health checks stay strict in normal use while test fixtures and temporary audits remain reproducible.
-- **Acceptance Criteria:** CLI accepts a minimum-open-goals flag; default remains 100; tests cover default and custom values; docs mention the flag without weakening the permanent backlog rule.
+- **Problem:** Active-goal drift is checked by the default backlog health CLI, but maintainers cannot yet opt into an active-goal minimum for local experiments.
+- **Desired Outcome:** Add an explicit CLI flag for the active-goal minimum and document when to use a custom threshold.
+- **User Value:** Backlog health checks stay useful while cleanup, test fixtures and temporary audits remain reproducible.
+- **Acceptance Criteria:** CLI accepts a minimum-open-goals flag; default has no open-goal floor; tests cover default and custom values; docs mention the flag without creating replacement work by default.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** scripts, tests, docs
@@ -2182,7 +2182,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Problem:** The JSON contract test now builds a representative report inline, but future tests could duplicate bulky backlog and issue fixtures.
 - **Desired Outcome:** Extract or document a compact test helper for representative backlog-health issue-snapshot JSON contract fixtures.
 - **User Value:** Maintainers can extend contract coverage without copying large markdown snippets or accidentally weakening the privacy boundary.
-- **Acceptance Criteria:** Tests use a small helper for representative issue-snapshot contract fixtures; helper keeps bodies/tokens out of expected report output; backlog/docs remain at 100 open goals.
+- **Acceptance Criteria:** Tests use a small helper for representative issue-snapshot contract fixtures; helper keeps bodies/tokens out of expected report output; backlog/docs keep open-goal IDs consistent.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, scripts
@@ -2196,7 +2196,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Problem:** The representative JSON contract fixture is now reusable in tests, but there is no guard preventing future helpers from writing snapshots or exporting raw fixture payloads.
 - **Desired Outcome:** Add a small test or helper assertion that the representative contract fixture stays in-memory and never creates committed or temporary snapshot artifacts.
 - **User Value:** Maintainers can expand contract tests without accidentally leaking raw issue payloads or creating cleanup work.
-- **Acceptance Criteria:** Tests assert the representative contract helper returns sanitized in-memory data only; no issue bodies, tokens or snapshot files are committed; backlog remains at 100 open goals.
+- **Acceptance Criteria:** Tests assert the representative contract helper returns sanitized in-memory data only; no issue bodies, tokens or snapshot files are committed; backlog remains consistent.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, scripts
@@ -2210,7 +2210,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Problem:** The contract fixture now proves sanitized in-memory output, but expected fields are still asserted through scattered object checks.
 - **Desired Outcome:** Add a compact field matrix for each issue-snapshot group so contract changes fail with clearer diagnostics.
 - **User Value:** Maintainers can see exactly which JSON group changed when future backlog-health automation evolves.
-- **Acceptance Criteria:** Tests validate expected top-level and nested fields per issue-snapshot group through a small matrix; no issue bodies, tokens or snapshot files are committed; backlog remains at 100 open goals.
+- **Acceptance Criteria:** Tests validate expected top-level and nested fields per issue-snapshot group through a small matrix; no issue bodies, tokens or snapshot files are committed; backlog remains consistent.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** tests, scripts
@@ -2252,7 +2252,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Problem:** The contract matrix now has a drift hint, but the docs do not assert that every documented issue-snapshot group appears in the matrix test source.
 - **Desired Outcome:** Add a maintenance assertion that documented issue-snapshot groups and the matrix test groups stay symmetric.
 - **User Value:** Maintainers get faster feedback when documentation and contract tests diverge.
-- **Acceptance Criteria:** Tests compare documented issue-snapshot group names against the matrix groups; no issue bodies, tokens or snapshot files are committed; backlog remains at 100 open goals.
+- **Acceptance Criteria:** Tests compare documented issue-snapshot group names against the matrix groups; no issue bodies, tokens or snapshot files are committed; backlog remains consistent.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** docs, tests
@@ -3140,4 +3140,4 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** tests
 - **ADR Needed:** no
 - **Score:** 103
-- **Status:** ☐ open
+- **Status:** ☑ klaar

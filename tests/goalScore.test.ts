@@ -61,7 +61,7 @@ describe('goal scoring', () => {
       .map((section) => `### ${section}`)
       .filter((section) => section.includes('- **Status:** ☐ open'));
 
-    expect(openSections.length).toBeGreaterThanOrEqual(100);
+    expect(openSections.length).toBeGreaterThan(0);
     for (const section of openSections) {
       expect(section).toMatch(/^- \*\*Score:\*\* \d+$/m);
     }

@@ -35,9 +35,10 @@ Voordat je merget:
 - `npm run typecheck` — groen.
 - `npm run lint` — groen.
 - `npm run test` — groen; nieuwe logica heeft tests.
-- `npm run backlog:health` — groen; standaard minimaal 100 open doelen. Alleen voor
-  lokale fixtures of experimenten mag tijdelijk
-  `npm run backlog:health -- --minimum-open-goals <n>` worden gebruikt.
+- `npm run backlog:health` — groen; bewaakt backlog-, execution- en issue-drift zonder
+  standaardvloer voor open doelen. Gebruik
+  `npm run backlog:health -- --minimum-open-goals <n>` alleen wanneer je bewust een
+  tijdelijk minimum wilt afdwingen.
   Optioneel vóór merge: exporteer issues met
   `gh issue list --state all --limit 200 --json number,title,state,url > /tmp/kiempad-issues.json`
   controleer de timestamp met `stat -c %y /tmp/kiempad-issues.json` en draai

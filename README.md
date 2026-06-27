@@ -82,13 +82,12 @@ npm run fixtures:check # scan testfixtures op niet-synthetische gevoelige data
 npm run smoke:offline # Playwright-smoke: eerste bezoek, offline reload via service worker
 npm run smoke:central # Playwright-smoke: PWA tegen echte centrale backend + encrypted persistence
 npm run drill:backup # export/import/ontgrendel-drill met representatieve encrypted records
-npm run backlog:health # bewaakt backlogdrift en vereist standaard minimaal 100 open doelen
+npm run backlog:health # bewaakt backlogdrift zonder standaard open-doelenvloer
 ```
 
-`npm run backlog:health` gebruikt standaard `--minimum-open-goals 100`. Gebruik alleen
-voor lokale experimenten of kleine fixtures een tijdelijke custom drempel, bijvoorbeeld
-`npm run backlog:health -- --minimum-open-goals 2`; de permanente backlogregel blijft
-minimaal 100 open doelen.
+`npm run backlog:health` gebruikt standaard geen minimum voor open doelen. Gebruik
+alleen voor lokale experimenten of kleine fixtures een tijdelijke custom drempel,
+bijvoorbeeld `npm run backlog:health -- --minimum-open-goals 2`.
 
 Optionele GitHub issue-driftcheck zonder issue bodies:
 

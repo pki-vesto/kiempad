@@ -584,15 +584,15 @@ describe('backlog health', () => {
     ]);
   });
 
-  it('ondersteunt een expliciete minimum-open-goals CLI-drempel met default 100', () => {
-    expect(readNumberArg(['node', 'scripts/backlog-health.mjs'], '--minimum-open-goals', 100)).toBe(
-      100,
+  it('ondersteunt een expliciete minimum-open-goals CLI-drempel zonder defaultvloer', () => {
+    expect(readNumberArg(['node', 'scripts/backlog-health.mjs'], '--minimum-open-goals', 0)).toBe(
+      0,
     );
     expect(
       readNumberArg(
         ['node', 'scripts/backlog-health.mjs', '--minimum-open-goals', '2'],
         '--minimum-open-goals',
-        100,
+        0,
       ),
     ).toBe(2);
 
@@ -602,10 +602,10 @@ describe('backlog health', () => {
       activeGoalMinimum: readNumberArg(
         ['node', 'scripts/backlog-health.mjs'],
         '--minimum-open-goals',
-        100,
+        0,
       ),
     });
-    expect(defaultThresholdReport.findings).toContainEqual(
+    expect(defaultThresholdReport.findings).not.toContainEqual(
       expect.objectContaining({ type: 'active-goal-minimum' }),
     );
 
@@ -615,7 +615,7 @@ describe('backlog health', () => {
       activeGoalMinimum: readNumberArg(
         ['node', 'scripts/backlog-health.mjs', '--minimum-open-goals', '2'],
         '--minimum-open-goals',
-        100,
+        0,
       ),
     });
     expect(customThresholdReport.findings).toEqual([]);
