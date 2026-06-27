@@ -6,6 +6,7 @@ const STATUS_LABELS = {
   '☑': 'klaar',
   '◐': 'bezig',
   '☐': 'open',
+  '☒': 'archived',
 };
 
 export const ISSUE_SNAPSHOT_CLEANUP_COMMAND = 'rm -f /tmp/kiempad-issues.json';
@@ -30,7 +31,7 @@ export function parseBacklog(markdown) {
 
   for (const line of markdown.split('\n')) {
     const match = line.match(
-      /^\| (?<id>G\d+) \| (?<title>.+?) \| (?<priority>P\d) \| (?<phase>F\d) \| (?<status>☑|◐|☐) \|$/,
+      /^\| (?<id>G\d+) \| (?<title>.+?) \| (?<priority>P\d) \| (?<phase>F\d) \| (?<status>☑|◐|☐|☒) \|$/,
     );
     if (!match?.groups) continue;
 
@@ -71,7 +72,9 @@ export function parseExecutionGoals(markdown) {
         ? '◐'
         : fields.Status?.startsWith('☐')
           ? '☐'
-          : undefined;
+          : fields.Status?.startsWith('☒')
+            ? '☒'
+            : undefined;
     const goal = {
       id: header.groups.id,
       title: header.groups.title,

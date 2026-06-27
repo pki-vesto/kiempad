@@ -54,14 +54,13 @@ describe('goal scoring', () => {
     expect(ranked.map((goal) => `${goal.id}:${goal.score}`)).toEqual(['G200:98', 'G300:95']);
   });
 
-  it('geeft ieder actief execution goal een scoreveld', () => {
+  it('geeft ieder open execution goal een scoreveld wanneer er open werk is', () => {
     const openSections = executionGoals
       .split('\n### ')
       .slice(1)
       .map((section) => `### ${section}`)
       .filter((section) => section.includes('- **Status:** ☐ open'));
 
-    expect(openSections.length).toBeGreaterThan(0);
     for (const section of openSections) {
       expect(section).toMatch(/^- \*\*Score:\*\* \d+$/m);
     }

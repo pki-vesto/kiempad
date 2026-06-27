@@ -458,8 +458,8 @@
   GitHub issue-snapshot, zodat ontbrekende issue-links, dubbele goal-id's en
   statusdrift zichtbaar worden zonder netwerkverplichting.
 - **G246 Goal Scoring Model:** `EXECUTION_GOALS.md` bevat een reproduceerbare
-  scoringrubric en scorevelden; `npm run goals:score` rangschikt open doelen op
-  prioriteit, complexiteit, epic-modifier en Goal ID.
+  scoringrubric en scorevelden; `npm run goals:score` rangschikt eventuele open doelen
+  op prioriteit, complexiteit, epic-modifier en Goal ID.
 - **G250 Goal Completion Audit Checklist:** `docs/GOAL_COMPLETION_AUDIT.md` beschrijft
   requirement-per-requirement bewijs voor afronden, is gekoppeld aan DoD en
   PR-template, en wordt bewaakt door een onderhoudstest.

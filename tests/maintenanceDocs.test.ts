@@ -151,7 +151,6 @@ describe('onderhoudsdocumentatie', () => {
       .sort();
     const activeEpics = executionGoals.match(/^- \*\*.+:\*\* .+$/gm) ?? [];
 
-    expect(openBacklogGoalIds.length).toBeGreaterThan(0);
     expect(openExecutionGoalIds).toEqual(openBacklogGoalIds);
     expect(executionGoalSections.length).toBeGreaterThanOrEqual(openBacklogGoalIds.length);
     expect(activeEpics.length).toBeGreaterThanOrEqual(3);
@@ -975,27 +974,28 @@ function extractBacklogSummary(): Record<string, number> {
     '☑': Number(backlog.match(/\| ☑ klaar \| (?<count>\d+) \|/)?.groups?.count),
     '◐': Number(backlog.match(/\| ◐ bezig \| (?<count>\d+) \|/)?.groups?.count),
     '☐': Number(backlog.match(/\| ☐ open \| (?<count>\d+) \|/)?.groups?.count),
+    '☒': Number(backlog.match(/\| ☒ archived \| (?<count>\d+) \|/)?.groups?.count),
   };
 }
 
 function countGoalStatuses(): Record<string, number> {
-  const counts = { '☑': 0, '◐': 0, '☐': 0 };
+  const counts = { '☑': 0, '◐': 0, '☐': 0, '☒': 0 };
   for (const goal of parseBacklogGoalRows()) {
     counts[goal.status] += 1;
   }
   return counts;
 }
 
-function parseBacklogGoalRows(): Array<{ id: string; status: '☑' | '◐' | '☐' }> {
+function parseBacklogGoalRows(): Array<{ id: string; status: '☑' | '◐' | '☐' | '☒' }> {
   return backlog
     .split('\n')
     .map((line) => {
-      const match = line.match(/^\| (?<id>G\d+) \|.*\| (?<status>☑|◐|☐) \|$/);
+      const match = line.match(/^\| (?<id>G\d+) \|.*\| (?<status>☑|◐|☐|☒) \|$/);
       return match?.groups
-        ? { id: match.groups.id, status: match.groups.status as '☑' | '◐' | '☐' }
+        ? { id: match.groups.id, status: match.groups.status as '☑' | '◐' | '☐' | '☒' }
         : undefined;
     })
-    .filter((goal): goal is { id: string; status: '☑' | '◐' | '☐' } => Boolean(goal));
+    .filter((goal): goal is { id: string; status: '☑' | '◐' | '☐' | '☒' } => Boolean(goal));
 }
 
 function parseExecutionGoalSections(): Array<{ id: string; status: string; raw: string }> {
@@ -1005,7 +1005,7 @@ function parseExecutionGoalSections(): Array<{ id: string; status: string; raw: 
     .map((section) => {
       const raw = `### ${section}`;
       const id = raw.match(/^### (?<id>G\d+) — .+$/m)?.groups?.id;
-      const status = raw.match(/^- \*\*Status:\*\* (?<status>[☑◐☐] .+)$/m)?.groups?.status;
+      const status = raw.match(/^- \*\*Status:\*\* (?<status>[☑◐☐☒] .+)$/m)?.groups?.status;
       if (!id || !status) throw new Error(`Execution goal mist id of status: ${raw}`);
       return { id, status, raw };
     });

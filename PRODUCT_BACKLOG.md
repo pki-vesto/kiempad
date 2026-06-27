@@ -11,6 +11,7 @@
 - ☐ open — nog niet begonnen
 - ◐ bezig — in uitvoering
 - ☑ klaar — gedaan en (waar van toepassing) getest
+- ☒ archived — bewust gesloten als niet-actueel werk onder zero-cleanup
 
 ## Prioriteiten
 
@@ -30,7 +31,8 @@
 |---|---|
 | ☑ klaar | 366 |
 | ◐ bezig | 0 |
-| ☐ open | 99 |
+| ☐ open | 0 |
+| ☒ archived | 99 |
 | **Totaal** | **465** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -392,139 +394,139 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G244 | Goal Expansion Engine | P0 | F4 | ☑ |
 | G245 | Backlog Health Dashboard | P0 | F4 | ☑ |
 | G246 | Goal Scoring Model | P1 | F4 | ☑ |
-| G247 | Goal Template CLI | P2 | F4 | ☐ |
-| G248 | Issue Sync Script | P1 | F4 | ☐ |
-| G249 | Roadmap Coverage Matrix | P1 | F4 | ☐ |
+| G247 | Goal Template CLI | P2 | F4 | ☒ |
+| G248 | Issue Sync Script | P1 | F4 | ☒ |
+| G249 | Roadmap Coverage Matrix | P1 | F4 | ☒ |
 | G250 | Goal Completion Audit Checklist | P0 | F4 | ☑ |
 | G251 | Architecture Decision Backlog | P1 | F4 | ☑ |
-| G252 | User Workflow Gap Review | P1 | F4 | ☐ |
-| G253 | Operational Runbook Refresh | P2 | F4 | ☐ |
-| G254 | Goal Aging Signals | P2 | F4 | ☐ |
-| G255 | Release Notes Generator | P2 | F4 | ☐ |
-| G256 | Goal Dependency Mapping | P2 | F4 | ☐ |
+| G252 | User Workflow Gap Review | P1 | F4 | ☒ |
+| G253 | Operational Runbook Refresh | P2 | F4 | ☒ |
+| G254 | Goal Aging Signals | P2 | F4 | ☒ |
+| G255 | Release Notes Generator | P2 | F4 | ☒ |
+| G256 | Goal Dependency Mapping | P2 | F4 | ☒ |
 | G257 | Autonomy Guardrails Doc | P1 | F4 | ☑ |
-| G258 | Goal Search Index | P3 | F4 | ☐ |
+| G258 | Goal Search Index | P3 | F4 | ☒ |
 | G259 | Backlog Statistics Test | P1 | F4 | ☑ |
-| G260 | Vision Traceability Tags | P2 | F4 | ☐ |
-| G261 | Next Horizon Roadmap | P1 | F4 | ☐ |
-| G262 | Issue Label Taxonomy | P2 | F4 | ☐ |
-| G263 | Monthly Goal Review Ritual | P3 | F4 | ☐ |
+| G260 | Vision Traceability Tags | P2 | F4 | ☒ |
+| G261 | Next Horizon Roadmap | P1 | F4 | ☒ |
+| G262 | Issue Label Taxonomy | P2 | F4 | ☒ |
+| G263 | Monthly Goal Review Ritual | P3 | F4 | ☒ |
 | G264 | First Run Guided Setup | P0 | F4 | ☑ |
 | G265 | Daily Command Center | P0 | F4 | ☑ |
-| G266 | Partner Handoff Mode | P1 | F4 | ☐ |
+| G266 | Partner Handoff Mode | P1 | F4 | ☒ |
 | G267 | Consult Prep Wizard | P0 | F4 | ☑ |
-| G268 | After Consult Capture Flow | P1 | F4 | ☐ |
-| G269 | Medication Day Timeline | P1 | F4 | ☐ |
-| G270 | Question Inbox Zero | P2 | F4 | ☐ |
-| G271 | Timeline Quick Add | P1 | F4 | ☐ |
-| G272 | Dossier Import Checklist | P1 | F4 | ☐ |
-| G273 | Empty State Action Shortcuts | P2 | F4 | ☐ |
-| G274 | Gentle Reminder Review | P2 | F4 | ☐ |
-| G275 | Weekly Review Screen | P2 | F4 | ☐ |
-| G276 | Stress-Light Mode | P3 | F4 | ☐ |
-| G277 | Timeline Story Mode | P3 | F4 | ☐ |
-| G278 | Cost Entry From Appointment | P2 | F4 | ☐ |
-| G279 | Backup Nudge Personalization | P2 | F4 | ☐ |
-| G280 | Search Everywhere | P1 | F4 | ☐ |
-| G281 | Print-Friendly Daily Brief | P2 | F4 | ☐ |
-| G282 | Keyboard-First Data Entry | P2 | F4 | ☐ |
-| G283 | Microcopy Consistency Pass | P3 | F4 | ☐ |
-| G284 | Service Worker Update UX | P1 | F4 | ☐ |
+| G268 | After Consult Capture Flow | P1 | F4 | ☒ |
+| G269 | Medication Day Timeline | P1 | F4 | ☒ |
+| G270 | Question Inbox Zero | P2 | F4 | ☒ |
+| G271 | Timeline Quick Add | P1 | F4 | ☒ |
+| G272 | Dossier Import Checklist | P1 | F4 | ☒ |
+| G273 | Empty State Action Shortcuts | P2 | F4 | ☒ |
+| G274 | Gentle Reminder Review | P2 | F4 | ☒ |
+| G275 | Weekly Review Screen | P2 | F4 | ☒ |
+| G276 | Stress-Light Mode | P3 | F4 | ☒ |
+| G277 | Timeline Story Mode | P3 | F4 | ☒ |
+| G278 | Cost Entry From Appointment | P2 | F4 | ☒ |
+| G279 | Backup Nudge Personalization | P2 | F4 | ☒ |
+| G280 | Search Everywhere | P1 | F4 | ☒ |
+| G281 | Print-Friendly Daily Brief | P2 | F4 | ☒ |
+| G282 | Keyboard-First Data Entry | P2 | F4 | ☒ |
+| G283 | Microcopy Consistency Pass | P3 | F4 | ☒ |
+| G284 | Service Worker Update UX | P1 | F4 | ☒ |
 | G285 | Offline Smoke Test Script | P0 | F4 | ☑ |
 | G286 | Backup Restore Drill | P0 | F4 | ☑ |
-| G287 | Tailscale Smoke Automation | P1 | F4 | ☐ |
-| G288 | Data Integrity Report | P1 | F4 | ☐ |
-| G289 | Duplicate Detection | P2 | F4 | ☐ |
-| G290 | Import Preview Before Commit | P1 | F4 | ☐ |
-| G291 | Sync Conflict Explanation | P2 | F4 | ☐ |
-| G292 | Performance Budget Test | P2 | F4 | ☐ |
-| G293 | Large Dossier Rendering Guard | P1 | F4 | ☐ |
-| G294 | IndexedDB Quota Warning | P2 | F4 | ☐ |
-| G295 | Error Boundary Screen | P1 | F4 | ☐ |
-| G296 | Form Draft Persistence | P2 | F4 | ☐ |
-| G297 | Event Log Filters | P3 | F4 | ☐ |
-| G298 | Runbook Command Verification | P2 | F4 | ☐ |
-| G299 | Import Error Taxonomy | P2 | F4 | ☐ |
-| G300 | Local Diagnostics Export | P2 | F4 | ☐ |
+| G287 | Tailscale Smoke Automation | P1 | F4 | ☒ |
+| G288 | Data Integrity Report | P1 | F4 | ☒ |
+| G289 | Duplicate Detection | P2 | F4 | ☒ |
+| G290 | Import Preview Before Commit | P1 | F4 | ☒ |
+| G291 | Sync Conflict Explanation | P2 | F4 | ☒ |
+| G292 | Performance Budget Test | P2 | F4 | ☒ |
+| G293 | Large Dossier Rendering Guard | P1 | F4 | ☒ |
+| G294 | IndexedDB Quota Warning | P2 | F4 | ☒ |
+| G295 | Error Boundary Screen | P1 | F4 | ☒ |
+| G296 | Form Draft Persistence | P2 | F4 | ☒ |
+| G297 | Event Log Filters | P3 | F4 | ☒ |
+| G298 | Runbook Command Verification | P2 | F4 | ☒ |
+| G299 | Import Error Taxonomy | P2 | F4 | ☒ |
+| G300 | Local Diagnostics Export | P2 | F4 | ☒ |
 | G301 | Recovery Mode Unlock Help | P1 | F4 | ☑ |
-| G302 | Notification Delivery Audit | P2 | F4 | ☐ |
-| G303 | Browser Compatibility Matrix | P3 | F4 | ☐ |
-| G304 | On-Device Summarizer Adapter | P1 | F4 | ☐ |
+| G302 | Notification Delivery Audit | P2 | F4 | ☒ |
+| G303 | Browser Compatibility Matrix | P3 | F4 | ☒ |
+| G304 | On-Device Summarizer Adapter | P1 | F4 | ☒ |
 | G305 | AI Prompt Registry | P0 | F4 | ☑ |
-| G306 | Research Source Importer | P1 | F4 | ☐ |
-| G307 | Research Reading Queue | P2 | F4 | ☐ |
-| G308 | Research-to-Question Suggestions | P1 | F4 | ☐ |
-| G309 | Evidence Strength Labels | P1 | F4 | ☐ |
-| G310 | Research Update Reminder | P2 | F4 | ☐ |
-| G311 | Local Citation Formatter | P2 | F4 | ☐ |
-| G312 | AI Output Diff Review | P1 | F4 | ☐ |
+| G306 | Research Source Importer | P1 | F4 | ☒ |
+| G307 | Research Reading Queue | P2 | F4 | ☒ |
+| G308 | Research-to-Question Suggestions | P1 | F4 | ☒ |
+| G309 | Evidence Strength Labels | P1 | F4 | ☒ |
+| G310 | Research Update Reminder | P2 | F4 | ☒ |
+| G311 | Local Citation Formatter | P2 | F4 | ☒ |
+| G312 | AI Output Diff Review | P1 | F4 | ☒ |
 | G313 | Sensitive Text Redaction Preview | P0 | F4 | ☑ |
-| G314 | Cloud AI Cost Warning | P2 | F4 | ☐ |
-| G315 | AI Provider Health Check | P3 | F4 | ☐ |
-| G316 | Research Topic Map | P2 | F4 | ☐ |
-| G317 | Question Safety Classifier | P1 | F4 | ☐ |
-| G318 | Local Research Full Text Index | P2 | F4 | ☐ |
-| G319 | Research Export Packet | P2 | F4 | ☐ |
+| G314 | Cloud AI Cost Warning | P2 | F4 | ☒ |
+| G315 | AI Provider Health Check | P3 | F4 | ☒ |
+| G316 | Research Topic Map | P2 | F4 | ☒ |
+| G317 | Question Safety Classifier | P1 | F4 | ☒ |
+| G318 | Local Research Full Text Index | P2 | F4 | ☒ |
+| G319 | Research Export Packet | P2 | F4 | ☒ |
 | G320 | Prompt Regression Suite | P0 | F4 | ☑ |
-| G321 | On-Device Capability Explainer | P3 | F4 | ☐ |
-| G322 | Research Network Audit Log | P1 | F4 | ☐ |
-| G323 | AI Data Retention Controls | P1 | F4 | ☐ |
+| G321 | On-Device Capability Explainer | P3 | F4 | ☒ |
+| G322 | Research Network Audit Log | P1 | F4 | ☒ |
+| G323 | AI Data Retention Controls | P1 | F4 | ☒ |
 | G324 | Content Security Policy | P0 | F4 | ☑ |
 | G325 | Dependency Review Cadence | P1 | F4 | ☑ |
 | G326 | Secrets Scan Test | P0 | F4 | ☑ |
 | G327 | Sensitive Fixture Policy | P1 | F4 | ☑ |
-| G328 | Storage Schema Migration Harness | P1 | F4 | ☐ |
-| G329 | Domain Boundary Lint | P2 | F4 | ☐ |
-| G330 | Accessibility Regression Smoke | P1 | F4 | ☐ |
-| G331 | Mobile Viewport Screenshot Gate | P2 | F4 | ☐ |
-| G332 | Markdown Export Sanitizer | P1 | F4 | ☐ |
-| G333 | Audit Event Retention Policy | P2 | F4 | ☐ |
-| G334 | Form Validation Library Cleanup | P2 | F4 | ☐ |
-| G335 | Typed Route Registry | P2 | F4 | ☐ |
-| G336 | Store Factory Refactor | P3 | F4 | ☐ |
+| G328 | Storage Schema Migration Harness | P1 | F4 | ☒ |
+| G329 | Domain Boundary Lint | P2 | F4 | ☒ |
+| G330 | Accessibility Regression Smoke | P1 | F4 | ☒ |
+| G331 | Mobile Viewport Screenshot Gate | P2 | F4 | ☒ |
+| G332 | Markdown Export Sanitizer | P1 | F4 | ☒ |
+| G333 | Audit Event Retention Policy | P2 | F4 | ☒ |
+| G334 | Form Validation Library Cleanup | P2 | F4 | ☒ |
+| G335 | Typed Route Registry | P2 | F4 | ☒ |
+| G336 | Store Factory Refactor | P3 | F4 | ☒ |
 | G337 | Event Log Privacy Test | P1 | F4 | ☑ |
-| G338 | Tailscale Deploy Drift Check | P2 | F4 | ☐ |
+| G338 | Tailscale Deploy Drift Check | P2 | F4 | ☒ |
 | G339 | Public Repo Privacy Review | P1 | F4 | ☑ |
-| G340 | Build Provenance Notes | P3 | F4 | ☐ |
-| G341 | CSS Token Audit | P2 | F4 | ☐ |
+| G340 | Build Provenance Notes | P3 | F4 | ☒ |
+| G341 | CSS Token Audit | P2 | F4 | ☒ |
 | G342 | No External Asset Test | P0 | F4 | ☑ |
-| G343 | Type Coverage Ratchet | P2 | F4 | ☐ |
-| G344 | Future Sync Relay Threat Model | P1 | F4 | ☐ |
-| G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☐ |
-| G346 | Goal Score Issue Annotation | P1 | F4 | ☐ |
+| G343 | Type Coverage Ratchet | P2 | F4 | ☒ |
+| G344 | Future Sync Relay Threat Model | P1 | F4 | ☒ |
+| G345 | Backlog Health Issue Snapshot Automation | P1 | F4 | ☒ |
+| G346 | Goal Score Issue Annotation | P1 | F4 | ☒ |
 | G347 | External Asset CI Gate | P0 | F4 | ☑ |
 | G348 | External Asset Allowlist Governance | P1 | F4 | ☑ |
 | G349 | Completion Audit Evidence Markers | P1 | F4 | ☑ |
-| G350 | First Run Setup Progress Persistence | P1 | F4 | ☐ |
-| G351 | Offline Smoke CI Artifact | P1 | F4 | ☐ |
-| G352 | Backup Drill Fixture Expansion | P1 | F4 | ☐ |
+| G350 | First Run Setup Progress Persistence | P1 | F4 | ☒ |
+| G351 | Offline Smoke CI Artifact | P1 | F4 | ☒ |
+| G352 | Backup Drill Fixture Expansion | P1 | F4 | ☒ |
 | G353 | CSP Violation Reporting Plan | P1 | F4 | ☑ |
 | G354 | Secrets Scan Baseline Review | P1 | F4 | ☑ |
-| G355 | Prompt Registry UI Exposure | P1 | F4 | ☐ |
-| G356 | Redaction Pattern Baseline Review | P1 | F4 | ☐ |
-| G357 | Prompt Regression Coverage Report | P1 | F4 | ☐ |
-| G358 | Daily Command Center Personalization | P1 | F4 | ☐ |
-| G359 | Consult Prep Packet Persistence | P1 | F4 | ☐ |
+| G355 | Prompt Registry UI Exposure | P1 | F4 | ☒ |
+| G356 | Redaction Pattern Baseline Review | P1 | F4 | ☒ |
+| G357 | Prompt Regression Coverage Report | P1 | F4 | ☒ |
+| G358 | Daily Command Center Personalization | P1 | F4 | ☒ |
+| G359 | Consult Prep Packet Persistence | P1 | F4 | ☒ |
 | G360 | Recovery Mode Diagnostics Card | P1 | F4 | ☑ |
 | G361 | Dependency Review Evidence Snapshot | P1 | F4 | ☑ |
 | G362 | Sensitive Fixture Allowlist Review | P1 | F4 | ☑ |
 | G363 | Event Log Detail Allowlist Governance | P1 | F4 | ☑ |
-| G364 | Public Repo Privacy Review Automation Hook | P1 | F4 | ☐ |
-| G365 | External Asset Allowlist Review Evidence | P1 | F4 | ☐ |
-| G366 | Local CSP Violation Reproduction Fixture | P1 | F4 | ☐ |
-| G367 | Secrets Scan Review Evidence Snapshot | P1 | F4 | ☐ |
-| G368 | Recovery Diagnostics Visual Regression Fixture | P1 | F4 | ☐ |
-| G369 | Dependency Evidence Generator Dry Run | P1 | F4 | ☐ |
-| G370 | Sensitive Fixture Review Evidence Snapshot | P1 | F4 | ☐ |
-| G371 | Event Log Detail Review Evidence Snapshot | P1 | F4 | ☐ |
+| G364 | Public Repo Privacy Review Automation Hook | P1 | F4 | ☒ |
+| G365 | External Asset Allowlist Review Evidence | P1 | F4 | ☒ |
+| G366 | Local CSP Violation Reproduction Fixture | P1 | F4 | ☒ |
+| G367 | Secrets Scan Review Evidence Snapshot | P1 | F4 | ☒ |
+| G368 | Recovery Diagnostics Visual Regression Fixture | P1 | F4 | ☒ |
+| G369 | Dependency Evidence Generator Dry Run | P1 | F4 | ☒ |
+| G370 | Sensitive Fixture Review Evidence Snapshot | P1 | F4 | ☒ |
+| G371 | Event Log Detail Review Evidence Snapshot | P1 | F4 | ☒ |
 | G372 | ADR Review Evidence Template | P1 | F4 | ☑ |
 | G373 | Autonomy Guardrail Evidence Checklist | P1 | F4 | ☑ |
 | G374 | Backlog Active Goal Drift Fixture | P1 | F4 | ☑ |
-| G375 | Completion Audit Marker Parser CLI | P1 | F4 | ☐ |
+| G375 | Completion Audit Marker Parser CLI | P1 | F4 | ☒ |
 | G376 | ADR Review Evidence Index | P1 | F4 | ☑ |
-| G377 | Autonomy Guardrail Evidence Parser | P1 | F4 | ☐ |
+| G377 | Autonomy Guardrail Evidence Parser | P1 | F4 | ☒ |
 | G378 | Backlog Active Goal Drift CLI Flag | P1 | F4 | ☑ |
-| G379 | ADR Review Evidence Freshness Check | P1 | F4 | ☐ |
+| G379 | ADR Review Evidence Freshness Check | P1 | F4 | ☒ |
 | G380 | Backlog Health Issue Snapshot Default Gate | P1 | F4 | ☑ |
 | G381 | Backlog Health Snapshot Cleanup Reminder | P1 | F4 | ☑ |
 | G382 | Backlog Health Issue Snapshot Freshness Hint | P1 | F4 | ☑ |
