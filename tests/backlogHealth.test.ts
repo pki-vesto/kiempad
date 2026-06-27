@@ -64,6 +64,43 @@ describe('backlog health', () => {
     ]);
   });
 
+  it('parseert archived doelen zonder ze als actieve open items te behandelen', () => {
+    const archivedBacklog = `
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G245 | Archived example | P1 | F4 | ☒ |
+`;
+    const archivedExecutionGoals = `
+### G245 — Archived example
+
+- **Epic:** Continuous Evolution
+- **Problem:** Fixture problem.
+- **Desired Outcome:** Fixture outcome.
+- **User Value:** Fixture value.
+- **Acceptance Criteria:** Fixture criteria.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** tests
+- **Status:** ☒ archived
+`;
+
+    expect(parseBacklog(archivedBacklog).goals).toEqual([
+      expect.objectContaining({ id: 'G245', status: '☒', statusLabel: 'archived' }),
+    ]);
+    expect(parseExecutionGoals(archivedExecutionGoals).goals).toEqual([
+      expect.objectContaining({ id: 'G245', status: '☒', statusLabel: 'archived' }),
+    ]);
+    expect(
+      buildBacklogHealthReport({
+        backlogMarkdown: archivedBacklog,
+        executionGoalsMarkdown: archivedExecutionGoals,
+        issueSnapshotJson: JSON.stringify([
+          { number: 245, title: 'G245 Archived example', state: 'CLOSED' },
+        ]),
+      }).findings,
+    ).toEqual([]);
+  });
+
   it('rapporteert ontbrekende issuelinks en statusmismatches vanuit een lokale issue-snapshot', () => {
     const issueSnapshot = JSON.stringify([
       { number: 291, title: 'G244 Continuous Evolution: Goal Expansion Engine', state: 'CLOSED' },

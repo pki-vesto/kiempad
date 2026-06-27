@@ -88,7 +88,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, docs
 - **ADR Needed:** no
 - **Score:** 76
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G248 — Issue Sync Script
 
@@ -102,7 +102,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, GitHub CLI
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G249 — Roadmap Coverage Matrix
 
@@ -116,7 +116,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ROADMAP, EXECUTION_GOALS
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G250 — Goal Completion Audit Checklist
 
@@ -158,7 +158,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, app shell
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G253 — Operational Runbook Refresh
 
@@ -172,7 +172,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs/RUNBOOK.md
 - **ADR Needed:** no
 - **Score:** 83
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G254 — Goal Aging Signals
 
@@ -186,7 +186,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** EXECUTION_GOALS, tests
 - **ADR Needed:** no
 - **Score:** 83
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G255 — Release Notes Generator
 
@@ -200,7 +200,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CHANGELOG, scripts
 - **ADR Needed:** no
 - **Score:** 76
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G256 — Goal Dependency Mapping
 
@@ -214,7 +214,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** EXECUTION_GOALS
 - **ADR Needed:** no
 - **Score:** 76
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G257 — Autonomy Guardrails Doc
 
@@ -242,7 +242,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, app shell or script
 - **ADR Needed:** no
 - **Score:** 56
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G259 — Backlog Statistics Test
 
@@ -270,7 +270,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** EXECUTION_GOALS, VISIE
 - **ADR Needed:** no
 - **Score:** 83
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G261 — Next Horizon Roadmap
 
@@ -284,7 +284,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ROADMAP, EXECUTION_GOALS
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G262 — Issue Label Taxonomy
 
@@ -298,7 +298,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** GitHub Issues, docs
 - **ADR Needed:** no
 - **Score:** 83
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G263 — Monthly Goal Review Ritual
 
@@ -312,7 +312,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs
 - **ADR Needed:** no
 - **Score:** 63
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G264 — First Run Guided Setup
 
@@ -354,7 +354,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Settings, start screen
 - **ADR Needed:** yes
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G267 — Consult Prep Wizard
 
@@ -382,7 +382,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult records, questions, actions
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G269 — Medication Day Timeline
 
@@ -396,7 +396,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication, reminders
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G270 — Question Inbox Zero
 
@@ -410,7 +410,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Questions
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G271 — Timeline Quick Add
 
@@ -424,7 +424,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, quick entry
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G272 — Dossier Import Checklist
 
@@ -438,7 +438,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, onboarding
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G273 — Empty State Action Shortcuts
 
@@ -452,7 +452,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell UX
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G274 — Gentle Reminder Review
 
@@ -466,7 +466,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Notifications, UX copy
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G275 — Weekly Review Screen
 
@@ -480,7 +480,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Agenda, timeline, costs, wellbeing
 - **ADR Needed:** no
 - **Score:** 78
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G276 — Stress-Light Mode
 
@@ -494,7 +494,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Settings, UI
 - **ADR Needed:** no
 - **Score:** 58
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G277 — Timeline Story Mode
 
@@ -508,7 +508,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, export
 - **ADR Needed:** no
 - **Score:** 50
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G278 — Cost Entry From Appointment
 
@@ -522,7 +522,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Agenda, costs
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G279 — Backup Nudge Personalization
 
@@ -536,7 +536,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backup, settings
 - **ADR Needed:** no
 - **Score:** 85
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G280 — Search Everywhere
 
@@ -550,7 +550,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, questions, knowledge, timeline
 - **ADR Needed:** no
 - **Score:** 90
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G281 — Print-Friendly Daily Brief
 
@@ -564,7 +564,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Start screen, export
 - **ADR Needed:** no
 - **Score:** 78
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G282 — Keyboard-First Data Entry
 
@@ -578,7 +578,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Forms, accessibility
 - **ADR Needed:** no
 - **Score:** 78
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G283 — Microcopy Consistency Pass
 
@@ -592,7 +592,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** UI copy
 - **ADR Needed:** no
 - **Score:** 65
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G284 — Service Worker Update UX
 
@@ -606,7 +606,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** PWA, service worker
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G285 — Offline Smoke Test Script
 
@@ -648,7 +648,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Tailscale, scripts
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G288 — Data Integrity Report
 
@@ -662,7 +662,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Storage, domain stores
 - **ADR Needed:** no
 - **Score:** 89
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G289 — Duplicate Detection
 
@@ -676,7 +676,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, consults, agenda
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G290 — Import Preview Before Commit
 
@@ -690,7 +690,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backup, sync, dossier
 - **ADR Needed:** no
 - **Score:** 89
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G291 — Sync Conflict Explanation
 
@@ -704,7 +704,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Sync
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G292 — Performance Budget Test
 
@@ -718,7 +718,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Build, CI
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G293 — Large Dossier Rendering Guard
 
@@ -732,7 +732,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, timeline
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G294 — IndexedDB Quota Warning
 
@@ -746,7 +746,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Storage, backup
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G295 — Error Boundary Screen
 
@@ -760,7 +760,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G296 — Form Draft Persistence
 
@@ -774,7 +774,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Forms, storage
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G297 — Event Log Filters
 
@@ -788,7 +788,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Event log
 - **ADR Needed:** no
 - **Score:** 64
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G298 — Runbook Command Verification
 
@@ -802,7 +802,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** docs/RUNBOOK, tests
 - **ADR Needed:** no
 - **Score:** 84
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G299 — Import Error Taxonomy
 
@@ -816,7 +816,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backup, sync, dossier
 - **ADR Needed:** no
 - **Score:** 84
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G300 — Local Diagnostics Export
 
@@ -830,7 +830,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Diagnostics, export
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G301 — Recovery Mode Unlock Help
 
@@ -858,7 +858,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Notifications, event log
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G303 — Browser Compatibility Matrix
 
@@ -872,7 +872,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, PWA
 - **ADR Needed:** no
 - **Score:** 64
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G304 — On-Device Summarizer Adapter
 
@@ -886,7 +886,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI, knowledge
 - **ADR Needed:** yes
 - **Score:** 87
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G305 — AI Prompt Registry
 
@@ -914,7 +914,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, knowledge
 - **ADR Needed:** no
 - **Score:** 87
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G307 — Research Reading Queue
 
@@ -928,7 +928,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge
 - **ADR Needed:** no
 - **Score:** 75
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G308 — Research-to-Question Suggestions
 
@@ -942,7 +942,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, questions
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G309 — Evidence Strength Labels
 
@@ -956,7 +956,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research
 - **ADR Needed:** no
 - **Score:** 87
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G310 — Research Update Reminder
 
@@ -970,7 +970,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, reminders
 - **ADR Needed:** no
 - **Score:** 82
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G311 — Local Citation Formatter
 
@@ -984,7 +984,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research export
 - **ADR Needed:** no
 - **Score:** 82
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G312 — AI Output Diff Review
 
@@ -998,7 +998,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI summaries, knowledge
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G313 — Sensitive Text Redaction Preview
 
@@ -1026,7 +1026,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI settings
 - **ADR Needed:** no
 - **Score:** 82
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G315 — AI Provider Health Check
 
@@ -1040,7 +1040,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI settings
 - **ADR Needed:** yes
 - **Score:** 55
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G316 — Research Topic Map
 
@@ -1054,7 +1054,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge graph, research
 - **ADR Needed:** no
 - **Score:** 75
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G317 — Question Safety Classifier
 
@@ -1068,7 +1068,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Questions, AI policy
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G318 — Local Research Full Text Index
 
@@ -1082,7 +1082,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge, storage
 - **ADR Needed:** no
 - **Score:** 67
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G319 — Research Export Packet
 
@@ -1096,7 +1096,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, export
 - **ADR Needed:** no
 - **Score:** 75
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G320 — Prompt Regression Suite
 
@@ -1124,7 +1124,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI UI
 - **ADR Needed:** no
 - **Score:** 62
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G322 — Research Network Audit Log
 
@@ -1138,7 +1138,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research opt-in, event log
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G323 — AI Data Retention Controls
 
@@ -1152,7 +1152,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI settings, knowledge
 - **ADR Needed:** yes
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G324 — Content Security Policy
 
@@ -1222,7 +1222,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Storage, tests
 - **ADR Needed:** no
 - **Score:** 89
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G329 — Domain Boundary Lint
 
@@ -1236,7 +1236,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Architecture, tests
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G330 — Accessibility Regression Smoke
 
@@ -1250,7 +1250,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** UI tests
 - **ADR Needed:** no
 - **Score:** 89
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G331 — Mobile Viewport Screenshot Gate
 
@@ -1264,7 +1264,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** UI tests
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G332 — Markdown Export Sanitizer
 
@@ -1278,7 +1278,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Exports
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G333 — Audit Event Retention Policy
 
@@ -1292,7 +1292,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Event log, docs
 - **ADR Needed:** no
 - **Score:** 84
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G334 — Form Validation Library Cleanup
 
@@ -1306,7 +1306,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Forms
 - **ADR Needed:** no
 - **Score:** 69
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G335 — Typed Route Registry
 
@@ -1320,7 +1320,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G336 — Store Factory Refactor
 
@@ -1334,7 +1334,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** main.ts, stores
 - **ADR Needed:** no
 - **Score:** 49
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G337 — Event Log Privacy Test
 
@@ -1362,7 +1362,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Tailscale docs, scripts
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G339 — Public Repo Privacy Review
 
@@ -1390,7 +1390,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, CI
 - **ADR Needed:** no
 - **Score:** 64
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G341 — CSS Token Audit
 
@@ -1404,7 +1404,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Styles
 - **ADR Needed:** no
 - **Score:** 84
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G342 — No External Asset Test
 
@@ -1432,7 +1432,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** TypeScript
 - **ADR Needed:** no
 - **Score:** 77
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G344 — Future Sync Relay Threat Model
 
@@ -1446,7 +1446,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Architecture, security docs
 - **ADR Needed:** yes
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G345 — Backlog Health Issue Snapshot Automation
 
@@ -1460,7 +1460,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, GitHub Issues, docs
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G346 — Goal Score Issue Annotation
 
@@ -1474,7 +1474,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, GitHub Issues, docs
 - **ADR Needed:** no
 - **Score:** 96
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G347 — External Asset CI Gate
 
@@ -1530,7 +1530,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, settings, onboarding tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G351 — Offline Smoke CI Artifact
 
@@ -1544,7 +1544,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** PWA, Playwright smoke, docs
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G352 — Backup Drill Fixture Expansion
 
@@ -1558,7 +1558,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Storage, backup, tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G353 — CSP Violation Reporting Plan
 
@@ -1600,7 +1600,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI registry, app shell, docs
 - **ADR Needed:** no
 - **Score:** 95
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G356 — Redaction Pattern Baseline Review
 
@@ -1614,7 +1614,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI payloads, privacy tests, docs
 - **ADR Needed:** no
 - **Score:** 102
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G357 — Prompt Regression Coverage Report
 
@@ -1628,7 +1628,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI tests, docs, maintenance scripts
 - **ADR Needed:** no
 - **Score:** 102
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G358 — Daily Command Center Personalization
 
@@ -1642,7 +1642,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Start screen, settings, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G359 — Consult Prep Packet Persistence
 
@@ -1656,7 +1656,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Questions, storage, export
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G360 — Recovery Mode Diagnostics Card
 
@@ -1726,7 +1726,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, docs, CI
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G365 — External Asset Allowlist Review Evidence
 
@@ -1740,7 +1740,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Docs, asset scanner, maintenance tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G366 — Local CSP Violation Reproduction Fixture
 
@@ -1754,7 +1754,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CSP docs, tests, dev tooling
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G367 — Secrets Scan Review Evidence Snapshot
 
@@ -1768,7 +1768,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Secrets scan, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G368 — Recovery Diagnostics Visual Regression Fixture
 
@@ -1782,7 +1782,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Vault UX, visual tests, docs
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G369 — Dependency Evidence Generator Dry Run
 
@@ -1796,7 +1796,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dependency review script, docs, tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G370 — Sensitive Fixture Review Evidence Snapshot
 
@@ -1810,7 +1810,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Fixture scanner, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G371 — Event Log Detail Review Evidence Snapshot
 
@@ -1824,7 +1824,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Event log privacy, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G372 — ADR Review Evidence Template
 
@@ -1880,7 +1880,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, PR template, tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G376 — ADR Review Evidence Index
 
@@ -1908,7 +1908,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** scripts, PR template, tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G378 — Backlog Active Goal Drift CLI Flag
 
@@ -1936,7 +1936,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** ADR backlog, docs, maintenance tests
 - **ADR Needed:** no
 - **Score:** 97
-- **Status:** ☐ open
+- **Status:** ☒ archived
 
 ### G380 — Backlog Health Issue Snapshot Default Gate
 

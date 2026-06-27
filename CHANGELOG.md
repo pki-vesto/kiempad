@@ -11,6 +11,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   open-doelenvloer meer. Open backlog- en execution-goals moeten nog steeds exact
   matchen en issue-drift blijft zichtbaar, maar afgeronde doelen hoeven niet meer
   kunstmatig vervangen te worden om 100 open GitHub-items te behouden.
+- Zero-cleanup: open backlogwerk kan nu expliciet als `☒ archived` worden vastgelegd
+  wanneer het onder GitHub-opruiming bewust niet-actueel is; de resterende 99 oude
+  backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
 - G148 UI-herstel (sidebar + fasehero): op desktop is de navigatie nu een
