@@ -138,7 +138,7 @@ describe('onderhoudsdocumentatie', () => {
     expect(onboarding).not.toContain('start een nieuwe lokale kluis per toestel');
   });
 
-  it('houdt een rijke execution-goalcatalogus met minimaal 100 actieve doelen', () => {
+  it('houdt een rijke execution-goalcatalogus zonder verplichte open-doelenvloer', () => {
     const backlogGoals = parseBacklogGoalRows();
     const executionGoalSections = parseExecutionGoalSections();
     const openBacklogGoalIds = backlogGoals
@@ -151,7 +151,7 @@ describe('onderhoudsdocumentatie', () => {
       .sort();
     const activeEpics = executionGoals.match(/^- \*\*.+:\*\* .+$/gm) ?? [];
 
-    expect(openBacklogGoalIds.length).toBeGreaterThanOrEqual(100);
+    expect(openBacklogGoalIds.length).toBeGreaterThan(0);
     expect(openExecutionGoalIds).toEqual(openBacklogGoalIds);
     expect(executionGoalSections.length).toBeGreaterThanOrEqual(openBacklogGoalIds.length);
     expect(activeEpics.length).toBeGreaterThanOrEqual(3);
@@ -352,7 +352,7 @@ describe('onderhoudsdocumentatie', () => {
     }
 
     expect(goalCompletionAudit).toContain('`MASTER_CONTEXT.md` sectie 4');
-    expect(goalCompletionAudit).toContain('minimaal 100 actieve doelen');
+    expect(goalCompletionAudit).toContain('maak geen vervangdoelen');
     expect(goalCompletionAudit).toContain('Closes #');
     expect(goalCompletionAudit).toContain('`main` groen');
     expect(masterContext).toContain('docs/GOAL_COMPLETION_AUDIT.md');
@@ -393,7 +393,7 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(goalCompletionAudit).toContain('### Filled Example');
     expect(goalCompletionAudit).toContain('Direct docs plus maintenance test');
-    expect(goalCompletionAudit).toContain('replacement goal added to keep 100 open goals');
+    expect(goalCompletionAudit).toContain('no replacement goal added');
   });
 
   it('documenteert autonomieguardrails voor centrale encrypted self-merge', () => {

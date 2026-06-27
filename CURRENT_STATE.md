@@ -452,7 +452,7 @@
 
 ## 3. Nog Niet Gebouwd
 
-- **G244 Continuous Evolution catalogus:** `EXECUTION_GOALS.md` definieert de tweede-generatie doelcatalogus met 5 actieve epics, F5-horizon en 100 open doelen (nu G246-G345) met probleem, gewenste uitkomst, gebruikerswaarde, acceptatiecriteria, prioriteit, complexiteit en componenten.
+- **G244 Continuous Evolution catalogus:** `EXECUTION_GOALS.md` definieert de tweede-generatie doelcatalogus met 5 actieve epics, F5-horizon en traceerbare doelen met probleem, gewenste uitkomst, gebruikerswaarde, acceptatiecriteria, prioriteit, complexiteit en componenten.
 - **G245 Backlog Health Dashboard:** `npm run backlog:health` vergelijkt lokaal
   `PRODUCT_BACKLOG.md`, `EXECUTION_GOALS.md` en optioneel een vooraf geëxporteerde
   GitHub issue-snapshot, zodat ontbrekende issue-links, dubbele goal-id's en
@@ -486,8 +486,8 @@
   medisch beleid; ADR-0007, de completion audit, PR-template en onderhoudstest
   verwijzen ernaar.
 - **G259 Backlog Statistics Test:** `tests/maintenanceDocs.test.ts` parseert open G-id's
-  uit `PRODUCT_BACKLOG.md` en `EXECUTION_GOALS.md`, vereist minimaal 100 actieve doelen
-  en faalt als beide actieve catalogi niet dezelfde open doelen bevatten.
+  uit `PRODUCT_BACKLOG.md` en `EXECUTION_GOALS.md` en faalt als beide actieve catalogi
+  niet dezelfde open doelen bevatten.
 - **G349 Completion Audit Evidence Markers:** `docs/GOAL_COMPLETION_AUDIT.md` en de
   PR-template bevatten een herkenbaar `completion-audit` markerblok met requirements-,
   test-, policy- en GitHub-evidence; de onderhoudstest bewaakt headings en velden.
@@ -499,15 +499,15 @@
   autonome PR evidence vast voor netwerk, AI, data, GitHub, Tailscale, medisch beleid
   en gevoelige-datagrenzen.
 - **G374 Backlog Active Goal Drift Fixture:** `scripts/backlog-health.mjs` valideert
-  actieve open doelen op minimum, ontbrekende execution IDs en extra execution IDs;
+  actieve open doelen op opt-in minimum, ontbrekende execution IDs en extra execution IDs;
   `tests/backlogHealth.test.ts` gebruikt kleine synthetische negatieve fixtures zonder
   productiebacklog te dupliceren.
 - **G376 ADR Review Evidence Index:** `docs/ADR_REVIEW_EVIDENCE_INDEX.md` koppelt alle
   huidige `ADR Needed: yes` doelen aan evidence location, decision outcome en follow-up
   status; de onderhoudstest vergelijkt de index met de ADR-needed marker set.
 - **G378 Backlog Active Goal Drift CLI Flag:** `npm run backlog:health` accepteert
-  `--minimum-open-goals` voor lokale fixtures/experimenten, met default 100 en
-  documentatie die de permanente 100-open-doelenregel behoudt.
+  `--minimum-open-goals` voor lokale fixtures/experimenten; standaard is er geen
+  open-doelenvloer zodat cleanup geen vervangruis hoeft te maken.
 - **G380 Backlog Health Issue Snapshot Default Gate:** README/CONTRIBUTING tonen het
   exacte veilige `gh issue list --json number,title,state,url` snapshotcommando,
   backlog-health meldt de optionele `--issues-json` route wanneer die ontbreekt en

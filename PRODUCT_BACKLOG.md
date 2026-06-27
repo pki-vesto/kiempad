@@ -28,9 +28,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 365 |
+| ☑ klaar | 366 |
 | ◐ bezig | 0 |
-| ☐ open | 100 |
+| ☐ open | 99 |
 | **Totaal** | **465** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
@@ -385,7 +385,7 @@ Bron: [`docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md`](docs/PERSONAL_FERTILI
 
 ## 21. Continuous Evolution & Goal Expansion
 
-Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcatalogus en issue-seeding; G246-G345 blijven actief zodat de backlog niet opdroogt.
+Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcatalogus en issue-seeding; open doelen blijven traceerbaar zolang ze werkelijk waardevol en actueel zijn.
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
@@ -610,14 +610,14 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G462 | Backlog Health JSON Contract Recovery Artifact Docs Hint Mixed Fixture Comment Boundary | P1 | F4 | ☑ |
 | G463 | Backlog Health JSON Contract Recovery Artifact Docs Hint Static Alias Comment Boundary | P1 | F4 | ☑ |
 | G464 | Backlog Health JSON Contract Recovery Artifact Docs Hint Broad Static Fixture Test Placement | P1 | F4 | ☑ |
-| G465 | Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Fixture Test Placement | P1 | F4 | ☐ |
+| G465 | Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Fixture Test Placement | P1 | F4 | ☑ |
 
 ---
 
 ## Telling
 
 - **Totaal doelen: 465** (id's G001 t/m G465, doorlopend genummerd) — ruim boven het
-  minimum van 100.
+  minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
 

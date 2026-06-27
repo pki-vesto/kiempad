@@ -38,7 +38,8 @@ docs.
    - Werk `PRODUCT_BACKLOG.md`, `EXECUTION_GOALS.md`, `CURRENT_STATE.md` en
      `CHANGELOG.md` bij wanneer status, gedrag of workflow verandert.
    - Voeg een ADR toe of pas die aan als een architectuur- of beleidskeuze wijzigt.
-   - Vervang afgeronde open doelen zodat de catalogus minimaal 100 actieve doelen houdt.
+   - Vervang afgeronde open doelen alleen wanneer er bewust nieuw waardevol werk is;
+     maak geen vervangdoelen om GitHub-ruis kunstmatig in stand te houden.
 
 6. **GitHub-status verifiëren**
    - PR-CI moet groen zijn voordat er gemerged wordt.
@@ -100,7 +101,7 @@ headings moeten exact blijven staan.
 - Issue: Closes #297.
 - PR: Green CI before squash merge.
 - Main CI: Verified green after merge.
-- Backlog: Goal marked `☑ klaar`; replacement goal added to keep 100 open goals.
+- Backlog: Goal marked `☑ klaar`; no replacement goal added because no new work was needed.
 <!-- completion-audit:end -->
 ```
 

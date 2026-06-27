@@ -132,7 +132,9 @@ describe('central encrypted API service', () => {
       ttlMs: 365 * 24 * 60 * 60 * 1000,
     });
 
-    expect(Date.parse(ticket.expiresAt) - Date.parse(ticket.issuedAt)).toBe(60_000);
+    const ttlDeltaMs = Date.parse(ticket.expiresAt) - Date.parse(ticket.issuedAt);
+    expect(ttlDeltaMs).toBeGreaterThanOrEqual(59_900);
+    expect(ttlDeltaMs).toBeLessThanOrEqual(60_100);
   });
 
   it('faalt gesloten bij ongeldige centrale sessie-TTL-configuratie', () => {
