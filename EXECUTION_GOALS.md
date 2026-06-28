@@ -5170,4 +5170,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap governance script, CI workflow, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G611 — bootstrap governance schema-error annotation release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Schemafouten hebben nu een compacte CI-annotatie, maar release- en state-documentatie bewaken nog niet apart dat `ciAnnotation` bij schemafoutwijzigingen genoemd blijft.
+- **Desired Outcome:** Maintenance-tests koppelen `ciAnnotation` aan de schemafout-releasecontext wanneer de bootstrap governance schemafout-output wijzigt.
+- **User Value:** Reviewers zien annotatiewijzigingen ook in de releasecontext en missen geen CI-outputcontractdrift.
+- **Acceptance Criteria:** Maintenance-test bewaakt `ciAnnotation` in CHANGELOG en CURRENT_STATE naast `schemaValidation`; test faalt bij ontbrekende annotatieterm; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

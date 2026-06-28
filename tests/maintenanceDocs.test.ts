@@ -161,6 +161,7 @@ describe('onderhoudsdocumentatie', () => {
       '`runbookChecklist`, `registryReference` en `ciStep`',
       'Succesvolle freshness-outputsnapshot',
       '"gate": "bootstrap-governance-freshness"',
+      'ciAnnotation',
       'schemaValidation',
       'Onbekende source- of coveragevelden',
       'Schemafout-outputvoorbeeld',
@@ -239,6 +240,8 @@ describe('onderhoudsdocumentatie', () => {
     expect(schemaErrorSnapshot).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
+      ciAnnotation:
+        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=1',
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 1,
@@ -1493,6 +1496,7 @@ function extractBootstrapGovernanceFreshnessSnapshot(): {
 function extractBootstrapGovernanceSchemaErrorSnapshot(): {
   status: string;
   gate: string;
+  ciAnnotation: string;
   schemaValidation: {
     status: string;
     unknownSourceFieldCount: number;
@@ -1510,6 +1514,7 @@ function extractBootstrapGovernanceSchemaErrorSnapshot(): {
   return JSON.parse(snapshot) as {
     status: string;
     gate: string;
+    ciAnnotation: string;
     schemaValidation: {
       status: string;
       unknownSourceFieldCount: number;

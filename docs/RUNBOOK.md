@@ -132,6 +132,7 @@ pad zonder lokale vault-hercreatie.
   {
     "status": "failed",
     "gate": "bootstrap-governance-freshness",
+    "ciAnnotation": "bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=1",
     "schemaValidation": {
       "status": "failed",
       "unknownSourceFieldCount": 1,
