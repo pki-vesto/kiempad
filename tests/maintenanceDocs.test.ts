@@ -8,6 +8,7 @@ import currentState from '../CURRENT_STATE.md?raw';
 import adrBacklog from '../docs/ADR_BACKLOG.md?raw';
 import adrReviewEvidenceIndex from '../docs/ADR_REVIEW_EVIDENCE_INDEX.md?raw';
 import adrReviewEvidenceTemplate from '../docs/ADR_REVIEW_EVIDENCE_TEMPLATE.md?raw';
+import autonomousEvolutionGovernance from '../docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md?raw';
 import autonomyGuardrailEvidenceChecklist from '../docs/AUTONOMY_GUARDRAIL_EVIDENCE_CHECKLIST.md?raw';
 import autonomyGuardrails from '../docs/AUTONOMY_GUARDRAILS.md?raw';
 import medicalBoundaryAdr from '../docs/adr/0004-geen-medisch-hulpmiddel.md?raw';
@@ -140,20 +141,25 @@ describe('onderhoudsdocumentatie', () => {
     expect(onboarding).not.toContain('start een nieuwe lokale kluis per toestel');
   });
 
-  it('houdt een rijke execution-goalcatalogus zonder verplichte open-doelenvloer', () => {
+  it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
     const backlogGoals = parseBacklogGoalRows();
     const executionGoalSections = parseExecutionGoalSections();
     const openBacklogGoalIds = backlogGoals
       .filter((goal) => goal.status === '☐')
       .map((goal) => goal.id)
       .sort();
-    const openExecutionGoalIds = executionGoalSections
-      .filter((goal) => goal.status === '☐ open')
-      .map((goal) => goal.id)
-      .sort();
+    const openExecutionGoals = executionGoalSections.filter((goal) => goal.status === '☐ open');
+    const openExecutionGoalIds = openExecutionGoals.map((goal) => goal.id).sort();
     const activeEpics = executionGoals.match(/^- \*\*.+:\*\* .+$/gm) ?? [];
+    const openEpicNames = new Set(openExecutionGoals.map((goal) => goal.fields.Epic));
 
     expect(openExecutionGoalIds).toEqual(openBacklogGoalIds);
+    expect(openBacklogGoalIds.length).toBeGreaterThanOrEqual(100);
+    expect(openEpicNames.size).toBeGreaterThanOrEqual(3);
+    expect(roadmap).toContain('F4 — Toekomst');
+    expect(autonomousEvolutionGovernance).toContain('100 active open goals');
+    expect(autonomousEvolutionGovernance).toContain('3 active epics');
+    expect(autonomousEvolutionGovernance).toContain('1 future roadmap horizon');
     expect(executionGoalSections.length).toBeGreaterThanOrEqual(openBacklogGoalIds.length);
     expect(activeEpics.length).toBeGreaterThanOrEqual(3);
     expect(executionGoals).toContain('F5 — Continuous Personal Fertility Operations');

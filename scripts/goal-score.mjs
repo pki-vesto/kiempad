@@ -17,6 +17,10 @@ export const COMPLEXITY_POINTS = {
 };
 
 export const EPIC_POINTS = {
+  'Central Encrypted Platform': 13,
+  'Fertility Timeline & Knowledge Graph': 12,
+  'Premium Claude Design UI': 10,
+  'Product Quality & Automation': 9,
   'Fertility Intelligence': 12,
   'Research Intelligence': 11,
   'Daily Recommendations': 11,

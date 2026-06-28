@@ -138,11 +138,7 @@
 - **G143/G144/G145 E2E-syncpakket:** back-upscherm kan een `.kiempad-sync`-pakket
   met uitsluitend encrypted records downloaden en importeren op een gekoppelde kluis;
   conflicten worden deterministisch last-wins op `updatedAt` afgehandeld.
-- **G466-G490 Fertility Intelligence actieve doelen:** de backlog bevat opnieuw 25
-  open strategische doelen voor historische dossieringestie, imaging, consulten,
-  embryo-tracking, research intelligence en dagelijkse aanbevelingen. De
-  onderhoudstests borgen dat minimaal 25 Fertility Intelligence-domain doelen, 5
-  Research Intelligence-doelen en 5 Daily Recommendations-doelen actief blijven.
+- **G466-G565 actieve autonome doelen:** de backlog bevat 100 open doelen voor centrale encrypted architectuur, Fertility Intelligence, research, daily recommendations, timeline/knowledge graph, premium Claude Design UI en productkwaliteit. Onderhoudstests borgen de vloer van minimaal 100 actieve doelen, 3 actieve epics en 1 toekomstige roadmap-horizon.
 - **G146 consult-PDF:** vragenscherm kan een lokaal printbaar consultoverzicht openen
   met afspraken, vragen en medicatie; de browser kan dit zonder externe dienst als PDF
   opslaan.

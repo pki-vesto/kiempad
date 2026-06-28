@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G491-G565 autonome evolution-governance: 75 extra actieve implementatiedoelen toegevoegd, inclusief GitHub-issuevloer van 100 actieve doelen, nieuwe governance-doc en onderhoudstests voor minimaal 100 actieve doelen, 3 actieve epics en 1 toekomstige roadmap-horizon.
 - G466-G490 Fertility Intelligence platformgovernance: nieuwe strategiedoc
   `docs/FERTILITY_INTELLIGENCE_STRATEGY.md`, 25 actieve open doelen in backlog en
   execution-catalogus, scoreprioriteit voor Fertility/Research/Daily

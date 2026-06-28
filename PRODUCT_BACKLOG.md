@@ -32,9 +32,9 @@
 |---|---|
 | ☑ klaar | 366 |
 | ◐ bezig | 0 |
-| ☐ open | 25 |
+| ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **490** |
+| **Totaal** | **565** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -647,11 +647,93 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G489 | Daily Recommendations: supplement boundary en artscheck | P0 | F5 | ☐ |
 | G490 | Daily Recommendations: aanbevelingen op fertility timeline | P1 | F5 | ☐ |
 
+## 23. Autonomous Evolution Active Goal Floor
+
+Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md). Deze laag houdt minimaal 100 actieve doelen, minimaal 3 actieve epics en minimaal 1 toekomstige roadmap-horizon beschikbaar voor autonome doorontwikkeling.
+
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G491 | Central Encrypted Platform: central session renewal zonder plaintext fallback | P0 | F5 | ☐ |
+| G492 | Central Encrypted Platform: owner-scoped record list pagination | P0 | F5 | ☐ |
+| G493 | Central Encrypted Platform: encrypted attachment envelope contract | P0 | F5 | ☐ |
+| G494 | Central Encrypted Platform: central attachment size limit policy | P0 | F5 | ☐ |
+| G495 | Central Encrypted Platform: record replay protection metadata | P0 | F5 | ☐ |
+| G496 | Central Encrypted Platform: central dataset bootstrap smoke test | P0 | F5 | ☐ |
+| G497 | Central Encrypted Platform: central API outage recovery banner | P1 | F5 | ☐ |
+| G498 | Central Encrypted Platform: central encrypted sync conflict audit view | P1 | F5 | ☐ |
+| G499 | Central Encrypted Platform: encrypted record schema version gate | P0 | F5 | ☐ |
+| G500 | Central Encrypted Platform: central session expiry user journey | P1 | F5 | ☐ |
+| G501 | Central Encrypted Platform: multi-device unlock copy consistency | P0 | F5 | ☐ |
+| G502 | Central Encrypted Platform: central persistence backup drill | P1 | F5 | ☐ |
+| G503 | Central Encrypted Platform: central API health endpoint privacy review | P1 | F5 | ☐ |
+| G504 | Central Encrypted Platform: central encrypted dataset export manifest | P1 | F5 | ☐ |
+| G505 | Central Encrypted Platform: legacy fallback migration decision screen | P1 | F5 | ☐ |
+| G506 | Fertility Intelligence: historische labwaarde normalisatie zonder interpretatie | P0 | F5 | ☐ |
+| G507 | Fertility Intelligence: dossierupload duplicaatreview op checksum | P0 | F5 | ☐ |
+| G508 | Fertility Intelligence: PDF-pagina preview met encrypted bronkoppeling | P1 | F5 | ☐ |
+| G509 | Fertility Intelligence: OCR-resultaat bronfragment navigatie | P1 | F5 | ☐ |
+| G510 | Fertility Intelligence: ziekenhuisdocument type-taxonomie | P0 | F5 | ☐ |
+| G511 | Fertility Intelligence: fertiliteitsrapport samenvatting als conceptkennis | P1 | F5 | ☐ |
+| G512 | Fertility Intelligence: historische records zoekfilter op kliniek | P1 | F5 | ☐ |
+| G513 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☐ |
+| G514 | Fertility Intelligence: documentreview wachtrij per confidence | P0 | F5 | ☐ |
+| G515 | Fertility Intelligence: medische bronverwijzing per tijdlijnitem | P0 | F5 | ☐ |
+| G516 | Fertility Intelligence: echo upload classificatie per afspraak | P0 | F5 | ☐ |
+| G517 | Fertility Intelligence: beeldpreview lock-state placeholder | P0 | F5 | ☐ |
+| G518 | Fertility Intelligence: embryo-afbeelding EXIF isolatie | P0 | F5 | ☐ |
+| G519 | Fertility Intelligence: beeldvergelijking selectieflow | P1 | F5 | ☐ |
+| G520 | Fertility Intelligence: scanrecord bronlabel en notitie | P1 | F5 | ☐ |
+| G521 | Fertility Intelligence: consultnotitie import uit tekstveld | P0 | F5 | ☐ |
+| G522 | Fertility Intelligence: consultdocument koppelen aan open vragen | P1 | F5 | ☐ |
+| G523 | Fertility Intelligence: consultactie omzetten naar herinnering | P1 | F5 | ☐ |
+| G524 | Fertility Intelligence: consultsamenvatting bronparagraaf review | P0 | F5 | ☐ |
+| G525 | Fertility Intelligence: behandelgeschiedenis reconstructie vanuit consulten | P1 | F5 | ☐ |
+| G526 | Fertility Intelligence: embryo-ID schema per poging | P0 | F5 | ☐ |
+| G527 | Fertility Intelligence: embryo-status event editor | P0 | F5 | ☐ |
+| G528 | Fertility Intelligence: embryo kwaliteit bronlabel UI | P0 | F5 | ☐ |
+| G529 | Fertility Intelligence: embryo cryo-status tijdlijnitem | P1 | F5 | ☐ |
+| G530 | Fertility Intelligence: embryo terugplaatsing contextkaart | P1 | F5 | ☐ |
+| G531 | Fertility Timeline & Knowledge Graph: knowledge graph node schema | P0 | F5 | ☐ |
+| G532 | Fertility Timeline & Knowledge Graph: relationship edge provenance model | P0 | F5 | ☐ |
+| G533 | Fertility Timeline & Knowledge Graph: fertility timeline filter op brontype | P1 | F5 | ☐ |
+| G534 | Fertility Timeline & Knowledge Graph: fertility timeline maandgroepering | P1 | F5 | ☐ |
+| G535 | Fertility Timeline & Knowledge Graph: timeline item detail drawer zonder kaart-in-kaart | P1 | F5 | ☐ |
+| G536 | Fertility Timeline & Knowledge Graph: timeline export met bronlijst | P1 | F5 | ☐ |
+| G537 | Fertility Timeline & Knowledge Graph: knowledge graph privacy boundary test | P0 | F5 | ☐ |
+| G538 | Fertility Timeline & Knowledge Graph: contextuele inzichten als vragen voor arts | P1 | F5 | ☐ |
+| G539 | Research Intelligence: research source allowlist met rationale | P0 | F5 | ☐ |
+| G540 | Research Intelligence: PubMed query preview zonder dossierplaintext | P0 | F5 | ☐ |
+| G541 | Research Intelligence: research item broncitatie parser | P1 | F5 | ☐ |
+| G542 | Research Intelligence: patientvriendelijke samenvatting leesniveau guard | P1 | F5 | ☐ |
+| G543 | Research Intelligence: research trend update timestamp | P1 | F5 | ☐ |
+| G544 | Research Intelligence: research relevantie uitleg onzekerheidslabel | P0 | F5 | ☐ |
+| G545 | Research Intelligence: researchbibliotheek offline cache metadata | P1 | F5 | ☐ |
+| G546 | Research Intelligence: research item artsbespreek-vraag generator | P1 | F5 | ☐ |
+| G547 | Daily Recommendations: dagadvies engine input-minimalisatie | P0 | F5 | ☐ |
+| G548 | Daily Recommendations: vrouw aanbeveling cyclusfase context | P0 | F5 | ☐ |
+| G549 | Daily Recommendations: man aanbeveling leefstijl context | P0 | F5 | ☐ |
+| G550 | Daily Recommendations: aanbeveling bronconfidence label | P1 | F5 | ☐ |
+| G551 | Daily Recommendations: aanbeveling artscheck actieknop | P0 | F5 | ☐ |
+| G552 | Daily Recommendations: dagadvies feedback analytics zonder tracking | P1 | F5 | ☐ |
+| G553 | Daily Recommendations: aanbevelingen verbergen per eigenaar | P1 | F5 | ☐ |
+| G554 | Daily Recommendations: daily recommendation policy regression fixtures | P0 | F5 | ☐ |
+| G555 | Premium Claude Design UI: fertility intelligence dossier inbox layout | P1 | F5 | ☐ |
+| G556 | Premium Claude Design UI: imaging repository compare layout | P1 | F5 | ☐ |
+| G557 | Premium Claude Design UI: consult intelligence review layout | P1 | F5 | ☐ |
+| G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☐ |
+| G559 | Premium Claude Design UI: research trend dashboard visual system | P1 | F5 | ☐ |
+| G560 | Premium Claude Design UI: daily recommendation dual-owner cards | P1 | F5 | ☐ |
+| G561 | Product Quality & Automation: active goal floor maintenance test | P0 | F5 | ☐ |
+| G562 | Product Quality & Automation: goal score top-priority snapshot | P1 | F5 | ☐ |
+| G563 | Product Quality & Automation: issue creation script dry-run fixture | P1 | F5 | ☐ |
+| G564 | Product Quality & Automation: autonomous evolution runbook checklist | P1 | F5 | ☐ |
+| G565 | Product Quality & Automation: autonomous issue snapshot freshness gate | P1 | F5 | ☐ |
+
 ---
 
 ## Telling
 
-- **Totaal doelen: 490** (id's G001 t/m G490, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 565** (id's G001 t/m G565, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
