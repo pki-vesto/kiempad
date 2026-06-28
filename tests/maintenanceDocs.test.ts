@@ -268,6 +268,29 @@ describe('onderhoudsdocumentatie', () => {
       for (const coverageField of governanceContract.coverageFields) {
         expect(releaseDoc).toContain(coverageField);
       }
+      const schemaErrorReleaseContext =
+        extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc);
+      for (const schemaErrorField of [
+        'schemaValidation',
+        'unknownSourceFieldCount',
+        'unknownCoverageFieldCount',
+      ]) {
+        expect(schemaErrorReleaseContext).toContain(schemaErrorField);
+      }
+      for (const forbiddenTerm of [
+        'payload',
+        'passphrase',
+        'secret',
+        'token',
+        'bestandsnaam',
+        'filename',
+        'OCR',
+        'base64',
+        'medische',
+        'fertiliteitsnotitie',
+      ]) {
+        expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
+      }
     }
   });
 
@@ -1493,6 +1516,22 @@ function extractBootstrapGovernanceSchemaErrorSnapshot(): {
       unknownCoverageFieldCount: number;
     };
   };
+}
+
+function extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      ['schemaValidation', 'unknownSourceFieldCount', 'unknownCoverageFieldCount'].some((term) =>
+        line.includes(term),
+      ),
+    );
+
+  if (matchingLines.length === 0) {
+    throw new Error('Bootstrap governance schemafoutvelden ontbreken in releasecontext.');
+  }
+
+  return matchingLines.join('\n');
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {

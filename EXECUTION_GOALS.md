@@ -5156,4 +5156,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G610 — bootstrap governance schema-error CI annotation
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Schemafouten worden nu in runbook, release en state bewaakt, maar CI toont nog geen compacte reviewannotatie die reviewers direct naar de schemafoutvelden leidt.
+- **Desired Outcome:** De bootstrap governance flow heeft een geteste, gesanitized CI-annotatie of summaryregel voor schemaValidation-fouten met alleen technische tellers en de gate-naam.
+- **User Value:** Reviewers kunnen contractdrift sneller herkennen zonder commandologs of scriptdetails uit te pluizen.
+- **Acceptance Criteria:** CI- of scriptoutput bevat een compacte schemafoutannotatie voor `schemaValidation`; tests bewaken dat `unknownSourceFieldCount` en `unknownCoverageFieldCount` aanwezig zijn; docs/backlog verwijzen naar dit doel; output bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance script, CI workflow, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
