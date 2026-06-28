@@ -8,6 +8,7 @@ import workflowRaw from '../.github/workflows/ci.yml?raw';
 import runbookRaw from '../docs/RUNBOOK.md?raw';
 import packageJsonRaw from '../package.json?raw';
 import governanceScriptRaw from '../scripts/bootstrap-governance-freshness.mjs?raw';
+import governanceContract from '../scripts/bootstrap-governance-freshness-contract.json';
 
 const execFileAsync = promisify(execFile);
 
@@ -20,27 +21,23 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     );
     expect(workflowRaw).toContain('Bootstrap governance freshness');
     expect(workflowRaw).toContain('npm run governance:bootstrap');
-    expect(governanceScriptRaw).toContain('bootstrap-governance-freshness');
-    expect(governanceScriptRaw).toContain('REQUIRED_RUNBOOK_CHECKLIST_MARKERS');
-    expect(governanceScriptRaw).toContain('registryReference');
+    expect(governanceScriptRaw).toContain('bootstrap-governance-freshness-contract.json');
+    expect(governanceScriptRaw).toContain('contract.sourceFields');
+    expect(governanceScriptRaw).toContain('contract.coverageFields');
   });
 
   it('rapporteert checklistdekking met gesanitized technische output', async () => {
     const { stdout, stderr } = await execFileAsync('node', [
       'scripts/bootstrap-governance-freshness.mjs',
     ]);
-    const report = JSON.parse(stdout) as {
-      status: string;
-      gate: string;
-      coverage: Record<string, string>;
-    };
+    const report = JSON.parse(stdout) as GovernanceGateReport;
     const docsSnapshotText = extractBootstrapGovernanceFreshnessDocsSnapshot();
     const docsSnapshot = JSON.parse(docsSnapshotText) as GovernanceGateReport;
 
     expect(stderr).toBe('');
     expect(report).toEqual({
       status: 'ok',
-      gate: 'bootstrap-governance-freshness',
+      gate: governanceContract.gate,
       sources: {
         runbookChecklist: {
           status: 'ok',
@@ -64,6 +61,10 @@ describe('bootstrap diagnostic governance freshness gate', () => {
       },
     });
     expect(docsSnapshot).toEqual(report);
+    expect(Object.keys(report.sources)).toEqual(governanceContract.sourceFields);
+    expect(Object.keys(report.coverage)).toEqual(governanceContract.coverageFields);
+    expect(Object.keys(docsSnapshot.sources)).toEqual(governanceContract.sourceFields);
+    expect(Object.keys(docsSnapshot.coverage)).toEqual(governanceContract.coverageFields);
 
     for (const forbiddenTerm of [
       'payload',

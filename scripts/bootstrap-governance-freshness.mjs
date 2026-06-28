@@ -5,23 +5,9 @@ import { isAbsolute, join } from 'node:path';
 
 const ROOT = process.cwd();
 
-const REQUIRED_RUNBOOK_CHECKLIST_MARKERS = [
-  '- [ ] Registry:',
-  '- [ ] Schema guard:',
-  '- [ ] Snapshot:',
-  '- [ ] Runbookreview:',
-];
-
-const REQUIRED_REGISTRY_REFERENCE_MARKERS = [
-  'src/storage/centralBootstrapDiagnostics.ts',
-  'diagnosticRegistry',
-  'phaseCode-matrix',
-];
-
-const REQUIRED_WORKFLOW_MARKERS = [
-  'Bootstrap governance freshness',
-  'npm run governance:bootstrap',
-];
+const contract = JSON.parse(
+  readFileSync(new URL('./bootstrap-governance-freshness-contract.json', import.meta.url), 'utf8'),
+);
 
 function readProjectFile(path) {
   return readFileSync(isAbsolute(path) ? path : join(ROOT, path), 'utf8');
@@ -47,13 +33,13 @@ const workflow = readProjectFile(
 
 const missingRunbookChecklistMarkers = collectMissingMarkers(
   runbook,
-  REQUIRED_RUNBOOK_CHECKLIST_MARKERS,
+  contract.runbookChecklistMarkers,
 );
 const missingRegistryReferenceMarkers = collectMissingMarkers(
   runbook,
-  REQUIRED_REGISTRY_REFERENCE_MARKERS,
+  contract.registryReferenceMarkers,
 );
-const missingWorkflowMarkers = collectMissingMarkers(workflow, REQUIRED_WORKFLOW_MARKERS);
+const missingWorkflowMarkers = collectMissingMarkers(workflow, contract.workflowMarkers);
 const missing = [
   ...missingRunbookChecklistMarkers,
   ...missingRegistryReferenceMarkers,
@@ -62,22 +48,26 @@ const missing = [
 
 const report = {
   status: missing.length === 0 ? 'ok' : 'failed',
-  gate: 'bootstrap-governance-freshness',
+  gate: contract.gate,
   sources: {
-    runbookChecklist: buildSourceDiagnostic(missingRunbookChecklistMarkers),
-    registryReference: buildSourceDiagnostic(missingRegistryReferenceMarkers),
-    ciStep: buildSourceDiagnostic(missingWorkflowMarkers),
+    [contract.sourceFields[0]]: buildSourceDiagnostic(missingRunbookChecklistMarkers),
+    [contract.sourceFields[1]]: buildSourceDiagnostic(missingRegistryReferenceMarkers),
+    [contract.sourceFields[2]]: buildSourceDiagnostic(missingWorkflowMarkers),
   },
   coverage: {
-    registry: missingRunbookChecklistMarkers.includes('- [ ] Registry:') ? 'missing' : 'ok',
-    schemaGuard: missingRunbookChecklistMarkers.includes('- [ ] Schema guard:')
+    [contract.coverageFields[0]]: missingRunbookChecklistMarkers.includes('- [ ] Registry:')
       ? 'missing'
       : 'ok',
-    snapshot: missingRunbookChecklistMarkers.includes('- [ ] Snapshot:') ? 'missing' : 'ok',
-    runbookReview: missingRunbookChecklistMarkers.includes('- [ ] Runbookreview:')
+    [contract.coverageFields[1]]: missingRunbookChecklistMarkers.includes('- [ ] Schema guard:')
       ? 'missing'
       : 'ok',
-    ciStep: missingWorkflowMarkers.length === 0 ? 'ok' : 'missing',
+    [contract.coverageFields[2]]: missingRunbookChecklistMarkers.includes('- [ ] Snapshot:')
+      ? 'missing'
+      : 'ok',
+    [contract.coverageFields[3]]: missingRunbookChecklistMarkers.includes('- [ ] Runbookreview:')
+      ? 'missing'
+      : 'ok',
+    [contract.coverageFields[4]]: missingWorkflowMarkers.length === 0 ? 'ok' : 'missing',
   },
 };
 
