@@ -163,6 +163,97 @@ describe('central dataset bootstrap smoke command', () => {
       expect(Object.keys(phase).sort()).toEqual(['envName', 'phaseCode', 'redactionCategories']);
     }
   });
+
+  it('legt de publieke diagnosticRegistry summary als reviewbare snapshot vast', () => {
+    const summary = createBootstrapSmokeDiagnosticRegistrySummary();
+
+    expect(summary).toMatchInlineSnapshot(`
+      {
+        "fixtureCount": 7,
+        "phases": [
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_FIRST_DEVICE_FAILURE",
+            "phaseCode": "first-device-write",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE",
+            "phaseCode": "second-device-read",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RESTART_FAILURE",
+            "phaseCode": "restart-read",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_WRONG_KEY_FAILURE",
+            "phaseCode": "wrong-key",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SNAPSHOT_INSPECTION_FAILURE",
+            "phaseCode": "snapshot-inspection",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK",
+            "phaseCode": "plaintext-boundary",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+          {
+            "envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE",
+            "phaseCode": "runtime",
+            "redactionCategories": [
+              "credential-secret",
+              "session-credential",
+              "file-reference",
+              "text-extraction-marker",
+              "medical-content",
+            ],
+          },
+        ],
+      }
+    `);
+
+    expectSanitizedSmokeOutput(JSON.stringify(summary));
+  });
 });
 
 async function runFailingSmoke(env: Record<string, string>): Promise<string> {

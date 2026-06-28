@@ -4988,4 +4988,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap diagnostic registry, command tests, snapshots
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G598 — bootstrap diagnostic summary docs snapshot link
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De diagnosticRegistry summary heeft nu een schema guard en inline snapshot, maar de runbook verwijst nog niet naar hoe reviewers snapshotdrift moeten beoordelen.
+- **Desired Outcome:** De runbook legt kort uit dat snapshotwijzigingen alleen acceptabel zijn bij bewuste registrywijzigingen aan phaseCode, envName of neutrale categorylabels.
+- **User Value:** Reviewers kunnen bootstrap CI-outputwijzigingen sneller beoordelen zonder gevoelige fixturedetails te bekijken.
+- **Acceptance Criteria:** Runbook benoemt de snapshotreviewregel; maintenance-test bewaakt deze verwijzing; tekst bevat geen payload, passphrase, token, filename, OCR/base64 of medische plaintext; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, command tests, maintenance docs tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
