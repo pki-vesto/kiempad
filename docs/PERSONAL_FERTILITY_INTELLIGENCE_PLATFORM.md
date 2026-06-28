@@ -212,7 +212,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-026 Behandelgeschiedenis reconstrueren uit consulten | Consultation Intelligence | Historie | Bouw een chronologisch behandelverhaal uit consultverslagen, afspraken en dossierdocumenten. |
 | PFIP-027 Correctieflow voor consultsamenvattingen | Consultation Intelligence | Review | Laat gebruikers samenvattingen en actiepunten corrigeren en label AI-output als concept. |
 | PFIP-028 Consultexport voor artsvoorbereiding | Consultation Intelligence | Export | Maak een printbaar consultoverzicht met open vragen, actiepunten en relevante historie. |
-| PFIP-029 Embryo-dossier per poging | Embryo Tracking | Embryodossier | Maak per poging een embryo-overzicht met embryo-ID, dag, status, kwaliteit en notities. |
+| PFIP-029 Embryo-dossier per poging | Embryo Tracking | Embryodossier | Maak per poging een embryo-overzicht met canonieke Kiempad embryo-ID, dag, status, kwaliteit en notities. |
 | PFIP-030 Embryo-afbeelding koppelen aan embryo-record | Embryo Tracking | Beeldkoppeling | Koppel embryo-afbeeldingen direct aan embryo's en behoud bronmetadata. |
 | PFIP-031 Embryokwaliteit registreren volgens kliniektekst | Embryo Tracking | Kwaliteitsregistratie | Registreer kwaliteitsbeoordeling zoals ontvangen van de kliniek zonder eigen kansberekening. |
 | PFIP-032 Embryo-statushistorie bijhouden | Embryo Tracking | Historie | Leg statussen zoals bevrucht, ontwikkeling, ingevroren, teruggeplaatst of niet gebruikt vast door de tijd. |

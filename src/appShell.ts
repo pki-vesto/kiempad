@@ -1512,6 +1512,7 @@ function renderEmbryoVergelijking(vergelijking: EmbryoVergelijking): string {
 function renderEmbryoDossier(item: EmbryoDossierItem): string {
   const details = [
     item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+    `Kiempad-id: ${item.canonicalEmbryoId}`,
     `Laatste datum: ${item.laatsteDatum}`,
     item.kwaliteiten.length > 0 ? `Kwaliteit: ${item.kwaliteiten.join(', ')}` : undefined,
     item.statussen.length > 0 ? `Status: ${item.statussen.join(', ')}` : undefined,

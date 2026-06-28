@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { maakDossierDocument } from '../src/domain/dossier';
-import { bouwEmbryoDossiers, bouwEmbryoVergelijkingen } from '../src/domain/embryoDossier';
+import {
+  bouwEmbryoDossiers,
+  bouwEmbryoVergelijkingen,
+  maakEmbryoIdVoorPoging,
+} from '../src/domain/embryoDossier';
 
 describe('embryoDossier', () => {
   it('bouwt een embryo-dossier per embryo binnen een poging', () => {
@@ -43,6 +47,7 @@ describe('embryoDossier', () => {
 
     expect(bouwEmbryoDossiers([beeld, kwaliteit])).toEqual([
       expect.objectContaining({
+        canonicalEmbryoId: 'embryo:traject-1:embryo-1',
         embryoLabel: 'Embryo 1',
         trajectId: 'traject-1',
         laatsteDatum: '2026-06-13',
@@ -81,6 +86,7 @@ describe('embryoDossier', () => {
 
     expect(bouwEmbryoDossiers([beeld])).toEqual([
       expect.objectContaining({
+        canonicalEmbryoId: 'embryo:traject-1:e2',
         embryoLabel: 'E2',
         meetmomenten: [],
         kliniekTerminologieen: [],
@@ -91,6 +97,13 @@ describe('embryoDossier', () => {
         documenten: [expect.objectContaining({ id: 'doc-beeld-id', soort: 'beeld' })],
       }),
     ]);
+  });
+
+  it('normaliseert een Kiempad embryo-id per poging', () => {
+    expect(maakEmbryoIdVoorPoging('Poging 1 / IVF', 'Embryo 1')).toBe(
+      'embryo:poging-1-ivf:embryo-1',
+    );
+    expect(maakEmbryoIdVoorPoging(undefined, 'E2')).toBe('embryo:zonder-traject:e2');
   });
 
   it('bouwt een chronologische embryo-historie van bevruchting tot eindstatus', () => {
