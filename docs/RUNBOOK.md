@@ -120,6 +120,8 @@ pad zonder lokale vault-hercreatie.
     bewust is en de publieke summary technisch blijft.
   - [ ] Runbookreview: controleer deze paragraaf, de phaseCode-matrix en de
     snapshotreviewregel voordat de PR mergebaar is.
+  CI voert daarnaast `npm run governance:bootstrap` uit als freshness gate voor deze
+  checklist naast de centrale bootstrap smoke.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale
