@@ -3491,3 +3491,1053 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **ADR Needed:** no
 - **Score:** 99
 - **Status:** ☐ open
+
+### G491 — central session renewal zonder plaintext fallback
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central session renewal zonder plaintext fallback, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central session renewal zonder plaintext fallback is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central session renewal zonder plaintext fallback gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Central API, session runtime, tests
+- **ADR Needed:** no
+- **Score:** 121
+- **Status:** ☐ open
+
+### G492 — owner-scoped record list pagination
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor owner-scoped record list pagination, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** owner-scoped record list pagination is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** owner-scoped record list pagination gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Central API, record repository, tests
+- **ADR Needed:** no
+- **Score:** 121
+- **Status:** ☐ open
+
+### G493 — encrypted attachment envelope contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor encrypted attachment envelope contract, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** encrypted attachment envelope contract is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** encrypted attachment envelope contract gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Central API, dossier attachments, tests
+- **ADR Needed:** no
+- **Score:** 121
+- **Status:** ☐ open
+
+### G494 — central attachment size limit policy
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central attachment size limit policy, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central attachment size limit policy is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central attachment size limit policy gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Central API, uploads, validation tests
+- **ADR Needed:** no
+- **Score:** 128
+- **Status:** ☐ open
+
+### G495 — record replay protection metadata
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor record replay protection metadata, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** record replay protection metadata is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** record replay protection metadata gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Central API, crypto metadata, tests
+- **ADR Needed:** no
+- **Score:** 121
+- **Status:** ☐ open
+
+### G496 — central dataset bootstrap smoke test
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central dataset bootstrap smoke test, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central dataset bootstrap smoke test is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central dataset bootstrap smoke test gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Smoke tests, onboarding, central API
+- **ADR Needed:** no
+- **Score:** 121
+- **Status:** ☐ open
+
+### G497 — central API outage recovery banner
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central API outage recovery banner, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central API outage recovery banner is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central API outage recovery banner gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, onboarding, tests
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+
+### G498 — central encrypted sync conflict audit view
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central encrypted sync conflict audit view, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central encrypted sync conflict audit view is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central encrypted sync conflict audit view gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Central records, event log, tests
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+
+### G499 — encrypted record schema version gate
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor encrypted record schema version gate, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** encrypted record schema version gate is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** encrypted record schema version gate gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Storage, schema, tests
+- **ADR Needed:** no
+- **Score:** 128
+- **Status:** ☐ open
+
+### G500 — central session expiry user journey
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central session expiry user journey, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central session expiry user journey is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central session expiry user journey gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Session runtime, app shell, tests
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+
+### G501 — multi-device unlock copy consistency
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor multi-device unlock copy consistency, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** multi-device unlock copy consistency is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** multi-device unlock copy consistency gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Onboarding, central API, tests
+- **ADR Needed:** no
+- **Score:** 121
+- **Status:** ☐ open
+
+### G502 — central persistence backup drill
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central persistence backup drill, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central persistence backup drill is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central persistence backup drill gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Backend persistence, runbook, tests
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+
+### G503 — central API health endpoint privacy review
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central API health endpoint privacy review, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central API health endpoint privacy review is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central API health endpoint privacy review gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Backend, security docs, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G504 — central encrypted dataset export manifest
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor central encrypted dataset export manifest, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** central encrypted dataset export manifest is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** central encrypted dataset export manifest gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Backup, central records, tests
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+
+### G505 — legacy fallback migration decision screen
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale encrypted architectuur heeft nog een uitvoerbaar vervolg nodig voor legacy fallback migration decision screen, zodat multi-device gebruik betrouwbaar blijft zonder plaintext medische data.
+- **Desired Outcome:** legacy fallback migration decision screen is uitgewerkt met centrale encrypted opslag als primaire route, expliciete foutstatussen en tests die plaintext backendinhoud blokkeren.
+- **User Value:** Gebruikers kunnen dezelfde versleutelde dataset betrouwbaarder op meerdere apparaten gebruiken zonder privacygrens te verliezen.
+- **Acceptance Criteria:** legacy fallback migration decision screen gebruikt client-side versleutelde envelopes; centrale backend ziet alleen technische metadata; fout- en lege staten zijn zichtbaar; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Onboarding, legacy storage, tests
+- **ADR Needed:** no
+- **Score:** 101
+- **Status:** ☐ open
+
+### G506 — historische labwaarde normalisatie zonder interpretatie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog historische labwaarde normalisatie zonder interpretatie, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** historische labwaarde normalisatie zonder interpretatie is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** historische labwaarde normalisatie zonder interpretatie bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Dossier, metadata, policy tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G507 — dossierupload duplicaatreview op checksum
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog dossierupload duplicaatreview op checksum, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** dossierupload duplicaatreview op checksum is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** dossierupload duplicaatreview op checksum bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Dossier, attachments, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G508 — PDF-pagina preview met encrypted bronkoppeling
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog PDF-pagina preview met encrypted bronkoppeling, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** PDF-pagina preview met encrypted bronkoppeling is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** PDF-pagina preview met encrypted bronkoppeling bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, preview, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G509 — OCR-resultaat bronfragment navigatie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog OCR-resultaat bronfragment navigatie, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** OCR-resultaat bronfragment navigatie is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** OCR-resultaat bronfragment navigatie bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** OCR, dossier, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G510 — ziekenhuisdocument type-taxonomie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog ziekenhuisdocument type-taxonomie, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** ziekenhuisdocument type-taxonomie is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** ziekenhuisdocument type-taxonomie bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Dossier taxonomy, tests
+- **ADR Needed:** no
+- **Score:** 127
+- **Status:** ☐ open
+
+### G511 — fertiliteitsrapport samenvatting als conceptkennis
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog fertiliteitsrapport samenvatting als conceptkennis, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** fertiliteitsrapport samenvatting als conceptkennis is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** fertiliteitsrapport samenvatting als conceptkennis bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, knowledge, AI policy tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G512 — historische records zoekfilter op kliniek
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog historische records zoekfilter op kliniek, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** historische records zoekfilter op kliniek is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** historische records zoekfilter op kliniek bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Search, dossier, tests
+- **ADR Needed:** no
+- **Score:** 107
+- **Status:** ☐ open
+
+### G513 — historische records zoekfilter op poging
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog historische records zoekfilter op poging, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** historische records zoekfilter op poging is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** historische records zoekfilter op poging bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Search, trajectory, tests
+- **ADR Needed:** no
+- **Score:** 107
+- **Status:** ☐ open
+
+### G514 — documentreview wachtrij per confidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog documentreview wachtrij per confidence, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** documentreview wachtrij per confidence is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** documentreview wachtrij per confidence bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** OCR review, dossier, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G515 — medische bronverwijzing per tijdlijnitem
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog medische bronverwijzing per tijdlijnitem, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** medische bronverwijzing per tijdlijnitem is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** medische bronverwijzing per tijdlijnitem bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Timeline, dossier, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G516 — echo upload classificatie per afspraak
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog echo upload classificatie per afspraak, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** echo upload classificatie per afspraak is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** echo upload classificatie per afspraak bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Imaging, appointments, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G517 — beeldpreview lock-state placeholder
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog beeldpreview lock-state placeholder, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** beeldpreview lock-state placeholder is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** beeldpreview lock-state placeholder bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Imaging, privacy, tests
+- **ADR Needed:** no
+- **Score:** 127
+- **Status:** ☐ open
+
+### G518 — embryo-afbeelding EXIF isolatie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog embryo-afbeelding EXIF isolatie, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** embryo-afbeelding EXIF isolatie is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** embryo-afbeelding EXIF isolatie bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Imaging, privacy, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G519 — beeldvergelijking selectieflow
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog beeldvergelijking selectieflow, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** beeldvergelijking selectieflow is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** beeldvergelijking selectieflow bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Imaging, UI, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G520 — scanrecord bronlabel en notitie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog scanrecord bronlabel en notitie, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** scanrecord bronlabel en notitie is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** scanrecord bronlabel en notitie bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging, dossier, tests
+- **ADR Needed:** no
+- **Score:** 107
+- **Status:** ☐ open
+
+### G521 — consultnotitie import uit tekstveld
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog consultnotitie import uit tekstveld, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** consultnotitie import uit tekstveld is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** consultnotitie import uit tekstveld bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Consults, dossier, tests
+- **ADR Needed:** no
+- **Score:** 127
+- **Status:** ☐ open
+
+### G522 — consultdocument koppelen aan open vragen
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog consultdocument koppelen aan open vragen, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** consultdocument koppelen aan open vragen is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** consultdocument koppelen aan open vragen bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consults, questions, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G523 — consultactie omzetten naar herinnering
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog consultactie omzetten naar herinnering, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** consultactie omzetten naar herinnering is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** consultactie omzetten naar herinnering bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consults, reminders, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G524 — consultsamenvatting bronparagraaf review
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog consultsamenvatting bronparagraaf review, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** consultsamenvatting bronparagraaf review is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** consultsamenvatting bronparagraaf review bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Consults, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G525 — behandelgeschiedenis reconstructie vanuit consulten
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog behandelgeschiedenis reconstructie vanuit consulten, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** behandelgeschiedenis reconstructie vanuit consulten is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** behandelgeschiedenis reconstructie vanuit consulten bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consults, timeline, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G526 — embryo-ID schema per poging
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog embryo-ID schema per poging, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** embryo-ID schema per poging is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** embryo-ID schema per poging bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Embryo dossier, domain types, tests
+- **ADR Needed:** no
+- **Score:** 127
+- **Status:** ☐ open
+
+### G527 — embryo-status event editor
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog embryo-status event editor, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** embryo-status event editor is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** embryo-status event editor bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Embryo dossier, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G528 — embryo kwaliteit bronlabel UI
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog embryo kwaliteit bronlabel UI, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** embryo kwaliteit bronlabel UI is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** embryo kwaliteit bronlabel UI bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Embryo dossier, UI, tests
+- **ADR Needed:** no
+- **Score:** 127
+- **Status:** ☐ open
+
+### G529 — embryo cryo-status tijdlijnitem
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog embryo cryo-status tijdlijnitem, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** embryo cryo-status tijdlijnitem is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** embryo cryo-status tijdlijnitem bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Embryo dossier, timeline, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G530 — embryo terugplaatsing contextkaart
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het persoonlijke fertiliteitsdossier mist nog embryo terugplaatsing contextkaart, waardoor historische medische context niet volledig bruikbaar is binnen de niet-medische Kiempad-grenzen.
+- **Desired Outcome:** embryo terugplaatsing contextkaart is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** embryo terugplaatsing contextkaart bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Embryo dossier, trajectory, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G531 — knowledge graph node schema
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog knowledge graph node schema, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** knowledge graph node schema is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** knowledge graph node schema bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Knowledge graph, domain types, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G532 — relationship edge provenance model
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog relationship edge provenance model, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** relationship edge provenance model is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** relationship edge provenance model bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Knowledge graph, dossier, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G533 — fertility timeline filter op brontype
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog fertility timeline filter op brontype, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** fertility timeline filter op brontype is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** fertility timeline filter op brontype bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Timeline, filters, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G534 — fertility timeline maandgroepering
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog fertility timeline maandgroepering, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** fertility timeline maandgroepering is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** fertility timeline maandgroepering bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Timeline, UI, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G535 — timeline item detail drawer zonder kaart-in-kaart
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog timeline item detail drawer zonder kaart-in-kaart, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** timeline item detail drawer zonder kaart-in-kaart is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** timeline item detail drawer zonder kaart-in-kaart bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Timeline, UI, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G536 — timeline export met bronlijst
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog timeline export met bronlijst, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** timeline export met bronlijst is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** timeline export met bronlijst bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Timeline, export, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G537 — knowledge graph privacy boundary test
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog knowledge graph privacy boundary test, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** knowledge graph privacy boundary test is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** knowledge graph privacy boundary test bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Knowledge graph, policy tests
+- **ADR Needed:** no
+- **Score:** 127
+- **Status:** ☐ open
+
+### G538 — contextuele inzichten als vragen voor arts
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De relatie tussen dossierbronnen, tijdlijn en contextuele inzichten mist nog contextuele inzichten als vragen voor arts, waardoor het traject minder goed vanuit een scherm te begrijpen is.
+- **Desired Outcome:** contextuele inzichten als vragen voor arts is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** contextuele inzichten als vragen voor arts bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge graph, questions, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G539 — research source allowlist met rationale
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog research source allowlist met rationale, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** research source allowlist met rationale is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** research source allowlist met rationale bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Research, security docs, tests
+- **ADR Needed:** no
+- **Score:** 126
+- **Status:** ☐ open
+
+### G540 — PubMed query preview zonder dossierplaintext
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog PubMed query preview zonder dossierplaintext, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** PubMed query preview zonder dossierplaintext is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** PubMed query preview zonder dossierplaintext bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Research, privacy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G541 — research item broncitatie parser
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog research item broncitatie parser, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** research item broncitatie parser is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** research item broncitatie parser bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, knowledge, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G542 — patientvriendelijke samenvatting leesniveau guard
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog patientvriendelijke samenvatting leesniveau guard, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** patientvriendelijke samenvatting leesniveau guard is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** patientvriendelijke samenvatting leesniveau guard bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G543 — research trend update timestamp
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog research trend update timestamp, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** research trend update timestamp is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** research trend update timestamp bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research dashboard, tests
+- **ADR Needed:** no
+- **Score:** 106
+- **Status:** ☐ open
+
+### G544 — research relevantie uitleg onzekerheidslabel
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog research relevantie uitleg onzekerheidslabel, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** research relevantie uitleg onzekerheidslabel is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** research relevantie uitleg onzekerheidslabel bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Research, policy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G545 — researchbibliotheek offline cache metadata
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog researchbibliotheek offline cache metadata, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** researchbibliotheek offline cache metadata is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** researchbibliotheek offline cache metadata bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, encrypted storage, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G546 — research item artsbespreek-vraag generator
+
+- **Epic:** Research Intelligence
+- **Problem:** Research intelligence mist nog research item artsbespreek-vraag generator, waardoor wetenschappelijke context onvoldoende herleidbaar of begrijpelijk is voor leken.
+- **Desired Outcome:** research item artsbespreek-vraag generator is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** research item artsbespreek-vraag generator bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, questions, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G547 — dagadvies engine input-minimalisatie
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog dagadvies engine input-minimalisatie, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** dagadvies engine input-minimalisatie is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** dagadvies engine input-minimalisatie bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Recommendations, privacy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G548 — vrouw aanbeveling cyclusfase context
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog vrouw aanbeveling cyclusfase context, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** vrouw aanbeveling cyclusfase context is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** vrouw aanbeveling cyclusfase context bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Recommendations, cycle data, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G549 — man aanbeveling leefstijl context
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog man aanbeveling leefstijl context, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** man aanbeveling leefstijl context is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** man aanbeveling leefstijl context bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Recommendations, owner labels, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G550 — aanbeveling bronconfidence label
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog aanbeveling bronconfidence label, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** aanbeveling bronconfidence label is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** aanbeveling bronconfidence label bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations, UI, tests
+- **ADR Needed:** no
+- **Score:** 106
+- **Status:** ☐ open
+
+### G551 — aanbeveling artscheck actieknop
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog aanbeveling artscheck actieknop, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** aanbeveling artscheck actieknop is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** aanbeveling artscheck actieknop bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Recommendations, questions, tests
+- **ADR Needed:** no
+- **Score:** 126
+- **Status:** ☐ open
+
+### G552 — dagadvies feedback analytics zonder tracking
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog dagadvies feedback analytics zonder tracking, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** dagadvies feedback analytics zonder tracking is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** dagadvies feedback analytics zonder tracking bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Recommendations, encrypted storage, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G553 — aanbevelingen verbergen per eigenaar
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog aanbevelingen verbergen per eigenaar, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** aanbevelingen verbergen per eigenaar is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** aanbevelingen verbergen per eigenaar bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations, owner labels, tests
+- **ADR Needed:** no
+- **Score:** 106
+- **Status:** ☐ open
+
+### G554 — daily recommendation policy regression fixtures
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen missen nog daily recommendation policy regression fixtures, waardoor persoonlijke voorbereiding minder uitlegbaar en minder veilig afgebakend is.
+- **Desired Outcome:** daily recommendation policy regression fixtures is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Gebruikers krijgen meer begrijpelijke context rond hun traject zonder dat Kiempad als medisch hulpmiddel optreedt.
+- **Acceptance Criteria:** daily recommendation policy regression fixtures bewaart bron, datum en reviewstatus; gebruiker kan concepten controleren of corrigeren; UI toont geen diagnose, dosering, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Recommendations, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G555 — fertility intelligence dossier inbox layout
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De premium Claude Design UI mist nog fertility intelligence dossier inbox layout, waardoor nieuwe intelligence-workflows minder consistent en minder scanbaar worden.
+- **Desired Outcome:** fertility intelligence dossier inbox layout is beschikbaar als rustige, mobiel-first interface die de bestaande bindings behoudt en geen externe assets introduceert.
+- **User Value:** Gebruikers krijgen een rustigere, professionelere werkervaring terwijl alle bestaande functies bereikbaar blijven.
+- **Acceptance Criteria:** fertility intelligence dossier inbox layout volgt docs/UI_GUIDELINES.md; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; assets:check blijft groen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
+### G556 — imaging repository compare layout
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De premium Claude Design UI mist nog imaging repository compare layout, waardoor nieuwe intelligence-workflows minder consistent en minder scanbaar worden.
+- **Desired Outcome:** imaging repository compare layout is beschikbaar als rustige, mobiel-first interface die de bestaande bindings behoudt en geen externe assets introduceert.
+- **User Value:** Gebruikers krijgen een rustigere, professionelere werkervaring terwijl alle bestaande functies bereikbaar blijven.
+- **Acceptance Criteria:** imaging repository compare layout volgt docs/UI_GUIDELINES.md; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; assets:check blijft groen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Imaging UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
+### G557 — consult intelligence review layout
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De premium Claude Design UI mist nog consult intelligence review layout, waardoor nieuwe intelligence-workflows minder consistent en minder scanbaar worden.
+- **Desired Outcome:** consult intelligence review layout is beschikbaar als rustige, mobiel-first interface die de bestaande bindings behoudt en geen externe assets introduceert.
+- **User Value:** Gebruikers krijgen een rustigere, professionelere werkervaring terwijl alle bestaande functies bereikbaar blijven.
+- **Acceptance Criteria:** consult intelligence review layout volgt docs/UI_GUIDELINES.md; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; assets:check blijft groen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
+### G558 — embryo tracking compact cards
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De premium Claude Design UI mist nog embryo tracking compact cards, waardoor nieuwe intelligence-workflows minder consistent en minder scanbaar worden.
+- **Desired Outcome:** embryo tracking compact cards is beschikbaar als rustige, mobiel-first interface die de bestaande bindings behoudt en geen externe assets introduceert.
+- **User Value:** Gebruikers krijgen een rustigere, professionelere werkervaring terwijl alle bestaande functies bereikbaar blijven.
+- **Acceptance Criteria:** embryo tracking compact cards volgt docs/UI_GUIDELINES.md; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; assets:check blijft groen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Embryo UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
+### G559 — research trend dashboard visual system
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De premium Claude Design UI mist nog research trend dashboard visual system, waardoor nieuwe intelligence-workflows minder consistent en minder scanbaar worden.
+- **Desired Outcome:** research trend dashboard visual system is beschikbaar als rustige, mobiel-first interface die de bestaande bindings behoudt en geen externe assets introduceert.
+- **User Value:** Gebruikers krijgen een rustigere, professionelere werkervaring terwijl alle bestaande functies bereikbaar blijven.
+- **Acceptance Criteria:** research trend dashboard visual system volgt docs/UI_GUIDELINES.md; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; assets:check blijft groen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
+### G560 — daily recommendation dual-owner cards
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De premium Claude Design UI mist nog daily recommendation dual-owner cards, waardoor nieuwe intelligence-workflows minder consistent en minder scanbaar worden.
+- **Desired Outcome:** daily recommendation dual-owner cards is beschikbaar als rustige, mobiel-first interface die de bestaande bindings behoudt en geen externe assets introduceert.
+- **User Value:** Gebruikers krijgen een rustigere, professionelere werkervaring terwijl alle bestaande functies bereikbaar blijven.
+- **Acceptance Criteria:** daily recommendation dual-owner cards volgt docs/UI_GUIDELINES.md; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; assets:check blijft groen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Recommendations UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
+### G561 — active goal floor maintenance test
+
+- **Epic:** Product Quality & Automation
+- **Problem:** Autonome doorontwikkeling mist nog active goal floor maintenance test, waardoor actieve doelen, issues en validatie minder stevig bewaakt worden.
+- **Desired Outcome:** active goal floor maintenance test is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Maintainers kunnen autonoom doorbouwen zonder dat backlog, issues of validatie uit elkaar lopen.
+- **Acceptance Criteria:** active goal floor maintenance test heeft reproduceerbare commandoguidance; onderhoudstests bewaken drift; backlog-health blijft zonder bevindingen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Maintenance tests, backlog health
+- **ADR Needed:** no
+- **Score:** 124
+- **Status:** ☐ open
+
+### G562 — goal score top-priority snapshot
+
+- **Epic:** Product Quality & Automation
+- **Problem:** Autonome doorontwikkeling mist nog goal score top-priority snapshot, waardoor actieve doelen, issues en validatie minder stevig bewaakt worden.
+- **Desired Outcome:** goal score top-priority snapshot is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Maintainers kunnen autonoom doorbouwen zonder dat backlog, issues of validatie uit elkaar lopen.
+- **Acceptance Criteria:** goal score top-priority snapshot heeft reproduceerbare commandoguidance; onderhoudstests bewaken drift; backlog-health blijft zonder bevindingen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Goal scoring, tests
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+
+### G563 — issue creation script dry-run fixture
+
+- **Epic:** Product Quality & Automation
+- **Problem:** Autonome doorontwikkeling mist nog issue creation script dry-run fixture, waardoor actieve doelen, issues en validatie minder stevig bewaakt worden.
+- **Desired Outcome:** issue creation script dry-run fixture is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Maintainers kunnen autonoom doorbouwen zonder dat backlog, issues of validatie uit elkaar lopen.
+- **Acceptance Criteria:** issue creation script dry-run fixture heeft reproduceerbare commandoguidance; onderhoudstests bewaken drift; backlog-health blijft zonder bevindingen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Backlog automation, tests
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☐ open
+
+### G564 — autonomous evolution runbook checklist
+
+- **Epic:** Product Quality & Automation
+- **Problem:** Autonome doorontwikkeling mist nog autonomous evolution runbook checklist, waardoor actieve doelen, issues en validatie minder stevig bewaakt worden.
+- **Desired Outcome:** autonomous evolution runbook checklist is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Maintainers kunnen autonoom doorbouwen zonder dat backlog, issues of validatie uit elkaar lopen.
+- **Acceptance Criteria:** autonomous evolution runbook checklist heeft reproduceerbare commandoguidance; onderhoudstests bewaken drift; backlog-health blijft zonder bevindingen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Docs, runbook, tests
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
+
+### G565 — autonomous issue snapshot freshness gate
+
+- **Epic:** Product Quality & Automation
+- **Problem:** Autonome doorontwikkeling mist nog autonomous issue snapshot freshness gate, waardoor actieve doelen, issues en validatie minder stevig bewaakt worden.
+- **Desired Outcome:** autonomous issue snapshot freshness gate is als concrete workflow beschikbaar met bronherleiding, reviewstatus en tests die diagnose, dosering en behandelkeuzeadvies uitsluiten.
+- **User Value:** Maintainers kunnen autonoom doorbouwen zonder dat backlog, issues of validatie uit elkaar lopen.
+- **Acceptance Criteria:** autonomous issue snapshot freshness gate heeft reproduceerbare commandoguidance; onderhoudstests bewaken drift; backlog-health blijft zonder bevindingen; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Backlog health, GitHub issues, tests
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☐ open
