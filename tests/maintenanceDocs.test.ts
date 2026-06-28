@@ -187,6 +187,8 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_REL
     'release-statebewaking',
     'release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding',
   ] as const;
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR =
+  'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding';
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -979,6 +981,22 @@ describe('onderhoudsdocumentatie', () => {
       BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR,
     ).toBe(
       'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding',
+    );
+  });
+
+  it('geeft ontbrekende bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: release-statebewaking staat in releasecontext.',
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_TERMS,
+      ),
+    ).toThrow(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR,
+    );
+    expect(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR,
+    ).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding',
     );
   });
 
