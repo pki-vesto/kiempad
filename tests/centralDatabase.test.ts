@@ -217,6 +217,7 @@ describe('central encrypted database architecture', () => {
       { ...createEncryptedRecord('bad-record'), type: 'plaintext_note' },
       { ...createEncryptedRecord('bad-record'), createdAt: '2026-06-25T08:00:00Z' },
       { ...createEncryptedRecord('bad-record'), schemaVersion: 0 },
+      { ...createEncryptedRecord('bad-record'), schemaVersion: 2 },
       {
         ...createEncryptedRecord('bad-record'),
         payload: { ...createEncryptedRecord('x').payload, iv: '' },

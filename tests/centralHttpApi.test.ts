@@ -213,6 +213,7 @@ describe('central encrypted HTTP API contract', () => {
       { ...validRecord, updatedAt: 'niet-een-datum' },
       { ...validRecord, schemaVersion: 0 },
       { ...validRecord, schemaVersion: 1.5 },
+      { ...validRecord, schemaVersion: 2 },
       { ...validRecord, payload: { ...validRecord.payload, v: 2 } },
       { ...validRecord, payload: { ...validRecord.payload, iv: '' } },
       { ...validRecord, payload: { ...validRecord.payload, ciphertext: '' } },

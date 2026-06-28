@@ -16,8 +16,8 @@ owner/indexmetadata en encrypted envelopes.
   De contractlaag accepteert alleen origin-form paden; absolute of
   protocol-relative URL's en malformed percent-encoded paden worden als ongeldig
   API-pad geweigerd. `PUT /records/:id` valideert recordbody's vóór
-  database-mutatie op canonieke ISO-timestamps, positieve `schemaVersion` en een
-  complete `AES-256-GCM` envelope.
+  database-mutatie op canonieke ISO-timestamps, een door deze app ondersteunde
+  `schemaVersion` en een complete `AES-256-GCM` envelope.
 - `CentralEncryptedApiServer` resolveert opaque tokens naar actieve sessies.
   `MemoryCentralSessionStore` indexeert sessies intern met een SHA-256-fingerprint
   van het bearer token; het ruwe token staat alleen in het uitgegeven sessieticket en
@@ -30,9 +30,9 @@ owner/indexmetadata en encrypted envelopes.
   Een mislukte save lekt daardoor geen onpersisted record-, meta- of delete-mutatie
   naar latere reads in hetzelfde serverproces en blokkeert latere commits niet.
   Recordwrites worden vóór runtime-mutatie gevalideerd op bekende recordtypes,
-  canonieke timestamps, positieve `schemaVersion` en complete `AES-256-GCM`
-  envelopes; malformed payloads bereiken dus ook via directe databasecalls geen
-  centrale runtime-state.
+  canonieke timestamps, een door deze app ondersteunde `schemaVersion` en complete
+  `AES-256-GCM` envelopes; malformed of toekomstige recordversies bereiken dus ook
+  via directe databasecalls geen centrale runtime-state.
   Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
   `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
   persistence geweigerd. Die technische metadata is owner-scoped: dezelfde metakey
@@ -41,9 +41,10 @@ owner/indexmetadata en encrypted envelopes.
 - `JsonFileCentralDatabasePersistence` is de eerste concrete server-side adapter.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
-  ownermetadata, bekende recordtypes, canonieke ISO-timestamps, positieve integer
-  versies, servermetadata, toegestane technische metakeys, dubbele logical keys
-  binnen dezelfde ownernamespace en `AES-256-GCM` envelopes.
+  ownermetadata, bekende recordtypes, canonieke ISO-timestamps, ondersteunde
+  record-schemaversies, positieve serverversies, servermetadata, toegestane
+  technische metakeys, dubbele logical keys binnen dezelfde ownernamespace en
+  `AES-256-GCM` envelopes.
   De file-backed adapter valideert dezelfde snapshotgrens ook vóór hij een nieuwe
   snapshot naar disk schrijft. Saves schrijven eerst naar een random, exclusief
   aangemaakt tijdelijk snapshotpad, flushen dat bestand vóór replacement, vervangen

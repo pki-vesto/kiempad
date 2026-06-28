@@ -14,6 +14,7 @@ import type {
   StorageMeta,
   StoredRecordType,
 } from './records';
+import { isSupportedRecordSchemaVersion } from './records';
 
 export type CentralHttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
 
@@ -307,7 +308,7 @@ function parseEncryptedRecordBody(body: unknown): EncryptedRecord {
   if (
     !isIsoTimestamp(body.createdAt) ||
     !isIsoTimestamp(body.updatedAt) ||
-    !isPositiveInteger(body.schemaVersion) ||
+    !isSupportedRecordSchemaVersion(body.schemaVersion) ||
     !isRecord(body.payload) ||
     body.payload.v !== 1 ||
     body.payload.alg !== 'AES-256-GCM' ||
@@ -342,10 +343,6 @@ function isIsoTimestamp(value: unknown): value is string {
   if (typeof value !== 'string' || !value.trim()) return false;
   const timestamp = Date.parse(value);
   return Number.isFinite(timestamp) && new Date(timestamp).toISOString() === value;
-}
-
-function isPositiveInteger(value: unknown): value is number {
-  return typeof value === 'number' && Number.isInteger(value) && value > 0;
 }
 
 function isNonEmptyString(value: unknown): value is string {
