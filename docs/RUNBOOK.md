@@ -123,6 +123,35 @@ pad zonder lokale vault-hercreatie.
   CI voert daarnaast `npm run governance:bootstrap` uit als freshness gate voor deze
   checklist naast de centrale bootstrap smoke. Bij falen rapporteert de gate alleen
   technische status per bron: `runbookChecklist`, `registryReference` en `ciStep`.
+  Succesvolle freshness-outputsnapshot:
+
+  ```json
+  {
+    "status": "ok",
+    "gate": "bootstrap-governance-freshness",
+    "sources": {
+      "runbookChecklist": {
+        "status": "ok",
+        "missingCount": 0
+      },
+      "registryReference": {
+        "status": "ok",
+        "missingCount": 0
+      },
+      "ciStep": {
+        "status": "ok",
+        "missingCount": 0
+      }
+    },
+    "coverage": {
+      "registry": "ok",
+      "schemaGuard": "ok",
+      "snapshot": "ok",
+      "runbookReview": "ok",
+      "ciStep": "ok"
+    }
+  }
+  ```
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

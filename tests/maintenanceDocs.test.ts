@@ -158,6 +158,8 @@ describe('onderhoudsdocumentatie', () => {
       'Checklist voor nieuwe bootstrapdiagnostics',
       'npm run governance:bootstrap',
       '`runbookChecklist`, `registryReference` en `ciStep`',
+      'Succesvolle freshness-outputsnapshot',
+      '"gate": "bootstrap-governance-freshness"',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }

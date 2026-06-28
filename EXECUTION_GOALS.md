@@ -5086,4 +5086,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, bootstrap governance script, maintenance docs tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G605 — bootstrap governance freshness changelog guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap governance freshness output heeft nu een docsnapshot, maar changelog- en state-updates kunnen nog drift vertonen wanneer de gatevelden wijzigen.
+- **Desired Outcome:** Een maintenance-test bewaakt dat changelog en current-state naar de actuele freshness gatevelden verwijzen wanneer de docsnapshot wijzigt.
+- **User Value:** Reviewers zien governance-outputwijzigingen ook in de releasecontext zonder losse documentatie te moeten vergelijken.
+- **Acceptance Criteria:** Maintenance-test koppelt docsnapshotvelden aan CHANGELOG/CURRENT_STATE-termen; test faalt bij ontbrekende gate-, source- of coverageverwijzing; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
 import workflowRaw from '../.github/workflows/ci.yml?raw';
+import runbookRaw from '../docs/RUNBOOK.md?raw';
 import packageJsonRaw from '../package.json?raw';
 import governanceScriptRaw from '../scripts/bootstrap-governance-freshness.mjs?raw';
 
@@ -33,6 +34,8 @@ describe('bootstrap diagnostic governance freshness gate', () => {
       gate: string;
       coverage: Record<string, string>;
     };
+    const docsSnapshotText = extractBootstrapGovernanceFreshnessDocsSnapshot();
+    const docsSnapshot = JSON.parse(docsSnapshotText) as GovernanceGateReport;
 
     expect(stderr).toBe('');
     expect(report).toEqual({
@@ -60,6 +63,7 @@ describe('bootstrap diagnostic governance freshness gate', () => {
         ciStep: 'ok',
       },
     });
+    expect(docsSnapshot).toEqual(report);
 
     for (const forbiddenTerm of [
       'payload',
@@ -74,6 +78,7 @@ describe('bootstrap diagnostic governance freshness gate', () => {
       'fertiliteitsnotitie',
     ]) {
       expect(stdout).not.toContain(forbiddenTerm);
+      expect(docsSnapshotText).not.toContain(forbiddenTerm);
     }
   });
 
@@ -113,6 +118,18 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(output.sources.ciStep).toEqual({ status: 'missing', missingCount: 2 });
   });
 });
+
+function extractBootstrapGovernanceFreshnessDocsSnapshot(): string {
+  const snapshot = runbookRaw.match(
+    /Succesvolle freshness-outputsnapshot:\n\n\s*```json\n([\s\S]*?)\n\s*```/,
+  )?.[1];
+
+  if (!snapshot) {
+    throw new Error('Bootstrap governance freshness docsnapshot ontbreekt in de runbook.');
+  }
+
+  return snapshot;
+}
 
 type GovernanceGateReport = {
   status: string;
