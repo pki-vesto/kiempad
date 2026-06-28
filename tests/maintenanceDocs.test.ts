@@ -273,6 +273,7 @@ describe('onderhoudsdocumentatie', () => {
       }
       const schemaErrorReleaseContext =
         extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc);
+      expect(schemaErrorReleaseContext).toContain(schemaErrorSnapshot.ciAnnotation);
       for (const schemaErrorField of [
         'ciAnnotation',
         'schemaValidation',
