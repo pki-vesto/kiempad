@@ -3196,7 +3196,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, dossier, search, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G470 — fertility dossier packet per behandeltraject
 
@@ -4734,6 +4734,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, metadata review, app shell, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G580 — historische tijdlijnitem reviewactie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Historische dossierrecords leveren nu concept-tijdlijnitems met confidence en datumconflict, maar gebruikers kunnen die items nog niet expliciet bevestigen, wijzigen of verbergen.
+- **Desired Outcome:** Per gereconstrueerd tijdlijnitem kan de gebruiker reviewstatus, datum, bron en zichtbaarheid corrigeren zonder medische interpretatie of verlies van originele broncontext.
+- **User Value:** Gebruikers bouwen een betrouwbaar chronologisch verhaal op uit oude dossierstukken en kunnen onzekerheden gecontroleerd verwerken.
+- **Acceptance Criteria:** UI toont reviewacties voor historische tijdlijnitems; bevestigen/wijzigen/verbergen bewaart reviewstatus, datumcorrectie, broncorrectie en zichtbaarheid encrypted; timeline behoudt originele datumconflicten als auditcontext; tests dekken bevestigen, wijzigen, verbergen en geen diagnose, dosering of behandelkeuzeadvies; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Fertility timeline, dossier, app shell, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

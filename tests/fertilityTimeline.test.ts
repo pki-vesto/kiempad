@@ -171,7 +171,15 @@ describe('fertility timeline', () => {
       ]),
     );
     expect(timeline.items.find((item) => item.id === 'onderzoek-doc-embryo')).toMatchObject({
-      context: 'Categorie Embryokwaliteit · documenttype Embryorapport',
+      context:
+        'Categorie Embryokwaliteit · documenttype Embryorapport · tijdlijn concept · confidence middel (60%)',
+      historischConcept: {
+        reviewStatus: 'concept',
+        bron: 'embryo.pdf',
+        datumBron: 'metadata',
+        confidenceLabel: 'middel',
+        confidenceScore: 0.6,
+      },
       gekoppeldeRecords: expect.arrayContaining([
         { soort: 'dossier', id: 'doc-embryo', label: 'Dossierrecord: Embryorapport' },
         { soort: 'traject', id: 'traject-1', label: 'Traject: traject-1' },
@@ -253,6 +261,81 @@ describe('fertility timeline', () => {
     expect(timeline.contextSignalen.map((item) => item.detail).join(' ')).not.toMatch(
       /slecht|risico|advies/i,
     );
+  });
+
+  it('reconstrueert historische dossierrecords als conceptitems met bron, confidence en datumconflict', () => {
+    const labDocument = {
+      id: 'doc-lab',
+      datum: '2026-05-01',
+      titel: 'Historische labuitslag',
+      categorie: 'onderzoek',
+      bestandsNaam: 'lab.pdf',
+      grootteBytes: 1024,
+      inhoudBase64: 'base64',
+      analyse: {
+        samenvatting: 'Labuitslag vastgelegd zonder interpretatie.',
+        signalen: [],
+      },
+      metadata: {
+        documentDatum: '2026-05-03',
+        documenttype: 'Labuitslag',
+        bronbestand: 'lab.pdf',
+        extractieBronnen: ['bronbestand', 'datumherkenning'],
+        normalisatie: {
+          datum: '2026-05-03',
+          bron: 'Erasmus MC',
+          documenttype: 'Labuitslag',
+          onderzoekstype: 'Labwaarde',
+          pogingId: 'traject-1',
+          afspraakId: 'afspraak-1',
+          onzekerheid: 'hoog',
+          origineleWaarden: {
+            datum: '2026-05-03',
+            bron: 'lab.pdf',
+            documenttype: 'Labuitslag',
+            pogingId: 'traject-1',
+            afspraakId: 'afspraak-1',
+          },
+          overschrevenDoorGebruiker: false,
+        },
+      },
+      uploadedAt: '2026-05-04T10:00:00.000Z',
+    } as DossierDocument;
+    const timeline = bouwFertilityTimeline({
+      trajecten: [],
+      afspraken: [],
+      dossierDocuments: [labDocument],
+      consultVerslagen: [],
+      kennisItems: [],
+    });
+
+    expect(timeline.items).toHaveLength(1);
+    expect(timeline.items[0]).toMatchObject({
+      id: 'onderzoek-doc-lab',
+      datum: '2026-05-03',
+      label: 'Labuitslag',
+      bron: 'Erasmus MC',
+      trajectId: 'traject-1',
+      gekoppeldeRecords: expect.arrayContaining([
+        { soort: 'dossier', id: 'doc-lab', label: 'Dossierrecord: Historische labuitslag' },
+        { soort: 'traject', id: 'traject-1', label: 'Traject: traject-1' },
+        { soort: 'afspraak', id: 'afspraak-1', label: 'Afspraak: afspraak-1' },
+      ]),
+      historischConcept: {
+        reviewStatus: 'concept',
+        bron: 'Erasmus MC',
+        datumBron: 'genormaliseerde_metadata',
+        confidenceLabel: 'laag',
+        confidenceScore: 0.35,
+        conflict: {
+          formulierDatum: '2026-05-01',
+          metadataDatum: '2026-05-03',
+          toelichting:
+            'Formulierdatum en herkende documentdatum verschillen; beide blijven zichtbaar voor review.',
+        },
+      },
+    });
+    expect(timeline.items[0]?.context).toContain('datumconflict zichtbaar');
   });
 
   it('filtert tijdlijnitems op type, periode, traject en bron', () => {

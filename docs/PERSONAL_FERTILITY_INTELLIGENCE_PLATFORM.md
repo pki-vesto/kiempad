@@ -191,7 +191,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-005 Handmatige correctie van documentmetadata | Historical Medical Record Ingestion | Metadata review | Laat gebruikers OCR- en metadataresultaten corrigeren voordat gereviewde OCR-tekst definitief metadata, zoekindex of tijdlijn voedt. |
 | PFIP-006 Dossierindex voor historische records | Historical Medical Record Ingestion | Indexering | Bouw een doorzoekbare dossierindex op basis van documentmetadata en versleutelde inhoudssamenvattingen. |
 | PFIP-007 Zoekfunctie over historische onderzoeken | Historical Medical Record Ingestion | Zoeken | Zoek op datum, bron, type, vrije tekst, kliniek en gekoppelde poging. |
-| PFIP-008 Tijdlijnkoppeling voor historische records | Historical Medical Record Ingestion | Tijdlijn | Plaats elk historisch document met bronverwijzing op de fertility timeline. |
+| PFIP-008 Tijdlijnkoppeling voor historische records | Historical Medical Record Ingestion | Tijdlijn | Plaats elk historisch document als conceptitem met bron, datumbron, confidence, reviewstatus en zichtbaar datumconflict op de fertility timeline. |
 | PFIP-009 Duplicaatdetectie voor opnieuw geuploade documenten | Historical Medical Record Ingestion | Kwaliteit | Waarschuw bij vermoedelijke duplicaten op basis van checksum, datum, titel en metadata. |
 | PFIP-010 Importstatus en foutafhandeling voor dossieruploads | Historical Medical Record Ingestion | Upload UX | Toon per bestand status, foutreden, veilige verwijderactie en opvolgend retry-doel zonder medische inhoud in logs. |
 | PFIP-011 Auditlog voor dossieringestie | Historical Medical Record Ingestion | Audit | Registreer upload, OCR, metadatawijziging en verwijdering als technische eventlog zonder medische plaintext. |
