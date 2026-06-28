@@ -84,6 +84,15 @@ pad zonder lokale vault-hercreatie.
   Output is alleen technische JSON-status. Bij falen bevat de smoke een
   gesanitized `phaseCode` en `recoveryHint`, zonder passphrases, bearer tokens of
   medische plaintext.
+
+  | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
+  |---|---|---|---|---|
+  | `first-device-write` | eerste centrale write of sessie faalt | controleer sessie-uitgifte, encrypted repository write en persistence-adapter | herhaal lokaal met `npm run smoke:central-bootstrap` en inspecteer alleen technische backendlogs | Platform |
+  | `second-device-read` | tweede apparaat ziet dezelfde encrypted dataset niet | controleer centrale user-scope, `crypto` metadata, recordlist en owner-isolatie | herlaad centrale bootstrap en verifieer dat beide apparaten dezelfde user-scope gebruiken | Platform |
+  | `restart-read` | persistence laadt encrypted snapshot niet terug | controleer snapshotvalidatie, file/row-store permissies en save/load pad | draai persistence-regressies en herstel de laatste geldige encrypted snapshot | Platform |
+  | `wrong-key` | verkeerde sleutel wordt niet geweigerd | controleer passphrase verifier en vault-key validatie | blokkeer release en draai storage-crypto/vault regressies | Security |
+  | `snapshot-inspection` | smoke kan technische snapshot niet inspecteren | controleer smoke-runner persistence wiring | herstel de smoke-harness voordat conclusies over privacygrens worden getrokken | Platform |
+  | `plaintext-boundary` | centrale snapshot bevat verboden plaintext | controleer encrypted envelope boundary en snapshotserialisatie | blokkeer release, verwijder de testoutput en onderzoek alleen synthetische fixtures | Security |
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

@@ -4890,4 +4890,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, central bootstrap smoke, maintenance docs tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G591 — bootstrap diagnostics redaction regression
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook bevat nu fasegerichte bootstrap smoke diagnostics, maar er is nog geen aparte regressie die alle failurediagnostics gezamenlijk op redactionbeleid controleert.
+- **Desired Outcome:** Een dedicated regression controleert dat alle bootstrap smoke failurediagnostics geen passphrases, bearer tokens, bestandsnamen, OCR/base64-markers of medische plaintext kunnen loggen.
+- **User Value:** CI-logs blijven bruikbaar voor triage zonder gevoelige datasetinformatie te lekken.
+- **Acceptance Criteria:** Test of script dwingt redaction af voor alle bekende `phaseCode` diagnostics; test faalt bij passphrase, token, filename, OCR/base64 of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Central bootstrap smoke, tests, scripts
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
