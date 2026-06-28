@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G685/G686 Central Encrypted Platform: de exacte bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding staat nu als compact onderhoudstestcontract naast de negatieve fixture. G686 is toegevoegd als opvolgdoel voor release-statebewaking van deze release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmelding.
 - G151 Vandaag "Vandaag te zetten": het startscherm toont nu de interactieve
   dosislijst van vandaag (afvinken/overslaan) met een teller "x/y gedaan", zoals
   het Claude Design-prototype. De command-center-samenvatting blijft de triage;
