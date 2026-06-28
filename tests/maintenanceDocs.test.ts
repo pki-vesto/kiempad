@@ -1568,6 +1568,14 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('bewaakt bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext vervolgcontracttermcontracttekstcontractcontractcontractcontractcontractcontractcontractcontract in release-state', () => {
+    const releaseContextTerm =
+      'release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding';
+
+    expect(changelog).toContain(releaseContextTerm);
+    expect(currentState).toContain(releaseContextTerm);
+  });
+
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
     expect({
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
