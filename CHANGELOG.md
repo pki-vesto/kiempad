@@ -23,6 +23,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G664/G665 Central Encrypted Platform: de exacte bootstrap governance release-state-foutmeldingcontextmeldingreleasecontext missing-term melding staat nu als compact onderhoudstestcontract naast de negatieve fixture. G665 is toegevoegd als opvolgdoel voor release-statebewaking van deze release-state-foutmeldingcontextmelding.
 - G663/G664 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance release-state-foutmeldingcontextmeldingreleasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G664 is toegevoegd als opvolgdoel voor een compact contract rond deze release-state-foutmeldingcontextmelding missing-term melding.
 - G662/G663 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance `release-state-foutmeldingcontext missing-term melding` blijven noemen. G663 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende release-state-foutmeldingcontextmeldingreleasecontext.
 - G661/G662 Central Encrypted Platform: de exacte bootstrap governance release-state-foutmeldingcontext missing-term melding staat nu als compact onderhoudstestcontract naast de negatieve fixture. G662 is toegevoegd als opvolgdoel voor release-statebewaking van deze release-state-foutmeldingcontextmelding.
