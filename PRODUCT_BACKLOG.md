@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 387 |
+| ☑ klaar | 388 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **586** |
+| **Totaal** | **587** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -658,7 +658,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G493 | Central Encrypted Platform: encrypted attachment envelope contract | P0 | F5 | ☑ |
 | G494 | Central Encrypted Platform: central attachment size limit policy | P0 | F5 | ☑ |
 | G495 | Central Encrypted Platform: record replay protection metadata | P0 | F5 | ☑ |
-| G496 | Central Encrypted Platform: central dataset bootstrap smoke test | P0 | F5 | ☐ |
+| G496 | Central Encrypted Platform: central dataset bootstrap smoke test | P0 | F5 | ☑ |
 | G497 | Central Encrypted Platform: central API outage recovery banner | P1 | F5 | ☐ |
 | G498 | Central Encrypted Platform: central encrypted sync conflict audit view | P1 | F5 | ☐ |
 | G499 | Central Encrypted Platform: encrypted record schema version gate | P0 | F5 | ☑ |
@@ -749,12 +749,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G584 | Central Encrypted Platform: paginated record load status UI | P1 | F5 | ☐ |
 | G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☐ |
 | G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☐ |
+| G587 | Central Encrypted Platform: bootstrap smoke CI command | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 586** (id's G001 t/m G586, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 587** (id's G001 t/m G587, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

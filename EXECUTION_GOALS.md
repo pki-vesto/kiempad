@@ -3574,7 +3574,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Smoke tests, onboarding, central API
 - **ADR Needed:** no
 - **Score:** 121
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G497 — central API outage recovery banner
 
@@ -4834,4 +4834,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, storage bootstrap, central API, tests
 - **ADR Needed:** no
 - **Score:** 113
+- **Status:** ☐ open
+
+### G587 — bootstrap smoke CI command
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale dataset bootstrap heeft nu een herbruikbare smoke-runner, maar er is nog geen dedicated npm/CI-commando dat deze bootstrap smoke buiten de unit-testselectie reproduceerbaar uitvoert.
+- **Desired Outcome:** Maintainers kunnen de centrale dataset bootstrap smoke als expliciet commando draaien met duidelijke output over lege dataset, encrypted write, tweede-device read, restart, verkeerde-sleutel foutstatus en plaintext-boundary.
+- **User Value:** Regressies in centrale multi-device bootstrap worden sneller gevonden voordat productie- of Tailscale-publicatie nieuwe data raakt.
+- **Acceptance Criteria:** Er is een dedicated script of npm-command voor de centrale bootstrap smoke; CI of docs verwijzen naar het commando; output bevat alleen technische status; tests dekken succes en falen zonder passphrase, bearer token, filename, OCR/base64 of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Scripts, CI, central bootstrap, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

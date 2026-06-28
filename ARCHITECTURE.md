@@ -128,6 +128,10 @@ en blijft ook centraal **versleuteld at rest**.
   legacy lokale kluis. De refresh-status is alleen technische clientstatus
   (`active`/`refreshing`/`failed`) met timestamp of foutcode, zonder passphrase,
   recordpayload of medische plaintext.
+- **Bootstrap smoke:** `runCentralDatasetBootstrapSmoke` doorloopt de centrale
+  encrypted dataset bootstrap met lege dataset, eerste write, tweede-device read,
+  serverrestart, verkeerde-sleutel foutstatus en optionele snapshotinspectie op
+  plaintextlekkage.
 - **Versleuteling:** **AES-256-GCM** per record. De client versleutelt payloads voor
   persistente opslag; de centrale laag ziet alleen encrypted envelopes plus minimale
   indexmetadata.
