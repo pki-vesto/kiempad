@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 388 |
+| ☑ klaar | 389 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **587** |
+| **Totaal** | **588** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -663,7 +663,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G498 | Central Encrypted Platform: central encrypted sync conflict audit view | P1 | F5 | ☐ |
 | G499 | Central Encrypted Platform: encrypted record schema version gate | P0 | F5 | ☑ |
 | G500 | Central Encrypted Platform: central session expiry user journey | P1 | F5 | ☐ |
-| G501 | Central Encrypted Platform: multi-device unlock copy consistency | P0 | F5 | ☐ |
+| G501 | Central Encrypted Platform: multi-device unlock copy consistency | P0 | F5 | ☑ |
 | G502 | Central Encrypted Platform: central persistence backup drill | P1 | F5 | ☐ |
 | G503 | Central Encrypted Platform: central API health endpoint privacy review | P1 | F5 | ☐ |
 | G504 | Central Encrypted Platform: central encrypted dataset export manifest | P1 | F5 | ☐ |
@@ -750,12 +750,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☐ |
 | G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☐ |
 | G587 | Central Encrypted Platform: bootstrap smoke CI command | P1 | F5 | ☐ |
+| G588 | Central Encrypted Platform: missing key metadata recovery UI | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 587** (id's G001 t/m G587, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 588** (id's G001 t/m G588, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

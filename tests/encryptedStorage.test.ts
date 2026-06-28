@@ -58,6 +58,30 @@ describe('encrypted storage', () => {
     expect(secondSession.isUnlocked()).toBe(true);
   });
 
+  it('weigert nieuwe sleutelmetadata te maken wanneer encrypted records al bestaan', async () => {
+    const driver = new MemoryEncryptedStorageDriver();
+    await driver.putRecord({
+      id: 'orphan-record',
+      type: 'traject',
+      createdAt: '2026-06-25T08:00:00.000Z',
+      updatedAt: '2026-06-25T08:00:01.000Z',
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      payload: {
+        v: 1,
+        alg: 'AES-256-GCM',
+        iv: 'encrypted-iv-orphan',
+        ciphertext: 'encrypted-ciphertext-orphan',
+      },
+    });
+
+    const session = new VaultSession(driver, { autoLockMs: 60_000 });
+
+    await expect(session.initializeOrUnlock('nieuwe passphrase')).rejects.toThrow(
+      'sleutelmetadata ontbreekt terwijl er al versleutelde records bestaan',
+    );
+    await expect(driver.getMeta('crypto')).resolves.toBeUndefined();
+  });
+
   it('herstelt ontbrekende schemametadata bij het ontgrendelen van een bestaande kluis', async () => {
     const driver = new MemoryEncryptedStorageDriver();
     const firstSession = new VaultSession(driver, { autoLockMs: 60_000 });
