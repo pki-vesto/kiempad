@@ -1,4 +1,4 @@
-import type { DossierDocument } from './types';
+import type { DossierDocument, ZiekenhuisDocumentType } from './types';
 
 export type DossierDocumentInput = {
   datum: string;
@@ -142,6 +142,17 @@ export const DOSSIER_UPLOAD_PROFIEL_LABELS: Record<
   behandelverslag: 'Behandelverslag',
   pdf: 'PDF',
   afbeelding: 'Afbeelding',
+};
+
+export const ZIEKENHUIS_DOCUMENT_TYPE_LABELS: Record<ZiekenhuisDocumentType, string> = {
+  patientenportaal_export: 'Patiëntenportaal-export',
+  verwijsbrief: 'Verwijsbrief',
+  ontslagbrief: 'Ontslagbrief',
+  operatieverslag: 'Operatieverslag',
+  lab_rapport: 'Labrapport',
+  beeldverslag: 'Beeldverslag',
+  toestemmingsformulier: 'Toestemmingsformulier',
+  algemeen_ziekenhuisdocument: 'Algemeen ziekenhuisdocument',
 };
 
 export const EMBRYO_KWALITEIT_WAARSCHUWING =
@@ -519,6 +530,12 @@ function bouwDossierZoekVelden(
     { label: 'notitie', waarde: document.notitie ?? '' },
     { label: 'OCR-tekst', waarde: document.ocr?.tekst ?? '' },
     { label: 'documenttype', waarde: document.metadata?.documenttype ?? index?.documenttype ?? '' },
+    {
+      label: 'ziekenhuisdocumenttype',
+      waarde: document.metadata?.ziekenhuisDocumentType
+        ? ZIEKENHUIS_DOCUMENT_TYPE_LABELS[document.metadata.ziekenhuisDocumentType]
+        : '',
+    },
     { label: 'instelling', waarde: document.metadata?.instelling ?? '' },
     { label: 'arts', waarde: document.metadata?.arts ?? '' },
     { label: 'bronbestand', waarde: document.metadata?.bronbestand ?? document.bestandsNaam },
@@ -537,6 +554,9 @@ function normaliseerZoektekst(value: string): string {
 function bepaalDossierIndexTags(document: DossierDocument, documenttype: string): string[] {
   const tags = [
     documenttype,
+    document.metadata?.ziekenhuisDocumentType
+      ? ZIEKENHUIS_DOCUMENT_TYPE_LABELS[document.metadata.ziekenhuisDocumentType]
+      : undefined,
     DOSSIER_CATEGORIE_LABELS[document.categorie],
     document.uploadProfiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel] : undefined,
     document.mimeType === 'application/pdf' ? 'PDF' : undefined,
@@ -747,21 +767,56 @@ export function extraheerDossierMetadata(input: {
   const documenttype = input.uploadProfiel
     ? DOSSIER_UPLOAD_PROFIEL_LABELS[input.uploadProfiel]
     : DOSSIER_CATEGORIE_LABELS[input.categorie];
+  const ziekenhuisDocumentType = bepaalZiekenhuisDocumentType({
+    uploadProfiel: input.uploadProfiel,
+    tekst: gecombineerdeTekst,
+  });
 
   if (input.trajectId) bronnen.push('trajectkoppeling');
   if (herkendeDatum) bronnen.push('datumherkenning');
   if (instelling) bronnen.push('instellingherkenning');
   if (arts) bronnen.push('artsherkenning');
+  if (ziekenhuisDocumentType) bronnen.push('ziekenhuisdocumenttype-herkenning');
 
   return {
     documentDatum,
     instelling,
     documenttype,
+    ziekenhuisDocumentType,
     trajectId: input.trajectId || undefined,
     arts,
     bronbestand: input.bestandsNaam,
     extractieBronnen: Array.from(new Set(bronnen)),
   };
+}
+
+export function bepaalZiekenhuisDocumentType(input: {
+  uploadProfiel?: DossierDocument['uploadProfiel'];
+  tekst: string;
+}): ZiekenhuisDocumentType | undefined {
+  const normalized = normaliseerZoektekst(input.tekst);
+  const lijktZiekenhuisDocument =
+    input.uploadProfiel === 'ziekenhuisdocument' ||
+    /\b(ziekenhuis|kliniek|patientenportaal|patientendossier|epd|polikliniek|umc|mc)\b/.test(
+      normalized,
+    );
+  if (!lijktZiekenhuisDocument) return undefined;
+
+  const regels: Array<[ZiekenhuisDocumentType, RegExp]> = [
+    ['patientenportaal_export', /\b(patientenportaal|patientendossier|epd|mijn\s+\w+)\b/],
+    ['verwijsbrief', /\b(verwijsbrief|verwijzing|huisartsverwijzing)\b/],
+    ['ontslagbrief', /\b(ontslagbrief|ontslag\s+brief|ontslagverslag)\b/],
+    ['operatieverslag', /\b(operatieverslag|ok-verslag|ingreepverslag)\b/],
+    ['lab_rapport', /\b(labrapport|laboratorium|labuitslag|bloeduitslag|hormoonuitslag)\b/],
+    ['beeldverslag', /\b(radiologie|beeldverslag|echo-verslag|echoverslag|scanverslag)\b/],
+    ['toestemmingsformulier', /\b(toestemming|informed\s+consent|machtiging|formulier)\b/],
+  ];
+
+  for (const [type, patroon] of regels) {
+    if (patroon.test(normalized)) return type;
+  }
+
+  return 'algemeen_ziekenhuisdocument';
 }
 
 function normaliseerMetadataDatum(value: string): string | undefined {
@@ -810,6 +865,7 @@ function telGevondenMetadata(metadata: DossierDocument['metadata']): number {
     metadata.documentDatum,
     metadata.instelling,
     metadata.documenttype,
+    metadata.ziekenhuisDocumentType,
     metadata.trajectId,
     metadata.arts,
     metadata.bronbestand,
@@ -821,6 +877,9 @@ function beschrijfMetadataSignalen(metadata: DossierDocument['metadata']): strin
     metadata.documentDatum ? `Metadata datum: ${metadata.documentDatum}.` : undefined,
     metadata.instelling ? `Metadata instelling: ${metadata.instelling}.` : undefined,
     metadata.documenttype ? `Metadata documenttype: ${metadata.documenttype}.` : undefined,
+    metadata.ziekenhuisDocumentType
+      ? `Metadata ziekenhuisdocumenttype: ${ZIEKENHUIS_DOCUMENT_TYPE_LABELS[metadata.ziekenhuisDocumentType]}.`
+      : undefined,
     metadata.trajectId ? `Metadata trajectkoppeling: ${metadata.trajectId}.` : undefined,
     metadata.arts ? `Metadata arts: ${metadata.arts}.` : undefined,
   ].filter((value): value is string => Boolean(value));

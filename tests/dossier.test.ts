@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   bepaalDossierUploadProfiel,
   bepaalImagingPreviewState,
+  bepaalZiekenhuisDocumentType,
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
@@ -129,6 +130,50 @@ describe('dossier', () => {
     ).toBe('behandelverslag');
   });
 
+  it('herkent ziekenhuisdocumenttypes zonder medische interpretatie', () => {
+    expect(
+      bepaalZiekenhuisDocumentType({
+        uploadProfiel: 'ziekenhuisdocument',
+        tekst: 'Erasmus MC patientenportaal export 2026',
+      }),
+    ).toBe('patientenportaal_export');
+    expect(
+      bepaalZiekenhuisDocumentType({
+        uploadProfiel: 'ziekenhuisdocument',
+        tekst: 'Verwijsbrief fertiliteitspoli',
+      }),
+    ).toBe('verwijsbrief');
+    expect(
+      bepaalZiekenhuisDocumentType({
+        uploadProfiel: 'onderzoek',
+        tekst: 'los fertiliteitsrapport zonder ziekenhuisbron',
+      }),
+    ).toBeUndefined();
+
+    const document = maakDossierDocument('doc-hospital-taxonomy', {
+      datum: '2026-05-01',
+      titel: 'Ziekenhuisdocument',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'amsterdam-umc-echo-verslag.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Amsterdam UMC radiologie echo-verslag',
+      },
+    });
+
+    expect(document.metadata.ziekenhuisDocumentType).toBe('beeldverslag');
+    expect(document.metadata.extractieBronnen).toContain('ziekenhuisdocumenttype-herkenning');
+    expect(document.analyse.signalen).toContain('Metadata ziekenhuisdocumenttype: Beeldverslag.');
+    expect(bouwDossierIndex([document])[0]?.tags).toContain('Beeldverslag');
+    expect(zoekDossierDocumenten([document], 'beeldverslag')[0]?.matches).toContain(
+      'ziekenhuisdocumenttype',
+    );
+  });
+
   it('maakt OCR-resultaten alleen na expliciete lokale verwerking', () => {
     expect(
       maakDossierOcrResultaat(
@@ -246,6 +291,7 @@ describe('dossier', () => {
       documentDatum: '2026-05-24',
       instelling: 'Erasmus MC',
       documenttype: 'Fertiliteitsrapport',
+      ziekenhuisDocumentType: 'algemeen_ziekenhuisdocument',
       trajectId: 'traject-1',
       arts: 'dr. Jansen',
       bronbestand: '2026-05-24-erasmus-rapport.pdf',
@@ -258,6 +304,7 @@ describe('dossier', () => {
         'datumherkenning',
         'instellingherkenning',
         'artsherkenning',
+        'ziekenhuisdocumenttype-herkenning',
       ],
     });
   });
@@ -408,7 +455,15 @@ describe('dossier', () => {
         documenttype: 'Labuitslag',
         bron: '2026-05-01-erasmus-lab.pdf',
         trajectId: 'traject-1',
-        tags: ['Labuitslag', 'Onderzoek', 'PDF', 'OCR', 'Erasmus MC', 'Traject gekoppeld'],
+        tags: [
+          'Labuitslag',
+          'Labrapport',
+          'Onderzoek',
+          'PDF',
+          'OCR',
+          'Erasmus MC',
+          'Traject gekoppeld',
+        ],
       },
     ]);
   });

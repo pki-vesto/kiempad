@@ -184,6 +184,16 @@ export interface EventLog {
   detail?: string;
 }
 
+export type ZiekenhuisDocumentType =
+  | 'patientenportaal_export'
+  | 'verwijsbrief'
+  | 'ontslagbrief'
+  | 'operatieverslag'
+  | 'lab_rapport'
+  | 'beeldverslag'
+  | 'toestemmingsformulier'
+  | 'algemeen_ziekenhuisdocument';
+
 export interface DossierDocument {
   id: string;
   datum: IsoDate;
@@ -221,6 +231,7 @@ export interface DossierDocument {
     documentDatum?: IsoDate;
     instelling?: string;
     documenttype?: string;
+    ziekenhuisDocumentType?: ZiekenhuisDocumentType;
     trajectId?: string;
     arts?: string;
     bronbestand: string;
