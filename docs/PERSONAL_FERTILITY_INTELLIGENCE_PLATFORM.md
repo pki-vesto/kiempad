@@ -234,7 +234,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-048 Aanbevelingen met medische grens | Daily Recommendations | Safety | Label aanbevelingen als niet-medisch, niet-doserend en altijd ondergeschikt aan kliniek/arts. |
 | PFIP-049 Dagelijkse aanbeveling-tijdlijn | Daily Recommendations | Tijdlijn | Plaats dagelijkse aanbevelingen op de tijdlijn met datum en broncontext. |
 | PFIP-050 Feedback op aanbevelingen | Daily Recommendations | Feedback | Laat gebruikers aanbevelingen markeren als nuttig, niet relevant, uitgesteld of besproken met arts. |
-| PFIP-051 Fertility knowledge graph schema | Fertility Knowledge Graph | Graph model | Definieer knopen en relaties voor onderzoeken, embryo's, behandelingen, gesprekken, literatuur en aanbevelingen. |
+| PFIP-051 Fertility knowledge graph schema | Fertility Knowledge Graph | Graph model | Definieer knopen en relaties voor onderzoeken, embryo's, behandelingen, gesprekken, literatuur en aanbevelingen zonder raw payloads in graph-output. |
 | PFIP-052 Relaties leggen tussen records | Fertility Knowledge Graph | Relaties | Koppel dossierdocumenten, afspraken, consulten, embryo's en researchitems via expliciete relaties. |
 | PFIP-053 Contextuele inzichten uit graph | Fertility Knowledge Graph | Inzichten | Genereer uitlegbare inzichten met bronpad, onzekerheid en niet-advieslabel. |
 | PFIP-054 Graph-navigatie vanuit elk record | Fertility Knowledge Graph | Navigatie | Toon gerelateerde records vanuit document, consult, embryo, behandeling en researchkaart. |
