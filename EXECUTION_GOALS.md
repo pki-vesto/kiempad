@@ -5016,4 +5016,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, maintenance docs tests, bootstrap diagnostic snapshot
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G600 — bootstrap diagnostic governance consolidation
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap diagnostic governance is nu verspreid over registry, commandotests, snapshots en runbookregels, maar er is nog geen korte centrale onderhoudsparagraaf die de samenhang uitlegt.
+- **Desired Outcome:** Een compacte governanceparagraaf bundelt registry, schema guard, snapshot en reviewregel zodat toekomstige diagnostics via één werkwijze worden toegevoegd.
+- **User Value:** Maintainers kunnen nieuwe bootstrap diagnostics toevoegen zonder privacychecks, runbookdekking of snapshotreview te missen.
+- **Acceptance Criteria:** Docs beschrijven de vier stappen registry → schema guard → snapshot → runbookreview; maintenance-test bewaakt de stappen; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; backlog/docs verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, bootstrap diagnostic registry, maintenance docs tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
