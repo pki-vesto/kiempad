@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G466/G577 Fertility Intelligence: de dossierpagina heeft nu een historische import-inbox met veilige metadata per bestand, OCR/importstatus en een geteste verwijderactie via encrypted opslag; G577 is toegevoegd als opvolgdoel voor retry per bestand.
 - G551/G576 Daily Recommendations: dagelijkse aanbevelingen hebben nu een aparte Artscheck-knop die een veilige vraag voor kliniek, arts of apotheek maakt via een geteste niet-doserende helper; G576 is toegevoegd als opvolgdoel voor reviewstatus op artscheckvragen.
 - G539/G575 Research Intelligence: researchbronnen hebben nu een expliciete source allowlist met rationale, lokale notitie- en handmatige-reviewstatus in broncache en researchkaartmetadata; G575 is toegevoegd als opvolgdoel voor review-evidence.
 - G489/G574 Daily Recommendations safety: supplementchecklistregels tonen nu een verplicht artscheck-label en worden door een policytest geblokkeerd bij doseringen, interactieclaims of behandelvervanging; G574 is toegevoegd als opvolgdoel voor een supplement-artscheck actieflow.

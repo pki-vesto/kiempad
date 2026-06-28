@@ -55,4 +55,22 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
     expect(await store.list()).toEqual([saved]);
   });
+
+  it('verwijdert dossierdocumenten via de encrypted repository', async () => {
+    const { driver, store } = await setupStore();
+    const saved = await store.save({
+      datum: '2026-05-01',
+      titel: 'Te verwijderen import',
+      categorie: 'onderzoek',
+      bestandsNaam: 'oude-import.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 1024,
+      inhoudBase64: 'cGRmLWdlaGVpbQ==',
+    });
+
+    await store.delete(saved.id);
+
+    expect(await driver.getRecord(saved.id)).toBeUndefined();
+    expect(await store.list()).toEqual([]);
+  });
 });

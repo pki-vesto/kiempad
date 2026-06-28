@@ -32,6 +32,7 @@ import {
   type DailyRecommendationOwner,
 } from './domain/dailyRecommendations';
 import {
+  bouwDossierImportInbox,
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
@@ -962,6 +963,9 @@ function renderDossierScreen(state: AppShellState): string {
   const imagingItems = filterImagingRepository(alleImagingItems, state.imagingFilter ?? {});
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
+  const importInboxItems = bouwDossierImportInbox(zichtbareDocumenten, {
+    vergrendeld: state.imagingPreviewLocked,
+  });
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
   const embryoDossiers = bouwEmbryoDossiers(
     zichtbareDocumenten,
@@ -1081,6 +1085,26 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
+        <h2>Import-inbox</h2>
+        ${
+          importInboxItems.length > 0
+            ? `<ol class="phase-list">${importInboxItems
+                .map(
+                  (item) => `
+                    <li class="phase-item">
+                      <div>
+                        <h3>${escapeHtml(item.titel)}</h3>
+                        <p>${escapeHtml(item.datum)} · ${escapeHtml(item.type)} · ${escapeHtml(item.grootte)}</p>
+                        <p class="linked-note">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} · Importstatus: ${escapeHtml(item.importstatusLabel)}</p>
+                        <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
+                      </div>
+                      <button class="phase-button secondary delete-dossier-document" type="button" data-dossier-document-id="${escapeAttribute(item.id)}">Verwijder</button>
+                    </li>
+                  `,
+                )
+                .join('')}</ol>`
+            : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
+        }
         <h2>Consultverslag toevoegen</h2>
         <form id="consult-verslag-form" class="data-form">
           <label>

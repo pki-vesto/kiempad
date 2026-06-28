@@ -3,6 +3,7 @@ import {
   bepaalDossierUploadProfiel,
   bepaalImagingPreviewState,
   bepaalZiekenhuisDocumentType,
+  bouwDossierImportInbox,
   bouwDossierIndex,
   bouwDossierTijdlijn,
   bouwImagingRepository,
@@ -65,6 +66,54 @@ describe('dossier', () => {
     expect(document.analyse.signalen).toContain('Bestandstype is PDF.');
 
     vi.useRealTimers();
+  });
+
+  it('bouwt een veilige import-inbox met status per dossierbestand', () => {
+    const lab = maakDossierDocument('doc-inbox-lab', {
+      datum: '2026-05-01',
+      titel: 'Labuitslag mei',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: 'labuitslag-mei.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+      },
+      uploadedAt: '2026-06-23T15:00:00.000Z',
+    });
+    const echo = maakDossierDocument('doc-inbox-echo', {
+      datum: '2026-05-02',
+      titel: 'Echo',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-gevoelig.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 4096,
+      inhoudBase64: 'anBn',
+      uploadedAt: '2026-06-23T16:00:00.000Z',
+    });
+
+    const inbox = bouwDossierImportInbox([lab, echo], { vergrendeld: true });
+
+    expect(inbox).toHaveLength(2);
+    expect(inbox[0]).toMatchObject({
+      id: 'doc-inbox-echo',
+      type: 'Afbeelding',
+      grootte: '4 KB',
+      importstatus: 'klaar_voor_review',
+      importstatusLabel: 'Klaar voor review',
+      veiligBestandslabel: 'Beeldbron verborgen tot ontgrendeling',
+    });
+    expect(inbox[1]).toMatchObject({
+      id: 'doc-inbox-lab',
+      type: 'Labuitslag',
+      bronlabel: 'labuitslag-mei.pdf',
+      importstatus: 'ocr_wacht',
+      importstatusLabel: 'Wacht op lokale OCR',
+      veiligBestandslabel: 'Labuitslag · 2 KB',
+    });
+    expect(inbox.map((item) => item.veiligBestandslabel).join(' ')).not.toContain('cGRm');
   });
 
   it('valideert verplichte dossier- en bestandsvelden', () => {

@@ -4,4 +4,5 @@ export const DELETE_CONFIRMATIONS = {
   afspraak: 'Weet je zeker dat je deze afspraak wilt verwijderen?',
   medicatie: 'Weet je zeker dat je deze medicatie en geplande logs wilt verwijderen?',
   kosten: 'Weet je zeker dat je deze kostenpost wilt verwijderen?',
+  dossierDocument: 'Weet je zeker dat je dit dossierdocument uit de import-inbox wilt verwijderen?',
 } as const;

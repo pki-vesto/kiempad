@@ -20,4 +20,8 @@ export class DossierStore {
     await this.documenten.saveWithId(document);
     return document;
   }
+
+  async delete(id: string): Promise<void> {
+    await this.documenten.delete(id);
+  }
 }

@@ -66,6 +66,19 @@ export type DossierIndexItem = {
   tags: string[];
 };
 
+export type DossierImportInboxItem = {
+  id: string;
+  titel: string;
+  datum: string;
+  type: string;
+  grootte: string;
+  bronlabel: string;
+  importstatus: 'klaar_voor_review' | 'ocr_wacht' | 'ocr_uitgelezen' | 'ocr_niet_ondersteund';
+  importstatusLabel: string;
+  veiligBestandslabel: string;
+  document: DossierDocument;
+};
+
 export type DossierZoekResultaat = {
   document: DossierDocument;
   matches: string[];
@@ -299,6 +312,43 @@ export function bouwDossierIndex(items: readonly DossierDocument[]): DossierInde
       bron: metadata?.bronbestand ?? document.bestandsNaam,
       trajectId: metadata?.trajectId ?? document.trajectId,
       tags: bepaalDossierIndexTags(document, documenttype),
+    };
+  });
+}
+
+export function bouwDossierImportInbox(
+  items: readonly DossierDocument[],
+  options: { vergrendeld?: boolean } = {},
+): DossierImportInboxItem[] {
+  const vergrendeld = options.vergrendeld ?? false;
+  return sorteerDossierDocumenten(items).map((document) => {
+    const type = document.uploadProfiel
+      ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+      : DOSSIER_CATEGORIE_LABELS[document.categorie];
+    const ocrStatus = document.ocr?.status;
+    const importstatus: DossierImportInboxItem['importstatus'] =
+      ocrStatus === 'tekst_uitgelezen'
+        ? 'ocr_uitgelezen'
+        : ocrStatus === 'wacht_op_lokale_ocr'
+          ? 'ocr_wacht'
+          : ocrStatus === 'niet_ondersteund'
+            ? 'ocr_niet_ondersteund'
+            : 'klaar_voor_review';
+
+    return {
+      id: document.id,
+      titel: document.titel,
+      datum: bepaalDossierTijdlijnDatum(document),
+      type,
+      grootte: formatBytes(document.grootteBytes),
+      bronlabel: document.metadata?.bronbestand ?? document.bestandsNaam,
+      importstatus,
+      importstatusLabel: beschrijfDossierImportstatus(importstatus),
+      veiligBestandslabel:
+        vergrendeld && document.categorie === 'beeld'
+          ? 'Beeldbron verborgen tot ontgrendeling'
+          : `${type} · ${formatBytes(document.grootteBytes)}`,
+      document,
     };
   });
 }
@@ -943,4 +993,17 @@ export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${Math.floor(bytes)} B`;
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
   return `${Math.round((bytes / (1024 * 1024)) * 10) / 10} MB`;
+}
+
+function beschrijfDossierImportstatus(status: DossierImportInboxItem['importstatus']): string {
+  switch (status) {
+    case 'ocr_uitgelezen':
+      return 'OCR lokaal uitgelezen';
+    case 'ocr_wacht':
+      return 'Wacht op lokale OCR';
+    case 'ocr_niet_ondersteund':
+      return 'OCR niet ondersteund';
+    case 'klaar_voor_review':
+      return 'Klaar voor review';
+  }
 }

@@ -3154,7 +3154,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, encrypted storage, central API, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G467 — OCR-confidence review voor kliniekdocumenten
 
@@ -4692,6 +4692,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Daily recommendations, vragen, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G577 — import-inbox retry per bestand
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De dossierimport-inbox toont status en veilige verwijderactie, maar gebruikers kunnen een mislukte batchstap nog niet per bestand opnieuw proberen.
+- **Desired Outcome:** Import-inbox-items krijgen een retry-actie per bestand voor mislukte of wachtende lokale stappen zonder het volledige batchformulier opnieuw te hoeven uploaden.
+- **User Value:** Gebruikers herstellen oude dossierimports sneller wanneer één bestand OCR, metadata of opslagreview opnieuw nodig heeft.
+- **Acceptance Criteria:** UI toont retry alleen voor wachtende of foutstatussen; retry bewaart bron, datum, type en status encrypted; eventlog vermeldt alleen technische status en record-id; tests dekken retrystatus, foutmelding en geen plaintext medische inhoud; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, import-inbox, eventlog, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

@@ -45,4 +45,11 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("gebeurtenis: 'Aanbeveling omgezet naar artscheck'");
     expect(mainSource).toContain('Artscheckvraag gemaakt:');
   });
+
+  it('verwerkt dossierimport verwijderen zonder documentinhoud te loggen', () => {
+    expect(mainSource).toContain("'.delete-dossier-document'");
+    expect(mainSource).toContain('DELETE_CONFIRMATIONS.dossierDocument');
+    expect(mainSource).toContain("gebeurtenis: 'Dossierimport verwijderd'");
+    expect(mainSource).toContain('Dossierdocument verwijderd uit de import-inbox.');
+  });
 });
