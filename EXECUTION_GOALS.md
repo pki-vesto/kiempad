@@ -3616,7 +3616,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Storage, schema, tests
 - **ADR Needed:** no
 - **Score:** 128
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G500 — central session expiry user journey
 
@@ -4540,4 +4540,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backlog health, GitHub issues, tests
 - **ADR Needed:** no
 - **Score:** 104
+- **Status:** ☐ open
+
+### G566 — encrypted record migration fixture registry
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Toekomstige encrypted record-schemawijzigingen hebben nog geen centrale fixturecatalogus waarmee oude en nieuwe recordversies reproduceerbaar tegen de compatibiliteitsgrens kunnen worden getest.
+- **Desired Outcome:** Er is een registry met minimale encrypted recordfixtures per ondersteunde schemaversie, inclusief migratieverwachtingen en guards die onbekende toekomstige versies blijven weigeren.
+- **User Value:** Gebruikers kunnen hun centrale versleutelde dataset over app-updates heen betrouwbaarder blijven openen zonder plaintext medische data of stille schema-incompatibiliteit.
+- **Acceptance Criteria:** fixtures bevatten alleen technische metadata en encrypted envelopes; tests bewijzen dat ondersteunde versies expliciet bekend zijn; onbekende toekomstige recordversies worden geweigerd; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Storage schema, central database, tests
+- **ADR Needed:** no
+- **Score:** 106
 - **Status:** ☐ open

@@ -314,7 +314,7 @@ describe('central file persistence snapshot validation', () => {
     }
   });
 
-  it('weigert snapshots met non-positive of niet-integer versies vóór save', async () => {
+  it('weigert snapshots met unsupported record- of serverversies vóór save', async () => {
     const { filePath } = await createPersistenceFile();
 
     for (const mutate of [
@@ -327,6 +327,11 @@ describe('central file persistence snapshot validation', () => {
         const record = snapshot.records[0];
         if (!record) throw new Error('Expected record fixture.');
         record.schemaVersion = 1.5;
+      },
+      (snapshot: CentralDatabaseSnapshot) => {
+        const record = snapshot.records[0];
+        if (!record) throw new Error('Expected record fixture.');
+        record.schemaVersion = 2;
       },
       (snapshot: CentralDatabaseSnapshot) => {
         const record = snapshot.records[0];

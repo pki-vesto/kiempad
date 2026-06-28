@@ -4,7 +4,7 @@ import type {
   StorageMeta,
   StoredRecordType,
 } from './records';
-import { nowIso } from './records';
+import { isSupportedRecordSchemaVersion, nowIso } from './records';
 
 export type CentralAuthSession = {
   userId: string;
@@ -371,7 +371,7 @@ function assertValidCentralEncryptedRecord(
     !isIsoTimestamp(record.createdAt) ||
     !isIsoTimestamp(record.updatedAt) ||
     !isIsoTimestamp(record.storedAt) ||
-    !isPositiveInteger(record.schemaVersion) ||
+    !isSupportedRecordSchemaVersion(record.schemaVersion) ||
     !isPositiveInteger(record.serverVersion) ||
     typeof record.type !== 'string' ||
     !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
@@ -393,7 +393,7 @@ function assertValidEncryptedRecordInput(record: unknown): asserts record is Enc
     !isNonEmptyString(record.id) ||
     !isIsoTimestamp(record.createdAt) ||
     !isIsoTimestamp(record.updatedAt) ||
-    !isPositiveInteger(record.schemaVersion) ||
+    !isSupportedRecordSchemaVersion(record.schemaVersion) ||
     typeof record.type !== 'string' ||
     !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
     !isEncryptionEnvelope(record.payload)

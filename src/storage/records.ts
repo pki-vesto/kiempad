@@ -49,6 +49,15 @@ export interface EncryptedStorageDriver {
 
 export const CURRENT_SCHEMA_VERSION = 1;
 
+export function isSupportedRecordSchemaVersion(value: unknown): value is number {
+  return (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value > 0 &&
+    value <= CURRENT_SCHEMA_VERSION
+  );
+}
+
 export function generateRecordId(): string {
   return globalThis.crypto.randomUUID();
 }

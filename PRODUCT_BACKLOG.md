@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 366 |
+| ☑ klaar | 367 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **565** |
+| **Totaal** | **566** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -661,7 +661,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G496 | Central Encrypted Platform: central dataset bootstrap smoke test | P0 | F5 | ☐ |
 | G497 | Central Encrypted Platform: central API outage recovery banner | P1 | F5 | ☐ |
 | G498 | Central Encrypted Platform: central encrypted sync conflict audit view | P1 | F5 | ☐ |
-| G499 | Central Encrypted Platform: encrypted record schema version gate | P0 | F5 | ☐ |
+| G499 | Central Encrypted Platform: encrypted record schema version gate | P0 | F5 | ☑ |
 | G500 | Central Encrypted Platform: central session expiry user journey | P1 | F5 | ☐ |
 | G501 | Central Encrypted Platform: multi-device unlock copy consistency | P0 | F5 | ☐ |
 | G502 | Central Encrypted Platform: central persistence backup drill | P1 | F5 | ☐ |
@@ -728,12 +728,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G563 | Product Quality & Automation: issue creation script dry-run fixture | P1 | F5 | ☐ |
 | G564 | Product Quality & Automation: autonomous evolution runbook checklist | P1 | F5 | ☐ |
 | G565 | Product Quality & Automation: autonomous issue snapshot freshness gate | P1 | F5 | ☐ |
+| G566 | Central Encrypted Platform: encrypted record migration fixture registry | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 565** (id's G001 t/m G565, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 566** (id's G001 t/m G566, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
