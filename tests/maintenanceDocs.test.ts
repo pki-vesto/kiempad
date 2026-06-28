@@ -69,6 +69,10 @@ const BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS = [
 ] as const;
 const BOOTSTRAP_GOVERNANCE_REDACTION_CONTEXT_MISSING_TERM_ERROR =
   'Bootstrap governance releasecontext ontbreekt voor termen: redactioncontext';
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS = [
+  'redactioncontext-failuretekst',
+  'failuretekstcontract',
+] as const;
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -339,9 +343,17 @@ describe('onderhoudsdocumentatie', () => {
       for (const redactionTerm of BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS) {
         expect(redactionReleaseContext).toContain(redactionTerm);
       }
+      const redactionFailureReleaseContext = extractBootstrapGovernanceReleaseContext(
+        releaseDoc,
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS,
+      );
+      for (const failureTerm of BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS) {
+        expect(redactionFailureReleaseContext).toContain(failureTerm);
+      }
       for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
         expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
         expect(redactionReleaseContext).not.toContain(forbiddenTerm);
+        expect(redactionFailureReleaseContext).not.toContain(forbiddenTerm);
       }
     }
   });
@@ -375,6 +387,7 @@ describe('onderhoudsdocumentatie', () => {
       placeholders: BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS,
       runbookContext: BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS,
       redactionContext: BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS,
+      redactionFailure: BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -385,6 +398,7 @@ describe('onderhoudsdocumentatie', () => {
       placeholders: ['{gate}', '{unknownCoverageFieldCount}', '{unknownSourceFieldCount}'],
       runbookContext: ['runbook', 'releasecontextbewaking', 'schemafoutvelden', 'placeholders'],
       redactionContext: ['runbookcontexttermset', 'redaction guard', 'redactioncontext'],
+      redactionFailure: ['redactioncontext-failuretekst', 'failuretekstcontract'],
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
