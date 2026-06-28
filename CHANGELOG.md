@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G591/G592 Central Encrypted Platform: commandotests forceren nu alle bekende centrale bootstrap smoke failurefasecodes en controleren gezamenlijk dat diagnostics geen passphrases, bearer tokens, bestandsnamen, OCR/base64-markers of medische plaintext bevatten. G592 is toegevoegd als opvolgdoel voor een runtime-exception diagnostic fixture.
 - G590/G591 Central Encrypted Platform: de runbook bevat nu een phaseCode-matrix voor centrale bootstrap smoke failures met oorzaak, technische check, herstelactie en eigenaar; maintenance-tests bewaken alle fasecodes zonder gevoelige output. G591 is toegevoegd als opvolgdoel voor een brede redaction-regressie over alle failurediagnostics.
 - G589/G590 Central Encrypted Platform: de centrale bootstrap smoke geeft bij falen nu gesanitized JSON-diagnostics met `phaseCode` en `recoveryHint`; tests dekken `plaintext-boundary` en `second-device-read` failures zonder passphrases, tokens of medische plaintext. G590 is toegevoegd als opvolgdoel voor een runbook-matrix per fasecode.
 - G587/G589 Central Encrypted Platform: `npm run smoke:central-bootstrap` draait nu de centrale dataset bootstrap smoke als dedicated CI/CLI-command met technische JSON-output; CI voert het commando uit en tests dekken success/failure zonder passphrase, tokens of medische plaintext in output. G589 is toegevoegd als opvolgdoel voor gestructureerde failure diagnostics.

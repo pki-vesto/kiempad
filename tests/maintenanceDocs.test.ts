@@ -162,8 +162,8 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(runbook).not.toContain('central bootstrap smoke passphrase');
     expect(runbook).not.toContain('kiempad-session-');
-    expect(runbook).not.toContain('OCR/base64');
     expect(runbook).not.toContain('gevoelige fertiliteitsnotitie');
+    expect(runbook).not.toContain('echo-foto-privenaam.jpg');
   });
 
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
