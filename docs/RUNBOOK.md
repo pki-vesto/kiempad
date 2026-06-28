@@ -125,6 +125,21 @@ pad zonder lokale vault-hercreatie.
   technische status per bron: `runbookChecklist`, `registryReference` en `ciStep`.
   Onbekende source- of coveragevelden worden als gesanitized `schemaValidation`
   schemafout met alleen tellingen gerapporteerd.
+
+  Schemafout-outputvoorbeeld:
+
+  ```json
+  {
+    "status": "failed",
+    "gate": "bootstrap-governance-freshness",
+    "schemaValidation": {
+      "status": "failed",
+      "unknownSourceFieldCount": 1,
+      "unknownCoverageFieldCount": 1
+    }
+  }
+  ```
+
   Succesvolle freshness-outputsnapshot:
 
   ```json

@@ -163,6 +163,9 @@ describe('onderhoudsdocumentatie', () => {
       '"gate": "bootstrap-governance-freshness"',
       'schemaValidation',
       'Onbekende source- of coveragevelden',
+      'Schemafout-outputvoorbeeld',
+      'unknownSourceFieldCount',
+      'unknownCoverageFieldCount',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }
@@ -232,6 +235,30 @@ describe('onderhoudsdocumentatie', () => {
     expect(freshnessSnapshot.gate).toBe(governanceContract.gate);
     expect(Object.keys(freshnessSnapshot.sources)).toEqual(governanceContract.sourceFields);
     expect(Object.keys(freshnessSnapshot.coverage)).toEqual(governanceContract.coverageFields);
+    const schemaErrorSnapshot = extractBootstrapGovernanceSchemaErrorSnapshot();
+    expect(schemaErrorSnapshot).toEqual({
+      status: 'failed',
+      gate: governanceContract.gate,
+      schemaValidation: {
+        status: 'failed',
+        unknownSourceFieldCount: 1,
+        unknownCoverageFieldCount: 1,
+      },
+    });
+    for (const forbiddenTerm of [
+      'payload',
+      'passphrase',
+      'secret',
+      'token',
+      'bestandsnaam',
+      'filename',
+      'OCR',
+      'base64',
+      'medische',
+      'fertiliteitsnotitie',
+    ]) {
+      expect(JSON.stringify(schemaErrorSnapshot)).not.toContain(forbiddenTerm);
+    }
     for (const releaseDoc of [changelog, currentState]) {
       expect(releaseDoc).toContain(freshnessSnapshot.gate);
       for (const sourceField of governanceContract.sourceFields) {
@@ -1437,6 +1464,34 @@ function extractBootstrapGovernanceFreshnessSnapshot(): {
     gate: string;
     sources: Record<string, unknown>;
     coverage: Record<string, unknown>;
+  };
+}
+
+function extractBootstrapGovernanceSchemaErrorSnapshot(): {
+  status: string;
+  gate: string;
+  schemaValidation: {
+    status: string;
+    unknownSourceFieldCount: number;
+    unknownCoverageFieldCount: number;
+  };
+} {
+  const snapshot = runbook.match(
+    /Schemafout-outputvoorbeeld:\n\n\s*```json\n([\s\S]*?)\n\s*```/,
+  )?.[1];
+
+  if (!snapshot) {
+    throw new Error('Bootstrap governance schemafoutvoorbeeld ontbreekt in de runbook.');
+  }
+
+  return JSON.parse(snapshot) as {
+    status: string;
+    gate: string;
+    schemaValidation: {
+      status: string;
+      unknownSourceFieldCount: number;
+      unknownCoverageFieldCount: number;
+    };
   };
 }
 
