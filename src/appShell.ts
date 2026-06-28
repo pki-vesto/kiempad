@@ -2894,9 +2894,11 @@ function renderStartScreen(state: AppShellState): string {
               cta: { href: '#traject', label: 'Bekijk traject' },
             }
           : {
-              eyebrow: activeTraject ? 'Jullie traject' : 'Welkom',
-              phaseLabel: activeTraject ? activeTraject.traject.naam : 'Welkom bij Kiempad',
-              subtitle: bepaalVolgendeStap(activeTraject),
+              eyebrow: activeTraject ? 'Jullie traject' : 'Aan de slag',
+              phaseLabel: activeTraject ? activeTraject.traject.naam : 'Begin jullie traject',
+              subtitle: activeTraject
+                ? bepaalVolgendeStap(activeTraject)
+                : 'Maak een traject aan om de eerste fase en volgende stap zichtbaar te maken.',
               steps: faseSteps,
               cta: {
                 href: '#traject',
@@ -3191,7 +3193,7 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
       <span>${escapeHtml(item.detail)}</span>
       ${
         item.checklist
-          ? `<ol class="compact-list">${item.checklist
+          ? `<ol class="compact-list rec-checklist">${item.checklist
               .map(
                 (checklistItem) => `
                   <li>
@@ -3225,11 +3227,18 @@ function renderDailyRecommendationActions(item: DailyRecommendation): string {
         Herinner op
         <input name="reminderTijdstip" type="datetime-local" value="${escapeAttribute(defaultRecommendationReminderTime())}" />
       </label>
-      <button class="phase-button secondary" type="submit" name="recommendationAction" value="bewaar">Bewaar</button>
-      <button class="phase-button secondary" type="submit" name="recommendationAction" value="afwijzen">Wijs af</button>
-      <button class="phase-button secondary" type="submit" name="recommendationAction" value="herinnering">Maak herinnering</button>
-      <button class="phase-button secondary" type="submit" name="recommendationAction" value="vraag">Maak vraag</button>
-      <button class="phase-button secondary" type="submit" name="recommendationAction" value="artscheck">Artscheck</button>
+      <div class="rec-actions">
+        <button class="rec-action rec-action--primary" type="submit" name="recommendationAction" value="bewaar">Bewaar</button>
+        <button class="rec-action rec-action--ghost" type="submit" name="recommendationAction" value="herinnering">Maak herinnering</button>
+        <button class="rec-action rec-action--ghost" type="submit" name="recommendationAction" value="vraag">Maak vraag</button>
+        <details class="rec-overflow">
+          <summary class="rec-overflow__toggle" aria-label="Meer acties">⋯</summary>
+          <div class="rec-overflow__menu" role="menu">
+            <button class="rec-action rec-action--menu" type="submit" name="recommendationAction" value="afwijzen">Wijs af</button>
+            <button class="rec-action rec-action--menu rec-action--artscheck" type="submit" name="recommendationAction" value="artscheck">Artscheck</button>
+          </div>
+        </details>
+      </div>
     </form>
   `;
 }

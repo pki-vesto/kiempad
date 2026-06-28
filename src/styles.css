@@ -507,7 +507,7 @@ h3 {
   justify-content: center;
   gap: 7px;
   padding: 8px 14px;
-  border-radius: var(--radius-pill);
+  border-radius: 11px;
   background: transparent;
   color: var(--text-soft);
   font-weight: 600;
@@ -1821,6 +1821,129 @@ a.action-card:active {
   padding: 7px 12px;
 }
 
+/* FIX 1: knoppen-hiërarchie per aanbevelingskaart (1 primair + 2 ghost + ⋯) */
+.rec-actions {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.rec-action {
+  width: auto;
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--motion),
+    border-color var(--motion),
+    color var(--motion);
+}
+
+.rec-action--primary {
+  background: var(--teal);
+  color: var(--on-teal);
+}
+
+.rec-action--primary:hover {
+  background: var(--teal-deep);
+}
+
+.rec-action--ghost {
+  border-color: var(--line-2);
+  color: var(--ink-2);
+}
+
+.rec-action--ghost:hover {
+  background: var(--surface-2);
+}
+
+.rec-overflow {
+  position: relative;
+  display: inline-flex;
+}
+
+.rec-overflow__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  list-style: none;
+}
+
+.rec-overflow__toggle::-webkit-details-marker {
+  display: none;
+}
+
+.rec-overflow__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 5;
+  display: flex;
+  min-width: 168px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(21, 48, 44, 0.12);
+}
+
+.rec-action--menu {
+  width: 100%;
+  min-height: 34px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.rec-action--menu:hover {
+  background: var(--surface-2);
+}
+
+.rec-action--artscheck {
+  color: var(--teal-deep);
+}
+
+/* FIX 4: checklist-bron onder de tekst (één kolom i.p.v. twee) */
+.rec-checklist li {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.rec-checklist li > span {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.rec-checklist li > small {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  line-height: 1.45;
+}
+
 /* Desktop: left sidebar (brand + controls + vertical nav) | content */
 @media (min-width: 900px) {
   .app-shell {
@@ -1881,7 +2004,7 @@ a.action-card:active {
     flex: 0 0 auto;
     justify-content: flex-start;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 11px;
     text-align: left;
   }
 

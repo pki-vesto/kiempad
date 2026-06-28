@@ -6,6 +6,19 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 
 ## [Unreleased]
 
+### Fixed
+- Claude Design FIXES.md (5 gerichte UI-correcties):
+  1. Knoppen-hiërarchie per aanbevelingskaart: één primaire "Bewaar" (gevuld teal),
+     "Maak herinnering"/"Maak vraag" als ghost-knoppen, en "Wijs af"/"Artscheck"
+     achter een ⋯-overloopmenu — i.p.v. 5 gelijke teal pillen.
+  2. Actieve nav-highlight: strakke 11px-pill per item (geen elliptische pill meer
+     die overliep).
+  3. Dubbele "Welkom bij Kiempad" weg: de hero toont nu de functionele titel
+     "Begin jullie traject" terwijl de paginakop de begroeting/datum doet.
+  4. Checklist-bron staat nu ónder de itemtekst (één kolom) i.p.v. ernaast.
+  5. Spelling nagelopen: "dagnotitie" en alle herhaalde disclaimer-strings zijn
+     correct gespeld — geen wijziging nodig.
+
 ### Added
 - G687/G688 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G688 is toegevoegd als opvolgdoel voor een compact contract rond deze release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding.
 - G686/G687 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance `release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding` blijven noemen. G687 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext.
