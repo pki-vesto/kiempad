@@ -111,6 +111,8 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_REL
   'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contract';
 const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_TERMS =
   ['runbooknotitie-contractmissingterm contractmissingterm contract'] as const;
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR =
+  'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contract';
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -572,6 +574,22 @@ describe('onderhoudsdocumentatie', () => {
       BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR,
     ).toBe(
       'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contract',
+    );
+  });
+
+  it('geeft ontbrekende bootstrap governance runbooknotitie-contractmissingterm contractmissingterm contractreleasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: runbooknotitie-contractmissingterm staat in releasecontext.',
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_TERMS,
+      ),
+    ).toThrow(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR,
+    );
+    expect(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR,
+    ).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contract',
     );
   });
 
