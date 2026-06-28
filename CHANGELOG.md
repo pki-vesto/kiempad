@@ -6,6 +6,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 
 ## [Unreleased]
 
+### Added
+- G151 Vandaag "Vandaag te zetten": het startscherm toont nu de interactieve
+  dosislijst van vandaag (afvinken/overslaan) met een teller "x/y gedaan", zoals
+  het Claude Design-prototype. De command-center-samenvatting blijft de triage;
+  dit is de actielijst.
+
 ### Changed
 - G147 Claude Design herstijling (stap 1 — fonts + tokens): nieuwe koel/kalm/
   minimalistische identiteit. Self-hosted Instrument Serif (display) + Hanken

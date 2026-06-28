@@ -2875,6 +2875,11 @@ function renderStartScreen(state: AppShellState): string {
     dossierDocuments: state.dossierDocuments ?? [],
     cycleData: state.cycleData ?? [],
   });
+  const todayDoseLogs = doseLogsVoorDag(
+    state.medicatie.flatMap((bundle) => bundle.doseLogs),
+    vandaag,
+  );
+  const doseGedaan = todayDoseLogs.filter((doseLog) => doseLog.status === 'genomen').length;
 
   return sectionStack(
     [
@@ -2901,6 +2906,14 @@ function renderStartScreen(state: AppShellState): string {
       ),
       renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
       renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
+      todayDoseLogs.length > 0
+        ? card({
+            title: 'Vandaag te zetten',
+            eyebrow: `${doseGedaan}/${todayDoseLogs.length} gedaan`,
+            body: renderDoseLogList(todayDoseLogs, state.medicatie),
+            ariaLabel: 'Vandaag te zetten',
+          })
+        : '',
       renderFirstRunSetup(state),
       card({
         body: `${
