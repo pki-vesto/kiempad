@@ -45,6 +45,17 @@ const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contrac
 const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION = `herstel beide markercomments ${BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER} en ${BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER} rond dezelfde issueSnapshot-matrixgroepverwachting in tests/backlogHealth.test.ts`;
 const BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR = `Backlog-health contractmatrix ontbreekt: ${BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION}.`;
+const BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS = [
+  'ciAnnotation',
+  'schemaValidation',
+  'unknownSourceFieldCount',
+  'unknownCoverageFieldCount',
+] as const;
+const BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS = [
+  '{gate}',
+  '{unknownCoverageFieldCount}',
+  '{unknownSourceFieldCount}',
+] as const;
 type BacklogHealthArtifactDocsHint = {
   label: string;
   term: string;
@@ -246,11 +257,9 @@ describe('onderhoudsdocumentatie', () => {
     const schemaFailurePlaceholders = extractTemplatePlaceholders(
       governanceContract.schemaFailureAnnotationTemplate,
     );
-    expect(schemaFailurePlaceholders).toEqual([
-      'gate',
-      'unknownCoverageFieldCount',
-      'unknownSourceFieldCount',
-    ]);
+    expect(schemaFailurePlaceholders.map((placeholder) => `{${placeholder}}`)).toEqual(
+      BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS,
+    );
     expect(schemaErrorSnapshot).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
@@ -287,26 +296,20 @@ describe('onderhoudsdocumentatie', () => {
       for (const coverageField of governanceContract.coverageFields) {
         expect(releaseDoc).toContain(coverageField);
       }
-      const schemaErrorReleaseTerms = [
-        'ciAnnotation',
-        'schemaValidation',
-        'unknownSourceFieldCount',
-        'unknownCoverageFieldCount',
-      ];
       const schemaErrorReleaseContext = extractBootstrapGovernanceReleaseContext(
         releaseDoc,
-        schemaErrorReleaseTerms,
+        BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
       );
       expect(schemaErrorReleaseContext).toContain(schemaErrorSnapshot.ciAnnotation);
-      for (const schemaErrorField of schemaErrorReleaseTerms) {
+      for (const schemaErrorField of BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS) {
         expect(schemaErrorReleaseContext).toContain(schemaErrorField);
       }
       const placeholderReleaseContext = extractBootstrapGovernanceReleaseContext(
         releaseDoc,
-        schemaFailurePlaceholders.map((placeholder) => `{${placeholder}}`),
+        BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS,
       );
-      for (const placeholder of schemaFailurePlaceholders) {
-        expect(placeholderReleaseContext).toContain(`{${placeholder}}`);
+      for (const placeholderTerm of BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS) {
+        expect(placeholderReleaseContext).toContain(placeholderTerm);
       }
       for (const forbiddenTerm of [
         'payload',
@@ -1564,7 +1567,7 @@ function extractBootstrapGovernanceSchemaErrorSnapshot(): {
 
 function extractBootstrapGovernanceReleaseContext(
   releaseDoc: string,
-  requiredTerms: string[],
+  requiredTerms: readonly string[],
 ): string {
   const matchingLines = releaseDoc
     .split(/\n|;\s+|,\s+G\d{3}\s+/)
