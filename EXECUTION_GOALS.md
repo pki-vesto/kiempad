@@ -5226,4 +5226,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, maintenance docs tests, bootstrap governance contract
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G615 — bootstrap governance annotation template placeholder guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het annotatietemplate is nu gedocumenteerd, maar er is nog geen expliciete test die de vereiste placeholders in `schemaFailureAnnotationTemplate` bewaakt.
+- **Desired Outcome:** Tests falen wanneer het template `{gate}`, `{unknownSourceFieldCount}` of `{unknownCoverageFieldCount}` mist of extra onbekende placeholders introduceert.
+- **User Value:** Reviewers kunnen templatewijzigingen veilig beoordelen zonder per ongeluk tellers of gatecontext uit CI-output te verliezen.
+- **Acceptance Criteria:** Test bewaakt verplichte en toegestane placeholders in `schemaFailureAnnotationTemplate`; output blijft gesanitized; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance contract, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

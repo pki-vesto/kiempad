@@ -162,6 +162,8 @@ describe('onderhoudsdocumentatie', () => {
       'Succesvolle freshness-outputsnapshot',
       '"gate": "bootstrap-governance-freshness"',
       'ciAnnotation',
+      'schemaFailureAnnotationTemplate',
+      'scripts/bootstrap-governance-freshness-contract.json',
       'schemaValidation',
       'Onbekende source- of coveragevelden',
       'Schemafout-outputvoorbeeld',

@@ -125,6 +125,11 @@ pad zonder lokale vault-hercreatie.
   technische status per bron: `runbookChecklist`, `registryReference` en `ciStep`.
   Onbekende source- of coveragevelden worden als gesanitized `schemaValidation`
   schemafout met alleen tellingen gerapporteerd.
+  De `ciAnnotation` voor schemafouten wordt afgeleid uit
+  `schemaFailureAnnotationTemplate` in
+  `scripts/bootstrap-governance-freshness-contract.json`. Pas dit template alleen aan
+  wanneer de reviewbare annotatievorm bewust wijzigt en houd scriptoutput,
+  docsnapshot en releasecontext in dezelfde wijziging gelijk.
 
   Schemafout-outputvoorbeeld:
 
