@@ -101,6 +101,48 @@ describe('central fetch client', () => {
     await expect(driver.getMeta('crypto')).resolves.toEqual({ version: 1 });
   });
 
+  it('vraagt centrale recordpagina op met type, limit en cursor zonder plaintext body', async () => {
+    const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {
+      expect(input).toBe('https://central.test/records?type=traject&limit=2&cursor=2');
+      expect(init?.method).toBe('GET');
+      expect(init?.credentials).toBe('omit');
+      expect(init?.cache).toBe('no-store');
+      expect(init?.body).toBeUndefined();
+      return new Response(
+        JSON.stringify({
+          records: [
+            {
+              id: 'page-3',
+              type: 'traject',
+              createdAt: '2026-06-25T08:00:00.000Z',
+              updatedAt: '2026-06-25T08:00:03.000Z',
+              schemaVersion: 1,
+              payload: {
+                v: 1,
+                alg: 'AES-256-GCM',
+                iv: 'encrypted-iv',
+                ciphertext: 'encrypted-ciphertext',
+              },
+            },
+          ],
+        }),
+        { status: 200, headers: { 'content-type': 'application/json' } },
+      );
+    });
+    const driver = new CentralFetchApiClientDriver(
+      'https://central.test',
+      'central-token',
+      fetcher,
+    );
+
+    await expect(
+      driver.listRecordsPage({ type: 'traject', limit: 2, cursor: '2' }),
+    ).resolves.toEqual({
+      records: [expect.objectContaining({ id: 'page-3' })],
+    });
+    expect(JSON.stringify(fetcher.mock.calls)).not.toContain('plaintext fertiliteitsnotitie');
+  });
+
   it('weigert ongeldige centrale fetch base URLs aan de directe clientgrens', async () => {
     const invalidUrls = [
       '',

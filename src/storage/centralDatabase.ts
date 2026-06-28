@@ -31,6 +31,17 @@ export type CentralDatabaseSnapshot = {
   records: CentralEncryptedRecord[];
 };
 
+export type CentralRecordListPageOptions = {
+  type?: StoredRecordType;
+  limit?: number;
+  cursor?: string;
+};
+
+export type CentralRecordListPage = {
+  records: EncryptedRecord[];
+  nextCursor?: string;
+};
+
 export interface CentralDatabasePersistence {
   load(): Promise<CentralDatabaseSnapshot | undefined>;
   save(snapshot: CentralDatabaseSnapshot): Promise<void>;
@@ -65,6 +76,10 @@ export interface CentralEncryptedDatabase {
   putRecord(session: CentralAuthSession, record: EncryptedRecord): Promise<void>;
   deleteRecord(session: CentralAuthSession, id: string): Promise<void>;
   listRecords(session: CentralAuthSession, type?: StoredRecordType): Promise<EncryptedRecord[]>;
+  listRecordsPage(
+    session: CentralAuthSession,
+    options?: CentralRecordListPageOptions,
+  ): Promise<CentralRecordListPage>;
 }
 
 export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase {
@@ -138,10 +153,30 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
     type?: StoredRecordType,
   ): Promise<EncryptedRecord[]> {
     assertActiveCentralSession(session);
+    return this.selectOwnerRecords(session.userId, type).map(stripCentralRecord);
+  }
+
+  async listRecordsPage(
+    session: CentralAuthSession,
+    options: CentralRecordListPageOptions = {},
+  ): Promise<CentralRecordListPage> {
+    assertActiveCentralSession(session);
+    const page = normalizeRecordPageOptions(options);
+    const ownerRecords = this.selectOwnerRecords(session.userId, page.type).map(stripCentralRecord);
+    const records = ownerRecords.slice(page.offset, page.offset + page.limit);
+    const nextOffset = page.offset + records.length;
+
+    return {
+      records,
+      nextCursor: nextOffset < ownerRecords.length ? String(nextOffset) : undefined,
+    };
+  }
+
+  private selectOwnerRecords(userId: string, type?: StoredRecordType): CentralEncryptedRecord[] {
     return Array.from(this.records.values())
-      .filter((record) => record.ownerUserId === session.userId)
+      .filter((record) => record.ownerUserId === userId)
       .filter((record) => (type ? record.type === type : true))
-      .map(stripCentralRecord);
+      .sort(compareCentralRecords);
   }
 
   unsafeDumpRecordsForTest(): CentralEncryptedRecord[] {
@@ -228,6 +263,13 @@ export class PersistedCentralEncryptedDatabase implements CentralEncryptedDataba
     return this.database.listRecords(session, type);
   }
 
+  async listRecordsPage(
+    session: CentralAuthSession,
+    options?: CentralRecordListPageOptions,
+  ): Promise<CentralRecordListPage> {
+    return this.database.listRecordsPage(session, options);
+  }
+
   unsafeDumpRecordsForTest(): CentralEncryptedRecord[] {
     return this.database.unsafeDumpRecordsForTest();
   }
@@ -278,6 +320,10 @@ export class CentralUserStorageDriver implements EncryptedStorageDriver {
 
   async listRecords(type?: StoredRecordType): Promise<EncryptedRecord[]> {
     return this.database.listRecords(this.session, type);
+  }
+
+  async listRecordsPage(options?: CentralRecordListPageOptions): Promise<CentralRecordListPage> {
+    return this.database.listRecordsPage(this.session, options);
   }
 }
 
@@ -510,6 +556,44 @@ function stripCentralRecord(record: CentralEncryptedRecord): EncryptedRecord {
     ...storedRecord
   } = record;
   return storedRecord;
+}
+
+function compareCentralRecords(
+  left: CentralEncryptedRecord,
+  right: CentralEncryptedRecord,
+): number {
+  return (
+    left.updatedAt.localeCompare(right.updatedAt) ||
+    left.type.localeCompare(right.type) ||
+    left.id.localeCompare(right.id)
+  );
+}
+
+function normalizeRecordPageOptions(options: CentralRecordListPageOptions): {
+  limit: number;
+  offset: number;
+  type?: StoredRecordType;
+} {
+  const limit = options.limit ?? 100;
+  if (!Number.isInteger(limit) || !Number.isFinite(limit) || limit < 1 || limit > 100) {
+    throw new CentralDataValidationError('Ongeldige centrale recordpaginagrootte.');
+  }
+
+  if (options.type && !STORED_RECORD_TYPES.has(options.type)) {
+    throw new CentralDataValidationError('Recordtype filter is ongeldig.');
+  }
+
+  const cursor = options.cursor?.trim();
+  if (!cursor) return { limit, offset: 0, type: options.type };
+  if (!/^\d+$/.test(cursor)) {
+    throw new CentralDataValidationError('Ongeldige centrale recordcursor.');
+  }
+  const offset = Number(cursor);
+  if (!Number.isSafeInteger(offset) || offset < 0) {
+    throw new CentralDataValidationError('Ongeldige centrale recordcursor.');
+  }
+
+  return { limit, offset, type: options.type };
 }
 
 function cloneJson<T>(value: T): T {

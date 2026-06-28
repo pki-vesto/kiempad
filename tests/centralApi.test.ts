@@ -10,6 +10,7 @@ import {
   MemoryCentralEncryptedDatabase,
 } from '../src/storage/centralDatabase';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
+import type { EncryptedRecord } from '../src/storage/records';
 import { VaultSession } from '../src/storage/vaultSession';
 
 type TestRecord = {
@@ -227,4 +228,48 @@ describe('central encrypted API service', () => {
     });
     expect(database.unsafeDumpRecordsForTest()).toHaveLength(2);
   });
+
+  it('pageert recordlijsten per owner via het centrale API-token', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const server = new CentralEncryptedApiServer(database, new MemoryCentralSessionStore());
+    const ownerTicket = await server.issueSession({ userId: 'user-peter' });
+    const otherTicket = await server.issueSession({ userId: 'user-partner' });
+
+    for (const id of ['owner-page-1', 'owner-page-2', 'owner-page-3']) {
+      await server.putRecord(ownerTicket.token, createEncryptedRecord(id));
+    }
+    await server.putRecord(otherTicket.token, createEncryptedRecord('other-page-1'));
+
+    const firstPage = await server.listRecordsPage(ownerTicket.token, { limit: 2 });
+    expect(firstPage.records.map((record) => record.id)).toEqual(['owner-page-1', 'owner-page-2']);
+    expect(firstPage.nextCursor).toBe('2');
+    await expect(
+      server.listRecordsPage(ownerTicket.token, { limit: 2, cursor: firstPage.nextCursor }),
+    ).resolves.toMatchObject({
+      records: [expect.objectContaining({ id: 'owner-page-3' })],
+      nextCursor: undefined,
+    });
+    await expect(server.listRecordsPage(otherTicket.token, { limit: 2 })).resolves.toMatchObject({
+      records: [expect.objectContaining({ id: 'other-page-1' })],
+      nextCursor: undefined,
+    });
+    expect(JSON.stringify(firstPage)).not.toContain('other-page-1');
+    expect(JSON.stringify(firstPage)).not.toContain('plaintext fertiliteitsnotitie');
+  });
 });
+
+function createEncryptedRecord(id: string): EncryptedRecord {
+  return {
+    id,
+    type: 'traject' as const,
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt: `2026-06-25T08:00:${id.match(/\d+$/)?.[0]?.padStart(2, '0') ?? '00'}.000Z`,
+    schemaVersion: 1,
+    payload: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `encrypted-iv-${id}`,
+      ciphertext: `encrypted-ciphertext-${id}`,
+    },
+  };
+}
