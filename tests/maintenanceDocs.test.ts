@@ -224,6 +224,30 @@ describe('onderhoudsdocumentatie', () => {
       expect(governanceRule).not.toContain(forbiddenTerm);
       expect(governanceChecklist).not.toContain(forbiddenTerm);
     }
+
+    const freshnessSnapshot = extractBootstrapGovernanceFreshnessSnapshot();
+    expect(freshnessSnapshot.gate).toBe('bootstrap-governance-freshness');
+    expect(Object.keys(freshnessSnapshot.sources).sort()).toEqual([
+      'ciStep',
+      'registryReference',
+      'runbookChecklist',
+    ]);
+    expect(Object.keys(freshnessSnapshot.coverage).sort()).toEqual([
+      'ciStep',
+      'registry',
+      'runbookReview',
+      'schemaGuard',
+      'snapshot',
+    ]);
+    for (const releaseDoc of [changelog, currentState]) {
+      expect(releaseDoc).toContain(freshnessSnapshot.gate);
+      expect(releaseDoc).toContain('runbookChecklist');
+      expect(releaseDoc).toContain('registryReference');
+      expect(releaseDoc).toContain('ciStep');
+      expect(releaseDoc).toContain('coverage');
+      expect(releaseDoc).toContain('schemaGuard');
+      expect(releaseDoc).toContain('runbookReview');
+    }
   });
 
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
@@ -1400,6 +1424,26 @@ function extractBootstrapDiagnosticGovernanceChecklist(): string {
   }
 
   return checklist;
+}
+
+function extractBootstrapGovernanceFreshnessSnapshot(): {
+  gate: string;
+  sources: Record<string, unknown>;
+  coverage: Record<string, unknown>;
+} {
+  const snapshot = runbook.match(
+    /Succesvolle freshness-outputsnapshot:\n\n\s*```json\n([\s\S]*?)\n\s*```/,
+  )?.[1];
+
+  if (!snapshot) {
+    throw new Error('Bootstrap governance freshness docsnapshot ontbreekt in de runbook.');
+  }
+
+  return JSON.parse(snapshot) as {
+    gate: string;
+    sources: Record<string, unknown>;
+    coverage: Record<string, unknown>;
+  };
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {
