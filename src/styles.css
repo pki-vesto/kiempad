@@ -1030,6 +1030,28 @@ h2 {
   background: var(--accent-strong);
 }
 
+/* B12: een secundaire phase-button in een knoppenpaar is ghost (bv. "Wis filter") */
+.phase-button.secondary {
+  background: transparent;
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+}
+
+.phase-button.secondary:hover {
+  background: var(--surface-2);
+}
+
+/* B15: subtiele tik-feedback op knoppen (uit bij reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .phase-button:active,
+  .secondary-button:active,
+  .danger-button:active,
+  .rec-action:active,
+  .action-card:active {
+    transform: scale(0.98);
+  }
+}
+
 .danger-button {
   border: 1px solid var(--danger-border);
   background: var(--surface-danger);
@@ -1764,16 +1786,25 @@ a.action-card:active {
   color: var(--success-text);
 }
 
+/* B10/B12: secundaire knoppen zijn ghost (transparant + hairline), niet vol */
 .secondary-button {
   min-height: 40px;
   padding: 9px 16px;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--line-2);
   border-radius: var(--radius-pill);
-  background: var(--surface);
-  color: var(--text-strong);
+  background: transparent;
+  color: var(--ink-2);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    background var(--motion),
+    border-color var(--motion),
+    color var(--motion);
+}
+
+.secondary-button:hover {
+  background: var(--surface-2);
 }
 
 .definition-list,
