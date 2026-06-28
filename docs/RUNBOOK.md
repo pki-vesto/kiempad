@@ -130,6 +130,9 @@ pad zonder lokale vault-hercreatie.
   `scripts/bootstrap-governance-freshness-contract.json`. Pas dit template alleen aan
   wanneer de reviewbare annotatievorm bewust wijzigt en houd scriptoutput,
   docsnapshot en releasecontext in dezelfde wijziging gelijk.
+  Toegestane placeholders in dit schemafoutannotatietemplate zijn alleen `{gate}`,
+  `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}`; voeg geen vrije
+  fouttekst of inhoudsvelden toe.
 
   Schemafout-outputvoorbeeld:
 

@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G616/G617 Central Encrypted Platform: de runbook documenteert nu expliciet dat `schemaFailureAnnotationTemplate` alleen `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` als schemafoutannotatie-placeholders mag gebruiken; maintenance-tests bewaken deze termen. G617 is toegevoegd als opvolgdoel voor placeholder-releasecontext.
 - G615/G616 Central Encrypted Platform: bootstrap governance tests bewaken nu exact dat `schemaFailureAnnotationTemplate` alleen de verplichte placeholders `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` gebruikt en gesanitized blijft. G616 is toegevoegd als opvolgdoel voor placeholderdocumentatie in de runbook.
 - G614/G615 Central Encrypted Platform: de runbook benoemt nu dat bootstrap governance schemafout-`ciAnnotation` uit `schemaFailureAnnotationTemplate` in `scripts/bootstrap-governance-freshness-contract.json` komt en dat templatewijzigingen scriptoutput, docsnapshot en releasecontext samen moeten bijwerken. G615 is toegevoegd als opvolgdoel voor contracttemplate-placeholdervalidatie.
 - G613/G614 Central Encrypted Platform: het bootstrap governance freshnesscontract exporteert nu `schemaFailureAnnotationTemplate`; script en tests bouwen `ciAnnotation` uit deze gedeelde contractbron in plaats van losse stringverwachtingen. G614 is toegevoegd als opvolgdoel voor annotatiecontract-documentatie.
