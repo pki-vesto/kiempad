@@ -5352,4 +5352,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G624 — bootstrap governance releasecontext runbook term contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De release-state bewaakt nu de runbookcontext, maar de runbookcontexttermen zelf staan nog niet als compact contract naast de andere releasecontexttermsets.
+- **Desired Outcome:** Maintenance-tests leggen de runbookcontexttermen voor releasecontextbewaking vast als compacte termset.
+- **User Value:** Reviewers zien wijzigingen in de runbookcontexttermen als bewust contractwerk.
+- **Acceptance Criteria:** Test bewaakt de runbookcontexttermen als compacte termset; bestaande release-state en runbookguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
