@@ -3123,7 +3123,7 @@ function renderFirstRunSetup(state: AppShellState): string {
       </ol>
       <div class="button-row">
         <form id="first-run-complete-form">
-          <button type="submit">Setup afgerond</button>
+          <button class="phase-button" type="submit">Setup afgerond</button>
         </form>
         <form id="first-run-skip-form">
           <button class="secondary-button" type="submit">Later doen</button>

@@ -7,6 +7,16 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Fixed
+- Claude Design FIXES.md ronde 2 (deel 2):
+  10. Setup-kaart: "Setup afgerond" is nu een gevulde teal-knop (geen off-brand/
+      ongestylde knop meer); setup-stappen zijn gewone regels (geen kapotte
+      space-between meer).
+  11. Timeline-export: nette niet-resizable mono-preview (surface-2, radius 13px)
+      i.p.v. een klein resizable tekstvak met overlappende tekst.
+  12. Label-waarde-rijen (Dataset:/Traject:/…) staan links uitgelijnd op één regel;
+      geen losse punt die naar rechts wegvliegt.
+
+### Fixed
 - Claude Design FIXES.md ronde 2 (deel 1):
   6. Koppen breken niet meer mid-woord: `overflow-wrap:anywhere` weg van h1/h2;
      koppen krijgen `word-break:keep-all` (breken alleen op spaties).
