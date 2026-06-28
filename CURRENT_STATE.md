@@ -138,7 +138,7 @@
 - **G143/G144/G145 E2E-syncpakket:** back-upscherm kan een `.kiempad-sync`-pakket
   met uitsluitend encrypted records downloaden en importeren op een gekoppelde kluis;
   conflicten worden deterministisch last-wins op `updatedAt` afgehandeld.
-- **G466-G568 actieve autonome doelen:** de backlog bevat 100 open doelen voor centrale encrypted architectuur, Fertility Intelligence, research, daily recommendations, timeline/knowledge graph, premium Claude Design UI en productkwaliteit; G494 is afgerond met een centrale attachment/envelope size-limit policy, G499 met een centrale encrypted record schema-versiegate en G510 met een ziekenhuisdocument type-taxonomie. Onderhoudstests borgen de vloer van minimaal 100 actieve doelen, 3 actieve epics en 1 toekomstige roadmap-horizon.
+- **G466-G569 actieve autonome doelen:** de backlog bevat 100 open doelen voor centrale encrypted architectuur, Fertility Intelligence, research, daily recommendations, timeline/knowledge graph, premium Claude Design UI en productkwaliteit; G494 is afgerond met een centrale attachment/envelope size-limit policy, G499 met een centrale encrypted record schema-versiegate, G510 met een ziekenhuisdocument type-taxonomie en G517 met locked imaging placeholders. Onderhoudstests borgen de vloer van minimaal 100 actieve doelen, 3 actieve epics en 1 toekomstige roadmap-horizon.
 - **G146 consult-PDF:** vragenscherm kan een lokaal printbaar consultoverzicht openen
   met afspraken, vragen en medicatie; de browser kan dit zonder externe dienst als PDF
   opslaan.

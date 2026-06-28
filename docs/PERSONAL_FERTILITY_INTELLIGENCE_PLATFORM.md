@@ -197,7 +197,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-011 Auditlog voor dossieringestie | Historical Medical Record Ingestion | Audit | Registreer upload, OCR, metadatawijziging en verwijdering als technische eventlog zonder medische plaintext. |
 | PFIP-012 Privacygrens voor OCR en analyse | Historical Medical Record Ingestion | Security | Documenteer en test dat OCR-resultaten en samenvattingen alleen encrypted worden opgeslagen. |
 | PFIP-013 Imaging repository voor echo's en foto's | Imaging Repository | Beeldupload | Upload echo's, foto's, scans en embryo-afbeeldingen als aparte beeldrecords. |
-| PFIP-014 Veilige preview voor medische beelden | Imaging Repository | Preview | Toon beeldpreviews alleen na ontgrendeling van de actieve encrypted dataset. |
+| PFIP-014 Veilige preview voor medische beelden | Imaging Repository | Preview | Toon beeldpreviews alleen na ontgrendeling van de actieve encrypted dataset en gebruik locked placeholders zonder beeldpayload, thumbnail of bronbestandsnaam zolang de preview vergrendeld is. |
 | PFIP-015 Beeldclassificatie met handmatige bevestiging | Imaging Repository | Classificatie | Classificeer beelden als echo, foto, scan of embryo-afbeelding en laat correctie toe. |
 | PFIP-016 Beelden koppelen aan traject, afspraak en poging | Imaging Repository | Context | Koppel elk beeld aan datum, traject, poging, afspraak en bron. |
 | PFIP-017 Vergelijkingsweergave voor beelden door de tijd | Imaging Repository | Vergelijking | Vergelijk twee of meer beelden naast elkaar zonder medische interpretatie of score. |

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 369 |
+| ☑ klaar | 370 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **568** |
+| **Totaal** | **569** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -679,7 +679,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G514 | Fertility Intelligence: documentreview wachtrij per confidence | P0 | F5 | ☐ |
 | G515 | Fertility Intelligence: medische bronverwijzing per tijdlijnitem | P0 | F5 | ☐ |
 | G516 | Fertility Intelligence: echo upload classificatie per afspraak | P0 | F5 | ☐ |
-| G517 | Fertility Intelligence: beeldpreview lock-state placeholder | P0 | F5 | ☐ |
+| G517 | Fertility Intelligence: beeldpreview lock-state placeholder | P0 | F5 | ☑ |
 | G518 | Fertility Intelligence: embryo-afbeelding EXIF isolatie | P0 | F5 | ☐ |
 | G519 | Fertility Intelligence: beeldvergelijking selectieflow | P1 | F5 | ☐ |
 | G520 | Fertility Intelligence: scanrecord bronlabel en notitie | P1 | F5 | ☐ |
@@ -731,12 +731,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G566 | Central Encrypted Platform: encrypted record migration fixture registry | P1 | F5 | ☐ |
 | G567 | Fertility Intelligence: dossierupload size feedback voor grote bijlagen | P1 | F5 | ☐ |
 | G568 | Fertility Intelligence: ziekenhuisdocument taxonomie reviewcorrectie | P1 | F5 | ☐ |
+| G569 | Product Quality & Automation: imaging lock-state visual regression fixture | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 568** (id's G001 t/m G568, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 569** (id's G001 t/m G569, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
