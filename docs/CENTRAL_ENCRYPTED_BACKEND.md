@@ -38,6 +38,9 @@ owner/indexmetadata en encrypted envelopes.
   mutatie geweigerd zonder payloadinhoud te inspecteren.
   Legacy snapshots zonder replaymetadata worden bij database-open gehydrateerd en
   daarna met het nieuwe technische metadata-contract geëxporteerd.
+  `runCentralDatasetBootstrapSmoke` smoke-test deze boundary end-to-end met een lege
+  dataset, encrypted write, tweede-device unlock, serverrestart, verkeerde-sleutel
+  foutstatus en optionele snapshotinspectie op plaintextlekkage.
   Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
   `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
   persistence geweigerd. Die technische metadata is owner-scoped: dezelfde metakey
