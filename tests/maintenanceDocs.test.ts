@@ -145,6 +145,8 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_REL
   'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmelding missing-term melding';
 const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS =
   ['release-state-foutmeldingcontextmeldingreleasecontextmelding missing-term melding'] as const;
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR =
+  'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmelding missing-term melding';
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -816,6 +818,22 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('geeft ontbrekende bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: release-state-foutmeldingcontextmeldingreleasecontextmelding staat in releasecontext.',
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS,
+      ),
+    ).toThrow(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR,
+    );
+    expect(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR,
+    ).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmelding missing-term melding',
+    );
+  });
+
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
     expect({
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
@@ -879,6 +897,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR,
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorReleaseErrorRelease:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS,
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorReleaseErrorReleaseError:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -961,6 +981,8 @@ describe('onderhoudsdocumentatie', () => {
         'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmelding missing-term melding',
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorReleaseErrorRelease:
         ['release-state-foutmeldingcontextmeldingreleasecontextmelding missing-term melding'],
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorReleaseErrorReleaseError:
+        'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmelding missing-term melding',
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
