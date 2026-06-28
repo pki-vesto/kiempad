@@ -16,6 +16,7 @@
     "fixtures:check": "node scripts/check-sensitive-fixtures.mjs",
     "deps:review": "node scripts/dependency-review.mjs",
     "backlog:health": "node scripts/backlog-health.mjs",
+    "governance:bootstrap": "node scripts/bootstrap-governance-freshness.mjs",
     "goals:score": "node scripts/goal-score.mjs",
     "drill:backup": "vitest run tests/backupRestoreDrill.test.ts",
     "smoke:offline": "node scripts/offline-smoke.mjs",

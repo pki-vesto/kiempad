@@ -5058,4 +5058,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CI, maintenance docs tests, central bootstrap governance
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G603 — bootstrap governance freshness failure diagnostics
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap governance freshness gate rapporteert nu checklistdekking, maar faaldiagnostics zijn nog niet uitgesplitst per ontbrekende governancebron.
+- **Desired Outcome:** Bij falen toont de gate een gesanitized, technische status per governancebron, zodat maintainers direct zien of runbookchecklist, CI-step of registryverwijzing ontbreekt.
+- **User Value:** Governance regressies zijn sneller te herstellen zonder gevoelige inhoud in CI-output te plaatsen.
+- **Acceptance Criteria:** Faaloutput onderscheidt runbookchecklist, registryverwijzing en CI-step; tests dekken minimaal één ontbrekende marker per bron; output bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance script, CI, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

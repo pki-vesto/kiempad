@@ -156,6 +156,7 @@ describe('onderhoudsdocumentatie', () => {
       '`phaseCode`, `envName` of neutrale redactioncategory-labels',
       '`registry -> schema guard -> snapshot -> runbookreview`',
       'Checklist voor nieuwe bootstrapdiagnostics',
+      'npm run governance:bootstrap',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }

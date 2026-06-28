@@ -32,6 +32,8 @@ jobs:
         run: npm run test
       - name: Central bootstrap smoke
         run: npm run smoke:central-bootstrap
+      - name: Bootstrap governance freshness
+        run: npm run governance:bootstrap
       - name: Security audit
         run: npm audit --audit-level=high
       - name: Build
