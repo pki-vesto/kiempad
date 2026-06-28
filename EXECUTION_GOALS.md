@@ -4974,4 +4974,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap diagnostic registry, command tests, CI smoke output
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G597 — bootstrap diagnostic summary fixture snapshot
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De diagnosticRegistry summary heeft nu een schema guard, maar er is nog geen compacte snapshotfixture die de verwachte publieke summary als reviewbare referentie vastlegt.
+- **Desired Outcome:** Een dedicated fixture of inline snapshot legt de veilige diagnosticRegistry summary vast, zodat wijzigingen aan phaseCodes of categorylabels expliciet zichtbaar worden in reviews.
+- **User Value:** Maintainers zien direct wanneer CI-triageoutput verandert en kunnen bewaken dat alleen technische metadata publiek blijft.
+- **Acceptance Criteria:** Test bevat een reviewbare snapshot van `diagnosticRegistry`; snapshot bevat geen payload, passphrase, token, filename, OCR/base64 of medische plaintext; snapshot faalt bij phaseCode-, envName- of categorydrift; docs of backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap diagnostic registry, command tests, snapshots
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

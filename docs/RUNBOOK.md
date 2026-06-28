@@ -100,7 +100,8 @@ pad zonder lokale vault-hercreatie.
   `src/storage/centralBootstrapDiagnostics.ts` worden toegevoegd; commandotests
   vergelijken die registry met de `phaseCode` literals in de CLI. De succesvolle
   smoke-output bevat daarnaast een gesanitized `diagnosticRegistry` summary met
-  alleen `phaseCode`, fixture-envnaam en neutrale redactioncategorieën voor CI-triage.
+  alleen `fixtureCount`, `phases`, `phaseCode`, `envName` en neutrale
+  `redactionCategories` voor CI-triage; commandotests bewaken dit JSON-schema strikt.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale
