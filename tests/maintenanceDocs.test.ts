@@ -26,6 +26,7 @@ import publicRepoPrivacyReview from '../docs/PUBLIC_REPO_PRIVACY_REVIEW.md?raw';
 import runbook from '../docs/RUNBOOK.md?raw';
 import secretsScanBaseline from '../docs/SECRETS_SCAN_BASELINE.md?raw';
 import tailscaleDeploy from '../docs/TAILSCALE_DEPLOY.md?raw';
+import uiGuidelines from '../docs/UI_GUIDELINES.md?raw';
 import executionGoals from '../EXECUTION_GOALS.md?raw';
 import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
@@ -478,6 +479,22 @@ describe('onderhoudsdocumentatie', () => {
     expect(claudeDesignPrompt).not.toContain('Maak local-first zichtbaar');
     expect(styles).toContain('central-encrypted aware');
     expect(styles).not.toContain('Editorial, warm, local-first');
+  });
+
+  it('houdt de Claude Design prototype-import herleidbaar in docs en CSS', () => {
+    const projectId = 'dab87658-12f7-476d-80f2-f36de2acb4ae';
+    const prototypeFile = 'Kiempad-prototype.dc.html';
+    const prototypeEtag = '1782338087299810';
+
+    for (const artifact of [uiGuidelines, styles]) {
+      expect(artifact).toContain(projectId);
+      expect(artifact).toContain(prototypeFile);
+      expect(artifact).toContain(prototypeEtag);
+    }
+
+    for (const prototypeClass of ['.kp-scroll', '.kp-tap', '.kp-in']) {
+      expect(styles).toContain(prototypeClass);
+    }
   });
 
   it('documenteert de gesanitized backlog-health JSON-shape voor automation', () => {
