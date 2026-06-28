@@ -108,6 +108,18 @@ pad zonder lokale vault-hercreatie.
   synthetische foutdetails of exceptionmessages om deze snapshot te verklaren.
   Governance voor nieuwe bootstrapdiagnostics volgt altijd:
   `registry -> schema guard -> snapshot -> runbookreview`.
+
+  Checklist voor nieuwe bootstrapdiagnostics:
+
+  - [ ] Registry: voeg de diagnostic toe aan
+    `src/storage/centralBootstrapDiagnostics.ts` met fasecode, omgevingsnaam en
+    neutrale redactioncategory-labels.
+  - [ ] Schema guard: werk de commandotest bij die de publieke
+    `diagnosticRegistry` summary exact begrenst tot technische registryvelden.
+  - [ ] Snapshot: accepteer de inline snapshot alleen wanneer de registrywijziging
+    bewust is en de publieke summary technisch blijft.
+  - [ ] Runbookreview: controleer deze paragraaf, de phaseCode-matrix en de
+    snapshotreviewregel voordat de PR mergebaar is.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale
