@@ -279,6 +279,9 @@ h3 {
   font-family: var(--font-serif);
   font-weight: 400;
   letter-spacing: 0.2px;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .app-shell {
@@ -556,8 +559,6 @@ h3 {
   text-transform: uppercase;
 }
 
-h1,
-h2,
 p {
   overflow-wrap: anywhere;
 }
@@ -897,8 +898,9 @@ h2 {
 .data-form label {
   display: grid;
   gap: 7px;
-  color: var(--text-strong);
-  font-weight: 700;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
 }
 
 .data-form .check-row {
@@ -914,6 +916,17 @@ h2 {
   accent-color: var(--accent);
 }
 
+/* checkboxes/radios behouden hun native vink (niet de appearance:none veld-kit) */
+.data-form input[type="checkbox"],
+.data-form input[type="radio"] {
+  width: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  appearance: auto;
+  -webkit-appearance: auto;
+  accent-color: var(--teal);
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -925,19 +938,36 @@ h2 {
 .data-form textarea {
   width: 100%;
   min-height: 44px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-tile);
-  padding: 10px 13px;
-  background: var(--field-bg);
-  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--surface);
+  color: var(--ink);
   font: inherit;
   font-weight: 500;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.data-form input:focus-visible,
-.data-form select:focus-visible,
-.data-form textarea:focus-visible {
-  border-color: var(--accent);
+.data-form input:focus,
+.data-form select:focus,
+.data-form textarea:focus {
+  border-color: var(--teal);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--teal-soft);
+}
+
+.data-form input::placeholder,
+.data-form textarea::placeholder {
+  color: var(--ink-3);
+}
+
+/* FIX 8: eigen chevron op select (verbergt de native lichtblauwe stijl) */
+.data-form select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a9793' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
 }
 
 .data-form textarea {
