@@ -123,6 +123,8 @@ pad zonder lokale vault-hercreatie.
   CI voert daarnaast `npm run governance:bootstrap` uit als freshness gate voor deze
   checklist naast de centrale bootstrap smoke. Bij falen rapporteert de gate alleen
   technische status per bron: `runbookChecklist`, `registryReference` en `ciStep`.
+  Onbekende source- of coveragevelden worden als gesanitized `schemaValidation`
+  schemafout met alleen tellingen gerapporteerd.
   Succesvolle freshness-outputsnapshot:
 
   ```json

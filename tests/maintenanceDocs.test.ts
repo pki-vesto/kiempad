@@ -161,6 +161,8 @@ describe('onderhoudsdocumentatie', () => {
       '`runbookChecklist`, `registryReference` en `ciStep`',
       'Succesvolle freshness-outputsnapshot',
       '"gate": "bootstrap-governance-freshness"',
+      'schemaValidation',
+      'Onbekende source- of coveragevelden',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }
