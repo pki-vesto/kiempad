@@ -44,6 +44,10 @@ export type DossierBeeldMetadataInput = {
 export type DossierOcrInput = {
   explicieteLokaleVerwerking: boolean;
   tekst?: string;
+  confidenceScore?: number;
+  reviewStatus?: NonNullable<DossierDocument['ocr']>['reviewStatus'];
+  correctieTekst?: string;
+  metadataCorrectieNotitie?: string;
   verwerktOp?: string;
 };
 
@@ -693,7 +697,16 @@ function bepaalSignalen(input: {
   }
   if (input.ocr) {
     signalen.push('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');
+    signalen.push(
+      `OCR-confidence: ${input.ocr.confidenceLabel} (${Math.round(input.ocr.confidenceScore * 100)}%).`,
+    );
+    signalen.push(
+      `OCR-reviewstatus: ${input.ocr.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept'}.`,
+    );
     signalen.push(input.ocr.waarschuwing);
+    if (input.ocr.reviewStatus !== 'gereviewd') {
+      signalen.push('OCR-tekst wordt pas na review gebruikt voor metadata en tijdlijnindex.');
+    }
   }
   signalen.push(`Bronbestand metadata: ${input.metadata.bronbestand}.`);
   for (const signaal of beschrijfMetadataSignalen(input.metadata)) {
@@ -762,14 +775,33 @@ export function maakDossierOcrResultaat(
 
   const bron = bepaalOcrBron(document);
   const tekst = input.tekst?.trim();
+  const correctieTekst = input.correctieTekst?.trim();
+  const metadataCorrectieNotitie = input.metadataCorrectieNotitie?.trim();
   const verwerktOp = input.verwerktOp?.trim() || fallbackVerwerktOp;
+  const confidenceScore = bepaalOcrConfidenceScore(input.confidenceScore, bron, Boolean(tekst));
+  const confidenceLabel = labelOcrConfidence(confidenceScore);
+  const reviewStatus =
+    input.reviewStatus ??
+    (confidenceLabel === 'hoog' && bron === 'tekstbestand' ? 'gereviewd' : 'concept');
+  const correctie =
+    correctieTekst || metadataCorrectieNotitie
+      ? {
+          tekst: correctieTekst || undefined,
+          metadataNotitie: metadataCorrectieNotitie || undefined,
+          bijgewerktOp: verwerktOp,
+        }
+      : undefined;
 
   if (tekst) {
     return {
       status: 'tekst_uitgelezen',
       bron,
       explicieteLokaleVerwerking: true,
+      confidenceScore,
+      confidenceLabel,
+      reviewStatus,
       tekst,
+      correctie,
       waarschuwing:
         'Tekst is lokaal uit het bestand gelezen; controleer altijd of de inhoud klopt.',
       verwerktOp,
@@ -781,6 +813,10 @@ export function maakDossierOcrResultaat(
       status: 'wacht_op_lokale_ocr',
       bron,
       explicieteLokaleVerwerking: true,
+      confidenceScore,
+      confidenceLabel,
+      reviewStatus,
+      correctie,
       waarschuwing:
         'PDF of afbeelding is klaargezet voor lokale OCR; er is geen cloudverwerking gestart.',
       verwerktOp,
@@ -791,6 +827,10 @@ export function maakDossierOcrResultaat(
     status: 'niet_ondersteund',
     bron,
     explicieteLokaleVerwerking: true,
+    confidenceScore,
+    confidenceLabel,
+    reviewStatus,
+    correctie,
     waarschuwing:
       'Dit bestandstype heeft nog geen lokale OCR-route; het originele bestand blijft wel bewaard.',
     verwerktOp,
@@ -808,11 +848,15 @@ export function extraheerDossierMetadata(input: {
   ocr?: DossierDocument['ocr'];
 }): DossierDocument['metadata'] {
   const bronnen: string[] = ['bronbestand', 'formulierdatum'];
-  const tekstBronnen = [input.bestandsNaam, input.titel, input.notitie, input.ocr?.tekst].filter(
+  const gereviewdeOcrTekst =
+    input.ocr?.reviewStatus === 'gereviewd'
+      ? (input.ocr.correctie?.tekst ?? input.ocr.tekst)
+      : undefined;
+  const tekstBronnen = [input.bestandsNaam, input.titel, input.notitie, gereviewdeOcrTekst].filter(
     (value): value is string => Boolean(value),
   );
   if (input.notitie) bronnen.push('notitie');
-  if (input.ocr?.tekst) bronnen.push('ocr-tekst');
+  if (gereviewdeOcrTekst) bronnen.push('ocr-tekst-gereviewd');
 
   const gecombineerdeTekst = tekstBronnen.join('\n');
   const herkendeDatum = normaliseerMetadataDatum(gecombineerdeTekst);
@@ -938,6 +982,25 @@ function beschrijfMetadataSignalen(metadata: DossierDocument['metadata']): strin
     metadata.trajectId ? `Metadata trajectkoppeling: ${metadata.trajectId}.` : undefined,
     metadata.arts ? `Metadata arts: ${metadata.arts}.` : undefined,
   ].filter((value): value is string => Boolean(value));
+}
+
+function bepaalOcrConfidenceScore(
+  inputScore: number | undefined,
+  bron: NonNullable<DossierDocument['ocr']>['bron'],
+  heeftTekst: boolean,
+): number {
+  if (Number.isFinite(inputScore)) return Math.max(0, Math.min(1, Number(inputScore)));
+  if (!heeftTekst) return 0;
+  if (bron === 'tekstbestand') return 0.95;
+  if (bron === 'pdf') return 0.72;
+  if (bron === 'afbeelding') return 0.62;
+  return 0.4;
+}
+
+function labelOcrConfidence(score: number): NonNullable<DossierDocument['ocr']>['confidenceLabel'] {
+  if (score >= 0.85) return 'hoog';
+  if (score >= 0.6) return 'middel';
+  return 'laag';
 }
 
 function bepaalOcrBron(

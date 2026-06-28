@@ -254,9 +254,85 @@ describe('dossier', () => {
       status: 'tekst_uitgelezen',
       bron: 'tekstbestand',
       explicieteLokaleVerwerking: true,
+      confidenceScore: 0.95,
+      confidenceLabel: 'hoog',
+      reviewStatus: 'gereviewd',
       tekst: 'AMH 1,2',
       verwerktOp: '2026-06-23T15:00:00.000Z',
     });
+  });
+
+  it('houdt lage OCR-confidence als concept buiten metadata tot review', () => {
+    const conceptOcr = maakDossierOcrResultaat(
+      {
+        bestandsNaam: 'scan.pdf',
+        mimeType: 'application/pdf',
+        grootteBytes: 2048,
+        categorie: 'onderzoek',
+      },
+      {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Controle door dr. Jansen bij Erasmus MC op 2026-05-24',
+        confidenceScore: 0.42,
+        verwerktOp: '2026-06-23T15:00:00.000Z',
+      },
+    );
+    const conceptMetadata = extraheerDossierMetadata({
+      datum: '2026-06-01',
+      titel: 'Controle',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'scan.pdf',
+      ocr: conceptOcr,
+    });
+
+    expect(conceptOcr).toMatchObject({
+      confidenceLabel: 'laag',
+      reviewStatus: 'concept',
+    });
+    expect(conceptMetadata.instelling).toBeUndefined();
+    expect(conceptMetadata.arts).toBeUndefined();
+    expect(conceptMetadata.documentDatum).toBe('2026-06-01');
+    expect(conceptMetadata.extractieBronnen).not.toContain('ocr-tekst-gereviewd');
+  });
+
+  it('gebruikt gecorrigeerde OCR-tekst pas na review voor metadata', () => {
+    const reviewedOcr = maakDossierOcrResultaat(
+      {
+        bestandsNaam: 'kliniekdocument.pdf',
+        mimeType: 'application/pdf',
+        grootteBytes: 2048,
+        categorie: 'onderzoek',
+      },
+      {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Onzekere OCR zonder artsnaam',
+        confidenceScore: 0.58,
+        reviewStatus: 'gereviewd',
+        correctieTekst: 'Controle door dr. Jansen bij Erasmus MC op 2026-05-24',
+        metadataCorrectieNotitie: 'Gebruiker heeft OCR en metadata gecontroleerd.',
+        verwerktOp: '2026-06-23T15:00:00.000Z',
+      },
+    );
+    const metadata = extraheerDossierMetadata({
+      datum: '2026-06-01',
+      titel: 'Controle',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'kliniekdocument.pdf',
+      ocr: reviewedOcr,
+    });
+
+    expect(reviewedOcr?.correctie).toMatchObject({
+      tekst: 'Controle door dr. Jansen bij Erasmus MC op 2026-05-24',
+      metadataNotitie: 'Gebruiker heeft OCR en metadata gecontroleerd.',
+    });
+    expect(metadata).toMatchObject({
+      documentDatum: '2026-05-24',
+      instelling: 'Erasmus MC',
+      arts: 'dr. Jansen',
+    });
+    expect(metadata.extractieBronnen).toContain('ocr-tekst-gereviewd');
   });
 
   it('zet PDF en afbeeldingen klaar voor lokale OCR zonder cloudverwerking', () => {
@@ -282,6 +358,9 @@ describe('dossier', () => {
     expect(pdf).toMatchObject({
       status: 'wacht_op_lokale_ocr',
       bron: 'pdf',
+      confidenceScore: 0,
+      confidenceLabel: 'laag',
+      reviewStatus: 'concept',
       waarschuwing:
         'PDF of afbeelding is klaargezet voor lokale OCR; er is geen cloudverwerking gestart.',
     });
@@ -309,6 +388,8 @@ describe('dossier', () => {
     expect(document.ocr).toMatchObject({
       status: 'tekst_uitgelezen',
       bron: 'tekstbestand',
+      confidenceLabel: 'hoog',
+      reviewStatus: 'gereviewd',
       tekst: 'AMH 1,2',
     });
     expect(document.analyse.samenvatting).toContain('Lokale OCR-status: tekst lokaal uitgelezen.');
@@ -330,6 +411,9 @@ describe('dossier', () => {
         status: 'tekst_uitgelezen',
         bron: 'tekstbestand',
         explicieteLokaleVerwerking: true,
+        confidenceScore: 0.95,
+        confidenceLabel: 'hoog',
+        reviewStatus: 'gereviewd',
         tekst: 'Controle door dr. Jansen bij Erasmus MC',
         waarschuwing: 'Lokaal gelezen.',
         verwerktOp: '2026-06-23T15:00:00.000Z',
@@ -348,7 +432,7 @@ describe('dossier', () => {
         'bronbestand',
         'formulierdatum',
         'notitie',
-        'ocr-tekst',
+        'ocr-tekst-gereviewd',
         'trajectkoppeling',
         'datumherkenning',
         'instellingherkenning',
