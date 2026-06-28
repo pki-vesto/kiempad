@@ -3224,7 +3224,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, domain types, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G472 — embryo image classification review
 
@@ -4748,6 +4748,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Fertility timeline, dossier, app shell, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G581 — imaging metadata reviewcorrectie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Het imaging-metadata schema bewaart nu type, poging, afspraak, EXIF-isolatiestatus en reviewstatus, maar gebruikers kunnen die velden nog niet in een aparte flow corrigeren.
+- **Desired Outcome:** Gebruikers kunnen beeldtype, bron, poging, afspraak en EXIF-/reviewstatus corrigeren zonder beeldinterpretatie of medische conclusie.
+- **User Value:** Beelden blijven betrouwbaar terugvindbaar wanneer automatische classificatie of bronkoppeling later gecorrigeerd moet worden.
+- **Acceptance Criteria:** UI toont een reviewformulier voor beeldmetadata; correcties bewaren beeldtype, bron, poging, afspraak, EXIF-status en reviewstatus encrypted; repository en tijdlijn gebruiken gecorrigeerde metadata; locked previews blijven zonder thumbnail, beeldpayload of plaintext bronbestandsnaam; tests dekken opslag, correctie en geen diagnose, dosering of behandelkeuzeadvies; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Imaging, dossier UI, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

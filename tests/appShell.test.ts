@@ -1611,15 +1611,19 @@ describe('app shell', () => {
           },
           beeldMetadata: {
             datum: '2026-05-02',
+            soort: 'echo',
             context: 'Follikelmeting links',
             bron: 'Kliniekportaal',
             afspraakId: 'afspraak-beeld',
             trajectId: 'traject-beeld',
+            pogingId: 'poging-beeld',
             cyclusDag: 9,
             embryoLabel: 'Embryo 1',
             embryoId: 'E1',
             embryoDag: 5,
             laboratoriumContext: 'Labfoto dag 5',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'concept',
           },
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
@@ -1645,8 +1649,11 @@ describe('app shell', () => {
           },
           beeldMetadata: {
             datum: '2026-05-04',
+            soort: 'echo',
             context: 'Follikelmeting rechts',
             bron: 'Kliniekportaal',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'concept',
           },
           uploadedAt: '2026-06-23T16:00:00.000Z',
         },
@@ -1674,10 +1681,10 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale thumbnail van Echo 6 weken"');
     expect(html).toContain('Thumbnail uit ontgrendelde encrypted dataset.');
     expect(html).toContain(
-      'Beeldmetadata: Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld',
+      'Beeldmetadata: Schema: Echo · Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld · EXIF: geisoleerd · Review: concept',
     );
     expect(html).toContain(
-      'Tijdlijnkoppeling: Poging: traject-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1 · Embryo-id: E1 · Embryodag: 5 · Labcontext: Labfoto dag 5',
+      'Tijdlijnkoppeling: Poging: poging-beeld · Afspraak: afspraak-beeld · Cyclusdag: 9 · Embryo: Embryo 1 · Embryo-id: E1 · Embryodag: 5 · Labcontext: Labfoto dag 5',
     );
     expect(html).toContain('Beeldcontextnotitie: Echo 6 weken');
     expect(html).toContain(

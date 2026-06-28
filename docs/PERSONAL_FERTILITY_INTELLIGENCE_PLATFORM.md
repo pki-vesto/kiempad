@@ -198,11 +198,11 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-012 Privacygrens voor OCR en analyse | Historical Medical Record Ingestion | Security | Documenteer en test dat OCR-resultaten en samenvattingen alleen encrypted worden opgeslagen. |
 | PFIP-013 Imaging repository voor echo's en foto's | Imaging Repository | Beeldupload | Upload echo's, foto's, scans en embryo-afbeeldingen als aparte beeldrecords. |
 | PFIP-014 Veilige preview voor medische beelden | Imaging Repository | Preview | Toon beeldpreviews alleen na ontgrendeling van de actieve encrypted dataset en gebruik locked placeholders zonder beeldpayload, thumbnail of bronbestandsnaam zolang de preview vergrendeld is. |
-| PFIP-015 Beeldclassificatie met handmatige bevestiging | Imaging Repository | Classificatie | Classificeer beelden als echo, foto, scan of embryo-afbeelding en laat correctie toe. |
-| PFIP-016 Beelden koppelen aan traject, afspraak en poging | Imaging Repository | Context | Koppel elk beeld aan datum, traject, poging, afspraak en bron. |
+| PFIP-015 Beeldclassificatie met handmatige bevestiging | Imaging Repository | Classificatie | Classificeer beelden expliciet als echo, foto, scan, embryo-afbeelding of overig beeld en laat correctie toe. |
+| PFIP-016 Beelden koppelen aan traject, afspraak en poging | Imaging Repository | Context | Koppel elk beeld aan datum, traject, poging, afspraak, bron en reviewstatus. |
 | PFIP-017 Vergelijkingsweergave voor beelden door de tijd | Imaging Repository | Vergelijking | Vergelijk twee of meer beelden naast elkaar zonder medische interpretatie of score. |
 | PFIP-018 AI-samenvatting voor beelden als concept | Imaging Repository | AI-samenvatting | Genereer alleen beschrijvende, ongeverifieerde conceptsamenvattingen met duidelijke waarschuwing. |
-| PFIP-019 Beeldmetadata zonder EXIF-lekkage | Imaging Repository | Privacy | Strip of isoleer potentieel gevoelige EXIF-velden voordat beelden centraal worden bewaard. |
+| PFIP-019 Beeldmetadata zonder EXIF-lekkage | Imaging Repository | Privacy | Strip of isoleer potentieel gevoelige EXIF-velden voordat beelden centraal worden bewaard en bewaar alleen een expliciete EXIF-status in versleutelde metadata. |
 | PFIP-020 Tijdlijnitems voor beeldmomenten | Imaging Repository | Tijdlijn | Toon beeldrecords als herkenbare tijdlijnmomenten met thumbnail en context. |
 | PFIP-021 Gespreksverslagen uploaden als consultrecords | Consultation Intelligence | Consultupload | Upload gespreksverslagen, consultnotities, behandelgesprekken en samenvattingen als consultverslag; tekstveld-import bewaart bron- en conceptreviewmetadata. |
 | PFIP-022 Consultverslagen koppelen aan afspraken | Consultation Intelligence | Context | Koppel ieder consultverslag aan afspraak, arts/kliniek, traject en poging. |

@@ -1400,11 +1400,20 @@ function renderImagingRepositoryItem(
         <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(bronLabel)}</p>
         <p class="linked-note">Previewstatus: ${escapeHtml(item.previewState.label)}</p>
         ${
-          item.context || item.afspraakId || item.trajectId
+          item.context || item.afspraakId || item.trajectId || item.document.beeldMetadata
             ? `<p class="linked-note">Beeldmetadata: ${[
+                item.document.beeldMetadata?.soort
+                  ? `Schema: ${imagingSoortLabel(item.document.beeldMetadata.soort)}`
+                  : undefined,
                 item.context ? `Context: ${item.context}` : undefined,
                 item.afspraakId ? `Afspraak: ${item.afspraakId}` : undefined,
                 item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+                item.document.beeldMetadata?.exifStatus
+                  ? `EXIF: ${item.document.beeldMetadata.exifStatus}`
+                  : undefined,
+                item.document.beeldMetadata?.reviewStatus
+                  ? `Review: ${item.document.beeldMetadata.reviewStatus}`
+                  : undefined,
               ]
                 .filter((value): value is string => Boolean(value))
                 .map(escapeHtml)

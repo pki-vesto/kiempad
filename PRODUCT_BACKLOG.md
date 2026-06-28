@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 381 |
+| ☑ klaar | 382 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **580** |
+| **Totaal** | **581** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -626,7 +626,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G468 | Fertility Intelligence: metadata normaliseren voor lab- en onderzoeksrapporten | P0 | F5 | ☑ |
 | G469 | Fertility Intelligence: tijdlijnreconstructie uit historische records | P0 | F5 | ☑ |
 | G470 | Fertility Intelligence: fertility dossier packet per behandeltraject | P1 | F5 | ☐ |
-| G471 | Fertility Intelligence: ultrasound upload metadata schema | P0 | F5 | ☐ |
+| G471 | Fertility Intelligence: ultrasound upload metadata schema | P0 | F5 | ☑ |
 | G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☐ |
 | G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☐ |
 | G474 | Fertility Intelligence: imaging timeline privacy boundary | P0 | F5 | ☐ |
@@ -743,12 +743,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G578 | Fertility Intelligence: OCR-review correctieformulier | P1 | F5 | ☐ |
 | G579 | Fertility Intelligence: metadata-normalisatie correctieformulier | P1 | F5 | ☐ |
 | G580 | Fertility Intelligence: historische tijdlijnitem reviewactie | P1 | F5 | ☐ |
+| G581 | Fertility Intelligence: imaging metadata reviewcorrectie | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 580** (id's G001 t/m G580, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 581** (id's G001 t/m G581, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

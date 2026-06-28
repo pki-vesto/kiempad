@@ -257,15 +257,19 @@ export interface DossierDocument {
   };
   beeldMetadata?: {
     datum: IsoDate;
+    soort: 'echo' | 'foto' | 'scan' | 'embryo_afbeelding' | 'overig_beeld';
     context?: string;
     bron: string;
     afspraakId?: string;
     trajectId?: string;
+    pogingId?: string;
     cyclusDag?: number;
     embryoLabel?: string;
     embryoId?: string;
     embryoDag?: number;
     laboratoriumContext?: string;
+    exifStatus: 'geisoleerd' | 'geen_exif' | 'onbekend';
+    reviewStatus: 'concept' | 'gereviewd';
   };
   ocr?: {
     status: 'tekst_uitgelezen' | 'wacht_op_lokale_ocr' | 'niet_ondersteund';

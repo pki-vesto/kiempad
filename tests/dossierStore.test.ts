@@ -56,6 +56,50 @@ describe('DossierStore', () => {
     expect(await store.list()).toEqual([saved]);
   });
 
+  it('bewaart beeldmetadata versleuteld zonder preview- of EXIF-context in plaintext', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.save({
+      datum: '2026-05-04',
+      titel: 'Echo follikelmeting',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-follikelmeting.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 4096,
+      inhoudBase64: 'anBnLWdlaGVpbQ==',
+      afspraakId: 'afspraak-echo',
+      trajectId: 'traject-1',
+      beeldMetadata: {
+        soort: 'echo',
+        context: 'Follikelmeting links',
+        bron: 'Kliniekportaal',
+        pogingId: 'poging-1',
+        cyclusDag: 9,
+        exifStatus: 'geisoleerd',
+        reviewStatus: 'gereviewd',
+      },
+    });
+    const raw = await driver.getRecord(saved.id);
+
+    expect(saved.beeldMetadata).toMatchObject({
+      soort: 'echo',
+      context: 'Follikelmeting links',
+      bron: 'Kliniekportaal',
+      pogingId: 'poging-1',
+      exifStatus: 'geisoleerd',
+      reviewStatus: 'gereviewd',
+    });
+    expect(raw?.type).toBe('dossier_document');
+    expect(raw?.payload.ciphertext).not.toContain('Echo follikelmeting');
+    expect(raw?.payload.ciphertext).not.toContain('echo-follikelmeting.jpg');
+    expect(raw?.payload.ciphertext).not.toContain('anBnLWdlaGVpbQ');
+    expect(raw?.payload.ciphertext).not.toContain('Follikelmeting links');
+    expect(raw?.payload.ciphertext).not.toContain('Kliniekportaal');
+    expect(raw?.payload.ciphertext).not.toContain('poging-1');
+    expect(raw?.payload.ciphertext).not.toContain('geisoleerd');
+    expect(await store.list()).toEqual([saved]);
+  });
+
   it('verwijdert dossierdocumenten via de encrypted repository', async () => {
     const { driver, store } = await setupStore();
     const saved = await store.save({

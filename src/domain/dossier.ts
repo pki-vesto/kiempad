@@ -43,13 +43,17 @@ export type DossierMetadataCorrectieInput = {
 };
 
 export type DossierBeeldMetadataInput = {
+  soort?: DossierBeeldClassificatie;
   context?: string;
   bron?: string;
+  pogingId?: string;
   cyclusDag?: number;
   embryoLabel?: string;
   embryoId?: string;
   embryoDag?: number;
   laboratoriumContext?: string;
+  exifStatus?: NonNullable<DossierDocument['beeldMetadata']>['exifStatus'];
+  reviewStatus?: NonNullable<DossierDocument['beeldMetadata']>['reviewStatus'];
 };
 
 export type DossierOcrInput = {
@@ -240,6 +244,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const beeldMetadata = maakBeeldMetadata(
     {
       datum,
+      titel,
       categorie,
       uploadProfiel,
       bestandsNaam,
@@ -414,7 +419,7 @@ export function bouwImagingRepository(
       id: document.id,
       datum: bepaalDossierTijdlijnDatum(document),
       titel: document.titel,
-      soort: classificeerDossierBeeld(document),
+      soort: document.beeldMetadata?.soort ?? classificeerDossierBeeld(document),
       bronbestand:
         document.beeldMetadata?.bron ?? document.metadata?.bronbestand ?? document.bestandsNaam,
       context: document.beeldMetadata?.context,
@@ -530,20 +535,43 @@ export function classificeerDossierBeeld(document: DossierDocument): DossierBeel
   return 'overig_beeld';
 }
 
+function classificeerBeeldMetadataInput(
+  document: Pick<DossierDocumentInput, 'titel' | 'bestandsNaam'>,
+): DossierBeeldClassificatie {
+  const tekst = normaliseerZoektekst([document.titel, document.bestandsNaam].join(' '));
+  if (/\b(embryo|blastocyst|blastocyste)\b/.test(tekst)) return 'embryo_afbeelding';
+  if (/\b(echo|ultrasound)\b/.test(tekst)) return 'echo';
+  if (/\b(scan|mri|ct)\b/.test(tekst)) return 'scan';
+  if (/\b(foto|photo)\b/.test(tekst)) return 'foto';
+  return 'overig_beeld';
+}
+
+function bepaalExifStatus(
+  bestandsNaam: string,
+  uploadProfiel: DossierDocument['uploadProfiel'] | undefined,
+): NonNullable<DossierDocument['beeldMetadata']>['exifStatus'] {
+  if (uploadProfiel !== 'afbeelding' && !/\.(jpe?g|png|heic|webp)$/i.test(bestandsNaam)) {
+    return 'geen_exif';
+  }
+  return 'geisoleerd';
+}
+
 export function maakBeeldMetadata(
   document: Pick<
     DossierDocumentInput,
-    'datum' | 'categorie' | 'uploadProfiel' | 'bestandsNaam' | 'afspraakId' | 'trajectId'
+    'datum' | 'titel' | 'categorie' | 'uploadProfiel' | 'bestandsNaam' | 'afspraakId' | 'trajectId'
   >,
   input: DossierBeeldMetadataInput | undefined,
 ): DossierDocument['beeldMetadata'] {
   const isBeeld = document.categorie === 'beeld' || document.uploadProfiel === 'afbeelding';
   if (!isBeeld) return undefined;
 
+  const soort = input?.soort ?? classificeerBeeldMetadataInput(document);
   const context = input?.context?.trim();
   const bron = input?.bron?.trim() || document.bestandsNaam;
   const afspraakId = document.afspraakId?.trim();
   const trajectId = document.trajectId?.trim();
+  const pogingId = input?.pogingId?.trim() || trajectId;
   const embryoLabel = input?.embryoLabel?.trim();
   const embryoId = input?.embryoId?.trim();
   const laboratoriumContext = input?.laboratoriumContext?.trim();
@@ -558,15 +586,20 @@ export function maakBeeldMetadata(
 
   return {
     datum: document.datum,
+    soort,
     context: context || undefined,
     bron,
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
+    pogingId: pogingId || undefined,
     cyclusDag,
     embryoLabel: embryoLabel || undefined,
     embryoId: embryoId || undefined,
     embryoDag,
     laboratoriumContext: laboratoriumContext || undefined,
+    exifStatus:
+      input?.exifStatus ?? bepaalExifStatus(document.bestandsNaam, document.uploadProfiel),
+    reviewStatus: input?.reviewStatus ?? 'concept',
   };
 }
 
@@ -574,7 +607,8 @@ export function bouwImagingTijdlijnKoppeling(
   document: DossierDocument,
 ): ImagingRepositoryItem['tijdlijnKoppeling'] {
   return {
-    pogingId: document.beeldMetadata?.trajectId ?? document.trajectId,
+    pogingId:
+      document.beeldMetadata?.pogingId ?? document.beeldMetadata?.trajectId ?? document.trajectId,
     afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
     cyclusDag: document.beeldMetadata?.cyclusDag,
     embryoLabel: document.beeldMetadata?.embryoLabel ?? document.embryo?.label,

@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G471/G581 Fertility Intelligence imaging: beeldmetadata bewaart nu expliciete beeldsoort, poging-id, EXIF-isolatiestatus en reviewstatus naast bron, afspraak en traject; repository, tijdlijnkoppeling en UI gebruiken het schema zonder locked previews te lekken. G581 is toegevoegd als opvolgdoel voor een imaging-metadata reviewcorrectieflow.
 - G469/G580 Fertility Intelligence: historische dossierrecords leveren nu concept-tijdlijnitems met bron, datumbron, confidence, reviewstatus en expliciet datumconflict in de fertility timeline. G580 is toegevoegd als opvolgdoel voor reviewacties op historische tijdlijnitems.
 - G468/G579 Fertility Intelligence: dossierdocumenten bewaren nu genormaliseerde metadata voor datum, bron, documenttype, onderzoekstype, poging, afspraak en onzekerheid met originele waarden en gebruikersoverschrijving; index, zoekvelden en dossier-UI gebruiken deze normalisatie. G579 is toegevoegd als opvolgdoel voor een metadata-correctieformulier.
 - G467/G578 Fertility Intelligence: OCR-resultaten bewaren nu confidence, concept/gereviewd-status en correctiemetadata; lage confidence blijft concept en OCR-tekst voedt metadata pas na review. G578 is toegevoegd als opvolgdoel voor een OCR-reviewcorrectieformulier.
