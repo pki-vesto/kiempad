@@ -325,6 +325,17 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('geeft ontbrekende bootstrap governance releasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: schemaValidation staat in releasecontext.',
+        ['schemaValidation', '{unknownSourceFieldCount}'],
+      ),
+    ).toThrow(
+      'Bootstrap governance releasecontext ontbreekt voor termen: {unknownSourceFieldCount}',
+    );
+  });
+
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
     const backlogGoals = parseBacklogGoalRows();
     const executionGoalSections = parseExecutionGoalSections();
@@ -1559,13 +1570,15 @@ function extractBootstrapGovernanceReleaseContext(
     .split(/\n|;\s+|,\s+G\d{3}\s+/)
     .filter((line) => requiredTerms.some((term) => line.includes(term)));
 
-  if (matchingLines.length === 0) {
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = requiredTerms.filter((term) => !matchingContext.includes(term));
+  if (missingTerms.length > 0) {
     throw new Error(
-      `Bootstrap governance releasecontext ontbreekt voor termen: ${requiredTerms.join(', ')}`,
+      `Bootstrap governance releasecontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
     );
   }
 
-  return matchingLines.join('\n');
+  return matchingContext;
 }
 
 function buildBootstrapGovernanceSchemaFailureAnnotationFixture({

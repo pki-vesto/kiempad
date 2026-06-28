@@ -5296,4 +5296,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G620 — bootstrap governance releasecontext term list deduplication
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De releasecontext-helper heeft nu een negatieve fixture, maar de schemafout- en placeholdertermlijsten worden nog inline in de test samengesteld.
+- **Desired Outcome:** De maintenance-test gebruikt expliciete kleine constante termlijsten voor schemafoutvelden en placeholdervelden.
+- **User Value:** Reviewers kunnen termcontracten sneller beoordelen zonder door testlogica te zoeken.
+- **Acceptance Criteria:** Schemafout- en placeholdertermen staan in compacte constanten; bestaande positieve en negatieve helperguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
