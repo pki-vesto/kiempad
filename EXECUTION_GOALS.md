@@ -6929,4 +6929,19 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+
+### G736 — bootstrap governance missing-term runbook note contract release text missing-term release text contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De negatieve fixture bewaakt ontbrekende release-statecontexttermen, maar de exacte missing-term melding staat nog niet als compact contract voor deze laag.
+- **Desired Outcome:** Maintenance-tests leggen de release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding opnieuw vast als apart compact contract voor deze guardlaag.
+- **User Value:** Reviewers zien wijzigingen in deze technische foutmelding als bewust contractwerk zonder inhoudelijke dossierdetails.
+- **Acceptance Criteria:** Test bewaakt de exacte release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding; bestaande negatieve fixture, compact contract en release-state guards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
