@@ -157,6 +157,7 @@ describe('onderhoudsdocumentatie', () => {
       '`registry -> schema guard -> snapshot -> runbookreview`',
       'Checklist voor nieuwe bootstrapdiagnostics',
       'npm run governance:bootstrap',
+      '`runbookChecklist`, `registryReference` en `ciStep`',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }

@@ -1,4 +1,7 @@
 import { execFile } from 'node:child_process';
+import { mkdtemp, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
 import workflowRaw from '../.github/workflows/ci.yml?raw';
@@ -17,7 +20,8 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(workflowRaw).toContain('Bootstrap governance freshness');
     expect(workflowRaw).toContain('npm run governance:bootstrap');
     expect(governanceScriptRaw).toContain('bootstrap-governance-freshness');
-    expect(governanceScriptRaw).toContain('REQUIRED_CHECKLIST_MARKERS');
+    expect(governanceScriptRaw).toContain('REQUIRED_RUNBOOK_CHECKLIST_MARKERS');
+    expect(governanceScriptRaw).toContain('registryReference');
   });
 
   it('rapporteert checklistdekking met gesanitized technische output', async () => {
@@ -34,6 +38,20 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(report).toEqual({
       status: 'ok',
       gate: 'bootstrap-governance-freshness',
+      sources: {
+        runbookChecklist: {
+          status: 'ok',
+          missingCount: 0,
+        },
+        registryReference: {
+          status: 'ok',
+          missingCount: 0,
+        },
+        ciStep: {
+          status: 'ok',
+          missingCount: 0,
+        },
+      },
       coverage: {
         registry: 'ok',
         schemaGuard: 'ok',
@@ -58,4 +76,104 @@ describe('bootstrap diagnostic governance freshness gate', () => {
       expect(stdout).not.toContain(forbiddenTerm);
     }
   });
+
+  it('onderscheidt ontbrekende runbookchecklist-markers in faaloutput', async () => {
+    const output = await runGovernanceGateWithFixture({
+      runbook: buildRunbookFixture({ includeChecklist: false }),
+      workflow: buildWorkflowFixture({ includeCiStep: true }),
+    });
+
+    expect(output.status).toBe('failed');
+    expect(output.sources.runbookChecklist).toEqual({ status: 'missing', missingCount: 4 });
+    expect(output.sources.registryReference).toEqual({ status: 'ok', missingCount: 0 });
+    expect(output.sources.ciStep).toEqual({ status: 'ok', missingCount: 0 });
+  });
+
+  it('onderscheidt ontbrekende registryverwijzingen in faaloutput', async () => {
+    const output = await runGovernanceGateWithFixture({
+      runbook: buildRunbookFixture({ includeRegistryReferences: false }),
+      workflow: buildWorkflowFixture({ includeCiStep: true }),
+    });
+
+    expect(output.status).toBe('failed');
+    expect(output.sources.runbookChecklist).toEqual({ status: 'ok', missingCount: 0 });
+    expect(output.sources.registryReference).toEqual({ status: 'missing', missingCount: 3 });
+    expect(output.sources.ciStep).toEqual({ status: 'ok', missingCount: 0 });
+  });
+
+  it('onderscheidt ontbrekende CI-step in faaloutput', async () => {
+    const output = await runGovernanceGateWithFixture({
+      runbook: buildRunbookFixture({ includeChecklist: true }),
+      workflow: buildWorkflowFixture({ includeCiStep: false }),
+    });
+
+    expect(output.status).toBe('failed');
+    expect(output.sources.runbookChecklist).toEqual({ status: 'ok', missingCount: 0 });
+    expect(output.sources.registryReference).toEqual({ status: 'ok', missingCount: 0 });
+    expect(output.sources.ciStep).toEqual({ status: 'missing', missingCount: 2 });
+  });
 });
+
+type GovernanceGateReport = {
+  status: string;
+  gate: string;
+  sources: Record<string, { status: string; missingCount: number }>;
+  coverage: Record<string, string>;
+};
+
+async function runGovernanceGateWithFixture({
+  runbook,
+  workflow,
+}: {
+  runbook: string;
+  workflow: string;
+}): Promise<GovernanceGateReport> {
+  const fixtureDir = await mkdtemp(join(tmpdir(), 'kiempad-governance-'));
+  const runbookPath = join(fixtureDir, 'RUNBOOK.md');
+  const workflowPath = join(fixtureDir, 'ci.yml');
+  await writeFile(runbookPath, runbook);
+  await writeFile(workflowPath, workflow);
+
+  try {
+    const { stdout } = await execFileAsync('node', ['scripts/bootstrap-governance-freshness.mjs'], {
+      env: {
+        ...process.env,
+        KIEMPAD_BOOTSTRAP_GOVERNANCE_RUNBOOK_PATH: runbookPath,
+        KIEMPAD_BOOTSTRAP_GOVERNANCE_WORKFLOW_PATH: workflowPath,
+      },
+    });
+    return JSON.parse(stdout) as GovernanceGateReport;
+  } catch (error) {
+    const failedRun = error as { stdout?: string };
+    return JSON.parse(failedRun.stdout ?? '{}') as GovernanceGateReport;
+  }
+}
+
+function buildRunbookFixture({
+  includeChecklist = true,
+  includeRegistryReferences = true,
+}: {
+  includeChecklist?: boolean;
+  includeRegistryReferences?: boolean;
+}): string {
+  return [
+    includeChecklist
+      ? ['- [ ] Registry:', '- [ ] Schema guard:', '- [ ] Snapshot:', '- [ ] Runbookreview:'].join(
+          '\n',
+        )
+      : 'Checklist ontbreekt.',
+    includeRegistryReferences
+      ? [
+          'src/storage/centralBootstrapDiagnostics.ts',
+          'diagnosticRegistry',
+          'phaseCode-matrix',
+        ].join('\n')
+      : 'Registryverwijzing ontbreekt.',
+  ].join('\n');
+}
+
+function buildWorkflowFixture({ includeCiStep }: { includeCiStep: boolean }): string {
+  return includeCiStep
+    ? ['Bootstrap governance freshness', 'npm run governance:bootstrap'].join('\n')
+    : 'build-test: true';
+}
