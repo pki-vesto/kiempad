@@ -106,6 +106,8 @@ pad zonder lokale vault-hercreatie.
   Snapshotdrift is alleen acceptabel bij een bewuste registrywijziging aan
   `phaseCode`, `envName` of neutrale redactioncategory-labels; review nooit
   synthetische foutdetails of exceptionmessages om deze snapshot te verklaren.
+  Governance voor nieuwe bootstrapdiagnostics volgt altijd:
+  `registry -> schema guard -> snapshot -> runbookreview`.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

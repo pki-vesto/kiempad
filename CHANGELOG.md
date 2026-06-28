@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G600/G601 Central Encrypted Platform: de runbook bevat nu een compacte governancevolgorde voor nieuwe bootstrap diagnostics (`registry -> schema guard -> snapshot -> runbookreview`) en maintenance-tests bewaken die stappen zonder gevoelige termen. G601 is toegevoegd als opvolgdoel voor een afvinkbare governancechecklist.
 - G599/G600 Central Encrypted Platform: maintenance-tests extraheren nu de bootstrap diagnostic snapshotreviewregel uit de runbook en bewaken dat die alleen veilige registryvelden noemt en geen payload-, secret-, token-, bestandsnaam-, tekstextractie- of medische inhoudstermen bevat. G600 is toegevoegd als opvolgdoel voor governanceconsolidatie.
 - G598/G599 Central Encrypted Platform: de runbook bevat nu een snapshotreviewregel voor `diagnosticRegistry` drift; maintenance-tests bewaken dat reviewers alleen bewuste wijzigingen aan `phaseCode`, `envName` of neutrale categorylabels accepteren. G599 is toegevoegd als opvolgdoel voor een expliciete reviewregel-fixture.
 - G597/G598 Central Encrypted Platform: de publieke `diagnosticRegistry` summary is nu vastgelegd als reviewbare inline snapshot in de commandotests; snapshotdrift maakt phaseCode-, envName- en categorywijzigingen expliciet zonder fixturepayloads te tonen. G598 is toegevoegd als opvolgdoel voor runbookreviewregels bij snapshotdrift.

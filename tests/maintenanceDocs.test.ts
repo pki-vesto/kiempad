@@ -154,6 +154,7 @@ describe('onderhoudsdocumentatie', () => {
       'src/storage/centralBootstrapDiagnostics.ts',
       'Snapshotdrift is alleen acceptabel bij een bewuste registrywijziging',
       '`phaseCode`, `envName` of neutrale redactioncategory-labels',
+      '`registry -> schema guard -> snapshot -> runbookreview`',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }
@@ -186,6 +187,27 @@ describe('onderhoudsdocumentatie', () => {
       'fertiliteitsnotitie',
     ]) {
       expect(snapshotReviewRule).not.toContain(forbiddenTerm);
+    }
+
+    const governanceRule = extractBootstrapDiagnosticGovernanceRule();
+    expect(governanceRule).toContain('registry');
+    expect(governanceRule).toContain('schema guard');
+    expect(governanceRule).toContain('snapshot');
+    expect(governanceRule).toContain('runbookreview');
+    expect(governanceRule).toContain('registry -> schema guard -> snapshot -> runbookreview');
+    for (const forbiddenTerm of [
+      'payload',
+      'passphrase',
+      'secret',
+      'token',
+      'bestandsnaam',
+      'filename',
+      'OCR',
+      'base64',
+      'medische',
+      'fertiliteitsnotitie',
+    ]) {
+      expect(governanceRule).not.toContain(forbiddenTerm);
     }
   });
 
@@ -1336,6 +1358,18 @@ function extractBootstrapSnapshotReviewRule(): string {
 
   if (!rule) {
     throw new Error('Bootstrap diagnostic snapshotreviewregel ontbreekt in de runbook.');
+  }
+
+  return rule;
+}
+
+function extractBootstrapDiagnosticGovernanceRule(): string {
+  const rule = runbook.match(
+    /Governance voor nieuwe bootstrapdiagnostics volgt altijd:[\s\S]*?runbookreview`./,
+  )?.[0];
+
+  if (!rule) {
+    throw new Error('Bootstrap diagnostic governanceregel ontbreekt in de runbook.');
   }
 
   return rule;
