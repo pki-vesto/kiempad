@@ -7,6 +7,15 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Fixed
+- Claude Design FIXES.md ronde 2 (deel 1):
+  6. Koppen breken niet meer mid-woord: `overflow-wrap:anywhere` weg van h1/h2;
+     koppen krijgen `word-break:keep-all` (breken alleen op spaties).
+  8. Formulier-veldkit: labels 12.5px/600 boven het veld; inputs/selects/
+     textarea's met hairline-rand, radius 12px, teal focus-ring; `appearance:none`
+     + eigen chevron op selects (geen lichtblauwe native velden meer). Checkboxes/
+     radios behouden hun native vink.
+
+### Fixed
 - Claude Design FIXES.md (5 gerichte UI-correcties):
   1. Knoppen-hiërarchie per aanbevelingskaart: één primaire "Bewaar" (gevuld teal),
      "Maak herinnering"/"Maak vraag" als ghost-knoppen, en "Wijs af"/"Artscheck"
