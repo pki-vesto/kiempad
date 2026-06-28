@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Fixed
+- VERBETERINGEN-VOLLEDIG.md sectie B (knoppen): secundaire knoppen (.secondary-
+  button en `.phase-button.secondary`, bv. "Wis filter"/"Later doen") zijn nu
+  ghost (transparant + hairline + ink-2) i.p.v. vol; subtiele tik-feedback
+  (`:active scale .98`, uit bij reduced-motion).
+
+### Fixed
 - Claude Design FIXES.md punt 9 (lege staten): kale "Nog geen …"-regels zijn nu
   rustige, ontworpen lege-staat-blokken (gecentreerd, dashed hairline, surface-2)
   i.p.v. losse tekst. De `emptyState()`-component levert het rijke blok met een
