@@ -1460,6 +1460,9 @@ function renderDossierIndexItem(
     item.documenttype,
     `Bron: ${bron}`,
     item.trajectId ? `Traject: ${item.trajectId}` : undefined,
+    item.afspraakId ? `Afspraak: ${item.afspraakId}` : undefined,
+    item.onderzoekstype ? `Onderzoekstype: ${item.onderzoekstype}` : undefined,
+    item.onzekerheid ? `Onzekerheid: ${item.onzekerheid}` : undefined,
   ].filter((value): value is string => Boolean(value));
   return `
     <li>
@@ -1829,9 +1832,39 @@ function renderDossierMetadata(document: DossierDocument, state: AppShellState):
       ? 'Bronbestand: verborgen tot ontgrendeling'
       : `Bronbestand: ${metadata.bronbestand}`,
   ].filter((value): value is string => Boolean(value));
+  const normalisatie = metadata.normalisatie;
+  const normalisatieDetails = normalisatie
+    ? [
+        `Datum: ${normalisatie.datum}`,
+        `Bron: ${normalisatie.bron}`,
+        `Documenttype: ${normalisatie.documenttype}`,
+        normalisatie.onderzoekstype ? `Onderzoekstype: ${normalisatie.onderzoekstype}` : undefined,
+        normalisatie.pogingId ? `Poging: ${normalisatie.pogingId}` : undefined,
+        normalisatie.afspraakId ? `Afspraak: ${normalisatie.afspraakId}` : undefined,
+        `Onzekerheid: ${normalisatie.onzekerheid}`,
+        normalisatie.overschrevenDoorGebruiker ? 'Door gebruiker gecorrigeerd' : undefined,
+      ].filter((value): value is string => Boolean(value))
+    : [];
+  const origineleWaarden = normalisatie
+    ? [
+        `datum ${normalisatie.origineleWaarden.datum}`,
+        `bron ${normalisatie.origineleWaarden.bron}`,
+        `documenttype ${normalisatie.origineleWaarden.documenttype}`,
+      ]
+    : [];
 
   return `
     <p class="linked-note">Metadata: ${details.map(escapeHtml).join(' · ')}</p>
+    ${
+      normalisatieDetails.length > 0
+        ? `<p class="linked-note">Genormaliseerd: ${normalisatieDetails.map(escapeHtml).join(' · ')}</p>`
+        : ''
+    }
+    ${
+      origineleWaarden.length > 0
+        ? `<p class="linked-note">Originele metadatawaarden: ${origineleWaarden.map(escapeHtml).join(' · ')}</p>`
+        : ''
+    }
     <p class="linked-note">Metadata-bronnen: ${metadata.extractieBronnen.map(escapeHtml).join(', ')}</p>
   `;
 }

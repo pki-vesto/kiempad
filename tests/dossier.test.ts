@@ -428,6 +428,23 @@ describe('dossier', () => {
       trajectId: 'traject-1',
       arts: 'dr. Jansen',
       bronbestand: '2026-05-24-erasmus-rapport.pdf',
+      normalisatie: {
+        datum: '2026-05-24',
+        bron: 'Erasmus MC',
+        documenttype: 'Fertiliteitsrapport',
+        onderzoekstype: 'Fertiliteitsrapport',
+        pogingId: 'traject-1',
+        afspraakId: undefined,
+        onzekerheid: 'laag',
+        origineleWaarden: {
+          datum: '2026-05-24',
+          bron: 'Erasmus MC',
+          documenttype: 'Fertiliteitsrapport',
+          pogingId: 'traject-1',
+          afspraakId: undefined,
+        },
+        overschrevenDoorGebruiker: false,
+      },
       extractieBronnen: [
         'bronbestand',
         'formulierdatum',
@@ -440,6 +457,96 @@ describe('dossier', () => {
         'ziekenhuisdocumenttype-herkenning',
       ],
     });
+  });
+
+  it('normaliseert labmetadata met originele waarden, poging, afspraak en onzekerheid', () => {
+    const document = maakDossierDocument('doc-normalisatie', {
+      datum: '2026-05-01',
+      titel: 'AMH labcontrole',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: '2026-05-03-erasmus-amh-lab.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      afspraakId: 'afspraak-1',
+      trajectId: 'poging-1',
+      notitie: 'Controle bij Erasmus MC',
+    });
+
+    expect(document.metadata.normalisatie).toEqual({
+      datum: '2026-05-03',
+      bron: 'Erasmus MC',
+      documenttype: 'Labuitslag',
+      onderzoekstype: 'Labwaarde',
+      pogingId: 'poging-1',
+      afspraakId: 'afspraak-1',
+      onzekerheid: 'laag',
+      origineleWaarden: {
+        datum: '2026-05-03',
+        bron: 'Erasmus MC',
+        documenttype: 'Labuitslag',
+        pogingId: 'poging-1',
+        afspraakId: 'afspraak-1',
+      },
+      overschrevenDoorGebruiker: false,
+    });
+    expect(bouwDossierIndex([document])[0]).toMatchObject({
+      datum: '2026-05-03',
+      bron: 'Erasmus MC',
+      trajectId: 'poging-1',
+      afspraakId: 'afspraak-1',
+      onderzoekstype: 'Labwaarde',
+      onzekerheid: 'laag',
+    });
+    expect(bouwDossierIndex([document])[0]?.tags).toEqual(
+      expect.arrayContaining(['Labwaarde', 'Onzekerheid laag', 'Afspraak gekoppeld']),
+    );
+    expect(zoekDossierDocumenten([document], 'labwaarde')[0]?.matches).toContain('tags');
+    expect(zoekDossierDocumenten([document], 'afspraak-1')[0]?.matches).toContain('afspraak');
+  });
+
+  it('laat gebruikers normalisatie overschrijven zonder bronwaarden te verliezen', () => {
+    const document = maakDossierDocument('doc-correctie', {
+      datum: '2026-05-01',
+      titel: 'Onbekend rapport',
+      categorie: 'onderzoek',
+      bestandsNaam: 'rapport-zonder-duidelijke-bron.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      metadataCorrectie: {
+        datum: '2026-05-07',
+        bron: 'Gebruiker: kliniekportaal',
+        documenttype: 'Labuitslag',
+        onderzoekstype: 'Hormoonwaarde',
+        pogingId: 'poging-gecorrigeerd',
+        afspraakId: 'afspraak-gecorrigeerd',
+        onzekerheid: 'laag',
+      },
+    });
+
+    expect(document.metadata.normalisatie).toMatchObject({
+      datum: '2026-05-07',
+      bron: 'Gebruiker: kliniekportaal',
+      documenttype: 'Labuitslag',
+      onderzoekstype: 'Hormoonwaarde',
+      pogingId: 'poging-gecorrigeerd',
+      afspraakId: 'afspraak-gecorrigeerd',
+      onzekerheid: 'laag',
+      overschrevenDoorGebruiker: true,
+    });
+    expect(document.metadata.normalisatie?.origineleWaarden).toMatchObject({
+      datum: '2026-05-01',
+      bron: 'rapport-zonder-duidelijke-bron.pdf',
+      documenttype: 'Fertiliteitsrapport',
+    });
+    expect(bouwDossierTijdlijn([document])[0]).toMatchObject({
+      datum: '2026-05-07',
+      documenttype: 'Labuitslag',
+      bron: 'metadata',
+    });
+    expect(bouwDossierIndex([document])[0]?.tags).toContain('Metadata gecorrigeerd');
   });
 
   it('bewaart gespreksverslagen met afspraak- en trajectkoppeling', () => {
@@ -588,10 +695,15 @@ describe('dossier', () => {
         id: 'doc-index',
         datum: '2026-05-01',
         documenttype: 'Labuitslag',
-        bron: '2026-05-01-erasmus-lab.pdf',
+        bron: 'Erasmus MC',
         trajectId: 'traject-1',
+        afspraakId: undefined,
+        onderzoekstype: 'Labwaarde',
+        onzekerheid: 'laag',
         tags: [
           'Labuitslag',
+          'Labwaarde',
+          'Onzekerheid laag',
           'Labrapport',
           'Onderzoek',
           'PDF',
@@ -926,7 +1038,7 @@ describe('dossier', () => {
       { document: match, matches: ['OCR-tekst'] },
     ]);
     expect(zoekDossierDocumenten([match, geenMatch], 'erasmus')).toEqual([
-      { document: match, matches: ['notitie', 'instelling', 'tags'] },
+      { document: match, matches: ['notitie', 'instelling', 'bron', 'tags'] },
     ]);
     expect(
       zoekDossierDocumenten([match, geenMatch], '').map((result) => result.document.id),

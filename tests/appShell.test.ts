@@ -1404,6 +1404,23 @@ describe('app shell', () => {
             documenttype: 'Labuitslag',
             trajectId: 'traject-1',
             bronbestand: 'bloed-lab-uitslag.pdf',
+            normalisatie: {
+              datum: '2026-05-01',
+              bron: 'Erasmus MC',
+              documenttype: 'Labuitslag',
+              onderzoekstype: 'Labwaarde',
+              pogingId: 'traject-1',
+              afspraakId: 'afspraak-1',
+              onzekerheid: 'laag',
+              origineleWaarden: {
+                datum: '2026-05-01',
+                bron: 'bloed-lab-uitslag.pdf',
+                documenttype: 'Labuitslag',
+                pogingId: 'traject-1',
+                afspraakId: 'afspraak-1',
+              },
+              overschrevenDoorGebruiker: false,
+            },
             extractieBronnen: [
               'bronbestand',
               'formulierdatum',
@@ -1488,13 +1505,23 @@ describe('app shell', () => {
     expect(html).toContain('geen medisch advies');
     expect(html).toContain('Bloeduitslag mei');
     expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
-    expect(html).toContain('Tags: Labuitslag, Onderzoek, PDF, OCR, Erasmus MC');
+    expect(html).toContain(
+      'Tags: Labuitslag, Labwaarde, Onzekerheid laag, Onderzoek, PDF, OCR, Erasmus MC',
+    );
+    expect(html).toContain('Onderzoekstype: Labwaarde');
+    expect(html).toContain('Onzekerheid: laag');
     expect(html).toContain('bloed-lab-uitslag.pdf');
     expect(html).toContain('Onderzoek');
     expect(html).toContain('Labuitslag');
     expect(html).toContain('Metadata: Datum: 2026-05-01');
+    expect(html).toContain(
+      'Genormaliseerd: Datum: 2026-05-01 · Bron: Erasmus MC · Documenttype: Labuitslag · Onderzoekstype: Labwaarde · Poging: traject-1 · Afspraak: afspraak-1 · Onzekerheid: laag',
+    );
+    expect(html).toContain(
+      'Originele metadatawaarden: datum 2026-05-01 · bron bloed-lab-uitslag.pdf · documenttype Labuitslag',
+    );
     expect(html).toContain('Tijdlijn: 2026-05-01 · Labuitslag · bron: formulierdatum');
-    expect(html).toContain('Zoekmatch: instelling, tags');
+    expect(html).toContain('Zoekmatch: instelling, bron, tags');
     expect(html).toContain('Instelling: Erasmus MC');
     expect(html).toContain('Documenttype: Labuitslag');
     expect(html).toContain('Bronbestand: bloed-lab-uitslag.pdf');
