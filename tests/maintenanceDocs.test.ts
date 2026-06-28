@@ -1741,6 +1741,14 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('bewaakt bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding als vervolgcontracttermcontracttekstcontractcontractcontractcontractcontractcontractcontractcontractcontractcontractcontractcontractcontract', () => {
+    expect(
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR,
+    ).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding',
+    );
+  });
+
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
     expect({
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
