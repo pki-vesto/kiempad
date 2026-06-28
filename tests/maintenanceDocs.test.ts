@@ -737,6 +737,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS,
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsError:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR,
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorContract:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -794,6 +796,8 @@ describe('onderhoudsdocumentatie', () => {
         'runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contractmissingterm contractmissingterm contract',
       ],
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsError:
+        'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contractmissingterm contractmissingterm contract',
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorContract:
         'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contractmissingterm contractmissingterm contract',
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
