@@ -5128,4 +5128,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap governance script, tests, runbook
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G608 — bootstrap governance freshness schema-error docs
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De freshness gate rapporteert onbekende velden nu als `schemaValidation`-fout, maar de runbook bevat nog geen compact schemafoutvoorbeeld voor reviewers.
+- **Desired Outcome:** De runbook toont een gesanitized schemafoutvoorbeeld met alleen gate, status en unknown-field tellers.
+- **User Value:** Reviewers herkennen contractdrift in CI-output zonder scriptdetails of gevoelige inhoud te bekijken.
+- **Acceptance Criteria:** Runbook bevat een compacte schemafout-output; tests bewaken de velden; outputvoorbeeld bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, bootstrap governance script, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

@@ -24,6 +24,29 @@ function buildSourceDiagnostic(missingMarkers) {
   };
 }
 
+function collectUnknownFields(record, allowedFields) {
+  return Object.keys(record).filter((field) => !allowedFields.includes(field));
+}
+
+function buildSchemaFailureReport(report) {
+  const unknownSourceFields = collectUnknownFields(report.sources, contract.sourceFields);
+  const unknownCoverageFields = collectUnknownFields(report.coverage, contract.coverageFields);
+
+  if (unknownSourceFields.length === 0 && unknownCoverageFields.length === 0) {
+    return null;
+  }
+
+  return {
+    status: 'failed',
+    gate: contract.gate,
+    schemaValidation: {
+      status: 'failed',
+      unknownSourceFieldCount: unknownSourceFields.length,
+      unknownCoverageFieldCount: unknownCoverageFields.length,
+    },
+  };
+}
+
 const runbook = readProjectFile(
   process.env.KIEMPAD_BOOTSTRAP_GOVERNANCE_RUNBOOK_PATH ?? 'docs/RUNBOOK.md',
 );
@@ -71,8 +94,18 @@ const report = {
   },
 };
 
-console.log(JSON.stringify(report, null, 2));
+if (process.env.KIEMPAD_BOOTSTRAP_GOVERNANCE_INJECT_UNKNOWN_SOURCE_FIELD === '1') {
+  report.sources.unexpectedSource = buildSourceDiagnostic([]);
+}
 
-if (missing.length > 0) {
+if (process.env.KIEMPAD_BOOTSTRAP_GOVERNANCE_INJECT_UNKNOWN_COVERAGE_FIELD === '1') {
+  report.coverage.unexpectedCoverage = 'ok';
+}
+
+const schemaFailureReport = buildSchemaFailureReport(report);
+
+console.log(JSON.stringify(schemaFailureReport ?? report, null, 2));
+
+if (schemaFailureReport || missing.length > 0) {
   process.exit(1);
 }

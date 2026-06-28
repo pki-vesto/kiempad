@@ -118,6 +118,42 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(output.sources.registryReference).toEqual({ status: 'ok', missingCount: 0 });
     expect(output.sources.ciStep).toEqual({ status: 'missing', missingCount: 2 });
   });
+
+  it('rapporteert onbekende sourcevelden als gesanitized schemafout', async () => {
+    const output = await runGovernanceGateWithUnknownField({
+      KIEMPAD_BOOTSTRAP_GOVERNANCE_INJECT_UNKNOWN_SOURCE_FIELD: '1',
+    });
+
+    expect(output).toEqual({
+      status: 'failed',
+      gate: governanceContract.gate,
+      schemaValidation: {
+        status: 'failed',
+        unknownSourceFieldCount: 1,
+        unknownCoverageFieldCount: 0,
+      },
+    });
+    expect(JSON.stringify(output)).not.toContain('unexpectedSource');
+    expectSanitizedGovernanceOutput(JSON.stringify(output));
+  });
+
+  it('rapporteert onbekende coveragevelden als gesanitized schemafout', async () => {
+    const output = await runGovernanceGateWithUnknownField({
+      KIEMPAD_BOOTSTRAP_GOVERNANCE_INJECT_UNKNOWN_COVERAGE_FIELD: '1',
+    });
+
+    expect(output).toEqual({
+      status: 'failed',
+      gate: governanceContract.gate,
+      schemaValidation: {
+        status: 'failed',
+        unknownSourceFieldCount: 0,
+        unknownCoverageFieldCount: 1,
+      },
+    });
+    expect(JSON.stringify(output)).not.toContain('unexpectedCoverage');
+    expectSanitizedGovernanceOutput(JSON.stringify(output));
+  });
 });
 
 function extractBootstrapGovernanceFreshnessDocsSnapshot(): string {
@@ -137,6 +173,16 @@ type GovernanceGateReport = {
   gate: string;
   sources: Record<string, { status: string; missingCount: number }>;
   coverage: Record<string, string>;
+};
+
+type GovernanceSchemaFailureReport = {
+  status: string;
+  gate: string;
+  schemaValidation: {
+    status: string;
+    unknownSourceFieldCount: number;
+    unknownCoverageFieldCount: number;
+  };
 };
 
 async function runGovernanceGateWithFixture({
@@ -194,4 +240,38 @@ function buildWorkflowFixture({ includeCiStep }: { includeCiStep: boolean }): st
   return includeCiStep
     ? ['Bootstrap governance freshness', 'npm run governance:bootstrap'].join('\n')
     : 'build-test: true';
+}
+
+async function runGovernanceGateWithUnknownField(
+  env: Record<string, string>,
+): Promise<GovernanceSchemaFailureReport> {
+  try {
+    const { stdout } = await execFileAsync('node', ['scripts/bootstrap-governance-freshness.mjs'], {
+      env: {
+        ...process.env,
+        ...env,
+      },
+    });
+    return JSON.parse(stdout) as GovernanceSchemaFailureReport;
+  } catch (error) {
+    const failedRun = error as { stdout?: string };
+    return JSON.parse(failedRun.stdout ?? '{}') as GovernanceSchemaFailureReport;
+  }
+}
+
+function expectSanitizedGovernanceOutput(output: string): void {
+  for (const forbiddenTerm of [
+    'payload',
+    'passphrase',
+    'secret',
+    'token',
+    'bestandsnaam',
+    'filename',
+    'OCR',
+    'base64',
+    'medische',
+    'fertiliteitsnotitie',
+  ]) {
+    expect(output).not.toContain(forbiddenTerm);
+  }
 }
