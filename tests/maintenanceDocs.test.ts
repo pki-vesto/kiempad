@@ -62,6 +62,11 @@ const BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS = [
   'schemafoutvelden',
   'placeholders',
 ] as const;
+const BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS = [
+  'runbookcontexttermset',
+  'redaction guard',
+  'redactioncontext',
+] as const;
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -325,8 +330,16 @@ describe('onderhoudsdocumentatie', () => {
       for (const placeholderTerm of BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS) {
         expect(placeholderReleaseContext).toContain(placeholderTerm);
       }
+      const redactionReleaseContext = extractBootstrapGovernanceReleaseContext(
+        releaseDoc,
+        BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS,
+      );
+      for (const redactionTerm of BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS) {
+        expect(redactionReleaseContext).toContain(redactionTerm);
+      }
       for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
         expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
+        expect(redactionReleaseContext).not.toContain(forbiddenTerm);
       }
     }
   });
@@ -347,6 +360,7 @@ describe('onderhoudsdocumentatie', () => {
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
       placeholders: BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS,
       runbookContext: BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS,
+      redactionContext: BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -356,6 +370,7 @@ describe('onderhoudsdocumentatie', () => {
       ],
       placeholders: ['{gate}', '{unknownCoverageFieldCount}', '{unknownSourceFieldCount}'],
       runbookContext: ['runbook', 'releasecontextbewaking', 'schemafoutvelden', 'placeholders'],
+      redactionContext: ['runbookcontexttermset', 'redaction guard', 'redactioncontext'],
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
