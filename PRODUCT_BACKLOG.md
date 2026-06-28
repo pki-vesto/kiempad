@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 368 |
+| ☑ klaar | 369 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **567** |
+| **Totaal** | **568** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -672,7 +672,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G507 | Fertility Intelligence: dossierupload duplicaatreview op checksum | P0 | F5 | ☐ |
 | G508 | Fertility Intelligence: PDF-pagina preview met encrypted bronkoppeling | P1 | F5 | ☐ |
 | G509 | Fertility Intelligence: OCR-resultaat bronfragment navigatie | P1 | F5 | ☐ |
-| G510 | Fertility Intelligence: ziekenhuisdocument type-taxonomie | P0 | F5 | ☐ |
+| G510 | Fertility Intelligence: ziekenhuisdocument type-taxonomie | P0 | F5 | ☑ |
 | G511 | Fertility Intelligence: fertiliteitsrapport samenvatting als conceptkennis | P1 | F5 | ☐ |
 | G512 | Fertility Intelligence: historische records zoekfilter op kliniek | P1 | F5 | ☐ |
 | G513 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☐ |
@@ -730,12 +730,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G565 | Product Quality & Automation: autonomous issue snapshot freshness gate | P1 | F5 | ☐ |
 | G566 | Central Encrypted Platform: encrypted record migration fixture registry | P1 | F5 | ☐ |
 | G567 | Fertility Intelligence: dossierupload size feedback voor grote bijlagen | P1 | F5 | ☐ |
+| G568 | Fertility Intelligence: ziekenhuisdocument taxonomie reviewcorrectie | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 567** (id's G001 t/m G567, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 568** (id's G001 t/m G568, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G510/G568 Fertility Intelligence taxonomie: dossiermetadata herkent ziekenhuisdocumenttypes zoals portaalexport, verwijsbrief, ontslagbrief, operatieverslag, labrapport, beeldverslag en toestemmingsformulier als feitelijke index- en zoekcontext zonder medische interpretatie; G568 is toegevoegd als opvolgdoel voor reviewcorrectie.
 - G494/G567 centrale attachment size policy: de Node-boundary weigert oversized encrypted attachment/envelope requests nu ook direct op `Content-Length` met `request-body-too-large`, gebruikt één gedeelde standaardlimiet en documenteert de uploadlimiet zonder plaintext backendinhoud; G567 is toegevoegd als opvolgdoel voor gebruikersgerichte dossierupload-size feedback.
 - G499/G566 centrale encrypted schema-governance: recordwrites en snapshots weigeren nu onbekende toekomstige `schemaVersion`-waarden aan de centrale encrypted grens; G566 is toegevoegd als opvolgdoel voor migratiefixtures zodat de actieve doelvloer 100 open doelen houdt.
 - G491-G565 autonome evolution-governance: 75 extra actieve implementatiedoelen toegevoegd, inclusief GitHub-issuevloer van 100 actieve doelen, nieuwe governance-doc en onderhoudstests voor minimaal 100 actieve doelen, 3 actieve epics en 1 toekomstige roadmap-horizon.

@@ -3770,7 +3770,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier taxonomy, tests
 - **ADR Needed:** no
 - **Score:** 127
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G511 — fertiliteitsrapport samenvatting als conceptkennis
 
@@ -4566,6 +4566,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier uploads, central API errors, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G568 — ziekenhuisdocument taxonomie reviewcorrectie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** De nieuwe ziekenhuisdocumenttype-taxonomie is nog automatisch en mist een expliciete reviewcorrectieflow voor gebruikers.
+- **Desired Outcome:** Gebruikers kunnen het herkende ziekenhuisdocumenttype controleren, corrigeren of leeg laten voordat het als gereviewde dossiermetadata gebruikt wordt.
+- **User Value:** Gebruikers houden controle over documentcontext terwijl Kiempad feitelijke ordening biedt zonder medisch advies.
+- **Acceptance Criteria:** UI toont het herkende type als conceptmetadata; gebruiker kan kiezen uit dezelfde taxonomie of onbekend; gecorrigeerde waarde wordt encrypted bewaard en in index/zoekfunctie gebruikt; tests dekken correctie en niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier review, metadata, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open
