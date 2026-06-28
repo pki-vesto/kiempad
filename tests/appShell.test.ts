@@ -257,7 +257,8 @@ describe('app shell', () => {
       'Voeding en supplementen: verzamel vragen voor kliniek, arts of apotheek.',
     );
     expect(html).toContain('Bron: Gedeelde consultvoorbereiding');
-    expect(html).toContain('Kiempad adviseert geen supplement en geen hoeveelheid.');
+    expect(html).toContain('Kiempad adviseert geen supplement, combinatie of hoeveelheid.');
+    expect(html).toContain('Artscheck verplicht voor supplementvragen');
     expect(html).toContain('Geen behandelkeuze of medische interpretatie.');
     expect(html).toContain('Eigen aandachtspunten vastleggen');
     expect(html).toContain('Voeding en supplementen checklijst');
@@ -268,7 +269,7 @@ describe('app shell', () => {
       'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
     );
     expect(html).toContain('Bron: Medicatie- en dossiercontext');
-    expect(html).toContain('Kiempad adviseert geen supplement en geen hoeveelheid.');
+    expect(html).toContain('Kiempad adviseert geen supplement, combinatie of hoeveelheid.');
     expect(html).toContain('Vragenlijst nalopen');
     expect(html).toContain('Kiempad geeft geen medisch advies');
     expect(html).toContain('Volgende afspraak');
