@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G629/G630 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance redactioncontext-failuretekst en het failuretekstcontract samen blijven noemen. G630 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende failuretekstcontract-releasecontext.
 - G628/G629 Central Encrypted Platform: de exacte bootstrap governance redactioncontext-failuretekst staat nu als compact onderhoudstestcontract naast de redactioncontextfixture. G629 is toegevoegd als opvolgdoel voor release-statebewaking van dit failuretekstcontract.
 - G627/G628 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance redactioncontexttermen; de foutmelding blijft beperkt tot technische termnamen. G628 is toegevoegd als opvolgdoel voor een compact contract rond de redactioncontext-failuretekst.
 - G626/G627 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance runbookcontexttermset, redaction guard en redactioncontext samen blijven noemen. G627 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende redactioncontexttermen.

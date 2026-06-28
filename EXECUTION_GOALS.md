@@ -5436,4 +5436,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G630 — bootstrap governance redaction failure release missing-term fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De failuretekstcontract-releasecontext wordt nu positief bewaakt, maar ontbrekende releasecontexttermen hebben nog geen specifieke negatieve fixture.
+- **Desired Outcome:** Maintenance-tests tonen technisch welke failuretekstcontract-releasecontextterm ontbreekt.
+- **User Value:** Reviewers kunnen failuretekstcontract-releasecontextdrift snel herstellen zonder gevoelige inhoud te inspecteren.
+- **Acceptance Criteria:** Negatieve fixture faalt bij ontbrekende failuretekstcontract-releasecontextterm met alleen technische termnamen; bestaande release-state failuretekstcontractguard blijft groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
