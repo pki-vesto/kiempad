@@ -155,6 +155,7 @@ describe('onderhoudsdocumentatie', () => {
       'Snapshotdrift is alleen acceptabel bij een bewuste registrywijziging',
       '`phaseCode`, `envName` of neutrale redactioncategory-labels',
       '`registry -> schema guard -> snapshot -> runbookreview`',
+      'Checklist voor nieuwe bootstrapdiagnostics',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }
@@ -195,6 +196,15 @@ describe('onderhoudsdocumentatie', () => {
     expect(governanceRule).toContain('snapshot');
     expect(governanceRule).toContain('runbookreview');
     expect(governanceRule).toContain('registry -> schema guard -> snapshot -> runbookreview');
+
+    const governanceChecklist = extractBootstrapDiagnosticGovernanceChecklist();
+    expect(governanceChecklist).toContain('- [ ] Registry:');
+    expect(governanceChecklist).toContain('- [ ] Schema guard:');
+    expect(governanceChecklist).toContain('- [ ] Snapshot:');
+    expect(governanceChecklist).toContain('- [ ] Runbookreview:');
+    expect(governanceChecklist).toContain('src/storage/centralBootstrapDiagnostics.ts');
+    expect(governanceChecklist).toContain('diagnosticRegistry');
+    expect(governanceChecklist).toContain('phaseCode-matrix');
     for (const forbiddenTerm of [
       'payload',
       'passphrase',
@@ -208,6 +218,7 @@ describe('onderhoudsdocumentatie', () => {
       'fertiliteitsnotitie',
     ]) {
       expect(governanceRule).not.toContain(forbiddenTerm);
+      expect(governanceChecklist).not.toContain(forbiddenTerm);
     }
   });
 
@@ -1373,6 +1384,18 @@ function extractBootstrapDiagnosticGovernanceRule(): string {
   }
 
   return rule;
+}
+
+function extractBootstrapDiagnosticGovernanceChecklist(): string {
+  const checklist = runbook.match(
+    /Checklist voor nieuwe bootstrapdiagnostics:[\s\S]*?(?=\n- \*\*Back-up restore drill:\*\*)/,
+  )?.[0];
+
+  if (!checklist) {
+    throw new Error('Bootstrap diagnostic governancechecklist ontbreekt in de runbook.');
+  }
+
+  return checklist;
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {

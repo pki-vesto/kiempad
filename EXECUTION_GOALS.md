@@ -5044,4 +5044,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, maintenance docs tests, bootstrap diagnostic governance
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G602 — bootstrap diagnostic governance CI freshness gate
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap diagnostic governance heeft nu registry-, schema-, snapshot-, runbook- en checklistdekking, maar de CI-gate maakt nog niet expliciet zichtbaar wanneer deze governancechecklist is meegenomen in de centrale bootstrapvalidatie.
+- **Desired Outcome:** CI- of maintenance-output benoemt de bootstrap diagnostic governancechecklist als expliciete freshness gate naast de bestaande bootstrap smoke en docsdriftcontroles.
+- **User Value:** Maintainers zien vóór merge dat nieuwe bootstrap diagnostics niet alleen technisch werken, maar ook via de actuele governancechecklist zijn beoordeeld.
+- **Acceptance Criteria:** Een CI- of maintenance-check rapporteert de governancechecklistdekking; tests bewaken de rapportage; output bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** CI, maintenance docs tests, central bootstrap governance
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
