@@ -1,4 +1,9 @@
-import type { CentralAuthSession, CentralEncryptedDatabase } from './centralDatabase';
+import type {
+  CentralAuthSession,
+  CentralEncryptedDatabase,
+  CentralRecordListPage,
+  CentralRecordListPageOptions,
+} from './centralDatabase';
 import { CentralSessionError } from './centralDatabase';
 import { bytesToBase64, randomBytes } from './encoding';
 import type {
@@ -167,6 +172,13 @@ export class CentralEncryptedApiServer {
   ): Promise<EncryptedRecord[]> {
     return this.database.listRecords(await this.sessions.resolve(token), type);
   }
+
+  async listRecordsPage(
+    token: CentralSessionToken,
+    options?: CentralRecordListPageOptions,
+  ): Promise<CentralRecordListPage> {
+    return this.database.listRecordsPage(await this.sessions.resolve(token), options);
+  }
 }
 
 export class CentralEncryptedApiClientDriver implements EncryptedStorageDriver {
@@ -201,6 +213,10 @@ export class CentralEncryptedApiClientDriver implements EncryptedStorageDriver {
 
   async listRecords(type?: StoredRecordType): Promise<EncryptedRecord[]> {
     return this.server.listRecords(this.token, type);
+  }
+
+  async listRecordsPage(options?: CentralRecordListPageOptions): Promise<CentralRecordListPage> {
+    return this.server.listRecordsPage(this.token, options);
   }
 }
 

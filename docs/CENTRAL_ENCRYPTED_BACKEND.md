@@ -208,6 +208,11 @@ fetches doet. Zet deze API niet direct publiek op internet.
   ontbrekende allowlist-configuratie gebruikt de standaard private user.
 - Records worden server-side op owner+record-id genamespaced; een record-id buiten
   de huidige sessie-namespace gedraagt zich als een ontbrekend record en wordt `404`.
+- Recordlijsten blijven owner-scoped. `/records` zonder pagination blijft een array
+  voor bestaande clients; `/records?limit=...&cursor=...` retourneert een page-object
+  met `records` en optioneel `nextCursor`. `type`, `limit` en `cursor` zijn
+  technische metadata; records blijven encrypted envelopes zonder plaintext
+  dossierinhoud.
 - Malformed API-paden, inclusief malformed percent-encoding in path segments, worden
   `400` en bereiken geen database-mutatie.
 - Request bodies moeten `Content-Type: application/json` of een `+json` mediatype

@@ -157,6 +157,9 @@ Alle externe koppelingen zijn **opt-in en uit by default**:
   encrypted database via opaque API-sessietokens en HTTP-style `/records` endpoints.
   Ze zien alleen data waarvoor hun centrale sessie en key kloppen. Een backend ziet
   enkel **versleutelde blobs**; de sleutel verlaat het toestel niet in plaintext.
+  Recordlijsten kunnen per owner en type gepagineerd worden met technische
+  `limit`/`cursor`-metadata; page-responses bevatten alleen encrypted envelopes en
+  een volgende cursor.
 - **Agenda-export:** **ICS**-export/import van afspraken, lokaal gegenereerd.
 - **PDF-export:** lokaal gegenereerde samenvatting voor het consult.
 

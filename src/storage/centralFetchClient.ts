@@ -1,4 +1,5 @@
 import type { CentralSessionToken } from './centralApi';
+import type { CentralRecordListPage, CentralRecordListPageOptions } from './centralDatabase';
 import { CentralAccessDeniedError, CentralSessionError } from './centralDatabase';
 import { CentralHttpBadRequestError } from './centralHttpApi';
 import type {
@@ -87,6 +88,23 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
   async listRecords(type?: StoredRecordType): Promise<EncryptedRecord[]> {
     const path = type ? `/records?type=${encodeURIComponent(type)}` : '/records';
     return (await this.request<EncryptedRecord[]>(path)) ?? [];
+  }
+
+  async listRecordsPage(
+    options: CentralRecordListPageOptions = {},
+  ): Promise<CentralRecordListPage> {
+    const params = new URLSearchParams();
+    if (options.type) params.set('type', options.type);
+    if (options.limit !== undefined) params.set('limit', String(options.limit));
+    if (options.cursor !== undefined) params.set('cursor', options.cursor);
+    const query = params.toString();
+    return (
+      (await this.request<CentralRecordListPage>(
+        query ? `/records?${query}` : '/records?limit=100',
+      )) ?? {
+        records: [],
+      }
+    );
   }
 
   getSessionRenewalStatus(): CentralFetchSessionRenewalStatus {

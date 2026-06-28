@@ -6,6 +6,8 @@ import type {
 import {
   CentralAccessDeniedError,
   CentralDataValidationError,
+  type CentralRecordListPage,
+  type CentralRecordListPageOptions,
   CentralSessionError,
 } from './centralDatabase';
 import type {
@@ -150,6 +152,13 @@ export class CentralEncryptedHttpApi {
     const token = requireToken(request);
 
     if (request.method === 'GET' && segments.length === 1) {
+      const pageOptions = parseRecordPageOptions(searchParams);
+      if (pageOptions) {
+        return {
+          status: 200,
+          body: await this.server.listRecordsPage(token, pageOptions),
+        };
+      }
       return {
         status: 200,
         body: await this.server.listRecords(token, parseRecordType(searchParams)),
@@ -237,6 +246,21 @@ export class CentralHttpApiClientDriver implements EncryptedStorageDriver {
   async listRecords(type?: StoredRecordType): Promise<EncryptedRecord[]> {
     const path = type ? `/records?type=${encodeURIComponent(type)}` : '/records';
     return (await this.request<EncryptedRecord[]>({ method: 'GET', path })).body ?? [];
+  }
+
+  async listRecordsPage(
+    options: CentralRecordListPageOptions = {},
+  ): Promise<CentralRecordListPage> {
+    const params = new URLSearchParams();
+    if (options.type) params.set('type', options.type);
+    if (options.limit !== undefined) params.set('limit', String(options.limit));
+    if (options.cursor !== undefined) params.set('cursor', options.cursor);
+    const query = params.toString();
+    const response = await this.request<CentralRecordListPage>({
+      method: 'GET',
+      path: query ? `/records?${query}` : '/records?limit=100',
+    });
+    return response.body ?? { records: [] };
   }
 
   private async request<T>(
@@ -328,6 +352,21 @@ function parseRecordType(searchParams: URLSearchParams): StoredRecordType | unde
     throw new CentralHttpBadRequestError('Recordtype filter is ongeldig.');
   }
   return type as StoredRecordType;
+}
+
+function parseRecordPageOptions(
+  searchParams: URLSearchParams,
+): CentralRecordListPageOptions | undefined {
+  if (!searchParams.has('limit') && !searchParams.has('cursor')) return undefined;
+  const type = parseRecordType(searchParams);
+  const limitValue = searchParams.get('limit');
+  const cursor = searchParams.get('cursor') ?? undefined;
+  const limit = limitValue === null || limitValue === '' ? undefined : Number(limitValue);
+  return {
+    type,
+    limit,
+    cursor,
+  };
 }
 
 function extractErrorMessage(body: unknown): string {

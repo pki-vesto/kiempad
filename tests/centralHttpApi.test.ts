@@ -159,6 +159,80 @@ describe('central encrypted HTTP API contract', () => {
     );
   });
 
+  it('pageert HTTP-recordlijsten owner-scoped met technische cursoren', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const ownerToken = await issueToken(api, 'user-peter');
+    const otherToken = await issueToken(api, 'user-partner');
+
+    for (const id of ['http-page-1', 'http-page-2', 'http-page-3']) {
+      await api.handle({
+        method: 'PUT',
+        path: `/records/${id}`,
+        token: ownerToken,
+        body: createHttpEncryptedRecord(id),
+      });
+    }
+    await api.handle({
+      method: 'PUT',
+      path: '/records/http-other-1',
+      token: otherToken,
+      body: createHttpEncryptedRecord('http-other-1'),
+    });
+
+    await expect(
+      api.handle({ method: 'GET', path: '/records', token: ownerToken }),
+    ).resolves.toEqual(expect.objectContaining({ status: 200, body: expect.any(Array) }));
+    const firstPage = await api.handle({
+      method: 'GET',
+      path: '/records?limit=2',
+      token: ownerToken,
+    });
+    expect(firstPage).toEqual({
+      status: 200,
+      body: {
+        records: [
+          expect.objectContaining({ id: 'http-page-1' }),
+          expect.objectContaining({ id: 'http-page-2' }),
+        ],
+        nextCursor: '2',
+      },
+    });
+    await expect(
+      api.handle({ method: 'GET', path: '/records?limit=2&cursor=2', token: ownerToken }),
+    ).resolves.toMatchObject({
+      status: 200,
+      body: {
+        records: [expect.objectContaining({ id: 'http-page-3' })],
+      },
+    });
+    expect(JSON.stringify(firstPage.body)).not.toContain('http-other-1');
+    expect(JSON.stringify(firstPage.body)).not.toContain('plaintext');
+  });
+
+  it('weigert ongeldige HTTP-recordpaginatie als veilige clientfout', async () => {
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(
+        new MemoryCentralEncryptedDatabase(),
+        new MemoryCentralSessionStore(),
+      ),
+    );
+    const token = await issueToken(api, 'user-peter');
+
+    for (const path of [
+      '/records?limit=0',
+      '/records?limit=101',
+      '/records?limit=abc',
+      '/records?cursor=niet-numeriek',
+    ]) {
+      await expect(api.handle({ method: 'GET', path, token })).resolves.toMatchObject({
+        status: 400,
+      });
+    }
+  });
+
   it('weigert malformed API payloads met veilige client errors', async () => {
     const api = new CentralEncryptedHttpApi(
       new CentralEncryptedApiServer(
@@ -288,3 +362,19 @@ describe('central encrypted HTTP API contract', () => {
     expect(database.unsafeDumpRecordsForTest()).toEqual([]);
   });
 });
+
+function createHttpEncryptedRecord(id: string) {
+  return {
+    id,
+    type: 'traject',
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt: `2026-06-25T08:00:${id.match(/\d+$/)?.[0]?.padStart(2, '0') ?? '00'}.000Z`,
+    schemaVersion: 1,
+    payload: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `encrypted-iv-${id}`,
+      ciphertext: `encrypted-ciphertext-${id}`,
+    },
+  };
+}

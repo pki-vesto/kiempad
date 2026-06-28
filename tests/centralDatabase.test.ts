@@ -146,6 +146,62 @@ describe('central encrypted database architecture', () => {
     expect(database.unsafeDumpRecordsForTest()).toHaveLength(2);
   });
 
+  it('pageert centrale recordlijsten owner-scoped zonder plaintext payloads te lekken', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    for (const record of [
+      createEncryptedRecord('owner-1'),
+      createEncryptedRecord('owner-2'),
+      createEncryptedRecord('owner-3'),
+    ]) {
+      await database.putRecord(userA, record);
+    }
+    await database.putRecord(userB, createEncryptedRecord('other-1'));
+
+    const firstPage = await database.listRecordsPage(userA, { limit: 2 });
+    expect(firstPage).toEqual({
+      records: [
+        expect.objectContaining({ id: 'owner-1' }),
+        expect.objectContaining({ id: 'owner-2' }),
+      ],
+      nextCursor: '2',
+    });
+    const secondPage = await database.listRecordsPage(userA, {
+      limit: 2,
+      cursor: firstPage.nextCursor,
+    });
+    expect(secondPage).toEqual({
+      records: [expect.objectContaining({ id: 'owner-3' })],
+      nextCursor: undefined,
+    });
+    await expect(database.listRecordsPage(userA, { limit: 2, cursor: '99' })).resolves.toEqual({
+      records: [],
+      nextCursor: undefined,
+    });
+    await expect(database.listRecordsPage(userB, { limit: 2 })).resolves.toEqual({
+      records: [expect.objectContaining({ id: 'other-1' })],
+      nextCursor: undefined,
+    });
+    expect(JSON.stringify(firstPage)).not.toContain('other-1');
+    expect(JSON.stringify(firstPage)).not.toContain('plaintext');
+  });
+
+  it('weigert ongeldige centrale recordpaginatie zonder records vrij te geven', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    await database.putRecord(userA, createEncryptedRecord('owner-1'));
+
+    for (const options of [
+      { limit: 0 },
+      { limit: 101 },
+      { limit: 1.5 },
+      { cursor: 'niet-numeriek' },
+      { cursor: '-1' },
+    ]) {
+      await expect(database.listRecordsPage(userA, options)).rejects.toBeInstanceOf(
+        CentralDataValidationError,
+      );
+    }
+  });
+
   it('faalt veilig bij verkeerde sleutel, vergrendelde sessie en verlopen centrale sessie', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const driver = new CentralUserStorageDriver(database, userA);

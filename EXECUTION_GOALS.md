@@ -3518,7 +3518,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, record repository, tests
 - **ADR Needed:** no
 - **Score:** 121
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G493 — encrypted attachment envelope contract
 
@@ -4790,6 +4790,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** App shell, central fetch client, storage bootstrap, tests
+- **ADR Needed:** no
+- **Score:** 113
+- **Status:** ☐ open
+
+### G584 — paginated record load status UI
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale API kan recordlijsten owner-scoped pagineren, maar de app-shell toont nog geen laadstatus, lege page-state of vervolgcursor voor grote centrale datasets.
+- **Desired Outcome:** Centrale recordloads kunnen in de UI of bootstraplaag als pagina's worden opgehaald met duidelijke loading/empty/error states zonder plaintext recordinhoud te tonen.
+- **User Value:** Gebruikers met grotere centrale datasets krijgen voorspelbare multi-device performance en begrijpen wanneer er meer encrypted records worden geladen.
+- **Acceptance Criteria:** Storage/bootstraplaag kan paginated loads itereren met cursor; UI of statusmodel toont laden, lege pagina en foutstatus generiek; tests dekken meerdere pagina's, lege page en fout zonder passphrase, token, secrets of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Central fetch client, app shell, storage bootstrap, tests
 - **ADR Needed:** no
 - **Score:** 113
 - **Status:** ☐ open
