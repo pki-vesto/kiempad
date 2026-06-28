@@ -339,6 +339,21 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
+    expect({
+      schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
+      placeholders: BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS,
+    }).toEqual({
+      schemaError: [
+        'ciAnnotation',
+        'schemaValidation',
+        'unknownSourceFieldCount',
+        'unknownCoverageFieldCount',
+      ],
+      placeholders: ['{gate}', '{unknownCoverageFieldCount}', '{unknownSourceFieldCount}'],
+    });
+  });
+
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
     const backlogGoals = parseBacklogGoalRows();
     const executionGoalSections = parseExecutionGoalSections();
