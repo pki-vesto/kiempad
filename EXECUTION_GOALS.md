@@ -4484,7 +4484,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, backlog health
 - **ADR Needed:** no
 - **Score:** 124
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G562 — goal score top-priority snapshot
 
@@ -4764,4 +4764,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, dossier UI, encrypted storage, tests
 - **ADR Needed:** no
 - **Score:** 108
+- **Status:** ☐ open
+
+### G582 — active goal floor CI gate
+
+- **Epic:** Product Quality & Automation
+- **Problem:** De actieve-doelenvloer kan nu lokaal reproduceerbaar worden gecontroleerd, maar de CI-gate voert de expliciete `--minimum-open-goals 100` variant nog niet apart uit.
+- **Desired Outcome:** CI draait een dedicated active-goal floor check met verse catalogusinput en duidelijke foutmelding wanneer open doelen, execution-goals of GitHub-issuepariteit onder de vloer zakken.
+- **User Value:** Maintainers merken goal-floor drift al in PR-checks, niet pas tijdens handmatige autonome audits.
+- **Acceptance Criteria:** CI of npm-script voert `backlog:health -- --minimum-open-goals 100` reproduceerbaar uit; test dekt het script of workflowcommando; documentatie beschrijft wanneer de gate faalt; gate gebruikt geen issue bodies, secrets of medische payloads; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** CI, backlog health, maintenance tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

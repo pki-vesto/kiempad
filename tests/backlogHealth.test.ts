@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
+  ACTIVE_GOAL_FLOOR_MINIMUM,
   buildActiveGoalDriftFindings,
+  buildActiveGoalFloorValidationCommand,
   buildBacklogHealthReport,
   buildIssueSnapshotCommand,
   buildIssueSnapshotValidationCommand,
@@ -133,6 +135,13 @@ describe('backlog health', () => {
     expect(ISSUE_SNAPSHOT_FRESHNESS_COMMAND).toBe('stat -c %y /tmp/kiempad-issues.json');
     expect(ISSUE_SNAPSHOT_EXAMPLE_LIMIT).toBe(500);
     expect(ISSUE_SNAPSHOT_LIMIT).toBe(200);
+    expect(ACTIVE_GOAL_FLOOR_MINIMUM).toBe(100);
+    expect(buildActiveGoalFloorValidationCommand()).toBe(
+      'npm run backlog:health -- --minimum-open-goals 100',
+    );
+    expect(buildActiveGoalFloorValidationCommand(125)).toBe(
+      'npm run backlog:health -- --minimum-open-goals 125',
+    );
     expect(buildIssueSnapshotValidationCommand(500)).toBe(
       'npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500',
     );
@@ -205,6 +214,28 @@ describe('backlog health', () => {
         findings: [],
       }),
     ).toContain('Issue snapshot hoger-limiet voorbeeld');
+    expect(
+      formatBacklogHealthMarkdown({
+        summary: {
+          backlogGoals: 1,
+          executionGoals: 1,
+          openBacklogGoals: 1,
+          findings: 0,
+        },
+        findings: [],
+      }),
+    ).toContain('Active goal floor: valideer de autonome vloer expliciet');
+    expect(
+      formatBacklogHealthMarkdown({
+        summary: {
+          backlogGoals: 1,
+          executionGoals: 1,
+          openBacklogGoals: 1,
+          findings: 0,
+        },
+        findings: [],
+      }),
+    ).toContain('npm run backlog:health -- --minimum-open-goals 100');
     expect(
       formatBacklogHealthMarkdown({
         summary: {
@@ -619,6 +650,87 @@ describe('backlog health', () => {
           'Open goal staat in EXECUTION_GOALS.md maar ontbreekt als open goal in PRODUCT_BACKLOG.md.',
       },
     ]);
+  });
+
+  it('bewaakt de actieve-doelenvloer met reproduceerbare fixturecases', () => {
+    const healthyReport = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244', 'G245', 'G246']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244', 'G245', 'G246']),
+      activeGoalMinimum: 3,
+    });
+    expect(healthyReport.findings).toEqual([]);
+    expect(formatBacklogHealthMarkdown(healthyReport)).toContain(
+      buildActiveGoalFloorValidationCommand(),
+    );
+
+    const belowMinimumReport = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244', 'G245']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244', 'G245']),
+      activeGoalMinimum: 3,
+    });
+    expect(belowMinimumReport.findings).toEqual([
+      {
+        type: 'active-goal-minimum',
+        id: 'ACTIVE-GOALS',
+        detail: 'Active backlog heeft 2 open doelen; minimaal 3 vereist.',
+      },
+    ]);
+
+    const missingExecutionReport = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244', 'G245']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244']),
+      activeGoalMinimum: 2,
+    });
+    expect(missingExecutionReport.findings).toEqual(
+      expect.arrayContaining([
+        {
+          type: 'missing-definition',
+          id: 'G245',
+          detail: 'Goal staat in PRODUCT_BACKLOG.md maar mist in EXECUTION_GOALS.md.',
+        },
+        {
+          type: 'active-goal-missing-execution',
+          id: 'G245',
+          detail:
+            'Open goal staat in PRODUCT_BACKLOG.md maar ontbreekt als open goal in EXECUTION_GOALS.md.',
+        },
+      ]),
+    );
+
+    const extraExecutionReport = buildBacklogHealthReport({
+      backlogMarkdown: buildBacklogFixture(['G244']),
+      executionGoalsMarkdown: buildExecutionFixture(['G244', 'G245']),
+      activeGoalMinimum: 1,
+    });
+    expect(extraExecutionReport.findings).toEqual(
+      expect.arrayContaining([
+        {
+          type: 'missing-definition',
+          id: 'G245',
+          detail: 'Goal staat in EXECUTION_GOALS.md maar mist in PRODUCT_BACKLOG.md.',
+        },
+        {
+          type: 'active-goal-extra-execution',
+          id: 'G245',
+          detail:
+            'Open goal staat in EXECUTION_GOALS.md maar ontbreekt als open goal in PRODUCT_BACKLOG.md.',
+        },
+      ]),
+    );
+
+    for (const report of [
+      healthyReport,
+      belowMinimumReport,
+      missingExecutionReport,
+      extraExecutionReport,
+    ]) {
+      const serialized = JSON.stringify(report);
+      expect(serialized).not.toContain('body');
+      expect(serialized).not.toContain('token');
+      expect(serialized).not.toContain('diagnose');
+      expect(serialized).not.toContain('dosering');
+      expect(serialized).not.toContain('behandelkeuzeadvies');
+    }
   });
 
   it('ondersteunt een expliciete minimum-open-goals CLI-drempel zonder defaultvloer', () => {

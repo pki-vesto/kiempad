@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G561/G582 Product Quality & Automation: backlog-health publiceert nu reproduceerbare active-goal-floor commandoguidance met `--minimum-open-goals 100`, governance-docs beschrijven de lokale en GitHub-snapshotvariant en tests dekken gezonde, ondergrens-, missende- en extra-execution fixtures zonder issue bodies, secrets of medische payloads. G582 is toegevoegd als opvolgdoel voor een CI-gate op deze floor-check.
 - G471/G581 Fertility Intelligence imaging: beeldmetadata bewaart nu expliciete beeldsoort, poging-id, EXIF-isolatiestatus en reviewstatus naast bron, afspraak en traject; repository, tijdlijnkoppeling en UI gebruiken het schema zonder locked previews te lekken. G581 is toegevoegd als opvolgdoel voor een imaging-metadata reviewcorrectieflow.
 - G469/G580 Fertility Intelligence: historische dossierrecords leveren nu concept-tijdlijnitems met bron, datumbron, confidence, reviewstatus en expliciet datumconflict in de fertility timeline. G580 is toegevoegd als opvolgdoel voor reviewacties op historische tijdlijnitems.
 - G468/G579 Fertility Intelligence: dossierdocumenten bewaren nu genormaliseerde metadata voor datum, bron, documenttype, onderzoekstype, poging, afspraak en onzekerheid met originele waarden en gebruikersoverschrijving; index, zoekvelden en dossier-UI gebruiken deze normalisatie. G579 is toegevoegd als opvolgdoel voor een metadata-correctieformulier.

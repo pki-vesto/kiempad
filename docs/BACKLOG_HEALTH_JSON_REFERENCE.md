@@ -5,6 +5,10 @@ backlog- en issue-driftchecks. Gebruik dit alleen met snapshots die zijn gemaakt
 `number,title,state,url`; issue bodies, tokens en snapshotbestanden horen niet in de
 repo.
 
+Gebruik voor de autonome actieve-doelenvloer expliciet
+`npm run backlog:health -- --minimum-open-goals 100`; zonder die vlag blijft de
+standaardcheck gericht op drift en statusconsistentie.
+
 ## Issue Snapshot
 
 Wanneer `--issues-json /tmp/kiempad-issues.json` is meegegeven, bevat het rapport:

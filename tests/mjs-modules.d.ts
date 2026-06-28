@@ -1,9 +1,11 @@
 declare module '*.mjs' {
+  export const ACTIVE_GOAL_FLOOR_MINIMUM: number;
   export const ISSUE_SNAPSHOT_CLEANUP_COMMAND: string;
   export const ISSUE_SNAPSHOT_COMMAND: string;
   export const ISSUE_SNAPSHOT_EXAMPLE_LIMIT: number;
   export const ISSUE_SNAPSHOT_FRESHNESS_COMMAND: string;
   export const ISSUE_SNAPSHOT_LIMIT: number;
+  export function buildActiveGoalFloorValidationCommand(minimum?: number): string;
   export function buildIssueSnapshotCommand(limit?: number): string;
   export function buildIssueSnapshotValidationCommand(limit?: number): string;
   export function parseBacklog(markdown: string): {
