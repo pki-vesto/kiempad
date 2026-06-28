@@ -5338,4 +5338,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G623 — bootstrap governance releasecontext runbook release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook benoemt nu releasecontextbewaking voor schemafoutvelden en placeholders, maar changelog en current-state worden nog niet apart bewaakt op deze runbookcontext.
+- **Desired Outcome:** Maintenance-tests koppelen de runbookzin over releasecontextbewaking aan CHANGELOG/CURRENT_STATE.
+- **User Value:** Reviewers zien runbookcontextwijzigingen ook terug in release-state zonder handmatige vergelijking.
+- **Acceptance Criteria:** Maintenance-test bewaakt release-stateverwijzing naar de runbookcontext; bestaande runbook- en releasecontextguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
