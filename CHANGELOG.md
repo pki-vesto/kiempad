@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G633/G634 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance missing-term contractreleasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G634 is toegevoegd als opvolgdoel voor een compact contract rond deze missing-term contractreleasecontextmelding.
 - G632/G633 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance failuretekstcontract-releasecontext en het missing-term contract samen blijven noemen. G633 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende missing-term contractreleasecontext.
 - G631/G632 Central Encrypted Platform: de exacte bootstrap governance failuretekstcontract-releasecontext missing-term melding staat nu als compact onderhoudstestcontract naast de negatieve fixture. G632 is toegevoegd als opvolgdoel voor release-statebewaking van dit missing-term contract.
 - G630/G631 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance failuretekstcontract-releasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G631 is toegevoegd als opvolgdoel voor een compact contract rond deze failuretekstcontract-missing-term melding.
