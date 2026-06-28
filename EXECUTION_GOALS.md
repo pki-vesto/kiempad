@@ -5324,4 +5324,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G622 — bootstrap governance releasecontext term runbook reference
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De releasecontext-termsets zijn nu als testcontract bewaakt, maar de runbook verwijst nog niet naar deze releasecontextbewaking.
+- **Desired Outcome:** De runbook benoemt dat releasecontext voor schemafoutvelden en placeholders door maintenance-tests wordt bewaakt.
+- **User Value:** Reviewers weten waar releasecontextdrift wordt gecontroleerd zonder de testfile te openen.
+- **Acceptance Criteria:** Runbook benoemt releasecontextbewaking voor schemafoutvelden en placeholders; maintenance-test bewaakt deze runbookzin; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
