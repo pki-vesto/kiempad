@@ -26,6 +26,12 @@ describe('consultVerslag', () => {
       tekst: 'Besproken wat de volgende stap wordt.',
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
+      importMetadata: {
+        bron: 'tekstveld',
+        reviewStatus: 'concept',
+        bronLabel: 'Tekstveld consultnotitie',
+        aangemaaktOp: '2026-06-12T10:00:00.000Z',
+      },
     });
     expect(verslag.samenvatting).toMatchObject({
       status: 'concept',

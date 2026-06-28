@@ -273,6 +273,12 @@ export interface ConsultVerslag {
   afspraakId?: string;
   trajectId?: string;
   notitie?: string;
+  importMetadata?: {
+    bron: 'tekstveld' | 'bestand';
+    reviewStatus: 'concept' | 'gereviewd';
+    bronLabel: string;
+    aangemaaktOp: IsoDate;
+  };
   samenvatting?: {
     status: 'concept';
     methode: 'lokale_tekstheuristiek';

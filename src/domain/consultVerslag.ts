@@ -83,6 +83,14 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
     notitie: notitie || undefined,
+    importMetadata: {
+      bron: tekst ? 'tekstveld' : 'bestand',
+      reviewStatus: 'concept',
+      bronLabel: tekst
+        ? 'Tekstveld consultnotitie'
+        : `Bestand: ${bestandsNaam || 'bestand zonder naam'}`,
+      aangemaaktOp: uploadedAt,
+    },
     samenvatting: maakConsultSamenvatting({
       titel,
       tekst: tekst || undefined,
