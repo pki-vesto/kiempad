@@ -5114,4 +5114,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap governance script, tests, runbook
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G607 — bootstrap governance freshness unknown-field guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap governance freshness gate heeft nu een gedeeld veldcontract, maar onbekende extra velden in output of docsnapshot worden nog niet apart als schemafout gerapporteerd.
+- **Desired Outcome:** Tests en/of gate-validatie maken onbekende gate-, source- of coveragevelden expliciet zichtbaar als technische schemafout.
+- **User Value:** Maintainers merken outputdrift direct op voordat CI- of runbookconsumenten onverwachte velden gaan vertrouwen.
+- **Acceptance Criteria:** Test fixture met onbekend source- of coverageveld faalt; foutstatus blijft gesanitized en technisch; docs/backlog verwijzen naar dit doel; output bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance script, tests, runbook
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

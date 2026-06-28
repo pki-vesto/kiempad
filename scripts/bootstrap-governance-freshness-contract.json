@@ -1,0 +1,17 @@
+{
+  "gate": "bootstrap-governance-freshness",
+  "sourceFields": ["runbookChecklist", "registryReference", "ciStep"],
+  "coverageFields": ["registry", "schemaGuard", "snapshot", "runbookReview", "ciStep"],
+  "runbookChecklistMarkers": [
+    "- [ ] Registry:",
+    "- [ ] Schema guard:",
+    "- [ ] Snapshot:",
+    "- [ ] Runbookreview:"
+  ],
+  "registryReferenceMarkers": [
+    "src/storage/centralBootstrapDiagnostics.ts",
+    "diagnosticRegistry",
+    "phaseCode-matrix"
+  ],
+  "workflowMarkers": ["Bootstrap governance freshness", "npm run governance:bootstrap"]
+}

@@ -35,6 +35,7 @@ import backlog from '../PRODUCT_BACKLOG.md?raw';
 import readme from '../README.md?raw';
 import roadmap from '../ROADMAP.md?raw';
 import security from '../SECURITY.md?raw';
+import governanceContract from '../scripts/bootstrap-governance-freshness-contract.json';
 import { DISCLAIMER } from '../src/appShell';
 import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiagnostics';
 import vision from '../VISION.md?raw';
@@ -226,27 +227,18 @@ describe('onderhoudsdocumentatie', () => {
     }
 
     const freshnessSnapshot = extractBootstrapGovernanceFreshnessSnapshot();
-    expect(freshnessSnapshot.gate).toBe('bootstrap-governance-freshness');
-    expect(Object.keys(freshnessSnapshot.sources).sort()).toEqual([
-      'ciStep',
-      'registryReference',
-      'runbookChecklist',
-    ]);
-    expect(Object.keys(freshnessSnapshot.coverage).sort()).toEqual([
-      'ciStep',
-      'registry',
-      'runbookReview',
-      'schemaGuard',
-      'snapshot',
-    ]);
+    expect(freshnessSnapshot.gate).toBe(governanceContract.gate);
+    expect(Object.keys(freshnessSnapshot.sources)).toEqual(governanceContract.sourceFields);
+    expect(Object.keys(freshnessSnapshot.coverage)).toEqual(governanceContract.coverageFields);
     for (const releaseDoc of [changelog, currentState]) {
       expect(releaseDoc).toContain(freshnessSnapshot.gate);
-      expect(releaseDoc).toContain('runbookChecklist');
-      expect(releaseDoc).toContain('registryReference');
-      expect(releaseDoc).toContain('ciStep');
+      for (const sourceField of governanceContract.sourceFields) {
+        expect(releaseDoc).toContain(sourceField);
+      }
       expect(releaseDoc).toContain('coverage');
-      expect(releaseDoc).toContain('schemaGuard');
-      expect(releaseDoc).toContain('runbookReview');
+      for (const coverageField of governanceContract.coverageFields) {
+        expect(releaseDoc).toContain(coverageField);
+      }
     }
   });
 
