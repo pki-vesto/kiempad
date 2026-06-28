@@ -4148,7 +4148,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge graph, policy tests
 - **ADR Needed:** no
 - **Score:** 127
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G538 — contextuele inzichten als vragen voor arts
 
@@ -4636,6 +4636,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Embryo dossier, dossier UI, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G573 — graph payload leak regression fixtures
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** De knowledge graph privacy boundary heeft nu een sentinel-test, maar mist herbruikbare fixtures die toekomstige payloadvelden automatisch meenemen.
+- **Desired Outcome:** Maintainers kunnen nieuwe graph-inputvelden toevoegen met een centrale payload-leak fixture die raw dossier-, OCR-, consult-, research- en aanbevelingsinhoud blijft uitsluiten.
+- **User Value:** Gebruikers krijgen sterkere privacygaranties wanneer het kennisnetwerk groeit met nieuwe recordtypen.
+- **Acceptance Criteria:** Centrale privacyfixture bevat sentinels voor alle payloaddragende recordtypen; graph, voorstellen, inzichten, trajectweergave en export worden tegen dezelfde sentinelset gecontroleerd; test faalt zichtbaar bij nieuwe raw payloadvelden zonder allowlist; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge graph, privacy tests, fixtures
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open
