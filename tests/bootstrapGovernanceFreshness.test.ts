@@ -28,6 +28,16 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(governanceScriptRaw).toContain('ciAnnotation');
   });
 
+  it('bewaakt verplichte placeholders in het schemafout-annotatietemplate', () => {
+    const placeholders = extractTemplatePlaceholders(
+      governanceContract.schemaFailureAnnotationTemplate,
+    );
+
+    expect(placeholders).toEqual(['gate', 'unknownCoverageFieldCount', 'unknownSourceFieldCount']);
+    expect(governanceContract.schemaFailureAnnotationTemplate).toContain('schemaValidation');
+    expectSanitizedGovernanceOutput(governanceContract.schemaFailureAnnotationTemplate);
+  });
+
   it('rapporteert checklistdekking met gesanitized technische output', async () => {
     const { stdout, stderr } = await execFileAsync('node', [
       'scripts/bootstrap-governance-freshness.mjs',
@@ -234,6 +244,17 @@ function buildSchemaFailureAnnotationFixture({
     .replace('{gate}', governanceContract.gate)
     .replace('{unknownSourceFieldCount}', String(unknownSourceFieldCount))
     .replace('{unknownCoverageFieldCount}', String(unknownCoverageFieldCount));
+}
+
+function extractTemplatePlaceholders(template: string): string[] {
+  const placeholders: string[] = [];
+  for (const match of template.matchAll(/\{([A-Za-z0-9]+)\}/g)) {
+    if (match[1]) {
+      placeholders.push(match[1]);
+    }
+  }
+
+  return [...new Set(placeholders)].sort();
 }
 
 type GovernanceGateReport = {
