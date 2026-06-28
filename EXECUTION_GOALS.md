@@ -5212,4 +5212,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap governance contract, script, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G614 — bootstrap governance annotation contract docs
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het annotatiecontract staat nu in de gedeelde contractfile, maar de runbook benoemt nog niet dat `ciAnnotation` uit `schemaFailureAnnotationTemplate` wordt afgeleid.
+- **Desired Outcome:** De runbook beschrijft de contractbron voor schemafoutannotaties en wanneer reviewers het template mogen aanpassen.
+- **User Value:** Reviewers weten waar de annotatievorm beheerd wordt en kunnen contractdrift sneller beoordelen.
+- **Acceptance Criteria:** Runbook benoemt `schemaFailureAnnotationTemplate`; maintenance-test bewaakt deze runbookverwijzing; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, maintenance docs tests, bootstrap governance contract
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

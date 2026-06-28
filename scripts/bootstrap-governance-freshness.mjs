@@ -28,6 +28,13 @@ function collectUnknownFields(record, allowedFields) {
   return Object.keys(record).filter((field) => !allowedFields.includes(field));
 }
 
+function buildSchemaFailureAnnotation({ unknownSourceFieldCount, unknownCoverageFieldCount }) {
+  return contract.schemaFailureAnnotationTemplate
+    .replace('{gate}', contract.gate)
+    .replace('{unknownSourceFieldCount}', String(unknownSourceFieldCount))
+    .replace('{unknownCoverageFieldCount}', String(unknownCoverageFieldCount));
+}
+
 function buildSchemaFailureReport(report) {
   const unknownSourceFields = collectUnknownFields(report.sources, contract.sourceFields);
   const unknownCoverageFields = collectUnknownFields(report.coverage, contract.coverageFields);
@@ -39,7 +46,10 @@ function buildSchemaFailureReport(report) {
   return {
     status: 'failed',
     gate: contract.gate,
-    ciAnnotation: `${contract.gate} schemaValidation failed: unknownSourceFieldCount=${unknownSourceFields.length} unknownCoverageFieldCount=${unknownCoverageFields.length}`,
+    ciAnnotation: buildSchemaFailureAnnotation({
+      unknownSourceFieldCount: unknownSourceFields.length,
+      unknownCoverageFieldCount: unknownCoverageFields.length,
+    }),
     schemaValidation: {
       status: 'failed',
       unknownSourceFieldCount: unknownSourceFields.length,

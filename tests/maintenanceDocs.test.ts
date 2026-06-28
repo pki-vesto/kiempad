@@ -240,8 +240,10 @@ describe('onderhoudsdocumentatie', () => {
     expect(schemaErrorSnapshot).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
-      ciAnnotation:
-        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=1',
+      ciAnnotation: buildBootstrapGovernanceSchemaFailureAnnotationFixture({
+        unknownSourceFieldCount: 1,
+        unknownCoverageFieldCount: 1,
+      }),
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 1,
@@ -1542,6 +1544,19 @@ function extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc: string)
   }
 
   return matchingLines.join('\n');
+}
+
+function buildBootstrapGovernanceSchemaFailureAnnotationFixture({
+  unknownSourceFieldCount,
+  unknownCoverageFieldCount,
+}: {
+  unknownSourceFieldCount: number;
+  unknownCoverageFieldCount: number;
+}): string {
+  return governanceContract.schemaFailureAnnotationTemplate
+    .replace('{gate}', governanceContract.gate)
+    .replace('{unknownSourceFieldCount}', String(unknownSourceFieldCount))
+    .replace('{unknownCoverageFieldCount}', String(unknownCoverageFieldCount));
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {

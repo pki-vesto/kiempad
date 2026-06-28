@@ -2,6 +2,7 @@
   "gate": "bootstrap-governance-freshness",
   "sourceFields": ["runbookChecklist", "registryReference", "ciStep"],
   "coverageFields": ["registry", "schemaGuard", "snapshot", "runbookReview", "ciStep"],
+  "schemaFailureAnnotationTemplate": "{gate} schemaValidation failed: unknownSourceFieldCount={unknownSourceFieldCount} unknownCoverageFieldCount={unknownCoverageFieldCount}",
   "runbookChecklistMarkers": [
     "- [ ] Registry:",
     "- [ ] Schema guard:",
