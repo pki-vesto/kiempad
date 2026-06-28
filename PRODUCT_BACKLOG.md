@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 375 |
+| ☑ klaar | 376 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **574** |
+| **Totaal** | **575** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -701,7 +701,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G536 | Fertility Timeline & Knowledge Graph: timeline export met bronlijst | P1 | F5 | ☐ |
 | G537 | Fertility Timeline & Knowledge Graph: knowledge graph privacy boundary test | P0 | F5 | ☑ |
 | G538 | Fertility Timeline & Knowledge Graph: contextuele inzichten als vragen voor arts | P1 | F5 | ☐ |
-| G539 | Research Intelligence: research source allowlist met rationale | P0 | F5 | ☐ |
+| G539 | Research Intelligence: research source allowlist met rationale | P0 | F5 | ☑ |
 | G540 | Research Intelligence: PubMed query preview zonder dossierplaintext | P0 | F5 | ☐ |
 | G541 | Research Intelligence: research item broncitatie parser | P1 | F5 | ☐ |
 | G542 | Research Intelligence: patientvriendelijke samenvatting leesniveau guard | P1 | F5 | ☐ |
@@ -737,12 +737,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G572 | Fertility Intelligence: embryo kwaliteit bronlabel correctieflow | P1 | F5 | ☐ |
 | G573 | Fertility Timeline & Knowledge Graph: graph payload leak regression fixtures | P1 | F5 | ☐ |
 | G574 | Daily Recommendations: supplement artscheck actieflow | P1 | F5 | ☐ |
+| G575 | Research Intelligence: research source allowlist review evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 574** (id's G001 t/m G574, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 575** (id's G001 t/m G575, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

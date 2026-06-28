@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G539/G575 Research Intelligence: researchbronnen hebben nu een expliciete source allowlist met rationale, lokale notitie- en handmatige-reviewstatus in broncache en researchkaartmetadata; G575 is toegevoegd als opvolgdoel voor review-evidence.
 - G489/G574 Daily Recommendations safety: supplementchecklistregels tonen nu een verplicht artscheck-label en worden door een policytest geblokkeerd bij doseringen, interactieclaims of behandelvervanging; G574 is toegevoegd als opvolgdoel voor een supplement-artscheck actieflow.
 - G537/G573 Fertility Timeline & Knowledge Graph privacy: graph-output, relatievoorstellen, inzichten, trajectweergave en consultvoorbereidingsexport hebben nu een sentinel-regressietest die raw dossier-, OCR-, consult-, research- en aanbevelingsinhoud uitsluit; G573 is toegevoegd als opvolgdoel voor gedeelde payload-leak fixtures.
 - G528/G572 Fertility Intelligence embryo-tracking: embryokwaliteitsrecords bewaren en tonen nu bronlabel, datum en reviewstatus in dossierdetails en embryo-dossiers; G572 is toegevoegd als opvolgdoel voor bronlabel-correctieflow.

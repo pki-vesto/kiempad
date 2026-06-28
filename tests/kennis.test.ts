@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  beoordeelResearchBron,
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
   bouwEenvoudigeResearchSamenvattingen,
@@ -64,10 +65,36 @@ describe('kennis domeinregels', () => {
       bron: 'https://voorbeeld.test/embryo-cultuur',
       herkomst: 'lokale_cache',
       toelichting: 'Lokale notitie bij gevonden artikel.',
+      allowlistStatus: 'handmatige_review_nodig',
+      allowlistRationale:
+        'Bron staat niet op de research-source allowlist; gebruik alleen na handmatige controle van herkomst, publicatiedatum en relevantie.',
+    });
+    expect(bronnen.find((bron) => bron.id === 'seed-research-pubmed')).toMatchObject({
+      allowlistStatus: 'toegestaan_met_rationale',
+      allowlistRationale: expect.stringContaining('PubMed'),
     });
     expect(bronnen.find((bron) => bron.id === 'seed-research-pubmed')?.toelichting).toContain(
       'Kiempad haalt niets automatisch op',
     );
+  });
+
+  it('beoordeelt researchbronnen via een expliciete allowlist met rationale', () => {
+    expect(beoordeelResearchBron('https://pubmed.ncbi.nlm.nih.gov/123')).toMatchObject({
+      allowlistStatus: 'toegestaan_met_rationale',
+      allowlistRationale: expect.stringContaining('PubMed'),
+    });
+    expect(beoordeelResearchBron('https://doi.org/10.1000/test')).toMatchObject({
+      allowlistStatus: 'toegestaan_met_rationale',
+      allowlistRationale: expect.stringContaining('DOI'),
+    });
+    expect(beoordeelResearchBron('https://voorbeeld.test/artikel')).toEqual({
+      allowlistStatus: 'handmatige_review_nodig',
+      allowlistRationale:
+        'Bron staat niet op de research-source allowlist; gebruik alleen na handmatige controle van herkomst, publicatiedatum en relevantie.',
+    });
+    expect(beoordeelResearchBron(undefined)).toMatchObject({
+      allowlistStatus: 'lokale_notitie',
+    });
   });
 
   it('zet researchaggregatie pas klaar na expliciete netwerk-opt-in', () => {
@@ -287,12 +314,16 @@ describe('kennis domeinregels', () => {
 
     expect(bouwResearchKaartMetadata(publicatie)).toEqual({
       bron: 'https://voorbeeld.test/embryo-cultuur',
-      bronverificatie: 'Bronverificatie: bron vastgelegd voor handmatige controle',
+      bronverificatie: 'Bronverificatie: handmatige review nodig',
+      bronRationale:
+        'Bron staat niet op de research-source allowlist; gebruik alleen na handmatige controle van herkomst, publicatiedatum en relevantie.',
       publicatieDatum: '2026-05-10',
     });
     expect(bouwResearchKaartMetadata(lokaleNotitie)).toEqual({
       bron: 'Geen bron vastgelegd',
-      bronverificatie: 'Bronverificatie: bron ontbreekt',
+      bronverificatie: 'Bronverificatie: lokale notitie zonder externe bron',
+      bronRationale:
+        'Lokale researchnotitie zonder externe bron; handmatig bruikbaar als persoonlijke leeslijst, niet als geverifieerde publicatiebron.',
       publicatieDatum: 'Publicatiedatum onbekend',
     });
     expect(nietResearchItem).toBeDefined();
