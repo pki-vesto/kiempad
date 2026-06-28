@@ -5100,4 +5100,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G606 — bootstrap governance freshness schema export
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap governance freshness velden worden nu door docs en release-state bewaakt, maar het schema is nog impliciet in testverwachtingen en scriptoutput.
+- **Desired Outcome:** Exporteer een klein gedeeld schema/veldcontract voor de freshness gate, zodat script, docsnapshot en tests dezelfde bron gebruiken.
+- **User Value:** Governance-outputwijzigingen blijven voorspelbaar en minder foutgevoelig wanneer nieuwe velden worden toegevoegd.
+- **Acceptance Criteria:** Script en tests gebruiken een gedeelde lijst voor gate-, source- en coveragevelden; docsnapshot blijft met die lijst verifieerbaar; output bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance script, tests, runbook
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
