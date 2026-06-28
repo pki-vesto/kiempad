@@ -24,6 +24,7 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(governanceScriptRaw).toContain('bootstrap-governance-freshness-contract.json');
     expect(governanceScriptRaw).toContain('contract.sourceFields');
     expect(governanceScriptRaw).toContain('contract.coverageFields');
+    expect(governanceScriptRaw).toContain('ciAnnotation');
   });
 
   it('rapporteert checklistdekking met gesanitized technische output', async () => {
@@ -127,12 +128,18 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(output).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
+      ciAnnotation:
+        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=0',
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 1,
         unknownCoverageFieldCount: 0,
       },
     });
+    expect(output.ciAnnotation).toContain(governanceContract.gate);
+    expect(output.ciAnnotation).toContain('schemaValidation');
+    expect(output.ciAnnotation).toContain('unknownSourceFieldCount=1');
+    expect(output.ciAnnotation).toContain('unknownCoverageFieldCount=0');
     expect(JSON.stringify(output)).not.toContain('unexpectedSource');
     expectSanitizedGovernanceOutput(JSON.stringify(output));
   });
@@ -145,12 +152,18 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(output).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
+      ciAnnotation:
+        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=0 unknownCoverageFieldCount=1',
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 0,
         unknownCoverageFieldCount: 1,
       },
     });
+    expect(output.ciAnnotation).toContain(governanceContract.gate);
+    expect(output.ciAnnotation).toContain('schemaValidation');
+    expect(output.ciAnnotation).toContain('unknownSourceFieldCount=0');
+    expect(output.ciAnnotation).toContain('unknownCoverageFieldCount=1');
     expect(JSON.stringify(output)).not.toContain('unexpectedCoverage');
     expectSanitizedGovernanceOutput(JSON.stringify(output));
   });
@@ -167,6 +180,8 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(docsSnapshot).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
+      ciAnnotation:
+        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=1',
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 1,
@@ -211,6 +226,7 @@ type GovernanceGateReport = {
 type GovernanceSchemaFailureReport = {
   status: string;
   gate: string;
+  ciAnnotation: string;
   schemaValidation: {
     status: string;
     unknownSourceFieldCount: number;

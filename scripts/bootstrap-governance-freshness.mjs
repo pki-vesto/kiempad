@@ -39,6 +39,7 @@ function buildSchemaFailureReport(report) {
   return {
     status: 'failed',
     gate: contract.gate,
+    ciAnnotation: `${contract.gate} schemaValidation failed: unknownSourceFieldCount=${unknownSourceFields.length} unknownCoverageFieldCount=${unknownCoverageFields.length}`,
     schemaValidation: {
       status: 'failed',
       unknownSourceFieldCount: unknownSourceFields.length,
