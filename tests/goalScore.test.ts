@@ -22,6 +22,15 @@ describe('goal scoring', () => {
         },
       }),
     ).toBe(67);
+    expect(
+      scoreGoal({
+        fields: {
+          Priority: 'P0',
+          Complexity: 'M',
+          Epic: 'Fertility Intelligence',
+        },
+      }),
+    ).toBe(120);
   });
 
   it('rangschikt open doelen reproduceerbaar op score en Goal ID', () => {

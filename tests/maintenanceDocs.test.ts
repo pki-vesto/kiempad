@@ -18,6 +18,7 @@ import claudeDesignPrompt from '../docs/CLAUDE_DESIGN_PROMPT.md?raw';
 import cspViolationWorkflow from '../docs/CSP_VIOLATION_WORKFLOW.md?raw';
 import eventLogPrivacy from '../docs/EVENT_LOG_PRIVACY.md?raw';
 import externalAssetAllowlist from '../docs/EXTERNAL_ASSET_ALLOWLIST.md?raw';
+import fertilityIntelligenceStrategy from '../docs/FERTILITY_INTELLIGENCE_STRATEGY.md?raw';
 import goalCompletionAudit from '../docs/GOAL_COMPLETION_AUDIT.md?raw';
 import onboarding from '../docs/ONBOARDING.md?raw';
 import personalFertilityIntelligencePlatform from '../docs/PERSONAL_FERTILITY_INTELLIGENCE_PLATFORM.md?raw';
@@ -172,6 +173,37 @@ describe('onderhoudsdocumentatie', () => {
         expect(section.raw).toContain(`- **${field}:**`);
       }
     }
+  });
+
+  it('houdt de Fertility Intelligence active-goal vloer expliciet gevuld', () => {
+    const executionGoalSections = parseExecutionGoalSections();
+    const openGoals = executionGoalSections.filter((goal) => goal.status === '☐ open');
+    const fertilityDomainEpics = [
+      'Fertility Intelligence',
+      'Research Intelligence',
+      'Daily Recommendations',
+    ];
+    const openFertilityDomainGoals = openGoals.filter((goal) =>
+      fertilityDomainEpics.includes(goal.fields.Epic ?? ''),
+    );
+    const openResearchGoals = openGoals.filter(
+      (goal) => goal.fields.Epic === 'Research Intelligence',
+    );
+    const openDailyRecommendationGoals = openGoals.filter(
+      (goal) => goal.fields.Epic === 'Daily Recommendations',
+    );
+
+    expect(fertilityIntelligenceStrategy).toContain('At least 25 active goals');
+    expect(fertilityIntelligenceStrategy).toContain(
+      'At least 5 active goals related to Research Intelligence',
+    );
+    expect(fertilityIntelligenceStrategy).toContain(
+      'At least 5 active goals related to Daily Recommendations',
+    );
+    expect(backlog).toContain('Strategic Fertility Intelligence Platform');
+    expect(openFertilityDomainGoals.length).toBeGreaterThanOrEqual(25);
+    expect(openResearchGoals.length).toBeGreaterThanOrEqual(5);
+    expect(openDailyRecommendationGoals.length).toBeGreaterThanOrEqual(5);
   });
 
   it('houdt ADR-needed markers expliciet en synchroon met de ADR-backlog', () => {
@@ -998,16 +1030,27 @@ function parseBacklogGoalRows(): Array<{ id: string; status: '☑' | '◐' | '�
     .filter((goal): goal is { id: string; status: '☑' | '◐' | '☐' | '☒' } => Boolean(goal));
 }
 
-function parseExecutionGoalSections(): Array<{ id: string; status: string; raw: string }> {
+function parseExecutionGoalSections(): Array<{
+  id: string;
+  fields: Record<string, string>;
+  status: string;
+  raw: string;
+}> {
   return executionGoals
     .split('\n### ')
     .slice(1)
     .map((section) => {
       const raw = `### ${section}`;
       const id = raw.match(/^### (?<id>G\d+) — .+$/m)?.groups?.id;
+      const fields = Object.fromEntries(
+        [...raw.matchAll(/^- \*\*(?<key>[^:]+):\*\* (?<value>.*)$/gm)].map((match) => [
+          match.groups?.key ?? '',
+          match.groups?.value ?? '',
+        ]),
+      );
       const status = raw.match(/^- \*\*Status:\*\* (?<status>[☑◐☐☒] .+)$/m)?.groups?.status;
       if (!id || !status) throw new Error(`Execution goal mist id of status: ${raw}`);
-      return { id, status, raw };
+      return { id, fields, status, raw };
     });
 }
 
