@@ -3141,3 +3141,353 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☑ klaar
+
+### G466 — historische dossierimport inbox
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Historische onderzoeken en kliniekdocumenten kunnen nog niet als batch-inbox worden verzameld voordat ze worden verwerkt.
+- **Desired Outcome:** Een ontgrendelde dossierinbox accepteert meerdere PDF- en afbeeldingsbestanden, toont veilige bestandsmetadata en bewaart niets plaintext buiten de encrypted dataset.
+- **User Value:** Gebruikers kunnen oude onderzoeken inhalen zonder losse handmatige registratie per document.
+- **Acceptance Criteria:** Dossierinbox ondersteunt meerdere bestanden; per bestand staan type, grootte, bronlabel en importstatus zichtbaar; opslag blijft encrypted in centrale modus en legacy fallback; foutstatussen en verwijderen zijn gedekt door tests; geen OCR-tekst of medische inhoud komt plaintext in backendlogs.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Dossier, encrypted storage, central API, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G467 — OCR-confidence review voor kliniekdocumenten
+
+- **Epic:** Fertility Intelligence
+- **Problem:** OCR-resultaten kunnen onzeker zijn en mogen niet stilzwijgend als feit in het dossier belanden.
+- **Desired Outcome:** OCR-uitvoer krijgt een confidence-status en een reviewflow voordat tekst, datums of labels aan tijdlijn en index worden gekoppeld.
+- **User Value:** Gebruikers zien welke extracties gecontroleerd moeten worden en kunnen fouten herstellen.
+- **Acceptance Criteria:** OCR-resultaten hebben confidence en bronbestand; lage confidence blijft concept; gebruiker kan tekst en metadata corrigeren; timeline/index krijgen alleen gereviewde velden; tests dekken conceptlabel, correctie en geen behandeladvies.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Dossier, OCR adapter, timeline, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G468 — metadata normaliseren voor lab- en onderzoeksrapporten
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Historische rapporten gebruiken verschillende namen, datums en bronnotaties waardoor zoeken en tijdlijnopbouw rommelig worden.
+- **Desired Outcome:** Een normalisatielaag legt datum, kliniek, documenttype, onderzoekstype, poging en onzekerheid eenduidig vast.
+- **User Value:** Gebruikers kunnen documenten terugvinden en begrijpen zonder de originele kliniektaal te verliezen.
+- **Acceptance Criteria:** Metadata-schema bevat datum, bron, documenttype, poging, afspraak en onzekerheid; originele bronwaarde blijft zichtbaar; gebruiker kan normalisatie overschrijven; zoekfilters gebruiken genormaliseerde velden; tests dekken onbekende en conflicterende metadata.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Dossier, domain types, search, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G469 — tijdlijnreconstructie uit historische records
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Oude dossierstukken staan nog los van het fertiliteitstraject en geven geen chronologisch verhaal.
+- **Desired Outcome:** Kiempad kan uit historische records concept-tijdlijnitems maken met bronverwijzing en reviewstatus.
+- **User Value:** Gebruikers kunnen hun volledige traject vanaf oude onderzoeken opbouwen vanuit een scherm.
+- **Acceptance Criteria:** Historische documenten leveren concept-tijdlijnitems; elk item toont bron, datum en confidence; gebruiker kan item bevestigen, wijzigen of verbergen; conflicterende datums blijven zichtbaar; tests dekken sortering en bronkoppeling.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Timeline, dossier, search, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G470 — fertility dossier packet per behandeltraject
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Dossierinformatie kan verspreid raken over documenten, consulten, beelden en embryo-records.
+- **Desired Outcome:** Per traject/poging kan een dossierpakket worden samengesteld met bronnen, samenvattingen en ontbrekende reviewpunten.
+- **User Value:** Gebruikers kunnen voor consultvoorbereiding snel zien wat bij een behandeling hoort.
+- **Acceptance Criteria:** Dossierpakket groepeert documenten, consulten, beelden en embryo-events per traject; ontbrekende metadata wordt als reviewpunt getoond; export/print bevat disclaimer en bronlijst; tests dekken lege en gevulde pakketten.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, trajectory, export, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G471 — ultrasound upload metadata schema
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Echo- en scanbeelden hebben eigen context nodig die niet past in generieke documentmetadata.
+- **Desired Outcome:** Een imaging-metadata schema ondersteunt echo, foto, scan en embryo-afbeelding met datum, bron, traject, poging en type.
+- **User Value:** Gebruikers kunnen beelden veilig bewaren en later op context terugvinden.
+- **Acceptance Criteria:** Schema onderscheidt echo, foto, scan en embryo-afbeelding; metadata koppelt aan traject, poging en afspraak; preview werkt alleen na unlock; EXIF-risico is gedocumenteerd of afgeschermd; tests dekken typekeuze en encrypted opslag.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Imaging, domain types, encrypted storage, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G472 — embryo image classification review
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-afbeeldingen mogen niet automatisch als medisch oordeel worden geclassificeerd.
+- **Desired Outcome:** Beeldclassificatie blijft beschrijvend en vraagt handmatige bevestiging voordat een embryo-koppeling actief wordt.
+- **User Value:** Gebruikers houden controle over beeldlabels en voorkomen verwarring tussen embryo-records.
+- **Acceptance Criteria:** Classificatievoorstel is concept; gebruiker bevestigt of corrigeert beeldtype en embryo-koppeling; UI gebruikt geen kwaliteitsscore of selectieadvies; tests dekken conceptlabel en handmatige correctie.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Imaging, embryo dossier, AI guardrails, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G473 — beeldvergelijking zonder medische interpretatie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Gebruikers willen beelden naast elkaar zien, maar vergelijking mag geen diagnose of beoordeling suggereren.
+- **Desired Outcome:** Een vergelijkingsweergave toont beelden, datums en bronmetadata zonder score, afwijkingslabel of behandeladvies.
+- **User Value:** Gebruikers kunnen veranderingen visueel bespreken met hun kliniek zonder Kiempad als arts te laten optreden.
+- **Acceptance Criteria:** Vergelijkingsweergave ondersteunt twee of meer beelden; toont datum, bron, type en notitie; bevat expliciete geen-interpretatiegrens; er worden geen automatische scores of conclusies getoond; tests dekken lege selectie en meerdere beelden.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Imaging, timeline, disclaimer, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G474 — imaging timeline privacy boundary
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Beeldmomenten op de tijdlijn kunnen gevoelige thumbnails of metadata lekken als de privacygrens onduidelijk is.
+- **Desired Outcome:** Imaging-tijdlijnitems tonen alleen veilige informatie in vergrendelde en ontgrendelde contexten.
+- **User Value:** Gebruikers kunnen de tijdlijn gebruiken zonder gevoelige beelden op ongewenste momenten te tonen.
+- **Acceptance Criteria:** Vergrendelde app toont geen thumbnails of medische bestandsnamen; ontgrendelde tijdlijn toont previews alleen uit encrypted dataset; centrale backend bewaart geen plaintext thumbnails; tests dekken lock-state en centrale modus.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Timeline, imaging, privacy, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G475 — consult transcript import en bronkoppeling
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Gespreksverslagen en consultnotities kunnen nog niet als eigen bronsoort worden beheerd.
+- **Desired Outcome:** Consultuploads krijgen bron, afspraak, traject, poging en auteur/context als metadata.
+- **User Value:** Gebruikers kunnen consultinformatie terugvinden en voorbereiden zonder losse notities.
+- **Acceptance Criteria:** Consultupload accepteert tekst/PDF/afbeelding; metadata koppelt aan afspraak en traject; origineel blijft als bron beschikbaar; importstatus en fouten zijn zichtbaar; tests dekken koppeling en encrypted opslag.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Consults, appointments, dossier, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G476 — actie-extractie uit consulten als taken en vragen
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Actiepunten uit consulten raken makkelijk verspreid over notities, vragen en herinneringen.
+- **Desired Outcome:** Consultanalyse kan concept-acties, conceptvragen en herinneringsvoorstellen maken met bronverwijzing.
+- **User Value:** Gebruikers zien wat ze moeten navragen of voorbereiden zonder alles opnieuw te lezen.
+- **Acceptance Criteria:** Extracties blijven concept tot gebruiker bevestigt; elk actiepunt heeft bronfragment, eigenaar en optionele datum; vragen kunnen naar vragenlijst worden overgezet; tests dekken reviewflow en geen behandeladvies.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Consults, questions, reminders, AI guardrails, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G477 — consultsamenvatting reviewflow zonder behandeladvies
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Automatische consultsamenvattingen kunnen te stellig of adviserend worden als er geen reviewgrens is.
+- **Desired Outcome:** Samenvattingen zijn concept, brongekoppeld en expliciet beperkt tot begrijpelijke weergave van besproken informatie.
+- **User Value:** Gebruikers krijgen overzicht zonder dat Kiempad behandelkeuzes gaat adviseren.
+- **Acceptance Criteria:** Samenvatting toont conceptlabel en bronverwijzing; gebruiker kan aanpassen of verwerpen; policy blokkeert diagnose, dosering en behandelkeuzeadvies; tests dekken verboden formuleringen en opslag als concept.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Consults, AI policy, knowledge, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G478 — embryo grading bronregistratie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryokwaliteit moet worden vastgelegd zoals de kliniek het geeft, zonder eigen interpretatie.
+- **Desired Outcome:** Embryo-records bewaren dag, status, kliniektekst, bron en datum als bronregistratie.
+- **User Value:** Gebruikers kunnen embryo-informatie teruglezen zonder dat Kiempad kansen of keuzes suggereert.
+- **Acceptance Criteria:** Embryo-record bevat kliniekbeoordeling als tekst, bron en datum; UI labelt het als kliniekopgave; geen kansberekening of rangorde wordt getoond; tests dekken opslag, weergave en policygrens.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Embryo dossier, domain types, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G479 — embryo outcome event tracking
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-statussen veranderen door de tijd en moeten als historie in plaats van overschreven eindstaat worden bewaard.
+- **Desired Outcome:** Embryo-events leggen statuswijzigingen, datum, bron en context vast op embryo- en pogingniveau.
+- **User Value:** Gebruikers kunnen terugzien wat er met elk embryo gebeurde tijdens het traject.
+- **Acceptance Criteria:** Embryo heeft eventhistorie met status, datum, bron en notitie; events verschijnen optioneel op de fertility timeline; wijzigen bewaart auditbare updatedAt; tests dekken sortering en trajectkoppeling.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Embryo dossier, timeline, encrypted storage, tests
+- **ADR Needed:** no
+- **Score:** 100
+- **Status:** ☐ open
+
+### G480 — embryovergelijking taalgrens
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryo-overzichten kunnen snel aanvoelen als selectieadvies wanneer records worden vergeleken.
+- **Desired Outcome:** Vergelijking toont feitelijke kliniekvelden naast elkaar zonder ranking, score, kleuradvies of voorkeurstaal.
+- **User Value:** Gebruikers kunnen informatie ordenen voor bespreking met de arts zonder app-advies.
+- **Acceptance Criteria:** Vergelijking toont dag, status, kliniektekst, bron en notitie; sortering is neutraal of gebruikersgestuurd; UI bevat geen beste/slechtste of kanslabels; tests dekken verboden advieswoorden en vergelijking tussen pogingen.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Embryo dossier, UI, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 120
+- **Status:** ☐ open
+
+### G481 — fertility research source registry
+
+- **Epic:** Research Intelligence
+- **Problem:** Researchaggregatie heeft betrouwbare bronregistratie nodig voordat artikelen kunnen worden opgehaald of samengevat.
+- **Desired Outcome:** Een bronregister definieert toegestane wetenschappelijke bronnen, updatefrequentie, opt-in en bronmetadata.
+- **User Value:** Gebruikers zien waar research vandaan komt en kunnen netwerkgebruik bewust toestaan.
+- **Acceptance Criteria:** Bronregister bevat naam, type, URL, updatebeleid en opt-invereiste; netwerkcalls blijven uit zonder expliciete toestemming; bronverwijzing is verplicht per item; tests dekken opt-in gating en bronvalidatie.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Research, AI settings, privacy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G482 — literatuur discovery query builder
+
+- **Epic:** Research Intelligence
+- **Problem:** Relevante literatuur zoeken vraagt reproduceerbare queries in plaats van losse zoektermen.
+- **Desired Outcome:** Kiempad kan gebruikerscontext omzetten naar controleerbare, gede-identificeerde researchqueries.
+- **User Value:** Gebruikers krijgen beter passende literatuur zonder gevoelige dossierdetails te lekken.
+- **Acceptance Criteria:** Querybuilder toont preview voor verzending; gebruikt gede-identificeerde context; gebruiker kan termen aanpassen; query wordt met bron en datum opgeslagen; tests dekken minimalisatie en opt-in.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, AI payload preview, privacy, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G483 — wetenschappelijke en patientvriendelijke samenvattingen
+
+- **Epic:** Research Intelligence
+- **Problem:** Publicaties moeten zowel correct als begrijpelijk worden uitgelegd.
+- **Desired Outcome:** Elk researchitem ondersteunt een wetenschappelijke samenvatting, eenvoudige samenvatting en bronverwijzing.
+- **User Value:** Gebruikers kunnen wetenschappelijke ontwikkelingen begrijpen zonder vaktaal te hoeven ontleden.
+- **Acceptance Criteria:** Researchitem bevat scientificSummary, patientSummary en sourceCitation; patientSummary gebruikt begrijpelijk Nederlands; AI-output is concept en brongekoppeld; tests dekken verplichte velden en disclaimer.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Research, knowledge, AI summaries, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G484 — persoonlijke relevantiescore zonder behandeladvies
+
+- **Epic:** Research Intelligence
+- **Problem:** Persoonlijke relevantie kan waardevol zijn, maar mag geen behandeladvies of kansinschatting worden.
+- **Desired Outcome:** Relevantie wordt uitgelegd als contextmatch met bronnen en onzekerheid, zonder advies of rangorde voor behandeling.
+- **User Value:** Gebruikers zien waarom een publicatie mogelijk relevant is en wat ze met hun arts kunnen bespreken.
+- **Acceptance Criteria:** Relevantie-uitleg noemt gekoppelde contextfactoren en ontbrekende gegevens; bevat artsbespreek-taal; toont geen kans, diagnose of behandelkeuze; tests dekken verboden adviespatronen.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Research, knowledge graph, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G485 — fertiliteitsresearch trend dashboard
+
+- **Epic:** Research Intelligence
+- **Problem:** Losse researchitems geven weinig overzicht over ontwikkelingen in de tijd.
+- **Desired Outcome:** Een trenddashboard groepeert research per onderwerp, publicatiedatum, bron en relevantie-uitleg.
+- **User Value:** Gebruikers kunnen zien welke thema's actueel zijn zonder elk artikel los te openen.
+- **Acceptance Criteria:** Dashboard toont trends per onderwerp en periode; elk trenditem linkt naar bronnen en samenvattingen; update-status en laatste check zijn zichtbaar; tests dekken lege staat, grouping en bronvermelding.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, dashboard, timeline, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G486 — vrouw-dagkaart met bronherleiding
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen voor de vrouw moeten persoonlijk en uitlegbaar zijn zonder medisch advies te worden.
+- **Desired Outcome:** Een dagkaart toont leefstijl-, voeding-, supplement- en cyclusgerelateerde aandachtspunten met bron en artscheck waar nodig.
+- **User Value:** Gebruikers krijgen praktische voorbereiding die aansluit op traject en dossier.
+- **Acceptance Criteria:** Dagkaart gebruikt dossiercontext en cyclus/trajectfase; elke aanbeveling heeft bron of reden; supplementen tonen artscheck; geen dosering of behandelkeuzeadvies; tests dekken bronherleiding en policygrens.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Recommendations, timeline, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G487 — man-dagkaart met bronherleiding
+
+- **Epic:** Daily Recommendations
+- **Problem:** Mannelijke vruchtbaarheidsoptimalisatie moet zichtbaar zijn als eigen dagelijkse stroom, niet als bijzaak.
+- **Desired Outcome:** Een dagkaart voor de man toont leefstijl-, voeding-, supplement- en voorbereidingspunten met bronherleiding.
+- **User Value:** Gebruikers kunnen samen werken aan voorbereiding en context vastleggen.
+- **Acceptance Criteria:** Dagkaart ondersteunt eigenaar man; aanbevelingen hebben bron/reden en datum; supplementen tonen artscheck; geen dosering, diagnose of garantieclaims; tests dekken eigenaarlabel en policygrens.
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** Recommendations, owner labels, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 119
+- **Status:** ☐ open
+
+### G488 — personalisatiefeedback over tijd
+
+- **Epic:** Daily Recommendations
+- **Problem:** Aanbevelingen blijven minder bruikbaar als gebruikers geen feedback kunnen geven op relevantie of haalbaarheid.
+- **Desired Outcome:** Gebruikers kunnen aanbevelingen markeren als nuttig, niet passend, gedaan of bespreken met arts, en die feedback stuurt toekomstige selectie.
+- **User Value:** Aanbevelingen worden praktischer zonder gevoelige of onveilige conclusies te trekken.
+- **Acceptance Criteria:** Feedbackstatus wordt encrypted opgeslagen; toekomstige aanbevelingsselectie kan status meenemen; negatieve feedback verbergt vergelijkbare suggesties niet definitief zonder uitleg; tests dekken feedbackpersistente en explainability.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Recommendations, encrypted storage, personalization, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open
+
+### G489 — supplement boundary en artscheck
+
+- **Epic:** Daily Recommendations
+- **Problem:** Supplementaanbevelingen kunnen snel overgaan in dosering of medisch advies.
+- **Desired Outcome:** Een supplementgrens verplicht artscheck, bronverwijzing en verbiedt dosering, combinaties en vervangend behandeladvies.
+- **User Value:** Gebruikers krijgen veilige gespreksvoorbereiding rond supplementen.
+- **Acceptance Criteria:** Policytests blokkeren doseringen, interactieclaims en behandelvervanging; UI toont artscheck-label; aanbeveling linkt naar bron en persoonlijke reden; bestaande disclaimer blijft zichtbaar.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** Recommendations, AI policy, tests
+- **ADR Needed:** no
+- **Score:** 126
+- **Status:** ☐ open
+
+### G490 — aanbevelingen op fertility timeline
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen staan los van het traject als ze niet in de tijdlijncontext zichtbaar zijn.
+- **Desired Outcome:** Aanbevelingen kunnen als contextitems op de fertility timeline verschijnen met bron, datum en eigenaar.
+- **User Value:** Gebruikers zien welke voorbereiding bij welke fase, afspraak of behandeling hoorde.
+- **Acceptance Criteria:** Timeline toont aanbevelingen als aparte categorie; items bevatten datum, eigenaar, bron en status; gebruiker kan filteren of verbergen; tests dekken sortering, filters en geen medische adviesclaim.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Recommendations, timeline, filters, tests
+- **ADR Needed:** no
+- **Score:** 99
+- **Status:** ☐ open

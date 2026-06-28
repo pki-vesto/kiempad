@@ -16,6 +16,10 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G466-G490 Fertility Intelligence platformgovernance: nieuwe strategiedoc
+  `docs/FERTILITY_INTELLIGENCE_STRATEGY.md`, 25 actieve open doelen in backlog en
+  execution-catalogus, scoreprioriteit voor Fertility/Research/Daily
+  Recommendations en onderhoudstests die de minimale actieve doelvloer bewaken.
 - G148 UI-herstel (sidebar + fasehero): op desktop is de navigatie nu een
   linker zijbalk (rond kiemlogo + verticale nav), zoals het Claude Design-
   prototype; op mobiel blijft de onderbalk. Het Vandaag-scherm toont nu een

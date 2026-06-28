@@ -22,7 +22,8 @@
 
 ## Fasen
 
-`F0` fundament · `F1` MVP · `F2` nice-to-have · `F3` later · `F4` toekomst (zie
+`F0` fundament · `F1` MVP · `F2` nice-to-have · `F3` later · `F4` toekomst ·
+`F5` strategische intelligence-laag (zie
 [`ROADMAP.md`](ROADMAP.md)).
 
 ## Samenvatting per status
@@ -31,9 +32,9 @@
 |---|---|
 | ☑ klaar | 366 |
 | ◐ bezig | 0 |
-| ☐ open | 0 |
+| ☐ open | 25 |
 | ☒ archived | 99 |
-| **Totaal** | **465** |
+| **Totaal** | **490** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -614,11 +615,43 @@ Bron: [`EXECUTION_GOALS.md`](EXECUTION_GOALS.md). G244 levert de nieuwe doelcata
 | G464 | Backlog Health JSON Contract Recovery Artifact Docs Hint Broad Static Fixture Test Placement | P1 | F4 | ☑ |
 | G465 | Backlog Health JSON Contract Recovery Artifact Docs Hint Dynamic Fixture Test Placement | P1 | F4 | ☑ |
 
+## 22. Strategic Fertility Intelligence Platform
+
+Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_STRATEGY.md). Deze strategische domeinlaag houdt minimaal 25 actieve Fertility Intelligence-doelen, minimaal 5 Research Intelligence-doelen en minimaal 5 Daily Recommendations-doelen actief.
+
+| ID | Doel | Prio | Fase | Status |
+|---|---|---|---|---|
+| G466 | Fertility Intelligence: historische dossierimport inbox | P0 | F5 | ☐ |
+| G467 | Fertility Intelligence: OCR-confidence review voor kliniekdocumenten | P0 | F5 | ☐ |
+| G468 | Fertility Intelligence: metadata normaliseren voor lab- en onderzoeksrapporten | P0 | F5 | ☐ |
+| G469 | Fertility Intelligence: tijdlijnreconstructie uit historische records | P0 | F5 | ☐ |
+| G470 | Fertility Intelligence: fertility dossier packet per behandeltraject | P1 | F5 | ☐ |
+| G471 | Fertility Intelligence: ultrasound upload metadata schema | P0 | F5 | ☐ |
+| G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☐ |
+| G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☐ |
+| G474 | Fertility Intelligence: imaging timeline privacy boundary | P0 | F5 | ☐ |
+| G475 | Fertility Intelligence: consult transcript import en bronkoppeling | P0 | F5 | ☐ |
+| G476 | Fertility Intelligence: actie-extractie uit consulten als taken en vragen | P0 | F5 | ☐ |
+| G477 | Fertility Intelligence: consultsamenvatting reviewflow zonder behandeladvies | P0 | F5 | ☐ |
+| G478 | Fertility Intelligence: embryo grading bronregistratie | P0 | F5 | ☐ |
+| G479 | Fertility Intelligence: embryo outcome event tracking | P1 | F5 | ☐ |
+| G480 | Fertility Intelligence: embryovergelijking taalgrens | P0 | F5 | ☐ |
+| G481 | Research Intelligence: fertility research source registry | P0 | F5 | ☐ |
+| G482 | Research Intelligence: literatuur discovery query builder | P1 | F5 | ☐ |
+| G483 | Research Intelligence: wetenschappelijke en patientvriendelijke samenvattingen | P0 | F5 | ☐ |
+| G484 | Research Intelligence: persoonlijke relevantiescore zonder behandeladvies | P0 | F5 | ☐ |
+| G485 | Research Intelligence: fertiliteitsresearch trend dashboard | P1 | F5 | ☐ |
+| G486 | Daily Recommendations: vrouw-dagkaart met bronherleiding | P0 | F5 | ☐ |
+| G487 | Daily Recommendations: man-dagkaart met bronherleiding | P0 | F5 | ☐ |
+| G488 | Daily Recommendations: personalisatiefeedback over tijd | P1 | F5 | ☐ |
+| G489 | Daily Recommendations: supplement boundary en artscheck | P0 | F5 | ☐ |
+| G490 | Daily Recommendations: aanbevelingen op fertility timeline | P1 | F5 | ☐ |
+
 ---
 
 ## Telling
 
-- **Totaal doelen: 465** (id's G001 t/m G465, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 490** (id's G001 t/m G490, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -17,6 +17,9 @@ export const COMPLEXITY_POINTS = {
 };
 
 export const EPIC_POINTS = {
+  'Fertility Intelligence': 12,
+  'Research Intelligence': 11,
+  'Daily Recommendations': 11,
   'Onboarding & Daily Use': 10,
   'Reliability & Operations': 9,
   'Security & DevEx': 9,
