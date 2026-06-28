@@ -67,6 +67,8 @@ const BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS = [
   'redaction guard',
   'redactioncontext',
 ] as const;
+const BOOTSTRAP_GOVERNANCE_REDACTION_CONTEXT_MISSING_TERM_ERROR =
+  'Bootstrap governance releasecontext ontbreekt voor termen: redactioncontext';
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -361,7 +363,10 @@ describe('onderhoudsdocumentatie', () => {
         'G000 Central Encrypted Platform: runbookcontexttermset en redaction guard staan in releasecontext.',
         BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS,
       ),
-    ).toThrow('Bootstrap governance releasecontext ontbreekt voor termen: redactioncontext');
+    ).toThrow(BOOTSTRAP_GOVERNANCE_REDACTION_CONTEXT_MISSING_TERM_ERROR);
+    expect(BOOTSTRAP_GOVERNANCE_REDACTION_CONTEXT_MISSING_TERM_ERROR).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: redactioncontext',
+    );
   });
 
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {

@@ -5422,4 +5422,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G629 — bootstrap governance redaction failure release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De redactioncontext-failuretekst staat nu als compact testcontract, maar changelog en current-state bewaken deze contractcontext nog niet apart.
+- **Desired Outcome:** Maintenance-tests koppelen het redactioncontext-failuretekstcontract aan release-state.
+- **User Value:** Reviewers zien wijzigingen in failuretekstcontracten ook terug in releasecontext.
+- **Acceptance Criteria:** Test bewaakt release-stateverwijzing naar het redactioncontext-failuretekstcontract; bestaande failuretekst- en redactioncontextguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
