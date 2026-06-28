@@ -3476,7 +3476,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 126
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G490 — aanbevelingen op fertility timeline
 
@@ -4650,6 +4650,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Knowledge graph, privacy tests, fixtures
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G574 — supplement artscheck actieflow
+
+- **Epic:** Daily Recommendations
+- **Problem:** Supplementregels tonen nu een verplicht artscheck-label, maar gebruikers kunnen daar nog geen aparte artscheck-actie of consultvraag van maken.
+- **Desired Outcome:** Supplementchecklistregels krijgen een actieflow waarmee gebruikers een arts/apotheekvraag of herinnering kunnen maken zonder dosering, interactieclaim of behandelvervanging.
+- **User Value:** Gebruikers kunnen supplementvragen veilig voorbereiden voor hun kliniek, arts of apotheek.
+- **Acceptance Criteria:** UI biedt een expliciete artscheck-actie voor supplementregels; actie bewaart bron, datum en reviewstatus; gegenereerde vraag bevat geen dosering, interactieclaim of behandelvervanging; tests dekken opslag/weergave en supplement-policygrens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Daily recommendations, vragen, herinneringen, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

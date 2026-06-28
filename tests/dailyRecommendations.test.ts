@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { bouwDagelijksAanbevelingsoverzicht } from '../src/domain/dailyRecommendations';
+import {
+  bouwDagelijksAanbevelingsoverzicht,
+  controleerSupplementBoundary,
+  type DailyRecommendationOverview,
+} from '../src/domain/dailyRecommendations';
 import type { ConsultVerslag, DossierDocument } from '../src/domain/types';
 
 describe('dagelijkse aanbevelingen', () => {
@@ -61,7 +65,11 @@ describe('dagelijkse aanbevelingen', () => {
       {
         label: 'Voeding en supplementen: verzamel vragen voor kliniek, arts of apotheek.',
         bron: 'Gedeelde consultvoorbereiding',
-        disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+        disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+        artscheck: {
+          verplicht: true,
+          label: 'Artscheck verplicht voor supplementvragen',
+        },
       },
       {
         label: 'Voorbereiding: controleer welke praktische punten jullie zelf willen bespreken.',
@@ -89,7 +97,11 @@ describe('dagelijkse aanbevelingen', () => {
         label:
           'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
         bron: 'Medicatie- en dossiercontext',
-        disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+        disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+        artscheck: {
+          verplicht: true,
+          label: 'Artscheck verplicht voor supplementvragen',
+        },
       },
     ]);
     expect(overzicht.samen[1]?.checklist).toEqual([
@@ -131,6 +143,41 @@ describe('dagelijkse aanbevelingen', () => {
       .join(' ');
     expect(titelEnDetail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
     expect(overzicht.samen.every((item) => item.waarschuwing.includes('geen diagnose'))).toBe(true);
+    expect(controleerSupplementBoundary(overzicht)).toEqual([]);
+  });
+
+  it('bewaakt supplementregels tegen dosering, interactieclaims en behandelvervanging', () => {
+    const onveilig: DailyRecommendationOverview = {
+      vrouw: [],
+      man: [],
+      samen: [
+        {
+          id: 'supplement-onveilig',
+          owner: 'samen',
+          titel: 'Supplementregel',
+          detail: 'Conceptnotitie.',
+          bron: 'Test',
+          waarschuwing: 'Geen medisch advies.',
+          checklist: [
+            {
+              label:
+                'Supplementen: neem 400 mg en combineer samen met medicatie in plaats van kliniekinstructies.',
+              bron: 'Testbron',
+              disclaimer: 'Geen artscheck vermeld.',
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(controleerSupplementBoundary(onveilig).map((item) => item.reden)).toEqual(
+      expect.arrayContaining([
+        'Supplementregel mist verplichte artscheck.',
+        'Supplementregel bevat een dosering of hoeveelheid.',
+        'Supplementregel bevat een interactie- of combinatieclaim.',
+        'Supplementregel suggereert vervanging van behandeling of medicatie.',
+      ]),
+    );
   });
 
   it('baseert leefstijlaanbevelingen op dossier, cyclusfase en behandelgeschiedenis', () => {

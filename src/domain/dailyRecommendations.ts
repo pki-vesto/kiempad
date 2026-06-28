@@ -31,6 +31,10 @@ export type DailyRecommendationChecklistItem = {
   label: string;
   bron: string;
   disclaimer: string;
+  artscheck?: {
+    verplicht: true;
+    label: string;
+  };
 };
 
 export type DailyRecommendationOverview = Record<DailyRecommendationOwner, DailyRecommendation[]>;
@@ -123,7 +127,11 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
             label:
               'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
             bron: 'Medicatie- en dossiercontext',
-            disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+            disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+            artscheck: {
+              verplicht: true,
+              label: 'Artscheck verplicht voor supplementvragen',
+            },
           },
         ],
       },
@@ -226,7 +234,11 @@ function bouwMannelijkeVoorbereidingskaart(): DailyRecommendation {
       {
         label: 'Voeding en supplementen: verzamel vragen voor kliniek, arts of apotheek.',
         bron: 'Gedeelde consultvoorbereiding',
-        disclaimer: 'Kiempad adviseert geen supplement en geen hoeveelheid.',
+        disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+        artscheck: {
+          verplicht: true,
+          label: 'Artscheck verplicht voor supplementvragen',
+        },
       },
       {
         label: 'Voorbereiding: controleer welke praktische punten jullie zelf willen bespreken.',
@@ -235,6 +247,57 @@ function bouwMannelijkeVoorbereidingskaart(): DailyRecommendation {
       },
     ],
   };
+}
+
+export type DailyRecommendationPolicyViolation = {
+  aanbevelingId: string;
+  checklistLabel: string;
+  reden: string;
+};
+
+export function controleerSupplementBoundary(
+  overview: DailyRecommendationOverview,
+): DailyRecommendationPolicyViolation[] {
+  const overtredingen: DailyRecommendationPolicyViolation[] = [];
+  for (const aanbeveling of Object.values(overview).flat()) {
+    for (const checklistItem of aanbeveling.checklist ?? []) {
+      if (!isSupplementChecklistItem(checklistItem)) continue;
+      const tekst = `${checklistItem.label} ${checklistItem.disclaimer}`.toLocaleLowerCase('nl-NL');
+      if (!checklistItem.artscheck?.verplicht) {
+        overtredingen.push({
+          aanbevelingId: aanbeveling.id,
+          checklistLabel: checklistItem.label,
+          reden: 'Supplementregel mist verplichte artscheck.',
+        });
+      }
+      if (/\b\d+\s*(mg|mcg|µg|iu|ie|gram|g)\b/.test(tekst)) {
+        overtredingen.push({
+          aanbevelingId: aanbeveling.id,
+          checklistLabel: checklistItem.label,
+          reden: 'Supplementregel bevat een dosering of hoeveelheid.',
+        });
+      }
+      if (/\b(interactie|combineer|samen met)\b/.test(tekst)) {
+        overtredingen.push({
+          aanbevelingId: aanbeveling.id,
+          checklistLabel: checklistItem.label,
+          reden: 'Supplementregel bevat een interactie- of combinatieclaim.',
+        });
+      }
+      if (/\b(vervangt|in plaats van|stop met|laat .* achterwege)\b/.test(tekst)) {
+        overtredingen.push({
+          aanbevelingId: aanbeveling.id,
+          checklistLabel: checklistItem.label,
+          reden: 'Supplementregel suggereert vervanging van behandeling of medicatie.',
+        });
+      }
+    }
+  }
+  return overtredingen;
+}
+
+function isSupplementChecklistItem(item: DailyRecommendationChecklistItem): boolean {
+  return /\bsupplement/i.test(`${item.label} ${item.disclaimer}`);
 }
 
 function bouwBehandelvoorbereiding(input: {

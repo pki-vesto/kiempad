@@ -231,7 +231,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-045 Dagelijkse aanbevelingen voor vrouw | Daily Recommendations | Vrouw | Genereer dagelijkse leefstijl-, voeding-, supplement-, behandelvoorbereiding- en cycluscontext als concept. |
 | PFIP-046 Dagelijkse aanbevelingen voor man | Daily Recommendations | Man | Genereer dagelijkse leefstijl-, voeding-, supplement- en vruchtbaarheidsoptimalisatiecontext als concept. |
 | PFIP-047 Aanbevelingen baseren op dossiercontext | Daily Recommendations | Context | Gebruik dossier, onderzoeken, behandelgeschiedenis en persoonlijke situatie als herleidbare bronnen. |
-| PFIP-048 Aanbevelingen met medische grens | Daily Recommendations | Safety | Label aanbevelingen als niet-medisch, niet-doserend en altijd ondergeschikt aan kliniek/arts. |
+| PFIP-048 Aanbevelingen met medische grens | Daily Recommendations | Safety | Label aanbevelingen als niet-medisch, niet-doserend en altijd ondergeschikt aan kliniek/arts; supplementregels vereisen artscheck. |
 | PFIP-049 Dagelijkse aanbeveling-tijdlijn | Daily Recommendations | Tijdlijn | Plaats dagelijkse aanbevelingen op de tijdlijn met datum en broncontext. |
 | PFIP-050 Feedback op aanbevelingen | Daily Recommendations | Feedback | Laat gebruikers aanbevelingen markeren als nuttig, niet relevant, uitgesteld of besproken met arts. |
 | PFIP-051 Fertility knowledge graph schema | Fertility Knowledge Graph | Graph model | Definieer knopen en relaties voor onderzoeken, embryo's, behandelingen, gesprekken, literatuur en aanbevelingen zonder raw payloads in graph-output. |

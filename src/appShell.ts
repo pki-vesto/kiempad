@@ -3102,7 +3102,7 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
                 (checklistItem) => `
                   <li>
                     <span>${escapeHtml(checklistItem.label)}</span>
-                    <small>Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}</small>
+                    <small>Bron: ${escapeHtml(checklistItem.bron)} · ${escapeHtml(checklistItem.disclaimer)}${checklistItem.artscheck ? ` · ${escapeHtml(checklistItem.artscheck.label)}` : ''}</small>
                   </li>
                 `,
               )

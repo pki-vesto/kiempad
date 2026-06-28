@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 374 |
+| ☑ klaar | 375 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **573** |
+| **Totaal** | **574** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -644,7 +644,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G486 | Daily Recommendations: vrouw-dagkaart met bronherleiding | P0 | F5 | ☐ |
 | G487 | Daily Recommendations: man-dagkaart met bronherleiding | P0 | F5 | ☐ |
 | G488 | Daily Recommendations: personalisatiefeedback over tijd | P1 | F5 | ☐ |
-| G489 | Daily Recommendations: supplement boundary en artscheck | P0 | F5 | ☐ |
+| G489 | Daily Recommendations: supplement boundary en artscheck | P0 | F5 | ☑ |
 | G490 | Daily Recommendations: aanbevelingen op fertility timeline | P1 | F5 | ☐ |
 
 ## 23. Autonomous Evolution Active Goal Floor
@@ -736,12 +736,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G571 | Fertility Intelligence: embryo-ID alias reviewcorrectie | P1 | F5 | ☐ |
 | G572 | Fertility Intelligence: embryo kwaliteit bronlabel correctieflow | P1 | F5 | ☐ |
 | G573 | Fertility Timeline & Knowledge Graph: graph payload leak regression fixtures | P1 | F5 | ☐ |
+| G574 | Daily Recommendations: supplement artscheck actieflow | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 573** (id's G001 t/m G573, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 574** (id's G001 t/m G574, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
