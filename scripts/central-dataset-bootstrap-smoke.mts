@@ -1,6 +1,7 @@
 import {
   BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT,
   type BootstrapSmokePhaseCode,
+  createBootstrapSmokeDiagnosticRegistrySummary,
   isBootstrapSmokeDiagnosticInjectionEnabled,
 } from '../src/storage/centralBootstrapDiagnostics';
 import { runCentralDatasetBootstrapSmoke } from '../src/storage/centralDatasetBootstrapSmoke';
@@ -52,6 +53,7 @@ async function main(): Promise<void> {
         restartedReadVisible: result.restartedReadVisible,
         wrongPassphraseRejected: result.wrongPassphraseRejected,
         plaintextBoundary: result.plaintextBoundary,
+        diagnosticRegistry: createBootstrapSmokeDiagnosticRegistrySummary(),
       },
       null,
       2,

@@ -14,10 +14,26 @@ export type BootstrapSmokeRedactionCategory =
   | 'ocr-base64'
   | 'medical-plaintext';
 
+export type BootstrapSmokeSummaryRedactionCategory =
+  | 'credential-secret'
+  | 'session-credential'
+  | 'file-reference'
+  | 'text-extraction-marker'
+  | 'medical-content';
+
 export type BootstrapSmokeDiagnosticInjection = {
   envName: string;
   phaseCode: BootstrapSmokePhaseCode;
   redactionCategories: readonly BootstrapSmokeRedactionCategory[];
+};
+
+export type BootstrapSmokeDiagnosticRegistrySummary = {
+  fixtureCount: number;
+  phases: Array<{
+    phaseCode: BootstrapSmokePhaseCode;
+    envName: string;
+    redactionCategories: BootstrapSmokeSummaryRedactionCategory[];
+  }>;
 };
 
 export const BOOTSTRAP_SMOKE_REDACTION_CATEGORIES = [
@@ -30,6 +46,17 @@ export const BOOTSTRAP_SMOKE_REDACTION_CATEGORIES = [
 
 export const BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT =
   'central bootstrap smoke passphrase kiempad-session-forged echo-foto-privenaam.jpg OCR base64 gevoelige fertiliteitsnotitie';
+
+const SUMMARY_REDACTION_CATEGORY_LABELS = {
+  passphrase: 'credential-secret',
+  'bearer-token': 'session-credential',
+  filename: 'file-reference',
+  'ocr-base64': 'text-extraction-marker',
+  'medical-plaintext': 'medical-content',
+} as const satisfies Record<
+  BootstrapSmokeRedactionCategory,
+  BootstrapSmokeSummaryRedactionCategory
+>;
 
 export const BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS = [
   {
@@ -87,4 +114,19 @@ export function isBootstrapSmokeDiagnosticInjectionEnabled(
 ): boolean {
   const envName = bootstrapSmokeInjectionEnvForPhase(phaseCode);
   return envName !== undefined && env[envName] === '1';
+}
+
+export function createBootstrapSmokeDiagnosticRegistrySummary(): BootstrapSmokeDiagnosticRegistrySummary {
+  return {
+    fixtureCount: BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS.length,
+    phases: BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS.map(
+      ({ phaseCode, envName, redactionCategories }) => ({
+        phaseCode,
+        envName,
+        redactionCategories: redactionCategories.map(
+          (category) => SUMMARY_REDACTION_CATEGORY_LABELS[category],
+        ),
+      }),
+    ),
+  };
 }

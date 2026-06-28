@@ -98,7 +98,9 @@ pad zonder lokale vault-hercreatie.
   redaction van passphrases, bearer tokens, bestandsnamen, OCR/base64-markers en
   medische plaintext. Nieuwe failurefixtures moeten eerst in de registry
   `src/storage/centralBootstrapDiagnostics.ts` worden toegevoegd; commandotests
-  vergelijken die registry met de `phaseCode` literals in de CLI.
+  vergelijken die registry met de `phaseCode` literals in de CLI. De succesvolle
+  smoke-output bevat daarnaast een gesanitized `diagnosticRegistry` summary met
+  alleen `phaseCode`, fixture-envnaam en neutrale redactioncategorieën voor CI-triage.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

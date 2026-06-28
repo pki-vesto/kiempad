@@ -4960,4 +4960,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap diagnostic registry, CI smoke output, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G596 — bootstrap diagnostic summary schema guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap diagnostic registrysummary staat nu in CI-output, maar er is nog geen expliciete schema-guard die de publieke JSON-vorm stabiel houdt.
+- **Desired Outcome:** Een dedicated test of fixture valideert het schema van `diagnosticRegistry` zodat consumers alleen op veilige, technische velden bouwen.
+- **User Value:** CI- en runbookautomatisering kan de summary gebruiken zonder te breken of per ongeluk gevoelige velden te introduceren.
+- **Acceptance Criteria:** Test valideert dat `diagnosticRegistry` alleen `fixtureCount`, `phases`, `phaseCode`, `envName` en `redactionCategories` bevat; extra velden falen; schemafixture bevat geen payload, passphrase, token, filename, OCR/base64 of medische plaintext; docs of backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap diagnostic registry, command tests, CI smoke output
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
