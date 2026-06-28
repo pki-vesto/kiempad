@@ -5380,4 +5380,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G626 — bootstrap governance releasecontext runbook term release redaction guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbookcontexttermset heeft nu een redaction guard, maar release-state benoemt die redactioncontext nog niet als bewaakt contract.
+- **Desired Outcome:** Maintenance-tests koppelen de runbookcontexttermset-redaction aan changelog en current-state.
+- **User Value:** Reviewers zien termset-redactionwijzigingen ook in releasecontext zonder handmatige vergelijking.
+- **Acceptance Criteria:** Maintenance-test bewaakt release-stateverwijzing naar de redaction guard; bestaande termset- en redactionguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

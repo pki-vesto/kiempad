@@ -62,6 +62,18 @@ const BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS = [
   'schemafoutvelden',
   'placeholders',
 ] as const;
+const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
+  'payload',
+  'passphrase',
+  'secret',
+  'token',
+  'bestandsnaam',
+  'filename',
+  'OCR',
+  'base64',
+  'medische',
+  'fertiliteitsnotitie',
+] as const;
 type BacklogHealthArtifactDocsHint = {
   label: string;
   term: string;
@@ -283,18 +295,7 @@ describe('onderhoudsdocumentatie', () => {
         unknownCoverageFieldCount: 1,
       },
     });
-    for (const forbiddenTerm of [
-      'payload',
-      'passphrase',
-      'secret',
-      'token',
-      'bestandsnaam',
-      'filename',
-      'OCR',
-      'base64',
-      'medische',
-      'fertiliteitsnotitie',
-    ]) {
+    for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(JSON.stringify(schemaErrorSnapshot)).not.toContain(forbiddenTerm);
     }
     for (const releaseDoc of [changelog, currentState]) {
@@ -324,18 +325,7 @@ describe('onderhoudsdocumentatie', () => {
       for (const placeholderTerm of BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS) {
         expect(placeholderReleaseContext).toContain(placeholderTerm);
       }
-      for (const forbiddenTerm of [
-        'payload',
-        'passphrase',
-        'secret',
-        'token',
-        'bestandsnaam',
-        'filename',
-        'OCR',
-        'base64',
-        'medische',
-        'fertiliteitsnotitie',
-      ]) {
+      for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
         expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
       }
     }
@@ -367,6 +357,11 @@ describe('onderhoudsdocumentatie', () => {
       placeholders: ['{gate}', '{unknownCoverageFieldCount}', '{unknownSourceFieldCount}'],
       runbookContext: ['runbook', 'releasecontextbewaking', 'schemafoutvelden', 'placeholders'],
     });
+    for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
+      expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
+        forbiddenTerm,
+      );
+    }
   });
 
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
