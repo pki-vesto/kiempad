@@ -5856,4 +5856,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G660 — bootstrap governance missing-term runbook note contract release text missing-term release missing-term fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De foutmelding `Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contractmissingterm contractmissingterm contract` wordt nu positief bewaakt in release-state, maar ontbrekende foutmeldingcontexttermen hebben nog geen specifieke negatieve fixture.
+- **Desired Outcome:** Maintenance-tests tonen technisch welke release-state-foutmeldingcontextterm ontbreekt.
+- **User Value:** Reviewers kunnen release-state drift rond deze technische foutmelding snel herstellen zonder gevoelige inhoud te inspecteren.
+- **Acceptance Criteria:** Negatieve fixture faalt bij ontbrekende release-state-foutmeldingcontextterm met alleen technische termnamen; bestaande fouttekst-, negatieve fixture- en release-state guards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
