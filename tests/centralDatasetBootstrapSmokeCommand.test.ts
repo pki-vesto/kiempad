@@ -52,6 +52,41 @@ describe('central dataset bootstrap smoke command', () => {
     expect(output).toContain('"recoveryHint"');
     expectSanitizedSmokeOutput(output);
   }, 15_000);
+
+  it('redigeert alle bekende bootstrap failurediagnostics', async () => {
+    for (const { phaseCode, env } of [
+      {
+        phaseCode: 'first-device-write',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_FIRST_DEVICE_FAILURE: '1' },
+      },
+      {
+        phaseCode: 'second-device-read',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE: '1' },
+      },
+      {
+        phaseCode: 'restart-read',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RESTART_FAILURE: '1' },
+      },
+      {
+        phaseCode: 'wrong-key',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_WRONG_KEY_FAILURE: '1' },
+      },
+      {
+        phaseCode: 'snapshot-inspection',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SNAPSHOT_INSPECTION_FAILURE: '1' },
+      },
+      {
+        phaseCode: 'plaintext-boundary',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK: '1' },
+      },
+    ]) {
+      const output = await runFailingSmoke(env);
+      expect(output).toContain('"status": "failed"');
+      expect(output).toContain(`"phaseCode": "${phaseCode}"`);
+      expect(output).toContain('"recoveryHint"');
+      expectSanitizedSmokeOutput(output);
+    }
+  }, 30_000);
 });
 
 async function runFailingSmoke(env: Record<string, string>): Promise<string> {

@@ -4904,4 +4904,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central bootstrap smoke, tests, scripts
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G592 — bootstrap runtime diagnostic fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap smoke redaction-regressie dekt alle normale fasecodes, maar runtime-exceptions worden nog niet via een aparte failurefixture getest.
+- **Desired Outcome:** De centrale bootstrap smoke krijgt een runtime-failure fixture die bewijst dat onverwachte exceptions dezelfde gesanitized diagnostic-vorm gebruiken.
+- **User Value:** Ook onverwachte CI-fouten blijven triageerbaar zonder secrets of medische inhoud in logs.
+- **Acceptance Criteria:** Runtime failure kan via testfixture of env-injectie worden afgedwongen; output bevat `phaseCode=runtime` en generieke herstelhint; test faalt bij passphrase, token, filename, OCR/base64 of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Central bootstrap smoke, tests, scripts
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

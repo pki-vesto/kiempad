@@ -93,6 +93,9 @@ pad zonder lokale vault-hercreatie.
   | `wrong-key` | verkeerde sleutel wordt niet geweigerd | controleer passphrase verifier en vault-key validatie | blokkeer release en draai storage-crypto/vault regressies | Security |
   | `snapshot-inspection` | smoke kan technische snapshot niet inspecteren | controleer smoke-runner persistence wiring | herstel de smoke-harness voordat conclusies over privacygrens worden getrokken | Platform |
   | `plaintext-boundary` | centrale snapshot bevat verboden plaintext | controleer encrypted envelope boundary en snapshotserialisatie | blokkeer release, verwijder de testoutput en onderzoek alleen synthetische fixtures | Security |
+  Alle bekende failurediagnostics worden in tests gezamenlijk gecontroleerd op
+  redaction van passphrases, bearer tokens, bestandsnamen, OCR/base64-markers en
+  medische plaintext.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

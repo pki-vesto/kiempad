@@ -23,15 +23,16 @@ async function main(): Promise<void> {
     persistence,
     inspectSerializedSnapshot: () => {
       const serialized = persistence.unsafeSerializedSnapshotForTest();
+      if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SNAPSHOT_INSPECTION_FAILURE === '1') {
+        return undefined;
+      }
       if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK === '1') {
         return `${serialized}\n${FAILURE_INJECTION_NEEDLE}`;
       }
       return serialized;
     },
   });
-  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE === '1') {
-    result.secondDeviceReadVisible = false;
-  }
+  applyDiagnosticFailureInjection(result);
 
   const diagnostic = diagnoseBootstrapSmokeFailure(result);
   if (diagnostic) {
@@ -117,4 +118,21 @@ function diagnoseBootstrapSmokeFailure(
 
 function writeDiagnostic(diagnostic: BootstrapSmokeDiagnostic): void {
   console.error(JSON.stringify(diagnostic, null, 2));
+}
+
+function applyDiagnosticFailureInjection(
+  result: Awaited<ReturnType<typeof runCentralDatasetBootstrapSmoke>>,
+): void {
+  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_FIRST_DEVICE_FAILURE === '1') {
+    result.firstDeviceWriteVisible = false;
+  }
+  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE === '1') {
+    result.secondDeviceReadVisible = false;
+  }
+  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RESTART_FAILURE === '1') {
+    result.restartedReadVisible = false;
+  }
+  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_WRONG_KEY_FAILURE === '1') {
+    result.wrongPassphraseRejected = false;
+  }
 }
