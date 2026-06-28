@@ -2380,7 +2380,7 @@ function renderResearchBronnenCache(bronnen: readonly ResearchBron[]): string {
             <li>
               <strong>${escapeHtml(bron.titel)}</strong>
               <span>${escapeHtml(bron.herkomst === 'handmatige_seed' ? 'Seedbron' : 'Lokale cache')} · ${escapeHtml(bron.bron)}</span>
-              <small>${escapeHtml(bron.toelichting)}</small>
+              <small>${escapeHtml(bron.toelichting)} · ${escapeHtml(renderResearchBronAllowlistStatus(bron.allowlistStatus))}: ${escapeHtml(bron.allowlistRationale)}</small>
             </li>
           `,
         )
@@ -2752,10 +2752,17 @@ function renderResearchKaartMetadata(metadata: ResearchKaartMetadata): string {
   return `
     <dl class="summary-list">
       <div><dt>Bronverificatie</dt><dd>${escapeHtml(metadata.bronverificatie)}</dd></div>
+      <div><dt>Bronrationale</dt><dd>${escapeHtml(metadata.bronRationale)}</dd></div>
       <div><dt>Publicatiedatum</dt><dd>${escapeHtml(metadata.publicatieDatum)}</dd></div>
       <div><dt>Researchbron</dt><dd>${escapeHtml(metadata.bron)}</dd></div>
     </dl>
   `;
+}
+
+function renderResearchBronAllowlistStatus(status: ResearchBron['allowlistStatus']): string {
+  if (status === 'toegestaan_met_rationale') return 'Allowlist';
+  if (status === 'lokale_notitie') return 'Lokale notitie';
+  return 'Handmatige review';
 }
 
 function isEigenKennisItem(item: KennisItem): boolean {

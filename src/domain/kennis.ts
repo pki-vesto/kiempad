@@ -19,6 +19,19 @@ export type ResearchBron = {
   bron: string;
   herkomst: 'handmatige_seed' | 'lokale_cache';
   toelichting: string;
+  allowlistStatus: ResearchBronAllowlistStatus;
+  allowlistRationale: string;
+};
+
+export type ResearchBronAllowlistStatus =
+  | 'toegestaan_met_rationale'
+  | 'handmatige_review_nodig'
+  | 'lokale_notitie';
+
+export type ResearchBronAllowlistEntry = {
+  host: string;
+  label: string;
+  rationale: string;
 };
 
 export type ResearchAggregatiePlan = {
@@ -97,6 +110,7 @@ export type ResearchTrendGroep = {
 export type ResearchKaartMetadata = {
   bron: string;
   bronverificatie: string;
+  bronRationale: string;
   publicatieDatum: string;
 };
 
@@ -116,6 +130,33 @@ export const RESEARCH_TREND_LABELS: Record<ResearchTrendOnderwerp, string> = {
   overig: 'Overig',
 };
 
+export const RESEARCH_SOURCE_ALLOWLIST: readonly ResearchBronAllowlistEntry[] = [
+  {
+    host: 'pubmed.ncbi.nlm.nih.gov',
+    label: 'PubMed',
+    rationale:
+      'PubMed is een publieke bibliografische index voor biomedische literatuur; Kiempad gebruikt dit alleen als handmatige zoek- of bronverwijzing.',
+  },
+  {
+    host: 'www.cochranelibrary.com',
+    label: 'Cochrane Library',
+    rationale:
+      'Cochrane Library bevat systematische reviews; Kiempad gebruikt dit alleen als achtergrondbron zonder behandeladvies.',
+  },
+  {
+    host: 'www.eshre.eu',
+    label: 'ESHRE',
+    rationale:
+      'ESHRE publiceert Europese richtlijnen en updates rond fertiliteitszorg; de gebruiker controleert relevantie zelf.',
+  },
+  {
+    host: 'doi.org',
+    label: 'DOI',
+    rationale:
+      'DOI-links zijn persistente publicatieverwijzingen; Kiempad bewaart ze alleen voor herleidbaarheid.',
+  },
+] as const;
+
 export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
   {
     id: 'seed-research-eshre',
@@ -123,6 +164,7 @@ export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
     bron: 'https://www.eshre.eu/Guidelines-and-Legal/Guidelines',
     herkomst: 'handmatige_seed',
     toelichting: 'Startpunt voor Europese richtlijnen en achtergrondbronnen rond fertiliteitszorg.',
+    ...beoordeelResearchBron('https://www.eshre.eu/Guidelines-and-Legal/Guidelines'),
   },
   {
     id: 'seed-research-cochrane',
@@ -130,6 +172,9 @@ export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
     bron: 'https://www.cochranelibrary.com/cdsr/reviews/topics?topicId=GYNAECA%3AFERTILREG',
     herkomst: 'handmatige_seed',
     toelichting: 'Startpunt voor systematische reviews; gebruiker controleert relevantie zelf.',
+    ...beoordeelResearchBron(
+      'https://www.cochranelibrary.com/cdsr/reviews/topics?topicId=GYNAECA%3AFERTILREG',
+    ),
   },
   {
     id: 'seed-research-pubmed',
@@ -138,6 +183,7 @@ export const INITIELE_RESEARCH_BRONNEN: readonly ResearchBron[] = [
     herkomst: 'handmatige_seed',
     toelichting:
       'Handmatige zoekstart voor recente publicaties; Kiempad haalt niets automatisch op.',
+    ...beoordeelResearchBron('https://pubmed.ncbi.nlm.nih.gov/?term=IVF+ICSI+embryo+fertility'),
   },
 ] as const;
 
@@ -226,6 +272,7 @@ export function bouwResearchBronnenCache(items: readonly KennisItem[]): Research
         bron,
         herkomst: 'lokale_cache',
         toelichting: item.inhoud,
+        ...beoordeelResearchBron(bron),
       };
     });
 
@@ -435,12 +482,12 @@ export function bouwResearchKaartMetadata(item: KennisItem): ResearchKaartMetada
   if (item.categorie !== 'research') return undefined;
 
   const bron = item.researchPublicatie?.bron ?? item.bron?.trim();
+  const beoordeling = beoordeelResearchBron(bron);
 
   return {
     bron: bron || 'Geen bron vastgelegd',
-    bronverificatie: bron
-      ? 'Bronverificatie: bron vastgelegd voor handmatige controle'
-      : 'Bronverificatie: bron ontbreekt',
+    bronverificatie: beschrijfResearchBronVerificatie(beoordeling),
+    bronRationale: beoordeling.allowlistRationale,
     publicatieDatum: item.researchPublicatie?.publicatieDatum ?? 'Publicatiedatum onbekend',
   };
 }
@@ -651,6 +698,59 @@ function bevatBehandeladviesClaim(value: string): boolean {
   return /\b(moet(en)?\b.{0,40}\b(kiezen|starten|stoppen|gebruiken)|beste behandeling|dosering|diagnose)\b/i.test(
     value,
   );
+}
+
+export function beoordeelResearchBron(
+  bron: string | undefined,
+): Pick<ResearchBron, 'allowlistStatus' | 'allowlistRationale'> {
+  const value = bron?.trim();
+  if (!value || value.startsWith('Lokale notitie zonder externe link:')) {
+    return {
+      allowlistStatus: 'lokale_notitie',
+      allowlistRationale:
+        'Lokale researchnotitie zonder externe bron; handmatig bruikbaar als persoonlijke leeslijst, niet als geverifieerde publicatiebron.',
+    };
+  }
+
+  const host = normaliseerResearchBronHost(value);
+  const entry = host
+    ? RESEARCH_SOURCE_ALLOWLIST.find(
+        (candidate) => host === candidate.host || host.endsWith(`.${candidate.host}`),
+      )
+    : undefined;
+
+  if (entry) {
+    return {
+      allowlistStatus: 'toegestaan_met_rationale',
+      allowlistRationale: `${entry.label}: ${entry.rationale}`,
+    };
+  }
+
+  return {
+    allowlistStatus: 'handmatige_review_nodig',
+    allowlistRationale:
+      'Bron staat niet op de research-source allowlist; gebruik alleen na handmatige controle van herkomst, publicatiedatum en relevantie.',
+  };
+}
+
+function beschrijfResearchBronVerificatie(
+  beoordeling: Pick<ResearchBron, 'allowlistStatus' | 'allowlistRationale'>,
+): string {
+  if (beoordeling.allowlistStatus === 'toegestaan_met_rationale') {
+    return 'Bronverificatie: bron staat op allowlist met rationale';
+  }
+  if (beoordeling.allowlistStatus === 'lokale_notitie') {
+    return 'Bronverificatie: lokale notitie zonder externe bron';
+  }
+  return 'Bronverificatie: handmatige review nodig';
+}
+
+function normaliseerResearchBronHost(bron: string): string | undefined {
+  try {
+    return new URL(bron).hostname.toLocaleLowerCase('nl-NL').replace(/^www\.(?=doi\.org$)/, '');
+  } catch {
+    return undefined;
+  }
 }
 
 function bepaalResearchTrendOnderwerpen(item: KennisItem): ResearchTrendOnderwerp[] {

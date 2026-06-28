@@ -4176,7 +4176,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, security docs, tests
 - **ADR Needed:** no
 - **Score:** 126
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G540 — PubMed query preview zonder dossierplaintext
 
@@ -4664,6 +4664,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Daily recommendations, vragen, herinneringen, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G575 — research source allowlist review evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** Researchbronnen hebben nu een allowliststatus en rationale, maar periodieke review van allowlistentries laat nog geen gestructureerd bewijs achter.
+- **Desired Outcome:** Maintainers kunnen research-source allowlistreviews vastleggen met datum, entry, rationale, bronstatus en testresultaat zonder medische inhoud of secrets.
+- **User Value:** Gebruikers krijgen betere herleidbaarheid en beheer van researchbronnen wanneer de bronlijst groeit.
+- **Acceptance Criteria:** Evidence-template bevat reviewedatum, allowlist-entry, rationale, reviewer en validatiecommando; tests controleren dat iedere allowlist-entry een reviewbaar evidenceveld heeft; docs beschrijven reviewcadans en privacygrens; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research, docs, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

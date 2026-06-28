@@ -225,7 +225,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-039 Wetenschappelijke samenvatting per publicatie | Research Intelligence | Samenvatting | Maak een korte inhoudelijke samenvatting met methode, populatie, uitkomst en beperkingen. |
 | PFIP-040 Eenvoudige samenvatting per publicatie | Research Intelligence | Lekentaal | Vertaal iedere publicatie naar begrijpelijk Nederlands zonder jargon waar mogelijk. |
 | PFIP-041 Relevantie voor gebruiker zonder behandeladvies | Research Intelligence | Relevantie | Leg uit waarom publicatie mogelijk relevant is voor dossiercontext, met expliciete niet-adviesgrens. |
-| PFIP-042 Bronverwijzing en actualiteitsdatum | Research Intelligence | Bronnen | Toon publicatiedatum, geraadpleegde datum, DOI/URL en betrouwbaarheidssignalen. |
+| PFIP-042 Bronverwijzing en actualiteitsdatum | Research Intelligence | Bronnen | Toon publicatiedatum, geraadpleegde datum, DOI/URL, allowliststatus en betrouwbaarheidssignalen met rationale. |
 | PFIP-043 Trendanalyse over researchtopics | Research Intelligence | Trends | Toon terugkerende thema's en verschuivingen door de tijd zonder conclusies als persoonlijk advies. |
 | PFIP-044 Research opslaan als kennisitem | Research Intelligence | Kennisbank | Sla researchsamenvattingen op als kennisitems met bron, AI-label en verificatiestatus. |
 | PFIP-045 Dagelijkse aanbevelingen voor vrouw | Daily Recommendations | Vrouw | Genereer dagelijkse leefstijl-, voeding-, supplement-, behandelvoorbereiding- en cycluscontext als concept. |
