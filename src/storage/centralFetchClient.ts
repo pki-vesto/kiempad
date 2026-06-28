@@ -21,9 +21,25 @@ export type CentralFetchSessionRefresher = () => Promise<{
   token: CentralSessionToken;
 }>;
 
+export type CentralFetchSessionRenewalStatus =
+  | {
+      status: 'active';
+      refreshedAt?: string;
+    }
+  | {
+      status: 'refreshing';
+      previousFailure?: string;
+    }
+  | {
+      status: 'failed';
+      error: string;
+      failedAt: string;
+    };
+
 export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
   private readonly normalizedBaseUrl: string;
   private token: CentralSessionToken;
+  private sessionRenewalStatus: CentralFetchSessionRenewalStatus = { status: 'active' };
 
   constructor(
     baseUrl: string,
@@ -73,6 +89,10 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
     return (await this.request<EncryptedRecord[]>(path)) ?? [];
   }
 
+  getSessionRenewalStatus(): CentralFetchSessionRenewalStatus {
+    return { ...this.sessionRenewalStatus };
+  }
+
   private async request<T>(
     path: string,
     options: RequestInit & { allowNotFound?: boolean } = {},
@@ -106,14 +126,32 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
     allowRefresh: boolean,
   ): Promise<T | undefined> {
     if (response.status === 401 && allowRefresh && this.refreshSession) {
-      const ticket = await this.refreshSession();
-      this.token = normalizeCentralFetchBearerToken(ticket.token);
+      this.sessionRenewalStatus = { status: 'refreshing' };
+      try {
+        const ticket = await this.refreshSession();
+        this.token = normalizeCentralFetchBearerToken(ticket.token);
+        this.sessionRenewalStatus = { status: 'active', refreshedAt: new Date().toISOString() };
+      } catch (error) {
+        this.sessionRenewalStatus = {
+          status: 'failed',
+          error: error instanceof Error ? error.message : 'central-session-refresh-failed',
+          failedAt: new Date().toISOString(),
+        };
+        throw error;
+      }
       return this.handleResponse<T>(await this.fetchWithToken(path, options), path, options, false);
     }
 
     if (response.status === 204) return undefined;
     if (response.status === 404 && options.allowNotFound) return undefined;
-    if (response.status === 401) throw new CentralSessionError();
+    if (response.status === 401) {
+      this.sessionRenewalStatus = {
+        status: 'failed',
+        error: 'unauthorized',
+        failedAt: new Date().toISOString(),
+      };
+      throw new CentralSessionError();
+    }
     if (response.status === 403) throw new CentralAccessDeniedError();
     if (response.status >= 400) {
       throw new CentralHttpBadRequestError(await readErrorMessage(response));

@@ -162,10 +162,13 @@ describe('client storage bootstrap', () => {
   it('wiret centrale sessie-refresh met dezelfde user id zonder legacy fallback', async () => {
     const openLegacyDriver = vi.fn(async () => new MemoryEncryptedStorageDriver());
     const issuedSessionBodies: unknown[] = [];
+    const serializedFetchBodies: string[] = [];
     const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {
       const url = new URL(input);
       if (url.pathname === '/sessions') {
-        const body = JSON.parse(String(init?.body ?? '{}')) as unknown;
+        const serializedBody = String(init?.body ?? '{}');
+        serializedFetchBodies.push(serializedBody);
+        const body = JSON.parse(serializedBody) as unknown;
         issuedSessionBodies.push(body);
         const token = issuedSessionBodies.length === 1 ? 'expired-token' : 'fresh-token';
         return new Response(
@@ -208,6 +211,9 @@ describe('client storage bootstrap', () => {
       { userId: 'peter-en-partner' },
       { userId: 'peter-en-partner' },
     ]);
+    expect(serializedFetchBodies.join('\n')).not.toContain('centrale client passphrase');
+    expect(serializedFetchBodies.join('\n')).not.toContain('beschikbaar op tweede apparaat');
+    expect(serializedFetchBodies.join('\n')).not.toContain('plaintext');
     expect(openLegacyDriver).not.toHaveBeenCalled();
   });
 });

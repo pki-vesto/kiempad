@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 383 |
+| ☑ klaar | 384 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **582** |
+| **Totaal** | **583** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -653,7 +653,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 
 | ID | Doel | Prio | Fase | Status |
 |---|---|---|---|---|
-| G491 | Central Encrypted Platform: central session renewal zonder plaintext fallback | P0 | F5 | ☐ |
+| G491 | Central Encrypted Platform: central session renewal zonder plaintext fallback | P0 | F5 | ☑ |
 | G492 | Central Encrypted Platform: owner-scoped record list pagination | P0 | F5 | ☐ |
 | G493 | Central Encrypted Platform: encrypted attachment envelope contract | P0 | F5 | ☐ |
 | G494 | Central Encrypted Platform: central attachment size limit policy | P0 | F5 | ☑ |
@@ -745,12 +745,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G580 | Fertility Intelligence: historische tijdlijnitem reviewactie | P1 | F5 | ☐ |
 | G581 | Fertility Intelligence: imaging metadata reviewcorrectie | P1 | F5 | ☐ |
 | G582 | Product Quality & Automation: active goal floor CI gate | P1 | F5 | ☐ |
+| G583 | Central Encrypted Platform: central session renewal status UI | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 582** (id's G001 t/m G582, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 583** (id's G001 t/m G583, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

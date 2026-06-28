@@ -254,6 +254,8 @@ describe('central fetch client', () => {
   });
 
   it('ververst een verlopen centraal sessietoken eenmalig en hergebruikt daarna het nieuwe token', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-25T09:15:00.000Z'));
     const seenTokens: string[] = [];
     const fetcher = vi.fn(async (input: string, init?: RequestInit): Promise<Response> => {
       expect(input).toBe('https://central.test/meta/crypto');
@@ -286,6 +288,10 @@ describe('central fetch client', () => {
       version: 1,
       token: 'fresh-token',
     });
+    expect(driver.getSessionRenewalStatus()).toEqual({
+      status: 'active',
+      refreshedAt: '2026-06-25T09:15:00.000Z',
+    });
     await expect(driver.getMeta('crypto')).resolves.toEqual({
       version: 1,
       token: 'fresh-token',
@@ -296,6 +302,8 @@ describe('central fetch client', () => {
   });
 
   it('probeert sessie-refresh niet eindeloos wanneer het nieuwe token ook unauthorized is', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-25T09:20:00.000Z'));
     const fetcher = vi.fn(async (): Promise<Response> => {
       return new Response(JSON.stringify({ error: 'unauthorized' }), {
         status: 401,
@@ -311,11 +319,18 @@ describe('central fetch client', () => {
     );
 
     await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralSessionError);
+    expect(driver.getSessionRenewalStatus()).toEqual({
+      status: 'failed',
+      error: 'unauthorized',
+      failedAt: '2026-06-25T09:20:00.000Z',
+    });
     expect(refreshSession).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
   it('weigert malformed refresh tokens voordat de retry request wordt verstuurd', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-25T09:25:00.000Z'));
     const fetcher = vi.fn(async (): Promise<Response> => {
       return new Response(JSON.stringify({ error: 'unauthorized' }), {
         status: 401,
@@ -333,11 +348,18 @@ describe('central fetch client', () => {
     const request = driver.listMeta();
     await expect(request).rejects.toThrow('central-fetch-invalid-bearer-token');
     await expect(request).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+    expect(driver.getSessionRenewalStatus()).toEqual({
+      status: 'failed',
+      error: 'central-fetch-invalid-bearer-token',
+      failedAt: '2026-06-25T09:25:00.000Z',
+    });
     expect(refreshSession).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
   it('laat refresh-fouten centraal falen zonder lokale fallback of stille retry', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-25T09:30:00.000Z'));
     const fetcher = vi.fn(async (): Promise<Response> => {
       return new Response(JSON.stringify({ error: 'unauthorized' }), {
         status: 401,
@@ -355,6 +377,11 @@ describe('central fetch client', () => {
     );
 
     await expect(driver.listMeta()).rejects.toBeInstanceOf(CentralHttpBadRequestError);
+    expect(driver.getSessionRenewalStatus()).toEqual({
+      status: 'failed',
+      error: 'unauthorized',
+      failedAt: '2026-06-25T09:30:00.000Z',
+    });
     expect(refreshSession).toHaveBeenCalledTimes(1);
     expect(fetcher).toHaveBeenCalledTimes(1);
   });

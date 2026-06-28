@@ -120,7 +120,9 @@ en blijft ook centraal **versleuteld at rest**.
   Als een bestaand centraal fetch-token verloopt, vraagt de driver één nieuw
   server-side sessietoken voor dezelfde configured user-scope en herhaalt hij de
   opslagrequest één keer; refresh-fouten blijven centrale fouten en openen nooit de
-  legacy lokale kluis.
+  legacy lokale kluis. De refresh-status is alleen technische clientstatus
+  (`active`/`refreshing`/`failed`) met timestamp of foutcode, zonder passphrase,
+  recordpayload of medische plaintext.
 - **Versleuteling:** **AES-256-GCM** per record. De client versleutelt payloads voor
   persistente opslag; de centrale laag ziet alleen encrypted envelopes plus minimale
   indexmetadata.
