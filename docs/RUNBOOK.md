@@ -136,6 +136,8 @@ pad zonder lokale vault-hercreatie.
   Maintenance-tests bewaken de releasecontextbewaking voor schemafoutvelden en
   placeholders, zodat changelog- en state-documentatie dezelfde technische termsets
   blijven noemen.
+  De contractreleasecontextmelding-releasecontexttermset bewaakt alleen technische
+  termen: contractreleasecontextmelding en contractreleasecontextmeldingscontract.
 
   Schemafout-outputvoorbeeld:
 

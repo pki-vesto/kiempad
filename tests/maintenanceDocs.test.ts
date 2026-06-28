@@ -87,6 +87,11 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_TERMS = [
 ] as const;
 const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_ERROR =
   'Bootstrap governance releasecontext ontbreekt voor termen: contractreleasecontextmeldingscontract';
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_TERMS = [
+  'contractreleasecontextmelding-releasecontexttermset',
+  'contractreleasecontextmelding',
+  'contractreleasecontextmeldingscontract',
+] as const;
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -226,6 +231,7 @@ describe('onderhoudsdocumentatie', () => {
       '`{unknownCoverageFieldCount}`',
       'Maintenance-tests bewaken de releasecontextbewaking voor schemafoutvelden',
       ...BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS,
+      ...BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_TERMS,
       'changelog- en state-documentatie',
       'technische termsets',
       'Schemafout-outputvoorbeeld',
@@ -322,6 +328,16 @@ describe('onderhoudsdocumentatie', () => {
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(JSON.stringify(schemaErrorSnapshot)).not.toContain(forbiddenTerm);
+    }
+    const missingTermTextRunbookContext = extractBootstrapGovernanceReleaseContext(
+      runbook,
+      BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_TERMS,
+    );
+    for (const missingTermTextRunbookTerm of BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_TERMS) {
+      expect(missingTermTextRunbookContext).toContain(missingTermTextRunbookTerm);
+    }
+    for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
+      expect(missingTermTextRunbookContext).not.toContain(forbiddenTerm);
     }
     for (const releaseDoc of [changelog, currentState]) {
       expect(releaseDoc).toContain(freshnessSnapshot.gate);
@@ -459,6 +475,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_RELEASE_TERMS,
       redactionFailureMissingTermText:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_TERMS,
+      redactionFailureMissingTermTextRunbook:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_TERMS,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -472,6 +490,11 @@ describe('onderhoudsdocumentatie', () => {
       redactionFailure: ['redactioncontext-failuretekst', 'failuretekstcontract'],
       redactionFailureMissingTerm: ['failuretekstcontract-releasecontext', 'missing-term contract'],
       redactionFailureMissingTermText: [
+        'contractreleasecontextmelding',
+        'contractreleasecontextmeldingscontract',
+      ],
+      redactionFailureMissingTermTextRunbook: [
+        'contractreleasecontextmelding-releasecontexttermset',
         'contractreleasecontextmelding',
         'contractreleasecontextmeldingscontract',
       ],
