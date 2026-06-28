@@ -381,6 +381,15 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('geeft ontbrekende bootstrap governance redaction failure releasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: redactioncontext-failuretekst staat in releasecontext.',
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS,
+      ),
+    ).toThrow('Bootstrap governance releasecontext ontbreekt voor termen: failuretekstcontract');
+  });
+
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
     expect({
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
