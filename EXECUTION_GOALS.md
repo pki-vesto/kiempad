@@ -5198,4 +5198,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap governance tests, runbook, maintenance docs tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G613 — bootstrap governance annotation contract export
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De annotatietekst wordt nu in scriptoutput, runbook en releasecontext exact bewaakt, maar het annotatiecontract staat nog niet als gedeelde export naast het freshness veldcontract.
+- **Desired Outcome:** De bootstrap governance annotatievorm is afgeleid uit een gedeelde contractdefinitie in plaats van losse stringverwachtingen in script en tests.
+- **User Value:** Reviewers hoeven bij annotatiewijzigingen maar één contractbron te controleren.
+- **Acceptance Criteria:** Annotatieprefix of template staat in het bootstrap governance contract; script en tests gebruiken die contractbron; docs/backlog verwijzen naar dit doel; output bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance contract, script, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
