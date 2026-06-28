@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G528/G572 Fertility Intelligence embryo-tracking: embryokwaliteitsrecords bewaren en tonen nu bronlabel, datum en reviewstatus in dossierdetails en embryo-dossiers; G572 is toegevoegd als opvolgdoel voor bronlabel-correctieflow.
 - G526/G571 Fertility Intelligence embryo-tracking: embryo-dossiers krijgen nu een canonieke Kiempad embryo-ID per poging, zichtbaar in de dossier-UI naast kliniek-ID's; G571 is toegevoegd als opvolgdoel voor alias- en reviewcorrectie.
 - G521/G570 Consultation Intelligence: tekstveld-import van consultnotities bewaart nu bronlabel en conceptreviewstatus in het encrypted consultverslagrecord en toont die status in de dossier-UI; G570 is toegevoegd als opvolgdoel voor reviewcorrectie.
 - G517/G569 Fertility Intelligence imaging privacy: dossier en imaging-repository tonen bij locked previews alleen placeholders zonder beeldpayload, thumbnail of bronbestandsnaam; G569 is toegevoegd als opvolgdoel voor visuele regressiebewaking.

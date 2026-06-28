@@ -18,6 +18,7 @@ export type DossierDocumentInput = {
     meetmoment?: string;
     kliniekTerminologie?: string;
     bron?: string;
+    reviewStatus?: NonNullable<DossierDocument['embryo']>['reviewStatus'];
     status?: DossierDocument['embryo'] extends infer Embryo
       ? Embryo extends { status?: infer Status }
         ? Status
@@ -925,6 +926,7 @@ function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocume
     meetmoment: input?.meetmoment?.trim() || undefined,
     kliniekTerminologie: input?.kliniekTerminologie?.trim() || undefined,
     bron: input?.bron?.trim() || undefined,
+    reviewStatus: input?.reviewStatus ?? 'concept',
     status: input?.status,
   };
 }

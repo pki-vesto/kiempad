@@ -9,6 +9,7 @@ export type EmbryoDossierItem = {
   trajectId?: string;
   laatsteDatum: string;
   kwaliteiten: string[];
+  kwaliteitBronLabels: string[];
   statussen: string[];
   meetmomenten: string[];
   kliniekTerminologieen: string[];
@@ -127,6 +128,11 @@ function bouwEmbryoDossier(
   const kwaliteiten = uniekeWaarden(
     dossierDocumenten.map((document) => document.embryo?.kwaliteit).filter(isString),
   );
+  const kwaliteitBronLabels = uniekeWaarden(
+    dossierDocumenten
+      .filter((document) => document.embryo?.kwaliteit)
+      .map((document) => beschrijfKwaliteitBronLabel(document)),
+  );
   const statussen = uniekeWaarden(
     dossierDocumenten
       .map((document) => document.embryo?.status)
@@ -163,6 +169,7 @@ function bouwEmbryoDossier(
     trajectId,
     laatsteDatum: bepaalDatum(dossierDocumenten[dossierDocumenten.length - 1] ?? eerste),
     kwaliteiten,
+    kwaliteitBronLabels,
     statussen,
     meetmomenten,
     kliniekTerminologieen,
@@ -249,6 +256,15 @@ function beschrijfHistorieDetail(document: DossierDocument): string {
   ].filter(isString);
 
   return details.length > 0 ? details.join(' · ') : document.titel;
+}
+
+function beschrijfKwaliteitBronLabel(document: DossierDocument): string {
+  const reviewStatus = document.embryo?.reviewStatus ?? 'concept';
+  const bron = document.embryo?.bron ?? document.metadata.bronbestand;
+  const datum = bepaalDatum(document);
+  const kwaliteit = document.embryo?.kwaliteit ?? 'onbekend';
+  const reviewLabel = reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
+  return `${kwaliteit} · bronlabel ${bron} · ${datum} · ${reviewLabel}`;
 }
 
 function bepaalBron(document: DossierDocument): string {

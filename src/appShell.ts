@@ -1155,6 +1155,13 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
           </label>
           <label>
+            Reviewstatus bronlabel
+            <select name="embryoReviewStatus">
+              <option value="concept">Concept - nog controleren</option>
+              <option value="gereviewd">Gereviewd</option>
+            </select>
+          </label>
+          <label>
             Status
             <select name="embryoStatus">
               ${Object.entries(EMBRYO_STATUS_LABELS)
@@ -1515,6 +1522,9 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
     `Kiempad-id: ${item.canonicalEmbryoId}`,
     `Laatste datum: ${item.laatsteDatum}`,
     item.kwaliteiten.length > 0 ? `Kwaliteit: ${item.kwaliteiten.join(', ')}` : undefined,
+    item.kwaliteitBronLabels.length > 0
+      ? `Kwaliteit bronlabels: ${item.kwaliteitBronLabels.join(' | ')}`
+      : undefined,
     item.statussen.length > 0 ? `Status: ${item.statussen.join(', ')}` : undefined,
     item.meetmomenten.length > 0 ? `Meetmoment: ${item.meetmomenten.join(', ')}` : undefined,
     item.kliniekTerminologieen.length > 0
@@ -1829,6 +1839,13 @@ function renderDossierOcrDetails(document: DossierDocument): string {
 function renderEmbryoDetails(document: DossierDocument): string {
   if (!document.embryo) return '';
   const status = document.embryo.status ? EMBRYO_STATUS_LABELS[document.embryo.status] : undefined;
+  const reviewStatus = document.embryo.reviewStatus ?? 'concept';
+  const bronlabel = document.embryo.bron ?? document.metadata.bronbestand;
+  const bronlabelDetails = [
+    `Bronlabel embryokwaliteit: ${bronlabel}`,
+    `Datum: ${document.metadata.documentDatum ?? document.datum}`,
+    `Reviewstatus: ${reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
+  ];
   const details = [
     `Embryo: ${document.embryo.label}`,
     document.embryo.dag ? `Dag ${document.embryo.dag}` : undefined,
@@ -1841,7 +1858,10 @@ function renderEmbryoDetails(document: DossierDocument): string {
     document.embryo.bron ? `Bron: ${document.embryo.bron}` : undefined,
   ].filter((label): label is string => Boolean(label));
 
-  return `<p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>`;
+  return `
+    <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
+    <p class="linked-note">${bronlabelDetails.map(escapeHtml).join(' · ')}</p>
+  `;
 }
 
 function renderDossierImagePreview(document: DossierDocument, state: AppShellState): string {

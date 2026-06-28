@@ -352,6 +352,7 @@ describe('dossier', () => {
         kwaliteit: '4AA',
         kliniekTerminologie: 'Gardner-score',
         bron: 'Labrapport',
+        reviewStatus: 'gereviewd',
         status: 'teruggeplaatst',
       },
     });
@@ -363,6 +364,7 @@ describe('dossier', () => {
       kwaliteit: '4AA',
       kliniekTerminologie: 'Gardner-score',
       bron: 'Labrapport',
+      reviewStatus: 'gereviewd',
       status: 'teruggeplaatst',
     });
     expect(document.analyse.samenvatting).toContain('Embryokwaliteit opgeslagen');

@@ -4022,7 +4022,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, UI, tests
 - **ADR Needed:** no
 - **Score:** 127
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G529 — embryo cryo-status tijdlijnitem
 
@@ -4619,6 +4619,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Desired Outcome:** Gebruikers kunnen per embryo-dossier bronlabels, kliniek-ID's en Kiempad-ID's controleren en aliascorrecties vastleggen zonder medische interpretatie.
 - **User Value:** Gebruikers herkennen hetzelfde embryo over labrapporten, beelduploads en consultcontext heen, ook wanneer klinieken afwijkende labels gebruiken.
 - **Acceptance Criteria:** UI toont Kiempad-ID, bronlabels en kliniek-ID's naast elkaar; gebruiker kan aliascorrectie als reviewmetadata bewaren; embryo-dossier en vergelijking gebruiken de gecorrigeerde alias zonder diagnose, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Embryo dossier, dossier UI, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G572 — embryo kwaliteit bronlabel correctieflow
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Embryokwaliteitsrecords tonen nu bronlabel en reviewstatus, maar gebruikers kunnen bestaande bronlabels nog niet in een aparte correctieflow aanpassen.
+- **Desired Outcome:** Gebruikers kunnen per embryokwaliteitsrecord bronlabel, datum en reviewstatus corrigeren zonder de kliniekwaarde inhoudelijk te veranderen of medisch te interpreteren.
+- **User Value:** Gebruikers houden herleidbaarheid van labrapporten en portaalteksten schoon wanneer bronnen later verduidelijkt worden.
+- **Acceptance Criteria:** UI toont bestaande bronlabelgegevens in een bewerkflow; wijzigingen bewaren bronlabel, datum en reviewstatus encrypted; embryo-dossier toont gecorrigeerde bronlabels; tests dekken correctie zonder diagnose, kansberekening of behandelkeuzeadvies; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Embryo dossier, dossier UI, tests

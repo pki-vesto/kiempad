@@ -52,6 +52,7 @@ describe('embryoDossier', () => {
         trajectId: 'traject-1',
         laatsteDatum: '2026-06-13',
         kwaliteiten: ['4AA'],
+        kwaliteitBronLabels: ['4AA · bronlabel Labrapport · 2026-06-12 · concept'],
         statussen: ['teruggeplaatst'],
         meetmomenten: ['Dag 5 blastocyst'],
         kliniekTerminologieen: ['Gardner-score'],

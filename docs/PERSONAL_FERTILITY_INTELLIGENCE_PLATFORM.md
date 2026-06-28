@@ -214,7 +214,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-028 Consultexport voor artsvoorbereiding | Consultation Intelligence | Export | Maak een printbaar consultoverzicht met open vragen, actiepunten en relevante historie. |
 | PFIP-029 Embryo-dossier per poging | Embryo Tracking | Embryodossier | Maak per poging een embryo-overzicht met canonieke Kiempad embryo-ID, dag, status, kwaliteit en notities. |
 | PFIP-030 Embryo-afbeelding koppelen aan embryo-record | Embryo Tracking | Beeldkoppeling | Koppel embryo-afbeeldingen direct aan embryo's en behoud bronmetadata. |
-| PFIP-031 Embryokwaliteit registreren volgens kliniektekst | Embryo Tracking | Kwaliteitsregistratie | Registreer kwaliteitsbeoordeling zoals ontvangen van de kliniek zonder eigen kansberekening. |
+| PFIP-031 Embryokwaliteit registreren volgens kliniektekst | Embryo Tracking | Kwaliteitsregistratie | Registreer kwaliteitsbeoordeling zoals ontvangen van de kliniek met bronlabel en reviewstatus, zonder eigen kansberekening. |
 | PFIP-032 Embryo-statushistorie bijhouden | Embryo Tracking | Historie | Leg statussen zoals bevrucht, ontwikkeling, ingevroren, teruggeplaatst of niet gebruikt vast door de tijd. |
 | PFIP-033 Embryo's vergelijken binnen en tussen pogingen | Embryo Tracking | Vergelijking | Toon embryo's naast elkaar met dag, status, kliniekbeoordeling en gekoppelde beelden. |
 | PFIP-034 Embryo-tijdlijnitems | Embryo Tracking | Tijdlijn | Plaats embryo-events op de centrale fertility timeline. |
