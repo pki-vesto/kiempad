@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 391 |
+| ☑ klaar | 392 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **590** |
+| **Totaal** | **591** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -752,13 +752,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G587 | Central Encrypted Platform: bootstrap smoke CI command | P1 | F5 | ☑ |
 | G588 | Central Encrypted Platform: missing key metadata recovery UI | P1 | F5 | ☐ |
 | G589 | Central Encrypted Platform: bootstrap smoke failure diagnostics | P1 | F5 | ☑ |
-| G590 | Central Encrypted Platform: bootstrap smoke phase runbook matrix | P1 | F5 | ☐ |
+| G590 | Central Encrypted Platform: bootstrap smoke phase runbook matrix | P1 | F5 | ☑ |
+| G591 | Central Encrypted Platform: bootstrap diagnostics redaction regression | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 590** (id's G001 t/m G590, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 591** (id's G001 t/m G591, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

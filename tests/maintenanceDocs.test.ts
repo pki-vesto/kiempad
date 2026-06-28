@@ -141,6 +141,31 @@ describe('onderhoudsdocumentatie', () => {
     expect(onboarding).not.toContain('start een nieuwe lokale kluis per toestel');
   });
 
+  it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
+    for (const requiredTerm of [
+      'npm run smoke:central-bootstrap',
+      'phaseCode',
+      'recoveryHint',
+      'first-device-write',
+      'second-device-read',
+      'restart-read',
+      'wrong-key',
+      'snapshot-inspection',
+      'plaintext-boundary',
+      'Waarschijnlijke oorzaak',
+      'Technische check',
+      'Herstelactie',
+      'Eigenaar',
+    ]) {
+      expect(runbook).toContain(requiredTerm);
+    }
+
+    expect(runbook).not.toContain('central bootstrap smoke passphrase');
+    expect(runbook).not.toContain('kiempad-session-');
+    expect(runbook).not.toContain('OCR/base64');
+    expect(runbook).not.toContain('gevoelige fertiliteitsnotitie');
+  });
+
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
     const backlogGoals = parseBacklogGoalRows();
     const executionGoalSections = parseExecutionGoalSections();
