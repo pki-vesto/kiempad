@@ -5184,4 +5184,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G612 — bootstrap governance annotation docsnapshot consistency
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De annotatieterm is nu gekoppeld aan releasecontext, maar wijzigingen in de docsnapshot kunnen nog apart drift veroorzaken als de annotatievorm verandert.
+- **Desired Outcome:** Tests vergelijken de `ciAnnotation` uit de runbook-schemafoutsnapshot met de gegenereerde schemafoutannotatie en releasecontext als één contract.
+- **User Value:** Reviewers zien annotatiedrift in één testpad in plaats van verspreid over script-, docs- en releasewijzigingen.
+- **Acceptance Criteria:** Test koppelt runbook `ciAnnotation`, scriptoutput en releasecontext; faalt bij mismatch in annotatietekst; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap governance tests, runbook, maintenance docs tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

@@ -12,7 +12,6 @@ import type {
   StorageMeta,
   StoredRecordType,
 } from './records';
-import { nowIso } from './records';
 
 export type CentralSessionToken = string;
 
@@ -60,8 +59,9 @@ export class MemoryCentralSessionStore implements CentralSessionStore {
       throw new CentralSessionError('Centrale sessie is niet toegestaan voor deze gebruiker.');
     }
 
-    const issuedAt = nowIso();
-    const expiresAt = new Date(Date.now() + this.ttlMs).toISOString();
+    const issuedAtMs = Date.now();
+    const issuedAt = new Date(issuedAtMs).toISOString();
+    const expiresAt = new Date(issuedAtMs + this.ttlMs).toISOString();
     const token = createOpaqueSessionToken();
     const tokenFingerprint = await fingerprintSessionToken(token);
     this.sessions.set(tokenFingerprint, {
