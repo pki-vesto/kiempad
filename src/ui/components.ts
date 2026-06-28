@@ -241,12 +241,15 @@ export function disclosure(opts: {
 /** Empty state with optional call to action. */
 export function emptyState(opts: {
   message: string;
+  title?: string;
+  iconName?: IconName;
   cta?: { href: string; label: string };
 }): string {
   const cta = opts.cta
     ? `<a class="inline-action" href="${escapeAttribute(opts.cta.href)}">${escapeHtml(opts.cta.label)}</a>`
     : '';
-  return `<div class="empty-state kp-empty"><p>${escapeHtml(opts.message)}</p>${cta}</div>`;
+  const heading = opts.title ? `<h3 class="kp-empty__title">${escapeHtml(opts.title)}</h3>` : '';
+  return `<div class="empty-state kp-empty"><span class="kp-empty__tile" aria-hidden="true">${icon(opts.iconName ?? 'sprout')}</span>${heading}<p>${escapeHtml(opts.message)}</p>${cta}</div>`;
 }
 
 /** Loading skeleton (shimmer disabled under prefers-reduced-motion via CSS). */

@@ -7,6 +7,12 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Fixed
+- Claude Design FIXES.md punt 9 (lege staten): kale "Nog geen …"-regels zijn nu
+  rustige, ontworpen lege-staat-blokken (gecentreerd, dashed hairline, surface-2)
+  i.p.v. losse tekst. De `emptyState()`-component levert het rijke blok met een
+  teal icoon-tegel (52px), serif kopje, zin en één primaire actie.
+
+### Fixed
 - Claude Design FIXES.md ronde 2 (deel 2):
   10. Setup-kaart: "Setup afgerond" is nu een gevulde teal-knop (geen off-brand/
       ongestylde knop meer); setup-stappen zijn gewone regels (geen kapotte

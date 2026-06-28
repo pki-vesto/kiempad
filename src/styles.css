@@ -1106,10 +1106,56 @@ h2 {
   object-fit: cover;
 }
 
+/* FIX 9: lege staten voelen als rustige, ontworpen blokken (geen kale tekst) */
 .empty-state {
   margin: 0;
-  color: var(--text-muted);
-  line-height: 1.6;
+  padding: 22px 18px;
+  border: 1px dashed var(--line-2);
+  border-radius: 14px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  line-height: 1.55;
+  text-align: center;
+}
+
+/* rich lege-staat (component): icoon-tegel + serif kop + zin + actie */
+.kp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 22px;
+  border-style: solid;
+  border-color: var(--line);
+  background: var(--surface);
+}
+
+.kp-empty__tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 4px;
+  border-radius: 14px;
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+}
+
+.kp-empty__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.kp-empty p {
+  margin: 0;
+  max-width: 42ch;
+}
+
+.kp-empty .inline-action {
+  margin-top: 6px;
 }
 
 .section-subheading {
