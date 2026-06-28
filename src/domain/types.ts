@@ -221,6 +221,7 @@ export interface DossierDocument {
     meetmoment?: string;
     kliniekTerminologie?: string;
     bron?: string;
+    reviewStatus?: 'concept' | 'gereviewd';
   };
   notitie?: string;
   analyse: {

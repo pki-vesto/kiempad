@@ -1793,6 +1793,7 @@ describe('app shell', () => {
             kwaliteit: '4AA',
             kliniekTerminologie: 'Gardner-score',
             bron: 'Labrapport',
+            reviewStatus: 'gereviewd',
             status: 'teruggeplaatst',
           },
           analyse: {
@@ -1859,6 +1860,8 @@ describe('app shell', () => {
     expect(html).toContain('Kwaliteit volgens kliniek');
     expect(html).toContain('name="embryoKliniekTerminologie"');
     expect(html).toContain('name="embryoBron"');
+    expect(html).toContain('name="embryoReviewStatus"');
+    expect(html).toContain('Reviewstatus bronlabel');
     expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
     expect(html).toContain(
       'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
@@ -1868,6 +1871,12 @@ describe('app shell', () => {
     expect(html).toContain('Poging: traject-1');
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-1');
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-2');
+    expect(html).toContain(
+      'Kwaliteit bronlabels: 4AA · bronlabel Labrapport · 2026-05-04 · gereviewd',
+    );
+    expect(html).toContain(
+      'Kwaliteit bronlabels: 4BB · bronlabel Labrapport · 2026-05-04 · concept',
+    );
     expect(html).toContain(
       'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 2',
     );
@@ -1897,6 +1906,12 @@ describe('app shell', () => {
     );
     expect(html).toContain('Laatste datum: 2026-05-04');
     expect(html).toContain('Kwaliteit: 4AA');
+    expect(html).toContain(
+      'Bronlabel embryokwaliteit: Labrapport · Datum: 2026-05-04 · Reviewstatus: Gereviewd',
+    );
+    expect(html).toContain(
+      'Bronlabel embryokwaliteit: Labrapport · Datum: 2026-05-04 · Reviewstatus: Concept',
+    );
     expect(html).toContain('Status: teruggeplaatst');
     expect(html).toContain('Meetmoment: Dag 5 blastocyst');
     expect(html).toContain('Terminologie: Gardner-score');

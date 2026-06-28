@@ -650,6 +650,7 @@ async function saveEmbryoQualityFromForm(
     const embryoStatus = parseEmbryoStatus(data.get('embryoStatus'));
     const embryoKliniekTerminologie = optionalString(data.get('embryoKliniekTerminologie'));
     const embryoBron = optionalString(data.get('embryoBron'));
+    const embryoReviewStatus = parseEmbryoReviewStatus(data.get('embryoReviewStatus'));
     const inhoud = JSON.stringify({
       embryo: embryoLabel,
       dag: embryoDag,
@@ -658,6 +659,7 @@ async function saveEmbryoQualityFromForm(
       kliniekTerminologie: embryoKliniekTerminologie,
       status: embryoStatus,
       bron: embryoBron,
+      reviewStatus: embryoReviewStatus,
       notitie,
     });
 
@@ -678,6 +680,7 @@ async function saveEmbryoQualityFromForm(
         meetmoment: embryoMeetmoment,
         kliniekTerminologie: embryoKliniekTerminologie,
         bron: embryoBron,
+        reviewStatus: embryoReviewStatus,
         status: embryoStatus,
       },
       notitie,
@@ -2393,6 +2396,12 @@ function parseEmbryoStatus(
   }
 
   return 'onbekend';
+}
+
+function parseEmbryoReviewStatus(
+  value: FormDataEntryValue | null,
+): NonNullable<NonNullable<DossierDocument['embryo']>['reviewStatus']> {
+  return value === 'gereviewd' ? 'gereviewd' : 'concept';
 }
 
 function parseThema(value: FormDataEntryValue | null): AppSettings['thema'] {
