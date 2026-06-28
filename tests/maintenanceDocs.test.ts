@@ -139,6 +139,8 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_REL
   ['release-state-foutmeldingcontext missing-term melding'] as const;
 const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR =
   'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontext missing-term melding';
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS =
+  ['release-state-foutmeldingcontextmelding missing-term melding'] as const;
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -532,6 +534,18 @@ describe('onderhoudsdocumentatie', () => {
           redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorContext,
         ).toContain(missingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorTerm);
       }
+      const redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseContext =
+        extractBootstrapGovernanceReleaseContext(
+          releaseDoc,
+          BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS,
+        );
+      for (const missingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseTerm of BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS) {
+        expect(
+          redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseContext,
+        ).toContain(
+          missingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseTerm,
+        );
+      }
       for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
         expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
         expect(redactionReleaseContext).not.toContain(forbiddenTerm);
@@ -562,6 +576,9 @@ describe('onderhoudsdocumentatie', () => {
         ).not.toContain(forbiddenTerm);
         expect(
           redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorContext,
+        ).not.toContain(forbiddenTerm);
+        expect(
+          redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseContext,
         ).not.toContain(forbiddenTerm);
       }
     }
@@ -819,6 +836,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR,
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorContract:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR,
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorRelease:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_TERMS,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -893,6 +912,8 @@ describe('onderhoudsdocumentatie', () => {
         'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontext missing-term melding',
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorContract:
         'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontext missing-term melding',
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorRelease:
+        ['release-state-foutmeldingcontextmelding missing-term melding'],
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
