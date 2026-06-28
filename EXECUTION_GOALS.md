@@ -5268,4 +5268,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G618 — bootstrap governance placeholder context helper consolidation
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook- en releasecontext rond schemafoutannotatie-placeholders wordt nu bewaakt, maar de maintenance-test gebruikt nog aparte extractiehelpers voor schemafout- en placeholdercontext.
+- **Desired Outcome:** De maintenance-test gebruikt één kleine helper voor bootstrap governance releasecontext waarin annotatievelden en placeholdervelden samen worden gevalideerd.
+- **User Value:** Toekomstige contractwijzigingen zijn eenvoudiger te reviewen en minder foutgevoelig.
+- **Acceptance Criteria:** Maintenance-test consolideert releasecontext-extractie voor schemafoutvelden en placeholders; bestaande guards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance docs
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

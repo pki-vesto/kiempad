@@ -243,6 +243,14 @@ describe('onderhoudsdocumentatie', () => {
     expect(Object.keys(freshnessSnapshot.sources)).toEqual(governanceContract.sourceFields);
     expect(Object.keys(freshnessSnapshot.coverage)).toEqual(governanceContract.coverageFields);
     const schemaErrorSnapshot = extractBootstrapGovernanceSchemaErrorSnapshot();
+    const schemaFailurePlaceholders = extractTemplatePlaceholders(
+      governanceContract.schemaFailureAnnotationTemplate,
+    );
+    expect(schemaFailurePlaceholders).toEqual([
+      'gate',
+      'unknownCoverageFieldCount',
+      'unknownSourceFieldCount',
+    ]);
     expect(schemaErrorSnapshot).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
@@ -289,6 +297,11 @@ describe('onderhoudsdocumentatie', () => {
         'unknownCoverageFieldCount',
       ]) {
         expect(schemaErrorReleaseContext).toContain(schemaErrorField);
+      }
+      const placeholderReleaseContext =
+        extractBootstrapGovernancePlaceholderReleaseContext(releaseDoc);
+      for (const placeholder of schemaFailurePlaceholders) {
+        expect(placeholderReleaseContext).toContain(`{${placeholder}}`);
       }
       for (const forbiddenTerm of [
         'payload',
@@ -1552,6 +1565,22 @@ function extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc: string)
   return matchingLines.join('\n');
 }
 
+function extractBootstrapGovernancePlaceholderReleaseContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      ['{gate}', '{unknownSourceFieldCount}', '{unknownCoverageFieldCount}'].some((term) =>
+        line.includes(term),
+      ),
+    );
+
+  if (matchingLines.length === 0) {
+    throw new Error('Bootstrap governance placeholdervelden ontbreken in releasecontext.');
+  }
+
+  return matchingLines.join('\n');
+}
+
 function buildBootstrapGovernanceSchemaFailureAnnotationFixture({
   unknownSourceFieldCount,
   unknownCoverageFieldCount,
@@ -1563,6 +1592,17 @@ function buildBootstrapGovernanceSchemaFailureAnnotationFixture({
     .replace('{gate}', governanceContract.gate)
     .replace('{unknownSourceFieldCount}', String(unknownSourceFieldCount))
     .replace('{unknownCoverageFieldCount}', String(unknownCoverageFieldCount));
+}
+
+function extractTemplatePlaceholders(template: string): string[] {
+  const placeholders: string[] = [];
+  for (const match of template.matchAll(/\{([A-Za-z0-9]+)\}/g)) {
+    if (match[1]) {
+      placeholders.push(match[1]);
+    }
+  }
+
+  return [...new Set(placeholders)].sort();
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {
