@@ -111,6 +111,25 @@ describe('central row-store persistence', () => {
     await expect(readdir(directory)).rejects.toMatchObject({ code: 'ENOENT' });
   });
 
+  it('weigert replay-protection metadata die niet bij recordmetadata past vóór save', async () => {
+    const directory = await createPersistenceDirectory();
+    const snapshot = createValidSnapshot();
+    const record = snapshot.records[0];
+    if (!record) throw new Error('Expected record fixture.');
+    snapshot.records[0] = {
+      ...record,
+      replayProtection: {
+        ...record.replayProtection,
+        clientUpdatedAt: '2026-06-25T07:00:00.000Z',
+      },
+    };
+
+    await expect(new JsonTableCentralDatabasePersistence(directory).save(snapshot)).rejects.toThrow(
+      'Ongeldige centrale database snapshot',
+    );
+    await expect(readdir(directory)).rejects.toMatchObject({ code: 'ENOENT' });
+  });
+
   it('weigert corrupte row files vóór databasegebruik', async () => {
     const directory = await createPersistenceDirectory();
     const persistence = new JsonTableCentralDatabasePersistence(directory);
@@ -162,6 +181,11 @@ describe('central row-store persistence', () => {
       id: 'record-2',
       updatedAt: '2026-06-25T08:00:05.000Z',
       storedAt: '2026-06-25T08:00:06.000Z',
+      replayProtection: {
+        clientUpdatedAt: '2026-06-25T08:00:05.000Z',
+        acceptedAt: '2026-06-25T08:00:06.000Z',
+        serverVersion: 1,
+      },
     };
     await persistence.save(nextSnapshot);
 
@@ -222,6 +246,11 @@ function createValidSnapshot(): CentralDatabaseSnapshot {
         schemaVersion: 1,
         storedAt: '2026-06-25T08:00:04.000Z',
         serverVersion: 1,
+        replayProtection: {
+          clientUpdatedAt: '2026-06-25T08:00:03.000Z',
+          acceptedAt: '2026-06-25T08:00:04.000Z',
+          serverVersion: 1,
+        },
         payload: {
           v: 1,
           alg: 'AES-256-GCM',

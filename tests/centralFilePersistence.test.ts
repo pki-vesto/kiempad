@@ -268,6 +268,11 @@ describe('central file persistence snapshot validation', () => {
       updatedAt: '2026-06-25T08:00:06.000Z',
       storedAt: '2026-06-25T08:00:07.000Z',
       serverVersion: 1,
+      replayProtection: {
+        clientUpdatedAt: '2026-06-25T08:00:06.000Z',
+        acceptedAt: '2026-06-25T08:00:07.000Z',
+        serverVersion: 1,
+      },
     });
 
     const persistence = new JsonFileCentralDatabasePersistence(filePath);
@@ -387,6 +392,11 @@ function createValidSnapshot(): CentralDatabaseSnapshot {
         schemaVersion: 1,
         storedAt: '2026-06-25T08:00:04.000Z',
         serverVersion: 1,
+        replayProtection: {
+          clientUpdatedAt: '2026-06-25T08:00:03.000Z',
+          acceptedAt: '2026-06-25T08:00:04.000Z',
+          serverVersion: 1,
+        },
         payload: {
           v: 1,
           alg: 'AES-256-GCM',

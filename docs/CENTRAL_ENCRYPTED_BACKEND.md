@@ -32,7 +32,12 @@ owner/indexmetadata en encrypted envelopes.
   Recordwrites worden vóór runtime-mutatie gevalideerd op bekende recordtypes,
   canonieke timestamps, een door deze app ondersteunde `schemaVersion` en complete
   `AES-256-GCM` envelopes; malformed of toekomstige recordversies bereiken dus ook
-  via directe databasecalls geen centrale runtime-state.
+  via directe databasecalls geen centrale runtime-state. Centrale records krijgen
+  server-owned replaymetadata (`clientUpdatedAt`, `acceptedAt`, `serverVersion`),
+  en oudere of identieke client-updates voor hetzelfde owner-record worden vóór
+  mutatie geweigerd zonder payloadinhoud te inspecteren.
+  Legacy snapshots zonder replaymetadata worden bij database-open gehydrateerd en
+  daarna met het nieuwe technische metadata-contract geëxporteerd.
   Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
   `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
   persistence geweigerd. Die technische metadata is owner-scoped: dezelfde metakey
@@ -42,9 +47,9 @@ owner/indexmetadata en encrypted envelopes.
   Het bestand bevat encrypted envelopes en minimale metadata, geen plaintext
   medische/fertiliteitsinhoud. Snapshots worden vóór databasegebruik gevalideerd op
   ownermetadata, bekende recordtypes, canonieke ISO-timestamps, ondersteunde
-  record-schemaversies, positieve serverversies, servermetadata, toegestane
-  technische metakeys, dubbele logical keys binnen dezelfde ownernamespace en
-  `AES-256-GCM` envelopes.
+  record-schemaversies, positieve serverversies, replaymetadata, servermetadata,
+  toegestane technische metakeys, dubbele logical keys binnen dezelfde
+  ownernamespace en `AES-256-GCM` envelopes.
   De file-backed adapter valideert dezelfde snapshotgrens ook vóór hij een nieuwe
   snapshot naar disk schrijft. Saves schrijven eerst naar een random, exclusief
   aangemaakt tijdelijk snapshotpad, flushen dat bestand vóór replacement, vervangen

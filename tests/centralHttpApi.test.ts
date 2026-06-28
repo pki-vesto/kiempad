@@ -233,6 +233,50 @@ describe('central encrypted HTTP API contract', () => {
     }
   });
 
+  it('weigert replay van oudere HTTP-recordwrites zonder plaintext te lekken', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const token = await issueToken(api, 'user-peter');
+    const oldRecord = createHttpEncryptedRecord('http-replay-record', '2026-06-25T08:00:01.000Z');
+    const newRecord = {
+      ...createHttpEncryptedRecord('http-replay-record', '2026-06-25T08:00:05.000Z'),
+      payload: {
+        ...oldRecord.payload,
+        iv: 'encrypted-iv-http-newer',
+        ciphertext: 'encrypted-ciphertext-http-newer',
+      },
+    };
+
+    await expect(
+      api.handle({ method: 'PUT', path: '/records/http-replay-record', token, body: oldRecord }),
+    ).resolves.toEqual({ status: 204 });
+    await expect(
+      api.handle({ method: 'PUT', path: '/records/http-replay-record', token, body: newRecord }),
+    ).resolves.toEqual({ status: 204 });
+    await expect(
+      api.handle({ method: 'PUT', path: '/records/http-replay-record', token, body: oldRecord }),
+    ).resolves.toEqual({
+      status: 400,
+      body: { error: 'Centrale recordwrite is ouder dan de laatste versie.' },
+    });
+
+    const stored = database.unsafeDumpRecordsForTest()[0];
+    expect(stored).toMatchObject({
+      id: 'http-replay-record',
+      serverVersion: 2,
+      replayProtection: {
+        clientUpdatedAt: '2026-06-25T08:00:05.000Z',
+        acceptedAt: stored?.storedAt,
+        serverVersion: 2,
+      },
+    });
+    expect(JSON.stringify(database.unsafeDumpRecordsForTest())).not.toContain(
+      'gevoelige fertiliteitsnotitie',
+    );
+  });
+
   it('weigert malformed API payloads met veilige client errors', async () => {
     const api = new CentralEncryptedHttpApi(
       new CentralEncryptedApiServer(
@@ -447,12 +491,15 @@ describe('central encrypted HTTP API contract', () => {
   });
 });
 
-function createHttpEncryptedRecord(id: string) {
+function createHttpEncryptedRecord(
+  id: string,
+  updatedAt = `2026-06-25T08:00:${id.match(/\d+$/)?.[0]?.padStart(2, '0') ?? '00'}.000Z`,
+) {
   return {
     id,
     type: 'traject',
     createdAt: '2026-06-25T08:00:00.000Z',
-    updatedAt: `2026-06-25T08:00:${id.match(/\d+$/)?.[0]?.padStart(2, '0') ?? '00'}.000Z`,
+    updatedAt,
     schemaVersion: 1,
     payload: {
       v: 1,

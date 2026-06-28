@@ -17,6 +17,13 @@ export type CentralEncryptedRecord = EncryptedRecord & {
   ownerUserId: string;
   storedAt: string;
   serverVersion: number;
+  replayProtection: CentralRecordReplayProtection;
+};
+
+export type CentralRecordReplayProtection = {
+  clientUpdatedAt: string;
+  acceptedAt: string;
+  serverVersion: number;
 };
 
 export type CentralStorageMeta = StorageMeta & {
@@ -94,7 +101,11 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
       this.meta.set(metaKey(entry.ownerUserId, entry.key), cloneJson(entry));
     }
     for (const record of snapshot.records) {
-      this.records.set(recordKey(record.ownerUserId, record.id), cloneJson(record));
+      const hydratedRecord = hydrateCentralRecordReplayProtection(record);
+      this.records.set(
+        recordKey(hydratedRecord.ownerUserId, hydratedRecord.id),
+        cloneJson(hydratedRecord),
+      );
     }
   }
 
@@ -134,12 +145,20 @@ export class MemoryCentralEncryptedDatabase implements CentralEncryptedDatabase 
     assertValidEncryptedRecordInput(record);
     const storageKey = recordKey(session.userId, record.id);
     const existing = this.records.get(storageKey);
+    assertNotReplayedCentralRecord(record, existing);
+    const serverVersion = (existing?.serverVersion ?? 0) + 1;
+    const storedAt = nowIso();
 
     this.records.set(storageKey, {
       ...record,
       ownerUserId: session.userId,
-      storedAt: nowIso(),
-      serverVersion: (existing?.serverVersion ?? 0) + 1,
+      storedAt,
+      serverVersion,
+      replayProtection: {
+        clientUpdatedAt: record.updatedAt,
+        acceptedAt: storedAt,
+        serverVersion,
+      },
     });
   }
 
@@ -421,9 +440,23 @@ function assertValidCentralEncryptedRecord(
     !isPositiveInteger(record.serverVersion) ||
     typeof record.type !== 'string' ||
     !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
-    !isEncryptionEnvelope(record.payload)
+    !isEncryptionEnvelope(record.payload) ||
+    !hasValidCentralRecordReplayProtection(record)
   ) {
     throwInvalidCentralSnapshot();
+  }
+}
+
+function assertNotReplayedCentralRecord(
+  record: EncryptedRecord,
+  existing: CentralEncryptedRecord | undefined,
+): void {
+  if (!existing) return;
+
+  const previousClientUpdatedAt = Date.parse(existing.replayProtection.clientUpdatedAt);
+  const nextClientUpdatedAt = Date.parse(record.updatedAt);
+  if (nextClientUpdatedAt <= previousClientUpdatedAt) {
+    throw new CentralDataValidationError('Centrale recordwrite is ouder dan de laatste versie.');
   }
 }
 
@@ -460,6 +493,40 @@ function isPositiveInteger(value: unknown): value is number {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
+}
+
+function hasValidCentralRecordReplayProtection(record: Record<string, unknown>): boolean {
+  if (!('replayProtection' in record)) return true;
+  const replayProtection = record.replayProtection;
+  return (
+    isCentralRecordReplayProtection(replayProtection) &&
+    replayProtection.clientUpdatedAt === record.updatedAt &&
+    replayProtection.acceptedAt === record.storedAt &&
+    replayProtection.serverVersion === record.serverVersion
+  );
+}
+
+function isCentralRecordReplayProtection(value: unknown): value is CentralRecordReplayProtection {
+  return (
+    isRecord(value) &&
+    isIsoTimestamp(value.clientUpdatedAt) &&
+    isIsoTimestamp(value.acceptedAt) &&
+    isPositiveInteger(value.serverVersion)
+  );
+}
+
+function hydrateCentralRecordReplayProtection(
+  record: CentralEncryptedRecord,
+): CentralEncryptedRecord {
+  if (record.replayProtection) return record;
+  return {
+    ...record,
+    replayProtection: {
+      clientUpdatedAt: record.updatedAt,
+      acceptedAt: record.storedAt,
+      serverVersion: record.serverVersion,
+    },
+  };
 }
 
 function assertValidCentralMetaValue(key: string, value: unknown): void {
@@ -577,6 +644,7 @@ function stripCentralRecord(record: CentralEncryptedRecord): EncryptedRecord {
     ownerUserId: _ownerUserId,
     storedAt: _storedAt,
     serverVersion: _serverVersion,
+    replayProtection: _replayProtection,
     ...storedRecord
   } = record;
   return storedRecord;

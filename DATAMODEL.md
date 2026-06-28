@@ -263,7 +263,12 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
   bestandsnamen, bronpad, OCR-tekst, notities, base64-inhoud en medische context
   blijven onderdeel van de versleutelde payload.
 - De centrale servervorm is `CentralEncryptedRecord`: alle velden van
-  `EncryptedRecord` plus `ownerUserId`, `storedAt` en `serverVersion`.
+  `EncryptedRecord` plus `ownerUserId`, `storedAt`, `serverVersion` en
+  server-owned `replayProtection`.
+- `replayProtection` bewaart alleen technische replaymetadata:
+  `clientUpdatedAt`, `acceptedAt` en `serverVersion`. De centrale write-route
+  weigert oudere of identieke client-updates voor hetzelfde owner-record voordat
+  de snapshot muteert.
 - Centrale technische metadata gebruikt `CentralStorageMeta`: `ownerUserId`, `key`,
   `value` en `updatedAt`.
 - De centrale snapshot is `CentralDatabaseSnapshot` met `version`, `exportedAt`,

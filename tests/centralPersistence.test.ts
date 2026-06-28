@@ -243,6 +243,11 @@ describe('central encrypted database persistence', () => {
             ownerUserId: testSession.userId,
             storedAt: '2026-06-25T08:00:01.000Z',
             serverVersion: 1,
+            replayProtection: {
+              clientUpdatedAt: existingRecord.updatedAt,
+              acceptedAt: '2026-06-25T08:00:01.000Z',
+              serverVersion: 1,
+            },
           },
         ],
       }),
