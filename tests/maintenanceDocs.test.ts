@@ -152,6 +152,8 @@ describe('onderhoudsdocumentatie', () => {
       'Herstelactie',
       'Eigenaar',
       'src/storage/centralBootstrapDiagnostics.ts',
+      'Snapshotdrift is alleen acceptabel bij een bewuste registrywijziging',
+      '`phaseCode`, `envName` of neutrale redactioncategory-labels',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }

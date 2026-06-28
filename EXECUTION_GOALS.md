@@ -5002,4 +5002,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, command tests, maintenance docs tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G599 — bootstrap diagnostic snapshot review fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook benoemt nu hoe snapshotdrift moet worden beoordeeld, maar er is nog geen testfixture die bewijst dat die reviewregel alleen naar veilige registryvelden verwijst.
+- **Desired Outcome:** Een maintenance-test of commandotest koppelt de snapshotreviewregel aan de toegestane registryvelden, zodat toekomstige tekstwijzigingen niet terugvallen op gevoelige synthetische details.
+- **User Value:** Reviewers kunnen bootstrapdiagnostic snapshotwijzigingen beoordelen via veilige metadata zonder inhoudelijke testdetails te hoeven openen.
+- **Acceptance Criteria:** Test controleert dat de reviewregel uitsluitend `phaseCode`, `envName` en neutrale categorylabels noemt; test faalt bij payload-, secret-, token-, bestandsnaam-, tekstextractie- of medische inhoudstermen; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, maintenance docs tests, bootstrap diagnostic snapshot
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
