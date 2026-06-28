@@ -3,6 +3,13 @@ import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
 import workflowRaw from '../.github/workflows/ci.yml?raw';
 import packageJsonRaw from '../package.json?raw';
+import smokeScriptRaw from '../scripts/central-dataset-bootstrap-smoke.mts?raw';
+import {
+  BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS,
+  BOOTSTRAP_SMOKE_PHASE_CODES,
+  BOOTSTRAP_SMOKE_REDACTION_CATEGORIES,
+  BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT,
+} from '../src/storage/centralBootstrapDiagnostics';
 
 const execFileAsync = promisify(execFile);
 const TSX_BIN = 'node_modules/.bin/tsx';
@@ -65,43 +72,40 @@ describe('central dataset bootstrap smoke command', () => {
   }, 15_000);
 
   it('redigeert alle bekende bootstrap failurediagnostics', async () => {
-    for (const { phaseCode, env } of [
-      {
-        phaseCode: 'first-device-write',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_FIRST_DEVICE_FAILURE: '1' },
-      },
-      {
-        phaseCode: 'second-device-read',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE: '1' },
-      },
-      {
-        phaseCode: 'restart-read',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RESTART_FAILURE: '1' },
-      },
-      {
-        phaseCode: 'wrong-key',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_WRONG_KEY_FAILURE: '1' },
-      },
-      {
-        phaseCode: 'snapshot-inspection',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SNAPSHOT_INSPECTION_FAILURE: '1' },
-      },
-      {
-        phaseCode: 'plaintext-boundary',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK: '1' },
-      },
-      {
-        phaseCode: 'runtime',
-        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE: '1' },
-      },
-    ]) {
-      const output = await runFailingSmoke(env);
+    for (const {
+      phaseCode,
+      envName,
+      redactionCategories,
+    } of BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS) {
+      expect(redactionCategories).toEqual(BOOTSTRAP_SMOKE_REDACTION_CATEGORIES);
+      const output = await runFailingSmoke({ [envName]: '1' });
       expect(output).toContain('"status": "failed"');
       expect(output).toContain(`"phaseCode": "${phaseCode}"`);
       expect(output).toContain('"recoveryHint"');
       expectSanitizedSmokeOutput(output);
     }
   }, 30_000);
+
+  it('houdt diagnostic registry compleet voor alle gedocumenteerde phaseCodes', () => {
+    const scriptPhaseCodes = [...smokeScriptRaw.matchAll(/phaseCode:\s*'([^']+)'/g)].map(
+      (match) => match[1],
+    );
+
+    expect(new Set(BOOTSTRAP_SMOKE_PHASE_CODES).size).toBe(BOOTSTRAP_SMOKE_PHASE_CODES.length);
+    expect([...new Set(scriptPhaseCodes)].sort()).toEqual([...BOOTSTRAP_SMOKE_PHASE_CODES].sort());
+    expect(BOOTSTRAP_SMOKE_PHASE_CODES).toEqual([
+      'first-device-write',
+      'second-device-read',
+      'restart-read',
+      'wrong-key',
+      'snapshot-inspection',
+      'plaintext-boundary',
+      'runtime',
+    ]);
+    expect(BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT).toContain(
+      'central bootstrap smoke passphrase',
+    );
+  });
 });
 
 async function runFailingSmoke(env: Record<string, string>): Promise<string> {
@@ -124,6 +128,7 @@ async function runFailingSmoke(env: Record<string, string>): Promise<string> {
 
 function expectSanitizedSmokeOutput(output: string): void {
   expect(output).not.toContain('central bootstrap smoke passphrase');
+  expect(output).not.toContain(BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT);
   expect(output).not.toContain('kiempad-session-');
   expect(output).not.toContain('Centrale bootstrap poging');
   expect(output).not.toContain('gevoelige fertiliteitsnotitie');

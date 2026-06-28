@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G593/G594 Central Encrypted Platform: bootstrap diagnostic failurefixtures staan nu in een centrale registry met env-naam, `phaseCode` en redactioncategorieën; de CLI en commandotests gebruiken dezelfde registry en tests falen als CLI-phaseCodes ontbreken. G594 is toegevoegd als opvolgdoel voor runbookdriftcontrole tegen de registry.
 - G592/G593 Central Encrypted Platform: de centrale bootstrap smoke heeft nu een runtime-exception fixture die bewust gevoelige synthetische fouttekst forceert, terwijl commandotests afdwingen dat output alleen `phaseCode=runtime` en een generieke herstelhint bevat. G593 is toegevoegd als opvolgdoel voor een centrale diagnostic injection registry.
 - G591/G592 Central Encrypted Platform: commandotests forceren nu alle bekende centrale bootstrap smoke failurefasecodes en controleren gezamenlijk dat diagnostics geen passphrases, bearer tokens, bestandsnamen, OCR/base64-markers of medische plaintext bevatten. G592 is toegevoegd als opvolgdoel voor een runtime-exception diagnostic fixture.
 - G590/G591 Central Encrypted Platform: de runbook bevat nu een phaseCode-matrix voor centrale bootstrap smoke failures met oorzaak, technische check, herstelactie en eigenaar; maintenance-tests bewaken alle fasecodes zonder gevoelige output. G591 is toegevoegd als opvolgdoel voor een brede redaction-regressie over alle failurediagnostics.

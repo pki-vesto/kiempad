@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 394 |
+| ☑ klaar | 395 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **593** |
+| **Totaal** | **594** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -755,13 +755,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G590 | Central Encrypted Platform: bootstrap smoke phase runbook matrix | P1 | F5 | ☑ |
 | G591 | Central Encrypted Platform: bootstrap diagnostics redaction regression | P1 | F5 | ☑ |
 | G592 | Central Encrypted Platform: bootstrap runtime diagnostic fixture | P1 | F5 | ☑ |
-| G593 | Central Encrypted Platform: bootstrap diagnostic injection registry | P1 | F5 | ☐ |
+| G593 | Central Encrypted Platform: bootstrap diagnostic injection registry | P1 | F5 | ☑ |
+| G594 | Central Encrypted Platform: bootstrap runbook registry drift check | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 593** (id's G001 t/m G593, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 594** (id's G001 t/m G594, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -1,17 +1,12 @@
+import {
+  BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT,
+  type BootstrapSmokePhaseCode,
+  isBootstrapSmokeDiagnosticInjectionEnabled,
+} from '../src/storage/centralBootstrapDiagnostics';
 import { runCentralDatasetBootstrapSmoke } from '../src/storage/centralDatasetBootstrapSmoke';
 import { MemoryCentralDatabasePersistence } from '../src/storage/centralDatabase';
 
 const FAILURE_INJECTION_NEEDLE = 'Centrale bootstrap poging';
-const RUNTIME_FAILURE_INJECTION_NEEDLE =
-  'central bootstrap smoke passphrase kiempad-session-forged echo-foto-privenaam.jpg OCR base64 gevoelige fertiliteitsnotitie';
-type BootstrapSmokePhaseCode =
-  | 'first-device-write'
-  | 'second-device-read'
-  | 'restart-read'
-  | 'wrong-key'
-  | 'plaintext-boundary'
-  | 'snapshot-inspection'
-  | 'runtime';
 
 type BootstrapSmokeDiagnostic = {
   status: 'failed';
@@ -20,8 +15,8 @@ type BootstrapSmokeDiagnostic = {
 };
 
 async function main(): Promise<void> {
-  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE === '1') {
-    throw new Error(RUNTIME_FAILURE_INJECTION_NEEDLE);
+  if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'runtime')) {
+    throw new Error(BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT);
   }
 
   const persistence = new MemoryCentralDatabasePersistence();
@@ -29,10 +24,10 @@ async function main(): Promise<void> {
     persistence,
     inspectSerializedSnapshot: () => {
       const serialized = persistence.unsafeSerializedSnapshotForTest();
-      if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SNAPSHOT_INSPECTION_FAILURE === '1') {
+      if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'snapshot-inspection')) {
         return undefined;
       }
-      if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK === '1') {
+      if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'plaintext-boundary')) {
         return `${serialized}\n${FAILURE_INJECTION_NEEDLE}`;
       }
       return serialized;
@@ -129,16 +124,16 @@ function writeDiagnostic(diagnostic: BootstrapSmokeDiagnostic): void {
 function applyDiagnosticFailureInjection(
   result: Awaited<ReturnType<typeof runCentralDatasetBootstrapSmoke>>,
 ): void {
-  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_FIRST_DEVICE_FAILURE === '1') {
+  if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'first-device-write')) {
     result.firstDeviceWriteVisible = false;
   }
-  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE === '1') {
+  if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'second-device-read')) {
     result.secondDeviceReadVisible = false;
   }
-  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RESTART_FAILURE === '1') {
+  if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'restart-read')) {
     result.restartedReadVisible = false;
   }
-  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_WRONG_KEY_FAILURE === '1') {
+  if (isBootstrapSmokeDiagnosticInjectionEnabled(process.env, 'wrong-key')) {
     result.wrongPassphraseRejected = false;
   }
 }
