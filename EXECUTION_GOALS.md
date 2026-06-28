@@ -5072,4 +5072,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Bootstrap governance script, CI, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G604 — bootstrap governance freshness docs snapshot
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap governance freshness gate heeft nu bron-specifieke faaldiagnostics, maar er is nog geen compacte docsnapshot die de verwachte succesvolle gate-output als reviewbaar contract vastlegt.
+- **Desired Outcome:** Een runbook- of docsnapshot toont de publieke succesvolle freshness-outputvelden, zodat reviewers outputdrift bewust kunnen beoordelen.
+- **User Value:** Governance-output blijft voorspelbaar voor maintainers zonder CI-logs of scriptcode te hoeven interpreteren.
+- **Acceptance Criteria:** Docs bevatten een compacte succesvolle freshness-outputsnapshot; tests bewaken de snapshotvelden; snapshot bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, bootstrap governance script, maintenance docs tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
