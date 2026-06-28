@@ -9,6 +9,7 @@ import {
   BOOTSTRAP_SMOKE_PHASE_CODES,
   BOOTSTRAP_SMOKE_REDACTION_CATEGORIES,
   BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT,
+  createBootstrapSmokeDiagnosticRegistrySummary,
 } from '../src/storage/centralBootstrapDiagnostics';
 
 const execFileAsync = promisify(execFile);
@@ -32,10 +33,21 @@ describe('central dataset bootstrap smoke command', () => {
     expect(stdout).toContain('"secondDeviceReadVisible": true');
     expect(stdout).toContain('"wrongPassphraseRejected": true');
     expect(stdout).toContain('"leaked": false');
+    expect(stdout).toContain('"diagnosticRegistry"');
+    expect(stdout).toContain('"fixtureCount": 7');
+    expect(stdout).toContain('"phaseCode": "runtime"');
+    expect(stdout).toContain('"envName": "KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE"');
+    expect(stdout).toContain('"redactionCategories"');
     expect(stdout).not.toContain('central bootstrap smoke passphrase');
     expect(stdout).not.toContain('kiempad-session-');
     expect(stdout).not.toContain('Centrale bootstrap poging');
     expect(stdout).not.toContain('gevoelige fertiliteitsnotitie');
+    expect(stdout).not.toContain(BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT);
+    expect(stdout).not.toContain('"passphrase"');
+    expect(stdout).not.toContain('"bearer-token"');
+    expect(stdout).not.toContain('"filename"');
+    expect(stdout).not.toContain('"ocr-base64"');
+    expect(stdout).not.toContain('"medical-plaintext"');
   }, 15_000);
 
   it('faalt met generieke output wanneer de plaintext-boundary faalt', async () => {
@@ -105,6 +117,37 @@ describe('central dataset bootstrap smoke command', () => {
     expect(BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT).toContain(
       'central bootstrap smoke passphrase',
     );
+  });
+
+  it('maakt een gesanitized diagnostic registrysummary voor CI-output', () => {
+    const summary = createBootstrapSmokeDiagnosticRegistrySummary();
+    const serializedSummary = JSON.stringify(summary);
+
+    expect(summary.fixtureCount).toBe(BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS.length);
+    expect(summary.phases.map((phase) => phase.phaseCode)).toEqual(BOOTSTRAP_SMOKE_PHASE_CODES);
+    expect(summary.phases.map((phase) => phase.envName)).toEqual(
+      BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS.map((injection) => injection.envName),
+    );
+    for (const phase of summary.phases) {
+      expect(phase.redactionCategories).toEqual([
+        'credential-secret',
+        'session-credential',
+        'file-reference',
+        'text-extraction-marker',
+        'medical-content',
+      ]);
+    }
+    expect(serializedSummary).not.toContain(BOOTSTRAP_SMOKE_RUNTIME_FAILURE_FIXTURE_TEXT);
+    expect(serializedSummary).not.toContain('central bootstrap smoke passphrase');
+    expect(serializedSummary).not.toContain('kiempad-session-');
+    expect(serializedSummary).not.toContain('Centrale bootstrap poging');
+    expect(serializedSummary).not.toContain('gevoelige fertiliteitsnotitie');
+    expect(serializedSummary).not.toContain('echo-foto-privenaam.jpg');
+    expect(serializedSummary).not.toContain('"passphrase"');
+    expect(serializedSummary).not.toContain('"bearer-token"');
+    expect(serializedSummary).not.toContain('"filename"');
+    expect(serializedSummary).not.toContain('"ocr-base64"');
+    expect(serializedSummary).not.toContain('"medical-plaintext"');
   });
 });
 
