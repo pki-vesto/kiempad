@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G624/G625 Central Encrypted Platform: de runbookguard gebruikt nu dezelfde compacte `BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS` termset als het releasecontext-contract. G625 is toegevoegd als opvolgdoel voor redactionbewaking op deze runbookcontexttermen.
 - G623/G624 Central Encrypted Platform: maintenance-tests koppelen de runbookcontext voor bootstrap governance releasecontextbewaking nu aan `CHANGELOG.md` en `CURRENT_STATE.md`. G624 is toegevoegd als opvolgdoel voor releasecontext-runbooktermen in het contractoverzicht.
 - G622/G623 Central Encrypted Platform: de runbook benoemt nu dat maintenance-tests releasecontext voor bootstrap governance schemafoutvelden en placeholders bewaken, inclusief changelog- en state-documentatie. G623 is toegevoegd als opvolgdoel voor releasecontext-runbookcontext in release-state.
 - G621/G622 Central Encrypted Platform: maintenance-tests bewaken de bootstrap governance schemafout- en placeholder-releasecontexttermsets nu als compact reviewbaar contract. G622 is toegevoegd als opvolgdoel voor runbookverwijzing naar deze termsets.

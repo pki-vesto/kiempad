@@ -133,8 +133,9 @@ pad zonder lokale vault-hercreatie.
   Toegestane placeholders in dit schemafoutannotatietemplate zijn alleen `{gate}`,
   `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}`; voeg geen vrije
   fouttekst of inhoudsvelden toe.
-  Maintenance-tests bewaken de releasecontext voor schemafoutvelden en placeholders,
-  zodat changelog- en state-documentatie dezelfde technische termsets blijven noemen.
+  Maintenance-tests bewaken de releasecontextbewaking voor schemafoutvelden en
+  placeholders, zodat changelog- en state-documentatie dezelfde technische termsets
+  blijven noemen.
 
   Schemafout-outputvoorbeeld:
 
