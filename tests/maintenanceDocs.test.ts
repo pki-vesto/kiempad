@@ -355,6 +355,15 @@ describe('onderhoudsdocumentatie', () => {
     );
   });
 
+  it('geeft ontbrekende bootstrap governance redactioncontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: runbookcontexttermset en redaction guard staan in releasecontext.',
+        BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_REDACTION_TERMS,
+      ),
+    ).toThrow('Bootstrap governance releasecontext ontbreekt voor termen: redactioncontext');
+  });
+
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
     expect({
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
