@@ -32,26 +32,52 @@ describe('central dataset bootstrap smoke command', () => {
   }, 15_000);
 
   it('faalt met generieke output wanneer de plaintext-boundary faalt', async () => {
-    try {
-      await execFileAsync(TSX_BIN, [SMOKE_SCRIPT], {
-        cwd: process.cwd(),
-        env: {
-          ...process.env,
-          KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK: '1',
-        },
-      });
-    } catch (error) {
-      const output = `${String((error as { stdout?: unknown }).stdout ?? '')}\n${String(
-        (error as { stderr?: unknown }).stderr ?? '',
-      )}`;
-      expect(output).not.toContain('central bootstrap smoke passphrase');
-      expect(output).not.toContain('kiempad-session-');
-      expect(output).not.toContain('Centrale bootstrap poging');
-      expect(output).not.toContain('gevoelige fertiliteitsnotitie');
-      expect(output).toContain('Central dataset bootstrap smoke failed');
-      return;
-    }
+    const output = await runFailingSmoke({
+      KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK: '1',
+    });
 
-    throw new Error('Expected smoke command to fail with injected plaintext boundary.');
+    expect(output).toContain('"status": "failed"');
+    expect(output).toContain('"phaseCode": "plaintext-boundary"');
+    expect(output).toContain('"recoveryHint"');
+    expectSanitizedSmokeOutput(output);
+  }, 15_000);
+
+  it('faalt met fasecode wanneer tweede-device read niet zichtbaar is', async () => {
+    const output = await runFailingSmoke({
+      KIEMPAD_BOOTSTRAP_SMOKE_FORCE_SECOND_DEVICE_FAILURE: '1',
+    });
+
+    expect(output).toContain('"status": "failed"');
+    expect(output).toContain('"phaseCode": "second-device-read"');
+    expect(output).toContain('"recoveryHint"');
+    expectSanitizedSmokeOutput(output);
   }, 15_000);
 });
+
+async function runFailingSmoke(env: Record<string, string>): Promise<string> {
+  try {
+    await execFileAsync(TSX_BIN, [SMOKE_SCRIPT], {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        ...env,
+      },
+    });
+  } catch (error) {
+    return `${String((error as { stdout?: unknown }).stdout ?? '')}\n${String(
+      (error as { stderr?: unknown }).stderr ?? '',
+    )}`;
+  }
+
+  throw new Error('Expected smoke command to fail.');
+}
+
+function expectSanitizedSmokeOutput(output: string): void {
+  expect(output).not.toContain('central bootstrap smoke passphrase');
+  expect(output).not.toContain('kiempad-session-');
+  expect(output).not.toContain('Centrale bootstrap poging');
+  expect(output).not.toContain('gevoelige fertiliteitsnotitie');
+  expect(output).not.toContain('filename');
+  expect(output).not.toContain('base64');
+  expect(output).not.toContain('OCR');
+}

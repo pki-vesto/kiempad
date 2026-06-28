@@ -81,7 +81,9 @@ pad zonder lokale vault-hercreatie.
 - **Centrale bootstrap smoke:** `npm run smoke:central-bootstrap` draait zonder
   browser een technische centrale dataset smoke met lege dataset, encrypted write,
   tweede-device read, restart, verkeerde-sleutel foutstatus en plaintext-boundary.
-  Output is alleen technische JSON-status.
+  Output is alleen technische JSON-status. Bij falen bevat de smoke een
+  gesanitized `phaseCode` en `recoveryHint`, zonder passphrases, bearer tokens of
+  medische plaintext.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

@@ -4876,4 +4876,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, CI, central bootstrap smoke, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G590 — bootstrap smoke phase runbook matrix
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale bootstrap smoke geeft nu gestructureerde phase diagnostics, maar de runbook bevat nog geen matrix die per `phaseCode` de concrete triagestap en eigenaar beschrijft.
+- **Desired Outcome:** Maintainers kunnen elke centrale bootstrap smoke failurefase vanuit de runbook direct koppelen aan waarschijnlijke oorzaak, technische check en herstelactie.
+- **User Value:** Centrale bootstrapregressies worden sneller opgelost zonder gevoelige data in logs of tickets te plaatsen.
+- **Acceptance Criteria:** Runbook bevat een phaseCode-matrix voor first-device-write, second-device-read, restart-read, wrong-key, snapshot-inspection en plaintext-boundary; matrix bevat geen passphrase, token, filename, OCR/base64 of medische plaintext; tests bewaken aanwezigheid van fasecodes en docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, central bootstrap smoke, maintenance docs tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
