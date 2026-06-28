@@ -115,6 +115,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'afspraakId',
     'trajectId',
     'notitie',
+    'importMetadata',
     'samenvatting',
     'samenvattingCorrectie',
     'actiepunten',

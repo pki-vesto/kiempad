@@ -3924,7 +3924,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consults, dossier, tests
 - **ADR Needed:** no
 - **Score:** 127
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G522 — consultdocument koppelen aan open vragen
 
@@ -4594,6 +4594,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** App shell, Playwright, visual fixtures
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G570 — consultnotitie tekstimport reviewcorrectie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Tekstveld-import van consultnotities bewaart nu conceptreviewmetadata, maar gebruikers kunnen die reviewstatus nog niet expliciet corrigeren of afronden.
+- **Desired Outcome:** Gebruikers kunnen een tekstveld-geimporteerde consultnotitie als gereviewd markeren en de bronlabel-context controleren zonder medische interpretatie.
+- **User Value:** Gebruikers houden controle over consultnotities voordat actiepunten, samenvattingen of vervolgvragen op de broncontext leunen.
+- **Acceptance Criteria:** UI toont concept/gereviewd status; gebruiker kan status wijzigen; gecorrigeerde status wordt encrypted bewaard; consultoverzichten en tests tonen de status zonder diagnose, dosering of behandelkeuzeadvies; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consultverslagen, dossier UI, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

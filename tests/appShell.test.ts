@@ -1326,6 +1326,12 @@ describe('app shell', () => {
           afspraakId: 'afspraak-1',
           trajectId: 'traject-1',
           notitie: 'Vraag over vervolgstap bewaren.',
+          importMetadata: {
+            bron: 'tekstveld',
+            reviewStatus: 'concept',
+            bronLabel: 'Tekstveld consultnotitie',
+            aangemaaktOp: '2026-06-23T15:05:00.000Z',
+          },
           samenvatting: {
             status: 'concept',
             methode: 'lokale_tekstheuristiek',
@@ -1492,6 +1498,7 @@ describe('app shell', () => {
     expect(html).toContain('Notitie: Historisch onderzoek');
     expect(html).toContain('Intakegesprek verslag');
     expect(html).toContain('Consultdatum: 2026-05-01 · Handmatig');
+    expect(html).toContain('Import: Tekstveld consultnotitie · review concept');
     expect(html).toContain('Afgesproken om bloeduitslagen mee te nemen.');
     expect(html).toContain('Conceptsamenvatting');
     expect(html).toContain('Bronnen: consulttekst, notitie');

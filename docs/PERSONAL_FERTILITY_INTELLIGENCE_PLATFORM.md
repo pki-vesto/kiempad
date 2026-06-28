@@ -204,7 +204,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-018 AI-samenvatting voor beelden als concept | Imaging Repository | AI-samenvatting | Genereer alleen beschrijvende, ongeverifieerde conceptsamenvattingen met duidelijke waarschuwing. |
 | PFIP-019 Beeldmetadata zonder EXIF-lekkage | Imaging Repository | Privacy | Strip of isoleer potentieel gevoelige EXIF-velden voordat beelden centraal worden bewaard. |
 | PFIP-020 Tijdlijnitems voor beeldmomenten | Imaging Repository | Tijdlijn | Toon beeldrecords als herkenbare tijdlijnmomenten met thumbnail en context. |
-| PFIP-021 Gespreksverslagen uploaden als consultrecords | Consultation Intelligence | Consultupload | Upload gespreksverslagen, consultnotities, behandelgesprekken en samenvattingen als consultverslag. |
+| PFIP-021 Gespreksverslagen uploaden als consultrecords | Consultation Intelligence | Consultupload | Upload gespreksverslagen, consultnotities, behandelgesprekken en samenvattingen als consultverslag; tekstveld-import bewaart bron- en conceptreviewmetadata. |
 | PFIP-022 Consultverslagen koppelen aan afspraken | Consultation Intelligence | Context | Koppel ieder consultverslag aan afspraak, arts/kliniek, traject en poging. |
 | PFIP-023 Automatische consultsamenvatting | Consultation Intelligence | Samenvatting | Vat consultverslagen samen in begrijpelijk Nederlands met bronverwijzing naar het originele document. |
 | PFIP-024 Actiepunten uit consultverslagen | Consultation Intelligence | Actiepunten | Extraheer actiepunten met eigenaar, datum, status en koppeling aan afspraak of herinnering. |

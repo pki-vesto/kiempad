@@ -1599,6 +1599,9 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
     CONSULT_VERSLAG_BRON_LABELS[verslag.bron],
     verslag.bestandsNaam,
     verslag.grootteBytes !== undefined ? formatBytes(verslag.grootteBytes) : undefined,
+    verslag.importMetadata
+      ? `Import: ${verslag.importMetadata.bronLabel} · review ${verslag.importMetadata.reviewStatus}`
+      : undefined,
     afspraak ? `Afspraak: ${afspraak.titel}` : undefined,
     traject ? `Traject: ${traject.naam}` : undefined,
   ].filter((detail): detail is string => Boolean(detail));
