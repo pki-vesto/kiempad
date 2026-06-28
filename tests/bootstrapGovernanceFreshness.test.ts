@@ -24,6 +24,7 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(governanceScriptRaw).toContain('bootstrap-governance-freshness-contract.json');
     expect(governanceScriptRaw).toContain('contract.sourceFields');
     expect(governanceScriptRaw).toContain('contract.coverageFields');
+    expect(governanceScriptRaw).toContain('contract.schemaFailureAnnotationTemplate');
     expect(governanceScriptRaw).toContain('ciAnnotation');
   });
 
@@ -128,8 +129,10 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(output).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
-      ciAnnotation:
-        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=0',
+      ciAnnotation: buildSchemaFailureAnnotationFixture({
+        unknownSourceFieldCount: 1,
+        unknownCoverageFieldCount: 0,
+      }),
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 1,
@@ -152,8 +155,10 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(output).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
-      ciAnnotation:
-        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=0 unknownCoverageFieldCount=1',
+      ciAnnotation: buildSchemaFailureAnnotationFixture({
+        unknownSourceFieldCount: 0,
+        unknownCoverageFieldCount: 1,
+      }),
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 0,
@@ -180,8 +185,10 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(docsSnapshot).toEqual({
       status: 'failed',
       gate: governanceContract.gate,
-      ciAnnotation:
-        'bootstrap-governance-freshness schemaValidation failed: unknownSourceFieldCount=1 unknownCoverageFieldCount=1',
+      ciAnnotation: buildSchemaFailureAnnotationFixture({
+        unknownSourceFieldCount: 1,
+        unknownCoverageFieldCount: 1,
+      }),
       schemaValidation: {
         status: 'failed',
         unknownSourceFieldCount: 1,
@@ -214,6 +221,19 @@ function extractBootstrapGovernanceSchemaErrorDocsSnapshot(): string {
   }
 
   return snapshot;
+}
+
+function buildSchemaFailureAnnotationFixture({
+  unknownSourceFieldCount,
+  unknownCoverageFieldCount,
+}: {
+  unknownSourceFieldCount: number;
+  unknownCoverageFieldCount: number;
+}): string {
+  return governanceContract.schemaFailureAnnotationTemplate
+    .replace('{gate}', governanceContract.gate)
+    .replace('{unknownSourceFieldCount}', String(unknownSourceFieldCount))
+    .replace('{unknownCoverageFieldCount}', String(unknownCoverageFieldCount));
 }
 
 type GovernanceGateReport = {
