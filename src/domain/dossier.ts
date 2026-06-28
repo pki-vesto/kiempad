@@ -11,6 +11,7 @@ export type DossierDocumentInput = {
   inhoudBase64: string;
   afspraakId?: string;
   trajectId?: string;
+  metadataCorrectie?: DossierMetadataCorrectieInput;
   embryo?: {
     label: string;
     kwaliteit: string;
@@ -29,6 +30,16 @@ export type DossierDocumentInput = {
   beeldMetadata?: DossierBeeldMetadataInput;
   ocr?: DossierOcrInput;
   uploadedAt?: string;
+};
+
+export type DossierMetadataCorrectieInput = {
+  datum?: string;
+  bron?: string;
+  documenttype?: string;
+  onderzoekstype?: string;
+  pogingId?: string;
+  afspraakId?: string;
+  onzekerheid?: NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'];
 };
 
 export type DossierBeeldMetadataInput = {
@@ -67,6 +78,9 @@ export type DossierIndexItem = {
   documenttype: string;
   bron: string;
   trajectId?: string;
+  afspraakId?: string;
+  onderzoekstype?: string;
+  onzekerheid?: NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'];
   tags: string[];
 };
 
@@ -217,7 +231,9 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     categorie,
     uploadProfiel,
     bestandsNaam,
+    afspraakId,
     trajectId,
+    metadataCorrectie: input.metadataCorrectie,
     notitie,
     ocr,
   });
@@ -283,18 +299,23 @@ export function sorteerDossierDocumenten(items: readonly DossierDocument[]): Dos
 export function bouwDossierTijdlijn(items: readonly DossierDocument[]): DossierTijdlijnItem[] {
   return sorteerDossierDocumenten(items).map((document) => {
     const metadata = document.metadata;
-    const datum = bepaalDossierTijdlijnDatum(document);
+    const datum = metadata?.normalisatie?.datum ?? bepaalDossierTijdlijnDatum(document);
     return {
       id: document.id,
       datum,
       titel: document.titel,
       documenttype:
+        metadata?.normalisatie?.documenttype ??
         metadata?.documenttype ??
         (document.uploadProfiel
           ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
           : DOSSIER_CATEGORIE_LABELS[document.categorie]),
       bronbestand: metadata?.bronbestand ?? document.bestandsNaam,
-      bron: metadata?.extractieBronnen.includes('datumherkenning') ? 'metadata' : 'formulier',
+      bron:
+        metadata?.normalisatie?.overschrevenDoorGebruiker ||
+        metadata?.extractieBronnen.includes('datumherkenning')
+          ? 'metadata'
+          : 'formulier',
       document,
     };
   });
@@ -303,7 +324,9 @@ export function bouwDossierTijdlijn(items: readonly DossierDocument[]): DossierT
 export function bouwDossierIndex(items: readonly DossierDocument[]): DossierIndexItem[] {
   return sorteerDossierDocumenten(items).map((document) => {
     const metadata = document.metadata;
+    const normalisatie = metadata?.normalisatie;
     const documenttype =
+      normalisatie?.documenttype ??
       metadata?.documenttype ??
       (document.uploadProfiel
         ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
@@ -311,10 +334,13 @@ export function bouwDossierIndex(items: readonly DossierDocument[]): DossierInde
 
     return {
       id: document.id,
-      datum: bepaalDossierTijdlijnDatum(document),
+      datum: normalisatie?.datum ?? bepaalDossierTijdlijnDatum(document),
       documenttype,
-      bron: metadata?.bronbestand ?? document.bestandsNaam,
-      trajectId: metadata?.trajectId ?? document.trajectId,
+      bron: normalisatie?.bron ?? metadata?.bronbestand ?? document.bestandsNaam,
+      trajectId: normalisatie?.pogingId ?? metadata?.trajectId ?? document.trajectId,
+      afspraakId: normalisatie?.afspraakId ?? document.afspraakId,
+      onderzoekstype: normalisatie?.onderzoekstype,
+      onzekerheid: normalisatie?.onzekerheid,
       tags: bepaalDossierIndexTags(document, documenttype),
     };
   });
@@ -588,7 +614,15 @@ function bouwDossierZoekVelden(
     { label: 'bestandsnaam', waarde: document.bestandsNaam },
     { label: 'notitie', waarde: document.notitie ?? '' },
     { label: 'OCR-tekst', waarde: document.ocr?.tekst ?? '' },
-    { label: 'documenttype', waarde: document.metadata?.documenttype ?? index?.documenttype ?? '' },
+    {
+      label: 'documenttype',
+      waarde:
+        document.metadata?.normalisatie?.documenttype ??
+        document.metadata?.documenttype ??
+        index?.documenttype ??
+        '',
+    },
+    { label: 'onderzoekstype', waarde: document.metadata?.normalisatie?.onderzoekstype ?? '' },
     {
       label: 'ziekenhuisdocumenttype',
       waarde: document.metadata?.ziekenhuisDocumentType
@@ -597,6 +631,10 @@ function bouwDossierZoekVelden(
     },
     { label: 'instelling', waarde: document.metadata?.instelling ?? '' },
     { label: 'arts', waarde: document.metadata?.arts ?? '' },
+    { label: 'bron', waarde: document.metadata?.normalisatie?.bron ?? '' },
+    { label: 'poging', waarde: document.metadata?.normalisatie?.pogingId ?? '' },
+    { label: 'afspraak', waarde: document.metadata?.normalisatie?.afspraakId ?? '' },
+    { label: 'onzekerheid', waarde: document.metadata?.normalisatie?.onzekerheid ?? '' },
     { label: 'bronbestand', waarde: document.metadata?.bronbestand ?? document.bestandsNaam },
     { label: 'tags', waarde: index?.tags.join(' ') ?? '' },
   ];
@@ -611,8 +649,12 @@ function normaliseerZoektekst(value: string): string {
 }
 
 function bepaalDossierIndexTags(document: DossierDocument, documenttype: string): string[] {
+  const normalisatie = document.metadata?.normalisatie;
   const tags = [
     documenttype,
+    normalisatie?.onderzoekstype,
+    normalisatie?.onzekerheid ? `Onzekerheid ${normalisatie.onzekerheid}` : undefined,
+    normalisatie?.overschrevenDoorGebruiker ? 'Metadata gecorrigeerd' : undefined,
     document.metadata?.ziekenhuisDocumentType
       ? ZIEKENHUIS_DOCUMENT_TYPE_LABELS[document.metadata.ziekenhuisDocumentType]
       : undefined,
@@ -623,7 +665,8 @@ function bepaalDossierIndexTags(document: DossierDocument, documenttype: string)
     document.ocr ? 'OCR' : undefined,
     document.metadata?.instelling,
     document.metadata?.arts,
-    document.trajectId ? 'Traject gekoppeld' : undefined,
+    normalisatie?.pogingId || document.trajectId ? 'Traject gekoppeld' : undefined,
+    normalisatie?.afspraakId || document.afspraakId ? 'Afspraak gekoppeld' : undefined,
   ].filter((tag): tag is string => Boolean(tag));
 
   return Array.from(new Set(tags));
@@ -843,7 +886,9 @@ export function extraheerDossierMetadata(input: {
   categorie: DossierDocument['categorie'];
   uploadProfiel?: DossierDocument['uploadProfiel'];
   bestandsNaam: string;
+  afspraakId?: string;
   trajectId?: string;
+  metadataCorrectie?: DossierMetadataCorrectieInput;
   notitie?: string;
   ocr?: DossierDocument['ocr'];
 }): DossierDocument['metadata'] {
@@ -877,7 +922,7 @@ export function extraheerDossierMetadata(input: {
   if (arts) bronnen.push('artsherkenning');
   if (ziekenhuisDocumentType) bronnen.push('ziekenhuisdocumenttype-herkenning');
 
-  return {
+  const metadataBasis = {
     documentDatum,
     instelling,
     documenttype,
@@ -886,6 +931,27 @@ export function extraheerDossierMetadata(input: {
     arts,
     bronbestand: input.bestandsNaam,
     extractieBronnen: Array.from(new Set(bronnen)),
+  };
+  return {
+    ...metadataBasis,
+    normalisatie: normaliseerDossierMetadata({
+      datum: documentDatum,
+      bron: instelling ?? input.bestandsNaam,
+      documenttype,
+      onderzoekstype: bepaalOnderzoekstype(
+        gecombineerdeTekst,
+        input.uploadProfiel,
+        input.categorie,
+      ),
+      pogingId: input.trajectId,
+      afspraakId: input.afspraakId,
+      herkendeDatum: Boolean(herkendeDatum),
+      herkendeBron: Boolean(instelling),
+      herkendOnderzoekstype: Boolean(
+        bepaalOnderzoekstype(gecombineerdeTekst, input.uploadProfiel, input.categorie),
+      ),
+      correctie: input.metadataCorrectie,
+    }),
   };
 }
 
@@ -916,6 +982,102 @@ export function bepaalZiekenhuisDocumentType(input: {
   }
 
   return 'algemeen_ziekenhuisdocument';
+}
+
+function normaliseerDossierMetadata(input: {
+  datum: string;
+  bron: string;
+  documenttype: string;
+  onderzoekstype?: string;
+  pogingId?: string;
+  afspraakId?: string;
+  herkendeDatum: boolean;
+  herkendeBron: boolean;
+  herkendOnderzoekstype: boolean;
+  correctie?: DossierMetadataCorrectieInput;
+}): NonNullable<DossierDocument['metadata']['normalisatie']> {
+  const correctie = input.correctie;
+  const datum = correctie?.datum?.trim() || input.datum;
+  const bron = correctie?.bron?.trim() || input.bron;
+  const documenttype = correctie?.documenttype?.trim() || input.documenttype;
+  const onderzoekstype = correctie?.onderzoekstype?.trim() || input.onderzoekstype;
+  const pogingId = correctie?.pogingId?.trim() || input.pogingId;
+  const afspraakId = correctie?.afspraakId?.trim() || input.afspraakId;
+  const overschrevenDoorGebruiker = Boolean(
+    correctie &&
+      [
+        correctie.datum,
+        correctie.bron,
+        correctie.documenttype,
+        correctie.onderzoekstype,
+        correctie.pogingId,
+        correctie.afspraakId,
+        correctie.onzekerheid,
+      ].some((value) => String(value ?? '').trim()),
+  );
+
+  return {
+    datum,
+    bron,
+    documenttype,
+    onderzoekstype: onderzoekstype || undefined,
+    pogingId: pogingId || undefined,
+    afspraakId: afspraakId || undefined,
+    onzekerheid:
+      correctie?.onzekerheid ??
+      bepaalNormalisatieOnzekerheid({
+        herkendeDatum: input.herkendeDatum,
+        herkendeBron: input.herkendeBron,
+        herkendOnderzoekstype: input.herkendOnderzoekstype,
+        overschrevenDoorGebruiker,
+      }),
+    origineleWaarden: {
+      datum: input.datum,
+      bron: input.bron,
+      documenttype: input.documenttype,
+      pogingId: input.pogingId,
+      afspraakId: input.afspraakId,
+    },
+    overschrevenDoorGebruiker,
+  };
+}
+
+function bepaalOnderzoekstype(
+  tekst: string,
+  uploadProfiel: DossierDocument['uploadProfiel'] | undefined,
+  categorie: DossierDocument['categorie'],
+): string | undefined {
+  const normalized = normaliseerZoektekst(tekst);
+  if (
+    uploadProfiel === 'labuitslag' ||
+    /\b(amh|fsh|lh|estradiol|hormoon|lab|bloed)\b/.test(normalized)
+  ) {
+    return 'Labwaarde';
+  }
+  if (uploadProfiel === 'fertiliteitsrapport') return 'Fertiliteitsrapport';
+  if (/\b(semen|zaad|sperma)\b/.test(normalized)) return 'Zaadonderzoek';
+  if (/\b(echo|ultrasound|follikel|scan)\b/.test(normalized) || categorie === 'beeld') {
+    return 'Beeldonderzoek';
+  }
+  if (/\b(fertiliteitsrapport|ivf|icsi|punctie|terugplaatsing|transfer)\b/.test(normalized)) {
+    return 'Fertiliteitsrapport';
+  }
+  return undefined;
+}
+
+function bepaalNormalisatieOnzekerheid(input: {
+  herkendeDatum: boolean;
+  herkendeBron: boolean;
+  herkendOnderzoekstype: boolean;
+  overschrevenDoorGebruiker: boolean;
+}): NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'] {
+  if (input.overschrevenDoorGebruiker) return 'laag';
+  const score = [input.herkendeDatum, input.herkendeBron, input.herkendOnderzoekstype].filter(
+    Boolean,
+  ).length;
+  if (score >= 3) return 'laag';
+  if (score >= 1) return 'middel';
+  return 'hoog';
 }
 
 function normaliseerMetadataDatum(value: string): string | undefined {

@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G468/G579 Fertility Intelligence: dossierdocumenten bewaren nu genormaliseerde metadata voor datum, bron, documenttype, onderzoekstype, poging, afspraak en onzekerheid met originele waarden en gebruikersoverschrijving; index, zoekvelden en dossier-UI gebruiken deze normalisatie. G579 is toegevoegd als opvolgdoel voor een metadata-correctieformulier.
 - G467/G578 Fertility Intelligence: OCR-resultaten bewaren nu confidence, concept/gereviewd-status en correctiemetadata; lage confidence blijft concept en OCR-tekst voedt metadata pas na review. G578 is toegevoegd als opvolgdoel voor een OCR-reviewcorrectieformulier.
 - G466/G577 Fertility Intelligence: de dossierpagina heeft nu een historische import-inbox met veilige metadata per bestand, OCR/importstatus en een geteste verwijderactie via encrypted opslag; G577 is toegevoegd als opvolgdoel voor retry per bestand.
 - G551/G576 Daily Recommendations: dagelijkse aanbevelingen hebben nu een aparte Artscheck-knop die een veilige vraag voor kliniek, arts of apotheek maakt via een geteste niet-doserende helper; G576 is toegevoegd als opvolgdoel voor reviewstatus op artscheckvragen.

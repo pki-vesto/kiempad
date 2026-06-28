@@ -237,6 +237,23 @@ export interface DossierDocument {
     arts?: string;
     bronbestand: string;
     extractieBronnen: string[];
+    normalisatie?: {
+      datum: IsoDate;
+      bron: string;
+      documenttype: string;
+      onderzoekstype?: string;
+      pogingId?: string;
+      afspraakId?: string;
+      onzekerheid: 'laag' | 'middel' | 'hoog';
+      origineleWaarden: {
+        datum: string;
+        bron: string;
+        documenttype: string;
+        pogingId?: string;
+        afspraakId?: string;
+      };
+      overschrevenDoorGebruiker: boolean;
+    };
   };
   beeldMetadata?: {
     datum: IsoDate;

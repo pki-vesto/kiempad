@@ -3182,7 +3182,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, domain types, search, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G469 — tijdlijnreconstructie uit historische records
 
@@ -4720,6 +4720,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, OCR review, app shell, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G579 — metadata-normalisatie correctieformulier
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Dossiermetadata wordt nu genormaliseerd met originele waarden en onzekerheid, maar gebruikers kunnen die normalisatie nog niet via een apart formulier corrigeren.
+- **Desired Outcome:** Per dossierdocument kan de gebruiker genormaliseerde datum, bron, documenttype, onderzoekstype, poging, afspraak en onzekerheid corrigeren zonder de originele bronwaarden te overschrijven.
+- **User Value:** Gebruikers kunnen lab- en onderzoeksrapporten betrouwbaar terugvinden en tijdlijnen corrigeren wanneer automatische herkenning onzeker of conflicterend is.
+- **Acceptance Criteria:** UI toont een metadata-normalisatieformulier bij dossierdocumenten; correcties bewaren originele waarden, overschrijfstatus en onzekerheid encrypted; index, zoekresultaten en tijdlijn gebruiken gecorrigeerde normalisatie; tests dekken onbekende/conflicterende metadata en geen diagnose, dosering of behandelkeuzeadvies; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, metadata review, app shell, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open
