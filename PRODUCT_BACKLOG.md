@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 472 |
+| ☑ klaar | 473 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **671** |
+| **Totaal** | **672** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -833,13 +833,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G668 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☑ |
 | G669 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release missing-term fixture | P1 | F5 | ☑ |
 | G670 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release text contract | P1 | F5 | ☑ |
-| G671 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☐ |
+| G671 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☑ |
+| G672 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release missing-term fixture | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 671** (id's G001 t/m G671, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 672** (id's G001 t/m G672, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
