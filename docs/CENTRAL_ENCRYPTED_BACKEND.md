@@ -108,11 +108,13 @@ credentials, pad, query of fragment; ongeldige origins laten de runtime fail-fas
 starten. Als `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` ontbreekt, gebruikt de CLI lokale
 development-defaults; als de variabele expliciet leeg of whitespace-only is, start
 de backend met geen toegestane browser-origins. De centrale fetch-client vernieuwt
-een verlopen bearer token maximaal één
-keer via `POST /sessions` voor dezelfde configured user-scope; als dat faalt blijft
-het een centrale opslagfout en is er geen stille legacy fallback. Een sessieticket
-uit `POST /sessions` wordt client-side pas gebruikt als token, user-scope en
-canonieke `issuedAt`/`expiresAt` timestamps geldig zijn. De sessie-TTL komt
+een verlopen bearer token maximaal één keer via `POST /sessions` voor dezelfde
+configured user-scope; als dat faalt blijft het een centrale opslagfout en is er
+geen stille legacy fallback. De client houdt daarbij alleen technische renew-status
+bij (`active`, `refreshing` of `failed`) met timestamp en foutcode; er wordt geen
+passphrase, recordpayload of medische plaintext in de status opgeslagen. Een
+sessieticket uit `POST /sessions` wordt client-side pas gebruikt als token,
+user-scope en canonieke `issuedAt`/`expiresAt` timestamps geldig zijn. De sessie-TTL komt
 alleen uit serverconfiguratie
 (`KIEMPAD_CENTRAL_SESSION_TTL_MS`); de sessiestore en `POST /sessions` negeren
 client-owned TTL-beleid. Die TTL moet een positieve millisecondewaarde zijn; een

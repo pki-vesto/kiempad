@@ -3504,7 +3504,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, session runtime, tests
 - **ADR Needed:** no
 - **Score:** 121
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G492 — owner-scoped record list pagination
 
@@ -4778,4 +4778,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CI, backlog health, maintenance tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☐ open
+
+### G583 — central session renewal status UI
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale fetch-driver houdt technische renew-status bij, maar de app-shell toont die status nog niet als gebruikersgerichte centrale fout- of herstelstaat.
+- **Desired Outcome:** De UI kan een verlopen, vernieuwde of mislukte centrale sessie herkenbaar tonen zonder legacy fallback of plaintext details.
+- **User Value:** Gebruikers begrijpen of centrale multi-device opslag actief, vernieuwd of tijdelijk niet beschikbaar is zonder dat data stil lokaal terechtkomt.
+- **Acceptance Criteria:** App-state of storage bootstrap exposeert renew-status aan de shell; UI toont actieve/vernieuwde/mislukte centrale sessiestatus met generieke fouttekst; tests dekken succesvolle en falende statusweergave zonder passphrase, tokens, secrets of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, central fetch client, storage bootstrap, tests
+- **ADR Needed:** no
+- **Score:** 113
 - **Status:** ☐ open
