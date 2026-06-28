@@ -5534,4 +5534,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G637 — bootstrap governance missing-term release runbook contract note
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het contractreleasecontextmeldingscontract wordt nu positief en negatief getest, maar de runbook benoemt deze compacte contractlijn nog niet apart.
+- **Desired Outcome:** De runbook beschrijft dat contractreleasecontextmelding-releasecontexttermen als technische releasecontexttermset worden bewaakt.
+- **User Value:** Reviewers weten waar contractreleasecontextmeldingdrift moet worden hersteld zonder gevoelige inhoud te inspecteren.
+- **Acceptance Criteria:** Runbook benoemt de contractreleasecontextmelding-releasecontexttermset met alleen technische termen; maintenance-tests bewaken die runbookcontext; bestaande positieve en negatieve releasecontextguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance runbook
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

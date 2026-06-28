@@ -85,6 +85,8 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_TERMS = [
   'contractreleasecontextmelding',
   'contractreleasecontextmeldingscontract',
 ] as const;
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_ERROR =
+  'Bootstrap governance releasecontext ontbreekt voor termen: contractreleasecontextmeldingscontract';
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -431,6 +433,18 @@ describe('onderhoudsdocumentatie', () => {
     ).toThrow(BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_RELEASE_ERROR);
     expect(BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_RELEASE_ERROR).toBe(
       'Bootstrap governance releasecontext ontbreekt voor termen: missing-term contract',
+    );
+  });
+
+  it('geeft ontbrekende bootstrap governance contractreleasecontextmelding-releasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractBootstrapGovernanceReleaseContext(
+        'G000 Central Encrypted Platform: contractreleasecontextmelding staat in releasecontext.',
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_TERMS,
+      ),
+    ).toThrow(BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_ERROR);
+    expect(BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RELEASE_ERROR).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: contractreleasecontextmeldingscontract',
     );
   });
 
