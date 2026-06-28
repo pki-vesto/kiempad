@@ -331,6 +331,7 @@ export type AppShellState = {
   dossierError?: string;
   dossierZoekterm?: string;
   imagingFilter?: ImagingRepositoryFilter;
+  imagingPreviewLocked?: boolean;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
   timelineFilter?: FertilityTimelineFilter;
   agendaImportStatus?: string;
@@ -947,6 +948,7 @@ function renderWebAuthnSettings(state: AppShellState): string {
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
+  const documentMap = new Map(documenten.map((document) => [document.id, document]));
   const consultVerslagen = state.consultVerslagen ?? [];
   const zoekterm = state.dossierZoekterm ?? '';
   const zoekResultaten = zoekDossierDocumenten(documenten, zoekterm);
@@ -954,7 +956,9 @@ function renderDossierScreen(state: AppShellState): string {
   const matchMap = new Map(
     zoekResultaten.map((resultaat) => [resultaat.document.id, resultaat.matches]),
   );
-  const alleImagingItems = bouwImagingRepository(zichtbareDocumenten);
+  const alleImagingItems = bouwImagingRepository(zichtbareDocumenten, {
+    ontgrendeld: !state.imagingPreviewLocked,
+  });
   const imagingItems = filterImagingRepository(alleImagingItems, state.imagingFilter ?? {});
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
@@ -1211,7 +1215,7 @@ function renderDossierScreen(state: AppShellState): string {
         <h2>Dossierindex</h2>
         ${
           indexItems.length > 0
-            ? `<ol class="compact-list">${indexItems.map(renderDossierIndexItem).join('')}</ol>`
+            ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
             : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
         }
         <h2>Embryo-dossiers</h2>
@@ -1230,7 +1234,7 @@ function renderDossierScreen(state: AppShellState): string {
         <h2>Behandelgeschiedenis</h2>
         ${
           behandelGeschiedenis.length > 0
-            ? `<ol class="phase-list">${behandelGeschiedenis.map(renderBehandelGeschiedenisItem).join('')}</ol>`
+            ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
             : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
         }
     </section>
@@ -1338,18 +1342,31 @@ function renderImagingRepositoryItem(
         </figure>`
       : '';
   const preview =
-    item.mimeType?.startsWith('image/') && item.document.inhoudBase64
+    item.previewState.status !== 'locked' &&
+    item.mimeType?.startsWith('image/') &&
+    item.document.inhoudBase64
       ? `<figure class="linked-note">
           <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale imaging-preview van ${escapeAttribute(item.titel)}" loading="lazy" />
           <figcaption>${escapeHtml(beschrijfPreviewLocatie(state))}</figcaption>
         </figure>`
       : '';
+  const lockedPlaceholder =
+    item.previewState.status === 'locked'
+      ? `<div class="linked-note imaging-locked-placeholder" aria-label="Beeldpreview vergrendeld">
+          <p>Beeldpreview vergrendeld.</p>
+          <p class="small-print">Ontgrendel de encrypted dataset om lokale preview of thumbnail te tonen.</p>
+        </div>`
+      : '';
+  const bronLabel =
+    item.previewState.status === 'locked'
+      ? 'Bronbestand verborgen tot ontgrendeling'
+      : item.bronbestand;
 
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.titel)}</h3>
-        <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(item.bronbestand)}</p>
+        <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(bronLabel)}</p>
         <p class="linked-note">Previewstatus: ${escapeHtml(item.previewState.label)}</p>
         ${
           item.context || item.afspraakId || item.trajectId
@@ -1368,6 +1385,7 @@ function renderImagingRepositoryItem(
         <p class="small-print">${escapeHtml(contextSamenvatting.waarschuwing)}</p>
         ${thumbnail}
         ${preview}
+        ${lockedPlaceholder}
       </div>
     </li>
   `;
@@ -1397,11 +1415,19 @@ function imagingSoortLabel(
   return classificeerBeeldLabel(soort);
 }
 
-function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number]): string {
+function renderDossierIndexItem(
+  item: ReturnType<typeof bouwDossierIndex>[number],
+  state: AppShellState,
+  document?: DossierDocument,
+): string {
+  const bron =
+    state.imagingPreviewLocked && document?.categorie === 'beeld'
+      ? 'verborgen tot ontgrendeling'
+      : item.bron;
   const details = [
     item.datum,
     item.documenttype,
-    `Bron: ${item.bron}`,
+    `Bron: ${bron}`,
     item.trajectId ? `Traject: ${item.trajectId}` : undefined,
   ].filter((value): value is string => Boolean(value));
   return `
@@ -1413,7 +1439,17 @@ function renderDossierIndexItem(item: ReturnType<typeof bouwDossierIndex>[number
   `;
 }
 
-function renderBehandelGeschiedenisItem(item: BehandelGeschiedenisItem): string {
+function renderBehandelGeschiedenisItem(
+  item: BehandelGeschiedenisItem,
+  state: AppShellState,
+  document?: DossierDocument,
+): string {
+  const bron =
+    state.imagingPreviewLocked &&
+    item.soort === 'dossierdocument' &&
+    document?.categorie === 'beeld'
+      ? 'verborgen tot ontgrendeling'
+      : item.bron;
   const koppelingen = [
     item.trajectId ? `Traject: ${item.trajectId}` : undefined,
     item.afspraakId ? `Afspraak: ${item.afspraakId}` : undefined,
@@ -1423,7 +1459,7 @@ function renderBehandelGeschiedenisItem(item: BehandelGeschiedenisItem): string 
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.titel)}</h3>
-        <p class="linked-note">${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · Bron: ${escapeHtml(item.bron)}</p>
+        <p class="linked-note">${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · Bron: ${escapeHtml(bron)}</p>
         <p>${escapeHtml(item.detail)}</p>
         ${koppelingen.length > 0 ? `<p class="small-print">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
       </div>
@@ -1699,6 +1735,10 @@ function renderDossierDocument(
   const uploadProfiel = document.uploadProfiel
     ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
     : undefined;
+  const lockedImage = state.imagingPreviewLocked && document.categorie === 'beeld';
+  const fileLabel = lockedImage
+    ? 'Beeldbron verborgen tot ontgrendeling'
+    : `${document.bestandsNaam}${document.mimeType ? ` · ${document.mimeType}` : ''}`;
 
   return `
     <li class="phase-item">
@@ -1715,9 +1755,9 @@ function renderDossierDocument(
             : ''
         }
         <p>${escapeHtml(document.datum)} · ${escapeHtml(DOSSIER_CATEGORIE_LABELS[document.categorie])}${uploadProfiel ? ` · ${escapeHtml(uploadProfiel)}` : ''} · ${escapeHtml(formatBytes(document.grootteBytes))}</p>
-        <small>${escapeHtml(document.bestandsNaam)}${document.mimeType ? ` · ${escapeHtml(document.mimeType)}` : ''}</small>
+        <small>${escapeHtml(fileLabel)}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
-        ${renderDossierMetadata(document)}
+        ${renderDossierMetadata(document, state)}
         ${renderEmbryoDetails(document)}
         ${renderDossierOcrDetails(document)}
         ${renderDossierImagePreview(document, state)}
@@ -1731,7 +1771,7 @@ function renderDossierDocument(
   `;
 }
 
-function renderDossierMetadata(document: DossierDocument): string {
+function renderDossierMetadata(document: DossierDocument, state: AppShellState): string {
   const metadata = document.metadata ?? {
     documentDatum: document.datum,
     documenttype: document.uploadProfiel
@@ -1747,7 +1787,9 @@ function renderDossierMetadata(document: DossierDocument): string {
     metadata.documenttype ? `Documenttype: ${metadata.documenttype}` : undefined,
     metadata.trajectId ? `Traject: ${metadata.trajectId}` : undefined,
     metadata.arts ? `Arts: ${metadata.arts}` : undefined,
-    `Bronbestand: ${metadata.bronbestand}`,
+    state.imagingPreviewLocked && document.categorie === 'beeld'
+      ? 'Bronbestand: verborgen tot ontgrendeling'
+      : `Bronbestand: ${metadata.bronbestand}`,
   ].filter((value): value is string => Boolean(value));
 
   return `
@@ -1800,6 +1842,14 @@ function renderEmbryoDetails(document: DossierDocument): string {
 
 function renderDossierImagePreview(document: DossierDocument, state: AppShellState): string {
   if (document.categorie !== 'beeld' || !document.mimeType?.startsWith('image/')) return '';
+  if (state.imagingPreviewLocked) {
+    return `
+      <div class="linked-note imaging-locked-placeholder" aria-label="Dossierpreview vergrendeld">
+        <p>Beeldpreview vergrendeld.</p>
+        <p class="small-print">Ontgrendel de encrypted dataset om deze lokale dossierpreview te tonen.</p>
+      </div>
+    `;
+  }
 
   return `
     <figure class="linked-note">

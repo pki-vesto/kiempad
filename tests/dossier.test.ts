@@ -687,6 +687,10 @@ describe('dossier', () => {
       status: 'locked',
       label: 'Preview beschikbaar na ontgrendeling',
     });
+    expect(bouwImagingRepository([kleinBeeld], { ontgrendeld: false })[0]?.previewState).toEqual({
+      status: 'locked',
+      label: 'Preview beschikbaar na ontgrendeling',
+    });
     expect(bepaalImagingPreviewState(kleinBeeld, true)).toEqual({
       status: 'thumbnail',
       label: 'Thumbnail en preview beschikbaar',

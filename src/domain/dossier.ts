@@ -322,7 +322,11 @@ export function zoekDossierDocumenten(
     .filter((resultaat) => resultaat.matches.length > 0);
 }
 
-export function bouwImagingRepository(items: readonly DossierDocument[]): ImagingRepositoryItem[] {
+export function bouwImagingRepository(
+  items: readonly DossierDocument[],
+  options: { ontgrendeld?: boolean } = {},
+): ImagingRepositoryItem[] {
+  const ontgrendeld = options.ontgrendeld ?? true;
   return sorteerDossierDocumenten(items)
     .filter(isImagingDocument)
     .map((document) => ({
@@ -336,7 +340,7 @@ export function bouwImagingRepository(items: readonly DossierDocument[]): Imagin
       afspraakId: document.beeldMetadata?.afspraakId ?? document.afspraakId,
       trajectId: document.beeldMetadata?.trajectId ?? document.trajectId,
       tijdlijnKoppeling: bouwImagingTijdlijnKoppeling(document),
-      previewState: bepaalImagingPreviewState(document, true),
+      previewState: bepaalImagingPreviewState(document, ontgrendeld),
       mimeType: document.mimeType,
       document,
     }));

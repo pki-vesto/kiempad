@@ -1632,6 +1632,55 @@ describe('app shell', () => {
     expect(html).toContain('Bestandstype is beeldmateriaal.');
   });
 
+  it('rendert locked beeldpreview-placeholders zonder beeldpayload of bronbestandsnaam', () => {
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      imagingPreviewLocked: true,
+      dossierDocuments: [
+        {
+          id: 'doc-locked-image',
+          datum: '2026-05-02',
+          titel: 'Echo controle',
+          categorie: 'beeld',
+          bestandsNaam: 'gevoelige-echo-portaalnaam.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'Z2VoZWltLWJlZWxk',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; 4 KB. Analyse is lokaal en niet-medisch.',
+            signalen: ['Bestandstype is beeldmateriaal.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'gevoelige-echo-portaalnaam.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('Previewstatus: Preview beschikbaar na ontgrendeling');
+    expect(html).toContain('Beeldpreview vergrendeld.');
+    expect(html).toContain('Bronbestand verborgen tot ontgrendeling');
+    expect(html).toContain('Beeldbron verborgen tot ontgrendeling');
+    expect(html).toContain('Bronbestand: verborgen tot ontgrendeling');
+    expect(html).not.toContain('data:image/jpeg;base64');
+    expect(html).not.toContain('Z2VoZWltLWJlZWxk');
+    expect(html).not.toContain('Lokale imaging-preview van Echo controle');
+    expect(html).not.toContain('Lokale preview van Echo controle');
+    expect(html).not.toContain('gevoelige-echo-portaalnaam.jpg');
+  });
+
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
     const html = renderAppShell('dossier', {
       trajecten: [],

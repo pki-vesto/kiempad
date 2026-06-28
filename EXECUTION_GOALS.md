@@ -3868,7 +3868,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, privacy, tests
 - **ADR Needed:** no
 - **Score:** 127
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G518 — embryo-afbeelding EXIF isolatie
 
@@ -4580,6 +4580,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier review, metadata, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G569 — imaging lock-state visual regression fixture
+
+- **Epic:** Product Quality & Automation
+- **Problem:** De beeldpreview lock-state is functioneel getest, maar mist nog een visuele regressiefixture voor desktop en mobiel.
+- **Desired Outcome:** Een onderhoudsfixture of screenshottest bewaakt dat locked imaging placeholders leesbaar blijven en geen thumbnails, base64 payloads of bronbestandsnamen tonen.
+- **User Value:** Maintainers kunnen UI-wijzigingen aan het dossierscherm veilig doorvoeren zonder previewprivacy of mobiele leesbaarheid te breken.
+- **Acceptance Criteria:** Fixture bevat locked imaging, unlocked thumbnail en geen-preview varianten; verificatie controleert geen overlap of clipped tekst; fixture bevat geen medische plaintext of secrets; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, Playwright, visual fixtures
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open
