@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G686/G687 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance `release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding` blijven noemen. G687 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext.
 - G685/G686 Central Encrypted Platform: de exacte bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding staat nu als compact onderhoudstestcontract naast de negatieve fixture. G686 is toegevoegd als opvolgdoel voor release-statebewaking van deze release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmelding.
 - G151 Vandaag "Vandaag te zetten": het startscherm toont nu de interactieve
   dosislijst van vandaag (afvinken/overslaan) met een teller "x/y gedaan", zoals
