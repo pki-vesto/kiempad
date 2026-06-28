@@ -4946,4 +4946,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, maintenance docs tests, bootstrap diagnostic registry
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G595 — bootstrap diagnostic registry CI summary
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap diagnostic registry wordt in tests bewaakt, maar CI-output toont nog niet compact welke registry-phaseCodes en redactioncategorieën actief zijn.
+- **Desired Outcome:** De centrale bootstrap smoke of een lichte helper kan een gesanitized registrysummary tonen voor CI-triage zonder secrets of medische inhoud.
+- **User Value:** Maintainers zien bij bootstrapdiagnostic failures sneller welke fixtures en redactioncategorieën door CI worden bewaakt.
+- **Acceptance Criteria:** Registrysummary bevat alleen phaseCode, fixture-envnaam en redactioncategorieën; summary bevat geen fixturepayload, passphrase, token, filename, OCR/base64 of medische plaintext; test dekt de summary-output; docs of backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Bootstrap diagnostic registry, CI smoke output, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

@@ -36,6 +36,7 @@ import readme from '../README.md?raw';
 import roadmap from '../ROADMAP.md?raw';
 import security from '../SECURITY.md?raw';
 import { DISCLAIMER } from '../src/appShell';
+import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiagnostics';
 import vision from '../VISION.md?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
 
@@ -146,13 +147,6 @@ describe('onderhoudsdocumentatie', () => {
       'npm run smoke:central-bootstrap',
       'phaseCode',
       'recoveryHint',
-      'first-device-write',
-      'second-device-read',
-      'restart-read',
-      'wrong-key',
-      'snapshot-inspection',
-      'plaintext-boundary',
-      'runtime',
       'Waarschijnlijke oorzaak',
       'Technische check',
       'Herstelactie',
@@ -160,6 +154,12 @@ describe('onderhoudsdocumentatie', () => {
       'src/storage/centralBootstrapDiagnostics.ts',
     ]) {
       expect(runbook).toContain(requiredTerm);
+    }
+
+    const runbookPhaseCodes = parseBootstrapRunbookPhaseCodes();
+    expect(runbookPhaseCodes).toEqual(BOOTSTRAP_SMOKE_PHASE_CODES);
+    for (const phaseCode of BOOTSTRAP_SMOKE_PHASE_CODES) {
+      expect(runbookPhaseCodes.filter((candidate) => candidate === phaseCode)).toHaveLength(1);
     }
 
     expect(runbook).not.toContain('central bootstrap smoke passphrase');
@@ -1299,6 +1299,13 @@ function extractBacklogHealthContractMatrixGroups(source = backlogHealthTest): s
   return Array.from(matrixTest.matchAll(/'(?<group>[A-Za-z]+)'/g), (match) => match.groups?.group)
     .filter((group): group is string => Boolean(group))
     .sort();
+}
+
+function parseBootstrapRunbookPhaseCodes(): string[] {
+  return runbook
+    .split('\n')
+    .map((line) => line.match(/^\s*\|\s*`(?<phaseCode>[^`]+)`\s*\|/)?.groups?.phaseCode)
+    .filter((phaseCode): phaseCode is string => Boolean(phaseCode));
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {
