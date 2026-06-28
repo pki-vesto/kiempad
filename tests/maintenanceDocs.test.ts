@@ -117,6 +117,10 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_REL
   ['runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contract'] as const;
 const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR =
   'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contract';
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_TERMS =
+  [
+    'runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contractmissingterm contract',
+  ] as const;
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -470,6 +474,16 @@ describe('onderhoudsdocumentatie', () => {
           redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseContext,
         ).toContain(missingTermTextRunbookErrorReleaseStateErrorReleaseTerm);
       }
+      const redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateContext =
+        extractBootstrapGovernanceReleaseContext(
+          releaseDoc,
+          BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_TERMS,
+        );
+      for (const missingTermTextRunbookErrorReleaseStateErrorReleaseStateTerm of BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_TERMS) {
+        expect(
+          redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateContext,
+        ).toContain(missingTermTextRunbookErrorReleaseStateErrorReleaseStateTerm);
+      }
       for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
         expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
         expect(redactionReleaseContext).not.toContain(forbiddenTerm);
@@ -488,6 +502,9 @@ describe('onderhoudsdocumentatie', () => {
         );
         expect(
           redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseContext,
+        ).not.toContain(forbiddenTerm);
+        expect(
+          redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateContext,
         ).not.toContain(forbiddenTerm);
       }
     }
@@ -659,6 +676,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_TERMS,
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseError:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR,
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseState:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_TERMS,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -707,6 +726,9 @@ describe('onderhoudsdocumentatie', () => {
       ],
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseError:
         'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contract',
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseState: [
+        'runbooknotitie-contractmissingterm contractmissingterm contractmissingterm contractmissingterm contract',
+      ],
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
