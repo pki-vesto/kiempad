@@ -77,7 +77,8 @@ en blijft ook centraal **versleuteld at rest**.
   versleutelde payloads. Vrije tekst, medische inhoud, dossierbijlagen en consultdata
   mogen niet centraal in plaintext staan.
 - **Server-side datamodel:** `CentralEncryptedRecord` bevat `ownerUserId`, minimale
-  clear indexvelden, `serverVersion`, `storedAt` en een `EncryptionEnvelope`.
+  clear indexvelden, `serverVersion`, `storedAt`, server-owned
+  `replayProtection` en een `EncryptionEnvelope`.
   Dossierbijlagen gebruiken hetzelfde encrypted envelope-contract met optionele
   attachmentmetadata: alleen `kind=attachment`, `contentType`, `sizeBytes` en
   `sha256` zijn centraal toegestaan. Bestandsnaam, brontekst, OCR-inhoud en

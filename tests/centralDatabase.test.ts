@@ -202,6 +202,75 @@ describe('central encrypted database architecture', () => {
     }
   });
 
+  it('voegt replay-protection metadata toe en weigert stale centrale recordwrites', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const originalRecord = createEncryptedRecord('replay-record', '2026-06-25T08:00:01.000Z');
+    const newerRecord = {
+      ...createEncryptedRecord('replay-record', '2026-06-25T08:00:05.000Z'),
+      payload: {
+        ...originalRecord.payload,
+        iv: 'encrypted-iv-newer',
+        ciphertext: 'encrypted-ciphertext-newer',
+      },
+    };
+
+    await database.putRecord(userA, originalRecord);
+    await expect(database.putRecord(userA, originalRecord)).rejects.toThrow(
+      'Centrale recordwrite is ouder dan de laatste versie.',
+    );
+    await database.putRecord(userA, newerRecord);
+    await expect(database.putRecord(userA, originalRecord)).rejects.toBeInstanceOf(
+      CentralDataValidationError,
+    );
+
+    const stored = database.unsafeDumpRecordsForTest()[0];
+    expect(stored).toEqual(
+      expect.objectContaining({
+        id: 'replay-record',
+        serverVersion: 2,
+        replayProtection: {
+          clientUpdatedAt: '2026-06-25T08:00:05.000Z',
+          acceptedAt: stored?.storedAt,
+          serverVersion: 2,
+        },
+      }),
+    );
+    await expect(database.getRecord(userA, 'replay-record')).resolves.not.toHaveProperty(
+      'replayProtection',
+    );
+    const serialized = JSON.stringify(database.unsafeDumpRecordsForTest());
+    expect(serialized).not.toContain('plaintext fertiliteitsnotitie');
+    expect(serialized).not.toContain('embryo update blijft geheim');
+  });
+
+  it('hydrateert legacy centrale snapshots zonder replay-protection metadata bij openen', async () => {
+    const legacyRecord = createEncryptedRecord('legacy-replay-record', '2026-06-25T08:00:03.000Z');
+    const database = new MemoryCentralEncryptedDatabase({
+      version: 1,
+      exportedAt: '2026-06-25T08:00:10.000Z',
+      meta: [],
+      records: [
+        {
+          ...legacyRecord,
+          ownerUserId: userA.userId,
+          storedAt: '2026-06-25T08:00:04.000Z',
+          serverVersion: 1,
+        } as never,
+      ],
+    });
+
+    await expect(database.getRecord(userA, 'legacy-replay-record')).resolves.toEqual(legacyRecord);
+    expect(database.exportSnapshot().records[0]).toEqual(
+      expect.objectContaining({
+        replayProtection: {
+          clientUpdatedAt: '2026-06-25T08:00:03.000Z',
+          acceptedAt: '2026-06-25T08:00:04.000Z',
+          serverVersion: 1,
+        },
+      }),
+    );
+  });
+
   it('faalt veilig bij verkeerde sleutel, vergrendelde sessie en verlopen centrale sessie', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const driver = new CentralUserStorageDriver(database, userA);
@@ -400,12 +469,15 @@ describe('central encrypted database architecture', () => {
   });
 });
 
-function createEncryptedRecord(id: string): EncryptedRecord {
+function createEncryptedRecord(
+  id: string,
+  updatedAt = '2026-06-25T08:00:01.000Z',
+): EncryptedRecord {
   return {
     id,
     type: 'traject',
     createdAt: '2026-06-25T08:00:00.000Z',
-    updatedAt: '2026-06-25T08:00:01.000Z',
+    updatedAt,
     schemaVersion: 1,
     payload: {
       v: 1,

@@ -3560,7 +3560,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, crypto metadata, tests
 - **ADR Needed:** no
 - **Score:** 121
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G496 — central dataset bootstrap smoke test
 
@@ -4818,6 +4818,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** App shell, dossier upload, imaging upload, central API, tests
+- **ADR Needed:** no
+- **Score:** 113
+- **Status:** ☐ open
+
+### G586 — replay conflict recovery status UI
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale recordlaag weigert nu oudere of identieke writes met replay-protection metadata, maar de app-shell vertaalt die fout nog niet naar een herstelbare gebruikersstatus.
+- **Desired Outcome:** Wanneer centrale sync een replay/stale-write conflict krijgt, toont de app een generieke herstelstatus en behoudt zij de encrypted payloadgrens zonder automatische plaintext fallback.
+- **User Value:** Gebruikers begrijpen dat een apparaat achterloopt of opnieuw moet laden zonder dat medische inhoud of bestandsdetails in foutmeldingen verschijnen.
+- **Acceptance Criteria:** Storage/bootstraplaag onderscheidt replay/stale-write fouten van algemene centrale fouten; UI- of statusmodel toont generieke hersteltekst; tests dekken foutmapping, retry/reload-status en geen passphrase, token, filename, OCR/base64 of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, storage bootstrap, central API, tests
 - **ADR Needed:** no
 - **Score:** 113
 - **Status:** ☐ open

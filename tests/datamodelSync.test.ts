@@ -172,6 +172,7 @@ describe('datamodel en TypeScript-types', () => {
       'ownerUserId',
       'storedAt',
       'serverVersion',
+      'replayProtection',
       'encrypted payload',
       'plaintext datamodel',
       'plaintext medische/fertiliteitsinhoud, passphrases en raw keys niet',
@@ -202,6 +203,8 @@ describe('datamodel en TypeScript-types', () => {
     expect(centralDatabaseSource).toContain('ownerUserId: string');
     expect(centralDatabaseSource).toContain('storedAt: string');
     expect(centralDatabaseSource).toContain('serverVersion: number');
+    expect(centralDatabaseSource).toContain('replayProtection: CentralRecordReplayProtection');
+    expect(centralDatabaseSource).toContain('clientUpdatedAt: string');
     expect(centralDatabaseSource).toContain('export type CentralStorageMeta = StorageMeta &');
     expect(centralDatabaseSource).toContain('assertValidCentralDatabaseSnapshot');
     expect(centralDatabaseSource).toContain('recordKey(session.userId, record.id)');
