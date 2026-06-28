@@ -6,6 +6,9 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 
 ## [Unreleased]
 
+### Added
+- G726/G727 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G727 is toegevoegd als opvolgdoel voor een compact contract rond deze release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding.
+
 ### Fixed
 - VERBETERINGEN-VOLLEDIG.md sectie B (knoppen): secundaire knoppen (.secondary-
   button en `.phase-button.secondary`, bv. "Wis filter"/"Later doen") zijn nu
