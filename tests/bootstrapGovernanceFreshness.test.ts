@@ -154,6 +154,27 @@ describe('bootstrap diagnostic governance freshness gate', () => {
     expect(JSON.stringify(output)).not.toContain('unexpectedCoverage');
     expectSanitizedGovernanceOutput(JSON.stringify(output));
   });
+
+  it('houdt het schemafoutvoorbeeld in de runbook gelijk aan de gesanitized gate-output', async () => {
+    const output = await runGovernanceGateWithUnknownField({
+      KIEMPAD_BOOTSTRAP_GOVERNANCE_INJECT_UNKNOWN_SOURCE_FIELD: '1',
+      KIEMPAD_BOOTSTRAP_GOVERNANCE_INJECT_UNKNOWN_COVERAGE_FIELD: '1',
+    });
+    const docsSnapshotText = extractBootstrapGovernanceSchemaErrorDocsSnapshot();
+    const docsSnapshot = JSON.parse(docsSnapshotText) as GovernanceSchemaFailureReport;
+
+    expect(docsSnapshot).toEqual(output);
+    expect(docsSnapshot).toEqual({
+      status: 'failed',
+      gate: governanceContract.gate,
+      schemaValidation: {
+        status: 'failed',
+        unknownSourceFieldCount: 1,
+        unknownCoverageFieldCount: 1,
+      },
+    });
+    expectSanitizedGovernanceOutput(docsSnapshotText);
+  });
 });
 
 function extractBootstrapGovernanceFreshnessDocsSnapshot(): string {
@@ -163,6 +184,18 @@ function extractBootstrapGovernanceFreshnessDocsSnapshot(): string {
 
   if (!snapshot) {
     throw new Error('Bootstrap governance freshness docsnapshot ontbreekt in de runbook.');
+  }
+
+  return snapshot;
+}
+
+function extractBootstrapGovernanceSchemaErrorDocsSnapshot(): string {
+  const snapshot = runbookRaw.match(
+    /Schemafout-outputvoorbeeld:\n\n\s*```json\n([\s\S]*?)\n\s*```/,
+  )?.[1];
+
+  if (!snapshot) {
+    throw new Error('Bootstrap governance schemafoutvoorbeeld ontbreekt in de runbook.');
   }
 
   return snapshot;

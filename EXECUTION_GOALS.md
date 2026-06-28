@@ -5142,4 +5142,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, bootstrap governance script, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G609 — bootstrap governance schema-error release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook heeft nu een schemafoutvoorbeeld, maar release- en state-documentatie worden nog niet apart bewaakt op de schemafoutvelden.
+- **Desired Outcome:** Maintenance-tests koppelen `schemaValidation`, `unknownSourceFieldCount` en `unknownCoverageFieldCount` aan CHANGELOG/CURRENT_STATE wanneer het schemafoutvoorbeeld wijzigt.
+- **User Value:** Reviewers zien schemafout-outputwijzigingen ook in de releasecontext.
+- **Acceptance Criteria:** Maintenance-test bewaakt schemafoutvelden in CHANGELOG en CURRENT_STATE; test faalt bij ontbrekende schemafouttermen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
