@@ -5030,4 +5030,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, bootstrap diagnostic registry, maintenance docs tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G601 — bootstrap diagnostic governance checklist
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap diagnostic governance is geconsolideerd, maar er is nog geen afvinkbare checklist voor het toevoegen van een nieuwe diagnostic.
+- **Desired Outcome:** De runbook bevat een korte checklist die maintainers door registry, tests, snapshot en reviewregel leidt.
+- **User Value:** Nieuwe bootstrap diagnostics kunnen sneller en consistenter worden toegevoegd zonder privacy- of documentatiestappen over te slaan.
+- **Acceptance Criteria:** Runbook bevat een checklist met de vier governance-stappen; maintenance-test bewaakt de checklist; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails; docs/backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, maintenance docs tests, bootstrap diagnostic governance
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
