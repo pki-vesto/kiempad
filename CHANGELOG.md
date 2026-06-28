@@ -7,6 +7,13 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Changed
+- G147 Claude Design herstijling (stap 1 — fonts + tokens): nieuwe koel/kalm/
+  minimalistische identiteit. Self-hosted Instrument Serif (display) + Hanken
+  Grotesk (UI) i.p.v. Lora/Figtree; het `:root`-palet vervangen door het teal-
+  slate tokenstelsel (steenwit `#e7ece9`, inkt `#15302c`, teal `#2c6e63`,
+  hairline-lijnen, geen zware schaduwen). Bestaande tokennamen blijven werken via
+  aliassen, dus alle componenten kleuren mee; donker thema herijkt op het teal-
+  palet.
 - G465/G378 Cleanup-governance: `backlog:health` heeft geen standaard
   open-doelenvloer meer. Open backlog- en execution-goals moeten nog steeds exact
   matchen en issue-drift blijft zichtbaar, maar afgeronde doelen hoeven niet meer
