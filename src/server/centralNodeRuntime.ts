@@ -17,7 +17,7 @@ export type CentralNodeRuntimeOptions = {
   maxRequestBodyBytes?: number;
 };
 
-const DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
+export const CENTRAL_DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
 type CentralNodeHttpApi = Pick<CentralEncryptedHttpApi, 'handle'>;
 
 export async function createCentralNodeHttpServer(
@@ -41,7 +41,7 @@ export function createCentralNodeHttpServerFromApi(
 }
 
 function normalizeMaxRequestBodyBytes(value: number | undefined): number {
-  const normalized = value ?? DEFAULT_MAX_REQUEST_BODY_BYTES;
+  const normalized = value ?? CENTRAL_DEFAULT_MAX_REQUEST_BODY_BYTES;
   if (!Number.isFinite(normalized) || !Number.isInteger(normalized) || normalized <= 0) {
     throw new Error('KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES moet een positieve integer zijn.');
   }
@@ -73,7 +73,7 @@ export async function handleCentralNodeRequest(
   request: IncomingMessage,
   response: ServerResponse,
   corsPolicy: CentralCorsPolicy = createCorsPolicy(),
-  maxRequestBodyBytes = DEFAULT_MAX_REQUEST_BODY_BYTES,
+  maxRequestBodyBytes = CENTRAL_DEFAULT_MAX_REQUEST_BODY_BYTES,
 ): Promise<void> {
   applySecurityHeaders(response);
   const corsResult = applyCorsHeaders(request, response, corsPolicy);
@@ -94,6 +94,12 @@ export async function handleCentralNodeRequest(
 
   if (hasRequestBody(request) && !hasJsonContentType(request)) {
     sendJson(response, 415, { error: 'unsupported-media-type' });
+    return;
+  }
+
+  if (exceedsDeclaredBodyLimit(request, maxRequestBodyBytes)) {
+    sendJson(response, 413, { error: 'request-body-too-large' });
+    request.destroy();
     return;
   }
 
@@ -176,6 +182,13 @@ function hasRequestBody(request: IncomingMessage): boolean {
     return true;
   }
   return request.headers['transfer-encoding'] !== undefined;
+}
+
+function exceedsDeclaredBodyLimit(request: IncomingMessage, maxRequestBodyBytes: number): boolean {
+  const contentLength = request.headers['content-length'];
+  if (typeof contentLength !== 'string') return false;
+  const declaredBytes = Number(contentLength);
+  return Number.isInteger(declaredBytes) && declaredBytes > maxRequestBodyBytes;
 }
 
 function hasJsonContentType(request: IncomingMessage): boolean {

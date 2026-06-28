@@ -3546,7 +3546,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, uploads, validation tests
 - **ADR Needed:** no
 - **Score:** 128
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G495 — record replay protection metadata
 
@@ -4554,4 +4554,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Storage schema, central database, tests
 - **ADR Needed:** no
 - **Score:** 106
+- **Status:** ☐ open
+
+### G567 — dossierupload size feedback voor grote bijlagen
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Grote historische dossierbijlagen krijgen nog geen gebruikersgerichte feedback voordat ze tegen centrale attachmentlimieten aanlopen.
+- **Desired Outcome:** Dossieruploads tonen vóór opslag duidelijke groottefeedback, een veilige fouttekst bij te grote encrypted envelopes en een retry-pad zonder plaintext medische inhoud.
+- **User Value:** Gebruikers begrijpen waarom grote PDF's, echo's of embryobeelden niet direct uploaden en kunnen veilig een kleinere bron of latere importstrategie kiezen.
+- **Acceptance Criteria:** UI toont bestands- en limietcontext zonder medische inhoud te loggen; oversized uploads krijgen een herstelbare foutstatus; centrale `request-body-too-large` blijft begrijpelijk in de dossierflow; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier uploads, central API errors, tests
+- **ADR Needed:** no
+- **Score:** 108
 - **Status:** ☐ open

@@ -3,7 +3,10 @@ import type { Server } from 'node:http';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-import { createCentralNodeHttpServer } from './centralNodeRuntime';
+import {
+  CENTRAL_DEFAULT_MAX_REQUEST_BODY_BYTES,
+  createCentralNodeHttpServer,
+} from './centralNodeRuntime';
 import { JsonTableCentralDatabasePersistence } from './centralTablePersistence';
 
 export type CentralBackendRuntime = {
@@ -22,7 +25,6 @@ type CentralPersistenceMode = 'snapshot-file' | 'row-store';
 const DEFAULT_HOST = '127.0.0.1';
 const DEFAULT_PORT = 8099;
 const DEFAULT_SESSION_TTL_MS = 60 * 60 * 1000;
-const DEFAULT_MAX_REQUEST_BODY_BYTES = 25 * 1024 * 1024;
 const DEFAULT_PERSISTENCE_FILE = 'data/central/kiempad-central-db.json';
 const DEFAULT_PERSISTENCE_DIR = 'data/central/kiempad-central-rows';
 const DEFAULT_ALLOWED_USER_ID = 'kiempad-private-user';
@@ -47,7 +49,7 @@ export async function startCentralBackendFromEnv(
   );
   const maxRequestBodyBytes = parsePositiveInteger(
     env.KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES,
-    DEFAULT_MAX_REQUEST_BODY_BYTES,
+    CENTRAL_DEFAULT_MAX_REQUEST_BODY_BYTES,
     'KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES',
   );
   const persistenceFile = resolve(
