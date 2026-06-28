@@ -182,6 +182,11 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_REL
   'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding';
 const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT =
   'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding';
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_TERMS =
+  [
+    'release-statebewaking',
+    'release-state-foutmeldingcontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontextmeldingreleasecontext missing-term melding',
+  ] as const;
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -635,6 +640,18 @@ describe('onderhoudsdocumentatie', () => {
           missingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractTerm,
         );
       }
+      const redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractReleaseErrorContractContext =
+        extractBootstrapGovernanceReleaseContext(
+          releaseDoc,
+          BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_TERMS,
+        );
+      for (const missingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractReleaseErrorContractTerm of BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_ERROR_RELEASE_STATE_ERROR_RELEASE_ERROR_CONTRACT_RELEASE_ERROR_CONTRACT_RELEASE_TERMS) {
+        expect(
+          redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractReleaseErrorContractContext,
+        ).toContain(
+          missingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractReleaseErrorContractTerm,
+        );
+      }
       for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
         expect(schemaErrorReleaseContext).not.toContain(forbiddenTerm);
         expect(redactionReleaseContext).not.toContain(forbiddenTerm);
@@ -680,6 +697,9 @@ describe('onderhoudsdocumentatie', () => {
         ).not.toContain(forbiddenTerm);
         expect(
           redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractContext,
+        ).not.toContain(forbiddenTerm);
+        expect(
+          redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorReleaseErrorReleaseStateErrorReleaseErrorContractReleaseErrorContractContext,
         ).not.toContain(forbiddenTerm);
       }
     }
