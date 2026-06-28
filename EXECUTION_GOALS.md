@@ -5590,4 +5590,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G641 — bootstrap governance missing-term runbook note text release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbooknotitie-missing-term melding staat nu als compact testcontract, maar changelog en current-state bewaken deze contractcontext nog niet apart.
+- **Desired Outcome:** Maintenance-tests koppelen het runbooknotitie-missing-term contract aan release-state.
+- **User Value:** Reviewers zien wijzigingen in deze technische foutmelding ook terug in releasecontext.
+- **Acceptance Criteria:** Test bewaakt release-stateverwijzing naar het runbooknotitie-missing-term contract; bestaande fouttekst-, negatieve fixture- en release-state guards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
