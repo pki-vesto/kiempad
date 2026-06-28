@@ -5254,4 +5254,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, maintenance docs tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G617 — bootstrap governance annotation placeholder release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook documenteert nu de toegestane schemafoutannotatie-placeholders, maar release- en state-documentatie kunnen nog drift vertonen wanneer die placeholderlijst wijzigt.
+- **Desired Outcome:** Maintenance-tests koppelen de toegestane placeholders `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` aan CHANGELOG/CURRENT_STATE wanneer de runbook-placeholderlijst wijzigt.
+- **User Value:** Reviewers zien placeholdercontractwijzigingen ook in releasecontext zonder runbook en testcode handmatig te vergelijken.
+- **Acceptance Criteria:** Maintenance-test bewaakt de placeholdertermen in release- en state-documentatie; test faalt bij ontbrekende placeholder-releasecontext; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
