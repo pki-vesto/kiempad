@@ -274,6 +274,7 @@ describe('onderhoudsdocumentatie', () => {
       const schemaErrorReleaseContext =
         extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc);
       for (const schemaErrorField of [
+        'ciAnnotation',
         'schemaValidation',
         'unknownSourceFieldCount',
         'unknownCoverageFieldCount',
@@ -1527,9 +1528,12 @@ function extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc: string)
   const matchingLines = releaseDoc
     .split(/\n|;\s+|,\s+G\d{3}\s+/)
     .filter((line) =>
-      ['schemaValidation', 'unknownSourceFieldCount', 'unknownCoverageFieldCount'].some((term) =>
-        line.includes(term),
-      ),
+      [
+        'ciAnnotation',
+        'schemaValidation',
+        'unknownSourceFieldCount',
+        'unknownCoverageFieldCount',
+      ].some((term) => line.includes(term)),
     );
 
   if (matchingLines.length === 0) {
