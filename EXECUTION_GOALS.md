@@ -5548,4 +5548,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance runbook
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G638 — bootstrap governance missing-term runbook note release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De runbook benoemt nu de contractreleasecontextmelding-releasecontexttermset, maar changelog en current-state bewaken deze runbooknotitie nog niet apart.
+- **Desired Outcome:** Maintenance-tests koppelen de contractreleasecontextmelding-runbooknotitie aan release-state.
+- **User Value:** Reviewers zien runbookdrift rond dit contract ook terug in releasecontext zonder gevoelige inhoud te inspecteren.
+- **Acceptance Criteria:** Test bewaakt release-stateverwijzing naar de contractreleasecontextmelding-releasecontexttermset-runbooknotitie; bestaande runbook-, positieve en negatieve releasecontextguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
