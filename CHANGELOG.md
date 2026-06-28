@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G596/G597 Central Encrypted Platform: commandotests bewaken nu het publieke `diagnosticRegistry` JSON-schema exact, inclusief toegestane top-level keys en phase-object keys; extra velden of gevoelige fixturewaarden falen. G597 is toegevoegd als opvolgdoel voor een reviewbare summary snapshotfixture.
 - G595/G596 Central Encrypted Platform: de centrale bootstrap smoke-output bevat nu een gesanitized `diagnosticRegistry` summary met fixture-aantal, phaseCodes, env-namen en redactioncategorieën; tests bewaken dat fixturepayloads en medische plaintext buiten de summary blijven. G596 is toegevoegd als opvolgdoel voor een expliciete summary schema guard.
 - G594/G595 Central Encrypted Platform: maintenance-tests parsen nu de centrale bootstrap runbookmatrix en vergelijken elke `phaseCode` exact met de diagnostic injection registry, inclusief unieke rijdekking en registryverwijzing. G595 is toegevoegd als opvolgdoel voor een gesanitized CI-summary van registrydekking.
 - G593/G594 Central Encrypted Platform: bootstrap diagnostic failurefixtures staan nu in een centrale registry met env-naam, `phaseCode` en redactioncategorieën; de CLI en commandotests gebruiken dezelfde registry en tests falen als CLI-phaseCodes ontbreken. G594 is toegevoegd als opvolgdoel voor runbookdriftcontrole tegen de registry.

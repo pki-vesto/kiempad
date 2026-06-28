@@ -26,6 +26,9 @@ describe('central dataset bootstrap smoke command', () => {
     expect(workflowRaw).toContain('npm run smoke:central-bootstrap');
 
     const { stdout, stderr } = await execFileAsync(TSX_BIN, [SMOKE_SCRIPT], { cwd: process.cwd() });
+    const output = JSON.parse(stdout) as {
+      diagnosticRegistry?: unknown;
+    };
 
     expect(stderr).toBe('');
     expect(stdout).toContain('"status": "ok"');
@@ -48,6 +51,7 @@ describe('central dataset bootstrap smoke command', () => {
     expect(stdout).not.toContain('"filename"');
     expect(stdout).not.toContain('"ocr-base64"');
     expect(stdout).not.toContain('"medical-plaintext"');
+    expectDiagnosticRegistrySummarySchema(output.diagnosticRegistry);
   }, 15_000);
 
   it('faalt met generieke output wanneer de plaintext-boundary faalt', async () => {
@@ -149,6 +153,16 @@ describe('central dataset bootstrap smoke command', () => {
     expect(serializedSummary).not.toContain('"ocr-base64"');
     expect(serializedSummary).not.toContain('"medical-plaintext"');
   });
+
+  it('bewaakt het publieke diagnosticRegistry summaryschema strikt', () => {
+    const summary = createBootstrapSmokeDiagnosticRegistrySummary();
+
+    expectDiagnosticRegistrySummarySchema(summary);
+    expect(Object.keys(summary).sort()).toEqual(['fixtureCount', 'phases']);
+    for (const phase of summary.phases) {
+      expect(Object.keys(phase).sort()).toEqual(['envName', 'phaseCode', 'redactionCategories']);
+    }
+  });
 });
 
 async function runFailingSmoke(env: Record<string, string>): Promise<string> {
@@ -178,4 +192,21 @@ function expectSanitizedSmokeOutput(output: string): void {
   expect(output).not.toContain('filename');
   expect(output).not.toContain('base64');
   expect(output).not.toContain('OCR');
+}
+
+function expectDiagnosticRegistrySummarySchema(summary: unknown): void {
+  expect(summary).toEqual({
+    fixtureCount: BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS.length,
+    phases: BOOTSTRAP_SMOKE_DIAGNOSTIC_INJECTIONS.map((injection) => ({
+      phaseCode: injection.phaseCode,
+      envName: injection.envName,
+      redactionCategories: [
+        'credential-secret',
+        'session-credential',
+        'file-reference',
+        'text-extraction-marker',
+        'medical-content',
+      ],
+    })),
+  });
 }
