@@ -254,7 +254,15 @@ export interface DossierDocument {
     status: 'tekst_uitgelezen' | 'wacht_op_lokale_ocr' | 'niet_ondersteund';
     bron: 'tekstbestand' | 'pdf' | 'afbeelding' | 'onbekend';
     explicieteLokaleVerwerking: boolean;
+    confidenceScore: number;
+    confidenceLabel: 'hoog' | 'middel' | 'laag';
+    reviewStatus: 'concept' | 'gereviewd';
     tekst?: string;
+    correctie?: {
+      tekst?: string;
+      metadataNotitie?: string;
+      bijgewerktOp: IsoDate;
+    };
     waarschuwing: string;
     verwerktOp: IsoDate;
   };

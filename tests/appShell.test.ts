@@ -1415,6 +1415,9 @@ describe('app shell', () => {
             status: 'wacht_op_lokale_ocr',
             bron: 'pdf',
             explicieteLokaleVerwerking: true,
+            confidenceScore: 0,
+            confidenceLabel: 'laag',
+            reviewStatus: 'concept',
             waarschuwing:
               'PDF of afbeelding is klaargezet voor lokale OCR; er is geen cloudverwerking gestart.',
             verwerktOp: '2026-06-23T15:00:00.000Z',
@@ -1499,6 +1502,11 @@ describe('app shell', () => {
     expect(html).toContain('2 KB');
     expect(html).toContain('Uploadprofiel: Labuitslag.');
     expect(html).toContain('OCR: Klaargezet voor lokale OCR');
+    expect(html).toContain('Confidence: laag (0%)');
+    expect(html).toContain('Review: concept');
+    expect(html).toContain(
+      'Concept: OCR-tekst wordt pas na review gebruikt voor metadata en tijdlijnindex.',
+    );
     expect(html).toContain('PDF of afbeelding is klaargezet voor lokale OCR');
     expect(html).toContain('Lokale OCR-status: klaargezet voor lokale OCR.');
     expect(html).toContain('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');

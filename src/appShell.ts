@@ -1847,15 +1847,23 @@ function renderDossierOcrDetails(document: DossierDocument): string {
   const details = [
     `OCR: ${status}`,
     `Bron: ${document.ocr.bron}`,
+    `Confidence: ${document.ocr.confidenceLabel} (${Math.round(document.ocr.confidenceScore * 100)}%)`,
+    `Review: ${document.ocr.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept'}`,
     `Verwerkt: ${document.ocr.verwerktOp}`,
   ];
-  const tekstPreview = document.ocr.tekst
-    ? `<p class="linked-note">OCR-tekst: ${escapeHtml(kortTekstAf(document.ocr.tekst, 180))}</p>`
+  const tekst = document.ocr.correctie?.tekst ?? document.ocr.tekst;
+  const tekstPreview = tekst
+    ? `<p class="linked-note">OCR-tekst${document.ocr.correctie?.tekst ? ' (correctie)' : ''}: ${escapeHtml(kortTekstAf(tekst, 180))}</p>`
     : '';
+  const reviewHint =
+    document.ocr.reviewStatus === 'gereviewd'
+      ? ''
+      : '<p class="linked-note">Concept: OCR-tekst wordt pas na review gebruikt voor metadata en tijdlijnindex.</p>';
 
   return `
     <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
     <p class="linked-note">${escapeHtml(document.ocr.waarschuwing)}</p>
+    ${reviewHint}
     ${tekstPreview}
   `;
 }

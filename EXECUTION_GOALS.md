@@ -3168,7 +3168,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, OCR adapter, timeline, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G468 — metadata normaliseren voor lab- en onderzoeksrapporten
 
@@ -4706,6 +4706,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Dossier, import-inbox, eventlog, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G578 — OCR-review correctieformulier
+
+- **Epic:** Fertility Intelligence
+- **Problem:** OCR-resultaten hebben nu confidence en reviewstatus, maar gebruikers kunnen die review nog niet via een apart correctieformulier in de UI afronden.
+- **Desired Outcome:** Per dossierdocument kan de gebruiker OCR-tekst, metadata-notitie en reviewstatus corrigeren of gereviewd markeren zonder medische interpretatie.
+- **User Value:** Gebruikers kunnen onzeker OCR-werk gecontroleerd naar metadata en tijdlijn brengen met behoud van herleidbaarheid.
+- **Acceptance Criteria:** UI toont een OCR-reviewformulier bij OCR-documenten; gebruiker kan correctietekst, metadata-notitie en reviewstatus opslaan; gereviewde correctie wordt encrypted opgeslagen en pas daarna gebruikt voor metadata/tijdlijnindex; tests dekken correctie, herberekening en geen diagnose, dosering of behandelkeuzeadvies; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier, OCR review, app shell, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open
