@@ -3994,7 +3994,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, domain types, tests
 - **ADR Needed:** no
 - **Score:** 127
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G527 — embryo-status event editor
 
@@ -4608,6 +4608,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Consultverslagen, dossier UI, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G571 — embryo-ID alias reviewcorrectie
+
+- **Epic:** Fertility Intelligence
+- **Problem:** Canonieke Kiempad embryo-ID's worden nu per poging opgebouwd, maar gebruikers kunnen klinieklabels of aliasnamen nog niet expliciet reviewen of corrigeren wanneer bronnen andere termen gebruiken.
+- **Desired Outcome:** Gebruikers kunnen per embryo-dossier bronlabels, kliniek-ID's en Kiempad-ID's controleren en aliascorrecties vastleggen zonder medische interpretatie.
+- **User Value:** Gebruikers herkennen hetzelfde embryo over labrapporten, beelduploads en consultcontext heen, ook wanneer klinieken afwijkende labels gebruiken.
+- **Acceptance Criteria:** UI toont Kiempad-ID, bronlabels en kliniek-ID's naast elkaar; gebruiker kan aliascorrectie als reviewmetadata bewaren; embryo-dossier en vergelijking gebruiken de gecorrigeerde alias zonder diagnose, kansberekening of behandelkeuzeadvies; tests dekken opslag/weergave en de niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Embryo dossier, dossier UI, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open

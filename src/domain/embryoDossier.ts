@@ -4,6 +4,7 @@ import type { Afspraak, DossierDocument } from './types';
 
 export type EmbryoDossierItem = {
   id: string;
+  canonicalEmbryoId: string;
   embryoLabel: string;
   trajectId?: string;
   laatsteDatum: string;
@@ -63,7 +64,7 @@ export function bouwEmbryoDossiers(
     if (!label) continue;
     const trajectId =
       document.trajectId ?? document.metadata.trajectId ?? document.beeldMetadata?.trajectId;
-    const sleutel = `${trajectId ?? 'zonder-traject'}:${normaliseerLabel(label)}`;
+    const sleutel = maakEmbryoIdVoorPoging(trajectId, label);
     groepen.set(sleutel, [...(groepen.get(sleutel) ?? []), document]);
   }
 
@@ -117,6 +118,7 @@ function bouwEmbryoDossier(
   const embryoLabel = eerste ? (bepaalEmbryoLabel(eerste) ?? 'Embryo') : 'Embryo';
   const trajectId =
     eerste?.trajectId ?? eerste?.metadata.trajectId ?? eerste?.beeldMetadata?.trajectId;
+  const canonicalEmbryoId = maakEmbryoIdVoorPoging(trajectId, embryoLabel);
   const dossierDocumenten = [...documenten].sort((a, b) =>
     bepaalDatum(a).localeCompare(bepaalDatum(b)),
   );
@@ -156,6 +158,7 @@ function bouwEmbryoDossier(
 
   return {
     id: sleutel,
+    canonicalEmbryoId,
     embryoLabel,
     trajectId,
     laatsteDatum: bepaalDatum(dossierDocumenten[dossierDocumenten.length - 1] ?? eerste),
@@ -339,8 +342,20 @@ function sorteerFasen(fasen: readonly TrajectMetFasen['fasen'][number][]) {
   );
 }
 
-function normaliseerLabel(label: string): string {
-  return label.trim().toLocaleLowerCase('nl-NL');
+export function maakEmbryoIdVoorPoging(trajectId: string | undefined, embryoLabel: string): string {
+  const trajectSegment = normaliseerIdSegment(trajectId ?? 'zonder-traject');
+  const embryoSegment = normaliseerIdSegment(embryoLabel);
+  return `embryo:${trajectSegment}:${embryoSegment}`;
+}
+
+function normaliseerIdSegment(value: string): string {
+  const normalized = value
+    .normalize('NFKD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLocaleLowerCase('nl-NL')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return normalized || 'onbekend';
 }
 
 function uniekeWaarden(values: string[]): string[] {

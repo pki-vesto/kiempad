@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 371 |
+| ☑ klaar | 372 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **570** |
+| **Totaal** | **571** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -688,7 +688,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G523 | Fertility Intelligence: consultactie omzetten naar herinnering | P1 | F5 | ☐ |
 | G524 | Fertility Intelligence: consultsamenvatting bronparagraaf review | P0 | F5 | ☐ |
 | G525 | Fertility Intelligence: behandelgeschiedenis reconstructie vanuit consulten | P1 | F5 | ☐ |
-| G526 | Fertility Intelligence: embryo-ID schema per poging | P0 | F5 | ☐ |
+| G526 | Fertility Intelligence: embryo-ID schema per poging | P0 | F5 | ☑ |
 | G527 | Fertility Intelligence: embryo-status event editor | P0 | F5 | ☐ |
 | G528 | Fertility Intelligence: embryo kwaliteit bronlabel UI | P0 | F5 | ☐ |
 | G529 | Fertility Intelligence: embryo cryo-status tijdlijnitem | P1 | F5 | ☐ |
@@ -733,12 +733,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G568 | Fertility Intelligence: ziekenhuisdocument taxonomie reviewcorrectie | P1 | F5 | ☐ |
 | G569 | Product Quality & Automation: imaging lock-state visual regression fixture | P1 | F5 | ☐ |
 | G570 | Fertility Intelligence: consultnotitie tekstimport reviewcorrectie | P1 | F5 | ☐ |
+| G571 | Fertility Intelligence: embryo-ID alias reviewcorrectie | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 570** (id's G001 t/m G570, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 571** (id's G001 t/m G571, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

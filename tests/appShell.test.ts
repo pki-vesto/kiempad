@@ -1866,6 +1866,8 @@ describe('app shell', () => {
     expect(html).toContain('Embryo-dossiers');
     expect(html).toContain('Embryovergelijking per poging');
     expect(html).toContain('Poging: traject-1');
+    expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-1');
+    expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-2');
     expect(html).toContain(
       'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 2',
     );
