@@ -3,6 +3,7 @@ import {
   bouwDagelijksAanbevelingsoverzicht,
   controleerSupplementBoundary,
   type DailyRecommendationOverview,
+  maakArtscheckVraagVoorAanbeveling,
 } from '../src/domain/dailyRecommendations';
 import type { ConsultVerslag, DossierDocument } from '../src/domain/types';
 
@@ -178,6 +179,21 @@ describe('dagelijkse aanbevelingen', () => {
         'Supplementregel suggereert vervanging van behandeling of medicatie.',
       ]),
     );
+  });
+
+  it('maakt een veilige artscheckvraag zonder dosering of behandelkeuzeadvies', () => {
+    const vraag = maakArtscheckVraagVoorAanbeveling({
+      titel: 'Voeding en supplementen checklijst',
+      detail: 'Gebruik dit alleen als notitielijst voor vragen aan de kliniek of apotheek.',
+      bron: 'Lokale leefstijl- en medicatiecontext',
+    });
+
+    expect(vraag).toContain('Artscheck dagelijkse aanbeveling: Voeding en supplementen checklijst');
+    expect(vraag).toContain('Vraag aan kliniek, arts of apotheek');
+    expect(vraag).toContain('Bron: Lokale leefstijl- en medicatiecontext');
+    expect(vraag).toContain('Geen dosering, interactieclaim of behandelkeuzeadvies door Kiempad.');
+    expect(vraag).not.toMatch(/\b\d+\s*(mg|mcg|iu|ie)\b/i);
+    expect(vraag).not.toMatch(/\bmoet(en)?\b.{0,40}\b(kiezen|starten|stoppen)\b/i);
   });
 
   it('baseert leefstijlaanbevelingen op dossier, cyclusfase en behandelgeschiedenis', () => {

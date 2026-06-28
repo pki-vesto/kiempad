@@ -38,4 +38,11 @@ describe('main bootstrap', () => {
       'Lokale PRF-keywrap toegevoegd voor centrale encrypted dataset; passphrase blijft fallback.',
     );
   });
+
+  it('verwerkt dagelijkse aanbevelingen met een aparte artscheck-vraagactie', () => {
+    expect(mainSource).toContain("action === 'artscheck' && state.vraagStore");
+    expect(mainSource).toContain('maakArtscheckVraagVoorAanbeveling({');
+    expect(mainSource).toContain("gebeurtenis: 'Aanbeveling omgezet naar artscheck'");
+    expect(mainSource).toContain('Artscheckvraag gemaakt:');
+  });
 });

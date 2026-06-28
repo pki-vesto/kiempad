@@ -4344,7 +4344,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, questions, tests
 - **ADR Needed:** no
 - **Score:** 126
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G552 — dagadvies feedback analytics zonder tracking
 
@@ -4678,6 +4678,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Research, docs, tests
+- **ADR Needed:** no
+- **Score:** 108
+- **Status:** ☐ open
+
+### G576 — artscheck vraag reviewstatus
+
+- **Epic:** Daily Recommendations
+- **Problem:** Dagelijkse aanbevelingen kunnen nu een artscheckvraag maken, maar die vraag heeft nog geen aparte reviewstatus of bronmetadata als artscheck-artefact.
+- **Desired Outcome:** Artscheckvragen uit dagelijkse aanbevelingen bewaren bron, datum en reviewstatus zodat gebruikers concepten kunnen controleren voordat ze naar consultvoorbereiding gaan.
+- **User Value:** Gebruikers zien welke vragen uit aanbevelingen komen en welke nog gereviewd moeten worden.
+- **Acceptance Criteria:** Artscheckvraag bewaart bron, datum en reviewstatus; UI toont concept/gereviewd status; gebruiker kan status corrigeren; tests dekken opslag/weergave en niet-medische grens; docs of backlog verwijzen naar het doel; er worden geen secrets, gezondheidsdata of plaintext medische payloads toegevoegd.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Daily recommendations, vragen, tests
 - **ADR Needed:** no
 - **Score:** 108
 - **Status:** ☐ open
