@@ -23,6 +23,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G640/G641 Central Encrypted Platform: de exacte bootstrap governance runbooknotitie-releasecontext missing-term melding staat nu als compact onderhoudstestcontract naast de negatieve fixture. G641 is toegevoegd als opvolgdoel voor release-statebewaking van dit runbooknotitie-missing-term contract.
 - G639/G640 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende bootstrap governance runbooknotitie-releasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G640 is toegevoegd als opvolgdoel voor een compact contract rond deze runbooknotitie-missing-term melding.
 - G638/G639 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de bootstrap governance contractreleasecontextmelding-releasecontexttermset en runbooknotitie samen blijven noemen. G639 is toegevoegd als opvolgdoel voor een negatieve fixture rond ontbrekende runbooknotitie-releasecontext.
 - G637/G638 Central Encrypted Platform: de runbook benoemt nu de bootstrap governance contractreleasecontextmelding-releasecontexttermset met alleen technische termen; maintenance-tests bewaken die runbookcontext. G638 is toegevoegd als opvolgdoel voor release-statebewaking van deze runbooknotitie.
