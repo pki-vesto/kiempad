@@ -183,7 +183,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 
 | Issue | Epic | Feature | Uitvoerbare goal |
 | --- | --- | --- | --- |
-| PFIP-001 Historische dossierupload voor meerdere bestanden | Historical Medical Record Ingestion | Batch upload | Upload meerdere onderzoeken, labuitslagen, fertiliteitsrapporten, ziekenhuisdocumenten en behandelverslagen in één sessie. |
+| PFIP-001 Historische dossierupload voor meerdere bestanden | Historical Medical Record Ingestion | Batch upload | Upload meerdere onderzoeken, labuitslagen, fertiliteitsrapporten, ziekenhuisdocumenten en behandelverslagen in één sessie en beheer ze in een import-inbox met veilige metadata per bestand. |
 | PFIP-002 Bestandstypeherkenning voor dossierdocumenten | Historical Medical Record Ingestion | Documentclassificatie | Herken PDF's, afbeeldingen en tekstbestanden en toon per bestand een veilige typeclassificatie. |
 | PFIP-003 OCR-pipeline voor historische documenten | Historical Medical Record Ingestion | OCR | Extraheer tekst uit PDF's en afbeeldingen zonder plaintext buiten de encrypted dataset te bewaren. |
 | PFIP-004 Metadata-extractie uit historische documenten | Historical Medical Record Ingestion | Metadata | Leg datum, bron, documenttype, kliniek, onderwerp en onzekerheidsscore vast als dossiermetadata. |
@@ -193,7 +193,7 @@ actiegericht, zodat ze direct naar backlog-items kunnen worden omgezet.
 | PFIP-007 Zoekfunctie over historische onderzoeken | Historical Medical Record Ingestion | Zoeken | Zoek op datum, bron, type, vrije tekst, kliniek en gekoppelde poging. |
 | PFIP-008 Tijdlijnkoppeling voor historische records | Historical Medical Record Ingestion | Tijdlijn | Plaats elk historisch document met bronverwijzing op de fertility timeline. |
 | PFIP-009 Duplicaatdetectie voor opnieuw geuploade documenten | Historical Medical Record Ingestion | Kwaliteit | Waarschuw bij vermoedelijke duplicaten op basis van checksum, datum, titel en metadata. |
-| PFIP-010 Importstatus en foutafhandeling voor dossieruploads | Historical Medical Record Ingestion | Upload UX | Toon per bestand status, foutreden, retry en veilige verwijderactie. |
+| PFIP-010 Importstatus en foutafhandeling voor dossieruploads | Historical Medical Record Ingestion | Upload UX | Toon per bestand status, foutreden, veilige verwijderactie en opvolgend retry-doel zonder medische inhoud in logs. |
 | PFIP-011 Auditlog voor dossieringestie | Historical Medical Record Ingestion | Audit | Registreer upload, OCR, metadatawijziging en verwijdering als technische eventlog zonder medische plaintext. |
 | PFIP-012 Privacygrens voor OCR en analyse | Historical Medical Record Ingestion | Security | Documenteer en test dat OCR-resultaten en samenvattingen alleen encrypted worden opgeslagen. |
 | PFIP-013 Imaging repository voor echo's en foto's | Imaging Repository | Beeldupload | Upload echo's, foto's, scans en embryo-afbeeldingen als aparte beeldrecords. |

@@ -1441,6 +1441,13 @@ describe('app shell', () => {
     expect(html).toContain('value="erasmus"');
     expect(html).toContain('1 resultaat voor "erasmus"');
     expect(html).toContain('Dossierindex');
+    expect(html).toContain('Import-inbox');
+    expect(html).toContain('Bronlabel: bloed-lab-uitslag.pdf');
+    expect(html).toContain('Importstatus: Wacht op lokale OCR');
+    expect(html).toContain('Veilige metadata: Labuitslag · 2 KB');
+    expect(html).toContain('class="phase-button secondary delete-dossier-document"');
+    expect(html).toContain('data-dossier-document-id="doc-1"');
+    expect(html).toContain('Verwijder</button>');
     expect(html).toContain('Documenttijdlijn');
     expect(html).toContain('Behandelgeschiedenis');
     expect(html).toContain('id="dossier-upload-form"');

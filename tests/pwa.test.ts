@@ -70,6 +70,7 @@ describe('destructieve acties', () => {
       'Weet je zeker dat je deze afspraak wilt verwijderen?',
       'Weet je zeker dat je deze medicatie en geplande logs wilt verwijderen?',
       'Weet je zeker dat je deze kostenpost wilt verwijderen?',
+      'Weet je zeker dat je dit dossierdocument uit de import-inbox wilt verwijderen?',
     ]);
   });
 });

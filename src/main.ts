@@ -422,6 +422,18 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     render(root, state);
   });
 
+  root.querySelectorAll<HTMLButtonElement>('.delete-dossier-document').forEach((button) => {
+    button.addEventListener('click', () => {
+      const documentId = button.dataset.dossierDocumentId;
+      if (!documentId || !state.dossierStore) return;
+
+      const confirmed = window.confirm(DELETE_CONFIRMATIONS.dossierDocument);
+      if (!confirmed) return;
+
+      void deleteDossierDocument(documentId, root, state);
+    });
+  });
+
   root.querySelector('#imaging-filter-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -584,6 +596,30 @@ async function saveDossierDocumentsFromForm(
   } catch (error: unknown) {
     state.dossierError =
       error instanceof Error ? error.message : 'Dossierdocumenten uploaden is mislukt.';
+    render(root, state);
+  }
+}
+
+async function deleteDossierDocument(
+  documentId: string,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!state.dossierStore) return;
+
+  try {
+    await state.dossierStore.delete(documentId);
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Dossierimport verwijderd',
+      detail: `Dossierdocument ${documentId} verwijderd uit import-inbox.`,
+    });
+    state.dossierStatus = 'Dossierdocument verwijderd uit de import-inbox.';
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Dossierdocument verwijderen is mislukt.';
     render(root, state);
   }
 }
