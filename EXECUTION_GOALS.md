@@ -5464,4 +5464,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G632 — bootstrap governance redaction failure missing-term release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het failuretekstcontract-releasecontext missing-term contract is nu compact vastgelegd, maar changelog en current-state bewaken deze contractcontext nog niet apart.
+- **Desired Outcome:** Maintenance-tests koppelen het failuretekstcontract missing-term contract aan release-state.
+- **User Value:** Reviewers zien wijzigingen in deze missing-term contracttekst ook terug in releasecontext.
+- **Acceptance Criteria:** Test bewaakt release-stateverwijzing naar het failuretekstcontract missing-term contract; bestaande missing-term fixture en release-state guards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, CHANGELOG, CURRENT_STATE
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

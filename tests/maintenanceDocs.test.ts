@@ -73,6 +73,8 @@ const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS = [
   'redactioncontext-failuretekst',
   'failuretekstcontract',
 ] as const;
+const BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_ERROR =
+  'Bootstrap governance releasecontext ontbreekt voor termen: failuretekstcontract';
 const BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS = [
   'payload',
   'passphrase',
@@ -387,7 +389,10 @@ describe('onderhoudsdocumentatie', () => {
         'G000 Central Encrypted Platform: redactioncontext-failuretekst staat in releasecontext.',
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_RELEASE_TERMS,
       ),
-    ).toThrow('Bootstrap governance releasecontext ontbreekt voor termen: failuretekstcontract');
+    ).toThrow(BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_ERROR);
+    expect(BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_ERROR).toBe(
+      'Bootstrap governance releasecontext ontbreekt voor termen: failuretekstcontract',
+    );
   });
 
   it('bewaakt bootstrap governance releasecontext-termsets als contract', () => {
