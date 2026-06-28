@@ -4848,7 +4848,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, CI, central bootstrap, tests
 - **ADR Needed:** no
 - **Score:** 115
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G588 — missing key metadata recovery UI
 
@@ -4862,4 +4862,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, client bootstrap, vault session, tests
 - **ADR Needed:** no
 - **Score:** 113
+- **Status:** ☐ open
+
+### G589 — bootstrap smoke failure diagnostics
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De centrale bootstrap smoke draait nu als dedicated CI/CLI-command, maar failure-output bevat nog geen gestructureerde diagnose per bootstrapfase.
+- **Desired Outcome:** Bij falen geeft de smoke een gesanitized technische diagnose per fase, zodat maintainers onderscheid zien tussen sessie, write, tweede-device read, restart, wrong-key en plaintext-boundary zonder secrets of medische inhoud.
+- **User Value:** Regressies in centrale bootstrap zijn sneller te triageren zonder gevoelige data in CI-logs.
+- **Acceptance Criteria:** Failure-output bevat fasecode en generieke herstelhint; output bevat geen passphrase, token, filename, OCR/base64 of medische plaintext; tests dekken minimaal plaintext-boundary en tweede-device read failure; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Scripts, CI, central bootstrap smoke, tests
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
