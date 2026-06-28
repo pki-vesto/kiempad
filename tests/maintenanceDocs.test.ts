@@ -56,6 +56,12 @@ const BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS = [
   '{unknownCoverageFieldCount}',
   '{unknownSourceFieldCount}',
 ] as const;
+const BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS = [
+  'runbook',
+  'releasecontextbewaking',
+  'schemafoutvelden',
+  'placeholders',
+] as const;
 type BacklogHealthArtifactDocsHint = {
   label: string;
   term: string;
@@ -292,6 +298,9 @@ describe('onderhoudsdocumentatie', () => {
     }
     for (const releaseDoc of [changelog, currentState]) {
       expect(releaseDoc).toContain(freshnessSnapshot.gate);
+      for (const runbookContextTerm of BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS) {
+        expect(releaseDoc).toContain(runbookContextTerm);
+      }
       for (const sourceField of governanceContract.sourceFields) {
         expect(releaseDoc).toContain(sourceField);
       }
@@ -346,6 +355,7 @@ describe('onderhoudsdocumentatie', () => {
     expect({
       schemaError: BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS,
       placeholders: BOOTSTRAP_GOVERNANCE_SCHEMA_FAILURE_PLACEHOLDER_TERMS,
+      runbookContext: BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -354,6 +364,7 @@ describe('onderhoudsdocumentatie', () => {
         'unknownCoverageFieldCount',
       ],
       placeholders: ['{gate}', '{unknownCoverageFieldCount}', '{unknownSourceFieldCount}'],
+      runbookContext: ['runbook', 'releasecontextbewaking', 'schemafoutvelden', 'placeholders'],
     });
   });
 

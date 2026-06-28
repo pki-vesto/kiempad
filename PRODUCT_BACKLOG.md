@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 424 |
+| ☑ klaar | 425 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **623** |
+| **Totaal** | **624** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -785,13 +785,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G620 | Central Encrypted Platform: bootstrap governance releasecontext term list deduplication | P1 | F5 | ☑ |
 | G621 | Central Encrypted Platform: bootstrap governance releasecontext term snapshot guard | P1 | F5 | ☑ |
 | G622 | Central Encrypted Platform: bootstrap governance releasecontext term runbook reference | P1 | F5 | ☑ |
-| G623 | Central Encrypted Platform: bootstrap governance releasecontext runbook release-state guard | P1 | F5 | ☐ |
+| G623 | Central Encrypted Platform: bootstrap governance releasecontext runbook release-state guard | P1 | F5 | ☑ |
+| G624 | Central Encrypted Platform: bootstrap governance releasecontext runbook term contract | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 623** (id's G001 t/m G623, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 624** (id's G001 t/m G624, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
