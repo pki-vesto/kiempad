@@ -817,6 +817,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_TERMS,
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseError:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR,
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorContract:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_STATE_ERROR_RELEASE_STATE_ERROR_TERMS_ERROR_RELEASE_ERROR_RELEASE_ERROR,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -888,6 +890,8 @@ describe('onderhoudsdocumentatie', () => {
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorRelease:
         ['release-state-foutmeldingcontext missing-term melding'],
       redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseError:
+        'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontext missing-term melding',
+      redactionFailureMissingTermTextRunbookErrorReleaseStateErrorReleaseStateErrorTermsErrorReleaseErrorReleaseErrorContract:
         'Bootstrap governance releasecontext ontbreekt voor termen: release-state-foutmeldingcontext missing-term melding',
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
