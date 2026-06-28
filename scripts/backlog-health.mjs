@@ -13,6 +13,7 @@ export const ISSUE_SNAPSHOT_CLEANUP_COMMAND = 'rm -f /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_FRESHNESS_COMMAND = 'stat -c %y /tmp/kiempad-issues.json';
 export const ISSUE_SNAPSHOT_EXAMPLE_LIMIT = 500;
 export const ISSUE_SNAPSHOT_LIMIT = 200;
+export const ACTIVE_GOAL_FLOOR_MINIMUM = 100;
 
 export function buildIssueSnapshotCommand(limit = ISSUE_SNAPSHOT_LIMIT) {
   return `gh issue list --state all --limit ${limit} --json number,title,state,url > /tmp/kiempad-issues.json`;
@@ -22,6 +23,10 @@ export const ISSUE_SNAPSHOT_COMMAND = buildIssueSnapshotCommand();
 
 export function buildIssueSnapshotValidationCommand(limit = ISSUE_SNAPSHOT_LIMIT) {
   return `npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit ${limit}`;
+}
+
+export function buildActiveGoalFloorValidationCommand(minimum = ACTIVE_GOAL_FLOOR_MINIMUM) {
+  return `npm run backlog:health -- --minimum-open-goals ${minimum}`;
 }
 
 export function parseBacklog(markdown) {
@@ -342,6 +347,7 @@ export function formatBacklogHealthMarkdown(report) {
     `- Issue snapshot freshness: maak de snapshot direct voor validatie en controleer eventueel met \`${ISSUE_SNAPSHOT_FRESHNESS_COMMAND}\``,
     `- Issue snapshot cleanup: \`${ISSUE_SNAPSHOT_CLEANUP_COMMAND}\` na lokale validatie`,
     `- Issue snapshot hoger-limiet voorbeeld: \`${buildIssueSnapshotCommand(ISSUE_SNAPSHOT_EXAMPLE_LIMIT)}\` en daarna \`${buildIssueSnapshotValidationCommand(ISSUE_SNAPSHOT_EXAMPLE_LIMIT)}\``,
+    `- Active goal floor: valideer de autonome vloer expliciet met \`${buildActiveGoalFloorValidationCommand()}\``,
     `- Bevindingen: ${report.summary.findings}`,
     '',
     '## Bevindingen',

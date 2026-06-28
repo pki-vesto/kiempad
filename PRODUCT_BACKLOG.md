@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 382 |
+| ☑ klaar | 383 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **581** |
+| **Totaal** | **582** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -723,7 +723,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☐ |
 | G559 | Premium Claude Design UI: research trend dashboard visual system | P1 | F5 | ☐ |
 | G560 | Premium Claude Design UI: daily recommendation dual-owner cards | P1 | F5 | ☐ |
-| G561 | Product Quality & Automation: active goal floor maintenance test | P0 | F5 | ☐ |
+| G561 | Product Quality & Automation: active goal floor maintenance test | P0 | F5 | ☑ |
 | G562 | Product Quality & Automation: goal score top-priority snapshot | P1 | F5 | ☐ |
 | G563 | Product Quality & Automation: issue creation script dry-run fixture | P1 | F5 | ☐ |
 | G564 | Product Quality & Automation: autonomous evolution runbook checklist | P1 | F5 | ☐ |
@@ -744,12 +744,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G579 | Fertility Intelligence: metadata-normalisatie correctieformulier | P1 | F5 | ☐ |
 | G580 | Fertility Intelligence: historische tijdlijnitem reviewactie | P1 | F5 | ☐ |
 | G581 | Fertility Intelligence: imaging metadata reviewcorrectie | P1 | F5 | ☐ |
+| G582 | Product Quality & Automation: active goal floor CI gate | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 581** (id's G001 t/m G581, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 582** (id's G001 t/m G582, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

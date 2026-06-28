@@ -12,6 +12,20 @@ The backlog and execution catalog must maintain at least:
 
 If the floor is not met, generate additional implementation-ready goals before unrelated cleanup. Active goals must be mirrored as GitHub Issues and must keep the same G-id in PRODUCT_BACKLOG.md, EXECUTION_GOALS.md and the issue title.
 
+Run the explicit floor check before closing autonomous maintenance work:
+
+```bash
+npm run backlog:health -- --minimum-open-goals 100
+```
+
+For GitHub parity, create a fresh sanitized issue snapshot and validate it in the same pass:
+
+```bash
+gh issue list --state all --limit 500 --json number,title,state,url > /tmp/kiempad-issues.json
+npm run backlog:health -- --issues-json /tmp/kiempad-issues.json --issue-snapshot-limit 500 --minimum-open-goals 100
+rm -f /tmp/kiempad-issues.json
+```
+
 ## Priority Horizons
 
 1. Central encrypted database architecture.
