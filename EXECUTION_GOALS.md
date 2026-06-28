@@ -5492,4 +5492,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G634 — bootstrap governance redaction failure missing-term release text contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De negatieve missing-term contractreleasecontextfixture bewaakt de ontbrekende term, maar de exacte missing-term contractreleasecontextmelding staat nog niet als compact contract.
+- **Desired Outcome:** Maintenance-tests leggen de missing-term contractreleasecontextmelding vast als apart contract.
+- **User Value:** Reviewers zien wijzigingen in deze technische foutmelding als bewust contractwerk.
+- **Acceptance Criteria:** Test bewaakt de exacte missing-term contractreleasecontextmelding; bestaande negatieve fixture en release-state guard blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
