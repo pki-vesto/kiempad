@@ -157,6 +157,7 @@ describe('onderhoudsdocumentatie', () => {
       'Technische check',
       'Herstelactie',
       'Eigenaar',
+      'src/storage/centralBootstrapDiagnostics.ts',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }

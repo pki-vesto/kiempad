@@ -96,7 +96,9 @@ pad zonder lokale vault-hercreatie.
   | `runtime` | onverwachte smoke-exception | controleer alleen de generieke CLI-diagnostic en CI-runmetadata | reproduceer met synthetische fixture; log geen exceptionmessage of payload | Platform |
   Alle bekende failurediagnostics worden in tests gezamenlijk gecontroleerd op
   redaction van passphrases, bearer tokens, bestandsnamen, OCR/base64-markers en
-  medische plaintext.
+  medische plaintext. Nieuwe failurefixtures moeten eerst in de registry
+  `src/storage/centralBootstrapDiagnostics.ts` worden toegevoegd; commandotests
+  vergelijken die registry met de `phaseCode` literals in de CLI.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale

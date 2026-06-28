@@ -4932,4 +4932,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central bootstrap smoke, tests, runbook
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G594 — bootstrap runbook registry drift check
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap diagnostic registry is nu bron voor failurefixtures, maar de runbookmatrix kan nog handmatig afwijken van de registryvolgorde of registryvelden.
+- **Desired Outcome:** Een maintenance-test controleert registry-gedreven runbookdekking per phaseCode, zodat documentatie en CLI-fixtures synchroon blijven.
+- **User Value:** Maintainers zien in CI direct wanneer een nieuwe diagnostic wel testbaar is maar niet triageerbaar in de runbook.
+- **Acceptance Criteria:** Test leest de registry en verifieert dat elke registry phaseCode exact één runbookrij heeft; test controleert dat de registryverwijzing in de runbook blijft staan; mismatch tussen registry en runbook faalt; docs of backlog verwijzen naar dit doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, maintenance docs tests, bootstrap diagnostic registry
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
