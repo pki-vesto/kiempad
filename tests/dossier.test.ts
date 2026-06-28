@@ -753,12 +753,13 @@ describe('dossier', () => {
       id: 'img-echo',
       datum: '2026-05-01',
       titel: 'Echo 6 weken',
+      soort: 'echo',
       bronbestand: 'echo-6-weken.jpg',
       mimeType: 'image/jpeg',
     });
   });
 
-  it('legt beeldmetadata vast voor datum, context, bron, afspraak en traject', () => {
+  it('legt beeldmetadata vast voor type, datum, context, bron, poging, afspraak en EXIF-status', () => {
     const document = maakDossierDocument('img-metadata', {
       datum: '2026-05-04',
       titel: 'Echo follikelmeting',
@@ -771,30 +772,39 @@ describe('dossier', () => {
       afspraakId: 'afspraak-echo',
       trajectId: 'traject-1',
       beeldMetadata: {
+        soort: 'echo',
         context: 'Follikelmeting links',
         bron: 'Kliniekportaal',
+        pogingId: 'poging-1',
         cyclusDag: 9,
         embryoLabel: 'Embryo 1',
+        exifStatus: 'geisoleerd',
+        reviewStatus: 'gereviewd',
       },
     });
 
     expect(document.beeldMetadata).toEqual({
       datum: '2026-05-04',
+      soort: 'echo',
       context: 'Follikelmeting links',
       bron: 'Kliniekportaal',
       afspraakId: 'afspraak-echo',
       trajectId: 'traject-1',
+      pogingId: 'poging-1',
       cyclusDag: 9,
       embryoLabel: 'Embryo 1',
+      exifStatus: 'geisoleerd',
+      reviewStatus: 'gereviewd',
     });
     expect(bouwImagingRepository([document])[0]).toMatchObject({
       datum: '2026-05-04',
+      soort: 'echo',
       bronbestand: 'Kliniekportaal',
       context: 'Follikelmeting links',
       afspraakId: 'afspraak-echo',
       trajectId: 'traject-1',
       tijdlijnKoppeling: {
-        pogingId: 'traject-1',
+        pogingId: 'poging-1',
         afspraakId: 'afspraak-echo',
         cyclusDag: 9,
         embryoLabel: 'Embryo 1',
