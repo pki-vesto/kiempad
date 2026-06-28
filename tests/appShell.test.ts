@@ -244,6 +244,9 @@ describe('app shell', () => {
     expect(html).toContain('name="recommendationAction" value="afwijzen"');
     expect(html).toContain('name="recommendationAction" value="herinnering"');
     expect(html).toContain('name="recommendationAction" value="vraag"');
+    expect(html).toContain('name="recommendationAction" value="artscheck"');
+    expect(html).toContain('Artscheck</button>');
+    expect(html).toContain('name="bron" value="Lokale dagstart"');
     expect(html).toContain('name="reminderTijdstip" type="datetime-local"');
     expect(html).toContain('data-recommendation-id="vrouw-basisdag"');
     expect(html).toContain('Gebruikte bronnen:');

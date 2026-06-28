@@ -3133,6 +3133,7 @@ function renderDailyRecommendationActions(item: DailyRecommendation): string {
       <input type="hidden" name="recommendationId" value="${escapeAttribute(item.id)}" />
       <input type="hidden" name="titel" value="${escapeAttribute(item.titel)}" />
       <input type="hidden" name="detail" value="${escapeAttribute(item.detail)}" />
+      <input type="hidden" name="bron" value="${escapeAttribute(item.bron)}" />
       <label>
         Herinner op
         <input name="reminderTijdstip" type="datetime-local" value="${escapeAttribute(defaultRecommendationReminderTime())}" />
@@ -3141,6 +3142,7 @@ function renderDailyRecommendationActions(item: DailyRecommendation): string {
       <button class="phase-button secondary" type="submit" name="recommendationAction" value="afwijzen">Wijs af</button>
       <button class="phase-button secondary" type="submit" name="recommendationAction" value="herinnering">Maak herinnering</button>
       <button class="phase-button secondary" type="submit" name="recommendationAction" value="vraag">Maak vraag</button>
+      <button class="phase-button secondary" type="submit" name="recommendationAction" value="artscheck">Artscheck</button>
     </form>
   `;
 }

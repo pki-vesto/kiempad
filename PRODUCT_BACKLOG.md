@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 376 |
+| ☑ klaar | 377 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **575** |
+| **Totaal** | **576** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -713,7 +713,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G548 | Daily Recommendations: vrouw aanbeveling cyclusfase context | P0 | F5 | ☐ |
 | G549 | Daily Recommendations: man aanbeveling leefstijl context | P0 | F5 | ☐ |
 | G550 | Daily Recommendations: aanbeveling bronconfidence label | P1 | F5 | ☐ |
-| G551 | Daily Recommendations: aanbeveling artscheck actieknop | P0 | F5 | ☐ |
+| G551 | Daily Recommendations: aanbeveling artscheck actieknop | P0 | F5 | ☑ |
 | G552 | Daily Recommendations: dagadvies feedback analytics zonder tracking | P1 | F5 | ☐ |
 | G553 | Daily Recommendations: aanbevelingen verbergen per eigenaar | P1 | F5 | ☐ |
 | G554 | Daily Recommendations: daily recommendation policy regression fixtures | P0 | F5 | ☐ |
@@ -738,12 +738,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G573 | Fertility Timeline & Knowledge Graph: graph payload leak regression fixtures | P1 | F5 | ☐ |
 | G574 | Daily Recommendations: supplement artscheck actieflow | P1 | F5 | ☐ |
 | G575 | Research Intelligence: research source allowlist review evidence | P1 | F5 | ☐ |
+| G576 | Daily Recommendations: artscheck vraag reviewstatus | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 575** (id's G001 t/m G575, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 576** (id's G001 t/m G576, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

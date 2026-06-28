@@ -13,7 +13,10 @@ import { type AiSamenvattingPayload, maakAiSamenvattingPayload } from './domain/
 import { maakConsultPrintHtml } from './domain/consultExport';
 import { ConsultVerslagStore } from './domain/consultVerslagStore';
 import { CycleDataStore } from './domain/cycleDataStore';
-import type { DailyRecommendationOwner } from './domain/dailyRecommendations';
+import {
+  type DailyRecommendationOwner,
+  maakArtscheckVraagVoorAanbeveling,
+} from './domain/dailyRecommendations';
 import type { DecisionOptionInput } from './domain/decision';
 import { DecisionStore } from './domain/decisionStore';
 import {
@@ -1860,6 +1863,25 @@ async function handleDailyRecommendationAction(
       detail: `${titel} (${recommendationId})`,
     });
     state.dailyRecommendationStatus = `Aanbeveling omgezet naar vraag: ${titel}.`;
+    await reloadAndRender(root, state);
+    return;
+  }
+
+  if (action === 'artscheck' && state.vraagStore) {
+    await state.vraagStore.save({
+      vraag: maakArtscheckVraagVoorAanbeveling({
+        titel,
+        detail,
+        bron: String(data.get('bron') ?? ''),
+      }),
+      beantwoord: false,
+    });
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Aanbeveling omgezet naar artscheck',
+      detail: `${titel} (${recommendationId})`,
+    });
+    state.dailyRecommendationStatus = `Artscheckvraag gemaakt: ${titel}.`;
     await reloadAndRender(root, state);
   }
 }

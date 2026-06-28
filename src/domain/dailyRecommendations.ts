@@ -300,6 +300,24 @@ function isSupplementChecklistItem(item: DailyRecommendationChecklistItem): bool
   return /\bsupplement/i.test(`${item.label} ${item.disclaimer}`);
 }
 
+export function maakArtscheckVraagVoorAanbeveling(input: {
+  titel: string;
+  detail?: string;
+  bron?: string;
+}): string {
+  const titel = input.titel.trim();
+  const detail = input.detail?.trim();
+  const bron = input.bron?.trim();
+  const onderdelen = [
+    `Artscheck dagelijkse aanbeveling: ${titel}`,
+    detail ? `Context om te bespreken: ${detail}` : undefined,
+    bron ? `Bron: ${bron}` : undefined,
+    'Vraag aan kliniek, arts of apotheek: klopt deze notitie voor onze situatie?',
+    'Geen dosering, interactieclaim of behandelkeuzeadvies door Kiempad.',
+  ].filter((item): item is string => Boolean(item));
+  return onderdelen.join(' ');
+}
+
 function bouwBehandelvoorbereiding(input: {
   afspraak: Afspraak | undefined;
   doseLogsVandaag: readonly { doseLog: DoseLog; medicatie: Medicatie }[];
