@@ -221,7 +221,12 @@ fetches doet. Zet deze API niet direct publiek op internet.
   draaiende proces onzichtbaar en veroorzaken geen lost updates voor parallelle
   writes.
 - Oversized JSON bodies boven `KIEMPAD_CENTRAL_MAX_REQUEST_BODY_BYTES` worden `413`
-  voordat ze naar de centrale API-laag gaan.
+  voordat ze naar de centrale API-laag gaan. Als `Content-Length` al boven de limiet
+  ligt, weigert de Node-boundary de request direct zonder centrale API-call of
+  persistence-mutatie. Dit is ook de centrale attachment/envelope-limiet voor
+  uploads: grote PDF-, echo-, foto- of embryobijlagen moeten client-side encrypted
+  blijven en als request onder deze bytegrens passen, anders krijgt de gebruiker een
+  expliciete `request-body-too-large` foutstatus zonder plaintext backendinhoud.
 - Onverwachte fouten aan de Node HTTP-boundary worden een generieke
   `500 {"error":"central-runtime-error"}` zonder exceptionbericht of stacktrace.
 - Recordpayloads moeten een `AES-256-GCM` envelope zijn.

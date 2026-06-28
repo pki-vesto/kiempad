@@ -1,5 +1,5 @@
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
-import type { Server } from 'node:http';
+import { request as httpRequest, type Server } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -211,6 +211,31 @@ describe('central encrypted Node backend runtime', () => {
     await expect(readFile(persistenceFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
 
     await rm(directory, { recursive: true, force: true });
+  });
+
+  it('weigert oversized attachment-envelopes direct op Content-Length zonder API-mutatie', async () => {
+    let apiCalls = 0;
+    const server = createCentralNodeHttpServerFromApi(
+      {
+        handle: async () => {
+          apiCalls += 1;
+          return { status: 204 };
+        },
+      },
+      { maxRequestBodyBytes: 64 },
+    );
+    await listen(server);
+    cleanupCallbacks.push(closeServer(server));
+    const address = server.address();
+    if (!address || typeof address === 'string') {
+      throw new Error('Expected TCP listener address.');
+    }
+
+    const response = await requestWithDeclaredContentLength(address.port, 512);
+
+    expect(response.status).toBe(413);
+    expect(JSON.parse(response.body)).toEqual({ error: 'request-body-too-large' });
+    expect(apiCalls).toBe(0);
   });
 
   it('faalt gesloten bij ongeldige directe request-body limietconfiguratie', () => {
@@ -498,6 +523,37 @@ function closeServer(server: Server): () => Promise<void> {
       });
     });
   };
+}
+
+async function requestWithDeclaredContentLength(
+  port: number,
+  contentLength: number,
+): Promise<{ status: number | undefined; body: string }> {
+  return await new Promise((resolve, reject) => {
+    const request = httpRequest(
+      {
+        host: '127.0.0.1',
+        port,
+        path: '/records/oversized-attachment',
+        method: 'PUT',
+        headers: {
+          authorization: 'Bearer oversized-test-token',
+          'content-type': 'application/json',
+          'content-length': String(contentLength),
+        },
+      },
+      (response) => {
+        let body = '';
+        response.setEncoding('utf8');
+        response.on('data', (chunk) => {
+          body += chunk;
+        });
+        response.on('end', () => resolve({ status: response.statusCode, body }));
+      },
+    );
+    request.on('error', reject);
+    request.end();
+  });
 }
 
 function expectSecurityHeaders(response: Response): void {
