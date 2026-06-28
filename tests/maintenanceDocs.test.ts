@@ -168,6 +168,25 @@ describe('onderhoudsdocumentatie', () => {
     expect(runbook).not.toContain('kiempad-session-');
     expect(runbook).not.toContain('gevoelige fertiliteitsnotitie');
     expect(runbook).not.toContain('echo-foto-privenaam.jpg');
+
+    const snapshotReviewRule = extractBootstrapSnapshotReviewRule();
+    expect(snapshotReviewRule).toContain('phaseCode');
+    expect(snapshotReviewRule).toContain('envName');
+    expect(snapshotReviewRule).toContain('neutrale redactioncategory-labels');
+    for (const forbiddenTerm of [
+      'payload',
+      'passphrase',
+      'secret',
+      'token',
+      'bestandsnaam',
+      'filename',
+      'OCR',
+      'base64',
+      'medische',
+      'fertiliteitsnotitie',
+    ]) {
+      expect(snapshotReviewRule).not.toContain(forbiddenTerm);
+    }
   });
 
   it('houdt een rijke execution-goalcatalogus met autonome open-doelenvloer', () => {
@@ -1308,6 +1327,18 @@ function parseBootstrapRunbookPhaseCodes(): string[] {
     .split('\n')
     .map((line) => line.match(/^\s*\|\s*`(?<phaseCode>[^`]+)`\s*\|/)?.groups?.phaseCode)
     .filter((phaseCode): phaseCode is string => Boolean(phaseCode));
+}
+
+function extractBootstrapSnapshotReviewRule(): string {
+  const rule = runbook.match(
+    /Snapshotdrift is alleen acceptabel bij een bewuste registrywijziging[\s\S]*?snapshot te verklaren\./,
+  )?.[0];
+
+  if (!rule) {
+    throw new Error('Bootstrap diagnostic snapshotreviewregel ontbreekt in de runbook.');
+  }
+
+  return rule;
 }
 
 function extractBacklogHealthExampleIssueKeys(example: BacklogHealthJsonExample): string[] {
