@@ -152,6 +152,7 @@ describe('onderhoudsdocumentatie', () => {
       'wrong-key',
       'snapshot-inspection',
       'plaintext-boundary',
+      'runtime',
       'Waarschijnlijke oorzaak',
       'Technische check',
       'Herstelactie',

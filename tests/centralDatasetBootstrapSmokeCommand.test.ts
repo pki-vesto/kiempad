@@ -53,6 +53,17 @@ describe('central dataset bootstrap smoke command', () => {
     expectSanitizedSmokeOutput(output);
   }, 15_000);
 
+  it('redigeert runtime-exceptions naar generieke bootstrap diagnostics', async () => {
+    const output = await runFailingSmoke({
+      KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE: '1',
+    });
+
+    expect(output).toContain('"status": "failed"');
+    expect(output).toContain('"phaseCode": "runtime"');
+    expect(output).toContain('"recoveryHint": "Controleer centrale bootstrap runtime."');
+    expectSanitizedSmokeOutput(output);
+  }, 15_000);
+
   it('redigeert alle bekende bootstrap failurediagnostics', async () => {
     for (const { phaseCode, env } of [
       {
@@ -78,6 +89,10 @@ describe('central dataset bootstrap smoke command', () => {
       {
         phaseCode: 'plaintext-boundary',
         env: { KIEMPAD_BOOTSTRAP_SMOKE_INJECT_PLAINTEXT_LEAK: '1' },
+      },
+      {
+        phaseCode: 'runtime',
+        env: { KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE: '1' },
       },
     ]) {
       const output = await runFailingSmoke(env);

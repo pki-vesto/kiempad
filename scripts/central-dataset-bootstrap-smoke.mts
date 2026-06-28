@@ -2,6 +2,8 @@ import { runCentralDatasetBootstrapSmoke } from '../src/storage/centralDatasetBo
 import { MemoryCentralDatabasePersistence } from '../src/storage/centralDatabase';
 
 const FAILURE_INJECTION_NEEDLE = 'Centrale bootstrap poging';
+const RUNTIME_FAILURE_INJECTION_NEEDLE =
+  'central bootstrap smoke passphrase kiempad-session-forged echo-foto-privenaam.jpg OCR base64 gevoelige fertiliteitsnotitie';
 type BootstrapSmokePhaseCode =
   | 'first-device-write'
   | 'second-device-read'
@@ -18,6 +20,10 @@ type BootstrapSmokeDiagnostic = {
 };
 
 async function main(): Promise<void> {
+  if (process.env.KIEMPAD_BOOTSTRAP_SMOKE_FORCE_RUNTIME_FAILURE === '1') {
+    throw new Error(RUNTIME_FAILURE_INJECTION_NEEDLE);
+  }
+
   const persistence = new MemoryCentralDatabasePersistence();
   const result = await runCentralDatasetBootstrapSmoke({
     persistence,

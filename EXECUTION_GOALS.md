@@ -4918,4 +4918,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central bootstrap smoke, tests, scripts
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G593 — bootstrap diagnostic injection registry
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De bootstrap smoke gebruikt meerdere env-fixtures voor diagnostics, maar er is nog geen centrale registry die fixture-naam, fasecode en redactionverwachting bij elkaar houdt.
+- **Desired Outcome:** Bootstrap diagnostic failure-injections worden vanuit een gedeelde registry beschreven, zodat nieuwe phaseCodes automatisch in commandotests en docs kunnen worden meegenomen.
+- **User Value:** Nieuwe bootstrap diagnostics blijven consistent en lekvrij zonder dubbele testlijsten of vergeten fasecodes.
+- **Acceptance Criteria:** Eén registry bevat fixture env, verwachte phaseCode en redactioncategorieën; commandotests gebruiken de registry; docs of runbook verwijzen naar de registry; test faalt als een phaseCode wel in code maar niet in de registry staat.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Central bootstrap smoke, tests, runbook
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open
