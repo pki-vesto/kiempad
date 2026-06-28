@@ -5310,4 +5310,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G621 — bootstrap governance releasecontext term snapshot guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De schemafout- en placeholdertermen staan nu in compacte constanten, maar er is nog geen kleine snapshotverwachting die de volledige termset als reviewbaar contract vastlegt.
+- **Desired Outcome:** Maintenance-tests leggen de twee releasecontext-termsets vast in een compacte inline snapshot of equivalente verwachting.
+- **User Value:** Reviewers zien termcontractwijzigingen direct als bewuste snapshotdrift.
+- **Acceptance Criteria:** Test bewaakt de schemafout- en placeholdertermsets als reviewbaar contract; bestaande positieve en negatieve helperguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

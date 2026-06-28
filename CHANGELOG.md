@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G620/G621 Central Encrypted Platform: bootstrap governance releasecontext-termen staan nu in compacte constanten voor schemafoutvelden en schemafoutannotatie-placeholders, terwijl de positieve en negatieve helperguards groen blijven. G621 is toegevoegd als opvolgdoel voor releasecontext-term snapshotbewaking.
 - G619/G620 Central Encrypted Platform: `extractBootstrapGovernanceReleaseContext` heeft nu een negatieve fixture voor ontbrekende releasecontexttermen en rapporteert alleen de ontbrekende technische termen. G620 is toegevoegd als opvolgdoel voor deduplicatie van releasecontextterm-lijsten.
 - G618/G619 Central Encrypted Platform: de maintenance-test gebruikt nu één `extractBootstrapGovernanceReleaseContext` helper om zowel schemafoutvelden als schemafoutannotatie-placeholders in releasecontext te bewaken. G619 is toegevoegd als opvolgdoel voor expliciete helper-failurefixtures.
 - G617/G618 Central Encrypted Platform: maintenance-tests koppelen de toegestane schemafoutannotatie-placeholders `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` nu aan `CHANGELOG.md` en `CURRENT_STATE.md`, zodat placeholdercontractdrift ook in releasecontext faalt. G618 is toegevoegd als opvolgdoel voor runbook- en releaseplaceholdercontext uit één helper.
