@@ -83,6 +83,7 @@ export class VaultSession {
 
     const metadata = await this.driver.getMeta<CryptoMetadata>(CRYPTO_META_KEY);
     if (!metadata) {
+      await this.assertNoExistingEncryptedRecordsWithoutCryptoMetadata();
       await this.createVault(passphrase);
       return;
     }
@@ -207,6 +208,15 @@ export class VaultSession {
     this.key = key;
     this.rawKey = rawKey;
     this.touch();
+  }
+
+  private async assertNoExistingEncryptedRecordsWithoutCryptoMetadata(): Promise<void> {
+    const records = await this.driver.listRecords();
+    if (records.length === 0) return;
+
+    throw new Error(
+      'Kiempad kan deze centrale dataset niet ontgrendelen: sleutelmetadata ontbreekt terwijl er al versleutelde records bestaan.',
+    );
   }
 
   private async unlockExistingVault(passphrase: string, metadata: CryptoMetadata): Promise<void> {

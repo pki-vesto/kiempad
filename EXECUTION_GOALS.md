@@ -3644,7 +3644,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Onboarding, central API, tests
 - **ADR Needed:** no
 - **Score:** 121
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G502 — central persistence backup drill
 
@@ -4848,4 +4848,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, CI, central bootstrap, tests
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☐ open
+
+### G588 — missing key metadata recovery UI
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De vaultlaag blokkeert nu centrale datasets met encrypted records maar ontbrekende sleutelmetadata, maar de app-shell toont deze inconsistentie nog niet als herstelbare gebruikersstatus.
+- **Desired Outcome:** De UI vertaalt ontbrekende sleutelmetadata bij bestaande encrypted records naar een generieke herstelmelding met reload/support/backup-richting zonder medische inhoud of secrets te tonen.
+- **User Value:** Gebruikers begrijpen dat hun centrale datasetkopie onvolledig is en voorkomen dat zij per ongeluk een nieuwe incompatibele kluis starten.
+- **Acceptance Criteria:** App-shell of bootstrapstatus onderscheidt missing-key-metadata van verkeerde passphrase; melding bevat geen passphrase, token, filename, OCR/base64 of medische plaintext; tests dekken lege dataset, inconsistente dataset en bestaande geldige dataset; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, client bootstrap, vault session, tests
+- **ADR Needed:** no
+- **Score:** 113
 - **Status:** ☐ open

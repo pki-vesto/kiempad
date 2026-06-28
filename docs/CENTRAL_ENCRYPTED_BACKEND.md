@@ -41,6 +41,9 @@ owner/indexmetadata en encrypted envelopes.
   `runCentralDatasetBootstrapSmoke` smoke-test deze boundary end-to-end met een lege
   dataset, encrypted write, tweede-device unlock, serverrestart, verkeerde-sleutel
   foutstatus en optionele snapshotinspectie op plaintextlekkage.
+  Bij unlock maakt `VaultSession` alleen nieuwe `crypto` sleutelmetadata aan voor
+  een lege dataset; bestaan er al encrypted records zonder sleutelmetadata, dan
+  faalt bootstrap expliciet om een incompatibele multi-device kopie te voorkomen.
   Centrale metadata is beperkt tot technische keys (`crypto`, `schema`,
   `webauthn-unlock`) met shape-validatie; willekeurige plaintext metadata wordt vóór
   persistence geweigerd. Die technische metadata is owner-scoped: dezelfde metakey

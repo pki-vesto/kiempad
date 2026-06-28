@@ -128,6 +128,9 @@ en blijft ook centraal **versleuteld at rest**.
   legacy lokale kluis. De refresh-status is alleen technische clientstatus
   (`active`/`refreshing`/`failed`) met timestamp of foutcode, zonder passphrase,
   recordpayload of medische plaintext.
+  `VaultSession` maakt geen nieuwe sleutelmetadata aan wanneer er al encrypted
+  records bestaan; zo wordt een gedeeltelijke of inconsistente centrale kopie
+  geblokkeerd voordat een tweede apparaat een incompatibele kluis initialiseert.
 - **Bootstrap smoke:** `runCentralDatasetBootstrapSmoke` doorloopt de centrale
   encrypted dataset bootstrap met lege dataset, eerste write, tweede-device read,
   serverrestart, verkeerde-sleutel foutstatus en optionele snapshotinspectie op

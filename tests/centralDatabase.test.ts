@@ -93,6 +93,23 @@ describe('central encrypted database architecture', () => {
     });
   });
 
+  it('blokkeert multi-device unlock wanneer centrale records zonder sleutelmetadata bestaan', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    await database.putRecord(userA, createEncryptedRecord('orphan-central-record'));
+    const driver = new CentralUserStorageDriver(database, userA);
+    const session = new VaultSession(driver, { autoLockMs: 60_000 });
+
+    await expect(session.initializeOrUnlock('nieuwe centrale passphrase')).rejects.toThrow(
+      'sleutelmetadata ontbreekt terwijl er al versleutelde records bestaan',
+    );
+
+    await expect(database.getMeta(userA, 'crypto')).resolves.toBeUndefined();
+    const serialized = JSON.stringify(database.unsafeDumpRecordsForTest());
+    expect(serialized).toContain('"ownerUserId":"user-peter"');
+    expect(serialized).not.toContain('nieuwe centrale passphrase');
+    expect(serialized).not.toContain('plaintext fertiliteitsnotitie');
+  });
+
   it('houdt centrale record-id namespaces per gebruiker gescheiden', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const ownerDriver = new CentralUserStorageDriver(database, userA);
