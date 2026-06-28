@@ -1,5 +1,7 @@
 /* ============================================================
    Kiempad — prototype-thema (Kiempad-prototype.dc.html)
+   Claude Design project dab87658-12f7-476d-80f2-f36de2acb4ae,
+   Kiempad-prototype.dc.html etag 1782338087299810.
    Editorial, warm, central-encrypted aware. Lora (serif) +
    Figtree (sans), zelf-gehost (geen externe fonts/CDN). Alle
    bestaande klassen blijven werken; dit is een pure UI/UX-laag.
@@ -68,6 +70,9 @@
   --surface-raised: #ffffff;
   --surface-subtle: #f3efe6;
   --surface-active: #e9f0e3;
+  --surface-complete: #f1f4ed;
+  --surface-complete-border: #dfe7d6;
+  --surface-cream: #ede7db;
   --surface-warning: #f6ecdb;
   --surface-danger: #f4e3d8;
   --field-bg: #ffffff;
@@ -78,6 +83,8 @@
   --text-soft: #6b7565;
   --text-strong: #3a463b;
   --text-faint: #8a8478;
+  --text-subtle-prototype: #9a9486;
+  --text-disabled-prototype: #a39c8c;
 
   /* primary (action = dark sage) + brand mark (lighter sage) */
   --accent: #5e7a57;
@@ -89,6 +96,11 @@
   --border: #e9e1d2;
   --border-strong: #ded4c2;
   --border-soft: #e0d6c4;
+  --border-prototype: #e3dbcb;
+  --border-complete: #dbe2d3;
+  --border-check: #c2cfb8;
+  --border-chevron: #c0b79f;
+  --border-warm: #c9bfa9;
   --border-warning: #d8cdb8;
 
   /* semantic */
@@ -101,7 +113,9 @@
   --warning: #a07a2e;
   --warning-soft: #f6ecdb;
   --warning-text: #7a5e1f;
+  --warning-icon: #a08763;
   --amber: #d9a45b;
+  --amber-border: #e8b98e;
   --danger: #a64b3a;
   --danger-border: #d6a08e;
   --danger-strong: #a64b3a;
@@ -127,6 +141,12 @@
   --owner-samen-bg: #f6ecdb;
   --owner-samen-text: #8a6a32;
   --owner-samen-dot: #d9a45b;
+  --phase-dot-done: #a7c39c;
+  --timeline-line-done: #c7d6be;
+  --dose-divider: #f0eadf;
+  --calendar-muted-bg: #f3f0e7;
+  --action-tile-sage: #e3ead9;
+  --ai-soft-prototype: #ece7f2;
 
   /* shape, depth, motion */
   --radius-hero: 20px;
@@ -152,12 +172,17 @@
   --surface-warning: #2f2a1a;
   --surface-danger: #2f2019;
   --field-bg: #313629;
+  --surface-complete: #2a3324;
+  --surface-complete-border: #3a4934;
+  --surface-cream: #2d3027;
 
   --text: #ece6d8;
   --text-muted: #c5c8b6;
   --text-soft: #a7a994;
   --text-strong: #ece6d8;
   --text-faint: #9a9a86;
+  --text-subtle-prototype: #aaa48f;
+  --text-disabled-prototype: #9a9d88;
 
   --accent: #8fae84;
   --accent-strong: #abc7a0;
@@ -167,6 +192,11 @@
   --border: #3a4030;
   --border-strong: #4a5040;
   --border-soft: #343a2b;
+  --border-prototype: #3f4635;
+  --border-complete: #405338;
+  --border-check: #58684f;
+  --border-chevron: #706c5f;
+  --border-warm: #675e4e;
   --border-warning: #5a4f33;
 
   --success: #8fae84;
@@ -178,7 +208,9 @@
   --warning: #d2a85a;
   --warning-soft: #322b18;
   --warning-text: #e2c283;
+  --warning-icon: #c2a07e;
   --amber: #e0b574;
+  --amber-border: #b87953;
   --danger: #e0a18f;
   --danger-border: #9a5544;
   --danger-strong: #d97f6a;
@@ -203,6 +235,12 @@
   --owner-samen-bg: #322b18;
   --owner-samen-text: #e2c283;
   --owner-samen-dot: #e0b574;
+  --phase-dot-done: #8fae84;
+  --timeline-line-done: #5f744e;
+  --dose-divider: #3b3b2f;
+  --calendar-muted-bg: #2a2f24;
+  --action-tile-sage: #2a3324;
+  --ai-soft-prototype: #262236;
 
   --ring: 0 0 0 3px rgba(143, 174, 132, 0.34);
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -236,6 +274,32 @@ body {
 ::selection {
   background: #c9d6be;
   color: #2e3a30;
+}
+
+.kp-scroll {
+  scrollbar-width: none;
+}
+
+.kp-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.kp-tap {
+  cursor: pointer;
+  transition:
+    transform 80ms ease,
+    background var(--motion),
+    border-color var(--motion),
+    box-shadow var(--motion);
+}
+
+.kp-tap:active {
+  transform: scale(0.985);
+}
+
+.kp-in {
+  outline: none;
 }
 
 a {
@@ -1968,6 +2032,18 @@ a.action-card:active {
 
   .button-row {
     justify-content: stretch;
+  }
+
+  .definition-list > div,
+  .summary-list > div {
+    display: grid;
+    justify-content: stretch;
+    gap: 3px;
+  }
+
+  .definition-list dd,
+  .summary-list dd {
+    text-align: left;
   }
 
   .timeline-overview-bar {

@@ -2,7 +2,9 @@
 
 Doel: voorkomen dat de UI opnieuw afdrijft naar een generieke dashboard-/admin-look.
 De bron van waarheid is het Claude Design-prototype (`Kiempad-prototype.dc.html`) en
-`docs/CLAUDE_DESIGN_PROMPT.md`; de tokens staan in `src/styles.css`.
+`docs/CLAUDE_DESIGN_PROMPT.md`; de tokens staan in `src/styles.css`. Laatste MCP-
+import: project `dab87658-12f7-476d-80f2-f36de2acb4ae`, bestand
+`Kiempad-prototype.dc.html`, etag `1782338087299810`.
 
 ## Kernprincipes
 
