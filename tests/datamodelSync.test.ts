@@ -192,7 +192,10 @@ describe('datamodel en TypeScript-types', () => {
 
     expect(typesSource).not.toContain('uitsluitend\n * versleuteld lokaal opgeslagen');
     expect(recordsSource).toContain('export type EncryptedRecord');
-    expect(recordsSource).toContain('payload: EncryptionEnvelope');
+    expect(recordsSource).toContain(
+      'export type RecordPayloadEnvelope = EncryptionEnvelope | AttachmentEncryptionEnvelope',
+    );
+    expect(recordsSource).toContain('payload: RecordPayloadEnvelope');
     expect(centralDatabaseSource).toContain(
       'export type CentralEncryptedRecord = EncryptedRecord &',
     );

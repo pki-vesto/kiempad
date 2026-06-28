@@ -255,6 +255,13 @@ opbouwen zonder historische onderzoeken of beeldmateriaal te vervormen.
   schemaversie), servermetadata en de encrypted payload.
 - De gedeelde client-indexvorm is `EncryptedRecord`: `id`, `type`, `createdAt`,
   `updatedAt`, `schemaVersion` en `payload`.
+- `EncryptedRecord.payload` gebruikt `RecordPayloadEnvelope`: een gewone
+  `EncryptionEnvelope` of een `AttachmentEncryptionEnvelope` voor dossier-,
+  beeld- en embryobijlagen.
+- Een attachment envelope mag centraal alleen technische attachmentmetadata dragen:
+  `kind=attachment`, `contentType`, `sizeBytes` en `sha256`. Oorspronkelijke
+  bestandsnamen, bronpad, OCR-tekst, notities, base64-inhoud en medische context
+  blijven onderdeel van de versleutelde payload.
 - De centrale servervorm is `CentralEncryptedRecord`: alle velden van
   `EncryptedRecord` plus `ownerUserId`, `storedAt` en `serverVersion`.
 - Centrale technische metadata gebruikt `CentralStorageMeta`: `ownerUserId`, `key`,

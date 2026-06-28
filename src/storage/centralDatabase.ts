@@ -421,11 +421,7 @@ function assertValidCentralEncryptedRecord(
     !isPositiveInteger(record.serverVersion) ||
     typeof record.type !== 'string' ||
     !STORED_RECORD_TYPES.has(record.type as StoredRecordType) ||
-    !isRecord(record.payload) ||
-    record.payload.v !== 1 ||
-    record.payload.alg !== 'AES-256-GCM' ||
-    !isNonEmptyString(record.payload.iv) ||
-    !isNonEmptyString(record.payload.ciphertext)
+    !isEncryptionEnvelope(record.payload)
   ) {
     throwInvalidCentralSnapshot();
   }
@@ -531,13 +527,41 @@ function assertValidWebAuthnUnlockMetadata(value: unknown): void {
 }
 
 function isEncryptionEnvelope(value: unknown): boolean {
+  if (
+    !isRecord(value) ||
+    value.v !== 1 ||
+    value.alg !== 'AES-256-GCM' ||
+    !isNonEmptyString(value.iv) ||
+    !isNonEmptyString(value.ciphertext)
+  ) {
+    return false;
+  }
+
+  if (!('attachment' in value)) return true;
+  return isAttachmentEnvelopeMetadata(value.attachment);
+}
+
+function isAttachmentEnvelopeMetadata(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  const allowedKeys = new Set(['kind', 'contentType', 'sizeBytes', 'sha256']);
+  if (Object.keys(value).some((key) => !allowedKeys.has(key))) return false;
   return (
-    isRecord(value) &&
-    value.v === 1 &&
-    value.alg === 'AES-256-GCM' &&
-    isNonEmptyString(value.iv) &&
-    isNonEmptyString(value.ciphertext)
+    value.kind === 'attachment' &&
+    isTechnicalMimeType(value.contentType) &&
+    isPositiveInteger(value.sizeBytes) &&
+    isSha256HexDigest(value.sha256)
   );
+}
+
+function isTechnicalMimeType(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    /^[a-z0-9][a-z0-9!#$&^_.+-]*\/[a-z0-9][a-z0-9!#$&^_.+-]*$/i.test(value)
+  );
+}
+
+function isSha256HexDigest(value: unknown): value is string {
+  return typeof value === 'string' && /^[a-f0-9]{64}$/i.test(value);
 }
 
 function metaKey(userId: string, key: string): string {

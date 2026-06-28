@@ -3532,7 +3532,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, dossier attachments, tests
 - **ADR Needed:** no
 - **Score:** 121
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G494 — central attachment size limit policy
 
@@ -4804,6 +4804,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Central fetch client, app shell, storage bootstrap, tests
+- **ADR Needed:** no
+- **Score:** 113
+- **Status:** ☐ open
+
+### G585 — attachment envelope metadata UI feedback
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het centrale attachment envelope contract accepteert alleen technische attachmentmetadata, maar de upload- en statuslaag toont nog niet vooraf of een attachment envelope geldig genoeg is voor centrale encrypted opslag.
+- **Desired Outcome:** Dossier-, image- en embryo-uploads kunnen generieke attachment envelope validatie en status tonen op basis van contenttype, bestandsgrootte en hash-aanwezigheid zonder bestandsnaam, broninhoud of medische context te lekken.
+- **User Value:** Gebruikers begrijpen waarom een bijlage wel of niet centraal kan synchroniseren, terwijl private bestands- en medische details versleuteld blijven.
+- **Acceptance Criteria:** UI- of statusmodel toont valid/invalid attachment envelope state; backendfouten worden naar generieke gebruikerstekst gemapt; tests dekken geldige en ongeldige metadata zonder filename, token, secret, base64, OCR-tekst of medische plaintext; docs of backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, dossier upload, imaging upload, central API, tests
 - **ADR Needed:** no
 - **Score:** 113
 - **Status:** ☐ open

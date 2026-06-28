@@ -55,6 +55,62 @@ describe('central row-store persistence', () => {
     await expect(readdir(directory)).rejects.toMatchObject({ code: 'ENOENT' });
   });
 
+  it('bewaart attachment envelopes alleen met technische attachmentmetadata', async () => {
+    const directory = await createPersistenceDirectory();
+    const persistence = new JsonTableCentralDatabasePersistence(directory);
+    const snapshot = createValidSnapshot();
+    const record = snapshot.records[0];
+    if (!record) throw new Error('Expected record fixture.');
+    snapshot.records[0] = {
+      ...record,
+      type: 'dossier_document',
+      payload: {
+        ...record.payload,
+        attachment: {
+          kind: 'attachment',
+          contentType: 'application/pdf',
+          sizeBytes: 4096,
+          sha256: 'c'.repeat(64),
+        },
+      },
+    };
+
+    await persistence.save(snapshot);
+
+    const persistedText = await readPersistenceDirectoryText(directory);
+    expect(persistedText).toContain('"attachment"');
+    expect(persistedText).toContain('"contentType":"application/pdf"');
+    expect(persistedText).not.toContain('echo-foto-privenaam.jpg');
+    expect(persistedText).not.toContain('plaintext fertiliteitsnotitie');
+    await expect(persistence.load()).resolves.toEqual(snapshot);
+  });
+
+  it('weigert attachment envelopes met vrije metadata vóór save', async () => {
+    const directory = await createPersistenceDirectory();
+    const snapshot = createValidSnapshot();
+    const record = snapshot.records[0];
+    if (!record) throw new Error('Expected record fixture.');
+    snapshot.records[0] = {
+      ...record,
+      type: 'dossier_document',
+      payload: {
+        ...record.payload,
+        attachment: {
+          kind: 'attachment',
+          contentType: 'application/pdf',
+          sizeBytes: 4096,
+          sha256: 'c'.repeat(64),
+          fileName: 'echo-foto-privenaam.jpg',
+        },
+      },
+    } as never;
+
+    await expect(new JsonTableCentralDatabasePersistence(directory).save(snapshot)).rejects.toThrow(
+      'Ongeldige centrale database snapshot',
+    );
+    await expect(readdir(directory)).rejects.toMatchObject({ code: 'ENOENT' });
+  });
+
   it('weigert corrupte row files vóór databasegebruik', async () => {
     const directory = await createPersistenceDirectory();
     const persistence = new JsonTableCentralDatabasePersistence(directory);

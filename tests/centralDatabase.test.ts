@@ -289,6 +289,93 @@ describe('central encrypted database architecture', () => {
     await expect(database.listRecords(userA)).resolves.toEqual([]);
   });
 
+  it('accepteert encrypted attachment envelopes met alleen technische metadata', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const record = createEncryptedRecord('attachment-record');
+    await database.putRecord(userA, {
+      ...record,
+      type: 'dossier_document',
+      payload: {
+        ...record.payload,
+        attachment: {
+          kind: 'attachment',
+          contentType: 'application/pdf',
+          sizeBytes: 4096,
+          sha256: 'a'.repeat(64),
+        },
+      },
+    });
+
+    await expect(database.getRecord(userA, 'attachment-record')).resolves.toMatchObject({
+      id: 'attachment-record',
+      type: 'dossier_document',
+      payload: {
+        attachment: {
+          kind: 'attachment',
+          contentType: 'application/pdf',
+          sizeBytes: 4096,
+          sha256: 'a'.repeat(64),
+        },
+      },
+    });
+    const serialized = JSON.stringify(database.unsafeDumpRecordsForTest());
+    expect(serialized).toContain('"contentType":"application/pdf"');
+    expect(serialized).not.toContain('echo-foto-privenaam.jpg');
+    expect(serialized).not.toContain('plaintext fertiliteitsnotitie');
+    expect(serialized).not.toContain('base64-bijlage-inhoud');
+  });
+
+  it('weigert attachment envelopes met vrije plaintext metadata', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const baseRecord = {
+      ...createEncryptedRecord('bad-attachment-record'),
+      type: 'dossier_document' as const,
+    };
+
+    for (const attachment of [
+      {
+        kind: 'attachment',
+        contentType: 'application/pdf',
+        sizeBytes: 4096,
+        sha256: 'a'.repeat(64),
+        fileName: 'echo-foto-privenaam.jpg',
+      },
+      {
+        kind: 'attachment',
+        contentType: 'application/pdf',
+        sizeBytes: 4096,
+        sha256: 'a'.repeat(64),
+        plaintext: 'plaintext fertiliteitsnotitie',
+      },
+      {
+        kind: 'attachment',
+        contentType: 'not-a-mime-type',
+        sizeBytes: 4096,
+        sha256: 'a'.repeat(64),
+      },
+      {
+        kind: 'attachment',
+        contentType: 'application/pdf',
+        sizeBytes: 0,
+        sha256: 'a'.repeat(64),
+      },
+      {
+        kind: 'attachment',
+        contentType: 'application/pdf',
+        sizeBytes: 4096,
+        sha256: 'niet-een-sha256',
+      },
+    ]) {
+      await expect(
+        database.putRecord(userA, {
+          ...baseRecord,
+          payload: { ...baseRecord.payload, attachment },
+        } as never),
+      ).rejects.toBeInstanceOf(CentralDataValidationError);
+    }
+    expect(database.unsafeDumpRecordsForTest()).toEqual([]);
+  });
+
   it('accepteert geldige technische WebAuthn metadata centraal', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     await database.putMeta(userA, 'webauthn-unlock', {

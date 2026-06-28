@@ -337,7 +337,8 @@ function parseEncryptedRecordBody(body: unknown): EncryptedRecord {
     body.payload.v !== 1 ||
     body.payload.alg !== 'AES-256-GCM' ||
     !isNonEmptyString(body.payload.iv) ||
-    !isNonEmptyString(body.payload.ciphertext)
+    !isNonEmptyString(body.payload.ciphertext) ||
+    !hasValidAttachmentEnvelopeMetadata(body.payload)
   ) {
     throw new CentralHttpBadRequestError('Record-body mist encrypted envelope.');
   }
@@ -386,4 +387,33 @@ function isIsoTimestamp(value: unknown): value is string {
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function hasValidAttachmentEnvelopeMetadata(payload: Record<string, unknown>): boolean {
+  if (!('attachment' in payload)) return true;
+  const attachment = payload.attachment;
+  if (!isRecord(attachment)) return false;
+  const allowedKeys = new Set(['kind', 'contentType', 'sizeBytes', 'sha256']);
+  if (Object.keys(attachment).some((key) => !allowedKeys.has(key))) return false;
+  return (
+    attachment.kind === 'attachment' &&
+    isTechnicalMimeType(attachment.contentType) &&
+    isPositiveInteger(attachment.sizeBytes) &&
+    isSha256HexDigest(attachment.sha256)
+  );
+}
+
+function isTechnicalMimeType(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    /^[a-z0-9][a-z0-9!#$&^_.+-]*\/[a-z0-9][a-z0-9!#$&^_.+-]*$/i.test(value)
+  );
+}
+
+function isPositiveInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value > 0;
+}
+
+function isSha256HexDigest(value: unknown): value is string {
+  return typeof value === 'string' && /^[a-f0-9]{64}$/i.test(value);
 }
