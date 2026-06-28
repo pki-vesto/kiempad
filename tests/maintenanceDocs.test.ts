@@ -545,6 +545,8 @@ describe('onderhoudsdocumentatie', () => {
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_RELEASE_ERROR,
       redactionFailureMissingTermTextRunbookErrorRelease:
         BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_TERMS,
+      redactionFailureMissingTermTextRunbookErrorReleaseError:
+        BOOTSTRAP_GOVERNANCE_REDACTION_FAILURE_MISSING_TERM_TEXT_RUNBOOK_ERROR_RELEASE_ERROR,
     }).toEqual({
       schemaError: [
         'ciAnnotation',
@@ -576,6 +578,8 @@ describe('onderhoudsdocumentatie', () => {
         'runbooknotitie-releasecontext missing-term melding',
         'runbooknotitie-missing-term contract',
       ],
+      redactionFailureMissingTermTextRunbookErrorReleaseError:
+        'Bootstrap governance releasecontext ontbreekt voor termen: runbooknotitie-missing-term contract',
     });
     for (const forbiddenTerm of BOOTSTRAP_GOVERNANCE_FORBIDDEN_REDACTION_TERMS) {
       expect(BOOTSTRAP_GOVERNANCE_RELEASE_CONTEXT_RUNBOOK_TERMS.join('\n')).not.toContain(
