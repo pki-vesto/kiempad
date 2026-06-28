@@ -287,19 +287,24 @@ describe('onderhoudsdocumentatie', () => {
       for (const coverageField of governanceContract.coverageFields) {
         expect(releaseDoc).toContain(coverageField);
       }
-      const schemaErrorReleaseContext =
-        extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc);
-      expect(schemaErrorReleaseContext).toContain(schemaErrorSnapshot.ciAnnotation);
-      for (const schemaErrorField of [
+      const schemaErrorReleaseTerms = [
         'ciAnnotation',
         'schemaValidation',
         'unknownSourceFieldCount',
         'unknownCoverageFieldCount',
-      ]) {
+      ];
+      const schemaErrorReleaseContext = extractBootstrapGovernanceReleaseContext(
+        releaseDoc,
+        schemaErrorReleaseTerms,
+      );
+      expect(schemaErrorReleaseContext).toContain(schemaErrorSnapshot.ciAnnotation);
+      for (const schemaErrorField of schemaErrorReleaseTerms) {
         expect(schemaErrorReleaseContext).toContain(schemaErrorField);
       }
-      const placeholderReleaseContext =
-        extractBootstrapGovernancePlaceholderReleaseContext(releaseDoc);
+      const placeholderReleaseContext = extractBootstrapGovernanceReleaseContext(
+        releaseDoc,
+        schemaFailurePlaceholders.map((placeholder) => `{${placeholder}}`),
+      );
       for (const placeholder of schemaFailurePlaceholders) {
         expect(placeholderReleaseContext).toContain(`{${placeholder}}`);
       }
@@ -1546,36 +1551,18 @@ function extractBootstrapGovernanceSchemaErrorSnapshot(): {
   };
 }
 
-function extractBootstrapGovernanceSchemaErrorReleaseContext(releaseDoc: string): string {
+function extractBootstrapGovernanceReleaseContext(
+  releaseDoc: string,
+  requiredTerms: string[],
+): string {
   const matchingLines = releaseDoc
     .split(/\n|;\s+|,\s+G\d{3}\s+/)
-    .filter((line) =>
-      [
-        'ciAnnotation',
-        'schemaValidation',
-        'unknownSourceFieldCount',
-        'unknownCoverageFieldCount',
-      ].some((term) => line.includes(term)),
-    );
+    .filter((line) => requiredTerms.some((term) => line.includes(term)));
 
   if (matchingLines.length === 0) {
-    throw new Error('Bootstrap governance schemafoutvelden ontbreken in releasecontext.');
-  }
-
-  return matchingLines.join('\n');
-}
-
-function extractBootstrapGovernancePlaceholderReleaseContext(releaseDoc: string): string {
-  const matchingLines = releaseDoc
-    .split(/\n|;\s+|,\s+G\d{3}\s+/)
-    .filter((line) =>
-      ['{gate}', '{unknownSourceFieldCount}', '{unknownCoverageFieldCount}'].some((term) =>
-        line.includes(term),
-      ),
+    throw new Error(
+      `Bootstrap governance releasecontext ontbreekt voor termen: ${requiredTerms.join(', ')}`,
     );
-
-  if (matchingLines.length === 0) {
-    throw new Error('Bootstrap governance placeholdervelden ontbreken in releasecontext.');
   }
 
   return matchingLines.join('\n');

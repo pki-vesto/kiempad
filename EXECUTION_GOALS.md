@@ -5282,4 +5282,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance docs
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☑ klaar
+
+### G619 — bootstrap governance releasecontext helper failure fixtures
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De releasecontext-helper is nu geconsolideerd, maar er is nog geen kleine negatieve fixture die de foutmelding voor ontbrekende releasecontexttermen expliciet bewaakt.
+- **Desired Outcome:** Maintenance-tests bevatten een synthetische negatieve fixture voor ontbrekende bootstrap governance releasecontexttermen.
+- **User Value:** Toekomstige helperwijzigingen blijven reviewbaar en geven duidelijke foutmeldingen zonder release-docs handmatig te breken.
+- **Acceptance Criteria:** Testfixture faalt op ontbrekende vereiste releasecontextterm met een technische foutmelding; bestaande releasecontextguards blijven groen; docs/backlog verwijzen naar dit doel; tekst bevat geen payload, passphrase, token, bestandsnaam-, tekstextractie- of medische inhoudsdetails.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
+- **ADR Needed:** no
+- **Score:** 115
 - **Status:** ☐ open

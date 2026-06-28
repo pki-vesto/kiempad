@@ -16,6 +16,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   backlogissues zijn in de lokale catalogi als archived geclassificeerd.
 
 ### Added
+- G618/G619 Central Encrypted Platform: de maintenance-test gebruikt nu één `extractBootstrapGovernanceReleaseContext` helper om zowel schemafoutvelden als schemafoutannotatie-placeholders in releasecontext te bewaken. G619 is toegevoegd als opvolgdoel voor expliciete helper-failurefixtures.
 - G617/G618 Central Encrypted Platform: maintenance-tests koppelen de toegestane schemafoutannotatie-placeholders `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` nu aan `CHANGELOG.md` en `CURRENT_STATE.md`, zodat placeholdercontractdrift ook in releasecontext faalt. G618 is toegevoegd als opvolgdoel voor runbook- en releaseplaceholdercontext uit één helper.
 - G616/G617 Central Encrypted Platform: de runbook documenteert nu expliciet dat `schemaFailureAnnotationTemplate` alleen `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` als schemafoutannotatie-placeholders mag gebruiken; maintenance-tests bewaken deze termen. G617 is toegevoegd als opvolgdoel voor placeholder-releasecontext.
 - G615/G616 Central Encrypted Platform: bootstrap governance tests bewaken nu exact dat `schemaFailureAnnotationTemplate` alleen de verplichte placeholders `{gate}`, `{unknownSourceFieldCount}` en `{unknownCoverageFieldCount}` gebruikt en gesanitized blijft. G616 is toegevoegd als opvolgdoel voor placeholderdocumentatie in de runbook.
