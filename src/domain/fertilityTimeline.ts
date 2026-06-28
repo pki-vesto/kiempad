@@ -30,6 +30,20 @@ export type FertilityTimelineItem = {
   eigenaar?: DailyRecommendationOwner;
   trajectId?: string;
   recordId: string;
+  historischConcept?: FertilityTimelineHistorischConcept;
+};
+
+export type FertilityTimelineHistorischConcept = {
+  reviewStatus: 'concept' | 'bevestigd' | 'verborgen';
+  bron: string;
+  datumBron: 'genormaliseerde_metadata' | 'metadata' | 'formulier';
+  confidenceLabel: 'hoog' | 'middel' | 'laag';
+  confidenceScore: number;
+  conflict?: {
+    formulierDatum: string;
+    metadataDatum: string;
+    toelichting: string;
+  };
 };
 
 export type FertilityTimelineRecordKoppeling = {
@@ -138,25 +152,41 @@ export function bouwFertilityTimeline(input: {
     }),
   );
 
-  const documentItems = input.dossierDocuments.map(
-    (document): FertilityTimelineItem => ({
+  const documentItems = input.dossierDocuments.map((document): FertilityTimelineItem => {
+    const historischConcept = bouwHistorischDocumentConcept(document);
+    return {
       id: `onderzoek-${document.id}`,
-      datum: document.metadata.documentDatum ?? document.datum,
+      datum:
+        historischConcept.conflict?.metadataDatum ??
+        document.metadata.normalisatie?.datum ??
+        document.metadata.documentDatum ??
+        document.datum,
       soort: 'onderzoek',
       titel: document.titel,
-      label: document.metadata.documenttype ?? DOSSIER_CATEGORIE_LABELS[document.categorie],
+      label:
+        document.metadata.normalisatie?.documenttype ??
+        document.metadata.documenttype ??
+        DOSSIER_CATEGORIE_LABELS[document.categorie],
       detail: document.analyse.samenvatting,
-      context: beschrijfDocumentContext(document),
-      bron: document.metadata.bronbestand ?? document.bestandsNaam,
+      context: beschrijfDocumentContext(document, historischConcept),
+      bron: historischConcept.bron,
       gekoppeldeRecords: [
         maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
-        ...maakTrajectKoppeling(document.metadata.trajectId ?? document.trajectId),
-        ...maakAfspraakKoppeling(document.afspraakId),
+        ...maakTrajectKoppeling(
+          document.metadata.normalisatie?.pogingId ??
+            document.metadata.trajectId ??
+            document.trajectId,
+        ),
+        ...maakAfspraakKoppeling(document.metadata.normalisatie?.afspraakId ?? document.afspraakId),
       ],
-      trajectId: document.metadata.trajectId ?? document.trajectId,
+      trajectId:
+        document.metadata.normalisatie?.pogingId ??
+        document.metadata.trajectId ??
+        document.trajectId,
       recordId: document.id,
-    }),
-  );
+      historischConcept,
+    };
+  });
 
   const embryoItems = input.dossierDocuments
     .map((document): FertilityTimelineItem | undefined => {
@@ -353,10 +383,74 @@ function maakAfspraakKoppeling(afspraakId: string | undefined): FertilityTimelin
   return afspraakId ? [maakKoppeling('afspraak', afspraakId, `Afspraak: ${afspraakId}`)] : [];
 }
 
-function beschrijfDocumentContext(document: DossierDocument): string {
+function bouwHistorischDocumentConcept(
+  document: DossierDocument,
+): FertilityTimelineHistorischConcept {
+  const normalisatie = document.metadata.normalisatie;
+  const datumBron: FertilityTimelineHistorischConcept['datumBron'] = normalisatie
+    ? 'genormaliseerde_metadata'
+    : document.metadata.documentDatum
+      ? 'metadata'
+      : 'formulier';
+  const confidenceLabel = normalisatie?.onzekerheid
+    ? normalisatie.onzekerheid === 'laag'
+      ? 'hoog'
+      : normalisatie.onzekerheid === 'middel'
+        ? 'middel'
+        : 'laag'
+    : (document.ocr?.confidenceLabel ?? 'middel');
+  const confidenceScore =
+    normalisatie?.onzekerheid === 'laag'
+      ? 0.9
+      : normalisatie?.onzekerheid === 'middel'
+        ? 0.65
+        : normalisatie?.onzekerheid === 'hoog'
+          ? 0.35
+          : (document.ocr?.confidenceScore ?? 0.6);
+  const reviewStatus: FertilityTimelineHistorischConcept['reviewStatus'] =
+    normalisatie?.overschrevenDoorGebruiker ||
+    document.ocr?.reviewStatus === 'gereviewd' ||
+    confidenceLabel === 'hoog'
+      ? 'bevestigd'
+      : 'concept';
+  const conflict =
+    document.metadata.documentDatum && document.metadata.documentDatum !== document.datum
+      ? {
+          formulierDatum: document.datum,
+          metadataDatum: document.metadata.documentDatum,
+          toelichting:
+            'Formulierdatum en herkende documentdatum verschillen; beide blijven zichtbaar voor review.',
+        }
+      : undefined;
+
+  return {
+    reviewStatus,
+    bron: normalisatie?.bron ?? document.metadata.bronbestand ?? document.bestandsNaam,
+    datumBron,
+    confidenceLabel,
+    confidenceScore,
+    conflict,
+  };
+}
+
+function beschrijfDocumentContext(
+  document: DossierDocument,
+  historischConcept?: FertilityTimelineHistorischConcept,
+): string {
   const onderdelen = [
     `Categorie ${DOSSIER_CATEGORIE_LABELS[document.categorie]}`,
-    document.metadata.documenttype ? `documenttype ${document.metadata.documenttype}` : undefined,
+    document.metadata.normalisatie?.documenttype
+      ? `documenttype ${document.metadata.normalisatie.documenttype}`
+      : document.metadata.documenttype
+        ? `documenttype ${document.metadata.documenttype}`
+        : undefined,
+    document.metadata.normalisatie?.onderzoekstype
+      ? `onderzoekstype ${document.metadata.normalisatie.onderzoekstype}`
+      : undefined,
+    historischConcept
+      ? `tijdlijn ${historischConcept.reviewStatus} · confidence ${historischConcept.confidenceLabel} (${Math.round(historischConcept.confidenceScore * 100)}%)`
+      : undefined,
+    historischConcept?.conflict ? 'datumconflict zichtbaar' : undefined,
     document.metadata.extractieBronnen.length > 0
       ? `metadata uit ${document.metadata.extractieBronnen.join(', ')}`
       : undefined,

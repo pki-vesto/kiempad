@@ -4398,6 +4398,18 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
           <div><dt>Bron</dt><dd>${escapeHtml(item.bron)}</dd></div>
           <div><dt>Context</dt><dd>${escapeHtml(item.context)}</dd></div>
           <div><dt>Record-ID</dt><dd>${escapeHtml(item.recordId)}</dd></div>
+          ${
+            item.historischConcept
+              ? `
+                <div><dt>Historische reconstructie</dt><dd>${escapeHtml(item.historischConcept.reviewStatus)} · ${escapeHtml(item.historischConcept.datumBron)} · confidence ${escapeHtml(item.historischConcept.confidenceLabel)} (${Math.round(item.historischConcept.confidenceScore * 100)}%)</dd></div>
+                ${
+                  item.historischConcept.conflict
+                    ? `<div><dt>Datumconflict</dt><dd>${escapeHtml(item.historischConcept.conflict.formulierDatum)} vs ${escapeHtml(item.historischConcept.conflict.metadataDatum)} · ${escapeHtml(item.historischConcept.conflict.toelichting)}</dd></div>`
+                    : ''
+                }
+              `
+              : ''
+          }
         </dl>
         ${
           item.gekoppeldeRecords.length > 0

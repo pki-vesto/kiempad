@@ -881,8 +881,13 @@ describe('app shell', () => {
     expect(html).toContain('id="fertility-timeline-items" class="compact-list timeline-list"');
     expect(html).toContain('class="timeline-detail-panel"');
     expect(html).toContain('<dt>Bron</dt><dd>echo.pdf</dd>');
-    expect(html).toContain('<dt>Context</dt><dd>Categorie Onderzoek</dd>');
+    expect(html).toContain(
+      '<dt>Context</dt><dd>Categorie Onderzoek · tijdlijn concept · confidence middel (60%)</dd>',
+    );
     expect(html).toContain('<dt>Record-ID</dt><dd>doc-1</dd>');
+    expect(html).toContain(
+      '<dt>Historische reconstructie</dt><dd>concept · formulier · confidence middel (60%)</dd>',
+    );
     expect(html).toContain('Dossierrecord: Echo verslag');
     expect(html).toContain('Traject: traject-1');
     const timelineListStart = html.indexOf('<ol class="compact-list timeline-list">');
