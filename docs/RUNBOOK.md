@@ -103,6 +103,9 @@ pad zonder lokale vault-hercreatie.
   alleen `fixtureCount`, `phases`, `phaseCode`, `envName` en neutrale
   `redactionCategories` voor CI-triage; commandotests bewaken dit JSON-schema strikt
   en leggen de publieke summary als reviewbare inline snapshot vast.
+  Snapshotdrift is alleen acceptabel bij een bewuste registrywijziging aan
+  `phaseCode`, `envName` of neutrale redactioncategory-labels; review nooit
+  synthetische foutdetails of exceptionmessages om deze snapshot te verklaren.
 - **Back-up restore drill:** `npm run drill:backup` exporteert, importeert,
   ontgrendelt en verifieert representatieve versleutelde records met memory drivers.
 - **Centrale multi-device route:** gekoppelde apparaten openen dezelfde centrale
