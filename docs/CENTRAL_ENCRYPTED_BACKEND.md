@@ -220,6 +220,11 @@ fetches doet. Zet deze API niet direct publiek op internet.
   effects.
 - Malformed JSON of ongeldige recordpayloads worden `400`; recordwrites bereiken de
   database pas na validatie van id, type, timestamps, schemaVersion en envelope.
+- Attachment-records blijven normale encrypted records. Als een payload
+  attachmentmetadata bevat, accepteert de centrale laag alleen de technische velden
+  `kind=attachment`, `contentType`, `sizeBytes` en `sha256`; vrije metadata zoals
+  bestandsnaam, bronpad, base64-inhoud, OCR-tekst of notitie wordt vóór mutatie
+  geweigerd.
 - Metadatawrites zijn alleen toegestaan voor technische keys (`crypto`, `schema`,
   `webauthn-unlock`) en moeten de verwachte technische vorm hebben; vrije
   dossier- of fertiliteitsmetadata wordt `400` en bereikt geen persistence.

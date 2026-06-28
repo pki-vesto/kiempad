@@ -78,6 +78,10 @@ en blijft ook centraal **versleuteld at rest**.
   mogen niet centraal in plaintext staan.
 - **Server-side datamodel:** `CentralEncryptedRecord` bevat `ownerUserId`, minimale
   clear indexvelden, `serverVersion`, `storedAt` en een `EncryptionEnvelope`.
+  Dossierbijlagen gebruiken hetzelfde encrypted envelope-contract met optionele
+  attachmentmetadata: alleen `kind=attachment`, `contentType`, `sizeBytes` en
+  `sha256` zijn centraal toegestaan. Bestandsnaam, brontekst, OCR-inhoud en
+  bijlagebody blijven in de client-side versleutelde payload.
   `CentralEncryptedDatabase` dwingt actieve sessies en user-isolatie af door records
   intern op owner+record-id te namespacen; dezelfde client-id mag dus per gebruiker
   bestaan zonder cross-user write-block of existence leak. Recordwrites worden ook

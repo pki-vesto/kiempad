@@ -14,6 +14,17 @@ export type EncryptionEnvelope = {
   ciphertext: string;
 };
 
+export type AttachmentEnvelopeMetadata = {
+  kind: 'attachment';
+  contentType: string;
+  sizeBytes: number;
+  sha256: string;
+};
+
+export type AttachmentEncryptionEnvelope = EncryptionEnvelope & {
+  attachment: AttachmentEnvelopeMetadata;
+};
+
 export async function deriveAesKey(
   passphrase: string,
   salt: Uint8Array,

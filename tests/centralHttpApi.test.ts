@@ -305,6 +305,90 @@ describe('central encrypted HTTP API contract', () => {
     expect(database.unsafeDumpRecordsForTest()).toEqual([]);
   });
 
+  it('accepteert encrypted attachment envelopes met technische metadata via HTTP', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const token = await issueToken(api, 'user-peter');
+    const record = createHttpEncryptedRecord('http-attachment-record');
+
+    await expect(
+      api.handle({
+        method: 'PUT',
+        path: '/records/http-attachment-record',
+        token,
+        body: {
+          ...record,
+          type: 'dossier_document',
+          payload: {
+            ...record.payload,
+            attachment: {
+              kind: 'attachment',
+              contentType: 'image/jpeg',
+              sizeBytes: 8192,
+              sha256: 'b'.repeat(64),
+            },
+          },
+        },
+      }),
+    ).resolves.toEqual({ status: 204 });
+
+    const serialized = JSON.stringify(database.unsafeDumpRecordsForTest());
+    expect(serialized).toContain('"contentType":"image/jpeg"');
+    expect(serialized).not.toContain('echo-foto-privenaam.jpg');
+    expect(serialized).not.toContain('plaintext fertiliteitsnotitie');
+    expect(serialized).not.toContain('base64-bijlage-inhoud');
+  });
+
+  it('weigert attachment envelopes met vrije metadata via HTTP zonder database-mutatie', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const token = await issueToken(api, 'user-peter');
+    const record = createHttpEncryptedRecord('bad-http-attachment-record');
+
+    for (const attachment of [
+      {
+        kind: 'attachment',
+        contentType: 'image/jpeg',
+        sizeBytes: 8192,
+        sha256: 'b'.repeat(64),
+        fileName: 'echo-foto-privenaam.jpg',
+      },
+      {
+        kind: 'attachment',
+        contentType: 'image/jpeg',
+        sizeBytes: 8192,
+        sha256: 'b'.repeat(64),
+        inhoudBase64: 'base64-bijlage-inhoud',
+      },
+      {
+        kind: 'attachment',
+        contentType: 'image/jpeg',
+        sizeBytes: 8192,
+        sha256: 'niet-een-sha256',
+      },
+    ]) {
+      await expect(
+        api.handle({
+          method: 'PUT',
+          path: '/records/bad-http-attachment-record',
+          token,
+          body: {
+            ...record,
+            payload: {
+              ...record.payload,
+              attachment,
+            },
+          },
+        }),
+      ).resolves.toMatchObject({ status: 400 });
+    }
+    expect(database.unsafeDumpRecordsForTest()).toEqual([]);
+  });
+
   it('weigert absolute of protocol-relative API-paden aan de HTTP-contractgrens', async () => {
     const api = new CentralEncryptedHttpApi(
       new CentralEncryptedApiServer(

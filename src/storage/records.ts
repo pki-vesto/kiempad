@@ -1,4 +1,4 @@
-import type { EncryptionEnvelope } from './crypto';
+import type { AttachmentEncryptionEnvelope, EncryptionEnvelope } from './crypto';
 
 export type StoredRecordType =
   | 'traject'
@@ -28,8 +28,10 @@ export type ClearRecordIndex = {
   schemaVersion: number;
 };
 
+export type RecordPayloadEnvelope = EncryptionEnvelope | AttachmentEncryptionEnvelope;
+
 export type EncryptedRecord = ClearRecordIndex & {
-  payload: EncryptionEnvelope;
+  payload: RecordPayloadEnvelope;
 };
 
 export type StorageMeta = {
