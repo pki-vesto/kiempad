@@ -1528,6 +1528,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentShareHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentPrintClinicianPacketPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAccessibilityAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentLandmarkNavigationPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2233,6 +2234,60 @@ function renderAttachmentAccessibilityAuditPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze accessibility-audit toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentLandmarkNavigationPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const landmarkState = hasAttachments
+    ? 'attachment-landmarks-ready'
+    : 'attachment-landmarks-empty';
+  const regionState = hasAttachments
+    ? 'region-navigation-metadata-only'
+    : 'region-navigation-empty';
+  const headingState = hasAttachments ? 'heading-routes-available' : 'heading-routes-empty';
+  const auditState = hasAttachments ? 'landmark-audit-summary-ready' : 'landmark-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0 ? 'locked-preview-landmark-boundary' : 'no-locked-preview-landmark';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment landmark navigation privacy states" data-attachment-landmark-navigation-surface="privacy">
+      <h2>Bijlage landmarknavigatie</h2>
+      <nav class="button-row" aria-label="Bijlage landmark routes" data-attachment-landmark-nav-state="${landmarkState}">
+        <a class="phase-button secondary" href="#inhoud" data-attachment-landmark-route-kind="main-landmark" data-attachment-landmark-route-state="${landmarkState}">Naar hoofdinhoud</a>
+        <a class="phase-button secondary" href="#dossier-search-form" data-attachment-landmark-route-kind="region-search" data-attachment-landmark-route-state="${regionState}">Naar zoekregio</a>
+        <a class="phase-button secondary" href="#attachment-bulk-selection-form" data-attachment-landmark-route-kind="heading-actions" data-attachment-landmark-route-state="${headingState}">Naar actieregio</a>
+      </nav>
+      <dl class="summary-list">
+        <div data-attachment-landmark-kind="landmark-boundary" data-attachment-landmark-state="${landmarkState}">
+          <dt>Landmark boundary</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} bereikbaar via veilige landmarkroutes.` : 'Geen bijlagen beschikbaar voor landmarkroutes.'}</dd>
+        </div>
+        <div data-attachment-landmark-kind="region-navigation-boundary" data-attachment-landmark-state="${regionState}">
+          <dt>Region navigation boundary</dt>
+          <dd>${hasAttachments ? 'Zoek-, actie- en statusregio’s blijven gekoppeld via metadata-only routes.' : 'Region navigation wacht op bijlagestatussen.'}</dd>
+        </div>
+        <div data-attachment-landmark-kind="heading-route-affordance" data-attachment-landmark-state="${headingState}">
+          <dt>Heading route affordance</dt>
+          <dd>${hasAttachments ? 'Headingroutes verwijzen naar veilige attachmentsecties zonder bronlabels.' : 'Headingroutes blijven leeg zonder attachmentsecties.'}</dd>
+        </div>
+        <div data-attachment-landmark-kind="landmark-audit-summary" data-attachment-landmark-state="${auditState}">
+          <dt>Landmark audit summary</dt>
+          <dd>${hasAttachments ? 'Landmarkaudit bevestigt nav-, section- en actionhooks zonder broninhoud.' : 'Landmarkaudit heeft nog geen attachmentroutes om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-landmark-kind="locked-preview-landmark-boundary" data-attachment-landmark-state="${lockedState}">
+          <dt>Locked-preview landmark boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten landmark-, region- en headingpayloads.` : 'Geen vergrendelde beeldpreviews binnen landmarknavigatie.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze landmarknavigatie toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 638 |
+| ☑ klaar | 639 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **818** |
+| **Totaal** | **819** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -999,13 +999,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G834 | Premium Claude Design UI: attachment share and handoff privacy states | P1 | F5 | ☑ |
 | G835 | Premium Claude Design UI: attachment print and clinician packet privacy states | P1 | F5 | ☑ |
 | G836 | Premium Claude Design UI: attachment accessibility audit privacy states | P1 | F5 | ☑ |
-| G837 | Premium Claude Design UI: attachment landmark navigation privacy states | P1 | F5 | ☐ |
+| G837 | Premium Claude Design UI: attachment landmark navigation privacy states | P1 | F5 | ☑ |
+| G838 | Premium Claude Design UI: attachment screenreader announcement privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 837** (id's G001 t/m G837, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 838** (id's G001 t/m G838, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
