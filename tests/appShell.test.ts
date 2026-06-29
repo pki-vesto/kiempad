@@ -187,6 +187,16 @@ function extractAttachmentPrintPacketSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAccessibilityAuditSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment accessibility audit privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment accessibility audit privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -5234,6 +5244,153 @@ describe('app shell', () => {
     expect(printPacket).not.toContain('dosering');
     expect(printPacket).not.toContain('behandelkeuzeadvies');
     expect(printPacket).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment accessibility audit privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-accessibility-token',
+        dossierStatus: 'Status met private-accessibility-token en accessibility-secret-source.pdf',
+        dossierDocuments: [
+          {
+            id: 'doc-accessibility-sensitive',
+            datum: '2026-06-24',
+            titel: 'Accessibility source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'accessibility-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YWNjZXNzaWJpbGl0eS1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-accessibility-token hoort niet in aria labels.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 825 mg behandelkeuzeadvies blijft buiten accessibility audit.',
+              signalen: ['OCR-payload blijft buiten live-region en role status boundary.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-24',
+              documenttype: 'Labuitslag',
+              bronbestand: 'accessibility-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-24T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE ACCESSIBILITY OCR TEKST private-accessibility-token diagnose 825 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor accessibility-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-24T08:05:00.000Z',
+          },
+          {
+            id: 'doc-accessibility-locked-image',
+            datum: '2026-06-25',
+            titel: 'Accessibility locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'accessibility-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YWNjZXNzaWJpbGl0eS1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-accessibility-token hoort ook niet bij live-region.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-25',
+              documenttype: 'Foto/echo',
+              bronbestand: 'accessibility-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-25',
+              soort: 'echo',
+              context: 'private accessibility imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-25T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const accessibilityAudit = extractAttachmentAccessibilityAuditSurface(html);
+
+    expect(html).toContain('aria-label="Attachment keyboard and focus privacy states"');
+    expect(html).toContain('data-attachment-keyboard-focus-surface="privacy"');
+    expect(html).toContain('data-attachment-audit-surface="privacy"');
+    expect(accessibilityAudit).toContain('data-attachment-accessibility-audit-surface="privacy"');
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-live-region-state="live-region-status-metadata-only"',
+    );
+    expect(accessibilityAudit).toContain('role="status"');
+    expect(accessibilityAudit).toContain('aria-live="polite"');
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-kind="aria-label-boundary"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-kind="role-status-boundary"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-kind="live-region-affordance"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-kind="accessibility-audit-summary"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-kind="locked-preview-accessibility-boundary"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-state="aria-labels-metadata-only"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-state="role-status-boundary-ready"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-state="live-region-status-metadata-only"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-state="accessibility-audit-summary-ready"',
+    );
+    expect(accessibilityAudit).toContain(
+      'data-attachment-accessibility-state="locked-preview-accessibility-boundary"',
+    );
+    expect(accessibilityAudit).toContain(
+      '2 bijlagen beschikbaar als assistive-tech veilige status',
+    );
+    expect(accessibilityAudit).toContain('Aria-labels beschrijven alleen workflowstatus');
+    expect(accessibilityAudit).toContain('Role-, group- en statusregio’s blijven beperkt');
+    expect(accessibilityAudit).toContain('Live-regions kondigen alleen tellingen');
+    expect(accessibilityAudit).toContain(
+      'Auditstatus bevestigt veilige labels, rollen en statusregio’s',
+    );
+    expect(accessibilityAudit).toContain(
+      '1 vergrendelde beeldpreview blijft buiten aria-, status- en live-region payloads',
+    );
+
+    expect(accessibilityAudit).not.toContain('private-accessibility-token');
+    expect(accessibilityAudit).not.toContain('accessibility-secret-source.pdf');
+    expect(accessibilityAudit).not.toContain('accessibility-locked-secret.jpg');
+    expect(accessibilityAudit).not.toContain('YWNjZXNzaWJpbGl0eS1zZWNyZXQtcGF5bG9hZA==');
+    expect(accessibilityAudit).not.toContain('YWNjZXNzaWJpbGl0eS1sb2NrZWQtc2VjcmV0');
+    expect(accessibilityAudit).not.toContain('data:image/jpeg;base64');
+    expect(accessibilityAudit).not.toContain('GEVOELIGE ACCESSIBILITY OCR TEKST');
+    expect(accessibilityAudit).not.toContain('OCR-payload');
+    expect(accessibilityAudit).not.toContain('Attachmentpayload');
+    expect(accessibilityAudit).not.toContain('attachmentpayload');
+    expect(accessibilityAudit).not.toContain('dossierpayload');
+    expect(accessibilityAudit).not.toContain('diagnose');
+    expect(accessibilityAudit).not.toContain('dosering');
+    expect(accessibilityAudit).not.toContain('behandelkeuzeadvies');
+    expect(accessibilityAudit).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
