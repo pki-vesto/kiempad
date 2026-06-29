@@ -7375,4 +7375,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery copy contracts
 - **ADR Needed:** no
 - **Score:** 111
+- **Status:** ☑ klaar
+
+### G766 — unlock-error visible copy redaction boundary
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De unlock-error support-handoff is nu generiek, maar de zichtbare unlock-error tekst kan nog letterlijk uit een exception komen en heeft nog geen eigen redaction-boundary voor onverwachte bestandsnamen, OCR/base64-markers of medische plaintext.
+- **Desired Outcome:** De app-shell toont bij generieke unlock-errors een veilige gebruikerscopy en houdt technische of gevoelige detailtekst buiten de zichtbare recoverystatus.
+- **User Value:** Gebruikers krijgen bruikbare ontgrendelhulp zonder dat foutdetails of medische context in de locked UI verschijnen.
+- **Acceptance Criteria:** Unlock-error UI toont een generieke herstelzin plus support-handoff; test bewijst dat exceptiondetails met token, filename, OCR/base64 en medische plaintext niet zichtbaar zijn; verkeerde-passphrase richting blijft herkenbaar zonder passphrasewaarde; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, recovery copy, tests
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
