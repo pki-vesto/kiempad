@@ -7487,4 +7487,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery contract helpers
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G774 — recovery contract helper source guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-contract helpernamen zijn verduidelijkt, maar er is nog geen kleine broncodeguard die voorkomt dat generieke recovery-foutmeldinghelpers weer categorie-specifieke namen krijgen.
+- **Desired Outcome:** Een onderhoudstest bewaakt de naamgrens tussen generieke recovery-contracthelpers en categorie-specifieke unlock-error structuurhelpers.
+- **User Value:** Nieuwe recovery-contracttests blijven consistent en privacyveilig zonder naamdrift.
+- **Acceptance Criteria:** Test of fixture controleert dat generieke recovery-contracthelpers categorie-neutraal benoemd blijven; unlock-error structuurhelpers blijven expliciet categorie-specifiek; bestaande negatieve fixtures blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery contract helpers
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
