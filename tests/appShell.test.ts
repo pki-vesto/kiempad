@@ -139,6 +139,14 @@ function extractAttachmentBulkSelectionSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentKeyboardFocusSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment keyboard and focus privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment keyboard/focus privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4552,6 +4560,134 @@ describe('app shell', () => {
     expect(bulkSelection).not.toContain('dosering');
     expect(bulkSelection).not.toContain('behandelkeuzeadvies');
     expect(bulkSelection).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment keyboard en focus privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-focus-token',
+        dossierDocuments: [
+          {
+            id: 'doc-focus-sensitive',
+            datum: '2026-06-14',
+            titel: 'Focus keyboard source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'focus-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'Zm9jdXMtc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-focus-token hoort niet in focuslabels.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 325 mg behandelkeuzeadvies blijft buiten focusstates.',
+              signalen: ['OCR-payload blijft buiten focusring en actionbar.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-14',
+              documenttype: 'Labuitslag',
+              bronbestand: 'focus-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-14T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE FOCUS OCR TEKST private-focus-token diagnose 325 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor focus-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-14T08:05:00.000Z',
+          },
+          {
+            id: 'doc-focus-locked-image',
+            datum: '2026-06-15',
+            titel: 'Focus locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'focus-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'Zm9jdXMtbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-focus-token hoort ook niet bij locked focus.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-15',
+              documenttype: 'Foto/echo',
+              bronbestand: 'focus-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-15',
+              soort: 'echo',
+              context: 'private focus imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-15T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const keyboardFocus = extractAttachmentKeyboardFocusSurface(html);
+
+    expect(html).toContain('<a class="skip-link" href="#inhoud">Ga naar inhoud</a>');
+    expect(html).toContain('id="dossier-search-form"');
+    expect(html).toContain('id="attachment-bulk-selection-form"');
+    expect(html).toContain('data-attachment-bulk-action-kind="review"');
+    expect(html).toContain('data-attachment-bulk-action-kind="export"');
+    expect(html).toContain('data-attachment-bulk-action-kind="delete"');
+    expect(html).toContain('data-attachment-delete-kind="dossier-import"');
+    expect(keyboardFocus).toContain('data-attachment-keyboard-focus-surface="privacy"');
+    expect(keyboardFocus).toContain(
+      'data-attachment-keyboard-nav-state="skiplink-actionbar-available"',
+    );
+    expect(keyboardFocus).toContain('data-attachment-keyboard-route-kind="skiplink"');
+    expect(keyboardFocus).toContain('href="#inhoud"');
+    expect(keyboardFocus).toContain('data-attachment-keyboard-route-kind="search-form"');
+    expect(keyboardFocus).toContain('href="#dossier-search-form"');
+    expect(keyboardFocus).toContain('data-attachment-keyboard-route-kind="bulk-actionbar"');
+    expect(keyboardFocus).toContain('href="#attachment-bulk-selection-form"');
+    expect(keyboardFocus).toContain('data-attachment-keyboard-kind="focus-status"');
+    expect(keyboardFocus).toContain(
+      'data-attachment-keyboard-state="focusable-attachment-actions"',
+    );
+    expect(keyboardFocus).toContain('data-attachment-keyboard-kind="skiplink-actionbar-boundary"');
+    expect(keyboardFocus).toContain('data-attachment-keyboard-kind="keyboard-only-affordance"');
+    expect(keyboardFocus).toContain('data-attachment-keyboard-state="keyboard-actions-guarded"');
+    expect(keyboardFocus).toContain(
+      'data-attachment-keyboard-kind="locked-preview-focus-boundary"',
+    );
+    expect(keyboardFocus).toContain(
+      'data-attachment-keyboard-state="locked-preview-focus-boundary"',
+    );
+    expect(keyboardFocus).toContain('2 bijlagen bereikbaar via veilige focusvolgorde');
+    expect(keyboardFocus).toContain('Skiplink, zoekformulier en bulkactionbar blijven bereikbaar');
+    expect(keyboardFocus).toContain('Toetsenbordacties tonen alleen workflowstatus');
+    expect(keyboardFocus).toContain('1 vergrendelde beeldpreview blijft buiten focuspayloads');
+
+    expect(keyboardFocus).not.toContain('private-focus-token');
+    expect(keyboardFocus).not.toContain('focus-secret-source.pdf');
+    expect(keyboardFocus).not.toContain('focus-locked-secret.jpg');
+    expect(keyboardFocus).not.toContain('Zm9jdXMtc2VjcmV0LXBheWxvYWQ=');
+    expect(keyboardFocus).not.toContain('Zm9jdXMtbG9ja2VkLXNlY3JldA==');
+    expect(keyboardFocus).not.toContain('data:image/jpeg;base64');
+    expect(keyboardFocus).not.toContain('GEVOELIGE FOCUS OCR TEKST');
+    expect(keyboardFocus).not.toContain('OCR-payload');
+    expect(keyboardFocus).not.toContain('Attachmentpayload');
+    expect(keyboardFocus).not.toContain('attachmentpayload');
+    expect(keyboardFocus).not.toContain('diagnose');
+    expect(keyboardFocus).not.toContain('dosering');
+    expect(keyboardFocus).not.toContain('behandelkeuzeadvies');
+    expect(keyboardFocus).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
