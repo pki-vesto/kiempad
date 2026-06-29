@@ -1535,6 +1535,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryCompletionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryHistoryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchiveExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2670,6 +2671,67 @@ function renderAttachmentAssistiveRecoveryArchivePrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive archive toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchiveExpiryPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const expiryAvailable = hasAttachments && (hasStatus || hasError);
+  const expiryState = expiryAvailable ? 'archive-expiry-available' : 'archive-expiry-empty';
+  const retentionState = hasError
+    ? 'retention-end-summary-paused'
+    : hasStatus
+      ? 'retention-end-summary-ready'
+      : 'retention-end-summary-empty';
+  const labelState = expiryAvailable
+    ? 'screenreader-expiry-label-ready'
+    : 'screenreader-expiry-label-empty';
+  const auditState = expiryAvailable
+    ? 'assistive-expiry-audit-ready'
+    : 'assistive-expiry-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-expiry-boundary'
+      : 'no-locked-preview-expiry';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive expiry privacy states" data-attachment-assistive-expiry-surface="privacy">
+      <h2>Bijlage assistive expiry</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-expiry-live-state="${expiryState}">
+        ${expiryAvailable ? 'Archiefverval beschikbaar als veilige assistive expirystatus.' : 'Geen veilige attachment-archiefvervalstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-expiry-kind="archive-expiry-boundary" data-attachment-assistive-expiry-state="${expiryState}">
+          <dt>Archive expiry boundary</dt>
+          <dd>${expiryAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige vervalstatus zonder broninhoud.` : 'Archiefverval wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-expiry-kind="retention-end-summary-affordance" data-attachment-assistive-expiry-state="${retentionState}">
+          <dt>Retention end summary</dt>
+          <dd>${hasError ? 'Retentie-einde blijft gepauzeerd als generieke opschoonstatus.' : hasStatus ? 'Retentie-einde is gepland zonder bestands- of medische details.' : 'Geen retentie-einde om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-expiry-kind="screenreader-expiry-label-state" data-attachment-assistive-expiry-state="${labelState}">
+          <dt>Screenreader expiry label</dt>
+          <dd>${expiryAvailable ? 'Screenreader expiry labels noemen alleen vervalgroep en opschoonstatus.' : 'Screenreader expiry labels blijven leeg zonder archiefverval.'}</dd>
+        </div>
+        <div data-attachment-assistive-expiry-kind="assistive-expiry-audit" data-attachment-assistive-expiry-state="${auditState}">
+          <dt>Assistive expiry audit</dt>
+          <dd>${expiryAvailable ? 'Assistive expiry audit bevestigt archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive expiry audit wacht op veilige archiefvervalstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-expiry-kind="locked-preview-assistive-expiry-boundary" data-attachment-assistive-expiry-state="${lockedState}">
+          <dt>Locked-preview assistive expiry boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive expiry payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive expiry states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive expiry toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
