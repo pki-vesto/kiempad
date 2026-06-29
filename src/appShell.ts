@@ -1537,6 +1537,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchiveExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgePrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2790,6 +2791,67 @@ function renderAttachmentAssistiveRecoveryArchivePurgePrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive purge toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const receiptAvailable = hasAttachments && (hasStatus || hasError);
+  const receiptState = receiptAvailable ? 'purge-receipt-available' : 'purge-receipt-empty';
+  const proofState = hasError
+    ? 'receipt-proof-summary-paused'
+    : hasStatus
+      ? 'receipt-proof-summary-ready'
+      : 'receipt-proof-summary-empty';
+  const labelState = receiptAvailable
+    ? 'screenreader-receipt-label-ready'
+    : 'screenreader-receipt-label-empty';
+  const auditState = receiptAvailable
+    ? 'assistive-receipt-audit-ready'
+    : 'assistive-receipt-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-receipt-boundary'
+      : 'no-locked-preview-receipt';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt privacy states" data-attachment-assistive-receipt-surface="privacy">
+      <h2>Bijlage assistive receipt</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-receipt-live-state="${receiptState}">
+        ${receiptAvailable ? 'Opschoonbewijs beschikbaar als veilige assistive receiptstatus.' : 'Geen veilige attachment-opschoonbewijsstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-receipt-kind="purge-receipt-boundary" data-attachment-assistive-receipt-state="${receiptState}">
+          <dt>Purge receipt boundary</dt>
+          <dd>${receiptAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige receiptstatus zonder broninhoud.` : 'Purge receipt wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-kind="receipt-proof-summary-affordance" data-attachment-assistive-receipt-state="${proofState}">
+          <dt>Receipt proof summary</dt>
+          <dd>${hasError ? 'Receiptbewijs blijft gepauzeerd als generieke opschoonstatus.' : hasStatus ? 'Receiptbewijs is bevestigd zonder bestands- of medische details.' : 'Geen receiptbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-kind="screenreader-receipt-label-state" data-attachment-assistive-receipt-state="${labelState}">
+          <dt>Screenreader receipt label</dt>
+          <dd>${receiptAvailable ? 'Screenreader receipt labels noemen alleen bewijsgroep en ontvangststatus.' : 'Screenreader receipt labels blijven leeg zonder opschoonbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-kind="assistive-receipt-audit" data-attachment-assistive-receipt-state="${auditState}">
+          <dt>Assistive receipt audit</dt>
+          <dd>${receiptAvailable ? 'Assistive receipt audit bevestigt purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive receipt audit wacht op veilige opschoonbewijsstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-kind="locked-preview-assistive-receipt-boundary" data-attachment-assistive-receipt-state="${lockedState}">
+          <dt>Locked-preview assistive receipt boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive receipt payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive receipt states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive receipt toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
