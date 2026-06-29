@@ -12582,6 +12582,102 @@ describe('app shell', () => {
     expect(assistiveTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G937 attachment assistive delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-token',
+        dossierStatus:
+          'G937 delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail bevat audittrailbewijs voor g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf met private-g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-token OCR-payload diagnose 6005 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-sensitive',
+            datum: '2026-10-11',
+            titel:
+              'G937 delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MzctUEFZTE9BRA==',
+            notitie:
+              'private-g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-token hoort niet in assistive handoff confirmation receipt audit trail.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 6005 mg behandelkeuzeadvies blijft buiten G937 cleanup archive receipt export delivery handoff confirmation receipt audit trail.',
+              signalen: ['OCR-payload blijft buiten G937 audit trail proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-10-11',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.98,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-10-11T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G937 OCR TEKST private-g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-token diagnose 6005 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf.',
+            },
+            uploadedAt: '2026-10-11T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveTrail =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailSurface(
+        html,
+      );
+
+    expect(assistiveTrail).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-surface="privacy"',
+    );
+    expect(assistiveTrail).toContain('role="status"');
+    expect(assistiveTrail).toContain('aria-live="polite"');
+    expect(assistiveTrail).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-boundary"',
+    );
+    expect(assistiveTrail).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-kind="audit-trail-proof-summary-affordance"',
+    );
+    expect(assistiveTrail).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-kind="screenreader-handoff-confirmation-receipt-audit-trail-label-state"',
+    );
+    expect(assistiveTrail).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-kind="assistive-confirmation-receipt-audit-trail-retention"',
+    );
+    expect(assistiveTrail).toContain(
+      '1 bijlage met veilige cleanup archive receipt export delivery handoff confirmation receipt audit trailstatus',
+    );
+
+    expect(assistiveTrail).not.toContain(
+      'private-g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-token',
+    );
+    expect(assistiveTrail).not.toContain(
+      'g937-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf',
+    );
+    expect(assistiveTrail).not.toContain('U0VDUkVULUc5MzctUEFZTE9BRA==');
+    expect(assistiveTrail).not.toContain('GEVOELIGE G937 OCR TEKST');
+    expect(assistiveTrail).not.toContain('OCR-payload');
+    expect(assistiveTrail).not.toContain('Attachmentpayload');
+    expect(assistiveTrail).not.toContain('attachmentpayload');
+    expect(assistiveTrail).not.toContain('dossierpayload');
+    expect(assistiveTrail).not.toContain('diagnose');
+    expect(assistiveTrail).not.toContain('behandelkeuzeadvies');
+    expect(assistiveTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
