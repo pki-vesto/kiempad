@@ -1554,6 +1554,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3870,6 +3871,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive cleanup archive receipt export delivery handoff confirmation toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const receiptAvailable = hasAttachments && (hasStatus || hasError);
+  const receiptState = receiptAvailable
+    ? 'cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-available'
+    : 'cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-empty';
+  const proofState = hasError
+    ? 'confirmation-receipt-proof-summary-paused'
+    : hasStatus
+      ? 'confirmation-receipt-proof-summary-ready'
+      : 'confirmation-receipt-proof-summary-empty';
+  const labelState = receiptAvailable
+    ? 'screenreader-handoff-confirmation-receipt-label-ready'
+    : 'screenreader-handoff-confirmation-receipt-label-empty';
+  const retentionState = receiptAvailable
+    ? 'assistive-confirmation-receipt-retention-ready'
+    : 'assistive-confirmation-receipt-retention-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-handoff-confirmation-receipt-boundary'
+      : 'no-locked-preview-handoff-confirmation-receipt';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt privacy states" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-surface="privacy">
+      <h2>Bijlage assistive receipt export delivery handoff confirmation receipt</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-live-state="${receiptState}">
+        ${receiptAvailable ? 'Opschoonbewijs cleanup archive receipt export delivery handoff confirmation receipt beschikbaar als veilige assistive bevestigingsontvangststatus.' : 'Geen veilige attachment-opschoonbewijs cleanup archive receipt export delivery handoff confirmation receiptstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-boundary" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-state="${receiptState}">
+          <dt>Cleanup archive receipt export delivery handoff confirmation receipt boundary</dt>
+          <dd>${receiptAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige cleanup archive receipt export delivery handoff confirmation receiptstatus zonder broninhoud.` : 'Cleanup archive receipt export delivery handoff confirmation receipt wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-kind="confirmation-receipt-proof-summary-affordance" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-state="${proofState}">
+          <dt>Confirmation receipt proof summary</dt>
+          <dd>${hasError ? 'Bevestigingsontvangstbewijs blijft gepauzeerd als generieke confirmation receiptstatus.' : hasStatus ? 'Bevestigingsontvangstbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen bevestigingsontvangstbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-kind="screenreader-handoff-confirmation-receipt-label-state" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-state="${labelState}">
+          <dt>Screenreader handoff confirmation receipt label</dt>
+          <dd>${receiptAvailable ? 'Screenreader handoff confirmation receipt labels noemen alleen bevestigingsontvangstgroep en bewijsstatus.' : 'Screenreader handoff confirmation receipt labels blijven leeg zonder bevestigingsontvangstbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-kind="assistive-confirmation-receipt-retention" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-state="${retentionState}">
+          <dt>Assistive confirmation receipt retention</dt>
+          <dd>${receiptAvailable ? 'Assistive confirmation receipt retention bevestigt confirmation-, handoff-, delivery-, export-, receipt-, archive-, cleanup-, expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, purge-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive confirmation receipt retention wacht op veilige confirmation receiptstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-kind="locked-preview-assistive-handoff-confirmation-receipt-boundary" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-state="${lockedState}">
+          <dt>Locked-preview assistive handoff confirmation receipt boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive handoff confirmation receipt payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive handoff confirmation receipt states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive cleanup archive receipt export delivery handoff confirmation receipt toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
