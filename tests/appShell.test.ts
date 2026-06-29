@@ -101,6 +101,18 @@ function expectUnlockErrorCopyRedaction(html: string): void {
   }
 }
 
+function extractUnlockErrorRecoveryAlert(html: string): string {
+  const match = html.match(
+    /<section class="form-error" role="alert" aria-label="Herstelstatus ontgrendelen">([\s\S]*?)<\/section>/,
+  );
+  if (!match?.[1]) {
+    throw new Error(
+      'Unlock-error recoverystatus alert ontbreekt of is niet toegankelijk gelabeld.',
+    );
+  }
+  return match[1].replace(/\s+/g, ' ').trim();
+}
+
 describe('app shell', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -304,6 +316,26 @@ describe('app shell', () => {
 
     expectSupportHandoffContract(html, UNLOCK_ERROR_HANDOFF_CONTRACT);
     expectUnlockErrorCopyRedaction(html);
+  });
+
+  it('bewaakt unlock-error alertsemantiek voor themawijzigingen', () => {
+    const html = renderVaultGate(true, UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE, undefined, {
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+    });
+
+    expect(html).toContain(
+      '<section class="form-error" role="alert" aria-label="Herstelstatus ontgrendelen">',
+    );
+
+    const alert = extractUnlockErrorRecoveryAlert(html);
+
+    expect(alert).toContain(UNLOCK_ERROR_GENERIC_COPY);
+    expect(alert).toContain('data-support-handoff="unlock-error"');
+    expectSupportHandoffContract(alert, UNLOCK_ERROR_HANDOFF_CONTRACT);
+    for (const forbidden of UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS) {
+      expect(alert).not.toContain(forbidden);
+    }
   });
 
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {
