@@ -7515,4 +7515,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, maintenance docs, recovery contract helpers
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G776 — recovery contract helper docs drift release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-contract helpernaamgrens is nu gedocumenteerd en getest, maar releasecontext kan nog achterlopen wanneer deze onderhoudsafspraak verandert.
+- **Desired Outcome:** Een release/state guard bewaakt dat changelog en current state de recovery-helper documentatieguard blijven noemen wanneer dit contract wijzigt.
+- **User Value:** Nieuwe recovery-contract onderhoudsafspraken blijven zichtbaar in releaseoverzicht en projectstatus.
+- **Acceptance Criteria:** Maintenance-test of fixture bewaakt releasecontext voor de recovery-helper documentatieguard; changelog en current state noemen de relevante guardterm; bestaande guard en negatieve fixtures blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helpers
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
