@@ -2181,6 +2181,7 @@ function renderDossierDocument(
         <small>${escapeHtml(fileLabel)}</small>
         ${koppelingen.length > 0 ? `<p class="linked-note">${koppelingen.map(escapeHtml).join(' · ')}</p>` : ''}
         ${renderDossierMetadata(document, state)}
+        ${renderAttachmentReviewMetadata(document)}
         ${renderEmbryoDetails(document)}
         ${renderDossierOcrDetails(document)}
         ${renderDossierImagePreview(document, state)}
@@ -2192,6 +2193,74 @@ function renderDossierDocument(
       </div>
     </li>
   `;
+}
+
+function renderAttachmentReviewMetadata(document: DossierDocument): string {
+  const items = [
+    renderAttachmentImportStatusReviewItem(document),
+    renderAttachmentOcrReviewItem(document),
+    renderAttachmentExifReviewItem(document),
+    renderAttachmentEmbryoSourceReviewItem(document),
+  ].filter((item): item is string => Boolean(item));
+  if (items.length === 0) return '';
+
+  const hasConcept = items.some((item) => item.includes('data-attachment-review-state="concept'));
+  return `
+    <section class="linked-note attachment-review-metadata" aria-label="Attachment reviewmetadata" data-attachment-review-surface="metadata" data-attachment-review-state="${hasConcept ? 'needs-review' : 'reviewed-or-stable'}">
+      <p>Reviewmetadata</p>
+      <ul class="compact-list">
+        ${items.join('')}
+      </ul>
+    </section>
+  `;
+}
+
+function renderAttachmentImportStatusReviewItem(document: DossierDocument): string {
+  const status =
+    document.ocr?.status === 'tekst_uitgelezen'
+      ? 'ocr_uitgelezen'
+      : document.ocr?.status === 'wacht_op_lokale_ocr'
+        ? 'ocr_wacht'
+        : document.ocr?.status === 'niet_ondersteund'
+          ? 'ocr_niet_ondersteund'
+          : 'klaar_voor_review';
+  const label =
+    status === 'ocr_uitgelezen'
+      ? 'OCR lokaal uitgelezen'
+      : status === 'ocr_wacht'
+        ? 'Wacht op lokale OCR'
+        : status === 'ocr_niet_ondersteund'
+          ? 'OCR niet ondersteund'
+          : 'Klaar voor review';
+
+  return `<li data-attachment-review-kind="import-status" data-attachment-review-state="${escapeAttribute(status)}">Importstatus: ${escapeHtml(label)}</li>`;
+}
+
+function renderAttachmentOcrReviewItem(document: DossierDocument): string {
+  if (!document.ocr) return '';
+  const status =
+    document.ocr.status === 'tekst_uitgelezen'
+      ? 'Tekst lokaal uitgelezen'
+      : document.ocr.status === 'wacht_op_lokale_ocr'
+        ? 'Klaargezet voor lokale OCR'
+        : 'OCR-route niet ondersteund';
+  const review = document.ocr.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
+
+  return `<li data-attachment-review-kind="ocr-review" data-attachment-review-state="${escapeAttribute(`${review}-${document.ocr.status}`)}">OCR-review: ${escapeHtml(status)} · Confidence ${escapeHtml(document.ocr.confidenceLabel)} · Review ${escapeHtml(review)}</li>`;
+}
+
+function renderAttachmentExifReviewItem(document: DossierDocument): string {
+  if (!document.beeldMetadata) return '';
+  const review = document.beeldMetadata.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
+
+  return `<li data-attachment-review-kind="exif-isolation" data-attachment-review-state="${escapeAttribute(`${review}-${document.beeldMetadata.exifStatus}`)}">EXIF-isolatie: ${escapeHtml(document.beeldMetadata.exifStatus)} · Review ${escapeHtml(review)}</li>`;
+}
+
+function renderAttachmentEmbryoSourceReviewItem(document: DossierDocument): string {
+  if (!document.embryo) return '';
+  const review = document.embryo.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
+
+  return `<li data-attachment-review-kind="embryo-source-label-review" data-attachment-review-state="${escapeAttribute(review)}">Embryo bronlabelreview: ${escapeHtml(review === 'gereviewd' ? 'Gereviewd' : 'Concept')} · Label geregistreerd</li>`;
 }
 
 function renderDossierMetadata(document: DossierDocument, state: AppShellState): string {
