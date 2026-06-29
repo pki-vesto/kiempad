@@ -7963,4 +7963,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G808 — imaging compare empty and locked states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossierinbox-states zijn nu bewaakt, maar de imaging-vergelijkingslayout heeft nog geen expliciete Claude Design-regressie voor lege en vergrendelde states.
+- **Desired Outcome:** Tests en UI-contracten bewaken dat imaging compare leeg, gevuld en locked scanbaar blijft zonder beeldpayload of bronbestandsnaam te lekken.
+- **User Value:** Gebruikers kunnen echo’s, foto’s en embryo-afbeeldingen rustig vergelijken terwijl privacygrenzen in het nieuwe thema intact blijven.
+- **Acceptance Criteria:** Tests dekken lege imaging-vergelijking, meerdere beeldmomenten en locked preview state; bestaande imaging filter form-id's blijven aanwezig; visible compare copy toont geen base64, OCR-tekst of verborgen bronbestandsnaam; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Imaging UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

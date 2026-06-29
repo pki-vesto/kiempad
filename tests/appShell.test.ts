@@ -66,6 +66,14 @@ function expectSupportHandoffContract(
   return contract;
 }
 
+function extractDossierInboxOverview(html: string): string {
+  const match = html.match(
+    /<section class="dossier-inbox-overview" aria-label="Dossier import-inbox overzicht">([\s\S]*?)<\/section>/,
+  );
+  if (!match?.[1]) throw new Error('Dossier import-inbox overview ontbreekt.');
+  return match[1].replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -1939,6 +1947,167 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
     expect(html).toContain('1 dossierbestand in de legacy lokale encrypted dataset opgeslagen.');
     expect(html).not.toContain('cGRm');
+  });
+
+  it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
+    const emptyHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const emptyOverview = extractDossierInboxOverview(emptyHtml);
+
+    expect(emptyOverview).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Imports</span>',
+    );
+    expect(emptyOverview).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">OCR wacht</span>',
+    );
+    expect(emptyOverview).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Beelden</span>',
+    );
+    expect(emptyOverview).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Review klaar</span>',
+    );
+    expect(emptyOverview).toContain(
+      'Upload historische onderzoeken, foto’s, echo’s of gespreksverslagen om de inbox te vullen.',
+    );
+    expect(emptyHtml).toContain('id="dossier-upload-form"');
+    expect(emptyHtml).toContain('id="dossier-search-form"');
+
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-ocr-wacht',
+          datum: '2026-05-01',
+          titel: 'OCR wachtdocument',
+          categorie: 'onderzoek',
+          uploadProfiel: 'labuitslag',
+          bestandsNaam: 'lab-ocr-wacht.pdf',
+          mimeType: 'application/pdf',
+          grootteBytes: 2048,
+          inhoudBase64: 'b2NyLXBheWxvYWQ=',
+          analyse: {
+            samenvatting: 'Onderzoek opgeslagen als PDF; analyse is lokaal en niet-medisch.',
+            signalen: ['OCR wacht op lokale verwerking.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-01',
+            documenttype: 'Labuitslag',
+            bronbestand: 'lab-ocr-wacht.pdf',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          ocr: {
+            status: 'wacht_op_lokale_ocr',
+            bron: 'pdf',
+            explicieteLokaleVerwerking: true,
+            confidenceScore: 0,
+            confidenceLabel: 'laag',
+            reviewStatus: 'concept',
+            tekst: 'GEVOELIGE OCR TEKST MET MEDISCHE PAYLOAD',
+            waarschuwing: 'Lokale OCR moet nog draaien.',
+            verwerktOp: '2026-06-23T15:00:00.000Z',
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+        {
+          id: 'doc-beeld-state',
+          datum: '2026-05-02',
+          titel: 'Echo state',
+          categorie: 'beeld',
+          bestandsNaam: 'echo-state.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'YmVlbGQtcGF5bG9hZA==',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'echo-state.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-02',
+            soort: 'echo',
+            context: 'Synthetische echo state',
+            bron: 'Testkliniek',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'concept',
+          },
+          uploadedAt: '2026-06-23T15:05:00.000Z',
+        },
+        {
+          id: 'doc-review-klaar',
+          datum: '2026-05-03',
+          titel: 'Reviewklaar dossierdocument',
+          categorie: 'gespreksverslag',
+          uploadProfiel: 'behandelverslag',
+          bestandsNaam: 'review-klaar.txt',
+          mimeType: 'text/plain',
+          grootteBytes: 1024,
+          inhoudBase64: 'cmV2aWV3LXBheWxvYWQ=',
+          analyse: {
+            samenvatting: 'Behandelverslag opgeslagen; analyse is lokaal en niet-medisch.',
+            signalen: ['Klaar voor review.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-03',
+            documenttype: 'Behandelverslag',
+            bronbestand: 'review-klaar.txt',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          uploadedAt: '2026-06-23T15:10:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const overview = extractDossierInboxOverview(html);
+
+    expect(overview).toContain(
+      '<span class="stat__value">3</span><span class="stat__label">Imports</span>',
+    );
+    expect(overview).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">OCR wacht</span>',
+    );
+    expect(overview).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">Beelden</span>',
+    );
+    expect(overview).toContain(
+      '<span class="stat__value">2</span><span class="stat__label">Review klaar</span>',
+    );
+    expect(overview).toContain('Laatste import: 2026-05-03 · Behandelverslag.');
+    expect(overview).toContain(
+      'Metadata blijft beperkt tot type, datum, status en veilige bestandslabels.',
+    );
+    expect(html).toContain('id="dossier-upload-form"');
+    expect(html).toContain('id="dossier-search-form"');
+    expect(html).toContain('data-dossier-document-id="doc-ocr-wacht"');
+    expect(html).toContain('data-dossier-document-id="doc-beeld-state"');
+    expect(html).toContain('data-dossier-document-id="doc-review-klaar"');
+    expect(html).toContain('Importstatus: Wacht op lokale OCR');
+    expect(html).toContain('Importstatus: Klaar voor review');
+    expect(overview).not.toContain('GEVOELIGE OCR TEKST');
+    expect(overview).not.toContain('MEDISCHE PAYLOAD');
+    expect(overview).not.toContain('b2NyLXBheWxvYWQ=');
+    expect(overview).not.toContain('YmVlbGQtcGF5bG9hZA==');
+    expect(overview).not.toContain('cmV2aWV3LXBheWxvYWQ=');
   });
 
   it('rendert beeldmateriaal als lokale dossierpreview', () => {
