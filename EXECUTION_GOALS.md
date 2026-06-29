@@ -7543,4 +7543,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helpers
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G778 — recovery contract helper release error compact contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-helper releasecontext heeft nu een negatieve fixture, maar de exacte foutmelding is nog niet als apart compact contract bewaakt voor toekomstige helperwijzigingen.
+- **Desired Outcome:** Een compacte test legt de exacte recovery-helper releasecontext missing-term melding vast.
+- **User Value:** Onderhoudstests blijven begrijpelijk en stabiel wanneer recovery-helper releasecontextbewaking wordt uitgebreid.
+- **Acceptance Criteria:** Compact contract bewaakt de exacte missing-term melding; bestaande negatieve fixture en releasecontextguard blijven groen; docs/backlog verwijzen naar het doel; fouttekst bevat alleen technische termnamen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open

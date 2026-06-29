@@ -411,6 +411,8 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_TERMS = [
   'docsafspraak',
   'releasecontextbewaking',
 ] as const;
+const RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR =
+  'Recovery helper releasecontext ontbreekt voor termen: docsafspraak';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 describe('onderhoudsdocumentatie', () => {
@@ -462,9 +464,25 @@ describe('onderhoudsdocumentatie', () => {
 
   it('bewaakt releasecontext voor de recovery-contract helper docsafspraak', () => {
     for (const releaseDoc of [changelog, currentState]) {
+      const releaseContext = extractRecoveryContractHelperReleaseContext(releaseDoc);
+
       for (const requiredTerm of RECOVERY_CONTRACT_HELPER_RELEASE_TERMS) {
-        expect(releaseDoc).toContain(requiredTerm);
+        expect(releaseContext).toContain(requiredTerm);
       }
+    }
+  });
+
+  it('geeft ontbrekende recovery-helper releasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractRecoveryContractHelperReleaseContext(
+        'G000 Central Encrypted Platform: recovery-contract helpernaamgrens heeft documentatiecontract en releasecontextbewaking.',
+      ),
+    ).toThrow(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR);
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR).toBe(
+      'Recovery helper releasecontext ontbreekt voor termen: docsafspraak',
+    );
+    for (const requiredTerm of ['docsafspraak']) {
+      expect(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR).toContain(requiredTerm);
     }
   });
 
@@ -3445,6 +3463,24 @@ function extractBootstrapGovernanceReleaseContext(
   if (missingTerms.length > 0) {
     throw new Error(
       `Bootstrap governance releasecontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractRecoveryContractHelperReleaseContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) => RECOVERY_CONTRACT_HELPER_RELEASE_TERMS.some((term) => line.includes(term)));
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = RECOVERY_CONTRACT_HELPER_RELEASE_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Recovery helper releasecontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
     );
   }
 
