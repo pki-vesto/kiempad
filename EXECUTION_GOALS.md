@@ -7417,4 +7417,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, theme accessibility, recovery copy tests
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G769 — unlock-error alert structure contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De unlock-error alertsemantiek is nu getest, maar de exacte structuur van de alertinhoud en handoff kan bij toekomstige themawijzigingen alsnog diffuus worden.
+- **Desired Outcome:** Een compact contract bewaakt de volgorde en minimale structuur van unlock-error alertcopy plus support-handoff zonder gevoelige inhoud.
+- **User Value:** Gebruikers en support blijven dezelfde herstelcontext krijgen, ook wanneer het nieuwe thema markup en componenten blijft evolueren.
+- **Acceptance Criteria:** Test bewaakt dat de generieke copy voor de support-handoff in de unlock-error alert staat; de handoff bevat exact supportcategorie, opslagmodus en actierichting; er zijn geen extra gevoelige of technische details in de alert; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, recovery alert markup, support handoff tests
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
