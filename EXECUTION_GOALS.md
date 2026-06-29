@@ -7571,4 +7571,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G780 — recovery contract helper release-state missing-term negative fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-helper release-stateguard bewaakt nu changelog en current state, maar heeft nog geen negatieve fixture voor ontbrekende release-state foutmeldingcontexttermen.
+- **Desired Outcome:** Een negatieve fixture bewijst dat ontbrekende recovery-helper release-statecontexttermen technisch en compact falen.
+- **User Value:** Onderhouders krijgen direct een gerichte foutmelding wanneer changelog of current state de recovery-helper foutmeldingcontext laat vallen.
+- **Acceptance Criteria:** Negatieve fixture gebruikt alleen technische termnamen; ontbrekende release-state foutmeldingcontexttermen falen met een gerichte melding; bestaande releasecontext-, release-state- en compact-contractguards blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
