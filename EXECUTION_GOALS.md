@@ -8663,4 +8663,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive UI, cleanup/expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/archive/history/completion/recovery/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G858 — attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive states zijn nu bewaakt, maar archive-receipt-, ontvangstbewijs-, screenreader archive receipt label- en receipt-retentiestates rond gearchiveerde cleanupstatussen hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt states begrijpelijk en assistive-tech veilig blijven, bestaande archive/cleanup/expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/history/completion/recovery/live-region/nav/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien dat een cleanup-archiefontvangstbewijs bestaat zonder dat receiptstates bronbestanden, selectiecontext of medische inhoud tonen.
+- **Acceptance Criteria:** Tests dekken cleanup archive receipt boundary, receipt proof summary affordance, screenreader archive receipt label state en assistive receipt retention state; bestaande archive/cleanup/expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/history/completion/recovery/live-region/nav/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt UI, archive/cleanup/expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/history/completion/recovery/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

@@ -1548,6 +1548,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3486,6 +3487,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive retention expiry cleanup toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchivePrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const archiveAvailable = hasAttachments && (hasStatus || hasError);
+  const archiveState = archiveAvailable
+    ? 'retention-expiry-cleanup-archive-available'
+    : 'retention-expiry-cleanup-archive-empty';
+  const proofState = hasError
+    ? 'archive-proof-summary-paused'
+    : hasStatus
+      ? 'archive-proof-summary-ready'
+      : 'archive-proof-summary-empty';
+  const labelState = archiveAvailable
+    ? 'screenreader-cleanup-archive-label-ready'
+    : 'screenreader-cleanup-archive-label-empty';
+  const retentionState = archiveAvailable
+    ? 'assistive-archive-retention-ready'
+    : 'assistive-archive-retention-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-cleanup-archive-boundary'
+      : 'no-locked-preview-cleanup-archive';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states" data-attachment-assistive-cleanup-archive-surface="privacy">
+      <h2>Bijlage assistive cleanup archive</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-cleanup-archive-live-state="${archiveState}">
+        ${archiveAvailable ? 'Opschoonbewijs retention expiry cleanup archive beschikbaar als veilige assistive archiefstatus.' : 'Geen veilige attachment-opschoonbewijs retention expiry cleanup archiefstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-cleanup-archive-kind="retention-expiry-cleanup-archive-boundary" data-attachment-assistive-cleanup-archive-state="${archiveState}">
+          <dt>Retention expiry cleanup archive boundary</dt>
+          <dd>${archiveAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige retention expiry cleanup archiefstatus zonder broninhoud.` : 'Retention expiry cleanup archive wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-kind="archive-proof-summary-affordance" data-attachment-assistive-cleanup-archive-state="${proofState}">
+          <dt>Archive proof summary</dt>
+          <dd>${hasError ? 'Archiefbewijs blijft gepauzeerd als generieke archiefstatus.' : hasStatus ? 'Archiefbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen archiefbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-kind="screenreader-cleanup-archive-label-state" data-attachment-assistive-cleanup-archive-state="${labelState}">
+          <dt>Screenreader cleanup archive label</dt>
+          <dd>${archiveAvailable ? 'Screenreader cleanup archive labels noemen alleen archiefgroep en bewijsstatus.' : 'Screenreader cleanup archive labels blijven leeg zonder archiefbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-kind="assistive-archive-retention" data-attachment-assistive-cleanup-archive-state="${retentionState}">
+          <dt>Assistive archive retention</dt>
+          <dd>${archiveAvailable ? 'Assistive archive retention bevestigt cleanup-, expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive archive retention wacht op veilige archiefstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-kind="locked-preview-assistive-cleanup-archive-boundary" data-attachment-assistive-cleanup-archive-state="${lockedState}">
+          <dt>Locked-preview assistive cleanup archive boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive cleanup archive payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive cleanup archive states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive retention expiry cleanup archive toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
