@@ -343,6 +343,9 @@ export type AppShellState = {
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
   centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
+  uploadAttachmentFeedback?: Partial<
+    Record<UploadAttachmentFeedbackKind, UploadAttachmentFeedbackItem>
+  >;
   webAuthnStatus?: WebAuthnViewStatus;
   inAppFallbackNotifications?: InAppFallbackNotification[];
   storageMode?: 'central-api' | 'legacy-indexeddb';
@@ -353,6 +356,18 @@ type CentralSyncFeedbackKind = 'replay-conflict' | 'stale-session' | 'record-pac
 
 type CentralSyncFeedbackItem = {
   state: 'idle' | 'success' | 'warning' | 'error';
+  status?: string;
+  error?: string;
+};
+
+type UploadAttachmentFeedbackKind =
+  | 'dossier-upload'
+  | 'imaging-upload'
+  | 'consult-upload'
+  | 'embryo-upload';
+
+type UploadAttachmentFeedbackItem = {
+  state: 'idle' | 'ready' | 'processing' | 'needs-review' | 'error';
   status?: string;
   error?: string;
 };
@@ -820,9 +835,12 @@ const EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS = [
   /\bapi[-_\s]?key\b/i,
   /\bproviderpayload\b/i,
   /\bprovider[-_\s]?payload\b/i,
+  /\bbestandsinhoud\b/i,
+  /\bfile[-_\s]?contents\b/i,
   /\bbase64\b/i,
   /\bencrypted[-_\s]?payload\b/i,
   /\bocr[-_\s]?payload\b/i,
+  /\battachment[-_\s]?payload\b/i,
   /\brecord[-_\s]?payload\b/i,
   /\bdossierpayload\b/i,
   /\bdossier\s+payload\b/i,
@@ -1196,9 +1214,12 @@ const STATUS_FEEDBACK_SENSITIVE_PATTERNS = [
   /\bapi[-_\s]?key\b/i,
   /\bproviderpayload\b/i,
   /\bprovider[-_\s]?payload\b/i,
+  /\bbestandsinhoud\b/i,
+  /\bfile[-_\s]?contents\b/i,
   /\bbase64\b/i,
   /\bencrypted[-_\s]?payload\b/i,
   /\bocr[-_\s]?payload\b/i,
+  /\battachment[-_\s]?payload\b/i,
   /\brecord[-_\s]?payload\b/i,
   /\bdossierpayload\b/i,
   /\bdossier\s+payload\b/i,
@@ -1256,7 +1277,7 @@ function renderDossierScreen(state: AppShellState): string {
         <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
         <div class="kp-disclosure__body">
         <h2>Dossierdocument uploaden</h2>
-        <form id="dossier-upload-form" class="data-form">
+        <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
           <label>
             Datum document
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1346,6 +1367,7 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit">Upload naar dossier</button>
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        ${renderUploadAttachmentFeedback(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         <h2>Import-inbox</h2>
         ${renderDossierInboxOverview(importInboxItems)}
@@ -1369,7 +1391,7 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
         }
         <h2>Consultverslag toevoegen</h2>
-        <form id="consult-verslag-form" class="data-form">
+        <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-consult-upload-privacy-state="encrypted-text-or-file">
           <label>
             Datum consult
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1412,7 +1434,7 @@ function renderDossierScreen(state: AppShellState): string {
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         <h2>Embryokwaliteit vastleggen</h2>
-        <form id="embryo-quality-form" class="data-form">
+        <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-embryo-upload-privacy-state="encrypted-quality-registration">
           <label>
             Datum labterugkoppeling
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1533,6 +1555,63 @@ function renderDossierScreen(state: AppShellState): string {
         }
     </section>
   `;
+}
+
+const UPLOAD_ATTACHMENT_FEEDBACK_DEFAULTS: Record<
+  UploadAttachmentFeedbackKind,
+  { label: string; defaultState: UploadAttachmentFeedbackItem['state']; defaultCopy: string }
+> = {
+  'dossier-upload': {
+    label: 'Dossierupload',
+    defaultState: 'ready',
+    defaultCopy: 'Klaar voor lokale analyse met versleutelde opslag.',
+  },
+  'imaging-upload': {
+    label: 'Beeldupload',
+    defaultState: 'ready',
+    defaultCopy: 'Foto, echo, scan of embryo-afbeelding wordt als versleutelde bijlage behandeld.',
+  },
+  'consult-upload': {
+    label: 'Consultupload',
+    defaultState: 'ready',
+    defaultCopy: 'Gespreksverslag wordt als eigen versleuteld record bewaard.',
+  },
+  'embryo-upload': {
+    label: 'Embryoregistratie',
+    defaultState: 'ready',
+    defaultCopy: 'Embryokwaliteit wordt als feitelijke bronregistratie bewaard.',
+  },
+};
+
+function renderUploadAttachmentFeedback(state: AppShellState): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Upload attachment privacy states" data-upload-attachment-feedback="encrypted-local">
+      <h2>Uploadprivacy</h2>
+      <dl class="summary-list">
+        ${(['dossier-upload', 'imaging-upload', 'consult-upload', 'embryo-upload'] as const)
+          .map((kind) =>
+            renderUploadAttachmentFeedbackRow(kind, state.uploadAttachmentFeedback?.[kind]),
+          )
+          .join('')}
+      </dl>
+      <p class="small-print">Deze uploadstatus toont alleen workflowmetadata en geen broninhoud.</p>
+    </section>
+  `;
+}
+
+function renderUploadAttachmentFeedbackRow(
+  kind: UploadAttachmentFeedbackKind,
+  item: UploadAttachmentFeedbackItem | undefined,
+): string {
+  const defaults = UPLOAD_ATTACHMENT_FEEDBACK_DEFAULTS[kind];
+  const state = item?.state ?? defaults.defaultState;
+  const fallback = `${defaults.label} bijgewerkt zonder broninhoud of attachmentdetails.`;
+  const copy = sanitizeSettingsPrivacyFeedback(
+    item?.error ?? item?.status ?? defaults.defaultCopy,
+    fallback,
+  );
+
+  return `<div data-upload-attachment-feedback-kind="${kind}" data-upload-attachment-feedback-state="${state}"><dt>${defaults.label}</dt><dd>${escapeHtml(copy)}</dd></div>`;
 }
 
 function renderDossierInboxOverview(items: DossierImportInboxItem[]): string {

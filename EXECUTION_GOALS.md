@@ -8173,4 +8173,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Upload UI, dossier UI, imaging repository, embryo tracking, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G823 — attachment preview and delete privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Upload attachment states zijn nu bewaakt, maar preview-, locked-preview- en verwijderstates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder bronbestandsnaam, base64 of medische payload.
+- **Desired Outcome:** Tests bewaken dat preview en delete states scanbaar blijven, bestaande preview/delete hooks behouden en geen bestandsinhoud, base64, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen bijlagen inspecteren of verwijderen zonder dat themawijzigingen verborgen bronbestanden of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken unlocked preview, locked preview en delete affordances voor dossier- en imagingbijlagen; bestaande preview/delete UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, base64, OCR-payload, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment preview UI, delete UI, imaging repository, dossier import inbox, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
