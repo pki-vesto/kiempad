@@ -11440,6 +11440,99 @@ describe('app shell', () => {
     expect(assistiveHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G933 attachment assistive delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-token',
+        dossierStatus:
+          'G933 delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff bevat overdrachtsbewijs voor g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-secret-source.pdf met private-g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-token OCR-payload diagnose 6001 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-sensitive',
+            datum: '2026-10-07',
+            titel:
+              'G933 delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MzMtUEFZTE9BRA==',
+            notitie:
+              'private-g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-token hoort niet in assistive archive receipt export delivery handoff.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 6001 mg behandelkeuzeadvies blijft buiten G933 cleanup archive receipt export delivery handoff.',
+              signalen: ['OCR-payload blijft buiten G933 handoff proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-10-07',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.98,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-10-07T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G933 OCR TEKST private-g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-token diagnose 6001 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-secret-source.pdf.',
+            },
+            uploadedAt: '2026-10-07T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveHandoff = extractAttachmentAssistiveReceiptExportDeliveryHandoffSurface(html);
+
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-surface="privacy"',
+    );
+    expect(assistiveHandoff).toContain('role="status"');
+    expect(assistiveHandoff).toContain('aria-live="polite"');
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-kind="cleanup-archive-receipt-export-delivery-handoff-boundary"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-kind="handoff-proof-summary-affordance"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-kind="screenreader-delivery-handoff-label-state"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-kind="assistive-handoff-retention"',
+    );
+    expect(assistiveHandoff).toContain(
+      '1 bijlage met veilige cleanup archive receipt export delivery handoffstatus',
+    );
+
+    expect(assistiveHandoff).not.toContain(
+      'private-g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-token',
+    );
+    expect(assistiveHandoff).not.toContain(
+      'g933-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-secret-source.pdf',
+    );
+    expect(assistiveHandoff).not.toContain('U0VDUkVULUc5MzMtUEFZTE9BRA==');
+    expect(assistiveHandoff).not.toContain('GEVOELIGE G933 OCR TEKST');
+    expect(assistiveHandoff).not.toContain('OCR-payload');
+    expect(assistiveHandoff).not.toContain('Attachmentpayload');
+    expect(assistiveHandoff).not.toContain('attachmentpayload');
+    expect(assistiveHandoff).not.toContain('dossierpayload');
+    expect(assistiveHandoff).not.toContain('diagnose');
+    expect(assistiveHandoff).not.toContain('behandelkeuzeadvies');
+    expect(assistiveHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
