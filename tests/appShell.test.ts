@@ -91,6 +91,14 @@ function extractUploadAttachmentFeedback(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentConsentExportSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment consent en export privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment consent/export privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -3812,6 +3820,119 @@ describe('app shell', () => {
     expect(reviewMetadata).not.toContain('diagnose');
     expect(reviewMetadata).not.toContain('behandelkeuzeadvies');
     expect(reviewMetadata).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment consent en export privacy states zonder bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-consent-export-state',
+            datum: '2026-05-02',
+            titel: 'Consent export beeld',
+            categorie: 'beeld',
+            bestandsNaam: 'consent-secret-source.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'Y29uc2VudC1zZWNyZXQtcGF5bG9hZA==',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload token abc123 diagnose 150 mg behandelkeuzeadvies mag niet in exportstatus.',
+              signalen: ['OCR-payload en bronbestandsnaam blijven buiten exportstatus.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Foto/echo',
+              bronbestand: 'consent-secret-source.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'afbeelding',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.91,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-05-02T10:00:00.000Z',
+              tekst: 'GEVOELIGE OCR TEKST diagnose attachmentpayload 150 mg behandelkeuzeadvies.',
+              waarschuwing: 'OCR-review afgerond voor consent-secret-source.jpg.',
+            },
+            beeldMetadata: {
+              datum: '2026-05-02',
+              soort: 'echo',
+              context: 'Consent export state',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-consent-export-embryo',
+            datum: '2026-05-03',
+            titel: 'Consent export embryo',
+            categorie: 'embryo',
+            bestandsNaam: 'embryo-consent-secret.json',
+            mimeType: 'application/json',
+            grootteBytes: 512,
+            inhoudBase64: 'ZW1icnlvLXNlY3JldA==',
+            analyse: {
+              samenvatting: 'Embryobron opgeslagen zonder medisch advies.',
+              signalen: ['Embryobron is feitelijke registratie.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-03',
+              documenttype: 'Embryokwaliteit',
+              bronbestand: 'embryo-consent-secret.json',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            embryo: {
+              label: 'Embryo 1',
+              dag: 5,
+              kwaliteit: '4AA',
+              bron: 'embryo-consent-secret.json',
+              reviewStatus: 'gereviewd',
+              status: 'ingevroren',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const consentExport = extractAttachmentConsentExportSurface(html);
+
+    expect(consentExport).toContain('data-attachment-consent-export-surface="privacy"');
+    expect(consentExport).toContain('data-attachment-consent-kind="explicit-review"');
+    expect(consentExport).toContain('data-attachment-consent-state="explicit-consent-required"');
+    expect(consentExport).toContain('data-attachment-export-kind="encrypted-attachments"');
+    expect(consentExport).toContain('data-attachment-export-state="central-encrypted-available"');
+    expect(consentExport).toContain('data-attachment-download-kind="local-attachment"');
+    expect(consentExport).toContain('data-attachment-download-state="locked-until-unlock"');
+    expect(consentExport).toContain('data-attachment-share-kind="medical-boundary"');
+    expect(consentExport).toContain('data-attachment-share-state="metadata-only-boundary"');
+    expect(consentExport).toContain('Expliciete keuze vereist');
+    expect(consentExport).toContain('Encrypted centrale export beschikbaar voor 2 bijlagen');
+    expect(consentExport).toContain('waaronder 1 beeld en 1 embryobron');
+    expect(consentExport).toContain('Downloads en previews blijven vergrendeld');
+    expect(consentExport).toContain('geen medisch oordeel, hoeveelheidadvies of behandelrichting');
+
+    expect(consentExport).not.toContain('consent-secret-source.jpg');
+    expect(consentExport).not.toContain('embryo-consent-secret.json');
+    expect(consentExport).not.toContain('Y29uc2VudC1zZWNyZXQtcGF5bG9hZA==');
+    expect(consentExport).not.toContain('ZW1icnlvLXNlY3JldA==');
+    expect(consentExport).not.toContain('data:image/jpeg;base64');
+    expect(consentExport).not.toContain('GEVOELIGE OCR TEKST');
+    expect(consentExport).not.toContain('OCR-payload');
+    expect(consentExport).not.toContain('Attachmentpayload');
+    expect(consentExport).not.toContain('attachmentpayload');
+    expect(consentExport).not.toContain('token abc123');
+    expect(consentExport).not.toContain('diagnose');
+    expect(consentExport).not.toContain('dosering');
+    expect(consentExport).not.toContain('behandelkeuzeadvies');
+    expect(consentExport).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
