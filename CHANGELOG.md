@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G807/G808 Premium Claude Design UI: app-shell tests bewaken nu lege, OCR-wachtende, beeld- en reviewklare dossierinbox-states met bestaande upload/delete-hooks en zonder OCR-tekst, base64 of medische payload in de overview; G808 is toegevoegd voor imaging-compare layout verdieping.
 - G555/G807 Premium Claude Design UI: de dossierimport-inbox heeft nu een scanbare Claude Design-overview met import-, OCR-, beeld- en reviewstatussen zonder inhoud, OCR-tekst of base64 te tonen; G807 is toegevoegd voor verdere theme-regressiebewaking van inbox-states.
 - G805/G806 Central Encrypted Platform: maintenance-tests leggen nu de exacte recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontext missing-term melding vast als compact contract zonder payload, passphrase of token; G806 is toegevoegd voor release-statebewaking van deze contractcontext.
 - G804/G805 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontexttermen; de foutmelding blijft beperkt tot technische termnamen. G805 is toegevoegd voor een compact contract rond deze releasecontextcontract-releasecontext contractcontext missing-term melding.
