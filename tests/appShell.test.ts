@@ -137,6 +137,23 @@ function expectUnlockErrorAlertStructureContract(alert: string): void {
   }
 }
 
+function captureUnlockErrorAlertContractMessage(alert: string): string {
+  try {
+    expectUnlockErrorAlertStructureContract(alert);
+  } catch (error) {
+    return error instanceof Error ? error.message : String(error);
+  }
+  throw new Error('Unlock-error alertstructuur contract had moeten falen.');
+}
+
+function expectSanitizedUnlockErrorContractMessage(message: string): void {
+  expect(message).toContain('Unlock-error alertstructuur contract mislukt:');
+  for (const forbidden of UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS) {
+    expect(message).not.toContain(forbidden);
+  }
+  expect(message).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
+}
+
 describe('app shell', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -384,6 +401,18 @@ describe('app shell', () => {
 
     expect(() => expectUnlockErrorAlertStructureContract(alertWithRawDetail)).toThrow(
       'Unlock-error alertstructuur contract mislukt: onverwachte alertinhoud.',
+    );
+  });
+
+  it('houdt unlock-error contractfoutmeldingen vrij van raw details', () => {
+    const reversedAlert = `<dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl> <span>${UNLOCK_ERROR_GENERIC_COPY}</span>`;
+    const alertWithRawDetail = `<span>${UNLOCK_ERROR_GENERIC_COPY}</span> <dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl> <small>${UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE}</small>`;
+
+    expectSanitizedUnlockErrorContractMessage(
+      captureUnlockErrorAlertContractMessage(reversedAlert),
+    );
+    expectSanitizedUnlockErrorContractMessage(
+      captureUnlockErrorAlertContractMessage(alertWithRawDetail),
     );
   });
 

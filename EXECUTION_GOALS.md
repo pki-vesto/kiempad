@@ -7459,4 +7459,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery alert contract helper
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G772 — unlock-error contract message helper reuse
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De unlock-error contractfoutmelding-redaction guard bestaat nu, maar de foutmeldingcapturing en redactionassertie zijn nog specifiek voor deze helper en kunnen bij volgende recovery-contracten opnieuw handmatig worden geschreven.
+- **Desired Outcome:** Herbruikbare testhulpen maken het eenvoudig om contracthelper-foutmeldingen voor recovery UI op dezelfde privacyboundary te controleren.
+- **User Value:** Nieuwe recovery-contracttests krijgen dezelfde privacyveilige foutmeldingen zonder duplicatie of afwijkende forbidden-term lijsten.
+- **Acceptance Criteria:** Foutmeldingcapture of redactionassertie is herbruikbaar voor minimaal één extra recovery-contract helper; bestaande unlock-error negatieve fixtures blijven groen; passphrase, token, filename, OCR/base64 en medische plaintext blijven uit helperfouten; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery contract helpers
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
