@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G778/G779 Central Encrypted Platform: maintenance-tests bewaken nu de exacte recovery-helper releasecontext missing-term melding als compact contract zonder payload, passphrase of token; G779 is toegevoegd voor release-statebewaking van deze foutmeldingcontext.
 - G777/G778 Central Encrypted Platform: recovery-helper releasecontextbewaking heeft nu een negatieve fixture met technische missing-term melding voor ontbrekende docsafspraak; G778 is toegevoegd voor een compact foutmeldingcontract.
 - G776/G777 Central Encrypted Platform: maintenance-tests bewaken nu releasecontext voor de recovery-contract helpernaamgrens met documentatiecontract, docsafspraak en releasecontextbewaking in changelog en current state; G777 is toegevoegd voor een negatieve fixture rond ontbrekende releasecontexttermen.
 - G775/G776 Central Encrypted Platform: de recovery-contract helpernaamgrens staat nu als documentatiecontract in de centrale backenddocs en maintenance-tests bewaken de generieke recovery-helper versus category-specific structuurhelper tweedeling; G776 is toegevoegd voor releasecontextbewaking van deze docsafspraak.

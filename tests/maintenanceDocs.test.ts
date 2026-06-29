@@ -486,6 +486,15 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt recovery-helper releasecontext missing-term melding als compact contract', () => {
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR).toBe(
+      'Recovery helper releasecontext ontbreekt voor termen: docsafspraak',
+    );
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR).not.toContain('payload');
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR).not.toContain('passphrase');
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR).not.toContain('token');
+  });
+
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
     for (const requiredTerm of [
       'npm run smoke:central-bootstrap',
