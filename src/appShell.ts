@@ -1522,6 +1522,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentSearchFilterPrivacy(state, zoekResultaten, alleImagingItems, imagingItems)}
         ${renderAttachmentSortPaginationPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentBulkSelectionPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentKeyboardFocusPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -1908,6 +1909,51 @@ function renderAttachmentBulkSelectionPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze bulkselectiestatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentKeyboardFocusPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const focusState = hasAttachments ? 'focusable-attachment-actions' : 'empty-focus-state';
+  const skiplinkState = hasAttachments ? 'skiplink-actionbar-available' : 'skiplink-only';
+  const keyboardState = hasAttachments ? 'keyboard-actions-guarded' : 'keyboard-actions-empty';
+  const lockedFocusState =
+    lockedPreviewCount > 0 ? 'locked-preview-focus-boundary' : 'no-locked-preview-focus';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment keyboard and focus privacy states" data-attachment-keyboard-focus-surface="privacy">
+      <h2>Bijlage toetsenbordfocus</h2>
+      <nav class="button-row" aria-label="Bijlage toetsenbordroutes" data-attachment-keyboard-nav-state="${skiplinkState}">
+        <a class="phase-button secondary" href="#inhoud" data-attachment-keyboard-route-kind="skiplink" data-attachment-keyboard-route-state="${skiplinkState}">Naar inhoud</a>
+        <a class="phase-button secondary" href="#dossier-search-form" data-attachment-keyboard-route-kind="search-form" data-attachment-keyboard-route-state="${focusState}">Naar bijlagezoeken</a>
+        <a class="phase-button secondary" href="#attachment-bulk-selection-form" data-attachment-keyboard-route-kind="bulk-actionbar" data-attachment-keyboard-route-state="${focusState}">Naar bulkacties</a>
+      </nav>
+      <dl class="summary-list">
+        <div data-attachment-keyboard-kind="focus-status" data-attachment-keyboard-state="${focusState}">
+          <dt>Focusstatus</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} bereikbaar via veilige focusvolgorde.` : 'Geen bijlagen in de focusvolgorde.'}</dd>
+        </div>
+        <div data-attachment-keyboard-kind="skiplink-actionbar-boundary" data-attachment-keyboard-state="${skiplinkState}">
+          <dt>Skiplink en actionbar</dt>
+          <dd>${hasAttachments ? 'Skiplink, zoekformulier en bulkactionbar blijven bereikbaar zonder broninhoud in focuslabels.' : 'Skiplink blijft beschikbaar terwijl actionbar wacht op bijlagen.'}</dd>
+        </div>
+        <div data-attachment-keyboard-kind="keyboard-only-affordance" data-attachment-keyboard-state="${keyboardState}">
+          <dt>Keyboard-only affordance</dt>
+          <dd>${hasAttachments ? 'Toetsenbordacties tonen alleen workflowstatus en vragen expliciete selectie.' : 'Toetsenbordacties blijven leeg zonder selectiecontext.'}</dd>
+        </div>
+        <div data-attachment-keyboard-kind="locked-preview-focus-boundary" data-attachment-keyboard-state="${lockedFocusState}">
+          <dt>Locked-preview focusgrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten focuspayloads.` : 'Geen vergrendelde beeldpreviews in de focusgrens.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze focusstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
