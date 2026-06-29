@@ -1526,6 +1526,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentResponsiveMotionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentLoadingErrorPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentShareHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentPrintClinicianPacketPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2118,6 +2119,67 @@ function renderAttachmentShareHandoffPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze share- en handoffstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentPrintClinicianPacketPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const reviewedCount = zichtbareDocumenten.filter(
+    (document) =>
+      document.ocr?.reviewStatus === 'gereviewd' ||
+      document.beeldMetadata?.reviewStatus === 'gereviewd' ||
+      document.embryo?.reviewStatus === 'gereviewd',
+  ).length;
+  const printState = hasAttachments ? 'print-metadata-ready' : 'print-empty';
+  const packetState =
+    reviewedCount > 0
+      ? 'clinician-packet-reviewed'
+      : hasAttachments
+        ? 'clinician-packet-draft'
+        : 'clinician-packet-empty';
+  const summaryState = hasAttachments ? 'summary-download-metadata-only' : 'summary-download-empty';
+  const consultState = hasAttachments ? 'consult-preparation-ready' : 'consult-preparation-empty';
+  const lockedState =
+    lockedPreviewCount > 0 ? 'locked-preview-print-boundary' : 'no-locked-preview-print';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment print and clinician packet privacy states" data-attachment-print-packet-surface="privacy">
+      <h2>Bijlage printpakket</h2>
+      <div class="button-row" role="group" aria-label="Bijlage print actionbar" data-attachment-print-actionbar-state="${printState}">
+        <button class="phase-button secondary" type="button" data-attachment-print-action-kind="print-summary" data-attachment-print-action-state="${printState}" ${hasAttachments ? '' : 'disabled'}>Printoverzicht</button>
+        <button class="phase-button secondary" type="button" data-attachment-print-action-kind="clinician-packet" data-attachment-print-action-state="${packetState}" ${hasAttachments ? '' : 'disabled'}>Artsenpakket</button>
+        <button class="phase-button secondary" type="button" data-attachment-print-action-kind="summary-download" data-attachment-print-action-state="${summaryState}" ${hasAttachments ? '' : 'disabled'}>Samenvatting</button>
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-print-kind="print-readiness" data-attachment-print-state="${printState}">
+          <dt>Print readiness</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} klaar als printbare metadatastatus.` : 'Geen bijlagen beschikbaar voor printvoorbereiding.'}</dd>
+        </div>
+        <div data-attachment-print-kind="clinician-packet-boundary" data-attachment-print-state="${packetState}">
+          <dt>Artsenpakketgrens</dt>
+          <dd>${reviewedCount > 0 ? `${reviewedCount} gereviewde bijlage${reviewedCount === 1 ? '' : 'n'} beschikbaar voor een veilig artsenpakket.` : hasAttachments ? 'Artsenpakket blijft concept tot reviewstatus is bevestigd.' : 'Geen artsenpakket beschikbaar zonder bijlagen.'}</dd>
+        </div>
+        <div data-attachment-print-kind="summary-download-affordance" data-attachment-print-state="${summaryState}">
+          <dt>Samenvattingsdownload</dt>
+          <dd>${hasAttachments ? 'Samenvattingsdownload gebruikt alleen metadata en vraagt expliciete keuze.' : 'Samenvattingsdownload wacht op bijlagen.'}</dd>
+        </div>
+        <div data-attachment-print-kind="consult-preparation-packet" data-attachment-print-state="${consultState}">
+          <dt>Consultvoorbereiding</dt>
+          <dd>${hasAttachments ? 'Consultvoorbereiding bundelt veilige statusregels zonder broninhoud.' : 'Consultvoorbereiding heeft nog geen attachmentstatus.'}</dd>
+        </div>
+        <div data-attachment-print-kind="locked-preview-print-boundary" data-attachment-print-state="${lockedState}">
+          <dt>Locked-preview printgrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten print- en artsenpakketstates.` : 'Geen vergrendelde beeldpreviews binnen print- en artsenpakketstates.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze print- en artsenpakketstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
