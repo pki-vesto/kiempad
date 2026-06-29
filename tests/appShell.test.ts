@@ -91,6 +91,20 @@ function extractUploadAttachmentFeedback(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentPreviewSurfaces(html: string): string {
+  const matches = html.match(
+    /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
+  );
+  if (!matches?.length) throw new Error('Attachment preview surfaces ontbreken.');
+  return matches.join(' ').replace(/\s+/g, ' ').trim();
+}
+
+function extractAttachmentDeleteButtons(html: string): string {
+  const matches = html.match(/<button[^>]*data-attachment-delete-kind="[^"]+"[\s\S]*?<\/button>/g);
+  if (!matches?.length) throw new Error('Attachment delete buttons ontbreken.');
+  return matches.join(' ').replace(/\s+/g, ' ').trim();
+}
+
 function extractImagingComparePanel(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">([\s\S]*?)<\/section>/,
@@ -3578,6 +3592,120 @@ describe('app shell', () => {
     expect(html).not.toContain('Lokale imaging-preview van Echo controle');
     expect(html).not.toContain('Lokale preview van Echo controle');
     expect(html).not.toContain('gevoelige-echo-portaalnaam.jpg');
+  });
+
+  it('bewaakt attachment preview en delete privacy states zonder locked bronpayload', () => {
+    const unlockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        dossierDocuments: [
+          {
+            id: 'doc-unlocked-preview',
+            datum: '2026-05-02',
+            titel: 'Unlocked preview beeld',
+            categorie: 'beeld',
+            bestandsNaam: 'unlocked-source.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'dW5sb2NrZWQtcHJldmlldw==',
+            analyse: {
+              samenvatting: 'Foto/echo opgeslagen als beeldbestand; analyse is lokaal.',
+              signalen: ['Beeldbijlage kan lokaal als preview worden getoond na ontgrendeling.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Foto/echo',
+              bronbestand: 'unlocked-source.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-02',
+              soort: 'echo',
+              context: 'Preview state',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const unlockedPreviews = extractAttachmentPreviewSurfaces(unlockedHtml);
+    const unlockedDeletes = extractAttachmentDeleteButtons(extractDossierAddSection(unlockedHtml));
+
+    expect(unlockedPreviews).toContain('data-attachment-preview-kind="dossier-preview"');
+    expect(unlockedPreviews).toContain('data-attachment-preview-kind="imaging-thumbnail"');
+    expect(unlockedPreviews).toContain('data-attachment-preview-kind="imaging-preview"');
+    expect(unlockedPreviews).toContain('data-attachment-preview-state="unlocked"');
+    expect(unlockedPreviews).toContain('alt="Lokale preview van Unlocked preview beeld"');
+    expect(unlockedPreviews).toContain('alt="Lokale imaging-preview van Unlocked preview beeld"');
+    expect(unlockedDeletes).toContain('class="phase-button secondary delete-dossier-document"');
+    expect(unlockedDeletes).toContain('data-attachment-delete-kind="dossier-import"');
+    expect(unlockedDeletes).toContain('data-attachment-delete-state="available"');
+    expect(unlockedDeletes).toContain('data-dossier-document-id="doc-unlocked-preview"');
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-locked-preview-state',
+            datum: '2026-05-02',
+            titel: 'Locked preview beeld',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-secret-source.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9ja2VkLXNlY3JldC1wYXlsb2Fk',
+            analyse: {
+              samenvatting:
+                'Foto/echo opgeslagen als beeldbestand; token abc123 attachmentpayload diagnose 150 mg behandelkeuzeadvies.',
+              signalen: ['Locked preview state met base64 payload.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-secret-source.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-02',
+              soort: 'echo',
+              context: 'Locked preview state',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedPreviews = extractAttachmentPreviewSurfaces(lockedHtml);
+    const lockedDeletes = extractAttachmentDeleteButtons(extractDossierAddSection(lockedHtml));
+
+    expect(lockedPreviews).toContain('data-attachment-preview-kind="dossier-preview"');
+    expect(lockedPreviews).toContain('data-attachment-preview-kind="imaging-preview"');
+    expect(lockedPreviews).toContain('data-attachment-preview-state="locked"');
+    expect(lockedPreviews).toContain('Dossierpreview vergrendeld');
+    expect(lockedPreviews).toContain('Beeldpreview vergrendeld.');
+    expect(lockedDeletes).toContain('data-attachment-delete-kind="dossier-import"');
+    expect(lockedDeletes).toContain('data-attachment-delete-state="available"');
+    expect(lockedDeletes).toContain('data-dossier-document-id="doc-locked-preview-state"');
+
+    for (const surface of [lockedPreviews, lockedDeletes]) {
+      expect(surface).not.toContain('locked-secret-source.jpg');
+      expect(surface).not.toContain('bG9ja2VkLXNlY3JldC1wYXlsb2Fk');
+      expect(surface).not.toContain('data:image/jpeg;base64');
+      expect(surface).not.toContain('base64 payload');
+      expect(surface).not.toContain('attachmentpayload');
+      expect(surface).not.toContain('token abc123');
+      expect(surface).not.toContain('diagnose');
+      expect(surface).not.toContain('behandelkeuzeadvies');
+      expect(surface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

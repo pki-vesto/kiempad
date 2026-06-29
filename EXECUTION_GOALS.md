@@ -8187,4 +8187,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment preview UI, delete UI, imaging repository, dossier import inbox, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G824 — attachment review metadata states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment preview/delete states zijn nu bewaakt, maar reviewmetadata rond OCR, EXIF-isolatie, importstatus en bronlabelreview heeft nog geen gezamenlijke Claude Design-regressie zonder OCR-tekst, bestandsnamen of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment reviewmetadata scanbaar blijft, bestaande OCR/EXIF/review hooks behouden en geen bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen reviewstatus van uploads beoordelen zonder dat themawijzigingen bronbestanden of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken OCR-review, EXIF-isolatie, importstatus en embryo bronlabelreview states; bestaande reviewmetadata UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment review UI, OCR metadata, imaging metadata, embryo source review, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
