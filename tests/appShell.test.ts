@@ -41,6 +41,31 @@ function extractSupportHandoffContract(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+type SupportHandoffContractExpectation = {
+  snapshot: string;
+  forbiddenTerms: readonly string[];
+};
+
+function expectSupportHandoffContract(
+  html: string,
+  expectation: SupportHandoffContractExpectation,
+): string {
+  const contract = extractSupportHandoffContract(html);
+
+  expect(contract).toMatchInlineSnapshot(expectation.snapshot);
+  for (const forbidden of expectation.forbiddenTerms) {
+    expect(contract).not.toContain(forbidden);
+  }
+  expect(contract).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
+
+  return contract;
+}
+
+const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
+  snapshot: `"<strong>Centrale dataset vraagt herstelcontrole.</strong> <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span> <dl class="definition-list compact-list" data-support-handoff="missing-key-metadata"> <div><dt>Supportcategorie</dt><dd>missing-key-metadata</dd></div> <div><dt>Opslagmodus</dt><dd>central-api</dd></div> <div><dt>Actierichting</dt><dd>reload-support-backup</dd></div> </dl>"`,
+  forbiddenTerms: ['Passphrase', 'token', 'echo.png', 'OCR/base64', 'Progesteron'],
+} as const;
+
 describe('app shell', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -188,15 +213,17 @@ describe('app shell', () => {
         storageLabel: 'Centrale encrypted API',
       },
     );
-    const contract = extractSupportHandoffContract(html);
 
-    expect(contract).toMatchInlineSnapshot(
-      `"<strong>Centrale dataset vraagt herstelcontrole.</strong> <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span> <dl class="definition-list compact-list" data-support-handoff="missing-key-metadata"> <div><dt>Supportcategorie</dt><dd>missing-key-metadata</dd></div> <div><dt>Opslagmodus</dt><dd>central-api</dd></div> <div><dt>Actierichting</dt><dd>reload-support-backup</dd></div> </dl>"`,
-    );
-    for (const forbidden of ['Passphrase', 'token', 'echo.png', 'OCR/base64', 'Progesteron']) {
-      expect(contract).not.toContain(forbidden);
-    }
-    expect(contract).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
+    expectSupportHandoffContract(html, MISSING_KEY_METADATA_HANDOFF_CONTRACT);
+  });
+
+  it('faalt expliciet wanneer een support-handoff contractsectie ontbreekt', () => {
+    expect(() =>
+      expectSupportHandoffContract(
+        '<section class="form-error" role="alert">Ontgrendelen is mislukt.</section>',
+        MISSING_KEY_METADATA_HANDOFF_CONTRACT,
+      ),
+    ).toThrow('Support-handoff contractsectie ontbreekt.');
   });
 
   it('houdt een bestaande geldige dataset en passphrasefout gescheiden van metadataherstel', () => {
