@@ -405,6 +405,12 @@ const RECOVERY_CONTRACT_HELPER_DOCS_TERMS = [
   'tests/appShell.test.ts',
   'app-shell broncodeguard',
 ] as const;
+const RECOVERY_CONTRACT_HELPER_RELEASE_TERMS = [
+  'recovery-contract helpernaamgrens',
+  'documentatiecontract',
+  'docsafspraak',
+  'releasecontextbewaking',
+] as const;
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 describe('onderhoudsdocumentatie', () => {
@@ -452,6 +458,14 @@ describe('onderhoudsdocumentatie', () => {
     expect(centralEncryptedBackend).toContain('exacte alertstructuur van één herstelstatus');
     expect(centralEncryptedBackend).toContain('Nieuwe recovery-contracthelpers');
     expect(centralEncryptedBackend).toContain('kiezen eerst deze tweedeling');
+  });
+
+  it('bewaakt releasecontext voor de recovery-contract helper docsafspraak', () => {
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const requiredTerm of RECOVERY_CONTRACT_HELPER_RELEASE_TERMS) {
+        expect(releaseDoc).toContain(requiredTerm);
+      }
+    }
   });
 
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
