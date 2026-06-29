@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G788/G789 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de recovery-helper release-state messagecontext missing-term melding als foutmeldingcontext blijven noemen; G789 is toegevoegd voor een negatieve fixture rond ontbrekende message-foutmeldingcontexttermen.
 - G787/G788 Central Encrypted Platform: maintenance-tests leggen nu de exacte recovery-helper release-state messagecontext missing-term melding vast als compact contract zonder payload, passphrase of token; G788 is toegevoegd voor release-statebewaking van deze foutmeldingcontext.
 - G786/G787 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende recovery-helper release-state messagecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G787 is toegevoegd voor een compact contract rond deze release-state messagecontext missing-term melding.
 - G785/G786 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de recovery-helper release-state errorcontext missing-term melding als messagecontext blijven noemen; G786 is toegevoegd voor een negatieve fixture rond ontbrekende messagecontexttermen.
