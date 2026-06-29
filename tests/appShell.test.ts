@@ -82,6 +82,13 @@ function extractImagingComparePanel(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractConsultVerslagenSection(html: string): string {
+  const start = html.indexOf('<h2>Consultverslagen</h2>');
+  const end = html.indexOf('<h2>Imaging-repository</h2>', start);
+  if (start < 0 || end < 0) throw new Error('Consultverslagen-sectie ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -2116,6 +2123,107 @@ describe('app shell', () => {
     expect(overview).not.toContain('b2NyLXBheWxvYWQ=');
     expect(overview).not.toContain('YmVlbGQtcGF5bG9hZA==');
     expect(overview).not.toContain('cmV2aWV3LXBheWxvYWQ=');
+  });
+
+  it('bewaakt consult intelligence reviewstates zonder uploadpayload of behandelkeuzeadvies', () => {
+    const emptyHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      consultVerslagen: [],
+      dossierDocuments: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const emptySection = extractConsultVerslagenSection(emptyHtml);
+
+    expect(emptyHtml).toContain('id="consult-verslag-form"');
+    expect(emptyHtml).toContain(
+      'name="consultBestand" type="file" accept="application/pdf,text/*"',
+    );
+    expect(emptyHtml).toContain('name="tekst"');
+    expect(emptyHtml).toContain('name="samenvattingCorrectie"');
+    expect(emptyHtml).toContain('name="notitie"');
+    expect(emptySection).toContain('Nog geen consultverslagen als apart recordtype vastgelegd.');
+
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      consultVerslagen: [
+        {
+          id: 'consult-review-state',
+          datum: '2026-05-08',
+          titel: 'Consult review state',
+          bron: 'upload',
+          bestandsNaam: 'consult-review-state.pdf',
+          mimeType: 'application/pdf',
+          grootteBytes: 4096,
+          inhoudBase64: 'Y29uc3VsdC1wYXlsb2Fk',
+          tekst:
+            'We bespraken de planning. Vraag de kliniek naar het vervolg en noteer het antwoord.',
+          importMetadata: {
+            bron: 'bestand',
+            reviewStatus: 'concept',
+            bronLabel: 'PDF consultverslag',
+            aangemaaktOp: '2026-06-23T15:00:00.000Z',
+          },
+          samenvatting: {
+            status: 'concept',
+            methode: 'lokale_tekstheuristiek',
+            tekst: 'We bespraken de planning. Vraag de kliniek naar het vervolg.',
+            bronnen: ['consulttekst'],
+            waarschuwing:
+              'Concept op basis van lokaal ingevoerde tekst. Consult-AI geeft geen diagnose of doseringsadvies; controleer altijd met de kliniek.',
+            gegenereerdOp: '2026-06-23T15:00:00.000Z',
+          },
+          samenvattingCorrectie: {
+            tekst:
+              'We bespraken de planning. Vraag de kliniek naar het vervolg en noteer het antwoord.',
+            bijgewerktOp: '2026-06-23T15:05:00.000Z',
+          },
+          actiepunten: [
+            {
+              id: 'consult-review-state-actie-1',
+              soort: 'vraag',
+              status: 'concept',
+              tekst: 'Vraag de kliniek naar het vervolg.',
+              bron: 'consulttekst regel 1',
+              aangemaaktOp: '2026-06-23T15:00:00.000Z',
+            },
+          ],
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+      ],
+      dossierDocuments: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const section = extractConsultVerslagenSection(html);
+
+    expect(section).toContain('Consult review state');
+    expect(section).toContain(
+      'Consultdatum: 2026-05-08 · Upload · consult-review-state.pdf · 4 KB',
+    );
+    expect(section).toContain('Import: PDF consultverslag · review concept');
+    expect(section).toContain('Conceptsamenvatting');
+    expect(section).toContain('Verschil met gebruikerscorrectie');
+    expect(section).toContain(
+      'Toegevoegd: Vraag de kliniek naar het vervolg en noteer het antwoord.',
+    );
+    expect(section).toContain('Conceptactiepunten');
+    expect(section).toContain('Vraag: Vraag de kliniek naar het vervolg.');
+    expect(section).toContain('Bron: consulttekst regel 1');
+    expect(section).not.toContain('Y29uc3VsdC1wYXlsb2Fk');
+    expect(section).not.toContain('data:application/pdf;base64');
+    expect(section).not.toContain('behandelkeuzeadvies');
+    expect(section).not.toContain('kies behandeling');
   });
 
   it('rendert beeldmateriaal als lokale dossierpreview', () => {
