@@ -8341,4 +8341,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment share UI, support handoff UI, export UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G835 — attachment print and clinician packet privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment share/handoff states zijn nu bewaakt, maar print-, artsenpakket-, samenvattingsdownload- en consultvoorbereidingsstates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment print/clinician packet states scanbaar blijven, bestaande print/export/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig een artsenpakket of printbare consultvoorbereiding klaarzetten zonder dat printstates bronbestanden, selectiecontext of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken print readiness, clinician packet boundary, summary download affordance states en consult preparation packet state; bestaande print/export/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment print UI, clinician packet UI, export UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
