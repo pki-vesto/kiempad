@@ -1529,6 +1529,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentPrintClinicianPacketPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAccessibilityAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentLandmarkNavigationPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentScreenreaderAnnouncementPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2288,6 +2289,65 @@ function renderAttachmentLandmarkNavigationPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze landmarknavigatie toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentScreenreaderAnnouncementPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const politeState = hasAttachments ? 'polite-announcement-metadata-only' : 'polite-empty';
+  const assertiveState = state.dossierError?.trim()
+    ? 'assertive-fallback-sanitized'
+    : hasAttachments
+      ? 'assertive-fallback-idle'
+      : 'assertive-fallback-empty';
+  const queueState = hasAttachments ? 'status-update-queue-ready' : 'status-update-queue-empty';
+  const auditState = hasAttachments
+    ? 'announcement-audit-summary-ready'
+    : 'announcement-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-announcement-boundary'
+      : 'no-locked-preview-announcement';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment screenreader announcement privacy states" data-attachment-screenreader-announcement-surface="privacy">
+      <h2>Bijlage screenreader announcements</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-announcement-live-kind="polite-status" data-attachment-announcement-live-state="${politeState}">
+        ${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} klaar voor veilige screenreaderstatus.` : 'Geen bijlagen beschikbaar voor screenreaderstatus.'}
+      </div>
+      <div class="linked-note" role="alert" aria-live="assertive" data-attachment-announcement-live-kind="assertive-fallback" data-attachment-announcement-live-state="${assertiveState}">
+        ${state.dossierError?.trim() ? 'Herstelmelding beschikbaar als generieke attachmentstatus.' : hasAttachments ? 'Assertive fallback blijft stil zolang er geen veilige herstelmelding is.' : 'Assertive fallback wacht op attachmentstatus.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-announcement-kind="polite-announcement-boundary" data-attachment-announcement-state="${politeState}">
+          <dt>Polite announcement boundary</dt>
+          <dd>${hasAttachments ? 'Polite announcements noemen alleen aantallen, routes en workflowstatus.' : 'Polite announcements wachten op bijlagestatussen.'}</dd>
+        </div>
+        <div data-attachment-announcement-kind="assertive-fallback-boundary" data-attachment-announcement-state="${assertiveState}">
+          <dt>Assertive fallback boundary</dt>
+          <dd>${state.dossierError?.trim() ? 'Assertive fallback gebruikt generieke herstelcopy zonder broninhoud.' : 'Assertive fallback blijft beschikbaar zonder medische inhoud uit te spreken.'}</dd>
+        </div>
+        <div data-attachment-announcement-kind="status-update-queue-affordance" data-attachment-announcement-state="${queueState}">
+          <dt>Status update queue</dt>
+          <dd>${hasAttachments ? 'Statusupdates worden als veilige wachtrij zonder bestandslabels aangekondigd.' : 'Statusupdatewachtrij is leeg zonder bijlagen.'}</dd>
+        </div>
+        <div data-attachment-announcement-kind="announcement-audit-summary" data-attachment-announcement-state="${auditState}">
+          <dt>Announcement audit summary</dt>
+          <dd>${hasAttachments ? 'Announcementaudit bevestigt polite, assertive en queue-states zonder broninhoud.' : 'Announcementaudit heeft nog geen statusupdates om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-announcement-kind="locked-preview-announcement-boundary" data-attachment-announcement-state="${lockedState}">
+          <dt>Locked-preview announcement boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten screenreader announcement payloads.` : 'Geen vergrendelde beeldpreviews binnen announcementstates.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze screenreader announcements tonen geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
