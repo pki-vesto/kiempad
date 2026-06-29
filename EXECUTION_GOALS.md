@@ -7347,4 +7347,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, tests, recovery copy
 - **ADR Needed:** no
 - **Score:** 113
+- **Status:** ☑ klaar
+
+### G764 — support handoff contract helper
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het support-handoff privacycontract wordt nu via rendered HTML getest, maar er is nog geen kleine testhelper of contractextractor die toekomstige recovery-handoffs herbruikbaar en minder fragiel kan controleren.
+- **Desired Outcome:** Tests gebruiken een gedeelde helper of contractextractor voor support-handoff secties, zodat veldnamen, copy en redaction-boundaries voor nieuwe recoverycategorieën consistent bewaakt kunnen worden.
+- **User Value:** Privacychecks rond supportinformatie blijven onderhoudbaar wanneer er meer centrale herstelstatussen bijkomen.
+- **Acceptance Criteria:** App-shell tests gebruiken een herbruikbare support-handoff contractextractie; helper faalt expliciet wanneer de handoff-sectie ontbreekt; redaction-boundary blijft passphrase, token, filename, OCR/base64, recordaantallen en medische plaintext uitsluiten; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery copy contracts
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open

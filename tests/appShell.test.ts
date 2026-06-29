@@ -33,6 +33,14 @@ function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
   };
 }
 
+function extractSupportHandoffContract(html: string): string {
+  const match = html.match(
+    /<section class="form-error" role="alert" aria-label="Herstelstatus centrale dataset">([\s\S]*?)<\/section>/,
+  );
+  if (!match?.[1]) throw new Error('Support-handoff contractsectie ontbreekt.');
+  return match[1].replace(/\s+/g, ' ').trim();
+}
+
 describe('app shell', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -168,6 +176,27 @@ describe('app shell', () => {
     expect(html).not.toContain('Progesteron');
     expect(html).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
     expect(html).not.toContain('Controleer rustig de passphrase');
+  });
+
+  it('legt missing-key-metadata support-handoff copy vast als privacycontract', () => {
+    const html = renderVaultGate(
+      true,
+      'Kiempad kan deze centrale dataset niet ontgrendelen: sleutelmetadata ontbreekt terwijl er al versleutelde records bestaan. Bestand echo.png bevat OCR/base64 token en Progesteron.',
+      undefined,
+      {
+        storageMode: 'central-api',
+        storageLabel: 'Centrale encrypted API',
+      },
+    );
+    const contract = extractSupportHandoffContract(html);
+
+    expect(contract).toMatchInlineSnapshot(
+      `"<strong>Centrale dataset vraagt herstelcontrole.</strong> <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span> <dl class="definition-list compact-list" data-support-handoff="missing-key-metadata"> <div><dt>Supportcategorie</dt><dd>missing-key-metadata</dd></div> <div><dt>Opslagmodus</dt><dd>central-api</dd></div> <div><dt>Actierichting</dt><dd>reload-support-backup</dd></div> </dl>"`,
+    );
+    for (const forbidden of ['Passphrase', 'token', 'echo.png', 'OCR/base64', 'Progesteron']) {
+      expect(contract).not.toContain(forbidden);
+    }
+    expect(contract).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
   });
 
   it('houdt een bestaande geldige dataset en passphrasefout gescheiden van metadataherstel', () => {
