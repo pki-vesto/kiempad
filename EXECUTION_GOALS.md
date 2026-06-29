@@ -7557,4 +7557,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G779 — recovery contract helper release error release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De exacte recovery-helper releasecontext missing-term melding heeft nu een compact testcontract, maar changelog en current state bewaken deze foutmeldingcontext nog niet apart.
+- **Desired Outcome:** Release/state bewaking koppelt de compacte recovery-helper missing-term melding aan changelog en current state.
+- **User Value:** Onderhouders zien in releaseoverzicht en projectstatus welke recovery-helper foutmeldingcontracten actief zijn.
+- **Acceptance Criteria:** Maintenance-test bewaakt releasecontext voor de recovery-helper missing-term melding; changelog en current state noemen de relevante foutmeldingterm; bestaande negatieve fixture en compact contract blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
