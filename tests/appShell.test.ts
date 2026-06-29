@@ -227,6 +227,16 @@ function extractAttachmentAssistiveSummarySurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveRecoverySurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive error recovery privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment assistive error recovery privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -5866,6 +5876,169 @@ describe('app shell', () => {
     expect(assistiveSummary).not.toContain('dosering');
     expect(assistiveSummary).not.toContain('behandelkeuzeadvies');
     expect(assistiveSummary).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive error recovery privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-recovery-token',
+        dossierError:
+          'private-recovery-token fout voor recovery-secret-source.pdf met base64 cmVjb3ZlcnktZXJyb3I= OCR-payload diagnose 1225 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-recovery-sensitive',
+            datum: '2026-07-02',
+            titel: 'Recovery source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'recovery-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'cmVjb3Zlcnktc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-recovery-token hoort niet in assistive recovery.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1225 mg behandelkeuzeadvies blijft buiten assistive recovery.',
+              signalen: ['OCR-payload blijft buiten recovery route en retry label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-02',
+              documenttype: 'Labuitslag',
+              bronbestand: 'recovery-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-02T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE RECOVERY OCR TEKST private-recovery-token diagnose 1225 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor recovery-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-02T08:05:00.000Z',
+          },
+          {
+            id: 'doc-recovery-locked-image',
+            datum: '2026-07-03',
+            titel: 'Recovery locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'recovery-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cmVjb3ZlcnktbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-recovery-token hoort ook niet in herstelroutes.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-03',
+              documenttype: 'Foto/echo',
+              bronbestand: 'recovery-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-03',
+              soort: 'echo',
+              context: 'private recovery imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-03T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveRecovery = extractAttachmentAssistiveRecoverySurface(html);
+
+    expect(html).toContain('data-attachment-loading-error-surface="privacy"');
+    expect(html).toContain('data-attachment-loading-kind="error-boundary"');
+    expect(html).toContain('data-attachment-announcement-live-kind="assertive-fallback"');
+    expect(html).toContain('data-attachment-assistive-summary-surface="privacy"');
+    expect(assistiveRecovery).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(assistiveRecovery).toContain('role="alert"');
+    expect(assistiveRecovery).toContain('aria-live="assertive"');
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-live-state="assistive-error-sanitized"',
+    );
+    expect(assistiveRecovery).toContain('aria-label="Bijlage assistive recovery routes"');
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-route-kind="status-route"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-route-kind="retry-route"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-route-state="recovery-route-available"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-route-state="retry-label-recovery-available"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-kind="assistive-error-boundary"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-kind="recovery-route-boundary"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-kind="retry-label-affordance"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-kind="assistive-recovery-audit"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-kind="locked-preview-assistive-recovery-boundary"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-state="assistive-error-sanitized"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-state="recovery-route-available"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-state="retry-label-recovery-available"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-state="assistive-recovery-audit-ready"',
+    );
+    expect(assistiveRecovery).toContain(
+      'data-attachment-assistive-recovery-state="locked-preview-assistive-recovery-boundary"',
+    );
+    expect(assistiveRecovery).toContain(
+      'Herstelstatus beschikbaar als veilige assistive recoverymelding',
+    );
+    expect(assistiveRecovery).toContain('Assistive error recovery gebruikt alleen generieke');
+    expect(assistiveRecovery).toContain('2 bijlagen blijven bereikbaar via veilige herstelroutes');
+    expect(assistiveRecovery).toContain('Retrylabels beschrijven alleen de herstelactie');
+    expect(assistiveRecovery).toContain(
+      'Assistive recovery audit bevestigt error-, live-region-, route- en actionhooks',
+    );
+    expect(assistiveRecovery).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive recovery payloads',
+    );
+
+    expect(assistiveRecovery).not.toContain('private-recovery-token');
+    expect(assistiveRecovery).not.toContain('recovery-secret-source.pdf');
+    expect(assistiveRecovery).not.toContain('recovery-locked-secret.jpg');
+    expect(assistiveRecovery).not.toContain('cmVjb3Zlcnktc2VjcmV0LXBheWxvYWQ=');
+    expect(assistiveRecovery).not.toContain('cmVjb3ZlcnktbG9ja2VkLXNlY3JldA==');
+    expect(assistiveRecovery).not.toContain('cmVjb3ZlcnktZXJyb3I=');
+    expect(assistiveRecovery).not.toContain('data:image/jpeg;base64');
+    expect(assistiveRecovery).not.toContain('GEVOELIGE RECOVERY OCR TEKST');
+    expect(assistiveRecovery).not.toContain('OCR-payload');
+    expect(assistiveRecovery).not.toContain('Attachmentpayload');
+    expect(assistiveRecovery).not.toContain('attachmentpayload');
+    expect(assistiveRecovery).not.toContain('dossierpayload');
+    expect(assistiveRecovery).not.toContain('diagnose');
+    expect(assistiveRecovery).not.toContain('dosering');
+    expect(assistiveRecovery).not.toContain('behandelkeuzeadvies');
+    expect(assistiveRecovery).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
