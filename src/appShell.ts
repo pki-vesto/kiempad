@@ -1383,7 +1383,7 @@ function renderDossierScreen(state: AppShellState): string {
                         <p class="linked-note">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} · Importstatus: ${escapeHtml(item.importstatusLabel)}</p>
                         <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
                       </div>
-                      <button class="phase-button secondary delete-dossier-document" type="button" data-dossier-document-id="${escapeAttribute(item.id)}">Verwijder</button>
+                      <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}">Verwijder</button>
                     </li>
                   `,
                 )
@@ -1740,7 +1740,7 @@ function renderImagingRepositoryItem(
   const contextSamenvatting = maakImagingContextSamenvatting(item);
   const thumbnail =
     item.previewState.status === 'thumbnail' && item.mimeType?.startsWith('image/')
-      ? `<figure class="linked-note imaging-thumbnail">
+      ? `<figure class="linked-note imaging-thumbnail" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="unlocked">
           <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale thumbnail van ${escapeAttribute(item.titel)}" loading="lazy" />
           <figcaption>Thumbnail uit ontgrendelde encrypted dataset.</figcaption>
         </figure>`
@@ -1749,14 +1749,14 @@ function renderImagingRepositoryItem(
     item.previewState.status !== 'locked' &&
     item.mimeType?.startsWith('image/') &&
     item.document.inhoudBase64
-      ? `<figure class="linked-note">
+      ? `<figure class="linked-note" data-attachment-preview-kind="imaging-preview" data-attachment-preview-state="unlocked">
           <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale imaging-preview van ${escapeAttribute(item.titel)}" loading="lazy" />
           <figcaption>${escapeHtml(beschrijfPreviewLocatie(state))}</figcaption>
         </figure>`
       : '';
   const lockedPlaceholder =
     item.previewState.status === 'locked'
-      ? `<div class="linked-note imaging-locked-placeholder" aria-label="Beeldpreview vergrendeld">
+      ? `<div class="linked-note imaging-locked-placeholder" aria-label="Beeldpreview vergrendeld" data-attachment-preview-kind="imaging-preview" data-attachment-preview-state="locked">
           <p>Beeldpreview vergrendeld.</p>
           <p class="small-print">Ontgrendel de encrypted dataset om lokale preview of thumbnail te tonen.</p>
         </div>`
@@ -2315,7 +2315,7 @@ function renderDossierImagePreview(document: DossierDocument, state: AppShellSta
   if (document.categorie !== 'beeld' || !document.mimeType?.startsWith('image/')) return '';
   if (state.imagingPreviewLocked) {
     return `
-      <div class="linked-note imaging-locked-placeholder" aria-label="Dossierpreview vergrendeld">
+      <div class="linked-note imaging-locked-placeholder" aria-label="Dossierpreview vergrendeld" data-attachment-preview-kind="dossier-preview" data-attachment-preview-state="locked">
         <p>Beeldpreview vergrendeld.</p>
         <p class="small-print">Ontgrendel de encrypted dataset om deze lokale dossierpreview te tonen.</p>
       </div>
@@ -2323,7 +2323,7 @@ function renderDossierImagePreview(document: DossierDocument, state: AppShellSta
   }
 
   return `
-    <figure class="linked-note">
+    <figure class="linked-note" data-attachment-preview-kind="dossier-preview" data-attachment-preview-state="unlocked">
       <img src="data:${escapeAttribute(document.mimeType)};base64,${escapeAttribute(document.inhoudBase64)}" alt="Lokale preview van ${escapeAttribute(document.titel)}" loading="lazy" />
       <figcaption>${escapeHtml(beschrijfPreviewLocatie(state))}</figcaption>
     </figure>
