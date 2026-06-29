@@ -535,6 +535,20 @@ function extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationRecei
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionSurface(
+  html: string,
+): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -10536,6 +10550,218 @@ describe('app shell', () => {
     expect(assistiveTrail).not.toContain('dosering');
     expect(assistiveTrail).not.toContain('behandelkeuzeadvies');
     expect(assistiveTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-confirmation-receipt-audit-trail-retention-token',
+        dossierStatus:
+          'Confirmation receipt audit trail retention bevat bewaarbewijs voor confirmation-receipt-audit-trail-retention-secret-source.pdf met private-confirmation-receipt-audit-trail-retention-token OCR-payload diagnose 4150 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-confirmation-receipt-audit-trail-retention-sensitive',
+            datum: '2026-08-23',
+            titel: 'Confirmation receipt audit trail retention source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'confirmation-receipt-audit-trail-retention-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 3072,
+            inhoudBase64:
+              'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLXNlY3JldC1wYXlsb2Fk',
+            notitie:
+              'private-confirmation-receipt-audit-trail-retention-token hoort niet in assistive confirmation receipt audit trail retention.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 4150 mg behandelkeuzeadvies blijft buiten assistive confirmation receipt audit trail retention.',
+              signalen: ['OCR-payload blijft buiten retention proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-23',
+              documenttype: 'Labuitslag',
+              bronbestand: 'confirmation-receipt-audit-trail-retention-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.94,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-08-23T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE CONFIRMATION RECEIPT AUDIT TRAIL RETENTION OCR TEKST private-confirmation-receipt-audit-trail-retention-token diagnose 4150 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor confirmation-receipt-audit-trail-retention-secret-source.pdf.',
+            },
+            uploadedAt: '2026-08-23T08:05:00.000Z',
+          },
+          {
+            id: 'doc-confirmation-receipt-audit-trail-retention-locked-image',
+            datum: '2026-08-24',
+            titel: 'Confirmation receipt audit trail retention locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'confirmation-receipt-audit-trail-retention-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 5120,
+            inhoudBase64:
+              'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLWxvY2tlZC1zZWNyZXQ=',
+            notitie:
+              'private-confirmation-receipt-audit-trail-retention-token hoort ook niet in retention labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-24',
+              documenttype: 'Foto/echo',
+              bronbestand: 'confirmation-receipt-audit-trail-retention-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-08-24',
+              soort: 'echo',
+              context: 'private confirmation receipt audit trail retention imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-08-24T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveRetention =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionSurface(
+        html,
+      );
+
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-receipt-export-delivery-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-cleanup-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-retention-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-retention-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-surface="privacy"',
+    );
+    expect(assistiveRetention).toContain('role="status"');
+    expect(assistiveRetention).toContain('aria-live="polite"');
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-live-state="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-available"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-kind="retention-proof-summary-affordance"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-kind="screenreader-handoff-confirmation-receipt-audit-trail-retention-label-state"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-kind="assistive-audit-trail-retention-state"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-kind="locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-state="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-available"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-state="retention-proof-summary-ready"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-state="screenreader-handoff-confirmation-receipt-audit-trail-retention-label-ready"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-state="assistive-audit-trail-retention-ready"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-state="locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'Opschoonbewijs cleanup archive receipt export delivery handoff confirmation receipt audit trail retention beschikbaar als veilige assistive bewaartermijnstatus',
+    );
+    expect(assistiveRetention).toContain(
+      '2 bijlagen met veilige cleanup archive receipt export delivery handoff confirmation receipt audit trail retentionstatus',
+    );
+    expect(assistiveRetention).toContain('Bewaarbewijs is beschikbaar zonder bestands-');
+    expect(assistiveRetention).toContain(
+      'Screenreader handoff confirmation receipt audit trail retention labels noemen alleen audittrail-retentiegroep',
+    );
+    expect(assistiveRetention).toContain(
+      'Assistive audit trail retention bevestigt audit trail-, audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, archive-, cleanup-, expiry-, retention-, confirmation receipt audit-, purge-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveRetention).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive handoff confirmation receipt audit trail retention payloads',
+    );
+
+    expect(assistiveRetention).not.toContain(
+      'private-confirmation-receipt-audit-trail-retention-token',
+    );
+    expect(assistiveRetention).not.toContain(
+      'confirmation-receipt-audit-trail-retention-secret-source.pdf',
+    );
+    expect(assistiveRetention).not.toContain(
+      'confirmation-receipt-audit-trail-retention-locked-secret.jpg',
+    );
+    expect(assistiveRetention).not.toContain(
+      'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLXNlY3JldC1wYXlsb2Fk',
+    );
+    expect(assistiveRetention).not.toContain(
+      'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLWxvY2tlZC1zZWNyZXQ=',
+    );
+    expect(assistiveRetention).not.toContain('data:image/jpeg;base64');
+    expect(assistiveRetention).not.toContain(
+      'GEVOELIGE CONFIRMATION RECEIPT AUDIT TRAIL RETENTION OCR TEKST',
+    );
+    expect(assistiveRetention).not.toContain('OCR-payload');
+    expect(assistiveRetention).not.toContain('Attachmentpayload');
+    expect(assistiveRetention).not.toContain('attachmentpayload');
+    expect(assistiveRetention).not.toContain('dossierpayload');
+    expect(assistiveRetention).not.toContain('diagnose');
+    expect(assistiveRetention).not.toContain('dosering');
+    expect(assistiveRetention).not.toContain('behandelkeuzeadvies');
+    expect(assistiveRetention).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
