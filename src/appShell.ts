@@ -1532,6 +1532,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentScreenreaderAnnouncementPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveSummaryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveErrorRecoveryPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryCompletionPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2474,6 +2475,77 @@ function renderAttachmentAssistiveErrorRecoveryPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive recovery toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryCompletionPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const completionReady = hasStatus && !hasError;
+  const completionState = completionReady
+    ? 'recovery-completion-ready'
+    : hasError
+      ? 'recovery-completion-waiting-for-retry'
+      : 'recovery-completion-idle';
+  const retrySuccessState = completionReady
+    ? 'retry-success-label-ready'
+    : hasAttachments
+      ? 'retry-success-label-idle'
+      : 'retry-success-label-empty';
+  const routeReturnState = completionReady
+    ? 'route-return-available'
+    : hasAttachments
+      ? 'route-return-idle'
+      : 'route-return-empty';
+  const auditState = completionReady
+    ? 'assistive-completion-audit-ready'
+    : 'assistive-completion-audit-idle';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-completion-boundary'
+      : 'no-locked-preview-completion';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery completion privacy states" data-attachment-assistive-completion-surface="privacy">
+      <h2>Bijlage assistive completion</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-completion-live-state="${completionState}">
+        ${completionReady ? 'Herstel is afgerond als veilige assistive completionstatus.' : 'Assistive completion wacht op een veilige herstelafronding.'}
+      </div>
+      <nav class="button-row" aria-label="Bijlage assistive completion routes" data-attachment-assistive-completion-route-state="${routeReturnState}">
+        <a class="phase-button secondary" href="#dossier-search-form" data-attachment-assistive-completion-route-kind="status-return" data-attachment-assistive-completion-route-state="${routeReturnState}">Terug naar status</a>
+        <a class="phase-button secondary" href="#attachment-bulk-selection-form" data-attachment-assistive-completion-route-kind="action-return" data-attachment-assistive-completion-route-state="${retrySuccessState}">Terug naar acties</a>
+      </nav>
+      <dl class="summary-list">
+        <div data-attachment-assistive-completion-kind="recovery-completion-boundary" data-attachment-assistive-completion-state="${completionState}">
+          <dt>Recovery completion boundary</dt>
+          <dd>${completionReady ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} afgerond via veilige completionstatus.` : 'Completionstatus blijft generiek tot herstel veilig is afgerond.'}</dd>
+        </div>
+        <div data-attachment-assistive-completion-kind="retry-success-label-affordance" data-attachment-assistive-completion-state="${retrySuccessState}">
+          <dt>Retry success label</dt>
+          <dd>${completionReady ? 'Retry-succeslabels beschrijven alleen afronding en vervolgstap.' : 'Retry-succeslabels blijven leeg zonder veilige afrondingsstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-completion-kind="route-return-boundary" data-attachment-assistive-completion-state="${routeReturnState}">
+          <dt>Route return boundary</dt>
+          <dd>${completionReady ? 'Terugkeerroutes wijzen naar status- en actieregio’s zonder bronlabels.' : 'Terugkeerroutes blijven beschikbaar als metadata-only navigatie.'}</dd>
+        </div>
+        <div data-attachment-assistive-completion-kind="assistive-completion-audit" data-attachment-assistive-completion-state="${auditState}">
+          <dt>Assistive completion audit</dt>
+          <dd>${completionReady ? 'Assistive completion audit bevestigt completion-, live-region-, route- en actionhooks zonder broninhoud.' : 'Assistive completion audit wacht op veilige afrondingsstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-completion-kind="locked-preview-assistive-completion-boundary" data-attachment-assistive-completion-state="${lockedState}">
+          <dt>Locked-preview assistive completion boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive completion payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive completion states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive completion toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }

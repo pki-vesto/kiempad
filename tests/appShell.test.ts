@@ -237,6 +237,16 @@ function extractAttachmentAssistiveRecoverySurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveCompletionSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery completion privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment assistive recovery completion privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -6039,6 +6049,168 @@ describe('app shell', () => {
     expect(assistiveRecovery).not.toContain('dosering');
     expect(assistiveRecovery).not.toContain('behandelkeuzeadvies');
     expect(assistiveRecovery).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery completion privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-completion-token',
+        dossierStatus:
+          'Retry gelukt voor completion-secret-source.pdf met private-completion-token OCR-payload diagnose 1325 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-completion-sensitive',
+            datum: '2026-07-04',
+            titel: 'Completion source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'completion-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'Y29tcGxldGlvbi1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-completion-token hoort niet in assistive completion.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1325 mg behandelkeuzeadvies blijft buiten assistive completion.',
+              signalen: ['OCR-payload blijft buiten retry success en route return.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-04',
+              documenttype: 'Labuitslag',
+              bronbestand: 'completion-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-04T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE COMPLETION OCR TEKST private-completion-token diagnose 1325 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor completion-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-04T08:05:00.000Z',
+          },
+          {
+            id: 'doc-completion-locked-image',
+            datum: '2026-07-05',
+            titel: 'Completion locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'completion-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'Y29tcGxldGlvbi1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-completion-token hoort ook niet in completion routes.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-05',
+              documenttype: 'Foto/echo',
+              bronbestand: 'completion-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-05',
+              soort: 'echo',
+              context: 'private completion imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-05T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveCompletion = extractAttachmentAssistiveCompletionSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-route-kind="retry-route"');
+    expect(html).toContain('data-attachment-assistive-summary-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveCompletion).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(assistiveCompletion).toContain('role="status"');
+    expect(assistiveCompletion).toContain('aria-live="polite"');
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-live-state="recovery-completion-ready"',
+    );
+    expect(assistiveCompletion).toContain('aria-label="Bijlage assistive completion routes"');
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-route-kind="status-return"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-route-kind="action-return"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-route-state="route-return-available"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-route-state="retry-success-label-ready"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-kind="recovery-completion-boundary"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-kind="retry-success-label-affordance"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-kind="route-return-boundary"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-kind="assistive-completion-audit"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-kind="locked-preview-assistive-completion-boundary"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-state="recovery-completion-ready"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-state="retry-success-label-ready"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-state="route-return-available"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-state="assistive-completion-audit-ready"',
+    );
+    expect(assistiveCompletion).toContain(
+      'data-attachment-assistive-completion-state="locked-preview-assistive-completion-boundary"',
+    );
+    expect(assistiveCompletion).toContain(
+      'Herstel is afgerond als veilige assistive completionstatus',
+    );
+    expect(assistiveCompletion).toContain('2 bijlagen afgerond via veilige completionstatus');
+    expect(assistiveCompletion).toContain('Retry-succeslabels beschrijven alleen afronding');
+    expect(assistiveCompletion).toContain('Terugkeerroutes wijzen naar status- en actieregio’s');
+    expect(assistiveCompletion).toContain(
+      'Assistive completion audit bevestigt completion-, live-region-, route- en actionhooks',
+    );
+    expect(assistiveCompletion).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive completion payloads',
+    );
+
+    expect(assistiveCompletion).not.toContain('private-completion-token');
+    expect(assistiveCompletion).not.toContain('completion-secret-source.pdf');
+    expect(assistiveCompletion).not.toContain('completion-locked-secret.jpg');
+    expect(assistiveCompletion).not.toContain('Y29tcGxldGlvbi1zZWNyZXQtcGF5bG9hZA==');
+    expect(assistiveCompletion).not.toContain('Y29tcGxldGlvbi1sb2NrZWQtc2VjcmV0');
+    expect(assistiveCompletion).not.toContain('data:image/jpeg;base64');
+    expect(assistiveCompletion).not.toContain('GEVOELIGE COMPLETION OCR TEKST');
+    expect(assistiveCompletion).not.toContain('OCR-payload');
+    expect(assistiveCompletion).not.toContain('Attachmentpayload');
+    expect(assistiveCompletion).not.toContain('attachmentpayload');
+    expect(assistiveCompletion).not.toContain('dossierpayload');
+    expect(assistiveCompletion).not.toContain('diagnose');
+    expect(assistiveCompletion).not.toContain('dosering');
+    expect(assistiveCompletion).not.toContain('behandelkeuzeadvies');
+    expect(assistiveCompletion).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
