@@ -7585,4 +7585,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G781 — recovery contract helper release-state error compact contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-helper release-state negatieve fixture bewaakt nu ontbrekende foutmeldingcontexttermen, maar de exacte release-state foutmelding is nog niet als apart compact contract vastgelegd.
+- **Desired Outcome:** Een compact testcontract legt de exacte recovery-helper release-state missing-term foutmelding vast.
+- **User Value:** Onderhouders kunnen release-state foutmeldingdrift snel herkennen zonder gevoelige context of lange fixture-output.
+- **Acceptance Criteria:** Compact contract bewaakt de exacte release-state missing-term melding; bestaande releasecontext-, release-state- en negatieve fixtureguards blijven groen; docs/backlog verwijzen naar het doel; fouttekst bevat alleen technische termnamen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
