@@ -423,6 +423,8 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR =
   'Recovery helper releasecontext ontbreekt voor termen: docsafspraak';
 const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MISSING_TERM_ERROR =
   'Recovery helper release-statecontext ontbreekt voor termen: foutmeldingcontext';
+const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR =
+  'Recovery helper release-state foutmeldingcontext ontbreekt voor termen: foutmeldingcontext';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 describe('onderhoudsdocumentatie', () => {
@@ -549,6 +551,27 @@ describe('onderhoudsdocumentatie', () => {
         expect(releaseContext).toContain(requiredTerm);
       }
     }
+  });
+
+  it('geeft ontbrekende recovery-helper release-state errorcontexttermen technisch terug', () => {
+    expect(() =>
+      extractRecoveryContractHelperReleaseStateErrorContext(
+        'G000 Central Encrypted Platform: recovery-helper release-state missing-term melding staat in release-state.',
+      ),
+    ).toThrow(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR);
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR).toBe(
+      'Recovery helper release-state foutmeldingcontext ontbreekt voor termen: foutmeldingcontext',
+    );
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR).toContain(
+      'foutmeldingcontext',
+    );
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR).not.toContain(
+      'payload',
+    );
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR).not.toContain(
+      'passphrase',
+    );
+    expect(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_ERROR_MISSING_TERM_ERROR).not.toContain('token');
   });
 
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
