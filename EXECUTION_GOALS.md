@@ -8033,4 +8033,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Fertility timeline, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G813 — knowledge graph relationship states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Fertility timeline unified states zijn nu bewaakt, maar knowledge graph relationship states hebben nog geen expliciete Claude Design-regressie rond lege graph, gemengde relaties en bronpadveiligheid.
+- **Desired Outcome:** Tests bewaken dat graph-relaties scanbaar blijven, bestaande graphfilter-hooks behouden en geen raw dossier-, consult-, research- of imagepayload tonen.
+- **User Value:** Gebruikers kunnen verbanden tussen traject, dossier, consult, embryo en research rustig volgen zonder dat themawijzigingen causaliteit of privacygrenzen verzwakken.
+- **Acceptance Criteria:** Tests dekken lege graphstate, gemengde relatiecontext en bronpadweergave; bestaande graph UI-hooks blijven aanwezig; zichtbare copy toont geen base64, OCR-payload, raw consulttekst, causaliteitsclaim, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Fertility knowledge graph, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
