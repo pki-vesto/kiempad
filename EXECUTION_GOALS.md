@@ -8635,4 +8635,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry UI, retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/expiry/archive/history/completion/recovery/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G856 — attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry states zijn nu bewaakt, maar expiry-cleanup-, cleanupbewijs-, screenreader cleanup label- en cleanup-retentiestates rond verlopen bewaartermijnen hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup states begrijpelijk en assistive-tech veilig blijven, bestaande expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/archive/history/completion/recovery/live-region/nav/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien dat een verlopen bewaartermijn klaarstaat voor cleanup zonder dat cleanupstates bronbestanden, selectiecontext of medische inhoud tonen.
+- **Acceptance Criteria:** Tests dekken retention expiry cleanup boundary, cleanup proof summary affordance, screenreader retention cleanup label state en assistive cleanup retention state; bestaande expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/archive/history/completion/recovery/live-region/nav/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup UI, expiry/retention/audit trail/confirmation receipt audit/confirmation receipt/confirmation/handoff/delivery/export/receipt/purge/archive/history/completion/recovery/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
