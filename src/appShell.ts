@@ -1541,6 +1541,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3040,6 +3041,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive handoff toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const confirmationAvailable = hasAttachments && (hasStatus || hasError);
+  const confirmationState = confirmationAvailable
+    ? 'delivery-handoff-confirmation-available'
+    : 'delivery-handoff-confirmation-empty';
+  const proofState = hasError
+    ? 'confirmation-proof-summary-paused'
+    : hasStatus
+      ? 'confirmation-proof-summary-ready'
+      : 'confirmation-proof-summary-empty';
+  const labelState = confirmationAvailable
+    ? 'screenreader-confirmation-label-ready'
+    : 'screenreader-confirmation-label-empty';
+  const auditState = confirmationAvailable
+    ? 'assistive-confirmation-audit-ready'
+    : 'assistive-confirmation-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-confirmation-boundary'
+      : 'no-locked-preview-confirmation';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation privacy states" data-attachment-assistive-confirmation-surface="privacy">
+      <h2>Bijlage assistive confirmation</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-confirmation-live-state="${confirmationState}">
+        ${confirmationAvailable ? 'Opschoonbewijs bevestiging beschikbaar als veilige assistive confirmationstatus.' : 'Geen veilige attachment-opschoonbewijs confirmationstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-confirmation-kind="delivery-handoff-confirmation-boundary" data-attachment-assistive-confirmation-state="${confirmationState}">
+          <dt>Delivery handoff confirmation boundary</dt>
+          <dd>${confirmationAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige confirmationstatus zonder broninhoud.` : 'Delivery handoff confirmation wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-kind="confirmation-proof-summary-affordance" data-attachment-assistive-confirmation-state="${proofState}">
+          <dt>Confirmation proof summary</dt>
+          <dd>${hasError ? 'Confirmationbewijs blijft gepauzeerd als generieke bevestigingsstatus.' : hasStatus ? 'Confirmationbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen confirmationbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-kind="screenreader-confirmation-label-state" data-attachment-assistive-confirmation-state="${labelState}">
+          <dt>Screenreader confirmation label</dt>
+          <dd>${confirmationAvailable ? 'Screenreader confirmation labels noemen alleen bevestigingsgroep en bewijsstatus.' : 'Screenreader confirmation labels blijven leeg zonder confirmationbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-kind="assistive-confirmation-audit" data-attachment-assistive-confirmation-state="${auditState}">
+          <dt>Assistive confirmation audit</dt>
+          <dd>${confirmationAvailable ? 'Assistive confirmation audit bevestigt handoff-, delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive confirmation audit wacht op veilige confirmationstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-kind="locked-preview-assistive-confirmation-boundary" data-attachment-assistive-confirmation-state="${lockedState}">
+          <dt>Locked-preview assistive confirmation boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive confirmation payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive confirmation states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive confirmation toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
