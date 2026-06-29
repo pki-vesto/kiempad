@@ -1551,6 +1551,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3678,6 +3679,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive cleanup archive receipt export toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const deliveryAvailable = hasAttachments && (hasStatus || hasError);
+  const deliveryState = deliveryAvailable
+    ? 'cleanup-archive-receipt-export-delivery-available'
+    : 'cleanup-archive-receipt-export-delivery-empty';
+  const proofState = hasError
+    ? 'delivery-proof-summary-paused'
+    : hasStatus
+      ? 'delivery-proof-summary-ready'
+      : 'delivery-proof-summary-empty';
+  const labelState = deliveryAvailable
+    ? 'screenreader-export-delivery-label-ready'
+    : 'screenreader-export-delivery-label-empty';
+  const retentionState = deliveryAvailable
+    ? 'assistive-delivery-retention-ready'
+    : 'assistive-delivery-retention-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-export-delivery-boundary'
+      : 'no-locked-preview-export-delivery';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states" data-attachment-assistive-receipt-export-delivery-surface="privacy">
+      <h2>Bijlage assistive receipt export delivery</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-receipt-export-delivery-live-state="${deliveryState}">
+        ${deliveryAvailable ? 'Opschoonbewijs cleanup archive receipt export delivery beschikbaar als veilige assistive afleverstatus.' : 'Geen veilige attachment-opschoonbewijs cleanup archive receipt export deliverystatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-receipt-export-delivery-kind="cleanup-archive-receipt-export-delivery-boundary" data-attachment-assistive-receipt-export-delivery-state="${deliveryState}">
+          <dt>Cleanup archive receipt export delivery boundary</dt>
+          <dd>${deliveryAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige cleanup archive receipt export deliverystatus zonder broninhoud.` : 'Cleanup archive receipt export delivery wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-kind="delivery-proof-summary-affordance" data-attachment-assistive-receipt-export-delivery-state="${proofState}">
+          <dt>Delivery proof summary</dt>
+          <dd>${hasError ? 'Afleveringsbewijs blijft gepauzeerd als generieke deliverystatus.' : hasStatus ? 'Afleveringsbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen afleveringsbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-kind="screenreader-export-delivery-label-state" data-attachment-assistive-receipt-export-delivery-state="${labelState}">
+          <dt>Screenreader export delivery label</dt>
+          <dd>${deliveryAvailable ? 'Screenreader export delivery labels noemen alleen aflevergroep en bewijsstatus.' : 'Screenreader export delivery labels blijven leeg zonder afleveringsbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-kind="assistive-delivery-retention" data-attachment-assistive-receipt-export-delivery-state="${retentionState}">
+          <dt>Assistive delivery retention</dt>
+          <dd>${deliveryAvailable ? 'Assistive delivery retention bevestigt export-, receipt-, archive-, cleanup-, expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, purge-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive delivery retention wacht op veilige deliverystatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-kind="locked-preview-assistive-export-delivery-boundary" data-attachment-assistive-receipt-export-delivery-state="${lockedState}">
+          <dt>Locked-preview assistive export delivery boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive export delivery payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive export delivery states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive cleanup archive receipt export delivery toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
