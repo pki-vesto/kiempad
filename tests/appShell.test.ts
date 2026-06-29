@@ -10114,6 +10114,97 @@ describe('app shell', () => {
     expect(assistiveCleanup).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G928 attachment assistive delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-token',
+        dossierStatus:
+          'G928 delivery handoff confirmation receipt audit trail retention expiry cleanup bevat opschoonbewijs voor g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-secret-source.pdf met private-g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-token OCR-payload diagnose 5895 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-sensitive',
+            datum: '2026-10-02',
+            titel:
+              'G928 delivery handoff confirmation receipt audit trail retention expiry cleanup bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjgtUEFZTE9BRA==',
+            notitie:
+              'private-g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-token hoort niet in assistive cleanup.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5895 mg behandelkeuzeadvies blijft buiten G928 cleanup.',
+              signalen: ['OCR-payload blijft buiten G928 cleanup proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-10-02',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.97,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-10-02T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G928 OCR TEKST private-g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-token diagnose 5895 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-secret-source.pdf.',
+            },
+            uploadedAt: '2026-10-02T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveCleanup = extractAttachmentAssistiveExpiryCleanupSurface(html);
+
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-surface="privacy"',
+    );
+    expect(assistiveCleanup).toContain('role="status"');
+    expect(assistiveCleanup).toContain('aria-live="polite"');
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="retention-expiry-cleanup-boundary"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="cleanup-proof-summary-affordance"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="screenreader-retention-cleanup-label-state"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="assistive-cleanup-retention"',
+    );
+    expect(assistiveCleanup).toContain('1 bijlage met veilige retention expiry cleanupstatus');
+
+    expect(assistiveCleanup).not.toContain(
+      'private-g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-token',
+    );
+    expect(assistiveCleanup).not.toContain(
+      'g928-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-secret-source.pdf',
+    );
+    expect(assistiveCleanup).not.toContain('U0VDUkVULUc5MjgtUEFZTE9BRA==');
+    expect(assistiveCleanup).not.toContain('GEVOELIGE G928 OCR TEKST');
+    expect(assistiveCleanup).not.toContain('OCR-payload');
+    expect(assistiveCleanup).not.toContain('Attachmentpayload');
+    expect(assistiveCleanup).not.toContain('attachmentpayload');
+    expect(assistiveCleanup).not.toContain('dossierpayload');
+    expect(assistiveCleanup).not.toContain('diagnose');
+    expect(assistiveCleanup).not.toContain('behandelkeuzeadvies');
+    expect(assistiveCleanup).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
