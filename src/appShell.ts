@@ -479,6 +479,7 @@ export function renderVaultGate(
   webAuthnStatus?: WebAuthnViewStatus,
   options: VaultGateOptions = {},
 ): string {
+  const recoveryStatus = classifyVaultRecoveryStatus(error);
   const central = options.storageMode !== 'legacy-indexeddb';
   const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale encrypted dataset';
   const eyebrow = central ? 'Centrale encrypted opslag' : 'Legacy lokale encrypted opslag';
@@ -502,13 +503,40 @@ export function renderVaultGate(
           <button type="submit">${button}</button>
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
-        ${error ? `<p class="form-error" role="alert">${escapeHtml(error)}</p>` : ''}
+        ${renderVaultRecoveryStatusAlert(recoveryStatus, error)}
         ${renderVaultDiagnostics(hasVault, webAuthnStatus, options)}
-        ${renderVaultRecoveryHelp(hasVault, options)}
+        ${renderVaultRecoveryHelp(hasVault, options, recoveryStatus)}
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
   `;
+}
+
+type VaultRecoveryStatus = 'none' | 'unlock-error' | 'missing-key-metadata';
+
+function classifyVaultRecoveryStatus(error?: string): VaultRecoveryStatus {
+  if (!error) return 'none';
+  const normalizedError = error.toLowerCase();
+  if (
+    normalizedError.includes('sleutelmetadata ontbreekt') &&
+    normalizedError.includes('versleutelde records bestaan')
+  ) {
+    return 'missing-key-metadata';
+  }
+  return 'unlock-error';
+}
+
+function renderVaultRecoveryStatusAlert(status: VaultRecoveryStatus, error?: string): string {
+  if (status === 'missing-key-metadata') {
+    return `
+      <section class="form-error" role="alert" aria-label="Herstelstatus centrale dataset">
+        <strong>Centrale dataset vraagt herstelcontrole.</strong>
+        <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span>
+      </section>
+    `;
+  }
+  if (!error) return '';
+  return `<p class="form-error" role="alert">${escapeHtml(error)}</p>`;
 }
 
 export function renderStorageBootstrapError(error: string): string {
@@ -567,10 +595,20 @@ function renderVaultDiagnostics(
   `;
 }
 
-function renderVaultRecoveryHelp(hasVault: boolean, options: VaultGateOptions = {}): string {
+function renderVaultRecoveryHelp(
+  hasVault: boolean,
+  options: VaultGateOptions = {},
+  recoveryStatus: VaultRecoveryStatus = 'none',
+): string {
   const central = options.storageMode !== 'legacy-indexeddb';
   const existingHelp = central
-    ? `<ol class="compact-list">
+    ? recoveryStatus === 'missing-key-metadata'
+      ? `<ol class="compact-list">
+              <li>Herlaad Kiempad en probeer dezelfde centrale omgeving opnieuw.</li>
+              <li>Controleer met support of backend, gebruikersscope en dataset bij elkaar horen.</li>
+              <li>Gebruik alleen een gecontroleerde versleutelde back-up als de centrale dataset niet veilig kan worden hersteld.</li>
+            </ol>`
+      : `<ol class="compact-list">
               <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
               <li>Controleer of de centrale backend en gebruikersscope dezelfde dataset openen als op je andere apparaat.</li>
               <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld; je passphrase blijft de herstelroute.</li>

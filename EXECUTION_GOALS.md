@@ -4862,7 +4862,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, client bootstrap, vault session, tests
 - **ADR Needed:** no
 - **Score:** 113
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G589 — bootstrap smoke failure diagnostics
 
@@ -7319,4 +7319,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs tests, bootstrap governance releasecontext
 - **ADR Needed:** no
 - **Score:** 115
+- **Status:** ☐ open
+
+### G762 — missing key metadata recovery audit handoff
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De app-shell toont ontbrekende sleutelmetadata nu als generieke herstelstatus, maar er is nog geen privacyveilige audit-handoff die support later kan gebruiken zonder dossierinhoud te loggen.
+- **Desired Outcome:** Een technisch audit-event of support-handoff beschrijft alleen opslagmodus, herstelcategorie en generieke actie, zodat triage kan starten zonder passphrase, token, bestandsnaam, OCR/base64 of medische inhoud.
+- **User Value:** Gebruikers kunnen een inconsistente centrale dataset laten onderzoeken zonder hun fertiliteitsdossier of sleutelgegevens in supportkanalen te delen.
+- **Acceptance Criteria:** Missing-key-metadata herstelstatus kan een gesanitized audit/handoff registreren; event bevat geen recordaantallen, passphrase, token, filename, OCR/base64 of medische plaintext; tests dekken success en redaction-boundary; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, event log, central bootstrap, tests
+- **ADR Needed:** no
+- **Score:** 114
 - **Status:** ☐ open

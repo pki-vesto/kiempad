@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 562 |
+| ☑ klaar | 563 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **761** |
+| **Totaal** | **762** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -750,7 +750,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G585 | Central Encrypted Platform: attachment envelope metadata UI feedback | P1 | F5 | ☐ |
 | G586 | Central Encrypted Platform: replay conflict recovery status UI | P1 | F5 | ☐ |
 | G587 | Central Encrypted Platform: bootstrap smoke CI command | P1 | F5 | ☑ |
-| G588 | Central Encrypted Platform: missing key metadata recovery UI | P1 | F5 | ☐ |
+| G588 | Central Encrypted Platform: missing key metadata recovery UI | P1 | F5 | ☑ |
 | G589 | Central Encrypted Platform: bootstrap smoke failure diagnostics | P1 | F5 | ☑ |
 | G590 | Central Encrypted Platform: bootstrap smoke phase runbook matrix | P1 | F5 | ☑ |
 | G591 | Central Encrypted Platform: bootstrap diagnostics redaction regression | P1 | F5 | ☑ |
@@ -924,12 +924,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G759 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release missing-term fixture | P1 | F5 | ☑ |
 | G760 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release text contract | P1 | F5 | ☑ |
 | G761 | Central Encrypted Platform: bootstrap governance missing-term runbook note contract release text missing-term release-state guard | P1 | F5 | ☐ |
+| G762 | Central Encrypted Platform: missing key metadata recovery audit handoff | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 761** (id's G001 t/m G761, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 762** (id's G001 t/m G762, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
