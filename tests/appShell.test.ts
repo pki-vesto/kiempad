@@ -197,6 +197,16 @@ function extractAttachmentAccessibilityAuditSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentLandmarkNavigationSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment landmark navigation privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment landmark navigation privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -5391,6 +5401,157 @@ describe('app shell', () => {
     expect(accessibilityAudit).not.toContain('dosering');
     expect(accessibilityAudit).not.toContain('behandelkeuzeadvies');
     expect(accessibilityAudit).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment landmark navigation privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-landmark-token',
+        dossierDocuments: [
+          {
+            id: 'doc-landmark-sensitive',
+            datum: '2026-06-26',
+            titel: 'Landmark source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'landmark-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'bGFuZG1hcmstc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-landmark-token hoort niet in landmark routes.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 925 mg behandelkeuzeadvies blijft buiten landmark navigation.',
+              signalen: [
+                'OCR-payload blijft buiten region navigation en heading route affordance.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2026-06-26',
+              documenttype: 'Labuitslag',
+              bronbestand: 'landmark-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-26T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE LANDMARK OCR TEKST private-landmark-token diagnose 925 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor landmark-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-26T08:05:00.000Z',
+          },
+          {
+            id: 'doc-landmark-locked-image',
+            datum: '2026-06-27',
+            titel: 'Landmark locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'landmark-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bGFuZG1hcmstbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-landmark-token hoort ook niet bij landmark audit.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-27',
+              documenttype: 'Foto/echo',
+              bronbestand: 'landmark-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-27',
+              soort: 'echo',
+              context: 'private landmark imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-27T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const landmarkNavigation = extractAttachmentLandmarkNavigationSurface(html);
+
+    expect(html).toContain('id="inhoud"');
+    expect(html).toContain('id="dossier-search-form"');
+    expect(html).toContain('id="attachment-bulk-selection-form"');
+    expect(html).toContain('data-attachment-accessibility-audit-surface="privacy"');
+    expect(landmarkNavigation).toContain('data-attachment-landmark-navigation-surface="privacy"');
+    expect(landmarkNavigation).toContain('aria-label="Bijlage landmark routes"');
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-nav-state="attachment-landmarks-ready"',
+    );
+    expect(landmarkNavigation).toContain('data-attachment-landmark-route-kind="main-landmark"');
+    expect(landmarkNavigation).toContain('data-attachment-landmark-route-kind="region-search"');
+    expect(landmarkNavigation).toContain('data-attachment-landmark-route-kind="heading-actions"');
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-route-state="attachment-landmarks-ready"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-route-state="region-navigation-metadata-only"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-route-state="heading-routes-available"',
+    );
+    expect(landmarkNavigation).toContain('data-attachment-landmark-kind="landmark-boundary"');
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-kind="region-navigation-boundary"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-kind="heading-route-affordance"',
+    );
+    expect(landmarkNavigation).toContain('data-attachment-landmark-kind="landmark-audit-summary"');
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-kind="locked-preview-landmark-boundary"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-state="attachment-landmarks-ready"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-state="region-navigation-metadata-only"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-state="heading-routes-available"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-state="landmark-audit-summary-ready"',
+    );
+    expect(landmarkNavigation).toContain(
+      'data-attachment-landmark-state="locked-preview-landmark-boundary"',
+    );
+    expect(landmarkNavigation).toContain('2 bijlagen bereikbaar via veilige landmarkroutes');
+    expect(landmarkNavigation).toContain('Zoek-, actie- en statusregio’s blijven gekoppeld');
+    expect(landmarkNavigation).toContain('Headingroutes verwijzen naar veilige attachmentsecties');
+    expect(landmarkNavigation).toContain('Landmarkaudit bevestigt nav-, section- en actionhooks');
+    expect(landmarkNavigation).toContain(
+      '1 vergrendelde beeldpreview blijft buiten landmark-, region- en headingpayloads',
+    );
+
+    expect(landmarkNavigation).not.toContain('private-landmark-token');
+    expect(landmarkNavigation).not.toContain('landmark-secret-source.pdf');
+    expect(landmarkNavigation).not.toContain('landmark-locked-secret.jpg');
+    expect(landmarkNavigation).not.toContain('bGFuZG1hcmstc2VjcmV0LXBheWxvYWQ=');
+    expect(landmarkNavigation).not.toContain('bGFuZG1hcmstbG9ja2VkLXNlY3JldA==');
+    expect(landmarkNavigation).not.toContain('data:image/jpeg;base64');
+    expect(landmarkNavigation).not.toContain('GEVOELIGE LANDMARK OCR TEKST');
+    expect(landmarkNavigation).not.toContain('OCR-payload');
+    expect(landmarkNavigation).not.toContain('Attachmentpayload');
+    expect(landmarkNavigation).not.toContain('attachmentpayload');
+    expect(landmarkNavigation).not.toContain('dossierpayload');
+    expect(landmarkNavigation).not.toContain('diagnose');
+    expect(landmarkNavigation).not.toContain('dosering');
+    expect(landmarkNavigation).not.toContain('behandelkeuzeadvies');
+    expect(landmarkNavigation).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
