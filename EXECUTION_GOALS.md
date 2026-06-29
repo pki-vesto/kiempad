@@ -8313,4 +8313,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment responsive UI, reduced motion UI, actionbar UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G833 — attachment loading and error privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment responsive en reduced-motion states zijn nu bewaakt, maar loading-, fout-, retry- en lege actionbarstates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment loading/error states scanbaar blijven, bestaande status/retry/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien wanneer attachmentacties laden, mislukken of opnieuw geprobeerd moeten worden zonder dat fout- of wachtstates bronbestanden, selectiecontext of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken loadingstatus, error boundary, retry affordance states en empty actionbar state; bestaande status/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment loading UI, error UI, retry UI, actionbar UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

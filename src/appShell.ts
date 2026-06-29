@@ -1523,6 +1523,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentSortPaginationPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentBulkSelectionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentKeyboardFocusPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentResponsiveMotionPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -1954,6 +1955,51 @@ function renderAttachmentKeyboardFocusPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze focusstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentResponsiveMotionPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const responsiveState = hasAttachments ? 'responsive-single-column-ready' : 'responsive-empty';
+  const touchState = hasAttachments ? 'touch-targets-guarded' : 'touch-targets-idle';
+  const motionState = 'reduced-motion-supported';
+  const compactState =
+    lockedPreviewCount > 0 ? 'locked-preview-compact-boundary' : 'compact-layout-clear';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment responsive and reduced-motion privacy states" data-attachment-responsive-motion-surface="privacy">
+      <h2>Bijlage responsive states</h2>
+      <div class="button-row" role="group" aria-label="Bijlage compacte actionbar" data-attachment-responsive-actionbar-state="${responsiveState}">
+        <button class="phase-button secondary" type="button" data-attachment-responsive-action-kind="compact-review" data-attachment-responsive-action-state="${touchState}" ${hasAttachments ? '' : 'disabled'}>Review</button>
+        <button class="phase-button secondary" type="button" data-attachment-responsive-action-kind="compact-export" data-attachment-responsive-action-state="${touchState}" ${hasAttachments ? '' : 'disabled'}>Export</button>
+        <button class="danger-button" type="button" data-attachment-responsive-action-kind="compact-delete" data-attachment-responsive-action-state="${touchState}" ${hasAttachments ? '' : 'disabled'}>Verwijder</button>
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-responsive-kind="responsive-status" data-attachment-responsive-state="${responsiveState}">
+          <dt>Responsive status</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} blijven scanbaar in compacte eenkolomsweergave.` : 'Geen bijlagen voor compacte weergave.'}</dd>
+        </div>
+        <div data-attachment-responsive-kind="touch-target-boundary" data-attachment-responsive-state="${touchState}">
+          <dt>Touch target boundary</dt>
+          <dd>${hasAttachments ? 'Compacte attachmentacties behouden minimaal aanraakbare knoppen zonder bronlabels.' : 'Touch targets wachten op attachmentacties.'}</dd>
+        </div>
+        <div data-attachment-responsive-kind="reduced-motion-affordance" data-attachment-responsive-state="${motionState}">
+          <dt>Reduced motion</dt>
+          <dd>Motiongevoelige instellingen gebruiken statische statusovergangen zonder broninhoud.</dd>
+        </div>
+        <div data-attachment-responsive-kind="locked-preview-compact-boundary" data-attachment-responsive-state="${compactState}">
+          <dt>Locked-preview compactgrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten compacte layoutinhoud.` : 'Geen vergrendelde beeldpreviews in de compacte layoutgrens.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze responsive status toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
