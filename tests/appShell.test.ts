@@ -257,6 +257,16 @@ function extractAttachmentAssistiveHistorySurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveArchiveSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment assistive recovery archive privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -6370,6 +6380,155 @@ describe('app shell', () => {
     expect(assistiveHistory).not.toContain('dosering');
     expect(assistiveHistory).not.toContain('behandelkeuzeadvies');
     expect(assistiveHistory).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-archive-token',
+        dossierStatus:
+          'Archive bevat retry voor archive-secret-source.pdf met private-archive-token OCR-payload diagnose 1525 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-archive-sensitive',
+            datum: '2026-07-08',
+            titel: 'Archive source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'archive-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YXJjaGl2ZS1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-archive-token hoort niet in assistive archive.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1525 mg behandelkeuzeadvies blijft buiten assistive archive.',
+              signalen: ['OCR-payload blijft buiten archived retry en screenreader archive label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-08',
+              documenttype: 'Labuitslag',
+              bronbestand: 'archive-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-08T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE ARCHIVE OCR TEKST private-archive-token diagnose 1525 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor archive-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-08T08:05:00.000Z',
+          },
+          {
+            id: 'doc-archive-locked-image',
+            datum: '2026-07-09',
+            titel: 'Archive locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'archive-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YXJjaGl2ZS1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-archive-token hoort ook niet in archive labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-09',
+              documenttype: 'Foto/echo',
+              bronbestand: 'archive-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-09',
+              soort: 'echo',
+              context: 'private archive imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-09T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveArchive = extractAttachmentAssistiveArchiveSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveArchive).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(assistiveArchive).toContain('role="status"');
+    expect(assistiveArchive).toContain('aria-live="polite"');
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-live-state="recovery-archive-available"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-kind="recovery-archive-boundary"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-kind="archived-retry-summary-affordance"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-kind="screenreader-archive-label-state"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-kind="assistive-archive-audit"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-kind="locked-preview-assistive-archive-boundary"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-state="recovery-archive-available"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-state="archived-retry-summary-retained"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-state="screenreader-archive-label-ready"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-state="assistive-archive-audit-ready"',
+    );
+    expect(assistiveArchive).toContain(
+      'data-attachment-assistive-archive-state="locked-preview-assistive-archive-boundary"',
+    );
+    expect(assistiveArchive).toContain(
+      'Herstelarchief beschikbaar als veilige assistive archivestatus',
+    );
+    expect(assistiveArchive).toContain('2 bijlagen met veilige herstelarchive');
+    expect(assistiveArchive).toContain('Gearchiveerde retry is bewaard zonder bestands-');
+    expect(assistiveArchive).toContain('Screenreader archive labels noemen alleen archiefgroep');
+    expect(assistiveArchive).toContain(
+      'Assistive archive audit bevestigt history-, completion-, recovery- en live-regionhooks',
+    );
+    expect(assistiveArchive).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive archive payloads',
+    );
+
+    expect(assistiveArchive).not.toContain('private-archive-token');
+    expect(assistiveArchive).not.toContain('archive-secret-source.pdf');
+    expect(assistiveArchive).not.toContain('archive-locked-secret.jpg');
+    expect(assistiveArchive).not.toContain('YXJjaGl2ZS1zZWNyZXQtcGF5bG9hZA==');
+    expect(assistiveArchive).not.toContain('YXJjaGl2ZS1sb2NrZWQtc2VjcmV0');
+    expect(assistiveArchive).not.toContain('data:image/jpeg;base64');
+    expect(assistiveArchive).not.toContain('GEVOELIGE ARCHIVE OCR TEKST');
+    expect(assistiveArchive).not.toContain('OCR-payload');
+    expect(assistiveArchive).not.toContain('Attachmentpayload');
+    expect(assistiveArchive).not.toContain('attachmentpayload');
+    expect(assistiveArchive).not.toContain('dossierpayload');
+    expect(assistiveArchive).not.toContain('diagnose');
+    expect(assistiveArchive).not.toContain('dosering');
+    expect(assistiveArchive).not.toContain('behandelkeuzeadvies');
+    expect(assistiveArchive).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
