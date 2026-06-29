@@ -177,6 +177,16 @@ function extractAttachmentShareHandoffSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentPrintPacketSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment print and clinician packet privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment print/clinician packet privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -5105,6 +5115,125 @@ describe('app shell', () => {
     expect(shareHandoff).not.toContain('dosering');
     expect(shareHandoff).not.toContain('behandelkeuzeadvies');
     expect(shareHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment print en clinician packet privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-print-token',
+        dossierDocuments: [
+          {
+            id: 'doc-print-sensitive',
+            datum: '2026-06-22',
+            titel: 'Print source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'print-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'cHJpbnQtc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-print-token hoort niet in printpakket.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 725 mg behandelkeuzeadvies blijft buiten printpakket.',
+              signalen: ['OCR-payload blijft buiten artsenpakket en samenvattingsdownload.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-22',
+              documenttype: 'Labuitslag',
+              bronbestand: 'print-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-22T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE PRINT OCR TEKST private-print-token diagnose 725 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor print-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-22T08:05:00.000Z',
+          },
+          {
+            id: 'doc-print-locked-image',
+            datum: '2026-06-23',
+            titel: 'Print locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'print-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cHJpbnQtbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-print-token hoort ook niet bij consultvoorbereiding.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-23',
+              documenttype: 'Foto/echo',
+              bronbestand: 'print-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-23',
+              soort: 'echo',
+              context: 'private print imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-23T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const printPacket = extractAttachmentPrintPacketSurface(html);
+
+    expect(html).toContain('data-attachment-share-action-kind="external-export"');
+    expect(html).toContain('data-attachment-export-kind="encrypted-attachments"');
+    expect(printPacket).toContain('data-attachment-print-packet-surface="privacy"');
+    expect(printPacket).toContain('data-attachment-print-actionbar-state="print-metadata-ready"');
+    expect(printPacket).toContain('data-attachment-print-action-kind="print-summary"');
+    expect(printPacket).toContain('data-attachment-print-action-kind="clinician-packet"');
+    expect(printPacket).toContain('data-attachment-print-action-kind="summary-download"');
+    expect(printPacket).toContain('data-attachment-print-action-state="print-metadata-ready"');
+    expect(printPacket).toContain('data-attachment-print-action-state="clinician-packet-reviewed"');
+    expect(printPacket).toContain(
+      'data-attachment-print-action-state="summary-download-metadata-only"',
+    );
+    expect(printPacket).toContain('data-attachment-print-kind="print-readiness"');
+    expect(printPacket).toContain('data-attachment-print-kind="clinician-packet-boundary"');
+    expect(printPacket).toContain('data-attachment-print-kind="summary-download-affordance"');
+    expect(printPacket).toContain('data-attachment-print-kind="consult-preparation-packet"');
+    expect(printPacket).toContain('data-attachment-print-kind="locked-preview-print-boundary"');
+    expect(printPacket).toContain('data-attachment-print-state="locked-preview-print-boundary"');
+    expect(printPacket).toContain('2 bijlagen klaar als printbare metadatastatus');
+    expect(printPacket).toContain('2 gereviewde bijlagen beschikbaar voor een veilig artsenpakket');
+    expect(printPacket).toContain('Samenvattingsdownload gebruikt alleen metadata');
+    expect(printPacket).toContain('Consultvoorbereiding bundelt veilige statusregels');
+    expect(printPacket).toContain(
+      '1 vergrendelde beeldpreview blijft buiten print- en artsenpakketstates',
+    );
+
+    expect(printPacket).not.toContain('private-print-token');
+    expect(printPacket).not.toContain('print-secret-source.pdf');
+    expect(printPacket).not.toContain('print-locked-secret.jpg');
+    expect(printPacket).not.toContain('cHJpbnQtc2VjcmV0LXBheWxvYWQ=');
+    expect(printPacket).not.toContain('cHJpbnQtbG9ja2VkLXNlY3JldA==');
+    expect(printPacket).not.toContain('data:image/jpeg;base64');
+    expect(printPacket).not.toContain('GEVOELIGE PRINT OCR TEKST');
+    expect(printPacket).not.toContain('OCR-payload');
+    expect(printPacket).not.toContain('Attachmentpayload');
+    expect(printPacket).not.toContain('attachmentpayload');
+    expect(printPacket).not.toContain('diagnose');
+    expect(printPacket).not.toContain('dosering');
+    expect(printPacket).not.toContain('behandelkeuzeadvies');
+    expect(printPacket).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
