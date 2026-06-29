@@ -7697,4 +7697,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G789 — recovery contract helper release-state message error negative fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-helper release-state messagecontext foutmeldingcontext wordt nu in changelog en current state bewaakt, maar ontbrekende foutmeldingcontexttermen hebben nog geen negatieve fixture met compacte technische foutmelding.
+- **Desired Outcome:** Een negatieve fixture bewijst dat ontbrekende recovery-helper release-state message-foutmeldingcontexttermen technisch en compact falen.
+- **User Value:** Onderhouders krijgen snelle, privacyveilige feedback wanneer release/state-documentatie de foutmeldingcontextterm verliest.
+- **Acceptance Criteria:** Maintenance-test faalt compact wanneer de release-state message-foutmeldingcontextterm ontbreekt; fouttekst bevat alleen technische termnamen; bestaande releasecontext-, release-state-, negatieve fixture-, compact-contract-, releaseguard- en messagecontracttests blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open

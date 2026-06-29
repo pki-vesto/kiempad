@@ -423,6 +423,10 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_TERMS = [
   'recovery-helper release-state errorcontext missing-term melding',
   'messagecontext',
 ] as const;
+const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_TERMS = [
+  'recovery-helper release-state messagecontext missing-term melding',
+  'foutmeldingcontext',
+] as const;
 const RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR =
   'Recovery helper releasecontext ontbreekt voor termen: docsafspraak';
 const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MISSING_TERM_ERROR =
@@ -639,6 +643,17 @@ describe('onderhoudsdocumentatie', () => {
     expect(RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_MISSING_TERM_ERROR).not.toContain(
       'token',
     );
+  });
+
+  it('bewaakt recovery-helper release-state messagecontext missing-term melding in release-state foutmeldingcontext', () => {
+    for (const releaseDoc of [changelog, currentState]) {
+      const releaseContext =
+        extractRecoveryContractHelperReleaseStateMessageErrorContext(releaseDoc);
+
+      for (const requiredTerm of RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_TERMS) {
+        expect(releaseContext).toContain(requiredTerm);
+      }
+    }
   });
 
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
@@ -3696,6 +3711,28 @@ function extractRecoveryContractHelperReleaseStateMessageContext(releaseDoc: str
   if (missingTerms.length > 0) {
     throw new Error(
       `Recovery helper release-state messagecontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractRecoveryContractHelperReleaseStateMessageErrorContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_TERMS.some((term) =>
+        line.includes(term),
+      ),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Recovery helper release-state message-foutmeldingcontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
     );
   }
 
