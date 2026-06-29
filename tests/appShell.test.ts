@@ -124,6 +124,67 @@ describe('app shell', () => {
     expect(html).not.toContain('reset je passphrase');
   });
 
+  it('toont geen ontbrekende-sleutelmetadata herstelstatus bij een lege centrale dataset', () => {
+    const html = renderVaultGate(false, undefined, undefined, {
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+    });
+
+    expect(html).toContain('data-vault-present="false"');
+    expect(html).toContain('Geen centrale encrypted dataset voor deze sessie gevonden.');
+    expect(html).not.toContain('Centrale dataset vraagt herstelcontrole.');
+    expect(html).not.toContain('sleutelmetadata ontbreekt');
+    expect(html).not.toContain('versleutelde records bestaan');
+  });
+
+  it('vertaalt ontbrekende sleutelmetadata naar generieke herstelstatus zonder gevoelige inhoud', () => {
+    const html = renderVaultGate(
+      true,
+      'Kiempad kan deze centrale dataset niet ontgrendelen: sleutelmetadata ontbreekt terwijl er al versleutelde records bestaan. Bestand echo.png bevat OCR/base64 token en Progesteron.',
+      undefined,
+      {
+        storageMode: 'central-api',
+        storageLabel: 'Centrale encrypted API',
+      },
+    );
+
+    expect(html).toContain('Centrale dataset vraagt herstelcontrole.');
+    expect(html).toContain('versleutelde data zonder sleutelmetadata');
+    expect(html).toContain('Herlaad eerst de app');
+    expect(html).toContain('contact op met support');
+    expect(html).toContain('gecontroleerde versleutelde back-up');
+    expect(html).toContain('backend, gebruikersscope en dataset bij elkaar horen');
+    expect(html).toContain('data-vault-present="true"');
+    expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
+    expect(html).not.toContain('Kiempad kan deze centrale dataset niet ontgrendelen');
+    expect(html).not.toContain('terwijl er al versleutelde records bestaan');
+    expect(html).not.toContain('echo.png');
+    expect(html).not.toContain('OCR/base64');
+    expect(html).not.toContain('token');
+    expect(html).not.toContain('Progesteron');
+    expect(html).not.toContain('Controleer rustig de passphrase');
+  });
+
+  it('houdt een bestaande geldige dataset en passphrasefout gescheiden van metadataherstel', () => {
+    const html = renderVaultGate(
+      true,
+      'Passphrase klopt niet voor deze Kiempad-dataset.',
+      undefined,
+      {
+        storageMode: 'central-api',
+        storageLabel: 'Centrale encrypted API',
+      },
+    );
+
+    expect(html).toContain('data-vault-present="true"');
+    expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
+    expect(html).toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
+    expect(html).toContain('Controleer rustig de passphrase');
+    expect(html).not.toContain('Centrale dataset vraagt herstelcontrole.');
+    expect(html).not.toContain('versleutelde data zonder sleutelmetadata');
+    expect(html).not.toContain('contact op met support');
+  });
+
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {
     const html = renderVaultGate(true, undefined, undefined, {
       storageMode: 'legacy-indexeddb',
