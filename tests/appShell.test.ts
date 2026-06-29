@@ -371,6 +371,18 @@ function extractAttachmentAssistiveConfirmationReceiptAuditSurface(html: string)
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveAuditTrailSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -8076,6 +8088,171 @@ describe('app shell', () => {
     expect(assistiveConfirmationReceiptAudit).not.toContain('dosering');
     expect(assistiveConfirmationReceiptAudit).not.toContain('behandelkeuzeadvies');
     expect(assistiveConfirmationReceiptAudit).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-audit-trail-token',
+        dossierStatus:
+          'Audit trail bevat bewijsroute voor audit-trail-secret-source.pdf met private-audit-trail-token OCR-payload diagnose 2525 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-audit-trail-sensitive',
+            datum: '2026-07-28',
+            titel: 'Audit trail source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'audit-trail-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YXVkaXQtdHJhaWwtc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-audit-trail-token hoort niet in assistive audit trail.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 2525 mg behandelkeuzeadvies blijft buiten assistive audit trail.',
+              signalen: ['OCR-payload blijft buiten audit trail proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-28',
+              documenttype: 'Labuitslag',
+              bronbestand: 'audit-trail-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-28T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE AUDIT TRAIL OCR TEKST private-audit-trail-token diagnose 2525 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor audit-trail-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-28T08:05:00.000Z',
+          },
+          {
+            id: 'doc-audit-trail-locked-image',
+            datum: '2026-07-29',
+            titel: 'Audit trail locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'audit-trail-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YXVkaXQtdHJhaWwtbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-audit-trail-token hoort ook niet in trail labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-29',
+              documenttype: 'Foto/echo',
+              bronbestand: 'audit-trail-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-29',
+              soort: 'echo',
+              context: 'private audit trail imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-29T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveAuditTrail = extractAttachmentAssistiveAuditTrailSurface(html);
+
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-surface="privacy"',
+    );
+    expect(assistiveAuditTrail).toContain('role="status"');
+    expect(assistiveAuditTrail).toContain('aria-live="polite"');
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-live-state="confirmation-receipt-audit-trail-available"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="confirmation-receipt-audit-trail-boundary"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="audit-trail-proof-summary-affordance"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="screenreader-audit-trail-label-state"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="assistive-audit-trail-retention"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="locked-preview-assistive-audit-trail-boundary"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-state="confirmation-receipt-audit-trail-available"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-state="audit-trail-proof-summary-ready"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-state="screenreader-audit-trail-label-ready"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-state="assistive-audit-trail-retention-ready"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-state="locked-preview-assistive-audit-trail-boundary"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'Opschoonbewijs audit trail beschikbaar als veilige assistive trailstatus',
+    );
+    expect(assistiveAuditTrail).toContain('2 bijlagen met veilige audit trailstatus');
+    expect(assistiveAuditTrail).toContain('Audit trailbewijs is beschikbaar zonder bestands-');
+    expect(assistiveAuditTrail).toContain(
+      'Screenreader audit trail labels noemen alleen trailgroep',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'Assistive audit trail retention bevestigt confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveAuditTrail).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive audit trail payloads',
+    );
+
+    expect(assistiveAuditTrail).not.toContain('private-audit-trail-token');
+    expect(assistiveAuditTrail).not.toContain('audit-trail-secret-source.pdf');
+    expect(assistiveAuditTrail).not.toContain('audit-trail-locked-secret.jpg');
+    expect(assistiveAuditTrail).not.toContain('YXVkaXQtdHJhaWwtc2VjcmV0LXBheWxvYWQ=');
+    expect(assistiveAuditTrail).not.toContain('YXVkaXQtdHJhaWwtbG9ja2VkLXNlY3JldA==');
+    expect(assistiveAuditTrail).not.toContain('data:image/jpeg;base64');
+    expect(assistiveAuditTrail).not.toContain('GEVOELIGE AUDIT TRAIL OCR TEKST');
+    expect(assistiveAuditTrail).not.toContain('OCR-payload');
+    expect(assistiveAuditTrail).not.toContain('Attachmentpayload');
+    expect(assistiveAuditTrail).not.toContain('attachmentpayload');
+    expect(assistiveAuditTrail).not.toContain('dossierpayload');
+    expect(assistiveAuditTrail).not.toContain('diagnose');
+    expect(assistiveAuditTrail).not.toContain('dosering');
+    expect(assistiveAuditTrail).not.toContain('behandelkeuzeadvies');
+    expect(assistiveAuditTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
