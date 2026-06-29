@@ -7977,4 +7977,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G809 — consult intelligence review states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De imaging compare states zijn nu bewaakt, maar consult intelligence review states hebben nog geen expliciete Claude Design-regressie rond lege, concept- en gecorrigeerde consultinzichten.
+- **Desired Outcome:** Tests bewaken dat consultverslag reviewstates scanbaar blijven, bestaande consult-form hooks behouden en geen ruwe uploadpayload of medische adviescopy in reviewpanelen lekt.
+- **User Value:** Gebruikers kunnen gespreksverslagen rustig controleren en corrigeren terwijl het nieuwe thema consistent en privacyveilig blijft.
+- **Acceptance Criteria:** Tests dekken lege consultverslagen, conceptactiepunten en gecorrigeerde samenvatting; bestaande `consult-verslag-form` velden blijven aanwezig; zichtbare reviewcopy toont geen base64, bestandspayload of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

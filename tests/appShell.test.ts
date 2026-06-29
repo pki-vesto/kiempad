@@ -74,6 +74,14 @@ function extractDossierInboxOverview(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractImagingComparePanel(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">([\s\S]*?)<\/section>/,
+  );
+  if (!match?.[1]) throw new Error('Imaging compare panel ontbreekt.');
+  return match[1].replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -2232,6 +2240,190 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
     expect(html).toContain('Lokale preview uit de legacy lokale encrypted dataset op dit toestel.');
     expect(html).toContain('Bestandstype is beeldmateriaal.');
+  });
+
+  it('bewaakt imaging compare empty, multiple en locked states zonder payloadlekken', () => {
+    const emptyHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const emptyCompare = extractImagingComparePanel(emptyHtml);
+
+    expect(emptyHtml).toContain('id="imaging-filter-form"');
+    expect(emptyHtml).toContain('name="imagingSoort"');
+    expect(emptyHtml).toContain('name="imagingDatumVanaf"');
+    expect(emptyHtml).toContain('name="imagingDatumTot"');
+    expect(emptyHtml).toContain('name="imagingTrajectId"');
+    expect(emptyHtml).toContain('name="imagingAfspraakId"');
+    expect(emptyHtml).toContain('name="imagingEmbryoLabel"');
+    expect(emptyCompare).toContain('Beeldmomenten vergelijken');
+    expect(emptyCompare).toContain(
+      'Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.',
+    );
+
+    const populatedHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [
+        {
+          id: 'doc-compare-1',
+          datum: '2026-05-02',
+          titel: 'Echo compare links',
+          categorie: 'beeld',
+          bestandsNaam: 'compare-links-verborgen.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'Y29tcGFyZS1saW5rcw==',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Beeldmoment voor vergelijking.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'compare-links-verborgen.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-02',
+            soort: 'echo',
+            context: 'Links follikelmeting',
+            bron: 'Testkliniek',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'concept',
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+        {
+          id: 'doc-compare-2',
+          datum: '2026-05-04',
+          titel: 'Embryo compare rechts',
+          categorie: 'beeld',
+          bestandsNaam: 'compare-rechts-verborgen.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 2048,
+          inhoudBase64: 'Y29tcGFyZS1yZWNodHM=',
+          analyse: {
+            samenvatting: 'Embryo-afbeelding opgeslagen; analyse is lokaal en niet-medisch.',
+            signalen: ['Tweede beeldmoment voor vergelijking.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Embryo-afbeelding',
+            bronbestand: 'compare-rechts-verborgen.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-04',
+            soort: 'embryo_afbeelding',
+            context: 'Embryo 1 dag 5',
+            bron: 'Testlab',
+            embryoLabel: 'Embryo 1',
+            embryoDag: 5,
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'concept',
+          },
+          uploadedAt: '2026-06-23T15:05:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const populatedCompare = extractImagingComparePanel(populatedHtml);
+
+    expect(populatedCompare).toContain('Eerste beeld');
+    expect(populatedCompare).toContain('Tweede beeld');
+    expect(populatedCompare).toContain('2026-05-04 · Embryo compare rechts');
+    expect(populatedCompare).toContain('2026-05-02 · Echo compare links');
+    expect(populatedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
+    expect(populatedCompare).toContain('Soorten: Embryo-afbeelding en Echo.');
+    expect(populatedCompare).toContain('Kiempad interpreteert beelden niet medisch.');
+    expect(populatedCompare).not.toContain('Y29tcGFyZS1saW5rcw==');
+    expect(populatedCompare).not.toContain('Y29tcGFyZS1yZWNodHM=');
+    expect(populatedCompare).not.toContain('data:image/jpeg;base64');
+    expect(populatedCompare).not.toContain('compare-links-verborgen.jpg');
+    expect(populatedCompare).not.toContain('compare-rechts-verborgen.jpg');
+
+    const lockedHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      imagingPreviewLocked: true,
+      dossierDocuments: [
+        {
+          id: 'doc-locked-compare-1',
+          datum: '2026-05-02',
+          titel: 'Locked compare links',
+          categorie: 'beeld',
+          bestandsNaam: 'locked-links-gevoelig.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'bG9ja2VkLWxpbmtz',
+          analyse: {
+            samenvatting:
+              'Foto/echo opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Locked beeldmoment.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'locked-links-gevoelig.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+        {
+          id: 'doc-locked-compare-2',
+          datum: '2026-05-04',
+          titel: 'Locked compare rechts',
+          categorie: 'beeld',
+          bestandsNaam: 'locked-rechts-gevoelig.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 2048,
+          inhoudBase64: 'bG9ja2VkLXJlY2h0cw==',
+          analyse: {
+            samenvatting: 'Scan opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Tweede locked beeldmoment.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Scan',
+            bronbestand: 'locked-rechts-gevoelig.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          uploadedAt: '2026-06-23T15:05:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const lockedCompare = extractImagingComparePanel(lockedHtml);
+
+    expect(lockedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
+    expect(lockedHtml).toContain('Previewstatus: Preview beschikbaar na ontgrendeling');
+    expect(lockedHtml).toContain('Bronbestand verborgen tot ontgrendeling');
+    expect(lockedHtml).not.toContain('data:image/jpeg;base64');
+    expect(lockedHtml).not.toContain('bG9ja2VkLWxpbmtz');
+    expect(lockedHtml).not.toContain('bG9ja2VkLXJlY2h0cw==');
+    expect(lockedHtml).not.toContain('locked-links-gevoelig.jpg');
+    expect(lockedHtml).not.toContain('locked-rechts-gevoelig.jpg');
+    expect(lockedCompare).not.toContain('locked-links-gevoelig.jpg');
+    expect(lockedCompare).not.toContain('locked-rechts-gevoelig.jpg');
   });
 
   it('rendert locked beeldpreview-placeholders zonder beeldpayload of bronbestandsnaam', () => {

@@ -1452,7 +1452,12 @@ function renderImagingVergelijking(
   vergelijking: ReturnType<typeof bouwImagingVergelijking>,
 ): string {
   if (!vergelijking) {
-    return '<p class="small-print">Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.</p>';
+    return `
+      <section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">
+        <h2>Beeldmomenten vergelijken</h2>
+        <p class="small-print">Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.</p>
+      </section>
+    `;
   }
 
   return `
