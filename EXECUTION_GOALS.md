@@ -8369,4 +8369,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment accessibility UI, aria/status UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G837 — attachment landmark navigation privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment accessibility audit states zijn nu bewaakt, maar landmark-, region-, nav- en headingnavigatie rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment landmark navigation states scanbaar en assistive-tech veilig blijven, bestaande nav/section/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen via screenreaderlandmarks en headingnavigatie veilig door attachmentsecties bewegen zonder dat navigatiestates bronbestanden, selectiecontext of medische inhoud hoorbaar maken.
+- **Acceptance Criteria:** Tests dekken landmark boundary, region navigation boundary, heading route affordance states en landmark audit summary state; bestaande nav/section/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment landmark UI, nav/region UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

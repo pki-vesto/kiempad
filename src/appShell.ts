@@ -1527,6 +1527,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentLoadingErrorPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentShareHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentPrintClinicianPacketPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAccessibilityAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2180,6 +2181,58 @@ function renderAttachmentPrintClinicianPacketPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze print- en artsenpakketstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAccessibilityAuditPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const ariaState = hasAttachments ? 'aria-labels-metadata-only' : 'aria-labels-empty';
+  const roleState = hasAttachments ? 'role-status-boundary-ready' : 'role-status-boundary-empty';
+  const liveRegionState = hasAttachments
+    ? 'live-region-status-metadata-only'
+    : 'live-region-status-empty';
+  const auditState = hasAttachments
+    ? 'accessibility-audit-summary-ready'
+    : 'accessibility-audit-summary-empty';
+  const lockedState =
+    lockedPreviewCount > 0 ? 'locked-preview-accessibility-boundary' : 'no-locked-preview-audit';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment accessibility audit privacy states" data-attachment-accessibility-audit-surface="privacy">
+      <h2>Bijlage accessibility audit</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-accessibility-live-region-state="${liveRegionState}">
+        ${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} beschikbaar als assistive-tech veilige status.` : 'Geen bijlagen beschikbaar voor accessibility audit.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-accessibility-kind="aria-label-boundary" data-attachment-accessibility-state="${ariaState}">
+          <dt>Aria label boundary</dt>
+          <dd>${hasAttachments ? 'Aria-labels beschrijven alleen workflowstatus en veilige routes.' : 'Aria-labels wachten op bijlagestatussen.'}</dd>
+        </div>
+        <div data-attachment-accessibility-kind="role-status-boundary" data-attachment-accessibility-state="${roleState}">
+          <dt>Role en status boundary</dt>
+          <dd>${hasAttachments ? 'Role-, group- en statusregio’s blijven beperkt tot metadata en actiecontext.' : 'Role- en statusregio’s blijven leeg zonder bijlagen.'}</dd>
+        </div>
+        <div data-attachment-accessibility-kind="live-region-affordance" data-attachment-accessibility-state="${liveRegionState}">
+          <dt>Live-region affordance</dt>
+          <dd>${hasAttachments ? 'Live-regions kondigen alleen tellingen en workflowwijzigingen aan.' : 'Live-region wacht op een veilige statuswijziging.'}</dd>
+        </div>
+        <div data-attachment-accessibility-kind="accessibility-audit-summary" data-attachment-accessibility-state="${auditState}">
+          <dt>Accessibility audit summary</dt>
+          <dd>${hasAttachments ? 'Auditstatus bevestigt veilige labels, rollen en statusregio’s zonder broninhoud.' : 'Accessibility audit heeft nog geen bijlagen om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-accessibility-kind="locked-preview-accessibility-boundary" data-attachment-accessibility-state="${lockedState}">
+          <dt>Locked-preview accessibility boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten aria-, status- en live-region payloads.` : 'Geen vergrendelde beeldpreviews binnen accessibility auditstates.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze accessibility-audit toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
