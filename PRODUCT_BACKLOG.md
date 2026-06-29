@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 727 |
+| ☑ klaar | 728 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **926** |
+| **Totaal** | **927** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1088,13 +1088,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G923 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt privacy states | P1 | F5 | ☑ |
 | G924 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit privacy states | P1 | F5 | ☑ |
 | G925 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail privacy states | P1 | F5 | ☑ |
-| G926 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states | P1 | F5 | ☐ |
+| G926 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states | P1 | F5 | ☑ |
+| G927 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 926** (id's G001 t/m G926, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 927** (id's G001 t/m G927, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
