@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G800/G801 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding als contractcontext blijven noemen; G801 is toegevoegd voor een negatieve fixture rond ontbrekende releasecontextcontract-releasecontexttermen.
 - G799/G800 Central Encrypted Platform: maintenance-tests leggen nu de exacte recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding vast als compact contract zonder payload, passphrase of token; G800 is toegevoegd voor release-statebewaking van deze contractcontext.
 - G798/G799 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontracttermen; de foutmelding blijft beperkt tot technische termnamen. G799 is toegevoegd voor een compact contract rond deze releasecontextcontract missing-term melding.
 - G797/G798 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext missing-term melding als contractcontext blijven noemen; G798 is toegevoegd voor een negatieve fixture rond ontbrekende releasecontextcontracttermen.
