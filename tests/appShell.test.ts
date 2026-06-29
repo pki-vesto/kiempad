@@ -10903,6 +10903,97 @@ describe('app shell', () => {
     expect(assistiveExport).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G931 attachment assistive delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-token',
+        dossierStatus:
+          'G931 delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export bevat exportbewijs voor g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-secret-source.pdf met private-g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-token OCR-payload diagnose 5998 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-sensitive',
+            datum: '2026-10-05',
+            titel:
+              'G931 delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MzEtUEFZTE9BRA==',
+            notitie:
+              'private-g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-token hoort niet in assistive archive receipt export.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5998 mg behandelkeuzeadvies blijft buiten G931 cleanup archive receipt export.',
+              signalen: ['OCR-payload blijft buiten G931 export proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-10-05',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.98,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-10-05T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G931 OCR TEKST private-g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-token diagnose 5998 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-secret-source.pdf.',
+            },
+            uploadedAt: '2026-10-05T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveExport = extractAttachmentAssistiveCleanupArchiveReceiptExportSurface(html);
+
+    expect(assistiveExport).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-surface="privacy"',
+    );
+    expect(assistiveExport).toContain('role="status"');
+    expect(assistiveExport).toContain('aria-live="polite"');
+    expect(assistiveExport).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-kind="cleanup-archive-receipt-export-boundary"',
+    );
+    expect(assistiveExport).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-kind="export-proof-summary-affordance"',
+    );
+    expect(assistiveExport).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-kind="screenreader-receipt-export-label-state"',
+    );
+    expect(assistiveExport).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-kind="assistive-export-retention"',
+    );
+    expect(assistiveExport).toContain('1 bijlage met veilige cleanup archive receipt exportstatus');
+
+    expect(assistiveExport).not.toContain(
+      'private-g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-token',
+    );
+    expect(assistiveExport).not.toContain(
+      'g931-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-secret-source.pdf',
+    );
+    expect(assistiveExport).not.toContain('U0VDUkVULUc5MzEtUEFZTE9BRA==');
+    expect(assistiveExport).not.toContain('GEVOELIGE G931 OCR TEKST');
+    expect(assistiveExport).not.toContain('OCR-payload');
+    expect(assistiveExport).not.toContain('Attachmentpayload');
+    expect(assistiveExport).not.toContain('attachmentpayload');
+    expect(assistiveExport).not.toContain('dossierpayload');
+    expect(assistiveExport).not.toContain('diagnose');
+    expect(assistiveExport).not.toContain('behandelkeuzeadvies');
+    expect(assistiveExport).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
