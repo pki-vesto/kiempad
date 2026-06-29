@@ -503,7 +503,7 @@ export function renderVaultGate(
           <button type="submit">${button}</button>
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
-        ${renderVaultRecoveryStatusAlert(recoveryStatus, error)}
+        ${renderVaultRecoveryStatusAlert(recoveryStatus, error, options)}
         ${renderVaultDiagnostics(hasVault, webAuthnStatus, options)}
         ${renderVaultRecoveryHelp(hasVault, options, recoveryStatus)}
         <p class="small-print">${DISCLAIMER}</p>
@@ -513,6 +513,12 @@ export function renderVaultGate(
 }
 
 type VaultRecoveryStatus = 'none' | 'unlock-error' | 'missing-key-metadata';
+
+type VaultRecoveryHandoff = {
+  storageMode: 'central-api' | 'legacy-indexeddb';
+  recoveryCategory: 'missing-key-metadata';
+  action: 'reload-support-backup';
+};
 
 function classifyVaultRecoveryStatus(error?: string): VaultRecoveryStatus {
   if (!error) return 'none';
@@ -526,17 +532,37 @@ function classifyVaultRecoveryStatus(error?: string): VaultRecoveryStatus {
   return 'unlock-error';
 }
 
-function renderVaultRecoveryStatusAlert(status: VaultRecoveryStatus, error?: string): string {
+function renderVaultRecoveryStatusAlert(
+  status: VaultRecoveryStatus,
+  error?: string,
+  options: VaultGateOptions = {},
+): string {
   if (status === 'missing-key-metadata') {
+    const handoff = buildMissingKeyMetadataRecoveryHandoff(options);
     return `
       <section class="form-error" role="alert" aria-label="Herstelstatus centrale dataset">
         <strong>Centrale dataset vraagt herstelcontrole.</strong>
         <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span>
+        <dl class="definition-list compact-list" data-support-handoff="missing-key-metadata">
+          <div><dt>Supportcategorie</dt><dd>${handoff.recoveryCategory}</dd></div>
+          <div><dt>Opslagmodus</dt><dd>${handoff.storageMode}</dd></div>
+          <div><dt>Actierichting</dt><dd>${handoff.action}</dd></div>
+        </dl>
       </section>
     `;
   }
   if (!error) return '';
   return `<p class="form-error" role="alert">${escapeHtml(error)}</p>`;
+}
+
+function buildMissingKeyMetadataRecoveryHandoff(
+  options: VaultGateOptions = {},
+): VaultRecoveryHandoff {
+  return {
+    storageMode: options.storageMode === 'legacy-indexeddb' ? 'legacy-indexeddb' : 'central-api',
+    recoveryCategory: 'missing-key-metadata',
+    action: 'reload-support-backup',
+  };
 }
 
 export function renderStorageBootstrapError(error: string): string {
