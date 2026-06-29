@@ -8159,4 +8159,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central sync UI, recovery UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G822 — upload attachment privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Centrale sync/conflictstates zijn nu bewaakt, maar uploadflows voor dossierdocumenten, beelden, consultverslagen en embryo-afbeeldingen hebben nog geen gezamenlijke Claude Design-regressie rond attachmentstatus zonder bestandsinhoud, base64 of medische payload.
+- **Desired Outcome:** Tests bewaken dat upload attachment states scanbaar blijven, bestaande upload/delete hooks behouden en geen bestandsinhoud, OCR/base64, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen historische onderzoeken, foto's, echo's, gespreksverslagen en embryo-informatie uploaden zonder dat themawijzigingen bronbestanden of medische inhoud lekken.
+- **Acceptance Criteria:** Tests dekken dossierupload, imagingupload, consultupload en embryoupload privacy states; bestaande upload UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bestandsinhoud, base64, OCR-payload, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Upload UI, dossier UI, imaging repository, embryo tracking, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

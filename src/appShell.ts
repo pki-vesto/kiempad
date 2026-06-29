@@ -342,10 +342,19 @@ export type AppShellState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
   webAuthnStatus?: WebAuthnViewStatus;
   inAppFallbackNotifications?: InAppFallbackNotification[];
   storageMode?: 'central-api' | 'legacy-indexeddb';
   storageLabel?: string;
+};
+
+type CentralSyncFeedbackKind = 'replay-conflict' | 'stale-session' | 'record-package';
+
+type CentralSyncFeedbackItem = {
+  state: 'idle' | 'success' | 'warning' | 'error';
+  status?: string;
+  error?: string;
 };
 
 export type WebAuthnViewStatus = {
@@ -812,8 +821,11 @@ const EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS = [
   /\bproviderpayload\b/i,
   /\bprovider[-_\s]?payload\b/i,
   /\bbase64\b/i,
+  /\bencrypted[-_\s]?payload\b/i,
   /\bocr[-_\s]?payload\b/i,
+  /\brecord[-_\s]?payload\b/i,
   /\bdossierpayload\b/i,
+  /\bdossier\s+payload\b/i,
   /\bdiagnose\b/i,
   /\bbehandelkeuzeadvies\b/i,
   /\b[\w.-]+\.(?:pdf|jpg|jpeg|png|heic|json|kiempad-export|kiempad-sync)\b/i,
@@ -1019,6 +1031,7 @@ function renderBackupScreen(state: AppShellState): string {
         <h2 class="section-subheading">${syncTitle}</h2>
         <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
         <p class="small-print">${syncCopy}</p>
+        ${renderCentralSyncFeedback(state)}
         <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
           <h2>${escapeHtml(reminder.titel)}</h2>
           <p>${escapeHtml(reminder.tekst)}</p>
@@ -1044,6 +1057,58 @@ function renderBackupScreen(state: AppShellState): string {
         ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
     </section>
   `;
+}
+
+const CENTRAL_SYNC_FEEDBACK_DEFAULTS: Record<
+  CentralSyncFeedbackKind,
+  { label: string; defaultState: CentralSyncFeedbackItem['state']; defaultCopy: string }
+> = {
+  'replay-conflict': {
+    label: 'Replayconflict',
+    defaultState: 'idle',
+    defaultCopy: 'Geen replayconflict gemeld voor deze centrale sessie.',
+  },
+  'stale-session': {
+    label: 'Sessie',
+    defaultState: 'idle',
+    defaultCopy: 'Geen verlopen centrale sessie gemeld.',
+  },
+  'record-package': {
+    label: 'Recordpakket',
+    defaultState: 'idle',
+    defaultCopy: 'Recordpakketstatus klaar voor handmatige encrypted overdracht.',
+  },
+};
+
+function renderCentralSyncFeedback(state: AppShellState): string {
+  if (!isCentralStorage(state)) return '';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Centrale syncstatus" data-central-sync-feedback="central-encrypted">
+      <h2>Centrale syncstatus</h2>
+      <dl class="summary-list">
+        ${(['replay-conflict', 'stale-session', 'record-package'] as const)
+          .map((kind) => renderCentralSyncFeedbackRow(kind, state.centralSyncFeedback?.[kind]))
+          .join('')}
+      </dl>
+      <p class="small-print">Deze status toont alleen technische syncrichting en geen recordinhoud.</p>
+    </section>
+  `;
+}
+
+function renderCentralSyncFeedbackRow(
+  kind: CentralSyncFeedbackKind,
+  item: CentralSyncFeedbackItem | undefined,
+): string {
+  const defaults = CENTRAL_SYNC_FEEDBACK_DEFAULTS[kind];
+  const state = item?.state ?? defaults.defaultState;
+  const fallback = `${defaults.label} bijgewerkt zonder sessie- of recorddetails.`;
+  const copy = sanitizeSettingsPrivacyFeedback(
+    item?.error ?? item?.status ?? defaults.defaultCopy,
+    fallback,
+  );
+
+  return `<div data-central-sync-feedback-kind="${kind}" data-central-sync-feedback-state="${state}"><dt>${defaults.label}</dt><dd>${escapeHtml(copy)}</dd></div>`;
 }
 
 function renderWebAuthnSettings(state: AppShellState): string {
@@ -1132,8 +1197,11 @@ const STATUS_FEEDBACK_SENSITIVE_PATTERNS = [
   /\bproviderpayload\b/i,
   /\bprovider[-_\s]?payload\b/i,
   /\bbase64\b/i,
+  /\bencrypted[-_\s]?payload\b/i,
   /\bocr[-_\s]?payload\b/i,
+  /\brecord[-_\s]?payload\b/i,
   /\bdossierpayload\b/i,
+  /\bdossier\s+payload\b/i,
   /\bdiagnose\b/i,
   /\bbehandelkeuzeadvies\b/i,
   /\braw importregel\b/i,

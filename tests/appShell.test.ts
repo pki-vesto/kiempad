@@ -219,6 +219,14 @@ function extractBackupImportPrivacyZone(html: string): string {
     .trim();
 }
 
+function extractCentralSyncFeedback(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Centrale syncstatus"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Centrale syncstatus ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractWebAuthnPanel(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn"[\s\S]*?<\/section>/,
@@ -4753,6 +4761,69 @@ describe('app shell', () => {
       expect(zone).not.toContain('diagnose');
       expect(zone).not.toContain('behandelkeuzeadvies');
       expect(zone).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
+  });
+
+  it('bewaakt centrale sync en conflict privacy states zonder sessie- of recordpayload', () => {
+    const html = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        centralSyncFeedback: {
+          'replay-conflict': {
+            state: 'warning',
+            status:
+              'Replay conflict voor recordpayload token abc123 echo.png encrypted payload diagnose 150 mg.',
+          },
+          'stale-session': {
+            state: 'error',
+            error:
+              'Stale session met passphrase API-sleutel base64 dossier payload behandelkeuzeadvies.',
+          },
+          'record-package': {
+            state: 'success',
+            status: 'Recordpakket bevat encrypted payload voor dossierpayload Progesteron 200 mg.',
+          },
+        },
+      }),
+    );
+    const syncFeedback = extractCentralSyncFeedback(html);
+    const backupZone = extractBackupImportPrivacyZone(html);
+
+    expect(syncFeedback).toContain('data-central-sync-feedback="central-encrypted"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-kind="replay-conflict"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-state="warning"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-kind="stale-session"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-state="error"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-kind="record-package"');
+    expect(syncFeedback).toContain('data-central-sync-feedback-state="success"');
+    expect(syncFeedback).toContain('Replayconflict bijgewerkt zonder sessie- of recorddetails.');
+    expect(syncFeedback).toContain('Sessie bijgewerkt zonder sessie- of recorddetails.');
+    expect(syncFeedback).toContain('Recordpakket bijgewerkt zonder sessie- of recorddetails.');
+    expect(syncFeedback).toContain('geen recordinhoud');
+
+    expect(backupZone).toContain('data-sync-export-state="central-record-package"');
+    expect(backupZone).toContain('data-import-privacy-state="central-record-package"');
+    expect(backupZone).toContain('Download recordpakket');
+    expect(backupZone).toContain('Recordpakket importeren');
+    expect(backupZone).toContain('Kiempad-recordpakket');
+
+    const centralSyncSurfaces = [syncFeedback, backupZone];
+    for (const surface of centralSyncSurfaces) {
+      expect(surface).not.toContain('token abc123');
+      expect(surface).not.toContain('passphrase');
+      expect(surface).not.toContain('API-sleutel');
+      expect(surface).not.toContain('api key');
+      expect(surface).not.toContain('base64');
+      expect(surface).not.toContain('encrypted payload');
+      expect(surface).not.toContain('recordpayload');
+      expect(surface).not.toContain('dossierpayload');
+      expect(surface).not.toContain('dossier payload');
+      expect(surface).not.toContain('echo.png');
+      expect(surface).not.toContain('diagnose');
+      expect(surface).not.toContain('Progesteron');
+      expect(surface).not.toContain('behandelkeuzeadvies');
+      expect(surface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
     }
   });
 
