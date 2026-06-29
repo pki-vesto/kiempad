@@ -550,10 +550,14 @@ function renderVaultRecoveryStatusAlert(
   if (!error) return '';
   return `
     <section class="form-error" role="alert" aria-label="Herstelstatus ontgrendelen">
-      <span>${escapeHtml(error)}</span>
+      <span>${renderVaultUnlockErrorCopy()}</span>
       ${renderVaultRecoveryHandoff(buildVaultRecoveryHandoff('unlock-error', options))}
     </section>
   `;
+}
+
+function renderVaultUnlockErrorCopy(): string {
+  return 'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.';
 }
 
 function buildVaultRecoveryHandoff(
