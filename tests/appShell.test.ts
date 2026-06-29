@@ -16672,6 +16672,105 @@ describe('app shell', () => {
     expect(assistiveArchiveReceiptExport).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G968 attachment assistive cleanup archive receipt export delivery privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token',
+        dossierStatus:
+          'G968 cleanup archive receipt export delivery bevat bewaartermijnopschoonarchiefontvangstexportafleveringsbewijs voor g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf met private-g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token OCR-payload diagnose 6066 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-sensitive',
+            datum: '2026-11-11',
+            titel: 'G968 cleanup archive receipt export delivery bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5NjgtUEFZTE9BRA==',
+            notitie:
+              'private-g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token hoort niet in assistive archive receipt export delivery states.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 6066 mg behandelkeuzeadvies blijft buiten G968 cleanup archive receipt export delivery proof.',
+              signalen: [
+                'OCR-payload blijft buiten G968 cleanup archive receipt export delivery screenreader label.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2026-11-11',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.98,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-11-11T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G968 OCR TEKST private-g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token diagnose 6066 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf.',
+            },
+            uploadedAt: '2026-11-11T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveArchiveReceiptExportDelivery =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliverySurface(
+        html,
+      );
+
+    expect(assistiveArchiveReceiptExportDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-surface="privacy"',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).toContain('role="status"');
+    expect(assistiveArchiveReceiptExportDelivery).toContain('aria-live="polite"');
+    expect(assistiveArchiveReceiptExportDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-boundary"',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-kind="retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-proof-summary-affordance"',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-kind="screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-label-state"',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-kind="assistive-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-state"',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).toContain(
+      '1 bijlage met veilige cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export deliverystatus zonder broninhoud.',
+    );
+
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain(
+      'private-g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain(
+      'g968-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf',
+    );
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('U0VDUkVULUc5NjgtUEFZTE9BRA==');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('GEVOELIGE G968 OCR TEKST');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('OCR-payload');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('Attachmentpayload');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('attachmentpayload');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('dossierpayload');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('diagnose');
+    expect(assistiveArchiveReceiptExportDelivery).not.toContain('behandelkeuzeadvies');
+    expect(assistiveArchiveReceiptExportDelivery).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i,
+    );
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
