@@ -267,6 +267,16 @@ function extractAttachmentAssistiveArchiveSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveExpirySurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive expiry privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment assistive recovery archive expiry privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -6529,6 +6539,156 @@ describe('app shell', () => {
     expect(assistiveArchive).not.toContain('dosering');
     expect(assistiveArchive).not.toContain('behandelkeuzeadvies');
     expect(assistiveArchive).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive expiry privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-expiry-token',
+        dossierStatus:
+          'Expiry bevat retentie-einde voor expiry-secret-source.pdf met private-expiry-token OCR-payload diagnose 1625 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-expiry-sensitive',
+            datum: '2026-07-10',
+            titel: 'Expiry source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'expiry-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'ZXhwaXJ5LXNlY3JldC1wYXlsb2Fk',
+            notitie: 'private-expiry-token hoort niet in assistive expiry.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1625 mg behandelkeuzeadvies blijft buiten assistive expiry.',
+              signalen: ['OCR-payload blijft buiten retention end en screenreader expiry label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-10',
+              documenttype: 'Labuitslag',
+              bronbestand: 'expiry-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-10T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE EXPIRY OCR TEKST private-expiry-token diagnose 1625 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor expiry-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-10T08:05:00.000Z',
+          },
+          {
+            id: 'doc-expiry-locked-image',
+            datum: '2026-07-11',
+            titel: 'Expiry locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'expiry-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'ZXhwaXJ5LWxvY2tlZC1zZWNyZXQ=',
+            notitie: 'private-expiry-token hoort ook niet in expiry labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-11',
+              documenttype: 'Foto/echo',
+              bronbestand: 'expiry-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-11',
+              soort: 'echo',
+              context: 'private expiry imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-11T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveExpiry = extractAttachmentAssistiveExpirySurface(html);
+
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveExpiry).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(assistiveExpiry).toContain('role="status"');
+    expect(assistiveExpiry).toContain('aria-live="polite"');
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-live-state="archive-expiry-available"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-kind="archive-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-kind="retention-end-summary-affordance"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-kind="screenreader-expiry-label-state"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-kind="assistive-expiry-audit"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-kind="locked-preview-assistive-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-state="archive-expiry-available"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-state="retention-end-summary-ready"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-state="screenreader-expiry-label-ready"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-state="assistive-expiry-audit-ready"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-expiry-state="locked-preview-assistive-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'Archiefverval beschikbaar als veilige assistive expirystatus',
+    );
+    expect(assistiveExpiry).toContain('2 bijlagen met veilige vervalstatus');
+    expect(assistiveExpiry).toContain('Retentie-einde is gepland zonder bestands-');
+    expect(assistiveExpiry).toContain('Screenreader expiry labels noemen alleen vervalgroep');
+    expect(assistiveExpiry).toContain(
+      'Assistive expiry audit bevestigt archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveExpiry).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive expiry payloads',
+    );
+
+    expect(assistiveExpiry).not.toContain('private-expiry-token');
+    expect(assistiveExpiry).not.toContain('expiry-secret-source.pdf');
+    expect(assistiveExpiry).not.toContain('expiry-locked-secret.jpg');
+    expect(assistiveExpiry).not.toContain('ZXhwaXJ5LXNlY3JldC1wYXlsb2Fk');
+    expect(assistiveExpiry).not.toContain('ZXhwaXJ5LWxvY2tlZC1zZWNyZXQ=');
+    expect(assistiveExpiry).not.toContain('data:image/jpeg;base64');
+    expect(assistiveExpiry).not.toContain('GEVOELIGE EXPIRY OCR TEKST');
+    expect(assistiveExpiry).not.toContain('OCR-payload');
+    expect(assistiveExpiry).not.toContain('Attachmentpayload');
+    expect(assistiveExpiry).not.toContain('attachmentpayload');
+    expect(assistiveExpiry).not.toContain('dossierpayload');
+    expect(assistiveExpiry).not.toContain('diagnose');
+    expect(assistiveExpiry).not.toContain('dosering');
+    expect(assistiveExpiry).not.toContain('behandelkeuzeadvies');
+    expect(assistiveExpiry).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
