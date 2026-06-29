@@ -9856,6 +9856,96 @@ describe('app shell', () => {
     expect(assistiveExpiry).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G927 attachment assistive delivery handoff confirmation receipt audit trail retention expiry privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-token',
+        dossierStatus:
+          'G927 delivery handoff confirmation receipt audit trail retention expiry bevat vervalbewijs voor g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf met private-g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-token OCR-payload diagnose 5794 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-sensitive',
+            datum: '2026-10-01',
+            titel: 'G927 delivery handoff confirmation receipt audit trail retention expiry bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjctUEFZTE9BRA==',
+            notitie:
+              'private-g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-token hoort niet in assistive expiry.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5794 mg behandelkeuzeadvies blijft buiten G927 retention expiry.',
+              signalen: ['OCR-payload blijft buiten G927 expiry proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-10-01',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.96,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-10-01T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G927 OCR TEKST private-g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-token diagnose 5794 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf.',
+            },
+            uploadedAt: '2026-10-01T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveExpiry = extractAttachmentAssistiveRetentionExpirySurface(html);
+
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-retention-expiry-surface="privacy"',
+    );
+    expect(assistiveExpiry).toContain('role="status"');
+    expect(assistiveExpiry).toContain('aria-live="polite"');
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-retention-expiry-kind="retention-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-retention-expiry-kind="expiry-proof-summary-affordance"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-retention-expiry-kind="screenreader-retention-expiry-label-state"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-retention-expiry-kind="assistive-expiry-cleanup"',
+    );
+    expect(assistiveExpiry).toContain('1 bijlage met veilige retention expirystatus');
+
+    expect(assistiveExpiry).not.toContain(
+      'private-g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-token',
+    );
+    expect(assistiveExpiry).not.toContain(
+      'g927-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf',
+    );
+    expect(assistiveExpiry).not.toContain('U0VDUkVULUc5MjctUEFZTE9BRA==');
+    expect(assistiveExpiry).not.toContain('GEVOELIGE G927 OCR TEKST');
+    expect(assistiveExpiry).not.toContain('OCR-payload');
+    expect(assistiveExpiry).not.toContain('Attachmentpayload');
+    expect(assistiveExpiry).not.toContain('attachmentpayload');
+    expect(assistiveExpiry).not.toContain('dossierpayload');
+    expect(assistiveExpiry).not.toContain('diagnose');
+    expect(assistiveExpiry).not.toContain('behandelkeuzeadvies');
+    expect(assistiveExpiry).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
