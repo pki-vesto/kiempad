@@ -8815,6 +8815,97 @@ describe('app shell', () => {
     expect(assistiveConfirmationReceipt).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G923 attachment assistive delivery handoff confirmation receipt privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-g923-delivery-handoff-confirmation-receipt-token',
+        dossierStatus:
+          'G923 delivery handoff confirmation receipt bevat ontvangstbewijs voor g923-delivery-handoff-confirmation-receipt-secret-source.pdf met private-g923-delivery-handoff-confirmation-receipt-token OCR-payload diagnose 5489 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g923-delivery-handoff-confirmation-receipt-sensitive',
+            datum: '2026-09-27',
+            titel: 'G923 delivery handoff confirmation receipt bron',
+            categorie: 'onderzoek',
+            bestandsNaam: 'g923-delivery-handoff-confirmation-receipt-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjMtUEFZTE9BRA==',
+            notitie:
+              'private-g923-delivery-handoff-confirmation-receipt-token hoort niet in assistive confirmation receipt.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5489 mg behandelkeuzeadvies blijft buiten G923 confirmation receipt.',
+              signalen: [
+                'OCR-payload blijft buiten G923 confirmation receipt proof en screenreader label.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2026-09-27',
+              documenttype: 'Labuitslag',
+              bronbestand: 'g923-delivery-handoff-confirmation-receipt-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.93,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-09-27T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G923 OCR TEKST private-g923-delivery-handoff-confirmation-receipt-token diagnose 5489 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g923-delivery-handoff-confirmation-receipt-secret-source.pdf.',
+            },
+            uploadedAt: '2026-09-27T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveConfirmationReceipt = extractAttachmentAssistiveConfirmationReceiptSurface(html);
+
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-surface="privacy"',
+    );
+    expect(assistiveConfirmationReceipt).toContain('role="status"');
+    expect(assistiveConfirmationReceipt).toContain('aria-live="polite"');
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="handoff-confirmation-receipt-boundary"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="confirmation-receipt-proof-summary-affordance"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="screenreader-confirmation-receipt-label-state"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="assistive-confirmation-receipt-audit"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      '1 bijlage met veilige confirmation receiptstatus',
+    );
+
+    expect(assistiveConfirmationReceipt).not.toContain(
+      'private-g923-delivery-handoff-confirmation-receipt-token',
+    );
+    expect(assistiveConfirmationReceipt).not.toContain(
+      'g923-delivery-handoff-confirmation-receipt-secret-source.pdf',
+    );
+    expect(assistiveConfirmationReceipt).not.toContain('U0VDUkVULUc5MjMtUEFZTE9BRA==');
+    expect(assistiveConfirmationReceipt).not.toContain('GEVOELIGE G923 OCR TEKST');
+    expect(assistiveConfirmationReceipt).not.toContain('OCR-payload');
+    expect(assistiveConfirmationReceipt).not.toContain('Attachmentpayload');
+    expect(assistiveConfirmationReceipt).not.toContain('attachmentpayload');
+    expect(assistiveConfirmationReceipt).not.toContain('dossierpayload');
+    expect(assistiveConfirmationReceipt).not.toContain('diagnose');
+    expect(assistiveConfirmationReceipt).not.toContain('behandelkeuzeadvies');
+    expect(assistiveConfirmationReceipt).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
