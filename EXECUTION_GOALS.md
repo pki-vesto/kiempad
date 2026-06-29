@@ -7781,4 +7781,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G795 — recovery contract helper release-state message error contract release guard negative fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext wordt nu in release/state bewaakt, maar ontbrekende releasecontexttermen hebben nog geen aparte negatieve fixture.
+- **Desired Outcome:** Een negatieve fixture bewijst dat ontbrekende recovery-helper release-state message-foutmeldingcontext contractcontext releasecontexttermen technisch en compact falen.
+- **User Value:** Onderhouders zien direct welke releasecontextterm ontbreekt zonder gevoelige payload-, passphrase- of tokencontext.
+- **Acceptance Criteria:** Maintenance-test faalt compact wanneer de release-state message-foutmeldingcontext contractcontext releasecontextterm ontbreekt; fouttekst bevat alleen technische termnamen; bestaande releasecontext-, release-state-, negatieve fixture-, compact-contract-, releaseguard- en messagecontracttests blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
