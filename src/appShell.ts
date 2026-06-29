@@ -41,11 +41,13 @@ import {
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   type DossierImportInboxItem,
+  type DossierZoekResultaat,
   EMBRYO_KWALITEIT_WAARSCHUWING,
   EMBRYO_STATUS_LABELS,
   filterImagingRepository,
   formatBytes,
   type ImagingRepositoryFilter,
+  type ImagingRepositoryItem,
   maakImagingContextSamenvatting,
   zoekDossierDocumenten,
 } from './domain/dossier';
@@ -1517,6 +1519,7 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde encrypted dataset.</p>`
             : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
+        ${renderAttachmentSearchFilterPrivacy(state, zoekResultaten, alleImagingItems, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -1742,6 +1745,65 @@ function renderAttachmentAuditTrailPrivacy(state: AppShellState): string {
         </div>
       </dl>
       <p class="small-print">Deze audittrail toont alleen eventstatus en geen broninhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentSearchFilterPrivacy(
+  state: AppShellState,
+  zoekResultaten: readonly DossierZoekResultaat[],
+  alleImagingItems: readonly ImagingRepositoryItem[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const documents = state.dossierDocuments ?? [];
+  const zoekActief = Boolean(state.dossierZoekterm?.trim());
+  const filter = state.imagingFilter ?? {};
+  const actieveFilterFacets = [
+    filter.soort,
+    filter.datumVanaf,
+    filter.datumTot,
+    filter.trajectId,
+    filter.afspraakId,
+    filter.embryoLabel?.trim(),
+  ].filter(Boolean).length;
+  const filterActief = actieveFilterFacets > 0;
+  const zoekHeeftResultaten = zoekResultaten.length > 0;
+  const filterHeeftResultaten = imagingItems.length > 0;
+  const emptyResultState =
+    (zoekActief && !zoekHeeftResultaten) || (filterActief && !filterHeeftResultaten)
+      ? 'empty-results'
+      : zoekActief || filterActief
+        ? 'results-available'
+        : 'idle';
+  const lockedResultState =
+    state.imagingPreviewLocked && alleImagingItems.length > 0
+      ? 'locked-results'
+      : alleImagingItems.length > 0
+        ? 'unlocked-results'
+        : 'no-results';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment search and filter privacy states" data-attachment-search-filter-surface="privacy">
+      <h2>Bijlage zoeken en filteren</h2>
+      <dl class="summary-list">
+        <div data-attachment-search-kind="search-status" data-attachment-search-state="${zoekActief ? (zoekHeeftResultaten ? 'active-matches' : 'active-empty') : 'idle'}">
+          <dt>Zoekstatus</dt>
+          <dd>${zoekActief ? `${zoekResultaten.length} veilige resultaatstatus${zoekResultaten.length === 1 ? '' : 'sen'} uit ${documents.length} dossierbijlage${documents.length === 1 ? '' : 'n'}.` : 'Geen actieve zoekopdracht op bijlagen.'}</dd>
+        </div>
+        <div data-attachment-filter-kind="filter-facets" data-attachment-filter-state="${filterActief ? 'active-facets' : 'inactive'}">
+          <dt>Filterfacets</dt>
+          <dd>${filterActief ? `${actieveFilterFacets} filterfacet${actieveFilterFacets === 1 ? '' : 's'} actief op imagingmetadata.` : 'Geen actieve imagingfilters.'}</dd>
+        </div>
+        <div data-attachment-filter-kind="empty-result" data-attachment-filter-state="${emptyResultState}">
+          <dt>Resultaatgrens</dt>
+          <dd>${emptyResultState === 'empty-results' ? 'Geen zichtbare resultaten binnen de veilige zoek- of filterstatus.' : zoekActief || filterActief ? 'Zoek- of filterresultaten blijven beperkt tot veilige statusmetadata.' : 'Resultaatgrens wacht op een zoek- of filteractie.'}</dd>
+        </div>
+        <div data-attachment-filter-kind="locked-result-boundary" data-attachment-filter-state="${lockedResultState}">
+          <dt>Vergrendelde resultaten</dt>
+          <dd>${state.imagingPreviewLocked ? 'Bijlagepreviews blijven vergrendeld; deze status toont alleen aantallen en workflowmetadata.' : alleImagingItems.length > 0 ? 'Bijlagepreviews zijn alleen zichtbaar binnen de ontgrendelde encrypted sessie.' : 'Geen vergrendelde imagingresultaten beschikbaar.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze zoek- en filterstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
