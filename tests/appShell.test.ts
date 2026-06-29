@@ -104,6 +104,25 @@ function extractResearchTrendDashboard(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractFertilityTimelineSection(html: string): string {
+  const start = html.indexOf(
+    '<section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline"',
+  );
+  const end = html.indexOf(
+    '<section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject"',
+    start,
+  );
+  if (start < 0 || end < 0) throw new Error('Centrale fertility timeline-sectie ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
+function extractFertilityTimelineItems(html: string): string {
+  const start = html.indexOf('<ol id="fertility-timeline-items"');
+  const end = html.indexOf('<p class="small-print">', start);
+  if (start < 0 || end < 0) throw new Error('Fertility timeline itemlijst ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -1425,6 +1444,209 @@ describe('app shell', () => {
     expect(html).toContain('Kiempad graph-samenvatting voor consultvoorbereiding');
     expect(html).toContain('Gebruik dit als gespreksoverzicht');
     expect(html).toContain('geen causaliteit');
+  });
+  it('bewaakt fertility timeline unified states met lege filterstate en gemengde broncontext', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-24T09:00:00'));
+
+    const emptyHtml = renderAppShell(
+      'traject',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-empty',
+              naam: 'Poging zonder match',
+              type: 'ivf',
+              startDatum: '2026-06-20',
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [],
+          },
+        ],
+        timelineFilter: {
+          soort: 'research',
+          bron: 'geen-match',
+        },
+      }),
+    );
+    const emptyTimeline = extractFertilityTimelineSection(emptyHtml);
+
+    expect(emptyTimeline).toContain('data-timeline-state="leeg"');
+    expect(emptyTimeline).toContain('id="timeline-filter-form"');
+    expect(emptyTimeline).toContain('href="#fertility-timeline-items"');
+    expect(emptyTimeline).toContain(
+      '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>',
+    );
+    expect(emptyTimeline).toContain(
+      'Geen ontbrekende context zichtbaar in de huidige timelinefilter.',
+    );
+
+    const contextualHtml = renderAppShell(
+      'traject',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-ctx',
+              naam: 'Poging context',
+              type: 'icsi',
+              startDatum: '2026-06-20',
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [],
+          },
+        ],
+        afspraken: [
+          {
+            afspraak: {
+              id: 'afspraak-ctx',
+              titel: 'Echo controle',
+              datumTijd: '2026-06-24T09:30',
+              type: 'echo',
+              trajectId: 'traject-ctx',
+            },
+          },
+        ],
+        vragen: [
+          {
+            vraag: {
+              id: 'vraag-ctx',
+              vraag: 'Welke labobservaties bespreken we?',
+              voorAfspraakId: 'afspraak-ctx',
+              beantwoord: false,
+            },
+          },
+        ],
+        dossierDocuments: [
+          {
+            id: 'doc-lab',
+            datum: '2026-06-21',
+            titel: 'Labuitslag hormonen',
+            categorie: 'onderzoek',
+            bestandsNaam: 'lab.pdf',
+            grootteBytes: 1024,
+            inhoudBase64: 'BASE64_MEDISCHE_PAYLOAD',
+            trajectId: 'traject-ctx',
+            analyse: { samenvatting: 'Labuitslag als gecontroleerde samenvatting.', signalen: [] },
+            metadata: {
+              bronbestand: 'lab.pdf',
+              documenttype: 'Labrapport',
+              trajectId: 'traject-ctx',
+              extractieBronnen: [],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceScore: 0.91,
+              confidenceLabel: 'hoog',
+              reviewStatus: 'concept',
+              tekst: 'OCR_RAW_PAYLOAD Progesteron 400 mg',
+              waarschuwing: 'Lokale OCR-review nodig.',
+              verwerktOp: '2026-06-21T10:00:00.000Z',
+            },
+            uploadedAt: '2026-06-21T10:00:00.000Z',
+          } as DossierDocument,
+          {
+            id: 'doc-embryo',
+            datum: '2026-06-22',
+            titel: 'Embryo foto dag 5',
+            categorie: 'embryo',
+            bestandsNaam: 'embryo.jpg',
+            grootteBytes: 2048,
+            inhoudBase64: 'BASE64_EMBRYO_IMAGE_PAYLOAD',
+            trajectId: 'traject-ctx',
+            embryo: {
+              label: 'Embryo A',
+              kwaliteit: '4AA',
+              dag: 5,
+              status: 'ingevroren',
+              bron: 'Embryolab',
+              reviewStatus: 'concept',
+            },
+            analyse: { samenvatting: 'Embryobeeld als dossiermetadata.', signalen: [] },
+            metadata: {
+              bronbestand: 'embryo.jpg',
+              documenttype: 'Embryobeeld',
+              trajectId: 'traject-ctx',
+              extractieBronnen: [],
+            },
+            uploadedAt: '2026-06-22T10:00:00.000Z',
+          } as DossierDocument,
+        ],
+        consultVerslagen: [
+          {
+            id: 'consult-ctx',
+            datum: '2026-06-23',
+            titel: 'Intake consult',
+            bron: 'upload',
+            bestandsNaam: 'consult.txt',
+            grootteBytes: 512,
+            inhoudBase64: 'BASE64_CONSULT_PAYLOAD',
+            tekst: 'CONSULT_RAW_PAYLOAD met prive details',
+            trajectId: 'traject-ctx',
+            samenvatting: {
+              status: 'concept',
+              methode: 'lokale_tekstheuristiek',
+              tekst: 'Consultsamenvatting met gecontroleerde actiepunten.',
+              bronnen: ['consult.txt'],
+              waarschuwing: 'Controleer met de kliniek.',
+              gegenereerdOp: '2026-06-23T10:00:00.000Z',
+            },
+            uploadedAt: '2026-06-23T10:00:00.000Z',
+          },
+        ],
+        kennisItems: [
+          {
+            id: 'research-ctx',
+            titel: 'IVF ICSI embryo trendreview',
+            inhoud: 'Researchnotitie over IVF, ICSI en embryo-ontwikkeling.',
+            bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+            categorie: 'research',
+            researchPublicatie: {
+              publicatieDatum: '2026-05-10',
+              bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+              wetenschappelijkeSamenvatting:
+                'Beschrijft IVF-, ICSI- en embryo-observaties met beperkingen.',
+              eenvoudigeSamenvatting: 'Gewone-taal samenvatting van bekeken labobservaties.',
+              relevantieVoorGebruiker:
+                'Achtergrond om vragen over labobservaties met de kliniek te bespreken.',
+            },
+            ai_gegenereerd: false,
+            geverifieerd_met_arts: false,
+          },
+        ],
+      }),
+    );
+    const timeline = extractFertilityTimelineSection(contextualHtml);
+    const timelineItems = extractFertilityTimelineItems(timeline);
+
+    expect(timeline).toContain('data-timeline-state="gevuld"');
+    expect(timeline).toContain('class="timeline-overview-bar" aria-label="Timeline overzicht"');
+    expect(timeline).toContain('id="fertility-timeline-export"');
+    expect(timelineItems).toContain('Labuitslag hormonen');
+    expect(timelineItems).toContain('Labrapport');
+    expect(timelineItems).toContain('Embryo A');
+    expect(timelineItems).toContain('Kwaliteit geregistreerd: 4AA.');
+    expect(timelineItems).toContain('Intake consult');
+    expect(timelineItems).toContain('Consultsamenvatting met gecontroleerde actiepunten.');
+    expect(timelineItems).toContain('IVF ICSI embryo trendreview');
+    expect(timelineItems).toContain('https://pubmed.ncbi.nlm.nih.gov/123456/');
+    expect(timelineItems).toContain('Behandelvoorbereiding');
+    expect(timelineItems).toContain('Dossierrecord: Labuitslag hormonen');
+    expect(timelineItems).toContain('Consultverslag: Intake consult');
+    expect(timelineItems).toContain('Kennisitem: IVF ICSI embryo trendreview');
+    expect(timelineItems).not.toContain('BASE64_MEDISCHE_PAYLOAD');
+    expect(timelineItems).not.toContain('BASE64_EMBRYO_IMAGE_PAYLOAD');
+    expect(timelineItems).not.toContain('BASE64_CONSULT_PAYLOAD');
+    expect(timelineItems).not.toContain('OCR_RAW_PAYLOAD');
+    expect(timelineItems).not.toContain('CONSULT_RAW_PAYLOAD');
+    expect(timelineItems).not.toContain('tracking-payload');
+    expect(timelineItems).not.toContain('behandelkeuzeadvies');
+    expect(timelineItems).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {

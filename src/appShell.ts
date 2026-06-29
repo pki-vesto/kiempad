@@ -4382,7 +4382,7 @@ function renderFertilityTimeline(
     : 'vanuit de legacy lokale encrypted dataset';
 
   return `
-    <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline">
+    <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline" data-timeline-state="${timeline.items.length > 0 ? 'gevuld' : 'leeg'}">
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research ${bronBeschrijving}.</p>
       ${renderFertilityTimelineMobielOverzicht(timeline)}
@@ -4393,7 +4393,7 @@ function renderFertilityTimeline(
       ${
         timeline.items.length > 0
           ? `<ol id="fertility-timeline-items" class="compact-list timeline-list" aria-label="Timeline-items">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
-          : '<p class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
+          : '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
     </section>
