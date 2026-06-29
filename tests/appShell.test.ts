@@ -79,6 +79,28 @@ const UNLOCK_ERROR_HANDOFF_CONTRACT = {
   forbiddenTerms: ['Passphrase', 'token', 'echo.png', 'OCR/base64', 'Progesteron'],
 } as const;
 
+const UNLOCK_ERROR_GENERIC_COPY =
+  'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.';
+
+const UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE =
+  'Passphrase klopt niet voor deze Kiempad-dataset. Bestand echo.png bevat OCR/base64 token en Progesteron.';
+
+const UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS = [
+  'Passphrase klopt niet voor deze Kiempad-dataset.',
+  'echo.png',
+  'OCR/base64',
+  'token',
+  'Progesteron',
+] as const;
+
+function expectUnlockErrorCopyRedaction(html: string): void {
+  expect(html).toContain(UNLOCK_ERROR_GENERIC_COPY);
+  expectSupportHandoffContract(html, UNLOCK_ERROR_HANDOFF_CONTRACT);
+  for (const forbidden of UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS) {
+    expect(html).not.toContain(forbidden);
+  }
+}
+
 describe('app shell', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -159,9 +181,7 @@ describe('app shell', () => {
     expect(html).toContain('Back-upherinnering');
     expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
     expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
-    expect(html).toContain(
-      'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.',
-    );
+    expect(html).toContain(UNLOCK_ERROR_GENERIC_COPY);
     expect(html).not.toContain('Ontgrendelen is mislukt');
     expect(html).not.toContain('Ontgrendelen is mislukt <script>');
     expect(html).toContain('Controleer rustig de passphrase');
@@ -255,9 +275,7 @@ describe('app shell', () => {
 
     expect(html).toContain('data-vault-present="true"');
     expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
-    expect(html).toContain(
-      'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.',
-    );
+    expect(html).toContain(UNLOCK_ERROR_GENERIC_COPY);
     expect(html).not.toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
     expect(html).toContain('Controleer rustig de passphrase');
     expect(html).toContain('data-support-handoff="unlock-error"');
@@ -270,25 +288,22 @@ describe('app shell', () => {
   });
 
   it('past support-handoff helper toe op centrale unlock-error herstelstatus', () => {
-    const html = renderVaultGate(
-      true,
-      'Passphrase klopt niet voor deze Kiempad-dataset. Bestand echo.png bevat OCR/base64 token en Progesteron.',
-      undefined,
-      {
-        storageMode: 'central-api',
-        storageLabel: 'Centrale encrypted API',
-      },
-    );
+    const html = renderVaultGate(true, UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE, undefined, {
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+    });
+
+    expectUnlockErrorCopyRedaction(html);
+  });
+
+  it('bewaakt unlock-error zichtbare copy met een regressiefixture', () => {
+    const html = renderVaultGate(true, UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE, undefined, {
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+    });
 
     expectSupportHandoffContract(html, UNLOCK_ERROR_HANDOFF_CONTRACT);
-    expect(html).toContain(
-      'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.',
-    );
-    expect(html).not.toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
-    expect(html).not.toContain('echo.png');
-    expect(html).not.toContain('OCR/base64');
-    expect(html).not.toContain('token');
-    expect(html).not.toContain('Progesteron');
+    expectUnlockErrorCopyRedaction(html);
   });
 
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {

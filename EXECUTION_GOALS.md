@@ -7403,4 +7403,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, recovery copy, tests
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G768 — unlock-error theme accessibility regression
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De unlock-error copy en handoff zijn privacyveilig, maar toekomstige themawijzigingen kunnen de alertrol, toegankelijke naam of herkenbare handoff-structuur onbedoeld verzwakken.
+- **Desired Outcome:** Een regressietest bewaakt dat de unlock-error recoverystatus in het nieuwe thema toegankelijk blijft en de privacyveilige copy/handoff herkenbaar exposeert.
+- **User Value:** Gebruikers met assistive technology krijgen dezelfde rustige herstelhulp zonder dat visuele themewijzigingen de ontgrendelroute of privacyboundary breken.
+- **Acceptance Criteria:** Test bewaakt `role="alert"` en `aria-label` voor unlock-error; test bewaakt dat de generieke copy zichtbaar blijft; support-handoff blijft semantisch extractbaar; fixture sluit passphrase, token, filename, OCR/base64 en medische plaintext uit; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, theme accessibility, recovery copy tests
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open

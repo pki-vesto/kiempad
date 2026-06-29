@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G767/G768 Central Encrypted Platform: unlock-error copy-redaction heeft nu een expliciete regressiefixture met raw exceptionpayload en forbidden terms; G768 is toegevoegd voor thema-toegankelijkheidsbewaking rond dezelfde recoverystatus.
 - G766/G767 Central Encrypted Platform: unlock-error herstelstatus toont nu generieke zichtbare copy zonder exceptiondetails terwijl de support-handoff behouden blijft; G767 is toegevoegd voor een regressiefixture rond deze copy-redaction.
 - G765/G766 Central Encrypted Platform: de support-handoff contracthelper bewaakt nu naast missing-key-metadata ook unlock-error handoffs met dezelfde velden en redaction-boundary; G766 is toegevoegd voor zichtbare unlock-error copy-redaction.
 - G764/G765 Central Encrypted Platform: app-shell tests gebruiken nu een herbruikbare support-handoff contracthelper met expliciete ontbrekende-sectie fout en gedeelde redaction-boundary; G765 is toegevoegd voor rollout naar een volgende recovery-status.
