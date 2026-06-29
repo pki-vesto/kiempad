@@ -1549,6 +1549,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3550,6 +3551,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive retention expiry cleanup archive toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const receiptAvailable = hasAttachments && (hasStatus || hasError);
+  const receiptState = receiptAvailable
+    ? 'cleanup-archive-receipt-available'
+    : 'cleanup-archive-receipt-empty';
+  const proofState = hasError
+    ? 'receipt-proof-summary-paused'
+    : hasStatus
+      ? 'receipt-proof-summary-ready'
+      : 'receipt-proof-summary-empty';
+  const labelState = receiptAvailable
+    ? 'screenreader-archive-receipt-label-ready'
+    : 'screenreader-archive-receipt-label-empty';
+  const retentionState = receiptAvailable
+    ? 'assistive-receipt-retention-ready'
+    : 'assistive-receipt-retention-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-archive-receipt-boundary'
+      : 'no-locked-preview-archive-receipt';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states" data-attachment-assistive-cleanup-archive-receipt-surface="privacy">
+      <h2>Bijlage assistive cleanup archive receipt</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-cleanup-archive-receipt-live-state="${receiptState}">
+        ${receiptAvailable ? 'Opschoonbewijs cleanup archive receipt beschikbaar als veilige assistive ontvangststatus.' : 'Geen veilige attachment-opschoonbewijs cleanup archive receiptstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-cleanup-archive-receipt-kind="cleanup-archive-receipt-boundary" data-attachment-assistive-cleanup-archive-receipt-state="${receiptState}">
+          <dt>Cleanup archive receipt boundary</dt>
+          <dd>${receiptAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige cleanup archive receiptstatus zonder broninhoud.` : 'Cleanup archive receipt wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-receipt-kind="receipt-proof-summary-affordance" data-attachment-assistive-cleanup-archive-receipt-state="${proofState}">
+          <dt>Receipt proof summary</dt>
+          <dd>${hasError ? 'Ontvangstbewijs blijft gepauzeerd als generieke receiptstatus.' : hasStatus ? 'Ontvangstbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen ontvangstbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-receipt-kind="screenreader-archive-receipt-label-state" data-attachment-assistive-cleanup-archive-receipt-state="${labelState}">
+          <dt>Screenreader archive receipt label</dt>
+          <dd>${receiptAvailable ? 'Screenreader archive receipt labels noemen alleen ontvangstgroep en bewijsstatus.' : 'Screenreader archive receipt labels blijven leeg zonder ontvangstbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-receipt-kind="assistive-receipt-retention" data-attachment-assistive-cleanup-archive-receipt-state="${retentionState}">
+          <dt>Assistive receipt retention</dt>
+          <dd>${receiptAvailable ? 'Assistive receipt retention bevestigt archive-, cleanup-, expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive receipt retention wacht op veilige receiptstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-cleanup-archive-receipt-kind="locked-preview-assistive-archive-receipt-boundary" data-attachment-assistive-cleanup-archive-receipt-state="${lockedState}">
+          <dt>Locked-preview assistive archive receipt boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive archive receipt payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive archive receipt states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive cleanup archive receipt toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
