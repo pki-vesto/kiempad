@@ -8257,4 +8257,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment search UI, filter UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G829 — attachment sort and pagination privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment search/filter states zijn nu bewaakt, maar sorteer-, paginatie-, result-count- en lange-lijststates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment sort/pagination states scanbaar blijven, bestaande lijst- en result-count hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig door grotere bijlagecollecties navigeren zonder dat themawijzigingen bronbestanden, zoekcontext of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken sorteerstatus, result-count summary, paginatieboundary en lange-lijst locked-preview states; bestaande lijst/result hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment list UI, result count UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

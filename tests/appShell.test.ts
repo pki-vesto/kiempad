@@ -115,6 +115,14 @@ function extractAttachmentAuditTrailSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentSearchFilterSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment search and filter privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment search/filter privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4183,6 +4191,135 @@ describe('app shell', () => {
     expect(auditTrail).not.toContain('dosering');
     expect(auditTrail).not.toContain('behandelkeuzeadvies');
     expect(auditTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment search en filter privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'ultra-private-search-token',
+        imagingFilter: {
+          soort: 'scan',
+          datumVanaf: '2026-06-01',
+          datumTot: '2026-06-30',
+          trajectId: 'traject-filter-secret',
+          afspraakId: 'afspraak-filter-secret',
+          embryoLabel: 'embryo-filter-secret',
+        },
+        dossierDocuments: [
+          {
+            id: 'doc-search-sensitive',
+            datum: '2026-06-10',
+            titel: 'Attachment search source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'search-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'c2VhcmNoLXNlY3JldC1wYXlsb2Fk',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 200 mg behandelkeuzeadvies blijft buiten de privacy surface.',
+              signalen: ['OCR-payload blijft buiten zoek/filter privacy states.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-10',
+              documenttype: 'Labuitslag',
+              bronbestand: 'search-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.91,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-10T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE ZOEK OCR TEKST ultra-private-search-token diagnose 200 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor search-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-10T08:05:00.000Z',
+          },
+          {
+            id: 'doc-search-locked-image',
+            datum: '2026-06-11',
+            titel: 'Locked attachment image',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-filter-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9ja2VkLWZpbHRlci1zZWNyZXQ=',
+            notitie: 'ultra-private-search-token hoort niet in de privacy surface.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-11',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-filter-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-11',
+              soort: 'echo',
+              context: 'private imaging context',
+              bron: 'Kliniekportaal',
+              trajectId: 'traject-anders',
+              afspraakId: 'afspraak-anders',
+              embryoLabel: 'Embryo anders',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-11T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const searchFilter = extractAttachmentSearchFilterSurface(html);
+
+    expect(html).toContain('id="dossier-search-form"');
+    expect(html).toContain('name="dossierZoekterm"');
+    expect(html).toContain('id="imaging-filter-form"');
+    expect(html).toContain('name="imagingSoort"');
+    expect(html).toContain('name="imagingDatumVanaf"');
+    expect(html).toContain('name="imagingDatumTot"');
+    expect(html).toContain('name="imagingTrajectId"');
+    expect(html).toContain('name="imagingAfspraakId"');
+    expect(html).toContain('name="imagingEmbryoLabel"');
+
+    expect(searchFilter).toContain('data-attachment-search-filter-surface="privacy"');
+    expect(searchFilter).toContain('data-attachment-search-kind="search-status"');
+    expect(searchFilter).toContain('data-attachment-search-state="active-matches"');
+    expect(searchFilter).toContain('data-attachment-filter-kind="filter-facets"');
+    expect(searchFilter).toContain('data-attachment-filter-state="active-facets"');
+    expect(searchFilter).toContain('data-attachment-filter-kind="empty-result"');
+    expect(searchFilter).toContain('data-attachment-filter-state="empty-results"');
+    expect(searchFilter).toContain('data-attachment-filter-kind="locked-result-boundary"');
+    expect(searchFilter).toContain('data-attachment-filter-state="locked-results"');
+    expect(searchFilter).toContain('2 veilige resultaatstatussen uit 2 dossierbijlagen');
+    expect(searchFilter).toContain('6 filterfacets actief op imagingmetadata');
+    expect(searchFilter).toContain(
+      'Geen zichtbare resultaten binnen de veilige zoek- of filterstatus',
+    );
+    expect(searchFilter).toContain('Bijlagepreviews blijven vergrendeld');
+
+    expect(searchFilter).not.toContain('ultra-private-search-token');
+    expect(searchFilter).not.toContain('search-secret-source.pdf');
+    expect(searchFilter).not.toContain('locked-filter-secret.jpg');
+    expect(searchFilter).not.toContain('c2VhcmNoLXNlY3JldC1wYXlsb2Fk');
+    expect(searchFilter).not.toContain('bG9ja2VkLWZpbHRlci1zZWNyZXQ=');
+    expect(searchFilter).not.toContain('data:image/jpeg;base64');
+    expect(searchFilter).not.toContain('GEVOELIGE ZOEK OCR TEKST');
+    expect(searchFilter).not.toContain('OCR-payload');
+    expect(searchFilter).not.toContain('Attachmentpayload');
+    expect(searchFilter).not.toContain('attachmentpayload');
+    expect(searchFilter).not.toContain('diagnose');
+    expect(searchFilter).not.toContain('dosering');
+    expect(searchFilter).not.toContain('behandelkeuzeadvies');
+    expect(searchFilter).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
