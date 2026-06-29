@@ -8397,4 +8397,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment screenreader UI, announcement/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G839 — attachment assistive summary privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment screenreader announcement states zijn nu bewaakt, maar compacte assistive summaries, statusoverzichtregels en screenreader-friendly samenvattingslabels rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment assistive summary states begrijpelijk en assistive-tech veilig blijven, bestaande summary/live-region/nav/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers krijgen een korte veilige samenvatting van attachmentstatussen voor assistive tech zonder dat samenvattingsregels bronbestanden, selectiecontext of medische inhoud tonen.
+- **Acceptance Criteria:** Tests dekken assistive summary boundary, compact status summary boundary, screenreader summary label affordance states en assistive summary audit state; bestaande summary/live-region/nav/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment assistive summary UI, announcement/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

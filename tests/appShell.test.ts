@@ -207,6 +207,16 @@ function extractAttachmentLandmarkNavigationSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentScreenreaderAnnouncementSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment screenreader announcement privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment screenreader announcement privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -5552,6 +5562,159 @@ describe('app shell', () => {
     expect(landmarkNavigation).not.toContain('dosering');
     expect(landmarkNavigation).not.toContain('behandelkeuzeadvies');
     expect(landmarkNavigation).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment screenreader announcement privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-announcement-token',
+        dossierError:
+          'private-announcement-token faalstatus voor announcement-secret-source.pdf met dossierpayload',
+        dossierDocuments: [
+          {
+            id: 'doc-announcement-sensitive',
+            datum: '2026-06-28',
+            titel: 'Announcement source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'announcement-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YW5ub3VuY2VtZW50LXNlY3JldC1wYXlsb2Fk',
+            notitie: 'private-announcement-token hoort niet in screenreader announcements.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1025 mg behandelkeuzeadvies blijft buiten announcements.',
+              signalen: ['OCR-payload blijft buiten polite en assertive announcement.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-28',
+              documenttype: 'Labuitslag',
+              bronbestand: 'announcement-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-28T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE ANNOUNCEMENT OCR TEKST private-announcement-token diagnose 1025 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor announcement-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-28T08:05:00.000Z',
+          },
+          {
+            id: 'doc-announcement-locked-image',
+            datum: '2026-06-29',
+            titel: 'Announcement locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'announcement-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YW5ub3VuY2VtZW50LWxvY2tlZC1zZWNyZXQ=',
+            notitie: 'private-announcement-token hoort ook niet in statusupdate queue.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-29',
+              documenttype: 'Foto/echo',
+              bronbestand: 'announcement-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-29',
+              soort: 'echo',
+              context: 'private announcement imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-29T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const announcements = extractAttachmentScreenreaderAnnouncementSurface(html);
+
+    expect(html).toContain('data-attachment-accessibility-live-region-state=');
+    expect(html).toContain('data-attachment-landmark-navigation-surface="privacy"');
+    expect(announcements).toContain('data-attachment-screenreader-announcement-surface="privacy"');
+    expect(announcements).toContain('role="status"');
+    expect(announcements).toContain('role="alert"');
+    expect(announcements).toContain('aria-live="polite"');
+    expect(announcements).toContain('aria-live="assertive"');
+    expect(announcements).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(announcements).toContain('data-attachment-announcement-live-kind="assertive-fallback"');
+    expect(announcements).toContain(
+      'data-attachment-announcement-live-state="polite-announcement-metadata-only"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-live-state="assertive-fallback-sanitized"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-kind="polite-announcement-boundary"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-kind="assertive-fallback-boundary"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-kind="status-update-queue-affordance"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-kind="announcement-audit-summary"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-kind="locked-preview-announcement-boundary"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-state="polite-announcement-metadata-only"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-state="assertive-fallback-sanitized"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-state="status-update-queue-ready"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-state="announcement-audit-summary-ready"',
+    );
+    expect(announcements).toContain(
+      'data-attachment-announcement-state="locked-preview-announcement-boundary"',
+    );
+    expect(announcements).toContain('2 bijlagen klaar voor veilige screenreaderstatus');
+    expect(announcements).toContain('Herstelmelding beschikbaar als generieke attachmentstatus');
+    expect(announcements).toContain('Polite announcements noemen alleen aantallen');
+    expect(announcements).toContain('Assertive fallback gebruikt generieke herstelcopy');
+    expect(announcements).toContain('Statusupdates worden als veilige wachtrij');
+    expect(announcements).toContain(
+      'Announcementaudit bevestigt polite, assertive en queue-states',
+    );
+    expect(announcements).toContain(
+      '1 vergrendelde beeldpreview blijft buiten screenreader announcement payloads',
+    );
+
+    expect(announcements).not.toContain('private-announcement-token');
+    expect(announcements).not.toContain('announcement-secret-source.pdf');
+    expect(announcements).not.toContain('announcement-locked-secret.jpg');
+    expect(announcements).not.toContain('YW5ub3VuY2VtZW50LXNlY3JldC1wYXlsb2Fk');
+    expect(announcements).not.toContain('YW5ub3VuY2VtZW50LWxvY2tlZC1zZWNyZXQ=');
+    expect(announcements).not.toContain('data:image/jpeg;base64');
+    expect(announcements).not.toContain('GEVOELIGE ANNOUNCEMENT OCR TEKST');
+    expect(announcements).not.toContain('OCR-payload');
+    expect(announcements).not.toContain('Attachmentpayload');
+    expect(announcements).not.toContain('attachmentpayload');
+    expect(announcements).not.toContain('dossierpayload');
+    expect(announcements).not.toContain('diagnose');
+    expect(announcements).not.toContain('dosering');
+    expect(announcements).not.toContain('behandelkeuzeadvies');
+    expect(announcements).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
