@@ -1534,6 +1534,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveErrorRecoveryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryCompletionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryHistoryPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2608,6 +2609,67 @@ function renderAttachmentAssistiveRecoveryHistoryPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive history toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const archiveAvailable = hasAttachments && (hasStatus || hasError);
+  const archiveState = archiveAvailable ? 'recovery-archive-available' : 'recovery-archive-empty';
+  const archivedRetryState = hasError
+    ? 'archived-retry-summary-active'
+    : hasStatus
+      ? 'archived-retry-summary-retained'
+      : 'archived-retry-summary-empty';
+  const labelState = archiveAvailable
+    ? 'screenreader-archive-label-ready'
+    : 'screenreader-archive-label-empty';
+  const auditState = archiveAvailable
+    ? 'assistive-archive-audit-ready'
+    : 'assistive-archive-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-archive-boundary'
+      : 'no-locked-preview-archive';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive privacy states" data-attachment-assistive-archive-surface="privacy">
+      <h2>Bijlage assistive archive</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-archive-live-state="${archiveState}">
+        ${archiveAvailable ? 'Herstelarchief beschikbaar als veilige assistive archivestatus.' : 'Geen veilige attachment-herstelarchive beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-archive-kind="recovery-archive-boundary" data-attachment-assistive-archive-state="${archiveState}">
+          <dt>Recovery archive boundary</dt>
+          <dd>${archiveAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige herstelarchive zonder broninhoud.` : 'Herstelarchive wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-archive-kind="archived-retry-summary-affordance" data-attachment-assistive-archive-state="${archivedRetryState}">
+          <dt>Archived retry summary</dt>
+          <dd>${hasError ? 'Gearchiveerde retry blijft zichtbaar als generieke herstelpoging.' : hasStatus ? 'Gearchiveerde retry is bewaard zonder bestands- of medische details.' : 'Geen gearchiveerde retry om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-archive-kind="screenreader-archive-label-state" data-attachment-assistive-archive-state="${labelState}">
+          <dt>Screenreader archive label</dt>
+          <dd>${archiveAvailable ? 'Screenreader archive labels noemen alleen archiefgroep en bewaartermijnstatus.' : 'Screenreader archive labels blijven leeg zonder herstelarchive.'}</dd>
+        </div>
+        <div data-attachment-assistive-archive-kind="assistive-archive-audit" data-attachment-assistive-archive-state="${auditState}">
+          <dt>Assistive archive audit</dt>
+          <dd>${archiveAvailable ? 'Assistive archive audit bevestigt history-, completion-, recovery- en live-regionhooks zonder broninhoud.' : 'Assistive archive audit wacht op veilige herstelarchive.'}</dd>
+        </div>
+        <div data-attachment-assistive-archive-kind="locked-preview-assistive-archive-boundary" data-attachment-assistive-archive-state="${lockedState}">
+          <dt>Locked-preview assistive archive boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive archive payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive archive states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive archive toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
