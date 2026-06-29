@@ -7333,4 +7333,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, event log, central bootstrap, tests
 - **ADR Needed:** no
 - **Score:** 114
+- **Status:** ☑ klaar
+
+### G763 — missing key metadata support handoff copy contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De missing-key-metadata herstelstatus toont nu een gesanitized support-handoff, maar de exacte copy en veldnamen hebben nog geen apart contract tegen toekomstige privacydrift.
+- **Desired Outcome:** Tests leggen de support-handoff veldnamen en gebruikerscopy vast als privacycontract, zodat supportinformatie generiek blijft bij thema- of copywijzigingen.
+- **User Value:** Gebruikers houden consistente, veilige herstelinformatie zonder dat technische of medische details via de UI gaan lekken.
+- **Acceptance Criteria:** Test bewaakt supportcategorie, opslagmodus en actierichting; test bewaakt reload/support/back-up copy zonder passphrase, token, filename, OCR/base64, recordaantallen of medische plaintext; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, tests, recovery copy
+- **ADR Needed:** no
+- **Score:** 113
 - **Status:** ☐ open

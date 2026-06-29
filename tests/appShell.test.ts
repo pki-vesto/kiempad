@@ -154,6 +154,10 @@ describe('app shell', () => {
     expect(html).toContain('contact op met support');
     expect(html).toContain('gecontroleerde versleutelde back-up');
     expect(html).toContain('backend, gebruikersscope en dataset bij elkaar horen');
+    expect(html).toContain('data-support-handoff="missing-key-metadata"');
+    expect(html).toContain('<dt>Supportcategorie</dt><dd>missing-key-metadata</dd>');
+    expect(html).toContain('<dt>Opslagmodus</dt><dd>central-api</dd>');
+    expect(html).toContain('<dt>Actierichting</dt><dd>reload-support-backup</dd>');
     expect(html).toContain('data-vault-present="true"');
     expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
     expect(html).not.toContain('Kiempad kan deze centrale dataset niet ontgrendelen');
@@ -162,6 +166,7 @@ describe('app shell', () => {
     expect(html).not.toContain('OCR/base64');
     expect(html).not.toContain('token');
     expect(html).not.toContain('Progesteron');
+    expect(html).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
     expect(html).not.toContain('Controleer rustig de passphrase');
   });
 
