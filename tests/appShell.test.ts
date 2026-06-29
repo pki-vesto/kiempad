@@ -74,6 +74,23 @@ function extractDossierInboxOverview(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierAddSection(html: string): string {
+  const start = html.indexOf(
+    '<summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>',
+  );
+  const end = html.indexOf('<h2>Dossier zoeken</h2>', start);
+  if (start < 0 || end < 0) throw new Error('Dossier toevoegsectie ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
+function extractUploadAttachmentFeedback(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Upload attachment privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Upload attachment privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractImagingComparePanel(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">([\s\S]*?)<\/section>/,
@@ -2841,6 +2858,107 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
     expect(html).toContain('1 dossierbestand in de legacy lokale encrypted dataset opgeslagen.');
     expect(html).not.toContain('cGRm');
+  });
+
+  it('bewaakt upload attachment privacy states zonder broninhoud of attachmentpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        dossierDocuments: [],
+        uploadAttachmentFeedback: {
+          'dossier-upload': {
+            state: 'needs-review',
+            status:
+              'Dossierupload bevat file contents token abc123 lab.pdf base64 OCR-payload attachmentpayload diagnose 150 mg.',
+          },
+          'imaging-upload': {
+            state: 'processing',
+            status:
+              'Beeldupload met echo.png bestandsinhoud attachment payload dossierpayload Progesteron 200 mg.',
+          },
+          'consult-upload': {
+            state: 'error',
+            error:
+              'Consultupload met passphrase API-sleutel gespreksverslag.txt behandelkeuzeadvies.',
+          },
+          'embryo-upload': {
+            state: 'ready',
+            status:
+              'Embryoupload met embryo.jpg encrypted payload diagnose dossier payload 4AA 100 IU.',
+          },
+        },
+      }),
+    );
+    const addSection = extractDossierAddSection(html);
+    const uploadFeedback = extractUploadAttachmentFeedback(html);
+
+    expect(addSection).toContain('id="dossier-upload-form"');
+    expect(addSection).toContain('data-upload-privacy-kind="dossier"');
+    expect(addSection).toContain('data-dossier-upload-privacy-state="encrypted-local-analysis"');
+    expect(addSection).toContain('data-imaging-upload-privacy-state="encrypted-attachment"');
+    expect(addSection).toContain(
+      'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
+    );
+    expect(addSection).toContain('name="beeldContext"');
+    expect(addSection).toContain('name="beeldEmbryoLabel"');
+    expect(addSection).toContain('id="consult-verslag-form"');
+    expect(addSection).toContain('data-upload-privacy-kind="consult"');
+    expect(addSection).toContain('data-consult-upload-privacy-state="encrypted-text-or-file"');
+    expect(addSection).toContain(
+      'name="consultBestand" type="file" accept="application/pdf,text/*"',
+    );
+    expect(addSection).toContain('id="embryo-quality-form"');
+    expect(addSection).toContain('data-upload-privacy-kind="embryo"');
+    expect(addSection).toContain(
+      'data-embryo-upload-privacy-state="encrypted-quality-registration"',
+    );
+    expect(addSection).toContain('name="embryoKwaliteit"');
+
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback="encrypted-local"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-kind="dossier-upload"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="needs-review"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-kind="imaging-upload"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="processing"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-kind="consult-upload"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="error"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-kind="embryo-upload"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="ready"');
+    expect(uploadFeedback).toContain(
+      'Dossierupload bijgewerkt zonder broninhoud of attachmentdetails.',
+    );
+    expect(uploadFeedback).toContain(
+      'Beeldupload bijgewerkt zonder broninhoud of attachmentdetails.',
+    );
+    expect(uploadFeedback).toContain(
+      'Consultupload bijgewerkt zonder broninhoud of attachmentdetails.',
+    );
+    expect(uploadFeedback).toContain(
+      'Embryoregistratie bijgewerkt zonder broninhoud of attachmentdetails.',
+    );
+    expect(uploadFeedback).toContain('geen broninhoud');
+
+    expect(uploadFeedback).not.toContain('token abc123');
+    expect(uploadFeedback).not.toContain('passphrase');
+    expect(uploadFeedback).not.toContain('API-sleutel');
+    expect(uploadFeedback).not.toContain('api key');
+    expect(uploadFeedback).not.toContain('file contents');
+    expect(uploadFeedback).not.toContain('bestandsinhoud');
+    expect(uploadFeedback).not.toContain('base64');
+    expect(uploadFeedback).not.toContain('OCR-payload');
+    expect(uploadFeedback).not.toContain('attachmentpayload');
+    expect(uploadFeedback).not.toContain('attachment payload');
+    expect(uploadFeedback).not.toContain('dossierpayload');
+    expect(uploadFeedback).not.toContain('dossier payload');
+    expect(uploadFeedback).not.toContain('encrypted payload');
+    expect(uploadFeedback).not.toContain('lab.pdf');
+    expect(uploadFeedback).not.toContain('echo.png');
+    expect(uploadFeedback).not.toContain('gespreksverslag.txt');
+    expect(uploadFeedback).not.toContain('embryo.jpg');
+    expect(uploadFeedback).not.toContain('diagnose');
+    expect(uploadFeedback).not.toContain('Progesteron');
+    expect(uploadFeedback).not.toContain('behandelkeuzeadvies');
+    expect(uploadFeedback).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
