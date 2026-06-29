@@ -1368,6 +1368,7 @@ function renderDossierScreen(state: AppShellState): string {
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${renderUploadAttachmentFeedback(state)}
+        ${renderAttachmentConsentExportPrivacy(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         <h2>Import-inbox</h2>
         ${renderDossierInboxOverview(importInboxItems)}
@@ -1612,6 +1613,52 @@ function renderUploadAttachmentFeedbackRow(
   );
 
   return `<div data-upload-attachment-feedback-kind="${kind}" data-upload-attachment-feedback-state="${state}"><dt>${defaults.label}</dt><dd>${escapeHtml(copy)}</dd></div>`;
+}
+
+function renderAttachmentConsentExportPrivacy(state: AppShellState): string {
+  const documents = state.dossierDocuments ?? [];
+  const attachmentCount = documents.length;
+  const imageCount = documents.filter((document) => document.categorie === 'beeld').length;
+  const embryoCount = documents.filter((document) => document.categorie === 'embryo').length;
+  const central = isCentralStorage(state);
+  const hasAttachments = attachmentCount > 0;
+  const consentState = hasAttachments ? 'explicit-consent-required' : 'empty';
+  const exportState = hasAttachments
+    ? central
+      ? 'central-encrypted-available'
+      : 'legacy-encrypted-available'
+    : 'unavailable-empty';
+  const downloadState = !hasAttachments
+    ? 'unavailable-empty'
+    : state.imagingPreviewLocked
+      ? 'locked-until-unlock'
+      : 'local-unlocked';
+  const shareState = hasAttachments ? 'metadata-only-boundary' : 'empty-boundary';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment consent en export privacy states" data-attachment-consent-export-surface="privacy">
+      <h2>Bijlage-export</h2>
+      <dl class="summary-list">
+        <div data-attachment-consent-kind="explicit-review" data-attachment-consent-state="${consentState}">
+          <dt>Toestemming</dt>
+          <dd>${hasAttachments ? 'Expliciete keuze vereist voordat bijlagen buiten Kiempad worden gebruikt.' : 'Geen bijlagen beschikbaar voor export.'}</dd>
+        </div>
+        <div data-attachment-export-kind="encrypted-attachments" data-attachment-export-state="${exportState}">
+          <dt>Exportbeschikbaarheid</dt>
+          <dd>${hasAttachments ? `Encrypted ${central ? 'centrale' : 'lokale'} export beschikbaar voor ${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'}, waaronder ${imageCount} beeld${imageCount === 1 ? '' : 'en'} en ${embryoCount} embryobron${embryoCount === 1 ? '' : 'nen'}.` : 'Upload eerst een bijlage om encrypted export beschikbaar te maken.'}</dd>
+        </div>
+        <div data-attachment-download-kind="local-attachment" data-attachment-download-state="${downloadState}">
+          <dt>Downloadstatus</dt>
+          <dd>${state.imagingPreviewLocked ? 'Downloads en previews blijven vergrendeld tot de encrypted dataset is ontgrendeld.' : hasAttachments ? 'Lokale downloadactie is alleen beschikbaar binnen de ontgrendelde encrypted sessie.' : 'Geen downloadbare bijlagen in dit dossier.'}</dd>
+        </div>
+        <div data-attachment-share-kind="medical-boundary" data-attachment-share-state="${shareState}">
+          <dt>Deelgrens</dt>
+          <dd>Deelacties tonen alleen workflowstatus; Kiempad voegt geen medisch oordeel, hoeveelheidadvies of behandelrichting toe.</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze exportstatus toont geen bronbestanden, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
 }
 
 function renderDossierInboxOverview(items: DossierImportInboxItem[]): string {
