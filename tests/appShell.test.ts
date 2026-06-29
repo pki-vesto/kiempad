@@ -131,6 +131,14 @@ function extractAttachmentSortPaginationSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentBulkSelectionSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment bulk selection privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment bulk selection privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4426,6 +4434,124 @@ describe('app shell', () => {
     expect(sortPagination).not.toContain('dosering');
     expect(sortPagination).not.toContain('behandelkeuzeadvies');
     expect(sortPagination).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment bulk selection privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-bulk-token',
+        dossierDocuments: [
+          {
+            id: 'doc-bulk-sensitive',
+            datum: '2026-06-12',
+            titel: 'Bulk selection source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'bulk-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YnVsay1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-bulk-token hoort niet in bulkselectie.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 225 mg behandelkeuzeadvies blijft buiten bulkselectie.',
+              signalen: ['OCR-payload blijft buiten batchactiegrens.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-12',
+              documenttype: 'Labuitslag',
+              bronbestand: 'bulk-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-12T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE BULK OCR TEKST private-bulk-token diagnose 225 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor bulk-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-12T08:05:00.000Z',
+          },
+          {
+            id: 'doc-bulk-locked-image',
+            datum: '2026-06-13',
+            titel: 'Bulk locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'bulk-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YnVsay1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-bulk-token hoort ook niet bij locked selectie.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-13',
+              documenttype: 'Foto/echo',
+              bronbestand: 'bulk-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-13',
+              soort: 'echo',
+              context: 'private bulk imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-13T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const bulkSelection = extractAttachmentBulkSelectionSurface(html);
+
+    expect(bulkSelection).toContain('data-attachment-bulk-selection-surface="privacy"');
+    expect(bulkSelection).toContain('id="attachment-bulk-selection-form"');
+    expect(bulkSelection).toContain('name="attachmentBulkSelectVisible"');
+    expect(bulkSelection).toContain('data-attachment-bulk-select-kind="visible-attachments"');
+    expect(bulkSelection).toContain('data-attachment-bulk-select-state="available-none-selected"');
+    expect(bulkSelection).toContain('data-attachment-bulk-action-kind="review"');
+    expect(bulkSelection).toContain('data-attachment-bulk-action-kind="export"');
+    expect(bulkSelection).toContain('data-attachment-bulk-action-kind="delete"');
+    expect(bulkSelection).toContain('data-attachment-bulk-action-state="selection-required"');
+    expect(bulkSelection).toContain('data-attachment-bulk-kind="selection-count"');
+    expect(bulkSelection).toContain('data-attachment-bulk-kind="batch-action-boundary"');
+    expect(bulkSelection).toContain('data-attachment-bulk-kind="export-delete-affordance"');
+    expect(bulkSelection).toContain(
+      'data-attachment-bulk-kind="locked-preview-selection-boundary"',
+    );
+    expect(bulkSelection).toContain(
+      'data-attachment-bulk-state="locked-preview-selection-boundary"',
+    );
+    expect(bulkSelection).toContain('0 van 2 bijlagen geselecteerd');
+    expect(bulkSelection).toContain('Batchacties wachten op expliciete selectie');
+    expect(bulkSelection).toContain(
+      'Bulk export en bulk verwijderen blijven uitgeschakeld tot selectie is bevestigd',
+    );
+    expect(bulkSelection).toContain('1 vergrendelde beeldpreview blijft buiten bulkpayloads');
+
+    expect(bulkSelection).not.toContain('private-bulk-token');
+    expect(bulkSelection).not.toContain('bulk-secret-source.pdf');
+    expect(bulkSelection).not.toContain('bulk-locked-secret.jpg');
+    expect(bulkSelection).not.toContain('YnVsay1zZWNyZXQtcGF5bG9hZA==');
+    expect(bulkSelection).not.toContain('YnVsay1sb2NrZWQtc2VjcmV0');
+    expect(bulkSelection).not.toContain('data:image/jpeg;base64');
+    expect(bulkSelection).not.toContain('GEVOELIGE BULK OCR TEKST');
+    expect(bulkSelection).not.toContain('OCR-payload');
+    expect(bulkSelection).not.toContain('Attachmentpayload');
+    expect(bulkSelection).not.toContain('attachmentpayload');
+    expect(bulkSelection).not.toContain('diagnose');
+    expect(bulkSelection).not.toContain('dosering');
+    expect(bulkSelection).not.toContain('behandelkeuzeadvies');
+    expect(bulkSelection).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

@@ -1521,6 +1521,7 @@ function renderDossierScreen(state: AppShellState): string {
         }
         ${renderAttachmentSearchFilterPrivacy(state, zoekResultaten, alleImagingItems, imagingItems)}
         ${renderAttachmentSortPaginationPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentBulkSelectionPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -1856,6 +1857,57 @@ function renderAttachmentSortPaginationPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze lijststatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentBulkSelectionPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const selectedCount = 0;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const selectionState = hasAttachments ? 'available-none-selected' : 'empty';
+  const batchState = hasAttachments ? 'selection-required' : 'unavailable-empty';
+  const lockedBoundaryState =
+    lockedPreviewCount > 0 ? 'locked-preview-selection-boundary' : 'no-locked-preview';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment bulk selection privacy states" data-attachment-bulk-selection-surface="privacy">
+      <h2>Bijlage bulkselectie</h2>
+      <form id="attachment-bulk-selection-form" class="data-form compact-form" data-attachment-bulk-form-state="${selectionState}">
+        <label class="check-row" data-attachment-bulk-select-kind="visible-attachments" data-attachment-bulk-select-state="${selectionState}">
+          <input name="attachmentBulkSelectVisible" type="checkbox" value="visible" ${hasAttachments ? '' : 'disabled'} />
+          Selecteer zichtbare bijlagestatussen
+        </label>
+        <div class="button-row">
+          <button class="phase-button secondary" type="button" data-attachment-bulk-action-kind="review" data-attachment-bulk-action-state="${batchState}" ${selectedCount === 0 ? 'disabled' : ''}>Review selectie</button>
+          <button class="phase-button secondary" type="button" data-attachment-bulk-action-kind="export" data-attachment-bulk-action-state="${batchState}" ${selectedCount === 0 ? 'disabled' : ''}>Export selectie</button>
+          <button class="danger-button" type="button" data-attachment-bulk-action-kind="delete" data-attachment-bulk-action-state="${batchState}" ${selectedCount === 0 ? 'disabled' : ''}>Verwijder selectie</button>
+        </div>
+      </form>
+      <dl class="summary-list">
+        <div data-attachment-bulk-kind="selection-count" data-attachment-bulk-state="${selectionState}">
+          <dt>Selectiecount</dt>
+          <dd>${hasAttachments ? `${selectedCount} van ${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} geselecteerd.` : 'Geen bijlagen beschikbaar voor bulkselectie.'}</dd>
+        </div>
+        <div data-attachment-bulk-kind="batch-action-boundary" data-attachment-bulk-state="${batchState}">
+          <dt>Batchactiegrens</dt>
+          <dd>${hasAttachments ? 'Batchacties wachten op expliciete selectie binnen de ontgrendelde sessie.' : 'Batchacties zijn niet beschikbaar zonder bijlagen.'}</dd>
+        </div>
+        <div data-attachment-bulk-kind="export-delete-affordance" data-attachment-bulk-state="${batchState}">
+          <dt>Export en verwijderen</dt>
+          <dd>${hasAttachments ? 'Bulk export en bulk verwijderen blijven uitgeschakeld tot selectie is bevestigd.' : 'Geen export- of verwijderselectie beschikbaar.'}</dd>
+        </div>
+        <div data-attachment-bulk-kind="locked-preview-selection-boundary" data-attachment-bulk-state="${lockedBoundaryState}">
+          <dt>Locked-preview selectiegrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten bulkpayloads.` : 'Geen vergrendelde beeldpreviews binnen de selectiegrens.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze bulkselectiestatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }

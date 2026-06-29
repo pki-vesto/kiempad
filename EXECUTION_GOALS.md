@@ -8285,4 +8285,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment selection UI, batch action UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G831 — attachment keyboard and focus privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment bulk selection states zijn nu bewaakt, maar keyboardnavigatie-, focusring-, skiplink- en actionbar-focusstates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment keyboard/focus states scanbaar en toegankelijk blijven, bestaande focus/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig met toetsenbord of assistive tech door attachment-acties navigeren zonder dat focusstates bronbestanden, selectiecontext of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken focusstatus, skiplink/actionbar boundary, keyboard-only affordance states en locked-preview focusgrens; bestaande focus/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment keyboard UI, focus management, actionbar UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
