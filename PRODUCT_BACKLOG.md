@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 618 |
+| ☑ klaar | 619 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **798** |
+| **Totaal** | **799** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -979,13 +979,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G814 | Premium Claude Design UI: AI preview and on-device opt-in states | P1 | F5 | ☑ |
 | G815 | Premium Claude Design UI: notification privacy states | P1 | F5 | ☑ |
 | G816 | Premium Claude Design UI: backup and import privacy states | P1 | F5 | ☑ |
-| G817 | Premium Claude Design UI: WebAuthn recovery privacy states | P1 | F5 | ☐ |
+| G817 | Premium Claude Design UI: WebAuthn recovery privacy states | P1 | F5 | ☑ |
+| G818 | Premium Claude Design UI: fallback notification and log privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 817** (id's G001 t/m G817, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 818** (id's G001 t/m G818, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

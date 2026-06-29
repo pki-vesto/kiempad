@@ -1017,7 +1017,7 @@ function renderWebAuthnSettings(state: AppShellState): string {
   const keyLabel = central ? 'datasetsleutel' : 'kluissleutel';
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn">
+    <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn" data-webauthn-storage="${central ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-webauthn-runtime="${status.runtimeBeschikbaar ? 'available' : 'unavailable'}" data-webauthn-link-state="${status.gekoppeld ? 'linked' : 'unlinked'}">
       <h2>Biometrie/WebAuthn</h2>
       <p>Optioneel ontgrendelgemak op dit toestel voor je ${datasetLabel}. Je passphrase blijft nodig als fallback en voor herstel via back-up.</p>
       <dl class="summary-list">
