@@ -1545,6 +1545,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3296,6 +3297,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive audit trail toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const retentionAvailable = hasAttachments && (hasStatus || hasError);
+  const retentionState = retentionAvailable
+    ? 'audit-trail-retention-available'
+    : 'audit-trail-retention-empty';
+  const proofState = hasError
+    ? 'retention-proof-summary-paused'
+    : hasStatus
+      ? 'retention-proof-summary-ready'
+      : 'retention-proof-summary-empty';
+  const labelState = retentionAvailable
+    ? 'screenreader-audit-trail-retention-label-ready'
+    : 'screenreader-audit-trail-retention-label-empty';
+  const expiryState = retentionAvailable
+    ? 'assistive-retention-expiry-ready'
+    : 'assistive-retention-expiry-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-retention-boundary'
+      : 'no-locked-preview-retention';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states" data-attachment-assistive-audit-trail-retention-surface="privacy">
+      <h2>Bijlage assistive audit trail retention</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-audit-trail-retention-live-state="${retentionState}">
+        ${retentionAvailable ? 'Opschoonbewijs audit trail retention beschikbaar als veilige assistive retentionstatus.' : 'Geen veilige attachment-opschoonbewijs audit trail retentionstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-audit-trail-retention-kind="audit-trail-retention-boundary" data-attachment-assistive-audit-trail-retention-state="${retentionState}">
+          <dt>Audit trail retention boundary</dt>
+          <dd>${retentionAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige audit trail retentionstatus zonder broninhoud.` : 'Audit trail retention wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-audit-trail-retention-kind="retention-proof-summary-affordance" data-attachment-assistive-audit-trail-retention-state="${proofState}">
+          <dt>Retention proof summary</dt>
+          <dd>${hasError ? 'Retentionbewijs blijft gepauzeerd als generieke bewaartermijnstatus.' : hasStatus ? 'Retentionbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen retentionbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-audit-trail-retention-kind="screenreader-audit-trail-retention-label-state" data-attachment-assistive-audit-trail-retention-state="${labelState}">
+          <dt>Screenreader audit trail retention label</dt>
+          <dd>${retentionAvailable ? 'Screenreader audit trail retention labels noemen alleen bewaargroep en bewijsstatus.' : 'Screenreader audit trail retention labels blijven leeg zonder retentionbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-audit-trail-retention-kind="assistive-retention-expiry" data-attachment-assistive-audit-trail-retention-state="${expiryState}">
+          <dt>Assistive retention expiry</dt>
+          <dd>${retentionAvailable ? 'Assistive retention expiry bevestigt audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive retention expiry wacht op veilige retentionstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-audit-trail-retention-kind="locked-preview-assistive-retention-boundary" data-attachment-assistive-audit-trail-retention-state="${lockedState}">
+          <dt>Locked-preview assistive retention boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive retention payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive retention states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive audit trail retention toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
