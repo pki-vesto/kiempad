@@ -7431,4 +7431,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, recovery alert markup, support handoff tests
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G770 — unlock-error structure negative fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** Het unlock-error alertstructuurcontract bewaakt de happy path markup, maar een negatieve fixture maakt nog niet expliciet dat copy/handoff-volgorde of extra details de contracthelper laten falen.
+- **Desired Outcome:** Een negatieve testfixture bewijst dat het compacte alertstructuurcontract breekt bij omgekeerde volgorde of extra gevoelige/technische detailtekst.
+- **User Value:** Toekomstige themawijzigingen krijgen een duidelijke testfout wanneer ze de herstelstructuur of privacyboundary aantasten.
+- **Acceptance Criteria:** Testfixture laat de contracthelper falen wanneer de handoff vóór de copy staat; testfixture laat de helper falen bij extra raw exceptiondetail in de alert; foutsignaal blijft gericht op structuur/redaction zonder gevoelige runtime-output; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery alert contract helper
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
