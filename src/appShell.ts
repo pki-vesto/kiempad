@@ -1520,6 +1520,7 @@ function renderDossierScreen(state: AppShellState): string {
             : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
         ${renderAttachmentSearchFilterPrivacy(state, zoekResultaten, alleImagingItems, imagingItems)}
+        ${renderAttachmentSortPaginationPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -1804,6 +1805,57 @@ function renderAttachmentSearchFilterPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze zoek- en filterstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentSortPaginationPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const pageSize = 10;
+  const pageCount = Math.max(1, Math.ceil(attachmentCount / pageSize));
+  const hasLongList = attachmentCount > pageSize;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const sortState =
+    attachmentCount > 1 ? 'date-desc-active' : attachmentCount === 1 ? 'single' : 'empty';
+  const paginationState = hasLongList
+    ? 'multi-page'
+    : attachmentCount > 0
+      ? 'single-page'
+      : 'empty';
+  const longListState = hasLongList
+    ? state.imagingPreviewLocked && lockedPreviewCount > 0
+      ? 'long-list-locked-preview'
+      : 'long-list'
+    : state.imagingPreviewLocked && lockedPreviewCount > 0
+      ? 'short-list-locked-preview'
+      : 'short-list';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment sort and pagination privacy states" data-attachment-sort-pagination-surface="privacy">
+      <h2>Bijlage lijstnavigatie</h2>
+      <dl class="summary-list">
+        <div data-attachment-list-kind="sort-status" data-attachment-list-state="${sortState}">
+          <dt>Sorteerstatus</dt>
+          <dd>${attachmentCount > 0 ? 'Bijlagen worden als veilige statuslijst op datum gesorteerd.' : 'Geen bijlagen om te sorteren.'}</dd>
+        </div>
+        <div data-attachment-list-kind="result-count" data-attachment-list-state="${attachmentCount > 0 ? 'results-counted' : 'empty'}">
+          <dt>Resultaattelling</dt>
+          <dd>${attachmentCount > 0 ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} beschikbaar als lijststatus.` : 'Geen bijlageresultaten beschikbaar.'}</dd>
+        </div>
+        <div data-attachment-list-kind="pagination-boundary" data-attachment-list-state="${paginationState}">
+          <dt>Paginatiegrens</dt>
+          <dd>${hasLongList ? `Lange lijst verdeeld over ${pageCount} veilige pagina${pageCount === 1 ? '' : "'s"} van maximaal ${pageSize} items.` : attachmentCount > 0 ? 'Alle zichtbare bijlagen passen binnen een enkele veilige lijstpagina.' : 'Paginatie wacht op bijlagen.'}</dd>
+        </div>
+        <div data-attachment-list-kind="long-list-locked-preview" data-attachment-list-state="${longListState}">
+          <dt>Previewgrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} vergrendeld binnen deze lijststatus.` : 'Geen vergrendelde beeldpreviews in deze lijststatus.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze lijststatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
