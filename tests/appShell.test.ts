@@ -9599,6 +9599,96 @@ describe('app shell', () => {
     expect(assistiveRetention).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G926 attachment assistive delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g926-delivery-handoff-confirmation-receipt-audit-trail-retention-token',
+        dossierStatus:
+          'G926 delivery handoff confirmation receipt audit trail retention bevat bewaartermijnbewijs voor g926-delivery-handoff-confirmation-receipt-audit-trail-retention-secret-source.pdf met private-g926-delivery-handoff-confirmation-receipt-audit-trail-retention-token OCR-payload diagnose 5693 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g926-delivery-handoff-confirmation-receipt-audit-trail-retention-sensitive',
+            datum: '2026-09-30',
+            titel: 'G926 delivery handoff confirmation receipt audit trail retention bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g926-delivery-handoff-confirmation-receipt-audit-trail-retention-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjYtUEFZTE9BRA==',
+            notitie:
+              'private-g926-delivery-handoff-confirmation-receipt-audit-trail-retention-token hoort niet in assistive retention.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5693 mg behandelkeuzeadvies blijft buiten G926 audit trail retention.',
+              signalen: ['OCR-payload blijft buiten G926 retention proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-09-30',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g926-delivery-handoff-confirmation-receipt-audit-trail-retention-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.95,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-09-30T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G926 OCR TEKST private-g926-delivery-handoff-confirmation-receipt-audit-trail-retention-token diagnose 5693 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g926-delivery-handoff-confirmation-receipt-audit-trail-retention-secret-source.pdf.',
+            },
+            uploadedAt: '2026-09-30T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveRetention = extractAttachmentAssistiveAuditTrailRetentionSurface(html);
+
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-surface="privacy"',
+    );
+    expect(assistiveRetention).toContain('role="status"');
+    expect(assistiveRetention).toContain('aria-live="polite"');
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="audit-trail-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="retention-proof-summary-affordance"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="screenreader-audit-trail-retention-label-state"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="assistive-retention-expiry"',
+    );
+    expect(assistiveRetention).toContain('1 bijlage met veilige audit trail retentionstatus');
+
+    expect(assistiveRetention).not.toContain(
+      'private-g926-delivery-handoff-confirmation-receipt-audit-trail-retention-token',
+    );
+    expect(assistiveRetention).not.toContain(
+      'g926-delivery-handoff-confirmation-receipt-audit-trail-retention-secret-source.pdf',
+    );
+    expect(assistiveRetention).not.toContain('U0VDUkVULUc5MjYtUEFZTE9BRA==');
+    expect(assistiveRetention).not.toContain('GEVOELIGE G926 OCR TEKST');
+    expect(assistiveRetention).not.toContain('OCR-payload');
+    expect(assistiveRetention).not.toContain('Attachmentpayload');
+    expect(assistiveRetention).not.toContain('attachmentpayload');
+    expect(assistiveRetention).not.toContain('dossierpayload');
+    expect(assistiveRetention).not.toContain('diagnose');
+    expect(assistiveRetention).not.toContain('behandelkeuzeadvies');
+    expect(assistiveRetention).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
