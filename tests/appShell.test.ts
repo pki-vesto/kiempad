@@ -479,6 +479,20 @@ function extractAttachmentAssistiveReceiptExportDeliveryHandoffSurface(html: str
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationSurface(
+  html: string,
+): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -9717,6 +9731,187 @@ describe('app shell', () => {
     expect(assistiveHandoff).not.toContain('dosering');
     expect(assistiveHandoff).not.toContain('behandelkeuzeadvies');
     expect(assistiveHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-handoff-confirmation-token',
+        dossierStatus:
+          'Handoff confirmation bevat bevestigingsbewijs voor handoff-confirmation-secret-source.pdf met private-handoff-confirmation-token OCR-payload diagnose 3425 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-handoff-confirmation-sensitive',
+            datum: '2026-08-15',
+            titel: 'Handoff confirmation source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'handoff-confirmation-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'aGFuZG9mZi1jb25maXJtYXRpb24tc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-handoff-confirmation-token hoort niet in assistive confirmation.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 3425 mg behandelkeuzeadvies blijft buiten assistive handoff confirmation.',
+              signalen: ['OCR-payload blijft buiten confirmation proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-15',
+              documenttype: 'Labuitslag',
+              bronbestand: 'handoff-confirmation-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.95,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-08-15T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE HANDOFF CONFIRMATION OCR TEKST private-handoff-confirmation-token diagnose 3425 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor handoff-confirmation-secret-source.pdf.',
+            },
+            uploadedAt: '2026-08-15T08:05:00.000Z',
+          },
+          {
+            id: 'doc-handoff-confirmation-locked-image',
+            datum: '2026-08-16',
+            titel: 'Handoff confirmation locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'handoff-confirmation-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'aGFuZG9mZi1jb25maXJtYXRpb24tbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-handoff-confirmation-token hoort ook niet in confirmation labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-16',
+              documenttype: 'Foto/echo',
+              bronbestand: 'handoff-confirmation-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-08-16',
+              soort: 'echo',
+              context: 'private handoff confirmation imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-08-16T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveConfirmation =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationSurface(html);
+
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-receipt-export-delivery-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-cleanup-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-retention-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-retention-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-surface="privacy"',
+    );
+    expect(assistiveConfirmation).toContain('role="status"');
+    expect(assistiveConfirmation).toContain('aria-live="polite"');
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-live-state="cleanup-archive-receipt-export-delivery-handoff-confirmation-available"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-boundary"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-kind="confirmation-proof-summary-affordance"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-kind="screenreader-handoff-confirmation-label-state"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-kind="assistive-confirmation-retention"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-kind="locked-preview-assistive-handoff-confirmation-boundary"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-state="cleanup-archive-receipt-export-delivery-handoff-confirmation-available"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-state="confirmation-proof-summary-ready"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-state="screenreader-handoff-confirmation-label-ready"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-state="assistive-confirmation-retention-ready"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-state="locked-preview-assistive-handoff-confirmation-boundary"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'Opschoonbewijs cleanup archive receipt export delivery handoff confirmation beschikbaar als veilige assistive bevestigingsstatus',
+    );
+    expect(assistiveConfirmation).toContain(
+      '2 bijlagen met veilige cleanup archive receipt export delivery handoff confirmationstatus',
+    );
+    expect(assistiveConfirmation).toContain('Bevestigingsbewijs is beschikbaar zonder bestands-');
+    expect(assistiveConfirmation).toContain(
+      'Screenreader handoff confirmation labels noemen alleen bevestigingsgroep',
+    );
+    expect(assistiveConfirmation).toContain(
+      'Assistive confirmation retention bevestigt handoff-, delivery-, export-, receipt-, archive-, cleanup-, expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, purge-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveConfirmation).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive handoff confirmation payloads',
+    );
+
+    expect(assistiveConfirmation).not.toContain('private-handoff-confirmation-token');
+    expect(assistiveConfirmation).not.toContain('handoff-confirmation-secret-source.pdf');
+    expect(assistiveConfirmation).not.toContain('handoff-confirmation-locked-secret.jpg');
+    expect(assistiveConfirmation).not.toContain('aGFuZG9mZi1jb25maXJtYXRpb24tc2VjcmV0LXBheWxvYWQ=');
+    expect(assistiveConfirmation).not.toContain('aGFuZG9mZi1jb25maXJtYXRpb24tbG9ja2VkLXNlY3JldA==');
+    expect(assistiveConfirmation).not.toContain('data:image/jpeg;base64');
+    expect(assistiveConfirmation).not.toContain('GEVOELIGE HANDOFF CONFIRMATION OCR TEKST');
+    expect(assistiveConfirmation).not.toContain('OCR-payload');
+    expect(assistiveConfirmation).not.toContain('Attachmentpayload');
+    expect(assistiveConfirmation).not.toContain('attachmentpayload');
+    expect(assistiveConfirmation).not.toContain('dossierpayload');
+    expect(assistiveConfirmation).not.toContain('diagnose');
+    expect(assistiveConfirmation).not.toContain('dosering');
+    expect(assistiveConfirmation).not.toContain('behandelkeuzeadvies');
+    expect(assistiveConfirmation).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
