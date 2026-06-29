@@ -157,6 +157,16 @@ function extractAttachmentResponsiveMotionSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentLoadingErrorSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment loading and error privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment loading/error privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4836,6 +4846,131 @@ describe('app shell', () => {
     expect(responsiveMotion).not.toContain('dosering');
     expect(responsiveMotion).not.toContain('behandelkeuzeadvies');
     expect(responsiveMotion).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment loading en error privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-loading-token',
+        dossierStatus:
+          'Loading klaar voor loading-secret-source.pdf met private-loading-token OCR-payload diagnose 525 mg behandelkeuzeadvies.',
+        dossierError:
+          'Retry fout voor loading-locked-secret.jpg met base64 bG9hZGluZy1lcnJvcg== attachmentpayload dosering.',
+        dossierDocuments: [
+          {
+            id: 'doc-loading-sensitive',
+            datum: '2026-06-18',
+            titel: 'Loading source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'loading-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'bG9hZGluZy1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-loading-token hoort niet in loading states.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 525 mg behandelkeuzeadvies blijft buiten loading states.',
+              signalen: ['OCR-payload blijft buiten retry en error boundary.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-18',
+              documenttype: 'Labuitslag',
+              bronbestand: 'loading-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-18T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE LOADING OCR TEKST private-loading-token diagnose 525 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor loading-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-18T08:05:00.000Z',
+          },
+          {
+            id: 'doc-loading-locked-image',
+            datum: '2026-06-19',
+            titel: 'Loading locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'loading-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9hZGluZy1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-loading-token hoort ook niet bij retry states.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-19',
+              documenttype: 'Foto/echo',
+              bronbestand: 'loading-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-19',
+              soort: 'echo',
+              context: 'private loading imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-19T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const loadingError = extractAttachmentLoadingErrorSurface(html);
+    const statusFeedback = extractStatusFeedback(html, 'dossier');
+
+    expect(statusFeedback).toContain('data-status-feedback-kind="dossier"');
+    expect(statusFeedback).toContain('data-status-feedback-state="mixed"');
+    expect(statusFeedback).toContain('Status bijgewerkt zonder broninhoud of bestandsdetails');
+    expect(loadingError).toContain('data-attachment-loading-error-surface="privacy"');
+    expect(loadingError).toContain('data-attachment-loading-actionbar-state="actions-available"');
+    expect(loadingError).toContain('data-attachment-loading-action-kind="retry"');
+    expect(loadingError).toContain('data-attachment-loading-action-state="retry-available"');
+    expect(loadingError).toContain('data-attachment-loading-action-kind="refresh-status"');
+    expect(loadingError).toContain('data-attachment-loading-action-state="status-updated"');
+    expect(loadingError).toContain('data-attachment-loading-kind="loading-status"');
+    expect(loadingError).toContain('data-attachment-loading-state="status-updated"');
+    expect(loadingError).toContain('data-attachment-loading-kind="error-boundary"');
+    expect(loadingError).toContain('data-attachment-loading-state="error-sanitized"');
+    expect(loadingError).toContain('data-attachment-loading-kind="retry-affordance"');
+    expect(loadingError).toContain('data-attachment-loading-kind="empty-actionbar"');
+    expect(loadingError).toContain('data-attachment-loading-state="actions-available"');
+    expect(loadingError).toContain('data-attachment-loading-kind="locked-preview-error-boundary"');
+    expect(loadingError).toContain('data-attachment-loading-state="locked-preview-error-boundary"');
+    expect(loadingError).toContain('Attachmentstatus is bijgewerkt als veilige workflowmelding');
+    expect(loadingError).toContain('Foutmelding is beschikbaar als generieke herstelstatus');
+    expect(loadingError).toContain('Retry is beschikbaar zonder bestandsnaam of medische inhoud');
+    expect(loadingError).toContain('2 bijlagen beschikbaar voor veilige statusacties');
+    expect(loadingError).toContain(
+      '1 vergrendelde beeldpreview blijft buiten fout- en retrystates',
+    );
+
+    expect(loadingError).not.toContain('private-loading-token');
+    expect(loadingError).not.toContain('loading-secret-source.pdf');
+    expect(loadingError).not.toContain('loading-locked-secret.jpg');
+    expect(loadingError).not.toContain('bG9hZGluZy1zZWNyZXQtcGF5bG9hZA==');
+    expect(loadingError).not.toContain('bG9hZGluZy1sb2NrZWQtc2VjcmV0');
+    expect(loadingError).not.toContain('bG9hZGluZy1lcnJvcg==');
+    expect(loadingError).not.toContain('data:image/jpeg;base64');
+    expect(loadingError).not.toContain('GEVOELIGE LOADING OCR TEKST');
+    expect(loadingError).not.toContain('OCR-payload');
+    expect(loadingError).not.toContain('Attachmentpayload');
+    expect(loadingError).not.toContain('attachmentpayload');
+    expect(loadingError).not.toContain('diagnose');
+    expect(loadingError).not.toContain('dosering');
+    expect(loadingError).not.toContain('behandelkeuzeadvies');
+    expect(loadingError).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
