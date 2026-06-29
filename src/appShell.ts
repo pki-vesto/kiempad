@@ -1539,6 +1539,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgePrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2914,6 +2915,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive receipt export toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const deliveryAvailable = hasAttachments && (hasStatus || hasError);
+  const deliveryState = deliveryAvailable
+    ? 'receipt-export-delivery-available'
+    : 'receipt-export-delivery-empty';
+  const proofState = hasError
+    ? 'delivery-proof-summary-paused'
+    : hasStatus
+      ? 'delivery-proof-summary-ready'
+      : 'delivery-proof-summary-empty';
+  const labelState = deliveryAvailable
+    ? 'screenreader-delivery-label-ready'
+    : 'screenreader-delivery-label-empty';
+  const auditState = deliveryAvailable
+    ? 'assistive-delivery-audit-ready'
+    : 'assistive-delivery-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-delivery-boundary'
+      : 'no-locked-preview-delivery';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery privacy states" data-attachment-assistive-delivery-surface="privacy">
+      <h2>Bijlage assistive delivery</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-delivery-live-state="${deliveryState}">
+        ${deliveryAvailable ? 'Opschoonbewijs delivery beschikbaar als veilige assistive deliverystatus.' : 'Geen veilige attachment-opschoonbewijs deliverystatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-delivery-kind="receipt-export-delivery-boundary" data-attachment-assistive-delivery-state="${deliveryState}">
+          <dt>Receipt export delivery boundary</dt>
+          <dd>${deliveryAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige deliverystatus zonder broninhoud.` : 'Receipt export delivery wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-delivery-kind="delivery-proof-summary-affordance" data-attachment-assistive-delivery-state="${proofState}">
+          <dt>Delivery proof summary</dt>
+          <dd>${hasError ? 'Deliverybewijs blijft gepauzeerd als generieke overdrachtsstatus.' : hasStatus ? 'Deliverybewijs is beschikbaar zonder bestands- of medische details.' : 'Geen deliverybewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-delivery-kind="screenreader-delivery-label-state" data-attachment-assistive-delivery-state="${labelState}">
+          <dt>Screenreader delivery label</dt>
+          <dd>${deliveryAvailable ? 'Screenreader delivery labels noemen alleen overdrachtsgroep en bewijsstatus.' : 'Screenreader delivery labels blijven leeg zonder deliverybewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-delivery-kind="assistive-delivery-audit" data-attachment-assistive-delivery-state="${auditState}">
+          <dt>Assistive delivery audit</dt>
+          <dd>${deliveryAvailable ? 'Assistive delivery audit bevestigt export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive delivery audit wacht op veilige deliverybewijsstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-delivery-kind="locked-preview-assistive-delivery-boundary" data-attachment-assistive-delivery-state="${lockedState}">
+          <dt>Locked-preview assistive delivery boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive delivery payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive delivery states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive delivery toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }

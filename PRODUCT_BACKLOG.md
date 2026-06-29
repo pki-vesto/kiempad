@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 649 |
+| ☑ klaar | 650 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **829** |
+| **Totaal** | **830** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1010,13 +1010,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G845 | Premium Claude Design UI: attachment assistive recovery archive purge privacy states | P1 | F5 | ☑ |
 | G846 | Premium Claude Design UI: attachment assistive recovery archive purge receipt privacy states | P1 | F5 | ☑ |
 | G847 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export privacy states | P1 | F5 | ☑ |
-| G848 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery privacy states | P1 | F5 | ☐ |
+| G848 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery privacy states | P1 | F5 | ☑ |
+| G849 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 848** (id's G001 t/m G848, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 849** (id's G001 t/m G849, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
