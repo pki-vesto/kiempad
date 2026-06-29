@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
@@ -91,6 +92,20 @@ const UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS = [
   'OCR/base64',
   'token',
   'Progesteron',
+] as const;
+const APP_SHELL_TEST_SOURCE = readFileSync(new URL('./appShell.test.ts', import.meta.url), 'utf8');
+const GENERIC_RECOVERY_CONTRACT_HELPER_NAMES = [
+  'captureRecoveryContractFailureMessage',
+  'expectSanitizedRecoveryContractMessage',
+] as const;
+const UNLOCK_ERROR_STRUCTURE_HELPER_NAMES = [
+  'extractUnlockErrorRecoveryAlert',
+  'expectUnlockErrorAlertStructureContract',
+] as const;
+const RECOVERY_CONTRACT_CATEGORY_NAME_PARTS = [
+  'UnlockError',
+  'MissingKeyMetadata',
+  'SupportHandoff',
 ] as const;
 
 function expectUnlockErrorCopyRedaction(html: string): void {
@@ -332,6 +347,21 @@ describe('app shell', () => {
       'Support-handoff contractsectie ontbreekt:',
       MISSING_KEY_METADATA_HANDOFF_CONTRACT.forbiddenTerms,
     );
+  });
+
+  it('bewaakt recovery-contract helpernamen als broncodeguard', () => {
+    for (const helperName of GENERIC_RECOVERY_CONTRACT_HELPER_NAMES) {
+      expect(APP_SHELL_TEST_SOURCE).toContain(`function ${helperName}(`);
+      expect(helperName).toContain('RecoveryContract');
+      for (const categoryNamePart of RECOVERY_CONTRACT_CATEGORY_NAME_PARTS) {
+        expect(helperName).not.toContain(categoryNamePart);
+      }
+    }
+
+    for (const helperName of UNLOCK_ERROR_STRUCTURE_HELPER_NAMES) {
+      expect(APP_SHELL_TEST_SOURCE).toContain(`function ${helperName}(`);
+      expect(helperName).toContain('UnlockError');
+    }
   });
 
   it('houdt een bestaande geldige dataset en passphrasefout gescheiden van metadataherstel', () => {

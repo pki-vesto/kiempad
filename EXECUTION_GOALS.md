@@ -7501,4 +7501,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery contract helpers
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G775 — recovery contract helper guard docs contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-contract helpernaamgrens heeft nu broncodedekking, maar de onderhoudsafspraak staat nog niet als apart documentatiecontract beschreven voor toekomstige recovery-contractuitbreiding.
+- **Desired Outcome:** Een korte documentatie- of maintenancetestkoppeling maakt duidelijk welke helpernaamgrens de broncodeguard bewaakt en wanneer nieuwe helpers generiek of categorie-specifiek moeten zijn.
+- **User Value:** Nieuwe recovery-contractuitbreidingen blijven sneller consistent, ook wanneer ontwikkelaars eerst de docs lezen.
+- **Acceptance Criteria:** Docs of onderhoudstest verwijzen expliciet naar de generieke recovery-contract helpernaamgrens; categorie-specifieke structuurhelpers blijven als uitzondering beschreven; bestaande guard en negatieve fixtures blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, maintenance docs, recovery contract helpers
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
