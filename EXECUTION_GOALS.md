@@ -8495,4 +8495,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive archive purge UI, expiry/archive/history/completion/recovery/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G846 — attachment assistive recovery archive purge receipt privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment assistive recovery archive purge states zijn nu bewaakt, maar purge receipt-, ontvangstbewijs-, screenreader receipt- en auditbewijsstates rond definitieve dossierbijlage- en beeldrecordopschoning hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment assistive recovery archive purge receipt states begrijpelijk en assistive-tech veilig blijven, bestaande purge/expiry/archive/history/completion/recovery/live-region/nav/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien dat definitieve archiefopschoning een bewijsstatus heeft zonder dat receipt states bronbestanden, selectiecontext of medische inhoud tonen.
+- **Acceptance Criteria:** Tests dekken purge receipt boundary, receipt proof summary affordance, screenreader receipt label state en assistive receipt audit state; bestaande purge/expiry/archive/history/completion/recovery/live-region/nav/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment assistive archive purge receipt UI, purge/expiry/archive/history/completion/recovery/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

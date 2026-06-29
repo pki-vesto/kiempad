@@ -1536,6 +1536,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryHistoryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchiveExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgePrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2732,6 +2733,63 @@ function renderAttachmentAssistiveRecoveryArchiveExpiryPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive expiry toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgePrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const purgeAvailable = hasAttachments && (hasStatus || hasError);
+  const purgeState = purgeAvailable ? 'archive-purge-available' : 'archive-purge-empty';
+  const proofState = hasError
+    ? 'purge-proof-summary-paused'
+    : hasStatus
+      ? 'purge-proof-summary-ready'
+      : 'purge-proof-summary-empty';
+  const labelState = purgeAvailable
+    ? 'screenreader-purge-label-ready'
+    : 'screenreader-purge-label-empty';
+  const auditState = purgeAvailable ? 'assistive-purge-audit-ready' : 'assistive-purge-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0 ? 'locked-preview-assistive-purge-boundary' : 'no-locked-preview-purge';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge privacy states" data-attachment-assistive-purge-surface="privacy">
+      <h2>Bijlage assistive purge</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-purge-live-state="${purgeState}">
+        ${purgeAvailable ? 'Archiefopschoning beschikbaar als veilige assistive purgestatus.' : 'Geen veilige attachment-archiefopschoning beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-purge-kind="archive-purge-boundary" data-attachment-assistive-purge-state="${purgeState}">
+          <dt>Archive purge boundary</dt>
+          <dd>${purgeAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige purge-status zonder broninhoud.` : 'Archiefpurge wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-purge-kind="purge-proof-summary-affordance" data-attachment-assistive-purge-state="${proofState}">
+          <dt>Purge proof summary</dt>
+          <dd>${hasError ? 'Verwijderbewijs blijft gepauzeerd als generieke opschoonstatus.' : hasStatus ? 'Verwijderbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen verwijderbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-purge-kind="screenreader-purge-label-state" data-attachment-assistive-purge-state="${labelState}">
+          <dt>Screenreader purge label</dt>
+          <dd>${purgeAvailable ? 'Screenreader purge labels noemen alleen opschoongroep en bewijsstatus.' : 'Screenreader purge labels blijven leeg zonder archiefopschoning.'}</dd>
+        </div>
+        <div data-attachment-assistive-purge-kind="assistive-purge-audit" data-attachment-assistive-purge-state="${auditState}">
+          <dt>Assistive purge audit</dt>
+          <dd>${purgeAvailable ? 'Assistive purge audit bevestigt expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive purge audit wacht op veilige archiefopschoning.'}</dd>
+        </div>
+        <div data-attachment-assistive-purge-kind="locked-preview-assistive-purge-boundary" data-attachment-assistive-purge-state="${lockedState}">
+          <dt>Locked-preview assistive purge boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive purge payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive purge states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive purge toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }

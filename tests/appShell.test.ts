@@ -277,6 +277,16 @@ function extractAttachmentAssistiveExpirySurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistivePurgeSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment assistive recovery archive purge privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -6689,6 +6699,157 @@ describe('app shell', () => {
     expect(assistiveExpiry).not.toContain('dosering');
     expect(assistiveExpiry).not.toContain('behandelkeuzeadvies');
     expect(assistiveExpiry).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-purge-token',
+        dossierStatus:
+          'Purge bevat verwijderbewijs voor purge-secret-source.pdf met private-purge-token OCR-payload diagnose 1725 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-purge-sensitive',
+            datum: '2026-07-12',
+            titel: 'Purge source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'purge-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'cHVyZ2Utc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-purge-token hoort niet in assistive purge.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1725 mg behandelkeuzeadvies blijft buiten assistive purge.',
+              signalen: ['OCR-payload blijft buiten purge proof en screenreader purge label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-12',
+              documenttype: 'Labuitslag',
+              bronbestand: 'purge-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-12T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE PURGE OCR TEKST private-purge-token diagnose 1725 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor purge-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-12T08:05:00.000Z',
+          },
+          {
+            id: 'doc-purge-locked-image',
+            datum: '2026-07-13',
+            titel: 'Purge locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'purge-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cHVyZ2UtbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-purge-token hoort ook niet in purge labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-13',
+              documenttype: 'Foto/echo',
+              bronbestand: 'purge-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-13',
+              soort: 'echo',
+              context: 'private purge imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-13T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistivePurge = extractAttachmentAssistivePurgeSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistivePurge).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(assistivePurge).toContain('role="status"');
+    expect(assistivePurge).toContain('aria-live="polite"');
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-live-state="archive-purge-available"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-kind="archive-purge-boundary"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-kind="purge-proof-summary-affordance"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-kind="screenreader-purge-label-state"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-kind="assistive-purge-audit"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-kind="locked-preview-assistive-purge-boundary"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-state="archive-purge-available"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-state="purge-proof-summary-ready"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-state="screenreader-purge-label-ready"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-state="assistive-purge-audit-ready"',
+    );
+    expect(assistivePurge).toContain(
+      'data-attachment-assistive-purge-state="locked-preview-assistive-purge-boundary"',
+    );
+    expect(assistivePurge).toContain(
+      'Archiefopschoning beschikbaar als veilige assistive purgestatus',
+    );
+    expect(assistivePurge).toContain('2 bijlagen met veilige purge-status');
+    expect(assistivePurge).toContain('Verwijderbewijs is beschikbaar zonder bestands-');
+    expect(assistivePurge).toContain('Screenreader purge labels noemen alleen opschoongroep');
+    expect(assistivePurge).toContain(
+      'Assistive purge audit bevestigt expiry-, archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistivePurge).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive purge payloads',
+    );
+
+    expect(assistivePurge).not.toContain('private-purge-token');
+    expect(assistivePurge).not.toContain('purge-secret-source.pdf');
+    expect(assistivePurge).not.toContain('purge-locked-secret.jpg');
+    expect(assistivePurge).not.toContain('cHVyZ2Utc2VjcmV0LXBheWxvYWQ=');
+    expect(assistivePurge).not.toContain('cHVyZ2UtbG9ja2VkLXNlY3JldA==');
+    expect(assistivePurge).not.toContain('data:image/jpeg;base64');
+    expect(assistivePurge).not.toContain('GEVOELIGE PURGE OCR TEKST');
+    expect(assistivePurge).not.toContain('OCR-payload');
+    expect(assistivePurge).not.toContain('Attachmentpayload');
+    expect(assistivePurge).not.toContain('attachmentpayload');
+    expect(assistivePurge).not.toContain('dossierpayload');
+    expect(assistivePurge).not.toContain('diagnose');
+    expect(assistivePurge).not.toContain('dosering');
+    expect(assistivePurge).not.toContain('behandelkeuzeadvies');
+    expect(assistivePurge).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
