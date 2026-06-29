@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 592 |
+| ☑ klaar | 593 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **791** |
+| **Totaal** | **792** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -953,13 +953,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G788 | Central Encrypted Platform: recovery contract helper release-state message error release guard | P1 | F5 | ☑ |
 | G789 | Central Encrypted Platform: recovery contract helper release-state message error negative fixture | P1 | F5 | ☑ |
 | G790 | Central Encrypted Platform: recovery contract helper release-state message error compact contract | P1 | F5 | ☑ |
-| G791 | Central Encrypted Platform: recovery contract helper release-state message error release guard | P1 | F5 | ☐ |
+| G791 | Central Encrypted Platform: recovery contract helper release-state message error release guard | P1 | F5 | ☑ |
+| G792 | Central Encrypted Platform: recovery contract helper release-state message error release guard negative fixture | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 791** (id's G001 t/m G791, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 792** (id's G001 t/m G792, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
