@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 611 |
+| ☑ klaar | 612 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -972,13 +972,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G807 | Premium Claude Design UI: dossier inbox state regression guard | P1 | F5 | ☑ |
 | G808 | Premium Claude Design UI: imaging compare empty and locked states | P1 | F5 | ☑ |
 | G809 | Premium Claude Design UI: consult intelligence review states | P1 | F5 | ☑ |
-| G810 | Premium Claude Design UI: daily recommendation dual-owner states | P1 | F5 | ☐ |
+| G810 | Premium Claude Design UI: daily recommendation dual-owner states | P1 | F5 | ☑ |
+| G811 | Premium Claude Design UI: research trend dashboard states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 810** (id's G001 t/m G810, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 811** (id's G001 t/m G811, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G810/G811 Premium Claude Design UI: app-shell tests bewaken daily recommendation dual-owner states voor lege context, vrouw/man aanbevelingen en artscheck-copy met bestaande recommendation hooks en zonder dosering, behandelvervanging, trackingpayload of medische payload; G811 is toegevoegd voor research trend dashboard statebewaking.
 - G809/G810 Premium Claude Design UI: app-shell tests bewaken consult intelligence reviewstates voor lege verslagen, conceptactiepunten en gecorrigeerde samenvattingen met bestaande consult-form hooks en zonder base64, bestandspayload of behandelkeuzeadvies in de reviewsectie; G810 is toegevoegd voor daily recommendation dual-owner statebewaking.
 - G808/G809 Premium Claude Design UI: imaging compare heeft nu een expliciete empty-state in hetzelfde Claude Design-panel en app-shell tests bewaken empty, multiple en locked image states zonder base64, OCR-tekst of verborgen bronbestandsnamen; G809 is toegevoegd voor consult intelligence review statebewaking.
 - G807/G808 Premium Claude Design UI: app-shell tests bewaken nu lege, OCR-wachtende, beeld- en reviewklare dossierinbox-states met bestaande upload/delete-hooks en zonder OCR-tekst, base64 of medische payload in de overview; G808 is toegevoegd voor imaging-compare layout verdieping.

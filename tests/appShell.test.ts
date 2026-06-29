@@ -89,6 +89,13 @@ function extractConsultVerslagenSection(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractDailyRecommendationsSection(html: string): string {
+  const start = html.indexOf('<h2>Dagelijkse aanbevelingen</h2>');
+  const end = html.indexOf('<details class="kp-disclosure"', start);
+  if (start < 0 || end < 0) throw new Error('Dagelijkse aanbevelingen-sectie ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -652,6 +659,128 @@ describe('app shell', () => {
     expect(html).toContain('Vragen voor de arts');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('bewaakt dagelijkse aanbevelingen als dual-owner states zonder dosering of trackingpayload', () => {
+    const emptyContextHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      consultVerslagen: [],
+      dossierDocuments: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
+
+    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen');
+    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Vrouw');
+    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Man');
+    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Samen');
+    expect(emptyContextRecommendations).toContain('data-recommendation-id="vrouw-basisdag"');
+    expect(emptyContextRecommendations).toContain('data-recommendation-id="man-basisdag"');
+    expect(emptyContextRecommendations).toContain('Dagcheck zonder extra medicatiemoment');
+    expect(emptyContextRecommendations).toContain('Mannelijke leefstijl- en voorbereidingskaart');
+    expect(emptyContextRecommendations).toContain('Voeding en supplementen checklijst');
+    expect(emptyContextRecommendations).toContain('Artscheck verplicht voor supplementvragen');
+    expect(emptyContextRecommendations).toContain('name="recommendationAction" value="bewaar"');
+    expect(emptyContextRecommendations).toContain(
+      'name="recommendationAction" value="herinnering"',
+    );
+    expect(emptyContextRecommendations).toContain('name="recommendationAction" value="vraag"');
+    expect(emptyContextRecommendations).toContain('name="recommendationAction" value="afwijzen"');
+    expect(emptyContextRecommendations).toContain('name="recommendationAction" value="artscheck"');
+    expect(emptyContextRecommendations).toContain('name="reminderTijdstip" type="datetime-local"');
+    expect(emptyContextRecommendations).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    expect(emptyContextRecommendations).not.toContain('tracking-payload');
+    expect(emptyContextRecommendations).not.toContain('vervang behandeling');
+    expect(emptyContextRecommendations).not.toContain('MEDISCHE PAYLOAD');
+
+    const vandaag = new Date().toISOString().slice(0, 10);
+    const contextualHtml = renderAppShell('start', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-ctx',
+            naam: 'Poging context',
+            type: 'ivf',
+            startDatum: vandaag,
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [
+            {
+              id: 'fase-ctx',
+              trajectId: 'traject-ctx',
+              fase: 'stimulatie',
+              startDatum: vandaag,
+            },
+          ],
+        },
+      ],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-ctx',
+            titel: 'Echo controle',
+            datumTijd: `${vandaag}T09:30`,
+            type: 'echo',
+          },
+        },
+      ],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-ctx',
+            naam: 'Progesteron',
+            vorm: 'tablet',
+            actief: true,
+          },
+          doseLogs: [
+            {
+              id: 'dose-ctx',
+              medicatieId: 'med-ctx',
+              geplandOp: `${vandaag}T08:00`,
+              status: 'gepland',
+            },
+          ],
+        },
+      ],
+      herinneringen: [],
+      vragen: [
+        {
+          vraag: {
+            id: 'vraag-ctx',
+            vraag: 'Welke vraag nemen we mee?',
+            beantwoord: false,
+          },
+        },
+      ],
+      kennisItems: [],
+      consultVerslagen: [],
+      dossierDocuments: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const contextualRecommendations = extractDailyRecommendationsSection(contextualHtml);
+
+    expect(contextualRecommendations).toContain('data-recommendation-id="vrouw-medicatie-vandaag"');
+    expect(contextualRecommendations).toContain(
+      'data-recommendation-id="samen-behandelvoorbereiding"',
+    );
+    expect(contextualRecommendations).toContain('data-recommendation-id="man-basisdag"');
+    expect(contextualRecommendations).toContain('Medicatieschema controleren');
+    expect(contextualRecommendations).toContain('Behandelvoorbereiding');
+    expect(contextualRecommendations).toContain('Bron: Medicatieplanning vandaag');
+    expect(contextualRecommendations).toContain('Bron: Vragenlijst');
+    expect(contextualRecommendations).toContain('Artscheck verplicht voor supplementvragen');
+    expect(contextualRecommendations).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    expect(contextualRecommendations).not.toContain('tracking-payload');
+    expect(contextualRecommendations).not.toContain('vervang behandeling');
+    expect(contextualRecommendations).not.toContain('MEDISCHE PAYLOAD');
   });
 
   it('beschrijft centrale encrypted opslag als primaire eerste setup wanneer actief', () => {
