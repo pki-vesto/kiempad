@@ -976,10 +976,10 @@ function renderBackupScreen(state: AppShellState): string {
   return `
     <section class="section-stack" aria-label="Back-up en import">
         <h2>Versleutelde export</h2>
-        <button id="export-backup" class="phase-button" type="button">Download back-up</button>
+        <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
         <p class="small-print">${backupCopy}</p>
         <h2 class="section-subheading">${syncTitle}</h2>
-        <button id="export-sync" class="phase-button" type="button">${syncButton}</button>
+        <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
         <p class="small-print">${syncCopy}</p>
         <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
           <h2>${escapeHtml(reminder.titel)}</h2>
@@ -988,7 +988,7 @@ function renderBackupScreen(state: AppShellState): string {
         </section>
         ${renderWebAuthnSettings(state)}
         <h2>Import</h2>
-        <form id="import-backup-form" class="data-form">
+        <form id="import-backup-form" class="data-form" data-import-privacy-state="${central ? 'central-encrypted-backup' : 'legacy-encrypted-backup'}">
           <label>
             Kiempad-exportbestand
             <input name="backupFile" type="file" accept=".kiempad-export,application/json" required />
@@ -996,7 +996,7 @@ function renderBackupScreen(state: AppShellState): string {
           <button type="submit">Importeer back-up</button>
         </form>
         <h2 class="section-subheading">${syncImportTitle}</h2>
-        <form id="import-sync-form" class="data-form">
+        <form id="import-sync-form" class="data-form" data-import-privacy-state="${central ? 'central-record-package' : 'legacy-sync-package'}">
           <label>
             ${syncImportLabel}
             <input name="syncFile" type="file" accept=".kiempad-sync,application/json" required />

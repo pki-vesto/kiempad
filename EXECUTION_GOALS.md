@@ -8089,4 +8089,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backup UI, import UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G817 — WebAuthn recovery privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Backup/import privacy states zijn nu bewaakt, maar WebAuthn- en recovery-copy op het back-upscherm hebben nog geen expliciete Claude Design-regressie rond gekoppeld/niet-gekoppeld, centrale dataset en herstelcopy zonder sleutel- of authenticatorpayload.
+- **Desired Outcome:** Tests bewaken dat WebAuthn/recovery states scanbaar blijven, bestaande enroll/remove hooks behouden en geen passphrase, PRF-output, credential-id, recoverytoken of medische payload tonen.
+- **User Value:** Gebruikers kunnen biometrie en herstelopties begrijpen zonder dat themawijzigingen gevoelige sleutel- of herstelcontext zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken niet-gekoppelde, gekoppelde en centrale WebAuthn states; bestaande WebAuthn UI-hooks blijven aanwezig; zichtbare copy toont geen PRF-output, credential-id, recoverytoken, API-sleutel, base64, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** WebAuthn UI, recovery copy, backup screen, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
