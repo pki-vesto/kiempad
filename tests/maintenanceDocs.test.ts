@@ -467,6 +467,8 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELE
   'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext missing-term melding';
 const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR =
   'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding';
+const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR =
+  'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontext ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext missing-term melding';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 describe('onderhoudsdocumentatie', () => {
@@ -959,6 +961,35 @@ describe('onderhoudsdocumentatie', () => {
         expect(releaseContext).toContain(requiredTerm);
       }
     }
+  });
+
+  it('geeft ontbrekende recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontexttermen technisch terug', () => {
+    expect(() =>
+      extractRecoveryContractHelperReleaseStateMessageErrorContractReleaseReleaseReleaseReleaseContext(
+        'G000 Central Encrypted Platform: contractcontext staat in release-state.',
+      ),
+    ).toThrow(
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR,
+    );
+    expect(
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR,
+    ).toBe(
+      'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontext ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext missing-term melding',
+    );
+    expect(
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR,
+    ).toContain(
+      'recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext',
+    );
+    expect(
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR,
+    ).not.toContain('payload');
+    expect(
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR,
+    ).not.toContain('passphrase');
+    expect(
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR,
+    ).not.toContain('token');
   });
 
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
