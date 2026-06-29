@@ -407,6 +407,18 @@ function extractAttachmentAssistiveRetentionExpirySurface(html: string): string 
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveExpiryCleanupSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -8610,6 +8622,174 @@ describe('app shell', () => {
     expect(assistiveExpiry).not.toContain('dosering');
     expect(assistiveExpiry).not.toContain('behandelkeuzeadvies');
     expect(assistiveExpiry).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-cleanup-token',
+        dossierStatus:
+          'Cleanup bevat opschoonbewijs voor cleanup-secret-source.pdf met private-cleanup-token OCR-payload diagnose 2825 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-cleanup-sensitive',
+            datum: '2026-08-03',
+            titel: 'Cleanup source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'cleanup-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'Y2xlYW51cC1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-cleanup-token hoort niet in assistive cleanup.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 2825 mg behandelkeuzeadvies blijft buiten assistive cleanup.',
+              signalen: ['OCR-payload blijft buiten cleanup proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-03',
+              documenttype: 'Labuitslag',
+              bronbestand: 'cleanup-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.92,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-08-03T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE CLEANUP OCR TEKST private-cleanup-token diagnose 2825 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor cleanup-secret-source.pdf.',
+            },
+            uploadedAt: '2026-08-03T08:05:00.000Z',
+          },
+          {
+            id: 'doc-cleanup-locked-image',
+            datum: '2026-08-04',
+            titel: 'Cleanup locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'cleanup-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'Y2xlYW51cC1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-cleanup-token hoort ook niet in cleanup labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-04',
+              documenttype: 'Foto/echo',
+              bronbestand: 'cleanup-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-08-04',
+              soort: 'echo',
+              context: 'private cleanup imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-08-04T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveCleanup = extractAttachmentAssistiveExpiryCleanupSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-retention-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-retention-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-surface="privacy"',
+    );
+    expect(assistiveCleanup).toContain('role="status"');
+    expect(assistiveCleanup).toContain('aria-live="polite"');
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-live-state="retention-expiry-cleanup-available"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="retention-expiry-cleanup-boundary"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="cleanup-proof-summary-affordance"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="screenreader-retention-cleanup-label-state"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="assistive-cleanup-retention"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-kind="locked-preview-assistive-cleanup-boundary"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-state="retention-expiry-cleanup-available"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-state="cleanup-proof-summary-ready"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-state="screenreader-retention-cleanup-label-ready"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-state="assistive-cleanup-retention-ready"',
+    );
+    expect(assistiveCleanup).toContain(
+      'data-attachment-assistive-expiry-cleanup-state="locked-preview-assistive-cleanup-boundary"',
+    );
+    expect(assistiveCleanup).toContain(
+      'Opschoonbewijs retention expiry cleanup beschikbaar als veilige assistive cleanupstatus',
+    );
+    expect(assistiveCleanup).toContain('2 bijlagen met veilige retention expiry cleanupstatus');
+    expect(assistiveCleanup).toContain('Cleanupbewijs is beschikbaar zonder bestands-');
+    expect(assistiveCleanup).toContain(
+      'Screenreader retention cleanup labels noemen alleen cleanupgroep',
+    );
+    expect(assistiveCleanup).toContain(
+      'Assistive cleanup retention bevestigt expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveCleanup).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive cleanup payloads',
+    );
+
+    expect(assistiveCleanup).not.toContain('private-cleanup-token');
+    expect(assistiveCleanup).not.toContain('cleanup-secret-source.pdf');
+    expect(assistiveCleanup).not.toContain('cleanup-locked-secret.jpg');
+    expect(assistiveCleanup).not.toContain('Y2xlYW51cC1zZWNyZXQtcGF5bG9hZA==');
+    expect(assistiveCleanup).not.toContain('Y2xlYW51cC1sb2NrZWQtc2VjcmV0');
+    expect(assistiveCleanup).not.toContain('data:image/jpeg;base64');
+    expect(assistiveCleanup).not.toContain('GEVOELIGE CLEANUP OCR TEKST');
+    expect(assistiveCleanup).not.toContain('OCR-payload');
+    expect(assistiveCleanup).not.toContain('Attachmentpayload');
+    expect(assistiveCleanup).not.toContain('attachmentpayload');
+    expect(assistiveCleanup).not.toContain('dossierpayload');
+    expect(assistiveCleanup).not.toContain('diagnose');
+    expect(assistiveCleanup).not.toContain('dosering');
+    expect(assistiveCleanup).not.toContain('behandelkeuzeadvies');
+    expect(assistiveCleanup).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
