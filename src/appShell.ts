@@ -3653,7 +3653,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
   return `
     <section class="section-stack" aria-label="Herinneringen beheren">
         <h2>Notificaties</h2>
-        <div class="notification-status">
+        <div class="notification-status" data-notification-permission="${escapeAttribute(state.notificaties.permission)}" data-notification-service-worker="${escapeAttribute(state.notificaties.serviceWorker)}">
           <p><strong>Toestemming:</strong> ${renderPermissionLabel(state.notificaties.permission)}</p>
           <p><strong>Service worker:</strong> ${renderServiceWorkerLabel(state.notificaties.serviceWorker)}</p>
         </div>
@@ -3669,7 +3669,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
             : ''
         }
         <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
-        <form id="notification-privacy-form" class="data-form compact-form">
+        <form id="notification-privacy-form" class="data-form compact-form" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
           <label>
             Inhoud op vergrendeld scherm
             <select name="toonNotificatieDetailsOpVergrendelscherm">
