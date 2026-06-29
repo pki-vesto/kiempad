@@ -1530,6 +1530,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAccessibilityAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentLandmarkNavigationPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentScreenreaderAnnouncementPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveSummaryPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2348,6 +2349,67 @@ function renderAttachmentScreenreaderAnnouncementPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze screenreader announcements tonen geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveSummaryPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const reviewedCount = zichtbareDocumenten.filter(
+    (document) =>
+      document.ocr?.reviewStatus === 'gereviewd' ||
+      document.beeldMetadata?.reviewStatus === 'gereviewd' ||
+      document.embryo?.reviewStatus === 'gereviewd',
+  ).length;
+  const summaryState = hasAttachments ? 'assistive-summary-ready' : 'assistive-summary-empty';
+  const compactState = hasAttachments ? 'compact-status-summary-ready' : 'compact-status-empty';
+  const labelState =
+    reviewedCount > 0
+      ? 'screenreader-summary-label-reviewed'
+      : 'screenreader-summary-label-pending';
+  const auditState = hasAttachments
+    ? 'assistive-summary-audit-ready'
+    : 'assistive-summary-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-summary-boundary'
+      : 'no-locked-preview-summary';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive summary privacy states" data-attachment-assistive-summary-surface="privacy">
+      <h2>Bijlage assistive summary</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-summary-live-state="${summaryState}">
+        ${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} samengevat als veilige assistive status.` : 'Geen bijlagen beschikbaar voor assistive summary.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-summary-kind="assistive-summary-boundary" data-attachment-assistive-summary-state="${summaryState}">
+          <dt>Assistive summary boundary</dt>
+          <dd>${hasAttachments ? 'Assistive summary toont alleen aantallen, reviewstatus en veilige routecontext.' : 'Assistive summary wacht op bijlagestatussen.'}</dd>
+        </div>
+        <div data-attachment-assistive-summary-kind="compact-status-summary-boundary" data-attachment-assistive-summary-state="${compactState}">
+          <dt>Compact status summary</dt>
+          <dd>${hasAttachments ? `${reviewedCount} gereviewde status${reviewedCount === 1 ? '' : 'sen'} beschikbaar binnen het compacte overzicht.` : 'Compact statusoverzicht is leeg zonder bijlagen.'}</dd>
+        </div>
+        <div data-attachment-assistive-summary-kind="screenreader-summary-label-affordance" data-attachment-assistive-summary-state="${labelState}">
+          <dt>Screenreader summary label</dt>
+          <dd>${reviewedCount > 0 ? 'Screenreader-labels gebruiken reviewstatus zonder bronlabels.' : 'Screenreader-labels blijven generiek tot reviewstatus beschikbaar is.'}</dd>
+        </div>
+        <div data-attachment-assistive-summary-kind="assistive-summary-audit" data-attachment-assistive-summary-state="${auditState}">
+          <dt>Assistive summary audit</dt>
+          <dd>${hasAttachments ? 'Assistive-summary audit bevestigt summary-, live-region-, nav- en actionhooks zonder broninhoud.' : 'Assistive-summary audit heeft nog geen statusregels om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-summary-kind="locked-preview-assistive-summary-boundary" data-attachment-assistive-summary-state="${lockedState}">
+          <dt>Locked-preview assistive summary boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive summary payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive summary states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive summary toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
