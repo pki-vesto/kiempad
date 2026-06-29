@@ -181,6 +181,19 @@ function extractNotificationPrivacyForm(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractBackupImportPrivacyZone(html: string): string {
+  const exportStart = html.indexOf('<h2>Versleutelde export</h2>');
+  const exportEnd = html.indexOf('<section class="policy-panel embedded-summary"', exportStart);
+  const importStart = html.indexOf('<h2>Import</h2>');
+  const importEnd = html.indexOf('</form>', html.indexOf('id="import-sync-form"', importStart));
+  if (exportStart < 0 || exportEnd < 0 || importStart < 0 || importEnd < 0) {
+    throw new Error('Back-up/import privacyzone ontbreekt.');
+  }
+  return `${html.slice(exportStart, exportEnd)} ${html.slice(importStart, importEnd + '</form>'.length)}`
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -4442,6 +4455,58 @@ describe('app shell', () => {
     expect(html).toContain('Importeer recordpakket');
     expect(html).not.toContain('via een versleutelde back-up aan dezelfde kluis');
     expect(html).not.toContain('Download syncpakket');
+  });
+
+  it('bewaakt backup en import privacy states zonder plaintext payloadcopy', () => {
+    const legacyHtml = renderAppShell('backup');
+    const legacyZone = extractBackupImportPrivacyZone(legacyHtml);
+
+    expect(legacyZone).toContain('id="export-backup"');
+    expect(legacyZone).toContain('data-backup-export-state="legacy-encrypted-vault"');
+    expect(legacyZone).toContain('id="export-sync"');
+    expect(legacyZone).toContain('data-sync-export-state="legacy-sync-package"');
+    expect(legacyZone).toContain('id="import-backup-form"');
+    expect(legacyZone).toContain('data-import-privacy-state="legacy-encrypted-backup"');
+    expect(legacyZone).toContain('id="import-sync-form"');
+    expect(legacyZone).toContain('data-import-privacy-state="legacy-sync-package"');
+    expect(legacyZone).toContain('Het bestand bevat versleutelde records en legacy kluismetadata');
+    expect(legacyZone).toContain('Het pakket bevat alleen encrypted records');
+    expect(legacyZone).toContain('.kiempad-export');
+    expect(legacyZone).toContain('.kiempad-sync');
+
+    const centralHtml = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const centralZone = extractBackupImportPrivacyZone(centralHtml);
+
+    expect(centralZone).toContain('data-backup-export-state="central-encrypted-metadata"');
+    expect(centralZone).toContain('data-sync-export-state="central-record-package"');
+    expect(centralZone).toContain('data-import-privacy-state="central-encrypted-backup"');
+    expect(centralZone).toContain('data-import-privacy-state="central-record-package"');
+    expect(centralZone).toContain('encrypted records en centrale datasetmetadata');
+    expect(centralZone).toContain('Download recordpakket');
+    expect(centralZone).toContain('Recordpakket importeren');
+    expect(centralZone).toContain('Kiempad-recordpakket');
+
+    for (const zone of [legacyZone, centralZone]) {
+      expect(zone).not.toContain('passphrase');
+      expect(zone).not.toContain('API-sleutel');
+      expect(zone).not.toContain('base64');
+      expect(zone).not.toContain('OCR-payload');
+      expect(zone).not.toContain('dossierpayload');
+      expect(zone).not.toContain('diagnose');
+      expect(zone).not.toContain('behandelkeuzeadvies');
+      expect(zone).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
   });
 
   it('rendert WebAuthn-copy voor de centrale encrypted dataset', () => {
