@@ -1586,6 +1586,19 @@ a.action-card:active {
   color: var(--danger);
 }
 
+.dossier-inbox-overview {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface-subtle);
+}
+
+.dossier-inbox-overview .small-print {
+  margin: 0;
+}
+
 .kp-timeline {
   display: grid;
   gap: 0;

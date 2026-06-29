@@ -4400,7 +4400,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G556 — imaging repository compare layout
 
@@ -7949,4 +7949,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☐ open
+
+### G807 — dossier inbox state regression guard
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossierimport-inbox heeft nu een scanbare Claude Design-overview, maar toekomstige themawijzigingen kunnen lege, OCR-wachtende, beeld- en reviewklare states onbedoeld minder scanbaar of minder privacyveilig maken.
+- **Desired Outcome:** Een gerichte regressieguard bewaakt dat de dossierinbox-states mobiel-first blijven, bestaande upload/delete-hooks behouden en geen OCR-tekst, base64 of bestandsinhoud tonen.
+- **User Value:** Gebruikers houden een rustige en consistente inboxervaring wanneer het nieuwe thema verder evolueert.
+- **Acceptance Criteria:** Tests dekken lege inbox, OCR-wacht, beeldimport en reviewklare status in de Claude Design-overview; bestaande form-id's en `data-dossier-document-id` hooks blijven aanwezig; `assets:check` blijft groen; zichtbare overview toont alleen veilige metadata en geen OCR-tekst, base64 of medische payload.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
