@@ -118,14 +118,23 @@ function expectUnlockErrorAlertStructureContract(alert: string): void {
   const handoffIndex = alert.indexOf('data-support-handoff="unlock-error"');
   const expectedAlert = `<span>${UNLOCK_ERROR_GENERIC_COPY}</span> <dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl>`;
 
-  expect(copyIndex).toBeGreaterThanOrEqual(0);
-  expect(handoffIndex).toBeGreaterThan(copyIndex);
-  expect(alert).toBe(expectedAlert);
+  if (copyIndex < 0 || handoffIndex <= copyIndex) {
+    throw new Error(
+      'Unlock-error alertstructuur contract mislukt: copy moet voor support-handoff staan.',
+    );
+  }
+  if (alert !== expectedAlert) {
+    throw new Error('Unlock-error alertstructuur contract mislukt: onverwachte alertinhoud.');
+  }
   expectSupportHandoffContract(alert, UNLOCK_ERROR_HANDOFF_CONTRACT);
   for (const forbidden of UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS) {
-    expect(alert).not.toContain(forbidden);
+    if (alert.includes(forbidden)) {
+      throw new Error('Unlock-error alertstructuur contract mislukt: onverwachte alertinhoud.');
+    }
   }
-  expect(alert).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
+  if (/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i.test(alert)) {
+    throw new Error('Unlock-error alertstructuur contract mislukt: onverwachte alertinhoud.');
+  }
 }
 
 describe('app shell', () => {
@@ -360,6 +369,22 @@ describe('app shell', () => {
     });
 
     expectUnlockErrorAlertStructureContract(extractUnlockErrorRecoveryAlert(html));
+  });
+
+  it('faalt gericht wanneer unlock-error handoff voor de copy staat', () => {
+    const reversedAlert = `<dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl> <span>${UNLOCK_ERROR_GENERIC_COPY}</span>`;
+
+    expect(() => expectUnlockErrorAlertStructureContract(reversedAlert)).toThrow(
+      'Unlock-error alertstructuur contract mislukt: copy moet voor support-handoff staan.',
+    );
+  });
+
+  it('faalt gesanitized wanneer unlock-error alert extra raw detail bevat', () => {
+    const alertWithRawDetail = `<span>${UNLOCK_ERROR_GENERIC_COPY}</span> <dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl> <small>${UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE}</small>`;
+
+    expect(() => expectUnlockErrorAlertStructureContract(alertWithRawDetail)).toThrow(
+      'Unlock-error alertstructuur contract mislukt: onverwachte alertinhoud.',
+    );
   });
 
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {

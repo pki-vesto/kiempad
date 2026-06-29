@@ -7445,4 +7445,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery alert contract helper
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G771 — unlock-error contract message redaction guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De negatieve unlock-error structuurfixtures gebruiken gesanitized foutmeldingen, maar er is nog geen aparte guard die expliciet voorkomt dat helperfouten raw exceptiondetails in testoutput opnemen.
+- **Desired Outcome:** Een gerichte test bewaakt dat contracthelper-foutmeldingen geen passphrase, token, filename, OCR/base64 of medische plaintext bevatten.
+- **User Value:** Ontwikkelaars krijgen bruikbare contractfouten zonder dat privacygevoelige fixturedetails in logs of CI-output verschijnen.
+- **Acceptance Criteria:** Test vangt minimaal twee helperfouten af en controleert de foutmelding; foutmelding bevat geen passphrase, token, filename, OCR/base64 of medische plaintext; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery alert contract helper
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
