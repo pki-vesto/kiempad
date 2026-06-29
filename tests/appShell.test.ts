@@ -96,6 +96,14 @@ function extractDailyRecommendationsSection(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractResearchTrendDashboard(html: string): string {
+  const match = html.match(
+    /<section class="research-trend-dashboard" aria-label="Research trenddashboard">([\s\S]*?)<\/section>/,
+  );
+  if (!match?.[1]) throw new Error('Research trenddashboard ontbreekt.');
+  return match[1].replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -3453,6 +3461,90 @@ describe('app shell', () => {
     expect(html).toContain('Mannelijke factor');
     expect(html).toContain('IVF embryo-cultuur · 2026-05-10 · https://voorbeeld.test/ivf-embryo');
     expect(html).toContain('Dit is geen bewijsweging of behandeladvies');
+  });
+
+  it('bewaakt research trend dashboard states met lege research, trendcontext en bronverwijzing', () => {
+    const emptyHtml = renderAppShell('kennis', makeStartState());
+    const emptyDashboard = extractResearchTrendDashboard(emptyHtml);
+
+    expect(emptyHtml).toContain('class="research-trend-dashboard"');
+    expect(emptyHtml).toContain('aria-label="Research trenddashboard"');
+    expect(emptyHtml).toContain('id="research-item-form"');
+    expect(emptyHtml).toContain('id="research-network-form"');
+    expect(emptyDashboard).toContain('Researchtrends');
+    expect(emptyDashboard).toContain(
+      'Nog geen researchtrends gevonden in opgeslagen researchitems.',
+    );
+    expect(emptyDashboard).not.toContain('tracking-payload');
+    expect(emptyDashboard).not.toContain('providerpayload');
+    expect(emptyDashboard).not.toContain('diagnose');
+    expect(emptyDashboard).not.toContain('behandelkeuzeadvies');
+
+    const contextualHtml = renderAppShell(
+      'kennis',
+      makeStartState({
+        kennisItems: [
+          {
+            id: 'research-ivf-icsi-embryo',
+            titel: 'IVF ICSI embryo trendreview',
+            inhoud: 'Artikel over IVF, ICSI en embryo-ontwikkeling als trendcontext.',
+            bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+            categorie: 'research',
+            researchPublicatie: {
+              publicatieDatum: '2026-05-10',
+              bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+              wetenschappelijkeSamenvatting:
+                'Beschrijft IVF-, ICSI- en embryo-observaties met beperkingen.',
+              eenvoudigeSamenvatting:
+                'Legt in gewone taal uit welke patronen onderzoekers bekeken.',
+              relevantieVoorGebruiker:
+                'Achtergrond om vragen over labobservaties met de kliniek te bespreken.',
+            },
+            ai_gegenereerd: false,
+            geverifieerd_met_arts: false,
+          },
+          {
+            id: 'research-man-leefstijl-bron',
+            titel: 'Mannelijke factor leefstijl overzicht',
+            inhoud: 'Research over sperma, voeding, slaap en leefstijl als trendcontext.',
+            bron: 'https://doi.org/10.1000/fertility-context',
+            categorie: 'research',
+            researchPublicatie: {
+              publicatieDatum: '2026-04-01',
+              bron: 'https://doi.org/10.1000/fertility-context',
+              wetenschappelijkeSamenvatting:
+                'Beschrijft zaadkwaliteit, voeding en slaap als onderzoeksonderwerpen.',
+              eenvoudigeSamenvatting:
+                'Vat samen welke leefstijlfactoren in publicaties worden besproken.',
+              relevantieVoorGebruiker:
+                'Achtergrond voor algemene vragen over voorbereiding van de man.',
+            },
+            ai_gegenereerd: false,
+            geverifieerd_met_arts: false,
+          },
+        ],
+      }),
+    );
+    const contextualDashboard = extractResearchTrendDashboard(contextualHtml);
+
+    expect(contextualDashboard).toContain('IVF');
+    expect(contextualDashboard).toContain('ICSI');
+    expect(contextualDashboard).toContain('Embryo');
+    expect(contextualDashboard).toContain('Leefstijl');
+    expect(contextualDashboard).toContain('Mannelijke factor');
+    expect(contextualDashboard).toContain(
+      'IVF ICSI embryo trendreview · 2026-05-10 · https://pubmed.ncbi.nlm.nih.gov/123456/',
+    );
+    expect(contextualDashboard).toContain(
+      'Mannelijke factor leefstijl overzicht · 2026-04-01 · https://doi.org/10.1000/fertility-context',
+    );
+    expect(contextualDashboard).toContain(
+      'Trendgroepering is een lokale trefwoordindeling voor overzicht',
+    );
+    expect(contextualDashboard).not.toContain('tracking-payload');
+    expect(contextualDashboard).not.toContain('providerpayload');
+    expect(contextualDashboard).not.toContain('diagnose');
+    expect(contextualDashboard).not.toContain('behandelkeuzeadvies');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {

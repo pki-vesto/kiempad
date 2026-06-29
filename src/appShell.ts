@@ -2685,31 +2685,33 @@ function renderResearchDossierRelaties(relaties: readonly ResearchDossierRelatie
 
 function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): string {
   return `
-    <h2>Researchtrends</h2>
-    <p class="small-print">Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.</p>
-    ${
-      groepen.length > 0
-        ? `<ol class="compact-list">${groepen
-            .map(
-              (groep) => `
-                <li>
-                  <strong>${escapeHtml(groep.label)}</strong>
-                  <span>${groep.items.length} item(s)</span>
-                  <small>${escapeHtml(groep.waarschuwing)}</small>
-                  <ol>
-                    ${groep.items
-                      .map(
-                        (item) =>
-                          `<li>${escapeHtml(item.titel)}${item.publicatieDatum ? ` · ${escapeHtml(item.publicatieDatum)}` : ''}${item.bron ? ` · ${escapeHtml(item.bron)}` : ''}</li>`,
-                      )
-                      .join('')}
-                  </ol>
-                </li>
-              `,
-            )
-            .join('')}</ol>`
-        : '<p class="empty-state">Nog geen researchtrends gevonden in opgeslagen researchitems.</p>'
-    }
+    <section class="research-trend-dashboard" aria-label="Research trenddashboard">
+      <h2>Researchtrends</h2>
+      <p class="small-print">Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.</p>
+      ${
+        groepen.length > 0
+          ? `<ol class="compact-list">${groepen
+              .map(
+                (groep) => `
+                  <li>
+                    <strong>${escapeHtml(groep.label)}</strong>
+                    <span>${groep.items.length} item(s)</span>
+                    <small>${escapeHtml(groep.waarschuwing)}</small>
+                    <ol>
+                      ${groep.items
+                        .map(
+                          (item) =>
+                            `<li>${escapeHtml(item.titel)}${item.publicatieDatum ? ` · ${escapeHtml(item.publicatieDatum)}` : ''}${item.bron ? ` · ${escapeHtml(item.bron)}` : ''}</li>`,
+                        )
+                        .join('')}
+                    </ol>
+                  </li>
+                `,
+              )
+              .join('')}</ol>`
+          : '<p class="empty-state">Nog geen researchtrends gevonden in opgeslagen researchitems.</p>'
+      }
+    </section>
   `;
 }
 

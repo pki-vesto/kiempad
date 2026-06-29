@@ -8019,4 +8019,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G812 — fertility timeline unified states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Research trend dashboard states zijn nu bewaakt, maar de volledige fertiliteitstijdlijn heeft nog geen expliciete Claude Design-regressie rond lege, gemengde en privacygevoelige timeline-states.
+- **Desired Outcome:** Tests bewaken dat de unified fertility timeline onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research scanbaar groepeert zonder ruwe payloads of medische adviescopy.
+- **User Value:** Gebruikers kunnen hun volledige traject vanuit één scherm begrijpen terwijl themawijzigingen de context en privacygrenzen intact houden.
+- **Acceptance Criteria:** Tests dekken lege timeline, gemengde dossier/consult/embryo/research-items en broncontext; bestaande timeline UI-hooks blijven aanwezig; zichtbare copy toont geen base64, OCR-payload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Fertility timeline, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
