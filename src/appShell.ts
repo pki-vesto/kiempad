@@ -1531,6 +1531,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentLandmarkNavigationPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentScreenreaderAnnouncementPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveSummaryPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveErrorRecoveryPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2410,6 +2411,69 @@ function renderAttachmentAssistiveSummaryPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive summary toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveErrorRecoveryPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasError = Boolean(state.dossierError?.trim());
+  const errorState = hasError ? 'assistive-error-sanitized' : 'assistive-error-clear';
+  const routeState = hasError
+    ? 'recovery-route-available'
+    : hasAttachments
+      ? 'recovery-route-idle'
+      : 'recovery-route-empty';
+  const retryLabelState = hasError
+    ? 'retry-label-recovery-available'
+    : hasAttachments
+      ? 'retry-label-recovery-idle'
+      : 'retry-label-recovery-empty';
+  const auditState = hasError ? 'assistive-recovery-audit-ready' : 'assistive-recovery-audit-idle';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-recovery-boundary'
+      : 'no-locked-preview-recovery';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive error recovery privacy states" data-attachment-assistive-recovery-surface="privacy">
+      <h2>Bijlage assistive recovery</h2>
+      <div class="linked-note" role="alert" aria-live="assertive" data-attachment-assistive-recovery-live-state="${errorState}">
+        ${hasError ? 'Herstelstatus beschikbaar als veilige assistive recoverymelding.' : 'Geen actieve assistive attachment-herstelmelding.'}
+      </div>
+      <nav class="button-row" aria-label="Bijlage assistive recovery routes" data-attachment-assistive-recovery-route-state="${routeState}">
+        <a class="phase-button secondary" href="#dossier-search-form" data-attachment-assistive-recovery-route-kind="status-route" data-attachment-assistive-recovery-route-state="${routeState}">Naar status</a>
+        <a class="phase-button secondary" href="#attachment-bulk-selection-form" data-attachment-assistive-recovery-route-kind="retry-route" data-attachment-assistive-recovery-route-state="${retryLabelState}">Naar herstelactie</a>
+      </nav>
+      <dl class="summary-list">
+        <div data-attachment-assistive-recovery-kind="assistive-error-boundary" data-attachment-assistive-recovery-state="${errorState}">
+          <dt>Assistive error boundary</dt>
+          <dd>${hasError ? 'Assistive error recovery gebruikt alleen generieke foutstatus en herstelcontext.' : 'Assistive error boundary is leeg zonder foutstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-recovery-kind="recovery-route-boundary" data-attachment-assistive-recovery-state="${routeState}">
+          <dt>Recovery route boundary</dt>
+          <dd>${hasError ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} blijven bereikbaar via veilige herstelroutes.` : 'Herstelroutes blijven beschikbaar zonder bronlabels.'}</dd>
+        </div>
+        <div data-attachment-assistive-recovery-kind="retry-label-affordance" data-attachment-assistive-recovery-state="${retryLabelState}">
+          <dt>Retry label affordance</dt>
+          <dd>${hasError ? 'Retrylabels beschrijven alleen de herstelactie en status, niet de bron.' : 'Retrylabels blijven generiek tot een foutstatus beschikbaar is.'}</dd>
+        </div>
+        <div data-attachment-assistive-recovery-kind="assistive-recovery-audit" data-attachment-assistive-recovery-state="${auditState}">
+          <dt>Assistive recovery audit</dt>
+          <dd>${hasError ? 'Assistive recovery audit bevestigt error-, live-region-, route- en actionhooks zonder broninhoud.' : 'Assistive recovery audit wacht op een veilige herstelstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-recovery-kind="locked-preview-assistive-recovery-boundary" data-attachment-assistive-recovery-state="${lockedState}">
+          <dt>Locked-preview assistive recovery boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive recovery payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive recovery states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive recovery toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
