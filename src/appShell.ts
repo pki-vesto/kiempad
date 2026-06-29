@@ -1370,6 +1370,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderUploadAttachmentFeedback(state)}
         ${renderAttachmentConsentExportPrivacy(state)}
         ${renderAttachmentRetentionCleanupPrivacy(state)}
+        ${renderAttachmentAuditTrailPrivacy(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         <h2>Import-inbox</h2>
         ${renderDossierInboxOverview(importInboxItems)}
@@ -1698,6 +1699,49 @@ function renderAttachmentRetentionCleanupPrivacy(state: AppShellState): string {
         </div>
       </dl>
       <p class="small-print">Deze beheerstatus toont alleen workflowmetadata en geen broninhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAuditTrailPrivacy(state: AppShellState): string {
+  const documents = state.dossierDocuments ?? [];
+  const attachmentCount = documents.length;
+  const reviewActionCount = documents.filter(
+    (document) =>
+      document.ocr?.reviewStatus === 'gereviewd' ||
+      document.beeldMetadata?.reviewStatus === 'gereviewd' ||
+      document.embryo?.reviewStatus === 'gereviewd',
+  ).length;
+  const linkEventCount = documents.filter((document) =>
+    Boolean(document.trajectId || document.afspraakId || document.metadata?.trajectId),
+  ).length;
+  const cleanupEventCount = documents.filter(
+    (document) => !document.trajectId && !document.afspraakId && !document.metadata?.trajectId,
+  ).length;
+  const hasAttachments = attachmentCount > 0;
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment audit trail privacy states" data-attachment-audit-surface="privacy">
+      <h2>Bijlage-audittrail</h2>
+      <dl class="summary-list">
+        <div data-attachment-audit-kind="audit-status" data-attachment-audit-state="${hasAttachments ? 'events-available' : 'empty'}">
+          <dt>Auditstatus</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige workflowhistorie.` : 'Geen bijlagehistorie beschikbaar.'}</dd>
+        </div>
+        <div data-attachment-audit-kind="review-action-history" data-attachment-audit-state="${reviewActionCount > 0 ? 'reviewed-events' : 'pending-events'}">
+          <dt>Reviewacties</dt>
+          <dd>${reviewActionCount > 0 ? `${reviewActionCount} reviewactie${reviewActionCount === 1 ? '' : 's'} vastgelegd als veilige status.` : 'Nog geen gereviewde bijlageacties vastgelegd.'}</dd>
+        </div>
+        <div data-attachment-audit-kind="link-event" data-attachment-audit-state="${linkEventCount > 0 ? 'linked-events' : 'unlinked-events'}">
+          <dt>Koppelingsevents</dt>
+          <dd>${linkEventCount > 0 ? `${linkEventCount} koppeling${linkEventCount === 1 ? '' : 'en'} naar traject of afspraak zichtbaar als workflowevent.` : 'Koppelingsevents wachten op review.'}</dd>
+        </div>
+        <div data-attachment-audit-kind="cleanup-event" data-attachment-audit-state="${cleanupEventCount > 0 ? 'cleanup-review-needed' : 'cleanup-clear'}">
+          <dt>Cleanup-events</dt>
+          <dd>${cleanupEventCount > 0 ? `${cleanupEventCount} cleanupreview${cleanupEventCount === 1 ? '' : 's'} gepland op metadata.` : 'Geen cleanupreview nodig op basis van workflowmetadata.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze audittrail toont alleen eventstatus en geen broninhoud.</p>
     </section>
   `;
 }
