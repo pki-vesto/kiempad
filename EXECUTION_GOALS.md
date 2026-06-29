@@ -7851,4 +7851,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G800 — recovery contract helper release-state message error contract release release release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De exacte recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding heeft nu een compact contract, maar changelog en current state bewaken deze melding nog niet apart als release-state contractcontext.
+- **Desired Outcome:** Release/state bewaking koppelt de compacte recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding aan changelog en current state.
+- **User Value:** Onderhouders zien in releaseoverzicht en projectstatus welke recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontractcontracten actief zijn.
+- **Acceptance Criteria:** Maintenance-test bewaakt releasecontext voor de recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding; changelog en current state noemen de relevante contractcontextterm; bestaande releasecontext-, release-state-, negatieve fixture-, compact-contract-, releaseguard- en messagecontracttests blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helper release guard
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
