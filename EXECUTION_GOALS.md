@@ -8005,4 +8005,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G811 — research trend dashboard states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Daily recommendation dual-owner states zijn nu bewaakt, maar research trend dashboard states hebben nog geen expliciete Claude Design-regressie rond lege research, trendcontext en bronverwijzing.
+- **Desired Outcome:** Tests bewaken dat research trend dashboards scanbaar blijven, bestaande research hooks behouden en geen externe tracking, providerpayload of medisch advies tonen.
+- **User Value:** Gebruikers kunnen relevante literatuur rustig volgen met duidelijke broncontext en lekenuitleg zonder privacy- of adviesgrenzen te verliezen.
+- **Acceptance Criteria:** Tests dekken lege researchstate, trendcontext en bronverwijzing; bestaande research UI-hooks blijven aanwezig; zichtbare copy toont geen externe tracking, providerpayload, diagnose of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
