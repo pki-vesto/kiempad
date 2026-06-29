@@ -217,6 +217,16 @@ function extractAttachmentScreenreaderAnnouncementSurface(html: string): string 
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveSummarySurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive summary privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment assistive summary privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -5715,6 +5725,147 @@ describe('app shell', () => {
     expect(announcements).not.toContain('dosering');
     expect(announcements).not.toContain('behandelkeuzeadvies');
     expect(announcements).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive summary privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-assistive-token',
+        dossierDocuments: [
+          {
+            id: 'doc-assistive-sensitive',
+            datum: '2026-06-30',
+            titel: 'Assistive source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'assistive-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YXNzaXN0aXZlLXNlY3JldC1wYXlsb2Fk',
+            notitie: 'private-assistive-token hoort niet in assistive summary.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 1125 mg behandelkeuzeadvies blijft buiten assistive summary.',
+              signalen: ['OCR-payload blijft buiten compact status summary.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-30',
+              documenttype: 'Labuitslag',
+              bronbestand: 'assistive-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-30T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE ASSISTIVE OCR TEKST private-assistive-token diagnose 1125 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor assistive-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-30T08:05:00.000Z',
+          },
+          {
+            id: 'doc-assistive-locked-image',
+            datum: '2026-07-01',
+            titel: 'Assistive locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'assistive-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YXNzaXN0aXZlLWxvY2tlZC1zZWNyZXQ=',
+            notitie: 'private-assistive-token hoort ook niet in screenreader summary labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-01',
+              documenttype: 'Foto/echo',
+              bronbestand: 'assistive-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-01',
+              soort: 'echo',
+              context: 'private assistive imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-01T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveSummary = extractAttachmentAssistiveSummarySurface(html);
+
+    expect(html).toContain('data-attachment-screenreader-announcement-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveSummary).toContain('data-attachment-assistive-summary-surface="privacy"');
+    expect(assistiveSummary).toContain('role="status"');
+    expect(assistiveSummary).toContain('aria-live="polite"');
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-live-state="assistive-summary-ready"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-kind="assistive-summary-boundary"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-kind="compact-status-summary-boundary"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-kind="screenreader-summary-label-affordance"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-kind="assistive-summary-audit"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-kind="locked-preview-assistive-summary-boundary"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-state="assistive-summary-ready"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-state="compact-status-summary-ready"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-state="screenreader-summary-label-reviewed"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-state="assistive-summary-audit-ready"',
+    );
+    expect(assistiveSummary).toContain(
+      'data-attachment-assistive-summary-state="locked-preview-assistive-summary-boundary"',
+    );
+    expect(assistiveSummary).toContain('2 bijlagen samengevat als veilige assistive status');
+    expect(assistiveSummary).toContain('Assistive summary toont alleen aantallen');
+    expect(assistiveSummary).toContain('2 gereviewde statussen beschikbaar');
+    expect(assistiveSummary).toContain('Screenreader-labels gebruiken reviewstatus');
+    expect(assistiveSummary).toContain('Assistive-summary audit bevestigt summary-');
+    expect(assistiveSummary).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive summary payloads',
+    );
+
+    expect(assistiveSummary).not.toContain('private-assistive-token');
+    expect(assistiveSummary).not.toContain('assistive-secret-source.pdf');
+    expect(assistiveSummary).not.toContain('assistive-locked-secret.jpg');
+    expect(assistiveSummary).not.toContain('YXNzaXN0aXZlLXNlY3JldC1wYXlsb2Fk');
+    expect(assistiveSummary).not.toContain('YXNzaXN0aXZlLWxvY2tlZC1zZWNyZXQ=');
+    expect(assistiveSummary).not.toContain('data:image/jpeg;base64');
+    expect(assistiveSummary).not.toContain('GEVOELIGE ASSISTIVE OCR TEKST');
+    expect(assistiveSummary).not.toContain('OCR-payload');
+    expect(assistiveSummary).not.toContain('Attachmentpayload');
+    expect(assistiveSummary).not.toContain('attachmentpayload');
+    expect(assistiveSummary).not.toContain('dossierpayload');
+    expect(assistiveSummary).not.toContain('diagnose');
+    expect(assistiveSummary).not.toContain('dosering');
+    expect(assistiveSummary).not.toContain('behandelkeuzeadvies');
+    expect(assistiveSummary).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

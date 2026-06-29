@@ -8411,4 +8411,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive summary UI, announcement/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G840 — attachment assistive error recovery privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment assistive summary states zijn nu bewaakt, maar assistive error recovery-, herstelroute-, retry-label- en screenreader recovery states rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment assistive error recovery states begrijpelijk en assistive-tech veilig blijven, bestaande error/live-region/nav/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers krijgen veilige herstelroutes en retrylabels voor attachmentstatussen zonder dat recovery states bronbestanden, selectiecontext of medische inhoud tonen.
+- **Acceptance Criteria:** Tests dekken assistive error boundary, recovery route boundary, retry label affordance states en assistive recovery audit state; bestaande error/live-region/nav/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment assistive recovery UI, error/live-region UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
