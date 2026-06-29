@@ -147,6 +147,28 @@ function extractFertilityGraphRelationships(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractAiSettingsForm(html: string): string {
+  const match = html.match(/<form id="ai-settings-form"[\s\S]*?<\/form>/);
+  if (!match?.[0]) throw new Error('AI-settings formulier ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
+function extractOnDeviceAiPanel(html: string): string {
+  const start = html.indexOf(
+    '<div class="policy-panel embedded-summary" aria-label="On-device AI verkenning"',
+  );
+  const end = html.indexOf('<h2>AI-preview</h2>', start);
+  if (start < 0 || end < 0) throw new Error('On-device AI panel ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
+function extractAiPreviewPanel(html: string): string {
+  const start = html.indexOf('<form id="ai-preview-form"');
+  const end = html.indexOf('<h2>AI-samenvatting bewaren</h2>', start);
+  if (start < 0 || end < 0) throw new Error('AI-preview panel ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -3637,6 +3659,92 @@ describe('app shell', () => {
     );
     expect(html).toContain('Opgeslagen; laat leeg om te bewaren');
     expect(html).not.toContain('sk-test-secret');
+  });
+
+  it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {
+    const aiOffHtml = renderAppShell('kennis', makeStartState());
+    const aiOffSettings = extractAiSettingsForm(aiOffHtml);
+    const onDevicePanel = extractOnDeviceAiPanel(aiOffHtml);
+    const emptyPreview = extractAiPreviewPanel(aiOffHtml);
+
+    expect(aiOffSettings).toContain('data-ai-state="uit"');
+    expect(aiOffSettings).toContain('data-ai-storage="local-legacy"');
+    expect(aiOffSettings).toContain('id="ai-settings-form"');
+    expect(aiOffSettings).toContain('name="aiIngeschakeld"');
+    expect(aiOffSettings).toContain('value="false" selected');
+    expect(aiOffSettings).toContain('name="aiProvider"');
+    expect(aiOffSettings).toContain('name="aiModel"');
+    expect(aiOffSettings).toContain('name="aiApiKey" type="password" value=""');
+    expect(onDevicePanel).toContain('data-on-device-ai-state="niet-beschikbaar"');
+    expect(onDevicePanel).toContain('Geen lokale browser-AI API-objecten gevonden.');
+    expect(onDevicePanel).toContain(
+      'Kiempad start geen AI-sessie, downloadt geen model en verstuurt niets.',
+    );
+    expect(onDevicePanel).toContain('LanguageModel');
+    expect(onDevicePanel).toContain('Summarizer');
+    expect(emptyPreview).toContain('data-ai-preview-state="leeg"');
+    expect(emptyPreview).toContain('id="ai-preview-form"');
+    expect(emptyPreview).toContain('name="aiBron"');
+    expect(emptyPreview).toContain('name="aiBronTekst"');
+    expect(emptyPreview).toContain('Toon payload-preview');
+
+    const configuredHtml = renderAppShell(
+      'kennis',
+      makeStartState({
+        storageMode: 'central-api',
+        settings: {
+          ...DEFAULT_APP_SETTINGS,
+          ai: {
+            ingeschakeld: true,
+            provider: 'OpenAI',
+            model: 'gpt-5-mini',
+            apiKey: 'test-api-key-providerpayload',
+            laatsteOptInOp: '2026-06-23T12:00:00.000Z',
+          },
+        },
+        aiPreview: {
+          tekst: 'Research: [naam verwijderd] bespreekt lokale context.',
+          bron: 'https://voorbeeld.test/research',
+          lengteOrigineel: 96,
+          lengteVerstuurd: 51,
+          redacties: [
+            {
+              type: 'naam',
+              label: 'Naam/patiëntnaam',
+              aantal: 1,
+              vervanging: '[naam verwijderd]',
+            },
+          ],
+        },
+      }),
+    );
+    const configuredSettings = extractAiSettingsForm(configuredHtml);
+    const configuredOnDevicePanel = extractOnDeviceAiPanel(configuredHtml);
+    const previewPanel = extractAiPreviewPanel(configuredHtml);
+    const aiZone = `${configuredSettings} ${configuredOnDevicePanel} ${previewPanel}`;
+
+    expect(configuredSettings).toContain('data-ai-state="aan"');
+    expect(configuredSettings).toContain('data-ai-storage="central-api"');
+    expect(configuredSettings).toContain('value="true" selected');
+    expect(configuredSettings).toContain('name="aiProvider" value="OpenAI"');
+    expect(configuredSettings).toContain('name="aiModel" value="gpt-5-mini"');
+    expect(configuredSettings).toContain('Opgeslagen; laat leeg om te bewaren');
+    expect(configuredSettings).toContain(
+      'client-side versleuteld in je centrale encrypted dataset',
+    );
+    expect(previewPanel).toContain('data-ai-preview-state="preview"');
+    expect(previewPanel).toContain('Payload-preview');
+    expect(previewPanel).toContain('51 van 96 tekens');
+    expect(previewPanel).toContain('Verwijderde velden');
+    expect(previewPanel).toContain('Naam/patiëntnaam: 1x vervangen door [naam verwijderd]');
+    expect(previewPanel).toContain('Research: [naam verwijderd] bespreekt lokale context.');
+    expect(configuredHtml).toContain('id="ai-summary-form"');
+    expect(configuredHtml).toContain('Bewaar als kennisitem');
+    expect(configuredHtml).not.toContain('test-api-key-providerpayload');
+    expect(aiZone).not.toContain('providerpayload');
+    expect(aiZone).not.toContain('diagnose');
+    expect(aiZone).not.toContain('behandelkeuzeadvies');
+    expect(aiZone).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('zet researchaggregatie pas klaar in de UI na netwerk-opt-in', () => {
