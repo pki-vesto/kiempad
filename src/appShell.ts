@@ -391,6 +391,8 @@ export function renderAppShell(
     state.storageMode === 'central-api'
       ? 'Centrale encrypted opslag'
       : 'Legacy lokaal · geen tracking';
+  const storageStatusState =
+    state.storageMode === 'central-api' ? 'central-encrypted' : 'legacy-local-encrypted';
 
   return `
     <div class="app-shell" data-theme="${escapeAttribute(state.settings.thema)}">
@@ -404,7 +406,7 @@ export function renderAppShell(
             <small>IVF/ICSI overzicht</small>
           </span>
         </a>
-        <p class="status-pill">${storageStatus}</p>
+        <p class="status-pill" data-storage-mode-copy="${storageStatusState}">${storageStatus}</p>
         <form id="theme-form" class="theme-form" aria-label="Weergavethema">
           <label>
             Thema
@@ -806,7 +808,9 @@ const EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS = [
   /\btoken\b/i,
   /\bpassphrase\b/i,
   /\bapi[-_\s]?sleutel\b/i,
+  /\bapi[-_\s]?key\b/i,
   /\bproviderpayload\b/i,
+  /\bprovider[-_\s]?payload\b/i,
   /\bbase64\b/i,
   /\bocr[-_\s]?payload\b/i,
   /\bdossierpayload\b/i,
@@ -1048,19 +1052,35 @@ function renderWebAuthnSettings(state: AppShellState): string {
   const central = isCentralStorage(state);
   const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale kluis';
   const keyLabel = central ? 'datasetsleutel' : 'kluissleutel';
+  const statusState =
+    status.status && status.error
+      ? 'mixed'
+      : status.status
+        ? 'success'
+        : status.error
+          ? 'error'
+          : 'idle';
+  const statusLabel = sanitizeSettingsPrivacyFeedback(
+    status.label ?? 'WebAuthn/biometrie',
+    'WebAuthn/biometrie',
+  );
+  const reason = sanitizeSettingsPrivacyFeedback(
+    status.reden,
+    'Browserstatus bijgewerkt zonder technische details.',
+  );
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn" data-webauthn-storage="${central ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-webauthn-runtime="${status.runtimeBeschikbaar ? 'available' : 'unavailable'}" data-webauthn-link-state="${status.gekoppeld ? 'linked' : 'unlinked'}">
+    <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn" data-settings-feedback-kind="webauthn" data-webauthn-feedback-state="${statusState}" data-webauthn-storage="${central ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-webauthn-runtime="${status.runtimeBeschikbaar ? 'available' : 'unavailable'}" data-webauthn-link-state="${status.gekoppeld ? 'linked' : 'unlinked'}">
       <h2>Biometrie/WebAuthn</h2>
-      <p>Optioneel ontgrendelgemak op dit toestel voor je ${datasetLabel}. Je passphrase blijft nodig als fallback en voor herstel via back-up.</p>
+      <p>Optioneel ontgrendelgemak op dit toestel voor je ${datasetLabel}. Je herstelzin blijft nodig als fallback en voor herstel via back-up.</p>
       <dl class="summary-list">
-        <div><dt>Status</dt><dd>${status.gekoppeld ? `Gekoppeld: ${escapeHtml(status.label ?? 'WebAuthn/biometrie')}` : 'Niet gekoppeld'}</dd></div>
-        <div><dt>Browser</dt><dd>${escapeHtml(status.reden)}</dd></div>
+        <div><dt>Status</dt><dd>${status.gekoppeld ? `Gekoppeld: ${escapeHtml(statusLabel)}` : 'Niet gekoppeld'}</dd></div>
+        <div><dt>Browser</dt><dd>${escapeHtml(reason)}</dd></div>
       </dl>
       <button id="webauthn-enroll" class="phase-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>${status.gekoppeld ? 'WebAuthn opnieuw koppelen' : 'Koppel WebAuthn'}</button>
-      <p class="small-print">Kiempad gebruikt alleen lokale WebAuthn PRF-output om de ${keyLabel} versleuteld te bewaren; er gaat geen PRF-output of passphrase naar een server.</p>
-      ${status.status ? `<p class="linked-note">${escapeHtml(status.status)}</p>` : ''}
-      ${status.error ? `<p class="form-error" role="alert">${escapeHtml(status.error)}</p>` : ''}
+      <p class="small-print">Kiempad gebruikt alleen lokale WebAuthn PRF-output om de ${keyLabel} versleuteld te bewaren; er gaat geen PRF-output of herstelzin naar een server.</p>
+      ${status.status ? `<p class="linked-note">${escapeHtml(sanitizeSettingsPrivacyFeedback(status.status, 'WebAuthn-status bijgewerkt zonder technische details.'))}</p>` : ''}
+      ${status.error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeSettingsPrivacyFeedback(status.error, 'WebAuthn-status bijgewerkt zonder technische details.'))}</p>` : ''}
     </section>
   `;
 }
@@ -1094,11 +1114,23 @@ function sanitizeStatusFeedback(value: string): string {
   return trimmed;
 }
 
+function sanitizeSettingsPrivacyFeedback(value: string, fallback: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return fallback;
+  if (STATUS_FEEDBACK_SENSITIVE_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    return fallback;
+  }
+
+  return trimmed;
+}
+
 const STATUS_FEEDBACK_SENSITIVE_PATTERNS = [
   /\btoken\b/i,
   /\bpassphrase\b/i,
   /\bapi[-_\s]?sleutel\b/i,
+  /\bapi[-_\s]?key\b/i,
   /\bproviderpayload\b/i,
+  /\bprovider[-_\s]?payload\b/i,
   /\bbase64\b/i,
   /\bocr[-_\s]?payload\b/i,
   /\bdossierpayload\b/i,
@@ -2831,7 +2863,7 @@ function renderResearchAggregatiePlan(plan: ResearchAggregatiePlan): string {
 
 function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): string {
   return `
-    <form id="ai-preview-form" class="data-form compact-form" data-ai-preview-state="${preview ? 'preview' : 'leeg'}">
+    <form id="ai-preview-form" class="data-form compact-form" data-ai-preview-state="${preview ? 'preview' : 'leeg'}" data-ai-preview-feedback-state="${error ? 'error' : preview ? 'preview' : 'idle'}">
       <label>
         Bron
         <input name="aiBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
@@ -2852,7 +2884,7 @@ function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): s
           </div>`
         : ''
     }
-    ${error ? `<p class="form-error" role="alert">${escapeHtml(error)}</p>` : ''}
+    ${error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeSettingsPrivacyFeedback(error, 'AI-previewstatus bijgewerkt zonder provider- of broninhoud.'))}</p>` : ''}
   `;
 }
 
@@ -2902,11 +2934,13 @@ function renderAiSettingsForm(
 ): string {
   const central = storageMode === 'central-api';
   const storageCopy = central
-    ? 'Provider, model en API-sleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.'
-    : 'Provider, model en API-sleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.';
+    ? 'Provider, model en toegangssleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.'
+    : 'Provider, model en toegangssleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.';
+  const provider = sanitizeSettingsPrivacyFeedback(settings.ai.provider ?? '', '');
+  const model = sanitizeSettingsPrivacyFeedback(settings.ai.model ?? '', '');
 
   return `
-    <form id="ai-settings-form" class="data-form compact-form" data-ai-state="${settings.ai.ingeschakeld ? 'aan' : 'uit'}" data-ai-storage="${central ? 'central-api' : 'local-legacy'}">
+    <form id="ai-settings-form" class="data-form compact-form" data-settings-feedback-kind="ai" data-ai-settings-feedback-state="${settings.ai.ingeschakeld ? 'configured' : 'disabled'}" data-ai-state="${settings.ai.ingeschakeld ? 'aan' : 'uit'}" data-ai-storage="${central ? 'central-api' : 'local-legacy'}">
       <label>
         AI
         <select name="aiIngeschakeld">
@@ -2916,14 +2950,14 @@ function renderAiSettingsForm(
       </label>
       <label>
         Provider
-        <input name="aiProvider" value="${escapeAttribute(settings.ai.provider ?? '')}" autocomplete="off" />
+        <input name="aiProvider" value="${escapeAttribute(provider)}" autocomplete="off" />
       </label>
       <label>
         Model
-        <input name="aiModel" value="${escapeAttribute(settings.ai.model ?? '')}" autocomplete="off" />
+        <input name="aiModel" value="${escapeAttribute(model)}" autocomplete="off" />
       </label>
       <label>
-        API-sleutel
+        Toegangssleutel
         <input name="aiApiKey" type="password" value="" placeholder="${settings.ai.apiKey ? 'Opgeslagen; laat leeg om te bewaren' : ''}" autocomplete="off" />
       </label>
       <p class="small-print">${storageCopy}</p>
@@ -3746,7 +3780,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
             : ''
         }
         <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
-        <form id="notification-privacy-form" class="data-form compact-form" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
+        <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
           <label>
             Inhoud op vergrendeld scherm
             <select name="toonNotificatieDetailsOpVergrendelscherm">

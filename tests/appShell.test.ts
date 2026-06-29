@@ -227,6 +227,12 @@ function extractWebAuthnPanel(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractStorageModeCopy(html: string): string {
+  const match = html.match(/<p class="status-pill" data-storage-mode-copy="[^"]+">[\s\S]*?<\/p>/);
+  if (!match?.[0]) throw new Error('Opslagmodus-copy ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -3886,7 +3892,7 @@ describe('app shell', () => {
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');
     expect(html).toContain(
-      'Provider, model en API-sleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.',
+      'Provider, model en toegangssleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.',
     );
     expect(html).toContain('Bewaar AI-instelling');
     expect(html).toContain('On-device AI');
@@ -3921,7 +3927,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain(
-      'Provider, model en API-sleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.',
+      'Provider, model en toegangssleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.',
     );
     expect(html).toContain('Opgeslagen; laat leeg om te bewaren');
     expect(html).not.toContain('sk-test-secret');
@@ -4663,7 +4669,7 @@ describe('app shell', () => {
     expect(html).toContain('Niet gekoppeld');
     expect(html).toContain('Optioneel ontgrendelgemak op dit toestel voor je legacy lokale kluis');
     expect(html).toContain('kluissleutel versleuteld te bewaren');
-    expect(html).toContain('geen PRF-output of passphrase naar een server');
+    expect(html).toContain('geen PRF-output of herstelzin naar een server');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
     expect(html).toContain('.kiempad-sync');
@@ -4776,7 +4782,7 @@ describe('app shell', () => {
       'Optioneel ontgrendelgemak op dit toestel voor je centrale encrypted dataset',
     );
     expect(html).toContain('datasetsleutel versleuteld te bewaren');
-    expect(html).toContain('geen PRF-output of passphrase naar een server');
+    expect(html).toContain('geen PRF-output of herstelzin naar een server');
     expect(html).toContain(
       'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
     );
@@ -4870,6 +4876,112 @@ describe('app shell', () => {
       expect(panel).not.toContain('diagnose');
       expect(panel).not.toContain('behandelkeuzeadvies');
       expect(panel).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
+  });
+
+  it('bewaakt settings en privacy feedback states zonder configuratie- of dossierpayload', () => {
+    const aiHtml = renderAppShell(
+      'kennis',
+      makeStartState({
+        storageMode: 'central-api',
+        settings: {
+          ...DEFAULT_APP_SETTINGS,
+          ai: {
+            ingeschakeld: true,
+            provider: 'OpenAI token abc123 providerpayload',
+            model: 'base64 dossierpayload diagnose 200 mg',
+            apiKey: 'stored-providerpayload-placeholder',
+          },
+        },
+        aiError:
+          'Providerpayload bevat API-sleutel token abc123 base64 dossierpayload diagnose Progesteron 200 mg behandelkeuzeadvies.',
+      }),
+    );
+    const aiSettings = extractAiSettingsForm(aiHtml);
+    const aiPreview = extractAiPreviewPanel(aiHtml);
+
+    expect(aiSettings).toContain('data-settings-feedback-kind="ai"');
+    expect(aiSettings).toContain('data-ai-settings-feedback-state="configured"');
+    expect(aiSettings).toContain('data-ai-storage="central-api"');
+    expect(aiSettings).toContain('name="aiProvider" value=""');
+    expect(aiSettings).toContain('name="aiModel" value=""');
+    expect(aiSettings).toContain('name="aiApiKey" type="password" value=""');
+    expect(aiSettings).toContain('Provider, model en toegangssleutel');
+    expect(aiPreview).toContain('data-ai-preview-feedback-state="error"');
+    expect(aiPreview).toContain('AI-previewstatus bijgewerkt zonder provider- of broninhoud.');
+
+    const notificationHtml = renderAppShell(
+      'herinneringen',
+      makeStartState({
+        settings: {
+          ...DEFAULT_APP_SETTINGS,
+          toonNotificatieDetailsOpVergrendelscherm: false,
+        },
+        notificaties: { permission: 'granted', serviceWorker: 'ready' },
+      }),
+    );
+    const notificationPrivacy = extractNotificationPrivacyForm(notificationHtml);
+
+    expect(notificationPrivacy).toContain('data-settings-feedback-kind="notification-privacy"');
+    expect(notificationPrivacy).toContain('data-notification-privacy-feedback-state="generic"');
+    expect(notificationPrivacy).toContain('data-lockscreen-privacy="generiek"');
+
+    const webAuthnHtml = renderAppShell(
+      'backup',
+      makeStartState({
+        storageMode: 'central-api',
+        webAuthnStatus: {
+          runtimeBeschikbaar: true,
+          reden: 'Browser token abc123 base64 credential payload.',
+          gekoppeld: true,
+          label: 'Authenticator providerpayload dossierpayload',
+          status: 'Status met passphrase API-sleutel providerpayload diagnose 200 mg.',
+          error: 'Fout met behandelkeuzeadvies en token abc123.',
+        },
+      }),
+    );
+    const webAuthnPanel = extractWebAuthnPanel(webAuthnHtml);
+
+    expect(webAuthnPanel).toContain('data-settings-feedback-kind="webauthn"');
+    expect(webAuthnPanel).toContain('data-webauthn-feedback-state="mixed"');
+    expect(webAuthnPanel).toContain('data-webauthn-storage="central-encrypted-dataset"');
+    expect(webAuthnPanel).toContain('Gekoppeld: WebAuthn/biometrie');
+    expect(webAuthnPanel).toContain('Browserstatus bijgewerkt zonder technische details.');
+    expect(webAuthnPanel).toContain('WebAuthn-status bijgewerkt zonder technische details.');
+    expect(webAuthnPanel).toContain('geen PRF-output of herstelzin naar een server');
+
+    const centralStorageCopy = extractStorageModeCopy(
+      renderAppShell('start', makeStartState({ storageMode: 'central-api' })),
+    );
+    const legacyStorageCopy = extractStorageModeCopy(
+      renderAppShell('start', makeStartState({ storageMode: 'legacy-indexeddb' })),
+    );
+
+    expect(centralStorageCopy).toContain('data-storage-mode-copy="central-encrypted"');
+    expect(centralStorageCopy).toContain('Centrale encrypted opslag');
+    expect(legacyStorageCopy).toContain('data-storage-mode-copy="legacy-local-encrypted"');
+    expect(legacyStorageCopy).toContain('Legacy lokaal');
+
+    const surfaces = [
+      aiSettings,
+      aiPreview,
+      notificationPrivacy,
+      webAuthnPanel,
+      centralStorageCopy,
+      legacyStorageCopy,
+    ];
+    for (const surface of surfaces) {
+      expect(surface).not.toContain('token abc123');
+      expect(surface).not.toContain('passphrase');
+      expect(surface).not.toContain('API-sleutel');
+      expect(surface).not.toContain('api key');
+      expect(surface).not.toContain('providerpayload');
+      expect(surface).not.toContain('base64');
+      expect(surface).not.toContain('dossierpayload');
+      expect(surface).not.toContain('diagnose');
+      expect(surface).not.toContain('Progesteron');
+      expect(surface).not.toContain('behandelkeuzeadvies');
+      expect(surface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
     }
   });
 

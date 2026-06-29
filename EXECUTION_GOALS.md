@@ -8145,4 +8145,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Settings UI, privacy feedback UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G821 — central sync and conflict privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Settings/privacy feedback states zijn nu bewaakt, maar centrale sync- en conflictstates hebben nog geen expliciete Claude Design-regressie rond replayconflict, stale session en recordpakket-copy zonder encrypted payload of tokenlekken.
+- **Desired Outcome:** Tests bewaken dat centrale sync/conflictstates scanbaar blijven, bestaande sync/recovery hooks behouden en geen tokens, recordpayloads, bestandsnamen of medische inhoud tonen.
+- **User Value:** Gebruikers begrijpen sync- en conflictstatussen zonder dat themawijzigingen centrale sessie- of dossierpayloads zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken replayconflict, stale-session en recordpakket-statuscopy; bestaande sync/recovery UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, API-sleutel, base64, encrypted payload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Central sync UI, recovery UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
