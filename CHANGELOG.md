@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G775/G776 Central Encrypted Platform: de recovery-contract helpernaamgrens staat nu als documentatiecontract in de centrale backenddocs en maintenance-tests bewaken de generieke recovery-helper versus category-specific structuurhelper tweedeling; G776 is toegevoegd voor releasecontextbewaking van deze docsafspraak.
 - G774/G775 Central Encrypted Platform: app-shell tests hebben nu een broncodeguard die generieke recovery-contract foutmeldinghelpers categorie-neutraal houdt en unlock-error structuurhelpers expliciet category-specific laat; G775 is toegevoegd voor een documentatiecontract rond deze helpernaamgrens.
 - G773/G774 Central Encrypted Platform: recovery-contracthelpers hebben nu categorie-neutrale namen voor generieke foutmeldingcapture en redactionasserties, terwijl unlock-error structuurhelpers expliciet categorie-specifiek blijven; G774 is toegevoegd voor een broncodeguard tegen naamdrift.
 - G772/G773 Central Encrypted Platform: recovery-contracttests gebruiken nu herbruikbare foutmeldingcapture en redactionasserties voor unlock-error en missing-key-metadata helpers; G773 is toegevoegd voor helpernaam-opruiming.

@@ -205,6 +205,12 @@ fetches doet. Zet deze API niet direct publiek op internet.
 - Browserclients accepteren alleen JSON-mediasoorten voor succesvolle centrale
   fetch-responses en mappen non-JSON of malformed JSON success responses naar een
   centrale API-contractfout.
+- Recovery UI helpernaamgrens: generieke recovery-contract foutmeldinghelpers blijven
+  categorie-neutraal en gebruiken `RecoveryContract` in de naam. Categorie-specifieke
+  structuurhelpers noemen hun categorie expliciet, zoals `UnlockError`, omdat zij de
+  exacte alertstructuur van één herstelstatus bewaken. Nieuwe recovery-contracthelpers
+  kiezen eerst deze tweedeling voordat ze aan `tests/appShell.test.ts` worden
+  toegevoegd; de app-shell broncodeguard bewaakt deze afspraak.
 - Browserrequests met een `Origin` buiten `KIEMPAD_CENTRAL_ALLOWED_ORIGINS` worden
   `403` vóór body parsing en vóór API-side effects. Requests zonder `Origin` blijven
   bruikbaar voor lokale/server-side tooling. De allowlist wordt bij runtime-start

@@ -394,6 +394,17 @@ const BACKLOG_HEALTH_RECOVERY_ARTIFACT_DOCS_HINT_TERMS = [
   { label: 'maintenance tests label usage', term: 'onderhoudstests gebruiken die labels' },
   { label: 'recovery fixes boundary', term: 'recoveryfixes' },
 ] as const satisfies ReadonlyArray<BacklogHealthArtifactDocsHint>;
+const RECOVERY_CONTRACT_HELPER_DOCS_TERMS = [
+  'Recovery UI helpernaamgrens',
+  'generieke recovery-contract foutmeldinghelpers',
+  'categorie-neutraal',
+  '`RecoveryContract`',
+  'Categorie-specifieke',
+  'structuurhelpers noemen hun categorie expliciet',
+  '`UnlockError`',
+  'tests/appShell.test.ts',
+  'app-shell broncodeguard',
+] as const;
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 
 describe('onderhoudsdocumentatie', () => {
@@ -431,6 +442,16 @@ describe('onderhoudsdocumentatie', () => {
     expect(readme).toContain('docs/ONBOARDING.md');
     expect(runbook).toContain('ONBOARDING.md');
     expect(onboarding).not.toContain('start een nieuwe lokale kluis per toestel');
+  });
+
+  it('documenteert de recovery-contract helpernaamgrens', () => {
+    for (const requiredTerm of RECOVERY_CONTRACT_HELPER_DOCS_TERMS) {
+      expect(centralEncryptedBackend).toContain(requiredTerm);
+    }
+
+    expect(centralEncryptedBackend).toContain('exacte alertstructuur van één herstelstatus');
+    expect(centralEncryptedBackend).toContain('Nieuwe recovery-contracthelpers');
+    expect(centralEncryptedBackend).toContain('kiezen eerst deze tweedeling');
   });
 
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
