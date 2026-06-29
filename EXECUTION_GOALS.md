@@ -7991,4 +7991,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G810 — daily recommendation dual-owner states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Consult intelligence review states zijn nu bewaakt, maar dagelijkse aanbevelingen voor vrouw en man hebben nog geen expliciete Claude Design-regressie rond lege context, dubbele eigenaar en artscheck-copy.
+- **Desired Outcome:** Tests bewaken dat dual-owner aanbevelingskaarten scanbaar blijven, bestaande recommendation hooks behouden en geen dosering, behandelvervanging of trackingpayload tonen.
+- **User Value:** Gebruikers krijgen rustige aanbevelingen per persoon zonder dat themawijzigingen de niet-medische grens of privacycopy verzwakken.
+- **Acceptance Criteria:** Tests dekken lege aanbevelingscontext, vrouw/man aanbevelingen en artscheck-status; bestaande recommendation UI-hooks blijven aanwezig; zichtbare copy toont geen dosering, behandelvervanging, trackingpayload of medische payload; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Recommendations UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
