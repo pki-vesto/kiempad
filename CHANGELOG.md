@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G771/G772 Central Encrypted Platform: unlock-error contracthelperfouten hebben nu een expliciete redaction guard die meerdere foutpaden controleert zonder raw gevoelige details; G772 is toegevoegd voor herbruikbare helperdekking.
 - G770/G771 Central Encrypted Platform: unlock-error alertstructuur heeft nu negatieve fixtures voor omgekeerde copy/handoff-volgorde en extra raw detailtekst met gesanitized contractfouten; G771 is toegevoegd voor expliciete foutmelding-redaction guard.
 - G769/G770 Central Encrypted Platform: unlock-error herstelstatus heeft nu een compact alertstructuurcontract dat de generieke copy vóór de exact gestructureerde support-handoff bewaakt en extra gevoelige details uitsluit; G770 is toegevoegd voor negatieve structuurfixtures.
 - G768/G769 Central Encrypted Platform: unlock-error herstelstatus heeft nu een thema-accessibility regressietest voor `role="alert"`, `aria-label`, generieke copy en semantisch extractbare support-handoff; G769 is toegevoegd voor een compacter alertstructuurcontract.
