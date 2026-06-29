@@ -196,6 +196,16 @@ function extractEventLogSurface(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractStatusFeedback(html: string, kind: string): string {
+  const match = html.match(
+    new RegExp(
+      `<section class="status-feedback" data-status-feedback-kind="${kind}"[\\s\\S]*?<\\/section>`,
+    ),
+  );
+  if (!match?.[0]) throw new Error(`Statusfeedback ontbreekt voor ${kind}.`);
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractBackupImportPrivacyZone(html: string): string {
   const exportStart = html.indexOf('<h2>Versleutelde export</h2>');
   const exportEnd = html.indexOf('<section class="policy-panel embedded-summary"', exportStart);
@@ -2194,6 +2204,104 @@ describe('app shell', () => {
     expect(html).toContain('ICS geïmporteerd: 2 afspraken.');
     expect(html).toContain('Een ICS-afspraak mist een geldige starttijd.');
     expect(html).toContain('role="alert"');
+  });
+
+  it('bewaakt import en statusfeedback privacy states zonder payloadlekken', () => {
+    const unsafeStatus =
+      'agenda.ics token abc123 raw importregel Progesteron 200 mg dossierpayload diagnose providerpayload';
+    const unsafeError =
+      'fout in echo-privenaam.pdf met passphrase base64 OCR-payload behandelkeuzeadvies';
+    const expectedGeneric = 'Status bijgewerkt zonder broninhoud of bestandsdetails.';
+
+    const agendaFeedback = extractStatusFeedback(
+      renderAppShell('agenda', {
+        trajecten: [],
+        afspraken: [],
+        medicatie: [],
+        herinneringen: [],
+        vragen: [],
+        kennisItems: [],
+        settings: DEFAULT_APP_SETTINGS,
+        notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+        agendaImportStatus: unsafeStatus,
+        agendaImportError: unsafeError,
+      }),
+      'agenda-import',
+    );
+
+    const medicatieFeedback = extractStatusFeedback(
+      renderAppShell('medicatie', {
+        trajecten: [],
+        afspraken: [],
+        medicatie: [],
+        herinneringen: [],
+        vragen: [],
+        kennisItems: [],
+        settings: DEFAULT_APP_SETTINGS,
+        notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+        medicatieImportStatus: unsafeStatus,
+        medicatieImportError: unsafeError,
+      }),
+      'medicatie-import',
+    );
+
+    const dossierFeedback = extractStatusFeedback(
+      renderAppShell('dossier', {
+        trajecten: [],
+        afspraken: [],
+        medicatie: [],
+        herinneringen: [],
+        vragen: [],
+        kennisItems: [],
+        dossierDocuments: [],
+        settings: DEFAULT_APP_SETTINGS,
+        notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+        dossierStatus: unsafeStatus,
+        dossierError: unsafeError,
+      }),
+      'dossier',
+    );
+
+    const backupFeedback = extractStatusFeedback(
+      renderAppShell('backup', {
+        trajecten: [],
+        afspraken: [],
+        medicatie: [],
+        herinneringen: [],
+        vragen: [],
+        kennisItems: [],
+        settings: DEFAULT_APP_SETTINGS,
+        notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+        backupStatus: unsafeStatus,
+        backupError: unsafeError,
+      }),
+      'backup',
+    );
+
+    for (const [kind, feedback] of [
+      ['agenda-import', agendaFeedback],
+      ['medicatie-import', medicatieFeedback],
+      ['dossier', dossierFeedback],
+      ['backup', backupFeedback],
+    ] as const) {
+      expect(feedback).toContain(`data-status-feedback-kind="${kind}"`);
+      expect(feedback).toContain('data-status-feedback-state="mixed"');
+      expect(feedback).toContain('class="linked-note"');
+      expect(feedback).toContain('class="form-error" role="alert"');
+      expect(feedback).toContain(expectedGeneric);
+      expect(feedback).not.toContain('abc123');
+      expect(feedback).not.toContain('passphrase');
+      expect(feedback).not.toContain('agenda.ics');
+      expect(feedback).not.toContain('echo-privenaam.pdf');
+      expect(feedback).not.toContain('base64');
+      expect(feedback).not.toContain('OCR-payload');
+      expect(feedback).not.toContain('raw importregel');
+      expect(feedback).not.toContain('dossierpayload');
+      expect(feedback).not.toContain('diagnose');
+      expect(feedback).not.toContain('providerpayload');
+      expect(feedback).not.toContain('behandelkeuzeadvies');
+      expect(feedback).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
   });
 
   it('vult nieuwe afspraakherinnering met standaard waarschuwtijd', () => {
