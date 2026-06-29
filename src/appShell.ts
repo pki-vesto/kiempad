@@ -40,6 +40,7 @@ import {
   classificeerBeeldLabel,
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
+  type DossierImportInboxItem,
   EMBRYO_KWALITEIT_WAARSCHUWING,
   EMBRYO_STATUS_LABELS,
   filterImagingRepository,
@@ -173,6 +174,7 @@ import {
   phaseHeroCard,
   type StepState,
   sectionStack,
+  statRow,
   statusMessage,
 } from './ui/components';
 import { escapeAttribute, escapeHtml } from './ui/escape';
@@ -1169,6 +1171,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
         ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
         <h2>Import-inbox</h2>
+        ${renderDossierInboxOverview(importInboxItems)}
         ${
           importInboxItems.length > 0
             ? `<ol class="phase-list">${importInboxItems
@@ -1351,6 +1354,32 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
             : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
         }
+    </section>
+  `;
+}
+
+function renderDossierInboxOverview(items: DossierImportInboxItem[]): string {
+  const ocrWacht = items.filter((item) => item.importstatus === 'ocr_wacht').length;
+  const reviewKlaar = items.filter((item) => item.importstatus === 'klaar_voor_review').length;
+  const beelden = items.filter((item) => item.document.categorie === 'beeld').length;
+  const laatsteItem = items.at(0);
+  const intro = laatsteItem
+    ? `Laatste import: ${laatsteItem.datum} · ${laatsteItem.type}.`
+    : 'Upload historische onderzoeken, foto’s, echo’s of gespreksverslagen om de inbox te vullen.';
+
+  return `
+    <section class="dossier-inbox-overview" aria-label="Dossier import-inbox overzicht">
+      ${statRow([
+        { label: 'Imports', value: String(items.length) },
+        { label: 'OCR wacht', value: String(ocrWacht), tone: ocrWacht > 0 ? 'warning' : 'default' },
+        { label: 'Beelden', value: String(beelden) },
+        {
+          label: 'Review klaar',
+          value: String(reviewKlaar),
+          tone: reviewKlaar > 0 ? 'success' : 'default',
+        },
+      ])}
+      <p class="small-print">${escapeHtml(intro)} Metadata blijft beperkt tot type, datum, status en veilige bestandslabels.</p>
     </section>
   `;
 }

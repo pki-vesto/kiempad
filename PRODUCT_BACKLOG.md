@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 607 |
+| ☑ klaar | 608 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -717,7 +717,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G552 | Daily Recommendations: dagadvies feedback analytics zonder tracking | P1 | F5 | ☐ |
 | G553 | Daily Recommendations: aanbevelingen verbergen per eigenaar | P1 | F5 | ☐ |
 | G554 | Daily Recommendations: daily recommendation policy regression fixtures | P0 | F5 | ☐ |
-| G555 | Premium Claude Design UI: fertility intelligence dossier inbox layout | P1 | F5 | ☐ |
+| G555 | Premium Claude Design UI: fertility intelligence dossier inbox layout | P1 | F5 | ☑ |
 | G556 | Premium Claude Design UI: imaging repository compare layout | P1 | F5 | ☐ |
 | G557 | Premium Claude Design UI: consult intelligence review layout | P1 | F5 | ☐ |
 | G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☐ |
@@ -969,12 +969,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G804 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release guard negative fixture | P1 | F5 | ☑ |
 | G805 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release negative compact contract | P1 | F5 | ☑ |
 | G806 | Central Encrypted Platform: recovery contract helper release-state message error contract release release release release release guard | P1 | F5 | ☐ |
+| G807 | Premium Claude Design UI: dossier inbox state regression guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 806** (id's G001 t/m G806, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 807** (id's G001 t/m G807, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

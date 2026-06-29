@@ -1816,6 +1816,25 @@ describe('app shell', () => {
     expect(html).toContain('1 resultaat voor "erasmus"');
     expect(html).toContain('Dossierindex');
     expect(html).toContain('Import-inbox');
+    expect(html).toContain(
+      '<section class="dossier-inbox-overview" aria-label="Dossier import-inbox overzicht">',
+    );
+    expect(html).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">Imports</span>',
+    );
+    expect(html).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">OCR wacht</span>',
+    );
+    expect(html).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Beelden</span>',
+    );
+    expect(html).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Review klaar</span>',
+    );
+    expect(html).toContain('Laatste import: 2026-05-01 · Labuitslag.');
+    expect(html).toContain(
+      'Metadata blijft beperkt tot type, datum, status en veilige bestandslabels.',
+    );
     expect(html).toContain('Bronlabel: bloed-lab-uitslag.pdf');
     expect(html).toContain('Importstatus: Wacht op lokale OCR');
     expect(html).toContain('Veilige metadata: Labuitslag · 2 KB');
