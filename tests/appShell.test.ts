@@ -9344,6 +9344,95 @@ describe('app shell', () => {
     expect(assistiveAuditTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G925 attachment assistive delivery handoff confirmation receipt audit trail privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-g925-delivery-handoff-confirmation-receipt-audit-trail-token',
+        dossierStatus:
+          'G925 delivery handoff confirmation receipt audit trail bevat trailbewijs voor g925-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf met private-g925-delivery-handoff-confirmation-receipt-audit-trail-token OCR-payload diagnose 5592 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g925-delivery-handoff-confirmation-receipt-audit-trail-sensitive',
+            datum: '2026-09-29',
+            titel: 'G925 delivery handoff confirmation receipt audit trail bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g925-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjUtUEFZTE9BRA==',
+            notitie:
+              'private-g925-delivery-handoff-confirmation-receipt-audit-trail-token hoort niet in assistive audit trail.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5592 mg behandelkeuzeadvies blijft buiten G925 audit trail.',
+              signalen: ['OCR-payload blijft buiten G925 audit trail proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-09-29',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g925-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.94,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-09-29T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G925 OCR TEKST private-g925-delivery-handoff-confirmation-receipt-audit-trail-token diagnose 5592 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g925-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf.',
+            },
+            uploadedAt: '2026-09-29T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveAuditTrail = extractAttachmentAssistiveAuditTrailSurface(html);
+
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-surface="privacy"',
+    );
+    expect(assistiveAuditTrail).toContain('role="status"');
+    expect(assistiveAuditTrail).toContain('aria-live="polite"');
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="confirmation-receipt-audit-trail-boundary"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="audit-trail-proof-summary-affordance"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="screenreader-audit-trail-label-state"',
+    );
+    expect(assistiveAuditTrail).toContain(
+      'data-attachment-assistive-audit-trail-kind="assistive-audit-trail-retention"',
+    );
+    expect(assistiveAuditTrail).toContain('1 bijlage met veilige audit trailstatus');
+
+    expect(assistiveAuditTrail).not.toContain(
+      'private-g925-delivery-handoff-confirmation-receipt-audit-trail-token',
+    );
+    expect(assistiveAuditTrail).not.toContain(
+      'g925-delivery-handoff-confirmation-receipt-audit-trail-secret-source.pdf',
+    );
+    expect(assistiveAuditTrail).not.toContain('U0VDUkVULUc5MjUtUEFZTE9BRA==');
+    expect(assistiveAuditTrail).not.toContain('GEVOELIGE G925 OCR TEKST');
+    expect(assistiveAuditTrail).not.toContain('OCR-payload');
+    expect(assistiveAuditTrail).not.toContain('Attachmentpayload');
+    expect(assistiveAuditTrail).not.toContain('attachmentpayload');
+    expect(assistiveAuditTrail).not.toContain('dossierpayload');
+    expect(assistiveAuditTrail).not.toContain('diagnose');
+    expect(assistiveAuditTrail).not.toContain('behandelkeuzeadvies');
+    expect(assistiveAuditTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
