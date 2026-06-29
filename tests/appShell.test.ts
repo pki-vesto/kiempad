@@ -383,6 +383,18 @@ function extractAttachmentAssistiveAuditTrailSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveAuditTrailRetentionSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -8253,6 +8265,172 @@ describe('app shell', () => {
     expect(assistiveAuditTrail).not.toContain('dosering');
     expect(assistiveAuditTrail).not.toContain('behandelkeuzeadvies');
     expect(assistiveAuditTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-retention-token',
+        dossierStatus:
+          'Retention bevat bewaartermijnbewijs voor retention-secret-source.pdf met private-retention-token OCR-payload diagnose 2625 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-retention-sensitive',
+            datum: '2026-07-30',
+            titel: 'Retention source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'retention-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'cmV0ZW50aW9uLXNlY3JldC1wYXlsb2Fk',
+            notitie: 'private-retention-token hoort niet in assistive retention.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 2625 mg behandelkeuzeadvies blijft buiten assistive retention.',
+              signalen: ['OCR-payload blijft buiten retention proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-30',
+              documenttype: 'Labuitslag',
+              bronbestand: 'retention-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-30T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE RETENTION OCR TEKST private-retention-token diagnose 2625 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor retention-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-30T08:05:00.000Z',
+          },
+          {
+            id: 'doc-retention-locked-image',
+            datum: '2026-07-31',
+            titel: 'Retention locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'retention-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cmV0ZW50aW9uLWxvY2tlZC1zZWNyZXQ=',
+            notitie: 'private-retention-token hoort ook niet in retention labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-31',
+              documenttype: 'Foto/echo',
+              bronbestand: 'retention-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-31',
+              soort: 'echo',
+              context: 'private retention imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-31T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveRetention = extractAttachmentAssistiveAuditTrailRetentionSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-audit-trail-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-surface="privacy"',
+    );
+    expect(assistiveRetention).toContain('role="status"');
+    expect(assistiveRetention).toContain('aria-live="polite"');
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-live-state="audit-trail-retention-available"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="audit-trail-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="retention-proof-summary-affordance"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="screenreader-audit-trail-retention-label-state"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="assistive-retention-expiry"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-kind="locked-preview-assistive-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-state="audit-trail-retention-available"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-state="retention-proof-summary-ready"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-state="screenreader-audit-trail-retention-label-ready"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-state="assistive-retention-expiry-ready"',
+    );
+    expect(assistiveRetention).toContain(
+      'data-attachment-assistive-audit-trail-retention-state="locked-preview-assistive-retention-boundary"',
+    );
+    expect(assistiveRetention).toContain(
+      'Opschoonbewijs audit trail retention beschikbaar als veilige assistive retentionstatus',
+    );
+    expect(assistiveRetention).toContain('2 bijlagen met veilige audit trail retentionstatus');
+    expect(assistiveRetention).toContain('Retentionbewijs is beschikbaar zonder bestands-');
+    expect(assistiveRetention).toContain(
+      'Screenreader audit trail retention labels noemen alleen bewaargroep',
+    );
+    expect(assistiveRetention).toContain(
+      'Assistive retention expiry bevestigt audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveRetention).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive retention payloads',
+    );
+
+    expect(assistiveRetention).not.toContain('private-retention-token');
+    expect(assistiveRetention).not.toContain('retention-secret-source.pdf');
+    expect(assistiveRetention).not.toContain('retention-locked-secret.jpg');
+    expect(assistiveRetention).not.toContain('cmV0ZW50aW9uLXNlY3JldC1wYXlsb2Fk');
+    expect(assistiveRetention).not.toContain('cmV0ZW50aW9uLWxvY2tlZC1zZWNyZXQ=');
+    expect(assistiveRetention).not.toContain('data:image/jpeg;base64');
+    expect(assistiveRetention).not.toContain('GEVOELIGE RETENTION OCR TEKST');
+    expect(assistiveRetention).not.toContain('OCR-payload');
+    expect(assistiveRetention).not.toContain('Attachmentpayload');
+    expect(assistiveRetention).not.toContain('attachmentpayload');
+    expect(assistiveRetention).not.toContain('dossierpayload');
+    expect(assistiveRetention).not.toContain('diagnose');
+    expect(assistiveRetention).not.toContain('dosering');
+    expect(assistiveRetention).not.toContain('behandelkeuzeadvies');
+    expect(assistiveRetention).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
