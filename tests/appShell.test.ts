@@ -123,6 +123,30 @@ function extractFertilityTimelineItems(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractFertilityGraphSection(html: string): string {
+  const start = html.indexOf(
+    '<section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject"',
+  );
+  const end = html.indexOf(
+    '<section class="summary-panel embedded-summary" aria-label="Overzicht over meerdere pogingen"',
+    start,
+  );
+  const fallbackEnd = html.indexOf('<h2 class="section-subheading"', start);
+  const sectionEnd = end >= 0 ? end : fallbackEnd;
+  if (start < 0 || sectionEnd < 0) throw new Error('Fertility knowledge graph-sectie ontbreekt.');
+  return html.slice(start, sectionEnd).replace(/\s+/g, ' ').trim();
+}
+
+function extractFertilityGraphRelationships(html: string): string {
+  const start = html.indexOf('<ol id="fertility-graph-relationships"');
+  const end = html.indexOf(
+    '<section class="policy-panel embedded-summary" aria-label="Graph-export consultvoorbereiding"',
+    start,
+  );
+  if (start < 0 || end < 0) throw new Error('Fertility graph-relatielijst ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -1445,6 +1469,200 @@ describe('app shell', () => {
     expect(html).toContain('Gebruik dit als gespreksoverzicht');
     expect(html).toContain('geen causaliteit');
   });
+
+  it('bewaakt knowledge graph relationship states met lege graph, gemengde relaties en veilige bronpaden', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-06-24T09:00:00'));
+
+    const emptyGraphHtml = renderAppShell(
+      'traject',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-empty',
+              naam: 'Poging zonder graphmatch',
+              type: 'ivf',
+              startDatum: '2026-06-20',
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [],
+          },
+        ],
+        graphFilter: {
+          trajectId: 'traject-empty',
+          relatieType: 'research_notitie',
+        },
+      }),
+    );
+    const emptyGraph = extractFertilityGraphSection(emptyGraphHtml);
+
+    expect(emptyGraph).toContain('data-graph-state="leeg"');
+    expect(emptyGraph).toContain('id="graph-filter-form"');
+    expect(emptyGraph).toContain('name="graphRelatieType"');
+    expect(emptyGraph).toContain('Geen graph-relaties binnen dit filter.');
+    expect(emptyGraph).toContain('Graph-index rebuild');
+    expect(emptyGraph).toContain('Graph-export consultvoorbereiding');
+
+    const contextualHtml = renderAppShell(
+      'traject',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-graph',
+              naam: 'Poging graph',
+              type: 'icsi',
+              startDatum: '2026-06-20',
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [],
+          },
+        ],
+        afspraken: [
+          {
+            afspraak: {
+              id: 'afspraak-graph',
+              titel: 'Echo controle',
+              datumTijd: '2026-06-24T09:30',
+              type: 'echo',
+              trajectId: 'traject-graph',
+            },
+          },
+        ],
+        dossierDocuments: [
+          {
+            id: 'doc-graph-lab',
+            datum: '2026-06-21',
+            titel: 'Labuitslag graph',
+            categorie: 'onderzoek',
+            bestandsNaam: 'lab-graph.pdf',
+            grootteBytes: 1024,
+            inhoudBase64: 'BASE64_GRAPH_DOSSIER_PAYLOAD',
+            trajectId: 'traject-graph',
+            analyse: { samenvatting: 'Graphveilig laboverzicht.', signalen: [] },
+            metadata: {
+              bronbestand: 'lab-graph.pdf',
+              documenttype: 'Labrapport',
+              trajectId: 'traject-graph',
+              extractieBronnen: [],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceScore: 0.9,
+              confidenceLabel: 'hoog',
+              reviewStatus: 'concept',
+              tekst: 'OCR_GRAPH_RAW_PAYLOAD Estradiol 250 mg',
+              waarschuwing: 'Lokale OCR-review nodig.',
+              verwerktOp: '2026-06-21T10:00:00.000Z',
+            },
+            uploadedAt: '2026-06-21T10:00:00.000Z',
+          } as DossierDocument,
+          {
+            id: 'doc-graph-embryo',
+            datum: '2026-06-22',
+            titel: 'Embryo B beeld',
+            categorie: 'embryo',
+            bestandsNaam: 'embryo-b.jpg',
+            grootteBytes: 2048,
+            inhoudBase64: 'BASE64_GRAPH_IMAGE_PAYLOAD',
+            trajectId: 'traject-graph',
+            afspraakId: 'afspraak-graph',
+            embryo: {
+              label: 'Embryo B',
+              kwaliteit: '4BB',
+              dag: 5,
+              status: 'ingevroren',
+              bron: 'Embryolab',
+              reviewStatus: 'concept',
+            },
+            analyse: { samenvatting: 'Embryobeeldmetadata.', signalen: [] },
+            metadata: {
+              bronbestand: 'embryo-b.jpg',
+              documenttype: 'Embryobeeld',
+              trajectId: 'traject-graph',
+              extractieBronnen: [],
+            },
+            uploadedAt: '2026-06-22T10:00:00.000Z',
+          } as DossierDocument,
+        ],
+        consultVerslagen: [
+          {
+            id: 'consult-graph',
+            datum: '2026-06-23',
+            titel: 'Consult graph',
+            bron: 'upload',
+            bestandsNaam: 'consult-graph.txt',
+            grootteBytes: 512,
+            inhoudBase64: 'BASE64_GRAPH_CONSULT_PAYLOAD',
+            tekst: 'CONSULT_GRAPH_RAW_PAYLOAD met prive details',
+            trajectId: 'traject-graph',
+            afspraakId: 'afspraak-graph',
+            samenvatting: {
+              status: 'concept',
+              methode: 'lokale_tekstheuristiek',
+              tekst: 'Graphveilige consultsamenvatting.',
+              bronnen: ['consult-graph.txt'],
+              waarschuwing: 'Controleer met de kliniek.',
+              gegenereerdOp: '2026-06-23T10:00:00.000Z',
+            },
+            uploadedAt: '2026-06-23T10:00:00.000Z',
+          },
+        ],
+        kennisItems: [
+          {
+            id: 'research-graph',
+            titel: 'Research graph payload guard',
+            inhoud: 'RESEARCH_GRAPH_RAW_PAYLOAD over IVF en embryo.',
+            bron: 'https://pubmed.ncbi.nlm.nih.gov/654321/',
+            categorie: 'research',
+            researchPublicatie: {
+              publicatieDatum: '2026-05-10',
+              bron: 'https://pubmed.ncbi.nlm.nih.gov/654321/',
+              wetenschappelijkeSamenvatting: 'Researchsamenvatting zonder graphkoppeling.',
+            },
+            ai_gegenereerd: false,
+            geverifieerd_met_arts: false,
+          },
+        ],
+      }),
+    );
+    const graph = extractFertilityGraphSection(contextualHtml);
+    const relationships = extractFertilityGraphRelationships(graph);
+
+    expect(graph).toContain('data-graph-state="gevuld"');
+    expect(graph).toContain('id="graph-filter-form"');
+    expect(relationships).toContain('id="fertility-graph-relationships"');
+    expect(relationships).toContain('aria-label="Graph-relaties"');
+    expect(relationships).toContain('Afspraak hoort bij traject');
+    expect(relationships).toContain('Echo controle -> Poging graph');
+    expect(relationships).toContain('Bron: Agenda trajectkoppeling');
+    expect(relationships).toContain('Document hoort bij traject');
+    expect(relationships).toContain('Labuitslag graph -> Poging graph');
+    expect(relationships).toContain('Bron: Dossiermetadata');
+    expect(relationships).toContain('Document beschrijft embryo');
+    expect(relationships).toContain('Embryo B beeld -> Embryo B');
+    expect(relationships).toContain('Bron: Embryometadata');
+    expect(relationships).toContain('Gesprek hoort bij traject');
+    expect(relationships).toContain('Consult graph -> Poging graph');
+    expect(relationships).toContain('Gesprek hoort bij afspraak');
+    expect(relationships).toContain('Consult graph -> Echo controle');
+    expect(relationships).not.toContain('BASE64_GRAPH_DOSSIER_PAYLOAD');
+    expect(relationships).not.toContain('BASE64_GRAPH_IMAGE_PAYLOAD');
+    expect(relationships).not.toContain('BASE64_GRAPH_CONSULT_PAYLOAD');
+    expect(relationships).not.toContain('OCR_GRAPH_RAW_PAYLOAD');
+    expect(relationships).not.toContain('CONSULT_GRAPH_RAW_PAYLOAD');
+    expect(relationships).not.toContain('RESEARCH_GRAPH_RAW_PAYLOAD');
+    expect(relationships).not.toContain('tracking-payload');
+    expect(relationships).not.toContain('veroorzaakt');
+    expect(relationships).not.toContain('behandelkeuzeadvies');
+    expect(relationships).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt fertility timeline unified states met lege filterstate en gemengde broncontext', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2026-06-24T09:00:00'));

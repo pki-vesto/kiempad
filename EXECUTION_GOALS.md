@@ -8047,4 +8047,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Fertility knowledge graph, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G814 — AI preview and on-device opt-in states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Knowledge graph relationship states zijn nu bewaakt, maar AI-preview en on-device opt-in states hebben nog geen expliciete Claude Design-regressie rond lokale/offline status, providerinstellingen en privacycopy.
+- **Desired Outcome:** Tests bewaken dat AI-preview, providerinstellingen en on-device capability states scanbaar blijven, bestaande AI-hooks behouden en geen API-sleutel, providerpayload of medische adviescopy tonen.
+- **User Value:** Gebruikers kunnen AI veilig opt-in gebruiken of uit laten, met duidelijke lokale status zonder dat themawijzigingen privacy- of medisch-grenzen verzwakken.
+- **Acceptance Criteria:** Tests dekken AI uit, provider ingesteld zonder sleutelweergave, on-device unavailable state en AI-preview formulierhooks; bestaande AI UI-hooks blijven aanwezig; zichtbare copy toont geen API-sleutel, providerpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** AI settings UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

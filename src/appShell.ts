@@ -4642,7 +4642,7 @@ function renderTrajectGraphWeergave(
 ): string {
   const consultExport = maakFertilityGraphConsultSamenvattingExport(weergave);
   return `
-    <section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject">
+    <section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject" data-graph-state="${weergave.edges.length > 0 ? 'gevuld' : 'leeg'}">
       <h2>Knowledge graph</h2>
       ${renderTrajectGraphFilterForm(weergave.filter, trajecten)}
       <dl class="summary-list">
@@ -4652,7 +4652,7 @@ function renderTrajectGraphWeergave(
       ${weergave.rebuildRapport ? renderGraphIndexRebuildRapport(weergave.rebuildRapport) : ''}
       ${
         weergave.edges.length > 0
-          ? `<ol class="compact-list">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
+          ? `<ol id="fertility-graph-relationships" class="compact-list" aria-label="Graph-relaties">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
           : '<p class="empty-state">Geen graph-relaties binnen dit filter.</p>'
       }
       ${renderGraphConsultSamenvattingExport(consultExport)}
