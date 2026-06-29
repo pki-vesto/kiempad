@@ -105,6 +105,12 @@ function extractAttachmentDeleteButtons(html: string): string {
   return matches.join(' ').replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentReviewMetadataItems(html: string): string {
+  const matches = html.match(/<li[^>]*data-attachment-review-kind="[^"]+"[\s\S]*?<\/li>/g);
+  if (!matches?.length) throw new Error('Attachment reviewmetadata items ontbreken.');
+  return matches.join(' ').replace(/\s+/g, ' ').trim();
+}
+
 function extractImagingComparePanel(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">([\s\S]*?)<\/section>/,
@@ -3706,6 +3712,106 @@ describe('app shell', () => {
       expect(surface).not.toContain('behandelkeuzeadvies');
       expect(surface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
     }
+  });
+
+  it('bewaakt attachment reviewmetadata states zonder OCR- of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-reviewmetadata-state',
+            datum: '2026-05-02',
+            titel: 'Reviewmetadata beeld',
+            categorie: 'beeld',
+            bestandsNaam: 'review-secret-source.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cmV2aWV3LXNlY3JldC1wYXlsb2Fk',
+            afspraakId: 'afspraak-review',
+            trajectId: 'traject-review',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload token abc123 diagnose 150 mg behandelkeuzeadvies blijft buiten reviewmetadata.',
+              signalen: ['OCR-payload en base64 payload horen niet in reviewmetadata.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Embryobeeld',
+              trajectId: 'traject-review',
+              bronbestand: 'review-secret-source.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'wacht_op_lokale_ocr',
+              bron: 'afbeelding',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'laag',
+              confidenceScore: 0.34,
+              reviewStatus: 'concept',
+              verwerktOp: '2026-05-02T10:00:00.000Z',
+              tekst:
+                'GEVOELIGE OCR TEKST token abc123 diagnose attachmentpayload behandelkeuzeadvies 150 mg.',
+              waarschuwing:
+                'Lokale OCR-review nodig voor review-secret-source.jpg met base64 payload.',
+            },
+            beeldMetadata: {
+              datum: '2026-05-02',
+              soort: 'embryo_afbeelding',
+              context: 'Reviewmetadata state',
+              bron: 'Kliniekportaal',
+              trajectId: 'traject-review',
+              afspraakId: 'afspraak-review',
+              embryoLabel: 'Embryo 1',
+              embryoId: 'lab-e1',
+              embryoDag: 5,
+              laboratoriumContext: 'Labfoto dag 5',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            embryo: {
+              label: 'Embryo 1',
+              dag: 5,
+              meetmoment: 'Dag 5 blastocyst',
+              kwaliteit: '4AA',
+              kliniekTerminologie: 'Gardner-score',
+              bron: 'review-secret-source.jpg',
+              reviewStatus: 'concept',
+              status: 'onbekend',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const reviewMetadata = extractAttachmentReviewMetadataItems(html);
+
+    expect(reviewMetadata).toContain('data-attachment-review-kind="import-status"');
+    expect(reviewMetadata).toContain('data-attachment-review-kind="ocr-review"');
+    expect(reviewMetadata).toContain('data-attachment-review-kind="exif-isolation"');
+    expect(reviewMetadata).toContain('data-attachment-review-kind="embryo-source-label-review"');
+    expect(reviewMetadata).toContain('data-attachment-review-state="ocr_wacht"');
+    expect(reviewMetadata).toContain('data-attachment-review-state="concept-wacht_op_lokale_ocr"');
+    expect(reviewMetadata).toContain('data-attachment-review-state="concept-geisoleerd"');
+    expect(reviewMetadata).toContain('data-attachment-review-state="concept"');
+    expect(reviewMetadata).toContain('Importstatus: Wacht op lokale OCR');
+    expect(reviewMetadata).toContain('OCR-review: Klaargezet voor lokale OCR');
+    expect(reviewMetadata).toContain('EXIF-isolatie: geisoleerd');
+    expect(reviewMetadata).toContain('Embryo bronlabelreview: Concept');
+
+    expect(reviewMetadata).not.toContain('review-secret-source.jpg');
+    expect(reviewMetadata).not.toContain('cmV2aWV3LXNlY3JldC1wYXlsb2Fk');
+    expect(reviewMetadata).not.toContain('data:image/jpeg;base64');
+    expect(reviewMetadata).not.toContain('GEVOELIGE OCR TEKST');
+    expect(reviewMetadata).not.toContain('base64 payload');
+    expect(reviewMetadata).not.toContain('OCR-payload');
+    expect(reviewMetadata).not.toContain('Attachmentpayload');
+    expect(reviewMetadata).not.toContain('attachmentpayload');
+    expect(reviewMetadata).not.toContain('token abc123');
+    expect(reviewMetadata).not.toContain('diagnose');
+    expect(reviewMetadata).not.toContain('behandelkeuzeadvies');
+    expect(reviewMetadata).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

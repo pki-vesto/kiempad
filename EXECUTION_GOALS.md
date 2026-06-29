@@ -8201,4 +8201,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment review UI, OCR metadata, imaging metadata, embryo source review, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G825 — attachment consent and export privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment reviewmetadata is nu bewaakt, maar consent-, download-, export- en deelstates rond dossierbijlagen, beelden en embryobronnen hebben nog geen gezamenlijke Claude Design-regressie zonder bestandsnaam, broninhoud of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment consent/export states scanbaar blijven, bestaande download/export/consent hooks behouden en geen bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien welke bijlagen lokaal of centraal exporteerbaar zijn zonder dat themawijzigingen bronbestanden of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken attachment consent, exportbeschikbaarheid, downloadstatus en deelboundary states; bestaande consent/export UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment consent UI, export UI, dossier UI, imaging repository, embryo source review, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
