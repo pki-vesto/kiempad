@@ -8075,4 +8075,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Notification UI, privacy settings, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G816 — backup and import privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Notificatieprivacy states zijn nu bewaakt, maar backup/import privacy states hebben nog geen expliciete Claude Design-regressie rond export, syncpakket en importcopy zonder plaintext of medische payload.
+- **Desired Outcome:** Tests bewaken dat backup/import states scanbaar blijven, bestaande export/import hooks behouden en geen plaintext dossier-, sleutel- of attachmentpayload tonen.
+- **User Value:** Gebruikers kunnen veilig back-ups en syncpakketten maken of importeren zonder dat themawijzigingen de encrypted-boundary onduidelijk maken.
+- **Acceptance Criteria:** Tests dekken backup-export, syncpakket-export en importstate; bestaande backup/import UI-hooks blijven aanwezig; zichtbare copy toont geen passphrase, API-sleutel, base64, OCR-payload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Backup UI, import UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

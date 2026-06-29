@@ -169,6 +169,18 @@ function extractAiPreviewPanel(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractNotificationStatus(html: string): string {
+  const match = html.match(/<div class="notification-status"[\s\S]*?<\/div>/);
+  if (!match?.[0]) throw new Error('Notificatiestatus ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
+function extractNotificationPrivacyForm(html: string): string {
+  const match = html.match(/<form id="notification-privacy-form"[\s\S]*?<\/form>/);
+  if (!match?.[0]) throw new Error('Notificatieprivacyformulier ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -4291,6 +4303,89 @@ describe('app shell', () => {
     expect(html).toContain('Altijd generieke tekst');
     expect(html).toContain('Details tonen na expliciete keuze');
     expect(html).toContain('value="false" selected');
+  });
+
+  it('bewaakt notificatieprivacy states met generieke lockscreen-copy en detail opt-in', () => {
+    const genericHtml = renderAppShell('herinneringen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [
+        {
+          medicatie: {
+            id: 'med-secret',
+            naam: 'Progesteron',
+            vorm: 'tablet',
+            actief: true,
+          },
+          doseLogs: [],
+        },
+      ],
+      vragen: [],
+      kennisItems: [],
+      herinneringen: [
+        {
+          id: 'rem-secret',
+          bron: { soort: 'medicatie', refId: 'med-secret' },
+          titel: 'Progesteron innemen',
+          tijdstip: '2099-06-23T20:00',
+          herhaling: 'eenmalig',
+          actief: true,
+        },
+      ],
+      notificaties: { permission: 'granted', serviceWorker: 'ready' },
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        toonNotificatieDetailsOpVergrendelscherm: false,
+      },
+    });
+    const genericStatus = extractNotificationStatus(genericHtml);
+    const genericPrivacy = extractNotificationPrivacyForm(genericHtml);
+    const lockscreenZone = `${genericStatus} ${genericPrivacy}`;
+
+    expect(genericStatus).toContain('data-notification-permission="granted"');
+    expect(genericStatus).toContain('data-notification-service-worker="ready"');
+    expect(genericStatus).toContain('Toestemming:</strong> toegestaan');
+    expect(genericStatus).toContain('Service worker:</strong> actief');
+    expect(genericPrivacy).toContain('id="notification-privacy-form"');
+    expect(genericPrivacy).toContain('data-lockscreen-privacy="generiek"');
+    expect(genericPrivacy).toContain('name="toonNotificatieDetailsOpVergrendelscherm"');
+    expect(genericPrivacy).toContain('Altijd generieke tekst');
+    expect(genericPrivacy).toContain('Details tonen na expliciete keuze');
+    expect(genericPrivacy).toContain('value="false" selected');
+    expect(genericHtml).toContain(
+      'OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.',
+    );
+    expect(lockscreenZone).not.toContain('Progesteron');
+    expect(lockscreenZone).not.toContain('Progesteron innemen');
+    expect(lockscreenZone).not.toContain('2099-06-23T20:00');
+    expect(lockscreenZone).not.toContain('dossierpayload');
+    expect(lockscreenZone).not.toContain('diagnose');
+    expect(lockscreenZone).not.toContain('behandelkeuzeadvies');
+    expect(lockscreenZone).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+
+    const detailOptInHtml = renderAppShell('herinneringen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      vragen: [],
+      kennisItems: [],
+      herinneringen: [],
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        toonNotificatieDetailsOpVergrendelscherm: true,
+      },
+    });
+    const detailStatus = extractNotificationStatus(detailOptInHtml);
+    const detailPrivacy = extractNotificationPrivacyForm(detailOptInHtml);
+
+    expect(detailStatus).toContain('data-notification-permission="unsupported"');
+    expect(detailStatus).toContain('data-notification-service-worker="unsupported"');
+    expect(detailStatus).toContain('Toestemming:</strong> niet ondersteund');
+    expect(detailStatus).toContain('Service worker:</strong> niet ondersteund');
+    expect(detailPrivacy).toContain('data-lockscreen-privacy="details-opt-in"');
+    expect(detailPrivacy).toContain('value="true" selected');
+    expect(detailPrivacy).toContain('Bewaar notificatieprivacy');
   });
 
   it('rendert het back-upscherm met export en import', () => {
