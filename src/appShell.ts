@@ -1524,6 +1524,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentBulkSelectionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentKeyboardFocusPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentResponsiveMotionPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentLoadingErrorPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2000,6 +2001,57 @@ function renderAttachmentResponsiveMotionPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze responsive status toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentLoadingErrorPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const loadingState = hasStatus ? 'status-updated' : 'idle';
+  const errorState = hasError ? 'error-sanitized' : 'error-clear';
+  const retryState = hasError ? 'retry-available' : hasAttachments ? 'retry-idle' : 'retry-empty';
+  const actionbarState = hasAttachments ? 'actions-available' : 'empty-actionbar';
+  const lockedState =
+    lockedPreviewCount > 0 ? 'locked-preview-error-boundary' : 'no-locked-preview-error';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment loading and error privacy states" data-attachment-loading-error-surface="privacy">
+      <h2>Bijlage laad- en foutstates</h2>
+      <div class="button-row" role="group" aria-label="Bijlage retry actionbar" data-attachment-loading-actionbar-state="${actionbarState}">
+        <button class="phase-button secondary" type="button" data-attachment-loading-action-kind="retry" data-attachment-loading-action-state="${retryState}" ${hasError ? '' : 'disabled'}>Probeer opnieuw</button>
+        <button class="phase-button secondary" type="button" data-attachment-loading-action-kind="refresh-status" data-attachment-loading-action-state="${loadingState}">Status verversen</button>
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-loading-kind="loading-status" data-attachment-loading-state="${loadingState}">
+          <dt>Loadingstatus</dt>
+          <dd>${hasStatus ? 'Attachmentstatus is bijgewerkt als veilige workflowmelding.' : 'Geen actieve attachment-laadmelding.'}</dd>
+        </div>
+        <div data-attachment-loading-kind="error-boundary" data-attachment-loading-state="${errorState}">
+          <dt>Foutgrens</dt>
+          <dd>${hasError ? 'Foutmelding is beschikbaar als generieke herstelstatus zonder broninhoud.' : 'Geen attachmentfout actief.'}</dd>
+        </div>
+        <div data-attachment-loading-kind="retry-affordance" data-attachment-loading-state="${retryState}">
+          <dt>Retry</dt>
+          <dd>${hasError ? 'Retry is beschikbaar zonder bestandsnaam of medische inhoud te tonen.' : hasAttachments ? 'Retry blijft inactief zolang er geen foutstatus is.' : 'Retry wacht op attachmentrecords.'}</dd>
+        </div>
+        <div data-attachment-loading-kind="empty-actionbar" data-attachment-loading-state="${actionbarState}">
+          <dt>Actionbar</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} beschikbaar voor veilige statusacties.` : 'Lege actionbar toont alleen dat er geen attachmentacties zijn.'}</dd>
+        </div>
+        <div data-attachment-loading-kind="locked-preview-error-boundary" data-attachment-loading-state="${lockedState}">
+          <dt>Locked-preview foutgrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten fout- en retrystates.` : 'Geen vergrendelde beeldpreviews binnen fout- en retrystates.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze laad- en foutstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }

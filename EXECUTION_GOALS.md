@@ -8327,4 +8327,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment loading UI, error UI, retry UI, actionbar UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G834 — attachment share and handoff privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment loading/error states zijn nu bewaakt, maar share-, support-handoff-, artsreview- en externe-exportvoorbereidingsstates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment share/handoff states scanbaar blijven, bestaande share/export/support hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien welke attachmentinformatie klaarstaat voor artsreview, support of externe export zonder dat handoffstates bronbestanden, selectiecontext of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken share readiness, support handoff boundary, artsreview affordance states en external export preparation state; bestaande share/export/action hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment share UI, support handoff UI, export UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
