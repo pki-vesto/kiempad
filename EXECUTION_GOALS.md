@@ -7473,4 +7473,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery contract helpers
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G773 — recovery contract helper naming cleanup
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-contracttests hebben nu herbruikbare foutmeldinghelpers, maar enkele helpernamen blijven gekoppeld aan één herstelcategorie en maken toekomstige uitbreiding minder duidelijk.
+- **Desired Outcome:** Helpernamen en testtitels maken expliciet onderscheid tussen generieke recovery-contractasserties en categorie-specifieke unlock-error structuurasserties.
+- **User Value:** Nieuwe recovery-tests kunnen sneller veilig worden toegevoegd zonder verwarring over welke helper generiek of categorie-specifiek is.
+- **Acceptance Criteria:** Generieke foutmeldinghelpers hebben categorie-neutrale namen; unlock-error specifieke structuurhelpers blijven herkenbaar; bestaande negatieve fixtures blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery contract helpers
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
