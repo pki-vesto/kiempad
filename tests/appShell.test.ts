@@ -9089,6 +9089,96 @@ describe('app shell', () => {
     expect(assistiveConfirmationReceiptAudit).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G924 attachment assistive delivery handoff confirmation receipt audit privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-g924-delivery-handoff-confirmation-receipt-audit-token',
+        dossierStatus:
+          'G924 delivery handoff confirmation receipt audit bevat auditbewijs voor g924-delivery-handoff-confirmation-receipt-audit-secret-source.pdf met private-g924-delivery-handoff-confirmation-receipt-audit-token OCR-payload diagnose 5491 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g924-delivery-handoff-confirmation-receipt-audit-sensitive',
+            datum: '2026-09-28',
+            titel: 'G924 delivery handoff confirmation receipt audit bron',
+            categorie: 'onderzoek',
+            bestandsNaam: 'g924-delivery-handoff-confirmation-receipt-audit-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjQtUEFZTE9BRA==',
+            notitie:
+              'private-g924-delivery-handoff-confirmation-receipt-audit-token hoort niet in assistive confirmation receipt audit.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5491 mg behandelkeuzeadvies blijft buiten G924 confirmation receipt audit.',
+              signalen: ['OCR-payload blijft buiten G924 audit proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-09-28',
+              documenttype: 'Labuitslag',
+              bronbestand: 'g924-delivery-handoff-confirmation-receipt-audit-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.93,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-09-28T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G924 OCR TEKST private-g924-delivery-handoff-confirmation-receipt-audit-token diagnose 5491 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g924-delivery-handoff-confirmation-receipt-audit-secret-source.pdf.',
+            },
+            uploadedAt: '2026-09-28T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveConfirmationReceiptAudit =
+      extractAttachmentAssistiveConfirmationReceiptAuditSurface(html);
+
+    expect(assistiveConfirmationReceiptAudit).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(assistiveConfirmationReceiptAudit).toContain('role="status"');
+    expect(assistiveConfirmationReceiptAudit).toContain('aria-live="polite"');
+    expect(assistiveConfirmationReceiptAudit).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-kind="confirmation-receipt-audit-boundary"',
+    );
+    expect(assistiveConfirmationReceiptAudit).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-kind="audit-proof-summary-affordance"',
+    );
+    expect(assistiveConfirmationReceiptAudit).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-kind="screenreader-confirmation-receipt-audit-label-state"',
+    );
+    expect(assistiveConfirmationReceiptAudit).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-kind="assistive-confirmation-receipt-audit-trail"',
+    );
+    expect(assistiveConfirmationReceiptAudit).toContain(
+      '1 bijlage met veilige confirmation receipt auditstatus',
+    );
+
+    expect(assistiveConfirmationReceiptAudit).not.toContain(
+      'private-g924-delivery-handoff-confirmation-receipt-audit-token',
+    );
+    expect(assistiveConfirmationReceiptAudit).not.toContain(
+      'g924-delivery-handoff-confirmation-receipt-audit-secret-source.pdf',
+    );
+    expect(assistiveConfirmationReceiptAudit).not.toContain('U0VDUkVULUc5MjQtUEFZTE9BRA==');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('GEVOELIGE G924 OCR TEKST');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('OCR-payload');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('Attachmentpayload');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('attachmentpayload');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('dossierpayload');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('diagnose');
+    expect(assistiveConfirmationReceiptAudit).not.toContain('behandelkeuzeadvies');
+    expect(assistiveConfirmationReceiptAudit).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
