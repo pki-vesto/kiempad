@@ -167,6 +167,16 @@ function extractAttachmentLoadingErrorSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentShareHandoffSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment share and handoff privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment share/handoff privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4971,6 +4981,130 @@ describe('app shell', () => {
     expect(loadingError).not.toContain('dosering');
     expect(loadingError).not.toContain('behandelkeuzeadvies');
     expect(loadingError).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment share en handoff privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-share-token',
+        dossierDocuments: [
+          {
+            id: 'doc-share-sensitive',
+            datum: '2026-06-20',
+            titel: 'Share source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'share-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'c2hhcmUtc2VjcmV0LXBheWxvYWQ=',
+            notitie: 'private-share-token hoort niet in share handoff.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 625 mg behandelkeuzeadvies blijft buiten share handoff.',
+              signalen: ['OCR-payload blijft buiten support-handoff en exportvoorbereiding.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-20',
+              documenttype: 'Labuitslag',
+              bronbestand: 'share-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-20T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE SHARE OCR TEKST private-share-token diagnose 625 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor share-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-20T08:05:00.000Z',
+          },
+          {
+            id: 'doc-share-locked-image',
+            datum: '2026-06-21',
+            titel: 'Share locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'share-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'c2hhcmUtbG9ja2VkLXNlY3JldA==',
+            notitie: 'private-share-token hoort ook niet bij externe export.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-21',
+              documenttype: 'Foto/echo',
+              bronbestand: 'share-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-21',
+              soort: 'echo',
+              context: 'private share imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-21T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const shareHandoff = extractAttachmentShareHandoffSurface(html);
+    const consentExport = extractAttachmentConsentExportSurface(html);
+
+    expect(consentExport).toContain('data-attachment-consent-export-surface="privacy"');
+    expect(consentExport).toContain('data-attachment-share-kind="medical-boundary"');
+    expect(consentExport).toContain('data-attachment-export-kind="encrypted-attachments"');
+    expect(shareHandoff).toContain('data-attachment-share-handoff-surface="privacy"');
+    expect(shareHandoff).toContain('data-attachment-share-actionbar-state="metadata-share-ready"');
+    expect(shareHandoff).toContain('data-attachment-share-action-kind="clinician-review"');
+    expect(shareHandoff).toContain('data-attachment-share-action-kind="support-handoff"');
+    expect(shareHandoff).toContain('data-attachment-share-action-kind="external-export"');
+    expect(shareHandoff).toContain('data-attachment-share-action-state="clinician-review-ready"');
+    expect(shareHandoff).toContain(
+      'data-attachment-share-action-state="support-handoff-metadata-only"',
+    );
+    expect(shareHandoff).toContain(
+      'data-attachment-share-action-state="central-encrypted-export-preparation"',
+    );
+    expect(shareHandoff).toContain('data-attachment-share-kind="share-readiness"');
+    expect(shareHandoff).toContain('data-attachment-share-kind="support-handoff-boundary"');
+    expect(shareHandoff).toContain('data-attachment-share-kind="clinician-review-affordance"');
+    expect(shareHandoff).toContain('data-attachment-share-kind="external-export-preparation"');
+    expect(shareHandoff).toContain('data-attachment-share-kind="locked-preview-handoff-boundary"');
+    expect(shareHandoff).toContain('data-attachment-share-state="locked-preview-handoff-boundary"');
+    expect(shareHandoff).toContain('2 bijlagen klaar als metadata-only deelstatus');
+    expect(shareHandoff).toContain('Support-handoff bevat alleen workflowstatus');
+    expect(shareHandoff).toContain('2 gereviewde bijlagen beschikbaar als veilige reviewstatus');
+    expect(shareHandoff).toContain('centrale encrypted metadata en vraagt expliciete toestemming');
+    expect(shareHandoff).toContain(
+      '1 vergrendelde beeldpreview blijft buiten share- en handoffstates',
+    );
+
+    expect(shareHandoff).not.toContain('private-share-token');
+    expect(shareHandoff).not.toContain('share-secret-source.pdf');
+    expect(shareHandoff).not.toContain('share-locked-secret.jpg');
+    expect(shareHandoff).not.toContain('c2hhcmUtc2VjcmV0LXBheWxvYWQ=');
+    expect(shareHandoff).not.toContain('c2hhcmUtbG9ja2VkLXNlY3JldA==');
+    expect(shareHandoff).not.toContain('data:image/jpeg;base64');
+    expect(shareHandoff).not.toContain('GEVOELIGE SHARE OCR TEKST');
+    expect(shareHandoff).not.toContain('OCR-payload');
+    expect(shareHandoff).not.toContain('Attachmentpayload');
+    expect(shareHandoff).not.toContain('attachmentpayload');
+    expect(shareHandoff).not.toContain('diagnose');
+    expect(shareHandoff).not.toContain('dosering');
+    expect(shareHandoff).not.toContain('behandelkeuzeadvies');
+    expect(shareHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

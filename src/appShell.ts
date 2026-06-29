@@ -1525,6 +1525,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentKeyboardFocusPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentResponsiveMotionPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentLoadingErrorPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentShareHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2052,6 +2053,71 @@ function renderAttachmentLoadingErrorPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze laad- en foutstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentShareHandoffPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const reviewedCount = zichtbareDocumenten.filter(
+    (document) =>
+      document.ocr?.reviewStatus === 'gereviewd' ||
+      document.beeldMetadata?.reviewStatus === 'gereviewd' ||
+      document.embryo?.reviewStatus === 'gereviewd',
+  ).length;
+  const shareState = hasAttachments ? 'metadata-share-ready' : 'share-empty';
+  const handoffState = hasAttachments ? 'support-handoff-metadata-only' : 'support-handoff-empty';
+  const clinicianState =
+    reviewedCount > 0
+      ? 'clinician-review-ready'
+      : hasAttachments
+        ? 'clinician-review-pending'
+        : 'clinician-review-empty';
+  const exportState = !hasAttachments
+    ? 'external-export-empty'
+    : isCentralStorage(state)
+      ? 'central-encrypted-export-preparation'
+      : 'legacy-encrypted-export-preparation';
+  const lockedState =
+    lockedPreviewCount > 0 ? 'locked-preview-handoff-boundary' : 'no-locked-preview-handoff';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment share and handoff privacy states" data-attachment-share-handoff-surface="privacy">
+      <h2>Bijlage share en handoff</h2>
+      <div class="button-row" role="group" aria-label="Bijlage share actionbar" data-attachment-share-actionbar-state="${shareState}">
+        <button class="phase-button secondary" type="button" data-attachment-share-action-kind="clinician-review" data-attachment-share-action-state="${clinicianState}" ${hasAttachments ? '' : 'disabled'}>Artsreview</button>
+        <button class="phase-button secondary" type="button" data-attachment-share-action-kind="support-handoff" data-attachment-share-action-state="${handoffState}" ${hasAttachments ? '' : 'disabled'}>Support</button>
+        <button class="phase-button secondary" type="button" data-attachment-share-action-kind="external-export" data-attachment-share-action-state="${exportState}" ${hasAttachments ? '' : 'disabled'}>Export voorbereiden</button>
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-share-kind="share-readiness" data-attachment-share-state="${shareState}">
+          <dt>Share readiness</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} klaar als metadata-only deelstatus.` : 'Geen bijlagen beschikbaar voor delen.'}</dd>
+        </div>
+        <div data-attachment-share-kind="support-handoff-boundary" data-attachment-share-state="${handoffState}">
+          <dt>Support handoff</dt>
+          <dd>${hasAttachments ? 'Support-handoff bevat alleen workflowstatus, opslagmodus en veilige actierichting.' : 'Geen support-handoff nodig zonder bijlagen.'}</dd>
+        </div>
+        <div data-attachment-share-kind="clinician-review-affordance" data-attachment-share-state="${clinicianState}">
+          <dt>Artsreview</dt>
+          <dd>${reviewedCount > 0 ? `${reviewedCount} gereviewde bijlage${reviewedCount === 1 ? '' : 'n'} beschikbaar als veilige reviewstatus.` : hasAttachments ? 'Artsreview wacht op expliciete reviewstatus zonder inhoud te openen.' : 'Geen artsreviewstatus beschikbaar.'}</dd>
+        </div>
+        <div data-attachment-share-kind="external-export-preparation" data-attachment-share-state="${exportState}">
+          <dt>Externe exportvoorbereiding</dt>
+          <dd>${hasAttachments ? `Externe exportvoorbereiding gebruikt ${isCentralStorage(state) ? 'centrale' : 'lokale'} encrypted metadata en vraagt expliciete toestemming.` : 'Externe exportvoorbereiding wacht op bijlagen.'}</dd>
+        </div>
+        <div data-attachment-share-kind="locked-preview-handoff-boundary" data-attachment-share-state="${lockedState}">
+          <dt>Locked-preview handoffgrens</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten share- en handoffstates.` : 'Geen vergrendelde beeldpreviews binnen share- en handoffstates.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze share- en handoffstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
