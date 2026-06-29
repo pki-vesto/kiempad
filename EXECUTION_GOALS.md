@@ -8061,4 +8061,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** AI settings UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G815 — notification privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** AI-preview en on-device opt-in states zijn nu bewaakt, maar notificatieprivacy states hebben nog geen expliciete Claude Design-regressie rond generieke lockscreen-copy, permissiestatus en detail-opt-in.
+- **Desired Outcome:** Tests bewaken dat notificatieprivacy scanbaar blijft, bestaande notification hooks behouden en geen medische details of planningpayload op het vergrendelscherm tonen.
+- **User Value:** Gebruikers kunnen herinneringen veilig instellen zonder dat themawijzigingen privacycopy of permissiestatus onduidelijk maken.
+- **Acceptance Criteria:** Tests dekken permission granted/unsupported, generieke lockscreen-copy en detail-opt-in state; bestaande notification UI-hooks blijven aanwezig; zichtbare lockscreen-copy toont geen medicatienaam, afspraakdetail, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Notification UI, privacy settings, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

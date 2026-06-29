@@ -2754,7 +2754,7 @@ function renderResearchAggregatiePlan(plan: ResearchAggregatiePlan): string {
 
 function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): string {
   return `
-    <form id="ai-preview-form" class="data-form compact-form">
+    <form id="ai-preview-form" class="data-form compact-form" data-ai-preview-state="${preview ? 'preview' : 'leeg'}">
       <label>
         Bron
         <input name="aiBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
@@ -2829,7 +2829,7 @@ function renderAiSettingsForm(
     : 'Provider, model en API-sleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.';
 
   return `
-    <form id="ai-settings-form" class="data-form compact-form">
+    <form id="ai-settings-form" class="data-form compact-form" data-ai-state="${settings.ai.ingeschakeld ? 'aan' : 'uit'}" data-ai-storage="${central ? 'central-api' : 'local-legacy'}">
       <label>
         AI
         <select name="aiIngeschakeld">
@@ -2856,8 +2856,11 @@ function renderAiSettingsForm(
 }
 
 function renderOnDeviceAiStatus(capabilities: OnDeviceAiCapability[]): string {
+  const capabilityState = capabilities.some((capability) => capability.beschikbaar)
+    ? 'beschikbaar'
+    : 'niet-beschikbaar';
   return `
-    <div class="policy-panel embedded-summary" aria-label="On-device AI verkenning">
+    <div class="policy-panel embedded-summary" aria-label="On-device AI verkenning" data-on-device-ai-state="${capabilityState}">
       <h3>On-device AI</h3>
       <p class="small-print">${escapeHtml(beschrijfOnDeviceAiStatus(capabilities))}</p>
       <p class="small-print">Verkenning zonder cloud-stap: Kiempad start geen AI-sessie, downloadt geen model en verstuurt niets.</p>
