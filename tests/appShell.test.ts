@@ -347,6 +347,18 @@ function extractAttachmentAssistiveConfirmationSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveConfirmationReceiptSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -7696,6 +7708,179 @@ describe('app shell', () => {
     expect(assistiveConfirmation).not.toContain('dosering');
     expect(assistiveConfirmation).not.toContain('behandelkeuzeadvies');
     expect(assistiveConfirmation).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-confirmation-receipt-token',
+        dossierStatus:
+          'Confirmation receipt bevat overdrachtsbewijs voor confirmation-receipt-secret-source.pdf met private-confirmation-receipt-token OCR-payload diagnose 2325 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-confirmation-receipt-sensitive',
+            datum: '2026-07-24',
+            titel: 'Confirmation receipt source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'confirmation-receipt-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'Y29uZmlybWF0aW9uLXJlY2VpcHQtc2VjcmV0LXBheWxvYWQ=',
+            notitie:
+              'private-confirmation-receipt-token hoort niet in assistive confirmation receipt.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 2325 mg behandelkeuzeadvies blijft buiten assistive confirmation receipt.',
+              signalen: [
+                'OCR-payload blijft buiten confirmation receipt proof en screenreader confirmation receipt label.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2026-07-24',
+              documenttype: 'Labuitslag',
+              bronbestand: 'confirmation-receipt-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-24T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE CONFIRMATION RECEIPT OCR TEKST private-confirmation-receipt-token diagnose 2325 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor confirmation-receipt-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-24T08:05:00.000Z',
+          },
+          {
+            id: 'doc-confirmation-receipt-locked-image',
+            datum: '2026-07-25',
+            titel: 'Confirmation receipt locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'confirmation-receipt-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'Y29uZmlybWF0aW9uLXJlY2VpcHQtbG9ja2VkLXNlY3JldA==',
+            notitie:
+              'private-confirmation-receipt-token hoort ook niet in confirmation receipt labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-25',
+              documenttype: 'Foto/echo',
+              bronbestand: 'confirmation-receipt-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-25',
+              soort: 'echo',
+              context: 'private confirmation receipt imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-25T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveConfirmationReceipt = extractAttachmentAssistiveConfirmationReceiptSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-surface="privacy"',
+    );
+    expect(assistiveConfirmationReceipt).toContain('role="status"');
+    expect(assistiveConfirmationReceipt).toContain('aria-live="polite"');
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-live-state="handoff-confirmation-receipt-available"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="handoff-confirmation-receipt-boundary"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="confirmation-receipt-proof-summary-affordance"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="screenreader-confirmation-receipt-label-state"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="assistive-confirmation-receipt-audit"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-kind="locked-preview-assistive-confirmation-receipt-boundary"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-state="handoff-confirmation-receipt-available"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-state="confirmation-receipt-proof-summary-ready"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-state="screenreader-confirmation-receipt-label-ready"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-state="assistive-confirmation-receipt-audit-ready"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'data-attachment-assistive-confirmation-receipt-state="locked-preview-assistive-confirmation-receipt-boundary"',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'Opschoonbewijs confirmation receipt beschikbaar als veilige assistive receiptstatus',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      '2 bijlagen met veilige confirmation receiptstatus',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'Confirmation receiptbewijs is beschikbaar zonder bestands-',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'Screenreader confirmation receipt labels noemen alleen bewijsgroep',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      'Assistive confirmation receipt audit bevestigt confirmation-, handoff-, delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveConfirmationReceipt).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive confirmation receipt payloads',
+    );
+
+    expect(assistiveConfirmationReceipt).not.toContain('private-confirmation-receipt-token');
+    expect(assistiveConfirmationReceipt).not.toContain('confirmation-receipt-secret-source.pdf');
+    expect(assistiveConfirmationReceipt).not.toContain('confirmation-receipt-locked-secret.jpg');
+    expect(assistiveConfirmationReceipt).not.toContain(
+      'Y29uZmlybWF0aW9uLXJlY2VpcHQtc2VjcmV0LXBheWxvYWQ=',
+    );
+    expect(assistiveConfirmationReceipt).not.toContain(
+      'Y29uZmlybWF0aW9uLXJlY2VpcHQtbG9ja2VkLXNlY3JldA==',
+    );
+    expect(assistiveConfirmationReceipt).not.toContain('data:image/jpeg;base64');
+    expect(assistiveConfirmationReceipt).not.toContain('GEVOELIGE CONFIRMATION RECEIPT OCR TEKST');
+    expect(assistiveConfirmationReceipt).not.toContain('OCR-payload');
+    expect(assistiveConfirmationReceipt).not.toContain('Attachmentpayload');
+    expect(assistiveConfirmationReceipt).not.toContain('attachmentpayload');
+    expect(assistiveConfirmationReceipt).not.toContain('dossierpayload');
+    expect(assistiveConfirmationReceipt).not.toContain('diagnose');
+    expect(assistiveConfirmationReceipt).not.toContain('dosering');
+    expect(assistiveConfirmationReceipt).not.toContain('behandelkeuzeadvies');
+    expect(assistiveConfirmationReceipt).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
