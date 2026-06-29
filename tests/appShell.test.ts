@@ -323,6 +323,18 @@ function extractAttachmentAssistiveDeliverySurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveHandoffSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -7355,6 +7367,161 @@ describe('app shell', () => {
     expect(assistiveDelivery).not.toContain('dosering');
     expect(assistiveDelivery).not.toContain('behandelkeuzeadvies');
     expect(assistiveDelivery).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-handoff-token',
+        dossierStatus:
+          'Handoff bevat overdrachtsroute voor handoff-secret-source.pdf met private-handoff-token OCR-payload diagnose 2125 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-handoff-sensitive',
+            datum: '2026-07-20',
+            titel: 'Handoff source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'handoff-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'aGFuZG9mZi1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-handoff-token hoort niet in assistive handoff.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 2125 mg behandelkeuzeadvies blijft buiten assistive handoff.',
+              signalen: ['OCR-payload blijft buiten handoff proof en screenreader handoff label.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-20',
+              documenttype: 'Labuitslag',
+              bronbestand: 'handoff-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-07-20T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE HANDOFF OCR TEKST private-handoff-token diagnose 2125 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor handoff-secret-source.pdf.',
+            },
+            uploadedAt: '2026-07-20T08:05:00.000Z',
+          },
+          {
+            id: 'doc-handoff-locked-image',
+            datum: '2026-07-21',
+            titel: 'Handoff locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'handoff-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'aGFuZG9mZi1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-handoff-token hoort ook niet in handoff labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-07-21',
+              documenttype: 'Foto/echo',
+              bronbestand: 'handoff-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-07-21',
+              soort: 'echo',
+              context: 'private handoff imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-07-21T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveHandoff = extractAttachmentAssistiveHandoffSurface(html);
+
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveHandoff).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(assistiveHandoff).toContain('role="status"');
+    expect(assistiveHandoff).toContain('aria-live="polite"');
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-live-state="delivery-handoff-available"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="delivery-handoff-boundary"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="handoff-proof-summary-affordance"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="screenreader-handoff-label-state"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="assistive-handoff-audit"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="locked-preview-assistive-handoff-boundary"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-state="delivery-handoff-available"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-state="handoff-proof-summary-ready"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-state="screenreader-handoff-label-ready"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-state="assistive-handoff-audit-ready"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-state="locked-preview-assistive-handoff-boundary"',
+    );
+    expect(assistiveHandoff).toContain(
+      'Opschoonbewijs handoff beschikbaar als veilige assistive handoffstatus',
+    );
+    expect(assistiveHandoff).toContain('2 bijlagen met veilige handoffstatus');
+    expect(assistiveHandoff).toContain('Handoffbewijs is beschikbaar zonder bestands-');
+    expect(assistiveHandoff).toContain('Screenreader handoff labels noemen alleen routegroep');
+    expect(assistiveHandoff).toContain(
+      'Assistive handoff audit bevestigt delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveHandoff).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive handoff payloads',
+    );
+
+    expect(assistiveHandoff).not.toContain('private-handoff-token');
+    expect(assistiveHandoff).not.toContain('handoff-secret-source.pdf');
+    expect(assistiveHandoff).not.toContain('handoff-locked-secret.jpg');
+    expect(assistiveHandoff).not.toContain('aGFuZG9mZi1zZWNyZXQtcGF5bG9hZA==');
+    expect(assistiveHandoff).not.toContain('aGFuZG9mZi1sb2NrZWQtc2VjcmV0');
+    expect(assistiveHandoff).not.toContain('data:image/jpeg;base64');
+    expect(assistiveHandoff).not.toContain('GEVOELIGE HANDOFF OCR TEKST');
+    expect(assistiveHandoff).not.toContain('OCR-payload');
+    expect(assistiveHandoff).not.toContain('Attachmentpayload');
+    expect(assistiveHandoff).not.toContain('attachmentpayload');
+    expect(assistiveHandoff).not.toContain('dossierpayload');
+    expect(assistiveHandoff).not.toContain('diagnose');
+    expect(assistiveHandoff).not.toContain('dosering');
+    expect(assistiveHandoff).not.toContain('behandelkeuzeadvies');
+    expect(assistiveHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

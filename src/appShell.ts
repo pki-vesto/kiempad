@@ -1540,6 +1540,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2978,6 +2979,67 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryPriva
         </div>
       </dl>
       <p class="small-print">Deze assistive delivery toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const handoffAvailable = hasAttachments && (hasStatus || hasError);
+  const handoffState = handoffAvailable ? 'delivery-handoff-available' : 'delivery-handoff-empty';
+  const proofState = hasError
+    ? 'handoff-proof-summary-paused'
+    : hasStatus
+      ? 'handoff-proof-summary-ready'
+      : 'handoff-proof-summary-empty';
+  const labelState = handoffAvailable
+    ? 'screenreader-handoff-label-ready'
+    : 'screenreader-handoff-label-empty';
+  const auditState = handoffAvailable
+    ? 'assistive-handoff-audit-ready'
+    : 'assistive-handoff-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-handoff-boundary'
+      : 'no-locked-preview-handoff';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff privacy states" data-attachment-assistive-handoff-surface="privacy">
+      <h2>Bijlage assistive handoff</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-handoff-live-state="${handoffState}">
+        ${handoffAvailable ? 'Opschoonbewijs handoff beschikbaar als veilige assistive handoffstatus.' : 'Geen veilige attachment-opschoonbewijs handoffstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-handoff-kind="delivery-handoff-boundary" data-attachment-assistive-handoff-state="${handoffState}">
+          <dt>Delivery handoff boundary</dt>
+          <dd>${handoffAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige handoffstatus zonder broninhoud.` : 'Delivery handoff wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-handoff-kind="handoff-proof-summary-affordance" data-attachment-assistive-handoff-state="${proofState}">
+          <dt>Handoff proof summary</dt>
+          <dd>${hasError ? 'Handoffbewijs blijft gepauzeerd als generieke overdrachtsroute.' : hasStatus ? 'Handoffbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen handoffbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-handoff-kind="screenreader-handoff-label-state" data-attachment-assistive-handoff-state="${labelState}">
+          <dt>Screenreader handoff label</dt>
+          <dd>${handoffAvailable ? 'Screenreader handoff labels noemen alleen routegroep en bewijsstatus.' : 'Screenreader handoff labels blijven leeg zonder handoffbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-handoff-kind="assistive-handoff-audit" data-attachment-assistive-handoff-state="${auditState}">
+          <dt>Assistive handoff audit</dt>
+          <dd>${handoffAvailable ? 'Assistive handoff audit bevestigt delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive handoff audit wacht op veilige handoffstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-handoff-kind="locked-preview-assistive-handoff-boundary" data-attachment-assistive-handoff-state="${lockedState}">
+          <dt>Locked-preview assistive handoff boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive handoff payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive handoff states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive handoff toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
