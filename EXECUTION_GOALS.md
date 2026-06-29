@@ -8243,4 +8243,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment audit UI, event log, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G828 — attachment search and filter privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment audittrail states zijn nu bewaakt, maar zoek-, filter-, facet- en lege-resultaatstates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment search/filter states scanbaar blijven, bestaande zoek/filter hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig bijlagen terugvinden en filteren zonder dat themawijzigingen zoektermen, bronbestanden of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken zoekstatus, filterfacets, lege-resultaatstate en locked-result boundary states; bestaande search/filter UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment search UI, filter UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

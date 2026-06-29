@@ -107,6 +107,14 @@ function extractAttachmentRetentionCleanupSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAuditTrailSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment audit trail privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment audit trail privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4057,6 +4065,124 @@ describe('app shell', () => {
     expect(retentionCleanup).not.toContain('dosering');
     expect(retentionCleanup).not.toContain('behandelkeuzeadvies');
     expect(retentionCleanup).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment audit trail privacy states zonder bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-audit-linked-reviewed',
+            datum: '2026-05-02',
+            titel: 'Audit linked beeld',
+            categorie: 'beeld',
+            bestandsNaam: 'audit-secret-source.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YXVkaXQtc2VjcmV0LXBheWxvYWQ=',
+            afspraakId: 'afspraak-audit',
+            trajectId: 'traject-audit',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload token abc123 diagnose 150 mg behandelkeuzeadvies mag niet in audittrail.',
+              signalen: ['OCR-payload en bronbestandsnaam blijven buiten audittrail.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Foto/echo',
+              trajectId: 'traject-audit',
+              bronbestand: 'audit-secret-source.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'trajectkoppeling'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'afbeelding',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.92,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-05-02T10:00:00.000Z',
+              tekst: 'GEVOELIGE OCR TEKST diagnose attachmentpayload 150 mg behandelkeuzeadvies.',
+              waarschuwing: 'Review afgerond voor audit-secret-source.jpg.',
+            },
+            beeldMetadata: {
+              datum: '2026-05-02',
+              soort: 'echo',
+              context: 'Audit trail state',
+              bron: 'Kliniekportaal',
+              trajectId: 'traject-audit',
+              afspraakId: 'afspraak-audit',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-audit-cleanup-review',
+            datum: '2026-05-03',
+            titel: 'Audit cleanup embryo',
+            categorie: 'embryo',
+            bestandsNaam: 'audit-embryo-secret.json',
+            mimeType: 'application/json',
+            grootteBytes: 512,
+            inhoudBase64: 'YXVkaXQtZW1icnlvLXNlY3JldA==',
+            analyse: {
+              samenvatting: 'Embryobron opgeslagen zonder medisch advies.',
+              signalen: ['Embryobron is feitelijke registratie.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-03',
+              documenttype: 'Embryokwaliteit',
+              bronbestand: 'audit-embryo-secret.json',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            embryo: {
+              label: 'Embryo 1',
+              dag: 5,
+              kwaliteit: '4AA',
+              bron: 'audit-embryo-secret.json',
+              reviewStatus: 'concept',
+              status: 'ingevroren',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const auditTrail = extractAttachmentAuditTrailSurface(html);
+
+    expect(auditTrail).toContain('data-attachment-audit-surface="privacy"');
+    expect(auditTrail).toContain('data-attachment-audit-kind="audit-status"');
+    expect(auditTrail).toContain('data-attachment-audit-state="events-available"');
+    expect(auditTrail).toContain('data-attachment-audit-kind="review-action-history"');
+    expect(auditTrail).toContain('data-attachment-audit-state="reviewed-events"');
+    expect(auditTrail).toContain('data-attachment-audit-kind="link-event"');
+    expect(auditTrail).toContain('data-attachment-audit-state="linked-events"');
+    expect(auditTrail).toContain('data-attachment-audit-kind="cleanup-event"');
+    expect(auditTrail).toContain('data-attachment-audit-state="cleanup-review-needed"');
+    expect(auditTrail).toContain('2 bijlagen met veilige workflowhistorie');
+    expect(auditTrail).toContain('1 reviewactie vastgelegd als veilige status');
+    expect(auditTrail).toContain(
+      '1 koppeling naar traject of afspraak zichtbaar als workflowevent',
+    );
+    expect(auditTrail).toContain('1 cleanupreview gepland op metadata');
+
+    expect(auditTrail).not.toContain('audit-secret-source.jpg');
+    expect(auditTrail).not.toContain('audit-embryo-secret.json');
+    expect(auditTrail).not.toContain('YXVkaXQtc2VjcmV0LXBheWxvYWQ=');
+    expect(auditTrail).not.toContain('YXVkaXQtZW1icnlvLXNlY3JldA==');
+    expect(auditTrail).not.toContain('data:image/jpeg;base64');
+    expect(auditTrail).not.toContain('GEVOELIGE OCR TEKST');
+    expect(auditTrail).not.toContain('OCR-payload');
+    expect(auditTrail).not.toContain('Attachmentpayload');
+    expect(auditTrail).not.toContain('attachmentpayload');
+    expect(auditTrail).not.toContain('token abc123');
+    expect(auditTrail).not.toContain('diagnose');
+    expect(auditTrail).not.toContain('dosering');
+    expect(auditTrail).not.toContain('behandelkeuzeadvies');
+    expect(auditTrail).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
