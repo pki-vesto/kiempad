@@ -8314,6 +8314,85 @@ describe('app shell', () => {
     expect(assistiveHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G921 attachment assistive delivery handoff privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-g921-delivery-handoff-token',
+        dossierStatus:
+          'G921 delivery handoff bevat overdrachtsroute voor g921-delivery-handoff-secret-source.pdf met private-g921-delivery-handoff-token OCR-payload diagnose 5479 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g921-delivery-handoff-sensitive',
+            datum: '2026-09-25',
+            titel: 'G921 delivery handoff bron',
+            categorie: 'onderzoek',
+            bestandsNaam: 'g921-delivery-handoff-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjEtUEFZTE9BRA==',
+            notitie: 'private-g921-delivery-handoff-token hoort niet in assistive handoff.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5479 mg behandelkeuzeadvies blijft buiten G921 handoff.',
+              signalen: ['OCR-payload blijft buiten G921 handoff proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-09-25',
+              documenttype: 'Labuitslag',
+              bronbestand: 'g921-delivery-handoff-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.93,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-09-25T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G921 OCR TEKST private-g921-delivery-handoff-token diagnose 5479 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor g921-delivery-handoff-secret-source.pdf.',
+            },
+            uploadedAt: '2026-09-25T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveHandoff = extractAttachmentAssistiveHandoffSurface(html);
+
+    expect(assistiveHandoff).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(assistiveHandoff).toContain('role="status"');
+    expect(assistiveHandoff).toContain('aria-live="polite"');
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="delivery-handoff-boundary"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="handoff-proof-summary-affordance"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="screenreader-handoff-label-state"',
+    );
+    expect(assistiveHandoff).toContain(
+      'data-attachment-assistive-handoff-kind="assistive-handoff-audit"',
+    );
+    expect(assistiveHandoff).toContain('1 bijlage met veilige handoffstatus');
+
+    expect(assistiveHandoff).not.toContain('private-g921-delivery-handoff-token');
+    expect(assistiveHandoff).not.toContain('g921-delivery-handoff-secret-source.pdf');
+    expect(assistiveHandoff).not.toContain('U0VDUkVULUc5MjEtUEFZTE9BRA==');
+    expect(assistiveHandoff).not.toContain('GEVOELIGE G921 OCR TEKST');
+    expect(assistiveHandoff).not.toContain('OCR-payload');
+    expect(assistiveHandoff).not.toContain('Attachmentpayload');
+    expect(assistiveHandoff).not.toContain('attachmentpayload');
+    expect(assistiveHandoff).not.toContain('dossierpayload');
+    expect(assistiveHandoff).not.toContain('diagnose');
+    expect(assistiveHandoff).not.toContain('behandelkeuzeadvies');
+    expect(assistiveHandoff).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
