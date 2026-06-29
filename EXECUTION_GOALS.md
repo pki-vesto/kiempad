@@ -7529,4 +7529,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance docs, changelog, current state, recovery contract helpers
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G777 — recovery contract helper release guard negative fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De recovery-helper docsafspraak heeft nu release/state-bewaking, maar er is nog geen negatieve fixture die de technische fout bij ontbrekende releasecontexttermen vastlegt.
+- **Desired Outcome:** Een negatieve fixture faalt compact wanneer changelog of current state de recovery-helper releasecontexttermset niet meer noemt.
+- **User Value:** Releaseoverzicht en projectstatus blijven betrouwbaar zichtbaar voor recovery-contract onderhoudsafspraken.
+- **Acceptance Criteria:** Negatieve fixture gebruikt alleen technische termnamen; ontbrekende recovery-helper releasecontexttermen falen met een gerichte melding; bestaande docs-, release- en app-shell guards blijven groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance docs, changelog, current state, recovery contract helpers
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
