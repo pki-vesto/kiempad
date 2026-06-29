@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 567 |
+| ☑ klaar | 568 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **766** |
+| **Totaal** | **767** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -928,13 +928,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G763 | Central Encrypted Platform: missing key metadata support handoff copy contract | P1 | F5 | ☑ |
 | G764 | Central Encrypted Platform: support handoff contract helper | P1 | F5 | ☑ |
 | G765 | Central Encrypted Platform: recovery handoff helper rollout | P1 | F5 | ☑ |
-| G766 | Central Encrypted Platform: unlock-error visible copy redaction boundary | P1 | F5 | ☐ |
+| G766 | Central Encrypted Platform: unlock-error visible copy redaction boundary | P1 | F5 | ☑ |
+| G767 | Central Encrypted Platform: unlock-error copy regression fixture | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 766** (id's G001 t/m G766, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 767** (id's G001 t/m G767, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -159,7 +159,10 @@ describe('app shell', () => {
     expect(html).toContain('Back-upherinnering');
     expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
     expect(html).toContain('Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.');
-    expect(html).toContain('Ontgrendelen is mislukt &lt;script&gt;');
+    expect(html).toContain(
+      'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.',
+    );
+    expect(html).not.toContain('Ontgrendelen is mislukt');
     expect(html).not.toContain('Ontgrendelen is mislukt <script>');
     expect(html).toContain('Controleer rustig de passphrase');
     expect(html).toContain('toetsenbordindeling en hoofdletters');
@@ -252,7 +255,10 @@ describe('app shell', () => {
 
     expect(html).toContain('data-vault-present="true"');
     expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
-    expect(html).toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
+    expect(html).toContain(
+      'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.',
+    );
+    expect(html).not.toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
     expect(html).toContain('Controleer rustig de passphrase');
     expect(html).toContain('data-support-handoff="unlock-error"');
     expect(html).toContain('<dt>Supportcategorie</dt><dd>unlock-error</dd>');
@@ -275,6 +281,14 @@ describe('app shell', () => {
     );
 
     expectSupportHandoffContract(html, UNLOCK_ERROR_HANDOFF_CONTRACT);
+    expect(html).toContain(
+      'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.',
+    );
+    expect(html).not.toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
+    expect(html).not.toContain('echo.png');
+    expect(html).not.toContain('OCR/base64');
+    expect(html).not.toContain('token');
+    expect(html).not.toContain('Progesteron');
   });
 
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {

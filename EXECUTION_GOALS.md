@@ -7389,4 +7389,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, recovery copy, tests
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G767 — unlock-error copy regression fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De unlock-error recoverystatus toont nu generieke copy, maar toekomstige thema- of copywijzigingen hebben een kleine regressiefixture nodig die de redaction-boundary expliciet vasthoudt.
+- **Desired Outcome:** Een gerichte fixture bewijst dat unlock-error zichtbare copy generiek blijft en ruwe exceptiondetails buiten de locked UI houdt.
+- **User Value:** Gebruikers blijven rustige ontgrendelhulp zien zonder dat bestandsnamen, tokens, OCR/base64-markers of medische plaintext per ongeluk uitlekken.
+- **Acceptance Criteria:** Fixture/test injecteert token, filename, OCR/base64-marker en medische plaintext in een unlock-exception; zichtbare locked UI sluit die ruwe details uit en toont generieke unlock-hulp; support-handoff blijft aanwezig en generiek; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, recovery copy, tests
+- **ADR Needed:** no
+- **Score:** 112
 - **Status:** ☐ open
