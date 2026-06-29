@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G769/G770 Central Encrypted Platform: unlock-error herstelstatus heeft nu een compact alertstructuurcontract dat de generieke copy vóór de exact gestructureerde support-handoff bewaakt en extra gevoelige details uitsluit; G770 is toegevoegd voor negatieve structuurfixtures.
 - G768/G769 Central Encrypted Platform: unlock-error herstelstatus heeft nu een thema-accessibility regressietest voor `role="alert"`, `aria-label`, generieke copy en semantisch extractbare support-handoff; G769 is toegevoegd voor een compacter alertstructuurcontract.
 - G767/G768 Central Encrypted Platform: unlock-error copy-redaction heeft nu een expliciete regressiefixture met raw exceptionpayload en forbidden terms; G768 is toegevoegd voor thema-toegankelijkheidsbewaking rond dezelfde recoverystatus.
 - G766/G767 Central Encrypted Platform: unlock-error herstelstatus toont nu generieke zichtbare copy zonder exceptiondetails terwijl de support-handoff behouden blijft; G767 is toegevoegd voor een regressiefixture rond deze copy-redaction.

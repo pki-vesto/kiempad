@@ -113,6 +113,21 @@ function extractUnlockErrorRecoveryAlert(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function expectUnlockErrorAlertStructureContract(alert: string): void {
+  const copyIndex = alert.indexOf(`<span>${UNLOCK_ERROR_GENERIC_COPY}</span>`);
+  const handoffIndex = alert.indexOf('data-support-handoff="unlock-error"');
+  const expectedAlert = `<span>${UNLOCK_ERROR_GENERIC_COPY}</span> <dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl>`;
+
+  expect(copyIndex).toBeGreaterThanOrEqual(0);
+  expect(handoffIndex).toBeGreaterThan(copyIndex);
+  expect(alert).toBe(expectedAlert);
+  expectSupportHandoffContract(alert, UNLOCK_ERROR_HANDOFF_CONTRACT);
+  for (const forbidden of UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS) {
+    expect(alert).not.toContain(forbidden);
+  }
+  expect(alert).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
+}
+
 describe('app shell', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -336,6 +351,15 @@ describe('app shell', () => {
     for (const forbidden of UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS) {
       expect(alert).not.toContain(forbidden);
     }
+  });
+
+  it('bewaakt unlock-error alertstructuur als compact contract', () => {
+    const html = renderVaultGate(true, UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE, undefined, {
+      storageMode: 'central-api',
+      storageLabel: 'Centrale encrypted API',
+    });
+
+    expectUnlockErrorAlertStructureContract(extractUnlockErrorRecoveryAlert(html));
   });
 
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {
