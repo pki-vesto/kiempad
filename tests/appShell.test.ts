@@ -147,6 +147,16 @@ function extractAttachmentKeyboardFocusSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentResponsiveMotionSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment responsive and reduced-motion privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error('Attachment responsive/reduced-motion privacy states ontbreken.');
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4688,6 +4698,144 @@ describe('app shell', () => {
     expect(keyboardFocus).not.toContain('dosering');
     expect(keyboardFocus).not.toContain('behandelkeuzeadvies');
     expect(keyboardFocus).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment responsive en reduced-motion privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-responsive-token',
+        dossierDocuments: [
+          {
+            id: 'doc-responsive-sensitive',
+            datum: '2026-06-16',
+            titel: 'Responsive source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'responsive-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'cmVzcG9uc2l2ZS1zZWNyZXQtcGF5bG9hZA==',
+            notitie: 'private-responsive-token hoort niet in responsive states.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 425 mg behandelkeuzeadvies blijft buiten responsive states.',
+              signalen: ['OCR-payload blijft buiten compact actionbar en motion states.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-16',
+              documenttype: 'Labuitslag',
+              bronbestand: 'responsive-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.9,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-16T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE RESPONSIVE OCR TEKST private-responsive-token diagnose 425 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor responsive-secret-source.pdf.',
+            },
+            uploadedAt: '2026-06-16T08:05:00.000Z',
+          },
+          {
+            id: 'doc-responsive-locked-image',
+            datum: '2026-06-17',
+            titel: 'Responsive locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'responsive-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cmVzcG9uc2l2ZS1sb2NrZWQtc2VjcmV0',
+            notitie: 'private-responsive-token hoort ook niet bij compact layout.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-06-17',
+              documenttype: 'Foto/echo',
+              bronbestand: 'responsive-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-06-17',
+              soort: 'echo',
+              context: 'private responsive imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-17T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const responsiveMotion = extractAttachmentResponsiveMotionSurface(html);
+    const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
+
+    expect(styles).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(styles).toContain('--motion: 0s');
+    expect(html).toContain('class="button-row"');
+    expect(html).toContain('data-attachment-bulk-action-kind="review"');
+    expect(html).toContain('data-attachment-bulk-action-kind="export"');
+    expect(html).toContain('data-attachment-bulk-action-kind="delete"');
+    expect(responsiveMotion).toContain('data-attachment-responsive-motion-surface="privacy"');
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-actionbar-state="responsive-single-column-ready"',
+    );
+    expect(responsiveMotion).toContain('data-attachment-responsive-action-kind="compact-review"');
+    expect(responsiveMotion).toContain('data-attachment-responsive-action-kind="compact-export"');
+    expect(responsiveMotion).toContain('data-attachment-responsive-action-kind="compact-delete"');
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-action-state="touch-targets-guarded"',
+    );
+    expect(responsiveMotion).toContain('data-attachment-responsive-kind="responsive-status"');
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-state="responsive-single-column-ready"',
+    );
+    expect(responsiveMotion).toContain('data-attachment-responsive-kind="touch-target-boundary"');
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-kind="reduced-motion-affordance"',
+    );
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-state="reduced-motion-supported"',
+    );
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-kind="locked-preview-compact-boundary"',
+    );
+    expect(responsiveMotion).toContain(
+      'data-attachment-responsive-state="locked-preview-compact-boundary"',
+    );
+    expect(responsiveMotion).toContain('2 bijlagen blijven scanbaar in compacte eenkolomsweergave');
+    expect(responsiveMotion).toContain(
+      'Compacte attachmentacties behouden minimaal aanraakbare knoppen',
+    );
+    expect(responsiveMotion).toContain(
+      'Motiongevoelige instellingen gebruiken statische statusovergangen',
+    );
+    expect(responsiveMotion).toContain(
+      '1 vergrendelde beeldpreview blijft buiten compacte layoutinhoud',
+    );
+
+    expect(responsiveMotion).not.toContain('private-responsive-token');
+    expect(responsiveMotion).not.toContain('responsive-secret-source.pdf');
+    expect(responsiveMotion).not.toContain('responsive-locked-secret.jpg');
+    expect(responsiveMotion).not.toContain('cmVzcG9uc2l2ZS1zZWNyZXQtcGF5bG9hZA==');
+    expect(responsiveMotion).not.toContain('cmVzcG9uc2l2ZS1sb2NrZWQtc2VjcmV0');
+    expect(responsiveMotion).not.toContain('data:image/jpeg;base64');
+    expect(responsiveMotion).not.toContain('GEVOELIGE RESPONSIVE OCR TEKST');
+    expect(responsiveMotion).not.toContain('OCR-payload');
+    expect(responsiveMotion).not.toContain('Attachmentpayload');
+    expect(responsiveMotion).not.toContain('attachmentpayload');
+    expect(responsiveMotion).not.toContain('diagnose');
+    expect(responsiveMotion).not.toContain('dosering');
+    expect(responsiveMotion).not.toContain('behandelkeuzeadvies');
+    expect(responsiveMotion).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
