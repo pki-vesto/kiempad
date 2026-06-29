@@ -1543,6 +1543,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -3168,6 +3169,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive confirmation receipt toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const auditAvailable = hasAttachments && (hasStatus || hasError);
+  const auditState = auditAvailable
+    ? 'confirmation-receipt-audit-available'
+    : 'confirmation-receipt-audit-empty';
+  const proofState = hasError
+    ? 'audit-proof-summary-paused'
+    : hasStatus
+      ? 'audit-proof-summary-ready'
+      : 'audit-proof-summary-empty';
+  const labelState = auditAvailable
+    ? 'screenreader-confirmation-receipt-audit-label-ready'
+    : 'screenreader-confirmation-receipt-audit-label-empty';
+  const trailState = auditAvailable
+    ? 'assistive-confirmation-receipt-audit-trail-ready'
+    : 'assistive-confirmation-receipt-audit-trail-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-confirmation-receipt-audit-boundary'
+      : 'no-locked-preview-confirmation-receipt-audit';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit privacy states" data-attachment-assistive-confirmation-receipt-audit-surface="privacy">
+      <h2>Bijlage assistive confirmation receipt audit</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-confirmation-receipt-audit-live-state="${auditState}">
+        ${auditAvailable ? 'Opschoonbewijs confirmation receipt audit beschikbaar als veilige assistive auditstatus.' : 'Geen veilige attachment-opschoonbewijs confirmation receipt auditstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-confirmation-receipt-audit-kind="confirmation-receipt-audit-boundary" data-attachment-assistive-confirmation-receipt-audit-state="${auditState}">
+          <dt>Confirmation receipt audit boundary</dt>
+          <dd>${auditAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige confirmation receipt auditstatus zonder broninhoud.` : 'Confirmation receipt audit wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-receipt-audit-kind="audit-proof-summary-affordance" data-attachment-assistive-confirmation-receipt-audit-state="${proofState}">
+          <dt>Audit proof summary</dt>
+          <dd>${hasError ? 'Auditbewijs blijft gepauzeerd als generieke auditstatus.' : hasStatus ? 'Auditbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen auditbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-receipt-audit-kind="screenreader-confirmation-receipt-audit-label-state" data-attachment-assistive-confirmation-receipt-audit-state="${labelState}">
+          <dt>Screenreader confirmation receipt audit label</dt>
+          <dd>${auditAvailable ? 'Screenreader confirmation receipt audit labels noemen alleen auditgroep en bewijsstatus.' : 'Screenreader confirmation receipt audit labels blijven leeg zonder auditbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-receipt-audit-kind="assistive-confirmation-receipt-audit-trail" data-attachment-assistive-confirmation-receipt-audit-state="${trailState}">
+          <dt>Assistive confirmation receipt audit trail</dt>
+          <dd>${auditAvailable ? 'Assistive confirmation receipt audit trail bevestigt confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive confirmation receipt audit trail wacht op veilige auditstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-confirmation-receipt-audit-kind="locked-preview-assistive-confirmation-receipt-audit-boundary" data-attachment-assistive-confirmation-receipt-audit-state="${lockedState}">
+          <dt>Locked-preview assistive confirmation receipt audit boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive confirmation receipt audit payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive confirmation receipt audit states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive confirmation receipt audit toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
