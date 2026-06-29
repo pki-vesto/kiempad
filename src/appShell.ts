@@ -1538,6 +1538,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchiveExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgePrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2852,6 +2853,67 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptPrivacy(
         </div>
       </dl>
       <p class="small-print">Deze assistive receipt toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const exportAvailable = hasAttachments && (hasStatus || hasError);
+  const exportState = exportAvailable ? 'receipt-export-available' : 'receipt-export-empty';
+  const proofState = hasError
+    ? 'export-proof-summary-paused'
+    : hasStatus
+      ? 'export-proof-summary-ready'
+      : 'export-proof-summary-empty';
+  const labelState = exportAvailable
+    ? 'screenreader-receipt-export-label-ready'
+    : 'screenreader-receipt-export-label-empty';
+  const auditState = exportAvailable
+    ? 'assistive-receipt-export-audit-ready'
+    : 'assistive-receipt-export-audit-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-receipt-export-boundary'
+      : 'no-locked-preview-receipt-export';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export privacy states" data-attachment-assistive-receipt-export-surface="privacy">
+      <h2>Bijlage assistive receipt export</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-receipt-export-live-state="${exportState}">
+        ${exportAvailable ? 'Opschoonbewijs export beschikbaar als veilige assistive exportstatus.' : 'Geen veilige attachment-opschoonbewijs exportstatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-receipt-export-kind="receipt-export-boundary" data-attachment-assistive-receipt-export-state="${exportState}">
+          <dt>Receipt export boundary</dt>
+          <dd>${exportAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige receipt-exportstatus zonder broninhoud.` : 'Receipt export wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-kind="export-proof-summary-affordance" data-attachment-assistive-receipt-export-state="${proofState}">
+          <dt>Export proof summary</dt>
+          <dd>${hasError ? 'Exportbewijs blijft gepauzeerd als generieke downloadstatus.' : hasStatus ? 'Exportbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen exportbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-kind="screenreader-receipt-export-label-state" data-attachment-assistive-receipt-export-state="${labelState}">
+          <dt>Screenreader receipt export label</dt>
+          <dd>${exportAvailable ? 'Screenreader receipt export labels noemen alleen exportgroep en bewijsstatus.' : 'Screenreader receipt export labels blijven leeg zonder exportbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-kind="assistive-receipt-export-audit" data-attachment-assistive-receipt-export-state="${auditState}">
+          <dt>Assistive receipt export audit</dt>
+          <dd>${exportAvailable ? 'Assistive receipt export audit bevestigt receipt-, purge-, expiry-, archive-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive receipt export audit wacht op veilige exportbewijsstatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-kind="locked-preview-assistive-receipt-export-boundary" data-attachment-assistive-receipt-export-state="${lockedState}">
+          <dt>Locked-preview assistive receipt export boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive receipt export payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive receipt export states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive receipt export toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
