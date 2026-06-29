@@ -1369,6 +1369,7 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${renderUploadAttachmentFeedback(state)}
         ${renderAttachmentConsentExportPrivacy(state)}
+        ${renderAttachmentRetentionCleanupPrivacy(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         <h2>Import-inbox</h2>
         ${renderDossierInboxOverview(importInboxItems)}
@@ -1657,6 +1658,46 @@ function renderAttachmentConsentExportPrivacy(state: AppShellState): string {
         </div>
       </dl>
       <p class="small-print">Deze exportstatus toont geen bronbestanden, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentRetentionCleanupPrivacy(state: AppShellState): string {
+  const documents = state.dossierDocuments ?? [];
+  const attachmentCount = documents.length;
+  const orphanCount = documents.filter(
+    (document) => !document.trajectId && !document.afspraakId && !document.metadata?.trajectId,
+  ).length;
+  const imageCount = documents.filter((document) => document.categorie === 'beeld').length;
+  const hasAttachments = attachmentCount > 0;
+  const retentionState = hasAttachments ? 'retained-encrypted' : 'empty';
+  const orphanState =
+    orphanCount > 0 ? 'needs-relink' : hasAttachments ? 'linked-or-reviewed' : 'empty';
+  const cleanupState = orphanCount > 0 ? 'available-metadata-only' : 'not-needed';
+  const deleteConfirmState = hasAttachments ? 'confirmation-required' : 'empty';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment retention en cleanup privacy states" data-attachment-retention-cleanup-surface="privacy">
+      <h2>Bijlagebeheer</h2>
+      <dl class="summary-list">
+        <div data-attachment-retention-kind="encrypted-retention" data-attachment-retention-state="${retentionState}">
+          <dt>Bewaarstatus</dt>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} blijven encrypted bewaard met workflowmetadata.` : 'Geen bijlagen om te bewaren.'}</dd>
+        </div>
+        <div data-attachment-orphan-kind="link-review" data-attachment-orphan-state="${orphanState}">
+          <dt>Koppeling</dt>
+          <dd>${orphanCount > 0 ? `${orphanCount} bijlage${orphanCount === 1 ? '' : 'n'} vraagt om traject- of afspraakreview.` : hasAttachments ? 'Bijlagen zijn gekoppeld of al als reviewpunt zichtbaar.' : 'Geen koppelingen te controleren.'}</dd>
+        </div>
+        <div data-attachment-cleanup-kind="metadata-cleanup" data-attachment-cleanup-state="${cleanupState}">
+          <dt>Opschonen</dt>
+          <dd>${orphanCount > 0 ? 'Cleanup kan metadatareview starten zonder broninhoud te openen.' : 'Geen cleanupactie nodig op basis van de huidige workflowmetadata.'}</dd>
+        </div>
+        <div data-attachment-delete-confirm-kind="boundary" data-attachment-delete-confirm-state="${deleteConfirmState}">
+          <dt>Verwijderbevestiging</dt>
+          <dd>${hasAttachments ? `Verwijderen vraagt bevestiging per encrypted bijlage; ${imageCount} beeld${imageCount === 1 ? '' : 'en'} blijven vergrendeld tot ontgrendeling.` : 'Geen verwijderbevestiging nodig.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze beheerstatus toont alleen workflowmetadata en geen broninhoud.</p>
     </section>
   `;
 }

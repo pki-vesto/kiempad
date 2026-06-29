@@ -99,6 +99,14 @@ function extractAttachmentConsentExportSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentRetentionCleanupSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment retention en cleanup privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment retention/cleanup privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -3933,6 +3941,122 @@ describe('app shell', () => {
     expect(consentExport).not.toContain('dosering');
     expect(consentExport).not.toContain('behandelkeuzeadvies');
     expect(consentExport).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment retention en cleanup privacy states zonder bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-retention-cleanup-orphan',
+            datum: '2026-05-02',
+            titel: 'Retention cleanup beeld',
+            categorie: 'beeld',
+            bestandsNaam: 'retention-secret-source.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cmV0ZW50aW9uLXNlY3JldC1wYXlsb2Fk',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload token abc123 diagnose 150 mg behandelkeuzeadvies mag niet in beheerstatus.',
+              signalen: ['OCR-payload en bronbestandsnaam blijven buiten cleanupstatus.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Foto/echo',
+              bronbestand: 'retention-secret-source.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'wacht_op_lokale_ocr',
+              bron: 'afbeelding',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'laag',
+              confidenceScore: 0.32,
+              reviewStatus: 'concept',
+              verwerktOp: '2026-05-02T10:00:00.000Z',
+              tekst:
+                'GEVOELIGE OCR TEKST token abc123 diagnose attachmentpayload 150 mg behandelkeuzeadvies.',
+              waarschuwing: 'OCR-review nodig voor retention-secret-source.jpg.',
+            },
+            beeldMetadata: {
+              datum: '2026-05-02',
+              soort: 'echo',
+              context: 'Retention cleanup state',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-retention-cleanup-linked',
+            datum: '2026-05-03',
+            titel: 'Retention cleanup embryo',
+            categorie: 'embryo',
+            bestandsNaam: 'retention-embryo-secret.json',
+            mimeType: 'application/json',
+            grootteBytes: 512,
+            inhoudBase64: 'cmV0ZW50aW9uLWVtYnJ5bw==',
+            trajectId: 'traject-retention',
+            analyse: {
+              samenvatting: 'Embryobron opgeslagen zonder medisch advies.',
+              signalen: ['Embryobron is feitelijke registratie.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-03',
+              documenttype: 'Embryokwaliteit',
+              trajectId: 'traject-retention',
+              bronbestand: 'retention-embryo-secret.json',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'trajectkoppeling'],
+            },
+            embryo: {
+              label: 'Embryo 1',
+              dag: 5,
+              kwaliteit: '4AA',
+              bron: 'retention-embryo-secret.json',
+              reviewStatus: 'concept',
+              status: 'ingevroren',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const retentionCleanup = extractAttachmentRetentionCleanupSurface(html);
+
+    expect(retentionCleanup).toContain('data-attachment-retention-cleanup-surface="privacy"');
+    expect(retentionCleanup).toContain('data-attachment-retention-kind="encrypted-retention"');
+    expect(retentionCleanup).toContain('data-attachment-retention-state="retained-encrypted"');
+    expect(retentionCleanup).toContain('data-attachment-orphan-kind="link-review"');
+    expect(retentionCleanup).toContain('data-attachment-orphan-state="needs-relink"');
+    expect(retentionCleanup).toContain('data-attachment-cleanup-kind="metadata-cleanup"');
+    expect(retentionCleanup).toContain('data-attachment-cleanup-state="available-metadata-only"');
+    expect(retentionCleanup).toContain('data-attachment-delete-confirm-kind="boundary"');
+    expect(retentionCleanup).toContain(
+      'data-attachment-delete-confirm-state="confirmation-required"',
+    );
+    expect(retentionCleanup).toContain('2 bijlagen blijven encrypted bewaard');
+    expect(retentionCleanup).toContain('1 bijlage vraagt om traject- of afspraakreview');
+    expect(retentionCleanup).toContain('Cleanup kan metadatareview starten');
+    expect(retentionCleanup).toContain('Verwijderen vraagt bevestiging per encrypted bijlage');
+
+    expect(retentionCleanup).not.toContain('retention-secret-source.jpg');
+    expect(retentionCleanup).not.toContain('retention-embryo-secret.json');
+    expect(retentionCleanup).not.toContain('cmV0ZW50aW9uLXNlY3JldC1wYXlsb2Fk');
+    expect(retentionCleanup).not.toContain('cmV0ZW50aW9uLWVtYnJ5bw==');
+    expect(retentionCleanup).not.toContain('data:image/jpeg;base64');
+    expect(retentionCleanup).not.toContain('GEVOELIGE OCR TEKST');
+    expect(retentionCleanup).not.toContain('OCR-payload');
+    expect(retentionCleanup).not.toContain('Attachmentpayload');
+    expect(retentionCleanup).not.toContain('attachmentpayload');
+    expect(retentionCleanup).not.toContain('token abc123');
+    expect(retentionCleanup).not.toContain('diagnose');
+    expect(retentionCleanup).not.toContain('dosering');
+    expect(retentionCleanup).not.toContain('behandelkeuzeadvies');
+    expect(retentionCleanup).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
