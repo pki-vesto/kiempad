@@ -8103,4 +8103,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** WebAuthn UI, recovery copy, backup screen, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G818 — fallback notification and log privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** WebAuthn/recovery privacy states zijn nu bewaakt, maar fallback-notificaties en logboekprivacy hebben nog geen expliciete Claude Design-regressie rond in-app fallback, high-risk events en lege logstate zonder payloadlekken.
+- **Desired Outcome:** Tests bewaken dat fallback-notificaties en logboekstates scanbaar blijven, bestaande notification/log hooks behouden en geen medische inhoud, tokens, bestandsnamen of providerpayload tonen.
+- **User Value:** Gebruikers kunnen meldingen en veiligheidslogboek vertrouwen zonder dat themawijzigingen gevoelige eventdetails zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken lege fallback-notificaties, actieve in-app fallback en high-risk logstates; bestaande notification/log UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bestandsnaam, base64, OCR-payload, dossierpayload, diagnose, dosering, providerpayload of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Notification fallback UI, event log UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

@@ -194,6 +194,14 @@ function extractBackupImportPrivacyZone(html: string): string {
     .trim();
 }
 
+function extractWebAuthnPanel(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('WebAuthn-paneel ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
   category: 'missing-key-metadata',
   contract:
@@ -4540,6 +4548,96 @@ describe('app shell', () => {
       'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
     );
     expect(html).not.toContain('Gekoppeld: Kiempad lokale kluis');
+  });
+
+  it('bewaakt WebAuthn recovery privacy states zonder sleutel- of authenticatorpayload', () => {
+    const unavailableHtml = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      webAuthnStatus: {
+        runtimeBeschikbaar: false,
+        reden: 'Deze browser meldt geen WebAuthn-ondersteuning.',
+        gekoppeld: false,
+      },
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const unavailablePanel = extractWebAuthnPanel(unavailableHtml);
+
+    expect(unavailablePanel).toContain('data-webauthn-storage="legacy-local-vault"');
+    expect(unavailablePanel).toContain('data-webauthn-runtime="unavailable"');
+    expect(unavailablePanel).toContain('data-webauthn-link-state="unlinked"');
+    expect(unavailablePanel).toContain('id="webauthn-enroll"');
+    expect(unavailablePanel).toContain('disabled');
+    expect(unavailablePanel).toContain('Niet gekoppeld');
+    expect(unavailablePanel).toContain('legacy lokale kluis');
+
+    const linkedLegacyHtml = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      webAuthnStatus: {
+        runtimeBeschikbaar: true,
+        reden: 'Browser meldt WebAuthn',
+        gekoppeld: true,
+        label: 'Lokale biometrie',
+        status: 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak.',
+      },
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const linkedLegacyPanel = extractWebAuthnPanel(linkedLegacyHtml);
+
+    expect(linkedLegacyPanel).toContain('data-webauthn-storage="legacy-local-vault"');
+    expect(linkedLegacyPanel).toContain('data-webauthn-runtime="available"');
+    expect(linkedLegacyPanel).toContain('data-webauthn-link-state="linked"');
+    expect(linkedLegacyPanel).toContain('Gekoppeld: Lokale biometrie');
+    expect(linkedLegacyPanel).toContain('WebAuthn opnieuw koppelen');
+
+    const linkedCentralHtml = renderAppShell('backup', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      storageMode: 'central-api',
+      webAuthnStatus: {
+        runtimeBeschikbaar: true,
+        reden: 'Browser meldt WebAuthn',
+        gekoppeld: true,
+        label: 'Centrale dataset',
+        status: 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak.',
+      },
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const linkedCentralPanel = extractWebAuthnPanel(linkedCentralHtml);
+
+    expect(linkedCentralPanel).toContain('data-webauthn-storage="central-encrypted-dataset"');
+    expect(linkedCentralPanel).toContain('data-webauthn-runtime="available"');
+    expect(linkedCentralPanel).toContain('data-webauthn-link-state="linked"');
+    expect(linkedCentralPanel).toContain('centrale encrypted dataset');
+    expect(linkedCentralPanel).toContain('datasetsleutel versleuteld te bewaren');
+
+    for (const panel of [unavailablePanel, linkedLegacyPanel, linkedCentralPanel]) {
+      expect(panel).not.toContain('credentialId');
+      expect(panel).not.toContain('credential-id');
+      expect(panel).not.toContain('recoverytoken');
+      expect(panel).not.toContain('API-sleutel');
+      expect(panel).not.toContain('base64');
+      expect(panel).not.toContain('dossierpayload');
+      expect(panel).not.toContain('diagnose');
+      expect(panel).not.toContain('behandelkeuzeadvies');
+      expect(panel).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
   });
 
   it('rendert de laatst bekende back-updatum en periodieke aanmoediging', () => {
