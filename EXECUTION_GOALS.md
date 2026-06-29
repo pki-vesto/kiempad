@@ -7361,4 +7361,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell tests, recovery copy contracts
 - **ADR Needed:** no
 - **Score:** 112
+- **Status:** ☑ klaar
+
+### G765 — recovery handoff helper rollout
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** De support-handoff contracthelper bestaat nu voor missing-key-metadata, maar toekomstige centrale recovery-statussen gebruiken hem nog niet als standaardpatroon.
+- **Desired Outcome:** Een volgende centrale recovery-status gebruikt dezelfde helperstructuur, zodat supportcategorie, opslagmodus, actierichting en redaction-boundary uniform worden getest.
+- **User Value:** Nieuwe herstelstatussen krijgen dezelfde privacygaranties zonder telkens handmatige testpatronen te kopiëren.
+- **Acceptance Criteria:** Minimaal één extra recovery/handoff test gebruikt dezelfde helper; test faalt duidelijk bij ontbrekende handoffsectie; redaction-boundary blijft passphrase, token, filename, OCR/base64, recordaantallen en medische plaintext uitsluiten; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell tests, recovery copy contracts
+- **ADR Needed:** no
+- **Score:** 111
 - **Status:** ☐ open

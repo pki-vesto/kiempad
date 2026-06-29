@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G764/G765 Central Encrypted Platform: app-shell tests gebruiken nu een herbruikbare support-handoff contracthelper met expliciete ontbrekende-sectie fout en gedeelde redaction-boundary; G765 is toegevoegd voor rollout naar een volgende recovery-status.
 - G763/G764 Central Encrypted Platform: app-shell tests leggen de missing-key-metadata support-handoff copy nu vast als expliciet privacycontract met redaction-boundary; G764 is toegevoegd voor een herbruikbare handoff-contracthelper.
 - G762/G763 Central Encrypted Platform: missing-key-metadata herstelstatus toont nu een gesanitized support-handoff met alleen supportcategorie, opslagmodus en actierichting; G763 is toegevoegd voor een apart copycontract rond deze handoff.
 - G588/G762 Central Encrypted Platform: app-shell vertaalt ontbrekende sleutelmetadata bij bestaande encrypted records nu naar een generieke herstelstatus met reload/support/back-up-richting zonder passphrase, token, bestandsnaam, OCR/base64 of medische inhoud; G762 is toegevoegd voor privacyveilige audit-handoff van deze herstelcategorie.
