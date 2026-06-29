@@ -435,6 +435,10 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_TERM
   'recovery-helper release-state message-foutmeldingcontext contractcontext missing-term melding',
   'contractcontext',
 ] as const;
+const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_TERMS = [
+  'recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext missing-term melding',
+  'contractcontext',
+] as const;
 const RECOVERY_CONTRACT_HELPER_RELEASE_MISSING_TERM_ERROR =
   'Recovery helper releasecontext ontbreekt voor termen: docsafspraak';
 const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MISSING_TERM_ERROR =
@@ -810,6 +814,19 @@ describe('onderhoudsdocumentatie', () => {
     expect(
       RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_MISSING_TERM_ERROR,
     ).not.toContain('token');
+  });
+
+  it('bewaakt recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext missing-term melding in release-state contractcontext', () => {
+    for (const releaseDoc of [changelog, currentState]) {
+      const releaseContext =
+        extractRecoveryContractHelperReleaseStateMessageErrorContractReleaseReleaseContext(
+          releaseDoc,
+        );
+
+      for (const requiredTerm of RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_TERMS) {
+        expect(releaseContext).toContain(requiredTerm);
+      }
+    }
   });
 
   it('documenteert centrale bootstrap smoke phase diagnostics zonder gevoelige output', () => {
@@ -3938,6 +3955,31 @@ function extractRecoveryContractHelperReleaseStateMessageErrorContractReleaseCon
   if (missingTerms.length > 0) {
     throw new Error(
       `Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractRecoveryContractHelperReleaseStateMessageErrorContractReleaseReleaseContext(
+  releaseDoc: string,
+): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_TERMS.some(
+        (term) => line.includes(term),
+      ),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms =
+    RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_TERMS.filter(
+      (term) => !matchingContext.includes(term),
+    );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract ontbreekt voor termen: ${missingTerms.join(', ')}`,
     );
   }
 
