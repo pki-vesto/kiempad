@@ -8555,6 +8555,93 @@ describe('app shell', () => {
     expect(assistiveConfirmation).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G922 attachment assistive delivery handoff confirmation privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-g922-delivery-handoff-confirmation-token',
+        dossierStatus:
+          'G922 delivery handoff confirmation bevat bevestigingsroute voor g922-delivery-handoff-confirmation-secret-source.pdf met private-g922-delivery-handoff-confirmation-token OCR-payload diagnose 5483 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g922-delivery-handoff-confirmation-sensitive',
+            datum: '2026-09-26',
+            titel: 'G922 delivery handoff confirmation bron',
+            categorie: 'onderzoek',
+            bestandsNaam: 'g922-delivery-handoff-confirmation-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5MjItUEFZTE9BRA==',
+            notitie:
+              'private-g922-delivery-handoff-confirmation-token hoort niet in assistive confirmation.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 5483 mg behandelkeuzeadvies blijft buiten G922 confirmation.',
+              signalen: [
+                'OCR-payload blijft buiten G922 confirmation proof en screenreader label.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2026-09-26',
+              documenttype: 'Labuitslag',
+              bronbestand: 'g922-delivery-handoff-confirmation-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.93,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-09-26T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G922 OCR TEKST private-g922-delivery-handoff-confirmation-token diagnose 5483 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g922-delivery-handoff-confirmation-secret-source.pdf.',
+            },
+            uploadedAt: '2026-09-26T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveConfirmation = extractAttachmentAssistiveConfirmationSurface(html);
+
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-confirmation-surface="privacy"',
+    );
+    expect(assistiveConfirmation).toContain('role="status"');
+    expect(assistiveConfirmation).toContain('aria-live="polite"');
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-confirmation-kind="delivery-handoff-confirmation-boundary"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-confirmation-kind="confirmation-proof-summary-affordance"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-confirmation-kind="screenreader-confirmation-label-state"',
+    );
+    expect(assistiveConfirmation).toContain(
+      'data-attachment-assistive-confirmation-kind="assistive-confirmation-audit"',
+    );
+    expect(assistiveConfirmation).toContain('1 bijlage met veilige confirmationstatus');
+
+    expect(assistiveConfirmation).not.toContain('private-g922-delivery-handoff-confirmation-token');
+    expect(assistiveConfirmation).not.toContain(
+      'g922-delivery-handoff-confirmation-secret-source.pdf',
+    );
+    expect(assistiveConfirmation).not.toContain('U0VDUkVULUc5MjItUEFZTE9BRA==');
+    expect(assistiveConfirmation).not.toContain('GEVOELIGE G922 OCR TEKST');
+    expect(assistiveConfirmation).not.toContain('OCR-payload');
+    expect(assistiveConfirmation).not.toContain('Attachmentpayload');
+    expect(assistiveConfirmation).not.toContain('attachmentpayload');
+    expect(assistiveConfirmation).not.toContain('dossierpayload');
+    expect(assistiveConfirmation).not.toContain('diagnose');
+    expect(assistiveConfirmation).not.toContain('behandelkeuzeadvies');
+    expect(assistiveConfirmation).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
