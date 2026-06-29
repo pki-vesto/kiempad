@@ -549,6 +549,20 @@ function extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationRecei
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpirySurface(
+  html: string,
+): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -10762,6 +10776,221 @@ describe('app shell', () => {
     expect(assistiveRetention).not.toContain('dosering');
     expect(assistiveRetention).not.toContain('behandelkeuzeadvies');
     expect(assistiveRetention).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-confirmation-receipt-audit-trail-retention-expiry-token',
+        dossierStatus:
+          'Confirmation receipt audit trail retention expiry bevat bewaartermijneindbewijs voor confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf met private-confirmation-receipt-audit-trail-retention-expiry-token OCR-payload diagnose 4875 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-confirmation-receipt-audit-trail-retention-expiry-sensitive',
+            datum: '2026-08-25',
+            titel: 'Confirmation receipt audit trail retention expiry source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 3584,
+            inhoudBase64:
+              'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLWV4cGlyeS1zZWNyZXQtcGF5bG9hZA==',
+            notitie:
+              'private-confirmation-receipt-audit-trail-retention-expiry-token hoort niet in assistive confirmation receipt audit trail retention expiry.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 4875 mg behandelkeuzeadvies blijft buiten assistive confirmation receipt audit trail retention expiry.',
+              signalen: ['OCR-payload blijft buiten retention expiry proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-25',
+              documenttype: 'Labuitslag',
+              bronbestand: 'confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.93,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-08-25T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE CONFIRMATION RECEIPT AUDIT TRAIL RETENTION EXPIRY OCR TEKST private-confirmation-receipt-audit-trail-retention-expiry-token diagnose 4875 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf.',
+            },
+            uploadedAt: '2026-08-25T08:05:00.000Z',
+          },
+          {
+            id: 'doc-confirmation-receipt-audit-trail-retention-expiry-locked-image',
+            datum: '2026-08-26',
+            titel: 'Confirmation receipt audit trail retention expiry locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'confirmation-receipt-audit-trail-retention-expiry-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 5632,
+            inhoudBase64:
+              'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLWV4cGlyeS1sb2NrZWQtc2VjcmV0',
+            notitie:
+              'private-confirmation-receipt-audit-trail-retention-expiry-token hoort ook niet in expiry labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-26',
+              documenttype: 'Foto/echo',
+              bronbestand: 'confirmation-receipt-audit-trail-retention-expiry-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-08-26',
+              soort: 'echo',
+              context: 'private confirmation receipt audit trail retention expiry imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-08-26T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveExpiry =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpirySurface(
+        html,
+      );
+
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-surface="privacy"',
+    );
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-receipt-export-delivery-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-cleanup-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-retention-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-retention-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-surface="privacy"',
+    );
+    expect(assistiveExpiry).toContain('role="status"');
+    expect(assistiveExpiry).toContain('aria-live="polite"');
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-live-state="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-available"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="retention-expiry-proof-summary-affordance"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-label-state"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="assistive-audit-trail-retention-expiry-state"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-available"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="retention-expiry-proof-summary-ready"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-label-ready"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="assistive-audit-trail-retention-expiry-ready"',
+    );
+    expect(assistiveExpiry).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-expiry-boundary"',
+    );
+    expect(assistiveExpiry).toContain(
+      'Opschoonbewijs cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry beschikbaar als veilige assistive bewaartermijneindestatus',
+    );
+    expect(assistiveExpiry).toContain(
+      '2 bijlagen met veilige cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expirystatus',
+    );
+    expect(assistiveExpiry).toContain('Bewaartermijneindbewijs is beschikbaar zonder bestands-');
+    expect(assistiveExpiry).toContain(
+      'Screenreader handoff confirmation receipt audit trail retention expiry labels noemen alleen audittrail-retention-expirygroep',
+    );
+    expect(assistiveExpiry).toContain(
+      'Assistive audit trail retention expiry bevestigt retention-, audit trail-, audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, archive-, cleanup-, expiry-, confirmation receipt audit-, purge-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveExpiry).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive handoff confirmation receipt audit trail retention expiry payloads',
+    );
+
+    expect(assistiveExpiry).not.toContain(
+      'private-confirmation-receipt-audit-trail-retention-expiry-token',
+    );
+    expect(assistiveExpiry).not.toContain(
+      'confirmation-receipt-audit-trail-retention-expiry-secret-source.pdf',
+    );
+    expect(assistiveExpiry).not.toContain(
+      'confirmation-receipt-audit-trail-retention-expiry-locked-secret.jpg',
+    );
+    expect(assistiveExpiry).not.toContain(
+      'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLWV4cGlyeS1zZWNyZXQtcGF5bG9hZA==',
+    );
+    expect(assistiveExpiry).not.toContain(
+      'Y29uZmlybWF0aW9uLXJlY2VpcHQtYXVkaXQtdHJhaWwtcmV0ZW50aW9uLWV4cGlyeS1sb2NrZWQtc2VjcmV0',
+    );
+    expect(assistiveExpiry).not.toContain('data:image/jpeg;base64');
+    expect(assistiveExpiry).not.toContain(
+      'GEVOELIGE CONFIRMATION RECEIPT AUDIT TRAIL RETENTION EXPIRY OCR TEKST',
+    );
+    expect(assistiveExpiry).not.toContain('OCR-payload');
+    expect(assistiveExpiry).not.toContain('Attachmentpayload');
+    expect(assistiveExpiry).not.toContain('attachmentpayload');
+    expect(assistiveExpiry).not.toContain('dossierpayload');
+    expect(assistiveExpiry).not.toContain('diagnose');
+    expect(assistiveExpiry).not.toContain('dosering');
+    expect(assistiveExpiry).not.toContain('behandelkeuzeadvies');
+    expect(assistiveExpiry).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {

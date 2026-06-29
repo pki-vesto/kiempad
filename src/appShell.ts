@@ -1558,6 +1558,7 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionPrivacy(state, zichtbareDocumenten, imagingItems)}
+        ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryPrivacy(state, zichtbareDocumenten, imagingItems)}
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -4126,6 +4127,69 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive cleanup archive receipt export delivery handoff confirmation receipt audit trail retention toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryPrivacy(
+  state: AppShellState,
+  zichtbareDocumenten: readonly DossierDocument[],
+  imagingItems: readonly ImagingRepositoryItem[],
+): string {
+  const attachmentCount = zichtbareDocumenten.length;
+  const lockedPreviewCount = state.imagingPreviewLocked ? imagingItems.length : 0;
+  const hasAttachments = attachmentCount > 0;
+  const hasStatus = Boolean(state.dossierStatus?.trim());
+  const hasError = Boolean(state.dossierError?.trim());
+  const expiryAvailable = hasAttachments && (hasStatus || hasError);
+  const expiryState = expiryAvailable
+    ? 'cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-available'
+    : 'cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-empty';
+  const proofState = hasError
+    ? 'retention-expiry-proof-summary-paused'
+    : hasStatus
+      ? 'retention-expiry-proof-summary-ready'
+      : 'retention-expiry-proof-summary-empty';
+  const labelState = expiryAvailable
+    ? 'screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-label-ready'
+    : 'screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-label-empty';
+  const auditTrailExpiryState = expiryAvailable
+    ? 'assistive-audit-trail-retention-expiry-ready'
+    : 'assistive-audit-trail-retention-expiry-empty';
+  const lockedState =
+    lockedPreviewCount > 0
+      ? 'locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-expiry-boundary'
+      : 'no-locked-preview-handoff-confirmation-receipt-audit-trail-retention-expiry';
+
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-surface="privacy">
+      <h2>Bijlage assistive receipt export delivery handoff confirmation receipt audit trail retention expiry</h2>
+      <div class="linked-note" role="status" aria-live="polite" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-live-state="${expiryState}">
+        ${expiryAvailable ? 'Opschoonbewijs cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry beschikbaar als veilige assistive bewaartermijneindestatus.' : 'Geen veilige attachment-opschoonbewijs cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expirystatus beschikbaar.'}
+      </div>
+      <dl class="summary-list">
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-boundary" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="${expiryState}">
+          <dt>Cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry boundary</dt>
+          <dd>${expiryAvailable ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} met veilige cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expirystatus zonder broninhoud.` : 'Cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry wacht op veilige status- of foutcontext.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="retention-expiry-proof-summary-affordance" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="${proofState}">
+          <dt>Retention expiry proof summary</dt>
+          <dd>${hasError ? 'Bewaartermijneindbewijs blijft gepauzeerd als generieke expiry-status.' : hasStatus ? 'Bewaartermijneindbewijs is beschikbaar zonder bestands- of medische details.' : 'Geen bewaartermijneindbewijs om samen te vatten.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-label-state" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="${labelState}">
+          <dt>Screenreader handoff confirmation receipt audit trail retention expiry label</dt>
+          <dd>${expiryAvailable ? 'Screenreader handoff confirmation receipt audit trail retention expiry labels noemen alleen audittrail-retention-expirygroep en bewijsstatus.' : 'Screenreader handoff confirmation receipt audit trail retention expiry labels blijven leeg zonder bewaartermijneindbewijs.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="assistive-audit-trail-retention-expiry-state" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="${auditTrailExpiryState}">
+          <dt>Assistive audit trail retention expiry state</dt>
+          <dd>${expiryAvailable ? 'Assistive audit trail retention expiry bevestigt retention-, audit trail-, audit-, confirmation receipt-, confirmation-, handoff-, delivery-, export-, receipt-, archive-, cleanup-, expiry-, confirmation receipt audit-, purge-, history-, completion- en recoveryhooks zonder broninhoud.' : 'Assistive audit trail retention expiry wacht op veilige bewaartermijneindestatus.'}</dd>
+        </div>
+        <div data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-kind="locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-expiry-boundary" data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-state="${lockedState}">
+          <dt>Locked-preview assistive handoff confirmation receipt audit trail retention expiry boundary</dt>
+          <dd>${lockedPreviewCount > 0 ? `${lockedPreviewCount} vergrendelde beeldpreview${lockedPreviewCount === 1 ? ' blijft' : 's blijven'} buiten assistive handoff confirmation receipt audit trail retention expiry payloads.` : 'Geen vergrendelde beeldpreviews binnen assistive handoff confirmation receipt audit trail retention expiry states.'}</dd>
+        </div>
+      </dl>
+      <p class="small-print">Deze assistive cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
     </section>
   `;
 }
