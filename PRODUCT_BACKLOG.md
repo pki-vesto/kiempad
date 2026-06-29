@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 662 |
+| ☑ klaar | 663 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **842** |
+| **Totaal** | **843** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1023,13 +1023,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G858 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states | P1 | F5 | ☑ |
 | G859 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export privacy states | P1 | F5 | ☑ |
 | G860 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states | P1 | F5 | ☑ |
-| G861 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff privacy states | P1 | F5 | ☐ |
+| G861 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff privacy states | P1 | F5 | ☑ |
+| G862 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 861** (id's G001 t/m G861, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 862** (id's G001 t/m G862, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
