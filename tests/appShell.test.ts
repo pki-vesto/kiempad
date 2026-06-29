@@ -33,16 +33,20 @@ function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
   };
 }
 
-function extractSupportHandoffContract(html: string): string {
+function extractSupportHandoffContract(html: string, category: string): string {
+  const escapedCategory = category.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = html.match(
-    /<section class="form-error" role="alert" aria-label="Herstelstatus centrale dataset">([\s\S]*?)<\/section>/,
+    new RegExp(
+      `<dl class="definition-list compact-list" data-support-handoff="${escapedCategory}">([\\s\\S]*?)<\\/dl>`,
+    ),
   );
-  if (!match?.[1]) throw new Error('Support-handoff contractsectie ontbreekt.');
+  if (!match?.[1]) throw new Error(`Support-handoff contractsectie ontbreekt: ${category}.`);
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
 type SupportHandoffContractExpectation = {
-  snapshot: string;
+  category: string;
+  contract: string;
   forbiddenTerms: readonly string[];
 };
 
@@ -50,9 +54,9 @@ function expectSupportHandoffContract(
   html: string,
   expectation: SupportHandoffContractExpectation,
 ): string {
-  const contract = extractSupportHandoffContract(html);
+  const contract = extractSupportHandoffContract(html, expectation.category);
 
-  expect(contract).toMatchInlineSnapshot(expectation.snapshot);
+  expect(contract).toBe(expectation.contract);
   for (const forbidden of expectation.forbiddenTerms) {
     expect(contract).not.toContain(forbidden);
   }
@@ -62,7 +66,16 @@ function expectSupportHandoffContract(
 }
 
 const MISSING_KEY_METADATA_HANDOFF_CONTRACT = {
-  snapshot: `"<strong>Centrale dataset vraagt herstelcontrole.</strong> <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span> <dl class="definition-list compact-list" data-support-handoff="missing-key-metadata"> <div><dt>Supportcategorie</dt><dd>missing-key-metadata</dd></div> <div><dt>Opslagmodus</dt><dd>central-api</dd></div> <div><dt>Actierichting</dt><dd>reload-support-backup</dd></div> </dl>"`,
+  category: 'missing-key-metadata',
+  contract:
+    '<div><dt>Supportcategorie</dt><dd>missing-key-metadata</dd></div> <div><dt>Opslagmodus</dt><dd>central-api</dd></div> <div><dt>Actierichting</dt><dd>reload-support-backup</dd></div>',
+  forbiddenTerms: ['Passphrase', 'token', 'echo.png', 'OCR/base64', 'Progesteron'],
+} as const;
+
+const UNLOCK_ERROR_HANDOFF_CONTRACT = {
+  category: 'unlock-error',
+  contract:
+    '<div><dt>Supportcategorie</dt><dd>unlock-error</dd></div> <div><dt>Opslagmodus</dt><dd>central-api</dd></div> <div><dt>Actierichting</dt><dd>check-keyboard-scope-webauthn</dd></div>',
   forbiddenTerms: ['Passphrase', 'token', 'echo.png', 'OCR/base64', 'Progesteron'],
 } as const;
 
@@ -223,7 +236,7 @@ describe('app shell', () => {
         '<section class="form-error" role="alert">Ontgrendelen is mislukt.</section>',
         MISSING_KEY_METADATA_HANDOFF_CONTRACT,
       ),
-    ).toThrow('Support-handoff contractsectie ontbreekt.');
+    ).toThrow('Support-handoff contractsectie ontbreekt: missing-key-metadata.');
   });
 
   it('houdt een bestaande geldige dataset en passphrasefout gescheiden van metadataherstel', () => {
@@ -241,9 +254,27 @@ describe('app shell', () => {
     expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
     expect(html).toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
     expect(html).toContain('Controleer rustig de passphrase');
+    expect(html).toContain('data-support-handoff="unlock-error"');
+    expect(html).toContain('<dt>Supportcategorie</dt><dd>unlock-error</dd>');
+    expect(html).toContain('<dt>Opslagmodus</dt><dd>central-api</dd>');
+    expect(html).toContain('<dt>Actierichting</dt><dd>check-keyboard-scope-webauthn</dd>');
     expect(html).not.toContain('Centrale dataset vraagt herstelcontrole.');
     expect(html).not.toContain('versleutelde data zonder sleutelmetadata');
     expect(html).not.toContain('contact op met support');
+  });
+
+  it('past support-handoff helper toe op centrale unlock-error herstelstatus', () => {
+    const html = renderVaultGate(
+      true,
+      'Passphrase klopt niet voor deze Kiempad-dataset. Bestand echo.png bevat OCR/base64 token en Progesteron.',
+      undefined,
+      {
+        storageMode: 'central-api',
+        storageLabel: 'Centrale encrypted API',
+      },
+    );
+
+    expectSupportHandoffContract(html, UNLOCK_ERROR_HANDOFF_CONTRACT);
   });
 
   it('houdt legacy herstelhulp beperkt tot lokale IndexedDB en back-up', () => {

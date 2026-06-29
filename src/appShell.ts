@@ -516,8 +516,8 @@ type VaultRecoveryStatus = 'none' | 'unlock-error' | 'missing-key-metadata';
 
 type VaultRecoveryHandoff = {
   storageMode: 'central-api' | 'legacy-indexeddb';
-  recoveryCategory: 'missing-key-metadata';
-  action: 'reload-support-backup';
+  recoveryCategory: 'missing-key-metadata' | 'unlock-error';
+  action: 'reload-support-backup' | 'check-keyboard-scope-webauthn';
 };
 
 function classifyVaultRecoveryStatus(error?: string): VaultRecoveryStatus {
@@ -538,31 +538,46 @@ function renderVaultRecoveryStatusAlert(
   options: VaultGateOptions = {},
 ): string {
   if (status === 'missing-key-metadata') {
-    const handoff = buildMissingKeyMetadataRecoveryHandoff(options);
+    const handoff = buildVaultRecoveryHandoff('missing-key-metadata', options);
     return `
       <section class="form-error" role="alert" aria-label="Herstelstatus centrale dataset">
         <strong>Centrale dataset vraagt herstelcontrole.</strong>
         <span>Kiempad ziet versleutelde data zonder sleutelmetadata. Herlaad eerst de app, controleer of je de juiste centrale omgeving gebruikt en neem daarna contact op met support of importeer een gecontroleerde versleutelde back-up.</span>
-        <dl class="definition-list compact-list" data-support-handoff="missing-key-metadata">
-          <div><dt>Supportcategorie</dt><dd>${handoff.recoveryCategory}</dd></div>
-          <div><dt>Opslagmodus</dt><dd>${handoff.storageMode}</dd></div>
-          <div><dt>Actierichting</dt><dd>${handoff.action}</dd></div>
-        </dl>
+        ${renderVaultRecoveryHandoff(handoff)}
       </section>
     `;
   }
   if (!error) return '';
-  return `<p class="form-error" role="alert">${escapeHtml(error)}</p>`;
+  return `
+    <section class="form-error" role="alert" aria-label="Herstelstatus ontgrendelen">
+      <span>${escapeHtml(error)}</span>
+      ${renderVaultRecoveryHandoff(buildVaultRecoveryHandoff('unlock-error', options))}
+    </section>
+  `;
 }
 
-function buildMissingKeyMetadataRecoveryHandoff(
+function buildVaultRecoveryHandoff(
+  recoveryCategory: VaultRecoveryHandoff['recoveryCategory'],
   options: VaultGateOptions = {},
 ): VaultRecoveryHandoff {
   return {
     storageMode: options.storageMode === 'legacy-indexeddb' ? 'legacy-indexeddb' : 'central-api',
-    recoveryCategory: 'missing-key-metadata',
-    action: 'reload-support-backup',
+    recoveryCategory,
+    action:
+      recoveryCategory === 'missing-key-metadata'
+        ? 'reload-support-backup'
+        : 'check-keyboard-scope-webauthn',
   };
+}
+
+function renderVaultRecoveryHandoff(handoff: VaultRecoveryHandoff): string {
+  return `
+    <dl class="definition-list compact-list" data-support-handoff="${handoff.recoveryCategory}">
+      <div><dt>Supportcategorie</dt><dd>${handoff.recoveryCategory}</dd></div>
+      <div><dt>Opslagmodus</dt><dd>${handoff.storageMode}</dd></div>
+      <div><dt>Actierichting</dt><dd>${handoff.action}</dd></div>
+    </dl>
+  `;
 }
 
 export function renderStorageBootstrapError(error: string): string {
