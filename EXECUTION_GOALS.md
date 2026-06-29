@@ -8271,4 +8271,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment list UI, result count UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G830 — attachment bulk selection privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment sort/pagination states zijn nu bewaakt, maar bulkselectie-, batchactie-, selectiecount- en bulk-delete/export-boundarystates rond dossierbijlagen en beeldrecords hebben nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment bulk selection states scanbaar blijven, bestaande selectie- en batchactiehooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig meerdere bijlagen selecteren voor review, export of verwijderen zonder dat themawijzigingen bronbestanden, selectiecontext of medische inhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken selectiecount, batchactieboundary, bulk export/delete affordance states en locked-preview selectiegrens; bestaande selectie/batch hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment selection UI, batch action UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

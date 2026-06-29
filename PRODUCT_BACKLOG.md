@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 630 |
+| ☑ klaar | 631 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **810** |
+| **Totaal** | **811** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -991,13 +991,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G826 | Premium Claude Design UI: attachment retention and cleanup privacy states | P1 | F5 | ☑ |
 | G827 | Premium Claude Design UI: attachment audit trail privacy states | P1 | F5 | ☑ |
 | G828 | Premium Claude Design UI: attachment search and filter privacy states | P1 | F5 | ☑ |
-| G829 | Premium Claude Design UI: attachment sort and pagination privacy states | P1 | F5 | ☐ |
+| G829 | Premium Claude Design UI: attachment sort and pagination privacy states | P1 | F5 | ☑ |
+| G830 | Premium Claude Design UI: attachment bulk selection privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 829** (id's G001 t/m G829, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 830** (id's G001 t/m G830, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

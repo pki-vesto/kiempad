@@ -123,6 +123,14 @@ function extractAttachmentSearchFilterSurface(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentSortPaginationSurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment sort and pagination privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Attachment sort/pagination privacy states ontbreken.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -4320,6 +4328,104 @@ describe('app shell', () => {
     expect(searchFilter).not.toContain('dosering');
     expect(searchFilter).not.toContain('behandelkeuzeadvies');
     expect(searchFilter).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment sort en pagination privacy states zonder zoekterm of bronpayload', () => {
+    const sensitiveSearchTerm = 'private-sort-token';
+    const dossierDocuments: DossierDocument[] = Array.from({ length: 12 }, (_, index) => {
+      const sequence = String(index + 1).padStart(2, '0');
+      const isLockedImage = index === 0;
+      return {
+        id: `doc-sort-${sequence}`,
+        datum: `2026-06-${sequence}`,
+        titel: `Sort attachment ${sequence}`,
+        categorie: isLockedImage ? 'beeld' : 'onderzoek',
+        bestandsNaam: isLockedImage
+          ? 'sort-locked-secret-source.jpg'
+          : `sort-secret-source-${sequence}.pdf`,
+        mimeType: isLockedImage ? 'image/jpeg' : 'application/pdf',
+        grootteBytes: isLockedImage ? 4096 : 2048,
+        inhoudBase64: isLockedImage ? 'c29ydC1sb2NrZWQtc2VjcmV0' : `c29ydC1zZWNyZXQt${sequence}`,
+        notitie: `${sensitiveSearchTerm} hoort niet in de lijstnavigatie surface.`,
+        analyse: {
+          samenvatting:
+            'Attachmentpayload diagnose 175 mg behandelkeuzeadvies blijft buiten de sort/pagination surface.',
+          signalen: ['OCR-payload en bronbestandsnaam blijven buiten lijstnavigatie.'],
+        },
+        metadata: {
+          documentDatum: `2026-06-${sequence}`,
+          documenttype: isLockedImage ? 'Foto/echo' : 'Labuitslag',
+          bronbestand: isLockedImage
+            ? 'sort-locked-secret-source.jpg'
+            : `sort-secret-source-${sequence}.pdf`,
+          extractieBronnen: ['bronbestand', 'formulierdatum'],
+        },
+        beeldMetadata: isLockedImage
+          ? {
+              datum: `2026-06-${sequence}`,
+              soort: 'echo',
+              context: 'private sort imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            }
+          : undefined,
+        ocr:
+          index === 1
+            ? {
+                status: 'tekst_uitgelezen',
+                bron: 'pdf',
+                explicieteLokaleVerwerking: true,
+                confidenceLabel: 'hoog',
+                confidenceScore: 0.9,
+                reviewStatus: 'gereviewd',
+                verwerktOp: '2026-06-02T08:00:00.000Z',
+                tekst: `GEVOELIGE SORT OCR TEKST ${sensitiveSearchTerm} diagnose 175 mg behandelkeuzeadvies attachmentpayload.`,
+                waarschuwing: 'Controleer OCR lokaal voor sort-secret-source-02.pdf.',
+              }
+            : undefined,
+        uploadedAt: `2026-06-${sequence}T09:00:00.000Z`,
+      };
+    });
+
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: sensitiveSearchTerm,
+        dossierDocuments,
+      }),
+    );
+    const sortPagination = extractAttachmentSortPaginationSurface(html);
+
+    expect(html).toContain('class="phase-list"');
+    expect(html).toContain('id="dossier-search-form"');
+    expect(sortPagination).toContain('data-attachment-sort-pagination-surface="privacy"');
+    expect(sortPagination).toContain('data-attachment-list-kind="sort-status"');
+    expect(sortPagination).toContain('data-attachment-list-state="date-desc-active"');
+    expect(sortPagination).toContain('data-attachment-list-kind="result-count"');
+    expect(sortPagination).toContain('data-attachment-list-state="results-counted"');
+    expect(sortPagination).toContain('data-attachment-list-kind="pagination-boundary"');
+    expect(sortPagination).toContain('data-attachment-list-state="multi-page"');
+    expect(sortPagination).toContain('data-attachment-list-kind="long-list-locked-preview"');
+    expect(sortPagination).toContain('data-attachment-list-state="long-list-locked-preview"');
+    expect(sortPagination).toContain('12 bijlagen beschikbaar als lijststatus');
+    expect(sortPagination).toContain("Lange lijst verdeeld over 2 veilige pagina's");
+    expect(sortPagination).toContain('1 beeldpreview blijft vergrendeld binnen deze lijststatus');
+
+    expect(sortPagination).not.toContain(sensitiveSearchTerm);
+    expect(sortPagination).not.toContain('sort-locked-secret-source.jpg');
+    expect(sortPagination).not.toContain('sort-secret-source-02.pdf');
+    expect(sortPagination).not.toContain('c29ydC1sb2NrZWQtc2VjcmV0');
+    expect(sortPagination).not.toContain('data:image/jpeg;base64');
+    expect(sortPagination).not.toContain('GEVOELIGE SORT OCR TEKST');
+    expect(sortPagination).not.toContain('OCR-payload');
+    expect(sortPagination).not.toContain('Attachmentpayload');
+    expect(sortPagination).not.toContain('attachmentpayload');
+    expect(sortPagination).not.toContain('diagnose');
+    expect(sortPagination).not.toContain('dosering');
+    expect(sortPagination).not.toContain('behandelkeuzeadvies');
+    expect(sortPagination).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
