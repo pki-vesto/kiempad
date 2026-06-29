@@ -137,7 +137,7 @@ function expectUnlockErrorAlertStructureContract(alert: string): void {
   }
 }
 
-function captureContractFailureMessage(assertContract: () => void): string {
+function captureRecoveryContractFailureMessage(assertContract: () => void): string {
   try {
     assertContract();
   } catch (error) {
@@ -146,7 +146,7 @@ function captureContractFailureMessage(assertContract: () => void): string {
   throw new Error('Contracthelper had moeten falen.');
 }
 
-function expectSanitizedContractMessage(
+function expectSanitizedRecoveryContractMessage(
   message: string,
   expectedPrefix: string,
   forbiddenTerms: readonly string[],
@@ -319,15 +319,15 @@ describe('app shell', () => {
     ).toThrow('Support-handoff contractsectie ontbreekt: missing-key-metadata.');
   });
 
-  it('hergebruikt contractfout-redaction op missing-key-metadata handoff', () => {
-    const message = captureContractFailureMessage(() =>
+  it('hergebruikt generieke recovery-contractfout redaction op missing-key-metadata handoff', () => {
+    const message = captureRecoveryContractFailureMessage(() =>
       expectSupportHandoffContract(
         '<section class="form-error" role="alert">Ontgrendelen is mislukt.</section>',
         MISSING_KEY_METADATA_HANDOFF_CONTRACT,
       ),
     );
 
-    expectSanitizedContractMessage(
+    expectSanitizedRecoveryContractMessage(
       message,
       'Support-handoff contractsectie ontbreekt:',
       MISSING_KEY_METADATA_HANDOFF_CONTRACT.forbiddenTerms,
@@ -423,17 +423,19 @@ describe('app shell', () => {
     );
   });
 
-  it('houdt unlock-error contractfoutmeldingen vrij van raw details', () => {
+  it('houdt unlock-error alertstructuur contractfoutmeldingen vrij van raw details', () => {
     const reversedAlert = `<dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl> <span>${UNLOCK_ERROR_GENERIC_COPY}</span>`;
     const alertWithRawDetail = `<span>${UNLOCK_ERROR_GENERIC_COPY}</span> <dl class="definition-list compact-list" data-support-handoff="unlock-error"> ${UNLOCK_ERROR_HANDOFF_CONTRACT.contract} </dl> <small>${UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE}</small>`;
 
-    expectSanitizedContractMessage(
-      captureContractFailureMessage(() => expectUnlockErrorAlertStructureContract(reversedAlert)),
+    expectSanitizedRecoveryContractMessage(
+      captureRecoveryContractFailureMessage(() =>
+        expectUnlockErrorAlertStructureContract(reversedAlert),
+      ),
       'Unlock-error alertstructuur contract mislukt:',
       UNLOCK_ERROR_VISIBLE_COPY_FORBIDDEN_TERMS,
     );
-    expectSanitizedContractMessage(
-      captureContractFailureMessage(() =>
+    expectSanitizedRecoveryContractMessage(
+      captureRecoveryContractFailureMessage(() =>
         expectUnlockErrorAlertStructureContract(alertWithRawDetail),
       ),
       'Unlock-error alertstructuur contract mislukt:',
