@@ -8131,4 +8131,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Import feedback UI, status/error UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G820 — settings and privacy feedback states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Import/status feedback privacy states zijn nu bewaakt, maar settings- en privacyfeedback rond AI, notificaties, WebAuthn en opslagmodus hebben nog geen expliciete Claude Design-regressie rond statuscopy zonder payloadlekken.
+- **Desired Outcome:** Tests bewaken dat settings/privacy feedback scanbaar blijft, bestaande settings hooks behouden en geen sleutels, providerpayload, tokens of medische inhoud tonen.
+- **User Value:** Gebruikers kunnen privacy-instellingen aanpassen zonder dat themawijzigingen gevoelige configuratie of medische context zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken AI-settings feedback, notificatieprivacy feedback, WebAuthn statusfeedback en opslagmoduscopy; bestaande settings UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, API-sleutel, providerpayload, base64, dossierpayload, diagnose, dosering of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Settings UI, privacy feedback UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open

@@ -1037,8 +1037,7 @@ function renderBackupScreen(state: AppShellState): string {
           </label>
           <button type="submit">${syncImportButton}</button>
         </form>
-        ${state.backupStatus ? `<p class="linked-note">${escapeHtml(state.backupStatus)}</p>` : ''}
-        ${state.backupError ? `<p class="form-error" role="alert">${escapeHtml(state.backupError)}</p>` : ''}
+        ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
     </section>
   `;
 }
@@ -1065,6 +1064,51 @@ function renderWebAuthnSettings(state: AppShellState): string {
     </section>
   `;
 }
+
+type StatusFeedbackKind = 'agenda-import' | 'medicatie-import' | 'dossier' | 'backup';
+
+function renderStatusFeedback(
+  kind: StatusFeedbackKind,
+  status: string | undefined,
+  error: string | undefined,
+): string {
+  if (!status && !error) return '';
+
+  const state = status && error ? 'mixed' : status ? 'success' : 'error';
+
+  return `
+    <section class="status-feedback" data-status-feedback-kind="${kind}" data-status-feedback-state="${state}">
+      ${status ? `<p class="linked-note">${escapeHtml(sanitizeStatusFeedback(status))}</p>` : ''}
+      ${error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeStatusFeedback(error))}</p>` : ''}
+    </section>
+  `;
+}
+
+function sanitizeStatusFeedback(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return 'Status bijgewerkt zonder details.';
+  if (STATUS_FEEDBACK_SENSITIVE_PATTERNS.some((pattern) => pattern.test(trimmed))) {
+    return 'Status bijgewerkt zonder broninhoud of bestandsdetails.';
+  }
+
+  return trimmed;
+}
+
+const STATUS_FEEDBACK_SENSITIVE_PATTERNS = [
+  /\btoken\b/i,
+  /\bpassphrase\b/i,
+  /\bapi[-_\s]?sleutel\b/i,
+  /\bproviderpayload\b/i,
+  /\bbase64\b/i,
+  /\bocr[-_\s]?payload\b/i,
+  /\bdossierpayload\b/i,
+  /\bdiagnose\b/i,
+  /\bbehandelkeuzeadvies\b/i,
+  /\braw importregel\b/i,
+  /\b(?:progesteron|gonal|ovitrelle|fyremadel|decapeptyl|utrogestan)\b/i,
+  /\b[\w.-]+\.(?:ics|csv|pdf|jpg|jpeg|png|heic|json|kiempad-export|kiempad-sync)\b/i,
+  /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i,
+];
 
 function renderDossierScreen(state: AppShellState): string {
   const documenten = state.dossierDocuments ?? [];
@@ -1202,8 +1246,7 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit">Upload naar dossier</button>
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
-        ${state.dossierStatus ? `<p class="linked-note">${escapeHtml(state.dossierStatus)}</p>` : ''}
-        ${state.dossierError ? `<p class="form-error" role="alert">${escapeHtml(state.dossierError)}</p>` : ''}
+        ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         <h2>Import-inbox</h2>
         ${renderDossierInboxOverview(importInboxItems)}
         ${
@@ -3947,8 +3990,7 @@ function renderAgendaImportForm(state: AppShellState): string {
       <p class="small-print">Kiempad leest het bestand lokaal en maakt alleen afspraken aan die in het bestand staan.</p>
       <button type="submit">Importeer ICS</button>
     </form>
-    ${state.agendaImportStatus ? `<p class="linked-note">${escapeHtml(state.agendaImportStatus)}</p>` : ''}
-    ${state.agendaImportError ? `<p class="form-error" role="alert">${escapeHtml(state.agendaImportError)}</p>` : ''}
+    ${renderStatusFeedback('agenda-import', state.agendaImportStatus, state.agendaImportError)}
   `;
 }
 
@@ -4158,8 +4200,11 @@ function renderMedicatieImportForm(state: AppShellState): string {
       <p class="small-print">Een regel per gepland moment: Medicatie | YYYY-MM-DD | HH:MM. Kiempad neemt geen dosering over of berekent niets.</p>
       <button type="submit">Importeer schema</button>
     </form>
-    ${state.medicatieImportStatus ? `<p class="linked-note">${escapeHtml(state.medicatieImportStatus)}</p>` : ''}
-    ${state.medicatieImportError ? `<p class="form-error" role="alert">${escapeHtml(state.medicatieImportError)}</p>` : ''}
+    ${renderStatusFeedback(
+      'medicatie-import',
+      state.medicatieImportStatus,
+      state.medicatieImportError,
+    )}
   `;
 }
 
