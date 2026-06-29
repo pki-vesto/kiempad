@@ -455,6 +455,18 @@ function extractAttachmentAssistiveCleanupArchiveReceiptExportSurface(html: stri
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractAttachmentAssistiveReceiptExportDeliverySurface(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) {
+    throw new Error(
+      'Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states ontbreken.',
+    );
+  }
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentPreviewSurfaces(html: string): string {
   const matches = html.match(
     /<(?:figure|div)[^>]*data-attachment-preview-kind="[^"]+"[\s\S]*?<\/(?:figure|div)>/g,
@@ -9340,6 +9352,182 @@ describe('app shell', () => {
     expect(assistiveExport).not.toContain('dosering');
     expect(assistiveExport).not.toContain('behandelkeuzeadvies');
     expect(assistiveExport).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm: 'private-export-delivery-token',
+        dossierStatus:
+          'Export delivery bevat afleveringsbewijs voor export-delivery-secret-source.pdf met private-export-delivery-token OCR-payload diagnose 3225 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-export-delivery-sensitive',
+            datum: '2026-08-11',
+            titel: 'Export delivery source',
+            categorie: 'onderzoek',
+            bestandsNaam: 'export-delivery-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'ZXhwb3J0LWRlbGl2ZXJ5LXNlY3JldC1wYXlsb2Fk',
+            notitie: 'private-export-delivery-token hoort niet in assistive delivery.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 3225 mg behandelkeuzeadvies blijft buiten assistive export delivery.',
+              signalen: ['OCR-payload blijft buiten delivery proof en screenreader label.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-11',
+              documenttype: 'Labuitslag',
+              bronbestand: 'export-delivery-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.95,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-08-11T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE EXPORT DELIVERY OCR TEKST private-export-delivery-token diagnose 3225 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing: 'Controleer OCR lokaal voor export-delivery-secret-source.pdf.',
+            },
+            uploadedAt: '2026-08-11T08:05:00.000Z',
+          },
+          {
+            id: 'doc-export-delivery-locked-image',
+            datum: '2026-08-12',
+            titel: 'Export delivery locked image',
+            categorie: 'beeld',
+            bestandsNaam: 'export-delivery-locked-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'ZXhwb3J0LWRlbGl2ZXJ5LWxvY2tlZC1zZWNyZXQ=',
+            notitie: 'private-export-delivery-token hoort ook niet in delivery labels.',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Bestandstype is beeldmateriaal.'],
+            },
+            metadata: {
+              documentDatum: '2026-08-12',
+              documenttype: 'Foto/echo',
+              bronbestand: 'export-delivery-locked-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-08-12',
+              soort: 'echo',
+              context: 'private export delivery imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-08-12T09:00:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveDelivery = extractAttachmentAssistiveReceiptExportDeliverySurface(html);
+
+    expect(html).toContain(
+      'data-attachment-assistive-cleanup-archive-receipt-export-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-cleanup-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-cleanup-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-retention-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-retention-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-audit-trail-surface="privacy"');
+    expect(html).toContain(
+      'data-attachment-assistive-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(html).toContain('data-attachment-assistive-confirmation-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-confirmation-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-handoff-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-delivery-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-export-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-receipt-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-purge-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-expiry-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-archive-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-history-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-completion-surface="privacy"');
+    expect(html).toContain('data-attachment-assistive-recovery-surface="privacy"');
+    expect(html).toContain('data-attachment-announcement-live-kind="polite-status"');
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-surface="privacy"',
+    );
+    expect(assistiveDelivery).toContain('role="status"');
+    expect(assistiveDelivery).toContain('aria-live="polite"');
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-live-state="cleanup-archive-receipt-export-delivery-available"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-kind="cleanup-archive-receipt-export-delivery-boundary"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-kind="delivery-proof-summary-affordance"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-kind="screenreader-export-delivery-label-state"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-kind="assistive-delivery-retention"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-kind="locked-preview-assistive-export-delivery-boundary"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-state="cleanup-archive-receipt-export-delivery-available"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-state="delivery-proof-summary-ready"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-state="screenreader-export-delivery-label-ready"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-state="assistive-delivery-retention-ready"',
+    );
+    expect(assistiveDelivery).toContain(
+      'data-attachment-assistive-receipt-export-delivery-state="locked-preview-assistive-export-delivery-boundary"',
+    );
+    expect(assistiveDelivery).toContain(
+      'Opschoonbewijs cleanup archive receipt export delivery beschikbaar als veilige assistive afleverstatus',
+    );
+    expect(assistiveDelivery).toContain(
+      '2 bijlagen met veilige cleanup archive receipt export deliverystatus',
+    );
+    expect(assistiveDelivery).toContain('Afleveringsbewijs is beschikbaar zonder bestands-');
+    expect(assistiveDelivery).toContain(
+      'Screenreader export delivery labels noemen alleen aflevergroep',
+    );
+    expect(assistiveDelivery).toContain(
+      'Assistive delivery retention bevestigt export-, receipt-, archive-, cleanup-, expiry-, retention-, audit trail-, confirmation receipt audit-, confirmation receipt-, confirmation-, handoff-, delivery-, purge-, history-, completion- en recoveryhooks',
+    );
+    expect(assistiveDelivery).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive export delivery payloads',
+    );
+
+    expect(assistiveDelivery).not.toContain('private-export-delivery-token');
+    expect(assistiveDelivery).not.toContain('export-delivery-secret-source.pdf');
+    expect(assistiveDelivery).not.toContain('export-delivery-locked-secret.jpg');
+    expect(assistiveDelivery).not.toContain('ZXhwb3J0LWRlbGl2ZXJ5LXNlY3JldC1wYXlsb2Fk');
+    expect(assistiveDelivery).not.toContain('ZXhwb3J0LWRlbGl2ZXJ5LWxvY2tlZC1zZWNyZXQ=');
+    expect(assistiveDelivery).not.toContain('data:image/jpeg;base64');
+    expect(assistiveDelivery).not.toContain('GEVOELIGE EXPORT DELIVERY OCR TEKST');
+    expect(assistiveDelivery).not.toContain('OCR-payload');
+    expect(assistiveDelivery).not.toContain('Attachmentpayload');
+    expect(assistiveDelivery).not.toContain('attachmentpayload');
+    expect(assistiveDelivery).not.toContain('dossierpayload');
+    expect(assistiveDelivery).not.toContain('diagnose');
+    expect(assistiveDelivery).not.toContain('dosering');
+    expect(assistiveDelivery).not.toContain('behandelkeuzeadvies');
+    expect(assistiveDelivery).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
