@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G795/G796 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende recovery-helper release-state message-foutmeldingcontext contractcontext releasecontexttermen; de foutmelding blijft beperkt tot technische termnamen. G796 is toegevoegd voor een compact contract rond deze releasecontext missing-term melding.
 - G794/G795 Central Encrypted Platform: maintenance-tests bewaken nu dat `CHANGELOG.md` en `CURRENT_STATE.md` de recovery-helper release-state message-foutmeldingcontext contractcontext missing-term melding als contractcontext blijven noemen; G795 is toegevoegd voor een negatieve fixture rond ontbrekende releasecontexttermen.
 - G793/G794 Central Encrypted Platform: maintenance-tests leggen nu de exacte recovery-helper release-state message-foutmeldingcontext contractcontext missing-term melding vast als compact contract zonder payload, passphrase of token; G794 is toegevoegd voor release-statebewaking van deze contractcontext.
 - G792/G793 Central Encrypted Platform: maintenance-tests hebben nu een negatieve fixture voor ontbrekende recovery-helper release-state message-foutmeldingcontext contractcontexttermen; de foutmelding blijft beperkt tot technische termnamen. G793 is toegevoegd voor een compact contract rond deze contractcontext missing-term melding.
