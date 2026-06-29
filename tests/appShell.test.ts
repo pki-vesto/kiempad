@@ -181,6 +181,21 @@ function extractNotificationPrivacyForm(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractInAppFallbackPanel(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary" aria-label="In-app meldingen"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('In-app fallbackpaneel ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
+function extractEventLogSurface(html: string): string {
+  const start = html.indexOf('<main class="content"');
+  const end = html.indexOf('</main>', start);
+  if (start < 0 || end < 0) throw new Error('Logboeksurface ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 function extractBackupImportPrivacyZone(html: string): string {
   const exportStart = html.indexOf('<h2>Versleutelde export</h2>');
   const exportEnd = html.indexOf('<section class="policy-panel embedded-summary"', exportStart);
@@ -2043,6 +2058,116 @@ describe('app shell', () => {
     expect(html).toContain('In-app meldingen');
     expect(html).toContain('Browsernotificaties staan niet klaar');
     expect(html).toContain('Er staat een herinnering klaar.');
+  });
+
+  it('bewaakt fallback notification en log privacy states zonder payloadlekken', () => {
+    const emptyFallbackHtml = renderAppShell('herinneringen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'denied', serviceWorker: 'unregistered' },
+      inAppFallbackNotifications: [],
+      herinneringen: [],
+    });
+    const emptyFallbackPanel = extractInAppFallbackPanel(emptyFallbackHtml);
+
+    expect(emptyFallbackPanel).toContain('data-fallback-notification-state="empty"');
+    expect(emptyFallbackPanel).toContain('data-fallback-notification-count="0"');
+    expect(emptyFallbackPanel).toContain('Geen in-app fallbackmeldingen actief.');
+
+    const activeFallbackHtml = renderAppShell('herinneringen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'denied', serviceWorker: 'unregistered' },
+      inAppFallbackNotifications: [
+        {
+          id: 'unsafe-fallback',
+          dueAt: '2099-06-23T20:00',
+          message: {
+            title: 'Progesteron 200 mg',
+            body: 'token abc123 echo-privenaam.pdf dossierpayload diagnose providerpayload',
+          },
+        },
+      ],
+      herinneringen: [],
+    });
+    const activeFallbackPanel = extractInAppFallbackPanel(activeFallbackHtml);
+
+    expect(activeFallbackPanel).toContain('data-fallback-notification-state="active"');
+    expect(activeFallbackPanel).toContain('data-fallback-notification-count="1"');
+    expect(activeFallbackPanel).toContain('Kiempad herinnering');
+    expect(activeFallbackPanel).toContain('Er staat een herinnering klaar.');
+
+    const highRiskLogHtml = renderAppShell('logboek', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      eventLogs: [
+        {
+          id: 'event-high-risk',
+          datum: '2026-06-23T15:00:00.000Z',
+          categorie: 'ai',
+          gebeurtenis: 'AI import verwerkt',
+          detail: 'token abc123 echo-privenaam.pdf dossierpayload diagnose providerpayload',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const highRiskLogSurface = extractEventLogSurface(highRiskLogHtml);
+
+    expect(highRiskLogSurface).toContain('data-event-log-storage="legacy-local-vault"');
+    expect(highRiskLogSurface).toContain('data-event-log-state="active"');
+    expect(highRiskLogSurface).toContain('data-event-log-high-risk="present"');
+    expect(highRiskLogSurface).toContain('AI import verwerkt');
+    expect(highRiskLogSurface).toContain('2026-06-23 15:00');
+
+    const emptyLogHtml = renderAppShell('logboek', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      eventLogs: [],
+      storageMode: 'central-api',
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const emptyLogSurface = extractEventLogSurface(emptyLogHtml);
+
+    expect(emptyLogSurface).toContain('data-event-log-storage="central-encrypted-dataset"');
+    expect(emptyLogSurface).toContain('data-event-log-state="empty"');
+    expect(emptyLogSurface).toContain('data-event-log-high-risk="none"');
+    expect(emptyLogSurface).toContain('Nog geen gebeurtenissen vastgelegd.');
+
+    for (const surface of [
+      emptyFallbackPanel,
+      activeFallbackPanel,
+      highRiskLogSurface,
+      emptyLogSurface,
+    ]) {
+      expect(surface).not.toContain('abc123');
+      expect(surface).not.toContain('passphrase');
+      expect(surface).not.toContain('echo-privenaam.pdf');
+      expect(surface).not.toContain('base64');
+      expect(surface).not.toContain('OCR-payload');
+      expect(surface).not.toContain('dossierpayload');
+      expect(surface).not.toContain('diagnose');
+      expect(surface).not.toContain('providerpayload');
+      expect(surface).not.toContain('behandelkeuzeadvies');
+      expect(surface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    }
   });
 
   it('rendert een lokale consult PDF-exportknop in het vragenscherm', () => {
