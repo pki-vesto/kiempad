@@ -9617,4 +9617,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G924 — attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt privacy states zijn nu bewaakt, maar de volgende delivery-handoff-confirmation-receipt-audit privacy state heeft nog geen gezamenlijke Claude Design-regressie zonder zoekterm, bronbestandsnaam, OCR-tekst of medische payload.
+- **Desired Outcome:** Tests bewaken dat attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit privacy states begrijpelijk en assistive-tech veilig blijven, bestaande archive/cleanup/expiry/retention/audit/confirmation/handoff/delivery/export/receipt/recovery/live-region/nav/action hooks behouden en geen zoekterm, bestandsinhoud, bronbestandsnamen, base64, OCR-payload, attachmentpayload, diagnose, dosering of behandelkeuzeadvies tonen.
+- **User Value:** Gebruikers kunnen veilig zien dat een auditbare delivery-handoff-confirmation-receipt-audit status beschikbaar is zonder dat auditstates bronbestanden, selectiecontext of medische inhoud tonen.
+- **Acceptance Criteria:** Tests dekken de nieuwe delivery-handoff-confirmation-receipt-audit boundary, proof summary affordance, screenreader label state en assistive state; bestaande hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bronbestandsnaam in locked state, OCR-tekst, zoekterm, base64, attachmentpayload, dossierpayload, diagnose, dosering of behandelkeuzeadvies; assets:check blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit UI, dossier UI, imaging repository, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
