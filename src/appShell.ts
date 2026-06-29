@@ -55,7 +55,7 @@ import {
   type EmbryoDossierItem,
   type EmbryoVergelijking,
 } from './domain/embryoDossier';
-import { EVENT_CATEGORIE_LABELS } from './domain/eventLog';
+import { EVENT_CATEGORIE_LABELS, isEventLogDetailPrivacySafe } from './domain/eventLog';
 import {
   bouwFertilityGraphWeergavePerTraject,
   type FertilityGraphConsultSamenvattingExport,
@@ -761,6 +761,7 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
 
 function renderLogboekScreen(state: AppShellState): string {
   const logs = state.eventLogs ?? [];
+  const highRiskLogs = logs.filter(isHighRiskEventLogForUi);
   const body = isCentralStorage(state)
     ? `Dit logboek staat in je centrale encrypted dataset en toont alleen privacyrelevante gebeurtenisdetails. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`
     : `Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
@@ -769,7 +770,7 @@ function renderLogboekScreen(state: AppShellState): string {
     [
       card({
         title: 'Gebeurtenissen',
-        body: `<p>${body}</p>`,
+        body: `<p data-event-log-storage="${isCentralStorage(state) ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-event-log-state="${logs.length > 0 ? 'active' : 'empty'}" data-event-log-high-risk="${highRiskLogs.length > 0 ? 'present' : 'none'}">${body}</p>`,
       }),
       '<h2>Recente gebeurtenissen</h2>',
       logs.length > 0
@@ -783,15 +784,48 @@ function renderLogboekScreen(state: AppShellState): string {
 }
 
 function renderEventLogItem(item: EventLog): string {
+  const detail = item.detail;
+  const safeDetail =
+    detail &&
+    isEventLogDetailPrivacySafe(item) &&
+    !EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS.some((pattern) => pattern.test(detail))
+      ? detail
+      : undefined;
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.gebeurtenis)}</h3>
         <p>${escapeHtml(formatDateTime(item.datum))} · ${escapeHtml(EVENT_CATEGORIE_LABELS[item.categorie])}</p>
-        ${item.detail ? `<p class="linked-note">${escapeHtml(item.detail)}</p>` : ''}
+        ${safeDetail ? `<p class="linked-note">${escapeHtml(safeDetail)}</p>` : ''}
       </div>
     </li>
   `;
+}
+
+const EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS = [
+  /\btoken\b/i,
+  /\bpassphrase\b/i,
+  /\bapi[-_\s]?sleutel\b/i,
+  /\bproviderpayload\b/i,
+  /\bbase64\b/i,
+  /\bocr[-_\s]?payload\b/i,
+  /\bdossierpayload\b/i,
+  /\bdiagnose\b/i,
+  /\bbehandelkeuzeadvies\b/i,
+  /\b[\w.-]+\.(?:pdf|jpg|jpeg|png|heic|json|kiempad-export|kiempad-sync)\b/i,
+  /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i,
+];
+
+function isHighRiskEventLogForUi(item: EventLog): boolean {
+  const gebeurtenis = item.gebeurtenis.toLowerCase();
+  return (
+    item.categorie === 'backup' ||
+    item.categorie === 'ai' ||
+    gebeurtenis.includes('import') ||
+    gebeurtenis.includes('geïmporteerd') ||
+    gebeurtenis.includes('notificatie') ||
+    gebeurtenis.includes('melding')
+  );
 }
 
 function renderAfwegingenScreen(state: AppShellState): string {
@@ -3691,7 +3725,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
         <div class="panel-heading">
           <h2>Komende herinneringen</h2>
         </div>
-        ${fallback.length > 0 ? renderInAppFallbackNotifications(fallback) : ''}
+        ${renderInAppFallbackNotifications(fallback)}
         ${
           komende.length > 0
             ? renderHerinneringenList(komende)
@@ -3703,27 +3737,63 @@ function renderHerinneringenScreen(state: AppShellState): string {
 
 function renderInAppFallbackNotifications(items: InAppFallbackNotification[]): string {
   return `
-    <section class="policy-panel embedded-summary" aria-label="In-app meldingen">
+    <section class="policy-panel embedded-summary" aria-label="In-app meldingen" data-fallback-notification-state="${items.length > 0 ? 'active' : 'empty'}" data-fallback-notification-count="${items.length}">
       <h2>In-app meldingen</h2>
       <p class="small-print">Browsernotificaties staan niet klaar. Kiempad toont daarom komende herinneringen hier in de app.</p>
-      <ol class="phase-list">
+      ${
+        items.length > 0
+          ? `<ol class="phase-list">
         ${items
-          .map(
-            (item) => `
+          .map((item) => {
+            const message = sanitizeFallbackNotificationMessage(item.message);
+            return `
               <li class="phase-item">
                 <div>
-                  <h3>${escapeHtml(item.message.title)}</h3>
-                  <p>${escapeHtml(item.message.body)}</p>
+                  <h3>${escapeHtml(message.title)}</h3>
+                  <p>${escapeHtml(message.body)}</p>
                   <small>${formatDateTime(item.dueAt)}</small>
                 </div>
               </li>
-            `,
-          )
+            `;
+          })
           .join('')}
-      </ol>
+      </ol>`
+          : '<p class="empty-state">Geen in-app fallbackmeldingen actief.</p>'
+      }
     </section>
   `;
 }
+
+function sanitizeFallbackNotificationMessage(
+  message: InAppFallbackNotification['message'],
+): InAppFallbackNotification['message'] {
+  const title = message.title.trim() || 'Kiempad herinnering';
+  const body = message.body.trim() || 'Er staat een herinnering klaar.';
+  const combined = `${title} ${body}`;
+  if (FALLBACK_NOTIFICATION_SENSITIVE_PATTERNS.some((pattern) => pattern.test(combined))) {
+    return {
+      title: 'Kiempad herinnering',
+      body: 'Er staat een herinnering klaar.',
+    };
+  }
+
+  return { title, body };
+}
+
+const FALLBACK_NOTIFICATION_SENSITIVE_PATTERNS = [
+  /\btoken\b/i,
+  /\bpassphrase\b/i,
+  /\bapi[-_\s]?sleutel\b/i,
+  /\bproviderpayload\b/i,
+  /\bbase64\b/i,
+  /\bocr[-_\s]?payload\b/i,
+  /\bdossierpayload\b/i,
+  /\bdiagnose\b/i,
+  /\bbehandelkeuzeadvies\b/i,
+  /\b(?:progesteron|gonal|ovitrelle|fyremadel|decapeptyl|utrogestan)\b/i,
+  /\b[\w.-]+\.(?:pdf|jpg|jpeg|png|heic|json|kiempad-export|kiempad-sync)\b/i,
+  /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i,
+];
 
 function renderEigenHerinneringForm(): string {
   return `

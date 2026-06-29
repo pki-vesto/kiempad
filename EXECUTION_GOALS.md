@@ -8117,4 +8117,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Notification fallback UI, event log UI, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ klaar
+
+### G819 — import and status feedback privacy states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Fallback-notificaties en logboekprivacy zijn nu bewaakt, maar import- en statusfeedback voor agenda, medicatie, dossier en backup hebben nog geen expliciete Claude Design-regressie rond success/error states zonder payloadlekken.
+- **Desired Outcome:** Tests bewaken dat import- en statusfeedback scanbaar blijft, bestaande status/error hooks behouden en geen bestandsnamen, tokens, raw importregels of medische payload tonen.
+- **User Value:** Gebruikers krijgen duidelijke feedback over imports en acties zonder dat themawijzigingen gevoelige broninhoud zichtbaar maken.
+- **Acceptance Criteria:** Tests dekken agenda-import, medicatie-import, dossierstatus en backupstatus/error states; bestaande status/error UI-hooks blijven aanwezig; zichtbare copy toont geen token, passphrase, bestandsnaam, base64, OCR-payload, raw importregel, dossierpayload, diagnose, dosering, providerpayload of behandelkeuzeadvies; `assets:check` blijft groen; docs/backlog verwijzen naar het doel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Import feedback UI, status/error UI, Claude Design, app shell tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
