@@ -983,21 +983,107 @@ function isHighRiskEventLogForUi(item: EventLog): boolean {
 
 function renderAfwegingenScreen(state: AppShellState): string {
   const decisions = state.decisions ?? [];
+  const chosenCount = decisions.filter((decision) => Boolean(decision.keuze)).length;
+  const linkedQuestionCount = decisions.filter((decision) => Boolean(decision.vraagId)).length;
 
   return sectionStack(
     [
-      '<h2>Beslisnotities</h2>',
-      decisions.length > 0
-        ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionItem(decision, state)).join('')}</ol>`
-        : '<p class="empty-state">Nog geen beslisnotities vastgelegd.</p>',
-      disclosure({
-        summary: 'Beslisnotitie toevoegen',
-        open: decisions.length === 0,
-        body: renderDecisionForm(state),
+      renderDecisionTaskRoutes({
+        decisionCount: decisions.length,
+        chosenCount,
+        linkedQuestionCount,
       }),
+      `<section id="afwegingen-route-prepare" class="decision-route-section" aria-labelledby="afwegingen-route-prepare-title" data-decision-route="prepare">
+        <header class="decision-route-section__header">
+          <p class="kp-card__eyebrow">Voorbereiden</p>
+          <h2 id="afwegingen-route-prepare-title">Beslisnotitie toevoegen</h2>
+          <p>Leg onderwerp, gekoppelde artsvraag en opties vast voordat je een keuze maakt.</p>
+        </header>
+        ${disclosure({
+          summary: 'Beslisnotitie toevoegen',
+          open: decisions.length === 0,
+          body: renderDecisionForm(state),
+        })}
+      </section>`,
+      `<section id="afwegingen-route-compare" class="decision-route-section" aria-labelledby="afwegingen-route-compare-title" data-decision-route="compare">
+        <header class="decision-route-section__header">
+          <p class="kp-card__eyebrow">Vergelijken</p>
+          <h2 id="afwegingen-route-compare-title">Opties vergelijken</h2>
+          <p>Bekijk voors en tegens per optie zonder behandeladvies of score.</p>
+        </header>
+        ${
+          decisions.length > 0
+            ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionCompareItem(decision, state)).join('')}</ol>`
+            : '<p class="empty-state">Nog geen opties om te vergelijken.</p>'
+        }
+      </section>`,
+      `<section id="afwegingen-route-choice" class="decision-route-section" aria-labelledby="afwegingen-route-choice-title" data-decision-route="choice">
+        <header class="decision-route-section__header">
+          <p class="kp-card__eyebrow">Keuze</p>
+          <h2 id="afwegingen-route-choice-title">Keuze vastleggen</h2>
+          <p>Registreer alleen de gemaakte keuze en onderbouwing; Kiempad kiest niet voor jou.</p>
+        </header>
+        ${
+          decisions.length > 0
+            ? `<ol class="phase-list">${decisions.map(renderDecisionChoiceItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen beslisnotitie om een keuze bij vast te leggen.</p>'
+        }
+      </section>`,
+      `<section id="afwegingen-route-history" class="decision-route-section" aria-labelledby="afwegingen-route-history-title" data-decision-route="history">
+        <header class="decision-route-section__header">
+          <p class="kp-card__eyebrow">Geschiedenis</p>
+          <h2 id="afwegingen-route-history-title">Beslisverslagen</h2>
+          <p>Lees eerdere afwegingen terug als feitelijk verslag van opties, keuze en onderbouwing.</p>
+        </header>
+        ${
+          decisions.length > 0
+            ? `<ol class="phase-list">${decisions.map(renderDecisionHistoryItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen beslisverslagen vastgelegd.</p>'
+        }
+      </section>`,
     ],
-    { ariaLabel: 'Afwegingen beheren' },
+    { className: 'decision-command-layout', ariaLabel: 'Afwegingen beheren' },
   );
+}
+
+function renderDecisionTaskRoutes(input: {
+  decisionCount: number;
+  chosenCount: number;
+  linkedQuestionCount: number;
+}): string {
+  const routes = [
+    {
+      href: '#afwegingen-route-prepare',
+      label: 'Voorbereiden',
+      meta: `${input.linkedQuestionCount} gekoppeld`,
+    },
+    {
+      href: '#afwegingen-route-compare',
+      label: 'Vergelijken',
+      meta: `${input.decisionCount} notities`,
+    },
+    { href: '#afwegingen-route-choice', label: 'Keuze', meta: `${input.chosenCount} vastgelegd` },
+    {
+      href: '#afwegingen-route-history',
+      label: 'Verslag',
+      meta: `${input.decisionCount} verslagen`,
+    },
+  ];
+
+  return `
+    <nav class="decision-task-routes" aria-label="Afwegingen taakroutes" data-decision-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="decision-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
 }
 
 function renderDecisionForm(state: AppShellState): string {
@@ -1041,7 +1127,7 @@ function renderDecisionForm(state: AppShellState): string {
   `;
 }
 
-function renderDecisionItem(item: Decision, state: AppShellState): string {
+function renderDecisionCompareItem(item: Decision, state: AppShellState): string {
   const vraag = item.vraagId
     ? state.vragen.find((bundle) => bundle.vraag.id === item.vraagId)
     : undefined;
@@ -1052,12 +1138,33 @@ function renderDecisionItem(item: Decision, state: AppShellState): string {
         <h3>${escapeHtml(item.onderwerp)}</h3>
         <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
         ${vraag ? `<p class="linked-note">Vraag voor de arts: ${escapeHtml(vraag.vraag.vraag)}</p>` : ''}
-        ${renderDecisionChoiceSummary(item)}
         <ul class="compact-list">
           ${item.opties.map(renderDecisionOption).join('')}
         </ul>
-        ${renderDecisionReport(item)}
+      </div>
+    </li>
+  `;
+}
+
+function renderDecisionChoiceItem(item: Decision): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.onderwerp)}</h3>
+        <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
+        ${renderDecisionChoiceSummary(item)}
         ${renderDecisionChoiceForm(item)}
+      </div>
+    </li>
+  `;
+}
+
+function renderDecisionHistoryItem(item: Decision): string {
+  return `
+    <li class="phase-item">
+      <div>
+        <h3>${escapeHtml(item.onderwerp)}</h3>
+        ${renderDecisionReport(item)}
       </div>
     </li>
   `;

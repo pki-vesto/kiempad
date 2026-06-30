@@ -34796,6 +34796,25 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Afwegingen');
+    expect(html).toContain('class="section-stack decision-command-layout"');
+    expect(html).toContain('class="decision-task-routes"');
+    expect(html).toContain('aria-label="Afwegingen taakroutes"');
+    expect(html).toContain('data-decision-task-routes="ready"');
+    expect(html).toContain('href="#afwegingen-route-prepare"');
+    expect(html).toContain('href="#afwegingen-route-compare"');
+    expect(html).toContain('href="#afwegingen-route-choice"');
+    expect(html).toContain('href="#afwegingen-route-history"');
+    expect(html).toContain('id="afwegingen-route-prepare"');
+    expect(html).toContain('data-decision-route="prepare"');
+    expect(html).toContain('id="afwegingen-route-compare"');
+    expect(html).toContain('data-decision-route="compare"');
+    expect(html).toContain('id="afwegingen-route-choice"');
+    expect(html).toContain('data-decision-route="choice"');
+    expect(html).toContain('id="afwegingen-route-history"');
+    expect(html).toContain('data-decision-route="history"');
+    expect(html).toContain('Opties vergelijken');
+    expect(html).toContain('Keuze vastleggen');
+    expect(html).toContain('Beslisverslagen');
     expect(html).toContain('Beslisnotitie toevoegen');
     expect(html).toContain('id="decision-form"');
     expect(html).toContain('name="onderwerp"');

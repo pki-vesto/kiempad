@@ -2073,6 +2073,107 @@ h2 {
   min-width: 0;
 }
 
+.decision-command-layout {
+  gap: 18px;
+}
+
+.decision-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.decision-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.decision-task-route:focus-visible,
+.decision-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.decision-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.decision-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.decision-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.decision-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.decision-route-section__header h2,
+.decision-route-section__header p {
+  margin: 0;
+}
+
+.decision-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.decision-route-section .summary-panel,
+.decision-route-section .policy-panel,
+.decision-route-section .linked-note,
+.decision-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.decision-route-section .definition-list > div,
+.decision-route-section .summary-list > div,
+.decision-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.decision-route-section .definition-list dd,
+.decision-route-section .summary-list dd,
+.decision-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.decision-route-section .data-form,
+.decision-route-section .data-form label,
+.decision-route-section .data-form input,
+.decision-route-section .data-form select,
+.decision-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4091,6 +4192,22 @@ a.action-card:active {
   }
 
   .wellbeing-task-route {
+    flex: 0 0 min(190px, 76vw);
+    scroll-snap-align: start;
+  }
+
+  .decision-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .decision-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .decision-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
   }
