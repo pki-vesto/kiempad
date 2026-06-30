@@ -188,6 +188,11 @@
   behoud van `export-backup`, `export-sync`, `import-backup-form`,
   `import-sync-form`, WebAuthn hooks en privacycopy; G1190 staat open voor
   herinneringen en notificatieprivacy.
+- **G1190 notificationroutes:** het herinneringenscherm heeft nu een routebalk en
+  duidelijke clusters voor status, lockscreenprivacy, plannen en komende/fallback,
+  met behoud van `notification-privacy-form`, `warning-default-form`,
+  `eigen-herinnering-form`, reschedule-hooks en generieke lockscreenprivacycopy;
+  G1191 staat open voor logboek- en audit-historyroutes.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

@@ -3627,6 +3627,26 @@ describe('app shell', () => {
       ],
     });
 
+    expect(html).toContain('class="section-stack notification-command-layout"');
+    expect(html).toContain('class="notification-task-routes"');
+    expect(html).toContain('aria-label="Herinneringen taakroutes"');
+    expect(html).toContain('data-notification-task-routes="ready"');
+    expect(html).toContain('href="#herinneringen-route-status"');
+    expect(html).toContain('href="#herinneringen-route-privacy"');
+    expect(html).toContain('href="#herinneringen-route-plannen"');
+    expect(html).toContain('href="#herinneringen-route-komend"');
+    expect(html).toContain('id="herinneringen-route-status"');
+    expect(html).toContain('data-notification-route="status"');
+    expect(html).toContain('id="herinneringen-route-privacy"');
+    expect(html).toContain('data-notification-route="privacy"');
+    expect(html).toContain('id="herinneringen-route-plannen"');
+    expect(html).toContain('data-notification-route="plannen"');
+    expect(html).toContain('id="herinneringen-route-komend"');
+    expect(html).toContain('data-notification-route="komend"');
+    expect(html).toContain('Notificatiestatus controleren');
+    expect(html).toContain('Lockscreenprivacy instellen');
+    expect(html).toContain('Herinnering plannen');
+    expect(html).toContain('Komende herinneringen en fallback');
     expect(html).toContain('Notificaties aanzetten');
     expect(html).toContain('id="eigen-herinnering-form"');
     expect(html).toContain('Voeg herinnering toe');

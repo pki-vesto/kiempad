@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1190/G1191 Premium Claude Design UI: het herinneringenscherm heeft nu taakgerichte notificationroutes voor status, lockscreenprivacy, plannen en komende/fallbackmeldingen, met behoud van reminder- en notificationprivacy hooks; G1191 is toegevoegd voor logboek- en audit-historyroutes.
 - G1189/G1190 Premium Claude Design UI: het back-upscherm heeft nu taakgerichte privacyroutes voor controleren, exporteren, importeren en herstel/toegang, met behoud van back-up/export/import/WebAuthn hooks en privacycopy; G1190 is toegevoegd voor herinneringen en notificatieprivacy.
 - G1188/G1189 Premium Claude Design UI: het afwegingenscherm heeft nu decisionroutes voor voorbereiden, opties vergelijken, keuze vastleggen en beslisverslagen, met behoud van `decision-form`, `decision-choice-form`, `data-decision-id` en bestaande inputcontracten; G1189 is toegevoegd voor taakgerichte privacyroutes in beheer- en instellingenschermen.
 - G1187/G1188 Premium Claude Design UI: het welzijnscherm heeft nu een zichtbare taakroutebalk en routecontainers voor overzicht & trends, geschiedenis en vastleggen, met behoud van bestaande check-in-, symptoom- en cyclusformulieren; G1188 is toegevoegd om het afwegingenscherm dezelfde decisionroute-structuur te geven.
