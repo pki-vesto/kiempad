@@ -86,9 +86,17 @@ function extractDossierSecondaryPrivacyDisclosure(html: string): string {
   const start = html.indexOf(
     '<details class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">',
   );
-  const end = html.indexOf('<h2>Consultverslagen</h2>', start);
+  const end = html.indexOf('<nav class="dossier-section-index" aria-label="Dossierinhoud"', start);
   if (start < 0 || end < 0) throw new Error('Dossier privacy disclosure ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
+function extractDossierSectionIndex(html: string): string {
+  const match = html.match(
+    /<nav class="dossier-section-index" aria-label="Dossierinhoud"[\s\S]*?<\/nav>/,
+  );
+  if (!match?.[0]) throw new Error('Dossier inhoudsindex ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
 }
 
 function extractDossierReviewQueue(html: string): string {
@@ -109,8 +117,11 @@ function extractDossierAddSection(html: string): string {
 }
 
 function extractDossierTimelineSection(html: string): string {
-  const start = html.indexOf('<h2>Documenttijdlijn</h2>');
-  const end = html.indexOf('<h2>Behandelgeschiedenis</h2>', start);
+  const start = html.indexOf('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
+  const end = html.indexOf(
+    '<h2 id="dossier-behandelgeschiedenis">Behandelgeschiedenis</h2>',
+    start,
+  );
   if (start < 0 || end < 0) throw new Error('Dossier tijdlijnsectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -1202,8 +1213,8 @@ function extractEmbryoExifIsolationPanel(html: string): string {
 }
 
 function extractConsultVerslagenSection(html: string): string {
-  const start = html.indexOf('<h2>Consultverslagen</h2>');
-  const end = html.indexOf('<h2>Imaging-repository</h2>', start);
+  const start = html.indexOf('<h2 id="dossier-consultverslagen">Consultverslagen</h2>');
+  const end = html.indexOf('<h2 id="dossier-imaging-repository">Imaging-repository</h2>', start);
   if (start < 0 || end < 0) throw new Error('Consultverslagen-sectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -4564,7 +4575,7 @@ describe('app shell', () => {
       emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"')).toBeLessThan(
-      emptyHtml.indexOf('<h2>Consultverslagen</h2>'),
+      emptyHtml.indexOf('data-dossier-section-index="ready"'),
     );
     expect(emptyHtml.indexOf('id="imaging-filter-form"')).toBeGreaterThan(
       emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"'),
@@ -4698,6 +4709,183 @@ describe('app shell', () => {
     expect(lockedDisclosure).toContain('Bijlagepreviews blijven vergrendeld');
     expect(lockedDisclosure).not.toContain('locked-secondary-disclosure-secret.jpg');
     expect(lockedDisclosure).not.toContain('bG9ja2VkLXNlY29uZGFyeQ==');
+  });
+
+  it('toont een compacte dossierinhoudsindex met ankers voor consulten imaging en tijdlijn', () => {
+    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const emptyIndex = extractDossierSectionIndex(emptyHtml);
+
+    expect(emptyIndex).toContain('data-dossier-section-index="ready"');
+    expect(emptyIndex).toContain('data-dossier-section-index-state="empty"');
+    expect(emptyIndex).toContain('href="#dossier-consultverslagen"');
+    expect(emptyIndex).toContain('href="#dossier-imaging-repository"');
+    expect(emptyIndex).toContain('href="#dossier-index"');
+    expect(emptyIndex).toContain('href="#dossier-embryo-dossiers"');
+    expect(emptyIndex).toContain('href="#dossier-documenttijdlijn"');
+    expect(emptyIndex).toContain('href="#dossier-behandelgeschiedenis"');
+    expect(emptyIndex).toContain('Secties staan klaar');
+    expect(emptyIndex).toContain(
+      'geen OCR-tekst, bestandsnamen, broninhoud of medische interpretatie',
+    );
+    expect(emptyHtml).toContain('<h2 id="dossier-consultverslagen">Consultverslagen</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-imaging-repository">Imaging-repository</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-index">Dossierindex</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-behandelgeschiedenis">Behandelgeschiedenis</h2>');
+    expect(emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-section-index="ready"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-section-index="ready"')).toBeLessThan(
+      emptyHtml.indexOf('<h2 id="dossier-consultverslagen">Consultverslagen</h2>'),
+    );
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        consultVerslagen: [
+          {
+            id: 'consult-anchor',
+            datum: '2026-05-03',
+            titel: 'Consult anchor secret',
+            bron: 'handmatig',
+            tekst: 'GEVOELIGE CONSULTTEKST diagnose 150 mg behandelkeuzeadvies.',
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+        ],
+        dossierDocuments: [
+          {
+            id: 'doc-anchor-ocr',
+            datum: '2026-05-08',
+            titel: 'Anchor OCR review',
+            categorie: 'onderzoek',
+            bestandsNaam: 'anchor-secret.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'YW5jaG9yLW9jcg==',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 150 mg behandelkeuzeadvies blijft buiten index.',
+              signalen: ['OCR-payload blijft buiten index.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-08',
+              documenttype: 'Labuitslag',
+              bronbestand: 'anchor-secret.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.92,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-23T15:00:00.000Z',
+              tekst: 'GEVOELIGE INDEX OCR diagnose 150 mg behandelkeuzeadvies.',
+              waarschuwing: 'Controleer OCR lokaal voor anchor-secret.pdf.',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-anchor-embryo',
+            datum: '2026-05-09',
+            titel: 'Anchor echo embryo',
+            categorie: 'beeld',
+            bestandsNaam: 'anchor-image-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'YW5jaG9yLWltYWdl',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-09',
+              documenttype: 'Foto/echo',
+              bronbestand: 'anchor-image-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-09',
+              soort: 'echo',
+              context: 'Anchor beeldcontext',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            embryo: {
+              label: 'Embryo anchor',
+              kwaliteit: '4AA',
+              dag: 5,
+              status: 'ingevroren',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const populatedIndex = extractDossierSectionIndex(populatedHtml);
+
+    expect(populatedIndex).toContain('data-dossier-section-index-state="has-content"');
+    expect(populatedIndex).toContain('>Consulten</span> <strong>1</strong>');
+    expect(populatedIndex).toContain('>Beelden</span> <strong>1</strong>');
+    expect(populatedIndex).toContain('>Index</span> <strong>2</strong>');
+    expect(populatedIndex).toContain('>Embryo&#039;s</span> <strong>1</strong>');
+    expect(populatedIndex).toContain('>Tijdlijn</span> <strong>2</strong>');
+    expect(populatedIndex).toContain('>Geschiedenis</span> <strong>3</strong>');
+    expect(populatedIndex).not.toContain('anchor-secret.pdf');
+    expect(populatedIndex).not.toContain('anchor-image-secret.jpg');
+    expect(populatedIndex).not.toContain('YW5jaG9yLW9jcg==');
+    expect(populatedIndex).not.toContain('YW5jaG9yLWltYWdl');
+    expect(populatedIndex).not.toContain('GEVOELIGE INDEX OCR');
+    expect(populatedIndex).not.toContain('GEVOELIGE CONSULTTEKST');
+    expect(populatedIndex).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies/i);
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-anchor-locked',
+            datum: '2026-05-10',
+            titel: 'Locked anchor echo',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-anchor-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9ja2VkLWFuY2hvcg==',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-10',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-anchor-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-10',
+              soort: 'echo',
+              context: 'Locked anchor beeldcontext',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedIndex = extractDossierSectionIndex(lockedHtml);
+
+    expect(lockedIndex).toContain('data-dossier-section-index-state="locked-preview"');
+    expect(lockedIndex).toContain('Beeldpreviews blijven vergrendeld');
+    expect(lockedIndex).not.toContain('locked-anchor-secret.jpg');
+    expect(lockedIndex).not.toContain('bG9ja2VkLWFuY2hvcg==');
   });
 
   it('rendert documentreview wachtrij per confidence zonder OCR-tekst of bronpayload', () => {
