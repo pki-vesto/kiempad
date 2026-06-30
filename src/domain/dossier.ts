@@ -733,8 +733,9 @@ export function bouwEmbryoAfbeeldingExifIsolaties(
 
 export function bouwImagingVergelijking(
   items: readonly DossierDocument[],
+  options: { ontgrendeld?: boolean } = {},
 ): ImagingVergelijking | undefined {
-  const beeldItems = bouwImagingRepository(items);
+  const beeldItems = bouwImagingRepository(items, options);
   if (beeldItems.length < 2) return undefined;
   const [links, rechts] = beeldItems;
   if (!links || !rechts) return undefined;

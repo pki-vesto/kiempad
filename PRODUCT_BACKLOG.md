@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 926 |
+| ☑ klaar | 927 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1125** |
+| **Totaal** | **1126** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -718,7 +718,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G553 | Daily Recommendations: aanbevelingen verbergen per eigenaar | P1 | F5 | ☐ |
 | G554 | Daily Recommendations: daily recommendation policy regression fixtures | P0 | F5 | ☑ |
 | G555 | Premium Claude Design UI: fertility intelligence dossier inbox layout | P1 | F5 | ☑ |
-| G556 | Premium Claude Design UI: imaging repository compare layout | P1 | F5 | ☐ |
+| G556 | Premium Claude Design UI: imaging repository compare layout | P1 | F5 | ☑ |
 | G557 | Premium Claude Design UI: consult intelligence review layout | P1 | F5 | ☐ |
 | G558 | Premium Claude Design UI: embryo tracking compact cards | P1 | F5 | ☐ |
 | G559 | Premium Claude Design UI: research trend dashboard visual system | P1 | F5 | ☐ |
@@ -1288,12 +1288,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1123 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard | P1 | F5 | ☑ |
 | G1124 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard missing-term fixture | P1 | F5 | ☑ |
 | G1125 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☐ |
+| G1126 | Premium Claude Design UI: dossier dashboard simplification for historical upload and imaging review | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1125** (id's G001 t/m G1125, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1126** (id's G001 t/m G1126, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

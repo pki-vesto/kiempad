@@ -4414,7 +4414,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+
 ### G557 — consult intelligence review layout
 
 - **Epic:** Premium Claude Design UI
@@ -12471,4 +12472,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☐ open
+
+### G1126 — dossier dashboard simplification for historical upload and imaging review
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossierpagina bevat veel privacy- en reviewpanelen achter elkaar, waardoor historische uploads en beeldreview op mobiel minder snel scanbaar zijn.
+- **User Impact:** Gebruikers moeten te veel technische blokken passeren voordat ze zien welke uploads, beelden en reviewacties aandacht vragen.
+- **Desired Outcome:** Maak de bovenkant van de dossierflow compacter met een rustige samenvatting, duidelijke primaire acties en minder visuele ruis zonder bestaande hooks te breken.
+- **User Value:** Gebruikers zien sneller welke uploads, beelden en reviewacties aandacht vragen zonder door technische dossierpanelen te moeten zoeken.
+- **Acceptance Criteria:** Dossierflow toont eerst een compact overzicht voor upload, imaging en review; secundaire technische panelen blijven bereikbaar maar domineren niet; mobile en desktop hebben geen overlap; bestaande form-id's/data-hooks blijven intact; tests dekken empty, populated en locked states; assets:check blijft groen; geen secrets, gezondheidsdata of plaintext medische payloads worden toegevoegd.
+- **Affected Screens:** Dossier, imaging repository, dossierupload, reviewwachtrij
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 98
 - **Status:** ☐ open
