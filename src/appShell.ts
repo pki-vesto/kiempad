@@ -10628,6 +10628,7 @@ function renderTrajectGraphWeergave(
         <div><dt>Nodes</dt><dd>${weergave.nodes.length}</dd></div>
         <div><dt>Relaties</dt><dd>${weergave.edges.length}</dd></div>
       </dl>
+      ${renderGraphNodeSchema(weergave)}
       ${weergave.rebuildRapport ? renderGraphIndexRebuildRapport(weergave.rebuildRapport) : ''}
       ${
         weergave.edges.length > 0
@@ -10636,6 +10637,34 @@ function renderTrajectGraphWeergave(
       }
       ${renderGraphConsultSamenvattingExport(consultExport)}
       <p class="small-print">${escapeHtml(weergave.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderGraphNodeSchema(weergave: FertilityGraphTrajectWeergave): string {
+  if (weergave.nodes.length === 0) {
+    return '<p class="small-print">Nog geen graph-nodes binnen dit filter.</p>';
+  }
+
+  const hasConcept = weergave.nodes.some((node) => node.reviewStatus === 'concept');
+  return `
+    <section class="policy-panel embedded-summary" aria-label="Knowledge graph node schema" data-graph-node-schema-state="${hasConcept ? 'concept-review' : 'gereviewd'}">
+      <h3>Node schema</h3>
+      <ol class="compact-list">
+        ${weergave.nodes
+          .map((node) => {
+            const details = [
+              `Type: ${node.type}`,
+              `Bron: ${node.bron}`,
+              `Datum: ${node.datum?.slice(0, 10) ?? 'onbekend'}`,
+              `Reviewstatus: ${node.reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
+              `Schema: v${node.schemaVersie}`,
+            ];
+            return `<li data-graph-node-id="${escapeAttribute(node.id)}"><strong>${escapeHtml(node.titel)}</strong><small>${details.map(escapeHtml).join(' · ')}</small></li>`;
+          })
+          .join('')}
+      </ol>
+      <p class="small-print">Graph-nodes zijn bronmetadata voor context en geen medisch advies.</p>
     </section>
   `;
 }

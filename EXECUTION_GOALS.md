@@ -4064,7 +4064,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge graph, domain types, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G532 — relationship edge provenance model
 
@@ -11615,6 +11615,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Embryo dossier, app shell, encrypted storage, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1065 — node schema audit evidence
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** G531 introduceert een expliciet knowledge graph node schema met bronrecord, brontype, datum en reviewstatus, maar er is nog geen compacte audit die deze metadata- en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat graph-nodes schemaVersie, bronRecordId, bronType, bron, datum en reviewStatus blijven tonen zonder bronpayload of medische interpretatie.
+- **User Value:** Gebruikers kunnen graph-context herleiden naar bronmetadata en concepten controleren zonder dat Kiempad relaties medisch duidt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G531; node schema versie, bronRecordId, bronType, datum, bron en reviewStatus blijven gedekt; concept en gereviewde nodes blijven zichtbaar in UI of schema-output; evidence bevat geen raw documentinhoud, OCR-tekst, consulttekst, base64, data-url, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge graph, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
