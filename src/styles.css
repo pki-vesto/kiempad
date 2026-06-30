@@ -2219,9 +2219,27 @@ a.action-card:active {
   justify-self: start;
   max-width: 58ch;
   margin: -4px 0 0;
+  padding: 6px 8px;
+  border-left: 3px solid var(--line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface-subtle) 76%, var(--surface) 24%);
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.35;
+}
+
+.dossier-submit-feedback[data-dossier-submit-feedback-state="ready"] {
+  border-left-color: var(--accent);
+}
+
+.dossier-submit-feedback[data-dossier-submit-feedback-state="processing"] {
+  border-left-color: var(--warning);
+}
+
+.dossier-submit-feedback[data-dossier-submit-feedback-state="needs-review"],
+.dossier-submit-feedback[data-dossier-submit-feedback-state="error"] {
+  border-left-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 8%, var(--surface) 92%);
 }
 
 .dossier-upload-group legend,

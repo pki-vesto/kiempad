@@ -4975,6 +4975,12 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-submit-feedback');
     expect(css).toContain('max-width: 58ch;');
     expect(css).toContain('margin: -4px 0 0;');
+    expect(css).toContain('data-dossier-submit-feedback-state="ready"');
+    expect(css).toContain('data-dossier-submit-feedback-state="processing"');
+    expect(css).toContain('data-dossier-submit-feedback-state="needs-review"');
+    expect(css).toContain('data-dossier-submit-feedback-state="error"');
+    expect(css).toContain('border-left-color: var(--warning);');
+    expect(css).toContain('border-left-color: var(--danger);');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
