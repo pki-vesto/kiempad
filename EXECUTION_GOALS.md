@@ -4386,7 +4386,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G555 — fertility intelligence dossier inbox layout
 
@@ -11783,6 +11783,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Daily Recommendations, owner labels, app shell, privacy tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1077 — policy fixture audit evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G554 introduceert daily recommendation policy regression fixtures voor bron, datum, reviewstatus, correctievelden en verboden patronen, maar er is nog geen compacte audit die deze fixture-set door toekomstige dagadvieswijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat daily recommendation policy fixtures zichtbaar, uitvoerbaar en gekoppeld aan het dagadviescontract blijven.
+- **User Value:** Gebruikers houden veilige dagelijkse aanbevelingen omdat regressies rond dosering, kansclaims, behandelkeuzeadvies, start-stopadvies en diagnoseclaims vroeg worden geblokkeerd.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G554; fixturelijst voor verboden patronen blijft zichtbaar of testbaar; bron, datum, reviewstatus en correctievelden blijven onderdeel van de regressiecontrole; evidence bevat geen secrets, echte gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies buiten synthetische testfixturetekst; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, policy tests, app shell
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

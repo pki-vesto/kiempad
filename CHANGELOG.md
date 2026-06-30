@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G554/G1077 Daily Recommendations: daily recommendation policy regression fixtures controleren nu alle dagadviesitems op bron, datum, reviewstatus, correctievelden en verboden patronen zoals dosering, kansclaim, behandelkeuzeadvies, start-stopadvies en diagnoseclaim; G1077 is toegevoegd voor policy fixture audit evidence.
 - G549/G1076 Daily Recommendations: de man-dagkaart toont nu expliciete leefstijlcontext met bron, datum, reviewstatus, status, contextlabels, bronpad en correctievelden voor conceptcontrole; regressies bewaken dat deze context feitelijk blijft zonder leefstijlvoorschrift, dosering, uitkomstclaim of behandelrichting; G1076 is toegevoegd voor man lifestyle context audit evidence.
 - G548/G1075 Daily Recommendations: de vrouw-dagkaart toont nu expliciete cyclusfasecontext met bron, datum, reviewstatus, status, fase-/metinglabels, bronpad en correctievelden voor conceptcontrole; regressies bewaken dat deze context feitelijk blijft zonder timingadvies, dosering, kansclaim of behandelrichting; G1075 is toegevoegd voor woman cycle phase context audit evidence.
 - G547/G1074 Daily Recommendations: dagadvies toont nu input-minimalisatie met bron, datum, reviewstatus, gebruikte inputcategorieen, uitgesloten inputcategorieen en correctievelden voor conceptcontrole; de bestaande aanbevelingsacties nemen gebruiker-correcties mee en blokkeren adviesachtige correcties; G1074 is toegevoegd voor input minimization audit evidence.

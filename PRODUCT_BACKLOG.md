@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 877 |
+| ☑ klaar | 878 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1076** |
+| **Totaal** | **1077** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -716,7 +716,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G551 | Daily Recommendations: aanbeveling artscheck actieknop | P0 | F5 | ☑ |
 | G552 | Daily Recommendations: dagadvies feedback analytics zonder tracking | P1 | F5 | ☐ |
 | G553 | Daily Recommendations: aanbevelingen verbergen per eigenaar | P1 | F5 | ☐ |
-| G554 | Daily Recommendations: daily recommendation policy regression fixtures | P0 | F5 | ☐ |
+| G554 | Daily Recommendations: daily recommendation policy regression fixtures | P0 | F5 | ☑ |
 | G555 | Premium Claude Design UI: fertility intelligence dossier inbox layout | P1 | F5 | ☑ |
 | G556 | Premium Claude Design UI: imaging repository compare layout | P1 | F5 | ☐ |
 | G557 | Premium Claude Design UI: consult intelligence review layout | P1 | F5 | ☐ |
@@ -1239,12 +1239,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1074 | Daily Recommendations: input minimization audit evidence | P1 | F5 | ☐ |
 | G1075 | Daily Recommendations: woman cycle phase context audit evidence | P1 | F5 | ☐ |
 | G1076 | Daily Recommendations: man lifestyle context audit evidence | P1 | F5 | ☐ |
+| G1077 | Daily Recommendations: policy fixture audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1076** (id's G001 t/m G1076, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1077** (id's G001 t/m G1077, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
