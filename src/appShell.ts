@@ -1304,6 +1304,24 @@ function renderDossierScreen(state: AppShellState): string {
       <details class="kp-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''}>
         <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
         <div class="kp-disclosure__body">
+        <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact">
+          <a href="#dossier-upload-form" class="dossier-add-route">
+            <strong>Onderzoek of bestand</strong>
+            <span>PDF, afbeelding, echo of scan</span>
+          </a>
+          <a href="#consult-verslag-form" class="dossier-add-route">
+            <strong>Consultverslag</strong>
+            <span>Gesprek, notitie of samenvatting</span>
+          </a>
+          <a href="#embryo-quality-form" class="dossier-add-route">
+            <strong>Embryokwaliteit</strong>
+            <span>Labscore en broncontrole</span>
+          </a>
+          <a href="#embryo-status-event-form" class="dossier-add-route">
+            <strong>Embryo-status</strong>
+            <span>Statusmoment of terugkoppeling</span>
+          </a>
+        </nav>
         <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
           <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">

@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1131/G1132 Premium Claude Design UI: de dossier-toevoegflow heeft nu een compacte route-selector naar documentupload, consultverslag, embryokwaliteit en embryo-status zonder formuliercontracten of privacyhooks te breken; G1132 is toegevoegd voor gefocuste routezichtbaarheid.
 - G1130/G1131 Premium Claude Design UI: consultverslag-, embryokwaliteit- en embryo-statusformulieren zijn nu gegroepeerd in compacte subsecties zonder formcontracten of privacyhooks te breken; G1131 is toegevoegd voor een compacte taakselector in de dossier-toevoegflow.
 - G1129/G1130 Premium Claude Design UI: dossierdocumentuploadvelden zijn nu gegroepeerd in compacte subsecties voor documentbasis, koppelingen, beeldcontext en embryo/labcontext zonder inputcontracten of privacyhooks te breken; G1130 is toegevoegd voor consult- en embryo-subform scan grouping.
 - G1128/G1129 Premium Claude Design UI: de dossierinhoud heeft nu een compacte sectie-index met ankers naar consulten, imaging, dossierindex, embryo's, tijdlijn en behandelgeschiedenis zonder payloadlekken; G1129 is toegevoegd voor compacte groepering van de dossieruploadvelden.

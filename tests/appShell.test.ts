@@ -116,6 +116,14 @@ function extractDossierAddSection(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierAddRouteSelector(html: string): string {
+  const match = html.match(
+    /<nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen"[\s\S]*?<\/nav>/,
+  );
+  if (!match?.[0]) throw new Error('Toevoegroute selector ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierTimelineSection(html: string): string {
   const start = html.indexOf('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
   const end = html.indexOf(
@@ -4486,6 +4494,102 @@ describe('app shell', () => {
     expect(lockedEmbryoStatusForm).not.toContain('locked-embryo-subform-secret.jpg');
     expect(lockedEmbryoQualityForm).not.toContain('c3ViZm9ybS1sb2NrZWQ=');
     expect(lockedEmbryoStatusForm).not.toContain('c3ViZm9ybS1sb2NrZWQ=');
+  });
+
+  it('toont een compacte toevoegroute-selector zonder formuliercontracten of payloadlekken', () => {
+    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const addSection = extractDossierAddSection(emptyHtml);
+    const selector = extractDossierAddRouteSelector(emptyHtml);
+
+    expect(selector).toContain('data-dossier-add-route-selector="compact"');
+    expect(selector).toContain('href="#dossier-upload-form"');
+    expect(selector).toContain('href="#consult-verslag-form"');
+    expect(selector).toContain('href="#embryo-quality-form"');
+    expect(selector).toContain('href="#embryo-status-event-form"');
+    expect(selector).toContain('Onderzoek of bestand');
+    expect(selector).toContain('Consultverslag');
+    expect(selector).toContain('Embryokwaliteit');
+    expect(selector).toContain('Embryo-status');
+    expect(addSection.indexOf('data-dossier-add-route-selector="compact"')).toBeLessThan(
+      addSection.indexOf('id="dossier-upload-form"'),
+    );
+    expect(addSection).toContain('id="dossier-upload-form"');
+    expect(addSection).toContain('id="consult-verslag-form"');
+    expect(addSection).toContain('id="embryo-quality-form"');
+    expect(addSection).toContain('id="embryo-status-event-form"');
+    expect(addSection).toContain('data-upload-privacy-kind="dossier"');
+    expect(addSection).toContain('data-upload-privacy-kind="consult"');
+    expect(addSection).toContain('data-upload-privacy-kind="embryo"');
+    expect(addSection).toContain('data-upload-privacy-kind="embryo-status"');
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        uploadAttachmentFeedback: {
+          'dossier-upload': {
+            state: 'needs-review',
+            status: 'Dossierupload bevat secret-route.pdf OCR-payload diagnose 150 mg.',
+          },
+          'consult-upload': {
+            state: 'error',
+            error: 'Consultupload bevat secret-route-consult.txt behandelkeuzeadvies.',
+          },
+          'embryo-upload': {
+            state: 'ready',
+            status: 'Embryoupload bevat secret-route-embryo.jpg base64 100 IU.',
+          },
+        },
+      }),
+    );
+    const populatedSelector = extractDossierAddRouteSelector(populatedHtml);
+    const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
+
+    expect(populatedSelector).toContain('href="#dossier-upload-form"');
+    expect(populatedSelector).not.toContain('secret-route.pdf');
+    expect(populatedSelector).not.toContain('secret-route-consult.txt');
+    expect(populatedSelector).not.toContain('secret-route-embryo.jpg');
+    expect(populatedSelector).not.toContain('OCR-payload');
+    expect(populatedSelector).not.toMatch(/diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i);
+    expect(uploadFeedback).not.toContain('secret-route.pdf');
+    expect(uploadFeedback).not.toContain('secret-route-consult.txt');
+    expect(uploadFeedback).not.toContain('secret-route-embryo.jpg');
+    expect(uploadFeedback).not.toContain('OCR-payload');
+    expect(uploadFeedback).not.toMatch(/diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i);
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-route-locked',
+            datum: '2026-05-12',
+            titel: 'Locked route selector',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-route-selector-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 2048,
+            inhoudBase64: 'cm91dGUtc2VsZWN0b3I=',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-12',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-route-selector-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedSelector = extractDossierAddRouteSelector(lockedHtml);
+
+    expect(lockedSelector).toContain('data-dossier-add-route-selector="compact"');
+    expect(lockedSelector).not.toContain('locked-route-selector-secret.jpg');
+    expect(lockedSelector).not.toContain('cm91dGUtc2VsZWN0b3I=');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
