@@ -1644,6 +1644,7 @@ describe('app shell', () => {
 
     expect(html).toContain('Ga naar inhoud');
     expect(html).toContain('href="#inhoud"');
+    expect(html).toContain('aria-label="Werkruimtes en schermen"');
     for (const screen of SCREENS) {
       expect(html).toContain(`href="#${screen.id}"`);
       expect(html).toContain(`>${screen.label}</span>`);
@@ -1651,6 +1652,22 @@ describe('app shell', () => {
 
     expect(html).toContain('href="#agenda" aria-current="page"');
     expect(html).toContain('Afspraken');
+  });
+
+  it('groepeert navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
+    const html = renderAppShell('dossier');
+
+    expect(html).toContain('class="primary-nav__group" data-nav-group-active="true"');
+    expect(html).toContain('<p class="primary-nav__title">Vandaag</p>');
+    expect(html).toContain('<p class="primary-nav__title">Behandeling</p>');
+    expect(html).toContain('<p class="primary-nav__title">Dossier</p>');
+    expect(html).toContain('<p class="primary-nav__title">Inzicht</p>');
+    expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
+    expect(html).toContain('<section class="workspace-context" aria-label="Actieve werkruimte">');
+    expect(html).toContain('<p class="workspace-context__eyebrow">Werkruimte</p>');
+    expect(html).toContain('<h2>Dossier</h2>');
+    expect(html).toContain('Documenten, beelden en medische context');
+    expect(html).toContain('aria-label="Schermen binnen Dossier"');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
