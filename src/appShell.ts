@@ -2054,13 +2054,24 @@ function renderDossierSubmitFeedback(
   const defaults = UPLOAD_ATTACHMENT_FEEDBACK_DEFAULTS[kind];
   const item = state.uploadAttachmentFeedback?.[kind];
   const feedbackState = item?.state ?? defaults.defaultState;
-  const fallback = `${defaults.label} bijgewerkt zonder broninhoud of attachmentdetails.`;
-  const copy = sanitizeSettingsPrivacyFeedback(
-    item?.error ?? item?.status ?? defaults.defaultCopy,
-    fallback,
-  );
+  const copy = renderDossierSubmitFeedbackCopy(feedbackState);
 
   return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}">${escapeHtml(copy)}</p>`;
+}
+
+function renderDossierSubmitFeedbackCopy(state: UploadAttachmentFeedbackItem['state']): string {
+  switch (state) {
+    case 'processing':
+      return 'Wordt lokaal verwerkt.';
+    case 'needs-review':
+      return 'Review nodig voor opslaan.';
+    case 'error':
+      return 'Controleer deze route.';
+    case 'idle':
+      return 'Nog geen actie gestart.';
+    case 'ready':
+      return 'Klaar voor lokale opslag.';
+  }
 }
 
 function renderAttachmentConsentExportPrivacy(state: AppShellState): string {
