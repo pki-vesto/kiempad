@@ -3448,7 +3448,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, owner labels, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G488 — personalisatiefeedback over tijd
 
@@ -11699,6 +11699,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Recommendations, timeline, AI policy, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1071 — man day card audit evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G487 introduceert een man-dagkaart met bronherleiding, datum, reden en supplement-artscheck, maar er is nog geen compacte audit die deze eigenaarstroom door toekomstige UI- en policywijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat de man-dagkaart eigenaar man, datum, reden, bronherleiding, veilige supplementtaal en artscheck behoudt.
+- **User Value:** Gebruikers krijgen een herkenbare man-stroom voor dagelijkse voorbereiding zonder dat Kiempad medische claims of keuzes suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G487; eigenaarlabel man, datum en reden blijven zichtbaar of testbaar; elke checklistregel behoudt bron of reden; supplementregels behouden verplichte artscheck; evidence bevat geen dosering, diagnose, garantieclaim of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, app shell, tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

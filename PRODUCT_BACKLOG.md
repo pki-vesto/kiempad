@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 871 |
+| ☑ klaar | 872 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1070** |
+| **Totaal** | **1071** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -642,7 +642,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G484 | Research Intelligence: persoonlijke relevantiescore zonder behandeladvies | P0 | F5 | ☑ |
 | G485 | Research Intelligence: fertiliteitsresearch trend dashboard | P1 | F5 | ☐ |
 | G486 | Daily Recommendations: vrouw-dagkaart met bronherleiding | P0 | F5 | ☑ |
-| G487 | Daily Recommendations: man-dagkaart met bronherleiding | P0 | F5 | ☐ |
+| G487 | Daily Recommendations: man-dagkaart met bronherleiding | P0 | F5 | ☑ |
 | G488 | Daily Recommendations: personalisatiefeedback over tijd | P1 | F5 | ☐ |
 | G489 | Daily Recommendations: supplement boundary en artscheck | P0 | F5 | ☑ |
 | G490 | Daily Recommendations: aanbevelingen op fertility timeline | P1 | F5 | ☐ |
@@ -1233,12 +1233,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1068 | Research Intelligence: dual summary audit evidence | P1 | F5 | ☐ |
 | G1069 | Research Intelligence: contextmatch relevance audit evidence | P1 | F5 | ☐ |
 | G1070 | Daily Recommendations: woman day card audit evidence | P1 | F5 | ☐ |
+| G1071 | Daily Recommendations: man day card audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1070** (id's G001 t/m G1070, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1071** (id's G001 t/m G1071, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

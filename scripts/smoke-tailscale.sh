@@ -2,8 +2,8 @@
 set -euo pipefail
 
 compose_file="docker-compose.tailscale.yml"
-local_port="${KIEMPAD_TAILSCALE_LOCAL_PORT:-8088}"
-local_url="${KIEMPAD_LOCAL_SMOKE_URL:-http://127.0.0.1:${local_port}}"
+local_port="${KIEMPAD_TAILSCALE_LOCAL_PORT:-}"
+local_url="${KIEMPAD_LOCAL_SMOKE_URL:-}"
 tailnet_url="${KIEMPAD_TAILNET_URL:-}"
 
 fail() {
@@ -36,6 +36,13 @@ fi
 
 if [[ "$(docker inspect -f '{{.State.Running}}' kiempad-central-api 2>/dev/null || true)" != "true" ]]; then
   fail "Container kiempad-central-api draait niet. Start eerst met: TS_AUTHKEY=... npm run deploy:tailscale"
+fi
+
+if [[ -z "${local_url}" ]]; then
+  if [[ -z "${local_port}" ]]; then
+    local_port="$(docker port kiempad-ts 80/tcp 2>/dev/null | sed -n 's/.*:\([0-9][0-9]*\)$/\1/p' | head -n 1)"
+  fi
+  local_url="http://127.0.0.1:${local_port:-8088}"
 fi
 
 echo "Lokale fallback check: ${local_url}"
