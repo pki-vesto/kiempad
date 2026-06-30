@@ -211,6 +211,13 @@ export interface DossierDocument {
   mimeType?: string;
   grootteBytes: number;
   inhoudBase64: string;
+  inhoudChecksum?: {
+    algoritme: 'SHA-256';
+    waarde: string;
+    bron: 'bestand';
+    berekendOp: IsoDate;
+    reviewStatus: 'concept' | 'gereviewd';
+  };
   afspraakId?: string;
   trajectId?: string;
   embryo?: {

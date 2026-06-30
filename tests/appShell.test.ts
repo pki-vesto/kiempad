@@ -31142,6 +31142,90 @@ describe('app shell', () => {
     );
   });
 
+  it('rendert dossierupload duplicaatreview op checksum zonder broninhoud of medisch advies', () => {
+    const checksum = 'd'.repeat(64);
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        dossierDocuments: [
+          {
+            id: 'doc-g507-a',
+            datum: '2026-05-01',
+            titel: 'Labuitslag mei',
+            categorie: 'onderzoek',
+            uploadProfiel: 'labuitslag',
+            bestandsNaam: 'labuitslag-mei.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUxBQi1B',
+            inhoudChecksum: {
+              algoritme: 'SHA-256',
+              waarde: checksum,
+              bron: 'bestand',
+              berekendOp: '2026-06-23T15:00:00.000Z',
+              reviewStatus: 'concept',
+            },
+            analyse: {
+              samenvatting: 'Labuitslag opgeslagen als PDF; analyse is lokaal en niet-medisch.',
+              signalen: ['Bestandstype is PDF.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-01',
+              documenttype: 'Labuitslag',
+              bronbestand: 'labuitslag-mei.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-g507-b',
+            datum: '2026-05-02',
+            titel: 'Labuitslag mei kopie',
+            categorie: 'onderzoek',
+            uploadProfiel: 'labuitslag',
+            bestandsNaam: 'labuitslag-mei-kopie.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUxBQi1C',
+            inhoudChecksum: {
+              algoritme: 'SHA-256',
+              waarde: checksum,
+              bron: 'bestand',
+              berekendOp: '2026-06-23T16:00:00.000Z',
+              reviewStatus: 'concept',
+            },
+            analyse: {
+              samenvatting: 'Labuitslag opgeslagen als PDF; analyse is lokaal en niet-medisch.',
+              signalen: ['Bestandstype is PDF.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Labuitslag',
+              bronbestand: 'labuitslag-mei-kopie.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            uploadedAt: '2026-06-23T16:00:00.000Z',
+          },
+        ],
+        settings: DEFAULT_APP_SETTINGS,
+        notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      }),
+    );
+    const inboxStart = html.indexOf('Import-inbox');
+    const inboxEnd = html.indexOf('Consultverslag toevoegen', inboxStart);
+    const inboxSection = html.slice(inboxStart, inboxEnd);
+
+    expect(inboxSection).toContain('data-dossier-duplicate-review-state="duplicaat_review"');
+    expect(inboxSection).toContain(
+      'Duplicaatreview: Mogelijk duplicaat: 2 bestanden met dezelfde checksum',
+    );
+    expect(inboxSection).toContain('Checksum dddddddddddd');
+    expect(inboxSection).toContain('Review concept');
+    expect(inboxSection).not.toContain('U0VDUkVULUxBQi1B');
+    expect(inboxSection).not.toContain('U0VDUkVULUxBQi1C');
+    expect(inboxSection).not.toMatch(/diagnose|dosering|behandelkeuze|kansberekening/i);
+  });
+
   it('rendert embryokwaliteit met traject- en terugplaatsingskoppeling', () => {
     const html = renderAppShell('dossier', {
       trajecten: [

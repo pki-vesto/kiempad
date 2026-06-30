@@ -1388,6 +1388,11 @@ function renderDossierScreen(state: AppShellState): string {
                         <h3>${escapeHtml(item.titel)}</h3>
                         <p>${escapeHtml(item.datum)} · ${escapeHtml(item.type)} · ${escapeHtml(item.grootte)}</p>
                         <p class="linked-note">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} · Importstatus: ${escapeHtml(item.importstatusLabel)}</p>
+                        ${
+                          item.duplicaatReview
+                            ? `<p class="linked-note" data-dossier-duplicate-review-state="${escapeAttribute(item.duplicaatReview.status)}">Duplicaatreview: ${escapeHtml(item.duplicaatReview.statusLabel)} · Checksum ${escapeHtml(item.duplicaatReview.checksumPrefix)} · Review ${escapeHtml(item.duplicaatReview.reviewStatus)}</p>`
+                            : '<p class="linked-note" data-dossier-duplicate-review-state="geen-checksum">Duplicaatreview: checksum ontbreekt voor deze legacy-import.</p>'
+                        }
                         <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
                       </div>
                       <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}">Verwijder</button>

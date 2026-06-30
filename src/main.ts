@@ -599,6 +599,7 @@ async function saveDossierDocumentsFromForm(
     }
 
     for (const file of files) {
+      const inhoudChecksum = await fileToSha256Checksum(file);
       await state.dossierStore.save({
         datum,
         titel: titel ?? file.name,
@@ -608,6 +609,10 @@ async function saveDossierDocumentsFromForm(
         mimeType: file.type || undefined,
         grootteBytes: file.size,
         inhoudBase64: await fileToBase64(file),
+        inhoudChecksum: {
+          waarde: inhoudChecksum,
+          reviewStatus: 'concept',
+        },
         afspraakId,
         trajectId,
         notitie,
@@ -2563,6 +2568,13 @@ async function fileToBase64(file: File): Promise<string> {
   }
 
   return btoa(binary);
+}
+
+async function fileToSha256Checksum(file: File): Promise<string> {
+  const digest = await globalThis.crypto.subtle.digest('SHA-256', await file.arrayBuffer());
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
 }
 
 async function leesTekstbestandVoorOcr(file: File): Promise<string | undefined> {

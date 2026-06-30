@@ -3,6 +3,7 @@ import {
   bepaalDossierUploadProfiel,
   bepaalImagingPreviewState,
   bepaalZiekenhuisDocumentType,
+  bouwDossierDuplicaatReview,
   bouwDossierImportInbox,
   bouwDossierIndex,
   bouwDossierTijdlijn,
@@ -69,6 +70,7 @@ describe('dossier', () => {
   });
 
   it('bouwt een veilige import-inbox met status per dossierbestand', () => {
+    const duplicateChecksum = 'a'.repeat(64);
     const lab = maakDossierDocument('doc-inbox-lab', {
       datum: '2026-05-01',
       titel: 'Labuitslag mei',
@@ -78,6 +80,10 @@ describe('dossier', () => {
       mimeType: 'application/pdf',
       grootteBytes: 2048,
       inhoudBase64: 'cGRm',
+      inhoudChecksum: {
+        waarde: duplicateChecksum,
+        berekendOp: '2026-06-23T15:00:00.000Z',
+      },
       ocr: {
         explicieteLokaleVerwerking: true,
       },
@@ -91,6 +97,11 @@ describe('dossier', () => {
       mimeType: 'image/jpeg',
       grootteBytes: 4096,
       inhoudBase64: 'anBn',
+      inhoudChecksum: {
+        waarde: duplicateChecksum,
+        berekendOp: '2026-06-23T16:00:00.000Z',
+        reviewStatus: 'gereviewd',
+      },
       uploadedAt: '2026-06-23T16:00:00.000Z',
     });
 
@@ -104,6 +115,13 @@ describe('dossier', () => {
       importstatus: 'klaar_voor_review',
       importstatusLabel: 'Klaar voor review',
       veiligBestandslabel: 'Beeldbron verborgen tot ontgrendeling',
+      duplicaatReview: {
+        status: 'duplicaat_review',
+        statusLabel: 'Mogelijk duplicaat: 2 bestanden met dezelfde checksum',
+        checksumPrefix: 'aaaaaaaaaaaa',
+        duplicateDocumentIds: ['doc-inbox-lab'],
+        reviewStatus: 'gereviewd',
+      },
     });
     expect(inbox[1]).toMatchObject({
       id: 'doc-inbox-lab',
@@ -112,8 +130,75 @@ describe('dossier', () => {
       importstatus: 'ocr_wacht',
       importstatusLabel: 'Wacht op lokale OCR',
       veiligBestandslabel: 'Labuitslag · 2 KB',
+      duplicaatReview: {
+        status: 'duplicaat_review',
+        duplicateDocumentIds: ['doc-inbox-echo'],
+        reviewStatus: 'concept',
+      },
     });
     expect(inbox.map((item) => item.veiligBestandslabel).join(' ')).not.toContain('cGRm');
+  });
+
+  it('groepeert dossieruploads voor duplicaatreview op SHA-256 checksum zonder inhoud te vergelijken', () => {
+    const checksum = 'f'.repeat(64);
+    const origineel = maakDossierDocument('doc-dup-1', {
+      datum: '2026-05-01',
+      titel: 'Labuitslag origineel',
+      categorie: 'onderzoek',
+      bestandsNaam: 'lab-1.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'ZHVwLWJyb24tMQ==',
+      inhoudChecksum: {
+        waarde: checksum,
+        berekendOp: '2026-06-23T15:00:00.000Z',
+      },
+    });
+    const duplicaat = maakDossierDocument('doc-dup-2', {
+      datum: '2026-05-02',
+      titel: 'Labuitslag opnieuw',
+      categorie: 'onderzoek',
+      bestandsNaam: 'lab-2.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'ZHVwLWJyb24tMg==',
+      inhoudChecksum: {
+        waarde: checksum.toUpperCase(),
+        berekendOp: '2026-06-23T16:00:00.000Z',
+      },
+    });
+    const uniek = maakDossierDocument('doc-uniek', {
+      datum: '2026-05-03',
+      titel: 'Unieke echo',
+      categorie: 'beeld',
+      bestandsNaam: 'echo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 4096,
+      inhoudBase64: 'dW5pZWstYnJvbg==',
+      inhoudChecksum: {
+        waarde: '1'.repeat(64),
+      },
+    });
+
+    const reviews = bouwDossierDuplicaatReview([origineel, duplicaat, uniek]);
+
+    expect(reviews.get('doc-dup-1')).toMatchObject({
+      status: 'duplicaat_review',
+      checksumPrefix: 'ffffffffffff',
+      duplicateDocumentIds: ['doc-dup-2'],
+      reviewStatus: 'concept',
+    });
+    expect(reviews.get('doc-dup-2')).toMatchObject({
+      status: 'duplicaat_review',
+      duplicateDocumentIds: ['doc-dup-1'],
+    });
+    expect(reviews.get('doc-uniek')).toMatchObject({
+      status: 'uniek',
+      duplicateDocumentIds: [],
+    });
+    expect(JSON.stringify(Array.from(reviews.values()))).not.toMatch(
+      /diagnose|dosering|behandelkeuze|kansberekening|ZHVw/i,
+    );
   });
 
   it('valideert verplichte dossier- en bestandsvelden', () => {

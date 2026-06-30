@@ -13,6 +13,11 @@ export type DossierDocumentInput = {
   mimeType?: string;
   grootteBytes: number;
   inhoudBase64: string;
+  inhoudChecksum?: {
+    waarde: string;
+    berekendOp?: string;
+    reviewStatus?: 'concept' | 'gereviewd';
+  };
   afspraakId?: string;
   trajectId?: string;
   metadataCorrectie?: DossierMetadataCorrectieInput;
@@ -120,6 +125,13 @@ export type DossierImportInboxItem = {
   importstatus: 'klaar_voor_review' | 'ocr_wacht' | 'ocr_uitgelezen' | 'ocr_niet_ondersteund';
   importstatusLabel: string;
   veiligBestandslabel: string;
+  duplicaatReview?: {
+    status: 'uniek' | 'duplicaat_review';
+    statusLabel: string;
+    checksumPrefix: string;
+    duplicateDocumentIds: string[];
+    reviewStatus: 'concept' | 'gereviewd';
+  };
   document: DossierDocument;
 };
 
@@ -240,6 +252,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
   const categorie = input.categorie ?? 'onderzoek';
   const uploadProfiel = bepaalDossierUploadProfiel(input);
+  const inhoudChecksum = normaliseerDossierChecksum(input.inhoudChecksum, uploadedAt);
   const ocr = maakDossierOcrResultaat(
     {
       categorie,
@@ -294,6 +307,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     mimeType: mimeType || undefined,
     grootteBytes: Math.floor(input.grootteBytes),
     inhoudBase64,
+    inhoudChecksum,
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
     embryo,
@@ -311,6 +325,26 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
     beeldMetadata,
     ocr,
     uploadedAt,
+  };
+}
+
+function normaliseerDossierChecksum(
+  input: DossierDocumentInput['inhoudChecksum'],
+  fallbackBerekendOp: string,
+): DossierDocument['inhoudChecksum'] {
+  if (!input) return undefined;
+  const waarde = input.waarde.trim().toLowerCase();
+  if (!waarde) return undefined;
+  if (!/^[a-f0-9]{64}$/.test(waarde)) {
+    throw new Error('Dossierbestand checksum is geen geldige SHA-256 hash.');
+  }
+
+  return {
+    algoritme: 'SHA-256',
+    waarde,
+    bron: 'bestand',
+    berekendOp: input.berekendOp?.trim() || fallbackBerekendOp,
+    reviewStatus: input.reviewStatus ?? 'concept',
   };
 }
 
@@ -395,6 +429,7 @@ export function bouwDossierImportInbox(
   options: { vergrendeld?: boolean } = {},
 ): DossierImportInboxItem[] {
   const vergrendeld = options.vergrendeld ?? false;
+  const duplicaatReview = bouwDossierDuplicaatReview(items);
   return sorteerDossierDocumenten(items).map((document) => {
     const type = document.uploadProfiel
       ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
@@ -422,9 +457,46 @@ export function bouwDossierImportInbox(
         vergrendeld && document.categorie === 'beeld'
           ? 'Beeldbron verborgen tot ontgrendeling'
           : `${type} · ${formatBytes(document.grootteBytes)}`,
+      duplicaatReview: duplicaatReview.get(document.id),
       document,
     };
   });
+}
+
+export function bouwDossierDuplicaatReview(
+  items: readonly DossierDocument[],
+): Map<string, NonNullable<DossierImportInboxItem['duplicaatReview']>> {
+  const checksumGroups = new Map<string, DossierDocument[]>();
+  for (const document of items) {
+    const checksum = document.inhoudChecksum?.waarde;
+    if (!checksum) continue;
+    checksumGroups.set(checksum, [...(checksumGroups.get(checksum) ?? []), document]);
+  }
+
+  const reviews = new Map<string, NonNullable<DossierImportInboxItem['duplicaatReview']>>();
+  for (const [checksum, group] of checksumGroups) {
+    const sortedGroup = sorteerDossierDocumenten(group);
+    const duplicate = sortedGroup.length > 1;
+    for (const document of sortedGroup) {
+      const duplicateDocumentIds = sortedGroup
+        .filter((anderDocument) => anderDocument.id !== document.id)
+        .map((anderDocument) => anderDocument.id);
+      reviews.set(document.id, {
+        status: duplicate ? 'duplicaat_review' : 'uniek',
+        statusLabel: duplicate
+          ? `Mogelijk duplicaat: ${sortedGroup.length} bestanden met dezelfde checksum`
+          : 'Geen duplicaat op checksum gevonden',
+        checksumPrefix: checksum.slice(0, 12),
+        duplicateDocumentIds,
+        reviewStatus:
+          duplicate && document.inhoudChecksum?.reviewStatus !== 'gereviewd'
+            ? 'concept'
+            : (document.inhoudChecksum?.reviewStatus ?? 'concept'),
+      });
+    }
+  }
+
+  return reviews;
 }
 
 export function zoekDossierDocumenten(
