@@ -16,6 +16,9 @@ export type ConsultVerslagInput = {
   samenvattingCorrectie?: string;
   afspraakId?: string;
   trajectId?: string;
+  pogingId?: string;
+  auteur?: string;
+  context?: string;
   notitie?: string;
   uploadedAt?: string;
 };
@@ -52,6 +55,9 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
   const notitie = input.notitie?.trim();
   const afspraakId = input.afspraakId?.trim();
   const trajectId = input.trajectId?.trim();
+  const pogingId = input.pogingId?.trim() || trajectId;
+  const auteur = input.auteur?.trim();
+  const context = input.context?.trim();
   const samenvattingCorrectie = input.samenvattingCorrectie?.trim();
   const inhoudBase64 = input.inhoudBase64?.trim();
   const mimeType = input.mimeType?.trim();
@@ -82,6 +88,9 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
     tekst: tekst || undefined,
     afspraakId: afspraakId || undefined,
     trajectId: trajectId || undefined,
+    pogingId: pogingId || undefined,
+    auteur: auteur || undefined,
+    context: context || undefined,
     notitie: notitie || undefined,
     importMetadata: {
       bron: tekst ? 'tekstveld' : 'bestand',
@@ -89,6 +98,11 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
       bronLabel: tekst
         ? 'Tekstveld consultnotitie'
         : `Bestand: ${bestandsNaam || 'bestand zonder naam'}`,
+      afspraakId: afspraakId || undefined,
+      trajectId: trajectId || undefined,
+      pogingId: pogingId || undefined,
+      auteur: auteur || undefined,
+      context: context || undefined,
       aangemaaktOp: uploadedAt,
     },
     samenvatting: maakConsultSamenvatting({

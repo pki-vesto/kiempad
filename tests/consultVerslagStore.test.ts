@@ -35,6 +35,9 @@ describe('ConsultVerslagStore', () => {
       inhoudBase64: 'Y29uc3VsdA==',
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
+      pogingId: 'poging-1',
+      auteur: 'Fertiliteitsarts',
+      context: 'Evaluatieconsult',
     });
     const raw = await driver.getRecord(saved.id);
 
@@ -42,6 +45,10 @@ describe('ConsultVerslagStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Evaluatie consult');
     expect(raw?.payload.ciphertext).not.toContain('Besproken welke vragen openstaan');
     expect(raw?.payload.ciphertext).not.toContain('afspraak-1');
+    expect(raw?.payload.ciphertext).not.toContain('traject-1');
+    expect(raw?.payload.ciphertext).not.toContain('poging-1');
+    expect(raw?.payload.ciphertext).not.toContain('Fertiliteitsarts');
+    expect(raw?.payload.ciphertext).not.toContain('Evaluatieconsult');
     expect(raw?.payload.ciphertext).not.toContain('Y29uc3VsdA');
     expect(await store.list()).toEqual([saved]);
   });

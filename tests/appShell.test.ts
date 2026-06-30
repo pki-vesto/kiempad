@@ -3786,7 +3786,9 @@ describe('app shell', () => {
     expect(html).toContain('Dossierdocument uploaden');
     expect(html).toContain('Consultverslag toevoegen');
     expect(html).toContain('id="consult-verslag-form"');
-    expect(html).toContain('name="consultBestand" type="file" accept="application/pdf,text/*"');
+    expect(html).toContain(
+      'name="consultBestand" type="file" accept="application/pdf,image/*,text/*"',
+    );
     expect(html).toContain('Tekst of samenvatting');
     expect(html).toContain('Consultverslagen');
     expect(html).toContain('Dossier zoeken');
@@ -3967,7 +3969,7 @@ describe('app shell', () => {
     expect(addSection).toContain('data-upload-privacy-kind="consult"');
     expect(addSection).toContain('data-consult-upload-privacy-state="encrypted-text-or-file"');
     expect(addSection).toContain(
-      'name="consultBestand" type="file" accept="application/pdf,text/*"',
+      'name="consultBestand" type="file" accept="application/pdf,image/*,text/*"',
     );
     expect(addSection).toContain('id="embryo-quality-form"');
     expect(addSection).toContain('data-upload-privacy-kind="embryo"');
@@ -4200,7 +4202,7 @@ describe('app shell', () => {
 
     expect(emptyHtml).toContain('id="consult-verslag-form"');
     expect(emptyHtml).toContain(
-      'name="consultBestand" type="file" accept="application/pdf,text/*"',
+      'name="consultBestand" type="file" accept="application/pdf,image/*,text/*"',
     );
     expect(emptyHtml).toContain('name="tekst"');
     expect(emptyHtml).toContain('name="samenvattingCorrectie"');
@@ -4209,7 +4211,16 @@ describe('app shell', () => {
 
     const html = renderAppShell('dossier', {
       trajecten: [],
-      afspraken: [],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-consult-review',
+            titel: 'Evaluatiegesprek',
+            datumTijd: '2026-05-08T09:30',
+            type: 'consult',
+          },
+        },
+      ],
       medicatie: [],
       herinneringen: [],
       vragen: [],
@@ -4224,12 +4235,22 @@ describe('app shell', () => {
           mimeType: 'application/pdf',
           grootteBytes: 4096,
           inhoudBase64: 'Y29uc3VsdC1wYXlsb2Fk',
+          afspraakId: 'afspraak-consult-review',
+          trajectId: 'traject-review',
+          pogingId: 'poging-review',
+          auteur: 'Fertiliteitsarts',
+          context: 'Evaluatie na punctie',
           tekst:
             'We bespraken de planning. Vraag de kliniek naar het vervolg en noteer het antwoord.',
           importMetadata: {
             bron: 'bestand',
             reviewStatus: 'concept',
             bronLabel: 'PDF consultverslag',
+            afspraakId: 'afspraak-consult-review',
+            trajectId: 'traject-review',
+            pogingId: 'poging-review',
+            auteur: 'Fertiliteitsarts',
+            context: 'Evaluatie na punctie',
             aangemaaktOp: '2026-06-23T15:00:00.000Z',
           },
           samenvatting: {
@@ -4270,6 +4291,10 @@ describe('app shell', () => {
       'Consultdatum: 2026-05-08 · Upload · consult-review-state.pdf · 4 KB',
     );
     expect(section).toContain('Import: PDF consultverslag · review concept');
+    expect(section).toContain('Afspraak: Evaluatiegesprek');
+    expect(section).toContain('Poging: poging-review');
+    expect(section).toContain('Auteur: Fertiliteitsarts');
+    expect(section).toContain('Context: Evaluatie na punctie');
     expect(section).toContain('Conceptsamenvatting');
     expect(section).toContain('Verschil met gebruikerscorrectie');
     expect(section).toContain(

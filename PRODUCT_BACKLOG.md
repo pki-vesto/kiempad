@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 852 |
+| ☑ klaar | 853 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1051** |
+| **Totaal** | **1052** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -630,7 +630,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☐ |
 | G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☐ |
 | G474 | Fertility Intelligence: imaging timeline privacy boundary | P0 | F5 | ☑ |
-| G475 | Fertility Intelligence: consult transcript import en bronkoppeling | P0 | F5 | ☐ |
+| G475 | Fertility Intelligence: consult transcript import en bronkoppeling | P0 | F5 | ☑ |
 | G476 | Fertility Intelligence: actie-extractie uit consulten als taken en vragen | P0 | F5 | ☐ |
 | G477 | Fertility Intelligence: consultsamenvatting reviewflow zonder behandeladvies | P0 | F5 | ☐ |
 | G478 | Fertility Intelligence: embryo grading bronregistratie | P0 | F5 | ☐ |
@@ -1214,12 +1214,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1049 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states | P1 | F5 | ☑ |
 | G1050 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states | P1 | F5 | ☐ |
 | G1051 | Fertility Intelligence: imaging timeline privacy audit evidence | P1 | F5 | ☐ |
+| G1052 | Fertility Intelligence: consult transcript source audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1051** (id's G001 t/m G1051, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1052** (id's G001 t/m G1052, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
