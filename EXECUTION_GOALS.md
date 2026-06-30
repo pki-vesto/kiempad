@@ -3434,7 +3434,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, timeline, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G487 — man-dagkaart met bronherleiding
 
@@ -11685,6 +11685,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Research, knowledge graph, AI policy, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1070 — woman day card audit evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G486 introduceert een vrouw-dagkaart met bronherleiding, maar er is nog geen compacte audit die dossiercontext, cyclus/trajectfase, supplement-artscheck en policygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat de vrouw-dagkaart leefstijl, voeding, supplementvragen, behandelvoorbereiding en cycluscontext toont met bron of reden zonder dosering of behandelkeuzeadvies.
+- **User Value:** Gebruikers krijgen dagelijkse voorbereiding die herleidbaar blijft naar lokale context zonder dat Kiempad medische keuzes suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G486; dossiercontext en cyclus/trajectfase blijven zichtbaar of testbaar; elke checklistregel behoudt bron of reden; supplementregels behouden verplichte artscheck; evidence bevat geen dosering, kansberekening, diagnose of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Recommendations, timeline, AI policy, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

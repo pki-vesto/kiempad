@@ -48,6 +48,34 @@ describe('dagelijkse aanbevelingen', () => {
 
     expect(Object.keys(overzicht)).toEqual(['vrouw', 'man', 'samen']);
     expect(overzicht.vrouw[0]).toMatchObject({
+      id: 'vrouw-dagkaart-bronherleiding',
+      owner: 'vrouw',
+      titel: 'Vrouw dagkaart met bronherleiding',
+      bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+    });
+    expect(overzicht.vrouw[0]?.checklist?.map((item) => item.bron)).toEqual([
+      'Lokale dagstart',
+      'Lokale leefstijlcontext',
+      'Medicatie- en dossiercontext',
+      'Agenda',
+      'Lokale dagstart',
+    ]);
+    expect(
+      overzicht.vrouw[0]?.checklist?.find((item) => item.label.includes('Supplementen')),
+    ).toMatchObject({
+      artscheck: {
+        verplicht: true,
+        label: 'Artscheck verplicht voor supplementvragen',
+      },
+    });
+    expect(overzicht.vrouw[0]?.gebruikteBronnen).toEqual(
+      expect.arrayContaining([
+        'Agenda: Echo controle op 2026-06-24 09:30',
+        'Medicatieplanning: Progesteron op 2026-06-24 08:00',
+        'Vragenlijst: 1 open vraag/vragen',
+      ]),
+    );
+    expect(overzicht.vrouw[1]).toMatchObject({
       owner: 'vrouw',
       titel: 'Medicatieschema controleren',
       bron: 'Medicatieplanning vandaag',
@@ -128,7 +156,7 @@ describe('dagelijkse aanbevelingen', () => {
         .flat()
         .every((item) => item.gebruikteBronnen?.length),
     ).toBe(true);
-    expect(overzicht.vrouw[0]?.gebruikteBronnen).toContain(
+    expect(overzicht.vrouw[1]?.gebruikteBronnen).toContain(
       'Medicatieplanning: Progesteron op 2026-06-24 08:00',
     );
     expect(overzicht.samen[1]?.gebruikteBronnen).toEqual(
@@ -233,27 +261,74 @@ describe('dagelijkse aanbevelingen', () => {
     });
 
     expect(overzicht.vrouw[0]).toMatchObject({
+      id: 'vrouw-dagkaart-bronherleiding',
+      titel: 'Vrouw dagkaart met bronherleiding',
+      bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+    });
+    expect(overzicht.vrouw[0]?.detail).toContain('Trajectfase: cyclusfase Stimulatie');
+    expect(overzicht.vrouw[0]?.gebruikteBronnen).toEqual(
+      expect.arrayContaining([
+        'Trajectfase: cyclusfase Stimulatie',
+        'Cyclusmeting: cyclusdag op 2026-06-24',
+        'Dossierdocument: Labuitslag op 2026-06-23',
+      ]),
+    );
+    expect(overzicht.vrouw[0]?.checklist).toEqual([
+      {
+        label:
+          'Leefstijl: noteer alleen haalbare observaties of vragen die je vandaag wilt meenemen.',
+        bron: 'Trajectfase en dossiercontext',
+        disclaimer: 'Geen leefstijlvoorschrift of medische conclusie.',
+      },
+      {
+        label: 'Voeding: verzamel feitelijke vragen voor kliniek, arts of apotheek.',
+        bron: 'Dossierdocument: Labuitslag',
+        disclaimer: 'Geen voedingsadvies of persoonlijk voorschrift.',
+      },
+      {
+        label:
+          'Supplementen: zet alleen vragen klaar over wat al met kliniek, arts of apotheek is besproken.',
+        bron: 'Medicatie- en dossiercontext',
+        disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+        artscheck: {
+          verplicht: true,
+          label: 'Artscheck verplicht voor supplementvragen',
+        },
+      },
+      {
+        label: 'Behandelvoorbereiding: controleer of er open vragen of eigen notities klaarstaan.',
+        bron: 'Lokale dagstart',
+        disclaimer: 'Alleen voorbereiding; volg de instructies van de kliniek.',
+      },
+      {
+        label:
+          'Cycluscontext: gebruik cyclusfase Stimulatie alleen als feitelijke context voor dagnotities.',
+        bron: 'Trajectfase',
+        disclaimer: 'Geen timingadvies, interpretatie of behandelrichting.',
+      },
+    ]);
+    expect(overzicht.vrouw[1]).toMatchObject({
       id: 'vrouw-leefstijl-context',
       titel: 'Leefstijlcontext nalopen',
       bron: 'Dossier, cyclusfase en behandelgeschiedenis',
     });
-    expect(overzicht.vrouw[0]?.detail).toContain('cyclusfase Stimulatie');
-    expect(overzicht.vrouw[0]?.detail).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
-    expect(overzicht.vrouw[0]?.detail).toContain('recent dossierdocument Labuitslag op 2026-06-23');
-    expect(overzicht.vrouw[0]?.detail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
-    expect(overzicht.vrouw[0]?.gebruikteBronnen).toEqual(
+    expect(overzicht.vrouw[1]?.detail).toContain('cyclusfase Stimulatie');
+    expect(overzicht.vrouw[1]?.detail).toContain('laatste cyclusmeting cyclusdag op 2026-06-24');
+    expect(overzicht.vrouw[1]?.detail).toContain('recent dossierdocument Labuitslag op 2026-06-23');
+    expect(overzicht.vrouw[1]?.detail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
+    expect(overzicht.vrouw[1]?.gebruikteBronnen).toEqual(
       expect.arrayContaining([
         'Trajectfase: Stimulatie vanaf 2026-06-22',
         'Cyclusmeting: cyclusdag op 2026-06-24',
         'Dossierdocument: Labuitslag op 2026-06-23',
       ]),
     );
-    expect(overzicht.vrouw[1]).toMatchObject({
+    expect(overzicht.vrouw[2]).toMatchObject({
       id: 'vrouw-cyclus-dagcheck',
       titel: 'Cyclusdagcheck',
       bron: 'Trajectfase en lokale cyclusmetingen',
     });
-    expect(overzicht.vrouw[1]?.checklist).toEqual([
+    expect(overzicht.vrouw[2]?.checklist).toEqual([
       {
         label:
           'Fase: gebruik cyclusfase Stimulatie alleen als context voor feitelijke dagnotities.',
@@ -267,7 +342,7 @@ describe('dagelijkse aanbevelingen', () => {
       },
     ]);
     expect(
-      `${overzicht.vrouw[1]?.detail} ${overzicht.vrouw[1]?.checklist?.map((item) => item.disclaimer)}`,
+      `${overzicht.vrouw[2]?.detail} ${overzicht.vrouw[2]?.checklist?.map((item) => item.disclaimer)}`,
     ).not.toMatch(/\bdosering\b/i);
   });
 

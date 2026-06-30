@@ -62,6 +62,12 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
   const vragenOpen = openstaandeVragen(input.vragen);
   const leefstijlContext = bouwLeefstijlContextAanbeveling(input);
   const cyclusContext = bouwCyclusAanbeveling(input);
+  const vrouwDagkaart = bouwVrouwDagkaart({
+    ...input,
+    afspraak,
+    doseLogsVandaag,
+    vragenOpen,
+  });
   const behandelvoorbereiding = bouwBehandelvoorbereiding({
     afspraak,
     doseLogsVandaag,
@@ -71,6 +77,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
 
   return verrijkDagelijksAanbevelingsoverzicht({
     vrouw: [
+      vrouwDagkaart,
       ...(leefstijlContext ? [leefstijlContext] : []),
       ...(cyclusContext ? [cyclusContext] : []),
       doseLogsVandaag.length > 0
@@ -298,6 +305,93 @@ export function controleerSupplementBoundary(
 
 function isSupplementChecklistItem(item: DailyRecommendationChecklistItem): boolean {
   return /\bsupplement/i.test(`${item.label} ${item.disclaimer}`);
+}
+
+function bouwVrouwDagkaart(input: {
+  datum: string;
+  afspraak: Afspraak | undefined;
+  doseLogsVandaag: readonly { doseLog: DoseLog; medicatie: Medicatie }[];
+  vragenOpen: readonly Vraag[];
+  trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
+  dossierDocuments?: readonly DossierDocument[];
+  cycleData?: readonly CycleData[];
+}): DailyRecommendation {
+  const fase = beschrijfCyclusfase(input.trajecten ?? [], input.datum);
+  const meting = laatsteCyclusmeting(input.cycleData ?? []);
+  const document = laatsteDossierdocument(input.dossierDocuments ?? []);
+  const contextBronnen = uniekeTeksten(
+    [
+      fase ? `Trajectfase: ${fase}` : undefined,
+      meting ? `Cyclusmeting: ${meting.meting} op ${meting.datum}` : undefined,
+      document ? `Dossierdocument: ${document.titel} op ${document.datum}` : undefined,
+      input.afspraak
+        ? `Agenda: ${input.afspraak.titel} op ${input.afspraak.datumTijd.replace('T', ' ')}`
+        : undefined,
+      ...input.doseLogsVandaag.map(
+        (item) =>
+          `Medicatieplanning: ${item.medicatie.naam} op ${item.doseLog.geplandOp.replace('T', ' ')}`,
+      ),
+      input.vragenOpen.length > 0
+        ? `Vragenlijst: ${input.vragenOpen.length} open vraag/vragen`
+        : undefined,
+    ].filter((bron): bron is string => Boolean(bron)),
+  );
+  const contextSamenvatting =
+    contextBronnen.length > 0
+      ? contextBronnen.slice(0, 3).join('; ')
+      : 'geen extra lokale context voor vandaag';
+
+  return {
+    id: 'vrouw-dagkaart-bronherleiding',
+    owner: 'vrouw',
+    titel: 'Vrouw dagkaart met bronherleiding',
+    detail: `Dagkaart voor leefstijl, voeding, supplementvragen, behandelvoorbereiding en cycluscontext op basis van ${contextSamenvatting}.`,
+    bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+    waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    gebruikteBronnen:
+      contextBronnen.length > 0 ? contextBronnen : ['Lokale dagstart zonder extra context'],
+    checklist: [
+      {
+        label:
+          'Leefstijl: noteer alleen haalbare observaties of vragen die je vandaag wilt meenemen.',
+        bron: (fase ?? document) ? 'Trajectfase en dossiercontext' : 'Lokale dagstart',
+        disclaimer: 'Geen leefstijlvoorschrift of medische conclusie.',
+      },
+      {
+        label: 'Voeding: verzamel feitelijke vragen voor kliniek, arts of apotheek.',
+        bron: document ? `Dossierdocument: ${document.titel}` : 'Lokale leefstijlcontext',
+        disclaimer: 'Geen voedingsadvies of persoonlijk voorschrift.',
+      },
+      {
+        label:
+          'Supplementen: zet alleen vragen klaar over wat al met kliniek, arts of apotheek is besproken.',
+        bron: 'Medicatie- en dossiercontext',
+        disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+        artscheck: {
+          verplicht: true,
+          label: 'Artscheck verplicht voor supplementvragen',
+        },
+      },
+      {
+        label: input.afspraak
+          ? `Behandelvoorbereiding: controleer de afspraak ${input.afspraak.titel} als bestaande agenda-informatie.`
+          : 'Behandelvoorbereiding: controleer of er open vragen of eigen notities klaarstaan.',
+        bron: input.afspraak
+          ? 'Agenda'
+          : input.vragenOpen.length > 0
+            ? 'Vragenlijst'
+            : 'Lokale dagstart',
+        disclaimer: 'Alleen voorbereiding; volg de instructies van de kliniek.',
+      },
+      {
+        label: fase
+          ? `Cycluscontext: gebruik ${fase} alleen als feitelijke context voor dagnotities.`
+          : 'Cycluscontext: nog geen trajectfase of cyclusmeting voor vandaag gevonden.',
+        bron: fase ? 'Trajectfase' : meting ? 'Lokale cyclusmetingen' : 'Lokale dagstart',
+        disclaimer: 'Geen timingadvies, interpretatie of behandelrichting.',
+      },
+    ],
+  };
 }
 
 export function maakArtscheckVraagVoorAanbeveling(input: {
