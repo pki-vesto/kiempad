@@ -4744,6 +4744,7 @@ describe('app shell', () => {
     );
     expect(dossierPanel).toContain('Upload document naar dossier</button>');
     expect(dossierPanel).toContain('data-dossier-submit-feedback="dossier-upload"');
+    expect(dossierPanel).toContain('data-dossier-feedback-announcement-order="1"');
     expect(dossierPanel).toContain(
       'aria-label="Feedback documentupload: klaar voor lokale opslag."',
     );
@@ -4773,6 +4774,7 @@ describe('app shell', () => {
     );
     expect(consultPanel).toContain('Bewaar consultverslag</button>');
     expect(consultPanel).toContain('data-dossier-submit-feedback="consult-upload"');
+    expect(consultPanel).toContain('data-dossier-feedback-announcement-order="2"');
     expect(consultPanel).toContain(
       'aria-label="Feedback consultverslag: klaar voor lokale opslag."',
     );
@@ -4795,6 +4797,7 @@ describe('app shell', () => {
     );
     expect(embryoQualityPanel).toContain('Bewaar embryokwaliteit</button>');
     expect(embryoQualityPanel).toContain('data-dossier-submit-feedback="embryo-quality"');
+    expect(embryoQualityPanel).toContain('data-dossier-feedback-announcement-order="3"');
     expect(embryoQualityPanel).toContain(
       'aria-label="Feedback embryokwaliteit: klaar voor lokale opslag."',
     );
@@ -4817,6 +4820,7 @@ describe('app shell', () => {
     );
     expect(embryoStatusPanel).toContain('Bewaar embryo-status</button>');
     expect(embryoStatusPanel).toContain('data-dossier-submit-feedback="embryo-status"');
+    expect(embryoStatusPanel).toContain('data-dossier-feedback-announcement-order="4"');
     expect(embryoStatusPanel).toContain(
       'aria-label="Feedback embryostatus: klaar voor lokale opslag."',
     );
