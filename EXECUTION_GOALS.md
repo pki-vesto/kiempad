@@ -12289,4 +12289,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1113 — central health monitor retention missing-term-contract compact contract release guard compact contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1112 voegt een missing-term fixture toe, maar het exacte foutmeldingcontract van deze compact-contract releaseguard is nog niet apart gesnapshott.
+- **Desired Outcome:** Leg de exacte G1112 missing-term foutmelding vast als compact contract.
+- **User Value:** Beheer herkent missing-term-contract compact-contract releaseguard-foutmeldingdrift direct zonder privacygevoelige evidence.
+- **Acceptance Criteria:** Exacte missing-term melding is als compact contract gesnapshott; contract verwijst alleen naar G1112-veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
