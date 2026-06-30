@@ -12696,4 +12696,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 85
+- **Status:** ☑ done
+
+### G1140 — dossier add route draft safety microcopy
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Routewisselherstel is duidelijker, maar de dossier-toevoegflow maakt nog niet compact genoeg duidelijk dat conceptinvoer lokaal blijft totdat de gebruiker expliciet opslaat.
+- **User Impact:** Gebruikers kunnen onzeker worden of half ingevulde medische details al gedeeld of geanalyseerd zijn.
+- **Desired Outcome:** Voeg compacte conceptveiligheids-microcopy toe rond de toevoegflow zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers voelen meer controle over conceptinvoer en uploadbeslissingen.
+- **Acceptance Criteria:** Conceptveiligheids-microcopy is compact, geruststellend en niet-medisch; bestaande ankers, form-id's, input names en data-hooks blijven intact; routewissel-hint, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 84
 - **Status:** ☐ open

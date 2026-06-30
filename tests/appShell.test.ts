@@ -124,6 +124,14 @@ function extractDossierAddRouteSelector(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierAddRouteSwitchHint(html: string): string {
+  const match = html.match(
+    /<p class="dossier-add-route-switch-hint" data-dossier-add-route-switch-hint="safe-switch">[\s\S]*?<\/p>/,
+  );
+  if (!match?.[0]) throw new Error('Toevoegroute wissel-hint ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierAddRoutePanel(html: string, panelId: string): string {
   const escapedPanelId = panelId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = html.match(
@@ -4511,6 +4519,7 @@ describe('app shell', () => {
     const emptyHtml = renderAppShell('dossier', makeStartState());
     const addSection = extractDossierAddSection(emptyHtml);
     const selector = extractDossierAddRouteSelector(emptyHtml);
+    const switchHint = extractDossierAddRouteSwitchHint(emptyHtml);
 
     expect(selector).toContain('data-dossier-add-route-selector="compact"');
     expect(selector).toContain('href="#dossier-upload-form"');
@@ -4549,7 +4558,14 @@ describe('app shell', () => {
     expect(addSection).toContain(
       'Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.',
     );
+    expect(addSection).toContain('data-dossier-add-route-switch-hint="safe-switch"');
+    expect(switchHint).toContain(
+      'Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.',
+    );
     expect(addSection.indexOf('data-dossier-add-route-selector="compact"')).toBeLessThan(
+      addSection.indexOf('id="dossier-upload-form"'),
+    );
+    expect(addSection.indexOf('data-dossier-add-route-switch-hint="safe-switch"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
     );
     expect(addSection).toContain('id="dossier-upload-form"');
@@ -4581,6 +4597,7 @@ describe('app shell', () => {
       }),
     );
     const populatedSelector = extractDossierAddRouteSelector(populatedHtml);
+    const populatedSwitchHint = extractDossierAddRouteSwitchHint(populatedHtml);
     const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
 
     expect(populatedSelector).toContain('href="#dossier-upload-form"');
@@ -4589,6 +4606,10 @@ describe('app shell', () => {
     expect(populatedSelector).not.toContain('secret-route-embryo.jpg');
     expect(populatedSelector).not.toContain('OCR-payload');
     expect(populatedSelector).not.toMatch(/diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i);
+    expect(populatedSwitchHint).toContain('data-dossier-add-route-switch-hint="safe-switch"');
+    expect(populatedSwitchHint).not.toMatch(
+      /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
+    );
     expect(uploadFeedback).not.toContain('secret-route.pdf');
     expect(uploadFeedback).not.toContain('secret-route-consult.txt');
     expect(uploadFeedback).not.toContain('secret-route-embryo.jpg');
@@ -4797,6 +4818,9 @@ describe('app shell', () => {
     expect(css).toContain(
       '.dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-status"]',
     );
+    expect(css).toContain('.dossier-add-route-switch-hint');
+    expect(css).toContain('max-width: 60ch;');
+    expect(css).toContain('font-size: 0.82rem;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 940 |
+| ☑ klaar | 941 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1139** |
+| **Totaal** | **1140** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1301,13 +1301,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1136 | Premium Claude Design UI: dossier add route active state affordance | P1 | F5 | ☑ |
 | G1137 | Premium Claude Design UI: dossier add route keyboard focus refinement | P1 | F5 | ☑ |
 | G1138 | Premium Claude Design UI: dossier add route screen reader active context | P1 | F5 | ☑ |
-| G1139 | Premium Claude Design UI: dossier add route switch recovery hint | P1 | F5 | ☐ |
+| G1139 | Premium Claude Design UI: dossier add route switch recovery hint | P1 | F5 | ☑ |
+| G1140 | Premium Claude Design UI: dossier add route draft safety microcopy | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1139** (id's G001 t/m G1139, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1140** (id's G001 t/m G1140, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
