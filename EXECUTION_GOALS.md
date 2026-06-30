@@ -11813,4 +11813,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, Node runtime, privacy tests, runbook
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1079 — central health live smoke evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G503 en G1078 borgen het health-contract lokaal en in onderhoudsdocs, maar de live Tailscale-smoke legt nog niet expliciet vast dat `/api/health` op de aparte HTTPS-node dezelfde privacygrens behoudt.
+- **Desired Outcome:** Breid de Tailscale of centrale smoke-evidence uit zodat de gepubliceerde `/api/health` route controleerbaar blijft op status, contractvelden en afwezigheid van user-id, session-id, record-id, recordcount, ciphertext, secrets en medische termen.
+- **User Value:** Gebruikers en beheer weten dat de gepubliceerde centrale route hetzelfde veilige health-contract volgt als de lokale runtime.
+- **Acceptance Criteria:** Smoke of tests verwijzen naar G503/G1078; live of lokale proxy-healthcheck valideert status en contractvelden; fallback zonder `KIEMPAD_TAILNET_URL` blijft veilig en informatief; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Tailscale smoke, Central API, runbook, tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
