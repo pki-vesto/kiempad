@@ -381,6 +381,22 @@ export function normalizeTreatmentRoute(value: string | null | undefined): Treat
     : 'overzicht';
 }
 
+type ScheduleRoute = 'overzicht' | 'komend' | 'plannen' | 'import' | 'historie';
+
+const SCHEDULE_ROUTES: readonly ScheduleRoute[] = [
+  'overzicht',
+  'komend',
+  'plannen',
+  'import',
+  'historie',
+];
+
+export function normalizeScheduleRoute(value: string | null | undefined): ScheduleRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return SCHEDULE_ROUTES.includes(route as ScheduleRoute) ? (route as ScheduleRoute) : 'overzicht';
+}
+
 export type AppShellState = {
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -411,6 +427,7 @@ export type AppShellState = {
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
   timelineFilter?: FertilityTimelineFilter;
   activeTreatmentRoute?: TreatmentRoute;
+  activeScheduleRoute?: ScheduleRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -11350,6 +11367,7 @@ function renderServiceWorkerLabel(status: NotificationRuntimeStatus['serviceWork
 
 function renderAgendaScreen(state: AppShellState): string {
   const selected = state.afspraken[0];
+  const activeScheduleRoute = state.activeScheduleRoute ?? 'overzicht';
   const now = new Date().toISOString().slice(0, 16);
   const upcomingIds = new Set(
     state.afspraken
@@ -11384,28 +11402,131 @@ function renderAgendaScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      `<div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>`,
-      agendaOverview,
-      upcoming.length > 0
-        ? renderAgendaList(upcoming, state.trajecten)
-        : '<p class="empty-state">Geen komende afspraken. Maak hieronder een nieuwe afspraak aan.</p>',
-      '<h2 class="section-subheading">Afgelopen</h2>',
-      past.length > 0
-        ? renderAfgelopenAgendaList(past, state.trajecten)
-        : '<p class="empty-state">Nog geen afgelopen afspraken.</p>',
-      disclosure({
-        summary: selected ? 'Afspraak bewerken' : 'Afspraak aanmaken',
-        open: !selected,
-        body: renderAfspraakForm(selected, state.trajecten, state.settings),
+      renderScheduleTaskRoutes({
+        totalCount: state.afspraken.length,
+        upcomingCount: upcoming.length,
+        pastCount: past.length,
+        hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
+        activeRoute: activeScheduleRoute,
       }),
-      disclosure({
-        summary: 'ICS importeren',
-        open: Boolean(state.agendaImportStatus || state.agendaImportError),
-        body: renderAgendaImportForm(state),
-      }),
+      `<section id="agenda-route-overzicht" class="schedule-route-section" aria-labelledby="agenda-route-overzicht-title" data-schedule-route="overzicht"${renderScheduleRouteVisibility(activeScheduleRoute, 'overzicht')}>
+        <header class="schedule-route-section__header">
+          <p class="kp-card__eyebrow">Overzicht</p>
+          <h2 id="agenda-route-overzicht-title">Agendaoverzicht</h2>
+          <p>Scan week- en maandcontext zonder direct door formulieren of historie te scrollen.</p>
+        </header>
+        ${agendaOverview || '<p class="empty-state">Nog geen agenda-overzicht beschikbaar.</p>'}
+      </section>`,
+      `<section id="agenda-route-komend" class="schedule-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
+        <header class="schedule-route-section__header">
+          <p class="kp-card__eyebrow">Komend</p>
+          <h2 id="agenda-route-komend-title">Komende afspraken</h2>
+          <p>Bekijk eerstvolgende afspraken met vraag- en herinneringscontext.</p>
+        </header>
+        <div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>
+        ${
+          upcoming.length > 0
+            ? renderAgendaList(upcoming, state.trajecten)
+            : '<p class="empty-state">Geen komende afspraken. Maak via Plannen een nieuwe afspraak aan.</p>'
+        }
+      </section>`,
+      `<section id="agenda-route-plannen" class="schedule-route-section" aria-labelledby="agenda-route-plannen-title" data-schedule-route="plannen"${renderScheduleRouteVisibility(activeScheduleRoute, 'plannen')}>
+        <header class="schedule-route-section__header">
+          <p class="kp-card__eyebrow">Plannen</p>
+          <h2 id="agenda-route-plannen-title">Afspraak plannen of bewerken</h2>
+          <p>Leg tijd, type, trajectkoppeling, voorbereiding, vraag en herinnering in één rustige workflow vast.</p>
+        </header>
+        ${disclosure({
+          summary: selected ? 'Afspraak bewerken' : 'Afspraak aanmaken',
+          open: !selected,
+          body: renderAfspraakForm(selected, state.trajecten, state.settings),
+        })}
+      </section>`,
+      `<section id="agenda-route-import" class="schedule-route-section" aria-labelledby="agenda-route-import-title" data-schedule-route="import"${renderScheduleRouteVisibility(activeScheduleRoute, 'import')}>
+        <header class="schedule-route-section__header">
+          <p class="kp-card__eyebrow">Import</p>
+          <h2 id="agenda-route-import-title">Kliniekagenda importeren</h2>
+          <p>Importeer een ICS-bestand lokaal zonder bronregels of medische inhoud in statusfeedback te tonen.</p>
+        </header>
+        ${disclosure({
+          summary: 'ICS importeren',
+          open: Boolean(state.agendaImportStatus || state.agendaImportError),
+          body: renderAgendaImportForm(state),
+        })}
+      </section>`,
+      `<section id="agenda-route-historie" class="schedule-route-section" aria-labelledby="agenda-route-historie-title" data-schedule-route="historie"${renderScheduleRouteVisibility(activeScheduleRoute, 'historie')}>
+        <header class="schedule-route-section__header">
+          <p class="kp-card__eyebrow">Historie</p>
+          <h2 id="agenda-route-historie-title">Afgelopen afspraken</h2>
+          <p>Lees terugbliknotities en afspraakcontext los van het planscherm.</p>
+        </header>
+        <h2 class="section-subheading">Afgelopen</h2>
+        ${
+          past.length > 0
+            ? renderAfgelopenAgendaList(past, state.trajecten)
+            : '<p class="empty-state">Nog geen afgelopen afspraken.</p>'
+        }
+      </section>`,
     ],
-    { ariaLabel: 'Agenda beheren' },
+    { className: 'schedule-command-layout', ariaLabel: 'Agenda beheren' },
   );
+}
+
+function renderScheduleTaskRoutes(input: {
+  totalCount: number;
+  upcomingCount: number;
+  pastCount: number;
+  hasImportFeedback: boolean;
+  activeRoute: ScheduleRoute;
+}): string {
+  const routes = [
+    {
+      id: 'overzicht',
+      href: '#agenda?route=overzicht',
+      label: 'Overzicht',
+      meta: `${input.totalCount} totaal`,
+    },
+    {
+      id: 'komend',
+      href: '#agenda?route=komend',
+      label: 'Komend',
+      meta: `${input.upcomingCount} open`,
+    },
+    { id: 'plannen', href: '#agenda?route=plannen', label: 'Plannen', meta: 'afspraak' },
+    {
+      id: 'import',
+      href: '#agenda?route=import',
+      label: 'Import',
+      meta: input.hasImportFeedback ? 'feedback' : 'ICS',
+    },
+    {
+      id: 'historie',
+      href: '#agenda?route=historie',
+      label: 'Historie',
+      meta: `${input.pastCount} terugblik`,
+    },
+  ];
+
+  return `
+    <nav class="schedule-task-routes" aria-label="Agenda taakroutes" data-schedule-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="schedule-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
+}
+
+function renderScheduleRouteVisibility(activeRoute: ScheduleRoute, route: ScheduleRoute): string {
+  return route === activeRoute
+    ? ' data-schedule-route-state="active"'
+    : ' data-schedule-route-state="inactive" hidden';
 }
 
 function renderAgendaImportForm(state: AppShellState): string {

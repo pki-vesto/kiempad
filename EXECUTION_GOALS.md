@@ -3446,6 +3446,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Schedule UI, Appointment UI, Reminder UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 51
+- **Status:** ☑ done
+
+### G1195 — medicatiescherm opdelen in taakgerichte medicationroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het medicatiescherm combineert vandaagoverzicht, medicatiebeheer, innamelogs, schema-import en voorraad/instructies nog in één lange medicatieflow.
+- **User Impact:** Gebruikers moeten door innames, beheerformulieren en historie scrollen om snel te zien wat vandaag relevant is of een middel bij te werken.
+- **Desired Outcome:** Deel het medicatiescherm zichtbaar op in taakgerichte medicationroutes voor vandaag, planning, beheer, import en historie/voorraad.
+- **User Value:** Medicatie voelt rustiger en taakgerichter zonder dosering te berekenen of medisch advies te geven.
+- **Acceptance Criteria:** Medicatiescherm bevat zichtbare taakroutes; bestaande medicatieformulier-id's, dose-log hooks, importfeedback, voorraadvelden en privacycopy blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen doseringsadvies, medische conclusie, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Medicatie, Start, Herinneringen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Medication UI, DoseLog UI, Reminder UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 50
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
