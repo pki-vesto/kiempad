@@ -476,6 +476,10 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELE
 const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR =
   'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontext ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext missing-term melding';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
+const maintenanceDocsRaw = readFileSync(
+  new URL('./maintenanceDocs.test.ts', import.meta.url),
+  'utf8',
+);
 
 describe('onderhoudsdocumentatie', () => {
   it('houdt de backlog-samenvatting gelijk aan de doelstatussen', () => {
@@ -3911,6 +3915,21 @@ describe('onderhoudsdocumentatie', () => {
       sources=docs/RUNBOOK.md,docs/GOAL_COMPLETION_AUDIT.md,tests/maintenanceDocs.test.ts
       sharedTerms=PR-comments|issuecomments|/tmp/kiempad-health-monitor-*.json|GitHub CI-artifacts|failure=...|recovery=...|contractVersion=1|responsebody|headers|user-id|session-id|record-id|recordcount|ciphertext|gezondheidsdata|diagnose|dosering|kansberekening|behandelkeuzeadvies"
     `);
+  });
+
+  it('bewaakt G1093 health monitor retention snapshot freshness guard', () => {
+    for (const freshnessTerm of [
+      'Retention snapshot freshness',
+      'health-monitor-retention-ci-evidence snapshot',
+      'docs/RUNBOOK.md',
+      'docs/GOAL_COMPLETION_AUDIT.md',
+      'tests/maintenanceDocs.test.ts',
+      'Snapshotdrift is alleen acceptabel',
+      'gedeelde cleanup- of forbidden-evidence termen',
+      'toegevoegd, verwijderd of hernoemd',
+    ]) {
+      expect(runbook + goalCompletionAudit + maintenanceDocsRaw).toContain(freshnessTerm);
+    }
   });
 
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {

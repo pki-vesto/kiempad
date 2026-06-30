@@ -12023,4 +12023,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, governance docs, runbook
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1094 — central health monitor retention freshness releasecontext evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1093 voegt snapshot freshness guardrails toe, maar releasecontext-evidence voor changelog/current-state drift is nog niet expliciet bewaakt.
+- **Desired Outcome:** Bewaak dat changelog en current state de health-monitor retention snapshot freshness guard blijven noemen zonder privacygevoelige termen.
+- **User Value:** Beheer kan releasecontext vertrouwen wanneer retention snapshotregels wijzigen.
+- **Acceptance Criteria:** Evidence verwijst naar G1093; releasecontext noemt snapshot freshness, runbook, goal-completion-audit en maintenance-test; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

@@ -162,6 +162,11 @@ pad zonder lokale vault-hercreatie.
   dat responsebody, headers, user-id, session-id, record-id, recordcount,
   ciphertext, gezondheidsdata, diagnose, dosering, kansberekening en
   behandelkeuzeadvies niet in blijvende PR-comments of issuecomments staan.
+  **Retention snapshot freshness (G1092/G1093):** wijzig de inline
+  health-monitor-retention-ci-evidence snapshot alleen samen met deze runbookregel,
+  `docs/GOAL_COMPLETION_AUDIT.md` en `tests/maintenanceDocs.test.ts`. Snapshotdrift is
+  alleen acceptabel wanneer de gedeelde cleanup- of forbidden-evidence termen bewust
+  wijzigen en de PR uitlegt welke term is toegevoegd, verwijderd of hernoemd.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

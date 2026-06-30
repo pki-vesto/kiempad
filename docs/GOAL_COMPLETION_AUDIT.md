@@ -119,6 +119,12 @@ Gebruik deze aanvullende audit wanneer een PR of issue health-monitor failure-ar
 - **Forbidden evidence terms:** blijvende audit-evidence mag geen responsebody,
   headers, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata,
   diagnose, dosering, kansberekening of behandelkeuzeadvies bevatten.
+- **Retention snapshot freshness:** wijzig de inline
+  health-monitor-retention-ci-evidence snapshot alleen samen met
+  `docs/RUNBOOK.md`, deze auditsectie en `tests/maintenanceDocs.test.ts`.
+  Snapshotdrift is alleen acceptabel wanneer gedeelde cleanup- of
+  forbidden-evidence termen bewust wijzigen en de PR uitlegt welke term is toegevoegd,
+  verwijderd of hernoemd.
 
 ## Beslissing
 
