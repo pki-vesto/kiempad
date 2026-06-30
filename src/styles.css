@@ -1417,6 +1417,62 @@ h2 {
   gap: 16px;
 }
 
+.kp-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.kp-dashboard__primary,
+.kp-dashboard__secondary {
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+}
+
+.kp-dashboard__secondary {
+  align-content: start;
+}
+
+.kp-dashboard-section {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.kp-dashboard-section__eyebrow {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kp-dashboard-section__title {
+  margin: 0;
+  font-size: 1.18rem;
+}
+
+.kp-dashboard-section__body {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.start-dashboard-shell > .kp-dashboard__primary {
+  gap: 16px;
+}
+
+.start-dashboard-shell > .kp-dashboard__secondary {
+  gap: 12px;
+}
+
 .start-command-layout {
   gap: 18px;
 }
@@ -3131,6 +3187,14 @@ a.action-card:active {
 
   .workspace {
     grid-template-columns: 1fr;
+  }
+
+  .kp-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .kp-dashboard-section {
+    padding: 14px;
   }
 
   .dashboard-grid {

@@ -77,6 +77,41 @@ export function sectionStack(
   return `<div class="section-stack${cls}"${label}>${children.join('')}</div>`;
 }
 
+/** Responsive dashboard shell with a primary task lane and secondary route lane. */
+export function dashboardShell(opts: {
+  primary: string[];
+  secondary?: string[];
+  className?: string;
+  ariaLabel?: string;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const secondary = opts.secondary?.filter(Boolean) ?? [];
+  return `<section class="kp-dashboard${cls}"${label}>
+    <div class="kp-dashboard__primary">${opts.primary.filter(Boolean).join('')}</div>
+    ${secondary.length > 0 ? `<aside class="kp-dashboard__secondary">${secondary.join('')}</aside>` : ''}
+  </section>`;
+}
+
+/** Task-oriented dashboard section. `body` is raw HTML. */
+export function dashboardSection(opts: {
+  title: string;
+  body: string;
+  eyebrow?: string;
+  className?: string;
+  ariaLabel?: string;
+  route?: string;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const route = opts.route ? ` data-dashboard-route="${escapeAttribute(opts.route)}"` : '';
+  return `<section class="kp-dashboard-section${cls}"${label}${route}>
+    ${opts.eyebrow ? `<p class="kp-dashboard-section__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : ''}
+    <h2 class="kp-dashboard-section__title">${escapeHtml(opts.title)}</h2>
+    <div class="kp-dashboard-section__body">${opts.body}</div>
+  </section>`;
+}
+
 /** Rounded surface card. `body` is raw HTML. */
 export function card(opts: {
   body: string;
