@@ -69,6 +69,48 @@ export class KennisStore {
     return item;
   }
 
+  async updateResearchRelevanceReview(
+    itemId: string,
+    input: {
+      relevantieVoorGebruiker: string;
+      reviewStatus: 'concept_te_controleren';
+    },
+  ): Promise<KennisItem> {
+    const existing = await this.kennisItems.get(itemId);
+    const existingValue = existing?.value;
+    if (!existingValue) {
+      throw new Error('Researchrelevantie niet gevonden.');
+    }
+    if (existingValue.categorie !== 'research' || !existingValue.researchPublicatie) {
+      throw new Error('Researchrelevantie niet gevonden.');
+    }
+    if (input.reviewStatus !== 'concept_te_controleren') {
+      throw new Error('Onbekende reviewstatus voor researchrelevantie.');
+    }
+
+    const item = maakResearchKennisItem(existingValue.id, {
+      titel: existingValue.titel,
+      notitie: existingValue.inhoud,
+      bron: existingValue.researchPublicatie.bron,
+      publicatieDatum: existingValue.researchPublicatie.publicatieDatum,
+      wetenschappelijkeSamenvatting: existingValue.researchPublicatie.wetenschappelijkeSamenvatting,
+      scientificSummary: existingValue.researchPublicatie.scientificSummary,
+      eenvoudigeSamenvatting: existingValue.researchPublicatie.eenvoudigeSamenvatting,
+      patientSummary: existingValue.researchPublicatie.patientSummary,
+      sourceCitation: existingValue.researchPublicatie.sourceCitation,
+      relevantieVoorGebruiker: input.relevantieVoorGebruiker,
+      aiGegenereerd: existingValue.ai_gegenereerd,
+    });
+    const updated: KennisItem = {
+      ...item,
+      geverifieerd_met_arts: existingValue.geverifieerd_met_arts,
+      geverifieerdOp: existingValue.geverifieerdOp,
+      volgendeVerificatieOp: existingValue.volgendeVerificatieOp,
+    };
+    await this.kennisItems.saveWithId(updated);
+    return updated;
+  }
+
   async saveEigenKennisItem(input: {
     id?: string;
     titel: string;

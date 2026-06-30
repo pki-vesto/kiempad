@@ -127,6 +127,16 @@ export type ResearchRelevantieVoorGebruiker = {
     artsBespreekTaal: string;
     uitleg: string;
   };
+  relevantieUitleg: {
+    bron: string;
+    datum: string;
+    reviewStatus: 'concept_te_controleren';
+    onzekerheidslabel: 'contextmatch_onzeker_geen_causaliteit';
+    bronpad: string[];
+    correctieVelden: string[];
+    uitlegVoorLeken: string;
+    waarschuwing: string;
+  };
   waarschuwing: string;
 };
 
@@ -668,6 +678,10 @@ export function bouwResearchRelevantieVoorGebruiker(
         relevantieVoorGebruiker: item.researchPublicatie.relevantieVoorGebruiker,
         dossierContextBronnen: [...dossierContextBronnen],
         contextMatch,
+        relevantieUitleg: bouwResearchRelevantieUitleg({
+          item,
+          contextMatch,
+        }),
         waarschuwing:
           'Relevantie is een contextmatch voor het gesprek met de kliniek; dit is geen medische conclusie, rangorde of behandelrichting.',
       };
@@ -677,6 +691,47 @@ export function bouwResearchRelevantieVoorGebruiker(
         b.publicatieDatum.localeCompare(a.publicatieDatum) ||
         a.titel.localeCompare(b.titel, 'nl-NL'),
     );
+}
+
+function bouwResearchRelevantieUitleg(input: {
+  item: KennisItem & {
+    researchPublicatie: NonNullable<KennisItem['researchPublicatie']> & {
+      relevantieVoorGebruiker: string;
+    };
+  };
+  contextMatch: ResearchRelevantieVoorGebruiker['contextMatch'];
+}): ResearchRelevantieVoorGebruiker['relevantieUitleg'] {
+  const bronpad = [
+    `Research: ${input.item.titel}`,
+    `Bron: ${input.item.researchPublicatie.bron}`,
+    `Publicatie: ${input.item.researchPublicatie.publicatieDatum}`,
+    `Contextmatch: ${input.contextMatch.label}`,
+  ];
+  const contextSamenvatting =
+    input.contextMatch.gekoppeldeContextfactoren.length > 0
+      ? input.contextMatch.gekoppeldeContextfactoren.join(' · ')
+      : 'nog geen lokale contextfactoren';
+  const ontbrekend =
+    input.contextMatch.ontbrekendeGegevens.length > 0
+      ? input.contextMatch.ontbrekendeGegevens.join(' · ')
+      : 'geen ontbrekende context';
+
+  return {
+    bron: input.item.researchPublicatie.bron,
+    datum: input.item.researchPublicatie.publicatieDatum,
+    reviewStatus: 'concept_te_controleren',
+    onzekerheidslabel: 'contextmatch_onzeker_geen_causaliteit',
+    bronpad,
+    correctieVelden: [
+      'relevantieVoorGebruiker',
+      'contextfactoren',
+      'ontbrekendeGegevens',
+      'reviewstatus',
+    ],
+    uitlegVoorLeken: `Deze relevantie is een controleerbare koppeling tussen de publicatie en lokale contextfactoren: ${contextSamenvatting}. Ontbrekende gegevens: ${ontbrekend}. Gebruik dit alleen als vraagvoorbereiding voor de kliniek.`,
+    waarschuwing:
+      'Onzekerheidslabel: contextmatch, geen causaliteit, rangorde, kansclaim of behandelrichting.',
+  };
 }
 
 export function bouwResearchDossierRelaties(

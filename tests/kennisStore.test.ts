@@ -111,6 +111,40 @@ describe('KennisStore', () => {
     expect((await store.list()).find((listed) => listed.id === item.id)).toEqual(item);
   });
 
+  it('bewaart een researchrelevantiecorrectie op hetzelfde versleutelde item', async () => {
+    const { driver, store } = await setupStore();
+
+    const item = await store.saveResearchItem({
+      titel: 'Artikel over embryocultuur',
+      bron: 'https://voorbeeld.test/research',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen samenvatting en aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Observationele publicatie met methode, populatie en beperkingen samengevat.',
+      eenvoudigeSamenvatting:
+        'Dit artikel geeft achtergrondvragen, maar bepaalt niet wat jullie moeten kiezen.',
+      relevantieVoorGebruiker:
+        'Relevant als achtergrond bij het lopende traject en vragen aan de kliniek.',
+    });
+
+    const updated = await store.updateResearchRelevanceReview(item.id, {
+      relevantieVoorGebruiker:
+        'Gebruikerscorrectie: relevant als vraagvoorbereiding bij het lopende traject.',
+      reviewStatus: 'concept_te_controleren',
+    });
+    const raw = await driver.getRecord(item.id);
+
+    expect(updated.id).toBe(item.id);
+    expect(updated.researchPublicatie).toMatchObject({
+      bron: 'https://voorbeeld.test/research',
+      publicatieDatum: '2026-05-10',
+      relevantieVoorGebruiker:
+        'Gebruikerscorrectie: relevant als vraagvoorbereiding bij het lopende traject.',
+    });
+    expect((await store.list()).filter((listed) => listed.id === item.id)).toHaveLength(1);
+    expect(raw?.payload.ciphertext).not.toContain('Gebruikerscorrectie');
+  });
+
   it('bewaart en bewerkt eigen kennisitems versleuteld', async () => {
     const { driver, store } = await setupStore();
 

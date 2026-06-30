@@ -32500,6 +32500,24 @@ describe('app shell', () => {
     expect(html).toContain('Gekoppelde contextfactoren: Traject: Poging 1');
     expect(html).toContain('Ontbrekende gegevens: Recent consultverslag ontbreekt');
     expect(html).toContain('Bespreek met je arts of kliniek');
+    expect(html).toContain('Relevantiebron');
+    expect(html).toContain('Reviewstatus</dt><dd>concept_te_controleren');
+    expect(html).toContain('Onzekerheidslabel');
+    expect(html).toContain('contextmatch_onzeker_geen_causaliteit');
+    expect(html).toContain('Uitleg voor leken');
+    expect(html).toContain('Deze relevantie is een controleerbare koppeling');
+    expect(html).toContain('class="research-relevance-review-form compact-form"');
+    expect(html).toContain('data-research-relevance-id="research-eigen"');
+    expect(html).toContain('name="researchRelevanceCorrection"');
+    expect(html).toContain('name="researchRelevanceReviewStatus"');
+    expect(html).toContain('Bewaar relevantiecorrectie');
+    expect(html).toContain(
+      'Bronpad: Research: Eigen artikel embryo-cultuur > Bron: https://voorbeeld.test/embryo-cultuur > Publicatie: 2026-05-10 > Contextmatch: contextmatch_met_lokale_bronnen',
+    );
+    expect(html).toContain(
+      'Correctievelden: relevantieVoorGebruiker · contextfactoren · ontbrekendeGegevens · reviewstatus',
+    );
+    expect(html).toContain('Onzekerheidslabel: contextmatch, geen causaliteit');
     expect(html).toContain('Context: Traject: Poging 1');
     expect(html).toContain('geen medische conclusie, rangorde of behandelrichting');
     expect(html).toContain('Research-dossierrelaties');
@@ -32509,6 +32527,11 @@ describe('app shell', () => {
     );
     expect(html).toContain('Onzekerheid: contextrelatie, geen causaliteit.');
     expect(html).toContain('dit bewijst geen oorzaak, diagnose, dosering of behandelkeuze');
+    const relevanceStart = html.indexOf('<h2>Relevantie voor jullie context</h2>');
+    const relevanceEnd = html.indexOf('<h2>Research-dossierrelaties</h2>', relevanceStart);
+    const relevanceSection = html.slice(relevanceStart, relevanceEnd);
+    expect(relevanceSection).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    expect(relevanceSection).not.toMatch(/\bdiagnose|kansberekening|behandelkeuzeadvies\b/i);
   });
 
   it('rendert researchtrends gegroepeerd per onderwerp', () => {

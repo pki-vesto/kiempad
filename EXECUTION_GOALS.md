@@ -4246,7 +4246,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, policy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G545 — researchbibliotheek offline cache metadata
 
@@ -11724,6 +11724,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Desired Outcome:** Voeg onderhoudsbewijs toe dat PubMed query previews alleen algemene allowlist-termen gebruiken, bron/datum/reviewstatus tonen en geen dossier-, consult- of medische vrije tekst lekken.
 - **User Value:** Gebruikers kunnen researchzoektermen controleren zonder dat Kiempad persoonlijke medische inhoud naar een externe zoekdienst voorbereidt.
 - **Acceptance Criteria:** Audit of tests verwijzen naar G540; PubMed-bron, datum en reviewstatus blijven zichtbaar of testbaar; queryterm-allowlisting en correctievelden blijven bewaakt; geen netwerkactie zonder expliciete opt-in; evidence bevat geen secrets, dossierplaintext, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research, knowledge screen, privacy tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1073 — relevance uncertainty audit evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** G544 introduceert een researchrelevantie-uitleg met onzekerheidslabel, bron, datum, reviewstatus en correctievelden, maar er is nog geen compacte audit die dit contract door toekomstige research-UI wijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat researchrelevantie-uitleg bron, datum, reviewstatus, onzekerheidslabel, bronpad en correctievelden behoudt zonder medische claims.
+- **User Value:** Gebruikers houden begrijpelijke, controleerbare researchcontext zonder dat Kiempad persoonlijke conclusies of behandeladvies suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G544; bron, datum, reviewstatus en onzekerheidslabel blijven zichtbaar of testbaar; correctievelden voor conceptcontrole blijven aanwezig; bronpad blijft vrij van dossierplaintext of medische vrije tekst; evidence bevat geen secrets, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Research, knowledge screen, privacy tests

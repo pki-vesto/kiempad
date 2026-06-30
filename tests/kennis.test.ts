@@ -355,6 +355,28 @@ describe('kennis domeinregels', () => {
           uitleg:
             'Contextmatch op basis van lokale bronnen: Traject: Poging 1 · Consult: 2026-06-12 · Labconsult · Dossierdocument: 2026-06-10 · Embryolabverslag. Ontbrekende gegevens: geen ontbrekende context. Bespreek met je arts of kliniek welke vragen deze publicatie oproept voor jullie dossiercontext. Geen medisch advies of behandelrichting.',
         },
+        relevantieUitleg: {
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          datum: '2026-05-10',
+          reviewStatus: 'concept_te_controleren',
+          onzekerheidslabel: 'contextmatch_onzeker_geen_causaliteit',
+          bronpad: [
+            'Research: Artikel over embryo-cultuur',
+            'Bron: https://voorbeeld.test/embryo-cultuur',
+            'Publicatie: 2026-05-10',
+            'Contextmatch: contextmatch_met_lokale_bronnen',
+          ],
+          correctieVelden: [
+            'relevantieVoorGebruiker',
+            'contextfactoren',
+            'ontbrekendeGegevens',
+            'reviewstatus',
+          ],
+          uitlegVoorLeken:
+            'Deze relevantie is een controleerbare koppeling tussen de publicatie en lokale contextfactoren: Traject: Poging 1 · Consult: 2026-06-12 · Labconsult · Dossierdocument: 2026-06-10 · Embryolabverslag. Ontbrekende gegevens: geen ontbrekende context. Gebruik dit alleen als vraagvoorbereiding voor de kliniek.',
+          waarschuwing:
+            'Onzekerheidslabel: contextmatch, geen causaliteit, rangorde, kansclaim of behandelrichting.',
+        },
         waarschuwing:
           'Relevantie is een contextmatch voor het gesprek met de kliniek; dit is geen medische conclusie, rangorde of behandelrichting.',
       },
@@ -382,6 +404,8 @@ describe('kennis domeinregels', () => {
     const tekst = [
       relevantie?.contextMatch.uitleg,
       relevantie?.contextMatch.artsBespreekTaal,
+      relevantie?.relevantieUitleg.uitlegVoorLeken,
+      relevantie?.relevantieUitleg.waarschuwing,
       relevantie?.waarschuwing,
     ].join(' ');
 
@@ -392,6 +416,18 @@ describe('kennis domeinregels', () => {
     });
     expect(tekst).toContain('Bespreek met je arts of kliniek');
     expect(tekst).toContain('Ontbrekende gegevens');
+    expect(relevantie?.relevantieUitleg).toMatchObject({
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      datum: '2026-05-10',
+      reviewStatus: 'concept_te_controleren',
+      onzekerheidslabel: 'contextmatch_onzeker_geen_causaliteit',
+      correctieVelden: [
+        'relevantieVoorGebruiker',
+        'contextfactoren',
+        'ontbrekendeGegevens',
+        'reviewstatus',
+      ],
+    });
     expect(tekst).not.toMatch(/\b(\d+%|kansscore|diagnose|moet|beste behandeling|kies)\b/i);
   });
 
