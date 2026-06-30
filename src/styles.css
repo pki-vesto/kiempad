@@ -2156,6 +2156,13 @@ a.action-card:active {
     padding 150ms ease;
 }
 
+#dossier-upload-form,
+#consult-verslag-form,
+#embryo-quality-form,
+#embryo-status-event-form {
+  scroll-margin-top: clamp(136px, 16vh, 176px);
+}
+
 .dossier-add-route-panel + .dossier-add-route-panel {
   margin-top: 10px;
 }

@@ -13112,4 +13112,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 59
+- **Status:** ☑ done
+
+### G1166 — dossier add feedback return landing context cue
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De ankerlanding heeft nu voldoende scrollmarge, maar het gelande formulierdeel mag subtieler bevestigen dat de gebruiker op de juiste context terug is.
+- **User Impact:** Gebruikers kunnen na de sprong nog kort zoeken naar het relevante veldblok, vooral op lange mobiele dossierformulieren.
+- **Desired Outcome:** Voeg een rustige visuele landingscue toe voor feedback focus-return targets zonder copy, volgorde, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers herkennen na de terugactie sneller welk formulierdeel aandacht vraagt.
+- **Acceptance Criteria:** Target-formulier of eerste veldgroep toont een subtiele contextcue bij anchor-target zonder layoutshift; bestaande ankers, form-id's, input names en data-hooks blijven intact; anchor landing audit, forced-colors audit, reduced-motion audit, pressed state audit, return interaction tone, return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 58
 - **Status:** ☐ open

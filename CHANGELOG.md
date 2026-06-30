@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1165/G1166 Premium Claude Design UI: feedback focus-return ankers landen nu met vaste responsive scrollmarge op de vier dossierformulieren zodat formulierdelen niet tegen vaste UI plakken; G1166 is toegevoegd voor landingscontext-cue.
 - G1164/G1165 Premium Claude Design UI: feedback focus-return links hebben nu forced-colors feedback met systeemkleuren voor hover, pressed en focus-visible states; G1165 is toegevoegd voor ankerlanding-audit.
 - G1163/G1164 Premium Claude Design UI: feedback focus-return links respecteren nu reduced-motion door transformbeweging uit te zetten terwijl hover- en pressed-feedback via achtergrond en insetlijn zichtbaar blijven; G1164 is toegevoegd voor forced-colors audit.
 - G1162/G1163 Premium Claude Design UI: feedback focus-return pressed state gebruikt nu centrumvaste mini-scale, subtiele pressed achtergrond en inset accentlijn in plaats van verticale verschuiving; G1163 is toegevoegd voor reduced-motion audit.
