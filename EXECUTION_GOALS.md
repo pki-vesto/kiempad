@@ -3350,7 +3350,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, UI, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G481 — fertility research source registry
 
@@ -11489,6 +11489,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Embryo dossier, dossier store, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1056 — embryo comparison language audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G480 verscherpt embryovergelijking naar feitelijke kliniekvelden met neutrale sortering en zonder score-, kleur-, voorkeur- of kanslabels, maar er is nog geen compacte audit die deze taalgrens en vergelijking tussen pogingen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat embryovergelijking dag, status, kliniektekst, bron en notitie toont met neutrale sortering zonder selectieadvies of rangordetaal.
+- **User Value:** Gebruikers kunnen embryo-informatie naast elkaar bespreken met de kliniek zonder dat Kiempad selectieadvies of impliciete voorkeur suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G480; vergelijking tussen meerdere embryo’s en pogingen blijft gedekt; sortering blijft embryo-label alfabetisch of expliciet gebruikersgestuurd; evidence bevat geen beste/slechtste/kans/score/kleuradvies/voorkeurstaal of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

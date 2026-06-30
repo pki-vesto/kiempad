@@ -31269,7 +31269,7 @@ describe('app shell', () => {
     );
     expect(html).toContain('Embryo-dossiers');
     expect(html).toContain('Embryovergelijking per poging');
-    expect(html).toContain('Poging: traject-1');
+    expect(html).toContain('Poging: traject-1 · Sortering: embryo-label alfabetisch');
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-1');
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-2');
     expect(html).toContain(
@@ -31279,15 +31279,24 @@ describe('app shell', () => {
       'Kwaliteit bronlabels: 4BB · bronlabel Labrapport · 2026-05-04 · concept',
     );
     expect(html).toContain(
-      'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 2',
+      'Embryo 1 · Dagen: 5 · Kwaliteit: 4AA · Kliniektekst: 4AA · Status: teruggeplaatst · Meetmoment: Dag 5 blastocyst · Bron: Labrapport',
     );
     expect(html).toContain(
-      'Embryo 2 · Dagen: 5 · Kwaliteit: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport · Historiemomenten: 1',
+      'Notitie: Pogingnotitie: Kort antagonistprotocol volgens kliniek. | Afspraak Terugplaatsing: Neem legitimatie en kliniekbrief mee.',
     );
-    expect(html).toContain('Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet');
+    expect(html).toContain(
+      'Embryo 2 · Dagen: 5 · Kwaliteit: 4BB · Kliniektekst: 4BB · Status: ingevroren · Meetmoment: Dag 5 blastocyst · Bron: Labrapport',
+    );
+    const vergelijkingStart = html.indexOf('Embryovergelijking per poging');
+    const vergelijkingEnd = html.indexOf('</section>', vergelijkingStart);
+    const vergelijkingSection = html.slice(vergelijkingStart, vergelijkingEnd);
+    expect(vergelijkingSection).toContain(
+      'Deze vergelijking zet alleen feitelijke kliniekvelden naast elkaar',
+    );
+    expect(vergelijkingSection).not.toMatch(/\b(beste|slechtste|kans|score|kleuradvies)\b/i);
     expect(html).toContain('Embryo-historie');
     expect(html).toContain(
-      '2026-05-04 · Terugplaatsing · dag 5 · kwaliteit 4AA · terminologie Gardner-score · Bron: Labrapport',
+      '2026-05-04 · Terugplaatsing · dag 5 · kliniektekst 4AA · terminologie Gardner-score · Bron: Labrapport',
     );
     expect(html).toContain(
       '2026-05-04T11:00 · Afspraak terugplaatsing · Terugplaatsing · Transfer gepland met embryo 1. · Bron: Agenda',
