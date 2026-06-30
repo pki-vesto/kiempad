@@ -1256,7 +1256,12 @@ function renderDossierScreen(state: AppShellState): string {
   const echoAfspraakClassificaties = bouwEchoAfspraakClassificaties(alleImagingItems);
   const embryoExifIsolaties = bouwEmbryoAfbeeldingExifIsolaties(alleImagingItems);
   const imagingItems = filterImagingRepository(alleImagingItems, state.imagingFilter ?? {});
-  const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
+  const imagingVergelijking = bouwImagingVergelijking(
+    imagingItems.map((item) => item.document),
+    {
+      ontgrendeld: !state.imagingPreviewLocked,
+    },
+  );
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
   const importInboxItems = bouwDossierImportInbox(zichtbareDocumenten, {
     vergrendeld: state.imagingPreviewLocked,
@@ -7177,25 +7182,64 @@ function renderImagingVergelijking(
 ): string {
   if (!vergelijking) {
     return `
-      <section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">
-        <h2>Beeldmomenten vergelijken</h2>
-        <p class="small-print">Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.</p>
+      <section class="policy-panel embedded-summary imaging-compare-panel" aria-label="Beeldmomenten vergelijken" data-imaging-compare-state="empty">
+        <div class="imaging-compare-panel__header">
+          <p class="kp-card__eyebrow">Beeldrepository</p>
+          <h2>Beeldmomenten vergelijken</h2>
+          <p class="small-print">Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.</p>
+        </div>
+        <div class="imaging-compare-panel__empty">
+          <strong>Nog niets naast elkaar</strong>
+          <p>Upload eerst twee echo’s, foto’s, scans of embryo-afbeeldingen. Kiempad toont daarna alleen datum, type, context en veilige bronmetadata.</p>
+        </div>
+        <p class="small-print">Geen beeldinterpretatie, kansberekening of behandeladvies.</p>
       </section>
     `;
   }
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">
-      <h2>Beeldmomenten vergelijken</h2>
-      <dl class="summary-list">
-        <div><dt>Eerste beeld</dt><dd>${escapeHtml(vergelijking.links.datum)} · ${escapeHtml(vergelijking.links.titel)}</dd></div>
-        <div><dt>Tweede beeld</dt><dd>${escapeHtml(vergelijking.rechts.datum)} · ${escapeHtml(vergelijking.rechts.titel)}</dd></div>
-      </dl>
-      <ul class="compact-list">
-        ${vergelijking.notities.map((notitie) => `<li>${escapeHtml(notitie)}</li>`).join('')}
-      </ul>
+    <section class="policy-panel embedded-summary imaging-compare-panel" aria-label="Beeldmomenten vergelijken" data-imaging-compare-state="ready">
+      <div class="imaging-compare-panel__header">
+        <p class="kp-card__eyebrow">Beeldrepository</p>
+        <h2>Beeldmomenten vergelijken</h2>
+        <p class="small-print">Twee meest recente beeldmomenten naast elkaar, zonder medische interpretatie.</p>
+      </div>
+      <div class="imaging-compare-grid" role="list" aria-label="Vergelijkbare beeldmomenten">
+        ${renderImagingCompareMoment('Eerste beeld', vergelijking.links)}
+        ${renderImagingCompareMoment('Tweede beeld', vergelijking.rechts)}
+      </div>
+      <div class="imaging-compare-summary" aria-label="Vergelijkingsnotities">
+        ${vergelijking.notities.map((notitie) => `<p>${escapeHtml(notitie)}</p>`).join('')}
+      </div>
       <p class="small-print">${escapeHtml(vergelijking.waarschuwing)}</p>
     </section>
+  `;
+}
+
+function renderImagingCompareMoment(label: string, item: ImagingRepositoryItem): string {
+  const context =
+    item.context ??
+    item.tijdlijnKoppeling.laboratoriumContext ??
+    item.tijdlijnKoppeling.embryoLabel ??
+    'Geen aanvullende context vastgelegd';
+  const koppeling = [
+    item.tijdlijnKoppeling.cyclusDag ? `Cyclusdag ${item.tijdlijnKoppeling.cyclusDag}` : undefined,
+    item.tijdlijnKoppeling.embryoDag ? `Embryodag ${item.tijdlijnKoppeling.embryoDag}` : undefined,
+    item.tijdlijnKoppeling.afspraakId ? 'Afspraak gekoppeld' : undefined,
+    item.tijdlijnKoppeling.pogingId ? 'Traject gekoppeld' : undefined,
+  ].filter((value): value is string => Boolean(value));
+
+  return `
+    <article class="imaging-compare-card" role="listitem">
+      <p class="imaging-compare-card__label">${escapeHtml(label)}</p>
+      <h3>${escapeHtml(item.datum)} · ${escapeHtml(item.titel)}</h3>
+      <dl class="summary-list imaging-compare-card__metadata">
+        <div><dt>Type</dt><dd>${escapeHtml(classificeerBeeldLabel(item.soort))}</dd></div>
+        <div><dt>Context</dt><dd>${escapeHtml(context)}</dd></div>
+        <div><dt>Preview</dt><dd>${escapeHtml(item.previewState.label)}</dd></div>
+        <div><dt>Koppeling</dt><dd>${escapeHtml(koppeling.length > 0 ? koppeling.join(' · ') : 'Nog niet gekoppeld')}</dd></div>
+      </dl>
+    </article>
   `;
 }
 

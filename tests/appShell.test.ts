@@ -1162,10 +1162,10 @@ function extractAttachmentReviewMetadataItems(html: string): string {
 
 function extractImagingComparePanel(html: string): string {
   const match = html.match(
-    /<section class="policy-panel embedded-summary" aria-label="Beeldmomenten vergelijken">([\s\S]*?)<\/section>/,
+    /<section class="policy-panel embedded-summary imaging-compare-panel" aria-label="Beeldmomenten vergelijken"[\s\S]*?<\/section>/,
   );
-  if (!match?.[1]) throw new Error('Imaging compare panel ontbreekt.');
-  return match[1].replace(/\s+/g, ' ').trim();
+  if (!match?.[0]) throw new Error('Imaging compare panel ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
 }
 
 function extractEchoAppointmentClassificationPanel(html: string): string {
@@ -5007,9 +5007,12 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('name="imagingAfspraakId"');
     expect(emptyHtml).toContain('name="imagingEmbryoLabel"');
     expect(emptyCompare).toContain('Beeldmomenten vergelijken');
+    expect(emptyCompare).toContain('data-imaging-compare-state="empty"');
+    expect(emptyCompare).toContain('Nog niets naast elkaar');
     expect(emptyCompare).toContain(
       'Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.',
     );
+    expect(emptyCompare).toContain('Geen beeldinterpretatie, kansberekening of behandeladvies.');
 
     const populatedHtml = renderAppShell('dossier', {
       trajecten: [],
@@ -5086,10 +5089,17 @@ describe('app shell', () => {
     });
     const populatedCompare = extractImagingComparePanel(populatedHtml);
 
+    expect(populatedCompare).toContain('data-imaging-compare-state="ready"');
+    expect(populatedCompare).toContain('class="imaging-compare-grid"');
+    expect(populatedCompare).toContain('class="imaging-compare-card"');
     expect(populatedCompare).toContain('Eerste beeld');
     expect(populatedCompare).toContain('Tweede beeld');
     expect(populatedCompare).toContain('2026-05-04 · Embryo compare rechts');
     expect(populatedCompare).toContain('2026-05-02 · Echo compare links');
+    expect(populatedCompare).toContain('<dt>Type</dt><dd>Embryo-afbeelding</dd>');
+    expect(populatedCompare).toContain('<dt>Context</dt><dd>Embryo 1 dag 5</dd>');
+    expect(populatedCompare).toContain('<dt>Preview</dt><dd>Thumbnail en preview beschikbaar</dd>');
+    expect(populatedCompare).toContain('<dt>Koppeling</dt><dd>Embryodag 5</dd>');
     expect(populatedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
     expect(populatedCompare).toContain('Soorten: Embryo-afbeelding en Echo.');
     expect(populatedCompare).toContain('Kiempad interpreteert beelden niet medisch.');
@@ -5157,6 +5167,10 @@ describe('app shell', () => {
     });
     const lockedCompare = extractImagingComparePanel(lockedHtml);
 
+    expect(lockedCompare).toContain('data-imaging-compare-state="ready"');
+    expect(lockedCompare).toContain(
+      '<dt>Preview</dt><dd>Preview beschikbaar na ontgrendeling</dd>',
+    );
     expect(lockedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
     expect(lockedHtml).toContain('Previewstatus: Preview beschikbaar na ontgrendeling');
     expect(lockedHtml).toContain('Bronbestand verborgen tot ontgrendeling');
