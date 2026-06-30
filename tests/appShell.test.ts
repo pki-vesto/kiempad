@@ -20218,6 +20218,127 @@ describe('app shell', () => {
     );
   });
 
+  it('bewaakt G996 attachment assistive cleanup archive receipt export delivery handoff confirmation receipt audit privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-token',
+        dossierStatus:
+          'G996 cleanup archive receipt export delivery handoff confirmation receipt audit bevat auditbewijs voor g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-secret-source.pdf met private-g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-token OCR-payload diagnose 6264 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-sensitive',
+            datum: '2026-12-09',
+            titel:
+              'G996 cleanup archive receipt export delivery handoff confirmation receipt audit bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUc5OTYtUEFZTE9BRA==',
+            notitie:
+              'private-g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-token hoort niet in assistive handoff confirmation receipt audit states.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 6264 mg behandelkeuzeadvies blijft buiten G996 handoff confirmation receipt audit proof.',
+              signalen: [
+                'OCR-payload blijft buiten G996 handoff confirmation receipt audit screenreader label.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2026-12-09',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.98,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-12-09T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G996 OCR TEKST private-g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-token diagnose 6264 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-secret-source.pdf.',
+            },
+            uploadedAt: '2026-12-09T08:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditSurface(html);
+
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-surface="privacy"',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'role="status"',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'aria-live="polite"',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-boundary',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'audit-proof-summary-affordance',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'screenreader-handoff-confirmation-receipt-audit-label-state',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'assistive-confirmation-receipt-audit-retention',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      'locked-preview-assistive-handoff-confirmation-receipt-audit-boundary',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).toContain(
+      '1 bijlage met veilige cleanup archive receipt export delivery handoff confirmation receipt auditstatus zonder broninhoud.',
+    );
+
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'private-g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-token',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'g996-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-secret-source.pdf',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'U0VDUkVULUc5OTYtUEFZTE9BRA==',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'GEVOELIGE G996 OCR TEKST',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'OCR-payload',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'Attachmentpayload',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'attachmentpayload',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'dossierpayload',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'diagnose',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toContain(
+      'behandelkeuzeadvies',
+    );
+    expect(assistiveArchiveReceiptExportDeliveryHandoffConfirmationReceiptAudit).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i,
+    );
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
