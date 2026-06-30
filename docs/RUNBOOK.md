@@ -153,6 +153,15 @@ pad zonder lokale vault-hercreatie.
   `failure=unexpected-error-states`; plak geen responsebody, headers, user-id,
   session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose,
   dosering, kansberekening of behandelkeuzeadvies in PR's, issues of CI-artifacts.
+  **Failure-artifact retention en cleanup (G1088/G1089):** bewaar health-monitor
+  failure-artifacts alleen zolang de bijbehorende PR of issue open staat; verwijder
+  lokale kopieen na triage met `rm -f /tmp/kiempad-health-monitor-*.json` en laat
+  GitHub CI-artifacts verlopen via de standaard Actions retention in plaats van ze
+  opnieuw te uploaden. Sluit de PR/issue pas nadat de evidence is vervangen door
+  compacte labels (`failure=...`, `recovery=...`, `contractVersion=1`) en controleer
+  dat responsebody, headers, user-id, session-id, record-id, recordcount,
+  ciphertext, gezondheidsdata, diagnose, dosering, kansberekening en
+  behandelkeuzeadvies niet in blijvende PR- of issuecomments staan.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

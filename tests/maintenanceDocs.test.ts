@@ -3803,6 +3803,39 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('documenteert G1089 central health monitor failure artifact retention policy', () => {
+    for (const requiredTerm of [
+      'Failure-artifact retention en cleanup (G1088/G1089)',
+      'bijbehorende PR of issue open staat',
+      'rm -f /tmp/kiempad-health-monitor-*.json',
+      'GitHub CI-artifacts',
+      'standaard Actions retention',
+      'failure=...',
+      'recovery=...',
+      'contractVersion=1',
+      'blijvende PR- of issuecomments',
+    ]) {
+      expect(runbook).toContain(requiredTerm);
+    }
+
+    for (const forbiddenOutput of [
+      'responsebody',
+      'headers',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(runbook).toContain(forbiddenOutput);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

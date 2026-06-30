@@ -11967,4 +11967,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, CI, privacy governance
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1090 — central health monitor retention audit evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1089 documenteert retention- en cleanupregels voor health-monitor failure-artifacts, maar audit evidence dat deze regels bij PR- en issueafhandeling worden gecontroleerd ontbreekt nog.
+- **Desired Outcome:** Voeg audit-evidence toe voor controle van health-monitor failure-artifact retention na triage.
+- **User Value:** Beheer kan aantonen dat tijdelijke monitorartefacten niet onnodig blijven rondzwerven.
+- **Acceptance Criteria:** Evidence verwijst naar G1089; auditcheck noemt PR-comments, issuecomments, lokale `/tmp/kiempad-health-monitor-*.json` kopieen en GitHub CI-artifacts; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, governance docs, CI
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
