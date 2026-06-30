@@ -12808,4 +12808,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 78
+- **Status:** ☑ done
+
+### G1147 — dossier add post-submit feedback placement
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Submitacties zijn nu duidelijker, maar de feedback na uploaden of bewaren staat nog niet altijd dicht bij de actie die de gebruiker net uitvoerde.
+- **User Impact:** Gebruikers kunnen na bewaren moeten zoeken of de actie gelukt is, vooral op mobiel na langere formulieren.
+- **Desired Outcome:** Positioneer of verduidelijk post-submit feedback dichter bij de betreffende toevoerroute zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers krijgen sneller bevestiging en hoeven minder te scrollen of zoeken na een actie.
+- **Acceptance Criteria:** Feedbackplaatsing is routegericht en dicht bij de submitactie; bestaande ankers, form-id's, input names en data-hooks blijven intact; submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 77
 - **Status:** ☐ open

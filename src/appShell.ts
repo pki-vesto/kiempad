@@ -1447,7 +1447,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="beeldLaboratoriumContext" autocomplete="off" placeholder="Bijvoorbeeld: labfoto dag 5 of incubatorbeeld" />
           </label>
           </fieldset>
-          <button type="submit">Upload naar dossier</button>
+          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${renderUploadAttachmentFeedback(state)}
@@ -1549,7 +1549,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="notitie" rows="3"></textarea>
           </label>
           </fieldset>
-          <button type="submit">Bewaar consultverslag</button>
+          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="consult-upload">Bewaar consultverslag</button>
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         </section>
@@ -1629,7 +1629,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="notitie" rows="3"></textarea>
           </label>
           </fieldset>
-          <button type="submit">Bewaar embryokwaliteit</button>
+          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
         </form>
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status">
@@ -1692,7 +1692,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="notitie" rows="2"></textarea>
           </label>
           </fieldset>
-          <button type="submit">Bewaar embryo-status</button>
+          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-status">Bewaar embryo-status</button>
         </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
         </section>
