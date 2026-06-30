@@ -2241,6 +2241,13 @@ a.action-card:active {
   font-weight: 720;
 }
 
+.dossier-submit-next-action {
+  width: fit-content;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface) 91%);
+}
+
 .dossier-submit-focus-return {
   width: fit-content;
   color: var(--accent);

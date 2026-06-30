@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1157/G1158 Premium Claude Design UI: dossier-submitfeedback markeert recovery hints nu ook als compacte next-action chips zodat de eerstvolgende actie duidelijker afsteekt tegen status- en doelcontext; G1158 is toegevoegd voor microcopy-volgorde-audit.
 - G1156/G1157 Premium Claude Design UI: dossier-submitfeedback toont nu een compacte privacyveilige hersteldoelbevestiging per review- en foutstate zodat gebruikers sneller zien welk formulierdeel aandacht vraagt; G1157 is toegevoegd voor contrast in de eerstvolgende actie.
 - G1155/G1156 Premium Claude Design UI: feedback focus-return cues hebben nu een duidelijke compacte `:focus-visible` state met accentoutline zonder ankers, formcontracten of privacyhooks te wijzigen; G1156 is toegevoegd voor doelbevestiging in feedbackcontext.
 - G1154/G1155 Premium Claude Design UI: inline dossier-submitfeedback toont nu compacte focus-return cues naar het relevante formulieranker bij review- en foutstates zonder payloadtekst of formcontractwijzigingen; G1155 is toegevoegd voor focus-visible verfijning.
