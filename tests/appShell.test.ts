@@ -4571,6 +4571,7 @@ describe('app shell', () => {
     expect(switchHint).toContain(
       'Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.',
     );
+    expect(addSection).toContain('data-dossier-add-route-microcopy="compact"');
     expect(addSection).toContain('data-dossier-add-route-draft-note="local-until-save"');
     expect(draftNote).toContain(
       'Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.',
@@ -4841,8 +4842,10 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-add-route-switch-hint');
     expect(css).toContain('.dossier-add-route-draft-note');
-    expect(css).toContain('max-width: 60ch;');
-    expect(css).toContain('font-size: 0.82rem;');
+    expect(css).toContain('.dossier-add-route-microcopy');
+    expect(css).toContain('max-width: 76ch;');
+    expect(css).toContain('flex-wrap: wrap;');
+    expect(css).toContain('font-size: 0.78rem;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
