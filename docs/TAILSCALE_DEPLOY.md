@@ -114,6 +114,7 @@ Lokale fallback op de host:
 
 ```bash
 curl -I http://127.0.0.1:8098
+curl -fsS http://127.0.0.1:8098/api/health
 ```
 
 Gebruik dezelfde `KIEMPAD_TAILSCALE_LOCAL_PORT` bij smoke als je bij deploy een
@@ -123,6 +124,7 @@ Tailnet-smoke vanaf een apparaat in de tailnet:
 
 ```bash
 curl -I https://kiempad.tail9d0c71.ts.net
+curl -fsS https://kiempad.tail9d0c71.ts.net/api/health
 ```
 
 Gecombineerde smoke:
@@ -130,6 +132,12 @@ Gecombineerde smoke:
 ```bash
 KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale
 ```
+
+De smoke valideert G503/G1078 voor `/api/health`: status, centrale opslagmodus,
+client-side encrypted envelope boundary, `technical-metadata-only`, expliciete
+empty/error states en afwezigheid van user-id, session-id, record-id, recordcount,
+ciphertext, secrets of medische termen. Zonder `KIEMPAD_TAILNET_URL` blijft de lokale
+proxycheck verplicht en meldt de smoke welke live HTTPS-check is overgeslagen.
 
 In de Tailscale-container:
 
