@@ -436,6 +436,8 @@ type CommandTaskRoute<RouteId extends string> = {
   href: string;
   label: string;
   meta: string;
+  badge: string;
+  density: 'empty' | 'filled' | 'action';
 };
 
 function renderCommandTaskRoutes<RouteId extends string>(input: {
@@ -451,8 +453,11 @@ function renderCommandTaskRoutes<RouteId extends string>(input: {
       ${input.routes
         .map(
           (route) => `
-            <a class="${input.routeClassName} command-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
-              <span>${escapeHtml(route.label)}</span>
+            <a class="${input.routeClassName} command-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''} data-command-route-density="${route.density}">
+              <span class="command-task-route__top">
+                <span>${escapeHtml(route.label)}</span>
+                <strong class="command-task-route__badge">${escapeHtml(route.badge)}</strong>
+              </span>
               <small>${escapeHtml(route.meta)}</small>
             </a>
           `,
@@ -11014,31 +11019,46 @@ function renderQuestionTaskRoutes(input: {
   hasPrepPacket: boolean;
   activeRoute: QuestionRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<QuestionRoute>[] = [
     {
       id: 'open',
       href: '#vragen?route=open',
       label: 'Open',
       meta: `${input.openCount} open`,
+      badge: String(input.openCount),
+      density: input.openCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'voorbereiden',
       href: '#vragen?route=voorbereiden',
       label: 'Prep',
       meta: input.hasPrepPacket ? 'packet' : 'wacht',
+      badge: input.hasPrepPacket ? 'klaar' : 'open',
+      density: input.hasPrepPacket ? 'filled' : 'empty',
     },
-    { id: 'beheer', href: '#vragen?route=beheer', label: 'Beheer', meta: 'vraag' },
+    {
+      id: 'beheer',
+      href: '#vragen?route=beheer',
+      label: 'Beheer',
+      meta: 'vraag',
+      badge: 'nieuw',
+      density: 'action',
+    },
     {
       id: 'verslagen',
       href: '#vragen?route=verslagen',
       label: 'Verslagen',
       meta: `${input.verslagCount} afspraak`,
+      badge: String(input.verslagCount),
+      density: input.verslagCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'alle',
       href: '#vragen?route=alle',
       label: 'Alle',
       meta: `${input.totalCount} totaal`,
+      badge: String(input.totalCount),
+      density: input.totalCount > 0 ? 'filled' : 'empty',
     },
   ];
 
@@ -11648,31 +11668,46 @@ function renderScheduleTaskRoutes(input: {
   hasImportFeedback: boolean;
   activeRoute: ScheduleRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<ScheduleRoute>[] = [
     {
       id: 'overzicht',
       href: '#agenda?route=overzicht',
       label: 'Overzicht',
       meta: `${input.totalCount} totaal`,
+      badge: String(input.totalCount),
+      density: input.totalCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'komend',
       href: '#agenda?route=komend',
       label: 'Komend',
       meta: `${input.upcomingCount} open`,
+      badge: String(input.upcomingCount),
+      density: input.upcomingCount > 0 ? 'filled' : 'empty',
     },
-    { id: 'plannen', href: '#agenda?route=plannen', label: 'Plannen', meta: 'afspraak' },
+    {
+      id: 'plannen',
+      href: '#agenda?route=plannen',
+      label: 'Plannen',
+      meta: 'afspraak',
+      badge: 'nieuw',
+      density: 'action',
+    },
     {
       id: 'import',
       href: '#agenda?route=import',
       label: 'Import',
       meta: input.hasImportFeedback ? 'feedback' : 'ICS',
+      badge: input.hasImportFeedback ? 'check' : 'ICS',
+      density: input.hasImportFeedback ? 'filled' : 'action',
     },
     {
       id: 'historie',
       href: '#agenda?route=historie',
       label: 'Historie',
       meta: `${input.pastCount} terugblik`,
+      badge: String(input.pastCount),
+      density: input.pastCount > 0 ? 'filled' : 'empty',
     },
   ];
 
@@ -11967,36 +12002,46 @@ function renderMedicationTaskRoutes(input: {
   hasImportFeedback: boolean;
   activeRoute: MedicationRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<MedicationRoute>[] = [
     {
       id: 'vandaag',
       href: '#medicatie?route=vandaag',
       label: 'Vandaag',
       meta: `${input.todayCount} gepland`,
+      badge: String(input.todayCount),
+      density: input.todayCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'planning',
       href: '#medicatie?route=planning',
       label: 'Planning',
       meta: `${input.plannedCount} later`,
+      badge: String(input.plannedCount),
+      density: input.plannedCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'beheer',
       href: '#medicatie?route=beheer',
       label: 'Beheer',
       meta: `${input.medicationCount} middel(en)`,
+      badge: String(input.medicationCount),
+      density: input.medicationCount > 0 ? 'filled' : 'action',
     },
     {
       id: 'import',
       href: '#medicatie?route=import',
       label: 'Import',
       meta: input.hasImportFeedback ? 'feedback' : 'schema',
+      badge: input.hasImportFeedback ? 'check' : 'schema',
+      density: input.hasImportFeedback ? 'filled' : 'action',
     },
     {
       id: 'historie',
       href: '#medicatie?route=historie',
       label: 'Historie',
       meta: 'voorraad',
+      badge: 'log',
+      density: 'action',
     },
   ];
 
@@ -12325,36 +12370,46 @@ function renderTreatmentTaskRoutes(input: {
   remainingReimbursements: number;
   activeRoute: TreatmentRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<TreatmentRoute>[] = [
     {
       id: 'overzicht',
       href: '#traject?route=overzicht',
       label: 'Overzicht',
       meta: `${input.activeCount} actief`,
+      badge: String(input.activeCount),
+      density: input.activeCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'fasen',
       href: '#traject?route=fasen',
       label: 'Fasen',
       meta: `${input.phaseCount} fases`,
+      badge: String(input.phaseCount),
+      density: input.phaseCount > 0 ? 'filled' : 'empty',
     },
     {
       id: 'vergoeding',
       href: '#traject?route=vergoeding',
       label: 'Vergoeding',
       meta: `${input.remainingReimbursements} resterend`,
+      badge: String(input.remainingReimbursements),
+      density: input.remainingReimbursements > 0 ? 'filled' : 'empty',
     },
     {
       id: 'context',
       href: '#traject?route=context',
       label: 'Context',
       meta: 'timeline',
+      badge: 'graph',
+      density: 'action',
     },
     {
       id: 'beheer',
       href: '#traject?route=beheer',
       label: 'Beheer',
       meta: `${input.archivedCount} archief`,
+      badge: String(input.archivedCount),
+      density: input.archivedCount > 0 ? 'filled' : 'action',
     },
   ];
 

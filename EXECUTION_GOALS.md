@@ -3510,6 +3510,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, command routes, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 47
+- **Status:** ☑ done
+
+### G1199 — mobiele commandroutes verfijnen met sticky ruimte en bottom-nav affordance
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Commandroutes tonen nu badges en density states, maar op mobiele schermen concurreren sticky routepanelen, routecontent en de bottom-nav nog om beperkte scanruimte.
+- **User Impact:** Gebruikers zien meer routecontext, maar kunnen op smalle schermen nog moeten heroriënteren tussen routepaneel, content en onderste navigatie.
+- **Desired Outcome:** Verfijn mobiele commandroutes met betere sticky spacing, scrollmarge en bottom-nav affordance zonder routehashes of privacygrenzen te wijzigen.
+- **User Value:** Gebruikers houden context tijdens mobiel scrollen en ervaren de taakroutes meer als een rustige app-flow dan als losse tabs boven formulieren.
+- **Acceptance Criteria:** Agenda, medicatie, vragen en traject behouden commandbadges; mobiele sticky spacing voorkomt overlap met content en bottom-nav; desktop blijft ongewijzigd scanbaar; bestaande hashes, form-id's, input names en privacyhooks blijven intact; browsercheck bewaakt geen horizontale overflow; tests bewaken routecontracten; geen medische payload, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Agenda, Medicatie, Vragen, Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, command routes, mobile navigation, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 46
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

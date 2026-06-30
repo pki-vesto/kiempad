@@ -2947,7 +2947,11 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Agenda taakroutes"');
     expect(html).toContain('data-schedule-task-routes="ready"');
     expect(html).toContain('data-command-task-routes="ready"');
-    expect(html).toContain('href="#agenda?route=overzicht" aria-current="page"');
+    expect(html).toContain(
+      'href="#agenda?route=overzicht" aria-current="page" data-command-route-density="filled"',
+    );
+    expect(html).toContain('class="command-task-route__badge">3</strong>');
+    expect(html).toContain('data-command-route-density="action"');
     expect(html).toContain('href="#agenda?route=komend"');
     expect(html).toContain('href="#agenda?route=plannen"');
     expect(html).toContain('href="#agenda?route=import"');
@@ -3649,7 +3653,11 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Medicatie taakroutes"');
     expect(html).toContain('data-medication-task-routes="ready"');
     expect(html).toContain('data-command-task-routes="ready"');
-    expect(html).toContain('href="#medicatie?route=vandaag" aria-current="page"');
+    expect(html).toContain(
+      'href="#medicatie?route=vandaag" aria-current="page" data-command-route-density="filled"',
+    );
+    expect(html).toContain('class="command-task-route__badge">1</strong>');
+    expect(html).toContain('class="command-task-route__badge">schema</strong>');
     expect(html).toContain('href="#medicatie?route=planning"');
     expect(html).toContain('href="#medicatie?route=beheer"');
     expect(html).toContain('href="#medicatie?route=import"');
@@ -4175,7 +4183,11 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Vragen taakroutes"');
     expect(html).toContain('data-question-task-routes="ready"');
     expect(html).toContain('data-command-task-routes="ready"');
-    expect(html).toContain('href="#vragen?route=open" aria-current="page"');
+    expect(html).toContain(
+      'href="#vragen?route=open" aria-current="page" data-command-route-density="filled"',
+    );
+    expect(html).toContain('class="command-task-route__badge">nieuw</strong>');
+    expect(html).toContain('data-command-route-density="action"');
     expect(html).toContain('href="#vragen?route=voorbereiden"');
     expect(html).toContain('href="#vragen?route=beheer"');
     expect(html).toContain('href="#vragen?route=verslagen"');
@@ -35773,7 +35785,10 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Traject taakroutes"');
     expect(html).toContain('data-treatment-task-routes="ready"');
     expect(html).toContain('data-command-task-routes="ready"');
-    expect(html).toContain('href="#traject?route=overzicht" aria-current="page"');
+    expect(html).toContain(
+      'href="#traject?route=overzicht" aria-current="page" data-command-route-density="filled"',
+    );
+    expect(html).toContain('class="command-task-route__badge">graph</strong>');
     expect(html).toContain('href="#traject?route=fasen"');
     expect(html).toContain('href="#traject?route=vergoeding"');
     expect(html).toContain('href="#traject?route=context"');
