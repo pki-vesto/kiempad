@@ -33,6 +33,10 @@ describe('DossierStore', () => {
       mimeType: 'application/pdf',
       grootteBytes: 2048,
       inhoudBase64: 'cGRmLWdlaGVpbQ==',
+      inhoudChecksum: {
+        waarde: 'c'.repeat(64),
+        berekendOp: '2026-06-23T15:00:00.000Z',
+      },
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
       notitie: 'AMH 1,7 ng/ml',
@@ -52,11 +56,19 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('AMH');
     expect(raw?.payload.ciphertext).not.toContain('1,7');
     expect(raw?.payload.ciphertext).not.toContain('ng/ml');
+    expect(raw?.payload.ciphertext).not.toContain('cccccccccccc');
     expect(raw?.payload.ciphertext).not.toContain('Embryo 1');
     expect(raw?.payload.ciphertext).not.toContain('Gardner-score');
     expect(raw?.payload.ciphertext).not.toContain('dag 5 blastocyst');
     expect(raw?.payload.ciphertext).not.toContain('cGRmLWdlaGVpbQ');
     expect(await store.list()).toEqual([saved]);
+    expect(saved.inhoudChecksum).toMatchObject({
+      algoritme: 'SHA-256',
+      waarde: 'c'.repeat(64),
+      bron: 'bestand',
+      berekendOp: '2026-06-23T15:00:00.000Z',
+      reviewStatus: 'concept',
+    });
   });
 
   it('bewaart beeldmetadata versleuteld zonder preview- of EXIF-context in plaintext', async () => {

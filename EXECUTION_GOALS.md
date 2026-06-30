@@ -3728,7 +3728,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, attachments, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G508 — PDF-pagina preview met encrypted bronkoppeling
 
@@ -11517,6 +11517,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Dossier, metadata normalization, encrypted storage, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1058 — dossier checksum duplicate review audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G507 markeert dossieruploads nu op SHA-256 checksum als unieke upload of duplicaatreview, maar er is nog geen compacte audit die deze workflowmetadata, bron/datum/reviewstatus en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat checksum-duplicaatreview zichtbaar blijft zonder broninhoud, OCR-tekst of medische payload te lekken.
+- **User Value:** Gebruikers kunnen dubbele historische uploads herkennen en controleren zonder dat Kiempad documenten inhoudelijk vergelijkt of medisch duidt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G507; duplicate-count, checksum-prefix, bron, berekend-op datum en reviewstatus blijven gedekt; evidence bevat geen broninhoud, OCR-tekst, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier, import inbox, encrypted storage, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
