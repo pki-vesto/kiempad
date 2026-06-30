@@ -335,6 +335,9 @@ export interface ConsultVerslag {
     status: 'concept';
     tekst: string;
     bron: string;
+    bronFragment: string;
+    eigenaar: Owner;
+    datum?: IsoDate;
     aangemaaktOp: IsoDate;
   }[];
   uploadedAt: IsoDate;

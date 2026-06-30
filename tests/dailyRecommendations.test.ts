@@ -284,6 +284,8 @@ describe('dagelijkse aanbevelingen', () => {
           status: 'concept',
           tekst: 'Neem labformulier mee',
           bron: 'consulttekst regel 4',
+          bronFragment: 'Neem labformulier mee',
+          eigenaar: 'samen',
           aangemaaktOp: '2026-06-20T10:00:00.000Z',
         },
       ],

@@ -184,6 +184,8 @@ describe('vraag domeinregels', () => {
               status: 'concept',
               tekst: 'Vraag aan arts: wanneer plannen we de controle?',
               bron: 'consulttekst regel 1',
+              bronFragment: 'Vraag aan arts: wanneer plannen we de controle?',
+              eigenaar: 'samen',
               aangemaaktOp: '2026-06-20T10:00:00.000Z',
             },
           ],

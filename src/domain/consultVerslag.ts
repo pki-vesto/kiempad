@@ -1,5 +1,6 @@
 import { valideerAiOutputPolicy } from './ai';
-import type { ConsultVerslag } from './types';
+import type { ConsultVerslag, Owner, Vraag } from './types';
+import { maakVraag } from './vraag';
 
 export const CONSULT_AI_SAFETY_POLICY =
   'Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze; controleer altijd met de kliniek.';
@@ -31,7 +32,22 @@ export type ConsultSamenvattingInput = Pick<
 export type ConsultActiepuntenInput = Pick<
   ConsultVerslag,
   'id' | 'tekst' | 'notitie' | 'uploadedAt'
->;
+> & {
+  eigenaar?: Owner;
+};
+
+export type ConsultActieReview = {
+  taken: NonNullable<ConsultVerslag['actiepunten']>;
+  vragen: NonNullable<ConsultVerslag['actiepunten']>;
+  herinneringsVoorstellen: {
+    id: string;
+    titel: string;
+    bronActiepuntId: string;
+    datum?: string;
+    status: 'concept';
+  }[];
+  waarschuwing: string;
+};
 
 export type ConsultSamenvattingVerschil = {
   status: 'geen_correctie' | 'gewijzigd' | 'ongewijzigd';
@@ -122,6 +138,7 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
       id,
       tekst: tekst || undefined,
       notitie: notitie || undefined,
+      eigenaar: 'samen',
       uploadedAt,
     }),
     uploadedAt,
@@ -213,6 +230,8 @@ export function extraheerConsultActiepunten(
       soort: bepaalActiepuntSoort(regel.tekst),
       tekst: normaliseerActiepuntTekst(regel.tekst),
       bron: `${regel.bron} regel ${regel.regelNummer}`,
+      bronFragment: maakBronFragment(regel.tekst),
+      datum: extraheerActieDatum(regel.tekst),
     }))
     .filter((actiepunt) => isVeiligeConsultAiTekst(actiepunt.tekst))
     .slice(0, 8)
@@ -222,10 +241,52 @@ export function extraheerConsultActiepunten(
       status: 'concept' as const,
       tekst: actiepunt.tekst,
       bron: actiepunt.bron,
+      bronFragment: actiepunt.bronFragment,
+      eigenaar: input.eigenaar ?? 'samen',
+      datum: actiepunt.datum,
       aangemaaktOp: input.uploadedAt,
     }));
 
   return actiepunten.length > 0 ? actiepunten : undefined;
+}
+
+export function maakConsultActieReview(verslag: ConsultVerslag): ConsultActieReview | undefined {
+  const actiepunten = verslag.actiepunten ?? [];
+  if (actiepunten.length === 0) return undefined;
+
+  const taken = actiepunten.filter((actiepunt) => actiepunt.soort === 'taak');
+  const vragen = actiepunten.filter((actiepunt) => actiepunt.soort === 'vraag');
+  const herinneringsVoorstellen = taken.map((actiepunt) => ({
+    id: `${actiepunt.id}-herinnering-voorstel`,
+    titel: actiepunt.tekst,
+    bronActiepuntId: actiepunt.id,
+    datum: actiepunt.datum,
+    status: 'concept' as const,
+  }));
+
+  return {
+    taken,
+    vragen,
+    herinneringsVoorstellen,
+    waarschuwing:
+      'Conceptreview uit lokale consulttekst; bevestig acties, vragen of herinneringen zelf voordat je ze gebruikt.',
+  };
+}
+
+export function maakVraagUitConsultActiepunt(
+  id: string,
+  actiepunt: NonNullable<ConsultVerslag['actiepunten']>[number],
+  afspraakId?: string,
+): Vraag {
+  if (actiepunt.soort !== 'vraag') {
+    throw new Error('Alleen conceptvragen uit consultactiepunten kunnen naar de vragenlijst.');
+  }
+
+  return maakVraag(id, {
+    vraag: actiepunt.tekst,
+    voorAfspraakId: afspraakId,
+    beantwoord: false,
+  });
 }
 
 function selecteerKernzinnen(tekst: string): string[] {
@@ -267,6 +328,24 @@ function bepaalActiepuntSoort(tekst: string): 'taak' | 'vraag' {
 
 function normaliseerActiepuntTekst(tekst: string): string {
   return tekst.replace(/^\s*[-*]\s*/u, '').trim();
+}
+
+function maakBronFragment(tekst: string): string {
+  const genormaliseerd = tekst.replace(/\s+/g, ' ').trim();
+  return genormaliseerd.length > 160 ? `${genormaliseerd.slice(0, 157).trim()}...` : genormaliseerd;
+}
+
+function extraheerActieDatum(tekst: string): string | undefined {
+  const isoMatch = tekst.match(/\b(20\d{2}-\d{2}-\d{2})\b/u);
+  if (isoMatch?.[1]) return isoMatch[1];
+
+  const nlMatch = tekst.match(/\b(\d{1,2})[-/](\d{1,2})[-/](20\d{2})\b/u);
+  if (!nlMatch) return undefined;
+
+  const dag = nlMatch[1]?.padStart(2, '0');
+  const maand = nlMatch[2]?.padStart(2, '0');
+  const jaar = nlMatch[3];
+  return dag && maand && jaar ? `${jaar}-${maand}-${dag}` : undefined;
 }
 
 function normaliseerZinnen(tekst: string): string[] {

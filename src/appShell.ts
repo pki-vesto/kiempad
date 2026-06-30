@@ -7397,10 +7397,11 @@ function renderConsultActiepunten(verslag: ConsultVerslag): string {
       <strong>Conceptactiepunten</strong>
       <ul class="compact-list">
         ${verslag.actiepunten
-          .map(
-            (actiepunt) =>
-              `<li>${escapeHtml(actiepunt.soort === 'vraag' ? 'Vraag' : 'Taak')}: ${escapeHtml(actiepunt.tekst)} <small>Bron: ${escapeHtml(actiepunt.bron)}</small></li>`,
-          )
+          .map((actiepunt) => {
+            const bronFragment = actiepunt.bronFragment || actiepunt.tekst;
+            const eigenaar = actiepunt.eigenaar || 'samen';
+            return `<li>${escapeHtml(actiepunt.soort === 'vraag' ? 'Vraag' : 'Taak')}: ${escapeHtml(actiepunt.tekst)} <small>Bron: ${escapeHtml(actiepunt.bron)} · Fragment: ${escapeHtml(bronFragment)} · Eigenaar: ${escapeHtml(eigenaar)}${actiepunt.datum ? ` · Datum: ${escapeHtml(actiepunt.datum)}` : ''} · Status: concept</small></li>`;
+          })
           .join('')}
       </ul>
       <small>Concepten uit lokale consulttekst; controleer ze voordat je ze gebruikt.</small>
