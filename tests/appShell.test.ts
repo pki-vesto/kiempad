@@ -151,6 +151,14 @@ function extractDossierAddRoutePanel(html: string, panelId: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierAddFormStart(html: string): string {
+  const match = html.match(
+    /<p class="dossier-add-form-start" data-dossier-add-form-start="document-first-step">[\s\S]*?<\/p>/,
+  );
+  if (!match?.[0]) throw new Error('Dossier toevoegformulier startcontext ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierTimelineSection(html: string): string {
   const start = html.indexOf('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
   const end = html.indexOf(
@@ -4678,16 +4686,25 @@ describe('app shell', () => {
     const emptyHtml = renderAppShell('dossier', makeStartState());
     const addSection = extractDossierAddSection(emptyHtml);
     const dossierPanel = extractDossierAddRoutePanel(emptyHtml, 'dossier-upload');
+    const formStart = extractDossierAddFormStart(emptyHtml);
     const consultPanel = extractDossierAddRoutePanel(emptyHtml, 'consult-upload');
     const embryoQualityPanel = extractDossierAddRoutePanel(emptyHtml, 'embryo-quality');
     const embryoStatusPanel = extractDossierAddRoutePanel(emptyHtml, 'embryo-status');
 
     expect(addSection).toContain('data-dossier-add-route-panel="dossier-upload"');
+    expect(addSection).toContain('data-dossier-add-form-start="document-first-step"');
+    expect(formStart).toContain(
+      'Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.',
+    );
+    expect(dossierPanel.indexOf('data-dossier-add-form-start="document-first-step"')).toBeLessThan(
+      dossierPanel.indexOf('id="dossier-upload-form"'),
+    );
     expect(addSection).toContain('data-dossier-add-route-panel="consult-upload"');
     expect(addSection).toContain('data-dossier-add-route-panel="embryo-quality"');
     expect(addSection).toContain('data-dossier-add-route-panel="embryo-status"');
     expect(dossierPanel).toContain('id="dossier-upload-form"');
     expect(dossierPanel).toContain('data-upload-privacy-kind="dossier"');
+    expect(dossierPanel).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies|OCR-payload|base64/i);
     expect(dossierPanel).toContain('data-dossier-upload-group="document-basis"');
     expect(dossierPanel).toContain('data-dossier-upload-group="embryo-labcontext"');
     expect(consultPanel).toContain('id="consult-verslag-form"');
@@ -4846,6 +4863,9 @@ describe('app shell', () => {
     expect(css).toContain('max-width: 76ch;');
     expect(css).toContain('flex-wrap: wrap;');
     expect(css).toContain('font-size: 0.78rem;');
+    expect(css).toContain('.dossier-add-form-start');
+    expect(css).toContain('max-width: 58ch;');
+    expect(css).toContain('font-size: 0.84rem;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

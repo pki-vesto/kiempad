@@ -12744,4 +12744,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 82
+- **Status:** ☑ done
+
+### G1143 — dossier add required field cue clarity
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De start van het eerste formulier is duidelijker, maar verplichte velden zijn nog vooral via browser-validatie en losse labels herkenbaar.
+- **User Impact:** Gebruikers kunnen pas laat ontdekken welke minimale velden nodig zijn om een dossierstuk op te slaan.
+- **Desired Outcome:** Maak de vereiste eerste invulvelden compact zichtbaar zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers begrijpen sneller wat minimaal nodig is en maken minder invoerfouten.
+- **Acceptance Criteria:** Vereiste veldcue is compact en taakgericht; bestaande ankers, form-id's, input names en data-hooks blijven intact; eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 81
 - **Status:** ☐ open

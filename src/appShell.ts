@@ -1342,6 +1342,9 @@ function renderDossierScreen(state: AppShellState): string {
         </div>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
         <h2>Dossierdocument uploaden</h2>
+        <p class="dossier-add-form-start" data-dossier-add-form-start="document-first-step">
+          Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.
+        </p>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
           <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">
             <legend>Documentbasis</legend>
