@@ -3626,6 +3626,46 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('documenteert G1083 central health monitor failure runbook evidence', () => {
+    for (const requiredTerm of [
+      'Health-monitorfailure-output (G1082/G1083)',
+      'validateCentralHealthContractBody',
+      'validateCentralHealthContract',
+      'gesanitized foutlabels',
+      'unexpected-contract-version',
+      'unexpected-field',
+      'unexpected-error-states',
+      'forbidden-privacy-field',
+      'contractVersion review',
+      'contractVersion=1',
+      'src/storage/centralHealthContract.ts',
+      'lokale',
+      '`/api/health` smoke',
+      'tailnet-HTTPS',
+      'dezelfde PR',
+    ]) {
+      expect(runbook).toContain(requiredTerm);
+    }
+
+    for (const forbiddenLogTerm of [
+      'responsebody',
+      'headers',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'secrets',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(runbook).toContain(forbiddenLogTerm);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

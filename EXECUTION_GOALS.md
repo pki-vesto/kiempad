@@ -11883,4 +11883,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, health contract fixture, Tailscale smoke
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1084 — central health monitor CI annotation evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1083 documenteert veilige monitorfailure-output, maar CI/automation heeft nog geen compacte annotatie-evidence die laat zien hoe health-contractdrift als technisch label wordt gemeld zonder responsebody of privacygevoelige velden.
+- **Desired Outcome:** Voeg test- of docs-evidence toe voor CI-annotaties bij central health monitor failures met alleen gesanitized foutlabels en herstelhint.
+- **User Value:** Beheer ziet in CI direct welk health-contractprobleem speelt zonder medische of accountdata in logs.
+- **Acceptance Criteria:** Evidence verwijst naar G1083; annotatievoorbeeld bevat alleen technische foutlabels en herstelhint; onverwachte contractversie, onverwacht veld en errorstate-drift blijven herkenbaar; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** CI, health contract fixture, runbook
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
