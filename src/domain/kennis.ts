@@ -65,6 +65,21 @@ export type ResearchAggregatiePlan = {
   status: 'uitgeschakeld' | 'klaar_voor_handmatige_start';
   bronnen: ResearchBron[];
   bronregister: ResearchSourceRegistryEntry[];
+  pubMedQueryPreview: PubMedQueryPreview;
+  waarschuwing: string;
+};
+
+export type PubMedQueryPreview = {
+  id: string;
+  bron: 'PubMed';
+  bronUrl: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  query: string;
+  previewUrl: string;
+  zoektermen: string[];
+  uitgeslotenContext: string[];
+  correctieVelden: string[];
   waarschuwing: string;
 };
 
@@ -172,6 +187,22 @@ export const RESEARCH_TREND_LABELS: Record<ResearchTrendOnderwerp, string> = {
   mannelijke_factor: 'Mannelijke factor',
   overig: 'Overig',
 };
+
+const VEILIGE_PUBMED_ZOEKTERMEN = new Map(
+  [
+    'fertility',
+    'IVF',
+    'ICSI',
+    'embryo',
+    'male factor',
+    'sperm',
+    'semen',
+    'lifestyle',
+    'nutrition',
+    'ovarian stimulation',
+    'blastocyst',
+  ].map((term) => [term.toLocaleLowerCase('nl-NL'), term]),
+);
 
 export const RESEARCH_SOURCE_ALLOWLIST: readonly ResearchBronAllowlistEntry[] = [
   {
@@ -452,9 +483,45 @@ export function bouwResearchAggregatiePlan(
     status: netwerkOptIn ? 'klaar_voor_handmatige_start' : 'uitgeschakeld',
     bronnen: netwerkOptIn ? [...bronnen] : [],
     bronregister,
+    pubMedQueryPreview: bouwPubMedQueryPreview({
+      netwerkOptIn,
+    }),
     waarschuwing: netwerkOptIn
       ? 'Netwerkresearch staat aan na expliciete opt-in. Kiempad haalt nog niet automatisch op; de gebruiker start aggregatie handmatig en controleert bronnen.'
       : 'Netwerkresearch staat uit. Kiempad toont alleen handmatige seed en lokale cache en haalt geen publicaties op.',
+  };
+}
+
+export function bouwPubMedQueryPreview(input: {
+  netwerkOptIn: boolean;
+  datum?: string;
+  zoektermen?: readonly string[];
+}): PubMedQueryPreview {
+  const zoektermen = uniekeResearchZoektermen(
+    input.zoektermen ?? ['fertility', 'IVF', 'ICSI', 'embryo', 'male factor'],
+  );
+  const query = zoektermen.join(' ');
+  const bronUrl = 'https://pubmed.ncbi.nlm.nih.gov/';
+
+  return {
+    id: 'pubmed-query-preview-zonder-dossierplaintext',
+    bron: 'PubMed',
+    bronUrl,
+    datum: input.datum ?? new Date().toISOString().slice(0, 10),
+    reviewStatus: 'concept_te_controleren',
+    query,
+    previewUrl: `${bronUrl}?term=${encodeURIComponent(query).replace(/%20/g, '+')}`,
+    zoektermen,
+    uitgeslotenContext: [
+      'geen dossierdocumenttekst',
+      'geen consulttekst',
+      'geen medische vrije tekst',
+      'geen persoonsgegevens',
+    ],
+    correctieVelden: ['zoektermen', 'datum', 'reviewstatus'],
+    waarschuwing: input.netwerkOptIn
+      ? 'Conceptpreview na expliciete opt-in; controleer of de zoektermen algemeen blijven voordat je PubMed handmatig opent.'
+      : 'Conceptpreview zonder netwerkactie; Kiempad opent PubMed niet zolang netwerkresearch uit staat.',
   };
 }
 
@@ -1049,6 +1116,21 @@ function bepaalResearchTrendOnderwerpen(item: KennisItem): ResearchTrendOnderwer
 
 function normaliseerResearchBron(bron: string): string {
   return bron.trim().toLocaleLowerCase('nl-NL');
+}
+
+function uniekeResearchZoektermen(zoektermen: readonly string[]): string[] {
+  const gezien = new Set<string>();
+  const veiligeTermen = zoektermen
+    .map((term) => VEILIGE_PUBMED_ZOEKTERMEN.get(term.trim().toLocaleLowerCase('nl-NL')))
+    .filter((term): term is string => Boolean(term))
+    .filter((term) => {
+      if (!term || gezien.has(term.toLocaleLowerCase('nl-NL'))) return false;
+      gezien.add(term.toLocaleLowerCase('nl-NL'));
+      return true;
+    });
+  return veiligeTermen.length > 0
+    ? veiligeTermen
+    : ['fertility', 'IVF', 'ICSI', 'embryo', 'male factor'];
 }
 
 function herkomstVolgorde(herkomst: ResearchBron['herkomst']): number {

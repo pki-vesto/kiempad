@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 872 |
+| ☑ klaar | 873 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1071** |
+| **Totaal** | **1072** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -702,7 +702,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G537 | Fertility Timeline & Knowledge Graph: knowledge graph privacy boundary test | P0 | F5 | ☑ |
 | G538 | Fertility Timeline & Knowledge Graph: contextuele inzichten als vragen voor arts | P1 | F5 | ☐ |
 | G539 | Research Intelligence: research source allowlist met rationale | P0 | F5 | ☑ |
-| G540 | Research Intelligence: PubMed query preview zonder dossierplaintext | P0 | F5 | ☐ |
+| G540 | Research Intelligence: PubMed query preview zonder dossierplaintext | P0 | F5 | ☑ |
 | G541 | Research Intelligence: research item broncitatie parser | P1 | F5 | ☐ |
 | G542 | Research Intelligence: patientvriendelijke samenvatting leesniveau guard | P1 | F5 | ☐ |
 | G543 | Research Intelligence: research trend update timestamp | P1 | F5 | ☐ |
@@ -1234,12 +1234,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1069 | Research Intelligence: contextmatch relevance audit evidence | P1 | F5 | ☐ |
 | G1070 | Daily Recommendations: woman day card audit evidence | P1 | F5 | ☐ |
 | G1071 | Daily Recommendations: man day card audit evidence | P1 | F5 | ☐ |
+| G1072 | Research Intelligence: PubMed query preview audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1071** (id's G001 t/m G1071, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1072** (id's G001 t/m G1072, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

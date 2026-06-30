@@ -4,6 +4,7 @@ import {
   bepaalKennisKostenJaar,
   berekenVolgendeKennisVerificatie,
   bouwEenvoudigeResearchSamenvattingen,
+  bouwPubMedQueryPreview,
   bouwResearchAggregatiePlan,
   bouwResearchBronnenCache,
   bouwResearchDossierContextBronnen,
@@ -149,6 +150,13 @@ describe('kennis domeinregels', () => {
     });
     expect(uit.waarschuwing).toContain('haalt geen publicaties op');
     expect(uit.bronregister.length).toBeGreaterThan(0);
+    expect(uit.pubMedQueryPreview).toMatchObject({
+      id: 'pubmed-query-preview-zonder-dossierplaintext',
+      bron: 'PubMed',
+      bronUrl: 'https://pubmed.ncbi.nlm.nih.gov/',
+      reviewStatus: 'concept_te_controleren',
+    });
+    expect(uit.pubMedQueryPreview.waarschuwing).toContain('zonder netwerkactie');
     expect(
       uit.bronregister.every(
         (entry) => entry.bronmetadata.netwerkGedrag === 'geen_netwerk_zonder_opt_in',
@@ -159,6 +167,46 @@ describe('kennis domeinregels', () => {
     expect(aan.bronregister.length).toBeGreaterThanOrEqual(uit.bronregister.length);
     expect(aan.waarschuwing).toContain('expliciete opt-in');
     expect(aan.waarschuwing).toContain('haalt nog niet automatisch op');
+    expect(aan.pubMedQueryPreview.waarschuwing).toContain('na expliciete opt-in');
+  });
+
+  it('bouwt een PubMed query preview zonder dossierplaintext of medisch advies', () => {
+    const preview = bouwPubMedQueryPreview({
+      netwerkOptIn: true,
+      datum: '2026-06-30',
+      zoektermen: [
+        ' IVF ',
+        'ICSI',
+        'embryo',
+        'IVF',
+        'Persoonlijke consulttekst hoort niet door te lekken',
+      ],
+    });
+
+    expect(preview).toMatchObject({
+      bron: 'PubMed',
+      bronUrl: 'https://pubmed.ncbi.nlm.nih.gov/',
+      datum: '2026-06-30',
+      reviewStatus: 'concept_te_controleren',
+      correctieVelden: ['zoektermen', 'datum', 'reviewstatus'],
+    });
+    expect(preview.zoektermen).toEqual(['IVF', 'ICSI', 'embryo']);
+    expect(preview.previewUrl).toBe('https://pubmed.ncbi.nlm.nih.gov/?term=IVF+ICSI+embryo');
+    expect(preview.query).not.toContain('Persoonlijke consulttekst');
+    expect(preview.uitgeslotenContext).toEqual([
+      'geen dossierdocumenttekst',
+      'geen consulttekst',
+      'geen medische vrije tekst',
+      'geen persoonsgegevens',
+    ]);
+    const tekst = [
+      preview.query,
+      preview.previewUrl,
+      preview.waarschuwing,
+      preview.uitgeslotenContext.join(' '),
+    ].join(' ');
+    expect(tekst).not.toMatch(/\bdiagnose|behandelkeuzeadvies|kansberekening\b/i);
+    expect(tekst).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
   it('bouwt wetenschappelijke samenvattingen per researchpublicatie met bron en datum', () => {
