@@ -3462,6 +3462,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medication UI, DoseLog UI, Reminder UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 50
+- **Status:** ☑ done
+
+### G1196 — vragenscherm opdelen in taakgerichte questionroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het vragenscherm combineert open vragen, consultvoorbereiding, beantwoorde verslagen en vraagbeheer nog in één lange consultvragenflow.
+- **User Impact:** Gebruikers moeten door vragenlijsten, antwoorden en formulieren scrollen om snel een vraag vast te leggen of een consult voor te bereiden.
+- **Desired Outcome:** Deel het vragenscherm zichtbaar op in taakgerichte questionroutes voor open vragen, voorbereiding, beantwoorden/verslagen en beheer.
+- **User Value:** Consultvragen voelen meer als een voorbereidingsworkflow en minder als een lange lijst met formulieren.
+- **Acceptance Criteria:** Vragenscherm bevat zichtbare taakroutes; bestaande vraagformulier-id's, prioriteithooks, antwoordhooks, afspraakkoppeling en privacycopy blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen medisch advies, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Vragen, Agenda, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Questions UI, Consultation prep UI, Appointment UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 49
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

@@ -2803,6 +2803,117 @@ h2 {
   min-width: 0;
 }
 
+.medication-command-layout {
+  gap: 18px;
+}
+
+.medication-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.medication-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.medication-task-route:focus-visible,
+.medication-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.medication-task-route[aria-current="page"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.medication-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medication-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.medication-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.medication-route-section[hidden] {
+  display: none;
+}
+
+.medication-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.medication-route-section__header h2,
+.medication-route-section__header p {
+  margin: 0;
+}
+
+.medication-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.medication-route-section .summary-panel,
+.medication-route-section .policy-panel,
+.medication-route-section .linked-note,
+.medication-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.medication-route-section .definition-list > div,
+.medication-route-section .summary-list > div,
+.medication-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.medication-route-section .definition-list dd,
+.medication-route-section .summary-list dd,
+.medication-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.medication-route-section .data-form,
+.medication-route-section .compact-form,
+.medication-route-section .data-form label,
+.medication-route-section .data-form input,
+.medication-route-section .data-form select,
+.medication-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4920,6 +5031,15 @@ a.action-card:active {
   }
 
   .schedule-task-route {
+    min-width: 0;
+  }
+
+  .medication-task-routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 7px;
+  }
+
+  .medication-task-route {
     min-width: 0;
   }
 
