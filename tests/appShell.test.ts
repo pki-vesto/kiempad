@@ -1168,6 +1168,14 @@ function extractImagingComparePanel(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractEchoAppointmentClassificationPanel(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary echo-appointment-classification" aria-label="Echo-classificatie per afspraak"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Echo-afspraakclassificatie ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractConsultVerslagenSection(html: string): string {
   const start = html.indexOf('<h2>Consultverslagen</h2>');
   const end = html.indexOf('<h2>Imaging-repository</h2>', start);
@@ -4612,6 +4620,140 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
     expect(html).toContain('Lokale preview uit de legacy lokale encrypted dataset op dit toestel.');
     expect(html).toContain('Bestandstype is beeldmateriaal.');
+  });
+
+  it('rendert echo-classificatie per afspraak zonder locked bronpayload', () => {
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-beeld',
+            titel: 'Echo controle',
+            datumTijd: '2026-05-02T09:30',
+            type: 'echo',
+          },
+        },
+      ],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      imagingPreviewLocked: true,
+      dossierDocuments: [
+        {
+          id: 'doc-echo-classificatie-1',
+          datum: '2026-05-02',
+          titel: 'Echo afspraak eerste',
+          categorie: 'beeld',
+          bestandsNaam: 'gevoelige-echo-eerste.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 4096,
+          inhoudBase64: 'Z2VoZWltLWVjaG8tMQ==',
+          afspraakId: 'afspraak-beeld',
+          analyse: {
+            samenvatting: 'Echo opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Echo-upload met afspraakkoppeling.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-02',
+            documenttype: 'Foto/echo',
+            bronbestand: 'gevoelige-echo-eerste.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-02',
+            soort: 'echo',
+            bron: 'Portaal bron eerste',
+            afspraakId: 'afspraak-beeld',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'gereviewd',
+          },
+          uploadedAt: '2026-06-23T15:00:00.000Z',
+        },
+        {
+          id: 'doc-echo-classificatie-2',
+          datum: '2026-05-04',
+          titel: 'Echo afspraak tweede',
+          categorie: 'beeld',
+          bestandsNaam: 'gevoelige-echo-tweede.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 2048,
+          inhoudBase64: 'Z2VoZWltLWVjaG8tMg==',
+          afspraakId: 'afspraak-beeld',
+          analyse: {
+            samenvatting: 'Echo opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Echo-upload met afspraakkoppeling.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Foto/echo',
+            bronbestand: 'gevoelige-echo-tweede.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-04',
+            soort: 'echo',
+            bron: 'Portaal bron tweede',
+            afspraakId: 'afspraak-beeld',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'concept',
+          },
+          uploadedAt: '2026-06-23T16:00:00.000Z',
+        },
+        {
+          id: 'doc-foto-classificatie',
+          datum: '2026-05-04',
+          titel: 'Foto afspraak',
+          categorie: 'beeld',
+          bestandsNaam: 'gevoelige-foto.jpg',
+          mimeType: 'image/jpeg',
+          grootteBytes: 1024,
+          inhoudBase64: 'Zm90bw==',
+          afspraakId: 'afspraak-beeld',
+          analyse: {
+            samenvatting: 'Foto opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+            signalen: ['Niet-echo beeld bij dezelfde afspraak.'],
+          },
+          metadata: {
+            documentDatum: '2026-05-04',
+            documenttype: 'Foto',
+            bronbestand: 'gevoelige-foto.jpg',
+            extractieBronnen: ['bronbestand', 'formulierdatum'],
+          },
+          beeldMetadata: {
+            datum: '2026-05-04',
+            soort: 'foto',
+            bron: 'Portaal bron foto',
+            afspraakId: 'afspraak-beeld',
+            exifStatus: 'geisoleerd',
+            reviewStatus: 'gereviewd',
+          },
+          uploadedAt: '2026-06-23T16:05:00.000Z',
+        },
+      ],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const panel = extractEchoAppointmentClassificationPanel(html);
+
+    expect(panel).toContain('data-echo-appointment-classification-state="concept-review"');
+    expect(panel).toContain('Echo controle · 2026-05-02 09:30');
+    expect(panel).toContain('2 echo-uploads gekoppeld aan afspraak');
+    expect(panel).toContain('2026-05-02, 2026-05-04');
+    expect(panel).toContain('2 bronnen verborgen tot ontgrendeling');
+    expect(panel).toContain('Review</dt><dd>concept</dd>');
+    expect(panel).toContain(
+      'Classificatie is beschrijvend: echo per afspraak, geen beeldanalyse of medisch advies.',
+    );
+    expect(panel).not.toContain('Portaal bron eerste');
+    expect(panel).not.toContain('Portaal bron tweede');
+    expect(panel).not.toContain('gevoelige-echo-eerste.jpg');
+    expect(panel).not.toContain('Z2VoZWltLWVjaG8tMQ==');
+    expect(panel).not.toContain('diagnose');
+    expect(panel).not.toContain('dosering');
+    expect(panel).not.toContain('kans');
+    expect(panel).not.toContain('behandelkeuzeadvies');
   });
 
   it('bewaakt imaging compare empty, multiple en locked states zonder payloadlekken', () => {

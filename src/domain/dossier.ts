@@ -205,6 +205,15 @@ export type ImagingRepositoryFilter = {
   embryoLabel?: string;
 };
 
+export type EchoAfspraakClassificatieItem = {
+  afspraakId: string;
+  echoDocumentIds: string[];
+  datums: string[];
+  bronnen: string[];
+  reviewStatus: 'concept' | 'gereviewd';
+  classificatieLabel: string;
+};
+
 export type DossierBeeldClassificatie = ImagingRepositoryItem['soort'];
 
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
@@ -647,6 +656,36 @@ export function filterImagingRepository(
     }
     return true;
   });
+}
+
+export function bouwEchoAfspraakClassificaties(
+  items: readonly ImagingRepositoryItem[],
+): EchoAfspraakClassificatieItem[] {
+  const groepen = new Map<string, ImagingRepositoryItem[]>();
+  for (const item of items) {
+    const afspraakId = item.tijdlijnKoppeling.afspraakId ?? item.afspraakId;
+    if (item.soort !== 'echo' || !afspraakId) continue;
+    groepen.set(afspraakId, [...(groepen.get(afspraakId) ?? []), item]);
+  }
+
+  return Array.from(groepen.entries())
+    .map(([afspraakId, groep]) => {
+      const gesorteerd = [...groep].sort((a, b) => a.datum.localeCompare(b.datum));
+      const reviewStatus: EchoAfspraakClassificatieItem['reviewStatus'] = gesorteerd.every(
+        (item) => item.document.beeldMetadata?.reviewStatus === 'gereviewd',
+      )
+        ? 'gereviewd'
+        : 'concept';
+      return {
+        afspraakId,
+        echoDocumentIds: gesorteerd.map((item) => item.id),
+        datums: Array.from(new Set(gesorteerd.map((item) => item.datum))),
+        bronnen: Array.from(new Set(gesorteerd.map((item) => item.bronbestand))),
+        reviewStatus,
+        classificatieLabel: `${gesorteerd.length} echo-upload${gesorteerd.length === 1 ? '' : 's'} gekoppeld aan afspraak`,
+      };
+    })
+    .sort((a, b) => a.afspraakId.localeCompare(b.afspraakId));
 }
 
 export function bouwImagingVergelijking(

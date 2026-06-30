@@ -8,6 +8,7 @@ import {
   bouwDossierIndex,
   bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
+  bouwEchoAfspraakClassificaties,
   bouwImagingRepository,
   bouwImagingVergelijking,
   classificeerDossierBeeld,
@@ -1310,6 +1311,75 @@ describe('dossier', () => {
       embryoDag: 5,
       laboratoriumContext: 'Labfoto dag 5',
     });
+  });
+
+  it('groepeert echo-uploads per afspraak zonder payload of medisch advies', () => {
+    const echoConcept = maakDossierDocument('img-echo-concept', {
+      datum: '2026-05-03',
+      titel: 'Echo concept',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-concept.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'cGF5bG9hZA==',
+      afspraakId: 'afspraak-echo',
+      beeldMetadata: {
+        soort: 'echo',
+        bron: 'Kliniekportaal',
+        reviewStatus: 'concept',
+      },
+    });
+    const echoGereviewd = maakDossierDocument('img-echo-gereviewd', {
+      datum: '2026-05-01',
+      titel: 'Echo gereviewd',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-gereviewd.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'cGF5bG9hZDI=',
+      afspraakId: 'afspraak-echo',
+      beeldMetadata: {
+        soort: 'echo',
+        bron: 'Kliniekportaal',
+        reviewStatus: 'gereviewd',
+      },
+    });
+    const foto = maakDossierDocument('img-foto', {
+      datum: '2026-05-02',
+      titel: 'Foto zelfde afspraak',
+      categorie: 'beeld',
+      bestandsNaam: 'foto.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'Zm90bw==',
+      afspraakId: 'afspraak-echo',
+      beeldMetadata: {
+        soort: 'foto',
+        bron: 'Kliniekportaal',
+        reviewStatus: 'gereviewd',
+      },
+    });
+
+    const classificaties = bouwEchoAfspraakClassificaties(
+      bouwImagingRepository([echoConcept, echoGereviewd, foto]),
+    );
+
+    expect(classificaties).toEqual([
+      {
+        afspraakId: 'afspraak-echo',
+        echoDocumentIds: ['img-echo-gereviewd', 'img-echo-concept'],
+        datums: ['2026-05-01', '2026-05-03'],
+        bronnen: ['Kliniekportaal'],
+        reviewStatus: 'concept',
+        classificatieLabel: '2 echo-uploads gekoppeld aan afspraak',
+      },
+    ]);
+    const serialized = JSON.stringify(classificaties);
+    expect(serialized).not.toContain('cGF5bG9hZA==');
+    expect(serialized).not.toContain('diagnose');
+    expect(serialized).not.toContain('dosering');
+    expect(serialized).not.toContain('kans');
+    expect(serialized).not.toContain('behandelkeuzeadvies');
   });
 
   it('zoekt lokaal in OCR-tekst, handmatige notities en metadata', () => {
