@@ -522,6 +522,8 @@ const HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_RELEASE_GUARD_TERMS = [
   'health-monitor retention compact-contract missing-term-contract releaseguard foutmelding',
   'veilige technische labels',
 ] as const;
+const HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_RELEASE_GUARD_MISSING_TERM_ERROR =
+  'Health monitor retention missing-term-contract releaseguardcontext ontbreekt voor termen: health-monitor retention compact-contract missing-term-contract releaseguard foutmelding, veilige technische labels';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 const maintenanceDocsRaw = readFileSync(
   new URL('./maintenanceDocs.test.ts', import.meta.url),
@@ -4523,6 +4525,42 @@ describe('onderhoudsdocumentatie', () => {
       references=G1107
       terms=compact contract|health-monitor retention compact-contract missing-term-contract releaseguard foutmelding|veilige technische labels"
     `);
+  });
+
+  it('geeft ontbrekende G1109 health monitor retention missing-term-contract releaseguard termen technisch terug', () => {
+    expect(() =>
+      extractHealthMonitorRetentionMissingTermContractReleaseGuardContext(
+        'G1107 compact contract heeft releaseguard-bewaking.',
+      ),
+    ).toThrow(HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_RELEASE_GUARD_MISSING_TERM_ERROR);
+    expect(HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_RELEASE_GUARD_MISSING_TERM_ERROR).toBe(
+      'Health monitor retention missing-term-contract releaseguardcontext ontbreekt voor termen: health-monitor retention compact-contract missing-term-contract releaseguard foutmelding, veilige technische labels',
+    );
+    for (const missingTerm of [
+      'health-monitor retention compact-contract missing-term-contract releaseguard foutmelding',
+      'veilige technische labels',
+    ]) {
+      expect(
+        HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_RELEASE_GUARD_MISSING_TERM_ERROR,
+      ).toContain(missingTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(
+        HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_RELEASE_GUARD_MISSING_TERM_ERROR,
+      ).not.toContain(forbiddenEvidenceTerm);
+    }
   });
 
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
