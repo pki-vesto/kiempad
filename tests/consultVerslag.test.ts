@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 import {
   CONSULT_AI_SAFETY_POLICY,
   extraheerConsultActiepunten,
+  maakConsultActieReview,
   maakConsultSamenvatting,
   maakConsultVerslag,
+  maakVraagUitConsultActiepunt,
   sorteerConsultVerslagen,
   vergelijkConsultSamenvatting,
 } from '../src/domain/consultVerslag';
@@ -59,6 +61,8 @@ describe('consultVerslag', () => {
         status: 'concept',
         tekst: 'Besproken wat de volgende stap wordt.',
         bron: 'consulttekst regel 1',
+        bronFragment: 'Besproken wat de volgende stap wordt.',
+        eigenaar: 'samen',
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
     ]);
@@ -191,8 +195,9 @@ describe('consultVerslag', () => {
     const actiepunten = extraheerConsultActiepunten({
       id: 'consult-2',
       tekst:
-        'Afgesproken: bloeduitslag meenemen naar volgende afspraak.\nVraag aan arts: wanneer plannen we de controle?',
+        'Afgesproken: bloeduitslag meenemen naar volgende afspraak op 2026-06-24.\nVraag aan arts: wanneer plannen we de controle?',
       notitie: 'Zelf regelen: formulier uploaden.',
+      eigenaar: 'peter',
       uploadedAt: '2026-06-12T10:00:00.000Z',
     });
 
@@ -201,8 +206,11 @@ describe('consultVerslag', () => {
         id: 'consult-2-actie-1',
         soort: 'taak',
         status: 'concept',
-        tekst: 'Afgesproken: bloeduitslag meenemen naar volgende afspraak.',
+        tekst: 'Afgesproken: bloeduitslag meenemen naar volgende afspraak op 2026-06-24.',
         bron: 'consulttekst regel 1',
+        bronFragment: 'Afgesproken: bloeduitslag meenemen naar volgende afspraak op 2026-06-24.',
+        eigenaar: 'peter',
+        datum: '2026-06-24',
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
       {
@@ -211,6 +219,8 @@ describe('consultVerslag', () => {
         status: 'concept',
         tekst: 'Vraag aan arts: wanneer plannen we de controle?',
         bron: 'consulttekst regel 2',
+        bronFragment: 'Vraag aan arts: wanneer plannen we de controle?',
+        eigenaar: 'peter',
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
       {
@@ -219,9 +229,71 @@ describe('consultVerslag', () => {
         status: 'concept',
         tekst: 'Zelf regelen: formulier uploaden.',
         bron: 'notitie regel 1',
+        bronFragment: 'Zelf regelen: formulier uploaden.',
+        eigenaar: 'peter',
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
     ]);
+  });
+
+  it('maakt een conceptreview met taken, vragen, herinneringsvoorstellen en vraagovername', () => {
+    const verslag = maakConsultVerslag('consult-review', {
+      datum: '2026-06-12',
+      titel: 'Reviewconsult',
+      tekst:
+        'Afgesproken: formulier meenemen op 24-06-2026. Vraag aan arts: wanneer bellen we over de uitslag?',
+      afspraakId: 'afspraak-1',
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    });
+
+    const review = maakConsultActieReview(verslag);
+    const vraagActiepunt = review?.vragen[0];
+
+    expect(review).toMatchObject({
+      taken: [
+        {
+          soort: 'taak',
+          status: 'concept',
+          eigenaar: 'samen',
+          datum: '2026-06-24',
+          bronFragment: 'Afgesproken: formulier meenemen op 24-06-2026.',
+        },
+      ],
+      vragen: [
+        {
+          soort: 'vraag',
+          status: 'concept',
+          eigenaar: 'samen',
+          bronFragment: 'Vraag aan arts: wanneer bellen we over de uitslag?',
+        },
+      ],
+      herinneringsVoorstellen: [
+        {
+          id: 'consult-review-actie-1-herinnering-voorstel',
+          titel: 'Afgesproken: formulier meenemen op 24-06-2026.',
+          bronActiepuntId: 'consult-review-actie-1',
+          datum: '2026-06-24',
+          status: 'concept',
+        },
+      ],
+    });
+    expect(review?.waarschuwing).toContain('Conceptreview');
+    expect(vraagActiepunt).toBeDefined();
+    if (!review || !vraagActiepunt || !review.taken[0]) {
+      throw new Error('Review mist de verwachte conceptactiepunten.');
+    }
+    const taakActiepunt = review.taken[0];
+    expect(maakVraagUitConsultActiepunt('vraag-uit-consult', vraagActiepunt, 'afspraak-1')).toEqual(
+      {
+        id: 'vraag-uit-consult',
+        vraag: 'Vraag aan arts: wanneer bellen we over de uitslag?',
+        voorAfspraakId: 'afspraak-1',
+        beantwoord: false,
+      },
+    );
+    expect(() => maakVraagUitConsultActiepunt('geen-vraag', taakActiepunt)).toThrow(
+      'Alleen conceptvragen',
+    );
   });
 
   it('maakt een verschilweergave tussen conceptsamenvatting en gebruikerscorrectie', () => {

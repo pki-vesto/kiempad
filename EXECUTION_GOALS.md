@@ -3294,7 +3294,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consults, questions, reminders, AI guardrails, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G477 — consultsamenvatting reviewflow zonder behandeladvies
 
@@ -11447,6 +11447,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Consults, encrypted storage, maintenance tests, dossier UI
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1053 — consult action review audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G476 extraheert consultactiepunten nu als concepttaken, conceptvragen en herinneringsvoorstellen met eigenaar, bronfragment en optionele datum, maar er is nog geen compacte audit die deze reviewgrens en vraagovername bewaakt tegen regressie.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat consultactie-review, vraagovername, bronfragmenten, eigenaarlabels, datumextractie en conceptstatus samen controleert zonder medisch advies te genereren.
+- **User Value:** Gebruikers kunnen blijven vertrouwen dat consultacties alleen als controleerbare concepten verschijnen en pas na bevestiging in de vragenlijst terechtkomen.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G476; concepttaken, conceptvragen en herinneringsvoorstellen blijven gedekt; vraagovername naar de vragenlijst is expliciet aantoonbaar; zichtbare of opgeslagen evidence bevat geen diagnose, dosering, behandelkeuzeadvies, transcriptpayload of base64; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consults, questions, reminders, maintenance tests, app shell
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

@@ -122,6 +122,8 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'samenvatting',
     'samenvattingCorrectie',
     'actiepunten',
+    'bronFragment',
+    'eigenaar',
     'uploadedAt',
   ],
   Settings: [

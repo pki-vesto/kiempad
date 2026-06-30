@@ -3518,6 +3518,8 @@ describe('app shell', () => {
               status: 'concept',
               tekst: 'Vraag aan arts: wanneer plannen we de controle?',
               bron: 'consulttekst regel 1',
+              bronFragment: 'Vraag aan arts: wanneer plannen we de controle?',
+              eigenaar: 'samen',
               aangemaaktOp: '2099-06-20T10:00:00.000Z',
             },
           ],
@@ -3691,6 +3693,8 @@ describe('app shell', () => {
               status: 'concept',
               tekst: 'Afgesproken om bloeduitslagen mee te nemen.',
               bron: 'consulttekst regel 1',
+              bronFragment: 'Afgesproken om bloeduitslagen mee te nemen.',
+              eigenaar: 'samen',
               aangemaaktOp: '2026-06-23T15:05:00.000Z',
             },
             {
@@ -3699,6 +3703,8 @@ describe('app shell', () => {
               status: 'concept',
               tekst: 'Vraag over vervolgstap bewaren.',
               bron: 'notitie regel 1',
+              bronFragment: 'Vraag over vervolgstap bewaren.',
+              eigenaar: 'samen',
               aangemaaktOp: '2026-06-23T15:05:00.000Z',
             },
           ],
@@ -4274,6 +4280,9 @@ describe('app shell', () => {
               status: 'concept',
               tekst: 'Vraag de kliniek naar het vervolg.',
               bron: 'consulttekst regel 1',
+              bronFragment: 'Vraag de kliniek naar het vervolg.',
+              eigenaar: 'samen',
+              datum: '2026-06-25',
               aangemaaktOp: '2026-06-23T15:00:00.000Z',
             },
           ],
@@ -4303,6 +4312,10 @@ describe('app shell', () => {
     expect(section).toContain('Conceptactiepunten');
     expect(section).toContain('Vraag: Vraag de kliniek naar het vervolg.');
     expect(section).toContain('Bron: consulttekst regel 1');
+    expect(section).toContain('Fragment: Vraag de kliniek naar het vervolg.');
+    expect(section).toContain('Eigenaar: samen');
+    expect(section).toContain('Datum: 2026-06-25');
+    expect(section).toContain('Status: concept');
     expect(section).not.toContain('Y29uc3VsdC1wYXlsb2Fk');
     expect(section).not.toContain('data:application/pdf;base64');
     expect(section).not.toContain('behandelkeuzeadvies');
