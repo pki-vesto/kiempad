@@ -135,6 +135,20 @@ export type DossierImportInboxItem = {
   document: DossierDocument;
 };
 
+export type DossierReviewWachtrijItem = {
+  id: string;
+  titel: string;
+  datum: string;
+  categorie: DossierDocument['categorie'];
+  documenttype: string;
+  bron: string;
+  confidenceScore: number;
+  confidenceLabel: NonNullable<DossierDocument['ocr']>['confidenceLabel'];
+  reviewStatus: NonNullable<DossierDocument['ocr']>['reviewStatus'];
+  prioriteit: 'hoog' | 'middel' | 'laag';
+  actieLabel: string;
+};
+
 export type DossierZoekResultaat = {
   document: DossierDocument;
   matches: string[];
@@ -497,6 +511,77 @@ export function bouwDossierDuplicaatReview(
   }
 
   return reviews;
+}
+
+export function bouwDossierReviewWachtrij(
+  items: readonly DossierDocument[],
+): DossierReviewWachtrijItem[] {
+  return sorteerDossierDocumenten(items)
+    .filter((document) => Boolean(document.ocr))
+    .map((document) => {
+      const ocr = document.ocr as NonNullable<DossierDocument['ocr']>;
+      const documenttype =
+        document.metadata.normalisatie?.documenttype ??
+        document.metadata.documenttype ??
+        (document.uploadProfiel
+          ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
+          : DOSSIER_CATEGORIE_LABELS[document.categorie]);
+      return {
+        id: document.id,
+        titel: document.titel,
+        datum:
+          document.metadata.normalisatie?.datum ??
+          document.metadata.documentDatum ??
+          document.datum,
+        categorie: document.categorie,
+        documenttype,
+        bron: document.metadata.normalisatie?.bron ?? document.metadata.bronbestand,
+        confidenceScore: ocr.confidenceScore,
+        confidenceLabel: ocr.confidenceLabel,
+        reviewStatus: ocr.reviewStatus,
+        prioriteit: bepaalDocumentReviewPrioriteit(ocr),
+        actieLabel: beschrijfDocumentReviewActie(ocr),
+      };
+    })
+    .sort(
+      (a, b) =>
+        reviewStatusRang(a.reviewStatus) - reviewStatusRang(b.reviewStatus) ||
+        reviewPrioriteitRang(a.prioriteit) - reviewPrioriteitRang(b.prioriteit) ||
+        a.confidenceScore - b.confidenceScore ||
+        b.datum.localeCompare(a.datum) ||
+        a.titel.localeCompare(b.titel),
+    );
+}
+
+function bepaalDocumentReviewPrioriteit(
+  ocr: NonNullable<DossierDocument['ocr']>,
+): DossierReviewWachtrijItem['prioriteit'] {
+  if (ocr.reviewStatus === 'gereviewd') return 'laag';
+  if (ocr.confidenceLabel === 'laag') return 'hoog';
+  if (ocr.confidenceLabel === 'middel') return 'middel';
+  return 'laag';
+}
+
+function beschrijfDocumentReviewActie(ocr: NonNullable<DossierDocument['ocr']>): string {
+  if (ocr.reviewStatus === 'gereviewd') return 'Gereviewd; alleen steekproef nodig.';
+  if (ocr.status === 'wacht_op_lokale_ocr')
+    return 'Start of herhaal lokale OCR voordat metadata wordt gebruikt.';
+  if (ocr.status === 'niet_ondersteund') return 'Controleer bron handmatig; OCR-route ontbreekt.';
+  if (ocr.confidenceLabel === 'laag')
+    return 'Controleer OCR-tekst en corrigeer metadata voordat dit document meetelt.';
+  if (ocr.confidenceLabel === 'middel')
+    return 'Controleer bronfragment en bevestig of corrigeer de conceptmetadata.';
+  return 'Bevestig de OCR-review voordat de wachtrij dit document als klaar markeert.';
+}
+
+function reviewStatusRang(status: DossierReviewWachtrijItem['reviewStatus']): number {
+  return status === 'concept' ? 0 : 1;
+}
+
+function reviewPrioriteitRang(prioriteit: DossierReviewWachtrijItem['prioriteit']): number {
+  if (prioriteit === 'hoog') return 0;
+  if (prioriteit === 'middel') return 1;
+  return 2;
 }
 
 export function zoekDossierDocumenten(

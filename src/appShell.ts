@@ -34,6 +34,7 @@ import {
 import {
   bouwDossierImportInbox,
   bouwDossierIndex,
+  bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
   bouwImagingRepository,
   bouwImagingVergelijking,
@@ -41,6 +42,7 @@ import {
   DOSSIER_CATEGORIE_LABELS,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   type DossierImportInboxItem,
+  type DossierReviewWachtrijItem,
   type DossierZoekResultaat,
   EMBRYO_KWALITEIT_WAARSCHUWING,
   EMBRYO_STATUS_LABELS,
@@ -1252,6 +1254,7 @@ function renderDossierScreen(state: AppShellState): string {
   const importInboxItems = bouwDossierImportInbox(zichtbareDocumenten, {
     vergrendeld: state.imagingPreviewLocked,
   });
+  const reviewWachtrij = bouwDossierReviewWachtrij(zichtbareDocumenten);
   const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten, {
     ontgrendeld: !state.imagingPreviewLocked,
   });
@@ -1376,6 +1379,8 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentRetentionCleanupPrivacy(state)}
         ${renderAttachmentAuditTrailPrivacy(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
+        <h2>Documentreview wachtrij</h2>
+        ${renderDossierReviewWachtrij(reviewWachtrij, state)}
         <h2>Import-inbox</h2>
         ${renderDossierInboxOverview(importInboxItems)}
         ${
@@ -6876,6 +6881,41 @@ function renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHando
         </div>
       </dl>
       <p class="small-print">Deze assistive cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
+    </section>
+  `;
+}
+
+function renderDossierReviewWachtrij(
+  items: DossierReviewWachtrijItem[],
+  state: AppShellState,
+): string {
+  if (items.length === 0) {
+    return '<p class="empty-state">Geen OCR-documenten in de documentreview wachtrij.</p>';
+  }
+
+  return `
+    <section class="dossier-review-queue" aria-label="Documentreview wachtrij per confidence" data-dossier-review-queue-state="${items.some((item) => item.reviewStatus === 'concept') ? 'concepten-open' : 'alles-gereviewd'}">
+      <ol class="phase-list">
+        ${items
+          .map((item) => {
+            const bron =
+              state.imagingPreviewLocked && item.categorie === 'beeld'
+                ? 'Beeldbron verborgen tot ontgrendeling'
+                : item.bron;
+            return `
+              <li class="phase-item" data-dossier-review-queue-priority="${escapeAttribute(item.prioriteit)}" data-dossier-review-queue-review="${escapeAttribute(item.reviewStatus)}">
+                <div>
+                  <h3>${escapeHtml(item.titel)}</h3>
+                  <p>${escapeHtml(item.datum)} · ${escapeHtml(item.documenttype)} · Bron: ${escapeHtml(bron)}</p>
+                  <p class="linked-note">Confidence: ${escapeHtml(item.confidenceLabel)} (${Math.round(item.confidenceScore * 100)}%) · Review: ${escapeHtml(item.reviewStatus)} · Prioriteit: ${escapeHtml(item.prioriteit)}</p>
+                  <p class="linked-note">Actie: ${escapeHtml(item.actieLabel)}</p>
+                </div>
+              </li>
+            `;
+          })
+          .join('')}
+      </ol>
+      <p class="small-print">Deze wachtrij sorteert op OCR-confidence en reviewstatus. De lijst toont geen OCR-tekst, broninhoud of medisch advies.</p>
     </section>
   `;
 }
