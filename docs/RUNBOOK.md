@@ -97,6 +97,14 @@ pad zonder lokale vault-hercreatie.
   nooit user-id, session-id, record-id, recordcount, ciphertext, secrets,
   gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies
   teruggeven en mag geen persistence write veroorzaken.
+  **Health-contractmigratie (G1080/G1081):** wijzig `contractVersion` alleen wanneer
+  de responsevorm bewust verandert. Documenteer in dezelfde PR de reden, de oude
+  contractversie, de nieuwe contractversie, de compatibilityregel voor bestaande monitors en de
+  deployvolgorde: centrale API bouwen, Tailscale-stack herstarten, lokale
+  `/api/health` smoke draaien en daarna de tailnet-HTTPS `/api/health` smoke draaien.
+  Oude monitors moeten veilig falen op een onverwachte contractversie of onverwacht
+  veld, zonder responsebody, user-id, session-id, record-id, recordcount, ciphertext,
+  secrets of medische termen te loggen.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|
