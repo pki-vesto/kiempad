@@ -1292,6 +1292,15 @@ function renderDossierScreen(state: AppShellState): string {
 
   return `
     <section class="section-stack" aria-label="Dossier beheren">
+      ${renderDossierCommandCenter({
+        documenten: zichtbareDocumenten,
+        importInboxItems,
+        imagingItems,
+        reviewWachtrij,
+        consultVerslagen,
+        embryoDossiers,
+        state,
+      })}
       <details class="kp-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''}>
         <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
         <div class="kp-disclosure__body">
@@ -1727,6 +1736,90 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
             : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
         }
+    </section>
+  `;
+}
+
+function renderDossierCommandCenter(input: {
+  documenten: readonly DossierDocument[];
+  importInboxItems: readonly DossierImportInboxItem[];
+  imagingItems: readonly ImagingRepositoryItem[];
+  reviewWachtrij: readonly DossierReviewWachtrijItem[];
+  consultVerslagen: readonly ConsultVerslag[];
+  embryoDossiers: readonly EmbryoDossierItem[];
+  state: AppShellState;
+}): string {
+  const ocrWacht = input.importInboxItems.filter(
+    (item) => item.importstatus === 'ocr_wacht',
+  ).length;
+  const reviewOpen = input.reviewWachtrij.filter((item) => item.reviewStatus === 'concept').length;
+  const laatsteItem = input.importInboxItems.at(0);
+  const laatsteImport = laatsteItem
+    ? `Laatste import: ${laatsteItem.datum} · ${laatsteItem.type}.`
+    : 'Nog geen historische dossierstukken toegevoegd.';
+  const primaireActie =
+    reviewOpen > 0
+      ? `${reviewOpen} OCR-review${reviewOpen === 1 ? '' : 's'} vraagt om controle.`
+      : ocrWacht > 0
+        ? `${ocrWacht} document${ocrWacht === 1 ? '' : 'en'} wacht${ocrWacht === 1 ? '' : 'en'} op lokale OCR.`
+        : input.imagingItems.length > 0
+          ? `${input.imagingItems.length} beeldmoment${input.imagingItems.length === 1 ? '' : 'en'} klaar voor veilige metadatareview.`
+          : 'Begin met uploaden; Kiempad toont daarna alleen veilige dossiermetadata.';
+  const opslag = beschrijfEncryptedRecordLocatie(input.state);
+  const previewStatus = input.state.imagingPreviewLocked
+    ? 'Beeldpreviews vergrendeld tot ontgrendeling.'
+    : input.imagingItems.length > 0
+      ? 'Beeldpreviews alleen zichtbaar binnen de ontgrendelde encrypted sessie.'
+      : 'Nog geen beeldpreviews in dit dossier.';
+
+  return `
+    <section class="policy-panel embedded-summary dossier-command-center" aria-label="Dossier startoverzicht" data-dossier-command-center="ready" data-dossier-command-preview="${input.state.imagingPreviewLocked ? 'locked' : 'unlocked'}">
+      <div class="dossier-command-center__header">
+        <div>
+          <p class="kp-card__eyebrow">Dossier</p>
+          <h2>Dossier vandaag</h2>
+          <p>${escapeHtml(primaireActie)}</p>
+        </div>
+        <p class="dossier-command-center__storage">${escapeHtml(opslag)}</p>
+      </div>
+      ${statRow([
+        { label: 'Uploads', value: String(input.documenten.length) },
+        { label: 'Beelden', value: String(input.imagingItems.length) },
+        {
+          label: 'Review',
+          value: String(reviewOpen),
+          tone: reviewOpen > 0 ? 'warning' : 'default',
+        },
+        { label: "Embryo's", value: String(input.embryoDossiers.length) },
+      ])}
+      <div class="dossier-command-center__actions" aria-label="Dossier snelacties">
+        ${actionCard({
+          title: 'Upload dossierstuk',
+          subtitle: 'Onderzoeken, PDF’s, foto’s of echo’s',
+          href: '#dossier-upload-form',
+          iconName: 'file',
+          tone: 'sage',
+        })}
+        ${actionCard({
+          title: 'Bekijk beeldreview',
+          subtitle: `${input.imagingItems.length} beeldmoment${input.imagingItems.length === 1 ? '' : 'en'} · ${previewStatus}`,
+          href: '#imaging-filter-form',
+          iconName: 'sprout',
+          tone: 'category',
+        })}
+        ${actionCard({
+          title: 'Zoek dossier',
+          subtitle: 'Zoek in ontgrendelde metadata, OCR en notities',
+          href: '#dossier-search-form',
+          iconName: 'question',
+          tone: 'info',
+        })}
+      </div>
+      <div class="dossier-command-center__summary" aria-label="Dossier samenvatting zonder payload">
+        <p>${escapeHtml(laatsteImport)}</p>
+        <p>${input.consultVerslagen.length} consultverslag${input.consultVerslagen.length === 1 ? '' : 'en'} · ${ocrWacht} OCR wacht · ${previewStatus}</p>
+      </div>
+      <p class="small-print">Dit startoverzicht toont alleen aantallen, datums, types en workflowstatussen; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
     </section>
   `;
 }

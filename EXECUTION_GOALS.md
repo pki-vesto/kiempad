@@ -12488,4 +12488,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☑ done
+
+### G1127 — dossier secondary privacy panels progressive disclosure
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na het nieuwe dossierstartoverzicht staan secundaire privacy-, audit- en assistive-panelen nog lang zichtbaar achter elkaar, waardoor de dossierpagina alsnog technisch en zwaar blijft aanvoelen.
+- **User Impact:** Gebruikers kunnen de primaire dossierinhoud wel sneller vinden, maar moeten daarna nog door veel technische blokken scannen voordat de kernlijsten rustig aanvoelen.
+- **Desired Outcome:** Groepeer secundaire dossierpanelen achter duidelijke, geruststellende progressive disclosure zonder bestaande privacyhooks of regressietests te breken.
+- **User Value:** Gebruikers houden zicht op upload, beeldreview en dossierinhoud terwijl technische privacybewaking beschikbaar blijft voor controle en tests.
+- **Acceptance Criteria:** Secundaire privacy- en auditpanelen staan onder een compacte disclosure; primaire dossieracties, zoeken, imaging en review blijven direct bereikbaar; bestaande data-* hooks blijven aanwezig; mobile, tablet en desktop tonen geen overlap in de primaire flow; tests dekken empty, populated en locked states; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossier, privacy panels, attachment review, imaging repository
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 97
 - **Status:** ☐ open

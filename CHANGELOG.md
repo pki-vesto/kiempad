@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1126/G1127 Premium Claude Design UI: de dossierpagina opent nu met een compact startoverzicht voor uploads, beeldreview en OCR-review, met veilige workflowmetadata, primaire snelacties en responsive guards voor de primaire dossierflow; G1127 is toegevoegd voor progressive disclosure van secundaire dossierpanelen.
 - G556/G1126 Premium Claude Design UI: de imaging repository compare layout is nu compacter en mobiel-first met twee scanbare beeldmomentkaarten, rustige empty-state, veilige previewstatus en regressietests zonder beeldpayloadlekken; G1126 is toegevoegd voor dashboard-simplificatie in de dossierflow.
 - G1124/G1125 Central Encrypted Platform: de health-monitor retention missing-term-contract compact contract compact releaseguard heeft nu een compacte missing-term fixture voor ontbrekende foutmelding- en veilige-technische-labels termen; G1125 is toegevoegd voor het compacte foutmeldingcontract van deze fixture.
 - G1123/G1124 Central Encrypted Platform: changelog en current-state hebben nu releaseguard-bewaking voor het G1122 health-monitor retention missing-term-contract compact contract compact releaseguardcontext foutmeldingcontract met veilige technische labels; G1124 is toegevoegd voor de missing-term fixture van deze releaseguard.
