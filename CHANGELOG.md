@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1151/G1152 Premium Claude Design UI: inline dossier-submitfeedback heeft nu privacyveilige aria-labels met route- en statusduiding voor documentupload, consultverslag, embryokwaliteit en embryostatus zonder zichtbare copy of formcontracten te wijzigen; G1152 is toegevoegd voor aria-live verfijning.
 - G1150/G1151 Premium Claude Design UI: inline dossier-submitfeedback toont nu compacte recovery hints bij review- en foutstates zonder broninhoud, formcontracten, ankers of privacyhooks te wijzigen; G1151 is toegevoegd voor toegankelijke feedbacklabels.
 - G1149/G1150 Premium Claude Design UI: inline dossier-submitfeedback gebruikt nu korte gestandaardiseerde statuscopy voor klaar, verwerken, review nodig, fout en idle zonder userpayload of broninhoud te tonen; G1150 is toegevoegd voor compacte recovery hints.
 - G1148/G1149 Premium Claude Design UI: post-submit feedbackstatussen in de dossier-toevoegflow hebben nu compacte toonverschillen voor ready, processing, needs-review en error zonder formcontracten, ankers of privacyhooks te wijzigen; G1149 is toegevoegd voor feedbackcopy-brevity.
