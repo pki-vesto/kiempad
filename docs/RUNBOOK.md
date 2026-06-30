@@ -84,6 +84,18 @@ pad zonder lokale vault-hercreatie.
   Output is alleen technische JSON-status. Bij falen bevat de smoke een
   gesanitized `phaseCode` en `recoveryHint`, zonder passphrases, bearer tokens of
   medische plaintext.
+- **Centrale API health privacy audit (G503/G1078):** `GET /health` is publiek en
+  read-only voor runtime checks. De response mag alleen technische contractvelden
+  bevatten: `status`, `service`, `storageMode`, `encryptionBoundary`,
+  `backendVisibility`, `medicalPlaintext`, `dataRoutes`, `emptyState` en
+  `errorStates`. Verwachte privacygrens: `storageMode=central-api`,
+  `encryptionBoundary=client-side-encrypted-envelopes`,
+  `backendVisibility=technical-metadata-only`, `medicalPlaintext=false`,
+  `dataRoutes=bearer-session-required`, `emptyState=no-user-dataset-opened` en
+  foutstatussen `unauthorized`, `forbidden`, `central-api-error`. De healthcheck mag
+  nooit user-id, session-id, record-id, recordcount, ciphertext, secrets,
+  gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies
+  teruggeven en mag geen persistence write veroorzaken.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

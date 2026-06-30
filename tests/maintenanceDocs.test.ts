@@ -38,8 +38,10 @@ import security from '../SECURITY.md?raw';
 import governanceContract from '../scripts/bootstrap-governance-freshness-contract.json';
 import { DISCLAIMER } from '../src/appShell';
 import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiagnostics';
+import centralHttpApiSource from '../src/storage/centralHttpApi.ts?raw';
 import vision from '../VISION.md?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
+import centralHttpApiTest from './centralHttpApi.test.ts?raw';
 
 const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contract-matrix:start';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
@@ -3499,6 +3501,58 @@ describe('onderhoudsdocumentatie', () => {
     expect(tailscaleDeploy).not.toContain(
       'Een nieuw apparaat ziet geen bestaande Kiempad-data totdat de gebruiker lokaal een eigen kluis/back-up importeert.',
     );
+  });
+
+  it('bewaakt G503/G1078 central health endpoint audit evidence', () => {
+    for (const requiredTerm of [
+      'G503/G1078',
+      'GET /health',
+      'read-only',
+      'status',
+      'service',
+      'storageMode',
+      'encryptionBoundary',
+      'backendVisibility',
+      'medicalPlaintext',
+      'dataRoutes',
+      'emptyState',
+      'errorStates',
+      'central-api',
+      'client-side-encrypted-envelopes',
+      'technical-metadata-only',
+      'bearer-session-required',
+      'no-user-dataset-opened',
+      'unauthorized',
+      'forbidden',
+      'central-api-error',
+      'persistence write',
+    ]) {
+      expect(runbook).toContain(requiredTerm);
+    }
+
+    for (const forbiddenBoundary of [
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'secrets',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(runbook).toContain(forbiddenBoundary);
+    }
+
+    expect(centralHttpApiSource).toContain('CENTRAL_HEALTH_RESPONSE');
+    expect(centralHttpApiSource).toContain("pathname === '/health'");
+    expect(centralHttpApiSource).toContain('medicalPlaintext: false');
+    expect(centralHttpApiSource).toContain("backendVisibility: 'technical-metadata-only'");
+    expect(centralHttpApiTest).toContain('G503');
+    expect(centralHttpApiTest).toContain('health-record-sensitive');
+    expect(centralHttpApiTest).toContain('recordCount');
   });
 
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {

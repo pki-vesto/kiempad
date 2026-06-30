@@ -27,7 +27,7 @@ async function issueToken(api: CentralEncryptedHttpApi, userId: string): Promise
 }
 
 describe('central encrypted HTTP API contract', () => {
-  it('publiceert een health endpoint met alleen technische privacygrensmetadata', async () => {
+  it('bewaakt G503 health endpoint met alleen technische privacygrensmetadata', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const api = new CentralEncryptedHttpApi(
       new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
