@@ -12584,4 +12584,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 92
+- **Status:** ☑ done
+
+### G1133 — dossier add route readiness cues
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De toevoegroute-selector helpt navigeren, maar toont nog niet welke route vooral voorbereiding, upload, review of labregistratie vraagt.
+- **User Impact:** Gebruikers kunnen alsnog een route openen zonder snel te weten welke input of controle nodig is voordat zij kunnen opslaan.
+- **Desired Outcome:** Voeg compacte readiness-cues toe aan de route-selector of routepanelen zonder extra formulierstappen of privacygevoelige data te tonen.
+- **User Value:** Gebruikers herkennen sneller welke route past bij hun huidige taak en hoeveel voorbereiding die vraagt.
+- **Acceptance Criteria:** Toevoegroute-selector of routepanelen tonen korte readiness-cues voor documentupload, consult, embryokwaliteit en embryo-status; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 91
 - **Status:** ☐ open
