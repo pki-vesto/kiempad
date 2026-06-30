@@ -160,7 +160,12 @@
   componenten met eigenaar-, review- en artscheckstate. Het startscherm heeft ook
   een taakroutebalk naar fase, vandaag, volgende stap, aanbevelingen en snelle
   invoer, en de theme-CSS laadt in dev/preview via een CSP-veilige stylesheetlink;
-  G1184 staat open voor herbruikbare researchcomponenten.
+  G1184 rondt de eerste herbruikbare researchcomponenten af.
+- **G1184 researchcomponenten:** researchbronnen en wetenschappelijke/eenvoudige
+  researchsamenvattingen gebruiken nu herbruikbare `researchSourceList`,
+  `researchSourceCard`, `researchSummaryList` en `researchSummaryCard` componenten
+  met bron-, citation-, review- en herverificatiecontext; G1185 staat open om de
+  kennispagina verder in taakgerichte researchroutes op te delen.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

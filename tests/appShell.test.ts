@@ -34025,6 +34025,9 @@ describe('app shell', () => {
     expect(html).toContain('name="researchRelevantieVoorGebruiker"');
     expect(html).toContain('Bewaar research');
     expect(html).toContain('Researchbronnen');
+    expect(html).toContain('class="kp-research-source-list"');
+    expect(html).toContain('data-research-source-component="source-list"');
+    expect(html).toContain('class="kp-research-source-card"');
     expect(html).toContain('Seedbron');
     expect(html).toContain('ESHRE richtlijnen en updates');
     expect(html).toContain('PubMed fertility research zoekstart');
@@ -34292,6 +34295,13 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Wetenschappelijke samenvattingen');
+    expect(html).toContain('class="kp-research-summary-list"');
+    expect(html).toContain('data-research-summary-component="scientific-list"');
+    expect(html).toContain('data-research-summary-list-kind="scientific"');
+    expect(html).toContain('class="kp-research-summary-card"');
+    expect(html).toContain('data-research-summary-kind="scientific"');
+    expect(html).toContain('data-research-summary-id="research-eigen"');
+    expect(html).toContain('data-research-summary-review="ongepland"');
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('2026-05-10 · https://voorbeeld.test/embryo-cultuur');
     expect(html).toContain('Bronverificatie: handmatige review nodig');
@@ -34375,6 +34385,9 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Eenvoudige samenvattingen');
+    expect(html).toContain('data-research-summary-component="patient-list"');
+    expect(html).toContain('data-research-summary-list-kind="patient"');
+    expect(html).toContain('data-research-summary-kind="patient"');
     expect(html).toContain('Eigen artikel embryo-cultuur');
     expect(html).toContain('2026-05-10 · https://voorbeeld.test/embryo-cultuur');
     expect(html).toContain(
