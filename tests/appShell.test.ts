@@ -1874,6 +1874,12 @@ describe('app shell', () => {
     expect(html).toContain('Artscheck</button>');
     expect(html).toContain('name="bron" value="Lokale dagstart"');
     expect(html).toContain('name="reminderTijdstip" type="datetime-local"');
+    expect(html).toContain('data-recommendation-id="vrouw-dagkaart-bronherleiding"');
+    expect(html).toContain('Vrouw dagkaart met bronherleiding');
+    expect(html).toContain('Leefstijl: noteer alleen haalbare observaties');
+    expect(html).toContain('Voeding: verzamel feitelijke vragen');
+    expect(html).toContain('Supplementen: zet alleen vragen klaar');
+    expect(html).toContain('Cycluscontext: nog geen trajectfase of cyclusmeting');
     expect(html).toContain('data-recommendation-id="vrouw-basisdag"');
     expect(html).toContain('Gebruikte bronnen:');
     expect(html).toContain('Gebruikte bronnen: Lokale dagstart zonder extra medicatiemoment');
@@ -1927,6 +1933,9 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Vrouw');
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Man');
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Samen');
+    expect(emptyContextRecommendations).toContain(
+      'data-recommendation-id="vrouw-dagkaart-bronherleiding"',
+    );
     expect(emptyContextRecommendations).toContain('data-recommendation-id="vrouw-basisdag"');
     expect(emptyContextRecommendations).toContain('data-recommendation-id="man-basisdag"');
     expect(emptyContextRecommendations).toContain('Dagcheck zonder extra medicatiemoment');
@@ -2015,6 +2024,11 @@ describe('app shell', () => {
     const contextualRecommendations = extractDailyRecommendationsSection(contextualHtml);
 
     expect(contextualRecommendations).toContain('data-recommendation-id="vrouw-medicatie-vandaag"');
+    expect(contextualRecommendations).toContain(
+      'data-recommendation-id="vrouw-dagkaart-bronherleiding"',
+    );
+    expect(contextualRecommendations).toContain('Vrouw dagkaart met bronherleiding');
+    expect(contextualRecommendations).toContain('Trajectfase: cyclusfase Stimulatie');
     expect(contextualRecommendations).toContain(
       'data-recommendation-id="samen-behandelvoorbereiding"',
     );
