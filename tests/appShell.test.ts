@@ -4751,6 +4751,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(dossierPanel).toContain('Klaar voor lokale opslag.');
     expect(dossierPanel).not.toContain('data-dossier-submit-recovery="dossier-upload"');
+    expect(dossierPanel).not.toContain('data-dossier-submit-focus-return="dossier-upload"');
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
     );
@@ -4893,9 +4894,20 @@ describe('app shell', () => {
     expect(populatedEmbryoPanel).toContain('Controleer deze route.');
     expect(populatedDossierPanel).toContain('data-dossier-submit-recovery="dossier-upload"');
     expect(populatedDossierPanel).toContain('Controleer datum, bestand en koppeling.');
+    expect(populatedDossierPanel).toContain(
+      'data-dossier-submit-focus-return="dossier-upload" href="#dossier-upload-form"',
+    );
+    expect(populatedDossierPanel).toContain('Terug naar documentvelden');
     expect(populatedConsultPanel).not.toContain('data-dossier-submit-recovery="consult-upload"');
+    expect(populatedConsultPanel).not.toContain(
+      'data-dossier-submit-focus-return="consult-upload"',
+    );
     expect(populatedEmbryoPanel).toContain('data-dossier-submit-recovery="embryo-quality"');
     expect(populatedEmbryoPanel).toContain('Pas invoer aan en probeer opnieuw.');
+    expect(populatedEmbryoPanel).toContain(
+      'data-dossier-submit-focus-return="embryo-quality" href="#embryo-quality-form"',
+    );
+    expect(populatedEmbryoPanel).toContain('Terug naar kwaliteitsvelden');
 
     const lockedHtml = renderAppShell(
       'dossier',
@@ -5023,6 +5035,8 @@ describe('app shell', () => {
     expect(css).toContain('border-left-color: var(--danger);');
     expect(css).toContain('.dossier-submit-recovery');
     expect(css).toContain('font-weight: 650;');
+    expect(css).toContain('.dossier-submit-focus-return');
+    expect(css).toContain('text-underline-offset: 3px;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
