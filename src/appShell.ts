@@ -1693,7 +1693,23 @@ function renderDossierScreen(state: AppShellState): string {
         })}
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality">
-        <h2>Embryokwaliteit vastleggen</h2>
+        ${workflowPanel({
+          title: 'Embryokwaliteit vastleggen',
+          eyebrow: 'Embryodossier',
+          intro:
+            'Registreer labterugkoppeling met bronlabel en reviewstatus, zonder dat Kiempad selectieadvies of medisch oordeel toevoegt.',
+          className: 'embryo-quality-workflow',
+          ariaLabel: 'Begeleide embryokwaliteit registratie',
+          data: {
+            'upload-workflow': 'embryo-quality',
+            'upload-workflow-state': 'guided',
+          },
+          steps: [
+            { label: 'Identificatie', state: 'current' },
+            { label: 'Beoordeling', state: 'todo' },
+            { label: 'Controle', state: 'todo' },
+          ],
+          body: `
         <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-dossier-feedback-focus-target="embryo-quality" data-embryo-upload-privacy-state="encrypted-quality-registration" tabindex="-1">
           <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie">
             <legend>Embryo-identificatie</legend>
@@ -1771,9 +1787,27 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
           ${renderDossierSubmitFeedback('embryo-quality', 'embryo-upload', state)}
         </form>
+        `,
+        })}
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status">
-        <h2>Embryo-status event vastleggen</h2>
+        ${workflowPanel({
+          title: 'Embryo-status event vastleggen',
+          eyebrow: 'Statusmoment',
+          intro:
+            'Leg status, bron en koppelingen als feitelijke registratie vast zodat het traject later rustig te reconstrueren is.',
+          className: 'embryo-status-workflow',
+          ariaLabel: 'Begeleide embryo-status registratie',
+          data: {
+            'upload-workflow': 'embryo-status',
+            'upload-workflow-state': 'guided',
+          },
+          steps: [
+            { label: 'Status', state: 'current' },
+            { label: 'Bron', state: 'todo' },
+            { label: 'Koppeling', state: 'todo' },
+          ],
+          body: `
         <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-dossier-feedback-focus-target="embryo-status" data-embryo-status-event-state="concept-editor" tabindex="-1">
           <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis">
             <legend>Statusbasis</legend>
@@ -1836,6 +1870,8 @@ function renderDossierScreen(state: AppShellState): string {
           ${renderDossierSubmitFeedback('embryo-status', 'embryo-upload', state)}
         </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
+        `,
+        })}
         </section>
         </div>
       </details>

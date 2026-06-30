@@ -146,8 +146,12 @@
   workflowpanel met begeleide stappen Basis, Context en Controle; G1180 rondt dezelfde
   componentstructuur af voor consultupload.
 - **G1180 consultworkflowcomponent:** consultupload gebruikt nu hetzelfde workflowpanel
-  met begeleide stappen Verslag, Context en Acties; G1181 staat open om
-  embryokwaliteit en embryostatus dezelfde componentstructuur te geven.
+  met begeleide stappen Verslag, Context en Acties; G1181 rondt dezelfde
+  componentstructuur af voor embryokwaliteit en embryostatus.
+- **G1181 embryoworkflowcomponenten:** embryokwaliteit en embryo-status gebruiken nu
+  herbruikbare workflowpanelen met begeleide stappen voor identificatie, beoordeling,
+  controle, status, bron en koppeling; G1182 staat open voor herbruikbare
+  timelinecomponenten.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

@@ -1731,7 +1731,9 @@ h2 {
 }
 
 .dossier-upload-workflow,
-.consult-upload-workflow {
+.consult-upload-workflow,
+.embryo-quality-workflow,
+.embryo-status-workflow {
   margin-bottom: 16px;
 }
 
@@ -3556,6 +3558,15 @@ a.action-card:active {
   .primary-nav a {
     min-width: 56px;
     font-size: 0.64rem;
+  }
+
+  .kp-workflow-panel__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .kp-workflow-panel__step {
+    justify-content: flex-start;
+    padding: 7px 9px;
   }
 
   .timeline-overview-bar {
