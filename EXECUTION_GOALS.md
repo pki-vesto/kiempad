@@ -3606,6 +3606,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, startscreen, dashboard sections, mobile navigation, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 51
+- **Status:** ☑ done
+
+### G1205 — mobiele app-chrome boven Start compacter maken
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het startscherm heeft nu een werkbank en vervolgpanelen, maar de mobiele topbar met opslagstatus, themaformulier en vergrendelknop neemt nog veel verticale ruimte in voordat gebruikers bij de Fertiliteitswerkbank komen.
+- **User Impact:** Gebruikers zien de nieuwe premium flowstructuur later dan nodig en kunnen de app nog als zwaar of formulierachtig ervaren.
+- **Desired Outcome:** Maak de mobiele app-chrome compacter zonder brand, opslagstatus, thema, vergrendelen of toegankelijkheid te verliezen.
+- **User Value:** Gebruikers komen sneller bij de kernflows en ervaren Start als rustiger en meer app-achtig.
+- **Acceptance Criteria:** Thema- en lockcontrols nemen op mobiel minder verticale ruimte in; brand, opslagstatus, thema en vergrendelen blijven bereikbaar en toegankelijk; Startwerkbank, bottom-nav en flowdashboard blijven vrij van overlap; desktop blijft ongewijzigd of gelijkwaardig bruikbaar; tests en visuele evidence dekken mobile en desktop; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload of secrets wordt toegevoegd.
+- **Affected Screens:** Start, app shell
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, topbar, mobile navigation, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 50
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
