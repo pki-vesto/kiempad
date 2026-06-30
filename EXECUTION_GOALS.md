@@ -11925,4 +11925,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Scripts, health contract fixture, CI
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1087 — central health monitor annotation CI workflow smoke
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1086 voegt een veilige annotatie-CLI-fixture toe, maar de CI-workflow draait deze fixture nog niet als vaste smoke.
+- **Desired Outcome:** Voeg de central health monitor annotation fixture toe aan de CI-smokegates of documenteer en test de CI-workflowkoppeling.
+- **User Value:** Health-monitor annotatiedrift wordt in CI zichtbaar voordat monitoring of privacyoutput regressies uitlekken.
+- **Acceptance Criteria:** Evidence verwijst naar G1086; CI of workflowdocs draaien de annotatiefixture; onverwachte contractversie, onverwacht veld en errorstate-drift blijven herkenbaar; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** CI, scripts, health contract fixture
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

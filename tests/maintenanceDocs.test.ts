@@ -32,6 +32,7 @@ import executionGoals from '../EXECUTION_GOALS.md?raw';
 import masterContext from '../MASTER_CONTEXT.md?raw';
 import privacy from '../PRIVACY.md?raw';
 import backlog from '../PRODUCT_BACKLOG.md?raw';
+import packageJsonRaw from '../package.json?raw';
 import readme from '../README.md?raw';
 import roadmap from '../ROADMAP.md?raw';
 import security from '../SECURITY.md?raw';
@@ -43,6 +44,7 @@ import centralHttpApiSource from '../src/storage/centralHttpApi.ts?raw';
 import vision from '../VISION.md?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
 import centralHealthContractTest from './centralHealthContract.test.ts?raw';
+import centralHealthMonitorAnnotationCommandTest from './centralHealthMonitorAnnotationCommand.test.ts?raw';
 import centralHttpApiTest from './centralHttpApi.test.ts?raw';
 
 const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contract-matrix:start';
@@ -3717,6 +3719,41 @@ describe('onderhoudsdocumentatie', () => {
       expect(runbook + centralHealthContractSource + centralHealthContractTest).toContain(
         requiredTerm,
       );
+    }
+  });
+
+  it('documenteert G1086 central health monitor annotation CLI fixture', () => {
+    for (const requiredTerm of [
+      'Health-monitor annotatie-CLI-fixture (G1085/G1086)',
+      'npm run smoke:central-health-monitor',
+      'scripts/central-health-monitor-annotation.mts --fixture=ok',
+      '--fixture=unexpected-contract-version',
+      '--fixture=unexpected-field',
+      '--fixture=unexpected-error-states',
+      'status',
+      'ciAnnotation',
+      'non-zero',
+    ]) {
+      expect(runbook + packageJsonRaw + centralHealthMonitorAnnotationCommandTest).toContain(
+        requiredTerm,
+      );
+    }
+
+    for (const forbiddenOutput of [
+      'responsebody',
+      'headers',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(runbook).toContain(forbiddenOutput);
     }
   });
 
