@@ -9363,6 +9363,26 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
             <small>${escapeHtml(item.inputMinimisatie.waarschuwing)}</small>`
           : ''
       }
+      ${
+        item.cyclusfaseContext
+          ? `<dl class="metadata-list compact-list">
+              <div><dt>Cyclusfasebron</dt><dd>${escapeHtml(item.cyclusfaseContext.bron)}</dd></div>
+              <div><dt>Cyclusfasedatum</dt><dd>${escapeHtml(item.cyclusfaseContext.datum)}</dd></div>
+              <div><dt>Cyclusfasereview</dt><dd>${escapeHtml(item.cyclusfaseContext.reviewStatus)}</dd></div>
+              <div><dt>Cyclusfasestatus</dt><dd>${escapeHtml(item.cyclusfaseContext.status)}</dd></div>
+              <div><dt>Cyclusfase</dt><dd>${escapeHtml(item.cyclusfaseContext.faseLabel)}</dd></div>
+              ${
+                item.cyclusfaseContext.metingLabel
+                  ? `<div><dt>Cyclusmeting</dt><dd>${escapeHtml(item.cyclusfaseContext.metingLabel)}</dd></div>`
+                  : ''
+              }
+              <div><dt>Cyclusfasecorrectievelden</dt><dd>${item.cyclusfaseContext.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+            </dl>
+            <small>Cyclusfasebronpad: ${item.cyclusfaseContext.bronpad.map(escapeHtml).join(' > ')}</small>
+            <small>${escapeHtml(item.cyclusfaseContext.uitlegVoorLeken)}</small>
+            <small>${escapeHtml(item.cyclusfaseContext.waarschuwing)}</small>`
+          : ''
+      }
       ${renderDailyRecommendationActions(item)}
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     </li>
