@@ -484,6 +484,12 @@ const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS = [
 ] as const;
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR =
   'Health monitor retention freshness releasecontext ontbreekt voor termen: goal-completion-audit, maintenance-test';
+const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
+  'G1095',
+  'missing-term fixture',
+  'health-monitor retention freshness releasecontext',
+  'release-state bewaking',
+] as const;
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 const maintenanceDocsRaw = readFileSync(
   new URL('./maintenanceDocs.test.ts', import.meta.url),
@@ -4012,6 +4018,47 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1096 health monitor retention release-state guard', () => {
+    const releaseStateEvidence = [
+      'G1096 health-monitor-retention-release-state',
+      'sources=CHANGELOG.md,CURRENT_STATE.md',
+      'references=G1095',
+      `terms=${HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS.slice(1).join('|')}`,
+    ].join('\n');
+
+    for (const releaseDoc of [changelog, currentState]) {
+      const releaseStateContext =
+        extractHealthMonitorRetentionFreshnessReleaseStateContext(releaseDoc);
+
+      for (const releaseStateTerm of HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS) {
+        expect(releaseStateContext).toContain(releaseStateTerm);
+      }
+    }
+
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(releaseStateEvidence).not.toContain(forbiddenEvidenceTerm);
+    }
+
+    expect(releaseStateEvidence).toMatchInlineSnapshot(`
+      "G1096 health-monitor-retention-release-state
+      sources=CHANGELOG.md,CURRENT_STATE.md
+      references=G1095
+      terms=missing-term fixture|health-monitor retention freshness releasecontext|release-state bewaking"
+    `);
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',
@@ -4535,6 +4582,28 @@ function extractHealthMonitorRetentionFreshnessReleaseContext(releaseDoc: string
   if (missingTerms.length > 0) {
     throw new Error(
       `Health monitor retention freshness releasecontext ontbreekt voor termen: ${missingTerms.join(
+        ', ',
+      )}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractHealthMonitorRetentionFreshnessReleaseStateContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS.some((term) => line.includes(term)),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Health monitor retention freshness release-state ontbreekt voor termen: ${missingTerms.join(
         ', ',
       )}`,
     );

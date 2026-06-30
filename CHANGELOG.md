@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1096/G1097 Central Encrypted Platform: changelog en current-state hebben nu release-state bewaking voor de G1095 health-monitor retention freshness releasecontext missing-term fixture met veilige technische labels; G1097 is toegevoegd voor de release-state missing-term fixture.
 - G1095/G1096 Central Encrypted Platform: de health-monitor retention freshness releasecontext heeft nu een compacte missing-term fixture die ontbrekende goal-completion-audit- en maintenance-test-labels technisch meldt zonder privacygevoelige evidence; G1096 is toegevoegd voor release-state bewaking van deze fixture.
 - G1094/G1095 Central Encrypted Platform: changelog en current-state hebben nu releasecontext-evidence voor de G1093 retention snapshot freshness guard met veilige labels voor snapshot freshness, runbook, goal-completion-audit en maintenance-test; G1095 is toegevoegd voor een missing-term fixture.
 - G1093/G1094 Central Encrypted Platform: de retention snapshot heeft nu freshness-guardrails in runbook, goal-completion-audit en maintenance-tests zodat snapshotdrift alleen met bewuste termuitleg wordt geaccepteerd; G1094 is toegevoegd voor freshness releasecontext evidence.
