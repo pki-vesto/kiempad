@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1090/G1091 Central Encrypted Platform: de goal-completion-audit bevat nu health-monitor retention audit evidence voor PR-comments, issuecomments, lokale `/tmp/kiempad-health-monitor-*.json` kopieen en GitHub CI-artifacts met forbidden evidence terms; G1091 is toegevoegd voor audit checklist drift guard.
 - G1089/G1090 Central Encrypted Platform: health-monitor failure-artifacts hebben nu runbook-retention en cleanupregels voor PR's, issues, lokale kopieen en GitHub CI-artifacts met onderhoudstestdekking; G1090 is toegevoegd voor retention audit evidence.
 - G1088/G1089 Central Encrypted Platform: het runbook en onderhoudstests leggen nu de toegestane CI health-monitor failure-artifact evidence vast met driftlabels en verboden privacytermen voor PR's, issues en CI-artifacts; G1089 is toegevoegd voor failure-artifact retentionbeleid.
 - G1087/G1088 Central Encrypted Platform: de CI workflow draait nu de central health monitor annotatie-smoke na de centrale bootstrap smoke, met runbook- en commandotests die de workflowkoppeling bewaken; G1088 is toegevoegd voor CI failure artifact evidence.

@@ -11981,4 +11981,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, governance docs, CI
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1091 — central health monitor retention audit checklist drift guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1090 voegt audit-evidence toe voor health-monitor artifact retention, maar toekomstige audittekst kan nog afdrijven van de runbook-retentionregels.
+- **Desired Outcome:** Bewaak dat runbook-retentionregels en goal-completion-auditchecklist dezelfde health-monitor artifact cleanup- en forbidden-evidence termen blijven noemen.
+- **User Value:** Beheer behoudt consistente retentioncontrole in runbook, PR-audit en issueafhandeling.
+- **Acceptance Criteria:** Evidence verwijst naar G1090; drift guard vergelijkt runbook en auditdocs op PR-comments, issuecomments, lokale `/tmp/kiempad-health-monitor-*.json` kopieen en GitHub CI-artifacts; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, runbook, governance docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
