@@ -6,6 +6,7 @@ import {
   maakConsultSamenvatting,
   maakConsultVerslag,
   maakVraagUitConsultActiepunt,
+  reviewConsultSamenvatting,
   sorteerConsultVerslagen,
   vergelijkConsultSamenvatting,
 } from '../src/domain/consultVerslag';
@@ -51,6 +52,10 @@ describe('consultVerslag', () => {
       methode: 'lokale_tekstheuristiek',
       tekst: 'Besproken wat de volgende stap wordt.',
       bronnen: ['consulttekst'],
+    });
+    expect(verslag.samenvattingReview).toMatchObject({
+      status: 'concept',
+      bijgewerktOp: '2026-06-12T10:00:00.000Z',
     });
     expect(verslag.samenvatting?.waarschuwing).toContain('controleer altijd');
     expect(verslag.samenvatting?.waarschuwing).toContain('geen diagnose');
@@ -189,6 +194,47 @@ describe('consultVerslag', () => {
     expect(verslag.actiepunten?.map((actiepunt) => actiepunt.tekst).join(' ')).not.toContain(
       'kies voor ICSI',
     );
+  });
+
+  it('reviewt conceptsamenvattingen als gebruikerscorrectie of verwerping zonder behandeladvies', () => {
+    const verslag = maakConsultVerslag('consult-summary-review', {
+      datum: '2026-06-12',
+      titel: 'Review consult',
+      tekst: 'Afgesproken dat de uitslag wordt besproken tijdens de controle.',
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    });
+
+    const aangepast = reviewConsultSamenvatting(verslag, {
+      actie: 'corrigeren',
+      correctie: 'Gebruikerscorrectie: uitslag bespreken tijdens de controle.',
+      bijgewerktOp: '2026-06-12T11:00:00.000Z',
+    });
+    const verworpen = reviewConsultSamenvatting(aangepast, {
+      actie: 'verwerpen',
+      reden: 'Concept was te kort.',
+      bijgewerktOp: '2026-06-12T12:00:00.000Z',
+    });
+
+    expect(aangepast.samenvattingReview).toEqual({
+      status: 'aangepast',
+      bijgewerktOp: '2026-06-12T11:00:00.000Z',
+    });
+    expect(aangepast.samenvattingCorrectie).toEqual({
+      tekst: 'Gebruikerscorrectie: uitslag bespreken tijdens de controle.',
+      bijgewerktOp: '2026-06-12T11:00:00.000Z',
+    });
+    expect(verworpen.samenvattingReview).toEqual({
+      status: 'verworpen',
+      bijgewerktOp: '2026-06-12T12:00:00.000Z',
+      reden: 'Concept was te kort.',
+    });
+    expect(verworpen.samenvattingCorrectie).toBeUndefined();
+    expect(() =>
+      reviewConsultSamenvatting(verslag, {
+        actie: 'corrigeren',
+        correctie: 'Mijn advies: kies voor deze behandeling.',
+      }),
+    ).toThrow('behandelkeuze');
   });
 
   it('extraheert concepttaken en conceptvragen met lokale bronverwijzing', () => {

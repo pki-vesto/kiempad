@@ -121,6 +121,7 @@ const requiredFields: Record<keyof typeof entityInterfaceMap, string[]> = {
     'importMetadata',
     'samenvatting',
     'samenvattingCorrectie',
+    'samenvattingReview',
     'actiepunten',
     'bronFragment',
     'eigenaar',

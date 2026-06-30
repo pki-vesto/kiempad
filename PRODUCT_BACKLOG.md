@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 854 |
+| ☑ klaar | 855 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1053** |
+| **Totaal** | **1054** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -632,7 +632,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G474 | Fertility Intelligence: imaging timeline privacy boundary | P0 | F5 | ☑ |
 | G475 | Fertility Intelligence: consult transcript import en bronkoppeling | P0 | F5 | ☑ |
 | G476 | Fertility Intelligence: actie-extractie uit consulten als taken en vragen | P0 | F5 | ☑ |
-| G477 | Fertility Intelligence: consultsamenvatting reviewflow zonder behandeladvies | P0 | F5 | ☐ |
+| G477 | Fertility Intelligence: consultsamenvatting reviewflow zonder behandeladvies | P0 | F5 | ☑ |
 | G478 | Fertility Intelligence: embryo grading bronregistratie | P0 | F5 | ☐ |
 | G479 | Fertility Intelligence: embryo outcome event tracking | P1 | F5 | ☐ |
 | G480 | Fertility Intelligence: embryovergelijking taalgrens | P0 | F5 | ☐ |
@@ -1216,12 +1216,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1051 | Fertility Intelligence: imaging timeline privacy audit evidence | P1 | F5 | ☐ |
 | G1052 | Fertility Intelligence: consult transcript source audit evidence | P1 | F5 | ☐ |
 | G1053 | Fertility Intelligence: consult action review audit evidence | P1 | F5 | ☐ |
+| G1054 | Fertility Intelligence: consult summary review audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1053** (id's G001 t/m G1053, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1054** (id's G001 t/m G1054, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

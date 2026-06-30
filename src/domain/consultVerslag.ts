@@ -58,6 +58,18 @@ export type ConsultSamenvattingVerschil = {
   waarschuwing: string;
 };
 
+export type ConsultSamenvattingReviewInput =
+  | {
+      actie: 'corrigeren';
+      correctie: string;
+      bijgewerktOp?: string;
+    }
+  | {
+      actie: 'verwerpen';
+      reden?: string;
+      bijgewerktOp?: string;
+    };
+
 export const CONSULT_VERSLAG_BRON_LABELS: Record<ConsultVerslag['bron'], string> = {
   upload: 'Upload',
   handmatig: 'Handmatig',
@@ -134,6 +146,10 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
           bijgewerktOp: uploadedAt,
         }
       : undefined,
+    samenvattingReview: {
+      status: samenvattingCorrectie ? 'aangepast' : 'concept',
+      bijgewerktOp: uploadedAt,
+    },
     actiepunten: extraheerConsultActiepunten({
       id,
       tekst: tekst || undefined,
@@ -142,6 +158,47 @@ export function maakConsultVerslag(id: string, input: ConsultVerslagInput): Cons
       uploadedAt,
     }),
     uploadedAt,
+  };
+}
+
+export function reviewConsultSamenvatting(
+  verslag: ConsultVerslag,
+  input: ConsultSamenvattingReviewInput,
+): ConsultVerslag {
+  if (!verslag.samenvatting) {
+    throw new Error('Er is geen conceptsamenvatting om te reviewen.');
+  }
+
+  const bijgewerktOp = input.bijgewerktOp?.trim() || new Date().toISOString();
+
+  if (input.actie === 'corrigeren') {
+    const correctie = input.correctie.trim();
+    if (!correctie)
+      throw new Error('Vul een correctie in om de conceptsamenvatting aan te passen.');
+    valideerAiOutputPolicy(correctie);
+
+    return {
+      ...verslag,
+      samenvattingCorrectie: {
+        tekst: correctie,
+        bijgewerktOp,
+      },
+      samenvattingReview: {
+        status: 'aangepast',
+        bijgewerktOp,
+      },
+    };
+  }
+
+  const reden = input.reden?.trim();
+  return {
+    ...verslag,
+    samenvattingCorrectie: undefined,
+    samenvattingReview: {
+      status: 'verworpen',
+      bijgewerktOp,
+      reden: reden || undefined,
+    },
   };
 }
 

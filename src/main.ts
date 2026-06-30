@@ -413,6 +413,12 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
     event.preventDefault();
     void saveConsultVerslagFromForm(event.currentTarget, root, state);
   });
+  root.querySelectorAll<HTMLFormElement>('.consult-samenvatting-review-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveConsultSamenvattingReviewFromForm(event.currentTarget, event.submitter, root, state);
+    });
+  });
 
   root.querySelector('#dossier-search-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -500,6 +506,51 @@ async function saveConsultVerslagFromForm(
   } catch (error: unknown) {
     state.dossierError =
       error instanceof Error ? error.message : 'Consultverslag opslaan is mislukt.';
+    render(root, state);
+  }
+}
+
+async function saveConsultSamenvattingReviewFromForm(
+  target: EventTarget | null,
+  submitter: HTMLElement | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.consultVerslagStore) return;
+
+  const data = new FormData(target);
+  const consultVerslagId = String(data.get('consultVerslagId') ?? '').trim();
+  const actie =
+    submitter instanceof HTMLButtonElement
+      ? submitter.value
+      : String(data.get('samenvattingReviewActie') ?? '');
+  if (!consultVerslagId) return;
+
+  try {
+    if (actie === 'verwerpen') {
+      await state.consultVerslagStore.updateSummaryReview(consultVerslagId, {
+        actie: 'verwerpen',
+        reden: optionalString(data.get('samenvattingVerwerpReden')),
+      });
+      state.dossierStatus = 'Conceptsamenvatting verworpen.';
+    } else {
+      await state.consultVerslagStore.updateSummaryReview(consultVerslagId, {
+        actie: 'corrigeren',
+        correctie: String(data.get('samenvattingCorrectie') ?? ''),
+      });
+      state.dossierStatus = 'Correctie op conceptsamenvatting bewaard.';
+    }
+
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Consultsamenvatting review bijgewerkt',
+      detail: `Reviewstatus ${actie === 'verwerpen' ? 'verworpen' : 'aangepast'} voor consultverslag.`,
+    });
+    state.dossierError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Consultsamenvatting reviewen is mislukt.';
     render(root, state);
   }
 }

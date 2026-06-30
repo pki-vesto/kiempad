@@ -329,6 +329,11 @@ export interface ConsultVerslag {
     tekst: string;
     bijgewerktOp: IsoDate;
   };
+  samenvattingReview?: {
+    status: 'concept' | 'aangepast' | 'verworpen';
+    bijgewerktOp: IsoDate;
+    reden?: string;
+  };
   actiepunten?: {
     id: string;
     soort: 'taak' | 'vraag';

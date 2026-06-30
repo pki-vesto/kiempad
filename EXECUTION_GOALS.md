@@ -3308,7 +3308,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consults, AI policy, knowledge, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G478 — embryo grading bronregistratie
 
@@ -11461,6 +11461,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Consults, questions, reminders, maintenance tests, app shell
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1054 — consult summary review audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G477 voegt consultsamenvatting-review toe met conceptstatus, gebruikerscorrectie en verwerping, maar er is nog geen compacte audit die de reviewlabels, bronverwijzing, encrypted opslag en adviesgrens samen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat consultsamenvatting-reviewstatussen, correcties, verwerpredenen, bronlabels en policyblokkades zichtbaar blijven zonder transcriptpayload of behandeladvies te lekken.
+- **User Value:** Gebruikers behouden vertrouwen dat consultsamenvattingen alleen als controleerbare concepten werken en dat verworpen of aangepaste samenvattingen niet terugdriften naar stellig advies.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G477; concept, aangepast en verworpen states blijven gedekt; correctie- en verwerpflow blijven encrypted en lokaal; evidence bevat geen diagnose, dosering, behandelkeuzeadvies, transcriptpayload, bronbestand-base64 of plaintext gevoelige correctie; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consults, encrypted storage, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
