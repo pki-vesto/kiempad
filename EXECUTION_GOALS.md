@@ -12632,4 +12632,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 89
+- **Status:** ☑ done
+
+### G1136 — dossier add route active state affordance
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De routecopy is duidelijker, maar de routekaarten tonen nog geen duidelijke actieve affordance wanneer een gebruiker een route via anchor heeft gekozen.
+- **User Impact:** Gebruikers kunnen na springen naar een formulier nog twijfelen welke routekaart bij de actieve sectie hoort.
+- **Desired Outcome:** Voeg een compacte actieve route-affordance toe aan de route-selector met behoud van bestaande anchors, formcontracten en privacyhooks.
+- **User Value:** Gebruikers zien direct welke toevoegroute actief is en kunnen sneller terugschakelen naar een andere taak.
+- **Acceptance Criteria:** Route-selector markeert de actieve route bij documentupload, consult, embryokwaliteit en embryo-status; readiness-cues blijven zichtbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 88
 - **Status:** ☐ open
