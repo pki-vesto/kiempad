@@ -33934,6 +33934,22 @@ describe('app shell', () => {
       ],
     });
 
+    expect(html).toContain('class="section-stack wellbeing-command-layout"');
+    expect(html).toContain('class="wellbeing-task-routes"');
+    expect(html).toContain('aria-label="Welzijn taakroutes"');
+    expect(html).toContain('data-wellbeing-task-routes="ready"');
+    expect(html).toContain('href="#welzijn-route-overview"');
+    expect(html).toContain('href="#welzijn-route-history"');
+    expect(html).toContain('href="#welzijn-route-log"');
+    expect(html).toContain('id="welzijn-route-overview"');
+    expect(html).toContain('data-wellbeing-route="overview"');
+    expect(html).toContain('id="welzijn-route-history"');
+    expect(html).toContain('data-wellbeing-route="history"');
+    expect(html).toContain('id="welzijn-route-log"');
+    expect(html).toContain('data-wellbeing-route="log"');
+    expect(html).toContain('Welzijn en trends');
+    expect(html).toContain('Check-ins, symptomen en cyclusmetingen');
+    expect(html).toContain('Check-in, symptoom of cyclusmeting toevoegen');
     expect(html).toContain('Mentale check-in');
     expect(html).toContain('id="mental-check-in-form"');
     expect(html).toContain('name="stemming"');

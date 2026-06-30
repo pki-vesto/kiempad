@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1187/G1188 Premium Claude Design UI: het welzijnscherm heeft nu een zichtbare taakroutebalk en routecontainers voor overzicht & trends, geschiedenis en vastleggen, met behoud van bestaande check-in-, symptoom- en cyclusformulieren; G1188 is toegevoegd om het afwegingenscherm dezelfde decisionroute-structuur te geven.
 - G1186/G1187 Premium Claude Design UI: de dossierpagina heeft nu een zichtbare taakroutebalk en routecontainers voor uploaden, review, beelden & embryo’s, tijdlijn en zoeken, met behoud van bestaande upload-, attachment- en privacycontracten; G1187 is toegevoegd voor taakroutes in welzijn en afwegingen.
 - G1185/G1186 Premium Claude Design UI: de kennispagina heeft nu een zichtbare taakroute-navigatie en routeclusters voor research lezen, research/kennis toevoegen, AI & netwerk en bibliotheek, met behoud van bestaande formcontracten; G1186 is toegevoegd om de dossierpagina op dezelfde manier in medical-record routes op te delen.
 - G1184/G1185 Premium Claude Design UI: researchbronnen en wetenschappelijke/eenvoudige researchsamenvattingen gebruiken nu herbruikbare `researchSourceList`/`researchSourceCard` en `researchSummaryList`/`researchSummaryCard` componenten met bron-, review-, herverificatie- en citationcontext; G1185 is toegevoegd om de kennispagina verder in taakgerichte routes op te delen.

@@ -8722,28 +8722,93 @@ function renderWelzijnScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      renderWelzijnOverzicht(overzicht),
-      renderWelzijnTrends(trends),
-      '<h2>Mentale check-ins</h2>',
-      checkIns.length > 0
-        ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
-        : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>',
-      '<h2 class="section-subheading">Symptoomlogboek</h2>',
-      perDag.length > 0
-        ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
-        : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>',
-      '<h2 class="section-subheading">Cyclusmetingen</h2>',
-      cycleData.length > 0
-        ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
-        : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>',
-      disclosure({
-        summary: 'Vastleggen: check-in, symptoom of cyclusmeting',
-        open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,
-        body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm()}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm()}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
+      renderWelzijnTaskRoutes({
+        checkInCount: checkIns.length,
+        symptomCount: logs.length,
+        cycleCount: cycleData.length,
+        trendCount: trends.length,
       }),
+      `<section id="welzijn-route-overview" class="wellbeing-route-section" aria-labelledby="welzijn-route-overview-title" data-wellbeing-route="overview">
+        <header class="wellbeing-route-section__header">
+          <p class="kp-card__eyebrow">Overzicht</p>
+          <h2 id="welzijn-route-overview-title">Welzijn en trends</h2>
+          <p>Bekijk feitelijke aantallen en trendperiodes zonder score, diagnose of behandeladvies.</p>
+        </header>
+        ${renderWelzijnOverzicht(overzicht)}
+        ${renderWelzijnTrends(trends)}
+      </section>`,
+      `<section id="welzijn-route-history" class="wellbeing-route-section" aria-labelledby="welzijn-route-history-title" data-wellbeing-route="history">
+        <header class="wellbeing-route-section__header">
+          <p class="kp-card__eyebrow">Geschiedenis</p>
+          <h2 id="welzijn-route-history-title">Check-ins, symptomen en cyclusmetingen</h2>
+          <p>Lees terug wat lokaal is vastgelegd, gescheiden van de invoerroute.</p>
+        </header>
+        <h2>Mentale check-ins</h2>
+        ${
+          checkIns.length > 0
+            ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
+        }
+        <h2 class="section-subheading">Symptoomlogboek</h2>
+        ${
+          perDag.length > 0
+            ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
+            : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
+        }
+        <h2 class="section-subheading">Cyclusmetingen</h2>
+        ${
+          cycleData.length > 0
+            ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
+        }
+      </section>`,
+      `<section id="welzijn-route-log" class="wellbeing-route-section" aria-labelledby="welzijn-route-log-title" data-wellbeing-route="log">
+        <header class="wellbeing-route-section__header">
+          <p class="kp-card__eyebrow">Vastleggen</p>
+          <h2 id="welzijn-route-log-title">Check-in, symptoom of cyclusmeting toevoegen</h2>
+          <p>Leg alleen feitelijke self-tracking vast; Kiempad maakt hier geen medische conclusie van.</p>
+        </header>
+        ${disclosure({
+          summary: 'Vastleggen: check-in, symptoom of cyclusmeting',
+          open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,
+          body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm()}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm()}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
+        })}
+      </section>`,
     ],
-    { ariaLabel: 'Symptomen en welzijn' },
+    { className: 'wellbeing-command-layout', ariaLabel: 'Symptomen en welzijn' },
   );
+}
+
+function renderWelzijnTaskRoutes(input: {
+  checkInCount: number;
+  symptomCount: number;
+  cycleCount: number;
+  trendCount: number;
+}): string {
+  const routes = [
+    { href: '#welzijn-route-overview', label: 'Overzicht', meta: `${input.trendCount} trends` },
+    {
+      href: '#welzijn-route-history',
+      label: 'Geschiedenis',
+      meta: `${input.checkInCount} check-ins · ${input.symptomCount} logs`,
+    },
+    { href: '#welzijn-route-log', label: 'Vastleggen', meta: `${input.cycleCount} metingen` },
+  ];
+
+  return `
+    <nav class="wellbeing-task-routes" aria-label="Welzijn taakroutes" data-wellbeing-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="wellbeing-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
 }
 
 function renderWelzijnTrends(trends: WelzijnTrendPeriode[]): string {

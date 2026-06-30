@@ -173,7 +173,11 @@
 - **G1186 dossierroutes:** de dossierpagina heeft nu een vroege routebalk en
   routecontainers voor uploaden, review, beelden & embryo's, tijdlijn en zoeken,
   met behoud van uploadformulieren, attachment hooks en privacycontroles; G1187
-  staat open voor taakroutes in welzijn en afwegingen.
+  deelt het welzijnscherm verder op in taakgerichte routes.
+- **G1187 welzijnroutes:** het welzijnscherm heeft nu een routebalk en duidelijke
+  clusters voor overzicht & trends, geschiedenis en vastleggen, met behoud van
+  check-in-, symptoom- en cyclusformulieren; G1188 staat open voor decisionroutes
+  in het afwegingenscherm.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
