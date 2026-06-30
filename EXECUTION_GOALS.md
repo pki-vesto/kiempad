@@ -12079,4 +12079,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1098 — central health monitor retention release-state missing-term compact contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1097 voegt een missing-term fixture toe, maar het exacte foutmeldingcontract is nog niet apart als compacte contractcheck vastgelegd.
+- **Desired Outcome:** Leg de exacte health-monitor retention release-state missing-term melding vast als compact contract.
+- **User Value:** Beheer herkent release-state missing-term drift direct zonder gevoelige payload of lange fixture-output.
+- **Acceptance Criteria:** Exacte missing-term melding is als compact contract gesnapshott; contract verwijst alleen naar G1097-veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

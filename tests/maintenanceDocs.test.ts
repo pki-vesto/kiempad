@@ -490,6 +490,8 @@ const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
   'health-monitor retention freshness releasecontext',
   'release-state bewaking',
 ] as const;
+const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR =
+  'Health monitor retention freshness release-state ontbreekt voor termen: health-monitor retention freshness releasecontext';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 const maintenanceDocsRaw = readFileSync(
   new URL('./maintenanceDocs.test.ts', import.meta.url),
@@ -4057,6 +4059,37 @@ describe('onderhoudsdocumentatie', () => {
       references=G1095
       terms=missing-term fixture|health-monitor retention freshness releasecontext|release-state bewaking"
     `);
+  });
+
+  it('geeft ontbrekende G1097 health monitor retention release-state termen technisch terug', () => {
+    expect(() =>
+      extractHealthMonitorRetentionFreshnessReleaseStateContext(
+        'G1095 missing-term fixture heeft release-state bewaking.',
+      ),
+    ).toThrow(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR);
+    expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR).toBe(
+      'Health monitor retention freshness release-state ontbreekt voor termen: health-monitor retention freshness releasecontext',
+    );
+    expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR).toContain(
+      'health-monitor retention freshness releasecontext',
+    );
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR).not.toContain(
+        forbiddenEvidenceTerm,
+      );
+    }
   });
 
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
