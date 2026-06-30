@@ -26986,6 +26986,156 @@ describe('app shell', () => {
     expect(assistiveSurface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
+  it('bewaakt G1040 attachment assistive cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery privacy states zonder zoekterm of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierZoekterm:
+          'private-g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token',
+        dossierStatus:
+          'G1040 cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery bevat bewijs voor g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf met private-g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token OCR-payload diagnose 6308 mg behandelkeuzeadvies dossierpayload.',
+        dossierDocuments: [
+          {
+            id: 'doc-g1040-sensitive',
+            datum: '2027-01-22',
+            titel:
+              'G1040 audit trail retention expiry cleanup archive receipt export delivery bron',
+            categorie: 'onderzoek',
+            bestandsNaam:
+              'g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'U0VDUkVULUcxMDQwLVBBWUxPQUQ=',
+            notitie:
+              'private-g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token hoort niet in assistive audit trail retention expiry cleanup archive receipt export delivery states.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 6308 mg behandelkeuzeadvies blijft buiten G1040 audit trail retention expiry cleanup archive receipt export delivery proof.',
+              signalen: [
+                'OCR-payload blijft buiten G1040 audit trail retention expiry cleanup archive receipt export delivery screenreader label.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2027-01-22',
+              documenttype: 'Labuitslag',
+              bronbestand:
+                'g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf',
+              extractieBronnen: ['bronbestand', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.98,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2027-01-22T08:00:00.000Z',
+              tekst:
+                'GEVOELIGE G1040 OCR TEKST private-g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token diagnose 6308 mg behandelkeuzeadvies attachmentpayload.',
+              waarschuwing:
+                'Controleer OCR lokaal voor g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf.',
+            },
+            uploadedAt: '2027-01-22T08:05:00.000Z',
+          },
+          {
+            id: 'doc-g1040-image',
+            datum: '2027-01-22',
+            titel:
+              'G1040 audit trail retention expiry cleanup archive receipt export delivery beeld',
+            categorie: 'beeld',
+            bestandsNaam:
+              'g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-image.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'U0VDUkVULUcxMDQwLUlNQUdF',
+            notitie:
+              'Attachmentpayload private-g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token hoort niet in locked preview labels.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose blijft buiten archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery beeldstatus.',
+              signalen: [
+                'OCR-payload hoort niet in receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery preview copy.',
+              ],
+            },
+            metadata: {
+              documentDatum: '2027-01-22',
+              documenttype: 'Foto/echo',
+              bronbestand:
+                'g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-image.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2027-01-22',
+              soort: 'echo',
+              context:
+                'private g1040 audit trail retention expiry cleanup archive receipt export delivery imaging context',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2027-01-22T08:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const assistiveSurface =
+      extractAttachmentAssistiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliverySurface(
+        html,
+      );
+
+    expect(html).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-surface="privacy"',
+    );
+    expect(assistiveSurface).toContain(
+      'data-attachment-assistive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-surface="privacy"',
+    );
+    expect(assistiveSurface).toContain('role="status"');
+    expect(assistiveSurface).toContain('aria-live="polite"');
+    expect(assistiveSurface).toContain(
+      'cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-boundary',
+    );
+    expect(assistiveSurface).toContain(
+      'retention-expiry-cleanup-archive-receipt-export-delivery-proof-summary-affordance',
+    );
+    expect(assistiveSurface).toContain(
+      'screenreader-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-label-state',
+    );
+    expect(assistiveSurface).toContain(
+      'assistive-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-state',
+    );
+    expect(assistiveSurface).toContain(
+      'locked-preview-assistive-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-boundary',
+    );
+    expect(assistiveSurface).toContain(
+      '2 bijlagen met veilige cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export deliverystatus zonder broninhoud.',
+    );
+    expect(assistiveSurface).toContain(
+      '1 vergrendelde beeldpreview blijft buiten assistive handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery payloads.',
+    );
+
+    expect(assistiveSurface).not.toContain(
+      'private-g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-token',
+    );
+    expect(assistiveSurface).not.toContain(
+      'g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-source.pdf',
+    );
+    expect(assistiveSurface).not.toContain(
+      'g1040-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-handoff-confirmation-receipt-audit-trail-retention-expiry-cleanup-archive-receipt-export-delivery-secret-image.jpg',
+    );
+    expect(assistiveSurface).not.toContain('U0VDUkVULUcxMDQwLVBBWUxPQUQ=');
+    expect(assistiveSurface).not.toContain('U0VDUkVULUcxMDQwLUlNQUdF');
+    expect(assistiveSurface).not.toContain('GEVOELIGE G1040 OCR TEKST');
+    expect(assistiveSurface).not.toContain('OCR-payload');
+    expect(assistiveSurface).not.toContain('Attachmentpayload');
+    expect(assistiveSurface).not.toContain('attachmentpayload');
+    expect(assistiveSurface).not.toContain('dossierpayload');
+    expect(assistiveSurface).not.toContain('diagnose');
+    expect(assistiveSurface).not.toContain('dosering');
+    expect(assistiveSurface).not.toContain('behandelkeuzeadvies');
+    expect(assistiveSurface).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
