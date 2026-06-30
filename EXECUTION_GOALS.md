@@ -3526,6 +3526,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, command routes, mobile navigation, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 46
+- **Status:** ☑ done
+
+### G1200 — mobiele formulierpanelen verdichten met duidelijke primaire actiezone
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Mobiele commandroutes en bottom-nav hebben nu veilige spacing, maar de routeformulieren zelf blijven op smalle schermen relatief lang en de primaire actiezone staat pas na veel verticale invoer.
+- **User Impact:** Gebruikers houden de routecontext beter vast, maar moeten nog veel scrollen om de belangrijkste bewaaractie of volgende stap te bereiken.
+- **Desired Outcome:** Verdicht mobiele formulierpanelen en maak primaire acties scanbaarder zonder form-id's, input names of privacygrenzen te wijzigen.
+- **User Value:** Gebruikers ervaren invoer op mobiel meer als een rustige app-flow met duidelijke vervolgstap in plaats van als een lang formulier.
+- **Acceptance Criteria:** Minimaal agenda, medicatie, vragen en traject behouden commandroute spacing; mobiele formulierpanelen krijgen compactere spacing en een duidelijkere primaire actiezone; desktop blijft scanbaar; bestaande hashes, form-id's, input names en privacyhooks blijven intact; browsercheck bewaakt geen horizontale overflow en geen bottom-nav overlap; tests bewaken CSS-contracten; geen medische payload, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Agenda, Medicatie, Vragen, Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, forms, command routes, mobile navigation, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

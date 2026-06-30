@@ -183,6 +183,7 @@
   --shadow-1: none;
   --shadow-2: 0 40px 90px rgba(21, 48, 44, 0.13);
   --motion: 0.16s ease;
+  --mobile-bottom-nav-clearance: calc(92px + env(safe-area-inset-bottom, 0px));
 }
 
 .app-shell[data-theme="donker"] {
@@ -5031,8 +5032,12 @@ a.action-card:active {
 }
 
 @media (max-width: 760px) {
+  html {
+    scroll-padding-bottom: var(--mobile-bottom-nav-clearance);
+  }
+
   .app-shell {
-    padding: 14px 14px 88px;
+    padding: 14px 14px var(--mobile-bottom-nav-clearance);
   }
 
   .topbar {
@@ -5303,6 +5308,7 @@ a.action-card:active {
     overflow-x: auto;
     padding: 7px;
     scroll-snap-type: x proximity;
+    scroll-padding-inline: 7px;
   }
 
   .command-task-routes::-webkit-scrollbar {
@@ -5314,6 +5320,19 @@ a.action-card:active {
     min-width: 0;
     padding: 9px 8px;
     scroll-snap-align: start;
+    scroll-margin-inline: 7px;
+  }
+
+  .command-route-section {
+    scroll-margin-top: 96px;
+    padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);
+  }
+
+  .command-route-section button,
+  .command-route-section input,
+  .command-route-section select,
+  .command-route-section textarea {
+    scroll-margin-bottom: var(--mobile-bottom-nav-clearance);
   }
 
   .command-task-route__top {
