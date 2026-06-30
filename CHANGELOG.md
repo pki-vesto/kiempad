@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1173/G1174 Premium Claude Design UI: de dossier cue parity smoke is nu expliciet traceerbaar als eigen CI-stap met runbook- en completion-audit evidence, bewaakt door maintenance-tests zonder bestandsnaam, OCR-tekst, beeldpayload of medische inhoud te loggen; G1174 is toegevoegd voor CI-volgorde-bewaking.
 - G1172/G1173 Premium Claude Design UI: dossier feedback-return cueparity heeft nu een expliciete app-shell regressiesmoke die target-, focus- en focus-visible selectors vergelijkt in standaard, reduced-motion en forced-colors context voor documentupload, consult, embryokwaliteit en embryo-status; G1173 is toegevoegd voor CI-evidence.
 - G1171/G1172 Premium Claude Design UI: feedback-return target- en focuslandingscues gebruiken nu gedeelde CSS-variabelen voor outline, achtergrond en contextlijn, inclusief forced-colors systeemkleurparity; G1172 is toegevoegd voor parity-regressiesmoke.
 - G1170/G1171 Premium Claude Design UI: gefocuste feedback-return landingscues hebben nu expliciete compacte transitionregels en reduced-motion schakelt die cuebeweging uit terwijl contrast en forced-colors dekking behouden blijven; G1171 is toegevoegd voor target/focus parity.

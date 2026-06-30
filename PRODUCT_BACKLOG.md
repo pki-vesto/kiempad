@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 974 |
+| ☑ klaar | 975 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1173** |
+| **Totaal** | **1174** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1335,13 +1335,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1170 | Premium Claude Design UI: dossier add feedback return focused cue contrast audit | P1 | F5 | ☑ |
 | G1171 | Premium Claude Design UI: dossier add feedback return focused cue target parity | P1 | F5 | ☑ |
 | G1172 | Premium Claude Design UI: dossier add feedback return cue parity regression smoke | P1 | F5 | ☑ |
-| G1173 | Premium Claude Design UI: dossier add feedback return cue parity smoke CI evidence | P1 | F5 | ☐ |
+| G1173 | Premium Claude Design UI: dossier add feedback return cue parity smoke CI evidence | P1 | F5 | ☑ |
+| G1174 | Premium Claude Design UI: dossier add feedback return cue parity CI order guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1173** (id's G001 t/m G1173, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1174** (id's G001 t/m G1174, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

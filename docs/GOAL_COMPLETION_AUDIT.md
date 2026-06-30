@@ -126,6 +126,22 @@ Gebruik deze aanvullende audit wanneer een PR of issue health-monitor failure-ar
   forbidden-evidence termen bewust wijzigen en de PR uitlegt welke term is toegevoegd,
   verwijderd of hernoemd.
 
+## Dossier Cue Parity CI Evidence
+
+Gebruik deze aanvullende evidence wanneer feedback-return cueparity rond dossierformulieren
+wordt gewijzigd.
+
+- **CI-stap:** `.github/workflows/ci.yml` bevat `Dossier cue parity smoke` met
+  `npm run test -- tests/appShell.test.ts`.
+- **Scope:** de smoke bewaakt documentupload, consult, embryokwaliteit en embryo-status
+  in standaard, reduced-motion en forced-colors context.
+- **Privacygrens:** evidence mag geen bestandsnaam, OCR-tekst, beeldpayload,
+  broninhoud, gezondheidsdata, diagnose, dosering, kansberekening of
+  behandelkeuzeadvies bevatten.
+- **Freshness:** wijzig deze sectie samen met `docs/RUNBOOK.md`,
+  `.github/workflows/ci.yml` en `tests/maintenanceDocs.test.ts` wanneer de
+  cue-parity smoke van naam, commando of scope verandert.
+
 ## Beslissing
 
 Markeer een doel alleen als `☑ klaar` wanneer ieder requirement direct bewijs heeft.
