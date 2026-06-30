@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 802 |
+| ☑ klaar | 803 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1001** |
+| **Totaal** | **1002** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1163,13 +1163,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G998 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention privacy states | P1 | F5 | ☑ |
 | G999 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry privacy states | P1 | F5 | ☑ |
 | G1000 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup privacy states | P1 | F5 | ☑ |
-| G1001 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states | P1 | F5 | ☐ |
+| G1001 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive privacy states | P1 | F5 | ☑ |
+| G1002 | Premium Claude Design UI: attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt privacy states | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1001** (id's G001 t/m G1001, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1002** (id's G001 t/m G1002, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
