@@ -2174,6 +2174,107 @@ h2 {
   min-width: 0;
 }
 
+.backup-command-layout {
+  gap: 18px;
+}
+
+.backup-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.backup-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.backup-task-route:focus-visible,
+.backup-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.backup-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backup-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backup-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.backup-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.backup-route-section__header h2,
+.backup-route-section__header p {
+  margin: 0;
+}
+
+.backup-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.backup-route-section .summary-panel,
+.backup-route-section .policy-panel,
+.backup-route-section .linked-note,
+.backup-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.backup-route-section .definition-list > div,
+.backup-route-section .summary-list > div,
+.backup-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.backup-route-section .definition-list dd,
+.backup-route-section .summary-list dd,
+.backup-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.backup-route-section .data-form,
+.backup-route-section .data-form label,
+.backup-route-section .data-form input,
+.backup-route-section .data-form select,
+.backup-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4208,6 +4309,22 @@ a.action-card:active {
   }
 
   .decision-task-route {
+    flex: 0 0 min(190px, 76vw);
+    scroll-snap-align: start;
+  }
+
+  .backup-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .backup-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .backup-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
   }

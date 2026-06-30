@@ -1494,14 +1494,14 @@ function extractStatusFeedback(html: string, kind: string): string {
 }
 
 function extractBackupImportPrivacyZone(html: string): string {
-  const exportStart = html.indexOf('<h2>Versleutelde export</h2>');
-  const exportEnd = html.indexOf('<section class="policy-panel embedded-summary"', exportStart);
-  const importStart = html.indexOf('<h2>Import</h2>');
-  const importEnd = html.indexOf('</form>', html.indexOf('id="import-sync-form"', importStart));
+  const exportStart = html.indexOf('<section id="backup-route-export"');
+  const exportEnd = html.indexOf('</section>', exportStart);
+  const importStart = html.indexOf('<section id="backup-route-import"');
+  const importEnd = html.indexOf('</section>', importStart);
   if (exportStart < 0 || exportEnd < 0 || importStart < 0 || importEnd < 0) {
     throw new Error('Back-up/import privacyzone ontbreekt.');
   }
-  return `${html.slice(exportStart, exportEnd)} ${html.slice(importStart, importEnd + '</form>'.length)}`
+  return `${html.slice(exportStart, exportEnd + '</section>'.length)} ${html.slice(importStart, importEnd + '</section>'.length)}`
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -34988,6 +34988,26 @@ describe('app shell', () => {
     const html = renderAppShell('backup');
 
     expect(html).toContain('Back-up &amp; import');
+    expect(html).toContain('class="section-stack backup-command-layout"');
+    expect(html).toContain('class="backup-task-routes"');
+    expect(html).toContain('aria-label="Back-up taakroutes"');
+    expect(html).toContain('data-backup-task-routes="ready"');
+    expect(html).toContain('href="#backup-route-controleren"');
+    expect(html).toContain('href="#backup-route-export"');
+    expect(html).toContain('href="#backup-route-import"');
+    expect(html).toContain('href="#backup-route-herstel"');
+    expect(html).toContain('id="backup-route-controleren"');
+    expect(html).toContain('data-backup-route="controleren"');
+    expect(html).toContain('id="backup-route-export"');
+    expect(html).toContain('data-backup-route="export"');
+    expect(html).toContain('id="backup-route-import"');
+    expect(html).toContain('data-backup-route="import"');
+    expect(html).toContain('id="backup-route-herstel"');
+    expect(html).toContain('data-backup-route="herstel"');
+    expect(html).toContain('Back-upstatus controleren');
+    expect(html).toContain('Encrypted export maken');
+    expect(html).toContain('Versleutelde data importeren');
+    expect(html).toContain('Toegang en herstel voorbereiden');
     expect(html).toContain('id="export-backup"');
     expect(html).toContain('Download back-up');
     expect(html).toContain('id="export-sync"');
