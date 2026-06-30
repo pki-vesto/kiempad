@@ -2061,7 +2061,7 @@ function renderDossierSubmitFeedback(
     ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
     : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" aria-label="${escapeAttribute(ariaLabel)}"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
 }
 
 function renderDossierSubmitRouteLabel(

@@ -4747,6 +4747,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain(
       'aria-label="Feedback documentupload: klaar voor lokale opslag."',
     );
+    expect(dossierPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(dossierPanel).toContain('Klaar voor lokale opslag.');
     expect(dossierPanel).not.toContain('data-dossier-submit-recovery="dossier-upload"');
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
@@ -4775,6 +4776,7 @@ describe('app shell', () => {
     expect(consultPanel).toContain(
       'aria-label="Feedback consultverslag: klaar voor lokale opslag."',
     );
+    expect(consultPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(consultPanel).toContain('Klaar voor lokale opslag.');
     expect(embryoQualityPanel).toContain('id="embryo-quality-form"');
     expect(embryoQualityPanel).toContain('data-upload-privacy-kind="embryo"');
@@ -4796,6 +4798,7 @@ describe('app shell', () => {
     expect(embryoQualityPanel).toContain(
       'aria-label="Feedback embryokwaliteit: klaar voor lokale opslag."',
     );
+    expect(embryoQualityPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(embryoQualityPanel).toContain('Klaar voor lokale opslag.');
     expect(embryoStatusPanel).toContain('id="embryo-status-event-form"');
     expect(embryoStatusPanel).toContain('data-upload-privacy-kind="embryo-status"');
@@ -4817,6 +4820,7 @@ describe('app shell', () => {
     expect(embryoStatusPanel).toContain(
       'aria-label="Feedback embryostatus: klaar voor lokale opslag."',
     );
+    expect(embryoStatusPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(embryoStatusPanel).toContain('Klaar voor lokale opslag.');
 
     const routeOrder = [
