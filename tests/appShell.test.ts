@@ -5703,6 +5703,12 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route-switch-hint');
     expect(css).toContain('.dossier-add-route-draft-note');
     expect(css).toContain('.dossier-add-route-microcopy');
+    expect(css).toContain('.dossier-route-stage {');
+    expect(css).toContain('[data-dossier-first-viewport="route-stage"]');
+    expect(css).toContain('.dossier-route-stage__header {');
+    expect(css).toContain('.dossier-route-stage__status {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('max-width: 76ch;');
     expect(css).toContain('flex-wrap: wrap;');
     expect(css).toContain('font-size: 0.78rem;');
@@ -6080,6 +6086,14 @@ describe('app shell', () => {
     const emptyCenter = extractDossierCommandCenter(emptyHtml);
 
     expect(emptyHtml).toContain('class="section-stack dossier-command-layout"');
+    expect(emptyHtml).toContain(
+      '<section class="dossier-route-stage" aria-label="Dossierwerkbank" data-dossier-first-viewport="route-stage">',
+    );
+    expect(emptyHtml).toContain('Kies eerst je dossierroute');
+    expect(emptyHtml).toContain(
+      'Uploaden, zoeken, beelden en tijdlijn blijven gescheiden zodat je niet door alle medische blokken tegelijk hoeft.',
+    );
+    expect(emptyHtml).toContain('class="dossier-route-stage__status">Actief: upload en review');
     expect(emptyHtml).toContain('class="dossier-task-routes command-task-routes"');
     expect(emptyHtml).toContain('aria-label="Dossier taakroutes"');
     expect(emptyHtml).toContain('data-dossier-task-routes="ready"');
@@ -6300,6 +6314,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('href="#dossier?route=imaging" aria-current="page"');
+    expect(html).toContain('class="dossier-route-stage__status">Actief: beelden en embryo&#039;s');
     expect(html).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
     expect(html).toContain(
       'data-dossier-route="upload" data-dossier-route-state="inactive" hidden',

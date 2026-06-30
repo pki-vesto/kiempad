@@ -3638,6 +3638,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, app shell, Claude Design, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 49
+- **Status:** ☑ done
+
+### G1207 — kennis en research eerste viewport als researchwerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Start en dossier hebben nu duidelijkere eerste-viewport werkbanken, maar kennis/research kan nog aanvoelen als een lange informatiepagina terwijl research intelligence een kernflow is.
+- **User Impact:** Gebruikers moeten bij wetenschappelijke ontwikkelingen nog scannen tussen filters, samenvattingen, trendinformatie en broncontext.
+- **Desired Outcome:** Maak de kennis/research eerste viewport meer app-achtig met een researchwerkbank voor relevante publicaties, trendanalyse en eenvoudige samenvattingen.
+- **User Value:** Gebruikers begrijpen sneller welke research relevant is en kunnen rustiger kiezen tussen lezen, trends bekijken en bronverwijzingen controleren.
+- **Acceptance Criteria:** Kennis/research opent met een duidelijke werkbank voor relevante publicaties, trendanalyse en eenvoudige samenvattingen; bestaande kennisitems, filters, AI-labels en bronverwijzingen blijven bereikbaar; mobile, tablet en desktop tonen geen overlap; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Kennis, Research Intelligence
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Kennis UI, research summaries, trend analysis, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 48
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

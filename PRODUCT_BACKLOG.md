@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1007 |
+| ☑ klaar | 1008 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1206** |
+| **Totaal** | **1207** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1368,13 +1368,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1203 | Premium Claude Design UI: startscherm openen met kernflow-werkbank | P1 | F5 | ☑ |
 | G1204 | Premium Claude Design UI: resterende startmodules omzetten naar echte flowpanelen | P1 | F5 | ☑ |
 | G1205 | Premium Claude Design UI: mobiele app-chrome boven Start compacter maken | P1 | F5 | ☑ |
-| G1206 | Premium Claude Design UI: dossierroute eerste viewport en live smoke verder verfijnen | P1 | F5 | ☐ |
+| G1206 | Premium Claude Design UI: dossierroute eerste viewport en live smoke verder verfijnen | P1 | F5 | ☑ |
+| G1207 | Premium Claude Design UI: kennis en research eerste viewport als researchwerkbank | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1206** (id's G001 t/m G1206, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1207** (id's G001 t/m G1207, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
