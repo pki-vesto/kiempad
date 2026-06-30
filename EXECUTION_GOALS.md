@@ -13289,3 +13289,35 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **ADR Needed:** no
 - **Score:** 48
 - **Status:** ☐ open
+
+### G1177 — werkruimte-navigatie tegen alles-op-een-pagina gevoel
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De hoofdschermen stonden als één platte navigatielijst naast elkaar, waardoor de app ondanks hash-routing kon voelen als één lange, onoverzichtelijke pagina.
+- **User Impact:** Gebruikers missen mentale rust en weten minder snel waar zij moeten beginnen of welk deel van de app bij hun taak hoort.
+- **Desired Outcome:** Groepeer de hoofdschermen in herkenbare werkruimtes en toon op elk scherm de actieve werkruimte met zusterbestemmingen.
+- **User Value:** Gebruikers begrijpen sneller waar zij zijn, welke opties bij elkaar horen en dat andere taken bewust op aparte schermen staan.
+- **Acceptance Criteria:** Hoofdnavigatie is gegroepeerd in Vandaag, Behandeling, Dossier, Inzicht en Beheer; actieve werkruimte is zichtbaar in de content; alle bestaande schermlinks, aria-current states en hash-routes blijven beschikbaar; mobile en desktop tonen geen overlap; test borgt dat de navigatie niet terugvalt naar een platte lijst; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, navigatie, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 68
+- **Status:** ☑ done
+
+### G1178 — startscherm modules verder verdelen in taakgerichte routes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De navigatie heeft nu werkruimtes, maar het startscherm kan nog te veel modules onder elkaar tonen wanneer er meer data, aanbevelingen en snelle invoer beschikbaar zijn.
+- **User Impact:** Gebruikers kunnen alsnog scannen en scrollen in plaats van direct de juiste dagelijkse taak te openen.
+- **Desired Outcome:** Maak het startscherm compacter door dagelijkse acties, voorbereiding en snelle invoer duidelijker te scheiden in taakgerichte panelen of routes.
+- **User Value:** Gebruikers zien sneller wat vandaag belangrijk is en hoeven minder door secundaire modules te bladeren.
+- **Acceptance Criteria:** Startscherm leidt met maximaal enkele primaire acties; secundaire modules zijn taakgericht gegroepeerd of progressief onthuld; daily recommendations, volgende stap, medicatie en vragen blijven bereikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty en populated startcontext; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Startscreen, app shell, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 67
+- **Status:** ☐ open

@@ -215,6 +215,12 @@ type Screen = {
   emptyState: string;
 };
 
+type ScreenGroup = {
+  label: string;
+  description: string;
+  screenIds: readonly ScreenId[];
+};
+
 export const SCREENS: readonly Screen[] = [
   {
     id: 'start',
@@ -307,6 +313,34 @@ export const SCREENS: readonly Screen[] = [
     title: 'Back-up & import',
     intro: 'Download of importeer een versleutelde Kiempad-back-up.',
     emptyState: 'Nog geen back-upactie uitgevoerd.',
+  },
+] as const;
+
+const SCREEN_GROUPS: readonly ScreenGroup[] = [
+  {
+    label: 'Vandaag',
+    description: 'Dagoverzicht en eerstvolgende acties',
+    screenIds: ['start', 'agenda', 'herinneringen'],
+  },
+  {
+    label: 'Behandeling',
+    description: 'Traject, medicatie en vragen voor de arts',
+    screenIds: ['traject', 'medicatie', 'vragen'],
+  },
+  {
+    label: 'Dossier',
+    description: 'Documenten, beelden en medische context',
+    screenIds: ['dossier'],
+  },
+  {
+    label: 'Inzicht',
+    description: 'Kennis, welzijn en afwegingen',
+    screenIds: ['kennis', 'welzijn', 'afwegingen'],
+  },
+  {
+    label: 'Beheer',
+    description: 'Kosten, logboek en back-up',
+    screenIds: ['kosten', 'logboek', 'backup'],
   },
 ] as const;
 
@@ -453,8 +487,8 @@ export function renderAppShell(
         <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
       </header>
 
-      <nav class="primary-nav" aria-label="Hoofdschermen">
-        ${SCREENS.map((screen) => renderNavItem(screen, activeId)).join('')}
+      <nav class="primary-nav" aria-label="Werkruimtes en schermen">
+        ${renderGroupedNavigation(activeId)}
       </nav>
       </div>
 
@@ -469,6 +503,7 @@ export function renderAppShell(
               })
         }
 
+        ${renderWorkspaceContext(activeId)}
         ${screenContent}
       </main>
     </div>
@@ -731,6 +766,59 @@ function renderVaultWebAuthnUnlock(status?: WebAuthnViewStatus): string {
       <button id="webauthn-unlock" class="secondary-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>Ontgrendel met WebAuthn</button>
       <p class="small-print">${escapeHtml(status.reden)}</p>
       ${status.error ? `<p class="form-error" role="alert">${escapeHtml(status.error)}</p>` : ''}
+    </section>
+  `;
+}
+
+function renderGroupedNavigation(activeId: ScreenId): string {
+  const screenMap = new Map(SCREENS.map((screen) => [screen.id, screen]));
+
+  return SCREEN_GROUPS.map((group) => {
+    const activeInGroup = group.screenIds.includes(activeId);
+    const items = group.screenIds
+      .map((screenId) => {
+        const screen = screenMap.get(screenId);
+        return screen ? renderNavItem(screen, activeId) : '';
+      })
+      .join('');
+
+    return `
+      <div class="primary-nav__group" data-nav-group-active="${activeInGroup ? 'true' : 'false'}">
+        <p class="primary-nav__title">${escapeHtml(group.label)}</p>
+        <div class="primary-nav__items">${items}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderWorkspaceContext(activeId: ScreenId): string {
+  const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
+  if (!activeGroup) return '';
+
+  const screenMap = new Map(SCREENS.map((screen) => [screen.id, screen]));
+  const siblingLinks = activeGroup.screenIds
+    .map((screenId) => screenMap.get(screenId))
+    .filter((screen): screen is Screen => Boolean(screen))
+    .map((screen) => {
+      const isActive = screen.id === activeId;
+      return `<a href="#${screen.id}"${isActive ? ' aria-current="page"' : ''}>${escapeHtml(
+        screen.label,
+      )}</a>`;
+    })
+    .join('');
+
+  return `
+    <section class="workspace-context" aria-label="Actieve werkruimte">
+      <div>
+        <p class="workspace-context__eyebrow">Werkruimte</p>
+        <h2>${escapeHtml(activeGroup.label)}</h2>
+        <p class="workspace-context__description">${escapeHtml(activeGroup.description)}</p>
+      </div>
+      <nav class="workspace-context__switcher" aria-label="Schermen binnen ${escapeAttribute(
+        activeGroup.label,
+      )}">
+        ${siblingLinks}
+      </nav>
     </section>
   `;
 }
