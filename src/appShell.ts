@@ -9268,6 +9268,7 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
     <li class="daily-recommendation-item">
       <strong>${escapeHtml(item.titel)}</strong>
       <span>${escapeHtml(item.detail)}</span>
+      <p class="small-print">Eigenaar: ${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[item.owner])}${item.datum ? ` · Datum: ${escapeHtml(item.datum)}` : ''}${item.reden ? ` · Reden: ${escapeHtml(item.reden)}` : ''}</p>
       ${
         item.checklist
           ? `<ol class="compact-list rec-checklist">${item.checklist

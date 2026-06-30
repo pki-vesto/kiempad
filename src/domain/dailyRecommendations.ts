@@ -23,6 +23,8 @@ export type DailyRecommendation = {
   detail: string;
   bron: string;
   waarschuwing: string;
+  datum?: string;
+  reden?: string;
   checklist?: DailyRecommendationChecklistItem[];
   gebruikteBronnen?: string[];
 };
@@ -68,6 +70,12 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
     doseLogsVandaag,
     vragenOpen,
   });
+  const manDagkaart = bouwManDagkaart({
+    ...input,
+    afspraak,
+    vragenOpen,
+    consultVerslagen: input.consultVerslagen ?? [],
+  });
   const behandelvoorbereiding = bouwBehandelvoorbereiding({
     afspraak,
     doseLogsVandaag,
@@ -105,6 +113,7 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
           },
     ],
     man: [
+      manDagkaart,
       bouwMannelijkeVoorbereidingskaart(),
       {
         id: 'man-basisdag',
@@ -305,6 +314,88 @@ export function controleerSupplementBoundary(
 
 function isSupplementChecklistItem(item: DailyRecommendationChecklistItem): boolean {
   return /\bsupplement/i.test(`${item.label} ${item.disclaimer}`);
+}
+
+function bouwManDagkaart(input: {
+  datum: string;
+  afspraak: Afspraak | undefined;
+  vragenOpen: readonly Vraag[];
+  consultVerslagen: readonly ConsultVerslag[];
+  trajecten?: readonly { traject: Traject; fasen: Fase[] }[];
+  dossierDocuments?: readonly DossierDocument[];
+}): DailyRecommendation {
+  const fase = beschrijfCyclusfase(input.trajecten ?? [], input.datum);
+  const document = laatsteDossierdocument(input.dossierDocuments ?? []);
+  const consultVerslag = laatsteConsultVerslag(input.consultVerslagen);
+  const contextBronnen = uniekeTeksten(
+    [
+      `Datum: ${input.datum}`,
+      fase ? `Trajectfase: ${fase}` : undefined,
+      document ? `Dossierdocument: ${document.titel} op ${document.datum}` : undefined,
+      consultVerslag
+        ? `Consultverslag: ${consultVerslag.titel} op ${consultVerslag.datum}`
+        : undefined,
+      input.afspraak
+        ? `Agenda: ${input.afspraak.titel} op ${input.afspraak.datumTijd.replace('T', ' ')}`
+        : undefined,
+      input.vragenOpen.length > 0
+        ? `Vragenlijst: ${input.vragenOpen.length} open vraag/vragen`
+        : undefined,
+    ].filter((bron): bron is string => Boolean(bron)),
+  );
+  const contextSamenvatting =
+    contextBronnen.length > 1
+      ? contextBronnen
+          .filter((bron) => !bron.startsWith('Datum: '))
+          .slice(0, 3)
+          .join('; ')
+      : 'lokale dagstart zonder extra context';
+
+  return {
+    id: 'man-dagkaart-bronherleiding',
+    owner: 'man',
+    titel: 'Man dagkaart met bronherleiding',
+    detail: `Dagkaart voor leefstijl, voeding, supplementvragen en voorbereiding op basis van ${contextSamenvatting}.`,
+    bron: 'Lokale dagstart, agenda, vragenlijst, consult- en dossiercontext',
+    waarschuwing: 'Algemene dagnotitie; geen medisch advies, garantieclaim of behandelrichting.',
+    datum: input.datum,
+    reden:
+      'Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie als lokale voorbereiding met herleidbare bronnen.',
+    gebruikteBronnen: contextBronnen,
+    checklist: [
+      {
+        label: 'Leefstijl: noteer feitelijke observaties zoals slaap, stress of routines.',
+        bron: consultVerslag ? `Consultverslag: ${consultVerslag.titel}` : 'Lokale dagstart',
+        disclaimer: 'Geen leefstijlvoorschrift of uitkomstclaim.',
+      },
+      {
+        label: 'Voeding: verzamel feitelijke vragen voor kliniek, arts of apotheek.',
+        bron: document ? `Dossierdocument: ${document.titel}` : 'Lokale leefstijlcontext',
+        disclaimer: 'Geen voedingsadvies of persoonlijk voorschrift.',
+      },
+      {
+        label:
+          'Supplementen: zet alleen vragen klaar over wat al met kliniek, arts of apotheek is besproken.',
+        bron: 'Medicatie- en dossiercontext',
+        disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+        artscheck: {
+          verplicht: true,
+          label: 'Artscheck verplicht voor supplementvragen',
+        },
+      },
+      {
+        label: input.afspraak
+          ? `Voorbereiding: controleer de afspraak ${input.afspraak.titel} als bestaande agenda-informatie.`
+          : 'Voorbereiding: controleer of er open vragen of eigen notities klaarstaan.',
+        bron: input.afspraak
+          ? 'Agenda'
+          : input.vragenOpen.length > 0
+            ? 'Vragenlijst'
+            : 'Lokale dagstart',
+        disclaimer: 'Alleen voorbereiding; volg de instructies van de kliniek.',
+      },
+    ],
+  };
 }
 
 function bouwVrouwDagkaart(input: {
@@ -622,4 +713,10 @@ function beschrijfRecentDossierdocument(items: readonly DossierDocument[]): stri
 
 function laatsteDossierdocument(items: readonly DossierDocument[]): DossierDocument | undefined {
   return [...items].sort((a, b) => b.datum.localeCompare(a.datum))[0];
+}
+
+function laatsteConsultVerslag(items: readonly ConsultVerslag[]): ConsultVerslag | undefined {
+  return [...items].sort(
+    (a, b) => b.datum.localeCompare(a.datum) || a.titel.localeCompare(b.titel),
+  )[0];
 }

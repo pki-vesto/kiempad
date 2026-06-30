@@ -81,11 +81,51 @@ describe('dagelijkse aanbevelingen', () => {
       bron: 'Medicatieplanning vandaag',
     });
     expect(overzicht.man[0]).toMatchObject({
+      id: 'man-dagkaart-bronherleiding',
+      owner: 'man',
+      titel: 'Man dagkaart met bronherleiding',
+      bron: 'Lokale dagstart, agenda, vragenlijst, consult- en dossiercontext',
+      datum: '2026-06-24',
+      reden:
+        'Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie als lokale voorbereiding met herleidbare bronnen.',
+    });
+    expect(overzicht.man[0]?.gebruikteBronnen).toEqual(
+      expect.arrayContaining([
+        'Datum: 2026-06-24',
+        'Agenda: Echo controle op 2026-06-24 09:30',
+        'Vragenlijst: 1 open vraag/vragen',
+      ]),
+    );
+    expect(overzicht.man[0]?.checklist?.map((item) => item.bron)).toEqual([
+      'Lokale dagstart',
+      'Lokale leefstijlcontext',
+      'Medicatie- en dossiercontext',
+      'Agenda',
+    ]);
+    expect(
+      overzicht.man[0]?.checklist?.find((item) => item.label.includes('Supplementen')),
+    ).toMatchObject({
+      artscheck: {
+        verplicht: true,
+        label: 'Artscheck verplicht voor supplementvragen',
+      },
+    });
+    const manDagkaartPolicyText = [
+      overzicht.man[0]?.titel,
+      overzicht.man[0]?.detail,
+      overzicht.man[0]?.reden,
+      overzicht.man[0]?.waarschuwing,
+      ...(overzicht.man[0]?.checklist?.flatMap((item) => [item.label, item.disclaimer]) ?? []),
+    ].join(' ');
+    expect(manDagkaartPolicyText).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|diagnose|gegarandeerd|behandelkeuze/i,
+    );
+    expect(overzicht.man[1]).toMatchObject({
       owner: 'man',
       titel: 'Mannelijke leefstijl- en voorbereidingskaart',
       bron: 'Lokale dagstart en gedeelde voorbereiding',
     });
-    expect(overzicht.man[0]?.checklist).toEqual([
+    expect(overzicht.man[1]?.checklist).toEqual([
       {
         label: 'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
         bron: 'Eigen lokale notities',
@@ -106,7 +146,7 @@ describe('dagelijkse aanbevelingen', () => {
         disclaimer: 'Geen behandelkeuze of medische interpretatie.',
       },
     ]);
-    expect(overzicht.man[1]).toMatchObject({
+    expect(overzicht.man[2]).toMatchObject({
       owner: 'man',
       titel: 'Eigen aandachtspunten vastleggen',
     });
