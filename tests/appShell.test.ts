@@ -5085,11 +5085,15 @@ describe('app shell', () => {
     expect(css).toContain('min-height: 28px;');
     expect(css).toContain('padding: 2px 6px;');
     expect(css).toContain('text-underline-offset: 3px;');
+    expect(css).toContain('transform-origin: center;');
     expect(css).toContain('background 140ms ease');
+    expect(css).toContain('box-shadow 140ms ease');
     expect(css).toContain('.dossier-submit-focus-return:hover');
     expect(css).toContain('color: var(--accent-strong);');
     expect(css).toContain('.dossier-submit-focus-return:active');
-    expect(css).toContain('transform: translateY(1px);');
+    expect(css).toContain('box-shadow: inset 0 0 0 1px');
+    expect(css).toContain('transform: scale(0.99);');
+    expect(css).not.toContain('transform: translateY(1px);');
     expect(css).toContain('.dossier-submit-focus-return:focus-visible');
     expect(css).toContain('outline-offset: 3px;');
     expect(css).toContain('border-radius: 5px;');
