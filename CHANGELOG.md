@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1170/G1171 Premium Claude Design UI: gefocuste feedback-return landingscues hebben nu expliciete compacte transitionregels en reduced-motion schakelt die cuebeweging uit terwijl contrast en forced-colors dekking behouden blijven; G1171 is toegevoegd voor target/focus parity.
 - G1169/G1170 Premium Claude Design UI: feedback focus-return targets tonen nu dezelfde compacte landingscue wanneer het gelande formulier toetsenbordfocus krijgt, inclusief forced-colors systeemkleurdekking zonder layoutshift; G1170 is toegevoegd voor focused-cue contrastbewaking.
 - G1168/G1169 Premium Claude Design UI: feedback focus-return kliks synchroniseren nu scrollpositie en toetsenbordfocus naar het gelande dossierformulier via focusbare targetformulieren zonder copy, ankers of inputcontracten te wijzigen; G1169 is toegevoegd voor zichtbare focused landing cue.
 - G1167/G1168 Premium Claude Design UI: feedback focus-return landingscue blijft nu zichtbaar in forced-colors mode met systeemkleur-outline, Canvas-achtergrond en zonder box-shadow-afhankelijkheid; G1168 is toegevoegd voor focus-synchronisatie.

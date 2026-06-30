@@ -2163,6 +2163,16 @@ a.action-card:active {
   scroll-margin-top: clamp(136px, 16vh, 176px);
 }
 
+#dossier-upload-form > .dossier-upload-group:first-of-type,
+#consult-verslag-form > .dossier-subform-group:first-of-type,
+#embryo-quality-form > .dossier-subform-group:first-of-type,
+#embryo-status-event-form > .dossier-subform-group:first-of-type {
+  transition:
+    background 140ms ease,
+    box-shadow 140ms ease,
+    outline-color 140ms ease;
+}
+
 #dossier-upload-form:target > .dossier-upload-group:first-of-type,
 #consult-verslag-form:target > .dossier-subform-group:first-of-type,
 #embryo-quality-form:target > .dossier-subform-group:first-of-type,
@@ -2308,6 +2318,17 @@ a.action-card:active {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  #dossier-upload-form:target > .dossier-upload-group:first-of-type,
+  #consult-verslag-form:target > .dossier-subform-group:first-of-type,
+  #embryo-quality-form:target > .dossier-subform-group:first-of-type,
+  #embryo-status-event-form:target > .dossier-subform-group:first-of-type,
+  #dossier-upload-form:focus-visible > .dossier-upload-group:first-of-type,
+  #consult-verslag-form:focus-visible > .dossier-subform-group:first-of-type,
+  #embryo-quality-form:focus-visible > .dossier-subform-group:first-of-type,
+  #embryo-status-event-form:focus-visible > .dossier-subform-group:first-of-type {
+    transition: none;
+  }
+
   .dossier-submit-focus-return {
     transition:
       background 140ms ease,

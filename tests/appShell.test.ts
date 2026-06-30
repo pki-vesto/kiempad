@@ -5025,6 +5025,8 @@ describe('app shell', () => {
     );
     expect(css).toContain('outline: 2px solid color-mix(in srgb, var(--accent) 34%, transparent);');
     expect(css).toContain('outline-offset: 2px;');
+    expect(css).toContain('#dossier-upload-form > .dossier-upload-group:first-of-type');
+    expect(css).toContain('outline-color 140ms ease;');
     expect(css).toContain(
       'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);',
     );
@@ -5120,6 +5122,9 @@ describe('app shell', () => {
     expect(css).toContain('transform: scale(0.99);');
     expect(css).not.toContain('transform: translateY(1px);');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(css).toContain(
+      '#embryo-status-event-form:focus-visible > .dossier-subform-group:first-of-type {\n    transition: none;\n  }',
+    );
     expect(css).toContain('.dossier-submit-focus-return:active {\n    transform: none;\n  }');
     expect(css).toContain('@media (forced-colors: active)');
     expect(css).toContain(
