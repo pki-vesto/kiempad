@@ -3686,6 +3686,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Traject UI, fertility timeline, treatment routes, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 46
+- **Status:** ☑ done
+
+### G1210 — welzijn en afwegingen eerste viewport als inzichtwerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Welzijn en Afwegingen hebben taakroutes, maar de eerste viewport moet nog sterker als inzicht- en besliswerkbank voelen in plaats van als losse log- en keuzecontent.
+- **User Impact:** Gebruikers moeten logs, cyclus, stemming, trends, actieve keuzes en criteria nog te veel scannen voordat duidelijk is welke route nu relevant is.
+- **Desired Outcome:** Maak Welzijn en Afwegingen meer app-achtig met een eerste-viewport inzichtwerkbank voor recente signalen, eigenaarcontext, actieve keuzes en volgende stap.
+- **User Value:** Gebruikers kunnen welzijnscontext en afwegingen rustiger interpreteren zonder door alle invoer- en overzichtscontent te scrollen.
+- **Acceptance Criteria:** Welzijn opent met een duidelijke eerste-viewport inzichtwerkbank voor logs, cyclus, stemming en trends; Afwegingen opent met een compacte besliswerkbank voor actieve keuzes, criteria en volgende stap; bestaande formulieren, filters, owner-labels en privacycopy blijven bereikbaar via taakroutes of compacte panelen; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Welzijn, Afwegingen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Wellbeing UI, decision UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
