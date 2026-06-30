@@ -4445,6 +4445,39 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1107 health monitor retention compact contract missing-term-contract release guard compact contract', () => {
+    expect(
+      HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_MISSING_TERM_CONTRACT_RELEASE_MISSING_TERM_ERROR,
+    ).toMatchInlineSnapshot(`
+      "Health monitor retention compact contract missing-term contract releasecontext ontbreekt voor termen: health-monitor retention compact-contract missing-term releaseguard foutmelding, veilige technische labels"
+    `);
+    for (const expectedTerm of [
+      'health-monitor retention compact-contract missing-term releaseguard foutmelding',
+      'veilige technische labels',
+    ]) {
+      expect(
+        HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_MISSING_TERM_CONTRACT_RELEASE_MISSING_TERM_ERROR,
+      ).toContain(expectedTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(
+        HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_MISSING_TERM_CONTRACT_RELEASE_MISSING_TERM_ERROR,
+      ).not.toContain(forbiddenEvidenceTerm);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',
