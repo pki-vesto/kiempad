@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
   bouwDagelijksAanbevelingsoverzicht,
+  controleerDailyRecommendationPolicyRegressions,
   controleerSupplementBoundary,
+  DAILY_RECOMMENDATION_POLICY_FIXTURES,
   type DailyRecommendationOverview,
   maakArtscheckVraagVoorAanbeveling,
 } from '../src/domain/dailyRecommendations';
@@ -240,6 +242,101 @@ describe('dagelijkse aanbevelingen', () => {
     expect(titelEnDetail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
     expect(overzicht.samen.every((item) => item.waarschuwing.includes('geen diagnose'))).toBe(true);
     expect(controleerSupplementBoundary(overzicht)).toEqual([]);
+    expect(controleerDailyRecommendationPolicyRegressions(overzicht)).toEqual([]);
+  });
+
+  it('bewaakt daily recommendation policy regression fixtures met metadata en verboden patronen', () => {
+    const overzicht = bouwDagelijksAanbevelingsoverzicht({
+      datum: '2026-06-24',
+      afspraken: [
+        {
+          id: 'afspraak-1',
+          titel: 'Echo controle',
+          datumTijd: '2026-06-24T09:30',
+          type: 'echo',
+        },
+      ],
+      medicatie: [],
+      vragen: [
+        {
+          id: 'vraag-1',
+          vraag: 'Welke vraag nemen we mee?',
+          beantwoord: false,
+        },
+      ],
+      consultVerslagen: [
+        {
+          id: 'consult-1',
+          datum: '2026-06-22',
+          titel: 'Consult',
+          bron: 'handmatig',
+          uploadedAt: '2026-06-22T09:00:00.000Z',
+        } as ConsultVerslag,
+      ],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-23',
+          titel: 'Labuitslag',
+        } as DossierDocument,
+      ],
+    });
+
+    expect(DAILY_RECOMMENDATION_POLICY_FIXTURES.map((fixture) => fixture.id)).toEqual([
+      'geen-dosering-of-hoeveelheid',
+      'geen-kansberekening-of-score',
+      'geen-behandelkeuzeadvies',
+      'geen-start-stop-advies',
+      'geen-diagnoseclaim',
+    ]);
+    expect(controleerDailyRecommendationPolicyRegressions(overzicht)).toEqual([]);
+    for (const aanbeveling of Object.values(overzicht).flat()) {
+      expect(aanbeveling.inputMinimisatie).toMatchObject({
+        bron: expect.any(String),
+        datum: '2026-06-24',
+        reviewStatus: 'concept_te_controleren',
+        correctieVelden: expect.arrayContaining(['dagadviesTekst', 'bronselectie', 'reviewstatus']),
+      });
+    }
+  });
+
+  it('rapporteert daily recommendation policy fixture-overtredingen zonder medische payload', () => {
+    const onveilig: DailyRecommendationOverview = {
+      vrouw: [
+        {
+          id: 'policy-onveilig',
+          owner: 'vrouw',
+          titel: 'Onveilig dagadvies',
+          detail:
+            'Start met 400 mg, kies voor de beste behandeling en toon een kansberekening van 60%.',
+          bron: 'Testfixture',
+          waarschuwing: 'diagnose: testclaim',
+          inputMinimisatie: {
+            bron: 'Testfixture',
+            datum: '2026-06-24',
+            reviewStatus: 'concept_te_controleren',
+            gebruikteInputCategorieen: ['lokale dagstart'],
+            uitgeslotenInputCategorieen: ['vrije dossier/OCR-tekst'],
+            correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+            waarschuwing: 'Alleen fixturetekst.',
+          },
+        },
+      ],
+      man: [],
+      samen: [],
+    };
+
+    const overtredingen = controleerDailyRecommendationPolicyRegressions(onveilig);
+    expect(overtredingen.map((item) => item.fixtureId)).toEqual(
+      expect.arrayContaining([
+        'geen-dosering-of-hoeveelheid',
+        'geen-kansberekening-of-score',
+        'geen-behandelkeuzeadvies',
+        'geen-start-stop-advies',
+        'geen-diagnoseclaim',
+      ]),
+    );
+    expect(JSON.stringify(overtredingen)).not.toContain('MEDISCHE PAYLOAD');
   });
 
   it('bewaart man-leefstijlcontext als reviewbaar concept zonder medische claims', () => {

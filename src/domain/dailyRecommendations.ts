@@ -356,6 +356,46 @@ export type DailyRecommendationPolicyViolation = {
   reden: string;
 };
 
+export type DailyRecommendationPolicyRegressionViolation = {
+  aanbevelingId: string;
+  fixtureId: string;
+  reden: string;
+};
+
+type DailyRecommendationPolicyFixture = {
+  id: string;
+  reden: string;
+  pattern: RegExp;
+};
+
+export const DAILY_RECOMMENDATION_POLICY_FIXTURES: readonly DailyRecommendationPolicyFixture[] = [
+  {
+    id: 'geen-dosering-of-hoeveelheid',
+    reden: 'Dagadvies mag geen dosering of hoeveelheid voorstellen.',
+    pattern: /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ie|ml|gram|g)\b/i,
+  },
+  {
+    id: 'geen-kansberekening-of-score',
+    reden: 'Dagadvies mag geen kansberekening, kansscore of succespercentage tonen.',
+    pattern: /\b(kansberekening|kansscore|succespercentage|slagingskans)\b|\b\d+%\b/i,
+  },
+  {
+    id: 'geen-behandelkeuzeadvies',
+    reden: 'Dagadvies mag geen behandelkeuze of voorkeursbehandeling suggereren.',
+    pattern: /\b(behandelkeuzeadvies|beste behandeling|kies voor|voorkeursbehandeling)\b/i,
+  },
+  {
+    id: 'geen-start-stop-advies',
+    reden: 'Dagadvies mag geen start-, stop- of vervangadvies geven.',
+    pattern: /\b(start met|stop met|vervangt|in plaats van|laat .* achterwege)\b/i,
+  },
+  {
+    id: 'geen-diagnoseclaim',
+    reden: 'Dagadvies mag geen diagnoseclaim formuleren.',
+    pattern: /\b(stelt diagnose|diagnosticeer)\b|\bdiagnose\s*:/i,
+  },
+] as const;
+
 export function controleerSupplementBoundary(
   overview: DailyRecommendationOverview,
 ): DailyRecommendationPolicyViolation[] {
@@ -395,6 +435,82 @@ export function controleerSupplementBoundary(
     }
   }
   return overtredingen;
+}
+
+export function controleerDailyRecommendationPolicyRegressions(
+  overview: DailyRecommendationOverview,
+): DailyRecommendationPolicyRegressionViolation[] {
+  const overtredingen: DailyRecommendationPolicyRegressionViolation[] = [];
+
+  for (const aanbeveling of Object.values(overview).flat()) {
+    const tekst = dailyRecommendationPolicyText(aanbeveling);
+    for (const fixture of DAILY_RECOMMENDATION_POLICY_FIXTURES) {
+      if (fixture.pattern.test(tekst)) {
+        overtredingen.push({
+          aanbevelingId: aanbeveling.id,
+          fixtureId: fixture.id,
+          reden: fixture.reden,
+        });
+      }
+    }
+
+    if (!aanbeveling.inputMinimisatie?.bron) {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'metadata-bron-verplicht',
+        reden: 'Dagadvies mist een inputminimalisatiebron.',
+      });
+    }
+    if (!aanbeveling.inputMinimisatie?.datum) {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'metadata-datum-verplicht',
+        reden: 'Dagadvies mist een datum.',
+      });
+    }
+    if (aanbeveling.inputMinimisatie?.reviewStatus !== 'concept_te_controleren') {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'metadata-reviewstatus-verplicht',
+        reden: 'Dagadvies mist reviewstatus concept_te_controleren.',
+      });
+    }
+    if (!aanbeveling.inputMinimisatie?.correctieVelden.includes('reviewstatus')) {
+      overtredingen.push({
+        aanbevelingId: aanbeveling.id,
+        fixtureId: 'metadata-correctievelden-verplicht',
+        reden: 'Dagadvies mist correctievelden voor conceptcontrole.',
+      });
+    }
+  }
+
+  return overtredingen;
+}
+
+function dailyRecommendationPolicyText(item: DailyRecommendation): string {
+  return [
+    item.titel,
+    item.detail,
+    item.bron,
+    item.waarschuwing,
+    item.reden,
+    ...(item.gebruikteBronnen ?? []),
+    ...(item.checklist?.flatMap((checklistItem) => [
+      checklistItem.label,
+      checklistItem.bron,
+      checklistItem.disclaimer,
+      checklistItem.artscheck?.label,
+    ]) ?? []),
+    item.inputMinimisatie?.waarschuwing,
+    ...(item.inputMinimisatie?.gebruikteInputCategorieen ?? []),
+    ...(item.inputMinimisatie?.uitgeslotenInputCategorieen ?? []),
+    item.cyclusfaseContext?.uitlegVoorLeken,
+    item.cyclusfaseContext?.waarschuwing,
+    item.manLeefstijlContext?.uitlegVoorLeken,
+    item.manLeefstijlContext?.waarschuwing,
+  ]
+    .filter((item): item is string => Boolean(item))
+    .join(' ');
 }
 
 function isSupplementChecklistItem(item: DailyRecommendationChecklistItem): boolean {
