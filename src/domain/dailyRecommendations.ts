@@ -29,6 +29,7 @@ export type DailyRecommendation = {
   gebruikteBronnen?: string[];
   inputMinimisatie?: DailyRecommendationInputMinimization;
   cyclusfaseContext?: DailyRecommendationCyclePhaseContext;
+  manLeefstijlContext?: DailyRecommendationLifestyleContext;
 };
 
 export type DailyRecommendationChecklistItem = {
@@ -58,6 +59,18 @@ export type DailyRecommendationCyclePhaseContext = {
   status: 'fase_gevonden' | 'meting_zonder_fase' | 'geen_cycluscontext';
   faseLabel: string;
   metingLabel?: string;
+  bronpad: string[];
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
+  waarschuwing: string;
+};
+
+export type DailyRecommendationLifestyleContext = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  status: 'context_gevonden' | 'alleen_dagstart';
+  contextLabels: string[];
   bronpad: string[];
   correctieVelden: string[];
   uitlegVoorLeken: string;
@@ -399,6 +412,14 @@ function bouwManDagkaart(input: {
   const fase = beschrijfCyclusfase(input.trajecten ?? [], input.datum);
   const document = laatsteDossierdocument(input.dossierDocuments ?? []);
   const consultVerslag = laatsteConsultVerslag(input.consultVerslagen);
+  const manLeefstijlContext = bouwManLeefstijlContext({
+    datum: input.datum,
+    fase,
+    document,
+    consultVerslag,
+    afspraak: input.afspraak,
+    vragenOpen: input.vragenOpen,
+  });
   const contextBronnen = uniekeTeksten(
     [
       `Datum: ${input.datum}`,
@@ -434,6 +455,7 @@ function bouwManDagkaart(input: {
     reden:
       'Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie als lokale voorbereiding met herleidbare bronnen.',
     gebruikteBronnen: contextBronnen,
+    manLeefstijlContext,
     checklist: [
       {
         label: 'Leefstijl: noteer feitelijke observaties zoals slaap, stress of routines.',
@@ -467,6 +489,49 @@ function bouwManDagkaart(input: {
         disclaimer: 'Alleen voorbereiding; volg de instructies van de kliniek.',
       },
     ],
+  };
+}
+
+function bouwManLeefstijlContext(input: {
+  datum: string;
+  fase: string | undefined;
+  document: DossierDocument | undefined;
+  consultVerslag: ConsultVerslag | undefined;
+  afspraak: Afspraak | undefined;
+  vragenOpen: readonly Vraag[];
+}): DailyRecommendationLifestyleContext {
+  const contextLabels = uniekeTeksten(
+    [
+      input.fase ? `Trajectfase: ${input.fase}` : undefined,
+      input.document ? `Dossierdocument: ${input.document.titel}` : undefined,
+      input.consultVerslag ? `Consultverslag: ${input.consultVerslag.titel}` : undefined,
+      input.afspraak ? `Agenda: ${input.afspraak.titel}` : undefined,
+      input.vragenOpen.length > 0
+        ? `Vragenlijst: ${input.vragenOpen.length} open vraag/vragen`
+        : undefined,
+    ].filter((item): item is string => Boolean(item)),
+  );
+  const bron =
+    contextLabels.length > 0
+      ? 'Lokale traject-, consult-, dossier-, agenda- en vragencontext'
+      : 'Lokale dagstart';
+
+  return {
+    bron,
+    datum: input.datum,
+    reviewStatus: 'concept_te_controleren',
+    status: contextLabels.length > 0 ? 'context_gevonden' : 'alleen_dagstart',
+    contextLabels:
+      contextLabels.length > 0 ? contextLabels : ['Lokale dagstart zonder extra context'],
+    bronpad: [
+      `Datum: ${input.datum}`,
+      ...contextLabels,
+      'Gebruik: feitelijke leefstijlobservaties en consultvoorbereiding',
+    ],
+    correctieVelden: ['leefstijlcontext', 'bronselectie', 'reviewstatus'],
+    uitlegVoorLeken:
+      'Deze leefstijlcontext is alleen een controleerbare samenvatting van lokale planning en notitiebronnen voor eigen observaties.',
+    waarschuwing: 'Geen leefstijlvoorschrift, uitkomstclaim, hoeveelheid of behandelrichting.',
   };
 }
 

@@ -9383,6 +9383,21 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
             <small>${escapeHtml(item.cyclusfaseContext.waarschuwing)}</small>`
           : ''
       }
+      ${
+        item.manLeefstijlContext
+          ? `<dl class="metadata-list compact-list">
+              <div><dt>Leefstijlcontextbron</dt><dd>${escapeHtml(item.manLeefstijlContext.bron)}</dd></div>
+              <div><dt>Leefstijlcontextdatum</dt><dd>${escapeHtml(item.manLeefstijlContext.datum)}</dd></div>
+              <div><dt>Leefstijlcontextreview</dt><dd>${escapeHtml(item.manLeefstijlContext.reviewStatus)}</dd></div>
+              <div><dt>Leefstijlcontextstatus</dt><dd>${escapeHtml(item.manLeefstijlContext.status)}</dd></div>
+              <div><dt>Leefstijlcontextlabels</dt><dd>${item.manLeefstijlContext.contextLabels.map(escapeHtml).join(' · ')}</dd></div>
+              <div><dt>Leefstijlcorrectievelden</dt><dd>${item.manLeefstijlContext.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+            </dl>
+            <small>Leefstijlbronpad: ${item.manLeefstijlContext.bronpad.map(escapeHtml).join(' > ')}</small>
+            <small>${escapeHtml(item.manLeefstijlContext.uitlegVoorLeken)}</small>
+            <small>${escapeHtml(item.manLeefstijlContext.waarschuwing)}</small>`
+          : ''
+      }
       ${renderDailyRecommendationActions(item)}
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     </li>

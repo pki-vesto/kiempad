@@ -1892,6 +1892,14 @@ describe('app shell', () => {
     expect(html).toContain('Eigenaar: Man');
     expect(html).toContain('Datum:');
     expect(html).toContain('Reden: Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie');
+    expect(html).toContain('Leefstijlcontextbron');
+    expect(html).toContain('Leefstijlcontextdatum');
+    expect(html).toContain('Leefstijlcontextreview</dt><dd>concept_te_controleren');
+    expect(html).toContain('Leefstijlcontextstatus</dt><dd>alleen_dagstart');
+    expect(html).toContain('Leefstijlcontextlabels</dt><dd>Lokale dagstart zonder extra context');
+    expect(html).toContain(
+      'Leefstijlcorrectievelden</dt><dd>leefstijlcontext · bronselectie · reviewstatus',
+    );
     expect(html).toContain('Gebruikte bronnen:');
     expect(html).toContain('Gebruikte bronnen: Lokale dagstart zonder extra medicatiemoment');
     expect(html).toContain('Inputminimalisatiebron');
@@ -1964,6 +1972,11 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('Man dagkaart met bronherleiding');
     expect(emptyContextRecommendations).toContain('Eigenaar: Man');
     expect(emptyContextRecommendations).toContain('Reden: Eigenaar man; dagelijkse');
+    expect(emptyContextRecommendations).toContain('Leefstijlcontextbron');
+    expect(emptyContextRecommendations).toContain(
+      'Leefstijlcontextreview</dt><dd>concept_te_controleren',
+    );
+    expect(emptyContextRecommendations).toContain('Leefstijlcontextstatus</dt><dd>alleen_dagstart');
     expect(emptyContextRecommendations).toContain('Dagcheck zonder extra medicatiemoment');
     expect(emptyContextRecommendations).toContain('Inputminimalisatiebron');
     expect(emptyContextRecommendations).toContain('Reviewstatus</dt><dd>concept_te_controleren');
@@ -2063,6 +2076,15 @@ describe('app shell', () => {
     );
     expect(contextualRecommendations).toContain('Vrouw dagkaart met bronherleiding');
     expect(contextualRecommendations).toContain('Man dagkaart met bronherleiding');
+    expect(contextualRecommendations).toContain(
+      'Leefstijlcontextbron</dt><dd>Lokale traject-, consult-, dossier-, agenda- en vragencontext',
+    );
+    expect(contextualRecommendations).toContain('Leefstijlcontextstatus</dt><dd>context_gevonden');
+    expect(contextualRecommendations).toContain('Leefstijlcontextlabels');
+    expect(contextualRecommendations).toContain('Leefstijlbronpad: Datum:');
+    expect(contextualRecommendations).toContain(
+      'Gebruik: feitelijke leefstijlobservaties en consultvoorbereiding',
+    );
     expect(contextualRecommendations).toContain(`Datum: ${vandaag}`);
     expect(contextualRecommendations).toContain('Eigenaar: Man');
     expect(contextualRecommendations).toContain('Trajectfase: cyclusfase Stimulatie');

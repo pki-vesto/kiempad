@@ -101,7 +101,21 @@ describe('dagelijkse aanbevelingen', () => {
       datum: '2026-06-24',
       reden:
         'Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie als lokale voorbereiding met herleidbare bronnen.',
+      manLeefstijlContext: {
+        bron: 'Lokale traject-, consult-, dossier-, agenda- en vragencontext',
+        datum: '2026-06-24',
+        reviewStatus: 'concept_te_controleren',
+        status: 'context_gevonden',
+        contextLabels: ['Agenda: Echo controle', 'Vragenlijst: 1 open vraag/vragen'],
+        correctieVelden: ['leefstijlcontext', 'bronselectie', 'reviewstatus'],
+      },
     });
+    expect(overzicht.man[0]?.manLeefstijlContext?.bronpad).toEqual([
+      'Datum: 2026-06-24',
+      'Agenda: Echo controle',
+      'Vragenlijst: 1 open vraag/vragen',
+      'Gebruik: feitelijke leefstijlobservaties en consultvoorbereiding',
+    ]);
     expect(overzicht.man[0]?.gebruikteBronnen).toEqual(
       expect.arrayContaining([
         'Datum: 2026-06-24',
@@ -226,6 +240,76 @@ describe('dagelijkse aanbevelingen', () => {
     expect(titelEnDetail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
     expect(overzicht.samen.every((item) => item.waarschuwing.includes('geen diagnose'))).toBe(true);
     expect(controleerSupplementBoundary(overzicht)).toEqual([]);
+  });
+
+  it('bewaart man-leefstijlcontext als reviewbaar concept zonder medische claims', () => {
+    const consultVerslag: ConsultVerslag = {
+      id: 'consult-1',
+      datum: '2026-06-22',
+      titel: 'Consult man context',
+      bron: 'handmatig',
+      uploadedAt: '2026-06-22T09:00:00.000Z',
+    };
+    const overzicht = bouwDagelijksAanbevelingsoverzicht({
+      datum: '2026-06-24',
+      afspraken: [],
+      medicatie: [],
+      vragen: [],
+      consultVerslagen: [consultVerslag],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-23',
+          titel: 'Leefstijlnotitie',
+        } as DossierDocument,
+      ],
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'ivf',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [
+            {
+              id: 'fase-1',
+              trajectId: 'traject-1',
+              fase: 'stimulatie',
+              startDatum: '2026-06-24',
+            },
+          ],
+        },
+      ],
+    });
+
+    const context = overzicht.man[0]?.manLeefstijlContext;
+    expect(context).toMatchObject({
+      bron: 'Lokale traject-, consult-, dossier-, agenda- en vragencontext',
+      datum: '2026-06-24',
+      reviewStatus: 'concept_te_controleren',
+      status: 'context_gevonden',
+      contextLabels: [
+        'Trajectfase: cyclusfase Stimulatie',
+        'Dossierdocument: Leefstijlnotitie',
+        'Consultverslag: Consult man context',
+      ],
+      correctieVelden: ['leefstijlcontext', 'bronselectie', 'reviewstatus'],
+    });
+    expect(context?.bronpad).toEqual([
+      'Datum: 2026-06-24',
+      'Trajectfase: cyclusfase Stimulatie',
+      'Dossierdocument: Leefstijlnotitie',
+      'Consultverslag: Consult man context',
+      'Gebruik: feitelijke leefstijlobservaties en consultvoorbereiding',
+    ]);
+    const policyText = JSON.stringify(context);
+    expect(policyText).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|diagnose|kansberekening|behandelkeuzeadvies|beste behandeling|kies voor/i,
+    );
+    expect(policyText).not.toContain('MEDISCHE PAYLOAD');
   });
 
   it('maakt input-minimalisatie expliciet zonder vrije medische payload of behandeladvies', () => {
