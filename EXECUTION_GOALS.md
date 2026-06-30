@@ -12776,4 +12776,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 80
+- **Status:** ☑ done
+
+### G1145 — dossier add section spacing audit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De verplichte en optionele groepen hebben nu meer hiërarchie, maar de verticale afstand tussen opeenvolgende toevoegsecties kan nog te veel schermruimte vragen.
+- **User Impact:** Gebruikers moeten op mobiel meer scrollen voordat zij van documentupload naar consult of embryo-invoer kunnen wisselen.
+- **Desired Outcome:** Verfijn de spacing tussen toevoegsecties zodat de flow compacter blijft zonder leesbaarheid of focusstates te verliezen.
+- **User Value:** Gebruikers zien sneller de volgende toevoegroute en houden overzicht op kleine schermen.
+- **Acceptance Criteria:** Section spacing is compacter maar leesbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 79
 - **Status:** ☐ open
