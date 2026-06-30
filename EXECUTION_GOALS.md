@@ -12920,4 +12920,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 71
+- **Status:** ☑ done
+
+### G1154 — dossier add feedback focus return cue
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedbackaankondigingen hebben nu een vaste volgorde, maar na aandacht- of foutfeedback is nog niet expliciet duidelijk waar de gebruiker terug kan focussen.
+- **User Impact:** Gebruikers met keyboard of assistive technology kunnen na een feedbackmelding extra navigeren voordat zij het relevante formulierdeel terugvinden.
+- **Desired Outcome:** Voeg compacte focus-return cues toe bij aandacht- en foutfeedback zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers herstellen sneller na review- of foutstates en blijven in de juiste routecontext.
+- **Acceptance Criteria:** Focus-return cue is compact, routegericht en privacyveilig; bestaande ankers, form-id's, input names en data-hooks blijven intact; announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 70
 - **Status:** ☐ open

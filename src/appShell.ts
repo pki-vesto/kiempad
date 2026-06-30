@@ -2057,11 +2057,27 @@ function renderDossierSubmitFeedback(
   const copy = renderDossierSubmitFeedbackCopy(feedbackState);
   const recoveryHint = renderDossierSubmitRecoveryHint(feedbackState);
   const ariaLabel = `Feedback ${renderDossierSubmitRouteLabel(route)}: ${renderDossierSubmitFeedbackStateLabel(feedbackState)}.`;
+  const announcementOrder = renderDossierSubmitFeedbackAnnouncementOrder(route);
   const recoveryMarkup = recoveryHint
     ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
     : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
+}
+
+function renderDossierSubmitFeedbackAnnouncementOrder(
+  route: 'dossier-upload' | 'consult-upload' | 'embryo-quality' | 'embryo-status',
+): 1 | 2 | 3 | 4 {
+  switch (route) {
+    case 'dossier-upload':
+      return 1;
+    case 'consult-upload':
+      return 2;
+    case 'embryo-quality':
+      return 3;
+    case 'embryo-status':
+      return 4;
+  }
 }
 
 function renderDossierSubmitRouteLabel(
