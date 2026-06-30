@@ -5059,8 +5059,12 @@ describe('app shell', () => {
     expect(css).toContain('box-shadow: 0 10px 24px');
     expect(css).toContain('justify-self: stretch;');
     expect(css).toContain('.dossier-submit-feedback');
+    expect(css).toContain('gap: 1px;');
     expect(css).toContain('max-width: 58ch;');
     expect(css).toContain('margin: -4px 0 0;');
+    expect(css).toContain('.dossier-submit-feedback > *');
+    expect(css).toContain('min-height: 1.25em;');
+    expect(css).toContain('line-height: 1.3;');
     expect(css).toContain('data-dossier-submit-feedback-state="ready"');
     expect(css).toContain('data-dossier-submit-feedback-state="processing"');
     expect(css).toContain('data-dossier-submit-feedback-state="needs-review"');
@@ -5072,6 +5076,8 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-submit-target');
     expect(css).toContain('font-weight: 720;');
     expect(css).toContain('.dossier-submit-next-action');
+    expect(css).toContain('margin-top: 1px;');
+    expect(css).toContain('padding: 0 6px;');
     expect(css).toContain('border-radius: 999px;');
     expect(css).toContain('.dossier-submit-focus-return');
     expect(css).toContain('text-underline-offset: 3px;');
