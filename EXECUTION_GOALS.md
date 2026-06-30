@@ -12840,4 +12840,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 76
+- **Status:** ☑ done
+
+### G1149 — dossier add feedback copy brevity audit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedbackstatussen zijn visueel herkenbaarder, maar de feedbackcopy kan nog te lang zijn voor snelle mobiele scanbaarheid.
+- **User Impact:** Gebruikers kunnen de status wel zien, maar moeten alsnog relatief veel tekst lezen om de vervolgstap te begrijpen.
+- **Desired Outcome:** Verkort en standaardiseer feedbackcopy per status zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers begrijpen sneller of een actie klaar is, verwerkt wordt, review vraagt of fout ging.
+- **Acceptance Criteria:** Feedbackcopy is compact en statusgericht; bestaande ankers, form-id's, input names en data-hooks blijven intact; feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 75
 - **Status:** ☐ open
