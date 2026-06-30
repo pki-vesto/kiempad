@@ -2039,6 +2039,19 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack start-command-layout"');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
+    expect(html).toContain('class="start-task-routes"');
+    expect(html).toContain('aria-label="Start taakroutes"');
+    expect(html).toContain('data-start-task-routes="ready"');
+    expect(html).toContain('href="#start-current-phase"');
+    expect(html).toContain('href="#start-today"');
+    expect(html).toContain('href="#start-next-step"');
+    expect(html).toContain('href="#start-recommendations"');
+    expect(html).toContain('href="#start-quick-entry"');
+    expect(html).toContain('id="start-current-phase"');
+    expect(html).toContain('id="start-today"');
+    expect(html).toContain('id="start-next-step"');
+    expect(html).toContain('id="start-recommendations"');
+    expect(html).toContain('id="start-quick-entry"');
     expect(html).toContain(
       '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
     );
@@ -2072,8 +2085,19 @@ describe('app shell', () => {
     expect(html).toContain('id="quick-entry-form"');
     expect(html).toContain('name="quickText" required');
     expect(html).toContain('Dagelijkse aanbevelingen');
-    expect(html).toContain('class="daily-recommendation-list"');
-    expect(html).toContain('class="daily-recommendation-items"');
+    expect(html).toContain('class="kp-recommendation-list daily-recommendation-list"');
+    expect(html).toContain('data-recommendation-component="daily-owner-list"');
+    expect(html).toContain('data-recommendation-component-state="structured"');
+    expect(html).toContain(
+      'class="kp-recommendation-group policy-panel embedded-summary daily-recommendation-group"',
+    );
+    expect(html).toContain('class="kp-recommendation-group__items"');
+    expect(html).toContain('class="kp-recommendation-card daily-recommendation-item"');
+    expect(html).toContain(
+      'class="kp-recommendation-card__title">Dagcheck zonder extra medicatiemoment</h4>',
+    );
+    expect(html).toContain('data-recommendation-owner="vrouw"');
+    expect(html).toContain('data-recommendation-artscheck="required"');
     expect(html).toContain('Dagelijkse aanbevelingen Vrouw');
     expect(html).toContain('Dagelijkse aanbevelingen Man');
     expect(html).toContain('Dagelijkse aanbevelingen Samen');
@@ -2196,6 +2220,7 @@ describe('app shell', () => {
     const dashboardStart = html.indexOf(
       '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
     );
+    const routeNavIndex = html.indexOf('class="start-task-routes"');
     const primaryStart = html.indexOf('class="kp-dashboard__primary"', dashboardStart);
     const secondaryStart = html.indexOf('class="kp-dashboard__secondary"', primaryStart);
     const phaseIndex = html.indexOf('Poging dashboard', primaryStart);
@@ -2208,6 +2233,8 @@ describe('app shell', () => {
     const quickEntryIndex = html.indexOf('data-dashboard-route="quick-entry"', secondaryStart);
 
     expect(dashboardStart).toBeGreaterThan(-1);
+    expect(routeNavIndex).toBeGreaterThan(-1);
+    expect(routeNavIndex).toBeLessThan(dashboardStart);
     expect(primaryStart).toBeGreaterThan(dashboardStart);
     expect(secondaryStart).toBeGreaterThan(primaryStart);
     expect(phaseIndex).toBeGreaterThan(primaryStart);
@@ -2235,6 +2262,26 @@ describe('app shell', () => {
     const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
 
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen');
+    expect(emptyContextRecommendations).toContain(
+      'class="kp-recommendation-list daily-recommendation-list"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-recommendation-component="daily-owner-list"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-recommendation-component-state="structured"',
+    );
+    expect(emptyContextRecommendations).toContain('data-recommendation-owner-group="vrouw"');
+    expect(emptyContextRecommendations).toContain('data-recommendation-owner-group="man"');
+    expect(emptyContextRecommendations).toContain('data-recommendation-owner-group="samen"');
+    expect(emptyContextRecommendations).toContain(
+      'class="kp-recommendation-card daily-recommendation-item"',
+    );
+    expect(emptyContextRecommendations).toContain('class="kp-recommendation-card__meta"');
+    expect(emptyContextRecommendations).toContain(
+      'data-recommendation-review-status="concept_te_controleren"',
+    );
+    expect(emptyContextRecommendations).toContain('data-recommendation-artscheck="required"');
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Vrouw');
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Man');
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Samen');
@@ -2344,6 +2391,7 @@ describe('app shell', () => {
     });
     const contextualRecommendations = extractDailyRecommendationsSection(contextualHtml);
 
+    expect(contextualRecommendations).toContain('data-recommendation-component-state="structured"');
     expect(contextualRecommendations).toContain('data-recommendation-id="vrouw-medicatie-vandaag"');
     expect(contextualRecommendations).toContain(
       'data-recommendation-id="vrouw-dagkaart-bronherleiding"',

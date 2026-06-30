@@ -154,7 +154,13 @@
   timelinecomponenten af.
 - **G1182 timelinecomponenten:** de centrale fertility timeline gebruikt nu
   herbruikbare `timelineList`/`timelineItem` componenten met rail, dot, itemstate en
-  broncontext; G1183 staat open voor herbruikbare recommendationcomponenten.
+  broncontext; G1183 rondt de eerste herbruikbare recommendationcomponenten af.
+- **G1183 recommendationcomponenten:** dagelijkse aanbevelingen gebruiken nu
+  herbruikbare `recommendationList`, `recommendationGroup` en `recommendationCard`
+  componenten met eigenaar-, review- en artscheckstate. Het startscherm heeft ook
+  een taakroutebalk naar fase, vandaag, volgende stap, aanbevelingen en snelle
+  invoer, en de theme-CSS laadt in dev/preview via een CSP-veilige stylesheetlink;
+  G1184 staat open voor herbruikbare researchcomponenten.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
