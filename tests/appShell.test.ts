@@ -35467,11 +35467,31 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Lokaal logboek');
+    expect(html).toContain('class="section-stack eventlog-command-layout"');
+    expect(html).toContain('class="eventlog-task-routes"');
+    expect(html).toContain('aria-label="Logboek taakroutes"');
+    expect(html).toContain('data-eventlog-task-routes="ready"');
+    expect(html).toContain('href="#logboek-route-overzicht"');
+    expect(html).toContain('href="#logboek-route-recent"');
+    expect(html).toContain('href="#logboek-route-categorieen"');
+    expect(html).toContain('href="#logboek-route-privacy"');
+    expect(html).toContain('id="logboek-route-overzicht"');
+    expect(html).toContain('data-eventlog-route="overzicht"');
+    expect(html).toContain('id="logboek-route-recent"');
+    expect(html).toContain('data-eventlog-route="recent"');
+    expect(html).toContain('id="logboek-route-categorieen"');
+    expect(html).toContain('data-eventlog-route="categorieen"');
+    expect(html).toContain('id="logboek-route-privacy"');
+    expect(html).toContain('data-eventlog-route="privacy"');
+    expect(html).toContain('Logboekstatus');
     expect(html).toContain('Recente gebeurtenissen');
+    expect(html).toContain('Categorieën scannen');
+    expect(html).toContain('Privacygevoelige gebeurtenissen');
     expect(html).toContain(
       'Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel',
     );
     expect(html).toContain('1 gebeurtenis vastgelegd');
+    expect(html).toContain('data-eventlog-category="backup"');
     expect(html).toContain('Versleutelde back-up klaargezet');
     expect(html).toContain('2026-06-23 15:00');
     expect(html).toContain('Back-up');

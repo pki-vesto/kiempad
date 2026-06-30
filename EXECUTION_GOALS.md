@@ -3398,6 +3398,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Event log UI, Audit UI, Privacy UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 54
+- **Status:** ☑ done
+
+### G1192 — kostenscherm opdelen in taakgerichte financeroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het kostenscherm combineert invoer, vergoedingsoverzicht, eigen-risico context en kostenhistorie nog in één lange financiële beheerflow.
+- **User Impact:** Gebruikers moeten door financiële details scrollen om kosten toe te voegen, vergoeding te controleren of eerdere posten terug te vinden.
+- **Desired Outcome:** Deel het kostenscherm zichtbaar op in taakgerichte financeroutes voor overzicht, kosten toevoegen, vergoeding/eigen risico en historie.
+- **User Value:** Financiële informatie voelt rustiger, beter scanbaar en minder als een administratieve spreadsheet.
+- **Acceptance Criteria:** Kostenscherm bevat zichtbare taakroutes; bestaande kostenformulier-id's, input names, kosten selectors en polisdisclaimers blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen secrets, medische payload, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Kosten, Beheer
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Finance UI, Cost UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 53
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

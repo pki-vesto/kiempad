@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1191/G1192 Premium Claude Design UI: het logboek heeft nu taakgerichte historyroutes voor overzicht, recente gebeurtenissen, categorieën en privacygevoelige auditregels, met behoud van eventlog selectors en privacy-sanitization; G1192 is toegevoegd voor financeroutes in het kostenscherm.
 - G1190/G1191 Premium Claude Design UI: het herinneringenscherm heeft nu taakgerichte notificationroutes voor status, lockscreenprivacy, plannen en komende/fallbackmeldingen, met behoud van reminder- en notificationprivacy hooks; G1191 is toegevoegd voor logboek- en audit-historyroutes.
 - G1189/G1190 Premium Claude Design UI: het back-upscherm heeft nu taakgerichte privacyroutes voor controleren, exporteren, importeren en herstel/toegang, met behoud van back-up/export/import/WebAuthn hooks en privacycopy; G1190 is toegevoegd voor herinneringen en notificatieprivacy.
 - G1188/G1189 Premium Claude Design UI: het afwegingenscherm heeft nu decisionroutes voor voorbereiden, opties vergelijken, keuze vastleggen en beslisverslagen, met behoud van `decision-form`, `decision-choice-form`, `data-decision-id` en bestaande inputcontracten; G1189 is toegevoegd voor taakgerichte privacyroutes in beheer- en instellingenschermen.
