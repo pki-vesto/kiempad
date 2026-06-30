@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 874 |
+| ☑ klaar | 875 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1073** |
+| **Totaal** | **1074** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -709,7 +709,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G544 | Research Intelligence: research relevantie uitleg onzekerheidslabel | P0 | F5 | ☑ |
 | G545 | Research Intelligence: researchbibliotheek offline cache metadata | P1 | F5 | ☐ |
 | G546 | Research Intelligence: research item artsbespreek-vraag generator | P1 | F5 | ☐ |
-| G547 | Daily Recommendations: dagadvies engine input-minimalisatie | P0 | F5 | ☐ |
+| G547 | Daily Recommendations: dagadvies engine input-minimalisatie | P0 | F5 | ☑ |
 | G548 | Daily Recommendations: vrouw aanbeveling cyclusfase context | P0 | F5 | ☐ |
 | G549 | Daily Recommendations: man aanbeveling leefstijl context | P0 | F5 | ☐ |
 | G550 | Daily Recommendations: aanbeveling bronconfidence label | P1 | F5 | ☐ |
@@ -1236,12 +1236,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1071 | Daily Recommendations: man day card audit evidence | P1 | F5 | ☐ |
 | G1072 | Research Intelligence: PubMed query preview audit evidence | P1 | F5 | ☐ |
 | G1073 | Research Intelligence: relevance uncertainty audit evidence | P1 | F5 | ☐ |
+| G1074 | Daily Recommendations: input minimization audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1073** (id's G001 t/m G1073, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1074** (id's G001 t/m G1074, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

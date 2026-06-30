@@ -4288,7 +4288,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, privacy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G548 — vrouw aanbeveling cyclusfase context
 
@@ -11741,6 +11741,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Research, knowledge screen, privacy tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1074 — input minimization audit evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G547 introduceert input-minimalisatie voor dagelijkse aanbevelingen met bron, datum, reviewstatus, gebruikte inputcategorieen, uitgesloten inputcategorieen en correctievelden, maar er is nog geen compacte audit die dit contract door toekomstige dagadvieswijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat dagadviesinput geminimaliseerd blijft tot categorie- en planningcontext met controleerbare bron, datum, reviewstatus en correctievelden.
+- **User Value:** Gebruikers houden uitlegbare dagelijkse aanbevelingen zonder dat Kiempad vrije medische payloads of behandeladvies nodig heeft.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G547; bron, datum, reviewstatus en correctievelden blijven zichtbaar of testbaar; gebruikte inputcategorieen blijven geminimaliseerd; uitgesloten inputcategorieen blijven vrije dossier/OCR-tekst, gespreksinhoud, research vrije tekst, trackingdata en locatiegegevens; evidence bevat geen secrets, echte gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, app shell, privacy tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

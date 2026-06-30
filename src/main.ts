@@ -2034,16 +2034,29 @@ async function handleDailyRecommendationAction(
       : String(data.get('recommendationAction') ?? '');
   const titel = String(data.get('titel') ?? '').trim();
   const detail = String(data.get('detail') ?? '').trim();
+  const correctie = optionalString(data.get('dailyRecommendationCorrection'));
+  const reviewStatus = parseDailyRecommendationReviewStatus(
+    data.get('dailyRecommendationReviewStatus'),
+  );
+  const reviewedDetail = correctie ?? detail;
   const recommendationId = String(data.get('recommendationId') ?? '').trim();
   if (!titel || !recommendationId) return;
+  if (correctie && bevatDagadviesMedischeClaim(correctie)) {
+    state.dailyRecommendationStatus =
+      'Dagadviescorrectie niet bewaard: geen diagnose, dosering, kansberekening of behandelkeuzeadvies.';
+    render(root, state);
+    return;
+  }
 
   if (action === 'bewaar') {
     await state.eventLogStore?.record({
       categorie: 'systeem',
       gebeurtenis: 'Dagelijkse aanbeveling bewaard',
-      detail: `${titel} (${recommendationId})`,
+      detail: `${titel} (${recommendationId}); reviewstatus ${reviewStatus}; correctie ${correctie ? reviewedDetail : 'geen'}`,
     });
-    state.dailyRecommendationStatus = `Aanbeveling bewaard: ${titel}.`;
+    state.dailyRecommendationStatus = correctie
+      ? `Aanbeveling bewaard met correctie: ${titel}.`
+      : `Aanbeveling bewaard: ${titel}.`;
     await reloadAndRender(root, state);
     return;
   }
@@ -2079,7 +2092,7 @@ async function handleDailyRecommendationAction(
 
   if (action === 'vraag' && state.vraagStore) {
     await state.vraagStore.save({
-      vraag: `Aanbeveling bespreken: ${titel}${detail ? `. ${detail}` : ''}`,
+      vraag: `Aanbeveling bespreken: ${titel}${reviewedDetail ? `. ${reviewedDetail}` : ''}`,
       beantwoord: false,
     });
     await state.eventLogStore?.record({
@@ -2096,7 +2109,7 @@ async function handleDailyRecommendationAction(
     await state.vraagStore.save({
       vraag: maakArtscheckVraagVoorAanbeveling({
         titel,
-        detail,
+        detail: reviewedDetail,
         bron: String(data.get('bron') ?? ''),
       }),
       beantwoord: false,
@@ -2109,6 +2122,19 @@ async function handleDailyRecommendationAction(
     state.dailyRecommendationStatus = `Artscheckvraag gemaakt: ${titel}.`;
     await reloadAndRender(root, state);
   }
+}
+
+function parseDailyRecommendationReviewStatus(
+  value: FormDataEntryValue | null,
+): 'concept_te_controleren' {
+  if (value === 'concept_te_controleren') return 'concept_te_controleren';
+  return 'concept_te_controleren';
+}
+
+function bevatDagadviesMedischeClaim(tekst: string): boolean {
+  return /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ie|ml|g)\b|diagnose|kansberekening|behandelkeuzeadvies|beste behandeling|kies voor|start met|stop met/i.test(
+    tekst,
+  );
 }
 
 async function saveTrajectFromForm(

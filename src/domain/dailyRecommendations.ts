@@ -27,6 +27,7 @@ export type DailyRecommendation = {
   reden?: string;
   checklist?: DailyRecommendationChecklistItem[];
   gebruikteBronnen?: string[];
+  inputMinimisatie?: DailyRecommendationInputMinimization;
 };
 
 export type DailyRecommendationChecklistItem = {
@@ -37,6 +38,16 @@ export type DailyRecommendationChecklistItem = {
     verplicht: true;
     label: string;
   };
+};
+
+export type DailyRecommendationInputMinimization = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  gebruikteInputCategorieen: string[];
+  uitgeslotenInputCategorieen: string[];
+  correctieVelden: string[];
+  waarschuwing: string;
 };
 
 export type DailyRecommendationOverview = Record<DailyRecommendationOwner, DailyRecommendation[]>;
@@ -83,131 +94,138 @@ export function bouwDagelijksAanbevelingsoverzicht(input: {
     consultVerslagen: input.consultVerslagen ?? [],
   });
 
-  return verrijkDagelijksAanbevelingsoverzicht({
-    vrouw: [
-      vrouwDagkaart,
-      ...(leefstijlContext ? [leefstijlContext] : []),
-      ...(cyclusContext ? [cyclusContext] : []),
-      doseLogsVandaag.length > 0
-        ? {
-            id: 'vrouw-medicatie-vandaag',
-            owner: 'vrouw',
-            titel: 'Medicatieschema controleren',
-            detail: `${doseLogsVandaag.length} gepland(e) medicatiemoment(en) vandaag; neem alleen over wat de kliniek heeft voorgeschreven.`,
-            bron: 'Medicatieplanning vandaag',
-            waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-            gebruikteBronnen: doseLogsVandaag.map(
-              (item) =>
-                `Medicatieplanning: ${item.medicatie.naam} op ${item.doseLog.geplandOp.replace('T', ' ')}`,
-            ),
-          }
-        : {
-            id: 'vrouw-basisdag',
-            owner: 'vrouw',
-            titel: 'Dagcheck zonder extra medicatiemoment',
-            detail:
-              'Bekijk of er vandaag eigen notities, symptomen of vragen zijn om lokaal vast te leggen.',
-            bron: 'Lokale dagstart',
-            waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-            gebruikteBronnen: ['Lokale dagstart zonder extra medicatiemoment'],
-          },
-    ],
-    man: [
-      manDagkaart,
-      bouwMannelijkeVoorbereidingskaart(),
-      {
-        id: 'man-basisdag',
-        owner: 'man',
-        titel: 'Eigen aandachtspunten vastleggen',
-        detail:
-          'Noteer alleen feitelijke vragen of leefstijlobservaties die jullie eventueel met de kliniek willen bespreken.',
-        bron: 'Lokale dagstart',
-        waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-      },
-    ],
-    samen: [
-      {
-        id: 'samen-voeding-supplement-checklist',
-        owner: 'samen',
-        titel: 'Voeding en supplementen checklijst',
-        detail: 'Gebruik dit alleen als notitielijst voor vragen aan de kliniek of apotheek.',
-        bron: 'Lokale leefstijl- en medicatiecontext',
-        waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-        checklist: [
-          {
-            label: 'Voeding: noteer feitelijke vragen of observaties voor het consult.',
-            bron: 'Lokale leefstijlcontext',
-            disclaimer: 'Geen voedingsadvies; bespreek persoonlijke keuzes met behandelaars.',
-          },
-          {
-            label:
-              'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
-            bron: 'Medicatie- en dossiercontext',
-            disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
-            artscheck: {
-              verplicht: true,
-              label: 'Artscheck verplicht voor supplementvragen',
+  return verrijkDagelijksAanbevelingsoverzicht(
+    {
+      vrouw: [
+        vrouwDagkaart,
+        ...(leefstijlContext ? [leefstijlContext] : []),
+        ...(cyclusContext ? [cyclusContext] : []),
+        doseLogsVandaag.length > 0
+          ? {
+              id: 'vrouw-medicatie-vandaag',
+              owner: 'vrouw',
+              titel: 'Medicatieschema controleren',
+              detail: `${doseLogsVandaag.length} gepland(e) medicatiemoment(en) vandaag; neem alleen over wat de kliniek heeft voorgeschreven.`,
+              bron: 'Medicatieplanning vandaag',
+              waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+              gebruikteBronnen: doseLogsVandaag.map(
+                (item) =>
+                  `Medicatieplanning: ${item.medicatie.naam} op ${item.doseLog.geplandOp.replace('T', ' ')}`,
+              ),
+            }
+          : {
+              id: 'vrouw-basisdag',
+              owner: 'vrouw',
+              titel: 'Dagcheck zonder extra medicatiemoment',
+              detail:
+                'Bekijk of er vandaag eigen notities, symptomen of vragen zijn om lokaal vast te leggen.',
+              bron: 'Lokale dagstart',
+              waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+              gebruikteBronnen: ['Lokale dagstart zonder extra medicatiemoment'],
             },
-          },
-        ],
-      },
-      ...(behandelvoorbereiding ? [behandelvoorbereiding] : []),
-      afspraak
-        ? {
-            id: 'samen-volgende-afspraak',
-            owner: 'samen',
-            titel: 'Volgende afspraak voorbereiden',
-            detail: `${afspraak.titel} staat gepland op ${afspraak.datumTijd.replace('T', ' ')}.`,
-            bron: 'Agenda',
-            waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-            gebruikteBronnen: [
-              `Agenda: ${afspraak.titel} op ${afspraak.datumTijd.replace('T', ' ')}`,
-            ],
-          }
-        : {
-            id: 'samen-geen-afspraak',
-            owner: 'samen',
-            titel: 'Geen afspraak vandaag bekend',
-            detail: 'Controleer samen of de lokale agenda nog klopt.',
-            bron: 'Agenda',
-            waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-            gebruikteBronnen: ['Agenda: geen komende afspraak gevonden'],
-          },
-      vragenOpen.length > 0
-        ? {
-            id: 'samen-open-vragen',
-            owner: 'samen',
-            titel: 'Open vragen ordenen',
-            detail: `${vragenOpen.length} open vraag/vragen staan klaar voor consultvoorbereiding.`,
-            bron: 'Vragenlijst',
-            waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-            gebruikteBronnen: vragenOpen.slice(0, 3).map((vraag) => `Open vraag: ${vraag.vraag}`),
-          }
-        : {
-            id: 'samen-geen-open-vragen',
-            owner: 'samen',
-            titel: 'Vragenlijst nalopen',
-            detail:
-              'Er staan geen open vragen klaar; voeg alleen toe wat jullie echt willen bespreken.',
-            bron: 'Vragenlijst',
-            waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
-            gebruikteBronnen: ['Vragenlijst: geen open vragen'],
-          },
-    ],
-  });
+      ],
+      man: [
+        manDagkaart,
+        bouwMannelijkeVoorbereidingskaart(),
+        {
+          id: 'man-basisdag',
+          owner: 'man',
+          titel: 'Eigen aandachtspunten vastleggen',
+          detail:
+            'Noteer alleen feitelijke vragen of leefstijlobservaties die jullie eventueel met de kliniek willen bespreken.',
+          bron: 'Lokale dagstart',
+          waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+        },
+      ],
+      samen: [
+        {
+          id: 'samen-voeding-supplement-checklist',
+          owner: 'samen',
+          titel: 'Voeding en supplementen checklijst',
+          detail: 'Gebruik dit alleen als notitielijst voor vragen aan de kliniek of apotheek.',
+          bron: 'Lokale leefstijl- en medicatiecontext',
+          waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+          checklist: [
+            {
+              label: 'Voeding: noteer feitelijke vragen of observaties voor het consult.',
+              bron: 'Lokale leefstijlcontext',
+              disclaimer: 'Geen voedingsadvies; bespreek persoonlijke keuzes met behandelaars.',
+            },
+            {
+              label:
+                'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
+              bron: 'Medicatie- en dossiercontext',
+              disclaimer: 'Kiempad adviseert geen supplement, combinatie of hoeveelheid.',
+              artscheck: {
+                verplicht: true,
+                label: 'Artscheck verplicht voor supplementvragen',
+              },
+            },
+          ],
+        },
+        ...(behandelvoorbereiding ? [behandelvoorbereiding] : []),
+        afspraak
+          ? {
+              id: 'samen-volgende-afspraak',
+              owner: 'samen',
+              titel: 'Volgende afspraak voorbereiden',
+              detail: `${afspraak.titel} staat gepland op ${afspraak.datumTijd.replace('T', ' ')}.`,
+              bron: 'Agenda',
+              waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+              gebruikteBronnen: [
+                `Agenda: ${afspraak.titel} op ${afspraak.datumTijd.replace('T', ' ')}`,
+              ],
+            }
+          : {
+              id: 'samen-geen-afspraak',
+              owner: 'samen',
+              titel: 'Geen afspraak vandaag bekend',
+              detail: 'Controleer samen of de lokale agenda nog klopt.',
+              bron: 'Agenda',
+              waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+              gebruikteBronnen: ['Agenda: geen komende afspraak gevonden'],
+            },
+        vragenOpen.length > 0
+          ? {
+              id: 'samen-open-vragen',
+              owner: 'samen',
+              titel: 'Open vragen ordenen',
+              detail: `${vragenOpen.length} open vraag/vragen staan klaar voor consultvoorbereiding.`,
+              bron: 'Vragenlijst',
+              waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+              gebruikteBronnen: vragenOpen.slice(0, 3).map((vraag) => `Open vraag: ${vraag.vraag}`),
+            }
+          : {
+              id: 'samen-geen-open-vragen',
+              owner: 'samen',
+              titel: 'Vragenlijst nalopen',
+              detail:
+                'Er staan geen open vragen klaar; voeg alleen toe wat jullie echt willen bespreken.',
+              bron: 'Vragenlijst',
+              waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+              gebruikteBronnen: ['Vragenlijst: geen open vragen'],
+            },
+      ],
+    },
+    input.datum,
+  );
 }
 
 function verrijkDagelijksAanbevelingsoverzicht(
   overview: DailyRecommendationOverview,
+  datum: string,
 ): DailyRecommendationOverview {
   return {
-    vrouw: overview.vrouw.map(verrijkAanbevelingMetBronnen),
-    man: overview.man.map(verrijkAanbevelingMetBronnen),
-    samen: overview.samen.map(verrijkAanbevelingMetBronnen),
+    vrouw: overview.vrouw.map((item) => verrijkAanbevelingMetBronnen(item, datum)),
+    man: overview.man.map((item) => verrijkAanbevelingMetBronnen(item, datum)),
+    samen: overview.samen.map((item) => verrijkAanbevelingMetBronnen(item, datum)),
   };
 }
 
-function verrijkAanbevelingMetBronnen(item: DailyRecommendation): DailyRecommendation {
+function verrijkAanbevelingMetBronnen(
+  item: DailyRecommendation,
+  datum: string,
+): DailyRecommendation {
   const bronnen = uniekeTeksten([
     ...(item.gebruikteBronnen ?? []),
     item.bron,
@@ -217,7 +235,47 @@ function verrijkAanbevelingMetBronnen(item: DailyRecommendation): DailyRecommend
   return {
     ...item,
     gebruikteBronnen: bronnen,
+    inputMinimisatie: bouwInputMinimisatie(item, bronnen, datum),
   };
+}
+
+function bouwInputMinimisatie(
+  item: DailyRecommendation,
+  bronnen: readonly string[],
+  datum: string,
+): DailyRecommendationInputMinimization {
+  return {
+    bron: item.bron,
+    datum,
+    reviewStatus: 'concept_te_controleren',
+    gebruikteInputCategorieen: categoriseerBronnen(bronnen),
+    uitgeslotenInputCategorieen: [
+      'vrije dossier/OCR-tekst',
+      'gespreksinhoud',
+      'research vrije tekst',
+      'trackingdata',
+      'locatiegegevens',
+    ],
+    correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+    waarschuwing:
+      'Input-minimalisatie: alleen lokale categorie- en planningcontext; geen medische conclusie, hoeveelheid, kansclaim of behandelrichting.',
+  };
+}
+
+function categoriseerBronnen(bronnen: readonly string[]): string[] {
+  const categorieen = bronnen.map((bron) => {
+    if (/agenda|afspraak/i.test(bron)) return 'agenda';
+    if (/medicatie/i.test(bron)) return 'medicatieplanning';
+    if (/vragenlijst|open vraag/i.test(bron)) return 'vragenlijst';
+    if (/traject|cyclusfase/i.test(bron)) return 'trajectfase';
+    if (/cyclusmeting/i.test(bron)) return 'cyclusmeting';
+    if (/dossierdocument/i.test(bron)) return 'dossierdocument-metadata';
+    if (/consultverslag/i.test(bron)) return 'consultverslag-metadata';
+    if (/leefstijl/i.test(bron)) return 'leefstijlcontext';
+    return 'lokale dagstart';
+  });
+
+  return uniekeTeksten(categorieen);
 }
 
 function uniekeTeksten(items: readonly string[]): string[] {
