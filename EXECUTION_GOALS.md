@@ -12648,4 +12648,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 88
+- **Status:** ☑ done
+
+### G1137 — dossier add route keyboard focus refinement
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve route-affordance is zichtbaar, maar keyboardfocus op de routekaarten kan nog explicieter worden onderscheiden van de actieve anchorstaat.
+- **User Impact:** Gebruikers die met toetsenbord of assistive tech navigeren kunnen minder snel zien welke routekaart focus heeft versus welke route actief is.
+- **Desired Outcome:** Verfijn keyboardfocus voor de toevoegroutekaarten zonder ankers, formcontracten of privacyhooks te wijzigen.
+- **User Value:** Toetsenbordgebruikers kunnen sneller en zekerder tussen toevoegroutekaarten navigeren.
+- **Acceptance Criteria:** Routekaarten hebben duidelijke keyboardfocus naast actieve route-state; readiness-cues blijven zichtbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 87
 - **Status:** ☐ open
