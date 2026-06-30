@@ -2235,6 +2235,12 @@ a.action-card:active {
   font-weight: 650;
 }
 
+.dossier-submit-target {
+  color: var(--text);
+  font-size: 0.76rem;
+  font-weight: 720;
+}
+
 .dossier-submit-focus-return {
   width: fit-content;
   color: var(--accent);
