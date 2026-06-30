@@ -3382,6 +3382,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Notification UI, Reminder UI, Privacy UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 55
+- **Status:** ☑ done
+
+### G1191 — logboek en auditoverzicht opdelen in taakgerichte historyroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Logboek en auditachtige overzichten tonen technische status, historie en privacywaarschuwingen nog als lange lijst.
+- **User Impact:** Gebruikers moeten door beheerachtige historie scrollen om recente gebeurtenissen, privacygevoelige meldingen en herstelcontext te vinden.
+- **Desired Outcome:** Deel het logboek zichtbaar op in taakgerichte historyroutes voor recent, categorieën, privacyveilige waarschuwingen en herstel/exportcontext.
+- **User Value:** Historie voelt rustiger en beter scanbaar, zonder dat technische auditinformatie als adminpaneel overheerst.
+- **Acceptance Criteria:** Logboek bevat zichtbare taakroutes; bestaande eventlog selectors, filter-/privacyhooks en sanitization blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen secrets, medische payload, attachmentpayload, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Logboek, Beheer
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Event log UI, Audit UI, Privacy UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 54
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

@@ -2275,6 +2275,108 @@ h2 {
   min-width: 0;
 }
 
+.notification-command-layout {
+  gap: 18px;
+}
+
+.notification-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.notification-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.notification-task-route:focus-visible,
+.notification-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.notification-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.notification-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.notification-route-section__header h2,
+.notification-route-section__header p {
+  margin: 0;
+}
+
+.notification-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.notification-route-section .summary-panel,
+.notification-route-section .policy-panel,
+.notification-route-section .linked-note,
+.notification-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.notification-route-section .definition-list > div,
+.notification-route-section .summary-list > div,
+.notification-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.notification-route-section .definition-list dd,
+.notification-route-section .summary-list dd,
+.notification-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.notification-route-section .data-form,
+.notification-route-section .compact-form,
+.notification-route-section .data-form label,
+.notification-route-section .data-form input,
+.notification-route-section .data-form select,
+.notification-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4325,6 +4427,22 @@ a.action-card:active {
   }
 
   .backup-task-route {
+    flex: 0 0 min(190px, 76vw);
+    scroll-snap-align: start;
+  }
+
+  .notification-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .notification-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .notification-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
   }

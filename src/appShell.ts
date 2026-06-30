@@ -10878,8 +10878,21 @@ function renderHerinneringenScreen(state: AppShellState): string {
   const komende = komendeHerinneringen(state.herinneringen, localDateTimeIso(new Date()));
   const fallback = state.inAppFallbackNotifications ?? [];
 
-  return `
-    <section class="section-stack" aria-label="Herinneringen beheren">
+  return sectionStack(
+    [
+      renderNotificationTaskRoutes({
+        reminderCount: komende.length,
+        fallbackCount: fallback.length,
+        permission: state.notificaties.permission,
+        serviceWorker: state.notificaties.serviceWorker,
+        lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+      }),
+      `<section id="herinneringen-route-status" class="notification-route-section" aria-labelledby="herinneringen-route-status-title" data-notification-route="status">
+        <header class="notification-route-section__header">
+          <p class="kp-card__eyebrow">Status</p>
+          <h2 id="herinneringen-route-status-title">Notificatiestatus controleren</h2>
+          <p>Controleer browsertoestemming en service worker zonder medicatie- of afspraakdetails te tonen.</p>
+        </header>
         <h2>Notificaties</h2>
         <div class="notification-status" data-notification-permission="${escapeAttribute(state.notificaties.permission)}" data-notification-service-worker="${escapeAttribute(state.notificaties.serviceWorker)}">
           <p><strong>Toestemming:</strong> ${renderPermissionLabel(state.notificaties.permission)}</p>
@@ -10896,6 +10909,13 @@ function renderHerinneringenScreen(state: AppShellState): string {
             ? '<p class="small-print">Notificaties zijn in de browser geweigerd. Kiempad blijft herinneringen in de app tonen.</p>'
             : ''
         }
+      </section>`,
+      `<section id="herinneringen-route-privacy" class="notification-route-section" aria-labelledby="herinneringen-route-privacy-title" data-notification-route="privacy">
+        <header class="notification-route-section__header">
+          <p class="kp-card__eyebrow">Privacy</p>
+          <h2 id="herinneringen-route-privacy-title">Lockscreenprivacy instellen</h2>
+          <p>Kies wat OS-notificaties mogen tonen op een vergrendeld scherm.</p>
+        </header>
         <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
         <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
           <label>
@@ -10907,6 +10927,13 @@ function renderHerinneringenScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar notificatieprivacy</button>
         </form>
+      </section>`,
+      `<section id="herinneringen-route-plannen" class="notification-route-section" aria-labelledby="herinneringen-route-plannen-title" data-notification-route="plannen">
+        <header class="notification-route-section__header">
+          <p class="kp-card__eyebrow">Plannen</p>
+          <h2 id="herinneringen-route-plannen-title">Herinnering plannen</h2>
+          <p>Stel standaard waarschuwtijd en eigen herinneringen in.</p>
+        </header>
         <form id="warning-default-form" class="data-form compact-form">
           <label>
             Standaard afspraakwaarschuwing (minuten vooraf)
@@ -10916,6 +10943,13 @@ function renderHerinneringenScreen(state: AppShellState): string {
         </form>
         <h2 class="section-subheading">Eigen herinnering</h2>
         ${renderEigenHerinneringForm()}
+      </section>`,
+      `<section id="herinneringen-route-komend" class="notification-route-section" aria-labelledby="herinneringen-route-komend-title" data-notification-route="komend">
+        <header class="notification-route-section__header">
+          <p class="kp-card__eyebrow">Komend</p>
+          <h2 id="herinneringen-route-komend-title">Komende herinneringen en fallback</h2>
+          <p>Bekijk actieve herinneringen en veilige in-app fallbackmeldingen.</p>
+        </header>
         <div class="panel-heading">
           <h2>Komende herinneringen</h2>
         </div>
@@ -10925,7 +10959,49 @@ function renderHerinneringenScreen(state: AppShellState): string {
             ? renderHerinneringenList(komende)
             : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
         }
-    </section>
+      </section>`,
+    ],
+    { className: 'notification-command-layout', ariaLabel: 'Herinneringen beheren' },
+  );
+}
+
+function renderNotificationTaskRoutes(input: {
+  reminderCount: number;
+  fallbackCount: number;
+  permission: NotificationRuntimeStatus['permission'];
+  serviceWorker: NotificationRuntimeStatus['serviceWorker'];
+  lockscreenDetails: boolean;
+}): string {
+  const statusMeta =
+    input.permission === 'granted' && input.serviceWorker === 'ready' ? 'klaar' : input.permission;
+  const routes = [
+    { href: '#herinneringen-route-status', label: 'Status', meta: statusMeta },
+    {
+      href: '#herinneringen-route-privacy',
+      label: 'Privacy',
+      meta: input.lockscreenDetails ? 'details' : 'generiek',
+    },
+    { href: '#herinneringen-route-plannen', label: 'Plannen', meta: 'instellen' },
+    {
+      href: '#herinneringen-route-komend',
+      label: 'Komend',
+      meta: `${input.reminderCount} actief · ${input.fallbackCount} fallback`,
+    },
+  ];
+
+  return `
+    <nav class="notification-task-routes" aria-label="Herinneringen taakroutes" data-notification-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="notification-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
   `;
 }
 
