@@ -1605,7 +1605,23 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
         }
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
-        <h2>Consultverslag toevoegen</h2>
+        ${workflowPanel({
+          title: 'Consultverslag toevoegen',
+          eyebrow: 'Gespreksintelligentie',
+          intro:
+            'Leg verslag, context en bron samen vast zodat Kiempad actiepunten en behandelgeschiedenis rustig kan voorbereiden.',
+          className: 'consult-upload-workflow',
+          ariaLabel: 'Begeleide consultupload',
+          data: {
+            'upload-workflow': 'consult-document',
+            'upload-workflow-state': 'guided',
+          },
+          steps: [
+            { label: 'Verslag', state: 'current' },
+            { label: 'Context', state: 'todo' },
+            { label: 'Acties', state: 'todo' },
+          ],
+          body: `
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-dossier-feedback-focus-target="consult-upload" data-consult-upload-privacy-state="encrypted-text-or-file" tabindex="-1">
           <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis">
             <legend>Consultbasis</legend>
@@ -1673,6 +1689,8 @@ function renderDossierScreen(state: AppShellState): string {
           ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
+        `,
+        })}
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality">
         <h2>Embryokwaliteit vastleggen</h2>
