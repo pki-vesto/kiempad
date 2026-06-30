@@ -13272,4 +13272,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, CI workflow, tests
 - **ADR Needed:** no
 - **Score:** 49
+- **Status:** ☑ done
+
+### G1176 — dossier add feedback return cue parity command drift guard
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De workflowlabelnaam is nu als exact contract bewaakt, maar het smoke-commando kan nog los van workflow, runbook en auditdocs drift vertonen.
+- **User Impact:** Als de parity-smoke later een ander commando draait zonder documentatie-update, kan specifieke dossierfeedback-regressie minder gericht worden bewaakt.
+- **Desired Outcome:** Borg dat het commando `npm run test -- tests/appShell.test.ts` in workflow, runbook, completion-audit en maintenance-test synchroon blijft zonder cue-copy, formuliercontracten of privacyhooks te wijzigen.
+- **User Value:** Gebruikers houden stabiele feedbackcontext doordat dezelfde gerichte test daadwerkelijk blijft draaien onder het bekende CI-label.
+- **Acceptance Criteria:** Onderhoudstest of contract bewaakt het exacte smoke-commando in workflow, runbook en auditdocs; bestaande ankers, form-id's, input names en data-hooks blijven intact; workflow label drift guard, CI order guard, cue parity smoke CI evidence, cue parity regression smoke, focused cue target parity, focused cue contrast audit, focused landing cue, landing focus sync, landing forced-colors cue, landing context cue, anchor landing audit, forced-colors audit, reduced-motion audit, pressed state audit, return interaction tone, return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, CI workflow, tests
+- **ADR Needed:** no
+- **Score:** 48
 - **Status:** ☐ open

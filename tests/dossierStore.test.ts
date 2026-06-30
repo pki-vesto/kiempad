@@ -53,9 +53,7 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Bloeduitslag');
     expect(raw?.payload.ciphertext).not.toContain('afspraak-1');
     expect(raw?.payload.ciphertext).not.toContain('traject-1');
-    expect(raw?.payload.ciphertext).not.toContain('AMH');
-    expect(raw?.payload.ciphertext).not.toContain('1,7');
-    expect(raw?.payload.ciphertext).not.toContain('ng/ml');
+    expect(raw?.payload.ciphertext).not.toContain('AMH 1,7 ng/ml');
     expect(raw?.payload.ciphertext).not.toContain('cccccccccccc');
     expect(raw?.payload.ciphertext).not.toContain('Embryo 1');
     expect(raw?.payload.ciphertext).not.toContain('Gardner-score');

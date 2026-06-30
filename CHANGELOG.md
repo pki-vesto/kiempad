@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1175/G1176 Premium Claude Design UI: de dossier cue parity smoke gebruikt nu een exact label- en commandocontract in maintenance-tests zodat workflow, runbook en completion-audit dezelfde smoke-identiteit blijven tonen; G1176 is toegevoegd voor commandodriftbewaking.
 - G1174/G1175 Premium Claude Design UI: de dossier cue parity smoke heeft nu maintenance-bewaking voor CI-volgorde na secrets/fixture-scans en voor de volledige testset, inclusief runbook- en completion-audit order-evidence; G1175 is toegevoegd voor workflowlabel-driftbewaking.
 - G1173/G1174 Premium Claude Design UI: de dossier cue parity smoke is nu expliciet traceerbaar als eigen CI-stap met runbook- en completion-audit evidence, bewaakt door maintenance-tests zonder bestandsnaam, OCR-tekst, beeldpayload of medische inhoud te loggen; G1174 is toegevoegd voor CI-volgorde-bewaking.
 - G1172/G1173 Premium Claude Design UI: dossier feedback-return cueparity heeft nu een expliciete app-shell regressiesmoke die target-, focus- en focus-visible selectors vergelijkt in standaard, reduced-motion en forced-colors context voor documentupload, consult, embryokwaliteit en embryo-status; G1173 is toegevoegd voor CI-evidence.
