@@ -220,6 +220,10 @@
 - **G1198 commandroute-badges:** agenda, medicatie, vragen en traject tonen nu
   compacte badges en density states op de gedeelde commandroutes, zodat tellingen,
   acties en lege/gevulde routecontext direct scanbaar zijn.
+- **G1199 mobiele commandroute-clearance:** mobiele commandroutes gebruiken nu een
+  gedeelde bottom-nav clearance met scroll-padding en control scroll-margin; de
+  browsercheck houdt primaire submitacties op agenda, medicatie, vragen en traject
+  vrij van de fixed bottom-nav.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
@@ -646,8 +650,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
   taakroutes; traject, agenda, medicatie en vragen gebruiken nu gedeelde
   command-routepanelen met consistente actieve state, header-spacing, compacte
-  badges, density states en routecontracten zodat deze schermen minder als één lange
-  pagina aanvoelen.
+  badges, density states, mobiele bottom-nav clearance en routecontracten zodat deze
+  schermen minder als één lange pagina aanvoelen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -663,7 +667,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1199: Premium Claude Design UI mobiele commandroutes verfijnen met sticky ruimte en bottom-nav affordance heeft prioriteit na de commandroute-badges van G1198.
+1. UI Improvement Evolution uitvoeren vanaf G1200: Premium Claude Design UI mobiele formulierpanelen verdichten met duidelijke primaire actiezone heeft prioriteit na de mobiele commandroute-clearance van G1199.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

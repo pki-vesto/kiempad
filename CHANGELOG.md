@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1199/G1200 Premium Claude Design UI: mobiele commandroutes gebruiken nu een gedeelde bottom-nav clearance, scroll-padding en control scroll-margin zodat routepanelen en submitacties vrij blijven van de fixed bottom-nav; G1200 is toegevoegd voor compactere mobiele formulierpanelen en primaire actiezone.
 - G1198/G1199 Premium Claude Design UI: de gedeelde commandroutes tonen nu compacte badges en `data-command-route-density` states voor agenda, medicatie, vragen en traject, zodat tellingen, lege states en acties direct scanbaar zijn; G1199 is toegevoegd voor mobiele sticky spacing en bottom-nav affordance.
 - G1197/G1198 Premium Claude Design UI: agenda, medicatie, vragen en traject gebruiken nu een gedeelde command-route helper en gedeelde command-sectieklassen met consistente routepanelen, actieve state en header-spacing; G1198 is toegevoegd voor statusbadges en compactere density states op commandroutes.
 - G1196/G1197 Premium Claude Design UI: het vragenscherm heeft nu taakgerichte questionroutes voor open vragen, consultvoorbereiding, beheer, verslagen en alle vragen, met behoud van `vraag-form`, `question-priority-form`, antwoordvelden, afspraakkoppeling en exporthook; G1197 is toegevoegd voor gedeelde command-route verfijning.

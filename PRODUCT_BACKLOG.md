@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 999 |
+| ☑ klaar | 1000 |
 | ◐ bezig | 0 |
 | ☐ open | 101 |
 | ☒ archived | 99 |
-| **Totaal** | **1199** |
+| **Totaal** | **1200** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1361,13 +1361,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1196 | Premium Claude Design UI: vragenscherm opdelen in taakgerichte questionroutes | P1 | F5 | ☑ |
 | G1197 | Premium Claude Design UI: taakroutepanelen visueel verfijnen met gedeelde command component | P1 | F5 | ☑ |
 | G1198 | Premium Claude Design UI: commandroutes uitbreiden met statusbadges en compactere density states | P1 | F5 | ☑ |
-| G1199 | Premium Claude Design UI: mobiele commandroutes verfijnen met sticky ruimte en bottom-nav affordance | P1 | F5 | ☐ |
+| G1199 | Premium Claude Design UI: mobiele commandroutes verfijnen met sticky ruimte en bottom-nav affordance | P1 | F5 | ☑ |
+| G1200 | Premium Claude Design UI: mobiele formulierpanelen verdichten met duidelijke primaire actiezone | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1199** (id's G001 t/m G1199, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1200** (id's G001 t/m G1200, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

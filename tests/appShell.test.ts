@@ -35866,6 +35866,22 @@ describe('app shell', () => {
     expect(html.slice(fasenStart, vergoedingStart)).not.toContain('hidden');
   });
 
+  it('bewaakt mobiele commandroute spacing tegen bottom-nav overlap', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+
+    expect(css).toContain(
+      '--mobile-bottom-nav-clearance: calc(92px + env(safe-area-inset-bottom, 0px));',
+    );
+    expect(mobileCss).toContain('padding: 14px 14px var(--mobile-bottom-nav-clearance);');
+    expect(mobileCss).toContain('scroll-padding-bottom: var(--mobile-bottom-nav-clearance);');
+    expect(mobileCss).toContain('scroll-padding-inline: 7px;');
+    expect(mobileCss).toContain('scroll-margin-inline: 7px;');
+    expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);');
+    expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
+    expect(mobileCss).toContain('scroll-margin-top: 96px;');
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',
