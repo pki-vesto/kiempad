@@ -4739,6 +4739,29 @@ describe('app shell', () => {
     }
   });
 
+  it('borgt actieve route-affordance voor de toevoegselector zonder formcontracten te wijzigen', () => {
+    const html = renderAppShell('dossier', makeStartState());
+    const selector = extractDossierAddRouteSelector(html);
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(selector).toContain('href="#dossier-upload-form"');
+    expect(selector).toContain('href="#consult-verslag-form"');
+    expect(selector).toContain('href="#embryo-quality-form"');
+    expect(selector).toContain('href="#embryo-status-event-form"');
+    expect(css).toContain('.kp-disclosure__body:has(#dossier-upload-form:target)');
+    expect(css).toContain('.dossier-add-route[href="#dossier-upload-form"]');
+    expect(css).toContain('.kp-disclosure__body:has(#consult-verslag-form:target)');
+    expect(css).toContain('.dossier-add-route[href="#consult-verslag-form"]');
+    expect(css).toContain('.kp-disclosure__body:has(#embryo-quality-form:target)');
+    expect(css).toContain('.dossier-add-route[href="#embryo-quality-form"]');
+    expect(css).toContain('.kp-disclosure__body:has(#embryo-status-event-form:target)');
+    expect(css).toContain('.dossier-add-route[href="#embryo-status-event-form"]');
+    expect(css).toContain('.dossier-add-route:not([href="#dossier-upload-form"])');
+    expect(css).toContain('.dossier-add-route:not([href="#consult-verslag-form"])');
+    expect(css).toContain('.dossier-add-route:not([href="#embryo-quality-form"])');
+    expect(css).toContain('.dossier-add-route:not([href="#embryo-status-event-form"])');
+  });
+
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
     const emptyHtml = renderAppShell('dossier', {
       trajecten: [],
