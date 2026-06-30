@@ -26,11 +26,31 @@ export type FertilityTimelineItem = {
   detail: string;
   context: string;
   bron: string;
+  bronverwijzingen: FertilityTimelineBronverwijzing[];
   gekoppeldeRecords: FertilityTimelineRecordKoppeling[];
   eigenaar?: DailyRecommendationOwner;
   trajectId?: string;
   recordId: string;
   historischConcept?: FertilityTimelineHistorischConcept;
+};
+
+export type FertilityTimelineBronverwijzing = {
+  soort:
+    | 'traject'
+    | 'agenda'
+    | 'dossiermetadata'
+    | 'ocr'
+    | 'embryobron'
+    | 'consult'
+    | 'vraag'
+    | 'medicatie'
+    | 'kennis'
+    | 'aanbeveling';
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept' | 'gereviewd';
+  recordId: string;
+  label: string;
 };
 
 export type FertilityTimelineHistorischConcept = {
@@ -123,6 +143,16 @@ export function bouwFertilityTimeline(input: {
       detail: `Status: ${bundle.traject.status}. Poging ${bundle.traject.pogingNummer}.`,
       context: `Poging ${bundle.traject.pogingNummer} · ${bundle.traject.type.toUpperCase()} · status ${bundle.traject.status}.`,
       bron: 'Traject',
+      bronverwijzingen: [
+        maakBronverwijzing(
+          'traject',
+          'Traject',
+          bundle.traject.startDatum,
+          'gereviewd',
+          bundle.traject.id,
+          'Trajectrecord',
+        ),
+      ],
       gekoppeldeRecords: [
         maakKoppeling('traject', bundle.traject.id, `Traject: ${bundle.traject.naam}`),
       ],
@@ -143,6 +173,16 @@ export function bouwFertilityTimeline(input: {
         ? `Afspraaktype ${AFSPRAAK_TYPE_LABELS[afspraak.type]} · locatie ${afspraak.locatie}.`
         : `Afspraaktype ${AFSPRAAK_TYPE_LABELS[afspraak.type]}.`,
       bron: 'Agenda',
+      bronverwijzingen: [
+        maakBronverwijzing(
+          'agenda',
+          'Agenda',
+          afspraak.datumTijd,
+          'gereviewd',
+          afspraak.id,
+          'Afspraakrecord',
+        ),
+      ],
       gekoppeldeRecords: [
         maakKoppeling('afspraak', afspraak.id, `Afspraak: ${afspraak.titel}`),
         ...maakTrajectKoppeling(afspraak.trajectId),
@@ -170,6 +210,7 @@ export function bouwFertilityTimeline(input: {
       detail: document.analyse.samenvatting,
       context: beschrijfDocumentContext(document, historischConcept),
       bron: historischConcept.bron,
+      bronverwijzingen: bouwDocumentBronverwijzingen(document, historischConcept),
       gekoppeldeRecords: [
         maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
         ...maakTrajectKoppeling(
@@ -207,6 +248,7 @@ export function bouwFertilityTimeline(input: {
           : 'Embryo gekoppeld aan dossierrecord.',
         context: beschrijfEmbryoContext(document),
         bron: document.embryo?.bron ?? document.beeldMetadata?.bron ?? document.bestandsNaam,
+        bronverwijzingen: bouwEmbryoBronverwijzingen(document),
         gekoppeldeRecords: [
           maakKoppeling('dossier', document.id, `Dossierrecord: ${document.titel}`),
           ...maakTrajectKoppeling(
@@ -235,6 +277,16 @@ export function bouwFertilityTimeline(input: {
         'Consultverslag vastgelegd.',
       context: `Consultbron ${verslag.bron}${verslag.actiepunten?.length ? ` · ${verslag.actiepunten.length} actiepunt(en)` : ''}.`,
       bron: verslag.bestandsNaam ? `Consultupload: ${verslag.bestandsNaam}` : 'Consulttekst',
+      bronverwijzingen: [
+        maakBronverwijzing(
+          'consult',
+          verslag.bestandsNaam ? `Consultupload: ${verslag.bestandsNaam}` : 'Consulttekst',
+          verslag.datum,
+          bepaalConsultBronReviewStatus(verslag),
+          verslag.id,
+          'Consultbron',
+        ),
+      ],
       gekoppeldeRecords: [
         maakKoppeling('consult', verslag.id, `Consultverslag: ${verslag.titel}`),
         ...maakTrajectKoppeling(verslag.trajectId),
@@ -258,6 +310,16 @@ export function bouwFertilityTimeline(input: {
         ? `Vraag gekoppeld aan afspraak ${bundle.afspraak.titel}.`
         : 'Vraag zonder afspraakkoppeling.',
       bron: bundle.afspraak ? `Vragenlijst bij ${bundle.afspraak.titel}` : 'Vragenlijst',
+      bronverwijzingen: [
+        maakBronverwijzing(
+          'vraag',
+          bundle.afspraak ? `Vragenlijst bij ${bundle.afspraak.titel}` : 'Vragenlijst',
+          bundle.afspraak?.datumTijd ?? '9999-12-31',
+          bundle.vraag.beantwoord ? 'gereviewd' : 'concept',
+          bundle.vraag.id,
+          'Vraagrecord',
+        ),
+      ],
       gekoppeldeRecords: [
         maakKoppeling('vraag', bundle.vraag.id, 'Vraag voor consult'),
         ...maakAfspraakKoppeling(bundle.afspraak?.id),
@@ -281,6 +343,16 @@ export function bouwFertilityTimeline(input: {
         : 'Medicatie niet actief vastgelegd.',
       context: `Medicatieregistratie · vorm ${MEDICATIE_VORM_LABELS[bundle.medicatie.vorm]}.`,
       bron: 'Medicatie',
+      bronverwijzingen: [
+        maakBronverwijzing(
+          'medicatie',
+          'Medicatie',
+          eersteDoseLog?.geplandOp ?? '9999-12-31',
+          'gereviewd',
+          bundle.medicatie.id,
+          'Medicatierecord',
+        ),
+      ],
       gekoppeldeRecords: [
         maakKoppeling('medicatie', bundle.medicatie.id, `Medicatie: ${bundle.medicatie.naam}`),
       ],
@@ -296,6 +368,16 @@ export function bouwFertilityTimeline(input: {
         detail: doseLog.notitie ?? 'Gepland medicatiemoment uit lokaal schema.',
         context: `Medicatiemoment voor ${bundle.medicatie.naam} · status ${doseLog.status}.`,
         bron: 'Medicatieplanning',
+        bronverwijzingen: [
+          maakBronverwijzing(
+            'medicatie',
+            'Medicatieplanning',
+            doseLog.geplandOp,
+            doseLog.status === 'gepland' ? 'concept' : 'gereviewd',
+            doseLog.id,
+            'Medicatiemoment',
+          ),
+        ],
         gekoppeldeRecords: [
           maakKoppeling('doseLog', doseLog.id, `Medicatiemoment: ${bundle.medicatie.naam}`),
           maakKoppeling('medicatie', bundle.medicatie.id, `Medicatie: ${bundle.medicatie.naam}`),
@@ -324,6 +406,16 @@ export function bouwFertilityTimeline(input: {
           ? `Relevantie: ${item.researchPublicatie.relevantieVoorGebruiker}`
           : 'Researchnotitie uit de lokale kennisbank.',
         bron: item.researchPublicatie?.bron ?? item.bron ?? 'Kennisbank',
+        bronverwijzingen: [
+          maakBronverwijzing(
+            'kennis',
+            item.researchPublicatie?.bron ?? item.bron ?? 'Kennisbank',
+            item.researchPublicatie?.publicatieDatum ?? '9999-12-31',
+            item.geverifieerd_met_arts ? 'gereviewd' : 'concept',
+            item.id,
+            'Researchbron',
+          ),
+        ],
         gekoppeldeRecords: [maakKoppeling('kennis', item.id, `Kennisitem: ${item.titel}`)],
         recordId: item.id,
       }),
@@ -341,6 +433,16 @@ export function bouwFertilityTimeline(input: {
         detail: item.detail,
         context: `Dagelijkse aanbeveling voor ${item.owner}; gebaseerd op lokale contextregels.`,
         bron: item.bron,
+        bronverwijzingen: [
+          maakBronverwijzing(
+            'aanbeveling',
+            item.bron,
+            input.aanbevelingenDatum ?? new Date().toISOString().slice(0, 10),
+            'concept',
+            item.id,
+            'Aanbevelingsbron',
+          ),
+        ],
         gekoppeldeRecords: [maakKoppeling('aanbeveling', item.id, `Aanbeveling: ${item.titel}`)],
         eigenaar: item.owner,
         recordId: item.id,
@@ -381,6 +483,82 @@ function maakTrajectKoppeling(trajectId: string | undefined): FertilityTimelineR
 
 function maakAfspraakKoppeling(afspraakId: string | undefined): FertilityTimelineRecordKoppeling[] {
   return afspraakId ? [maakKoppeling('afspraak', afspraakId, `Afspraak: ${afspraakId}`)] : [];
+}
+
+function maakBronverwijzing(
+  soort: FertilityTimelineBronverwijzing['soort'],
+  bron: string,
+  datum: string,
+  reviewStatus: FertilityTimelineBronverwijzing['reviewStatus'],
+  recordId: string,
+  label: string,
+): FertilityTimelineBronverwijzing {
+  return {
+    soort,
+    bron,
+    datum,
+    reviewStatus,
+    recordId,
+    label,
+  };
+}
+
+function bouwDocumentBronverwijzingen(
+  document: DossierDocument,
+  historischConcept: FertilityTimelineHistorischConcept,
+): FertilityTimelineBronverwijzing[] {
+  const verwijzingen = [
+    maakBronverwijzing(
+      'dossiermetadata',
+      historischConcept.bron,
+      historischConcept.conflict?.metadataDatum ??
+        document.metadata.normalisatie?.datum ??
+        document.metadata.documentDatum ??
+        document.datum,
+      historischConcept.reviewStatus === 'bevestigd' ? 'gereviewd' : 'concept',
+      document.id,
+      `Dossiermetadata · ${historischConcept.datumBron}`,
+    ),
+  ];
+
+  if (document.ocr) {
+    verwijzingen.push(
+      maakBronverwijzing(
+        'ocr',
+        `Lokale OCR · ${document.ocr.bron}`,
+        document.ocr.verwerktOp,
+        document.ocr.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+        document.id,
+        `OCR-confidence ${document.ocr.confidenceLabel}`,
+      ),
+    );
+  }
+
+  return verwijzingen;
+}
+
+function bouwEmbryoBronverwijzingen(document: DossierDocument): FertilityTimelineBronverwijzing[] {
+  const bron = document.embryo?.bron ?? document.beeldMetadata?.bron ?? document.bestandsNaam;
+  const datum =
+    document.embryo?.kliniekBeoordeling?.datum ??
+    document.beeldMetadata?.datum ??
+    document.metadata.documentDatum ??
+    document.datum;
+  const reviewStatus =
+    document.embryo?.reviewStatus === 'gereviewd' ||
+    document.beeldMetadata?.reviewStatus === 'gereviewd'
+      ? 'gereviewd'
+      : 'concept';
+
+  return [maakBronverwijzing('embryobron', bron, datum, reviewStatus, document.id, 'Embryobron')];
+}
+
+function bepaalConsultBronReviewStatus(
+  verslag: ConsultVerslag,
+): FertilityTimelineBronverwijzing['reviewStatus'] {
+  if (verslag.importMetadata?.reviewStatus === 'gereviewd') return 'gereviewd';
+  if (verslag.samenvattingReview?.status === 'aangepast') return 'gereviewd';
+  return 'concept';
 }
 
 function bouwHistorischDocumentConcept(
@@ -563,9 +741,19 @@ function formatTimelineItemsVoorExport(timeline: FertilityTimeline): string[] {
             .map((record) => `${record.label} (${record.soort}:${record.id})`)
             .join('; ')
         : 'geen gekoppelde records';
+    const bronverwijzingen =
+      item.bronverwijzingen.length > 0
+        ? item.bronverwijzingen
+            .map(
+              (bron) =>
+                `${bron.label}: ${bron.bron} · ${bron.datum} · ${bron.reviewStatus} · ${bron.soort}:${bron.recordId}`,
+            )
+            .join('; ')
+        : 'geen bronverwijzingen';
     return [
       `- ${item.datum} · ${item.label} · ${item.titel}`,
       `  Bron: ${item.bron}`,
+      `  Bronverwijzingen: ${bronverwijzingen}`,
       `  Context: ${item.context}`,
       `  Detail: ${item.detail}`,
       `  Gekoppelde records: ${records}`,

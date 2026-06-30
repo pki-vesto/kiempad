@@ -276,6 +276,17 @@ describe('fertility timeline', () => {
         samenvatting: 'Labuitslag vastgelegd zonder interpretatie.',
         signalen: [],
       },
+      ocr: {
+        status: 'tekst_uitgelezen',
+        bron: 'pdf',
+        explicieteLokaleVerwerking: true,
+        confidenceScore: 0.42,
+        confidenceLabel: 'laag',
+        reviewStatus: 'concept',
+        tekst: 'GEVOELIGE OCR TEKST diagnose 150 mg behandelkeuzeadvies',
+        waarschuwing: 'Controleer lokaal.',
+        verwerktOp: '2026-05-04T09:00:00.000Z',
+      },
       metadata: {
         documentDatum: '2026-05-03',
         documenttype: 'Labuitslag',
@@ -315,6 +326,24 @@ describe('fertility timeline', () => {
       datum: '2026-05-03',
       label: 'Labuitslag',
       bron: 'Erasmus MC',
+      bronverwijzingen: [
+        {
+          soort: 'dossiermetadata',
+          bron: 'Erasmus MC',
+          datum: '2026-05-03',
+          reviewStatus: 'concept',
+          recordId: 'doc-lab',
+          label: 'Dossiermetadata · genormaliseerde_metadata',
+        },
+        {
+          soort: 'ocr',
+          bron: 'Lokale OCR · pdf',
+          datum: '2026-05-04T09:00:00.000Z',
+          reviewStatus: 'concept',
+          recordId: 'doc-lab',
+          label: 'OCR-confidence laag',
+        },
+      ],
       trajectId: 'traject-1',
       gekoppeldeRecords: expect.arrayContaining([
         { soort: 'dossier', id: 'doc-lab', label: 'Dossierrecord: Historische labuitslag' },
@@ -336,6 +365,9 @@ describe('fertility timeline', () => {
       },
     });
     expect(timeline.items[0]?.context).toContain('datumconflict zichtbaar');
+    expect(JSON.stringify(timeline.items[0]?.bronverwijzingen)).not.toMatch(
+      /GEVOELIGE OCR TEKST|150 mg|diagnose|behandelkeuzeadvies|base64/i,
+    );
   });
 
   it('filtert tijdlijnitems op type, periode, traject en bron', () => {

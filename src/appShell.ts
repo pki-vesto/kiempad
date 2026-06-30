@@ -10290,6 +10290,7 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
         <summary>Details</summary>
         <dl class="summary-list">
           <div><dt>Bron</dt><dd>${escapeHtml(item.bron)}</dd></div>
+          <div><dt>Bronverwijzingen</dt><dd>${renderFertilityTimelineBronverwijzingen(item)}</dd></div>
           <div><dt>Context</dt><dd>${escapeHtml(item.context)}</dd></div>
           <div><dt>Record-ID</dt><dd>${escapeHtml(item.recordId)}</dd></div>
           ${
@@ -10325,6 +10326,18 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
       </details>
     </li>
   `;
+}
+
+function renderFertilityTimelineBronverwijzingen(item: FertilityTimeline['items'][number]): string {
+  if (item.bronverwijzingen.length === 0) return 'Geen bronverwijzingen gekoppeld.';
+
+  return item.bronverwijzingen
+    .map(
+      (bron) =>
+        `${bron.label}: ${bron.bron} · Datum: ${bron.datum} · Review: ${bron.reviewStatus} · Record: ${bron.recordId}`,
+    )
+    .map(escapeHtml)
+    .join(' | ');
 }
 
 const FERTILITY_TIMELINE_RECORD_LABELS: Record<FertilityTimelineRecordKoppeling['soort'], string> =

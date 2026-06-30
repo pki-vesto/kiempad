@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 860 |
+| ☑ klaar | 861 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1059** |
+| **Totaal** | **1060** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -677,7 +677,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G512 | Fertility Intelligence: historische records zoekfilter op kliniek | P1 | F5 | ☐ |
 | G513 | Fertility Intelligence: historische records zoekfilter op poging | P1 | F5 | ☐ |
 | G514 | Fertility Intelligence: documentreview wachtrij per confidence | P0 | F5 | ☑ |
-| G515 | Fertility Intelligence: medische bronverwijzing per tijdlijnitem | P0 | F5 | ☐ |
+| G515 | Fertility Intelligence: medische bronverwijzing per tijdlijnitem | P0 | F5 | ☑ |
 | G516 | Fertility Intelligence: echo upload classificatie per afspraak | P0 | F5 | ☐ |
 | G517 | Fertility Intelligence: beeldpreview lock-state placeholder | P0 | F5 | ☑ |
 | G518 | Fertility Intelligence: embryo-afbeelding EXIF isolatie | P0 | F5 | ☐ |
@@ -1222,12 +1222,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1057 | Fertility Intelligence: historical labvalue normalization audit evidence | P1 | F5 | ☐ |
 | G1058 | Fertility Intelligence: dossier checksum duplicate review audit evidence | P1 | F5 | ☐ |
 | G1059 | Fertility Intelligence: document review queue confidence audit evidence | P1 | F5 | ☐ |
+| G1060 | Fertility Intelligence: timeline source reference audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1059** (id's G001 t/m G1059, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1060** (id's G001 t/m G1060, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
