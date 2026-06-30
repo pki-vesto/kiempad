@@ -3854,7 +3854,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, appointments, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G517 — beeldpreview lock-state placeholder
 
@@ -11559,6 +11559,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Fertility timeline, dossier metadata, OCR, app shell, export, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1061 — echo appointment classification audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G516 groepeert echo-uploads nu per afspraak, maar er is nog geen compacte audit die afspraaklabel, datums, bronstatus, reviewstatus en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat echo-afspraakclassificaties zichtbaar blijven zonder bronbestandsnamen, beeldpayload of medische interpretatie te lekken.
+- **User Value:** Gebruikers kunnen echo-uploads per afspraak controleren zonder dat Kiempad beelden medisch beoordeelt of gevoelige payloads toont.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G516; concept/gereviewd, afspraaklabel, datumlijst, bronstatus en locked-preview privacy blijven gedekt; evidence bevat geen bronbestandsnaam, base64, data-url, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging, appointments, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

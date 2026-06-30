@@ -36,6 +36,7 @@ import {
   bouwDossierIndex,
   bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
+  bouwEchoAfspraakClassificaties,
   bouwImagingRepository,
   bouwImagingVergelijking,
   classificeerBeeldLabel,
@@ -44,6 +45,7 @@ import {
   type DossierImportInboxItem,
   type DossierReviewWachtrijItem,
   type DossierZoekResultaat,
+  type EchoAfspraakClassificatieItem,
   EMBRYO_KWALITEIT_WAARSCHUWING,
   EMBRYO_STATUS_LABELS,
   filterImagingRepository,
@@ -1248,6 +1250,7 @@ function renderDossierScreen(state: AppShellState): string {
   const alleImagingItems = bouwImagingRepository(zichtbareDocumenten, {
     ontgrendeld: !state.imagingPreviewLocked,
   });
+  const echoAfspraakClassificaties = bouwEchoAfspraakClassificaties(alleImagingItems);
   const imagingItems = filterImagingRepository(alleImagingItems, state.imagingFilter ?? {});
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
@@ -1633,6 +1636,7 @@ function renderDossierScreen(state: AppShellState): string {
         }
         <h2>Imaging-repository</h2>
         ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
+        ${renderEchoAfspraakClassificaties(echoAfspraakClassificaties, state)}
         ${renderImagingVergelijking(imagingVergelijking)}
         ${
           imagingItems.length > 0
@@ -7007,6 +7011,58 @@ function renderImagingFilterForm(filter: ImagingRepositoryFilter, state: AppShel
       </label>
       <button type="submit">Filter beelden</button>
     </form>
+  `;
+}
+
+function renderEchoAfspraakClassificaties(
+  items: readonly EchoAfspraakClassificatieItem[],
+  state: AppShellState,
+): string {
+  const status = items.some((item) => item.reviewStatus === 'concept')
+    ? 'concept-review'
+    : 'gereviewd';
+
+  if (items.length === 0) {
+    return `
+      <section class="policy-panel embedded-summary echo-appointment-classification" aria-label="Echo-classificatie per afspraak" data-echo-appointment-classification-state="leeg">
+        <h2>Echo-classificatie per afspraak</h2>
+        <p class="small-print">Nog geen echo-uploads met afspraakkoppeling gevonden.</p>
+      </section>
+    `;
+  }
+
+  return `
+    <section class="policy-panel embedded-summary echo-appointment-classification" aria-label="Echo-classificatie per afspraak" data-echo-appointment-classification-state="${status}">
+      <h2>Echo-classificatie per afspraak</h2>
+      <ol class="compact-list">
+        ${items
+          .map((item) => {
+            const afspraak = state.afspraken.find(
+              ({ afspraak: afspraakItem }) => afspraakItem.id === item.afspraakId,
+            )?.afspraak;
+            const afspraakLabel = afspraak
+              ? `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`
+              : item.afspraakId;
+            const bronnen = state.imagingPreviewLocked
+              ? `${item.bronnen.length} bron${item.bronnen.length === 1 ? '' : 'nen'} verborgen tot ontgrendeling`
+              : item.bronnen.join(', ');
+
+            return `
+              <li>
+                <strong>${escapeHtml(afspraakLabel)}</strong>
+                <p>${escapeHtml(item.classificatieLabel)}.</p>
+                <dl class="summary-list">
+                  <div><dt>Datums</dt><dd>${escapeHtml(item.datums.join(', '))}</dd></div>
+                  <div><dt>Bronnen</dt><dd>${escapeHtml(bronnen)}</dd></div>
+                  <div><dt>Review</dt><dd>${escapeHtml(item.reviewStatus)}</dd></div>
+                </dl>
+              </li>
+            `;
+          })
+          .join('')}
+      </ol>
+      <p class="small-print">Classificatie is beschrijvend: echo per afspraak, geen beeldanalyse of medisch advies.</p>
+    </section>
   `;
 }
 
