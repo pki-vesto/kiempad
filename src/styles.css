@@ -736,7 +736,7 @@ h2 {
   background: var(--surface-raised);
 }
 
-.timeline-list li {
+.timeline-list > li {
   display: grid;
   justify-content: stretch;
   gap: 6px;
@@ -2292,7 +2292,15 @@ a.action-card:active {
 }
 
 .kp-timeline__body {
-  padding-bottom: 16px;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface-raised);
+  overflow-wrap: anywhere;
 }
 
 .kp-timeline__title {
@@ -2304,6 +2312,11 @@ a.action-card:active {
   margin: 2px 0 0;
   color: var(--text-faint);
   font-size: 0.85rem;
+}
+
+.kp-timeline__detail {
+  margin: 0;
+  color: var(--text-muted);
 }
 
 .kp-accordion {
@@ -3536,9 +3549,7 @@ a.action-card:active {
   }
 
   .timeline-overview-bar {
-    position: sticky;
-    top: 8px;
-    z-index: 1;
+    position: static;
     grid-template-columns: repeat(4, minmax(86px, 1fr));
     overflow-x: auto;
     padding-bottom: 2px;

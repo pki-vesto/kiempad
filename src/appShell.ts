@@ -187,6 +187,8 @@ import {
   sectionStack,
   statRow,
   statusMessage,
+  timelineItem,
+  timelineList,
   workflowPanel,
 } from './ui/components';
 import { escapeAttribute, escapeHtml } from './ui/escape';
@@ -11160,7 +11162,16 @@ function renderFertilityTimeline(
       ${renderFertilityTimelineContextSignalen(timeline)}
       ${
         timeline.items.length > 0
-          ? `<ol id="fertility-timeline-items" class="compact-list timeline-list" aria-label="Timeline-items">${timeline.items.map(renderFertilityTimelineItem).join('')}</ol>`
+          ? timelineList({
+              id: 'fertility-timeline-items',
+              className: 'timeline-list fertility-timeline-list',
+              ariaLabel: 'Timeline-items',
+              data: {
+                'timeline-component': 'fertility-items',
+                'timeline-component-state': 'structured',
+              },
+              items: timeline.items.map(renderFertilityTimelineItem),
+            })
           : '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
@@ -11303,11 +11314,18 @@ function renderFertilityTimelineFilterForm(filter: FertilityTimelineFilter): str
 }
 
 function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): string {
-  return `
-    <li>
-      <strong>${escapeHtml(item.titel)}</strong>
-      <span>${escapeHtml(item.datum)} · ${escapeHtml(item.label)} · ${escapeHtml(item.bron)}</span>
-      <small>${escapeHtml(item.detail)}</small>
+  const status: StepState = item.historischConcept ? 'current' : 'done';
+  return timelineItem({
+    title: item.titel,
+    meta: `${item.datum} · ${item.label} · ${item.bron}`,
+    detail: item.detail,
+    state: status,
+    className: 'fertility-timeline-item',
+    data: {
+      'timeline-item-kind': item.soort,
+      'timeline-item-state': item.historischConcept ? 'concept' : 'reviewed',
+    },
+    body: `
       ${item.eigenaar ? `<small>Eigenaar: ${escapeHtml(item.eigenaar)}</small>` : ''}
       ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
       <details class="timeline-detail-panel">
@@ -11348,8 +11366,8 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
             : '<p class="empty-state">Geen gekoppelde records.</p>'
         }
       </details>
-    </li>
-  `;
+    `,
+  });
 }
 
 function renderFertilityTimelineBronverwijzingen(item: FertilityTimeline['items'][number]): string {

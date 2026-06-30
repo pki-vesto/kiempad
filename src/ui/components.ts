@@ -152,6 +152,53 @@ export function workflowPanel(opts: {
   </section>`;
 }
 
+/** Structured vertical timeline. Items should be built with `timelineItem`. */
+export function timelineList(opts: {
+  items: readonly string[];
+  id?: string;
+  className?: string;
+  ariaLabel?: string;
+  data?: Record<string, string>;
+}): string {
+  const id = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<ol${id} class="kp-timeline${cls}"${label}${dataAttrs}>${opts.items.join('')}</ol>`;
+}
+
+/** Timeline entry with a rail/dot and raw HTML detail body. */
+export function timelineItem(opts: {
+  title: string;
+  meta: string;
+  body: string;
+  detail?: string;
+  state?: StepState;
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const state = opts.state ?? 'todo';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<li class="kp-timeline__item${cls}" data-state="${escapeAttribute(state)}"${dataAttrs}>
+    <div class="kp-timeline__rail" aria-hidden="true"><span class="kp-timeline__dot"></span></div>
+    <article class="kp-timeline__body">
+      <h3 class="kp-timeline__title">${escapeHtml(opts.title)}</h3>
+      <p class="kp-timeline__meta">${escapeHtml(opts.meta)}</p>
+      ${opts.detail ? `<p class="kp-timeline__detail">${escapeHtml(opts.detail)}</p>` : ''}
+      ${opts.body}
+    </article>
+  </li>`;
+}
+
 /** Rounded surface card. `body` is raw HTML. */
 export function card(opts: {
   body: string;

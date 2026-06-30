@@ -2986,7 +2986,18 @@ describe('app shell', () => {
     expect(html).toContain('Geen ontbrekende context zichtbaar in de huidige timelinefilter.');
     expect(html).toContain('Deze signalen corrigeren niets automatisch');
     expect(html).toContain('Echo verslag');
-    expect(html).toContain('id="fertility-timeline-items" class="compact-list timeline-list"');
+    expect(html).toContain(
+      'id="fertility-timeline-items" class="kp-timeline timeline-list fertility-timeline-list"',
+    );
+    expect(html).toContain('data-timeline-component="fertility-items"');
+    expect(html).toContain('data-timeline-component-state="structured"');
+    expect(html).toContain('class="kp-timeline__item fertility-timeline-item"');
+    expect(html).toContain('data-timeline-item-kind="onderzoek"');
+    expect(html).toContain('data-timeline-item-state="concept"');
+    expect(html).toContain('class="kp-timeline__rail"');
+    expect(html).toContain('class="kp-timeline__dot"');
+    expect(html).toContain('class="kp-timeline__title">Echo verslag</h3>');
+    expect(html).toContain('class="kp-timeline__meta">2026-06-24 · Onderzoek · echo.pdf</p>');
     expect(html).toContain('class="timeline-detail-panel"');
     expect(html).toContain('<dt>Bron</dt><dd>echo.pdf</dd>');
     expect(html).toContain(
@@ -3004,7 +3015,7 @@ describe('app shell', () => {
     );
     expect(html).toContain('Dossierrecord: Echo verslag');
     expect(html).toContain('Traject: traject-1');
-    const timelineListStart = html.indexOf('<ol class="compact-list timeline-list">');
+    const timelineListStart = html.indexOf('<ol id="fertility-timeline-items"');
     const timelineListEnd = html.indexOf('</ol>', timelineListStart);
     const timelineListHtml = html.slice(timelineListStart, timelineListEnd);
     expect(timelineListHtml).not.toContain('Behandelvoorbereiding');
@@ -3431,6 +3442,19 @@ describe('app shell', () => {
     expect(timeline).toContain('data-timeline-state="gevuld"');
     expect(timeline).toContain('class="timeline-overview-bar" aria-label="Timeline overzicht"');
     expect(timeline).toContain('id="fertility-timeline-export"');
+    expect(timeline).toContain(
+      'id="fertility-timeline-items" class="kp-timeline timeline-list fertility-timeline-list"',
+    );
+    expect(timeline).toContain('data-timeline-component="fertility-items"');
+    expect(timeline).toContain('data-timeline-component-state="structured"');
+    expect(timelineItems).toContain('class="kp-timeline__item fertility-timeline-item"');
+    expect(timelineItems).toContain('class="kp-timeline__rail"');
+    expect(timelineItems).toContain('class="kp-timeline__dot"');
+    expect(timelineItems).toContain('class="kp-timeline__title">Labuitslag hormonen</h3>');
+    expect(timelineItems).toContain('data-timeline-item-kind="onderzoek"');
+    expect(timelineItems).toContain('data-timeline-item-kind="embryo"');
+    expect(timelineItems).toContain('data-timeline-item-kind="consult"');
+    expect(timelineItems).toContain('data-timeline-item-kind="research"');
     expect(timelineItems).toContain('Labuitslag hormonen');
     expect(timelineItems).toContain('Labrapport');
     expect(timelineItems).toContain('Embryo A');

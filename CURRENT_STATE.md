@@ -150,8 +150,11 @@
   componentstructuur af voor embryokwaliteit en embryostatus.
 - **G1181 embryoworkflowcomponenten:** embryokwaliteit en embryo-status gebruiken nu
   herbruikbare workflowpanelen met begeleide stappen voor identificatie, beoordeling,
-  controle, status, bron en koppeling; G1182 staat open voor herbruikbare
-  timelinecomponenten.
+  controle, status, bron en koppeling; G1182 rondt de eerste herbruikbare
+  timelinecomponenten af.
+- **G1182 timelinecomponenten:** de centrale fertility timeline gebruikt nu
+  herbruikbare `timelineList`/`timelineItem` componenten met rail, dot, itemstate en
+  broncontext; G1183 staat open voor herbruikbare recommendationcomponenten.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
