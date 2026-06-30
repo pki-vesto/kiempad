@@ -2286,6 +2286,20 @@ a.action-card:active {
   transform: scale(0.99);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .dossier-submit-focus-return {
+    transition:
+      background 140ms ease,
+      box-shadow 140ms ease,
+      color 140ms ease;
+    transform: none;
+  }
+
+  .dossier-submit-focus-return:active {
+    transform: none;
+  }
+}
+
 .dossier-submit-focus-return:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
   outline-offset: 3px;
