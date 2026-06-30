@@ -3558,6 +3558,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, forms, command routes, mobile navigation, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 44
+- **Status:** ☑ done
+
+### G1202 — veldsectiepatroon uitbreiden naar dossier- en uploadflows
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Agenda, medicatie, vragen en traject hebben nu compacte mobiele veldsecties, maar dossier- en uploadflows bevatten de meest complexe medische invoer en moeten hetzelfde begeleide veldsectiepatroon krijgen.
+- **User Impact:** Gebruikers ervaren de commandroute-formulieren rustiger, maar dossieruploads kunnen nog zwaarder voelen dan de nieuwe mobiele formulierflow.
+- **Desired Outcome:** Breid het compacte veldsectiepatroon zichtbaar uit naar dossier- en uploadflows zonder form-id's, input names, privacyhooks of bronpayloadgrenzen te wijzigen.
+- **User Value:** Gebruikers krijgen consistente begeleiding bij medische uploads, beelden, consultverslagen en embryo-invoer.
+- **Acceptance Criteria:** Minimaal dossierdocument-upload en één consult- of embryoflow krijgen herkenbare compacte veldsecties; bestaande form-id's, input names, ankers, aria-live feedback en privacydata-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; browsercheck bewaakt geen horizontale overflow; tests bewaken CSS/markupcontracten; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Dossier, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, upload workflow, forms, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 43
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

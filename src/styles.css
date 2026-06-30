@@ -2740,6 +2740,21 @@ h2 {
   min-width: 0;
 }
 
+.command-form-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+}
+
+.command-form-section__eyebrow {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .treatment-command-layout {
   gap: 18px;
 }
@@ -5350,6 +5365,23 @@ a.action-card:active {
 
   .command-route-section .data-form {
     gap: 10px;
+  }
+
+  .command-route-section .command-form-section {
+    gap: 9px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--surface) 82%, var(--surface-2));
+  }
+
+  .command-route-section .command-form-section + .command-form-section {
+    margin-top: 2px;
+  }
+
+  .command-route-section .command-form-section__eyebrow {
+    color: var(--accent);
+    font-size: 0.68rem;
   }
 
   .command-route-section .form-grid {

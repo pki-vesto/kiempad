@@ -227,6 +227,9 @@
 - **G1200 mobiele formulieractiezone:** commandroute-formulieren op mobiel gebruiken
   compactere disclosure-, veld- en textarea-spacing plus een sticky full-width
   primaire submitactie boven de bottom-nav.
+- **G1201 mobiele veldsecties:** commandroute-formulieren voor agenda, medicatie,
+  vragen en traject groeperen hun velden nu in compacte secties zoals Basis, Context,
+  Planning en Antwoord zonder form-id's of input names te wijzigen.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
@@ -654,7 +657,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   taakroutes; traject, agenda, medicatie en vragen gebruiken nu gedeelde
   command-routepanelen met consistente actieve state, header-spacing, compacte
   badges, density states, mobiele bottom-nav clearance, sticky formulieracties en
-  routecontracten zodat deze schermen minder als één lange pagina aanvoelen.
+  compacte veldsecties zodat deze schermen minder als één lange pagina aanvoelen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -670,7 +673,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1201: Premium Claude Design UI mobiele formulierinhoud groeperen met compacte veldsecties heeft prioriteit na de sticky mobiele formulieractiezone van G1200.
+1. UI Improvement Evolution uitvoeren vanaf G1202: Premium Claude Design UI veldsectiepatroon uitbreiden naar dossier- en uploadflows heeft prioriteit na de mobiele commandroute-veldsecties van G1201.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

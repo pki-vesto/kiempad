@@ -11165,40 +11165,49 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
   return `
     <form id="vraag-form" class="data-form">
       <input type="hidden" name="id" value="${escapeAttribute(vraag?.id ?? '')}" />
-      <label>
-        Vraag
-        <textarea name="vraag" rows="4" required>${escapeHtml(vraag?.vraag ?? '')}</textarea>
-      </label>
-      <label>
-        Koppel aan afspraak
-        <select name="voorAfspraakId">
-          <option value="">Geen koppeling</option>
-          ${afspraken
-            .map((item) =>
-              renderOption(
-                item.afspraak.id,
-                `${item.afspraak.titel} · ${formatDateTime(item.afspraak.datumTijd)}`,
-                vraag?.voorAfspraakId,
-              ),
-            )
-            .join('')}
-        </select>
-      </label>
-      <label>
-        Consultprioriteit
-        <input name="prioriteit" type="number" min="1" step="1" value="${escapeAttribute(String(vraag?.prioriteit ?? ''))}" />
-      </label>
-      <label>
-        Status
-        <select name="beantwoord">
-          ${renderOption('false', 'Openstaand', vraag?.beantwoord ? 'true' : 'false')}
-          ${renderOption('true', 'Beantwoord', vraag?.beantwoord ? 'true' : 'false')}
-        </select>
-      </label>
-      <label>
-        Antwoord
-        <textarea name="antwoord" rows="4">${escapeHtml(vraag?.antwoord ?? '')}</textarea>
-      </label>
+      <section class="command-form-section" data-command-form-section="vraag-basis">
+        <p class="command-form-section__eyebrow">Vraag</p>
+        <label>
+          Vraag
+          <textarea name="vraag" rows="4" required>${escapeHtml(vraag?.vraag ?? '')}</textarea>
+        </label>
+      </section>
+      <section class="command-form-section" data-command-form-section="vraag-context">
+        <p class="command-form-section__eyebrow">Context</p>
+        <label>
+          Koppel aan afspraak
+          <select name="voorAfspraakId">
+            <option value="">Geen koppeling</option>
+            ${afspraken
+              .map((item) =>
+                renderOption(
+                  item.afspraak.id,
+                  `${item.afspraak.titel} · ${formatDateTime(item.afspraak.datumTijd)}`,
+                  vraag?.voorAfspraakId,
+                ),
+              )
+              .join('')}
+          </select>
+        </label>
+        <label>
+          Consultprioriteit
+          <input name="prioriteit" type="number" min="1" step="1" value="${escapeAttribute(String(vraag?.prioriteit ?? ''))}" />
+        </label>
+        <label>
+          Status
+          <select name="beantwoord">
+            ${renderOption('false', 'Openstaand', vraag?.beantwoord ? 'true' : 'false')}
+            ${renderOption('true', 'Beantwoord', vraag?.beantwoord ? 'true' : 'false')}
+          </select>
+        </label>
+      </section>
+      <section class="command-form-section" data-command-form-section="vraag-antwoord">
+        <p class="command-form-section__eyebrow">Antwoord</p>
+        <label>
+          Antwoord
+          <textarea name="antwoord" rows="4">${escapeHtml(vraag?.antwoord ?? '')}</textarea>
+        </label>
+      </section>
       <button type="submit">${vraag ? 'Bewaar vraag' : 'Voeg vraag toe'}</button>
     </form>
   `;
@@ -11757,55 +11766,69 @@ function renderAfspraakForm(
   return `
     <form id="afspraak-form" class="data-form">
       <input type="hidden" name="id" value="${escapeAttribute(afspraak?.id ?? '')}" />
-      <label>
-        Titel
-        <input name="titel" required value="${escapeAttribute(afspraak?.titel ?? 'Afspraak kliniek')}" />
-      </label>
-      <div class="form-grid">
+      <section class="command-form-section" data-command-form-section="afspraak-basis">
+        <p class="command-form-section__eyebrow">Basis</p>
         <label>
-          Datum en tijd
-          <input name="datumTijd" type="datetime-local" required value="${escapeAttribute(afspraakDatumTijd)}" />
+          Titel
+          <input name="titel" required value="${escapeAttribute(afspraak?.titel ?? 'Afspraak kliniek')}" />
+        </label>
+        <div class="form-grid">
+          <label>
+            Datum en tijd
+            <input name="datumTijd" type="datetime-local" required value="${escapeAttribute(afspraakDatumTijd)}" />
+          </label>
+          <label>
+            Type
+            <select name="type">
+              ${Object.entries(AFSPRAAK_TYPE_LABELS)
+                .map(([value, label]) => renderOption(value, label, afspraak?.type))
+                .join('')}
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="command-form-section" data-command-form-section="afspraak-context">
+        <p class="command-form-section__eyebrow">Context</p>
+        <div class="form-grid">
+          <label>
+            Traject
+            <select name="trajectId">
+              <option value="">Geen koppeling</option>
+              ${trajecten
+                .map((item) =>
+                  renderOption(item.traject.id, item.traject.naam, afspraak?.trajectId),
+                )
+                .join('')}
+            </select>
+          </label>
+          <label>
+            Locatie
+            <input name="locatie" value="${escapeAttribute(afspraak?.locatie ?? '')}" />
+          </label>
+        </div>
+      </section>
+      <section class="command-form-section" data-command-form-section="afspraak-voorbereiding">
+        <p class="command-form-section__eyebrow">Voorbereiding</p>
+        <label>
+          Voorbereiding
+          <textarea name="voorbereiding" rows="3">${escapeHtml(afspraak?.voorbereiding ?? '')}</textarea>
         </label>
         <label>
-          Type
-          <select name="type">
-            ${Object.entries(AFSPRAAK_TYPE_LABELS)
-              .map(([value, label]) => renderOption(value, label, afspraak?.type))
-              .join('')}
-          </select>
-        </label>
-      </div>
-      <div class="form-grid">
-        <label>
-          Traject
-          <select name="trajectId">
-            <option value="">Geen koppeling</option>
-            ${trajecten
-              .map((item) => renderOption(item.traject.id, item.traject.naam, afspraak?.trajectId))
-              .join('')}
-          </select>
+          Vragen voor de arts
+          <textarea name="vraagVoorArts" rows="3">${escapeHtml(bundle?.vraag?.vraag ?? '')}</textarea>
         </label>
         <label>
-          Locatie
-          <input name="locatie" value="${escapeAttribute(afspraak?.locatie ?? '')}" />
+          Notitie
+          <textarea name="notitie" rows="3">${escapeHtml(afspraak?.notitie ?? '')}</textarea>
         </label>
-      </div>
-      <label>
-        Voorbereiding
-        <textarea name="voorbereiding" rows="3">${escapeHtml(afspraak?.voorbereiding ?? '')}</textarea>
-      </label>
-      <label>
-        Vragen voor de arts
-        <textarea name="vraagVoorArts" rows="3">${escapeHtml(bundle?.vraag?.vraag ?? '')}</textarea>
-      </label>
-      <label>
-        Notitie
-        <textarea name="notitie" rows="3">${escapeHtml(afspraak?.notitie ?? '')}</textarea>
-      </label>
-      <label>
-        Herinnering
-        <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? defaultReminder)}" />
-      </label>
+      </section>
+      <section class="command-form-section" data-command-form-section="afspraak-herinnering">
+        <p class="command-form-section__eyebrow">Herinnering</p>
+        <label>
+          Herinnering
+          <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? defaultReminder)}" />
+        </label>
+      </section>
       <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
     </form>
   `;
@@ -12088,63 +12111,75 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
   return `
     <form id="medicatie-form" class="data-form">
       <input type="hidden" name="id" value="${escapeAttribute(medicatie?.id ?? '')}" />
-      <label>
-        Naam
-        <input name="naam" required value="${escapeAttribute(medicatie?.naam ?? '')}" />
-      </label>
-      <div class="form-grid">
+      <section class="command-form-section" data-command-form-section="medicatie-basis">
+        <p class="command-form-section__eyebrow">Basis</p>
         <label>
-          Vorm
-          <select name="vorm">
-            ${Object.entries(MEDICATIE_VORM_LABELS)
-              .map(([value, label]) => renderOption(value, label, medicatie?.vorm))
-              .join('')}
-          </select>
+          Naam
+          <input name="naam" required value="${escapeAttribute(medicatie?.naam ?? '')}" />
+        </label>
+        <div class="form-grid">
+          <label>
+            Vorm
+            <select name="vorm">
+              ${Object.entries(MEDICATIE_VORM_LABELS)
+                .map(([value, label]) => renderOption(value, label, medicatie?.vorm))
+                .join('')}
+            </select>
+          </label>
+          <label>
+            Actief
+            <select name="actief">
+              ${renderOption('true', 'Actief', medicatie?.actief === false ? 'false' : 'true')}
+              ${renderOption('false', 'Inactief', medicatie?.actief === false ? 'false' : 'true')}
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="command-form-section" data-command-form-section="medicatie-voorraad">
+        <p class="command-form-section__eyebrow">Kliniektekst</p>
+        <label>
+          Voorgeschreven dosis
+          <input name="voorgeschrevenDosis" value="${escapeAttribute(medicatie?.voorgeschrevenDosis ?? '')}" placeholder="Neem exact over van de kliniek" />
         </label>
         <label>
-          Actief
-          <select name="actief">
-            ${renderOption('true', 'Actief', medicatie?.actief === false ? 'false' : 'true')}
-            ${renderOption('false', 'Inactief', medicatie?.actief === false ? 'false' : 'true')}
-          </select>
-        </label>
-      </div>
-      <label>
-        Voorgeschreven dosis
-        <input name="voorgeschrevenDosis" value="${escapeAttribute(medicatie?.voorgeschrevenDosis ?? '')}" placeholder="Neem exact over van de kliniek" />
-      </label>
-      <label>
-        Voorraad
-        <input name="voorraadAantal" type="number" min="0" step="1" value="${escapeAttribute(medicatie?.voorraadAantal?.toString() ?? '')}" placeholder="Aantal doses over" />
-      </label>
-      <label>
-        Instructie
-        <textarea name="instructie" rows="3">${escapeHtml(medicatie?.instructie ?? '')}</textarea>
-      </label>
-      <label>
-        Lokale instructievideo
-        <input name="instructieVideo" type="file" accept="video/*" />
-      </label>
-      ${
-        medicatie?.instructieVideo
-          ? `<p class="small-print">Huidige video: ${escapeHtml(medicatie.instructieVideo.bestandsNaam)} · ${escapeHtml(formatBytes(medicatie.instructieVideo.grootteBytes))}</p>`
-          : ''
-      }
-      <div class="form-grid">
-        <label>
-          Schema startdatum
-          <input name="schemaStartDatum" type="date" value="${today}" />
+          Voorraad
+          <input name="voorraadAantal" type="number" min="0" step="1" value="${escapeAttribute(medicatie?.voorraadAantal?.toString() ?? '')}" placeholder="Aantal doses over" />
         </label>
         <label>
-          Tijdstip
-          <input name="schemaTijdstip" type="time" value="20:00" />
+          Instructie
+          <textarea name="instructie" rows="3">${escapeHtml(medicatie?.instructie ?? '')}</textarea>
         </label>
-      </div>
-      <label>
-        Aantal dagen voor geplande logs
-        <input name="schemaAantalDagen" type="number" min="0" step="1" value="0" />
-      </label>
-      <p class="small-print">Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.</p>
+      </section>
+      <section class="command-form-section" data-command-form-section="medicatie-media">
+        <p class="command-form-section__eyebrow">Media</p>
+        <label>
+          Lokale instructievideo
+          <input name="instructieVideo" type="file" accept="video/*" />
+        </label>
+        ${
+          medicatie?.instructieVideo
+            ? `<p class="small-print">Huidige video: ${escapeHtml(medicatie.instructieVideo.bestandsNaam)} · ${escapeHtml(formatBytes(medicatie.instructieVideo.grootteBytes))}</p>`
+            : ''
+        }
+      </section>
+      <section class="command-form-section" data-command-form-section="medicatie-schema">
+        <p class="command-form-section__eyebrow">Planning</p>
+        <div class="form-grid">
+          <label>
+            Schema startdatum
+            <input name="schemaStartDatum" type="date" value="${today}" />
+          </label>
+          <label>
+            Tijdstip
+            <input name="schemaTijdstip" type="time" value="20:00" />
+          </label>
+        </div>
+        <label>
+          Aantal dagen voor geplande logs
+          <input name="schemaAantalDagen" type="number" min="0" step="1" value="0" />
+        </label>
+        <p class="small-print">Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.</p>
+      </section>
       <button type="submit">${medicatie ? 'Bewaar medicatie' : 'Voeg medicatie toe'}</button>
     </form>
   `;
@@ -12961,51 +12996,60 @@ function renderTrajectForm(
   return `
     <form id="${formId}" class="data-form">
       <input type="hidden" name="id" value="${escapeAttribute(traject?.id ?? '')}" />
-      <label>
-        Naam
-        <input name="naam" required value="${escapeAttribute(traject?.naam ?? 'Poging 1')}" />
-      </label>
-      <div class="form-grid">
+      <section class="command-form-section" data-command-form-section="traject-basis">
+        <p class="command-form-section__eyebrow">Basis</p>
         <label>
-          Type
-          <select name="type">
-            ${renderOption('ivf', 'IVF', traject?.type)}
-            ${renderOption('icsi', 'ICSI', traject?.type)}
-            ${renderOption('onbekend', 'Nog onbekend', traject?.type)}
+          Naam
+          <input name="naam" required value="${escapeAttribute(traject?.naam ?? 'Poging 1')}" />
+        </label>
+        <div class="form-grid">
+          <label>
+            Type
+            <select name="type">
+              ${renderOption('ivf', 'IVF', traject?.type)}
+              ${renderOption('icsi', 'ICSI', traject?.type)}
+              ${renderOption('onbekend', 'Nog onbekend', traject?.type)}
+            </select>
+          </label>
+          <label>
+            Status
+            <select name="status">
+              ${renderOption('gepland', 'Gepland', traject?.status)}
+              ${renderOption('lopend', 'Lopend', traject?.status)}
+              ${renderOption('afgerond', 'Afgerond', traject?.status)}
+              ${renderOption('gepauzeerd', 'Gepauzeerd', traject?.status)}
+              ${renderOption('geannuleerd', 'Geannuleerd', traject?.status)}
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="command-form-section" data-command-form-section="traject-planning">
+        <p class="command-form-section__eyebrow">Planning</p>
+        <div class="form-grid">
+          <label>
+            Startdatum
+            <input name="startDatum" type="date" required value="${escapeAttribute(traject?.startDatum ?? new Date().toISOString().slice(0, 10))}" />
+          </label>
+          <label>
+            Pogingnummer
+            <input name="pogingNummer" type="number" min="1" step="1" required value="${traject?.pogingNummer ?? 1}" />
+          </label>
+        </div>
+      </section>
+      <section class="command-form-section" data-command-form-section="traject-context">
+        <p class="command-form-section__eyebrow">Context</p>
+        <label>
+          Notitie
+          <textarea name="notitie" rows="4">${escapeHtml(traject?.notitie ?? '')}</textarea>
+        </label>
+        <label>
+          Vergoedingstelling
+          <select name="teltMeeVoorVergoeding">
+            ${renderOption('false', 'Telt nog niet mee', String(traject?.teltMeeVoorVergoeding === true))}
+            ${renderOption('true', 'Telt mee na geslaagde punctie', String(traject?.teltMeeVoorVergoeding === true))}
           </select>
         </label>
-        <label>
-          Status
-          <select name="status">
-            ${renderOption('gepland', 'Gepland', traject?.status)}
-            ${renderOption('lopend', 'Lopend', traject?.status)}
-            ${renderOption('afgerond', 'Afgerond', traject?.status)}
-            ${renderOption('gepauzeerd', 'Gepauzeerd', traject?.status)}
-            ${renderOption('geannuleerd', 'Geannuleerd', traject?.status)}
-          </select>
-        </label>
-      </div>
-      <div class="form-grid">
-        <label>
-          Startdatum
-          <input name="startDatum" type="date" required value="${escapeAttribute(traject?.startDatum ?? new Date().toISOString().slice(0, 10))}" />
-        </label>
-        <label>
-          Pogingnummer
-          <input name="pogingNummer" type="number" min="1" step="1" required value="${traject?.pogingNummer ?? 1}" />
-        </label>
-      </div>
-      <label>
-        Notitie
-        <textarea name="notitie" rows="4">${escapeHtml(traject?.notitie ?? '')}</textarea>
-      </label>
-      <label>
-        Vergoedingstelling
-        <select name="teltMeeVoorVergoeding">
-          ${renderOption('false', 'Telt nog niet mee', String(traject?.teltMeeVoorVergoeding === true))}
-          ${renderOption('true', 'Telt mee na geslaagde punctie', String(traject?.teltMeeVoorVergoeding === true))}
-        </select>
-      </label>
+      </section>
       <button type="submit">${submitLabel ?? (traject ? 'Bewaar traject' : 'Maak traject aan')}</button>
     </form>
   `;

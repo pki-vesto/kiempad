@@ -2959,6 +2959,9 @@ describe('app shell', () => {
     expect(html).toContain('id="agenda-route-overzicht"');
     expect(html).toContain('class="schedule-route-section command-route-section"');
     expect(html).toContain('class="schedule-route-section__header command-route-section__header"');
+    expect(html).toContain('data-command-form-section="afspraak-basis"');
+    expect(html).toContain('data-command-form-section="afspraak-context"');
+    expect(html).toContain('data-command-form-section="afspraak-voorbereiding"');
     expect(html).toContain('data-schedule-route="overzicht"');
     expect(html).toContain('data-schedule-route-state="active"');
     expect(html).toContain('id="agenda-route-komend"');
@@ -3664,6 +3667,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#medicatie?route=historie"');
     expect(html).toContain('id="medicatie-route-vandaag"');
     expect(html).toContain('class="medication-route-section command-route-section"');
+    expect(html).toContain('data-command-form-section="medicatie-basis"');
+    expect(html).toContain('data-command-form-section="medicatie-voorraad"');
+    expect(html).toContain('data-command-form-section="medicatie-schema"');
     expect(html).toContain(
       'class="medication-route-section__header command-route-section__header"',
     );
@@ -4195,6 +4201,9 @@ describe('app shell', () => {
     expect(html).toContain('id="vragen-route-open"');
     expect(html).toContain('class="question-route-section command-route-section"');
     expect(html).toContain('class="question-route-section__header command-route-section__header"');
+    expect(html).toContain('data-command-form-section="vraag-basis"');
+    expect(html).toContain('data-command-form-section="vraag-context"');
+    expect(html).toContain('data-command-form-section="vraag-antwoord"');
     expect(html).toContain('data-question-route="open"');
     expect(html).toContain('data-question-route-state="active"');
     expect(html).toContain('id="vragen-route-voorbereiden"');
@@ -35796,6 +35805,9 @@ describe('app shell', () => {
     expect(html).toContain('id="traject-route-overzicht"');
     expect(html).toContain('class="treatment-route-section command-route-section"');
     expect(html).toContain('class="treatment-route-section__header command-route-section__header"');
+    expect(html).toContain('data-command-form-section="traject-basis"');
+    expect(html).toContain('data-command-form-section="traject-planning"');
+    expect(html).toContain('data-command-form-section="traject-context"');
     expect(html).toContain('data-treatment-route="overzicht"');
     expect(html).toContain('data-treatment-route-state="active"');
     expect(html).toContain('id="traject-route-fasen"');
@@ -35882,6 +35894,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-margin-top: 96px;');
     expect(mobileCss).toContain('.command-route-section .data-form {');
     expect(mobileCss).toContain('gap: 10px;');
+    expect(mobileCss).toContain('.command-route-section .command-form-section {');
+    expect(mobileCss).toContain('border-radius: 12px;');
+    expect(mobileCss).toContain(
+      'background: color-mix(in srgb, var(--surface) 82%, var(--surface-2));',
+    );
+    expect(mobileCss).toContain('.command-route-section .command-form-section__eyebrow');
     expect(mobileCss).toContain('.command-route-section .data-form > button[type="submit"]');
     expect(mobileCss).toContain('position: sticky;');
     expect(mobileCss).toContain('bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);');

@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1201/G1202 Premium Claude Design UI: mobiele commandroute-formulieren groeperen hun inhoud nu in compacte veldsecties voor vraag, afspraak, medicatie en traject, met behoud van alle form-id's en input names; G1202 is toegevoegd om dit veldsectiepatroon naar dossier- en uploadflows uit te breiden.
 - G1200/G1201 Premium Claude Design UI: mobiele commandroute-formulieren hebben nu compactere disclosure-, veld- en textarea-spacing plus een sticky full-width primaire submitactie boven de bottom-nav; G1201 is toegevoegd voor compacte veldsectie-groepering.
 - G1199/G1200 Premium Claude Design UI: mobiele commandroutes gebruiken nu een gedeelde bottom-nav clearance, scroll-padding en control scroll-margin zodat routepanelen en submitacties vrij blijven van de fixed bottom-nav; G1200 is toegevoegd voor compactere mobiele formulierpanelen en primaire actiezone.
 - G1198/G1199 Premium Claude Design UI: de gedeelde commandroutes tonen nu compacte badges en `data-command-route-density` states voor agenda, medicatie, vragen en traject, zodat tellingen, lege states en acties direct scanbaar zijn; G1199 is toegevoegd voor mobiele sticky spacing en bottom-nav affordance.
