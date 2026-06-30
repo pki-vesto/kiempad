@@ -27,6 +27,78 @@ async function issueToken(api: CentralEncryptedHttpApi, userId: string): Promise
 }
 
 describe('central encrypted HTTP API contract', () => {
+  it('publiceert een health endpoint met alleen technische privacygrensmetadata', async () => {
+    const database = new MemoryCentralEncryptedDatabase();
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(database, new MemoryCentralSessionStore()),
+    );
+    const token = await issueToken(api, 'user-peter');
+    const driver = new CentralHttpApiClientDriver(api, token);
+    const vault = new VaultSession(driver, { autoLockMs: 60_000 });
+    await vault.initializeOrUnlock('health endpoint passphrase');
+
+    await new EncryptedRecordRepository<TestRecord>(driver, vault, 'traject').saveWithId({
+      id: 'health-record-sensitive',
+      titel: 'Progesteron echo consult',
+      gevoeligeNotitie: 'embryo score en labuitslag blijven client-side leesbaar',
+    });
+
+    const response = await api.handle({ method: 'GET', path: '/health' });
+    expect(response).toEqual({
+      status: 200,
+      body: {
+        status: 'ok',
+        service: 'kiempad-central-encrypted-api',
+        storageMode: 'central-api',
+        encryptionBoundary: 'client-side-encrypted-envelopes',
+        backendVisibility: 'technical-metadata-only',
+        medicalPlaintext: false,
+        dataRoutes: 'bearer-session-required',
+        emptyState: 'no-user-dataset-opened',
+        errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+      },
+    });
+
+    const serializedHealth = JSON.stringify(response.body);
+    for (const forbidden of [
+      'user-peter',
+      'health-record-sensitive',
+      'Progesteron',
+      'embryo score',
+      'labuitslag',
+      'health endpoint passphrase',
+      'ciphertext',
+      'encrypted-ciphertext',
+      'recordCount',
+      'sessionId',
+      token,
+    ]) {
+      expect(serializedHealth).not.toContain(forbidden);
+    }
+    expect(JSON.stringify(database.unsafeDumpRecordsForTest())).not.toContain('embryo score');
+  });
+
+  it('maakt health expliciet read-only en zonder bearer-token bruikbaar voor runtime checks', async () => {
+    const api = new CentralEncryptedHttpApi(
+      new CentralEncryptedApiServer(
+        new MemoryCentralEncryptedDatabase(),
+        new MemoryCentralSessionStore(),
+      ),
+    );
+
+    await expect(api.handle({ method: 'GET', path: '/health' })).resolves.toMatchObject({
+      status: 200,
+      body: {
+        emptyState: 'no-user-dataset-opened',
+        errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+      },
+    });
+    await expect(api.handle({ method: 'POST', path: '/health' })).resolves.toEqual({
+      status: 400,
+      body: { error: 'Health endpoint ondersteunt alleen GET.' },
+    });
+  });
+
   it('maakt encrypted records via HTTP-style requests beschikbaar op een tweede apparaat', async () => {
     const database = new MemoryCentralEncryptedDatabase();
     const api = new CentralEncryptedHttpApi(
