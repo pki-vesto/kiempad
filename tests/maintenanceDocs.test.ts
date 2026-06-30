@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import prTemplate from '../.github/PULL_REQUEST_TEMPLATE.md?raw';
+import ciWorkflow from '../.github/workflows/ci.yml?raw';
 import architecture from '../ARCHITECTURE.md?raw';
 import changelog from '../CHANGELOG.md?raw';
 import contributing from '../CONTRIBUTING.md?raw';
@@ -42,6 +43,7 @@ import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiag
 import centralHealthContractSource from '../src/storage/centralHealthContract.ts?raw';
 import centralHttpApiSource from '../src/storage/centralHttpApi.ts?raw';
 import vision from '../VISION.md?raw';
+import appShellTestSource from './appShell.test.ts?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
 import centralHealthContractTest from './centralHealthContract.test.ts?raw';
 import centralHealthMonitorAnnotationCommandTest from './centralHealthMonitorAnnotationCommand.test.ts?raw';
@@ -3863,6 +3865,43 @@ describe('onderhoudsdocumentatie', () => {
       'gesanitized annotatie-fixture',
     ]) {
       expect(runbook + centralHealthMonitorAnnotationCommandTest).toContain(requiredTerm);
+    }
+  });
+
+  it('documenteert G1173 dossier cue parity smoke CI evidence', () => {
+    const requiredTerms = [
+      'Dossier cue parity smoke',
+      'npm run test -- tests/appShell.test.ts',
+      'documentupload, consult, embryokwaliteit en embryo-status',
+      'standaard, reduced-motion en forced-colors context',
+      'G1172/G1173',
+    ] as const;
+    const forbiddenEvidenceTerms = [
+      'bestandsnaam',
+      'OCR-tekst',
+      'beeldpayload',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ] as const;
+
+    for (const requiredTerm of requiredTerms) {
+      expect(ciWorkflow + runbook + goalCompletionAudit + maintenanceDocsRaw).toContain(
+        requiredTerm,
+      );
+    }
+    expect(ciWorkflow).toContain('Dossier cue parity smoke');
+    expect(ciWorkflow).toContain('run: npm run test -- tests/appShell.test.ts');
+    expect(appShellTestSource).toContain(
+      'bewaakt target- en focuscue parity voor dossier-feedback return',
+    );
+    expect(appShellTestSource).toContain("extractCssMediaBlock(css, 'forced-colors: active')");
+
+    for (const forbiddenTerm of forbiddenEvidenceTerms) {
+      expect(goalCompletionAudit).toContain(forbiddenTerm);
+      expect(runbook).toContain(forbiddenTerm);
     }
   });
 

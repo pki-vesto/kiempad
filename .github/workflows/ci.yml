@@ -28,6 +28,8 @@ jobs:
         run: npm run secrets:check
       - name: Sensitive fixture scan
         run: npm run fixtures:check
+      - name: Dossier cue parity smoke
+        run: npm run test -- tests/appShell.test.ts
       - name: Test
         run: npm run test
       - name: Central bootstrap smoke
