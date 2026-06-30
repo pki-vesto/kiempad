@@ -193,6 +193,10 @@
   met behoud van `notification-privacy-form`, `warning-default-form`,
   `eigen-herinnering-form`, reschedule-hooks en generieke lockscreenprivacycopy;
   G1191 staat open voor logboek- en audit-historyroutes.
+- **G1191 logboekroutes:** het logboek heeft nu een routebalk en duidelijke
+  historyclusters voor overzicht, recent, categorieën en privacygevoelige
+  gebeurtenissen, met behoud van eventlog selectors, categoriecopy en
+  privacy-sanitization; G1192 staat open voor financeroutes in het kostenscherm.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

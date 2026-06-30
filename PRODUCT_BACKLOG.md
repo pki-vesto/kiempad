@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 991 |
+| ☑ klaar | 992 |
 | ◐ bezig | 0 |
 | ☐ open | 101 |
 | ☒ archived | 99 |
-| **Totaal** | **1191** |
+| **Totaal** | **1192** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1353,13 +1353,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1188 | Premium Claude Design UI: afwegingenscherm opdelen in taakgerichte decisionroutes | P1 | F5 | ☑ |
 | G1189 | Premium Claude Design UI: beheer- en instellingenschermen opdelen in taakgerichte privacyroutes | P1 | F5 | ☑ |
 | G1190 | Premium Claude Design UI: herinneringen en notificatieprivacy opdelen in taakgerichte notificationroutes | P1 | F5 | ☑ |
-| G1191 | Premium Claude Design UI: logboek en auditoverzicht opdelen in taakgerichte historyroutes | P1 | F5 | ☐ |
+| G1191 | Premium Claude Design UI: logboek en auditoverzicht opdelen in taakgerichte historyroutes | P1 | F5 | ☑ |
+| G1192 | Premium Claude Design UI: kostenscherm opdelen in taakgerichte financeroutes | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1191** (id's G001 t/m G1191, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1192** (id's G001 t/m G1192, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

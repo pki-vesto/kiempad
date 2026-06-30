@@ -907,25 +907,133 @@ function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShell
 function renderLogboekScreen(state: AppShellState): string {
   const logs = state.eventLogs ?? [];
   const highRiskLogs = logs.filter(isHighRiskEventLogForUi);
+  const categoryCounts = logs.reduce<Record<EventLog['categorie'], number>>(
+    (counts, item) => {
+      counts[item.categorie] = (counts[item.categorie] ?? 0) + 1;
+      return counts;
+    },
+    {} as Record<EventLog['categorie'], number>,
+  );
   const body = isCentralStorage(state)
     ? `Dit logboek staat in je centrale encrypted dataset en toont alleen privacyrelevante gebeurtenisdetails. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`
     : `Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
 
   return sectionStack(
     [
-      card({
-        title: 'Gebeurtenissen',
-        body: `<p data-event-log-storage="${isCentralStorage(state) ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-event-log-state="${logs.length > 0 ? 'active' : 'empty'}" data-event-log-high-risk="${highRiskLogs.length > 0 ? 'present' : 'none'}">${body}</p>`,
+      renderEventLogTaskRoutes({
+        eventCount: logs.length,
+        highRiskCount: highRiskLogs.length,
+        categoryCount: Object.keys(categoryCounts).length,
+        central: isCentralStorage(state),
       }),
-      '<h2>Recente gebeurtenissen</h2>',
-      logs.length > 0
-        ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
-        : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>',
+      `<section id="logboek-route-overzicht" class="eventlog-route-section" aria-labelledby="logboek-route-overzicht-title" data-eventlog-route="overzicht">
+        <header class="eventlog-route-section__header">
+          <p class="kp-card__eyebrow">Overzicht</p>
+          <h2 id="logboek-route-overzicht-title">Logboekstatus</h2>
+          <p>Controleer opslagmodus en privacyrisico's zonder gevoelige gebeurtenisdetails te tonen.</p>
+        </header>
+        ${card({
+          title: 'Gebeurtenissen',
+          body: `<p data-event-log-storage="${isCentralStorage(state) ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-event-log-state="${logs.length > 0 ? 'active' : 'empty'}" data-event-log-high-risk="${highRiskLogs.length > 0 ? 'present' : 'none'}">${body}</p>`,
+        })}
+      </section>`,
+      `<section id="logboek-route-recent" class="eventlog-route-section" aria-labelledby="logboek-route-recent-title" data-eventlog-route="recent">
+        <header class="eventlog-route-section__header">
+          <p class="kp-card__eyebrow">Recent</p>
+          <h2 id="logboek-route-recent-title">Recente gebeurtenissen</h2>
+          <p>Lees de laatste lokale auditregels terug in tijdsvolgorde.</p>
+        </header>
+        ${
+          logs.length > 0
+            ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>'
+        }
+      </section>`,
+      `<section id="logboek-route-categorieen" class="eventlog-route-section" aria-labelledby="logboek-route-categorieen-title" data-eventlog-route="categorieen">
+        <header class="eventlog-route-section__header">
+          <p class="kp-card__eyebrow">Categorieën</p>
+          <h2 id="logboek-route-categorieen-title">Categorieën scannen</h2>
+          <p>Bekijk hoeveel gebeurtenissen per categorie zijn vastgelegd.</p>
+        </header>
+        ${renderEventLogCategorySummary(categoryCounts)}
+      </section>`,
+      `<section id="logboek-route-privacy" class="eventlog-route-section" aria-labelledby="logboek-route-privacy-title" data-eventlog-route="privacy">
+        <header class="eventlog-route-section__header">
+          <p class="kp-card__eyebrow">Privacy</p>
+          <h2 id="logboek-route-privacy-title">Privacygevoelige gebeurtenissen</h2>
+          <p>Controleer welke auditregels extra terughoudend worden weergegeven.</p>
+        </header>
+        ${
+          highRiskLogs.length > 0
+            ? `<ol class="phase-list">${highRiskLogs.map(renderEventLogItem).join('')}</ol>`
+            : '<p class="empty-state">Geen privacygevoelige gebeurtenissen in dit logboek.</p>'
+        }
+      </section>`,
     ],
     {
+      className: 'eventlog-command-layout',
       ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Legacy lokaal gebeurtenissenlog',
     },
   );
+}
+
+function renderEventLogTaskRoutes(input: {
+  eventCount: number;
+  highRiskCount: number;
+  categoryCount: number;
+  central: boolean;
+}): string {
+  const routes = [
+    {
+      href: '#logboek-route-overzicht',
+      label: 'Overzicht',
+      meta: input.central ? 'centraal' : 'lokaal',
+    },
+    { href: '#logboek-route-recent', label: 'Recent', meta: `${input.eventCount} events` },
+    {
+      href: '#logboek-route-categorieen',
+      label: 'Categorieën',
+      meta: `${input.categoryCount} soorten`,
+    },
+    { href: '#logboek-route-privacy', label: 'Privacy', meta: `${input.highRiskCount} signalen` },
+  ];
+
+  return `
+    <nav class="eventlog-task-routes" aria-label="Logboek taakroutes" data-eventlog-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="eventlog-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
+}
+
+function renderEventLogCategorySummary(
+  counts: Partial<Record<EventLog['categorie'], number>>,
+): string {
+  const entries = Object.entries(counts) as [EventLog['categorie'], number][];
+  if (entries.length === 0) return '<p class="empty-state">Nog geen categorieën vastgelegd.</p>';
+
+  return `
+    <dl class="summary-list">
+      ${entries
+        .map(
+          ([categorie, count]) => `
+            <div data-eventlog-category="${escapeAttribute(categorie)}">
+              <dt>${escapeHtml(EVENT_CATEGORIE_LABELS[categorie])}</dt>
+              <dd>${count} gebeurtenis${count === 1 ? '' : 'sen'}</dd>
+            </div>
+          `,
+        )
+        .join('')}
+    </dl>
+  `;
 }
 
 function renderEventLogItem(item: EventLog): string {
