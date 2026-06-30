@@ -4273,6 +4273,10 @@ describe('app shell', () => {
               'We bespraken de planning. Vraag de kliniek naar het vervolg en noteer het antwoord.',
             bijgewerktOp: '2026-06-23T15:05:00.000Z',
           },
+          samenvattingReview: {
+            status: 'aangepast',
+            bijgewerktOp: '2026-06-23T15:05:00.000Z',
+          },
           actiepunten: [
             {
               id: 'consult-review-state-actie-1',
@@ -4305,6 +4309,11 @@ describe('app shell', () => {
     expect(section).toContain('Auteur: Fertiliteitsarts');
     expect(section).toContain('Context: Evaluatie na punctie');
     expect(section).toContain('Conceptsamenvatting');
+    expect(section).toContain('Reviewstatus: Aangepast door gebruiker');
+    expect(section).toContain('data-consult-summary-review-state="aangepast"');
+    expect(section).toContain('class="compact-form consult-samenvatting-review-form"');
+    expect(section).toContain('name="samenvattingReviewActie" value="corrigeren"');
+    expect(section).toContain('name="samenvattingReviewActie" value="verwerpen"');
     expect(section).toContain('Verschil met gebruikerscorrectie');
     expect(section).toContain(
       'Toegevoegd: Vraag de kliniek naar het vervolg en noteer het antwoord.',
