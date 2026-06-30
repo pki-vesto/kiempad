@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1172/G1173 Premium Claude Design UI: dossier feedback-return cueparity heeft nu een expliciete app-shell regressiesmoke die target-, focus- en focus-visible selectors vergelijkt in standaard, reduced-motion en forced-colors context voor documentupload, consult, embryokwaliteit en embryo-status; G1173 is toegevoegd voor CI-evidence.
 - G1171/G1172 Premium Claude Design UI: feedback-return target- en focuslandingscues gebruiken nu gedeelde CSS-variabelen voor outline, achtergrond en contextlijn, inclusief forced-colors systeemkleurparity; G1172 is toegevoegd voor parity-regressiesmoke.
 - G1170/G1171 Premium Claude Design UI: gefocuste feedback-return landingscues hebben nu expliciete compacte transitionregels en reduced-motion schakelt die cuebeweging uit terwijl contrast en forced-colors dekking behouden blijven; G1171 is toegevoegd voor target/focus parity.
 - G1169/G1170 Premium Claude Design UI: feedback focus-return targets tonen nu dezelfde compacte landingscue wanneer het gelande formulier toetsenbordfocus krijgt, inclusief forced-colors systeemkleurdekking zonder layoutshift; G1170 is toegevoegd voor focused-cue contrastbewaking.
