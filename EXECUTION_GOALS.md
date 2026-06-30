@@ -12616,4 +12616,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 90
+- **Status:** ☑ done
+
+### G1135 — dossier add route focus copy refinement
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De toevoegroutekaarten zijn compacter, maar de routecopy kan nog sterker sturen op taakkeuze en geruststelling zonder extra tekstdruk.
+- **User Impact:** Gebruikers kunnen nog twijfelen tussen documentupload, consultverslag, embryokwaliteit en embryo-status wanneer routecopy dicht bij elkaar ligt.
+- **Desired Outcome:** Verfijn de routecopy en cue-taal zodat iedere toevoegroute duidelijker als eigen taak voelt, zonder formuliercontracten of privacyhooks te wijzigen.
+- **User Value:** Gebruikers kiezen sneller en met meer vertrouwen de juiste route.
+- **Acceptance Criteria:** Routekaartcopy onderscheidt de vier toevoegroutes duidelijker; readiness-cues blijven kort en zichtbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 89
 - **Status:** ☐ open
