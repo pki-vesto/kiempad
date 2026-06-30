@@ -12142,8 +12142,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Central Encrypted Platform
 - **Problem:** G1101 legt de exacte compact-contract releaseguard missing-term melding vast, maar releasecontext rond dit compacte contract wordt nog niet apart bewaakt.
 - **Desired Outcome:** Bewaak dat changelog en current state het G1101 compacte contract met veilige technische labels blijven noemen.
-- **User Value:** Beheer ziet in releasecontext wanneer het health-monitor retention compact-contract missing-term contract actief is.
+- **User Value:** Beheer ziet in releasecontext wanneer het health-monitor retention compact-contract missing-term-contract actief is.
 - **Acceptance Criteria:** Changelog en current-state noemen het G1101 compacte contract; onderhoudstests bewaken release-tekst met veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☑ done
+
+### G1103 — central health monitor retention compact contract release missing-term release guard missing-term fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1102 bewaakt releasecontext voor het G1101 compact-contract, maar ontbrekende termen in deze releaseguard hebben nog geen compacte technische fixture.
+- **Desired Outcome:** Leg vast dat ontbrekende G1102 releaseguard-termen met een compacte technische foutmelding worden gerapporteerd.
+- **User Value:** Beheer ziet compact-contract releaseguard-drift zonder privacygevoelige evidence of lange documentcontext.
+- **Acceptance Criteria:** Missing-term foutmelding voor de G1102 releaseguard is compact getest; foutmelding noemt alleen veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Maintenance tests, changelog, current state
