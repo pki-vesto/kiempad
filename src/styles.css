@@ -2019,6 +2019,51 @@ a.action-card:active {
   max-width: 100%;
 }
 
+.dossier-add-route-selector {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+  margin: 0 0 14px;
+}
+
+.dossier-add-route {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.dossier-add-route:hover,
+.dossier-add-route:focus-visible {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-soft);
+  outline: none;
+}
+
+.dossier-add-route strong,
+.dossier-add-route span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-add-route strong {
+  font-size: 0.91rem;
+  line-height: 1.25;
+}
+
+.dossier-add-route span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
 .dossier-upload-group,
 .dossier-subform-group {
   display: grid;
@@ -2063,8 +2108,18 @@ a.action-card:active {
 }
 
 @media (max-width: 720px) {
+  .dossier-add-route-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .dossier-upload-group,
   .dossier-subform-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .dossier-add-route-selector {
     grid-template-columns: 1fr;
   }
 }

@@ -12568,4 +12568,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 93
+- **Status:** ☑ done
+
+### G1132 — dossier add flow focused route visibility
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De route-selector maakt kiezen sneller, maar alle uploadformulieren blijven daarna nog tegelijk zichtbaar in dezelfde disclosure.
+- **User Impact:** Gebruikers kunnen alsnog worden afgeleid door niet-relevante formulierblokken wanneer zij maar één type dossieritem willen toevoegen.
+- **Desired Outcome:** Maak de toevoegflow visueel meer gefocust per route met behoud van alle bestaande formulieren, ankers, input names en privacyhooks.
+- **User Value:** Gebruikers houden overzicht nadat ze een route kiezen en hoeven minder niet-relevante velden te verwerken.
+- **Acceptance Criteria:** Toevoegen-aan-dossier toont routefocus of compacte routecontext zonder formuliercontracten te breken; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 92
 - **Status:** ☐ open
