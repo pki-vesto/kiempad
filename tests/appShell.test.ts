@@ -2614,6 +2614,12 @@ describe('app shell', () => {
     expect(html).toContain('class="timeline-detail-panel"');
     expect(html).toContain('<dt>Bron</dt><dd>echo.pdf</dd>');
     expect(html).toContain(
+      '<dt>Bronverwijzingen</dt><dd>Dossiermetadata · formulier: echo.pdf · Datum: 2026-06-24 · Review: concept · Record: doc-1</dd>',
+    );
+    expect(html).toContain(
+      'Bronverwijzingen: Dossiermetadata · formulier: echo.pdf · 2026-06-24 · concept · dossiermetadata:doc-1',
+    );
+    expect(html).toContain(
       '<dt>Context</dt><dd>Categorie Onderzoek · tijdlijn concept · confidence middel (60%)</dd>',
     );
     expect(html).toContain('<dt>Record-ID</dt><dd>doc-1</dd>');
@@ -2626,6 +2632,8 @@ describe('app shell', () => {
     const timelineListEnd = html.indexOf('</ol>', timelineListStart);
     const timelineListHtml = html.slice(timelineListStart, timelineListEnd);
     expect(timelineListHtml).not.toContain('Behandelvoorbereiding');
+    expect(timelineListHtml).not.toContain('base64');
+    expect(timelineListHtml).not.toMatch(/diagnose|dosering|behandelkeuzeadvies/i);
     expect(html).toContain('Behandelvoorbereiding');
     expect(html).toContain('id="graph-filter-form"');
     expect(html).toContain('name="graphRelatieType"');

@@ -3840,7 +3840,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, dossier, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G516 — echo upload classificatie per afspraak
 
@@ -11545,6 +11545,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Dossier, OCR, review queue, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1060 — timeline source reference audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G515 toont nu veilige bronverwijzingen per fertility timeline-item, maar er is nog geen compacte audit die bronlabel, bron, datum, reviewstatus, record-id en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat bronverwijzingen per timeline-item zichtbaar blijven zonder OCR-tekst, broninhoud of medische payload.
+- **User Value:** Gebruikers kunnen elk timeline-item naar de juiste bron terugleiden zonder dat Kiempad inhoud lekt of medisch duidt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G515; dossiermetadata-, OCR-, consult- en overige timelinebronnen blijven gedekt met bron, datum, reviewstatus, type en record-id; evidence bevat geen OCR-tekst, broninhoud, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Fertility timeline, dossier metadata, OCR, app shell, export, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
