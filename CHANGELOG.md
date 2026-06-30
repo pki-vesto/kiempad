@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1155/G1156 Premium Claude Design UI: feedback focus-return cues hebben nu een duidelijke compacte `:focus-visible` state met accentoutline zonder ankers, formcontracten of privacyhooks te wijzigen; G1156 is toegevoegd voor doelbevestiging in feedbackcontext.
 - G1154/G1155 Premium Claude Design UI: inline dossier-submitfeedback toont nu compacte focus-return cues naar het relevante formulieranker bij review- en foutstates zonder payloadtekst of formcontractwijzigingen; G1155 is toegevoegd voor focus-visible verfijning.
 - G1153/G1154 Premium Claude Design UI: inline dossier-submitfeedback heeft nu vaste privacyveilige announcement-order metadata in routevolgorde voor rustigere assistive feedback; G1154 is toegevoegd voor focus-return cues.
 - G1152/G1153 Premium Claude Design UI: inline dossier-submitfeedback gebruikt nu rustige `aria-live="polite"` en `aria-atomic="true"` configuratie naast de privacyveilige route- en statuslabels; G1153 is toegevoegd voor aankondigingstiming-audit.

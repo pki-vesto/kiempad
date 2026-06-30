@@ -12952,4 +12952,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 69
+- **Status:** ☑ done
+
+### G1156 — dossier add feedback target confirmation
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Focus-return cues zijn keyboardduidelijker, maar de feedback zelf bevestigt nog niet expliciet welk formulierdeel als hersteldoel hoort bij de melding.
+- **User Impact:** Gebruikers kunnen na een fout- of reviewstate alsnog twijfelen of zij terug moeten naar documentvelden, consultvelden, kwaliteitsvelden of statusvelden.
+- **Desired Outcome:** Voeg compacte doelbevestiging toe aan feedbackcontext zonder broninhoud, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers begrijpen sneller welke invoerroute aandacht vraagt en herstellen met minder cognitieve belasting.
+- **Acceptance Criteria:** Feedbackdoel is compact, routegericht en privacyveilig; bestaande ankers, form-id's, input names en data-hooks blijven intact; focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 68
 - **Status:** ☐ open
