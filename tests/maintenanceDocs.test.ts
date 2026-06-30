@@ -3700,6 +3700,26 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1085 central health monitor annotation runbook drift guard', () => {
+    for (const requiredTerm of [
+      'Annotatie-driftbewaking (G1084/G1085)',
+      'CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX',
+      'CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT',
+      'CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION',
+      'central-health-contract failed: failure=',
+      'central-health-contract ok: contractVersion=1',
+      'recovery=review-contractVersion-and-run-health-smokes',
+      'unexpected-contract-version',
+      'unexpected-field',
+      'unexpected-error-states',
+      'runbook, helper en fixture',
+    ]) {
+      expect(runbook + centralHealthContractSource + centralHealthContractTest).toContain(
+        requiredTerm,
+      );
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

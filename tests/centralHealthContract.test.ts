@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import {
   buildCentralHealthMonitorCiAnnotation,
+  CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX,
+  CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT,
+  CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION,
   validateCentralHealthContract,
   validateCentralHealthContractBody,
 } from '../src/storage/centralHealthContract';
@@ -134,7 +137,7 @@ describe('G1084 central health monitor CI annotation evidence', () => {
   it('maakt een gesanitized success-annotatie voor contractVersion=1', () => {
     expect(buildCentralHealthMonitorCiAnnotation({ ok: true, contractVersion: 1 })).toEqual({
       ok: true,
-      ciAnnotation: 'central-health-contract ok: contractVersion=1',
+      ciAnnotation: CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION,
     });
   });
 
@@ -151,7 +154,7 @@ describe('G1084 central health monitor CI annotation evidence', () => {
 
       expect(buildCentralHealthMonitorCiAnnotation(validation)).toEqual({
         ok: false,
-        ciAnnotation: `central-health-contract failed: failure=${expectedFailure} recovery=review-contractVersion-and-run-health-smokes`,
+        ciAnnotation: `${CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX}${expectedFailure} recovery=${CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT}`,
       });
     }
   });
@@ -170,7 +173,7 @@ describe('G1084 central health monitor CI annotation evidence', () => {
     const annotation = buildCentralHealthMonitorCiAnnotation(validation).ciAnnotation;
 
     expect(annotation).toBe(
-      'central-health-contract failed: failure=forbidden-privacy-field recovery=review-contractVersion-and-run-health-smokes',
+      `${CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX}forbidden-privacy-field recovery=${CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT}`,
     );
     for (const forbidden of [
       'user-peter',
@@ -185,6 +188,30 @@ describe('G1084 central health monitor CI annotation evidence', () => {
       'headers',
     ]) {
       expect(annotation).not.toContain(forbidden);
+    }
+  });
+});
+
+describe('G1085 central health monitor annotation runbook drift guard', () => {
+  it('houdt de CI-annotatie contracttermen centraal voor helper en fixtures', () => {
+    expect(CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION).toBe(
+      'central-health-contract ok: contractVersion=1',
+    );
+    expect(CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX).toBe(
+      'central-health-contract failed: failure=',
+    );
+    expect(CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT).toBe(
+      'review-contractVersion-and-run-health-smokes',
+    );
+
+    for (const failure of [
+      'unexpected-contract-version',
+      'unexpected-field',
+      'unexpected-error-states',
+    ] as const) {
+      expect(buildCentralHealthMonitorCiAnnotation({ ok: false, failure }).ciAnnotation).toBe(
+        `${CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX}${failure} recovery=${CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT}`,
+      );
     }
   });
 });

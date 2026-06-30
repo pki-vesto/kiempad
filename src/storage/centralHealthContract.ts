@@ -15,11 +15,17 @@ export type CentralHealthContractValidation =
   | { ok: false; failure: CentralHealthContractFailure };
 
 export type CentralHealthMonitorCiAnnotation =
-  | { ok: true; ciAnnotation: 'central-health-contract ok: contractVersion=1' }
+  | { ok: true; ciAnnotation: typeof CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION }
   | {
       ok: false;
-      ciAnnotation: `central-health-contract failed: failure=${CentralHealthContractFailure} recovery=review-contractVersion-and-run-health-smokes`;
+      ciAnnotation: `${typeof CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX}${CentralHealthContractFailure} recovery=${typeof CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT}`;
     };
+
+export const CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION =
+  'central-health-contract ok: contractVersion=1';
+export const CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX = 'central-health-contract failed: failure=';
+export const CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT =
+  'review-contractVersion-and-run-health-smokes';
 
 const EXPECTED_HEALTH_CONTRACT: CentralHealthResponse = {
   status: 'ok',
@@ -104,13 +110,13 @@ export function buildCentralHealthMonitorCiAnnotation(
   if (validation.ok) {
     return {
       ok: true,
-      ciAnnotation: 'central-health-contract ok: contractVersion=1',
+      ciAnnotation: CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION,
     };
   }
 
   return {
     ok: false,
-    ciAnnotation: `central-health-contract failed: failure=${validation.failure} recovery=review-contractVersion-and-run-health-smokes`,
+    ciAnnotation: `${CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX}${validation.failure} recovery=${CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT}`,
   };
 }
 
