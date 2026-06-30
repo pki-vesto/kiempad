@@ -5037,6 +5037,9 @@ describe('app shell', () => {
     expect(css).toContain('font-weight: 650;');
     expect(css).toContain('.dossier-submit-focus-return');
     expect(css).toContain('text-underline-offset: 3px;');
+    expect(css).toContain('.dossier-submit-focus-return:focus-visible');
+    expect(css).toContain('outline-offset: 3px;');
+    expect(css).toContain('border-radius: 5px;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

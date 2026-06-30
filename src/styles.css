@@ -2244,6 +2244,13 @@ a.action-card:active {
   text-underline-offset: 3px;
 }
 
+.dossier-submit-focus-return:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 3px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
+}
+
 .dossier-submit-feedback[data-dossier-submit-feedback-state="ready"] {
   border-left-color: var(--accent);
 }
