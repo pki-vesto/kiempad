@@ -197,6 +197,10 @@
   historyclusters voor overzicht, recent, categorieën en privacygevoelige
   gebeurtenissen, met behoud van eventlog selectors, categoriecopy en
   privacy-sanitization; G1192 staat open voor financeroutes in het kostenscherm.
+- **G1192 financeroutes:** het kostenscherm heeft nu een routebalk en duidelijke
+  clusters voor overzicht, toevoegen, vergoeding/eigen risico en historie, met
+  behoud van `kosten-form`, kosten selectors, bewerk-/delete-hooks en
+  polisdisclaimers; G1193 staat open voor treatmentroutes in het trajectscherm.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

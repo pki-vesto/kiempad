@@ -3414,6 +3414,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Finance UI, Cost UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 53
+- **Status:** ☑ done
+
+### G1193 — trajectscherm opdelen in taakgerichte treatmentroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het trajectscherm combineert pogingsoverzicht, fasebeheer, vergoedingcontext en trajectformulieren nog in één lange behandelbeheerflow.
+- **User Impact:** Gebruikers moeten door trajectdetails scrollen om huidige fase, planning, vergoeding of beheeracties te vinden.
+- **Desired Outcome:** Deel het trajectscherm zichtbaar op in taakgerichte treatmentroutes voor overzicht, faseplanning, vergoeding en beheer/historie.
+- **User Value:** Het behandeltraject voelt rustiger en meer als een begeleide workflow dan als een administratiepagina.
+- **Acceptance Criteria:** Trajectscherm bevat zichtbare taakroutes; bestaande trajectformulier-id's, fase selectors, vergoedingcopy en privacygrenzen blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen medische conclusie, behandeladvies, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Traject, Dashboard
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment UI, Timeline UI, Finance UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 52
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
