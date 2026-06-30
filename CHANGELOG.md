@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1163/G1164 Premium Claude Design UI: feedback focus-return links respecteren nu reduced-motion door transformbeweging uit te zetten terwijl hover- en pressed-feedback via achtergrond en insetlijn zichtbaar blijven; G1164 is toegevoegd voor forced-colors audit.
 - G1162/G1163 Premium Claude Design UI: feedback focus-return pressed state gebruikt nu centrumvaste mini-scale, subtiele pressed achtergrond en inset accentlijn in plaats van verticale verschuiving; G1163 is toegevoegd voor reduced-motion audit.
 - G1161/G1162 Premium Claude Design UI: feedback focus-return links hebben nu rustige hover- en active-tonen met subtiele accentachtergrond, accentkleur en tapverschuiving zonder copy, ankers of volgorde te wijzigen; G1162 is toegevoegd voor pressed-state audit.
 - G1160/G1161 Premium Claude Design UI: feedback focus-return links hebben nu een compacte inline-flex touch target met extra hit-area zonder copy, ankers of feedbackvolgorde te wijzigen; G1161 is toegevoegd voor rustige interactietoon.

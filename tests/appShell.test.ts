@@ -5094,6 +5094,8 @@ describe('app shell', () => {
     expect(css).toContain('box-shadow: inset 0 0 0 1px');
     expect(css).toContain('transform: scale(0.99);');
     expect(css).not.toContain('transform: translateY(1px);');
+    expect(css).toContain('@media (prefers-reduced-motion: reduce)');
+    expect(css).toContain('.dossier-submit-focus-return:active {\n    transform: none;\n  }');
     expect(css).toContain('.dossier-submit-focus-return:focus-visible');
     expect(css).toContain('outline-offset: 3px;');
     expect(css).toContain('border-radius: 5px;');
