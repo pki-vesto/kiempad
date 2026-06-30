@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 902 |
+| ☑ klaar | 903 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1101** |
+| **Totaal** | **1102** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1263,13 +1263,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1098 | Central Encrypted Platform: central health monitor retention release-state missing-term compact contract | P1 | F5 | ☑ |
 | G1099 | Central Encrypted Platform: central health monitor retention compact contract release guard | P1 | F5 | ☑ |
 | G1100 | Central Encrypted Platform: central health monitor retention compact contract release guard missing-term fixture | P1 | F5 | ☑ |
-| G1101 | Central Encrypted Platform: central health monitor retention compact contract release missing-term compact contract | P1 | F5 | ☐ |
+| G1101 | Central Encrypted Platform: central health monitor retention compact contract release missing-term compact contract | P1 | F5 | ☑ |
+| G1102 | Central Encrypted Platform: central health monitor retention compact contract release missing-term release guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1101** (id's G001 t/m G1101, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1102** (id's G001 t/m G1102, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
