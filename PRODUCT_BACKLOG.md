@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1014 |
+| ☑ klaar | 1015 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1213** |
+| **Totaal** | **1214** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1375,13 +1375,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1210 | Premium Claude Design UI: welzijn en afwegingen eerste viewport als inzichtwerkbank | P1 | F5 | ☑ |
 | G1211 | Premium Claude Design UI: kosten en backup eerste viewport als beheerwerkbank | P1 | F5 | ☑ |
 | G1212 | Premium Claude Design UI: logboek en herinneringen eerste viewport als systeemwerkbank | P1 | F5 | ☑ |
-| G1213 | Premium Claude Design UI: agenda en medicatie eerste viewport als dagplanningwerkbank | P1 | F5 | ☐ |
+| G1213 | Premium Claude Design UI: agenda en medicatie eerste viewport als dagplanningwerkbank | P1 | F5 | ☑ |
+| G1214 | Premium Claude Design UI: vragen eerste viewport als consultvoorbereidingswerkbank | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1213** (id's G001 t/m G1213, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1214** (id's G001 t/m G1214, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
