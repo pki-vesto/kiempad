@@ -2307,6 +2307,30 @@ a.action-card:active {
   background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
 }
 
+@media (forced-colors: active) {
+  .dossier-submit-focus-return {
+    background: Canvas;
+    color: LinkText;
+    text-decoration-color: LinkText;
+  }
+
+  .dossier-submit-focus-return:hover,
+  .dossier-submit-focus-return:active {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    background: Highlight;
+    box-shadow: none;
+    color: HighlightText;
+  }
+
+  .dossier-submit-focus-return:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+    background: Canvas;
+    color: LinkText;
+  }
+}
+
 .dossier-submit-feedback[data-dossier-submit-feedback-state="ready"] {
   border-left-color: var(--accent);
 }
