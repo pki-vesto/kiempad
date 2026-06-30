@@ -2118,20 +2118,30 @@ a.action-card:active {
   display: block;
 }
 
+.dossier-add-route-microcopy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  max-width: 76ch;
+  min-width: 0;
+  margin: -4px 0 14px;
+}
+
 .dossier-add-route-switch-hint,
 .dossier-add-route-draft-note {
-  max-width: 60ch;
+  flex: 1 1 30ch;
+  min-width: 0;
+  margin: 0;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
-.dossier-add-route-switch-hint {
-  margin: -4px 0 4px;
-}
-
-.dossier-add-route-draft-note {
-  margin: 0 0 14px;
+.dossier-add-route-draft-note::before {
+  content: "· ";
+  color: var(--accent);
+  font-weight: 800;
 }
 
 .dossier-add-route-panel {

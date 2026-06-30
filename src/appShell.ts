@@ -1332,12 +1332,14 @@ function renderDossierScreen(state: AppShellState): string {
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-quality">Actieve toevoegroute: labkwaliteit registreren met bronlabel.</p>
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-status">Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.</p>
         </div>
-        <p class="dossier-add-route-switch-hint" data-dossier-add-route-switch-hint="safe-switch">
-          Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.
-        </p>
-        <p class="dossier-add-route-draft-note" data-dossier-add-route-draft-note="local-until-save">
-          Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.
-        </p>
+        <div class="dossier-add-route-microcopy" data-dossier-add-route-microcopy="compact">
+          <p class="dossier-add-route-switch-hint" data-dossier-add-route-switch-hint="safe-switch">
+            Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.
+          </p>
+          <p class="dossier-add-route-draft-note" data-dossier-add-route-draft-note="local-until-save">
+            Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.
+          </p>
+        </div>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
         <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
