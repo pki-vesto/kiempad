@@ -5096,6 +5096,11 @@ describe('app shell', () => {
     expect(css).not.toContain('transform: translateY(1px);');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
     expect(css).toContain('.dossier-submit-focus-return:active {\n    transform: none;\n  }');
+    expect(css).toContain('@media (forced-colors: active)');
+    expect(css).toContain('color: LinkText;');
+    expect(css).toContain('outline: 2px solid Highlight;');
+    expect(css).toContain('background: Highlight;');
+    expect(css).toContain('color: HighlightText;');
     expect(css).toContain('.dossier-submit-focus-return:focus-visible');
     expect(css).toContain('outline-offset: 3px;');
     expect(css).toContain('border-radius: 5px;');
