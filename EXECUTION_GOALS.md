@@ -12680,4 +12680,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 86
+- **Status:** ☑ done
+
+### G1139 — dossier add route switch recovery hint
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De actieve routecontext is nu beschikbaar voor screenreaders, maar gebruikers krijgen nog weinig begeleiding wanneer ze na een verkeerde routekeuze snel willen wisselen.
+- **User Impact:** Gebruikers kunnen blijven hangen in het verkeerde formulier en denken dat ze terug moeten scrollen of gegevens verliezen.
+- **Desired Outcome:** Voeg een compacte routewissel-hint toe die duidelijk maakt dat wisselen veilig is, zonder formuliercontracten of privacyhooks te wijzigen.
+- **User Value:** Gebruikers herstellen sneller van een verkeerde keuze en houden vertrouwen in de dossier-toevoegflow.
+- **Acceptance Criteria:** Routewissel-hint is compact en niet-medisch; bestaande ankers, form-id's, input names en data-hooks blijven intact; screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 85
 - **Status:** ☐ open

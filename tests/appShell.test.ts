@@ -4533,6 +4533,22 @@ describe('app shell', () => {
     expect(selector).toContain('Tekst of bestand');
     expect(selector).toContain('Score registreren');
     expect(selector).toContain('Status koppelen');
+    expect(addSection).toContain('data-dossier-add-route-active-contexts="ready"');
+    expect(addSection).toContain('aria-live="polite"');
+    expect(addSection).toContain('data-dossier-add-route-active-context="dossier-upload"');
+    expect(addSection).toContain(
+      'Actieve toevoegroute: document toevoegen voor onderzoek, echo, foto of scan.',
+    );
+    expect(addSection).toContain('data-dossier-add-route-active-context="consult-upload"');
+    expect(addSection).toContain(
+      'Actieve toevoegroute: consult vastleggen voor gesprek, notitie of artsupdate.',
+    );
+    expect(addSection).toContain('data-dossier-add-route-active-context="embryo-quality"');
+    expect(addSection).toContain('Actieve toevoegroute: labkwaliteit registreren met bronlabel.');
+    expect(addSection).toContain('data-dossier-add-route-active-context="embryo-status"');
+    expect(addSection).toContain(
+      'Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.',
+    );
     expect(addSection.indexOf('data-dossier-add-route-selector="compact"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
     );
@@ -4763,6 +4779,24 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route:focus-visible');
     expect(css).toContain('0 0 0 4px color-mix(in srgb, var(--accent) 70%, transparent)');
     expect(css).toContain('outline: none;');
+    expect(css).toContain('.dossier-add-route-active-context');
+    expect(css).toContain('display: none;');
+    expect(css).toContain('.kp-disclosure__body:has(#dossier-upload-form:target)');
+    expect(css).toContain(
+      '.dossier-add-route-active-context[data-dossier-add-route-active-context="dossier-upload"]',
+    );
+    expect(css).toContain('.kp-disclosure__body:has(#consult-verslag-form:target)');
+    expect(css).toContain(
+      '.dossier-add-route-active-context[data-dossier-add-route-active-context="consult-upload"]',
+    );
+    expect(css).toContain('.kp-disclosure__body:has(#embryo-quality-form:target)');
+    expect(css).toContain(
+      '.dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-quality"]',
+    );
+    expect(css).toContain('.kp-disclosure__body:has(#embryo-status-event-form:target)');
+    expect(css).toContain(
+      '.dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-status"]',
+    );
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
