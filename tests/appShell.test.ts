@@ -4521,6 +4521,14 @@ describe('app shell', () => {
     expect(selector).toContain('Consultverslag');
     expect(selector).toContain('Embryokwaliteit');
     expect(selector).toContain('Embryo-status');
+    expect(selector).toContain('data-dossier-add-route-cue="document"');
+    expect(selector).toContain('data-dossier-add-route-cue="consult"');
+    expect(selector).toContain('data-dossier-add-route-cue="embryo-quality"');
+    expect(selector).toContain('data-dossier-add-route-cue="embryo-status"');
+    expect(selector).toContain('Bestand + conceptreview');
+    expect(selector).toContain('Tekst, PDF of foto');
+    expect(selector).toContain('Score + bronlabel');
+    expect(selector).toContain('Status + koppeling');
     expect(addSection.indexOf('data-dossier-add-route-selector="compact"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
     );

@@ -12600,4 +12600,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 91
+- **Status:** ☑ done
+
+### G1134 — dossier add route mobile density tuning
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De route-selector bevat nu labels, sublabels en readiness-cues, maar de dichtheid op smalle mobiele schermen kan verder worden verfijnd.
+- **User Impact:** Gebruikers op kleine telefoons kunnen nog te veel verticale ruimte kwijt zijn voordat het eerste formulier zichtbaar wordt.
+- **Desired Outcome:** Verfijn de mobiele dichtheid van de toevoegroute-selector zonder labels, cues, ankers of formuliercontracten te verliezen.
+- **User Value:** Gebruikers zien sneller de routekeuze en het eerste relevante invoerveld op kleine schermen.
+- **Acceptance Criteria:** Route-selector blijft op mobiel compact en leesbaar; readiness-cues blijven zichtbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 90
 - **Status:** ☐ open
