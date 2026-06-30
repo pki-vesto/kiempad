@@ -56,9 +56,17 @@ describe('Tailscale publicatieconfiguratie', () => {
     expect(smokeScript).toContain('KIEMPAD_TAILNET_URL');
     expect(smokeScript).toContain('kiempad-central-api');
     expect(smokeScript).toContain('/api/sessions');
+    expect(smokeScript).toContain('check_health_contract');
+    expect(smokeScript).toContain('G503/G1078');
+    expect(smokeScript).toContain('/api/health');
+    expect(smokeScript).toContain('recordCount');
+    expect(smokeScript).toContain('ciphertext');
+    expect(smokeScript).toContain('Voor live /api/health check');
     expect(smokeScript).toContain('docker exec kiempad-ts tailscale serve status');
     expect(deployDocs).toContain('npm run deploy:tailscale');
     expect(deployDocs).toContain('npm run smoke:tailscale');
     expect(deployDocs).toContain('KIEMPAD_TAILSCALE_LOCAL_PORT=8098');
+    expect(deployDocs).toContain('curl -fsS https://kiempad.tail9d0c71.ts.net/api/health');
+    expect(deployDocs).toContain('client-side encrypted envelope boundary');
   });
 });

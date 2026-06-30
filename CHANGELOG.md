@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1079/G1080 Central Encrypted Platform: `smoke:tailscale` valideert nu ook `/api/health` via de lokale proxy en, wanneer `KIEMPAD_TAILNET_URL` is gezet, via de tailnet-HTTPS-route op het G503/G1078 health-contract zonder responsebody te loggen; de Tailscale docs tonen de healthcheck en fallback; G1080 is toegevoegd voor central health contract versioning evidence.
 - G1078/G1079 Central Encrypted Platform: het centrale health-contract heeft nu runbook-audit evidence en onderhoudstests die G503, `GET /health`, de verplichte technische responsevelden en verboden user/session/record/ciphertext/medische velden synchroon houden; G1079 is toegevoegd voor central health live smoke evidence.
 - G503/G1078 Central Encrypted Platform: de centrale API heeft nu een publieke read-only `GET /health` met alleen technische privacygrensmetadata, expliciete empty/error states en no-store runtimeheaders; regressies bewaken dat healthchecks geen user-id, session-id, record-id, recordcount, ciphertext, secrets of medische plaintext teruggeven; G1078 is toegevoegd voor central health endpoint audit evidence.
 - G554/G1077 Daily Recommendations: daily recommendation policy regression fixtures controleren nu alle dagadviesitems op bron, datum, reviewstatus, correctievelden en verboden patronen zoals dosering, kansclaim, behandelkeuzeadvies, start-stopadvies en diagnoseclaim; G1077 is toegevoegd voor policy fixture audit evidence.

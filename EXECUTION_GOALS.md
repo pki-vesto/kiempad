@@ -11827,4 +11827,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Tailscale smoke, Central API, runbook, tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1080 — central health contract versioning evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G503-G1079 borgen het centrale health-contract lokaal, in runbook en in Tailscale-smoke, maar er is nog geen expliciet versie- of changemanagementbewijs voor toekomstige wijzigingen aan de health-responsevorm.
+- **Desired Outcome:** Leg vast en test dat wijzigingen aan centrale health-responsevelden bewust gebeuren met contractversie, changelog/context en backward-compatible smokeverwachtingen.
+- **User Value:** Beheer en automatisering kunnen op healthchecks blijven vertrouwen zonder onverwachte privacy- of schemawijzigingen.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G503-G1079; health-contractwijzigingen vereisen expliciete versie/context of stabiele compatibilityregel; tests blokkeren onverwachte veldtoevoegingen of privacygrenswijzigingen; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Central API, Tailscale smoke, contract tests, docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
