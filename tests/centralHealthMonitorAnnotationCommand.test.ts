@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
+import workflowRaw from '../.github/workflows/ci.yml?raw';
 import packageJsonRaw from '../package.json?raw';
 import monitorScriptRaw from '../scripts/central-health-monitor-annotation.mts?raw';
 import {
@@ -20,6 +21,8 @@ describe('G1086 central health monitor annotation CLI fixture', () => {
     expect(pkg.scripts['smoke:central-health-monitor']).toBe(
       'tsx scripts/central-health-monitor-annotation.mts --fixture=ok',
     );
+    expect(workflowRaw).toContain('Central health monitor annotation smoke');
+    expect(workflowRaw).toContain('npm run smoke:central-health-monitor');
 
     const { stdout, stderr } = await execFileAsync(TSX_BIN, [MONITOR_SCRIPT], {
       cwd: process.cwd(),

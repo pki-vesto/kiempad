@@ -3757,6 +3757,19 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('documenteert G1087 central health monitor annotation CI workflow smoke', () => {
+    for (const requiredTerm of [
+      'CI health-monitor smoke (G1086/G1087)',
+      'Central health monitor annotation smoke',
+      'npm run smoke:central-health-monitor',
+      '.github/workflows/ci.yml',
+      'na de centrale bootstrap smoke',
+      'gesanitized annotatie-fixture',
+    ]) {
+      expect(runbook + centralHealthMonitorAnnotationCommandTest).toContain(requiredTerm);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',
