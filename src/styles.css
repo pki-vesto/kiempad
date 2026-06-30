@@ -1775,6 +1775,52 @@ h2 {
   line-height: 1.5;
 }
 
+.start-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.start-task-route {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.start-task-route:focus-visible,
+.start-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.start-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.start-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .partner-orbits {
   position: relative;
   display: flex;
@@ -3105,16 +3151,19 @@ a.action-card:active {
   gap: 10px;
 }
 
+.kp-recommendation-list,
 .daily-recommendation-list {
   display: grid;
   gap: 12px;
 }
 
-.daily-recommendation-list .embedded-summary {
+.daily-recommendation-list .embedded-summary,
+.kp-recommendation-list .embedded-summary {
   min-height: 0;
   margin: 0;
 }
 
+.kp-recommendation-group__items,
 .daily-recommendation-items {
   display: grid;
   gap: 10px;
@@ -3123,6 +3172,7 @@ a.action-card:active {
   list-style: none;
 }
 
+.kp-recommendation-card,
 .daily-recommendation-item {
   display: grid;
   gap: 8px;
@@ -3132,10 +3182,43 @@ a.action-card:active {
   background: var(--surface-raised);
 }
 
+.kp-recommendation-card__header {
+  display: grid;
+  gap: 4px;
+}
+
+.kp-recommendation-card__title,
+.kp-recommendation-card__detail,
+.kp-recommendation-card__meta {
+  margin: 0;
+}
+
+.kp-recommendation-card__title,
 .daily-recommendation-item > strong {
   color: var(--text-strong);
 }
 
+.kp-recommendation-card__title {
+  font-size: 1rem;
+}
+
+.kp-recommendation-card__detail {
+  color: var(--text);
+}
+
+.kp-recommendation-card__meta {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.kp-recommendation-card__body {
+  display: grid;
+  gap: 8px;
+}
+
+.kp-recommendation-card__header,
+.kp-recommendation-card__body,
 .daily-recommendation-item > span,
 .daily-recommendation-item small {
   overflow-wrap: anywhere;
@@ -3505,6 +3588,22 @@ a.action-card:active {
 
   .start-command-header {
     align-items: start;
+  }
+
+  .start-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .start-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .start-task-route {
+    flex: 0 0 min(180px, 72vw);
+    scroll-snap-align: start;
   }
 
   .daily-command-board {

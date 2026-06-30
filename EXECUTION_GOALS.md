@@ -3261,15 +3261,31 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Epic:** Premium Claude Design UI
 - **Problem:** Uploadflows en de centrale timeline gebruiken nu herbruikbare componenten, maar dagelijkse aanbevelingen worden nog route-specifiek opgebouwd.
 - **User Impact:** Gebruikers ervaren aanbevelingen minder als rustige, betrouwbare dagkaarten met duidelijke broncontext.
-- **Desired Outcome:** Introduceer herbruikbare recommendationcomponenten en pas ze zichtbaar toe op minimaal één vrouw/man/dagadviesweergave.
+- **Desired Outcome:** Introduceer herbruikbare recommendationcomponenten en pas ze zichtbaar toe op minimaal één vrouw/man/dagadviesweergave, met een startschermroutebalk die de lange-paginaervaring doorbreekt.
 - **User Value:** Gebruikers kunnen leefstijl-, voeding-, supplement- en behandelvoorbereidingsadviezen beter scannen zonder medische adviesgrenzen te verliezen.
-- **Acceptance Criteria:** Componentlaag bevat herbruikbare recommendation card/list helpers; minimaal één aanbevelingsroute gebruikt de nieuwe structuur zichtbaar; bestaande bron-, review-, eigenaar- en artschecklabels blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde aanbevelingscontext; geen dosering, medische behandelkeuze, trackingpayload, secrets of raw dossierpayload wordt toegevoegd.
+- **Acceptance Criteria:** Componentlaag bevat herbruikbare recommendation card/list helpers; minimaal één aanbevelingsroute gebruikt de nieuwe structuur zichtbaar; het startscherm biedt compacte taakroute-ankers naar de belangrijkste blokken; theme-CSS laadt in dev/preview zonder CSP-inline-style blokkade; bestaande bron-, review-, eigenaar- en artschecklabels blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde aanbevelingscontext; geen dosering, medische behandelkeuze, trackingpayload, secrets of raw dossierpayload wordt toegevoegd.
 - **Affected Screens:** Daily recommendations, Start
 - **Priority:** P1
 - **Complexity:** M
 - **Related Components:** Recommendation UI, Dashboard UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 62
+- **Status:** ☑ done
+
+### G1184 — researchsamenvattingen omzetten naar herbruikbare researchcomponenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dashboard, uploads, timeline en aanbevelingen gebruiken nu herbruikbare componenten, maar researchsamenvattingen worden nog route-specifiek opgebouwd.
+- **User Impact:** Gebruikers zien wetenschappelijke samenvattingen minder consistent als begrijpelijke bronkaarten met lekenuitleg en relevantie.
+- **Desired Outcome:** Introduceer herbruikbare research summary/source componenten en pas ze zichtbaar toe op minimaal één researchdashboard- of kennisweergave.
+- **User Value:** Gebruikers kunnen wetenschappelijke samenvatting, eenvoudige samenvatting, bronverwijzing en persoonlijke relevantie rustiger scannen.
+- **Acceptance Criteria:** Componentlaag bevat herbruikbare research summary/source helpers; minimaal één researchroute gebruikt de nieuwe structuur zichtbaar; bestaande bron-, trend-, relevantie- en reviewlabels blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde researchcontext; geen providerpayload, trackingpayload, medische behandelkeuze, secrets of raw researchbody wordt toegevoegd.
+- **Affected Screens:** Research intelligence, Kennisbank, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Research UI, Knowledge UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 61
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

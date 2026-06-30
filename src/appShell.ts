@@ -183,6 +183,9 @@ import {
   disclosure,
   pageHeader,
   phaseHeroCard,
+  recommendationCard,
+  recommendationGroup,
+  recommendationList,
   type StepState,
   sectionStack,
   statRow,
@@ -9639,6 +9642,7 @@ function renderStartScreen(state: AppShellState): string {
   const phasePanel = phaseHeroCard(
     huidigeFase
       ? {
+          id: 'start-current-phase',
           eyebrow: `Huidige fase · ${huidigeFaseIndex} van ${sortedFasen.length}`,
           phaseLabel: TRAJECT_FASE_LABELS[huidigeFase.fase],
           subtitle: TRAJECT_FASE_TOELICHTING[huidigeFase.fase],
@@ -9646,6 +9650,7 @@ function renderStartScreen(state: AppShellState): string {
           cta: { href: '#traject', label: 'Bekijk traject' },
         }
       : {
+          id: 'start-current-phase',
           eyebrow: activeTraject ? 'Jullie traject' : 'Aan de slag',
           phaseLabel: activeTraject ? activeTraject.traject.naam : 'Begin jullie traject',
           subtitle: activeTraject
@@ -9673,6 +9678,7 @@ function renderStartScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderStartCommandHeader(state),
+      renderStartTaskRouteNav(),
       dashboardShell({
         className: 'start-dashboard-shell',
         ariaLabel: 'Taakgericht startdashboard',
@@ -9691,6 +9697,31 @@ function renderStartScreen(state: AppShellState): string {
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartTaskRouteNav(): string {
+  const routes = [
+    { href: '#start-current-phase', label: 'Fase', meta: 'Traject' },
+    { href: '#start-today', label: 'Vandaag', meta: 'Taken' },
+    { href: '#start-next-step', label: 'Volgende stap', meta: 'Planning' },
+    { href: '#start-recommendations', label: 'Aanbevelingen', meta: 'Dagadvies' },
+    { href: '#start-quick-entry', label: 'Snelle invoer', meta: 'Vastleggen' },
+  ];
+
+  return `
+    <nav class="start-task-routes" aria-label="Start taakroutes" data-start-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="start-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
 }
 
 function renderStartCommandHeader(state: AppShellState): string {
@@ -9729,6 +9760,7 @@ function renderStartNextStepBoard(
   openQuestions: string,
 ): string {
   return card({
+    id: 'start-next-step',
     title: 'Volgende stap',
     className: 'start-next-step-board',
     body: `<div class="action-card-list">${actionCard({
@@ -9813,7 +9845,7 @@ function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: 
   ].filter((item): item is string => Boolean(item));
 
   return `
-    <section class="summary-panel command-center" aria-label="Vandaag command center">
+    <section id="start-today" class="summary-panel command-center" aria-label="Vandaag command center">
       <h2>Vandaag</h2>
       <p class="small-print">Een lokaal takenoverzicht op basis van agenda, medicatie, vragen, herinneringen en context. Kiempad geeft geen medisch advies.</p>
       <div class="daily-command-board">
@@ -9931,6 +9963,7 @@ function renderStartRecommendationRoute(
 ): string {
   return dashboardSection({
     title: 'Dagelijkse aanbevelingen',
+    id: 'start-recommendations',
     eyebrow: 'Dagadvies',
     route: 'recommendations',
     ariaLabel: 'Dagelijkse aanbevelingen taakroute',
@@ -9947,6 +9980,7 @@ function renderStartRecommendationRoute(
 function renderStartQuickEntryRoute(): string {
   return dashboardSection({
     title: 'Snelle invoer',
+    id: 'start-quick-entry',
     eyebrow: 'Vastleggen',
     route: 'quick-entry',
     ariaLabel: 'Snelle invoer taakroute',
@@ -9955,35 +9989,52 @@ function renderStartQuickEntryRoute(): string {
 }
 
 function renderDailyRecommendationList(overview: DailyRecommendationOverview): string {
-  return `
-    <div class="daily-recommendation-list">
-      ${(['vrouw', 'man', 'samen'] as const)
-        .map((owner) => renderDailyRecommendationGroup(owner, overview[owner]))
-        .join('')}
-    </div>
-  `;
+  return recommendationList({
+    className: 'daily-recommendation-list',
+    ariaLabel: 'Dagelijkse aanbevelingen per eigenaar',
+    data: {
+      'recommendation-component': 'daily-owner-list',
+      'recommendation-component-state': 'structured',
+    },
+    groups: (['vrouw', 'man', 'samen'] as const).map((owner) =>
+      renderDailyRecommendationGroup(owner, overview[owner]),
+    ),
+  });
 }
 
 function renderDailyRecommendationGroup(
   owner: DailyRecommendationOwner,
   items: readonly DailyRecommendation[],
 ): string {
-  return `
-    <section class="policy-panel embedded-summary" aria-label="Dagelijkse aanbevelingen ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}">
-      <h3>${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}</h3>
-      <ol class="daily-recommendation-items">
-        ${items.map(renderDailyRecommendationItem).join('')}
-      </ol>
-    </section>
-  `;
+  return recommendationGroup({
+    title: DAILY_RECOMMENDATION_OWNER_LABELS[owner],
+    items: items.map(renderDailyRecommendationItem),
+    ariaLabel: `Dagelijkse aanbevelingen ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}`,
+    className: 'policy-panel embedded-summary daily-recommendation-group',
+    data: {
+      'recommendation-owner-group': owner,
+      'recommendation-count': String(items.length),
+    },
+  });
 }
 
 function renderDailyRecommendationItem(item: DailyRecommendation): string {
-  return `
-    <li class="daily-recommendation-item">
-      <strong>${escapeHtml(item.titel)}</strong>
-      <span>${escapeHtml(item.detail)}</span>
-      <p class="small-print">Eigenaar: ${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[item.owner])}${item.datum ? ` · Datum: ${escapeHtml(item.datum)}` : ''}${item.reden ? ` · Reden: ${escapeHtml(item.reden)}` : ''}</p>
+  const meta = `Eigenaar: ${DAILY_RECOMMENDATION_OWNER_LABELS[item.owner]}${item.datum ? ` · Datum: ${item.datum}` : ''}${item.reden ? ` · Reden: ${item.reden}` : ''}`;
+  return recommendationCard({
+    id: item.id,
+    owner: item.owner,
+    title: item.titel,
+    detail: item.detail,
+    meta,
+    className: 'daily-recommendation-item',
+    data: {
+      'recommendation-review-status':
+        item.inputMinimisatie?.reviewStatus ?? 'geen-inputminimalisatie',
+      'recommendation-artscheck': item.checklist?.some((checklistItem) => checklistItem.artscheck)
+        ? 'required'
+        : 'not-required',
+    },
+    body: `
       ${
         item.checklist
           ? `<ol class="compact-list rec-checklist">${item.checklist
@@ -10053,8 +10104,8 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
       }
       ${renderDailyRecommendationActions(item)}
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
-    </li>
-  `;
+    `,
+  });
 }
 
 function renderDailyRecommendationActions(item: DailyRecommendation): string {

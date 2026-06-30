@@ -97,15 +97,17 @@ export function dashboardShell(opts: {
 export function dashboardSection(opts: {
   title: string;
   body: string;
+  id?: string;
   eyebrow?: string;
   className?: string;
   ariaLabel?: string;
   route?: string;
 }): string {
+  const id = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
   const cls = opts.className ? ` ${opts.className}` : '';
   const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
   const route = opts.route ? ` data-dashboard-route="${escapeAttribute(opts.route)}"` : '';
-  return `<section class="kp-dashboard-section${cls}"${label}${route}>
+  return `<section${id} class="kp-dashboard-section${cls}"${label}${route}>
     ${opts.eyebrow ? `<p class="kp-dashboard-section__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : ''}
     <h2 class="kp-dashboard-section__title">${escapeHtml(opts.title)}</h2>
     <div class="kp-dashboard-section__body">${opts.body}</div>
@@ -199,9 +201,78 @@ export function timelineItem(opts: {
   </li>`;
 }
 
+/** Recommendation owner/card list. Items should be built with `recommendationGroup`. */
+export function recommendationList(opts: {
+  groups: readonly string[];
+  className?: string;
+  ariaLabel?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<div class="kp-recommendation-list${cls}"${label}${dataAttrs}>${opts.groups.join('')}</div>`;
+}
+
+/** Recommendation group for an owner/daypart. */
+export function recommendationGroup(opts: {
+  title: string;
+  items: readonly string[];
+  ariaLabel?: string;
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<section class="kp-recommendation-group${cls}"${label}${dataAttrs}>
+    <h3 class="kp-recommendation-group__title">${escapeHtml(opts.title)}</h3>
+    <ol class="kp-recommendation-group__items">${opts.items.join('')}</ol>
+  </section>`;
+}
+
+/** Recommendation card with raw HTML context/actions. */
+export function recommendationCard(opts: {
+  title: string;
+  detail: string;
+  meta: string;
+  body: string;
+  id?: string;
+  owner?: string;
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const data = {
+    ...(opts.id ? { 'recommendation-id': opts.id } : {}),
+    ...(opts.owner ? { 'recommendation-owner': opts.owner } : {}),
+    ...(opts.data ?? {}),
+  };
+  const dataAttrs = Object.entries(data)
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+  return `<li class="kp-recommendation-card${cls}"${dataAttrs}>
+    <header class="kp-recommendation-card__header">
+      <h4 class="kp-recommendation-card__title">${escapeHtml(opts.title)}</h4>
+      <p class="kp-recommendation-card__detail">${escapeHtml(opts.detail)}</p>
+      <p class="kp-recommendation-card__meta">${escapeHtml(opts.meta)}</p>
+    </header>
+    <div class="kp-recommendation-card__body">${opts.body}</div>
+  </li>`;
+}
+
 /** Rounded surface card. `body` is raw HTML. */
 export function card(opts: {
   body: string;
+  id?: string;
   title?: string;
   titleTag?: 'h2' | 'h3';
   eyebrow?: string;
@@ -210,13 +281,14 @@ export function card(opts: {
   className?: string;
 }): string {
   const tag = opts.titleTag ?? 'h2';
+  const id = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
   const variant = opts.variant && opts.variant !== 'default' ? ` kp-card--${opts.variant}` : '';
   const cls = opts.className ? ` ${opts.className}` : '';
   const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
   const head =
     (opts.eyebrow ? `<p class="kp-card__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : '') +
     (opts.title ? `<${tag} class="kp-card__title">${escapeHtml(opts.title)}</${tag}>` : '');
-  return `<section class="kp-card${variant}${cls}"${label}>${head}${opts.body}</section>`;
+  return `<section${id} class="kp-card${variant}${cls}"${label}>${head}${opts.body}</section>`;
 }
 
 /** Next-step / navigation card: tinted icon tile + title + subtitle + chevron. */
@@ -251,11 +323,13 @@ export function actionCard(opts: {
 /** Signature current-phase hero: dark-sage card, serif label, segmented dots. */
 export function phaseHeroCard(opts: {
   phaseLabel: string;
+  id?: string;
   eyebrow?: string;
   subtitle?: string;
   steps?: { label: string; state: StepState }[];
   cta?: { href: string; label: string };
 }): string {
+  const id = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
   const dots = (opts.steps ?? [])
     .map(
       (s) =>
@@ -264,7 +338,7 @@ export function phaseHeroCard(opts: {
         )}</span></span>`,
     )
     .join('');
-  return `<section class="phase-hero" aria-label="Huidige fase">
+  return `<section${id} class="phase-hero" aria-label="Huidige fase">
     ${opts.eyebrow ? `<p class="phase-hero__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : ''}
     <p class="phase-hero__label">${escapeHtml(opts.phaseLabel)}</p>
     ${opts.subtitle ? `<p class="phase-hero__subtitle">${escapeHtml(opts.subtitle)}</p>` : ''}
