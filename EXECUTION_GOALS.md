@@ -13032,4 +13032,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 64
+- **Status:** ☑ done
+
+### G1161 — dossier add feedback return interaction tone
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De focus-return link heeft nu betere touchruimte, maar hover- en tapfeedback kunnen nog rustiger aangeven dat dit een zachte terugactie is.
+- **User Impact:** Gebruikers kunnen op desktop en touchapparaten minder snel zien dat de teruglink interactief is zonder de feedbackvisuele rust te doorbreken.
+- **Desired Outcome:** Verfijn hover-, active- en taptoon van feedback focus-return links zonder copy, volgorde, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers herkennen de terugactie sneller en activeren hem met meer vertrouwen zonder extra visuele ruis.
+- **Acceptance Criteria:** Focus-return interactietoon is compact, duidelijk en rustig; bestaande ankers, form-id's, input names en data-hooks blijven intact; return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 63
 - **Status:** ☐ open

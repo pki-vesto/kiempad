@@ -5080,6 +5080,10 @@ describe('app shell', () => {
     expect(css).toContain('padding: 0 6px;');
     expect(css).toContain('border-radius: 999px;');
     expect(css).toContain('.dossier-submit-focus-return');
+    expect(css).toContain('display: inline-flex;');
+    expect(css).toContain('align-items: center;');
+    expect(css).toContain('min-height: 28px;');
+    expect(css).toContain('padding: 2px 6px;');
     expect(css).toContain('text-underline-offset: 3px;');
     expect(css).toContain('.dossier-submit-focus-return:focus-visible');
     expect(css).toContain('outline-offset: 3px;');
