@@ -5007,6 +5007,11 @@ describe('app shell', () => {
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
     );
     expect(css).toContain('scroll-margin-top: clamp(136px, 16vh, 176px);');
+    expect(css).toContain('#dossier-upload-form:target > .dossier-upload-group:first-of-type');
+    expect(css).toContain('#consult-verslag-form:target > .dossier-subform-group:first-of-type');
+    expect(css).toContain(
+      'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);',
+    );
     expect(css).toContain('.dossier-add-route:not([href="#dossier-upload-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#consult-verslag-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#embryo-quality-form"])');

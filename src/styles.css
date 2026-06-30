@@ -2163,6 +2163,14 @@ a.action-card:active {
   scroll-margin-top: clamp(136px, 16vh, 176px);
 }
 
+#dossier-upload-form:target > .dossier-upload-group:first-of-type,
+#consult-verslag-form:target > .dossier-subform-group:first-of-type,
+#embryo-quality-form:target > .dossier-subform-group:first-of-type,
+#embryo-status-event-form:target > .dossier-subform-group:first-of-type {
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-subtle) 93%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
 .dossier-add-route-panel + .dossier-add-route-panel {
   margin-top: 10px;
 }
@@ -2172,10 +2180,10 @@ a.action-card:active {
 }
 
 .dossier-add-route-panel:has(> form:target) {
-  padding: 10px;
   border-color: var(--accent);
   border-radius: var(--radius-card);
   background: var(--surface-subtle);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .dossier-add-form-start {
@@ -2426,10 +2434,6 @@ a.action-card:active {
 
   .dossier-add-route-panel + .dossier-add-route-panel {
     margin-top: 8px;
-  }
-
-  .dossier-add-route-panel:has(> form:target) {
-    padding: 9px;
   }
 
   .dossier-submit-action {
