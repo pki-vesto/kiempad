@@ -15,6 +15,7 @@ export type DossierDocumentInput = {
   embryo?: {
     label: string;
     kwaliteit: string;
+    kliniekBeoordeling?: NonNullable<DossierDocument['embryo']>['kliniekBeoordeling'];
     dag?: number;
     meetmoment?: string;
     kliniekTerminologie?: string;
@@ -221,7 +222,7 @@ export function maakDossierDocument(id: string, input: DossierDocumentInput): Do
   const inhoudBase64 = input.inhoudBase64.trim();
   const afspraakId = input.afspraakId?.trim();
   const trajectId = input.trajectId?.trim();
-  const embryo = normaliseerEmbryo(input.embryo);
+  const embryo = normaliseerEmbryo(input.embryo, datum);
   const notitie = input.notitie?.trim();
   const uploadedAt = input.uploadedAt?.trim() || new Date().toISOString();
   const categorie = input.categorie ?? 'onderzoek';
@@ -1245,7 +1246,10 @@ function beschrijfOcrStatus(ocr: NonNullable<DossierDocument['ocr']>): string {
   return 'niet ondersteund';
 }
 
-function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocument['embryo'] {
+function normaliseerEmbryo(
+  input: DossierDocumentInput['embryo'],
+  datum: string,
+): DossierDocument['embryo'] {
   const label = input?.label.trim();
   const kwaliteit = input?.kwaliteit.trim();
   if (!label && !kwaliteit) return undefined;
@@ -1255,6 +1259,11 @@ function normaliseerEmbryo(input: DossierDocumentInput['embryo']): DossierDocume
   return {
     label,
     kwaliteit,
+    kliniekBeoordeling: {
+      tekst: input?.kliniekBeoordeling?.tekst.trim() || kwaliteit,
+      bron: input?.kliniekBeoordeling?.bron.trim() || input?.bron?.trim() || 'Kliniekopgave',
+      datum: input?.kliniekBeoordeling?.datum.trim() || datum,
+    },
     dag:
       input?.dag && Number.isFinite(input.dag) && input.dag > 0 ? Math.round(input.dag) : undefined,
     meetmoment: input?.meetmoment?.trim() || undefined,

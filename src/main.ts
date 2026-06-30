@@ -744,11 +744,18 @@ async function saveEmbryoQualityFromForm(
     const embryoKliniekTerminologie = optionalString(data.get('embryoKliniekTerminologie'));
     const embryoBron = optionalString(data.get('embryoBron'));
     const embryoReviewStatus = parseEmbryoReviewStatus(data.get('embryoReviewStatus'));
+    const kliniekBeoordelingDatum = datum || new Date().toISOString().slice(0, 10);
+    const kliniekBeoordelingBron = embryoBron || 'Kliniekopgave';
     const inhoud = JSON.stringify({
       embryo: embryoLabel,
       dag: embryoDag,
       meetmoment: embryoMeetmoment,
       kwaliteit: embryoKwaliteit,
+      kliniekBeoordeling: {
+        tekst: embryoKwaliteit,
+        bron: kliniekBeoordelingBron,
+        datum: kliniekBeoordelingDatum,
+      },
       kliniekTerminologie: embryoKliniekTerminologie,
       status: embryoStatus,
       bron: embryoBron,
@@ -769,6 +776,11 @@ async function saveEmbryoQualityFromForm(
       embryo: {
         label: embryoLabel,
         kwaliteit: embryoKwaliteit,
+        kliniekBeoordeling: {
+          tekst: embryoKwaliteit,
+          bron: kliniekBeoordelingBron,
+          datum: kliniekBeoordelingDatum,
+        },
         dag: embryoDag,
         meetmoment: embryoMeetmoment,
         kliniekTerminologie: embryoKliniekTerminologie,

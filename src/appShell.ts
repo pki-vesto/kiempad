@@ -7665,6 +7665,11 @@ function renderEmbryoDetails(document: DossierDocument): string {
   const status = document.embryo.status ? EMBRYO_STATUS_LABELS[document.embryo.status] : undefined;
   const reviewStatus = document.embryo.reviewStatus ?? 'concept';
   const bronlabel = document.embryo.bron ?? document.metadata.bronbestand;
+  const kliniekBeoordeling = document.embryo.kliniekBeoordeling ?? {
+    tekst: document.embryo.kwaliteit,
+    bron: bronlabel,
+    datum: document.metadata.documentDatum ?? document.datum,
+  };
   const bronlabelDetails = [
     `Bronlabel embryokwaliteit: ${bronlabel}`,
     `Datum: ${document.metadata.documentDatum ?? document.datum}`,
@@ -7674,7 +7679,7 @@ function renderEmbryoDetails(document: DossierDocument): string {
     `Embryo: ${document.embryo.label}`,
     document.embryo.dag ? `Dag ${document.embryo.dag}` : undefined,
     document.embryo.meetmoment ? `Meetmoment: ${document.embryo.meetmoment}` : undefined,
-    `Kwaliteit: ${document.embryo.kwaliteit}`,
+    `Kliniekopgave kwaliteit: ${kliniekBeoordeling.tekst}`,
     document.embryo.kliniekTerminologie
       ? `Terminologie: ${document.embryo.kliniekTerminologie}`
       : undefined,
@@ -7684,6 +7689,7 @@ function renderEmbryoDetails(document: DossierDocument): string {
 
   return `
     <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
+    <p class="linked-note">Kliniekbeoordeling als bronregistratie: ${escapeHtml(kliniekBeoordeling.tekst)} · Bron: ${escapeHtml(kliniekBeoordeling.bron)} · Datum: ${escapeHtml(kliniekBeoordeling.datum)}</p>
     <p class="linked-note">${bronlabelDetails.map(escapeHtml).join(' · ')}</p>
   `;
 }

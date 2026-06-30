@@ -31184,6 +31184,11 @@ describe('app shell', () => {
             dag: 5,
             meetmoment: 'Dag 5 blastocyst',
             kwaliteit: '4AA',
+            kliniekBeoordeling: {
+              tekst: '4AA',
+              bron: 'Labrapport',
+              datum: '2026-05-04',
+            },
             kliniekTerminologie: 'Gardner-score',
             bron: 'Labrapport',
             reviewStatus: 'gereviewd',
@@ -31257,7 +31262,10 @@ describe('app shell', () => {
     expect(html).toContain('Reviewstatus bronlabel');
     expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
     expect(html).toContain(
-      'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
+      'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kliniekopgave kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
+    );
+    expect(html).toContain(
+      'Kliniekbeoordeling als bronregistratie: 4AA · Bron: Labrapport · Datum: 2026-05-04',
     );
     expect(html).toContain('Embryo-dossiers');
     expect(html).toContain('Embryovergelijking per poging');
