@@ -3836,6 +3836,42 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('documenteert G1090 central health monitor retention audit evidence', () => {
+    for (const requiredTerm of [
+      'Health Monitor Retention Audit',
+      'health-monitor failure-artifact evidence',
+      'PR-comments',
+      'Issuecomments',
+      '/tmp/kiempad-health-monitor-*.json',
+      'GitHub CI-artifacts',
+      'standaard Actions retention',
+      'upload health-monitor failure-artifacts niet opnieuw',
+      'Forbidden evidence terms',
+      'failure=...',
+      'recovery=...',
+      'contractVersion=1',
+    ]) {
+      expect(goalCompletionAudit).toContain(requiredTerm);
+    }
+
+    for (const forbiddenEvidenceTerm of [
+      'responsebody',
+      'headers',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(goalCompletionAudit).toContain(forbiddenEvidenceTerm);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

@@ -105,6 +105,21 @@ headings moeten exact blijven staan.
 <!-- completion-audit:end -->
 ```
 
+## Health Monitor Retention Audit
+
+Gebruik deze aanvullende audit wanneer een PR of issue health-monitor failure-artifact evidence bevat.
+
+- **PR-comments:** controleer dat blijvende PR-comments alleen compacte labels zoals
+  `failure=...`, `recovery=...` en `contractVersion=1` bevatten.
+- **Issuecomments:** controleer dat issuecomments na triage geen gekopieerde
+  health-response of CLI-output buiten de toegestane labels bewaren.
+- **Lokale kopieen:** verwijder tijdelijke `/tmp/kiempad-health-monitor-*.json`
+  bestanden en noteer alleen het cleanupcommando of de afwezigheid van zulke kopieen.
+- **GitHub CI-artifacts:** vertrouw op standaard Actions retention; upload health-monitor failure-artifacts niet opnieuw naar PR's, issues of externe opslag.
+- **Forbidden evidence terms:** blijvende audit-evidence mag geen responsebody,
+  headers, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata,
+  diagnose, dosering, kansberekening of behandelkeuzeadvies bevatten.
+
 ## Beslissing
 
 Markeer een doel alleen als `☑ klaar` wanneer ieder requirement direct bewijs heeft.
