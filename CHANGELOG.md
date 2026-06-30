@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1193/G1194 Premium Claude Design UI: het trajectscherm heeft nu taakgerichte treatmentroutes voor overzicht, faseplanning, vergoeding, timeline/graphcontext en beheer/archief, met behoud van `traject-form`, `traject-new-form`, faseknoppen en vergoedingcopy; G1194 is toegevoegd voor scheduleroutes in het agendascherm.
 - G1192/G1193 Premium Claude Design UI: het kostenscherm heeft nu taakgerichte financeroutes voor overzicht, toevoegen, vergoeding/eigen risico en historie, met behoud van kostenformulieren, kosten selectors en polisdisclaimers; G1193 is toegevoegd voor treatmentroutes in het trajectscherm.
 - G1191/G1192 Premium Claude Design UI: het logboek heeft nu taakgerichte historyroutes voor overzicht, recente gebeurtenissen, categorieën en privacygevoelige auditregels, met behoud van eventlog selectors en privacy-sanitization; G1192 is toegevoegd voor financeroutes in het kostenscherm.
 - G1190/G1191 Premium Claude Design UI: het herinneringenscherm heeft nu taakgerichte notificationroutes voor status, lockscreenprivacy, plannen en komende/fallbackmeldingen, met behoud van reminder- en notificationprivacy hooks; G1191 is toegevoegd voor logboek- en audit-historyroutes.
