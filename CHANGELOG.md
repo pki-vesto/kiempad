@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1147/G1148 Premium Claude Design UI: post-submit feedback staat nu direct onder de route-specifieke submitactie voor documentupload, consultverslag, embryokwaliteit en embryo-status met veilige workflowcopy zonder broninhoud; G1148 is toegevoegd voor duidelijkere feedbackstatus-tonen.
 - G1146/G1147 Premium Claude Design UI: de vier dossier-toevoegroutes hebben nu compacte route-specifieke primaire submitacties met vaste submit-hooks en mobiele full-width guard zonder formcontracten, ankers of privacyhooks te wijzigen; G1147 is toegevoegd voor post-submit feedbackplaatsing.
 - G1145/G1146 Premium Claude Design UI: de dossier-toevoegsecties gebruiken nu compactere panel-, formulier- en fieldset-spacing met mobiele spacingguards zonder formcontracten, ankers of privacyhooks te wijzigen; G1146 is toegevoegd voor submitactie-hierarchie.
 - G1144/G1145 Premium Claude Design UI: optionele contextgroepen in de dossier-toevoegflow zijn nu visueel secundair met rustige optional-badges zonder formcontracten, ankers of privacyhooks te wijzigen; G1145 is toegevoegd voor spacing-audit tussen toevoegsecties.
