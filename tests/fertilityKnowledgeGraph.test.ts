@@ -4,10 +4,12 @@ import {
   bevestigFertilityGraphRelaties,
   bouwFertilityGraphWeergavePerTraject,
   bouwFertilityKnowledgeGraph,
+  controleerFertilityGraphNodeSchema,
   type FertilityGraphIndexRebuildInput,
   genereerFertilityGraphContextInzichten,
   herbouwFertilityGraphIndex,
   maakFertilityGraphConsultSamenvattingExport,
+  maakFertilityGraphNode,
   stelFertilityGraphRelatiesVoor,
 } from '../src/domain/fertilityKnowledgeGraph';
 import type { ConsultVerslag, DossierDocument, KennisItem } from '../src/domain/types';
@@ -157,6 +159,60 @@ describe('fertility knowledge graph', () => {
       ]),
     );
     expect(graph.edges.every((edge) => edge.waarschuwing.includes('geen causaliteit'))).toBe(true);
+    expect(graph.nodes.every((node) => controleerFertilityGraphNodeSchema(node).geldig)).toBe(true);
+    expect(graph.nodes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'document:doc-1',
+          schemaVersie: 1,
+          bronRecordId: 'doc-1',
+          bronType: 'dossier_document',
+          reviewStatus: 'concept',
+          waarschuwing: expect.stringContaining('geen causaliteit'),
+        }),
+        expect.objectContaining({
+          id: 'consult:consult-1',
+          bronRecordId: 'consult-1',
+          bronType: 'consult_verslag',
+          reviewStatus: 'concept',
+        }),
+        expect.objectContaining({
+          id: 'research:research-1',
+          bronRecordId: 'research-1',
+          bronType: 'kennis_item',
+          reviewStatus: 'concept',
+        }),
+      ]),
+    );
+  });
+
+  it('valideert het knowledge graph node schema zonder medische payloadvelden', () => {
+    const node = maakFertilityGraphNode({
+      id: 'document:doc-schema',
+      type: 'document',
+      titel: 'Labrapport metadata',
+      datum: '2026-06-24',
+      bron: 'labrapport.pdf',
+      bronRecordId: 'doc-schema',
+      bronType: 'dossier_document',
+      reviewStatus: 'gereviewd',
+    });
+
+    expect(node).toMatchObject({
+      schemaVersie: 1,
+      bronRecordId: 'doc-schema',
+      bronType: 'dossier_document',
+      reviewStatus: 'gereviewd',
+      waarschuwing: expect.stringContaining('geen causaliteit'),
+    });
+    expect(controleerFertilityGraphNodeSchema(node)).toEqual({
+      geldig: true,
+      ontbrekendeVelden: [],
+      waarschuwing: expect.stringContaining('geen causaliteit'),
+    });
+
+    const output = JSON.stringify(node);
+    expect(output).not.toMatch(/inhoudBase64|RAW_|ocr|behandelkeuzeadvies/i);
   });
 
   it('stelt graph-relaties automatisch voor en bevestigt geselecteerde relaties handmatig', () => {

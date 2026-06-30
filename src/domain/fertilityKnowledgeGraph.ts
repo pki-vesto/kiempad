@@ -10,6 +10,17 @@ export type FertilityGraphNodeType =
   | 'research'
   | 'aanbeveling';
 
+export type FertilityGraphNodeBronType =
+  | 'traject'
+  | 'afspraak'
+  | 'dossier_document'
+  | 'consult_verslag'
+  | 'kennis_item'
+  | 'aanbeveling'
+  | 'afgeleide_bron';
+
+export type FertilityGraphReviewStatus = 'concept' | 'gereviewd';
+
 export type FertilityGraphEdgeType =
   | 'hoort_bij_behandeling'
   | 'hoort_bij_afspraak'
@@ -18,11 +29,22 @@ export type FertilityGraphEdgeType =
   | 'research_notitie';
 
 export type FertilityGraphNode = {
+  schemaVersie: 1;
   id: string;
   type: FertilityGraphNodeType;
   titel: string;
   datum?: string;
   bron: string;
+  bronRecordId: string;
+  bronType: FertilityGraphNodeBronType;
+  reviewStatus: FertilityGraphReviewStatus;
+  waarschuwing: string;
+};
+
+export type FertilityGraphNodeSchemaControle = {
+  geldig: boolean;
+  ontbrekendeVelden: string[];
+  waarschuwing: string;
 };
 
 export type FertilityGraphEdge = {
@@ -127,6 +149,43 @@ export type FertilityGraphConsultSamenvattingExport = {
 const GRAPH_WAARSCHUWING =
   'Lokaal kennisnetwerk met feitelijke relaties uit opgeslagen records; geen causaliteit, diagnose, kansberekening of behandeladvies.';
 
+export function maakFertilityGraphNode(
+  input: Omit<FertilityGraphNode, 'schemaVersie' | 'waarschuwing'>,
+): FertilityGraphNode {
+  return {
+    schemaVersie: 1,
+    waarschuwing: GRAPH_WAARSCHUWING,
+    ...input,
+  };
+}
+
+export function controleerFertilityGraphNodeSchema(
+  node: FertilityGraphNode,
+): FertilityGraphNodeSchemaControle {
+  const ontbrekendeVelden = [
+    ['schemaVersie', node.schemaVersie],
+    ['id', node.id],
+    ['type', node.type],
+    ['titel', node.titel],
+    ['bron', node.bron],
+    ['bronRecordId', node.bronRecordId],
+    ['bronType', node.bronType],
+    ['reviewStatus', node.reviewStatus],
+    ['waarschuwing', node.waarschuwing],
+  ]
+    .filter(([, value]) => value === undefined || value === '')
+    .map(([veld]) => String(veld));
+
+  return {
+    geldig:
+      ontbrekendeVelden.length === 0 &&
+      node.schemaVersie === 1 &&
+      (node.reviewStatus === 'concept' || node.reviewStatus === 'gereviewd'),
+    ontbrekendeVelden,
+    waarschuwing: GRAPH_WAARSCHUWING,
+  };
+}
+
 export function bouwFertilityKnowledgeGraph(
   input: FertilityGraphIndexRebuildInput,
 ): FertilityKnowledgeGraph {
@@ -146,23 +205,33 @@ export function bouwFertilityKnowledgeGraph(
   };
 
   for (const traject of input.trajecten) {
-    voegNodeToe({
-      id: trajectNodeId(traject.traject.id),
-      type: 'behandeling',
-      titel: traject.traject.naam,
-      datum: traject.traject.startDatum,
-      bron: 'Traject',
-    });
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: trajectNodeId(traject.traject.id),
+        type: 'behandeling',
+        titel: traject.traject.naam,
+        datum: traject.traject.startDatum,
+        bron: 'Traject',
+        bronRecordId: traject.traject.id,
+        bronType: 'traject',
+        reviewStatus: 'gereviewd',
+      }),
+    );
   }
 
   for (const afspraak of input.afspraken) {
-    voegNodeToe({
-      id: afspraakNodeId(afspraak.id),
-      type: 'behandeling',
-      titel: afspraak.titel,
-      datum: afspraak.datumTijd,
-      bron: 'Agenda',
-    });
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: afspraakNodeId(afspraak.id),
+        type: 'behandeling',
+        titel: afspraak.titel,
+        datum: afspraak.datumTijd,
+        bron: 'Agenda',
+        bronRecordId: afspraak.id,
+        bronType: 'afspraak',
+        reviewStatus: 'gereviewd',
+      }),
+    );
     if (afspraak.trajectId) {
       voegEdgeToe({
         from: afspraakNodeId(afspraak.id),
@@ -176,13 +245,18 @@ export function bouwFertilityKnowledgeGraph(
 
   for (const document of input.dossierDocuments) {
     const documentId = documentNodeId(document.id);
-    voegNodeToe({
-      id: documentId,
-      type: 'document',
-      titel: document.titel,
-      datum: document.metadata.documentDatum ?? document.datum,
-      bron: document.metadata.bronbestand ?? document.bestandsNaam,
-    });
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: documentId,
+        type: 'document',
+        titel: document.titel,
+        datum: document.metadata.documentDatum ?? document.datum,
+        bron: document.metadata.bronbestand ?? document.bestandsNaam,
+        bronRecordId: document.id,
+        bronType: 'dossier_document',
+        reviewStatus: bepaalDossierDocumentGraphReviewStatus(document),
+      }),
+    );
 
     const trajectId =
       document.metadata.trajectId ?? document.trajectId ?? document.beeldMetadata?.trajectId;
@@ -213,13 +287,18 @@ export function bouwFertilityKnowledgeGraph(
       document.beeldMetadata?.embryoId;
     if (embryoLabel) {
       const embryoId = embryoNodeId(trajectId, embryoLabel);
-      voegNodeToe({
-        id: embryoId,
-        type: 'embryo',
-        titel: embryoLabel,
-        datum: document.beeldMetadata?.datum ?? document.metadata.documentDatum ?? document.datum,
-        bron: document.embryo?.bron ?? document.beeldMetadata?.bron ?? 'Dossierdocument',
-      });
+      voegNodeToe(
+        maakFertilityGraphNode({
+          id: embryoId,
+          type: 'embryo',
+          titel: embryoLabel,
+          datum: document.beeldMetadata?.datum ?? document.metadata.documentDatum ?? document.datum,
+          bron: document.embryo?.bron ?? document.beeldMetadata?.bron ?? 'Dossierdocument',
+          bronRecordId: document.id,
+          bronType: 'dossier_document',
+          reviewStatus: document.embryo?.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+        }),
+      );
       voegEdgeToe({
         from: documentId,
         to: embryoId,
@@ -241,13 +320,18 @@ export function bouwFertilityKnowledgeGraph(
 
   for (const consult of input.consultVerslagen) {
     const consultId = consultNodeId(consult.id);
-    voegNodeToe({
-      id: consultId,
-      type: 'gesprek',
-      titel: consult.titel,
-      datum: consult.datum,
-      bron: consult.bestandsNaam ? `Consultupload: ${consult.bestandsNaam}` : 'Consulttekst',
-    });
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: consultId,
+        type: 'gesprek',
+        titel: consult.titel,
+        datum: consult.datum,
+        bron: consult.bestandsNaam ? `Consultupload: ${consult.bestandsNaam}` : 'Consulttekst',
+        bronRecordId: consult.id,
+        bronType: 'consult_verslag',
+        reviewStatus: bepaalConsultGraphReviewStatus(consult),
+      }),
+    );
     if (consult.trajectId) {
       voegEdgeToe({
         from: consultId,
@@ -271,19 +355,29 @@ export function bouwFertilityKnowledgeGraph(
   for (const item of input.kennisItems.filter((item) => item.categorie === 'research')) {
     const researchId = researchNodeId(item.id);
     const bron = item.researchPublicatie?.bron ?? item.bron ?? 'Lokale researchnotitie';
-    voegNodeToe({
-      id: researchId,
-      type: 'research',
-      titel: item.titel,
-      datum: item.researchPublicatie?.publicatieDatum,
-      bron,
-    });
-    voegNodeToe({
-      id: bronNodeId(bron),
-      type: 'document',
-      titel: bron,
-      bron: 'Researchbron',
-    });
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: researchId,
+        type: 'research',
+        titel: item.titel,
+        datum: item.researchPublicatie?.publicatieDatum,
+        bron,
+        bronRecordId: item.id,
+        bronType: 'kennis_item',
+        reviewStatus: item.geverifieerd_met_arts ? 'gereviewd' : 'concept',
+      }),
+    );
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: bronNodeId(bron),
+        type: 'document',
+        titel: bron,
+        bron: 'Researchbron',
+        bronRecordId: item.id,
+        bronType: 'afgeleide_bron',
+        reviewStatus: item.geverifieerd_met_arts ? 'gereviewd' : 'concept',
+      }),
+    );
     voegEdgeToe({
       from: researchId,
       to: bronNodeId(bron),
@@ -295,12 +389,17 @@ export function bouwFertilityKnowledgeGraph(
 
   for (const aanbeveling of Object.values(input.aanbevelingen ?? {}).flat()) {
     const aanbevelingId = aanbevelingNodeId(aanbeveling.id);
-    voegNodeToe({
-      id: aanbevelingId,
-      type: 'aanbeveling',
-      titel: aanbeveling.titel,
-      bron: aanbeveling.bron,
-    });
+    voegNodeToe(
+      maakFertilityGraphNode({
+        id: aanbevelingId,
+        type: 'aanbeveling',
+        titel: aanbeveling.titel,
+        bron: aanbeveling.bron,
+        bronRecordId: aanbeveling.id,
+        bronType: 'aanbeveling',
+        reviewStatus: 'gereviewd',
+      }),
+    );
     for (const bron of aanbeveling.gebruikteBronnen ?? [aanbeveling.bron]) {
       voegEdgeToe({
         from: aanbevelingId,
@@ -309,12 +408,17 @@ export function bouwFertilityKnowledgeGraph(
         label: 'Aanbeveling gebruikt lokale bron',
         bron,
       });
-      voegNodeToe({
-        id: bronNodeId(bron),
-        type: 'document',
-        titel: bron,
-        bron: 'Aanbevelingsbron',
-      });
+      voegNodeToe(
+        maakFertilityGraphNode({
+          id: bronNodeId(bron),
+          type: 'document',
+          titel: bron,
+          bron: 'Aanbevelingsbron',
+          bronRecordId: aanbeveling.id,
+          bronType: 'afgeleide_bron',
+          reviewStatus: 'gereviewd',
+        }),
+      );
     }
   }
 
@@ -576,6 +680,40 @@ function documentNodeId(id: string): string {
 
 function consultNodeId(id: string): string {
   return `consult:${id}`;
+}
+
+function bepaalDossierDocumentGraphReviewStatus(
+  document: DossierDocument,
+): FertilityGraphReviewStatus {
+  const reviewStatussen = [
+    document.inhoudChecksum?.reviewStatus,
+    document.embryo?.reviewStatus,
+    document.beeldMetadata?.reviewStatus,
+    document.ocr?.reviewStatus,
+    ...(document.metadata.normalisatie?.labwaarden ?? []).map(
+      (labwaarde) => labwaarde.reviewStatus,
+    ),
+  ].filter((status): status is FertilityGraphReviewStatus => Boolean(status));
+
+  return reviewStatussen.length > 0 && reviewStatussen.every((status) => status === 'gereviewd')
+    ? 'gereviewd'
+    : 'concept';
+}
+
+function bepaalConsultGraphReviewStatus(consult: ConsultVerslag): FertilityGraphReviewStatus {
+  const reviewStatussen = [
+    consult.importMetadata?.reviewStatus,
+    consult.samenvatting?.bronParagraaf?.reviewStatus,
+    consult.samenvattingReview?.status === 'aangepast' ||
+    consult.samenvattingReview?.status === 'verworpen'
+      ? 'gereviewd'
+      : undefined,
+    ...(consult.actiepunten ?? []).map(() => 'concept' as const),
+  ].filter((status): status is FertilityGraphReviewStatus => Boolean(status));
+
+  return reviewStatussen.length > 0 && reviewStatussen.every((status) => status === 'gereviewd')
+    ? 'gereviewd'
+    : 'concept';
 }
 
 function embryoNodeId(trajectId: string | undefined, label: string): string {

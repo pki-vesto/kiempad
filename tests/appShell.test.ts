@@ -2658,6 +2658,12 @@ describe('app shell', () => {
     expect(html).toContain('name="graphDatumTot" type="date" value="2026-06-30"');
     expect(html).toContain('Nodes');
     expect(html).toContain('Relaties');
+    expect(html).toContain('aria-label="Knowledge graph node schema"');
+    expect(html).toContain('data-graph-node-schema-state="concept-review"');
+    expect(html).toContain('data-graph-node-id="document:doc-1"');
+    expect(html).toContain('Type: document · Bron: echo.pdf · Datum: 2026-06-24');
+    expect(html).toContain('Reviewstatus: Concept · Schema: v1');
+    expect(html).toContain('Graph-nodes zijn bronmetadata voor context');
     expect(html).toContain('Graph-index rebuild');
     expect(html).toContain('Opnieuw opgebouwd uit ontgrendelde encrypted datasetrecords');
     expect(html).toContain('Bronrecords');
@@ -2672,6 +2678,11 @@ describe('app shell', () => {
     expect(html).toContain('Kiempad graph-samenvatting voor consultvoorbereiding');
     expect(html).toContain('Gebruik dit als gespreksoverzicht');
     expect(html).toContain('geen causaliteit');
+    const graphNodeSchemaStart = html.indexOf('aria-label="Knowledge graph node schema"');
+    const graphNodeSchemaEnd = html.indexOf('</section>', graphNodeSchemaStart);
+    const graphNodeSchema = html.slice(graphNodeSchemaStart, graphNodeSchemaEnd);
+    expect(graphNodeSchema).not.toContain('base64');
+    expect(graphNodeSchema).not.toMatch(/diagnose|dosering|kansberekening|behandelkeuzeadvies/i);
   });
 
   it('bewaakt knowledge graph relationship states met lege graph, gemengde relaties en veilige bronpaden', () => {
