@@ -12107,4 +12107,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1100 — central health monitor retention compact contract release guard missing-term fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1099 bewaakt releasecontext voor het compacte contract, maar ontbrekende termen in deze releaseguard hebben nog geen compacte technische fixture.
+- **Desired Outcome:** Leg vast dat ontbrekende G1099 releaseguard-termen met een compacte technische foutmelding worden gerapporteerd.
+- **User Value:** Beheer ziet releaseguard-drift zonder privacygevoelige evidence of lange documentcontext.
+- **Acceptance Criteria:** Missing-term foutmelding voor de G1099 releaseguard is compact getest; foutmelding noemt alleen veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
