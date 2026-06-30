@@ -1306,24 +1306,24 @@ function renderDossierScreen(state: AppShellState): string {
         <div class="kp-disclosure__body">
         <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact">
           <a href="#dossier-upload-form" class="dossier-add-route">
-            <strong>Onderzoek of bestand</strong>
-            <span>PDF, afbeelding, echo of scan</span>
-            <small data-dossier-add-route-cue="document">Bestand + conceptreview</small>
+            <strong>Document toevoegen</strong>
+            <span>Onderzoek, echo, foto of scan</span>
+            <small data-dossier-add-route-cue="document">Upload + controle</small>
           </a>
           <a href="#consult-verslag-form" class="dossier-add-route">
-            <strong>Consultverslag</strong>
-            <span>Gesprek, notitie of samenvatting</span>
-            <small data-dossier-add-route-cue="consult">Tekst, PDF of foto</small>
+            <strong>Consult vastleggen</strong>
+            <span>Gesprek, notitie of artsupdate</span>
+            <small data-dossier-add-route-cue="consult">Tekst of bestand</small>
           </a>
           <a href="#embryo-quality-form" class="dossier-add-route">
-            <strong>Embryokwaliteit</strong>
-            <span>Labscore en broncontrole</span>
-            <small data-dossier-add-route-cue="embryo-quality">Score + bronlabel</small>
+            <strong>Labkwaliteit</strong>
+            <span>Embryoscore met bronlabel</span>
+            <small data-dossier-add-route-cue="embryo-quality">Score registreren</small>
           </a>
           <a href="#embryo-status-event-form" class="dossier-add-route">
-            <strong>Embryo-status</strong>
-            <span>Statusmoment of terugkoppeling</span>
-            <small data-dossier-add-route-cue="embryo-status">Status + koppeling</small>
+            <strong>Status bijwerken</strong>
+            <span>Embryomoment of terugkoppeling</span>
+            <small data-dossier-add-route-cue="embryo-status">Status koppelen</small>
           </a>
         </nav>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">

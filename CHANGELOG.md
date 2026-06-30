@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1135/G1136 Premium Claude Design UI: de dossier-toevoegroutekaartcopy onderscheidt nu document toevoegen, consult vastleggen, labkwaliteit en status bijwerken met kortere readiness-cues zonder ankers, formcontracten of privacyhooks te breken; G1136 is toegevoegd voor actieve route-affordance.
 - G1134/G1135 Premium Claude Design UI: de dossier-toevoegroute-selector is op smalle mobiele schermen compacter met tweekoloms routekaarten, kortere spacing en zichtbare readiness-cues zonder ankers, formcontracten of privacyhooks te breken; G1135 is toegevoegd voor routecopy-verfijning.
 - G1133/G1134 Premium Claude Design UI: de dossier-toevoegroute-selector toont nu compacte readiness-cues voor documentupload, consultverslag, embryokwaliteit en embryo-status zonder ankers, formcontracten of privacyhooks te breken; G1134 is toegevoegd voor mobiele dichtheidstuning.
 - G1132/G1133 Premium Claude Design UI: de dossier-toevoegflow focust nu de gekozen route met target-panels rond documentupload, consultverslag, embryokwaliteit en embryo-status zonder formulieren, ankers of privacyhooks te verbergen; G1133 is toegevoegd voor readiness-cues per route.
