@@ -1,4 +1,5 @@
 import {
+  normalizeScheduleRoute,
   normalizeScreenId,
   normalizeTreatmentRoute,
   renderAppShell,
@@ -189,6 +190,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     graphFilter: state.graphFilter,
     timelineFilter: state.timelineFilter,
     activeTreatmentRoute: normalizeTreatmentRoute(window.location.hash),
+    activeScheduleRoute: normalizeScheduleRoute(window.location.hash),
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,

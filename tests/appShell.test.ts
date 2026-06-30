@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
+  normalizeScheduleRoute,
   normalizeScreenId,
   normalizeTreatmentRoute,
   renderAppShell,
@@ -1649,6 +1650,10 @@ describe('app shell', () => {
     expect(normalizeScreenId('#afwegingen')).toBe('afwegingen');
     expect(normalizeScreenId('#logboek')).toBe('logboek');
     expect(normalizeScreenId('#dossier')).toBe('dossier');
+    expect(normalizeScreenId('#agenda?route=plannen')).toBe('agenda');
+    expect(normalizeScheduleRoute('#agenda?route=plannen')).toBe('plannen');
+    expect(normalizeScheduleRoute('#/agenda?route=historie')).toBe('historie');
+    expect(normalizeScheduleRoute('#agenda?route=bestaat-niet')).toBe('overzicht');
     expect(normalizeScreenId('#traject?route=fasen')).toBe('traject');
     expect(normalizeTreatmentRoute('#traject?route=fasen')).toBe('fasen');
     expect(normalizeTreatmentRoute('#traject?route=context')).toBe('context');
@@ -2927,6 +2932,30 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Echo controle');
+    expect(html).toContain('class="section-stack schedule-command-layout"');
+    expect(html).toContain('class="schedule-task-routes"');
+    expect(html).toContain('aria-label="Agenda taakroutes"');
+    expect(html).toContain('data-schedule-task-routes="ready"');
+    expect(html).toContain('href="#agenda?route=overzicht" aria-current="page"');
+    expect(html).toContain('href="#agenda?route=komend"');
+    expect(html).toContain('href="#agenda?route=plannen"');
+    expect(html).toContain('href="#agenda?route=import"');
+    expect(html).toContain('href="#agenda?route=historie"');
+    expect(html).toContain('id="agenda-route-overzicht"');
+    expect(html).toContain('data-schedule-route="overzicht"');
+    expect(html).toContain('data-schedule-route-state="active"');
+    expect(html).toContain('id="agenda-route-komend"');
+    expect(html).toContain('data-schedule-route="komend"');
+    expect(html).toContain('id="agenda-route-plannen"');
+    expect(html).toContain('data-schedule-route="plannen"');
+    expect(html).toContain('id="agenda-route-import"');
+    expect(html).toContain('data-schedule-route="import"');
+    expect(html).toContain('id="agenda-route-historie"');
+    expect(html).toContain('data-schedule-route="historie"');
+    expect(html).toContain('Agendaoverzicht');
+    expect(html).toContain('Afspraak plannen of bewerken');
+    expect(html).toContain('Kliniekagenda importeren');
+    expect(html).toContain('Afgelopen afspraken');
     expect(html).toContain('id="export-ics"');
     expect(html).toContain('Download ICS');
     expect(html).toContain('ICS importeren');
@@ -2944,6 +2973,35 @@ describe('app shell', () => {
     expect(html).toContain('Geweest · Consult · 2020-01-02 10:00');
     expect(html).toContain('Terugblik: Besproken wat de volgende stap wordt.');
     expect(html).toContain('aria-label="Verwijder afspraak: Echo controle"');
+  });
+
+  it('toont één actieve scheduleroute tegelijk', () => {
+    const html = renderAppShell('agenda', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeScheduleRoute: 'plannen',
+    });
+
+    const overzichtStart = html.indexOf('id="agenda-route-overzicht"');
+    const komendStart = html.indexOf('id="agenda-route-komend"');
+    const plannenStart = html.indexOf('id="agenda-route-plannen"');
+    const importStart = html.indexOf('id="agenda-route-import"');
+
+    expect(html).toContain('href="#agenda?route=plannen" aria-current="page"');
+    expect(html.slice(overzichtStart, komendStart)).toContain(
+      'data-schedule-route-state="inactive" hidden',
+    );
+    expect(html.slice(plannenStart, importStart)).toContain('data-schedule-route-state="active"');
+    expect(html.slice(plannenStart, importStart)).not.toContain(
+      'data-schedule-route-state="inactive" hidden',
+    );
+    expect(html).toContain('id="afspraak-form"');
   });
 
   it('rendert graphweergave per traject met relatietype- en periodefilters', () => {

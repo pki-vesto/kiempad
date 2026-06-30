@@ -2692,6 +2692,117 @@ h2 {
   min-width: 0;
 }
 
+.schedule-command-layout {
+  gap: 18px;
+}
+
+.schedule-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.schedule-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.schedule-task-route:focus-visible,
+.schedule-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.schedule-task-route[aria-current="page"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.schedule-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schedule-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schedule-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.schedule-route-section[hidden] {
+  display: none;
+}
+
+.schedule-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.schedule-route-section__header h2,
+.schedule-route-section__header p {
+  margin: 0;
+}
+
+.schedule-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.schedule-route-section .summary-panel,
+.schedule-route-section .policy-panel,
+.schedule-route-section .linked-note,
+.schedule-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.schedule-route-section .definition-list > div,
+.schedule-route-section .summary-list > div,
+.schedule-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.schedule-route-section .definition-list dd,
+.schedule-route-section .summary-list dd,
+.schedule-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.schedule-route-section .data-form,
+.schedule-route-section .compact-form,
+.schedule-route-section .data-form label,
+.schedule-route-section .data-form input,
+.schedule-route-section .data-form select,
+.schedule-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4800,6 +4911,15 @@ a.action-card:active {
   }
 
   .treatment-task-route {
+    min-width: 0;
+  }
+
+  .schedule-task-routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 7px;
+  }
+
+  .schedule-task-route {
     min-width: 0;
   }
 

@@ -204,8 +204,12 @@
 - **G1193 treatmentroutes:** het trajectscherm heeft nu een routebalk en duidelijke
   clusters voor trajectoverzicht, faseplanning, vergoeding, timeline/graphcontext en
   beheer/archief,
-  met behoud van `traject-form`, `traject-new-form`, faseknoppen en vergoedingcopy;
-  G1194 staat open voor scheduleroutes in het agendascherm.
+  met behoud van `traject-form`, `traject-new-form`, faseknoppen en vergoedingcopy.
+- **G1194 scheduleroutes:** het agendascherm heeft nu een routebalk en duidelijke
+  clusters voor agendaoverzicht, komende afspraken, plannen/bewerken, ICS-import en
+  historie, met behoud van `afspraak-form`, `ics-import-form`, reminderhooks,
+  vraagkoppeling en privacyfeedback; G1195 staat open voor medicationroutes in het
+  medicatiescherm.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
