@@ -12984,4 +12984,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 67
+- **Status:** ☑ done
+
+### G1158 — dossier add feedback microcopy order audit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De volgende actie is visueel duidelijker, maar de volgorde van status, hersteldoel, actie en teruglink moet nog expliciet op scanbaarheid worden bewaakt.
+- **User Impact:** Gebruikers kunnen bij meerdere feedbackregels alsnog extra lezen als de hiërarchie niet consequent status-eerst en actie-daarna blijft.
+- **Desired Outcome:** Bewaak en verfijn de microcopy-volgorde binnen dossier-submitfeedback zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers scannen feedback sneller en begrijpen in vaste volgorde wat er is gebeurd, waar herstel nodig is en welke actie volgt.
+- **Acceptance Criteria:** Feedbackvolgorde is status, hersteldoel, volgende actie, focus-return link; bestaande ankers, form-id's, input names en data-hooks blijven intact; next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 66
 - **Status:** ☐ open

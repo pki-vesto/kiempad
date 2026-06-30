@@ -2059,7 +2059,7 @@ function renderDossierSubmitFeedback(
   const ariaLabel = `Feedback ${renderDossierSubmitRouteLabel(route)}: ${renderDossierSubmitFeedbackStateLabel(feedbackState)}.`;
   const announcementOrder = renderDossierSubmitFeedbackAnnouncementOrder(route);
   const recoveryMarkup = recoveryHint
-    ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
+    ? `<span class="dossier-submit-recovery dossier-submit-next-action" data-dossier-submit-recovery="${route}" data-dossier-submit-next-action="${route}">${escapeHtml(recoveryHint)}</span>`
     : '';
   const targetConfirmation = renderDossierSubmitTargetConfirmation(route, feedbackState);
   const targetConfirmationMarkup = targetConfirmation
