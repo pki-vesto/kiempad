@@ -35880,6 +35880,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);');
     expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-margin-top: 96px;');
+    expect(mobileCss).toContain('.command-route-section .data-form {');
+    expect(mobileCss).toContain('gap: 10px;');
+    expect(mobileCss).toContain('.command-route-section .data-form > button[type="submit"]');
+    expect(mobileCss).toContain('position: sticky;');
+    expect(mobileCss).toContain('bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);');
+    expect(mobileCss).toContain('min-height: 44px;');
   });
 
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
