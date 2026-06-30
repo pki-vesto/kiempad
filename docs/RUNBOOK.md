@@ -161,7 +161,7 @@ pad zonder lokale vault-hercreatie.
   compacte labels (`failure=...`, `recovery=...`, `contractVersion=1`) en controleer
   dat responsebody, headers, user-id, session-id, record-id, recordcount,
   ciphertext, gezondheidsdata, diagnose, dosering, kansberekening en
-  behandelkeuzeadvies niet in blijvende PR- of issuecomments staan.
+  behandelkeuzeadvies niet in blijvende PR-comments of issuecomments staan.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|
