@@ -12712,4 +12712,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 84
+- **Status:** ☑ done
+
+### G1141 — dossier add route microcopy density audit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De toevoegflow bevat nu routecopy, readiness-cues, routewisselherstel en conceptveiligheid, maar de totale microcopydichtheid kan op smalle schermen opnieuw te druk worden.
+- **User Impact:** Gebruikers kunnen de compacte routekaarten minder snel scannen als ondersteunende microcopy visueel te veel gewicht krijgt.
+- **Desired Outcome:** Audit en verfijn de microcopydichtheid rond de dossier-toevoegroute zonder informatieverlies of contractwijzigingen.
+- **User Value:** Gebruikers houden de herstel- en privacyzekerheid, maar kunnen de vier toevoegroutes sneller scannen.
+- **Acceptance Criteria:** Microcopy rond de route-selector blijft compact en scanbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; routewissel-hint, conceptveiligheid, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 83
 - **Status:** ☐ open

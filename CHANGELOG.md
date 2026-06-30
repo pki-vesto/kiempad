@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1140/G1141 Premium Claude Design UI: de dossier-toevoegflow toont nu compacte conceptveiligheids-microcopy dat invoer lokaal blijft tot expliciet uploaden of bewaren, zonder formcontracten, ankers of privacyhooks te wijzigen; G1141 is toegevoegd voor microcopy-dichtheidsaudit.
 - G1139/G1140 Premium Claude Design UI: de dossier-toevoegflow toont nu een compacte routewissel-herstelhint zodat gebruikers veilig tussen toevoegroutes kunnen wisselen zonder formcontracten, ankers of privacyhooks te wijzigen; G1140 is toegevoegd voor conceptveiligheids-microcopy.
 - G1138/G1139 Premium Claude Design UI: de dossier-toevoegroute-selector heeft nu screenreader-veilige actieve routecontext per anchorroute zonder visuele ruis, formcontractwijzigingen of privacyhookwijzigingen; G1139 is toegevoegd voor routewissel-herstelhints.
 - G1137/G1138 Premium Claude Design UI: de dossier-toevoegroutekaarten hebben nu een expliciete keyboardfocus-ring die losstaat van de actieve anchorstate zonder ankers, formcontracten of privacyhooks te breken; G1138 is toegevoegd voor screenreader-actieve-routecontext.

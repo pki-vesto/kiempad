@@ -132,6 +132,14 @@ function extractDossierAddRouteSwitchHint(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierAddRouteDraftNote(html: string): string {
+  const match = html.match(
+    /<p class="dossier-add-route-draft-note" data-dossier-add-route-draft-note="local-until-save">[\s\S]*?<\/p>/,
+  );
+  if (!match?.[0]) throw new Error('Toevoegroute conceptveiligheidsnotitie ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierAddRoutePanel(html: string, panelId: string): string {
   const escapedPanelId = panelId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = html.match(
@@ -4520,6 +4528,7 @@ describe('app shell', () => {
     const addSection = extractDossierAddSection(emptyHtml);
     const selector = extractDossierAddRouteSelector(emptyHtml);
     const switchHint = extractDossierAddRouteSwitchHint(emptyHtml);
+    const draftNote = extractDossierAddRouteDraftNote(emptyHtml);
 
     expect(selector).toContain('data-dossier-add-route-selector="compact"');
     expect(selector).toContain('href="#dossier-upload-form"');
@@ -4562,10 +4571,17 @@ describe('app shell', () => {
     expect(switchHint).toContain(
       'Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.',
     );
+    expect(addSection).toContain('data-dossier-add-route-draft-note="local-until-save"');
+    expect(draftNote).toContain(
+      'Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.',
+    );
     expect(addSection.indexOf('data-dossier-add-route-selector="compact"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
     );
     expect(addSection.indexOf('data-dossier-add-route-switch-hint="safe-switch"')).toBeLessThan(
+      addSection.indexOf('id="dossier-upload-form"'),
+    );
+    expect(addSection.indexOf('data-dossier-add-route-draft-note="local-until-save"')).toBeLessThan(
       addSection.indexOf('id="dossier-upload-form"'),
     );
     expect(addSection).toContain('id="dossier-upload-form"');
@@ -4598,6 +4614,7 @@ describe('app shell', () => {
     );
     const populatedSelector = extractDossierAddRouteSelector(populatedHtml);
     const populatedSwitchHint = extractDossierAddRouteSwitchHint(populatedHtml);
+    const populatedDraftNote = extractDossierAddRouteDraftNote(populatedHtml);
     const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
 
     expect(populatedSelector).toContain('href="#dossier-upload-form"');
@@ -4608,6 +4625,10 @@ describe('app shell', () => {
     expect(populatedSelector).not.toMatch(/diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i);
     expect(populatedSwitchHint).toContain('data-dossier-add-route-switch-hint="safe-switch"');
     expect(populatedSwitchHint).not.toMatch(
+      /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
+    );
+    expect(populatedDraftNote).toContain('data-dossier-add-route-draft-note="local-until-save"');
+    expect(populatedDraftNote).not.toMatch(
       /secret-route\.pdf|secret-route-consult\.txt|secret-route-embryo\.jpg|OCR-payload|diagnose|150 mg|100 IU|behandelkeuzeadvies|base64/i,
     );
     expect(uploadFeedback).not.toContain('secret-route.pdf');
@@ -4819,6 +4840,7 @@ describe('app shell', () => {
       '.dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-status"]',
     );
     expect(css).toContain('.dossier-add-route-switch-hint');
+    expect(css).toContain('.dossier-add-route-draft-note');
     expect(css).toContain('max-width: 60ch;');
     expect(css).toContain('font-size: 0.82rem;');
   });

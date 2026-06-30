@@ -2118,12 +2118,20 @@ a.action-card:active {
   display: block;
 }
 
-.dossier-add-route-switch-hint {
+.dossier-add-route-switch-hint,
+.dossier-add-route-draft-note {
   max-width: 60ch;
-  margin: -4px 0 14px;
   color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.35;
+}
+
+.dossier-add-route-switch-hint {
+  margin: -4px 0 4px;
+}
+
+.dossier-add-route-draft-note {
+  margin: 0 0 14px;
 }
 
 .dossier-add-route-panel {
