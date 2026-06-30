@@ -17,6 +17,14 @@ export type EmbryoDossierItem = {
   embryoIds: string[];
   embryoDagen: number[];
   laboratoriumContexten: string[];
+  statusEvents: {
+    id: string;
+    datum: string;
+    status: NonNullable<NonNullable<DossierDocument['embryo']>['status']>;
+    bron: string;
+    reviewStatus: 'concept' | 'gereviewd';
+    notitie?: string;
+  }[];
   documenten: {
     id: string;
     datum: string;
@@ -169,6 +177,25 @@ function bouwEmbryoDossier(
       .map((document) => document.beeldMetadata?.laboratoriumContext)
       .filter(isString),
   );
+  const statusEvents: EmbryoDossierItem['statusEvents'] = dossierDocumenten
+    .filter(
+      (
+        document,
+      ): document is DossierDocument & {
+        embryo: NonNullable<DossierDocument['embryo']> & {
+          status: NonNullable<NonNullable<DossierDocument['embryo']>['status']>;
+        };
+      } => document.embryo?.status !== undefined,
+    )
+    .map((document): EmbryoDossierItem['statusEvents'][number] => ({
+      id: document.id,
+      datum: bepaalDatum(document),
+      status: document.embryo.status,
+      bron: bepaalBron(document),
+      reviewStatus: document.embryo.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+      notitie: document.notitie,
+    }))
+    .sort((a, b) => a.datum.localeCompare(b.datum) || a.id.localeCompare(b.id));
 
   return {
     id: sleutel,
@@ -185,6 +212,7 @@ function bouwEmbryoDossier(
     embryoIds,
     embryoDagen,
     laboratoriumContexten,
+    statusEvents,
     documenten: dossierDocumenten.map((document) => ({
       id: document.id,
       datum: bepaalDatum(document),
