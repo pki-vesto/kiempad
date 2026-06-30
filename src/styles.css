@@ -2217,7 +2217,7 @@ a.action-card:active {
 
 .dossier-submit-feedback {
   display: grid;
-  gap: 2px;
+  gap: 1px;
   justify-self: start;
   max-width: 58ch;
   margin: -4px 0 0;
@@ -2228,6 +2228,11 @@ a.action-card:active {
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.35;
+}
+
+.dossier-submit-feedback > * {
+  min-height: 1.25em;
+  line-height: 1.3;
 }
 
 .dossier-submit-recovery {
@@ -2243,7 +2248,8 @@ a.action-card:active {
 
 .dossier-submit-next-action {
   width: fit-content;
-  padding: 1px 6px;
+  margin-top: 1px;
+  padding: 0 6px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 9%, var(--surface) 91%);
 }

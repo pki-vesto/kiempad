@@ -13016,4 +13016,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 65
+- **Status:** ☑ done
+
+### G1160 — dossier add feedback return touch target
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedbackritmiek is compacter, maar de focus-return link kan op touchscreens nog duidelijker als kleine, comfortabele terugactie aanvoelen zonder extra visuele zwaarte.
+- **User Impact:** Gebruikers op mobiel kunnen de teruglink minder trefzeker activeren als de touchruimte te strak rond de tekst blijft.
+- **Desired Outcome:** Verfijn de touch target en hit-area van feedback focus-return links zonder copy, volgorde, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers op mobiel en tablet keren makkelijker terug naar het juiste formulierdeel na review- of foutfeedback.
+- **Acceptance Criteria:** Focus-return link behoudt compacte uitstraling met betere touchruimte; bestaande ankers, form-id's, input names en data-hooks blijven intact; compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 64
 - **Status:** ☐ open
