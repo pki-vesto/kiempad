@@ -8868,64 +8868,130 @@ function renderKennisScreen(state: AppShellState): string {
   );
 
   return `
-    <section class="section-stack" aria-label="Kennisbank">
-      <div class="summary-panel priority-panel">
+    <section class="section-stack knowledge-command-layout" aria-label="Kennisbank">
+      ${renderKennisTaskRoutes({
+        researchBronnen: researchBronnen.length,
+        researchSamenvattingen:
+          researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+        researchTrends: researchTrendGroepen.length,
+        kennisItems: filteredItems.length,
+      })}
+      <div id="knowledge-overview" class="summary-panel priority-panel knowledge-command-panel">
         <h2>Kennisbank</h2>
         <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
         <p>${filteredItems.length} van ${state.kennisItems.length} item(s) getoond.</p>
         ${renderKennisFilterForm(filter)}
       </div>
-      <div class="summary-panel">
-        <h2>Eigen kennisitem</h2>
-        ${renderEigenKennisItemForm()}
-      </div>
-      <div class="summary-panel">
-        <h2>Research opslaan</h2>
-        ${renderResearchItemForm()}
-      </div>
-      <div class="summary-panel">
-        ${renderResearchBronnenCache(researchBronnen)}
-      </div>
-      <div class="summary-panel">
-        ${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}
-      </div>
-      <div class="summary-panel">
-        ${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}
-      </div>
-      <div class="summary-panel">
-        ${renderResearchRelevantieVoorGebruiker(researchRelevantie)}
-      </div>
-      <div class="summary-panel">
-        ${renderResearchDossierRelaties(researchDossierRelaties)}
-      </div>
-      <div class="summary-panel">
-        ${renderResearchTrendGroepen(researchTrendGroepen)}
-      </div>
-      <div class="summary-panel">
-        ${renderResearchNetworkSettingsForm(state.settings)}
-        ${renderResearchAggregatiePlan(researchAggregatie)}
-      </div>
-      <div class="summary-panel">
-        <h2>AI-instelling</h2>
-        ${renderAiSettingsForm(state.settings, state.storageMode)}
-        ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
-      </div>
-      <div class="summary-panel">
-        <h2>AI-preview</h2>
-        ${renderAiPreviewForm(state.aiPreview, state.aiError)}
-      </div>
-      <div class="summary-panel">
-        <h2>AI-samenvatting bewaren</h2>
-        ${renderAiSummaryForm(state.aiPreview)}
-      </div>
-      <div class="timeline-panel">
-        ${Object.entries(KENNIS_CATEGORIE_LABELS)
-          .map(([categorie, label]) =>
-            renderKennisCategorie(label, grouped[categorie as KennisItem['categorie']]),
-          )
-          .join('')}
-      </div>
+      <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read">
+        <header class="knowledge-route-section__header">
+          <p class="kp-card__eyebrow">Research lezen</p>
+          <h2 id="knowledge-route-read-title">Bronnen, samenvattingen en trends</h2>
+          <p>Lees brongekoppelde publicaties, eenvoudige uitleg en contextrelaties zonder naar beheerinstellingen te hoeven zoeken.</p>
+        </header>
+        <div class="knowledge-route-grid knowledge-route-grid--research">
+          <div class="summary-panel">${renderResearchBronnenCache(researchBronnen)}</div>
+          <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
+          <div class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
+          <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
+          <div class="summary-panel">${renderResearchDossierRelaties(researchDossierRelaties)}</div>
+          <div class="summary-panel">${renderResearchTrendGroepen(researchTrendGroepen)}</div>
+        </div>
+      </section>
+      <section id="knowledge-route-add" class="knowledge-route-section" aria-labelledby="knowledge-route-add-title" data-knowledge-route="add">
+        <header class="knowledge-route-section__header">
+          <p class="kp-card__eyebrow">Vastleggen</p>
+          <h2 id="knowledge-route-add-title">Research en eigen kennis toevoegen</h2>
+          <p>Leg een publicatie of eigen kennisitem vast als controleerbaar concept, zonder AI- of netwerkstappen.</p>
+        </header>
+        <div class="knowledge-route-grid">
+          <div class="summary-panel">
+            <h3>Research opslaan</h3>
+            ${renderResearchItemForm()}
+          </div>
+          <div class="summary-panel">
+            <h3>Eigen kennisitem</h3>
+            ${renderEigenKennisItemForm()}
+          </div>
+        </div>
+      </section>
+      <section id="knowledge-route-ai" class="knowledge-route-section" aria-labelledby="knowledge-route-ai-title" data-knowledge-route="ai">
+        <header class="knowledge-route-section__header">
+          <p class="kp-card__eyebrow">AI en netwerk</p>
+          <h2 id="knowledge-route-ai-title">Opt-in, preview en opslag</h2>
+          <p>Beheer expliciete opt-ins en payloadpreviews los van de lees- en invoerroute.</p>
+        </header>
+        <div class="knowledge-route-grid">
+          <div class="summary-panel">
+            ${renderResearchNetworkSettingsForm(state.settings)}
+            ${renderResearchAggregatiePlan(researchAggregatie)}
+          </div>
+          <div class="summary-panel">
+            <h2>AI-instelling</h2>
+            ${renderAiSettingsForm(state.settings, state.storageMode)}
+            ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+          </div>
+          <div class="summary-panel">
+            <h2>AI-preview</h2>
+            ${renderAiPreviewForm(state.aiPreview, state.aiError)}
+          </div>
+          <div class="summary-panel">
+            <h2>AI-samenvatting bewaren</h2>
+            ${renderAiSummaryForm(state.aiPreview)}
+          </div>
+        </div>
+      </section>
+      <section id="knowledge-route-library" class="knowledge-route-section" aria-labelledby="knowledge-route-library-title" data-knowledge-route="library">
+        <header class="knowledge-route-section__header">
+          <p class="kp-card__eyebrow">Bibliotheek</p>
+          <h2 id="knowledge-route-library-title">Kennisitems per categorie</h2>
+          <p>Bekijk gefilterde kennisitems als bibliotheek nadat de research- en AI-routes zijn afgehandeld.</p>
+        </header>
+        <div class="timeline-panel knowledge-library-panel">
+          ${Object.entries(KENNIS_CATEGORIE_LABELS)
+            .map(([categorie, label]) =>
+              renderKennisCategorie(label, grouped[categorie as KennisItem['categorie']]),
+            )
+            .join('')}
+        </div>
+      </section>
     </section>
+  `;
+}
+
+function renderKennisTaskRoutes(input: {
+  researchBronnen: number;
+  researchSamenvattingen: number;
+  researchTrends: number;
+  kennisItems: number;
+}): string {
+  const routes = [
+    {
+      href: '#knowledge-route-read',
+      label: 'Research lezen',
+      meta: `${input.researchBronnen} bronnen · ${input.researchSamenvattingen} samenvattingen`,
+    },
+    { href: '#knowledge-route-add', label: 'Toevoegen', meta: 'Research of kennisitem' },
+    {
+      href: '#knowledge-route-ai',
+      label: 'AI & netwerk',
+      meta: `${input.researchTrends} trendgroepen`,
+    },
+    { href: '#knowledge-route-library', label: 'Bibliotheek', meta: `${input.kennisItems} items` },
+  ];
+
+  return `
+    <nav class="knowledge-task-routes" aria-label="Kennis taakroutes" data-knowledge-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="knowledge-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
   `;
 }
 

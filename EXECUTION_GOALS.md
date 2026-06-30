@@ -3302,6 +3302,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge UI, Research UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 60
+- **Status:** ☑ done
+
+### G1186 — dossierpagina opdelen in taakgerichte medical-record routes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Uploadflows en medische dossiercomponenten zijn verbeterd, maar de dossierpagina bevat nog veel upload-, inbox-, review-, imaging-, embryo-, tijdlijn- en geschiedenisblokken achter elkaar.
+- **User Impact:** Gebruikers moeten nog veel scrollen om te kiezen tussen uploaden, reviewen, beelden bekijken, embryo's volgen en historische tijdlijn begrijpen.
+- **Desired Outcome:** Deel de dossierpagina zichtbaar op in taakgerichte medical-record routeclusters voor uploaden, reviewen, beelden/embryo's, tijdlijn en zoeken.
+- **User Value:** Gebruikers begrijpen sneller waar zij historische onderzoeken, foto's/echo's, consultverslagen en embryokwaliteit moeten beheren.
+- **Acceptance Criteria:** Dossierpagina bevat een zichtbare taakroute- of subnavigatie voor medische record workflows; bestaande uploadformulieren, IDs, names, privacycopy, attachment hooks en dossiercomponenten blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers, lege staten en gevulde dossiercontext; geen OCR-plaintext, beeldpayload, behandelkeuzeadvies, secrets of trackingpayload wordt toegevoegd.
+- **Affected Screens:** Dossier, Medical records, Imaging repository, Embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Medical record UI, Upload workflow, Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 62
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
