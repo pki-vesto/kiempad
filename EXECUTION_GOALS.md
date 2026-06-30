@@ -11995,4 +11995,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, runbook, governance docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1092 — central health monitor retention CI evidence snapshot
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1091 bewaakt drift tussen runbook en auditdocs, maar er is nog geen compacte CI-evidence snapshot die aantoont dat de retention-auditregels in de onderhoudstest blijven meelopen.
+- **Desired Outcome:** Voeg CI- of test-evidence toe die de health-monitor retention drift guard als expliciete snapshot of commandoutput reviewbaar maakt.
+- **User Value:** Beheer ziet bij CI direct dat retentioncontrole voor monitorartefacten actief blijft.
+- **Acceptance Criteria:** Evidence verwijst naar G1091; snapshot of commandoutput noemt runbook, goal-completion-audit en maintenance-test; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, CI, governance docs
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

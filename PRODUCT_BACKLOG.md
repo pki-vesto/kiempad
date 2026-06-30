@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 892 |
+| ☑ klaar | 893 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1091** |
+| **Totaal** | **1092** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1253,13 +1253,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1088 | Central Encrypted Platform: central health monitor CI failure artifact evidence | P1 | F5 | ☑ |
 | G1089 | Central Encrypted Platform: central health monitor failure artifact retention policy | P1 | F5 | ☑ |
 | G1090 | Central Encrypted Platform: central health monitor retention audit evidence | P1 | F5 | ☑ |
-| G1091 | Central Encrypted Platform: central health monitor retention audit checklist drift guard | P1 | F5 | ☐ |
+| G1091 | Central Encrypted Platform: central health monitor retention audit checklist drift guard | P1 | F5 | ☑ |
+| G1092 | Central Encrypted Platform: central health monitor retention CI evidence snapshot | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1091** (id's G001 t/m G1091, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1092** (id's G001 t/m G1092, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -3813,7 +3813,7 @@ describe('onderhoudsdocumentatie', () => {
       'failure=...',
       'recovery=...',
       'contractVersion=1',
-      'blijvende PR- of issuecomments',
+      'blijvende PR-comments of issuecomments',
     ]) {
       expect(runbook).toContain(requiredTerm);
     }
@@ -3869,6 +3869,33 @@ describe('onderhoudsdocumentatie', () => {
       'behandelkeuzeadvies',
     ]) {
       expect(goalCompletionAudit).toContain(forbiddenEvidenceTerm);
+    }
+  });
+
+  it('bewaakt G1091 health monitor retention audit drift tussen runbook en completion audit', () => {
+    for (const sharedRetentionTerm of [
+      'PR-comments',
+      'issuecomments',
+      '/tmp/kiempad-health-monitor-*.json',
+      'GitHub CI-artifacts',
+      'failure=...',
+      'recovery=...',
+      'contractVersion=1',
+      'responsebody',
+      'headers',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(runbook).toContain(sharedRetentionTerm);
+      expect(goalCompletionAudit).toContain(sharedRetentionTerm);
     }
   });
 
