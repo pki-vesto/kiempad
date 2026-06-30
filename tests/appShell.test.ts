@@ -4751,6 +4751,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(dossierPanel).toContain('Klaar voor lokale opslag.');
     expect(dossierPanel).not.toContain('data-dossier-submit-recovery="dossier-upload"');
+    expect(dossierPanel).not.toContain('data-dossier-submit-target="dossier-upload"');
     expect(dossierPanel).not.toContain('data-dossier-submit-focus-return="dossier-upload"');
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
@@ -4892,6 +4893,8 @@ describe('app shell', () => {
     expect(populatedDossierPanel).toContain('Review nodig voor opslaan.');
     expect(populatedConsultPanel).toContain('Wordt lokaal verwerkt.');
     expect(populatedEmbryoPanel).toContain('Controleer deze route.');
+    expect(populatedDossierPanel).toContain('data-dossier-submit-target="dossier-upload"');
+    expect(populatedDossierPanel).toContain('Hersteldoel: documentvelden.');
     expect(populatedDossierPanel).toContain('data-dossier-submit-recovery="dossier-upload"');
     expect(populatedDossierPanel).toContain('Controleer datum, bestand en koppeling.');
     expect(populatedDossierPanel).toContain(
@@ -4899,9 +4902,12 @@ describe('app shell', () => {
     );
     expect(populatedDossierPanel).toContain('Terug naar documentvelden');
     expect(populatedConsultPanel).not.toContain('data-dossier-submit-recovery="consult-upload"');
+    expect(populatedConsultPanel).not.toContain('data-dossier-submit-target="consult-upload"');
     expect(populatedConsultPanel).not.toContain(
       'data-dossier-submit-focus-return="consult-upload"',
     );
+    expect(populatedEmbryoPanel).toContain('data-dossier-submit-target="embryo-quality"');
+    expect(populatedEmbryoPanel).toContain('Hersteldoel: kwaliteitsvelden.');
     expect(populatedEmbryoPanel).toContain('data-dossier-submit-recovery="embryo-quality"');
     expect(populatedEmbryoPanel).toContain('Pas invoer aan en probeer opnieuw.');
     expect(populatedEmbryoPanel).toContain(
@@ -5035,6 +5041,8 @@ describe('app shell', () => {
     expect(css).toContain('border-left-color: var(--danger);');
     expect(css).toContain('.dossier-submit-recovery');
     expect(css).toContain('font-weight: 650;');
+    expect(css).toContain('.dossier-submit-target');
+    expect(css).toContain('font-weight: 720;');
     expect(css).toContain('.dossier-submit-focus-return');
     expect(css).toContain('text-underline-offset: 3px;');
     expect(css).toContain('.dossier-submit-focus-return:focus-visible');

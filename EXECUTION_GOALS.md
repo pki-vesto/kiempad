@@ -12968,4 +12968,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 68
+- **Status:** ☑ done
+
+### G1157 — dossier add feedback next action contrast
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedbackdoelen verduidelijken waar herstel nodig is, maar de eerstvolgende actie kan nog sterker onderscheiden worden van status- en herstelcontext.
+- **User Impact:** Gebruikers kunnen bij review- of foutfeedback nog extra tijd besteden aan bepalen welke zin de actie is en welke zin alleen context geeft.
+- **Desired Outcome:** Maak de volgende actie binnen dossier-submitfeedback compacter en visueel beter onderscheidbaar zonder copy, formuliercontracten, ankers of privacyhooks te breken.
+- **User Value:** Gebruikers zien sneller wat zij direct moeten doen en blijven rustiger in fout- of reviewstates.
+- **Acceptance Criteria:** Volgende actie is compact, routegericht en duidelijker dan statuscontext; bestaande ankers, form-id's, input names en data-hooks blijven intact; feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 67
 - **Status:** ☐ open

@@ -2061,12 +2061,16 @@ function renderDossierSubmitFeedback(
   const recoveryMarkup = recoveryHint
     ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
     : '';
+  const targetConfirmation = renderDossierSubmitTargetConfirmation(route, feedbackState);
+  const targetConfirmationMarkup = targetConfirmation
+    ? `<span class="dossier-submit-target" data-dossier-submit-target="${route}">${escapeHtml(targetConfirmation)}</span>`
+    : '';
   const focusCue = renderDossierSubmitFocusReturnCue(route, feedbackState);
   const focusCueMarkup = focusCue
     ? `<a class="dossier-submit-focus-return" data-dossier-submit-focus-return="${route}" href="#${focusCue.targetId}">${escapeHtml(focusCue.copy)}</a>`
     : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${recoveryMarkup}${focusCueMarkup}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${targetConfirmationMarkup}${recoveryMarkup}${focusCueMarkup}</p>`;
 }
 
 function renderDossierSubmitFeedbackAnnouncementOrder(
@@ -2099,6 +2103,24 @@ function renderDossierSubmitFocusReturnCue(
       return { targetId: 'embryo-quality-form', copy: 'Terug naar kwaliteitsvelden' };
     case 'embryo-status':
       return { targetId: 'embryo-status-event-form', copy: 'Terug naar statusvelden' };
+  }
+}
+
+function renderDossierSubmitTargetConfirmation(
+  route: 'dossier-upload' | 'consult-upload' | 'embryo-quality' | 'embryo-status',
+  state: UploadAttachmentFeedbackItem['state'],
+): string | undefined {
+  if (state !== 'needs-review' && state !== 'error') return undefined;
+
+  switch (route) {
+    case 'dossier-upload':
+      return 'Hersteldoel: documentvelden.';
+    case 'consult-upload':
+      return 'Hersteldoel: consultvelden.';
+    case 'embryo-quality':
+      return 'Hersteldoel: kwaliteitsvelden.';
+    case 'embryo-status':
+      return 'Hersteldoel: statusvelden.';
   }
 }
 
