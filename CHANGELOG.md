@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1088/G1089 Central Encrypted Platform: het runbook en onderhoudstests leggen nu de toegestane CI health-monitor failure-artifact evidence vast met driftlabels en verboden privacytermen voor PR's, issues en CI-artifacts; G1089 is toegevoegd voor failure-artifact retentionbeleid.
 - G1087/G1088 Central Encrypted Platform: de CI workflow draait nu de central health monitor annotatie-smoke na de centrale bootstrap smoke, met runbook- en commandotests die de workflowkoppeling bewaken; G1088 is toegevoegd voor CI failure artifact evidence.
 - G1086/G1087 Central Encrypted Platform: er is nu een central health monitor annotatie-CLI-fixture die success en driftfixtures omzet naar dezelfde gesanitized annotatie-uitvoer zonder responsebody of privacygevoelige waarden; G1087 is toegevoegd voor CI workflow smoke.
 - G1085/G1086 Central Encrypted Platform: de central health monitor annotatie heeft nu driftbewaking met centrale contractconstanten, runbook-evidence en fixtures die helperoutput, runbookterm en failurelabels synchroon houden; G1086 is toegevoegd voor een annotation CLI fixture.

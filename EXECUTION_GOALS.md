@@ -11953,4 +11953,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CI, runbook, health contract fixture
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1089 — central health monitor failure artifact retention policy
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1088 legt veilige failure-artifact evidence vast, maar bewaartermijn en cleanup van zulke CI-artifacts zijn nog niet expliciet beschreven.
+- **Desired Outcome:** Documenteer retention- en cleanupregels voor central health monitor failure-artifacts in CI, PR's en issues.
+- **User Value:** Beheer bewaart alleen noodzakelijke technische evidence en beperkt langdurige blootstelling van monitoringmetadata.
+- **Acceptance Criteria:** Evidence verwijst naar G1088; retention- en cleanupregels noemen PR's, issues en CI-artifacts; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, CI, privacy governance
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
