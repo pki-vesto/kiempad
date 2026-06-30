@@ -124,6 +124,17 @@ function extractDossierAddRouteSelector(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierAddRoutePanel(html: string, panelId: string): string {
+  const escapedPanelId = panelId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = html.match(
+    new RegExp(
+      `<section class="dossier-add-route-panel" data-dossier-add-route-panel="${escapedPanelId}">[\\s\\S]*?<\\/section>`,
+    ),
+  );
+  if (!match?.[0]) throw new Error(`Toevoegroutepaneel ontbreekt: ${panelId}.`);
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierTimelineSection(html: string): string {
   const start = html.indexOf('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
   const end = html.indexOf(
@@ -4590,6 +4601,130 @@ describe('app shell', () => {
     expect(lockedSelector).toContain('data-dossier-add-route-selector="compact"');
     expect(lockedSelector).not.toContain('locked-route-selector-secret.jpg');
     expect(lockedSelector).not.toContain('cm91dGUtc2VsZWN0b3I=');
+  });
+
+  it('plaatst toevoegformulieren in gefocuste routepanelen zonder contracten te verbergen', () => {
+    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const addSection = extractDossierAddSection(emptyHtml);
+    const dossierPanel = extractDossierAddRoutePanel(emptyHtml, 'dossier-upload');
+    const consultPanel = extractDossierAddRoutePanel(emptyHtml, 'consult-upload');
+    const embryoQualityPanel = extractDossierAddRoutePanel(emptyHtml, 'embryo-quality');
+    const embryoStatusPanel = extractDossierAddRoutePanel(emptyHtml, 'embryo-status');
+
+    expect(addSection).toContain('data-dossier-add-route-panel="dossier-upload"');
+    expect(addSection).toContain('data-dossier-add-route-panel="consult-upload"');
+    expect(addSection).toContain('data-dossier-add-route-panel="embryo-quality"');
+    expect(addSection).toContain('data-dossier-add-route-panel="embryo-status"');
+    expect(dossierPanel).toContain('id="dossier-upload-form"');
+    expect(dossierPanel).toContain('data-upload-privacy-kind="dossier"');
+    expect(dossierPanel).toContain('data-dossier-upload-group="document-basis"');
+    expect(dossierPanel).toContain('data-dossier-upload-group="embryo-labcontext"');
+    expect(consultPanel).toContain('id="consult-verslag-form"');
+    expect(consultPanel).toContain('data-upload-privacy-kind="consult"');
+    expect(consultPanel).toContain('data-consult-upload-group="consult-basis"');
+    expect(consultPanel).toContain('data-consult-upload-group="consult-context"');
+    expect(embryoQualityPanel).toContain('id="embryo-quality-form"');
+    expect(embryoQualityPanel).toContain('data-upload-privacy-kind="embryo"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-identificatie"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-beoordeling"');
+    expect(embryoStatusPanel).toContain('id="embryo-status-event-form"');
+    expect(embryoStatusPanel).toContain('data-upload-privacy-kind="embryo-status"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-group="status-basis"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-group="status-koppelingen"');
+
+    const routeOrder = [
+      'data-dossier-add-route-selector="compact"',
+      'data-dossier-add-route-panel="dossier-upload"',
+      'data-dossier-add-route-panel="consult-upload"',
+      'data-dossier-add-route-panel="embryo-quality"',
+      'data-dossier-add-route-panel="embryo-status"',
+    ].map((marker) => addSection.indexOf(marker));
+    expect(routeOrder.every((position) => position >= 0)).toBe(true);
+    expect(routeOrder).toEqual([...routeOrder].sort((left, right) => left - right));
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        uploadAttachmentFeedback: {
+          'dossier-upload': {
+            state: 'needs-review',
+            status: 'Dossierpanel bevat panel-secret.pdf OCR-payload diagnose 150 mg.',
+          },
+          'consult-upload': {
+            state: 'processing',
+            status: 'Consultpanel bevat panel-consult-secret.txt behandelkeuzeadvies.',
+          },
+          'embryo-upload': {
+            state: 'error',
+            error: 'Embryopanel bevat panel-embryo-secret.jpg base64 100 IU.',
+          },
+        },
+      }),
+    );
+    const populatedDossierPanel = extractDossierAddRoutePanel(populatedHtml, 'dossier-upload');
+    const populatedConsultPanel = extractDossierAddRoutePanel(populatedHtml, 'consult-upload');
+    const populatedEmbryoPanel = extractDossierAddRoutePanel(populatedHtml, 'embryo-quality');
+    const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
+
+    expect(populatedDossierPanel).toContain('id="dossier-upload-form"');
+    expect(populatedConsultPanel).toContain('id="consult-verslag-form"');
+    expect(populatedEmbryoPanel).toContain('id="embryo-quality-form"');
+    for (const surface of [
+      populatedDossierPanel,
+      populatedConsultPanel,
+      populatedEmbryoPanel,
+      uploadFeedback,
+    ]) {
+      expect(surface).not.toContain('panel-secret.pdf');
+      expect(surface).not.toContain('panel-consult-secret.txt');
+      expect(surface).not.toContain('panel-embryo-secret.jpg');
+      expect(surface).not.toContain('OCR-payload');
+      expect(surface).not.toContain('base64');
+      expect(surface).not.toMatch(/150 mg|100 IU/i);
+    }
+    expect(uploadFeedback).not.toMatch(/diagnose|behandelkeuzeadvies/i);
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-route-panel-locked',
+            datum: '2026-05-13',
+            titel: 'Locked route panel',
+            categorie: 'embryo',
+            bestandsNaam: 'locked-route-panel-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'cm91dGUtcGFuZWw=',
+            analyse: {
+              samenvatting: 'Embryobijlage opgeslagen zonder medisch advies.',
+              signalen: ['Embryometadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-13',
+              documenttype: 'Embryokwaliteit',
+              bronbestand: 'locked-route-panel-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            embryo: {
+              label: 'Embryo 1',
+              kwaliteit: 'Kliniektekst',
+              bron: 'locked-route-panel-secret.jpg',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+
+    for (const panelId of ['dossier-upload', 'consult-upload', 'embryo-quality', 'embryo-status']) {
+      const panel = extractDossierAddRoutePanel(lockedHtml, panelId);
+      expect(panel).not.toContain('locked-route-panel-secret.jpg');
+      expect(panel).not.toContain('cm91dGUtcGFuZWw=');
+    }
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

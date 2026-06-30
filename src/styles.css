@@ -2064,6 +2064,36 @@ a.action-card:active {
   line-height: 1.3;
 }
 
+.dossier-add-route-panel {
+  min-width: 0;
+  padding: 0 0 14px;
+  border-top: 1px solid transparent;
+  scroll-margin-top: 18px;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    opacity 150ms ease,
+    padding 150ms ease;
+}
+
+.dossier-add-route-panel:has(> form:target) {
+  padding: 12px;
+  border-color: var(--accent);
+  border-radius: var(--radius-card);
+  background: var(--surface-subtle);
+}
+
+.kp-disclosure__body:has(#dossier-upload-form:target)
+  .dossier-add-route-panel:not(:has(#dossier-upload-form:target)),
+.kp-disclosure__body:has(#consult-verslag-form:target)
+  .dossier-add-route-panel:not(:has(#consult-verslag-form:target)),
+.kp-disclosure__body:has(#embryo-quality-form:target)
+  .dossier-add-route-panel:not(:has(#embryo-quality-form:target)),
+.kp-disclosure__body:has(#embryo-status-event-form:target)
+  .dossier-add-route-panel:not(:has(#embryo-status-event-form:target)) {
+  opacity: 0.58;
+}
+
 .dossier-upload-group,
 .dossier-subform-group {
   display: grid;

@@ -1322,6 +1322,7 @@ function renderDossierScreen(state: AppShellState): string {
             <span>Statusmoment of terugkoppeling</span>
           </a>
         </nav>
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
         <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
           <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">
@@ -1458,6 +1459,8 @@ function renderDossierScreen(state: AppShellState): string {
                 .join('')}</ol>`
             : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
         }
+        </section>
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
         <h2>Consultverslag toevoegen</h2>
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-consult-upload-privacy-state="encrypted-text-or-file">
           <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis">
@@ -1522,6 +1525,8 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit">Bewaar consultverslag</button>
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
+        </section>
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality">
         <h2>Embryokwaliteit vastleggen</h2>
         <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-embryo-upload-privacy-state="encrypted-quality-registration">
           <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie">
@@ -1596,6 +1601,8 @@ function renderDossierScreen(state: AppShellState): string {
           </fieldset>
           <button type="submit">Bewaar embryokwaliteit</button>
         </form>
+        </section>
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status">
         <h2>Embryo-status event vastleggen</h2>
         <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-embryo-status-event-state="concept-editor">
           <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis">
@@ -1655,6 +1662,7 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit">Bewaar embryo-status</button>
         </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
+        </section>
         </div>
       </details>
         <h2>Dossier zoeken</h2>
