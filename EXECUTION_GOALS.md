@@ -12760,4 +12760,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 81
+- **Status:** ☑ done
+
+### G1144 — dossier add optional context hierarchy
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Verplichte velden zijn nu sneller herkenbaar, maar optionele contextvelden kunnen nog hetzelfde gewicht krijgen als de minimale invulstap.
+- **User Impact:** Gebruikers kunnen alsnog denken dat koppelingen, beeldcontext en notities direct nodig zijn voordat ze veilig kunnen opslaan.
+- **Desired Outcome:** Maak optionele contextvelden rustiger en duidelijker secundair zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers bewaren sneller het minimale dossierstuk en vullen aanvullende context alleen aan wanneer die beschikbaar is.
+- **Acceptance Criteria:** Optionele context krijgt visueel lagere prioriteit dan verplichte basisvelden; bestaande ankers, form-id's, input names en data-hooks blijven intact; verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 80
 - **Status:** ☐ open

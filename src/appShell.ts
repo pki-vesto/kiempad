@@ -1348,6 +1348,9 @@ function renderDossierScreen(state: AppShellState): string {
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
           <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">
             <legend>Documentbasis</legend>
+          <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload">
+            Verplicht: datum, bestand en controlebevestiging.
+          </p>
           <label>
             Datum document
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1486,6 +1489,9 @@ function renderDossierScreen(state: AppShellState): string {
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-consult-upload-privacy-state="encrypted-text-or-file">
           <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis">
             <legend>Consultbasis</legend>
+          <p class="dossier-required-cue" data-dossier-required-cue="consult-upload">
+            Verplicht: datum; voeg daarna tekst of bestand toe.
+          </p>
           <label>
             Datum consult
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1552,6 +1558,9 @@ function renderDossierScreen(state: AppShellState): string {
         <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-embryo-upload-privacy-state="encrypted-quality-registration">
           <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie">
             <legend>Embryo-identificatie</legend>
+          <p class="dossier-required-cue" data-dossier-required-cue="embryo-quality">
+            Verplicht: datum, embryo en kwaliteit.
+          </p>
           <label>
             Datum labterugkoppeling
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1628,6 +1637,9 @@ function renderDossierScreen(state: AppShellState): string {
         <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-embryo-status-event-state="concept-editor">
           <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis">
             <legend>Statusbasis</legend>
+          <p class="dossier-required-cue" data-dossier-required-cue="embryo-status">
+            Verplicht: datum en embryo.
+          </p>
           <label>
             Datum status
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />

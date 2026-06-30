@@ -159,6 +159,17 @@ function extractDossierAddFormStart(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierRequiredCue(html: string, cueId: string): string {
+  const escapedCueId = cueId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = html.match(
+    new RegExp(
+      `<p class="dossier-required-cue" data-dossier-required-cue="${escapedCueId}">[\\s\\S]*?<\\/p>`,
+    ),
+  );
+  if (!match?.[0]) throw new Error(`Dossier verplichte-veld cue ontbreekt: ${cueId}.`);
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierTimelineSection(html: string): string {
   const start = html.indexOf('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
   const end = html.indexOf(
@@ -4690,6 +4701,10 @@ describe('app shell', () => {
     const consultPanel = extractDossierAddRoutePanel(emptyHtml, 'consult-upload');
     const embryoQualityPanel = extractDossierAddRoutePanel(emptyHtml, 'embryo-quality');
     const embryoStatusPanel = extractDossierAddRoutePanel(emptyHtml, 'embryo-status');
+    const dossierRequiredCue = extractDossierRequiredCue(emptyHtml, 'dossier-upload');
+    const consultRequiredCue = extractDossierRequiredCue(emptyHtml, 'consult-upload');
+    const embryoQualityRequiredCue = extractDossierRequiredCue(emptyHtml, 'embryo-quality');
+    const embryoStatusRequiredCue = extractDossierRequiredCue(emptyHtml, 'embryo-status');
 
     expect(addSection).toContain('data-dossier-add-route-panel="dossier-upload"');
     expect(addSection).toContain('data-dossier-add-form-start="document-first-step"');
@@ -4706,18 +4721,29 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('data-upload-privacy-kind="dossier"');
     expect(dossierPanel).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies|OCR-payload|base64/i);
     expect(dossierPanel).toContain('data-dossier-upload-group="document-basis"');
+    expect(dossierPanel).toContain('data-dossier-required-cue="dossier-upload"');
+    expect(dossierRequiredCue).toContain('Verplicht: datum, bestand en controlebevestiging.');
+    expect(dossierPanel.indexOf('data-dossier-required-cue="dossier-upload"')).toBeLessThan(
+      dossierPanel.indexOf('name="datum" type="date" required'),
+    );
     expect(dossierPanel).toContain('data-dossier-upload-group="embryo-labcontext"');
     expect(consultPanel).toContain('id="consult-verslag-form"');
     expect(consultPanel).toContain('data-upload-privacy-kind="consult"');
     expect(consultPanel).toContain('data-consult-upload-group="consult-basis"');
+    expect(consultPanel).toContain('data-dossier-required-cue="consult-upload"');
+    expect(consultRequiredCue).toContain('Verplicht: datum; voeg daarna tekst of bestand toe.');
     expect(consultPanel).toContain('data-consult-upload-group="consult-context"');
     expect(embryoQualityPanel).toContain('id="embryo-quality-form"');
     expect(embryoQualityPanel).toContain('data-upload-privacy-kind="embryo"');
     expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-identificatie"');
+    expect(embryoQualityPanel).toContain('data-dossier-required-cue="embryo-quality"');
+    expect(embryoQualityRequiredCue).toContain('Verplicht: datum, embryo en kwaliteit.');
     expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-beoordeling"');
     expect(embryoStatusPanel).toContain('id="embryo-status-event-form"');
     expect(embryoStatusPanel).toContain('data-upload-privacy-kind="embryo-status"');
     expect(embryoStatusPanel).toContain('data-embryo-status-group="status-basis"');
+    expect(embryoStatusPanel).toContain('data-dossier-required-cue="embryo-status"');
+    expect(embryoStatusRequiredCue).toContain('Verplicht: datum en embryo.');
     expect(embryoStatusPanel).toContain('data-embryo-status-group="status-koppelingen"');
 
     const routeOrder = [
@@ -4866,6 +4892,10 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-form-start');
     expect(css).toContain('max-width: 58ch;');
     expect(css).toContain('font-size: 0.84rem;');
+    expect(css).toContain('.dossier-required-cue');
+    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain('font-size: 0.78rem;');
+    expect(css).toContain('font-weight: 650;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

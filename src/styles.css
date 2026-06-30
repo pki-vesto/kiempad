@@ -2209,6 +2209,16 @@ a.action-card:active {
   min-width: 0;
 }
 
+.dossier-required-cue {
+  grid-column: 1 / -1;
+  max-width: 60ch;
+  margin: -2px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
 .dossier-upload-group .check-row,
 .dossier-upload-group .linked-note,
 .dossier-upload-group label:has(textarea),

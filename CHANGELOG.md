@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1143/G1144 Premium Claude Design UI: de dossier-toevoegformulieren tonen nu compacte verplichte-veldcues voor documentupload, consultverslag, embryokwaliteit en embryo-status zonder formcontracten, ankers of privacyhooks te wijzigen; G1144 is toegevoegd voor rustiger optionele-context hierarchie.
 - G1142/G1143 Premium Claude Design UI: de dossierdocument-upload start nu met compacte taakcontext voor datum, titel en bestand voordat gebruikers de aanvullende koppelingen en beeldcontext invullen, zonder formcontracten, ankers of privacyhooks te wijzigen; G1143 is toegevoegd voor duidelijkere verplichte-veld cues.
 - G1141/G1142 Premium Claude Design UI: de dossier-toevoegroute-microcopy is nu samengebracht in een compacte scanbare groep met behoud van routewisselherstel en conceptveiligheid zonder formcontracten, ankers of privacyhooks te wijzigen; G1142 is toegevoegd voor duidelijkere eerste formulierstart.
 - G1140/G1141 Premium Claude Design UI: de dossier-toevoegflow toont nu compacte conceptveiligheids-microcopy dat invoer lokaal blijft tot expliciet uploaden of bewaren, zonder formcontracten, ankers of privacyhooks te wijzigen; G1141 is toegevoegd voor microcopy-dichtheidsaudit.
