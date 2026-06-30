@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1196/G1197 Premium Claude Design UI: het vragenscherm heeft nu taakgerichte questionroutes voor open vragen, consultvoorbereiding, beheer, verslagen en alle vragen, met behoud van `vraag-form`, `question-priority-form`, antwoordvelden, afspraakkoppeling en exporthook; G1197 is toegevoegd voor gedeelde command-route verfijning.
 - G1195/G1196 Premium Claude Design UI: het medicatiescherm heeft nu taakgerichte medicationroutes voor vandaag, planning, beheer, schema-import en historie/voorraad, met behoud van `medicatie-form`, `medicatie-import-form`, dose-log hooks, voorraadvelden en privacycopy; G1196 is toegevoegd voor questionroutes in het vragenscherm.
 - G1194/G1195 Premium Claude Design UI: het agendascherm heeft nu taakgerichte scheduleroutes voor overzicht, komende afspraken, plannen, ICS-import en historie, met behoud van `afspraak-form`, `ics-import-form`, reminderhooks en vraagkoppeling; G1195 is toegevoegd voor medicationroutes in het medicatiescherm.
 - G1193/G1194 Premium Claude Design UI: het trajectscherm heeft nu taakgerichte treatmentroutes voor overzicht, faseplanning, vergoeding, timeline/graphcontext en beheer/archief, met behoud van `traject-form`, `traject-new-form`, faseknoppen en vergoedingcopy; G1194 is toegevoegd voor scheduleroutes in het agendascherm.

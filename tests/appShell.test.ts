@@ -4,6 +4,7 @@ import {
   type AppShellState,
   DISCLAIMER,
   normalizeMedicationRoute,
+  normalizeQuestionRoute,
   normalizeScheduleRoute,
   normalizeScreenId,
   normalizeTreatmentRoute,
@@ -1659,6 +1660,10 @@ describe('app shell', () => {
     expect(normalizeMedicationRoute('#medicatie?route=beheer')).toBe('beheer');
     expect(normalizeMedicationRoute('#/medicatie?route=historie')).toBe('historie');
     expect(normalizeMedicationRoute('#medicatie?route=bestaat-niet')).toBe('vandaag');
+    expect(normalizeScreenId('#vragen?route=voorbereiden')).toBe('vragen');
+    expect(normalizeQuestionRoute('#vragen?route=voorbereiden')).toBe('voorbereiden');
+    expect(normalizeQuestionRoute('#/vragen?route=verslagen')).toBe('verslagen');
+    expect(normalizeQuestionRoute('#vragen?route=bestaat-niet')).toBe('open');
     expect(normalizeScreenId('#traject?route=fasen')).toBe('traject');
     expect(normalizeTreatmentRoute('#traject?route=fasen')).toBe('fasen');
     expect(normalizeTreatmentRoute('#traject?route=context')).toBe('context');
@@ -4157,6 +4162,31 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Wat is de volgende stap?');
+    expect(html).toContain('class="section-stack question-command-layout"');
+    expect(html).toContain('class="question-task-routes"');
+    expect(html).toContain('aria-label="Vragen taakroutes"');
+    expect(html).toContain('data-question-task-routes="ready"');
+    expect(html).toContain('href="#vragen?route=open" aria-current="page"');
+    expect(html).toContain('href="#vragen?route=voorbereiden"');
+    expect(html).toContain('href="#vragen?route=beheer"');
+    expect(html).toContain('href="#vragen?route=verslagen"');
+    expect(html).toContain('href="#vragen?route=alle"');
+    expect(html).toContain('id="vragen-route-open"');
+    expect(html).toContain('data-question-route="open"');
+    expect(html).toContain('data-question-route-state="active"');
+    expect(html).toContain('id="vragen-route-voorbereiden"');
+    expect(html).toContain('data-question-route="voorbereiden"');
+    expect(html).toContain('id="vragen-route-beheer"');
+    expect(html).toContain('data-question-route="beheer"');
+    expect(html).toContain('id="vragen-route-verslagen"');
+    expect(html).toContain('data-question-route="verslagen"');
+    expect(html).toContain('id="vragen-route-alle"');
+    expect(html).toContain('data-question-route="alle"');
+    expect(html).toContain('Openstaande vragen');
+    expect(html).toContain('Consult voorbereiden');
+    expect(html).toContain('Vraag toevoegen of beantwoorden');
+    expect(html).toContain('Beantwoorde vragen per afspraak');
+    expect(html).toContain('Vraaglijst beheren');
     expect(html).toContain('Consult');
     expect(html).toContain('Openstaand');
     expect(html).toContain('Prioriteit 1');
@@ -4183,6 +4213,35 @@ describe('app shell', () => {
     expect(html).toContain('Geen behandeladvies of behandelkeuze.');
     expect(html).toContain('Wanneer horen we de uitslag?');
     expect(html).toContain('Antwoord: De kliniek belt morgen.');
+  });
+
+  it('toont één actieve questionroute tegelijk', () => {
+    const html = renderAppShell('vragen', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeQuestionRoute: 'beheer',
+    });
+
+    const openStart = html.indexOf('id="vragen-route-open"');
+    const voorbereidenStart = html.indexOf('id="vragen-route-voorbereiden"');
+    const beheerStart = html.indexOf('id="vragen-route-beheer"');
+    const verslagenStart = html.indexOf('id="vragen-route-verslagen"');
+
+    expect(html).toContain('href="#vragen?route=beheer" aria-current="page"');
+    expect(html.slice(openStart, voorbereidenStart)).toContain(
+      'data-question-route-state="inactive" hidden',
+    );
+    expect(html.slice(beheerStart, verslagenStart)).toContain('data-question-route-state="active"');
+    expect(html.slice(beheerStart, verslagenStart)).not.toContain(
+      'data-question-route-state="inactive" hidden',
+    );
+    expect(html).toContain('id="vraag-form"');
   });
 
   it('rendert kennisitems met bron en verificatielabels', () => {

@@ -3478,6 +3478,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Questions UI, Consultation prep UI, Appointment UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 49
+- **Status:** ☑ done
+
+### G1197 — taakroutepanelen visueel verfijnen met gedeelde command component
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Meerdere schermen hebben nu taakroutes, maar de routepanelen zijn nog grotendeels per scherm gedupliceerde CSS en missen een gedeelde premium command-component.
+- **User Impact:** Gebruikers kunnen subtiele visuele verschillen ervaren tussen routebalken en paneelheaders, waardoor de app minder coherent aanvoelt.
+- **Desired Outcome:** Introduceer of verfijn een gedeelde command-route componentstijl die routebalken en routepanelen consistenter, compacter en visueel rustiger maakt op minimaal de meest recente routes.
+- **User Value:** Taakroutes voelen als één samenhangend premium interactiepatroon in plaats van losse schermspecifieke tabs.
+- **Acceptance Criteria:** Gedeelde command-route styling of helper vermindert zichtbare duplicatie; agenda, medicatie, vragen en traject behouden bestaande routehashes, form-id's en privacyhooks; mobile, tablet en desktop tonen geen overlap; tests bewaken routecontracten; geen medische payload, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Agenda, Medicatie, Vragen, Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, command routes, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 48
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
