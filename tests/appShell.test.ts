@@ -32448,8 +32448,12 @@ describe('app shell', () => {
     expect(html).toContain(
       'Relevant als achtergrond bij het lopende ICSI-traject en vragen voor de kliniek.',
     );
+    expect(html).toContain('Contextmatch: contextmatch_met_lokale_bronnen');
+    expect(html).toContain('Gekoppelde contextfactoren: Traject: Poging 1');
+    expect(html).toContain('Ontbrekende gegevens: Recent consultverslag ontbreekt');
+    expect(html).toContain('Bespreek met je arts of kliniek');
     expect(html).toContain('Context: Traject: Poging 1');
-    expect(html).toContain('dit is geen diagnose, dosering of behandelkeuze');
+    expect(html).toContain('geen medische conclusie, rangorde of behandelrichting');
     expect(html).toContain('Research-dossierrelaties');
     expect(html).toContain('Research is gekoppeld als bespreekcontext bij deze dossierbron.');
     expect(html).toContain(

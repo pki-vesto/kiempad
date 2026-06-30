@@ -294,10 +294,57 @@ describe('kennis domeinregels', () => {
         relevantieVoorGebruiker:
           'Relevant als achtergrond bij het lopende ICSI-traject en het laatste labverslag.',
         dossierContextBronnen: contextBronnen,
+        contextMatch: {
+          label: 'contextmatch_met_lokale_bronnen',
+          gekoppeldeContextfactoren: [
+            'Traject: Poging 1',
+            'Consult: 2026-06-12 · Labconsult',
+            'Dossierdocument: 2026-06-10 · Embryolabverslag',
+          ],
+          ontbrekendeGegevens: [],
+          artsBespreekTaal:
+            'Bespreek met je arts of kliniek welke vragen deze publicatie oproept voor jullie dossiercontext.',
+          uitleg:
+            'Contextmatch op basis van lokale bronnen: Traject: Poging 1 · Consult: 2026-06-12 · Labconsult · Dossierdocument: 2026-06-10 · Embryolabverslag. Ontbrekende gegevens: geen ontbrekende context. Bespreek met je arts of kliniek welke vragen deze publicatie oproept voor jullie dossiercontext. Geen medisch advies of behandelrichting.',
+        },
         waarschuwing:
-          'Relevantie is een contextnotitie voor het gesprek met de kliniek; dit is geen diagnose, dosering of behandelkeuze.',
+          'Relevantie is een contextmatch voor het gesprek met de kliniek; dit is geen medische conclusie, rangorde of behandelrichting.',
       },
     ]);
+  });
+
+  it('bouwt persoonlijke research-contextmatch met ontbrekende gegevens zonder adviespatronen', () => {
+    const item = maakResearchKennisItem('research-contextmatch', {
+      titel: 'Artikel over embryo-cultuur',
+      bron: 'https://voorbeeld.test/embryo-cultuur',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      wetenschappelijkeSamenvatting:
+        'Beschrijft methode, populatie, observaties en beperkingen zonder behandeladvies.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken en wat onzeker blijft.',
+      relevantieVoorGebruiker:
+        'Relevant als achtergrond bij vragen over labobservaties tijdens het traject.',
+    });
+
+    const [relevantie] = bouwResearchRelevantieVoorGebruiker(
+      [item],
+      [{ id: 'traject-t1', label: 'Traject: Poging 1', type: 'traject' }],
+    );
+    const tekst = [
+      relevantie?.contextMatch.uitleg,
+      relevantie?.contextMatch.artsBespreekTaal,
+      relevantie?.waarschuwing,
+    ].join(' ');
+
+    expect(relevantie?.contextMatch).toMatchObject({
+      label: 'contextmatch_met_lokale_bronnen',
+      gekoppeldeContextfactoren: ['Traject: Poging 1'],
+      ontbrekendeGegevens: ['Recent consultverslag ontbreekt', 'Recent dossierdocument ontbreekt'],
+    });
+    expect(tekst).toContain('Bespreek met je arts of kliniek');
+    expect(tekst).toContain('Ontbrekende gegevens');
+    expect(tekst).not.toMatch(/\b(\d+%|kansscore|diagnose|moet|beste behandeling|kies)\b/i);
   });
 
   it('bouwt research-dossierrelaties met bronpad zonder causale claim', () => {

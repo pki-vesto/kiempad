@@ -105,6 +105,13 @@ export type ResearchRelevantieVoorGebruiker = {
   bron: string;
   relevantieVoorGebruiker: string;
   dossierContextBronnen: ResearchDossierContextBron[];
+  contextMatch: {
+    label: 'contextmatch_met_lokale_bronnen' | 'contextmatch_onvolledig';
+    gekoppeldeContextfactoren: string[];
+    ontbrekendeGegevens: string[];
+    artsBespreekTaal: string;
+    uitleg: string;
+  };
   waarschuwing: string;
 };
 
@@ -583,16 +590,21 @@ export function bouwResearchRelevantieVoorGebruiker(
       } =>
         item.categorie === 'research' && Boolean(item.researchPublicatie?.relevantieVoorGebruiker),
     )
-    .map((item) => ({
-      id: item.id,
-      titel: item.titel,
-      publicatieDatum: item.researchPublicatie.publicatieDatum,
-      bron: item.researchPublicatie.bron,
-      relevantieVoorGebruiker: item.researchPublicatie.relevantieVoorGebruiker,
-      dossierContextBronnen: [...dossierContextBronnen],
-      waarschuwing:
-        'Relevantie is een contextnotitie voor het gesprek met de kliniek; dit is geen diagnose, dosering of behandelkeuze.',
-    }))
+    .map((item) => {
+      const contextMatch = bouwResearchContextMatch(dossierContextBronnen);
+
+      return {
+        id: item.id,
+        titel: item.titel,
+        publicatieDatum: item.researchPublicatie.publicatieDatum,
+        bron: item.researchPublicatie.bron,
+        relevantieVoorGebruiker: item.researchPublicatie.relevantieVoorGebruiker,
+        dossierContextBronnen: [...dossierContextBronnen],
+        contextMatch,
+        waarschuwing:
+          'Relevantie is een contextmatch voor het gesprek met de kliniek; dit is geen medische conclusie, rangorde of behandelrichting.',
+      };
+    })
     .sort(
       (a, b) =>
         b.publicatieDatum.localeCompare(a.publicatieDatum) ||
@@ -622,6 +634,37 @@ export function bouwResearchDossierRelaties(
         'Deze relatie is alleen een contextrelatie voor consultvoorbereiding; dit bewijst geen oorzaak, diagnose, dosering of behandelkeuze.',
     })),
   );
+}
+
+function bouwResearchContextMatch(
+  dossierContextBronnen: readonly ResearchDossierContextBron[],
+): ResearchRelevantieVoorGebruiker['contextMatch'] {
+  const gekoppeldeContextfactoren = dossierContextBronnen.map((bron) => bron.label);
+  const aanwezigeTypes = new Set(dossierContextBronnen.map((bron) => bron.type));
+  const ontbrekendeGegevens = [
+    ...(aanwezigeTypes.has('traject') ? [] : ['Actief traject of poging ontbreekt']),
+    ...(aanwezigeTypes.has('consult') ? [] : ['Recent consultverslag ontbreekt']),
+    ...(aanwezigeTypes.has('document') ? [] : ['Recent dossierdocument ontbreekt']),
+  ];
+  const gekoppeld =
+    gekoppeldeContextfactoren.length > 0
+      ? gekoppeldeContextfactoren.join(' · ')
+      : 'nog geen lokale contextfactoren';
+  const ontbrekend =
+    ontbrekendeGegevens.length > 0 ? ontbrekendeGegevens.join(' · ') : 'geen ontbrekende context';
+  const artsBespreekTaal =
+    'Bespreek met je arts of kliniek welke vragen deze publicatie oproept voor jullie dossiercontext.';
+
+  return {
+    label:
+      gekoppeldeContextfactoren.length > 0
+        ? 'contextmatch_met_lokale_bronnen'
+        : 'contextmatch_onvolledig',
+    gekoppeldeContextfactoren,
+    ontbrekendeGegevens,
+    artsBespreekTaal,
+    uitleg: `Contextmatch op basis van lokale bronnen: ${gekoppeld}. Ontbrekende gegevens: ${ontbrekend}. ${artsBespreekTaal} Geen medisch advies of behandelrichting.`,
+  };
 }
 
 export function groepeerResearchTrends(items: readonly KennisItem[]): ResearchTrendGroep[] {
