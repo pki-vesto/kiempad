@@ -3254,6 +3254,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline UI, Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 63
+- **Status:** ☑ done
+
+### G1183 — aanbevelingen omzetten naar herbruikbare recommendationcomponenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Uploadflows en de centrale timeline gebruiken nu herbruikbare componenten, maar dagelijkse aanbevelingen worden nog route-specifiek opgebouwd.
+- **User Impact:** Gebruikers ervaren aanbevelingen minder als rustige, betrouwbare dagkaarten met duidelijke broncontext.
+- **Desired Outcome:** Introduceer herbruikbare recommendationcomponenten en pas ze zichtbaar toe op minimaal één vrouw/man/dagadviesweergave.
+- **User Value:** Gebruikers kunnen leefstijl-, voeding-, supplement- en behandelvoorbereidingsadviezen beter scannen zonder medische adviesgrenzen te verliezen.
+- **Acceptance Criteria:** Componentlaag bevat herbruikbare recommendation card/list helpers; minimaal één aanbevelingsroute gebruikt de nieuwe structuur zichtbaar; bestaande bron-, review-, eigenaar- en artschecklabels blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde aanbevelingscontext; geen dosering, medische behandelkeuze, trackingpayload, secrets of raw dossierpayload wordt toegevoegd.
+- **Affected Screens:** Daily recommendations, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Recommendation UI, Dashboard UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 62
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
