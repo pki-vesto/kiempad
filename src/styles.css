@@ -2159,7 +2159,36 @@ a.action-card:active {
 
 @media (max-width: 420px) {
   .dossier-add-route-selector {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .dossier-add-route {
+    gap: 2px;
+    min-height: 58px;
+    padding: 7px;
+  }
+
+  .dossier-add-route strong {
+    font-size: 0.84rem;
+  }
+
+  .dossier-add-route span {
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .dossier-add-route small {
+    font-size: 0.68rem;
+  }
+
+  .dossier-add-route strong,
+  .dossier-add-route span,
+  .dossier-add-route small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
