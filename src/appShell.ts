@@ -995,7 +995,9 @@ function renderWorkspaceContext(activeId: ScreenId): string {
     activeId === 'welzijn' ||
     activeId === 'afwegingen' ||
     activeId === 'kosten' ||
-    activeId === 'backup'
+    activeId === 'backup' ||
+    activeId === 'herinneringen' ||
+    activeId === 'logboek'
   )
     return '';
 
@@ -1105,6 +1107,13 @@ function renderLogboekScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderEventLogSystemWorkbench({
+        eventCount: logs.length,
+        highRiskCount: highRiskLogs.length,
+        categoryCount: Object.keys(categoryCounts).length,
+        central: isCentralStorage(state),
+        latestLog: logs[0],
+      }),
       renderEventLogTaskRoutes({
         eventCount: logs.length,
         highRiskCount: highRiskLogs.length,
@@ -1160,6 +1169,57 @@ function renderLogboekScreen(state: AppShellState): string {
       ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Legacy lokaal gebeurtenissenlog',
     },
   );
+}
+
+function renderEventLogSystemWorkbench(input: {
+  eventCount: number;
+  highRiskCount: number;
+  categoryCount: number;
+  central: boolean;
+  latestLog: EventLog | undefined;
+}): string {
+  const focus = input.latestLog
+    ? `${input.latestLog.gebeurtenis}: ${formatDateTime(input.latestLog.datum)}`
+    : 'Nog geen gebeurtenissen vastgelegd.';
+  const status =
+    input.highRiskCount > 0
+      ? `${input.highRiskCount} privacysignaal`
+      : input.eventCount > 0
+        ? 'Rustig logboek'
+        : 'Nog leeg';
+
+  return `
+    <section class="system-workbench eventlog-system-workbench" aria-label="Logboek systeemwerkbank" data-eventlog-first-viewport="system-workbench">
+      <header class="system-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Systeemwerkbank</p>
+          <h2>Auditstatus, categorieën en privacy eerst</h2>
+          <p>Start met laatste activiteit en risicosignalen zonder gevoelige gebeurtenisdetails te tonen.</p>
+        </div>
+        <p class="system-workbench__status">${escapeHtml(status)}</p>
+      </header>
+      <div class="system-workbench__grid">
+        <section class="system-workbench__focus" aria-label="Laatste logboekactiviteit">
+          <p class="kp-card__eyebrow">Laatste activiteit</p>
+          <h3>${escapeHtml(focus)}</h3>
+          <p>${input.central ? 'Centrale encrypted dataset' : 'Legacy lokale kluis'} · ${input.eventCount} gebeurtenis${input.eventCount === 1 ? '' : 'sen'}</p>
+        </section>
+        <div class="system-workbench__panel">
+          ${statRow([
+            { label: 'Events', value: String(input.eventCount) },
+            { label: 'Categorieën', value: String(input.categoryCount) },
+            { label: 'Privacy', value: String(input.highRiskCount) },
+            { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
+          ])}
+          <nav class="system-workbench__actions" aria-label="Logboek werkbank acties">
+            <a href="#logboek-route-overzicht">Status</a>
+            <a href="#logboek-route-recent">Recent</a>
+            <a href="#logboek-route-privacy">Privacy</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderEventLogTaskRoutes(input: {
@@ -11974,6 +12034,14 @@ function renderHerinneringenScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderNotificationSystemWorkbench({
+        reminderCount: komende.length,
+        fallbackCount: fallback.length,
+        permission: state.notificaties.permission,
+        serviceWorker: state.notificaties.serviceWorker,
+        lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+        nextReminder: komende[0],
+      }),
       renderNotificationTaskRoutes({
         reminderCount: komende.length,
         fallbackCount: fallback.length,
@@ -12057,6 +12125,58 @@ function renderHerinneringenScreen(state: AppShellState): string {
     ],
     { className: 'notification-command-layout', ariaLabel: 'Herinneringen beheren' },
   );
+}
+
+function renderNotificationSystemWorkbench(input: {
+  reminderCount: number;
+  fallbackCount: number;
+  permission: NotificationRuntimeStatus['permission'];
+  serviceWorker: NotificationRuntimeStatus['serviceWorker'];
+  lockscreenDetails: boolean;
+  nextReminder: ReturnType<typeof komendeHerinneringen>[number] | undefined;
+}): string {
+  const notificationReady = input.permission === 'granted' && input.serviceWorker === 'ready';
+  const focus = input.nextReminder
+    ? `${input.nextReminder.herinnering.titel ?? HERINNERING_BRON_LABELS[input.nextReminder.herinnering.bron.soort]}: ${formatDateTime(input.nextReminder.volgendMoment)}`
+    : 'Nog geen komende herinneringen.';
+  const status = notificationReady
+    ? 'Notificaties klaar'
+    : input.permission === 'denied'
+      ? 'Browser geweigerd'
+      : 'In-app fallback';
+
+  return `
+    <section class="system-workbench notification-system-workbench" aria-label="Herinneringen systeemwerkbank" data-notification-first-viewport="system-workbench">
+      <header class="system-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Systeemwerkbank</p>
+          <h2>Herinneringen, privacy en fallback eerst</h2>
+          <p>Start met de eerstvolgende melding, permissiestatus en lockscreenprivacy zonder inhoud op het vergrendelscherm te lekken.</p>
+        </div>
+        <p class="system-workbench__status">${escapeHtml(status)}</p>
+      </header>
+      <div class="system-workbench__grid">
+        <section class="system-workbench__focus" aria-label="Eerstvolgende herinnering">
+          <p class="kp-card__eyebrow">Volgende melding</p>
+          <h3>${escapeHtml(focus)}</h3>
+          <p>${input.reminderCount} actief · ${input.fallbackCount} fallback · ${input.lockscreenDetails ? 'details opt-in' : 'generieke lockscreen-tekst'}</p>
+        </section>
+        <div class="system-workbench__panel">
+          ${statRow([
+            { label: 'Toestemming', value: renderPermissionLabel(input.permission) },
+            { label: 'Worker', value: renderServiceWorkerLabel(input.serviceWorker) },
+            { label: 'Actief', value: String(input.reminderCount) },
+            { label: 'Fallback', value: String(input.fallbackCount) },
+          ])}
+          <nav class="system-workbench__actions" aria-label="Herinneringen werkbank acties">
+            <a href="#herinneringen-route-status">Status</a>
+            <a href="#herinneringen-route-privacy">Privacy</a>
+            <a href="#herinneringen-route-komend">Komend</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderNotificationTaskRoutes(input: {

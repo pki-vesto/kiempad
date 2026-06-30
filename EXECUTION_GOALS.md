@@ -3734,6 +3734,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** History UI, notification UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 43
+- **Status:** ☑ done
+
+### G1213 — agenda en medicatie eerste viewport als dagplanningwerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Agenda en Medicatie hebben taakroutes, maar de eerste viewport kan nog te administratief voelen wanneer afspraken, ICS-import, innames, voorraad en registraties onder elkaar staan.
+- **User Impact:** Gebruikers moeten planning en innamestatus nog te veel scannen voordat duidelijk is wat vandaag of als eerstvolgende stap relevant is.
+- **Desired Outcome:** Maak Agenda en Medicatie meer app-achtig met een eerste-viewport dagplanningwerkbank voor komende afspraak, innamestatus en veilige vervolgroutes.
+- **User Value:** Gebruikers zien sneller wat vandaag telt en kunnen direct naar plannen, registreren of importeren zonder door alle content te scrollen.
+- **Acceptance Criteria:** Agenda opent met een compacte eerste-viewport dagplanningwerkbank voor eerstvolgende afspraak, importstatus en planningsroutes; Medicatie opent met een compacte innames-werkbank voor vandaag, voorraad/context en veilige registratieroutes; bestaande formulieren, ICS-import hooks, dose-log hooks, voorraadcopy, privacycopy en taakroutes blijven bereikbaar; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, doseringsadvies, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Agenda, Medicatie
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Schedule UI, medication UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 42
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

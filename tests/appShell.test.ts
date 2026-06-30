@@ -1721,6 +1721,8 @@ describe('app shell', () => {
     const afwegingenHtml = renderAppShell('afwegingen');
     const kostenHtml = renderAppShell('kosten');
     const backupHtml = renderAppShell('backup');
+    const herinneringenHtml = renderAppShell('herinneringen');
+    const logboekHtml = renderAppShell('logboek');
 
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1750,9 +1752,17 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(backupHtml).toContain('data-backup-first-viewport="management-workbench"');
+    expect(herinneringenHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(herinneringenHtml).toContain('data-notification-first-viewport="system-workbench"');
+    expect(logboekHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(logboekHtml).toContain('data-eventlog-first-viewport="system-workbench"');
   });
 
-  it('bewaakt kosten en backup management workbenches als eerste-viewport laag', () => {
+  it('bewaakt beheer en systeem workbenches als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
 
     expect(css).toContain('.management-workbench {');
@@ -1770,6 +1780,16 @@ describe('app shell', () => {
     expect(css).toContain('.management-workbench :where(.stat) {');
     expect(css).toContain('flex: 0 0 102px;');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('.system-workbench {');
+    expect(css).toContain('[data-notification-first-viewport="system-workbench"]');
+    expect(css).toContain('[data-eventlog-first-viewport="system-workbench"]');
+    expect(css).toContain('.system-workbench__header {');
+    expect(css).toContain('.system-workbench__grid {');
+    expect(css).toContain('.system-workbench__actions {');
+    expect(css).toContain('.notification-task-routes {');
+    expect(css).toContain('.eventlog-task-routes {');
+    expect(css).toContain('.system-workbench :where(.stat-row) {');
+    expect(css).toContain('.system-workbench :where(.stat) {');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -3985,6 +4005,15 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('class="section-stack notification-command-layout"');
+    expect(html).toContain(
+      '<section class="system-workbench notification-system-workbench" aria-label="Herinneringen systeemwerkbank" data-notification-first-viewport="system-workbench">',
+    );
+    expect(html).toContain('Herinneringen, privacy en fallback eerst');
+    expect(html).toContain('Volgende melding');
+    expect(html).toContain('aria-label="Herinneringen werkbank acties"');
+    expect(html).toContain('href="#herinneringen-route-status"');
+    expect(html).toContain('href="#herinneringen-route-privacy"');
+    expect(html).toContain('href="#herinneringen-route-komend"');
     expect(html).toContain('class="notification-task-routes"');
     expect(html).toContain('aria-label="Herinneringen taakroutes"');
     expect(html).toContain('data-notification-task-routes="ready"');
@@ -36079,6 +36108,16 @@ describe('app shell', () => {
 
     expect(html).toContain('Lokaal logboek');
     expect(html).toContain('class="section-stack eventlog-command-layout"');
+    expect(html).toContain(
+      '<section class="system-workbench eventlog-system-workbench" aria-label="Logboek systeemwerkbank" data-eventlog-first-viewport="system-workbench">',
+    );
+    expect(html).toContain('Auditstatus, categorieën en privacy eerst');
+    expect(html).toContain('Laatste activiteit');
+    expect(html).toContain('Versleutelde back-up klaargezet: 2026-06-23 15:00');
+    expect(html).toContain('aria-label="Logboek werkbank acties"');
+    expect(html).toContain('href="#logboek-route-overzicht"');
+    expect(html).toContain('href="#logboek-route-recent"');
+    expect(html).toContain('href="#logboek-route-privacy"');
     expect(html).toContain('class="eventlog-task-routes"');
     expect(html).toContain('aria-label="Logboek taakroutes"');
     expect(html).toContain('data-eventlog-task-routes="ready"');
