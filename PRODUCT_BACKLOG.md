@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 866 |
+| ☑ klaar | 867 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1065** |
+| **Totaal** | **1066** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -694,7 +694,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G529 | Fertility Intelligence: embryo cryo-status tijdlijnitem | P1 | F5 | ☐ |
 | G530 | Fertility Intelligence: embryo terugplaatsing contextkaart | P1 | F5 | ☐ |
 | G531 | Fertility Timeline & Knowledge Graph: knowledge graph node schema | P0 | F5 | ☑ |
-| G532 | Fertility Timeline & Knowledge Graph: relationship edge provenance model | P0 | F5 | ☐ |
+| G532 | Fertility Timeline & Knowledge Graph: relationship edge provenance model | P0 | F5 | ☑ |
 | G533 | Fertility Timeline & Knowledge Graph: fertility timeline filter op brontype | P1 | F5 | ☐ |
 | G534 | Fertility Timeline & Knowledge Graph: fertility timeline maandgroepering | P1 | F5 | ☐ |
 | G535 | Fertility Timeline & Knowledge Graph: timeline item detail drawer zonder kaart-in-kaart | P1 | F5 | ☐ |
@@ -1228,12 +1228,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1063 | Fertility Intelligence: consult summary source paragraph audit evidence | P1 | F5 | ☐ |
 | G1064 | Fertility Intelligence: embryo status event audit evidence | P1 | F5 | ☐ |
 | G1065 | Fertility Timeline & Knowledge Graph: node schema audit evidence | P1 | F5 | ☐ |
+| G1066 | Fertility Timeline & Knowledge Graph: edge provenance audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1065** (id's G001 t/m G1065, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1066** (id's G001 t/m G1066, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

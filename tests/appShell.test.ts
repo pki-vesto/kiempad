@@ -2673,6 +2673,12 @@ describe('app shell', () => {
     expect(html).toContain('Echo controle -> Poging 1');
     expect(html).toContain('Document hoort bij traject');
     expect(html).toContain('Echo verslag -> Poging 1');
+    expect(html).toContain(
+      'data-graph-edge-id="document:doc-1-&gt;hoort_bij_behandeling-&gt;traject:traject-1"',
+    );
+    expect(html).toContain(
+      'Provenance: Dossiermetadata · 2026-06-24 · Concept · 2 bronrecord(s) · metadata_koppeling',
+    );
     expect(html).toContain('Graph-export consultvoorbereiding');
     expect(html).toContain('kiempad-graph-consult-traject-1.md');
     expect(html).toContain('Kiempad graph-samenvatting voor consultvoorbereiding');
@@ -2683,6 +2689,11 @@ describe('app shell', () => {
     const graphNodeSchema = html.slice(graphNodeSchemaStart, graphNodeSchemaEnd);
     expect(graphNodeSchema).not.toContain('base64');
     expect(graphNodeSchema).not.toMatch(/diagnose|dosering|kansberekening|behandelkeuzeadvies/i);
+    const graphRelationshipsStart = html.indexOf('id="fertility-graph-relationships"');
+    const graphRelationshipsEnd = html.indexOf('</ol>', graphRelationshipsStart);
+    const graphRelationships = html.slice(graphRelationshipsStart, graphRelationshipsEnd);
+    expect(graphRelationships).not.toContain('base64');
+    expect(graphRelationships).not.toMatch(/diagnose|dosering|kansberekening|behandelkeuzeadvies/i);
   });
 
   it('bewaakt knowledge graph relationship states met lege graph, gemengde relaties en veilige bronpaden', () => {

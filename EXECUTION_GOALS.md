@@ -4078,7 +4078,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Knowledge graph, dossier, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G533 — fertility timeline filter op brontype
 
@@ -11626,6 +11626,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Desired Outcome:** Voeg onderhoudsbewijs toe dat graph-nodes schemaVersie, bronRecordId, bronType, bron, datum en reviewStatus blijven tonen zonder bronpayload of medische interpretatie.
 - **User Value:** Gebruikers kunnen graph-context herleiden naar bronmetadata en concepten controleren zonder dat Kiempad relaties medisch duidt.
 - **Acceptance Criteria:** Audit of tests verwijzen naar G531; node schema versie, bronRecordId, bronType, datum, bron en reviewStatus blijven gedekt; concept en gereviewde nodes blijven zichtbaar in UI of schema-output; evidence bevat geen raw documentinhoud, OCR-tekst, consulttekst, base64, data-url, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Knowledge graph, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1066 — edge provenance audit evidence
+
+- **Epic:** Fertility Timeline & Knowledge Graph
+- **Problem:** G532 introduceert relationship edge provenance met bronrecord-id's, datum, reviewstatus en herkomst, maar er is nog geen compacte audit die deze relatie-metadata en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat graph-relaties provenance blijven tonen zonder raw dossier-, OCR-, consult-, research- of aanbevelingspayload.
+- **User Value:** Gebruikers kunnen graph-relaties naar bronmetadata herleiden en conceptrelaties controleren zonder dat Kiempad relaties medisch duidt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G532; edge provenance schemaVersie, bron, bronRecordIds, datum, reviewStatus en herkomst blijven gedekt; concept, gereviewde en handmatig bevestigde relaties blijven zichtbaar in UI of schema-output; evidence bevat geen raw documentinhoud, OCR-tekst, consulttekst, researchbody, aanbevelingsdetail, base64, data-url, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Knowledge graph, app shell, maintenance tests
