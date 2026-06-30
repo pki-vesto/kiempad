@@ -1365,8 +1365,8 @@ function extractConsultVerslagenSection(html: string): string {
 }
 
 function extractDailyRecommendationsSection(html: string): string {
-  const start = html.indexOf('<h2>Dagelijkse aanbevelingen</h2>');
-  const end = html.indexOf('<details class="kp-disclosure"', start);
+  const start = html.indexOf('data-dashboard-route="recommendations"');
+  const end = html.indexOf('data-dashboard-route="quick-entry"', start);
   if (start < 0 || end < 0) throw new Error('Dagelijkse aanbevelingen-sectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -2027,6 +2027,11 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack start-command-layout"');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
+    expect(html).toContain(
+      '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
+    );
+    expect(html).toContain('class="kp-dashboard__primary"');
+    expect(html).toContain('class="kp-dashboard__secondary"');
     expect(html).toContain('class="daily-command-board"');
     expect(html).not.toContain('class="page-header"');
     expect(html).not.toContain('Vandaag op Kiempad');
@@ -2045,6 +2050,12 @@ describe('app shell', () => {
     expect(html).toContain('Geen extra taken later vandaag.');
     expect(html).toContain('Nog geen traject- of dossiercontext voor vandaag.');
     expect(html).toContain('Volgende stap');
+    expect(html).toContain('data-dashboard-route="recommendations"');
+    expect(html).toContain('aria-label="Dagelijkse aanbevelingen taakroute"');
+    expect(html).toContain('class="kp-disclosure start-task-disclosure"');
+    expect(html).toContain('Bekijk aanbevelingen');
+    expect(html).toContain('data-dashboard-route="quick-entry"');
+    expect(html).toContain('aria-label="Snelle invoer taakroute"');
     expect(html).toContain('Snelle invoer');
     expect(html).toContain('id="quick-entry-form"');
     expect(html).toContain('name="quickText" required');
@@ -2130,6 +2141,70 @@ describe('app shell', () => {
     expect(html).toContain('Vragen voor de arts');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('houdt startschermmodules taakgericht verdeeld bij gevulde context', () => {
+    const vandaag = new Date().toISOString().slice(0, 10);
+    const html = renderAppShell(
+      'start',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-dashboard',
+              naam: 'Poging dashboard',
+              type: 'icsi',
+              startDatum: vandaag,
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [
+              {
+                id: 'fase-dashboard',
+                trajectId: 'traject-dashboard',
+                fase: 'stimulatie',
+                startDatum: vandaag,
+              },
+            ],
+          },
+        ],
+        afspraken: [
+          {
+            afspraak: {
+              id: 'afspraak-dashboard',
+              titel: 'Echo dashboard',
+              datumTijd: `${vandaag}T10:00`,
+              type: 'echo',
+            },
+          },
+        ],
+      }),
+    );
+
+    const dashboardStart = html.indexOf(
+      '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
+    );
+    const primaryStart = html.indexOf('class="kp-dashboard__primary"', dashboardStart);
+    const secondaryStart = html.indexOf('class="kp-dashboard__secondary"', primaryStart);
+    const phaseIndex = html.indexOf('Poging dashboard', primaryStart);
+    const todayIndex = html.indexOf('aria-label="Vandaag command center"', primaryStart);
+    const nextStepIndex = html.indexOf('Volgende stap', secondaryStart);
+    const recommendationsIndex = html.indexOf(
+      'data-dashboard-route="recommendations"',
+      secondaryStart,
+    );
+    const quickEntryIndex = html.indexOf('data-dashboard-route="quick-entry"', secondaryStart);
+
+    expect(dashboardStart).toBeGreaterThan(-1);
+    expect(primaryStart).toBeGreaterThan(dashboardStart);
+    expect(secondaryStart).toBeGreaterThan(primaryStart);
+    expect(phaseIndex).toBeGreaterThan(primaryStart);
+    expect(phaseIndex).toBeLessThan(secondaryStart);
+    expect(todayIndex).toBeGreaterThan(primaryStart);
+    expect(todayIndex).toBeLessThan(secondaryStart);
+    expect(nextStepIndex).toBeGreaterThan(secondaryStart);
+    expect(recommendationsIndex).toBeGreaterThan(secondaryStart);
+    expect(quickEntryIndex).toBeGreaterThan(recommendationsIndex);
   });
 
   it('bewaakt dagelijkse aanbevelingen als dual-owner states zonder dosering of trackingpayload', () => {

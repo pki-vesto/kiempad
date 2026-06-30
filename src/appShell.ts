@@ -178,6 +178,8 @@ import type { InAppFallbackNotification, NotificationRuntimeStatus } from './not
 import {
   actionCard,
   card,
+  dashboardSection,
+  dashboardShell,
   disclosure,
   pageHeader,
   phaseHeroCard,
@@ -9549,49 +9551,58 @@ function renderStartScreen(state: AppShellState): string {
     vandaag,
   );
   const doseGedaan = todayDoseLogs.filter((doseLog) => doseLog.status === 'genomen').length;
+  const phasePanel = phaseHeroCard(
+    huidigeFase
+      ? {
+          eyebrow: `Huidige fase · ${huidigeFaseIndex} van ${sortedFasen.length}`,
+          phaseLabel: TRAJECT_FASE_LABELS[huidigeFase.fase],
+          subtitle: TRAJECT_FASE_TOELICHTING[huidigeFase.fase],
+          steps: faseSteps,
+          cta: { href: '#traject', label: 'Bekijk traject' },
+        }
+      : {
+          eyebrow: activeTraject ? 'Jullie traject' : 'Aan de slag',
+          phaseLabel: activeTraject ? activeTraject.traject.naam : 'Begin jullie traject',
+          subtitle: activeTraject
+            ? bepaalVolgendeStap(activeTraject)
+            : 'Maak een traject aan om de eerste fase en volgende stap zichtbaar te maken.',
+          steps: faseSteps,
+          cta: {
+            href: '#traject',
+            label: activeTraject ? 'Bekijk traject' : 'Traject aanmaken',
+          },
+        },
+  );
+  const dosePanel =
+    todayDoseLogs.length > 0
+      ? dashboardSection({
+          title: 'Vandaag te zetten',
+          eyebrow: `${doseGedaan}/${todayDoseLogs.length} gedaan`,
+          body: renderDoseLogList(todayDoseLogs, state.medicatie),
+          route: 'medicatie',
+          ariaLabel: 'Vandaag te zetten',
+        })
+      : '';
+  const setupPanel = renderFirstRunSetup(state);
 
   return sectionStack(
     [
       renderStartCommandHeader(state),
-      phaseHeroCard(
-        huidigeFase
-          ? {
-              eyebrow: `Huidige fase · ${huidigeFaseIndex} van ${sortedFasen.length}`,
-              phaseLabel: TRAJECT_FASE_LABELS[huidigeFase.fase],
-              subtitle: TRAJECT_FASE_TOELICHTING[huidigeFase.fase],
-              steps: faseSteps,
-              cta: { href: '#traject', label: 'Bekijk traject' },
-            }
-          : {
-              eyebrow: activeTraject ? 'Jullie traject' : 'Aan de slag',
-              phaseLabel: activeTraject ? activeTraject.traject.naam : 'Begin jullie traject',
-              subtitle: activeTraject
-                ? bepaalVolgendeStap(activeTraject)
-                : 'Maak een traject aan om de eerste fase en volgende stap zichtbaar te maken.',
-              steps: faseSteps,
-              cta: {
-                href: '#traject',
-                label: activeTraject ? 'Bekijk traject' : 'Traject aanmaken',
-              },
-            },
-      ),
-      renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
-      renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
-      todayDoseLogs.length > 0
-        ? card({
-            title: 'Vandaag te zetten',
-            eyebrow: `${doseGedaan}/${todayDoseLogs.length} gedaan`,
-            body: renderDoseLogList(todayDoseLogs, state.medicatie),
-            ariaLabel: 'Vandaag te zetten',
-          })
-        : '',
-      renderFirstRunSetup(state),
-      card({
-        body: `${
-          state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
-        }${renderDailyRecommendations(dailyRecommendations)}`,
+      dashboardShell({
+        className: 'start-dashboard-shell',
+        ariaLabel: 'Taakgericht startdashboard',
+        primary: [
+          phasePanel,
+          renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
+        ],
+        secondary: [
+          renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
+          dosePanel,
+          renderStartRecommendationRoute(state, dailyRecommendations),
+          setupPanel,
+          renderStartQuickEntryRoute(),
+        ],
       }),
-      disclosure({ summary: 'Snelle invoer', body: renderQuickEntryForm() }),
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
@@ -9829,10 +9840,37 @@ const DAILY_RECOMMENDATION_OWNER_LABELS: Record<DailyRecommendationOwner, string
   samen: 'Samen',
 };
 
-function renderDailyRecommendations(overview: DailyRecommendationOverview): string {
+function renderStartRecommendationRoute(
+  state: AppShellState,
+  overview: DailyRecommendationOverview,
+): string {
+  return dashboardSection({
+    title: 'Dagelijkse aanbevelingen',
+    eyebrow: 'Dagadvies',
+    route: 'recommendations',
+    ariaLabel: 'Dagelijkse aanbevelingen taakroute',
+    body: `${
+      state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
+    }<p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
+    <details class="kp-disclosure start-task-disclosure">
+      <summary class="kp-disclosure__summary">Bekijk aanbevelingen</summary>
+      <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
+    </details>`,
+  });
+}
+
+function renderStartQuickEntryRoute(): string {
+  return dashboardSection({
+    title: 'Snelle invoer',
+    eyebrow: 'Vastleggen',
+    route: 'quick-entry',
+    ariaLabel: 'Snelle invoer taakroute',
+    body: renderQuickEntryForm(),
+  });
+}
+
+function renderDailyRecommendationList(overview: DailyRecommendationOverview): string {
   return `
-    <h2>Dagelijkse aanbevelingen</h2>
-    <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
     <div class="daily-recommendation-list">
       ${(['vrouw', 'man', 'samen'] as const)
         .map((owner) => renderDailyRecommendationGroup(owner, overview[owner]))

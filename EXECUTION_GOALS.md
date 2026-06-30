@@ -13320,4 +13320,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Startscreen, app shell, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 67
+- **Status:** ☑ done
+
+### G1179 — uploadflows omzetten naar herbruikbare workflowcomponenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het startdashboard heeft nu een herbruikbare dashboard-shell, maar de uploadflows voor dossier, consult en embryo bestaan nog uit veel route-specifieke markup waardoor verdere premium workflowverbeteringen traag en foutgevoelig blijven.
+- **User Impact:** Gebruikers kunnen uploadroutes nog steeds als formulierblokken ervaren in plaats van als begeleide, rustige workflows met duidelijke voortgang en context.
+- **Desired Outcome:** Introduceer herbruikbare workflowcomponenten voor uploadroutes en pas ze zichtbaar toe op minimaal één dossier-/consult-/embryo-uploadflow zonder privacyhooks of inputcontracten te breken.
+- **User Value:** Gebruikers krijgen een consistentere uploadervaring die minder technisch voelt en beter uitlegt welke stap, bron en controle nodig is.
+- **Acceptance Criteria:** Componentlaag bevat herbruikbare workflow- of uploadsectiehelpers; minimaal één uploadroute gebruikt de nieuwe componentstructuur zichtbaar; bestaande form-id's, input names, ankers, aria-live feedback en privacydata-hooks blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde uploadcontext; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Upload workflow, Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 66
 - **Status:** ☐ open
