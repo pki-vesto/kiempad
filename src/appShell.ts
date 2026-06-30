@@ -8581,6 +8581,30 @@ function renderResearchRelevantieVoorGebruiker(
                   <small>Ontbrekende gegevens: ${escapeHtml(item.contextMatch.ontbrekendeGegevens.join(' · ') || 'geen ontbrekende context')}</small>
                   <small>${escapeHtml(item.contextMatch.artsBespreekTaal)}</small>
                   <small>${escapeHtml(item.contextMatch.uitleg)}</small>
+                  <dl class="metadata-list compact-list">
+                    <div><dt>Relevantiebron</dt><dd>${escapeHtml(item.relevantieUitleg.bron)}</dd></div>
+                    <div><dt>Datum</dt><dd>${escapeHtml(item.relevantieUitleg.datum)}</dd></div>
+                    <div><dt>Reviewstatus</dt><dd>${escapeHtml(item.relevantieUitleg.reviewStatus)}</dd></div>
+                    <div><dt>Onzekerheidslabel</dt><dd>${escapeHtml(item.relevantieUitleg.onzekerheidslabel)}</dd></div>
+                    <div><dt>Uitleg voor leken</dt><dd>${escapeHtml(item.relevantieUitleg.uitlegVoorLeken)}</dd></div>
+                  </dl>
+                  <form class="research-relevance-review-form compact-form" data-research-relevance-id="${escapeAttribute(item.id)}">
+                    <input type="hidden" name="researchRelevanceId" value="${escapeAttribute(item.id)}" />
+                    <label>
+                      Relevantieconcept controleren
+                      <input name="researchRelevanceCorrection" value="${escapeAttribute(item.relevantieVoorGebruiker)}" />
+                    </label>
+                    <label>
+                      Reviewstatus
+                      <select name="researchRelevanceReviewStatus">
+                        ${renderOption('concept_te_controleren', 'Concept te controleren', item.relevantieUitleg.reviewStatus)}
+                      </select>
+                    </label>
+                    <button type="submit">Bewaar relevantiecorrectie</button>
+                  </form>
+                  <small>Bronpad: ${item.relevantieUitleg.bronpad.map(escapeHtml).join(' > ')}</small>
+                  <small>Correctievelden: ${item.relevantieUitleg.correctieVelden.map(escapeHtml).join(' · ')}</small>
+                  <small>${escapeHtml(item.relevantieUitleg.waarschuwing)}</small>
                   ${
                     item.dossierContextBronnen.length > 0
                       ? `<small>Context: ${item.dossierContextBronnen.map((bron) => escapeHtml(bron.label)).join(' · ')}</small>`

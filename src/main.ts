@@ -1237,6 +1237,13 @@ function bindKennisControls(root: HTMLElement, state: RuntimeState): void {
     void saveResearchItemFromForm(event.currentTarget, root, state);
   });
 
+  root.querySelectorAll<HTMLFormElement>('.research-relevance-review-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      void saveResearchRelevanceReviewFromForm(event.currentTarget, root, state);
+    });
+  });
+
   root.querySelector('#ai-preview-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     saveAiPreviewFromForm(event.currentTarget, root, state);
@@ -1331,6 +1338,36 @@ async function saveResearchItemFromForm(
     relevantieVoorGebruiker: optionalString(data.get('researchRelevantieVoorGebruiker')),
   });
   await reloadAndRender(root, state);
+}
+
+async function saveResearchRelevanceReviewFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.kennisStore) return;
+
+  const data = new FormData(target);
+  try {
+    await state.kennisStore.updateResearchRelevanceReview(
+      String(data.get('researchRelevanceId') ?? ''),
+      {
+        relevantieVoorGebruiker: String(data.get('researchRelevanceCorrection') ?? ''),
+        reviewStatus: 'concept_te_controleren',
+      },
+    );
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Researchrelevantie review bijgewerkt',
+      detail: 'Conceptuele relevantiecorrectie bewaard zonder behandeladvies.',
+    });
+    state.aiError = undefined;
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.aiError =
+      error instanceof Error ? error.message : 'Researchrelevantie reviewen is mislukt.';
+    render(root, state);
+  }
 }
 
 function saveAiPreviewFromForm(
