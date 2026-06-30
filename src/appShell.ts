@@ -1613,6 +1613,10 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde encrypted dataset.</p>`
             : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
+        <details class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">
+          <summary class="kp-disclosure__summary">Privacy- en toegankelijkheidscontrole</summary>
+          <div class="kp-disclosure__body dossier-secondary-privacy__body">
+            <p class="small-print dossier-secondary-privacy__intro">Technische controles voor zoeken, export, audit en assistive states blijven beschikbaar zonder de primaire dossierroute te onderbreken.</p>
         ${renderAttachmentSearchFilterPrivacy(state, zoekResultaten, alleImagingItems, imagingItems)}
         ${renderAttachmentSortPaginationPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentBulkSelectionPrivacy(state, zichtbareDocumenten, imagingItems)}
@@ -1695,6 +1699,8 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportPrivacy(state, zichtbareDocumenten, imagingItems)}
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
+          </div>
+        </details>
         <h2>Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
