@@ -3494,6 +3494,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, command routes, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 48
+- **Status:** ☑ done
+
+### G1198 — commandroutes uitbreiden met statusbadges en compactere density states
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De meest recente taakroutes delen nu command-styling, maar de routekaarten tonen nog weinig statuscontext en nemen op compacte schermen relatief veel scanruimte in.
+- **User Impact:** Gebruikers zien wel aparte routes, maar moeten nog routepanelen openen om te begrijpen waar aandacht, inhoud of een volgende actie zit.
+- **Desired Outcome:** Voeg compacte statusbadges, tellingen of density states toe aan commandroutes waar data beschikbaar is, zonder routehashes of privacygrenzen te wijzigen.
+- **User Value:** Gebruikers kunnen sneller kiezen welke taakroute relevant is en ervaren minder tab-achtige ruis op mobiele en desktopweergaven.
+- **Acceptance Criteria:** Minimaal agenda, medicatie, vragen en traject tonen consistente compacte routecontext; actieve, lege en gevulde states blijven visueel onderscheidbaar; bestaande hashes, form-id's, input names en privacyhooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests bewaken routecontext; geen medische payload, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Agenda, Medicatie, Vragen, Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, command routes, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 47
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

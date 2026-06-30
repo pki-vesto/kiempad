@@ -2943,15 +2943,18 @@ describe('app shell', () => {
 
     expect(html).toContain('Echo controle');
     expect(html).toContain('class="section-stack schedule-command-layout"');
-    expect(html).toContain('class="schedule-task-routes"');
+    expect(html).toContain('class="schedule-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Agenda taakroutes"');
     expect(html).toContain('data-schedule-task-routes="ready"');
+    expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain('href="#agenda?route=overzicht" aria-current="page"');
     expect(html).toContain('href="#agenda?route=komend"');
     expect(html).toContain('href="#agenda?route=plannen"');
     expect(html).toContain('href="#agenda?route=import"');
     expect(html).toContain('href="#agenda?route=historie"');
     expect(html).toContain('id="agenda-route-overzicht"');
+    expect(html).toContain('class="schedule-route-section command-route-section"');
+    expect(html).toContain('class="schedule-route-section__header command-route-section__header"');
     expect(html).toContain('data-schedule-route="overzicht"');
     expect(html).toContain('data-schedule-route-state="active"');
     expect(html).toContain('id="agenda-route-komend"');
@@ -3642,15 +3645,20 @@ describe('app shell', () => {
 
     expect(html).toContain('Progesteron');
     expect(html).toContain('class="section-stack medication-command-layout"');
-    expect(html).toContain('class="medication-task-routes"');
+    expect(html).toContain('class="medication-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Medicatie taakroutes"');
     expect(html).toContain('data-medication-task-routes="ready"');
+    expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain('href="#medicatie?route=vandaag" aria-current="page"');
     expect(html).toContain('href="#medicatie?route=planning"');
     expect(html).toContain('href="#medicatie?route=beheer"');
     expect(html).toContain('href="#medicatie?route=import"');
     expect(html).toContain('href="#medicatie?route=historie"');
     expect(html).toContain('id="medicatie-route-vandaag"');
+    expect(html).toContain('class="medication-route-section command-route-section"');
+    expect(html).toContain(
+      'class="medication-route-section__header command-route-section__header"',
+    );
     expect(html).toContain('data-medication-route="vandaag"');
     expect(html).toContain('data-medication-route-state="active"');
     expect(html).toContain('id="medicatie-route-planning"');
@@ -4163,15 +4171,18 @@ describe('app shell', () => {
 
     expect(html).toContain('Wat is de volgende stap?');
     expect(html).toContain('class="section-stack question-command-layout"');
-    expect(html).toContain('class="question-task-routes"');
+    expect(html).toContain('class="question-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Vragen taakroutes"');
     expect(html).toContain('data-question-task-routes="ready"');
+    expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain('href="#vragen?route=open" aria-current="page"');
     expect(html).toContain('href="#vragen?route=voorbereiden"');
     expect(html).toContain('href="#vragen?route=beheer"');
     expect(html).toContain('href="#vragen?route=verslagen"');
     expect(html).toContain('href="#vragen?route=alle"');
     expect(html).toContain('id="vragen-route-open"');
+    expect(html).toContain('class="question-route-section command-route-section"');
+    expect(html).toContain('class="question-route-section__header command-route-section__header"');
     expect(html).toContain('data-question-route="open"');
     expect(html).toContain('data-question-route-state="active"');
     expect(html).toContain('id="vragen-route-voorbereiden"');
@@ -35758,15 +35769,18 @@ describe('app shell', () => {
 
     expect(html).toContain('id="traject-new-form"');
     expect(html).toContain('class="section-stack treatment-command-layout"');
-    expect(html).toContain('class="treatment-task-routes"');
+    expect(html).toContain('class="treatment-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Traject taakroutes"');
     expect(html).toContain('data-treatment-task-routes="ready"');
+    expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain('href="#traject?route=overzicht" aria-current="page"');
     expect(html).toContain('href="#traject?route=fasen"');
     expect(html).toContain('href="#traject?route=vergoeding"');
     expect(html).toContain('href="#traject?route=context"');
     expect(html).toContain('href="#traject?route=beheer"');
     expect(html).toContain('id="traject-route-overzicht"');
+    expect(html).toContain('class="treatment-route-section command-route-section"');
+    expect(html).toContain('class="treatment-route-section__header command-route-section__header"');
     expect(html).toContain('data-treatment-route="overzicht"');
     expect(html).toContain('data-treatment-route-state="active"');
     expect(html).toContain('id="traject-route-fasen"');

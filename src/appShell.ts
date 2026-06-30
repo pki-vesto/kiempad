@@ -431,6 +431,37 @@ export function normalizeQuestionRoute(value: string | null | undefined): Questi
   return QUESTION_ROUTES.includes(route as QuestionRoute) ? (route as QuestionRoute) : 'open';
 }
 
+type CommandTaskRoute<RouteId extends string> = {
+  id: RouteId;
+  href: string;
+  label: string;
+  meta: string;
+};
+
+function renderCommandTaskRoutes<RouteId extends string>(input: {
+  className: string;
+  routeClassName: string;
+  ariaLabel: string;
+  dataAttribute: string;
+  routes: readonly CommandTaskRoute<RouteId>[];
+  activeRoute: RouteId;
+}): string {
+  return `
+    <nav class="${input.className} command-task-routes" aria-label="${escapeAttribute(input.ariaLabel)}" data-${input.dataAttribute}="ready" data-command-task-routes="ready">
+      ${input.routes
+        .map(
+          (route) => `
+            <a class="${input.routeClassName} command-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
+}
+
 export type AppShellState = {
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -10906,8 +10937,8 @@ function renderVragenScreen(state: AppShellState): string {
         hasPrepPacket: Boolean(gegenereerdeVragenlijst),
         activeRoute: activeQuestionRoute,
       }),
-      `<section id="vragen-route-open" class="question-route-section" aria-labelledby="vragen-route-open-title" data-question-route="open"${renderQuestionRouteVisibility(activeQuestionRoute, 'open')}>
-        <header class="question-route-section__header">
+      `<section id="vragen-route-open" class="question-route-section command-route-section" aria-labelledby="vragen-route-open-title" data-question-route="open"${renderQuestionRouteVisibility(activeQuestionRoute, 'open')}>
+        <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Open</p>
           <h2 id="vragen-route-open-title">Openstaande vragen</h2>
           <p>Bekijk de vragen die bij het eerstvolgende contactmoment horen.</p>
@@ -10919,8 +10950,8 @@ function renderVragenScreen(state: AppShellState): string {
             : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
         }
       </section>`,
-      `<section id="vragen-route-voorbereiden" class="question-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
-        <header class="question-route-section__header">
+      `<section id="vragen-route-voorbereiden" class="question-route-section command-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
+        <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Voorbereiden</p>
           <h2 id="vragen-route-voorbereiden-title">Consult voorbereiden</h2>
           <p>Maak lokaal een prep-packet met open vragen en consultactiepunten.</p>
@@ -10933,8 +10964,8 @@ function renderVragenScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>'
         }
       </section>`,
-      `<section id="vragen-route-beheer" class="question-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
-        <header class="question-route-section__header">
+      `<section id="vragen-route-beheer" class="question-route-section command-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
+        <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="vragen-route-beheer-title">Vraag toevoegen of beantwoorden</h2>
           <p>Leg vraag, afspraak, prioriteit, status en antwoord vast zonder medisch advies.</p>
@@ -10945,8 +10976,8 @@ function renderVragenScreen(state: AppShellState): string {
           body: renderVraagForm(selected, state.afspraken),
         })}
       </section>`,
-      `<section id="vragen-route-verslagen" class="question-route-section" aria-labelledby="vragen-route-verslagen-title" data-question-route="verslagen"${renderQuestionRouteVisibility(activeQuestionRoute, 'verslagen')}>
-        <header class="question-route-section__header">
+      `<section id="vragen-route-verslagen" class="question-route-section command-route-section" aria-labelledby="vragen-route-verslagen-title" data-question-route="verslagen"${renderQuestionRouteVisibility(activeQuestionRoute, 'verslagen')}>
+        <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Verslagen</p>
           <h2 id="vragen-route-verslagen-title">Beantwoorde vragen per afspraak</h2>
           <p>Lees antwoorden terug per contactmoment, los van open vragen en beheer.</p>
@@ -10958,8 +10989,8 @@ function renderVragenScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>'
         }
       </section>`,
-      `<section id="vragen-route-alle" class="question-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
-        <header class="question-route-section__header">
+      `<section id="vragen-route-alle" class="question-route-section command-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
+        <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Alle vragen</p>
           <h2 id="vragen-route-alle-title">Vraaglijst beheren</h2>
           <p>Bekijk alle vragen met prioriteitsknoppen en antwoordstatus.</p>
@@ -11011,20 +11042,14 @@ function renderQuestionTaskRoutes(input: {
     },
   ];
 
-  return `
-    <nav class="question-task-routes" aria-label="Vragen taakroutes" data-question-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="question-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
-  `;
+  return renderCommandTaskRoutes({
+    className: 'question-task-routes',
+    routeClassName: 'question-task-route',
+    ariaLabel: 'Vragen taakroutes',
+    dataAttribute: 'question-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
 }
 
 function renderQuestionRouteVisibility(activeRoute: QuestionRoute, route: QuestionRoute): string {
@@ -11553,16 +11578,16 @@ function renderAgendaScreen(state: AppShellState): string {
         hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
         activeRoute: activeScheduleRoute,
       }),
-      `<section id="agenda-route-overzicht" class="schedule-route-section" aria-labelledby="agenda-route-overzicht-title" data-schedule-route="overzicht"${renderScheduleRouteVisibility(activeScheduleRoute, 'overzicht')}>
-        <header class="schedule-route-section__header">
+      `<section id="agenda-route-overzicht" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-overzicht-title" data-schedule-route="overzicht"${renderScheduleRouteVisibility(activeScheduleRoute, 'overzicht')}>
+        <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="agenda-route-overzicht-title">Agendaoverzicht</h2>
           <p>Scan week- en maandcontext zonder direct door formulieren of historie te scrollen.</p>
         </header>
         ${agendaOverview || '<p class="empty-state">Nog geen agenda-overzicht beschikbaar.</p>'}
       </section>`,
-      `<section id="agenda-route-komend" class="schedule-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
-        <header class="schedule-route-section__header">
+      `<section id="agenda-route-komend" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
+        <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Komend</p>
           <h2 id="agenda-route-komend-title">Komende afspraken</h2>
           <p>Bekijk eerstvolgende afspraken met vraag- en herinneringscontext.</p>
@@ -11574,8 +11599,8 @@ function renderAgendaScreen(state: AppShellState): string {
             : '<p class="empty-state">Geen komende afspraken. Maak via Plannen een nieuwe afspraak aan.</p>'
         }
       </section>`,
-      `<section id="agenda-route-plannen" class="schedule-route-section" aria-labelledby="agenda-route-plannen-title" data-schedule-route="plannen"${renderScheduleRouteVisibility(activeScheduleRoute, 'plannen')}>
-        <header class="schedule-route-section__header">
+      `<section id="agenda-route-plannen" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-plannen-title" data-schedule-route="plannen"${renderScheduleRouteVisibility(activeScheduleRoute, 'plannen')}>
+        <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Plannen</p>
           <h2 id="agenda-route-plannen-title">Afspraak plannen of bewerken</h2>
           <p>Leg tijd, type, trajectkoppeling, voorbereiding, vraag en herinnering in één rustige workflow vast.</p>
@@ -11586,8 +11611,8 @@ function renderAgendaScreen(state: AppShellState): string {
           body: renderAfspraakForm(selected, state.trajecten, state.settings),
         })}
       </section>`,
-      `<section id="agenda-route-import" class="schedule-route-section" aria-labelledby="agenda-route-import-title" data-schedule-route="import"${renderScheduleRouteVisibility(activeScheduleRoute, 'import')}>
-        <header class="schedule-route-section__header">
+      `<section id="agenda-route-import" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-import-title" data-schedule-route="import"${renderScheduleRouteVisibility(activeScheduleRoute, 'import')}>
+        <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="agenda-route-import-title">Kliniekagenda importeren</h2>
           <p>Importeer een ICS-bestand lokaal zonder bronregels of medische inhoud in statusfeedback te tonen.</p>
@@ -11598,8 +11623,8 @@ function renderAgendaScreen(state: AppShellState): string {
           body: renderAgendaImportForm(state),
         })}
       </section>`,
-      `<section id="agenda-route-historie" class="schedule-route-section" aria-labelledby="agenda-route-historie-title" data-schedule-route="historie"${renderScheduleRouteVisibility(activeScheduleRoute, 'historie')}>
-        <header class="schedule-route-section__header">
+      `<section id="agenda-route-historie" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-historie-title" data-schedule-route="historie"${renderScheduleRouteVisibility(activeScheduleRoute, 'historie')}>
+        <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Historie</p>
           <h2 id="agenda-route-historie-title">Afgelopen afspraken</h2>
           <p>Lees terugbliknotities en afspraakcontext los van het planscherm.</p>
@@ -11651,20 +11676,14 @@ function renderScheduleTaskRoutes(input: {
     },
   ];
 
-  return `
-    <nav class="schedule-task-routes" aria-label="Agenda taakroutes" data-schedule-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="schedule-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
-  `;
+  return renderCommandTaskRoutes({
+    className: 'schedule-task-routes',
+    routeClassName: 'schedule-task-route',
+    ariaLabel: 'Agenda taakroutes',
+    dataAttribute: 'schedule-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
 }
 
 function renderScheduleRouteVisibility(activeRoute: ScheduleRoute, route: ScheduleRoute): string {
@@ -11876,8 +11895,8 @@ function renderMedicatieScreen(state: AppShellState): string {
         hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
         activeRoute: activeMedicationRoute,
       }),
-      `<section id="medicatie-route-vandaag" class="medication-route-section" aria-labelledby="medicatie-route-vandaag-title" data-medication-route="vandaag"${renderMedicationRouteVisibility(activeMedicationRoute, 'vandaag')}>
-        <header class="medication-route-section__header">
+      `<section id="medicatie-route-vandaag" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-vandaag-title" data-medication-route="vandaag"${renderMedicationRouteVisibility(activeMedicationRoute, 'vandaag')}>
+        <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Vandaag</p>
           <h2 id="medicatie-route-vandaag-title">Medicatie vandaag</h2>
           <p>Vink geplande momenten af zonder dosering te laten berekenen of interpreteren.</p>
@@ -11889,8 +11908,8 @@ function renderMedicatieScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>'
         }
       </section>`,
-      `<section id="medicatie-route-planning" class="medication-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
-        <header class="medication-route-section__header">
+      `<section id="medicatie-route-planning" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
+        <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Planning</p>
           <h2 id="medicatie-route-planning-title">Komende medicatiemomenten</h2>
           <p>Bekijk toekomstige afvinkmomenten uit eigen invoer of import.</p>
@@ -11901,8 +11920,8 @@ function renderMedicatieScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen toekomstige medicatiemomenten buiten vandaag.</p>'
         }
       </section>`,
-      `<section id="medicatie-route-beheer" class="medication-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
-        <header class="medication-route-section__header">
+      `<section id="medicatie-route-beheer" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
+        <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="medicatie-route-beheer-title">Middel beheren</h2>
           <p>Bewaar kliniektekst, voorraad, instructie en lokale video zonder doseeradvies.</p>
@@ -11914,16 +11933,16 @@ function renderMedicatieScreen(state: AppShellState): string {
           body: renderMedicatieForm(selected?.medicatie),
         })}
       </section>`,
-      `<section id="medicatie-route-import" class="medication-route-section" aria-labelledby="medicatie-route-import-title" data-medication-route="import"${renderMedicationRouteVisibility(activeMedicationRoute, 'import')}>
-        <header class="medication-route-section__header">
+      `<section id="medicatie-route-import" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-import-title" data-medication-route="import"${renderMedicationRouteVisibility(activeMedicationRoute, 'import')}>
+        <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="medicatie-route-import-title">Schema importeren</h2>
           <p>Importeer geplande momenten uit eigen klinieklijst zonder doseringen over te nemen of te berekenen.</p>
         </header>
         ${disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) })}
       </section>`,
-      `<section id="medicatie-route-historie" class="medication-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
-        <header class="medication-route-section__header">
+      `<section id="medicatie-route-historie" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
+        <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Historie</p>
           <h2 id="medicatie-route-historie-title">Middelen, voorraad en historie</h2>
           <p>Bekijk middelen, voorraad, instructies en innameloghistorie los van het beheerscherm.</p>
@@ -11981,20 +12000,14 @@ function renderMedicationTaskRoutes(input: {
     },
   ];
 
-  return `
-    <nav class="medication-task-routes" aria-label="Medicatie taakroutes" data-medication-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="medication-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
-  `;
+  return renderCommandTaskRoutes({
+    className: 'medication-task-routes',
+    routeClassName: 'medication-task-route',
+    ariaLabel: 'Medicatie taakroutes',
+    dataAttribute: 'medication-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
 }
 
 function renderMedicationRouteVisibility(
@@ -12232,8 +12245,8 @@ function renderTrajectScreen(state: AppShellState): string {
         remainingReimbursements: vergoeding.resterend,
         activeRoute: activeTreatmentRoute,
       }),
-      `<section id="traject-route-overzicht" class="treatment-route-section" aria-labelledby="traject-route-overzicht-title" data-treatment-route="overzicht"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'overzicht')}>
-        <header class="treatment-route-section__header">
+      `<section id="traject-route-overzicht" class="treatment-route-section command-route-section" aria-labelledby="traject-route-overzicht-title" data-treatment-route="overzicht"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'overzicht')}>
+        <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="traject-route-overzicht-title">Trajectoverzicht</h2>
           <p>Bekijk actieve en afgeronde pogingen, statusverdeling en de centrale trajectcontext.</p>
@@ -12245,8 +12258,8 @@ function renderTrajectScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen actieve pogingen.</p>'
         }
       </section>`,
-      `<section id="traject-route-fasen" class="treatment-route-section" aria-labelledby="traject-route-fasen-title" data-treatment-route="fasen"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'fasen')}>
-        <header class="treatment-route-section__header">
+      `<section id="traject-route-fasen" class="treatment-route-section command-route-section" aria-labelledby="traject-route-fasen-title" data-treatment-route="fasen"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'fasen')}>
+        <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Fasen</p>
           <h2 id="traject-route-fasen-title">Faseplanning</h2>
           <p>Markeer de actuele fase binnen het geselecteerde traject zonder medische conclusie.</p>
@@ -12258,8 +12271,8 @@ function renderTrajectScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.</p>'
         }
       </section>`,
-      `<section id="traject-route-vergoeding" class="treatment-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
-        <header class="treatment-route-section__header">
+      `<section id="traject-route-vergoeding" class="treatment-route-section command-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
+        <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Vergoeding</p>
           <h2 id="traject-route-vergoeding-title">Vergoeding</h2>
           <p>Controleer meetellende pogingen en resterende ruimte als voorbereiding op eigen administratie.</p>
@@ -12273,8 +12286,8 @@ function renderTrajectScreen(state: AppShellState): string {
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
       </section>`,
-      `<section id="traject-route-context" class="treatment-route-section" aria-labelledby="traject-route-context-title" data-treatment-route="context"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'context')}>
-        <header class="treatment-route-section__header">
+      `<section id="traject-route-context" class="treatment-route-section command-route-section" aria-labelledby="traject-route-context-title" data-treatment-route="context"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'context')}>
+        <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Context</p>
           <h2 id="traject-route-context-title">Timeline en graphcontext</h2>
           <p>Bekijk de centrale fertility timeline en kennisrelaties los van beheeracties.</p>
@@ -12287,8 +12300,8 @@ function renderTrajectScreen(state: AppShellState): string {
         )}
         ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
       </section>`,
-      `<section id="traject-route-beheer" class="treatment-route-section" aria-labelledby="traject-route-beheer-title" data-treatment-route="beheer"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'beheer')}>
-        <header class="treatment-route-section__header">
+      `<section id="traject-route-beheer" class="treatment-route-section command-route-section" aria-labelledby="traject-route-beheer-title" data-treatment-route="beheer"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'beheer')}>
+        <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="traject-route-beheer-title">Trajectbeheer en archief</h2>
           <p>Bewerk het geselecteerde traject, voeg een nieuwe poging toe of herstel een gearchiveerde poging.</p>
@@ -12345,20 +12358,14 @@ function renderTreatmentTaskRoutes(input: {
     },
   ];
 
-  return `
-    <nav class="treatment-task-routes" aria-label="Traject taakroutes" data-treatment-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="treatment-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
-  `;
+  return renderCommandTaskRoutes({
+    className: 'treatment-task-routes',
+    routeClassName: 'treatment-task-route',
+    ariaLabel: 'Traject taakroutes',
+    dataAttribute: 'treatment-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
 }
 
 function renderTreatmentRouteVisibility(
