@@ -23,6 +23,7 @@ import {
   bepaalDossierUploadProfiel,
   DOSSIER_UPLOAD_PROFIEL_LABELS,
   type DossierBeeldClassificatie,
+  EMBRYO_STATUS_LABELS,
   formatBytes,
   type ImagingRepositoryFilter,
 } from './domain/dossier';
@@ -407,6 +408,11 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
   root.querySelector('#embryo-quality-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void saveEmbryoQualityFromForm(event.currentTarget, root, state);
+  });
+
+  root.querySelector('#embryo-status-event-form')?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    void saveEmbryoStatusEventFromForm(event.currentTarget, root, state);
   });
 
   root.querySelector('#consult-verslag-form')?.addEventListener('submit', (event) => {
@@ -808,6 +814,81 @@ async function saveEmbryoQualityFromForm(
   } catch (error: unknown) {
     state.dossierError =
       error instanceof Error ? error.message : 'Embryokwaliteit vastleggen is mislukt.';
+    render(root, state);
+  }
+}
+
+async function saveEmbryoStatusEventFromForm(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  if (!(target instanceof HTMLFormElement) || !state.dossierStore) return;
+
+  const data = new FormData(target);
+  const embryoLabel = optionalString(data.get('embryoLabel'));
+  if (!embryoLabel) {
+    state.dossierError = 'Vul embryo in om een embryo-status vast te leggen.';
+    render(root, state);
+    return;
+  }
+
+  try {
+    const datum = String(data.get('datum') ?? '');
+    const afspraakId = optionalString(data.get('afspraakId'));
+    const trajectId = optionalString(data.get('trajectId'));
+    const notitie = optionalString(data.get('notitie'));
+    const embryoStatus = parseEmbryoStatus(data.get('embryoStatus'));
+    const embryoBron = optionalString(data.get('embryoBron'));
+    const embryoReviewStatus = parseEmbryoReviewStatus(data.get('embryoReviewStatus'));
+    const statusLabel = EMBRYO_STATUS_LABELS[embryoStatus];
+    const bron = embryoBron || 'Kliniekopgave';
+    const inhoud = JSON.stringify({
+      embryo: embryoLabel,
+      status: embryoStatus,
+      bron,
+      reviewStatus: embryoReviewStatus,
+      notitie,
+    });
+
+    await state.dossierStore.save({
+      datum,
+      titel: `Embryostatus ${embryoLabel}`,
+      categorie: 'embryo',
+      bestandsNaam: `embryostatus-${embryoLabel}.json`,
+      mimeType: 'application/json',
+      grootteBytes: new TextEncoder().encode(inhoud).byteLength,
+      inhoudBase64: textToBase64(inhoud),
+      afspraakId,
+      trajectId,
+      embryo: {
+        label: embryoLabel,
+        kwaliteit: `Status event: ${statusLabel}`,
+        kliniekBeoordeling: {
+          tekst: `Status event: ${statusLabel}`,
+          bron,
+          datum: datum || new Date().toISOString().slice(0, 10),
+        },
+        meetmoment: 'Status event',
+        bron,
+        reviewStatus: embryoReviewStatus,
+        status: embryoStatus,
+      },
+      notitie,
+    });
+
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Embryo-status vastgelegd',
+      detail: `Embryo-status ${beschrijfRecordOpslag(state)} als dossierdocument.`,
+    });
+    state.dossierStatus = `Embryo-status ${beschrijfRecordOpslag(state)}.`;
+    state.dossierError = undefined;
+    target.reset();
+    await reloadAndRender(root, state);
+  } catch (error: unknown) {
+    state.dossierError =
+      error instanceof Error ? error.message : 'Embryo-status vastleggen is mislukt.';
     render(root, state);
   }
 }

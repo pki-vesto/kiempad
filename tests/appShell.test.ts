@@ -31763,12 +31763,15 @@ describe('app shell', () => {
 
     expect(html).toContain('id="embryo-quality-form"');
     expect(html).toContain('Embryokwaliteit vastleggen');
+    expect(html).toContain('id="embryo-status-event-form"');
+    expect(html).toContain('Embryo-status event vastleggen');
     expect(html).toContain('name="embryoMeetmoment"');
     expect(html).toContain('Kwaliteit volgens kliniek');
     expect(html).toContain('name="embryoKliniekTerminologie"');
     expect(html).toContain('name="embryoBron"');
     expect(html).toContain('name="embryoReviewStatus"');
     expect(html).toContain('Reviewstatus bronlabel');
+    expect(html).toContain('Reviewstatus status-event');
     expect(html).toContain('Terugplaatsing · 2026-05-04 11:00');
     expect(html).toContain(
       'Embryo: Embryo 1 · Dag 5 · Meetmoment: Dag 5 blastocyst · Kliniekopgave kwaliteit: 4AA · Terminologie: Gardner-score · Status: Teruggeplaatst · Bron: Labrapport',
@@ -31783,6 +31786,19 @@ describe('app shell', () => {
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-2');
     expect(html).toContain(
       'Kwaliteit bronlabels: 4AA · bronlabel Labrapport · 2026-05-04 · gereviewd',
+    );
+    expect(html).toContain('Embryo-status events');
+    expect(html).toContain('data-embryo-status-event-state="concept-review"');
+    expect(html).toContain('data-embryo-status-event-id="doc-embryo"');
+    expect(html).toContain(
+      'Status: Teruggeplaatst · Bron: Labrapport · Datum: 2026-05-04 · Reviewstatus: Gereviewd',
+    );
+    expect(html).toContain('data-embryo-status-event-id="doc-embryo-2"');
+    expect(html).toContain(
+      'Status: Ingevroren · Bron: Labrapport · Datum: 2026-05-04 · Reviewstatus: Concept',
+    );
+    expect(html).toContain(
+      'Status-events zijn feitelijke bronregistraties en geen beoordeling of behandeladvies.',
     );
     expect(html).toContain(
       'Kwaliteit bronlabels: 4BB · bronlabel Labrapport · 2026-05-04 · concept',
@@ -31840,6 +31856,13 @@ describe('app shell', () => {
     expect(html).toContain('rangschikt embryo’s niet');
     expect(html).toContain('berekent geen kansen en geeft geen medisch advies');
     expect(html).not.toContain('e30=');
+    const statusEventStart = html.indexOf('Embryo-status events');
+    const statusEventEnd = html.indexOf('</section>', statusEventStart);
+    const statusEventSection = html.slice(statusEventStart, statusEventEnd);
+    expect(statusEventSection).not.toContain('behandelkeuzeadvies');
+    expect(statusEventSection).not.toContain('kansberekening');
+    expect(statusEventSection).not.toContain('diagnose');
+    expect(statusEventSection).not.toContain('dosering');
   });
 
   it('rendert het welzijnscherm met symptoomlogformulier en logs', () => {

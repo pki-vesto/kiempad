@@ -4008,7 +4008,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G528 — embryo kwaliteit bronlabel UI
 
@@ -11601,6 +11601,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Consults, app shell, encrypted storage, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1064 — embryo status event audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G527 voegt embryo-status events toe met bron, datum en reviewstatus, maar er is nog geen compacte audit die deze opslag-, correctie- en niet-medische taalgrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat embryo-status events zichtbaar en corrigeerbaar blijven zonder beeldpayload, broninhoud of medische interpretatie te lekken.
+- **User Value:** Gebruikers kunnen statusconcepten van embryo's controleren en corrigeren zonder dat Kiempad statusinformatie omzet in diagnose, kansberekening of behandelkeuzeadvies.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G527; bron, datum, status, notitie en reviewstatus blijven gedekt voor concept en gereviewde events; UI blijft conceptcorrectie ondersteunen zonder diagnose-, dosering-, kans- of behandelkeuzetaal; evidence bevat geen beeldpayload, base64, data-url, broninhoud, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, app shell, encrypted storage, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

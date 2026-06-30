@@ -54,6 +54,15 @@ describe('embryoDossier', () => {
         kwaliteiten: ['4AA'],
         kwaliteitBronLabels: ['4AA · bronlabel Labrapport · 2026-06-12 · concept'],
         statussen: ['teruggeplaatst'],
+        statusEvents: [
+          {
+            id: 'doc-kwaliteit',
+            datum: '2026-06-12',
+            status: 'teruggeplaatst',
+            bron: 'Labrapport',
+            reviewStatus: 'concept',
+          },
+        ],
         meetmomenten: ['Dag 5 blastocyst'],
         kliniekTerminologieen: ['Gardner-score'],
         bronnen: ['Labrapport'],
@@ -231,6 +240,73 @@ describe('embryoDossier', () => {
     expect(dossiers.find((item) => item.embryoLabel === 'Embryo 3')?.historie[0]).toEqual(
       expect.objectContaining({ gebeurtenis: 'Stop/niet gebruikt', bron: 'Embryoloog' }),
     );
+  });
+
+  it('bouwt status-events met bron, datum en reviewstatus zonder adviesvelden', () => {
+    const concept = maakDossierDocument('doc-status-concept', {
+      datum: '2026-06-15',
+      titel: 'Embryostatus embryo 1',
+      categorie: 'embryo',
+      bestandsNaam: 'status-concept.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'c3RhdHVzLXBheWxvYWQ=',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: 'Status event: Ingevroren',
+        meetmoment: 'Status event',
+        bron: 'Labportaal',
+        reviewStatus: 'concept',
+        status: 'ingevroren',
+      },
+      notitie: 'Bron overgenomen uit portaal.',
+    });
+    const gereviewd = maakDossierDocument('doc-status-gereviewd', {
+      datum: '2026-06-16',
+      titel: 'Embryostatus embryo 1 review',
+      categorie: 'embryo',
+      bestandsNaam: 'status-gereviewd.json',
+      mimeType: 'application/json',
+      grootteBytes: 128,
+      inhoudBase64: 'c3RhdHVzLXBheWxvYWQy',
+      trajectId: 'traject-1',
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: 'Status event: Niet gebruikt',
+        meetmoment: 'Status event',
+        bron: 'Embryoloog',
+        reviewStatus: 'gereviewd',
+        status: 'niet_gebruikt',
+      },
+    });
+
+    const dossier = bouwEmbryoDossiers([gereviewd, concept])[0];
+
+    expect(dossier?.statusEvents).toEqual([
+      {
+        id: 'doc-status-concept',
+        datum: '2026-06-15',
+        status: 'ingevroren',
+        bron: 'Labportaal',
+        reviewStatus: 'concept',
+        notitie: 'Bron overgenomen uit portaal.',
+      },
+      {
+        id: 'doc-status-gereviewd',
+        datum: '2026-06-16',
+        status: 'niet_gebruikt',
+        bron: 'Embryoloog',
+        reviewStatus: 'gereviewd',
+        notitie: undefined,
+      },
+    ]);
+    const serialized = JSON.stringify(dossier?.statusEvents);
+    expect(serialized).not.toContain('c3RhdHVzLXBheWxvYWQ=');
+    expect(serialized).not.toContain('diagnose');
+    expect(serialized).not.toContain('dosering');
+    expect(serialized).not.toContain('kans');
+    expect(serialized).not.toContain('behandelkeuzeadvies');
   });
 
   it('vergelijkt embryo’s binnen dezelfde poging zonder rangschikking of kansberekening', () => {

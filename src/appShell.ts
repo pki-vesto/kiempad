@@ -1533,6 +1533,55 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <button type="submit">Bewaar embryokwaliteit</button>
         </form>
+        <h2>Embryo-status event vastleggen</h2>
+        <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-embryo-status-event-state="concept-editor">
+          <label>
+            Datum status
+            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+          </label>
+          <label>
+            Embryo
+            <input name="embryoLabel" autocomplete="off" required placeholder="Bijvoorbeeld: embryo 1" />
+          </label>
+          <label>
+            Status
+            <select name="embryoStatus">
+              ${Object.entries(EMBRYO_STATUS_LABELS)
+                .map(([value, label]) => renderOption(value, label, 'onbekend'))
+                .join('')}
+            </select>
+          </label>
+          <label>
+            Bron status
+            <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
+          </label>
+          <label>
+            Reviewstatus status-event
+            <select name="embryoReviewStatus">
+              <option value="concept">Concept - nog controleren</option>
+              <option value="gereviewd">Gereviewd</option>
+            </select>
+          </label>
+          <label>
+            Koppel aan traject
+            <select name="trajectId">
+              <option value="">Geen traject</option>
+              ${trajectOpties}
+            </select>
+          </label>
+          <label>
+            Koppel aan afspraak/terugplaatsing
+            <select name="afspraakId">
+              <option value="">Geen afspraak</option>
+              ${afspraakOpties}
+            </select>
+          </label>
+          <label>
+            Notitie
+            <textarea name="notitie" rows="2"></textarea>
+          </label>
+          <button type="submit">Bewaar embryo-status</button>
+        </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
         </div>
       </details>
@@ -7384,6 +7433,7 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
             .join('')}
         </ol>
         ${renderEmbryoBehandelContext(item)}
+        ${renderEmbryoStatusEvents(item)}
         <ul class="compact-list">
           ${item.documenten
             .map(
@@ -7395,6 +7445,35 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
         <p class="small-print">${escapeHtml(item.waarschuwing)}</p>
       </div>
     </li>
+  `;
+}
+
+function renderEmbryoStatusEvents(item: EmbryoDossierItem): string {
+  if (item.statusEvents.length === 0) {
+    return '<p class="small-print">Nog geen embryo-status events vastgelegd.</p>';
+  }
+
+  const hasConcept = item.statusEvents.some((event) => event.reviewStatus === 'concept');
+  return `
+    <section class="linked-note embryo-status-events" aria-label="Embryo-status event editor" data-embryo-status-event-state="${hasConcept ? 'concept-review' : 'gereviewd'}">
+      <strong>Embryo-status events</strong>
+      <ol class="compact-list">
+        ${item.statusEvents
+          .map((event) => {
+            const details = [
+              `Status: ${EMBRYO_STATUS_LABELS[event.status]}`,
+              `Bron: ${event.bron}`,
+              `Datum: ${event.datum}`,
+              `Reviewstatus: ${event.reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'}`,
+              event.notitie ? `Notitie: ${event.notitie}` : undefined,
+            ].filter((detail): detail is string => Boolean(detail));
+
+            return `<li data-embryo-status-event-id="${escapeAttribute(event.id)}">${details.map(escapeHtml).join(' · ')}</li>`;
+          })
+          .join('')}
+      </ol>
+      <p class="small-print">Status-events zijn feitelijke bronregistraties en geen beoordeling of behandeladvies.</p>
+    </section>
   `;
 }
 
