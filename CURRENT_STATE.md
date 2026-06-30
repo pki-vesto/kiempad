@@ -654,7 +654,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Graph-relaties hebben gestructureerde provenance met bron, bronRecordIds, datum,
   reviewstatus en herkomst; de UI toont deze relatieherleiding zonder raw payload.
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
-  taakroutes; traject, agenda, medicatie en vragen gebruiken nu gedeelde
+  taakroutes; het startscherm opent nu zonder generieke werkruimte-context met een
+  aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn begrijpen, dagadvies
+  en research, en traject, agenda, medicatie en vragen gebruiken gedeelde
   command-routepanelen met consistente actieve state, header-spacing, compacte
   badges, density states, mobiele bottom-nav clearance, sticky formulieracties en
   compacte veldsecties zodat deze schermen minder als één lange pagina aanvoelen.
@@ -673,7 +675,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1202: Premium Claude Design UI veldsectiepatroon uitbreiden naar dossier- en uploadflows heeft prioriteit na de mobiele commandroute-veldsecties van G1201.
+1. UI Improvement Evolution uitvoeren vanaf G1204 en G1202: resterende startmodules verder omzetten naar echte flowpanelen en het veldsectiepatroon uitbreiden naar dossier- en uploadflows.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

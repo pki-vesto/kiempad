@@ -2060,6 +2060,19 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack start-command-layout"');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
+    expect(html).not.toContain('class="workspace-context"');
+    expect(html).toContain('class="start-workbench"');
+    expect(html).toContain('data-start-workbench="multi-flow"');
+    expect(html).toContain('aria-label="Kernflows"');
+    expect(html).toContain('Kies eerst je werkstroom');
+    expect(html).toContain('De belangrijkste onderdelen openen als aparte flows');
+    expect(html).toContain('data-start-workbench-flow="uploads"');
+    expect(html).toContain('data-start-workbench-flow="timeline"');
+    expect(html).toContain('data-start-workbench-flow="recommendations"');
+    expect(html).toContain('data-start-workbench-flow="research"');
+    expect(html).toContain('href="#dossier"');
+    expect(html).toContain('href="#traject?route=context"');
+    expect(html).toContain('href="#kennis"');
     expect(html).toContain('class="start-task-routes"');
     expect(html).toContain('aria-label="Start taakroutes"');
     expect(html).toContain('data-start-task-routes="ready"');
@@ -2200,6 +2213,25 @@ describe('app shell', () => {
     expect(html).toContain('Nog geen komende herinneringen');
   });
 
+  it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+
+    expect(css).toContain('.start-workbench {');
+    expect(css).toContain('linear-gradient(135deg');
+    expect(css).toContain('.start-workbench__grid {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.start-workbench-card {');
+    expect(css).toContain('border-radius: 12px;');
+    expect(mobileCss).toContain('.start-workbench__grid {');
+    expect(mobileCss).toContain('display: flex;');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.start-workbench-card {');
+    expect(mobileCss).toContain('flex: 0 0 min(238px, 82vw);');
+    expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
+    expect(mobileCss).toContain('margin-top: 64px;');
+  });
+
   it('houdt startschermmodules taakgericht verdeeld bij gevulde context', () => {
     const vandaag = new Date().toISOString().slice(0, 10);
     const html = renderAppShell(
@@ -2241,6 +2273,7 @@ describe('app shell', () => {
     const dashboardStart = html.indexOf(
       '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
     );
+    const workbenchIndex = html.indexOf('data-start-workbench="multi-flow"');
     const routeNavIndex = html.indexOf('class="start-task-routes"');
     const primaryStart = html.indexOf('class="kp-dashboard__primary"', dashboardStart);
     const secondaryStart = html.indexOf('class="kp-dashboard__secondary"', primaryStart);
@@ -2254,7 +2287,9 @@ describe('app shell', () => {
     const quickEntryIndex = html.indexOf('data-dashboard-route="quick-entry"', secondaryStart);
 
     expect(dashboardStart).toBeGreaterThan(-1);
+    expect(workbenchIndex).toBeGreaterThan(-1);
     expect(routeNavIndex).toBeGreaterThan(-1);
+    expect(workbenchIndex).toBeLessThan(routeNavIndex);
     expect(routeNavIndex).toBeLessThan(dashboardStart);
     expect(primaryStart).toBeGreaterThan(dashboardStart);
     expect(secondaryStart).toBeGreaterThan(primaryStart);
