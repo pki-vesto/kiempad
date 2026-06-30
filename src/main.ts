@@ -387,6 +387,19 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelectorAll<HTMLAnchorElement>('.dossier-submit-focus-return').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const targetId = link.hash.slice(1);
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({ block: 'start' });
+      window.history.replaceState(null, '', `#${targetId}`);
+    });
+  });
+
   const dossierForm = root.querySelector('#dossier-upload-form');
   dossierForm?.addEventListener('submit', (event) => {
     event.preventDefault();

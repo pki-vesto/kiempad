@@ -55,4 +55,11 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("gebeurtenis: 'Dossierimport verwijderd'");
     expect(mainSource).toContain('Dossierdocument verwijderd uit de import-inbox.');
   });
+
+  it('houdt feedback-teruglinks op hun formulieranker zonder vaste UI-overlap', () => {
+    expect(mainSource).toContain("'.dossier-submit-focus-return'");
+    expect(mainSource).toContain('const targetId = link.hash.slice(1)');
+    expect(mainSource).toContain("target.scrollIntoView({ block: 'start' })");
+    expect(mainSource).toContain("window.history.replaceState(null, '', `#");
+  });
 });

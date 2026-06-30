@@ -5003,6 +5003,10 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route[href="#embryo-quality-form"]');
     expect(css).toContain('.kp-disclosure__body:has(#embryo-status-event-form:target)');
     expect(css).toContain('.dossier-add-route[href="#embryo-status-event-form"]');
+    expect(css).toContain(
+      '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
+    );
+    expect(css).toContain('scroll-margin-top: clamp(136px, 16vh, 176px);');
     expect(css).toContain('.dossier-add-route:not([href="#dossier-upload-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#consult-verslag-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#embryo-quality-form"])');
