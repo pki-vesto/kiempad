@@ -187,6 +187,7 @@ import {
   sectionStack,
   statRow,
   statusMessage,
+  workflowPanel,
 } from './ui/components';
 import { escapeAttribute, escapeHtml } from './ui/escape';
 
@@ -1441,7 +1442,23 @@ function renderDossierScreen(state: AppShellState): string {
           </p>
         </div>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
-        <h2>Dossierdocument uploaden</h2>
+        ${workflowPanel({
+          title: 'Dossierdocument uploaden',
+          eyebrow: 'Begeleide upload',
+          intro:
+            'Werk van basisgegevens naar context en controle. Kiempad bewaart pas iets nadat je zelf uploadt.',
+          className: 'dossier-upload-workflow',
+          ariaLabel: 'Begeleide dossierdocument upload',
+          data: {
+            'upload-workflow': 'dossier-document',
+            'upload-workflow-state': 'guided',
+          },
+          steps: [
+            { label: 'Basis', state: 'current' },
+            { label: 'Context', state: 'todo' },
+            { label: 'Controle', state: 'todo' },
+          ],
+          body: `
         <p class="dossier-add-form-start" data-dossier-add-form-start="document-first-step">
           Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.
         </p>
@@ -1556,6 +1573,9 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentRetentionCleanupPrivacy(state)}
         ${renderAttachmentAuditTrailPrivacy(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
+        `,
+        })}
+        </section>
         <h2>Documentreview wachtrij</h2>
         ${renderDossierReviewWachtrij(reviewWachtrij, state)}
         <h2>Import-inbox</h2>
@@ -1584,7 +1604,6 @@ function renderDossierScreen(state: AppShellState): string {
                 .join('')}</ol>`
             : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
         }
-        </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
         <h2>Consultverslag toevoegen</h2>
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-dossier-feedback-focus-target="consult-upload" data-consult-upload-privacy-state="encrypted-text-or-file" tabindex="-1">

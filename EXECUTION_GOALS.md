@@ -3240,6 +3240,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 100
 - **Status:** ☐ open
 
+### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossierdocument-upload gebruikt nu een herbruikbaar workflowpanel, maar consultupload gebruikt nog route-specifieke formuliermarkup waardoor de uploadervaring inconsistent blijft.
+- **User Impact:** Gebruikers ervaren consultverslagen uploaden nog minder begeleid dan dossierdocumenten, terwijl juist consultcontext vaak actiepunten, vragen en behandelgeschiedenis bevat.
+- **Desired Outcome:** Pas dezelfde herbruikbare workflowcomponentstructuur zichtbaar toe op consultupload met duidelijke stappen voor basis, context en controle.
+- **User Value:** Gebruikers krijgen een consistente rustige uploadflow voor gespreksverslagen, met minder formuliergevoel en betere scanbaarheid.
+- **Acceptance Criteria:** Consultupload gebruikt de herbruikbare workflowcomponent; `consult-verslag-form`, input names, ankers, aria-live feedback en privacydata-hooks blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde consultuploadcontext; geen medische payload, transcripttekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Consult intelligence, Dossierupload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Upload workflow, Consult UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 65
+- **Status:** ☐ open
+
 ### G473 — beeldvergelijking zonder medische interpretatie
 
 - **Epic:** Fertility Intelligence
@@ -13336,4 +13352,4 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Upload workflow, Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 66
-- **Status:** ☐ open
+- **Status:** ☑ done

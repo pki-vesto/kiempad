@@ -112,6 +112,46 @@ export function dashboardSection(opts: {
   </section>`;
 }
 
+/** Guided workflow surface for uploads/forms. `body` is raw HTML. */
+export function workflowPanel(opts: {
+  title: string;
+  body: string;
+  steps: readonly { label: string; state?: StepState }[];
+  eyebrow?: string;
+  intro?: string;
+  className?: string;
+  data?: Record<string, string>;
+  ariaLabel?: string;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  const steps = opts.steps
+    .map(
+      (step, index) =>
+        `<li class="kp-workflow-panel__step" data-state="${escapeAttribute(step.state ?? 'todo')}"><span>${index + 1}</span>${escapeHtml(
+          step.label,
+        )}</li>`,
+    )
+    .join('');
+
+  return `<section class="kp-workflow-panel${cls}"${label}${dataAttrs}>
+    <header class="kp-workflow-panel__header">
+      <div>
+        ${opts.eyebrow ? `<p class="kp-workflow-panel__eyebrow">${escapeHtml(opts.eyebrow)}</p>` : ''}
+        <h2 class="kp-workflow-panel__title">${escapeHtml(opts.title)}</h2>
+        ${opts.intro ? `<p class="kp-workflow-panel__intro">${escapeHtml(opts.intro)}</p>` : ''}
+      </div>
+      ${steps ? `<ol class="kp-workflow-panel__steps" aria-label="Workflowstappen">${steps}</ol>` : ''}
+    </header>
+    <div class="kp-workflow-panel__body">${opts.body}</div>
+  </section>`;
+}
+
 /** Rounded surface card. `body` is raw HTML. */
 export function card(opts: {
   body: string;
