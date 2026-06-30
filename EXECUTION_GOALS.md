@@ -12872,4 +12872,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 74
+- **Status:** ☑ done
+
+### G1151 — dossier add feedback accessibility label
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedback is compact en heeft herstelhints, maar de statuscontext is voor assistive technology nog vooral via tekst en styling afleidbaar.
+- **User Impact:** Screenreadergebruikers kunnen minder snel horen welke feedbackroute en status bij de zojuist uitgevoerde actie hoort.
+- **Desired Outcome:** Voeg compacte toegankelijke labels toe aan inline feedback zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers met assistive technology krijgen dezelfde route- en statusduiding als visuele gebruikers.
+- **Acceptance Criteria:** Inline feedback heeft privacyveilige route- en statuslabels voor assistive technology; bestaande ankers, form-id's, input names en data-hooks blijven intact; recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 73
 - **Status:** ☐ open

@@ -4745,6 +4745,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('Upload document naar dossier</button>');
     expect(dossierPanel).toContain('data-dossier-submit-feedback="dossier-upload"');
     expect(dossierPanel).toContain('Klaar voor lokale opslag.');
+    expect(dossierPanel).not.toContain('data-dossier-submit-recovery="dossier-upload"');
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
     );
@@ -4863,6 +4864,11 @@ describe('app shell', () => {
     expect(populatedDossierPanel).toContain('Review nodig voor opslaan.');
     expect(populatedConsultPanel).toContain('Wordt lokaal verwerkt.');
     expect(populatedEmbryoPanel).toContain('Controleer deze route.');
+    expect(populatedDossierPanel).toContain('data-dossier-submit-recovery="dossier-upload"');
+    expect(populatedDossierPanel).toContain('Controleer datum, bestand en koppeling.');
+    expect(populatedConsultPanel).not.toContain('data-dossier-submit-recovery="consult-upload"');
+    expect(populatedEmbryoPanel).toContain('data-dossier-submit-recovery="embryo-quality"');
+    expect(populatedEmbryoPanel).toContain('Pas invoer aan en probeer opnieuw.');
 
     const lockedHtml = renderAppShell(
       'dossier',
@@ -4988,6 +4994,8 @@ describe('app shell', () => {
     expect(css).toContain('data-dossier-submit-feedback-state="error"');
     expect(css).toContain('border-left-color: var(--warning);');
     expect(css).toContain('border-left-color: var(--danger);');
+    expect(css).toContain('.dossier-submit-recovery');
+    expect(css).toContain('font-weight: 650;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
