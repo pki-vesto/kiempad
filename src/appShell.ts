@@ -8474,6 +8474,7 @@ function renderResearchItemForm(): string {
         Eenvoudige samenvatting
         <textarea name="researchEenvoudigeSamenvatting" rows="4" placeholder="Leg in gewone Nederlandse taal uit wat deze publicatie zegt en wat nog onzeker is"></textarea>
       </label>
+      <p class="small-print">Kiempad bewaart hierbij automatisch scientificSummary, patientSummary en sourceCitation als brongekoppeld concept.</p>
       <label>
         Relevantie voor jullie dossiercontext
         <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
@@ -8517,7 +8518,11 @@ function renderWetenschappelijkeResearchSamenvattingen(
                 <li>
                   <strong>${escapeHtml(item.titel)}</strong>
                   <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
+                  <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
+                  <small>${escapeHtml(item.aiConcept ? 'AI-concept · brongekoppeld' : 'Handmatig concept · brongekoppeld')}</small>
                   <small>${escapeHtml(item.wetenschappelijkeSamenvatting)}</small>
+                  <small>scientificSummary: ${escapeHtml(item.scientificSummary)}</small>
+                  <small>${escapeHtml(item.waarschuwing)}</small>
                 </li>
               `,
             )
@@ -8541,7 +8546,11 @@ function renderEenvoudigeResearchSamenvattingen(
                 <li>
                   <strong>${escapeHtml(item.titel)}</strong>
                   <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
+                  <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
+                  <small>${escapeHtml(item.aiConcept ? 'AI-concept · brongekoppeld' : 'Handmatig concept · brongekoppeld')}</small>
                   <small>${escapeHtml(item.eenvoudigeSamenvatting)}</small>
+                  <small>patientSummary: ${escapeHtml(item.patientSummary)}</small>
+                  <small>${escapeHtml(item.waarschuwing)}</small>
                 </li>
               `,
             )

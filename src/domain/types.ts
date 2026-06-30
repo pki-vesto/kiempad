@@ -114,7 +114,10 @@ export interface KennisItem {
   researchPublicatie?: {
     publicatieDatum: IsoDate;
     wetenschappelijkeSamenvatting: string;
+    scientificSummary?: string;
     eenvoudigeSamenvatting?: string;
+    patientSummary?: string;
+    sourceCitation?: string;
     relevantieVoorGebruiker?: string;
     bron: string;
   };

@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G483/G1068 Research Intelligence: researchpublicaties bewaren nu canonieke scientificSummary, patientSummary en sourceCitation naast de bestaande Nederlandse velden; nieuwe publicaties vereisen een begrijpelijke patientSummary, AI-samenvattingen blijven als brongekoppeld concept gelabeld en regressies bewaken verplichte velden, broncitatie en disclaimer zonder medisch advies; G1068 is toegevoegd voor dual summary audit evidence.
 - G481/G1067 Research Intelligence: researchaggregatie heeft nu een fertility source registry met naam, type, URL, updatebeleid, opt-invereiste, allowlist-rationale en geen-netwerk-zonder-opt-in metadata; de kennis-UI toont het bronregister naast de aggregatiestatus en regressies bewaken opt-in-gating en bronvalidatie zonder medisch advies; G1067 is toegevoegd voor source registry audit evidence.
 - G532/G1066 Fertility Timeline & Knowledge Graph: graph-relaties hebben nu gestructureerde edge provenance met schemaVersie, bron, bronRecordIds, datum, reviewstatus en herkomst; de graph-UI toont provenance per relatie zonder raw payload en G1066 is toegevoegd voor edge provenance audit evidence.
 - G531/G1065 Fertility Timeline & Knowledge Graph: graph-nodes hebben nu een expliciet schema met schemaVersie, bronRecordId, bronType, bron, datum, reviewstatus en waarschuwing; de graph-UI toont een veilige node-schema lijst met concept/gereviewd-state zonder bronpayload en G1065 is toegevoegd voor node schema audit evidence.

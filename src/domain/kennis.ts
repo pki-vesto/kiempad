@@ -74,6 +74,10 @@ export type WetenschappelijkeResearchSamenvatting = {
   publicatieDatum: string;
   bron: string;
   wetenschappelijkeSamenvatting: string;
+  scientificSummary: string;
+  sourceCitation: string;
+  aiConcept: boolean;
+  waarschuwing: string;
 };
 
 export type EenvoudigeResearchSamenvatting = {
@@ -82,6 +86,10 @@ export type EenvoudigeResearchSamenvatting = {
   publicatieDatum: string;
   bron: string;
   eenvoudigeSamenvatting: string;
+  patientSummary: string;
+  sourceCitation: string;
+  aiConcept: boolean;
+  waarschuwing: string;
 };
 
 export type ResearchDossierContextBron = {
@@ -443,6 +451,10 @@ export function bouwResearchAggregatiePlan(
   };
 }
 
+export function bouwResearchSourceCitation(bron: string, publicatieDatum: string): string {
+  return `${bron} · publicatiedatum ${publicatieDatum}`;
+}
+
 export function bouwWetenschappelijkeResearchSamenvattingen(
   items: readonly KennisItem[],
 ): WetenschappelijkeResearchSamenvatting[] {
@@ -460,6 +472,18 @@ export function bouwWetenschappelijkeResearchSamenvattingen(
       publicatieDatum: item.researchPublicatie.publicatieDatum,
       bron: item.researchPublicatie.bron,
       wetenschappelijkeSamenvatting: item.researchPublicatie.wetenschappelijkeSamenvatting,
+      scientificSummary:
+        item.researchPublicatie.scientificSummary ??
+        item.researchPublicatie.wetenschappelijkeSamenvatting,
+      sourceCitation:
+        item.researchPublicatie.sourceCitation ??
+        bouwResearchSourceCitation(
+          item.researchPublicatie.bron,
+          item.researchPublicatie.publicatieDatum,
+        ),
+      aiConcept: item.ai_gegenereerd,
+      waarschuwing:
+        'Conceptsamenvatting met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
     }))
     .sort(
       (a, b) =>
@@ -488,6 +512,17 @@ export function bouwEenvoudigeResearchSamenvattingen(
       publicatieDatum: item.researchPublicatie.publicatieDatum,
       bron: item.researchPublicatie.bron,
       eenvoudigeSamenvatting: item.researchPublicatie.eenvoudigeSamenvatting,
+      patientSummary:
+        item.researchPublicatie.patientSummary ?? item.researchPublicatie.eenvoudigeSamenvatting,
+      sourceCitation:
+        item.researchPublicatie.sourceCitation ??
+        bouwResearchSourceCitation(
+          item.researchPublicatie.bron,
+          item.researchPublicatie.publicatieDatum,
+        ),
+      aiConcept: item.ai_gegenereerd,
+      waarschuwing:
+        'Patientvriendelijke conceptsamenvatting in gewone taal met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
     }))
     .sort(
       (a, b) =>
@@ -717,21 +752,33 @@ export function maakResearchKennisItem(
     bron?: string;
     publicatieDatum?: string;
     wetenschappelijkeSamenvatting?: string;
+    scientificSummary?: string;
     eenvoudigeSamenvatting?: string;
+    patientSummary?: string;
+    sourceCitation?: string;
     relevantieVoorGebruiker?: string;
+    aiGegenereerd?: boolean;
   },
 ): KennisItem {
   const titel = input.titel.trim();
   const inhoud = input.notitie.trim();
   const bron = input.bron?.trim();
   const publicatieDatum = input.publicatieDatum?.trim();
-  const wetenschappelijkeSamenvatting = input.wetenschappelijkeSamenvatting?.trim();
-  const eenvoudigeSamenvatting = input.eenvoudigeSamenvatting?.trim();
+  const wetenschappelijkeSamenvatting = (
+    input.wetenschappelijkeSamenvatting ?? input.scientificSummary
+  )?.trim();
+  const scientificSummary = (input.scientificSummary ?? wetenschappelijkeSamenvatting)?.trim();
+  const eenvoudigeSamenvatting = (input.eenvoudigeSamenvatting ?? input.patientSummary)?.trim();
+  const patientSummary = (input.patientSummary ?? eenvoudigeSamenvatting)?.trim();
+  const sourceCitation = input.sourceCitation?.trim();
   const relevantieVoorGebruiker = input.relevantieVoorGebruiker?.trim();
   const heeftPublicatieSamenvatting = Boolean(
     publicatieDatum ||
       wetenschappelijkeSamenvatting ||
+      scientificSummary ||
       eenvoudigeSamenvatting ||
+      patientSummary ||
+      sourceCitation ||
       relevantieVoorGebruiker,
   );
 
@@ -745,11 +792,22 @@ export function maakResearchKennisItem(
       'Publicatiedatum is verplicht voor een wetenschappelijke researchsamenvatting.',
     );
   }
+  if (publicatieDatum && !/^\d{4}-\d{2}-\d{2}$/.test(publicatieDatum)) {
+    throw new Error('Publicatiedatum moet YYYY-MM-DD zijn.');
+  }
   if (heeftPublicatieSamenvatting && !wetenschappelijkeSamenvatting) {
     throw new Error('Wetenschappelijke samenvatting is verplicht voor een researchpublicatie.');
   }
+  if (heeftPublicatieSamenvatting && !eenvoudigeSamenvatting) {
+    throw new Error('Patientvriendelijke samenvatting is verplicht voor een researchpublicatie.');
+  }
   if (eenvoudigeSamenvatting && eenvoudigeSamenvatting.length < 20) {
     throw new Error('Eenvoudige samenvatting moet begrijpelijke context bevatten.');
+  }
+  if (eenvoudigeSamenvatting && !isBegrijpelijkePatientSamenvatting(eenvoudigeSamenvatting)) {
+    throw new Error(
+      'Patientvriendelijke samenvatting moet begrijpelijk Nederlands zonder vaktaal bevatten.',
+    );
   }
   if (relevantieVoorGebruiker && relevantieVoorGebruiker.length < 20) {
     throw new Error('Relevantie voor gebruiker moet concrete dossiercontext bevatten.');
@@ -758,9 +816,6 @@ export function maakResearchKennisItem(
     throw new Error(
       'Relevantie voor gebruiker mag geen diagnose, dosering of behandelkeuze geven.',
     );
-  }
-  if (publicatieDatum && !/^\d{4}-\d{2}-\d{2}$/.test(publicatieDatum)) {
-    throw new Error('Publicatiedatum moet YYYY-MM-DD zijn.');
   }
 
   return {
@@ -774,12 +829,15 @@ export function maakResearchKennisItem(
         ? {
             publicatieDatum,
             wetenschappelijkeSamenvatting,
+            scientificSummary,
             eenvoudigeSamenvatting,
+            patientSummary,
+            sourceCitation: sourceCitation || bouwResearchSourceCitation(bron, publicatieDatum),
             relevantieVoorGebruiker,
             bron,
           }
         : undefined,
-    ai_gegenereerd: false,
+    ai_gegenereerd: input.aiGegenereerd === true,
     geverifieerd_met_arts: false,
   };
 }
@@ -818,6 +876,31 @@ export function berekenVolgendeKennisVerificatie(geverifieerdOp: string): string
   const date = new Date(`${geverifieerdOp}T00:00:00.000Z`);
   date.setUTCFullYear(date.getUTCFullYear() + 1);
   return date.toISOString().slice(0, 10);
+}
+
+function isBegrijpelijkePatientSamenvatting(tekst: string): boolean {
+  const lower = tekst.toLowerCase();
+  const gewoneTaalMarkers = [
+    'dit artikel',
+    'dit onderzoek',
+    'legt uit',
+    'in gewone taal',
+    'betekent',
+    'onzeker',
+    'bespreken',
+  ];
+  const vaktaalZonderUitleg = [
+    'prospectieve cohortstudie',
+    'retrospectieve analyse',
+    'randomized controlled trial',
+    'hazard ratio',
+    'odds ratio',
+  ];
+
+  return (
+    gewoneTaalMarkers.some((marker) => lower.includes(marker)) &&
+    !vaktaalZonderUitleg.some((term) => lower.includes(term))
+  );
 }
 
 export function bepaalKennisKostenJaar(item: KennisItem): string | undefined {

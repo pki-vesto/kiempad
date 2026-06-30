@@ -32050,6 +32050,7 @@ describe('app shell', () => {
     expect(html).toContain('name="researchNotitie"');
     expect(html).toContain('name="researchWetenschappelijkeSamenvatting"');
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
+    expect(html).toContain('scientificSummary, patientSummary en sourceCitation');
     expect(html).toContain('name="researchRelevantieVoorGebruiker"');
     expect(html).toContain('Bewaar research');
     expect(html).toContain('Researchbronnen');
@@ -32288,8 +32289,15 @@ describe('app shell', () => {
             bron: 'https://voorbeeld.test/embryo-cultuur',
             wetenschappelijkeSamenvatting:
               'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+            scientificSummary:
+              'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
+            eenvoudigeSamenvatting:
+              'Dit artikel beschrijft welke labfactoren zijn bekeken en wat onzeker blijft.',
+            patientSummary:
+              'Dit artikel beschrijft welke labfactoren zijn bekeken en wat onzeker blijft.',
+            sourceCitation: 'Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.',
           },
-          ai_gegenereerd: false,
+          ai_gegenereerd: true,
           geverifieerd_met_arts: false,
         },
       ],
@@ -32303,6 +32311,10 @@ describe('app shell', () => {
     expect(html).toContain(
       'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
     );
+    expect(html).toContain('sourceCitation: Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.');
+    expect(html).toContain('scientificSummary: Prospectieve cohortstudie');
+    expect(html).toContain('AI-concept · brongekoppeld');
+    expect(html).toContain('Conceptsamenvatting met bronverwijzing');
     expect(html).toContain('Dit is geen behandeladvies');
   });
 
@@ -32364,6 +32376,9 @@ describe('app shell', () => {
               'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en benoemt beperkingen.',
             eenvoudigeSamenvatting:
               'Dit artikel legt uit welke labfactoren zijn bekeken. Het zegt niet welke behandeling jullie moeten kiezen.',
+            patientSummary:
+              'Dit artikel legt uit welke labfactoren zijn bekeken. Het zegt niet welke behandeling jullie moeten kiezen.',
+            sourceCitation: 'Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.',
           },
           ai_gegenereerd: false,
           geverifieerd_met_arts: false,
@@ -32377,6 +32392,10 @@ describe('app shell', () => {
     expect(html).toContain(
       'Dit artikel legt uit welke labfactoren zijn bekeken. Het zegt niet welke behandeling jullie moeten kiezen.',
     );
+    expect(html).toContain('sourceCitation: Voorbeeldbron embryo-cultuur, publicatie 2026-05-10.');
+    expect(html).toContain('patientSummary: Dit artikel legt uit welke labfactoren zijn bekeken');
+    expect(html).toContain('Handmatig concept · brongekoppeld');
+    expect(html).toContain('Patientvriendelijke conceptsamenvatting in gewone taal');
     expect(html).toContain('Dit is geen diagnose of behandeladvies');
   });
 
