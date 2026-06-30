@@ -3364,7 +3364,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, AI settings, privacy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G482 — literatuur discovery query builder
 
@@ -11643,6 +11643,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Knowledge graph, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1067 — source registry audit evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** G481 introduceert een fertility research source registry met opt-in-gating, maar er is nog geen compacte audit die bronvelden, allowlist-rationale en geen-netwerk-zonder-opt-in gedrag blijft bewaken.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat het source registry naam, type, URL, updatebeleid, opt-invereiste, bronverwijzing en allowlist-rationale behoudt zonder automatische researchcrawl.
+- **User Value:** Gebruikers blijven zien welke researchbronnen Kiempad kent en wanneer expliciete netwerktoestemming nodig is.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G481; naam, type, URL, updatebeleid en opt-invereiste blijven gedekt; zonder expliciete opt-in worden geen netwerkcalls of aggregatiestarts uitgevoerd; bronverwijzing en allowlist/rationale blijven zichtbaar of testbaar per researchitem; evidence bevat geen plaintext medische payload, diagnose, dosering of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research, AI settings, privacy, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

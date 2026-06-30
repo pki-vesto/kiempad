@@ -11,6 +11,7 @@ import {
   bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
+  bouwResearchSourceRegistry,
   bouwWetenschappelijkeResearchSamenvattingen,
   filterKennisItems,
   groepeerResearchTrends,
@@ -20,6 +21,7 @@ import {
   maakEigenKennisItem,
   maakResearchKennisItem,
   markeerKennisItemGeverifieerd,
+  RESEARCH_SOURCE_REGISTRY,
 } from '../src/domain/kennis';
 
 describe('kennis domeinregels', () => {
@@ -97,6 +99,44 @@ describe('kennis domeinregels', () => {
     });
   });
 
+  it('bouwt een fertility research source registry met opt-in en updatebeleid', () => {
+    const registry = bouwResearchSourceRegistry(
+      bouwResearchBronnenCache([
+        ...INITIELE_KENNIS_ITEMS,
+        maakResearchKennisItem('research-cache-1', {
+          titel: 'Eigen artikel embryo-cultuur',
+          bron: 'https://voorbeeld.test/embryo-cultuur',
+          notitie: 'Lokale notitie bij gevonden artikel.',
+        }),
+      ]),
+    );
+
+    expect(RESEARCH_SOURCE_REGISTRY.every((entry) => entry.naam && entry.type && entry.url)).toBe(
+      true,
+    );
+    expect(
+      RESEARCH_SOURCE_REGISTRY.every((entry) => entry.updatebeleid && entry.optInVereist !== null),
+    ).toBe(true);
+    expect(
+      registry.every((entry) => entry.bronmetadata.netwerkGedrag === 'geen_netwerk_zonder_opt_in'),
+    ).toBe(true);
+    expect(registry.find((entry) => entry.id === 'source-pubmed')).toMatchObject({
+      naam: 'PubMed',
+      type: 'bibliografische_index',
+      url: 'https://pubmed.ncbi.nlm.nih.gov/',
+      updatebeleid: 'maandelijks_handmatig_controleren',
+      optInVereist: true,
+    });
+    expect(
+      registry.find((entry) => entry.url === 'https://voorbeeld.test/embryo-cultuur'),
+    ).toMatchObject({
+      naam: 'Eigen artikel embryo-cultuur',
+      type: 'publicatie_link',
+      updatebeleid: 'per_publicatie_handmatig',
+      optInVereist: true,
+    });
+  });
+
   it('zet researchaggregatie pas klaar na expliciete netwerk-opt-in', () => {
     const bronnen = bouwResearchBronnenCache(INITIELE_KENNIS_ITEMS);
     const uit = bouwResearchAggregatiePlan(bronnen, false);
@@ -107,8 +147,15 @@ describe('kennis domeinregels', () => {
       bronnen: [],
     });
     expect(uit.waarschuwing).toContain('haalt geen publicaties op');
+    expect(uit.bronregister.length).toBeGreaterThan(0);
+    expect(
+      uit.bronregister.every(
+        (entry) => entry.bronmetadata.netwerkGedrag === 'geen_netwerk_zonder_opt_in',
+      ),
+    ).toBe(true);
     expect(aan.status).toBe('klaar_voor_handmatige_start');
     expect(aan.bronnen.length).toBe(bronnen.length);
+    expect(aan.bronregister.length).toBeGreaterThanOrEqual(uit.bronregister.length);
     expect(aan.waarschuwing).toContain('expliciete opt-in');
     expect(aan.waarschuwing).toContain('haalt nog niet automatisch op');
   });
