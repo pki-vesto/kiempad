@@ -4302,7 +4302,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, cycle data, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G549 — man aanbeveling leefstijl context
 
@@ -11755,6 +11755,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Daily Recommendations, app shell, privacy tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1075 — woman cycle phase context audit evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G548 introduceert vrouw-cyclusfasecontext met bron, datum, reviewstatus, status, fase-/metinglabels, bronpad en correctievelden, maar er is nog geen compacte audit die dit contract door toekomstige dagadvieswijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat vrouw-cyclusfasecontext zichtbaar, reviewbaar en feitelijk blijft zonder medische claims.
+- **User Value:** Gebruikers kunnen cyclusfasecontext als begrijpelijke dagcontext controleren zonder dat Kiempad timingadvies of behandelrichting suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G548; cyclusfasebron, datum, reviewstatus, status, faseLabel, bronpad en correctievelden blijven zichtbaar of testbaar; context blijft feitelijk en alleen bedoeld voor dagnotitie/consultvoorbereiding; evidence bevat geen secrets, echte gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, cycle data, app shell, privacy tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

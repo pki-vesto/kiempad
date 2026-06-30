@@ -28,6 +28,7 @@ export type DailyRecommendation = {
   checklist?: DailyRecommendationChecklistItem[];
   gebruikteBronnen?: string[];
   inputMinimisatie?: DailyRecommendationInputMinimization;
+  cyclusfaseContext?: DailyRecommendationCyclePhaseContext;
 };
 
 export type DailyRecommendationChecklistItem = {
@@ -47,6 +48,19 @@ export type DailyRecommendationInputMinimization = {
   gebruikteInputCategorieen: string[];
   uitgeslotenInputCategorieen: string[];
   correctieVelden: string[];
+  waarschuwing: string;
+};
+
+export type DailyRecommendationCyclePhaseContext = {
+  bron: string;
+  datum: string;
+  reviewStatus: 'concept_te_controleren';
+  status: 'fase_gevonden' | 'meting_zonder_fase' | 'geen_cycluscontext';
+  faseLabel: string;
+  metingLabel?: string;
+  bronpad: string[];
+  correctieVelden: string[];
+  uitlegVoorLeken: string;
   waarschuwing: string;
 };
 
@@ -468,6 +482,11 @@ function bouwVrouwDagkaart(input: {
   const fase = beschrijfCyclusfase(input.trajecten ?? [], input.datum);
   const meting = laatsteCyclusmeting(input.cycleData ?? []);
   const document = laatsteDossierdocument(input.dossierDocuments ?? []);
+  const cyclusfaseContext = bouwVrouwCyclusfaseContext({
+    datum: input.datum,
+    fase,
+    meting,
+  });
   const contextBronnen = uniekeTeksten(
     [
       fase ? `Trajectfase: ${fase}` : undefined,
@@ -497,8 +516,12 @@ function bouwVrouwDagkaart(input: {
     detail: `Dagkaart voor leefstijl, voeding, supplementvragen, behandelvoorbereiding en cycluscontext op basis van ${contextSamenvatting}.`,
     bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
     waarschuwing: VEILIGE_AANBEVELING_WAARSCHUWING,
+    datum: input.datum,
+    reden:
+      'Eigenaar vrouw; cyclusfasecontext is alleen feitelijke dagcontext voor voorbereiding en vragen.',
     gebruikteBronnen:
       contextBronnen.length > 0 ? contextBronnen : ['Lokale dagstart zonder extra context'],
+    cyclusfaseContext,
     checklist: [
       {
         label:
@@ -540,6 +563,43 @@ function bouwVrouwDagkaart(input: {
         disclaimer: 'Geen timingadvies, interpretatie of behandelrichting.',
       },
     ],
+  };
+}
+
+function bouwVrouwCyclusfaseContext(input: {
+  datum: string;
+  fase: string | undefined;
+  meting: CycleData | undefined;
+}): DailyRecommendationCyclePhaseContext {
+  const status = input.fase
+    ? 'fase_gevonden'
+    : input.meting
+      ? 'meting_zonder_fase'
+      : 'geen_cycluscontext';
+  const faseLabel =
+    input.fase ??
+    (input.meting
+      ? 'Geen trajectfase gevonden; lokale cyclusmeting beschikbaar.'
+      : 'Geen trajectfase of cyclusmeting gevonden.');
+  const metingLabel = input.meting ? `${input.meting.meting} op ${input.meting.datum}` : undefined;
+
+  return {
+    bron: input.fase ? 'Trajectfase' : input.meting ? 'Lokale cyclusmetingen' : 'Lokale dagstart',
+    datum: input.datum,
+    reviewStatus: 'concept_te_controleren',
+    status,
+    faseLabel,
+    metingLabel,
+    bronpad: [
+      `Datum: ${input.datum}`,
+      input.fase ? `Trajectfase: ${input.fase}` : undefined,
+      metingLabel ? `Cyclusmeting: ${metingLabel}` : undefined,
+      'Gebruik: dagnotitie en consultvoorbereiding',
+    ].filter((item): item is string => Boolean(item)),
+    correctieVelden: ['cyclusfase', 'cyclusmeting', 'bronselectie', 'reviewstatus'],
+    uitlegVoorLeken:
+      'Deze cyclusfasecontext is alleen een controleerbare samenvatting van lokale traject- of cyclusgegevens voor dagnotities.',
+    waarschuwing: 'Geen timingadvies, persoonlijke conclusie, kansclaim of behandelrichting.',
   };
 }
 

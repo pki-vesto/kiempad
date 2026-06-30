@@ -370,7 +370,28 @@ describe('dagelijkse aanbevelingen', () => {
       id: 'vrouw-dagkaart-bronherleiding',
       titel: 'Vrouw dagkaart met bronherleiding',
       bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+      datum: '2026-06-24',
+      reden:
+        'Eigenaar vrouw; cyclusfasecontext is alleen feitelijke dagcontext voor voorbereiding en vragen.',
+      cyclusfaseContext: {
+        bron: 'Trajectfase',
+        datum: '2026-06-24',
+        reviewStatus: 'concept_te_controleren',
+        status: 'fase_gevonden',
+        faseLabel: 'cyclusfase Stimulatie',
+        metingLabel: 'cyclusdag op 2026-06-24',
+        correctieVelden: ['cyclusfase', 'cyclusmeting', 'bronselectie', 'reviewstatus'],
+      },
     });
+    expect(overzicht.vrouw[0]?.cyclusfaseContext?.bronpad).toEqual([
+      'Datum: 2026-06-24',
+      'Trajectfase: cyclusfase Stimulatie',
+      'Cyclusmeting: cyclusdag op 2026-06-24',
+      'Gebruik: dagnotitie en consultvoorbereiding',
+    ]);
+    expect(overzicht.vrouw[0]?.cyclusfaseContext?.uitlegVoorLeken).toContain(
+      'controleerbare samenvatting',
+    );
     expect(overzicht.vrouw[0]?.detail).toContain('Trajectfase: cyclusfase Stimulatie');
     expect(overzicht.vrouw[0]?.gebruikteBronnen).toEqual(
       expect.arrayContaining([
@@ -450,6 +471,58 @@ describe('dagelijkse aanbevelingen', () => {
     expect(
       `${overzicht.vrouw[2]?.detail} ${overzicht.vrouw[2]?.checklist?.map((item) => item.disclaimer)}`,
     ).not.toMatch(/\bdosering\b/i);
+  });
+
+  it('bewaart vrouw-cyclusfasecontext als reviewbaar concept zonder medische claims', () => {
+    const overzicht = bouwDagelijksAanbevelingsoverzicht({
+      datum: '2026-06-24',
+      afspraken: [],
+      medicatie: [],
+      vragen: [],
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-1',
+            naam: 'Poging 1',
+            type: 'ivf',
+            startDatum: '2026-06-20',
+            status: 'lopend',
+            pogingNummer: 1,
+          },
+          fasen: [
+            {
+              id: 'fase-1',
+              trajectId: 'traject-1',
+              fase: 'punctie',
+              startDatum: '2026-06-24',
+            },
+          ],
+        },
+      ],
+      cycleData: [{ id: 'cyclus-1', datum: '2026-06-24', meting: 'cyclusdag', waarde: 9 }],
+    });
+
+    const context = overzicht.vrouw[0]?.cyclusfaseContext;
+    expect(context).toMatchObject({
+      bron: 'Trajectfase',
+      datum: '2026-06-24',
+      reviewStatus: 'concept_te_controleren',
+      status: 'fase_gevonden',
+      faseLabel: 'cyclusfase Punctie',
+      metingLabel: 'cyclusdag op 2026-06-24',
+      correctieVelden: ['cyclusfase', 'cyclusmeting', 'bronselectie', 'reviewstatus'],
+    });
+    expect(context?.bronpad).toEqual([
+      'Datum: 2026-06-24',
+      'Trajectfase: cyclusfase Punctie',
+      'Cyclusmeting: cyclusdag op 2026-06-24',
+      'Gebruik: dagnotitie en consultvoorbereiding',
+    ]);
+    const policyText = JSON.stringify(context);
+    expect(policyText).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|diagnose|kansberekening|behandelkeuzeadvies|beste behandeling|kies voor/i,
+    );
+    expect(policyText).not.toContain('MEDISCHE PAYLOAD');
   });
 
   it('genereert behandelvoorbereiding uit afspraak, medicatie en open actiepunten', () => {

@@ -1880,6 +1880,12 @@ describe('app shell', () => {
     expect(html).toContain('Voeding: verzamel feitelijke vragen');
     expect(html).toContain('Supplementen: zet alleen vragen klaar');
     expect(html).toContain('Cycluscontext: nog geen trajectfase of cyclusmeting');
+    expect(html).toContain('Cyclusfasebron</dt><dd>Lokale dagstart');
+    expect(html).toContain('Cyclusfasedatum');
+    expect(html).toContain('Cyclusfasereview</dt><dd>concept_te_controleren');
+    expect(html).toContain('Cyclusfasestatus</dt><dd>geen_cycluscontext');
+    expect(html).toContain('Cyclusfasecorrectievelden');
+    expect(html).toContain('cyclusfase · cyclusmeting · bronselectie · reviewstatus');
     expect(html).toContain('data-recommendation-id="vrouw-basisdag"');
     expect(html).toContain('data-recommendation-id="man-dagkaart-bronherleiding"');
     expect(html).toContain('Man dagkaart met bronherleiding');
@@ -2060,6 +2066,12 @@ describe('app shell', () => {
     expect(contextualRecommendations).toContain(`Datum: ${vandaag}`);
     expect(contextualRecommendations).toContain('Eigenaar: Man');
     expect(contextualRecommendations).toContain('Trajectfase: cyclusfase Stimulatie');
+    expect(contextualRecommendations).toContain('Cyclusfasebron</dt><dd>Trajectfase');
+    expect(contextualRecommendations).toContain('Cyclusfasereview</dt><dd>concept_te_controleren');
+    expect(contextualRecommendations).toContain('Cyclusfasestatus</dt><dd>fase_gevonden');
+    expect(contextualRecommendations).toContain('Cyclusfase</dt><dd>cyclusfase Stimulatie');
+    expect(contextualRecommendations).toContain('Cyclusfasebronpad: Datum:');
+    expect(contextualRecommendations).toContain('Gebruik: dagnotitie en consultvoorbereiding');
     expect(contextualRecommendations).toContain('Gebruikte inputcategorieen');
     expect(contextualRecommendations).toContain('medicatieplanning');
     expect(contextualRecommendations).toContain('vragenlijst');
