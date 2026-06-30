@@ -117,6 +117,13 @@ pad zonder lokale vault-hercreatie.
   responsevorm met `src/storage/centralHealthContract.ts`, herhaal de lokale
   `/api/health` smoke en daarna de tailnet-HTTPS `/api/health` smoke. Als de drift
   bewust is, wijzig contract, runbook en tests in dezelfde PR.
+  **Health-monitor CI-annotatie (G1083/G1084):** CI/automation mag alleen de
+  annotatievorm van `buildCentralHealthMonitorCiAnnotation` tonen. Voorbeeld:
+  `central-health-contract failed: failure=unexpected-contract-version recovery=review-contractVersion-and-run-health-smokes`.
+  Dezelfde annotatievorm moet `unexpected-field` en `unexpected-error-states`
+  herkenbaar houden. Gebruik geen responsebody, headers, user-id, session-id,
+  record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering,
+  kansberekening of behandelkeuzeadvies in CI-output.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

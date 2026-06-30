@@ -11897,4 +11897,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CI, health contract fixture, runbook
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1085 — central health monitor annotation runbook drift guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1084 introduceert een vaste CI-annotatievorm voor health-monitor failures, maar toekomstige tekstwijzigingen kunnen de runbooktermen en helpercontracten nog uit elkaar laten lopen.
+- **Desired Outcome:** Voeg driftbewaking toe die de runbookannotatie, helperoutput en testfixtures expliciet synchroon houdt.
+- **User Value:** Beheer kan vertrouwen op stabiele CI-signalen wanneer health-contractmonitoring faalt.
+- **Acceptance Criteria:** Evidence verwijst naar G1084; runbookterm, helperoutput en testfixture worden synchroon bewaakt; onverwachte contractversie, onverwacht veld en errorstate-drift blijven herkenbaar; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, health contract fixture, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

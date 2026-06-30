@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  buildCentralHealthMonitorCiAnnotation,
   validateCentralHealthContract,
   validateCentralHealthContractBody,
 } from '../src/storage/centralHealthContract';
@@ -125,6 +126,65 @@ describe('G1082 central health monitor compatibility fixture', () => {
       'start behandeling',
     ]) {
       expect(serializedResult).not.toContain(forbidden);
+    }
+  });
+});
+
+describe('G1084 central health monitor CI annotation evidence', () => {
+  it('maakt een gesanitized success-annotatie voor contractVersion=1', () => {
+    expect(buildCentralHealthMonitorCiAnnotation({ ok: true, contractVersion: 1 })).toEqual({
+      ok: true,
+      ciAnnotation: 'central-health-contract ok: contractVersion=1',
+    });
+  });
+
+  it('houdt version, field en errorstate drift herkenbaar in CI-annotaties', () => {
+    for (const [fixture, expectedFailure] of [
+      [{ ...validHealthContract, contractVersion: 2 }, 'unexpected-contract-version'],
+      [{ ...validHealthContract, uptimeSeconds: 123 }, 'unexpected-field'],
+      [
+        { ...validHealthContract, errorStates: ['unauthorized', 'central-api-error'] },
+        'unexpected-error-states',
+      ],
+    ] as const) {
+      const validation = validateCentralHealthContract(fixture);
+
+      expect(buildCentralHealthMonitorCiAnnotation(validation)).toEqual({
+        ok: false,
+        ciAnnotation: `central-health-contract failed: failure=${expectedFailure} recovery=review-contractVersion-and-run-health-smokes`,
+      });
+    }
+  });
+
+  it('lekt geen responsepayload of gevoelige waarden in CI-annotaties', () => {
+    const validation = validateCentralHealthContract({
+      ...validHealthContract,
+      userId: 'user-peter',
+      sessionId: 'kiempad-session-secret',
+      recordId: 'record-sensitive',
+      ciphertext: 'encrypted-ciphertext',
+      diagnose: 'Progesteron',
+      dosering: '123 mg',
+      behandelkeuzeadvies: 'start behandeling',
+    });
+    const annotation = buildCentralHealthMonitorCiAnnotation(validation).ciAnnotation;
+
+    expect(annotation).toBe(
+      'central-health-contract failed: failure=forbidden-privacy-field recovery=review-contractVersion-and-run-health-smokes',
+    );
+    for (const forbidden of [
+      'user-peter',
+      'kiempad-session-secret',
+      'record-sensitive',
+      'encrypted-ciphertext',
+      'Progesteron',
+      '123 mg',
+      'behandelkeuzeadvies',
+      'start behandeling',
+      'responsebody',
+      'headers',
+    ]) {
+      expect(annotation).not.toContain(forbidden);
     }
   });
 });
