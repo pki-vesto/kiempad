@@ -988,7 +988,14 @@ function renderGroupedNavigation(activeId: ScreenId): string {
 
 function renderWorkspaceContext(activeId: ScreenId): string {
   if (activeId === 'start') return '';
-  if (activeId === 'dossier' || activeId === 'kennis' || activeId === 'traject') return '';
+  if (
+    activeId === 'dossier' ||
+    activeId === 'kennis' ||
+    activeId === 'traject' ||
+    activeId === 'welzijn' ||
+    activeId === 'afwegingen'
+  )
+    return '';
 
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   if (!activeGroup) return '';
@@ -1272,6 +1279,12 @@ function renderAfwegingenScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderDecisionInsightWorkbench({
+        decisionCount: decisions.length,
+        chosenCount,
+        linkedQuestionCount,
+        latestDecision: decisions[0],
+      }),
       renderDecisionTaskRoutes({
         decisionCount: decisions.length,
         chosenCount,
@@ -1328,6 +1341,53 @@ function renderAfwegingenScreen(state: AppShellState): string {
     ],
     { className: 'decision-command-layout', ariaLabel: 'Afwegingen beheren' },
   );
+}
+
+function renderDecisionInsightWorkbench(input: {
+  decisionCount: number;
+  chosenCount: number;
+  linkedQuestionCount: number;
+  latestDecision: Decision | undefined;
+}): string {
+  const openCount = input.decisionCount - input.chosenCount;
+  const nextStep = input.latestDecision
+    ? input.latestDecision.keuze
+      ? `Keuze vastgelegd: ${input.latestDecision.keuze}`
+      : `Vergelijk opties voor ${input.latestDecision.onderwerp}`
+    : 'Leg een beslisnotitie vast om opties rustig naast elkaar te zetten.';
+
+  return `
+    <section class="insight-workbench decision-insight-workbench" aria-label="Besliswerkbank" data-decision-first-viewport="insight-workbench">
+      <header class="insight-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Besliswerkbank</p>
+          <h2>Afwegingen zonder score of stuuradvies</h2>
+          <p>Start met onderwerp, opties en keuze-status. Kiempad helpt structureren, maar kiest niet.</p>
+        </div>
+        <p class="insight-workbench__status">${openCount > 0 ? `${openCount} open` : 'Geen open keuze'}</p>
+      </header>
+      <div class="insight-workbench__grid">
+        <section class="insight-workbench__focus" aria-label="Volgende afweging">
+          <p class="kp-card__eyebrow">Nu eerst</p>
+          <h3>${escapeHtml(nextStep)}</h3>
+          <p>${input.latestDecision ? `${input.latestDecision.opties.length} optie(s) · ${input.latestDecision.datum}` : 'Nog geen beslisnotitie.'}</p>
+        </section>
+        <div class="insight-workbench__panel">
+          ${statRow([
+            { label: 'Notities', value: String(input.decisionCount) },
+            { label: 'Keuzes', value: String(input.chosenCount) },
+            { label: 'Open', value: String(openCount) },
+            { label: 'Gekoppeld', value: String(input.linkedQuestionCount) },
+          ])}
+          <nav class="insight-workbench__actions" aria-label="Besliswerkbank acties">
+            <a href="#afwegingen-route-prepare">Voorbereiden</a>
+            <a href="#afwegingen-route-compare">Vergelijken</a>
+            <a href="#afwegingen-route-choice">Keuze</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderDecisionTaskRoutes(input: {
@@ -9272,6 +9332,15 @@ function renderWelzijnScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderWellbeingInsightWorkbench({
+        checkInCount: checkIns.length,
+        symptomCount: logs.length,
+        cycleCount: cycleData.length,
+        trendCount: trends.length,
+        latestDate: overzicht.laatsteDatum,
+        latestCheckIn: checkIns[0],
+        latestSymptom: logs[0],
+      }),
       renderWelzijnTaskRoutes({
         checkInCount: checkIns.length,
         symptomCount: logs.length,
@@ -9327,6 +9396,59 @@ function renderWelzijnScreen(state: AppShellState): string {
     ],
     { className: 'wellbeing-command-layout', ariaLabel: 'Symptomen en welzijn' },
   );
+}
+
+function renderWellbeingInsightWorkbench(input: {
+  checkInCount: number;
+  symptomCount: number;
+  cycleCount: number;
+  trendCount: number;
+  latestDate: string | undefined;
+  latestCheckIn: MentalCheckIn | undefined;
+  latestSymptom: SymptomLog | undefined;
+}): string {
+  const owners = new Set<string>();
+  if (input.latestCheckIn) owners.add(OWNER_LABELS[input.latestCheckIn.owner]);
+  if (input.latestSymptom) owners.add(OWNER_LABELS[input.latestSymptom.owner]);
+  const ownerCopy = owners.size > 0 ? [...owners].join(' · ') : 'Nog geen eigenaarcontext';
+  const nextSignal = input.latestCheckIn
+    ? `${OWNER_LABELS[input.latestCheckIn.owner]} check-in: ${STEMMING_LABELS[input.latestCheckIn.stemming]}`
+    : input.latestSymptom
+      ? `${OWNER_LABELS[input.latestSymptom.owner]} symptoom: ${input.latestSymptom.symptoom}`
+      : 'Leg een check-in, symptoom of cyclusmeting vast.';
+
+  return `
+    <section class="insight-workbench wellbeing-insight-workbench" aria-label="Inzichtwerkbank welzijn" data-wellbeing-first-viewport="insight-workbench">
+      <header class="insight-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Inzichtwerkbank</p>
+          <h2>Welzijn eerst rustig scannen</h2>
+          <p>Bekijk recente signalen, eigenaarcontext en trends zonder score, diagnose of behandeladvies.</p>
+        </div>
+        <p class="insight-workbench__status">Laatst: ${escapeHtml(input.latestDate ?? 'nog niets')}</p>
+      </header>
+      <div class="insight-workbench__grid">
+        <section class="insight-workbench__focus" aria-label="Recent welzijnssignaal">
+          <p class="kp-card__eyebrow">Recent signaal</p>
+          <h3>${escapeHtml(nextSignal)}</h3>
+          <p>${escapeHtml(ownerCopy)}</p>
+        </section>
+        <div class="insight-workbench__panel">
+          ${statRow([
+            { label: 'Check-ins', value: String(input.checkInCount) },
+            { label: 'Logs', value: String(input.symptomCount) },
+            { label: 'Cyclus', value: String(input.cycleCount) },
+            { label: 'Trends', value: String(input.trendCount) },
+          ])}
+          <nav class="insight-workbench__actions" aria-label="Welzijn werkbank acties">
+            <a href="#welzijn-route-overview">Overzicht</a>
+            <a href="#welzijn-route-history">Geschiedenis</a>
+            <a href="#welzijn-route-log">Vastleggen</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderWelzijnTaskRoutes(input: {
