@@ -3334,6 +3334,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Wellbeing UI, Decision UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 58
+- **Status:** ☑ done
+
+### G1188 — afwegingenscherm opdelen in taakgerichte decisionroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Welzijn heeft taakroutes, maar afwegingen toont beslisnotities, keuzeformulier en historie nog in één route.
+- **User Impact:** Gebruikers moeten besluitcontext, opties en vastleggen nog op één lange pagina scannen.
+- **Desired Outcome:** Deel afwegingenscherm zichtbaar op in routeclusters voor voorbereiding, opties vergelijken, keuze vastleggen en geschiedenis/verslag.
+- **User Value:** Gebruikers vinden sneller waar zij een keuze willen voorbereiden, vergelijken of vastleggen zonder door alle besluitblokken te scrollen.
+- **Acceptance Criteria:** Het afwegingenscherm bevat zichtbare subnavigatie; bestaande `decision-form`, `decision-choice-form`, `data-decision-id`, input names en privacycopy blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde decisioncontext; geen trackingpayload, behandelkeuzeadvies, diagnose, secrets of raw dossierpayload wordt toegevoegd.
+- **Affected Screens:** Afwegingen, Dashboard
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Decision UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 57
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
