@@ -74,6 +74,14 @@ function extractDossierInboxOverview(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierReviewQueue(html: string): string {
+  const match = html.match(
+    /<section class="dossier-review-queue" aria-label="Documentreview wachtrij per confidence"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Documentreview wachtrij ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierAddSection(html: string): string {
   const start = html.indexOf(
     '<summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>',
@@ -4207,6 +4215,131 @@ describe('app shell', () => {
     expect(overview).not.toContain('b2NyLXBheWxvYWQ=');
     expect(overview).not.toContain('YmVlbGQtcGF5bG9hZA==');
     expect(overview).not.toContain('cmV2aWV3LXBheWxvYWQ=');
+  });
+
+  it('rendert documentreview wachtrij per confidence zonder OCR-tekst of bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-review-high',
+            datum: '2026-05-03',
+            titel: 'Gereviewd document',
+            categorie: 'onderzoek',
+            bestandsNaam: 'gereviewd.txt',
+            mimeType: 'text/plain',
+            grootteBytes: 1024,
+            inhoudBase64: 'Z2VyZXZpZXdkLXBheWxvYWQ=',
+            analyse: {
+              samenvatting: 'Tekstdocument opgeslagen; analyse is lokaal en niet-medisch.',
+              signalen: ['OCR gereviewd.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-03',
+              documenttype: 'Onderzoek',
+              bronbestand: 'gereviewd.txt',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'tekstbestand',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.95,
+              reviewStatus: 'gereviewd',
+              tekst: 'GEREVIEWDE OCR TEKST',
+              waarschuwing: 'Tekst is lokaal uit het bestand gelezen.',
+              verwerktOp: '2026-06-23T15:00:00.000Z',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-review-low-image',
+            datum: '2026-05-01',
+            titel: 'Lage confidence echo',
+            categorie: 'beeld',
+            bestandsNaam: 'secret-review-echo.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'U0VDUkVULVJFVklFVy1JTUFHRQ==',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 150 mg behandelkeuzeadvies blijft buiten wachtrij.',
+              signalen: ['OCR-payload hoort niet in wachtrij.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-01',
+              documenttype: 'Foto/echo',
+              bronbestand: 'secret-review-echo.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'afbeelding',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'laag',
+              confidenceScore: 0.31,
+              reviewStatus: 'concept',
+              tekst: 'GEVOELIGE OCR TEKST diagnose 150 mg behandelkeuzeadvies',
+              waarschuwing: 'Controleer lokaal.',
+              verwerktOp: '2026-06-23T15:05:00.000Z',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+          {
+            id: 'doc-review-middle',
+            datum: '2026-05-02',
+            titel: 'Middel confidence document',
+            categorie: 'onderzoek',
+            bestandsNaam: 'middel-review.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'TUlEREVMLVBBWUxPQUQ=',
+            analyse: {
+              samenvatting: 'PDF opgeslagen; analyse is lokaal en niet-medisch.',
+              signalen: ['OCR concept.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-02',
+              documenttype: 'Ziekenhuisdocument',
+              bronbestand: 'middel-review.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'middel',
+              confidenceScore: 0.66,
+              reviewStatus: 'concept',
+              tekst: 'MIDDEL OCR TEKST',
+              waarschuwing: 'Controleer lokaal.',
+              verwerktOp: '2026-06-23T15:10:00.000Z',
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const queue = extractDossierReviewQueue(html);
+
+    expect(queue).toContain('data-dossier-review-queue-state="concepten-open"');
+    expect(queue.indexOf('Lage confidence echo')).toBeLessThan(
+      queue.indexOf('Middel confidence document'),
+    );
+    expect(queue.indexOf('Middel confidence document')).toBeLessThan(
+      queue.indexOf('Gereviewd document'),
+    );
+    expect(queue).toContain('Confidence: laag (31%) · Review: concept · Prioriteit: hoog');
+    expect(queue).toContain('Confidence: middel (66%) · Review: concept · Prioriteit: middel');
+    expect(queue).toContain('Confidence: hoog (95%) · Review: gereviewd · Prioriteit: laag');
+    expect(queue).toContain('Beeldbron verborgen tot ontgrendeling');
+    expect(queue).not.toContain('secret-review-echo.jpg');
+    expect(queue).not.toContain('GEVOELIGE OCR TEKST');
+    expect(queue).not.toContain('U0VDUkVULVJFVklFVy1JTUFHRQ==');
+    expect(queue).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies|attachmentpayload/i);
   });
 
   it('bewaakt consult intelligence reviewstates zonder uploadpayload of behandelkeuzeadvies', () => {

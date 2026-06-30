@@ -6,6 +6,7 @@ import {
   bouwDossierDuplicaatReview,
   bouwDossierImportInbox,
   bouwDossierIndex,
+  bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
   bouwImagingRepository,
   bouwImagingVergelijking,
@@ -418,6 +419,84 @@ describe('dossier', () => {
       arts: 'dr. Jansen',
     });
     expect(metadata.extractieBronnen).toContain('ocr-tekst-gereviewd');
+  });
+
+  it('bouwt een documentreview wachtrij op OCR-confidence zonder OCR-tekst te lekken', () => {
+    const laagConcept = maakDossierDocument('doc-review-laag', {
+      datum: '2026-05-01',
+      titel: 'Lage confidence scan',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'lage-confidence.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'bGFnZS1wYXlsb2Fk',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'GEVOELIGE OCR TEKST diagnose 150 mg behandelkeuzeadvies',
+        confidenceScore: 0.31,
+        verwerktOp: '2026-06-23T15:00:00.000Z',
+      },
+    });
+    const middelConcept = maakDossierDocument('doc-review-middel', {
+      datum: '2026-05-02',
+      titel: 'Middel confidence scan',
+      categorie: 'onderzoek',
+      uploadProfiel: 'ziekenhuisdocument',
+      bestandsNaam: 'middel-confidence.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'bWlkZGVsLXBheWxvYWQ=',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'OCR concepttekst',
+        confidenceScore: 0.66,
+        verwerktOp: '2026-06-23T15:05:00.000Z',
+      },
+    });
+    const gereviewd = maakDossierDocument('doc-review-gereviewd', {
+      datum: '2026-05-03',
+      titel: 'Gereviewde tekst',
+      categorie: 'onderzoek',
+      bestandsNaam: 'gereviewd.txt',
+      mimeType: 'text/plain',
+      grootteBytes: 1024,
+      inhoudBase64: 'Z2VyZXZpZXdk',
+      ocr: {
+        explicieteLokaleVerwerking: true,
+        tekst: 'Gereviewde OCR tekst',
+        confidenceScore: 0.95,
+        reviewStatus: 'gereviewd',
+        verwerktOp: '2026-06-23T15:10:00.000Z',
+      },
+    });
+
+    const queue = bouwDossierReviewWachtrij([gereviewd, middelConcept, laagConcept]);
+
+    expect(queue.map((item) => item.id)).toEqual([
+      'doc-review-laag',
+      'doc-review-middel',
+      'doc-review-gereviewd',
+    ]);
+    expect(queue[0]).toMatchObject({
+      confidenceLabel: 'laag',
+      reviewStatus: 'concept',
+      prioriteit: 'hoog',
+      actieLabel: 'Controleer OCR-tekst en corrigeer metadata voordat dit document meetelt.',
+    });
+    expect(queue[1]).toMatchObject({
+      confidenceLabel: 'middel',
+      reviewStatus: 'concept',
+      prioriteit: 'middel',
+    });
+    expect(queue[2]).toMatchObject({
+      confidenceLabel: 'hoog',
+      reviewStatus: 'gereviewd',
+      prioriteit: 'laag',
+    });
+    expect(JSON.stringify(queue)).not.toMatch(
+      /GEVOELIGE OCR TEKST|150 mg|diagnose|behandelkeuzeadvies/i,
+    );
   });
 
   it('zet PDF en afbeeldingen klaar voor lokale OCR zonder cloudverwerking', () => {

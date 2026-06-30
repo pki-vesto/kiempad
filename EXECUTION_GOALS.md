@@ -3826,7 +3826,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** OCR review, dossier, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G515 — medische bronverwijzing per tijdlijnitem
 
@@ -11531,6 +11531,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Dossier, import inbox, encrypted storage, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1059 — document review queue confidence audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G514 toont nu een documentreview-wachtrij per OCR-confidence, maar er is nog geen compacte audit die sortering, reviewstatus, bron/datum en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat concepten op confidence-prioriteit zichtbaar blijven zonder OCR-tekst, broninhoud of medische payload te tonen.
+- **User Value:** Gebruikers kunnen reviewwerk prioriteren zonder dat gevoelige documentinhoud in audit- of statuspanelen verschijnt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G514; concept/gereviewd, confidence-label, confidence-percentage, bron, datum en prioriteit blijven gedekt; evidence bevat geen OCR-tekst, broninhoud, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier, OCR, review queue, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
