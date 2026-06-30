@@ -73,6 +73,14 @@ export type DossierTijdlijnItem = {
   documenttype: string;
   bronbestand: string;
   bron: 'metadata' | 'formulier';
+  privacy: {
+    isImaging: boolean;
+    titelLabel: string;
+    bronbestandLabel: string;
+    previewState?: ImagingPreviewState;
+    previewBron: 'encrypted_dataset' | 'niet_van_toepassing';
+    plaintextThumbnailOpgeslagen: false;
+  };
   document: DossierDocument;
 };
 
@@ -301,10 +309,16 @@ export function sorteerDossierDocumenten(items: readonly DossierDocument[]): Dos
   );
 }
 
-export function bouwDossierTijdlijn(items: readonly DossierDocument[]): DossierTijdlijnItem[] {
+export function bouwDossierTijdlijn(
+  items: readonly DossierDocument[],
+  options: { ontgrendeld?: boolean } = {},
+): DossierTijdlijnItem[] {
+  const ontgrendeld = options.ontgrendeld ?? true;
   return sorteerDossierDocumenten(items).map((document) => {
     const metadata = document.metadata;
     const datum = metadata?.normalisatie?.datum ?? bepaalDossierTijdlijnDatum(document);
+    const isImaging = isImagingDocument(document);
+    const previewState = isImaging ? bepaalImagingPreviewState(document, ontgrendeld) : undefined;
     return {
       id: document.id,
       datum,
@@ -321,6 +335,17 @@ export function bouwDossierTijdlijn(items: readonly DossierDocument[]): DossierT
         metadata?.extractieBronnen.includes('datumherkenning')
           ? 'metadata'
           : 'formulier',
+      privacy: {
+        isImaging,
+        titelLabel: isImaging && !ontgrendeld ? 'Beeldmoment vergrendeld' : document.titel,
+        bronbestandLabel:
+          isImaging && !ontgrendeld
+            ? 'Beeldbron verborgen tot ontgrendeling'
+            : (metadata?.bronbestand ?? document.bestandsNaam),
+        previewState,
+        previewBron: isImaging ? 'encrypted_dataset' : 'niet_van_toepassing',
+        plaintextThumbnailOpgeslagen: false,
+      },
       document,
     };
   });

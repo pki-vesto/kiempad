@@ -83,6 +83,13 @@ function extractDossierAddSection(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierTimelineSection(html: string): string {
+  const start = html.indexOf('<h2>Documenttijdlijn</h2>');
+  const end = html.indexOf('<h2>Behandelgeschiedenis</h2>', start);
+  if (start < 0 || end < 0) throw new Error('Dossier tijdlijnsectie ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 function extractUploadAttachmentFeedback(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Upload attachment privacy states"[\s\S]*?<\/section>/,
@@ -30995,6 +31002,79 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale preview van Centrale echo"');
     expect(html).toContain('Lokale preview uit de ontgrendelde centrale encrypted dataset.');
     expect(html).not.toContain('dit beeld blijft op dit toestel');
+  });
+
+  it('bewaakt G474 imaging timeline privacy boundary in locked en centrale modus', () => {
+    const document: DossierDocument = {
+      id: 'doc-g474-beeld',
+      datum: '2026-05-08',
+      titel: 'Secret G474 medische bestandsnaam echo',
+      categorie: 'beeld',
+      bestandsNaam: 'secret-g474-follikel-echo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'U0VDUkVULUc0NzQtSU1BR0U=',
+      analyse: {
+        samenvatting: 'Foto/echo opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+        signalen: ['Bestandstype is beeldmateriaal.'],
+      },
+      metadata: {
+        documentDatum: '2026-05-08',
+        documenttype: 'Foto/echo',
+        bronbestand: 'secret-g474-follikel-echo.jpg',
+        extractieBronnen: ['bronbestand', 'formulierdatum'],
+      },
+      beeldMetadata: {
+        datum: '2026-05-08',
+        soort: 'echo',
+        bron: 'Kliniekportaal',
+        context: 'Follikelmeting links',
+        exifStatus: 'geisoleerd',
+        reviewStatus: 'gereviewd',
+      },
+      uploadedAt: '2026-06-23T15:00:00.000Z',
+    };
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        imagingPreviewLocked: true,
+        dossierDocuments: [document],
+      }),
+    );
+    const lockedTimeline = extractDossierTimelineSection(lockedHtml);
+
+    expect(lockedTimeline).toContain('Beeldmoment vergrendeld');
+    expect(lockedTimeline).toContain('Beeldbron verborgen tot ontgrendeling');
+    expect(lockedTimeline).toContain('preview: Preview beschikbaar na ontgrendeling');
+    expect(lockedTimeline).toContain('encrypted dataset');
+    expect(lockedTimeline).not.toContain('Secret G474 medische bestandsnaam echo');
+    expect(lockedTimeline).not.toContain('secret-g474-follikel-echo.jpg');
+    expect(lockedHtml).not.toContain('U0VDUkVULUc0NzQtSU1BR0U=');
+    expect(lockedHtml).not.toContain('data:image/jpeg;base64');
+    expect(lockedHtml).not.toContain(
+      'alt="Lokale preview van Secret G474 medische bestandsnaam echo"',
+    );
+
+    const unlockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        imagingPreviewLocked: false,
+        dossierDocuments: [document],
+      }),
+    );
+    const unlockedTimeline = extractDossierTimelineSection(unlockedHtml);
+
+    expect(unlockedTimeline).toContain('Secret G474 medische bestandsnaam echo');
+    expect(unlockedTimeline).toContain('secret-g474-follikel-echo.jpg');
+    expect(unlockedTimeline).toContain('preview: Thumbnail en preview beschikbaar');
+    expect(unlockedTimeline).toContain('encrypted dataset');
+    expect(unlockedHtml).toContain('src="data:image/jpeg;base64,U0VDUkVULUc0NzQtSU1BR0U="');
+    expect(unlockedHtml).toContain(
+      'Lokale preview uit de ontgrendelde centrale encrypted dataset.',
+    );
   });
 
   it('rendert embryokwaliteit met traject- en terugplaatsingskoppeling', () => {
