@@ -34752,6 +34752,25 @@ describe('app shell', () => {
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
+    expect(html).toContain('class="section-stack finance-command-layout"');
+    expect(html).toContain('class="finance-task-routes"');
+    expect(html).toContain('aria-label="Kosten taakroutes"');
+    expect(html).toContain('data-finance-task-routes="ready"');
+    expect(html).toContain('href="#kosten-route-overzicht"');
+    expect(html).toContain('href="#kosten-route-toevoegen"');
+    expect(html).toContain('href="#kosten-route-vergoeding"');
+    expect(html).toContain('href="#kosten-route-historie"');
+    expect(html).toContain('id="kosten-route-overzicht"');
+    expect(html).toContain('data-finance-route="overzicht"');
+    expect(html).toContain('id="kosten-route-toevoegen"');
+    expect(html).toContain('data-finance-route="toevoegen"');
+    expect(html).toContain('id="kosten-route-vergoeding"');
+    expect(html).toContain('data-finance-route="vergoeding"');
+    expect(html).toContain('id="kosten-route-historie"');
+    expect(html).toContain('data-finance-route="historie"');
+    expect(html).toContain('Lokale kostenbibliotheek');
+    expect(html).toContain('Vergoeding en eigen risico');
+    expect(html).toContain('Kostenhistorie');
     expect(html).toContain('Kostenpost toevoegen');
     expect(html).toContain('id="kosten-form"');
     expect(html).toContain('Totaal');

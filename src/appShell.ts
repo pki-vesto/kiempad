@@ -9491,31 +9491,105 @@ function renderKennisFilterForm(filter: KennisFilter): string {
 function renderKostenScreen(state: AppShellState): string {
   const kosten = state.kosten ?? [];
   const overzicht = berekenKostenOverzicht(kosten);
+  const vergoedCount = kosten.filter((item) => item.vergoed === 'ja').length;
+  const eigenRisicoCount = kosten.filter((item) => item.vergoed === 'eigen_risico').length;
+  const onbekendCount = kosten.filter((item) => item.vergoed === 'onbekend').length;
 
   return sectionStack(
     [
-      '<h2>Lokale kostenbibliotheek</h2>',
-      `<dl class="summary-list">
-        <div><dt>Totaal</dt><dd>${formatEuro(overzicht.totaal)}</dd></div>
-        <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
-        <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
-        <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
-        <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
-        <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
-        <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
-      </dl>`,
-      '<p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>',
-      kosten.length > 0
-        ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
-        : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>',
-      disclosure({
-        summary: 'Kostenpost toevoegen',
-        open: kosten.length === 0,
-        body: renderKostenForm(),
+      renderFinanceTaskRoutes({
+        costCount: kosten.length,
+        vergoedCount,
+        eigenRisicoCount,
+        onbekendCount,
       }),
+      `<section id="kosten-route-overzicht" class="finance-route-section" aria-labelledby="kosten-route-overzicht-title" data-finance-route="overzicht">
+        <header class="finance-route-section__header">
+          <p class="kp-card__eyebrow">Overzicht</p>
+          <h2 id="kosten-route-overzicht-title">Lokale kostenbibliotheek</h2>
+          <p>Bekijk totalen uit lokale invoer zonder financieel advies of polisinterpretatie.</p>
+        </header>
+        <dl class="summary-list">
+          <div><dt>Totaal</dt><dd>${formatEuro(overzicht.totaal)}</dd></div>
+          <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
+          <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
+          <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
+        </dl>
+      </section>`,
+      `<section id="kosten-route-toevoegen" class="finance-route-section" aria-labelledby="kosten-route-toevoegen-title" data-finance-route="toevoegen">
+        <header class="finance-route-section__header">
+          <p class="kp-card__eyebrow">Toevoegen</p>
+          <h2 id="kosten-route-toevoegen-title">Kostenpost toevoegen</h2>
+          <p>Leg facturen of eigen betalingen vast met categorie en vergoedingstatus.</p>
+        </header>
+        ${disclosure({
+          summary: 'Kostenpost toevoegen',
+          open: kosten.length === 0,
+          body: renderKostenForm(),
+        })}
+      </section>`,
+      `<section id="kosten-route-vergoeding" class="finance-route-section" aria-labelledby="kosten-route-vergoeding-title" data-finance-route="vergoeding">
+        <header class="finance-route-section__header">
+          <p class="kp-card__eyebrow">Vergoeding</p>
+          <h2 id="kosten-route-vergoeding-title">Vergoeding en eigen risico</h2>
+          <p>Controleer eigen-risicocontext en onbekende posten zonder financieel advies.</p>
+        </header>
+        <dl class="summary-list">
+          <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
+          <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
+          <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
+          <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
+        </dl>
+        <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
+      </section>`,
+      `<section id="kosten-route-historie" class="finance-route-section" aria-labelledby="kosten-route-historie-title" data-finance-route="historie">
+        <header class="finance-route-section__header">
+          <p class="kp-card__eyebrow">Historie</p>
+          <h2 id="kosten-route-historie-title">Kostenhistorie</h2>
+          <p>Bekijk en bewerk eerder vastgelegde kostenposten.</p>
+        </header>
+        ${
+          kosten.length > 0
+            ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
+            : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>'
+        }
+      </section>`,
     ],
-    { ariaLabel: 'Kosten en vergoedingen' },
+    { className: 'finance-command-layout', ariaLabel: 'Kosten en vergoedingen' },
   );
+}
+
+function renderFinanceTaskRoutes(input: {
+  costCount: number;
+  vergoedCount: number;
+  eigenRisicoCount: number;
+  onbekendCount: number;
+}): string {
+  const routes = [
+    { href: '#kosten-route-overzicht', label: 'Overzicht', meta: `${input.costCount} posten` },
+    { href: '#kosten-route-toevoegen', label: 'Toevoegen', meta: 'nieuwe post' },
+    {
+      href: '#kosten-route-vergoeding',
+      label: 'Vergoeding',
+      meta: `${input.vergoedCount} vergoed · ${input.eigenRisicoCount} ER`,
+    },
+    { href: '#kosten-route-historie', label: 'Historie', meta: `${input.onbekendCount} onbekend` },
+  ];
+
+  return `
+    <nav class="finance-task-routes" aria-label="Kosten taakroutes" data-finance-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="finance-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
 }
 
 function renderKostenForm(selected?: CostItem): string {

@@ -2479,6 +2479,108 @@ h2 {
   min-width: 0;
 }
 
+.finance-command-layout {
+  gap: 18px;
+}
+
+.finance-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.finance-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.finance-task-route:focus-visible,
+.finance-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.finance-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.finance-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.finance-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.finance-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.finance-route-section__header h2,
+.finance-route-section__header p {
+  margin: 0;
+}
+
+.finance-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.finance-route-section .summary-panel,
+.finance-route-section .policy-panel,
+.finance-route-section .linked-note,
+.finance-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.finance-route-section .definition-list > div,
+.finance-route-section .summary-list > div,
+.finance-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.finance-route-section .definition-list dd,
+.finance-route-section .summary-list dd,
+.finance-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.finance-route-section .data-form,
+.finance-route-section .compact-form,
+.finance-route-section .data-form label,
+.finance-route-section .data-form input,
+.finance-route-section .data-form select,
+.finance-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4561,6 +4663,22 @@ a.action-card:active {
   }
 
   .eventlog-task-route {
+    flex: 0 0 min(190px, 76vw);
+    scroll-snap-align: start;
+  }
+
+  .finance-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .finance-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .finance-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
   }
