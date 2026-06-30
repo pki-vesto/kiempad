@@ -3873,7 +3873,7 @@ describe('onderhoudsdocumentatie', () => {
   });
 
   it('bewaakt G1091 health monitor retention audit drift tussen runbook en completion audit', () => {
-    for (const sharedRetentionTerm of [
+    const sharedRetentionTerms = [
       'PR-comments',
       'issuecomments',
       '/tmp/kiempad-health-monitor-*.json',
@@ -3893,10 +3893,24 @@ describe('onderhoudsdocumentatie', () => {
       'dosering',
       'kansberekening',
       'behandelkeuzeadvies',
-    ]) {
+    ];
+
+    for (const sharedRetentionTerm of sharedRetentionTerms) {
       expect(runbook).toContain(sharedRetentionTerm);
       expect(goalCompletionAudit).toContain(sharedRetentionTerm);
     }
+
+    expect(
+      [
+        'G1092 health-monitor-retention-ci-evidence',
+        'sources=docs/RUNBOOK.md,docs/GOAL_COMPLETION_AUDIT.md,tests/maintenanceDocs.test.ts',
+        `sharedTerms=${sharedRetentionTerms.join('|')}`,
+      ].join('\n'),
+    ).toMatchInlineSnapshot(`
+      "G1092 health-monitor-retention-ci-evidence
+      sources=docs/RUNBOOK.md,docs/GOAL_COMPLETION_AUDIT.md,tests/maintenanceDocs.test.ts
+      sharedTerms=PR-comments|issuecomments|/tmp/kiempad-health-monitor-*.json|GitHub CI-artifacts|failure=...|recovery=...|contractVersion=1|responsebody|headers|user-id|session-id|record-id|recordcount|ciphertext|gezondheidsdata|diagnose|dosering|kansberekening|behandelkeuzeadvies"
+    `);
   });
 
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
