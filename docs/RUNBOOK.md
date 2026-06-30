@@ -105,6 +105,18 @@ pad zonder lokale vault-hercreatie.
   Oude monitors moeten veilig falen op een onverwachte contractversie of onverwacht
   veld, zonder responsebody, user-id, session-id, record-id, recordcount, ciphertext,
   secrets of medische termen te loggen.
+  **Health-monitorfailure-output (G1082/G1083):** monitors die
+  `validateCentralHealthContractBody` of `validateCentralHealthContract` gebruiken
+  mogen bij health-contractdrift alleen gesanitized foutlabels loggen:
+  `unexpected-contract-version`, `unexpected-field`, `unexpected-error-states`,
+  `forbidden-privacy-field`, `invalid-json`, `invalid-shape`, `missing-field` en
+  `unexpected-value`. Log nooit de responsebody, headers, user-id, session-id,
+  record-id, recordcount, ciphertext, secrets, gezondheidsdata, diagnose, dosering,
+  kansberekening of behandelkeuzeadvies. Herstelactie: start met een
+  contractVersion review tegen de verwachte `contractVersion=1`, vergelijk de
+  responsevorm met `src/storage/centralHealthContract.ts`, herhaal de lokale
+  `/api/health` smoke en daarna de tailnet-HTTPS `/api/health` smoke. Als de drift
+  bewust is, wijzig contract, runbook en tests in dezelfde PR.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|
