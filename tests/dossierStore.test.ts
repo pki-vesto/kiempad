@@ -35,12 +35,12 @@ describe('DossierStore', () => {
       inhoudBase64: 'cGRmLWdlaGVpbQ==',
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
+      notitie: 'AMH 1,7 ng/ml',
       embryo: {
         label: 'Embryo 1',
         kwaliteit: 'Gardner-score 4AA dag 5 blastocyst',
         status: 'teruggeplaatst',
       },
-      notitie: 'oude uitslag',
     });
     const raw = await driver.getRecord(saved.id);
 
@@ -49,6 +49,9 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Bloeduitslag');
     expect(raw?.payload.ciphertext).not.toContain('afspraak-1');
     expect(raw?.payload.ciphertext).not.toContain('traject-1');
+    expect(raw?.payload.ciphertext).not.toContain('AMH');
+    expect(raw?.payload.ciphertext).not.toContain('1,7');
+    expect(raw?.payload.ciphertext).not.toContain('ng/ml');
     expect(raw?.payload.ciphertext).not.toContain('Embryo 1');
     expect(raw?.payload.ciphertext).not.toContain('Gardner-score');
     expect(raw?.payload.ciphertext).not.toContain('dag 5 blastocyst');

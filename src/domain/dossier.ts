@@ -1,5 +1,9 @@
 import type { DossierDocument, ZiekenhuisDocumentType } from './types';
 
+type DossierLabwaardeNormalisatie = NonNullable<
+  NonNullable<DossierDocument['metadata']['normalisatie']>['labwaarden']
+>[number];
+
 export type DossierDocumentInput = {
   datum: string;
   titel?: string;
@@ -38,6 +42,15 @@ export type DossierMetadataCorrectieInput = {
   bron?: string;
   documenttype?: string;
   onderzoekstype?: string;
+  labwaarden?: {
+    naam: string;
+    waarde: string;
+    eenheid?: string;
+    datum?: string;
+    bron?: string;
+    reviewStatus?: 'concept' | 'gereviewd';
+    origineleTekst?: string;
+  }[];
   pogingId?: string;
   afspraakId?: string;
   onzekerheid?: NonNullable<DossierDocument['metadata']['normalisatie']>['onzekerheid'];
@@ -1003,6 +1016,11 @@ export function extraheerDossierMetadata(input: {
         input.uploadProfiel,
         input.categorie,
       ),
+      labwaarden: extraheerLabwaarden({
+        tekst: gecombineerdeTekst,
+        datum: documentDatum,
+        bron: instelling ?? input.bestandsNaam,
+      }),
       pogingId: input.trajectId,
       afspraakId: input.afspraakId,
       herkendeDatum: Boolean(herkendeDatum),
@@ -1049,6 +1067,7 @@ function normaliseerDossierMetadata(input: {
   bron: string;
   documenttype: string;
   onderzoekstype?: string;
+  labwaarden?: NonNullable<DossierDocument['metadata']['normalisatie']>['labwaarden'];
   pogingId?: string;
   afspraakId?: string;
   herkendeDatum: boolean;
@@ -1061,6 +1080,11 @@ function normaliseerDossierMetadata(input: {
   const bron = correctie?.bron?.trim() || input.bron;
   const documenttype = correctie?.documenttype?.trim() || input.documenttype;
   const onderzoekstype = correctie?.onderzoekstype?.trim() || input.onderzoekstype;
+  const labwaarden =
+    normaliseerLabwaardeCorrecties(correctie?.labwaarden, {
+      datum,
+      bron,
+    }) ?? input.labwaarden;
   const pogingId = correctie?.pogingId?.trim() || input.pogingId;
   const afspraakId = correctie?.afspraakId?.trim() || input.afspraakId;
   const overschrevenDoorGebruiker = Boolean(
@@ -1070,6 +1094,7 @@ function normaliseerDossierMetadata(input: {
         correctie.bron,
         correctie.documenttype,
         correctie.onderzoekstype,
+        correctie.labwaarden?.length ? 'labwaarden' : undefined,
         correctie.pogingId,
         correctie.afspraakId,
         correctie.onzekerheid,
@@ -1081,6 +1106,7 @@ function normaliseerDossierMetadata(input: {
     bron,
     documenttype,
     onderzoekstype: onderzoekstype || undefined,
+    labwaarden,
     pogingId: pogingId || undefined,
     afspraakId: afspraakId || undefined,
     onzekerheid:
@@ -1100,6 +1126,74 @@ function normaliseerDossierMetadata(input: {
     },
     overschrevenDoorGebruiker,
   };
+}
+
+function extraheerLabwaarden(input: {
+  tekst: string;
+  datum: string;
+  bron: string;
+}): NonNullable<DossierDocument['metadata']['normalisatie']>['labwaarden'] | undefined {
+  const normalized = input.tekst.replace(/\s+/g, ' ');
+  const patronen = [
+    /\b(AMH|FSH|LH|TSH)\b\s*[:=]?\s*(\d+(?:[,.]\d+)?)\s*([a-zA-Zµ/]+(?:\/[a-zA-Zµ]+)?)?/giu,
+    /\b(Estradiol|E2|Progesteron|Prolactine)\b\s*[:=]?\s*(\d+(?:[,.]\d+)?)\s*([a-zA-Zµ/]+(?:\/[a-zA-Zµ]+)?)?/giu,
+  ];
+  const labwaarden = patronen.flatMap((patroon) =>
+    [...normalized.matchAll(patroon)].map((match) => {
+      const naam = normaliseerLabwaardeNaam(match[1] ?? '');
+      const waarde = (match[2] ?? '').replace(',', '.');
+      const eenheid = match[3]?.trim();
+      const origineleTekst = match[0]?.trim() ?? `${naam} ${waarde}`;
+      return {
+        naam,
+        waarde,
+        eenheid: eenheid || undefined,
+        datum: input.datum,
+        bron: input.bron,
+        reviewStatus: 'concept' as const,
+        origineleTekst,
+        overschrevenDoorGebruiker: false,
+      };
+    }),
+  );
+  const uniek = new Map<string, DossierLabwaardeNormalisatie>();
+  for (const labwaarde of labwaarden) {
+    if (!labwaarde.naam || !labwaarde.waarde) continue;
+    uniek.set(`${labwaarde.naam}:${labwaarde.waarde}:${labwaarde.eenheid ?? ''}`, labwaarde);
+  }
+  return uniek.size > 0 ? [...uniek.values()] : undefined;
+}
+
+function normaliseerLabwaardeCorrecties(
+  correcties: DossierMetadataCorrectieInput['labwaarden'] | undefined,
+  fallback: { datum: string; bron: string },
+): NonNullable<DossierDocument['metadata']['normalisatie']>['labwaarden'] | undefined {
+  if (!correcties || correcties.length === 0) return undefined;
+  const labwaarden = correcties
+    .map((correctie): DossierLabwaardeNormalisatie | undefined => {
+      const naam = normaliseerLabwaardeNaam(correctie.naam);
+      const waarde = correctie.waarde.trim().replace(',', '.');
+      if (!naam || !waarde) return undefined;
+      const eenheid = correctie.eenheid?.trim();
+      return {
+        naam,
+        waarde,
+        ...(eenheid ? { eenheid } : {}),
+        datum: correctie.datum?.trim() || fallback.datum,
+        bron: correctie.bron?.trim() || fallback.bron,
+        reviewStatus: correctie.reviewStatus ?? 'gereviewd',
+        origineleTekst: correctie.origineleTekst?.trim() || `${naam} ${waarde}`,
+        overschrevenDoorGebruiker: true,
+      };
+    })
+    .filter((labwaarde): labwaarde is DossierLabwaardeNormalisatie => Boolean(labwaarde));
+  return labwaarden.length > 0 ? labwaarden : undefined;
+}
+
+function normaliseerLabwaardeNaam(value: string): string {
+  const normalized = value.trim();
+  if (/^e2$/i.test(normalized)) return 'Estradiol';
+  return normalized.toUpperCase() === normalized ? normalized.toUpperCase() : normalized;
 }
 
 function bepaalOnderzoekstype(

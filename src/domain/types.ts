@@ -247,6 +247,16 @@ export interface DossierDocument {
       bron: string;
       documenttype: string;
       onderzoekstype?: string;
+      labwaarden?: {
+        naam: string;
+        waarde: string;
+        eenheid?: string;
+        datum: IsoDate;
+        bron: string;
+        reviewStatus: 'concept' | 'gereviewd';
+        origineleTekst: string;
+        overschrevenDoorGebruiker: boolean;
+      }[];
       pogingId?: string;
       afspraakId?: string;
       onzekerheid: 'laag' | 'middel' | 'hoog';

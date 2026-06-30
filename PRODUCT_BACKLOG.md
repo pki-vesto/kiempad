@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 857 |
+| ☑ klaar | 858 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1056** |
+| **Totaal** | **1057** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -668,7 +668,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G503 | Central Encrypted Platform: central API health endpoint privacy review | P1 | F5 | ☐ |
 | G504 | Central Encrypted Platform: central encrypted dataset export manifest | P1 | F5 | ☐ |
 | G505 | Central Encrypted Platform: legacy fallback migration decision screen | P1 | F5 | ☐ |
-| G506 | Fertility Intelligence: historische labwaarde normalisatie zonder interpretatie | P0 | F5 | ☐ |
+| G506 | Fertility Intelligence: historische labwaarde normalisatie zonder interpretatie | P0 | F5 | ☑ |
 | G507 | Fertility Intelligence: dossierupload duplicaatreview op checksum | P0 | F5 | ☐ |
 | G508 | Fertility Intelligence: PDF-pagina preview met encrypted bronkoppeling | P1 | F5 | ☐ |
 | G509 | Fertility Intelligence: OCR-resultaat bronfragment navigatie | P1 | F5 | ☐ |
@@ -1219,12 +1219,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1054 | Fertility Intelligence: consult summary review audit evidence | P1 | F5 | ☐ |
 | G1055 | Fertility Intelligence: embryo grading source audit evidence | P1 | F5 | ☐ |
 | G1056 | Fertility Intelligence: embryo comparison language audit evidence | P1 | F5 | ☐ |
+| G1057 | Fertility Intelligence: historical labvalue normalization audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1056** (id's G001 t/m G1056, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1057** (id's G001 t/m G1057, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

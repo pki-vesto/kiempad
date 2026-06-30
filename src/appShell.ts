@@ -7615,6 +7615,7 @@ function renderDossierMetadata(document: DossierDocument, state: AppShellState):
         `documenttype ${normalisatie.origineleWaarden.documenttype}`,
       ]
     : [];
+  const labwaarden = normalisatie?.labwaarden ?? [];
 
   return `
     <p class="linked-note">Metadata: ${details.map(escapeHtml).join(' · ')}</p>
@@ -7626,6 +7627,18 @@ function renderDossierMetadata(document: DossierDocument, state: AppShellState):
     ${
       origineleWaarden.length > 0
         ? `<p class="linked-note">Originele metadatawaarden: ${origineleWaarden.map(escapeHtml).join(' · ')}</p>`
+        : ''
+    }
+    ${
+      labwaarden.length > 0
+        ? `<div class="linked-note" data-labvalue-normalization-state="${labwaarden.some((labwaarde) => labwaarde.reviewStatus === 'concept') ? 'concept-review' : 'gereviewd'}"><strong>Genormaliseerde labwaarden</strong><ul class="compact-list">${labwaarden
+            .map(
+              (labwaarde) =>
+                `<li>${escapeHtml(labwaarde.naam)}: ${escapeHtml(labwaarde.waarde)}${labwaarde.eenheid ? ` ${escapeHtml(labwaarde.eenheid)}` : ''} · Datum: ${escapeHtml(labwaarde.datum)} · Bron: ${escapeHtml(labwaarde.bron)} · Review: ${escapeHtml(labwaarde.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept')}${labwaarde.overschrevenDoorGebruiker ? ' · Gecorrigeerd' : ''}</li>`,
+            )
+            .join(
+              '',
+            )}</ul><small>Feitelijke labwaarden uit bronmetadata; Kiempad toont geen referentiewaarden, diagnose of behandeladvies.</small></div>`
         : ''
     }
     <p class="linked-note">Metadata-bronnen: ${metadata.extractieBronnen.map(escapeHtml).join(', ')}</p>

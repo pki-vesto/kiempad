@@ -3714,7 +3714,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, metadata, policy tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G507 — dossierupload duplicaatreview op checksum
 
@@ -11503,6 +11503,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Embryo dossier, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1057 — historical labvalue normalization audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G506 normaliseert historische labwaarden nu als feitelijke naam/waarde/eenheid/datum/bron/reviewstatus zonder interpretatie, maar er is nog geen compacte audit die deze opslag-, weergave- en taalgrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat labwaarde-normalisatie, gebruikerscorrecties, encrypted opslag en geen diagnose-/referentie-/adviescopy samen controleert.
+- **User Value:** Gebruikers kunnen labwaarden terugvinden en corrigeren zonder dat Kiempad waarden duidt, classificeert of behandelkeuzes suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G506; concept en gereviewde/gecorrigeerde labwaarden blijven gedekt; naam/waarde/eenheid/datum/bron/reviewstatus blijven zichtbaar; encrypted-store bewijs toont geen plaintext labwaarde, bron of payload; evidence bevat geen diagnose, dosering, normaal/afwijkend, referentiewaarde, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier, metadata normalization, encrypted storage, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

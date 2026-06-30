@@ -471,7 +471,7 @@ describe('dossier', () => {
       inhoudBase64: 'cGRm',
       afspraakId: 'afspraak-1',
       trajectId: 'poging-1',
-      notitie: 'Controle bij Erasmus MC',
+      notitie: 'Controle bij Erasmus MC. AMH: 1,7 ng/ml. FSH 8 IU/L.',
     });
 
     expect(document.metadata.normalisatie).toEqual({
@@ -479,6 +479,28 @@ describe('dossier', () => {
       bron: 'Erasmus MC',
       documenttype: 'Labuitslag',
       onderzoekstype: 'Labwaarde',
+      labwaarden: [
+        {
+          naam: 'AMH',
+          waarde: '1.7',
+          eenheid: 'ng/ml',
+          datum: '2026-05-03',
+          bron: 'Erasmus MC',
+          reviewStatus: 'concept',
+          origineleTekst: 'AMH: 1,7 ng/ml',
+          overschrevenDoorGebruiker: false,
+        },
+        {
+          naam: 'FSH',
+          waarde: '8',
+          eenheid: 'IU/L',
+          datum: '2026-05-03',
+          bron: 'Erasmus MC',
+          reviewStatus: 'concept',
+          origineleTekst: 'FSH 8 IU/L',
+          overschrevenDoorGebruiker: false,
+        },
+      ],
       pogingId: 'poging-1',
       afspraakId: 'afspraak-1',
       onzekerheid: 'laag',
@@ -504,6 +526,48 @@ describe('dossier', () => {
     );
     expect(zoekDossierDocumenten([document], 'labwaarde')[0]?.matches).toContain('tags');
     expect(zoekDossierDocumenten([document], 'afspraak-1')[0]?.matches).toContain('afspraak');
+  });
+
+  it('laat gebruikers historische labwaarden corrigeren zonder interpretatie toe te voegen', () => {
+    const document = maakDossierDocument('doc-labwaarde-correctie', {
+      datum: '2026-05-01',
+      titel: 'Labcontrole',
+      categorie: 'onderzoek',
+      uploadProfiel: 'labuitslag',
+      bestandsNaam: 'labcontrole.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGRm',
+      metadataCorrectie: {
+        labwaarden: [
+          {
+            naam: 'AMH',
+            waarde: '1,9',
+            eenheid: 'ng/ml',
+            datum: '2026-05-02',
+            bron: 'Gebruiker: portaal',
+            reviewStatus: 'gereviewd',
+            origineleTekst: 'AMH onduidelijk',
+          },
+        ],
+      },
+    });
+
+    expect(document.metadata.normalisatie?.labwaarden).toEqual([
+      {
+        naam: 'AMH',
+        waarde: '1.9',
+        eenheid: 'ng/ml',
+        datum: '2026-05-02',
+        bron: 'Gebruiker: portaal',
+        reviewStatus: 'gereviewd',
+        origineleTekst: 'AMH onduidelijk',
+        overschrevenDoorGebruiker: true,
+      },
+    ]);
+    expect(JSON.stringify(document.metadata.normalisatie?.labwaarden)).not.toMatch(
+      /\b(diagnose|advies|referentiewaarde|normaal|afwijkend|kans)\b/i,
+    );
   });
 
   it('laat gebruikers normalisatie overschrijven zonder bronwaarden te verliezen', () => {
