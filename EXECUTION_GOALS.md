@@ -12009,4 +12009,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, CI, governance docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1093 — central health monitor retention snapshot freshness guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1092 maakt retention CI evidence reviewbaar als snapshot, maar toekomstige termwijzigingen kunnen de snapshot bijwerken zonder expliciete freshness-uitleg.
+- **Desired Outcome:** Voeg guardrails toe die snapshotwijzigingen koppelen aan bewuste runbook/auditdoc updates.
+- **User Value:** Beheer ziet of retention snapshotdrift intentioneel is en niet per ongeluk privacytermen verliest.
+- **Acceptance Criteria:** Evidence verwijst naar G1092; freshness guard noemt snapshot, runbook, goal-completion-audit en maintenance-test; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, governance docs, runbook
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
