@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 889 |
+| ☑ klaar | 890 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1088** |
+| **Totaal** | **1089** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1250,13 +1250,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1085 | Central Encrypted Platform: central health monitor annotation runbook drift guard | P1 | F5 | ☑ |
 | G1086 | Central Encrypted Platform: central health monitor annotation CLI fixture | P1 | F5 | ☑ |
 | G1087 | Central Encrypted Platform: central health monitor annotation CI workflow smoke | P1 | F5 | ☑ |
-| G1088 | Central Encrypted Platform: central health monitor CI failure artifact evidence | P1 | F5 | ☐ |
+| G1088 | Central Encrypted Platform: central health monitor CI failure artifact evidence | P1 | F5 | ☑ |
+| G1089 | Central Encrypted Platform: central health monitor failure artifact retention policy | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1088** (id's G001 t/m G1088, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1089** (id's G001 t/m G1089, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

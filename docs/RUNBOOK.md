@@ -143,6 +143,16 @@ pad zonder lokale vault-hercreatie.
   `Central health monitor annotation smoke` met `npm run smoke:central-health-monitor`
   na de centrale bootstrap smoke, zodat PR's de gesanitized annotatie-fixture
   uitvoeren voordat build- en assetgates starten.
+  **CI health-monitor failure-artifact evidence (G1087/G1088):** bij een rode
+  `Central health monitor annotation smoke` mag de PR-evidence alleen de lokale
+  artifactcommands `tsx scripts/central-health-monitor-annotation.mts --fixture=unexpected-contract-version`,
+  `tsx scripts/central-health-monitor-annotation.mts --fixture=unexpected-field` en
+  `tsx scripts/central-health-monitor-annotation.mts --fixture=unexpected-error-states`
+  plus de `status`/`ciAnnotation`-regels tonen. Verwachte labels zijn
+  `failure=unexpected-contract-version`, `failure=unexpected-field` en
+  `failure=unexpected-error-states`; plak geen responsebody, headers, user-id,
+  session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose,
+  dosering, kansberekening of behandelkeuzeadvies in PR's, issues of CI-artifacts.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|
