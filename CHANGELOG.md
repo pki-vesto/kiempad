@@ -6,6 +6,16 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 
 ## [Unreleased]
 
+### Changed
+- VERBETERINGEN-VOLLEDIG.md punt 109 (ontgrendelscherm herontworpen): rustige,
+  gecentreerde opbouw met brand-icoon, badge "Versleuteld · alleen op dit toestel",
+  serif "Welkom terug" + één warme zin. "passphrase" → "wachtwoordzin",
+  "WebAuthn/biometrie" → "biometrie". De "Hersteldiagnose"-tabel en de drie
+  hulpkaders zijn nu inklapbare Details ("Klaar om te ontgrendelen" + "Hulp bij
+  ontgrendelen"). Wachtwoordveld volgens de formulier-kit met oog-icoon
+  (tonen/verbergen) en een ghost-biometrieknop onder de primaire "Ontgrendel
+  Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
+
 ### Added
 - G1177/G1178 Premium Claude Design UI: de app-shell groepeert hoofdschermen nu in werkruimtes Vandaag, Behandeling, Dossier, Inzicht en Beheer met een actieve werkruimte-context boven het scherm, zodat Kiempad minder als één platte alles-op-een-pagina ervaring voelt; G1178 is toegevoegd voor verdere startschermontlasting.
 - G1175/G1176 Premium Claude Design UI: de dossier cue parity smoke gebruikt nu een exact label- en commandocontract in maintenance-tests zodat workflow, runbook en completion-audit dezelfde smoke-identiteit blijven tonen; G1176 is toegevoegd voor commandodriftbewaking.
