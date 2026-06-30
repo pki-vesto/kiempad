@@ -2118,6 +2118,14 @@ a.action-card:active {
   display: block;
 }
 
+.dossier-add-route-switch-hint {
+  max-width: 60ch;
+  margin: -4px 0 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
 .dossier-add-route-panel {
   min-width: 0;
   padding: 0 0 14px;
