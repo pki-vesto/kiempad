@@ -186,6 +186,10 @@ import {
   recommendationCard,
   recommendationGroup,
   recommendationList,
+  researchSourceCard,
+  researchSourceList,
+  researchSummaryCard,
+  researchSummaryList,
   type StepState,
   sectionStack,
   statRow,
@@ -8883,10 +8887,10 @@ function renderKennisScreen(state: AppShellState): string {
         ${renderResearchBronnenCache(researchBronnen)}
       </div>
       <div class="summary-panel">
-        ${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen)}
+        ${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}
       </div>
       <div class="summary-panel">
-        ${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen)}
+        ${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}
       </div>
       <div class="summary-panel">
         ${renderResearchRelevantieVoorGebruiker(researchRelevantie)}
@@ -9106,79 +9110,123 @@ function renderResearchItemForm(): string {
 }
 
 function renderResearchBronnenCache(bronnen: readonly ResearchBron[]): string {
-  return `
-    <h2>Researchbronnen</h2>
-    <p class="small-print">Handmatige seed en lokale cache uit opgeslagen researchitems. Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.</p>
-    <ol class="compact-list">
-      ${bronnen
-        .map(
-          (bron) => `
-            <li>
-              <strong>${escapeHtml(bron.titel)}</strong>
-              <span>${escapeHtml(bron.herkomst === 'handmatige_seed' ? 'Seedbron' : 'Lokale cache')} · ${escapeHtml(bron.bron)}</span>
-              <small>${escapeHtml(bron.toelichting)} · ${escapeHtml(renderResearchBronAllowlistStatus(bron.allowlistStatus))}: ${escapeHtml(bron.allowlistRationale)}</small>
-            </li>
-          `,
-        )
-        .join('')}
-    </ol>
-  `;
+  return researchSourceList({
+    title: 'Researchbronnen',
+    intro:
+      'Handmatige seed en lokale cache uit opgeslagen researchitems. Kiempad haalt geen publicaties op zonder expliciete netwerk-opt-in.',
+    ariaLabel: 'Researchbronnen met allowliststatus',
+    data: {
+      'research-source-component': 'source-list',
+      'research-source-count': String(bronnen.length),
+    },
+    items: bronnen.map((bron) =>
+      researchSourceCard({
+        id: bron.id,
+        source: bron.bron,
+        title: bron.titel,
+        meta: `${bron.herkomst === 'handmatige_seed' ? 'Seedbron' : 'Lokale cache'} · ${bron.bron}`,
+        detail: `${bron.toelichting} · ${renderResearchBronAllowlistStatus(bron.allowlistStatus)}: ${bron.allowlistRationale}`,
+        data: {
+          'research-source-origin': bron.herkomst,
+          'research-source-allowlist': bron.allowlistStatus,
+        },
+      }),
+    ),
+  });
 }
 
 function renderWetenschappelijkeResearchSamenvattingen(
   samenvattingen: readonly WetenschappelijkeResearchSamenvatting[],
+  kennisItems: readonly KennisItem[],
 ): string {
-  return `
-    <h2>Wetenschappelijke samenvattingen</h2>
-    <p class="small-print">Handmatig vastgelegde researchpublicaties met bron en publicatiedatum. Dit is geen behandeladvies.</p>
-    ${
-      samenvattingen.length > 0
-        ? `<ol class="compact-list">${samenvattingen
-            .map(
-              (item) => `
-                <li>
-                  <strong>${escapeHtml(item.titel)}</strong>
-                  <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
-                  <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
-                  <small>${escapeHtml(item.aiConcept ? 'AI-concept · brongekoppeld' : 'Handmatig concept · brongekoppeld')}</small>
-                  <small>${escapeHtml(item.wetenschappelijkeSamenvatting)}</small>
-                  <small>scientificSummary: ${escapeHtml(item.scientificSummary)}</small>
-                  <small>${escapeHtml(item.waarschuwing)}</small>
-                </li>
-              `,
-            )
-            .join('')}</ol>`
-        : '<p class="empty-state">Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.</p>'
-    }
-  `;
+  const kennisItemMap = new Map(kennisItems.map((item) => [item.id, item]));
+  return researchSummaryList({
+    title: 'Wetenschappelijke samenvattingen',
+    intro:
+      'Handmatig vastgelegde researchpublicaties met bron, publicatiedatum en herverificatiecontext. Dit is geen behandeladvies.',
+    kind: 'scientific',
+    emptyState: 'Nog geen wetenschappelijke samenvattingen per publicatie vastgelegd.',
+    ariaLabel: 'Wetenschappelijke researchsamenvattingen',
+    data: {
+      'research-summary-component': 'scientific-list',
+      'research-summary-count': String(samenvattingen.length),
+    },
+    items: samenvattingen.map((item) => {
+      const kennisItem = kennisItemMap.get(item.id);
+      const metadata = kennisItem ? bouwResearchKaartMetadata(kennisItem) : undefined;
+      const herverificatie = kennisItem ? bouwResearchHerverificatieStatus(kennisItem) : undefined;
+      return researchSummaryCard({
+        id: item.id,
+        source: item.bron,
+        kind: 'scientific',
+        title: item.titel,
+        meta: `${item.publicatieDatum} · ${item.bron}`,
+        summary: item.wetenschappelijkeSamenvatting,
+        sourceCitation: item.sourceCitation,
+        conceptLabel: item.aiConcept
+          ? 'AI-concept · brongekoppeld'
+          : 'Handmatig concept · brongekoppeld',
+        data: {
+          'research-summary-review':
+            herverificatie?.status ?? (item.aiConcept ? 'ai-concept' : 'manual-concept'),
+        },
+        body: `
+          <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
+          <small>scientificSummary: ${escapeHtml(item.scientificSummary)}</small>
+          ${metadata ? renderResearchKaartMetadata(metadata) : ''}
+          ${herverificatie ? renderResearchHerverificatieStatus(herverificatie) : ''}
+          <small>${escapeHtml(item.waarschuwing)}</small>
+        `,
+      });
+    }),
+  });
 }
 
 function renderEenvoudigeResearchSamenvattingen(
   samenvattingen: readonly EenvoudigeResearchSamenvatting[],
+  kennisItems: readonly KennisItem[],
 ): string {
-  return `
-    <h2>Eenvoudige samenvattingen</h2>
-    <p class="small-print">Begrijpelijke Nederlandse uitleg per publicatie, met bron en datum. Dit is geen diagnose of behandeladvies.</p>
-    ${
-      samenvattingen.length > 0
-        ? `<ol class="compact-list">${samenvattingen
-            .map(
-              (item) => `
-                <li>
-                  <strong>${escapeHtml(item.titel)}</strong>
-                  <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
-                  <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
-                  <small>${escapeHtml(item.aiConcept ? 'AI-concept · brongekoppeld' : 'Handmatig concept · brongekoppeld')}</small>
-                  <small>${escapeHtml(item.eenvoudigeSamenvatting)}</small>
-                  <small>patientSummary: ${escapeHtml(item.patientSummary)}</small>
-                  <small>${escapeHtml(item.waarschuwing)}</small>
-                </li>
-              `,
-            )
-            .join('')}</ol>`
-        : '<p class="empty-state">Nog geen eenvoudige samenvattingen per publicatie vastgelegd.</p>'
-    }
-  `;
+  const kennisItemMap = new Map(kennisItems.map((item) => [item.id, item]));
+  return researchSummaryList({
+    title: 'Eenvoudige samenvattingen',
+    intro:
+      'Begrijpelijke Nederlandse uitleg per publicatie, met bron, datum en lekencontext. Dit is geen diagnose of behandeladvies.',
+    kind: 'patient',
+    emptyState: 'Nog geen eenvoudige samenvattingen per publicatie vastgelegd.',
+    ariaLabel: 'Eenvoudige researchsamenvattingen',
+    data: {
+      'research-summary-component': 'patient-list',
+      'research-summary-count': String(samenvattingen.length),
+    },
+    items: samenvattingen.map((item) => {
+      const kennisItem = kennisItemMap.get(item.id);
+      const metadata = kennisItem ? bouwResearchKaartMetadata(kennisItem) : undefined;
+      const herverificatie = kennisItem ? bouwResearchHerverificatieStatus(kennisItem) : undefined;
+      return researchSummaryCard({
+        id: item.id,
+        source: item.bron,
+        kind: 'patient',
+        title: item.titel,
+        meta: `${item.publicatieDatum} · ${item.bron}`,
+        summary: item.eenvoudigeSamenvatting,
+        sourceCitation: item.sourceCitation,
+        conceptLabel: item.aiConcept
+          ? 'AI-concept · brongekoppeld'
+          : 'Handmatig concept · brongekoppeld',
+        data: {
+          'research-summary-review':
+            herverificatie?.status ?? (item.aiConcept ? 'ai-concept' : 'manual-concept'),
+        },
+        body: `
+          <small>sourceCitation: ${escapeHtml(item.sourceCitation)}</small>
+          <small>patientSummary: ${escapeHtml(item.patientSummary)}</small>
+          ${metadata ? renderResearchKaartMetadata(metadata) : ''}
+          ${herverificatie ? renderResearchHerverificatieStatus(herverificatie) : ''}
+          <small>${escapeHtml(item.waarschuwing)}</small>
+        `,
+      });
+    }),
+  });
 }
 
 function renderResearchRelevantieVoorGebruiker(

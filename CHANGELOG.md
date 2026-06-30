@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1184/G1185 Premium Claude Design UI: researchbronnen en wetenschappelijke/eenvoudige researchsamenvattingen gebruiken nu herbruikbare `researchSourceList`/`researchSourceCard` en `researchSummaryList`/`researchSummaryCard` componenten met bron-, review-, herverificatie- en citationcontext; G1185 is toegevoegd om de kennispagina verder in taakgerichte routes op te delen.
 - G1183/G1184 Premium Claude Design UI: dagelijkse aanbevelingen gebruiken nu herbruikbare `recommendationList`/`recommendationGroup`/`recommendationCard` componenten met eigenaar-, review- en artscheckstate, het startscherm heeft een zichtbare taakroutebalk tegen de lange-paginaervaring en de theme-CSS laadt via een CSP-veilige stylesheetlink in dev/preview; G1184 is toegevoegd voor researchcomponenten.
 - G1182/G1183 Premium Claude Design UI: de centrale fertility timeline gebruikt nu herbruikbare `timelineList`/`timelineItem` componenten met rail, dot, itemstate en broncontext in plaats van een generieke compacte lijst; G1183 is toegevoegd voor herbruikbare recommendationcomponenten.
 - G1181/G1182 Premium Claude Design UI: embryokwaliteit en embryo-status gebruiken nu herbruikbare workflowpanelen met begeleide stappen voor identificatie/beoordeling/controle en status/bron/koppeling, zonder formcontracten, privacyhooks of feedbackroutes te breken; G1182 is toegevoegd voor herbruikbare timelinecomponenten.

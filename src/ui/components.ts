@@ -269,6 +269,133 @@ export function recommendationCard(opts: {
   </li>`;
 }
 
+/** Research source list. Items should be built with `researchSourceCard`. */
+export function researchSourceList(opts: {
+  title: string;
+  intro: string;
+  items: readonly string[];
+  emptyState?: string;
+  className?: string;
+  ariaLabel?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<section class="kp-research-source-list${cls}"${label}${dataAttrs}>
+    <h2 class="kp-research-source-list__title">${escapeHtml(opts.title)}</h2>
+    <p class="kp-research-source-list__intro">${escapeHtml(opts.intro)}</p>
+    ${
+      opts.items.length > 0
+        ? `<ol class="kp-research-source-list__items">${opts.items.join('')}</ol>`
+        : `<p class="empty-state">${escapeHtml(opts.emptyState ?? 'Nog geen researchbronnen vastgelegd.')}</p>`
+    }
+  </section>`;
+}
+
+/** Research source card with allowlist/source context. */
+export function researchSourceCard(opts: {
+  title: string;
+  meta: string;
+  detail: string;
+  id?: string;
+  source?: string;
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const data = {
+    ...(opts.id ? { 'research-source-id': opts.id } : {}),
+    ...(opts.source ? { 'research-source': opts.source } : {}),
+    ...(opts.data ?? {}),
+  };
+  const dataAttrs = Object.entries(data)
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+  return `<li class="kp-research-source-card${cls}"${dataAttrs}>
+    <h3 class="kp-research-source-card__title">${escapeHtml(opts.title)}</h3>
+    <p class="kp-research-source-card__meta">${escapeHtml(opts.meta)}</p>
+    <p class="kp-research-source-card__detail">${escapeHtml(opts.detail)}</p>
+  </li>`;
+}
+
+/** Research summary list. Items should be built with `researchSummaryCard`. */
+export function researchSummaryList(opts: {
+  title: string;
+  intro: string;
+  items: readonly string[];
+  kind: 'scientific' | 'patient' | 'relevance';
+  emptyState: string;
+  className?: string;
+  ariaLabel?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const data = {
+    'research-summary-list-kind': opts.kind,
+    ...(opts.data ?? {}),
+  };
+  const dataAttrs = Object.entries(data)
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+  return `<section class="kp-research-summary-list${cls}"${label}${dataAttrs}>
+    <header class="kp-research-summary-list__header">
+      <h2 class="kp-research-summary-list__title">${escapeHtml(opts.title)}</h2>
+      <p class="kp-research-summary-list__intro">${escapeHtml(opts.intro)}</p>
+    </header>
+    ${
+      opts.items.length > 0
+        ? `<ol class="kp-research-summary-list__items">${opts.items.join('')}</ol>`
+        : `<p class="empty-state">${escapeHtml(opts.emptyState)}</p>`
+    }
+  </section>`;
+}
+
+/** Research summary/source card with raw HTML metadata body. */
+export function researchSummaryCard(opts: {
+  title: string;
+  meta: string;
+  summary: string;
+  sourceCitation: string;
+  conceptLabel: string;
+  body: string;
+  kind: 'scientific' | 'patient' | 'relevance';
+  id?: string;
+  source?: string;
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const data = {
+    'research-summary-kind': opts.kind,
+    ...(opts.id ? { 'research-summary-id': opts.id } : {}),
+    ...(opts.source ? { 'research-summary-source': opts.source } : {}),
+    ...(opts.data ?? {}),
+  };
+  const dataAttrs = Object.entries(data)
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+  return `<li class="kp-research-summary-card${cls}"${dataAttrs}>
+    <article class="kp-research-summary-card__body">
+      <header class="kp-research-summary-card__header">
+        <h3 class="kp-research-summary-card__title">${escapeHtml(opts.title)}</h3>
+        <p class="kp-research-summary-card__meta">${escapeHtml(opts.meta)}</p>
+      </header>
+      <p class="kp-research-summary-card__summary">${escapeHtml(opts.summary)}</p>
+      <dl class="kp-research-summary-card__facts">
+        <div><dt>sourceCitation</dt><dd>${escapeHtml(opts.sourceCitation)}</dd></div>
+        <div><dt>Conceptstatus</dt><dd>${escapeHtml(opts.conceptLabel)}</dd></div>
+      </dl>
+      <div class="kp-research-summary-card__details">${opts.body}</div>
+    </article>
+  </li>`;
+}
+
 /** Rounded surface card. `body` is raw HTML. */
 export function card(opts: {
   body: string;

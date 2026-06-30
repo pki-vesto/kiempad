@@ -3286,6 +3286,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research UI, Knowledge UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 61
+- **Status:** ☑ done
+
+### G1185 — kennispagina opdelen in taakgerichte researchroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Researchbronnen en researchsamenvattingen gebruiken nu herbruikbare componenten, maar de kennispagina toont nog veel beheer-, AI-, research- en categorieblokken onder elkaar.
+- **User Impact:** Gebruikers moeten nog te veel scrollen om te kiezen tussen research lezen, research opslaan, AI-preview, aggregatie-instellingen en kennisitems.
+- **Desired Outcome:** Deel de kennispagina zichtbaar op in taakgerichte routeclusters voor research lezen, research toevoegen, AI-preview en kennisbibliotheek, met compacte ankers of tabachtige routekaarten.
+- **User Value:** Gebruikers vinden sneller de juiste kennisworkflow zonder dat de pagina als één lange beheerpagina voelt.
+- **Acceptance Criteria:** Kennispagina bevat een zichtbare taakroute- of subnavigatie voor research/AI/kennis; bestaande form-id's, input names, privacycopy en researchcomponenten blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers, lege staten en gevulde researchcontext; geen providerpayload, trackingpayload, medische behandelkeuze, secrets of raw researchbody wordt toegevoegd.
+- **Affected Screens:** Kennisbank, Research intelligence
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge UI, Research UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 60
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

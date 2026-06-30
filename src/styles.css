@@ -3217,8 +3217,121 @@ a.action-card:active {
   gap: 8px;
 }
 
+.kp-research-source-list,
+.kp-research-summary-list {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+}
+
+.kp-research-source-list__title,
+.kp-research-summary-list__title {
+  margin: 0;
+}
+
+.kp-research-source-list__intro,
+.kp-research-summary-list__intro {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.kp-research-source-list__items,
+.kp-research-summary-list__items {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kp-research-source-card,
+.kp-research-summary-card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.kp-research-source-card {
+  display: grid;
+  gap: 5px;
+  padding: 13px;
+}
+
+.kp-research-source-card__title,
+.kp-research-source-card__meta,
+.kp-research-source-card__detail {
+  margin: 0;
+}
+
+.kp-research-source-card__title,
+.kp-research-summary-card__title {
+  color: var(--text-strong);
+}
+
+.kp-research-source-card__meta,
+.kp-research-source-card__detail,
+.kp-research-summary-card__meta {
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.kp-research-summary-card {
+  padding: 14px;
+}
+
+.kp-research-summary-card__body,
+.kp-research-summary-card__header,
+.kp-research-summary-card__details {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.kp-research-summary-card__title,
+.kp-research-summary-card__meta,
+.kp-research-summary-card__summary {
+  margin: 0;
+}
+
+.kp-research-summary-card__summary {
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.kp-research-summary-card__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.kp-research-summary-card__facts div {
+  min-width: 0;
+  padding: 9px;
+  border-radius: 8px;
+  background: var(--surface-muted);
+}
+
+.kp-research-summary-card__facts dt {
+  color: var(--text-faint);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.kp-research-summary-card__facts dd {
+  margin: 3px 0 0;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
 .kp-recommendation-card__header,
 .kp-recommendation-card__body,
+.kp-research-source-card,
+.kp-research-summary-card,
+.kp-research-summary-card__body,
 .daily-recommendation-item > span,
 .daily-recommendation-item small {
   overflow-wrap: anywhere;
@@ -3604,6 +3717,10 @@ a.action-card:active {
   .start-task-route {
     flex: 0 0 min(180px, 72vw);
     scroll-snap-align: start;
+  }
+
+  .kp-research-summary-card__facts {
+    grid-template-columns: 1fr;
   }
 
   .daily-command-board {

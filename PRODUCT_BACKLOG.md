@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 984 |
+| ☑ klaar | 985 |
 | ◐ bezig | 0 |
 | ☐ open | 101 |
 | ☒ archived | 99 |
-| **Totaal** | **1184** |
+| **Totaal** | **1185** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1346,13 +1346,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1181 | Premium Claude Design UI: embryoworkflows omzetten naar herbruikbare workflowcomponenten | P1 | F5 | ☑ |
 | G1182 | Premium Claude Design UI: tijdlijnweergaven omzetten naar herbruikbare timelinecomponenten | P1 | F5 | ☑ |
 | G1183 | Premium Claude Design UI: aanbevelingen omzetten naar herbruikbare recommendationcomponenten | P1 | F5 | ☑ |
-| G1184 | Premium Claude Design UI: researchsamenvattingen omzetten naar herbruikbare researchcomponenten | P1 | F5 | ☐ |
+| G1184 | Premium Claude Design UI: researchsamenvattingen omzetten naar herbruikbare researchcomponenten | P1 | F5 | ☑ |
+| G1185 | Premium Claude Design UI: kennispagina opdelen in taakgerichte researchroutes | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1184** (id's G001 t/m G1184, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1185** (id's G001 t/m G1185, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
