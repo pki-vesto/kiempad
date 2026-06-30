@@ -2055,8 +2055,12 @@ function renderDossierSubmitFeedback(
   const item = state.uploadAttachmentFeedback?.[kind];
   const feedbackState = item?.state ?? defaults.defaultState;
   const copy = renderDossierSubmitFeedbackCopy(feedbackState);
+  const recoveryHint = renderDossierSubmitRecoveryHint(feedbackState);
+  const recoveryMarkup = recoveryHint
+    ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
+    : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}">${escapeHtml(copy)}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
 }
 
 function renderDossierSubmitFeedbackCopy(state: UploadAttachmentFeedbackItem['state']): string {
@@ -2071,6 +2075,21 @@ function renderDossierSubmitFeedbackCopy(state: UploadAttachmentFeedbackItem['st
       return 'Nog geen actie gestart.';
     case 'ready':
       return 'Klaar voor lokale opslag.';
+  }
+}
+
+function renderDossierSubmitRecoveryHint(
+  state: UploadAttachmentFeedbackItem['state'],
+): string | undefined {
+  switch (state) {
+    case 'needs-review':
+      return 'Controleer datum, bestand en koppeling.';
+    case 'error':
+      return 'Pas invoer aan en probeer opnieuw.';
+    case 'idle':
+    case 'processing':
+    case 'ready':
+      return undefined;
   }
 }
 
