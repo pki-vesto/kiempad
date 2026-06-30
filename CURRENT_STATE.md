@@ -1,6 +1,6 @@
 # Kiempad — CURRENT_STATE
 
-> Stand per 2026-06-28. Houd dit bij de tijd: het is de eerlijke "wat is er echt"
+> Stand per 2026-07-01. Houd dit bij de tijd: het is de eerlijke "wat is er echt"
 > naast de ambitie in `ROADMAP.md`.
 
 ## 1. Gebouwde Functionaliteit
@@ -680,7 +680,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1207: kennis en research eerste viewport als researchwerkbank vormgeven.
+1. UI Improvement Evolution uitvoeren vanaf G1208: dagelijkse aanbevelingen eerste viewport als advieswerkbank vormgeven.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

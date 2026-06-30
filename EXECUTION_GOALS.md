@@ -3654,6 +3654,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Kennis UI, research summaries, trend analysis, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 48
+- **Status:** ☑ done
+
+### G1208 — dagelijkse aanbevelingen eerste viewport als advieswerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De startpagina bevat dagelijkse aanbevelingen, maar vrouw/man/samen advies kan nog te veel als doorlopende content voelen wanneer gebruikers alleen hun volgende adviesroute willen kiezen.
+- **User Impact:** Gebruikers moeten leefstijl, voeding, supplementen, behandelvoorbereiding en persoonlijke context scannen in plaats van direct de relevante eigenaar en prioriteit te kiezen.
+- **Desired Outcome:** Maak dagelijkse aanbevelingen meer app-achtig met een compacte advieswerkbank voor vrouw, man en samen, inclusief prioriteit, actiepunten en dossiercontext.
+- **User Value:** Gebruikers zien sneller welke aanbevelingen vandaag relevant zijn zonder door één lange adviespagina te scrollen.
+- **Acceptance Criteria:** Dagelijkse aanbevelingen openen met een duidelijke eerste-viewport advieswerkbank; vrouw/man/samen aanbevelingen blijven gescheiden en scanbaar; actiepunten, dossiercontext en niet-medisch advies/disclaimer blijven zichtbaar zonder één lange pagina te vormen; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Start, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Daily recommendation UI, start workbench, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 47
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

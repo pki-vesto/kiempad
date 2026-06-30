@@ -1698,7 +1698,7 @@ describe('app shell', () => {
   });
 
   it('groepeert navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
-    const html = renderAppShell('dossier');
+    const html = renderAppShell('agenda');
 
     expect(html).toContain('class="primary-nav__group" data-nav-group-active="true"');
     expect(html).toContain('<p class="primary-nav__title">Vandaag</p>');
@@ -1708,9 +1708,23 @@ describe('app shell', () => {
     expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
     expect(html).toContain('<section class="workspace-context" aria-label="Actieve werkruimte">');
     expect(html).toContain('<p class="workspace-context__eyebrow">Werkruimte</p>');
-    expect(html).toContain('<h2>Dossier</h2>');
-    expect(html).toContain('Documenten, beelden en medische context');
-    expect(html).toContain('aria-label="Schermen binnen Dossier"');
+    expect(html).toContain('<h2>Vandaag</h2>');
+    expect(html).toContain('Dagoverzicht en eerstvolgende acties');
+    expect(html).toContain('aria-label="Schermen binnen Vandaag"');
+  });
+
+  it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
+    const dossierHtml = renderAppShell('dossier');
+    const kennisHtml = renderAppShell('kennis');
+
+    expect(dossierHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(dossierHtml).toContain('data-dossier-first-viewport="route-stage"');
+    expect(kennisHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(kennisHtml).toContain('data-knowledge-first-viewport="research-workbench"');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -34465,7 +34479,14 @@ describe('app shell', () => {
 
     expect(html).toContain('Research opslaan');
     expect(html).toContain('class="section-stack knowledge-command-layout"');
+    expect(html).toContain(
+      '<section class="knowledge-research-workbench" aria-label="Researchwerkbank" data-knowledge-first-viewport="research-workbench">',
+    );
+    expect(html).toContain('Research begrijpen zonder alles tegelijk te lezen');
+    expect(html).toContain('Netwerkresearch: lokale cache');
     expect(html).toContain('id="knowledge-overview"');
+    expect(html).toContain('class="knowledge-command-panel__intro"');
+    expect(html).toContain('<span class="stat__value">');
     expect(html).toContain('class="knowledge-task-routes"');
     expect(html).toContain('aria-label="Kennis taakroutes"');
     expect(html).toContain('data-knowledge-task-routes="ready"');
@@ -34598,6 +34619,23 @@ describe('app shell', () => {
     );
     expect(html).toContain('Opgeslagen; laat leeg om te bewaren');
     expect(html).not.toContain('sk-test-secret');
+  });
+
+  it('bewaakt de kennis researchwerkbank als eerste-viewport laag', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain('.knowledge-research-workbench {');
+    expect(css).toContain('[data-knowledge-first-viewport="research-workbench"]');
+    expect(css).toContain('.knowledge-research-workbench__header {');
+    expect(css).toContain('.knowledge-research-workbench__status {');
+    expect(css).toContain('.knowledge-command-panel__intro {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.knowledge-task-routes {');
+    expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.knowledge-research-workbench__header h2 {');
+    expect(css).toContain('font-size: 1.16rem;');
+    expect(css).toContain('.knowledge-command-panel__intro {');
+    expect(css).toContain('grid-template-columns: 1fr;');
   });
 
   it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {

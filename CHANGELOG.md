@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1207/G1208 Premium Claude Design UI: Kennis/Research opent nu met een researchwerkbank in de eerste viewport, inclusief compacte routekeuze, netwerkstatus, researchstatistieken en behoud van de bestaande filterteller; G1208 is toegevoegd voor dagelijkse aanbevelingen als advieswerkbank.
 - G1206/G1207 Premium Claude Design UI: dossier opent nu met een aparte Dossierwerkbank first-viewport stage, compacte routekeuze en actieve route-status; `npm run smoke:dossier-routes` bewijst in Chromium desktop en mobiel dat `#dossier?route=imaging` precies één actieve route en drie verborgen routes heeft zonder horizontale overflow. G1207 is toegevoegd voor een researchwerkbank op Kennis/Research.
 - G1202/G1206 Premium Claude Design UI: dossier- en uploadflows hebben nu compacte veldsecties voor documentupload, consult, embryokwaliteit en embryo-status; het dossier gebruikt daarnaast taakroutes voor Upload & review, Zoeken, Beelden & embryo's en Tijdlijn zodat maar één hoofdroute tegelijk actief is. G1206 is toegevoegd voor verdere eerste-viewport verfijning en live browser-smoke evidence.
 - G1205 Premium Claude Design UI: de mobiele app-chrome boven Start is compacter met brand/status op één rij, thema en vergrendelen naast elkaar, kleinere controls en een 2x2 Fertiliteitswerkbank zodat de kernflows hoger en vollediger in beeld komen zonder bottom-nav overlap.
