@@ -4316,7 +4316,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, owner labels, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G550 — aanbeveling bronconfidence label
 
@@ -11769,6 +11769,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Daily Recommendations, cycle data, app shell, privacy tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1076 — man lifestyle context audit evidence
+
+- **Epic:** Daily Recommendations
+- **Problem:** G549 introduceert man-leefstijlcontext met bron, datum, reviewstatus, status, contextlabels, bronpad en correctievelden, maar er is nog geen compacte audit die dit contract door toekomstige dagadvieswijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat man-leefstijlcontext zichtbaar, reviewbaar en feitelijk blijft zonder medische claims.
+- **User Value:** Gebruikers kunnen man-leefstijlcontext als begrijpelijke dagcontext controleren zonder dat Kiempad leefstijlvoorschriften, uitkomstclaims of behandelrichting suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G549; leefstijlcontextbron, datum, reviewstatus, status, contextLabels, bronpad en correctievelden blijven zichtbaar of testbaar; context blijft feitelijk en alleen bedoeld voor observaties/consultvoorbereiding; evidence bevat geen secrets, echte gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily Recommendations, owner labels, app shell, privacy tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open
