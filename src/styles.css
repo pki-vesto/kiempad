@@ -3686,35 +3686,89 @@ a.action-card:active {
 
 .dossier-command-center {
   display: grid;
-  gap: 14px;
+  gap: 10px;
   box-sizing: border-box;
-  width: min(100%, calc(100vw - 48px));
+  width: 100%;
   min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .dossier-command-layout {
-  gap: 18px;
+  gap: 16px;
+}
+
+.dossier-route-stage {
+  display: grid;
+  gap: 12px;
+  box-sizing: border-box;
+  width: min(100%, calc(100vw - 48px));
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 46%),
+    var(--surface);
+}
+
+.dossier-route-stage[data-dossier-first-viewport="route-stage"] {
+  scroll-margin-top: 24px;
+}
+
+.dossier-route-stage__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dossier-route-stage__header h2,
+.dossier-route-stage__header p {
+  margin: 0;
+}
+
+.dossier-route-stage__header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
+}
+
+.dossier-route-stage__header p:last-child {
+  max-width: 68ch;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.dossier-route-stage__status {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface) 91%);
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .dossier-task-routes {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-soft);
 }
 
 .dossier-task-route {
   display: grid;
   gap: 3px;
   min-width: 0;
-  padding: 10px 12px;
+  padding: 9px 10px;
   border: 1px solid transparent;
   border-radius: 8px;
   color: var(--text);
@@ -3810,6 +3864,10 @@ a.action-card:active {
   max-width: 100%;
 }
 
+.section-stack[aria-label="Dossier beheren"] > .dossier-route-stage {
+  width: min(100%, calc(100vw - 48px));
+}
+
 .dossier-command-center__header {
   display: flex;
   align-items: start;
@@ -3841,8 +3899,8 @@ a.action-card:active {
 
 .dossier-command-center__actions .action-card {
   min-width: 0;
-  min-height: 64px;
-  padding: 12px;
+  min-height: 58px;
+  padding: 10px;
   background: var(--surface-raised);
 }
 
@@ -5451,6 +5509,33 @@ a.action-card:active {
   .kp-workflow-panel__step {
     justify-content: center;
     padding: 7px 6px;
+  }
+
+  .dossier-route-stage {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .dossier-route-stage__header {
+    display: grid;
+    gap: 8px;
+  }
+
+  .dossier-route-stage__header h2 {
+    font-size: 1.16rem;
+  }
+
+  .dossier-route-stage__header p:last-child {
+    display: none;
+  }
+
+  .dossier-route-stage__status {
+    width: fit-content;
+    padding: 5px 9px;
+  }
+
+  .dossier-route-stage .dossier-command-center {
+    gap: 8px;
   }
 
   .dashboard-grid {

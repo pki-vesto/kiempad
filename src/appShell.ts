@@ -1871,16 +1871,14 @@ function renderDossierScreen(state: AppShellState): string {
 
   return `
     <section class="section-stack dossier-command-layout" aria-label="Dossier beheren">
-      ${renderDossierTaskRoutes({
+      ${renderDossierRouteStage({
+        activeRoute: activeDossierRoute,
         uploadCount: zichtbareDocumenten.length,
         reviewCount: reviewWachtrij.length,
         imagingCount: imagingItems.length,
         embryoCount: embryoDossiers.length,
         timelineCount: tijdlijn.length,
         searchCount: zoekterm ? zoekResultaten.length : undefined,
-        activeRoute: activeDossierRoute,
-      })}
-      ${renderDossierCommandCenter({
         documenten: zichtbareDocumenten,
         importInboxItems,
         imagingItems,
@@ -2604,6 +2602,67 @@ function renderDossierRouteVisibility(activeRoute: DossierRoute, route: DossierR
   return route === activeRoute
     ? ' data-dossier-route-state="active"'
     : ' data-dossier-route-state="inactive" hidden';
+}
+
+function renderDossierRouteStage(input: {
+  activeRoute: DossierRoute;
+  uploadCount: number;
+  reviewCount: number;
+  imagingCount: number;
+  embryoCount: number;
+  timelineCount: number;
+  searchCount?: number;
+  documenten: readonly DossierDocument[];
+  importInboxItems: readonly DossierImportInboxItem[];
+  imagingItems: readonly ImagingRepositoryItem[];
+  reviewWachtrij: readonly DossierReviewWachtrijItem[];
+  consultVerslagen: readonly ConsultVerslag[];
+  embryoDossiers: readonly EmbryoDossierItem[];
+  state: AppShellState;
+}): string {
+  return `
+    <section class="dossier-route-stage" aria-label="Dossierwerkbank" data-dossier-first-viewport="route-stage">
+      <header class="dossier-route-stage__header">
+        <div>
+          <p class="kp-card__eyebrow">Dossierwerkbank</p>
+          <h2>Kies eerst je dossierroute</h2>
+          <p>Uploaden, zoeken, beelden en tijdlijn blijven gescheiden zodat je niet door alle medische blokken tegelijk hoeft.</p>
+        </div>
+        <p class="dossier-route-stage__status">${escapeHtml(renderDossierActiveRouteCopy(input.activeRoute))}</p>
+      </header>
+      ${renderDossierTaskRoutes({
+        uploadCount: input.uploadCount,
+        reviewCount: input.reviewCount,
+        imagingCount: input.imagingCount,
+        embryoCount: input.embryoCount,
+        timelineCount: input.timelineCount,
+        searchCount: input.searchCount,
+        activeRoute: input.activeRoute,
+      })}
+      ${renderDossierCommandCenter({
+        documenten: input.documenten,
+        importInboxItems: input.importInboxItems,
+        imagingItems: input.imagingItems,
+        reviewWachtrij: input.reviewWachtrij,
+        consultVerslagen: input.consultVerslagen,
+        embryoDossiers: input.embryoDossiers,
+        state: input.state,
+      })}
+    </section>
+  `;
+}
+
+function renderDossierActiveRouteCopy(route: DossierRoute): string {
+  switch (route) {
+    case 'upload':
+      return 'Actief: upload en review';
+    case 'search':
+      return 'Actief: zoeken';
+    case 'imaging':
+      return "Actief: beelden en embryo's";
+    case 'timeline':
+      return 'Actief: tijdlijn';
+  }
 }
 
 function renderDossierTaskRoutes(input: {
