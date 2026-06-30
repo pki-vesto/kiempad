@@ -1326,6 +1326,12 @@ function renderDossierScreen(state: AppShellState): string {
             <small data-dossier-add-route-cue="embryo-status">Status koppelen</small>
           </a>
         </nav>
+        <div class="sr-only dossier-add-route-active-contexts" aria-live="polite" data-dossier-add-route-active-contexts="ready">
+          <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="dossier-upload">Actieve toevoegroute: document toevoegen voor onderzoek, echo, foto of scan.</p>
+          <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="consult-upload">Actieve toevoegroute: consult vastleggen voor gesprek, notitie of artsupdate.</p>
+          <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-quality">Actieve toevoegroute: labkwaliteit registreren met bronlabel.</p>
+          <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-status">Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.</p>
+        </div>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
         <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">

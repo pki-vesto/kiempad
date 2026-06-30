@@ -2103,6 +2103,21 @@ a.action-card:active {
   line-height: 1.25;
 }
 
+.dossier-add-route-active-context {
+  display: none;
+}
+
+.kp-disclosure__body:has(#dossier-upload-form:target)
+  .dossier-add-route-active-context[data-dossier-add-route-active-context="dossier-upload"],
+.kp-disclosure__body:has(#consult-verslag-form:target)
+  .dossier-add-route-active-context[data-dossier-add-route-active-context="consult-upload"],
+.kp-disclosure__body:has(#embryo-quality-form:target)
+  .dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-quality"],
+.kp-disclosure__body:has(#embryo-status-event-form:target)
+  .dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-status"] {
+  display: block;
+}
+
 .dossier-add-route-panel {
   min-width: 0;
   padding: 0 0 14px;
