@@ -5018,6 +5018,14 @@ describe('app shell', () => {
     expect(css).toContain('#dossier-upload-form:target > .dossier-upload-group:first-of-type');
     expect(css).toContain('#consult-verslag-form:target > .dossier-subform-group:first-of-type');
     expect(css).toContain(
+      '#dossier-upload-form:focus-visible > .dossier-upload-group:first-of-type',
+    );
+    expect(css).toContain(
+      '#embryo-status-event-form:focus-visible > .dossier-subform-group:first-of-type',
+    );
+    expect(css).toContain('outline: 2px solid color-mix(in srgb, var(--accent) 34%, transparent);');
+    expect(css).toContain('outline-offset: 2px;');
+    expect(css).toContain(
       'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);',
     );
     expect(css).toContain('.dossier-add-route:not([href="#dossier-upload-form"])');
@@ -5116,6 +5124,9 @@ describe('app shell', () => {
     expect(css).toContain('@media (forced-colors: active)');
     expect(css).toContain(
       '#embryo-status-event-form:target > .dossier-subform-group:first-of-type',
+    );
+    expect(css).toContain(
+      '#embryo-status-event-form:focus-visible > .dossier-subform-group:first-of-type',
     );
     expect(css).toContain('background: Canvas;');
     expect(css).toContain('color: LinkText;');

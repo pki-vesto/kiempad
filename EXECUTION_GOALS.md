@@ -13176,4 +13176,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 55
+- **Status:** ☑ done
+
+### G1170 — dossier add feedback return focused cue contrast audit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De gefocuste landingscue is zichtbaar, maar contrast en timing moeten nog expliciet worden bewaakt in gewone, reduced-motion en forced-colors context.
+- **User Impact:** Gebruikers met toetsenbord of high-contrast instellingen kunnen de focuscontext minder goed herkennen als cue-contrast of motionregels later drift vertonen.
+- **Desired Outcome:** Borg contrast en motiongedrag van de gefocuste feedback-return landingscue zonder copy, volgorde, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers houden betrouwbare focuscontext na de terugactie, ook met toegankelijkheidsinstellingen.
+- **Acceptance Criteria:** Focused landing cue contrast en motiongedrag blijven compact en zichtbaar in standaard, reduced-motion en forced-colors context; bestaande ankers, form-id's, input names en data-hooks blijven intact; focused landing cue, landing focus sync, landing forced-colors cue, landing context cue, anchor landing audit, forced-colors audit, reduced-motion audit, pressed state audit, return interaction tone, return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 54
 - **Status:** ☐ open
