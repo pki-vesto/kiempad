@@ -12888,4 +12888,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 73
+- **Status:** ☑ done
+
+### G1152 — dossier add feedback aria-live refinement
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Inline feedback heeft nu route- en statuslabels, maar live updates kunnen nog rustiger worden aangekondigd voor assistive technology.
+- **User Impact:** Screenreadergebruikers kunnen feedbackupdates missen of juist te luid ervaren als live-region gedrag niet expliciet afgestemd is.
+- **Desired Outcome:** Verfijn live-region gedrag voor inline feedback zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers met assistive technology krijgen feedbackupdates tijdig maar niet storend.
+- **Acceptance Criteria:** Inline feedback gebruikt passende aria-live/atomic configuratie; bestaande ankers, form-id's, input names en data-hooks blijven intact; accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 72
 - **Status:** ☐ open

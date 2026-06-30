@@ -4744,6 +4744,9 @@ describe('app shell', () => {
     );
     expect(dossierPanel).toContain('Upload document naar dossier</button>');
     expect(dossierPanel).toContain('data-dossier-submit-feedback="dossier-upload"');
+    expect(dossierPanel).toContain(
+      'aria-label="Feedback documentupload: klaar voor lokale opslag."',
+    );
     expect(dossierPanel).toContain('Klaar voor lokale opslag.');
     expect(dossierPanel).not.toContain('data-dossier-submit-recovery="dossier-upload"');
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
@@ -4769,6 +4772,9 @@ describe('app shell', () => {
     );
     expect(consultPanel).toContain('Bewaar consultverslag</button>');
     expect(consultPanel).toContain('data-dossier-submit-feedback="consult-upload"');
+    expect(consultPanel).toContain(
+      'aria-label="Feedback consultverslag: klaar voor lokale opslag."',
+    );
     expect(consultPanel).toContain('Klaar voor lokale opslag.');
     expect(embryoQualityPanel).toContain('id="embryo-quality-form"');
     expect(embryoQualityPanel).toContain('data-upload-privacy-kind="embryo"');
@@ -4787,6 +4793,9 @@ describe('app shell', () => {
     );
     expect(embryoQualityPanel).toContain('Bewaar embryokwaliteit</button>');
     expect(embryoQualityPanel).toContain('data-dossier-submit-feedback="embryo-quality"');
+    expect(embryoQualityPanel).toContain(
+      'aria-label="Feedback embryokwaliteit: klaar voor lokale opslag."',
+    );
     expect(embryoQualityPanel).toContain('Klaar voor lokale opslag.');
     expect(embryoStatusPanel).toContain('id="embryo-status-event-form"');
     expect(embryoStatusPanel).toContain('data-upload-privacy-kind="embryo-status"');
@@ -4805,6 +4814,9 @@ describe('app shell', () => {
     );
     expect(embryoStatusPanel).toContain('Bewaar embryo-status</button>');
     expect(embryoStatusPanel).toContain('data-dossier-submit-feedback="embryo-status"');
+    expect(embryoStatusPanel).toContain(
+      'aria-label="Feedback embryostatus: klaar voor lokale opslag."',
+    );
     expect(embryoStatusPanel).toContain('Klaar voor lokale opslag.');
 
     const routeOrder = [
@@ -4861,6 +4873,13 @@ describe('app shell', () => {
     expect(populatedDossierPanel).toContain('data-dossier-submit-feedback-state="needs-review"');
     expect(populatedConsultPanel).toContain('data-dossier-submit-feedback-state="processing"');
     expect(populatedEmbryoPanel).toContain('data-dossier-submit-feedback-state="error"');
+    expect(populatedDossierPanel).toContain('aria-label="Feedback documentupload: review nodig."');
+    expect(populatedConsultPanel).toContain(
+      'aria-label="Feedback consultverslag: wordt lokaal verwerkt."',
+    );
+    expect(populatedEmbryoPanel).toContain(
+      'aria-label="Feedback embryokwaliteit: controle nodig."',
+    );
     expect(populatedDossierPanel).toContain('Review nodig voor opslaan.');
     expect(populatedConsultPanel).toContain('Wordt lokaal verwerkt.');
     expect(populatedEmbryoPanel).toContain('Controleer deze route.');

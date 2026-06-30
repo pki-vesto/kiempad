@@ -2056,11 +2056,44 @@ function renderDossierSubmitFeedback(
   const feedbackState = item?.state ?? defaults.defaultState;
   const copy = renderDossierSubmitFeedbackCopy(feedbackState);
   const recoveryHint = renderDossierSubmitRecoveryHint(feedbackState);
+  const ariaLabel = `Feedback ${renderDossierSubmitRouteLabel(route)}: ${renderDossierSubmitFeedbackStateLabel(feedbackState)}.`;
   const recoveryMarkup = recoveryHint
     ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
     : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" aria-label="${escapeAttribute(ariaLabel)}"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
+}
+
+function renderDossierSubmitRouteLabel(
+  route: 'dossier-upload' | 'consult-upload' | 'embryo-quality' | 'embryo-status',
+): string {
+  switch (route) {
+    case 'dossier-upload':
+      return 'documentupload';
+    case 'consult-upload':
+      return 'consultverslag';
+    case 'embryo-quality':
+      return 'embryokwaliteit';
+    case 'embryo-status':
+      return 'embryostatus';
+  }
+}
+
+function renderDossierSubmitFeedbackStateLabel(
+  state: UploadAttachmentFeedbackItem['state'],
+): string {
+  switch (state) {
+    case 'processing':
+      return 'wordt lokaal verwerkt';
+    case 'needs-review':
+      return 'review nodig';
+    case 'error':
+      return 'controle nodig';
+    case 'idle':
+      return 'nog niet gestart';
+    case 'ready':
+      return 'klaar voor lokale opslag';
+  }
 }
 
 function renderDossierSubmitFeedbackCopy(state: UploadAttachmentFeedbackItem['state']): string {
