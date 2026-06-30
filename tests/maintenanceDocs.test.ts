@@ -38,9 +38,11 @@ import security from '../SECURITY.md?raw';
 import governanceContract from '../scripts/bootstrap-governance-freshness-contract.json';
 import { DISCLAIMER } from '../src/appShell';
 import { BOOTSTRAP_SMOKE_PHASE_CODES } from '../src/storage/centralBootstrapDiagnostics';
+import centralHealthContractSource from '../src/storage/centralHealthContract.ts?raw';
 import centralHttpApiSource from '../src/storage/centralHttpApi.ts?raw';
 import vision from '../VISION.md?raw';
 import backlogHealthTest from './backlogHealth.test.ts?raw';
+import centralHealthContractTest from './centralHealthContract.test.ts?raw';
 import centralHttpApiTest from './centralHttpApi.test.ts?raw';
 
 const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contract-matrix:start';
@@ -3590,6 +3592,37 @@ describe('onderhoudsdocumentatie', () => {
       'medische termen',
     ]) {
       expect(runbook).toContain(forbiddenLogTerm);
+    }
+  });
+
+  it('bewaakt G1082 central health monitor compatibility fixture', () => {
+    for (const requiredTerm of [
+      'G1082',
+      'validateCentralHealthContractBody',
+      'validateCentralHealthContract',
+      'contractVersion: 1',
+      'unexpected-contract-version',
+      'unexpected-field',
+      'missing-field',
+      'unexpected-error-states',
+      'forbidden-privacy-field',
+    ]) {
+      expect(centralHealthContractSource + centralHealthContractTest).toContain(requiredTerm);
+    }
+
+    for (const forbiddenOutput of [
+      'ownerUserId',
+      'userId',
+      'sessionId',
+      'recordId',
+      'recordCount',
+      'ciphertext',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(centralHealthContractSource).toContain(forbiddenOutput);
     }
   });
 

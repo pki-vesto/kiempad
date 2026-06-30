@@ -11869,4 +11869,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Tailscale smoke, health contract tests, runbook
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1083 — central health monitor failure runbook evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1082 voegt een gesanitized monitorcompatibiliteitsfixture toe, maar het runbook legt nog niet vast welke foutlabels operators mogen loggen en welke privacygevoelige health-responsevelden nooit in monitoroutput terechtkomen.
+- **Desired Outcome:** Documenteer en test een compacte runbookparagraaf voor monitorfailure-output met toegestane foutlabels, verboden payloadlogging en herstelactie bij contractdrift.
+- **User Value:** Beheer kan healthmonitoring incidenten triageren zonder user-, sessie-, record-, ciphertext- of medische gegevens te lekken.
+- **Acceptance Criteria:** Docs of tests verwijzen naar G1082; runbook noemt de gesanitized foutlabels voor onverwachte contractversie, onverwacht veld en errorstate-drift; herstelactie verwijst naar contractVersion review en smokechecks; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, health contract fixture, Tailscale smoke
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
