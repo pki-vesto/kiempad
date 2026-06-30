@@ -12504,4 +12504,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 97
+- **Status:** ☑ done
+
+### G1128 — dossier content section scan anchors
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Nu secundaire privacycontrole is ingeklapt, staan consultverslagen, imaging, dossierindex, embryo-dossiers, tijdlijn en behandelgeschiedenis nog als lange reeks losse secties onder elkaar.
+- **User Impact:** Gebruikers vinden de primaire dossierinhoud rustiger, maar moeten nog verticaal scannen om snel naar beeldreview, embryo-informatie of behandelgeschiedenis te springen.
+- **Desired Outcome:** Voeg een compacte sectie-index of ankerstrip toe voor de belangrijkste dossierinhoud, zonder bestaande koppen, formulieren, privacyhooks of payloadgrenzen te breken.
+- **User Value:** Gebruikers kunnen vanuit het dossier sneller naar imaging, embryo's, tijdlijn of behandelgeschiedenis zonder technische panelen of lange lijsten te hoeven doorzoeken.
+- **Acceptance Criteria:** Dossierinhoud heeft een compacte scanbare sectie-index na zoeken/privacycontrole; links verwijzen naar bestaande inhoudssecties; imaging, consulten, embryo's, index, tijdlijn en behandelgeschiedenis blijven direct bereikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated en locked states; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossier, imaging repository, consultverslagen, embryo-dossiers, documenttijdlijn
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 96
 - **Status:** ☐ open

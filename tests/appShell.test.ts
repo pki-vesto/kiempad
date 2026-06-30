@@ -82,6 +82,15 @@ function extractDossierCommandCenter(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierSecondaryPrivacyDisclosure(html: string): string {
+  const start = html.indexOf(
+    '<details class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">',
+  );
+  const end = html.indexOf('<h2>Consultverslagen</h2>', start);
+  if (start < 0 || end < 0) throw new Error('Dossier privacy disclosure ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierReviewQueue(html: string): string {
   const match = html.match(
     /<section class="dossier-review-queue" aria-label="Documentreview wachtrij per confidence"[\s\S]*?<\/section>/,
@@ -4540,6 +4549,155 @@ describe('app shell', () => {
     expect(lockedCenter).toContain('Beeldpreviews vergrendeld tot ontgrendeling.');
     expect(lockedCenter).not.toContain('locked-dashboard-secret.jpg');
     expect(lockedCenter).not.toContain('bG9ja2VkLWRhc2hib2FyZA==');
+  });
+
+  it('groepeert secundaire dossierprivacy achter progressive disclosure zonder primaire routes te verbergen', () => {
+    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const emptyDisclosure = extractDossierSecondaryPrivacyDisclosure(emptyHtml);
+
+    expect(emptyDisclosure).toContain('data-dossier-secondary-privacy="collapsed"');
+    expect(emptyDisclosure).toContain('Privacy- en toegankelijkheidscontrole');
+    expect(emptyDisclosure).toContain('data-attachment-search-filter-surface="privacy"');
+    expect(emptyDisclosure).toContain('data-attachment-responsive-motion-surface="privacy"');
+    expect(emptyDisclosure).toContain('data-attachment-assistive-summary-surface="privacy"');
+    expect(emptyHtml.indexOf('id="dossier-search-form"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('<h2>Consultverslagen</h2>'),
+    );
+    expect(emptyHtml.indexOf('id="imaging-filter-form"')).toBeGreaterThan(
+      emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"'),
+    );
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        dossierZoekterm: 'private-disclosure-token',
+        dossierDocuments: [
+          {
+            id: 'doc-secondary-disclosure',
+            datum: '2026-05-08',
+            titel: 'Disclosure OCR review',
+            categorie: 'onderzoek',
+            bestandsNaam: 'secondary-disclosure-secret.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'c2Vjb25kYXJ5LWRpc2Nsb3N1cmU=',
+            notitie: 'private-disclosure-token hoort niet in de privacycontrole.',
+            analyse: {
+              samenvatting:
+                'Attachmentpayload diagnose 150 mg behandelkeuzeadvies blijft buiten disclosure.',
+              signalen: ['OCR-payload blijft buiten de compacte privacycontrole.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-08',
+              documenttype: 'Labuitslag',
+              bronbestand: 'secondary-disclosure-secret.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum', 'ocr-tekst-gereviewd'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'hoog',
+              confidenceScore: 0.92,
+              reviewStatus: 'gereviewd',
+              verwerktOp: '2026-06-23T15:00:00.000Z',
+              tekst:
+                'GEVOELIGE DISCLOSURE OCR private-disclosure-token diagnose 150 mg behandelkeuzeadvies.',
+              waarschuwing: 'Controleer OCR lokaal voor secondary-disclosure-secret.pdf.',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-secondary-image',
+            datum: '2026-05-09',
+            titel: 'Disclosure echo',
+            categorie: 'beeld',
+            bestandsNaam: 'secondary-disclosure-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'c2Vjb25kYXJ5LWltYWdl',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-09',
+              documenttype: 'Foto/echo',
+              bronbestand: 'secondary-disclosure-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-09',
+              soort: 'echo',
+              context: 'Disclosure beeldcontext',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const populatedDisclosure = extractDossierSecondaryPrivacyDisclosure(populatedHtml);
+
+    expect(populatedDisclosure).toContain('data-attachment-search-state="active-matches"');
+    expect(populatedDisclosure).toContain('data-attachment-list-state="results-counted"');
+    expect(populatedDisclosure).toContain('data-attachment-bulk-selection-surface="privacy"');
+    expect(populatedDisclosure).not.toContain('private-disclosure-token');
+    expect(populatedDisclosure).not.toContain('secondary-disclosure-secret.pdf');
+    expect(populatedDisclosure).not.toContain('secondary-disclosure-secret.jpg');
+    expect(populatedDisclosure).not.toContain('c2Vjb25kYXJ5LWRpc2Nsb3N1cmU=');
+    expect(populatedDisclosure).not.toContain('c2Vjb25kYXJ5LWltYWdl');
+    expect(populatedDisclosure).not.toContain('GEVOELIGE DISCLOSURE OCR');
+    expect(populatedDisclosure).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies/i);
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-secondary-locked',
+            datum: '2026-05-10',
+            titel: 'Locked disclosure echo',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-secondary-disclosure-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9ja2VkLXNlY29uZGFyeQ==',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-10',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-secondary-disclosure-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-10',
+              soort: 'echo',
+              context: 'Locked disclosure beeldcontext',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedDisclosure = extractDossierSecondaryPrivacyDisclosure(lockedHtml);
+
+    expect(lockedDisclosure).toContain('data-attachment-filter-state="locked-results"');
+    expect(lockedDisclosure).toContain('Bijlagepreviews blijven vergrendeld');
+    expect(lockedDisclosure).not.toContain('locked-secondary-disclosure-secret.jpg');
+    expect(lockedDisclosure).not.toContain('bG9ja2VkLXNlY29uZGFyeQ==');
   });
 
   it('rendert documentreview wachtrij per confidence zonder OCR-tekst of bronpayload', () => {

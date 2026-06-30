@@ -1952,6 +1952,29 @@ a.action-card:active {
   max-width: 100%;
 }
 
+.dossier-secondary-privacy {
+  background: var(--surface);
+}
+
+.dossier-secondary-privacy__body {
+  display: grid;
+  gap: 12px;
+}
+
+.dossier-secondary-privacy__body > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.dossier-secondary-privacy__intro {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.dossier-secondary-privacy__body > .policy-panel {
+  margin: 0;
+}
+
 .kp-empty {
   display: grid;
   gap: 12px;
