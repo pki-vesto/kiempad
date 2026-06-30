@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 961 |
+| ☑ klaar | 962 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1160** |
+| **Totaal** | **1161** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1322,13 +1322,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1157 | Premium Claude Design UI: dossier add feedback next action contrast | P1 | F5 | ☑ |
 | G1158 | Premium Claude Design UI: dossier add feedback microcopy order audit | P1 | F5 | ☑ |
 | G1159 | Premium Claude Design UI: dossier add feedback compact rhythm audit | P1 | F5 | ☑ |
-| G1160 | Premium Claude Design UI: dossier add feedback return touch target | P1 | F5 | ☐ |
+| G1160 | Premium Claude Design UI: dossier add feedback return touch target | P1 | F5 | ☑ |
+| G1161 | Premium Claude Design UI: dossier add feedback return interaction tone | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1160** (id's G001 t/m G1160, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1161** (id's G001 t/m G1161, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
