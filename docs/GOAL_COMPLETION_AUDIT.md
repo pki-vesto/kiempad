@@ -132,7 +132,8 @@ Gebruik deze aanvullende evidence wanneer feedback-return cueparity rond dossier
 wordt gewijzigd.
 
 - **CI-stap:** `.github/workflows/ci.yml` bevat `Dossier cue parity smoke` met
-  `npm run test -- tests/appShell.test.ts`.
+  `npm run test -- tests/appShell.test.ts`; de stap staat na `Secrets scan` en
+  `Sensitive fixture scan`, maar voor de volledige `Test`-stap.
 - **Scope:** de smoke bewaakt documentupload, consult, embryokwaliteit en embryo-status
   in standaard, reduced-motion en forced-colors context.
 - **Privacygrens:** evidence mag geen bestandsnaam, OCR-tekst, beeldpayload,
