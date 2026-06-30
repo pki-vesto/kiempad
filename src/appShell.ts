@@ -1442,6 +1442,8 @@ function renderDossierScreen(state: AppShellState): string {
         }
         <h2>Consultverslag toevoegen</h2>
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-consult-upload-privacy-state="encrypted-text-or-file">
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis">
+            <legend>Consultbasis</legend>
           <label>
             Datum consult
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1458,10 +1460,9 @@ function renderDossierScreen(state: AppShellState): string {
             Tekst of samenvatting
             <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
           </label>
-          <label>
-            Correctie op conceptsamenvatting
-            <textarea name="samenvattingCorrectie" rows="4" placeholder="Optioneel: corrigeer de lokale conceptsamenvatting in eigen woorden"></textarea>
-          </label>
+          </fieldset>
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen">
+            <legend>Koppelingen</legend>
           <label>
             Koppel aan afspraak
             <select name="afspraakId">
@@ -1480,6 +1481,13 @@ function renderDossierScreen(state: AppShellState): string {
             Poging of cycluscontext
             <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
           </label>
+          </fieldset>
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-context">
+            <legend>Bron en context</legend>
+          <label>
+            Correctie op conceptsamenvatting
+            <textarea name="samenvattingCorrectie" rows="4" placeholder="Optioneel: corrigeer de lokale conceptsamenvatting in eigen woorden"></textarea>
+          </label>
           <label>
             Auteur of bronpersoon
             <input name="consultAuteur" autocomplete="off" placeholder="Bijvoorbeeld: fertiliteitsarts, embryoloog of eigen notitie" />
@@ -1492,11 +1500,14 @@ function renderDossierScreen(state: AppShellState): string {
             Notitie
             <textarea name="notitie" rows="3"></textarea>
           </label>
+          </fieldset>
           <button type="submit">Bewaar consultverslag</button>
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         <h2>Embryokwaliteit vastleggen</h2>
         <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-embryo-upload-privacy-state="encrypted-quality-registration">
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie">
+            <legend>Embryo-identificatie</legend>
           <label>
             Datum labterugkoppeling
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1513,6 +1524,9 @@ function renderDossierScreen(state: AppShellState): string {
             Meetmoment
             <input name="embryoMeetmoment" autocomplete="off" placeholder="Bijvoorbeeld: dag 3 cleavage of dag 5 blastocyst" />
           </label>
+          </fieldset>
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-beoordeling">
+            <legend>Beoordeling</legend>
           <label>
             Kwaliteit volgens kliniek
             <input name="embryoKwaliteit" autocomplete="off" required placeholder="Bijvoorbeeld: 4AA of kliniektekst" />
@@ -1540,6 +1554,9 @@ function renderDossierScreen(state: AppShellState): string {
                 .join('')}
             </select>
           </label>
+          </fieldset>
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen">
+            <legend>Koppelingen</legend>
           <label>
             Koppel aan traject
             <select name="trajectId">
@@ -1558,10 +1575,13 @@ function renderDossierScreen(state: AppShellState): string {
             Notitie
             <textarea name="notitie" rows="3"></textarea>
           </label>
+          </fieldset>
           <button type="submit">Bewaar embryokwaliteit</button>
         </form>
         <h2>Embryo-status event vastleggen</h2>
         <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-embryo-status-event-state="concept-editor">
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis">
+            <legend>Statusbasis</legend>
           <label>
             Datum status
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1578,6 +1598,9 @@ function renderDossierScreen(state: AppShellState): string {
                 .join('')}
             </select>
           </label>
+          </fieldset>
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-bron">
+            <legend>Broncontrole</legend>
           <label>
             Bron status
             <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
@@ -1589,6 +1612,9 @@ function renderDossierScreen(state: AppShellState): string {
               <option value="gereviewd">Gereviewd</option>
             </select>
           </label>
+          </fieldset>
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-koppelingen">
+            <legend>Koppelingen</legend>
           <label>
             Koppel aan traject
             <select name="trajectId">
@@ -1607,6 +1633,7 @@ function renderDossierScreen(state: AppShellState): string {
             Notitie
             <textarea name="notitie" rows="2"></textarea>
           </label>
+          </fieldset>
           <button type="submit">Bewaar embryo-status</button>
         </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>

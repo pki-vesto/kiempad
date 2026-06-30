@@ -2019,7 +2019,8 @@ a.action-card:active {
   max-width: 100%;
 }
 
-.dossier-upload-group {
+.dossier-upload-group,
+.dossier-subform-group {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
@@ -2032,30 +2033,38 @@ a.action-card:active {
   background: var(--surface-subtle);
 }
 
-.dossier-upload-group legend {
+.dossier-upload-group legend,
+.dossier-subform-group legend {
   padding: 0 6px;
   color: var(--text);
   font-size: 0.86rem;
   font-weight: 750;
 }
 
-.dossier-upload-group > * {
+.dossier-upload-group > *,
+.dossier-subform-group > * {
   min-width: 0;
 }
 
 .dossier-upload-group .check-row,
 .dossier-upload-group .linked-note,
-.dossier-upload-group label:has(textarea) {
+.dossier-upload-group label:has(textarea),
+.dossier-subform-group label:has(textarea) {
   grid-column: 1 / -1;
 }
 
 .dossier-upload-group[data-dossier-upload-group="document-basis"] label:nth-of-type(5),
-.dossier-upload-group[data-dossier-upload-group="embryo-labcontext"] {
+.dossier-upload-group[data-dossier-upload-group="embryo-labcontext"],
+.dossier-subform-group[data-consult-upload-group="consult-context"],
+.dossier-subform-group[data-embryo-quality-group="embryo-beoordeling"],
+.dossier-subform-group[data-embryo-quality-group="embryo-koppelingen"],
+.dossier-subform-group[data-embryo-status-group="status-koppelingen"] {
   grid-column: 1 / -1;
 }
 
 @media (max-width: 720px) {
-  .dossier-upload-group {
+  .dossier-upload-group,
+  .dossier-subform-group {
     grid-template-columns: 1fr;
   }
 }
