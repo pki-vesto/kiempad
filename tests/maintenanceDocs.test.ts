@@ -3932,6 +3932,51 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1094 health monitor retention freshness releasecontext evidence', () => {
+    const releaseContextTerms = [
+      'G1093',
+      'snapshot freshness',
+      'runbook',
+      'goal-completion-audit',
+      'maintenance-test',
+    ];
+    const releaseContextEvidence = [
+      'G1094 health-monitor-retention-freshness-releasecontext',
+      'sources=CHANGELOG.md,CURRENT_STATE.md',
+      'references=G1093',
+      `terms=${releaseContextTerms.slice(1).join('|')}`,
+    ].join('\n');
+
+    for (const releaseDoc of [changelog, currentState]) {
+      for (const releaseContextTerm of releaseContextTerms) {
+        expect(releaseDoc).toContain(releaseContextTerm);
+      }
+    }
+
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(releaseContextEvidence).not.toContain(forbiddenEvidenceTerm);
+    }
+
+    expect(releaseContextEvidence).toMatchInlineSnapshot(`
+      "G1094 health-monitor-retention-freshness-releasecontext
+      sources=CHANGELOG.md,CURRENT_STATE.md
+      references=G1093
+      terms=snapshot freshness|runbook|goal-completion-audit|maintenance-test"
+    `);
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',
