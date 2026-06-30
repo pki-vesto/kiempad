@@ -133,11 +133,12 @@ Gecombineerde smoke:
 KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale
 ```
 
-De smoke valideert G503/G1078 voor `/api/health`: status, centrale opslagmodus,
-client-side encrypted envelope boundary, `technical-metadata-only`, expliciete
-empty/error states en afwezigheid van user-id, session-id, record-id, recordcount,
-ciphertext, secrets of medische termen. Zonder `KIEMPAD_TAILNET_URL` blijft de lokale
-proxycheck verplicht en meldt de smoke welke live HTTPS-check is overgeslagen.
+De smoke valideert G503/G1078 voor `/api/health`: status, `contractVersion=1`,
+centrale opslagmodus, client-side encrypted envelope boundary,
+`technical-metadata-only`, expliciete empty/error states en afwezigheid van user-id,
+session-id, record-id, recordcount, ciphertext, secrets of medische termen. Zonder
+`KIEMPAD_TAILNET_URL` blijft de lokale proxycheck verplicht en meldt de smoke welke
+live HTTPS-check is overgeslagen.
 
 In de Tailscale-container:
 

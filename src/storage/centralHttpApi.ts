@@ -34,6 +34,7 @@ export type CentralHttpResponse<T = unknown> = {
 
 export type CentralHealthResponse = {
   status: 'ok';
+  contractVersion: 1;
   service: 'kiempad-central-encrypted-api';
   storageMode: 'central-api';
   encryptionBoundary: 'client-side-encrypted-envelopes';
@@ -71,6 +72,7 @@ const STORED_RECORD_TYPES = new Set<StoredRecordType>([
 ]);
 const CENTRAL_HEALTH_RESPONSE: CentralHealthResponse = {
   status: 'ok',
+  contractVersion: 1,
   service: 'kiempad-central-encrypted-api',
   storageMode: 'central-api',
   encryptionBoundary: 'client-side-encrypted-envelopes',

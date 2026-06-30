@@ -48,6 +48,7 @@ describe('central encrypted HTTP API contract', () => {
       status: 200,
       body: {
         status: 'ok',
+        contractVersion: 1,
         service: 'kiempad-central-encrypted-api',
         storageMode: 'central-api',
         encryptionBoundary: 'client-side-encrypted-envelopes',
@@ -89,6 +90,7 @@ describe('central encrypted HTTP API contract', () => {
     await expect(api.handle({ method: 'GET', path: '/health' })).resolves.toMatchObject({
       status: 200,
       body: {
+        contractVersion: 1,
         emptyState: 'no-user-dataset-opened',
         errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
       },

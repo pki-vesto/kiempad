@@ -3509,6 +3509,8 @@ describe('onderhoudsdocumentatie', () => {
       'GET /health',
       'read-only',
       'status',
+      'contractVersion',
+      'contractVersion=1',
       'service',
       'storageMode',
       'encryptionBoundary',
@@ -3548,6 +3550,7 @@ describe('onderhoudsdocumentatie', () => {
 
     expect(centralHttpApiSource).toContain('CENTRAL_HEALTH_RESPONSE');
     expect(centralHttpApiSource).toContain("pathname === '/health'");
+    expect(centralHttpApiSource).toContain('contractVersion: 1');
     expect(centralHttpApiSource).toContain('medicalPlaintext: false');
     expect(centralHttpApiSource).toContain("backendVisibility: 'technical-metadata-only'");
     expect(centralHttpApiTest).toContain('G503');

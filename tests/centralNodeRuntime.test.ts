@@ -44,6 +44,7 @@ describe('central encrypted Node backend runtime', () => {
     expectSecurityHeaders(response);
     expect(body).toEqual({
       status: 'ok',
+      contractVersion: 1,
       service: 'kiempad-central-encrypted-api',
       storageMode: 'central-api',
       encryptionBoundary: 'client-side-encrypted-envelopes',
