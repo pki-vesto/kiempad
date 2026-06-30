@@ -397,6 +397,24 @@ export function normalizeScheduleRoute(value: string | null | undefined): Schedu
   return SCHEDULE_ROUTES.includes(route as ScheduleRoute) ? (route as ScheduleRoute) : 'overzicht';
 }
 
+type MedicationRoute = 'vandaag' | 'planning' | 'beheer' | 'import' | 'historie';
+
+const MEDICATION_ROUTES: readonly MedicationRoute[] = [
+  'vandaag',
+  'planning',
+  'beheer',
+  'import',
+  'historie',
+];
+
+export function normalizeMedicationRoute(value: string | null | undefined): MedicationRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return MEDICATION_ROUTES.includes(route as MedicationRoute)
+    ? (route as MedicationRoute)
+    : 'vandaag';
+}
+
 export type AppShellState = {
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -428,6 +446,7 @@ export type AppShellState = {
   timelineFilter?: FertilityTimelineFilter;
   activeTreatmentRoute?: TreatmentRoute;
   activeScheduleRoute?: ScheduleRoute;
+  activeMedicationRoute?: MedicationRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -11707,11 +11726,17 @@ function renderAfspraakMeta(afspraak: Afspraak, trajectNaam?: string): string {
 
 function renderMedicatieScreen(state: AppShellState): string {
   const selected = state.medicatie[0];
+  const activeMedicationRoute = state.activeMedicationRoute ?? 'vandaag';
   const today = new Date().toISOString().slice(0, 10);
+  const now = new Date().toISOString().slice(0, 16);
   const todayLogs = doseLogsVoorDag(
     state.medicatie.flatMap((bundle) => bundle.doseLogs),
     today,
   );
+  const plannedLogs = state.medicatie
+    .flatMap((bundle) => bundle.doseLogs)
+    .filter((doseLog) => doseLog.geplandOp >= now && !doseLog.geplandOp.startsWith(`${today}T`))
+    .sort((a, b) => a.geplandOp.localeCompare(b.geplandOp));
 
   const deleteMedicatieButton = selected
     ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}" aria-label="Verwijder medicatie: ${escapeAttribute(selected.medicatie.naam)}">Verwijder medicatie</button>`
@@ -11719,24 +11744,141 @@ function renderMedicatieScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      `<div class="panel-heading"><h2>Vandaag</h2>${deleteMedicatieButton}</div>`,
-      todayLogs.length > 0
-        ? renderDoseLogList(todayLogs, state.medicatie)
-        : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>',
-      '<h2 class="section-subheading">Middelen</h2>',
-      state.medicatie.length > 0
-        ? renderMedicatieList(state.medicatie)
-        : '<p class="empty-state">Nog geen medicatie. Voeg hieronder een middel toe zoals de kliniek het voorschrijft.</p>',
-      disclosure({
-        summary: selected ? 'Medicatie bewerken' : 'Medicatie toevoegen',
-        open: !selected,
-        body: renderMedicatieForm(selected?.medicatie),
+      renderMedicationTaskRoutes({
+        todayCount: todayLogs.length,
+        plannedCount: plannedLogs.length,
+        medicationCount: state.medicatie.length,
+        hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
+        activeRoute: activeMedicationRoute,
       }),
-      disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) }),
-      renderPolicyPanel(),
+      `<section id="medicatie-route-vandaag" class="medication-route-section" aria-labelledby="medicatie-route-vandaag-title" data-medication-route="vandaag"${renderMedicationRouteVisibility(activeMedicationRoute, 'vandaag')}>
+        <header class="medication-route-section__header">
+          <p class="kp-card__eyebrow">Vandaag</p>
+          <h2 id="medicatie-route-vandaag-title">Medicatie vandaag</h2>
+          <p>Vink geplande momenten af zonder dosering te laten berekenen of interpreteren.</p>
+        </header>
+        <div class="panel-heading"><h2>Vandaag</h2></div>
+        ${
+          todayLogs.length > 0
+            ? renderDoseLogList(todayLogs, state.medicatie)
+            : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>'
+        }
+      </section>`,
+      `<section id="medicatie-route-planning" class="medication-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
+        <header class="medication-route-section__header">
+          <p class="kp-card__eyebrow">Planning</p>
+          <h2 id="medicatie-route-planning-title">Komende medicatiemomenten</h2>
+          <p>Bekijk toekomstige afvinkmomenten uit eigen invoer of import.</p>
+        </header>
+        ${
+          plannedLogs.length > 0
+            ? renderDoseLogList(plannedLogs, state.medicatie)
+            : '<p class="empty-state">Nog geen toekomstige medicatiemomenten buiten vandaag.</p>'
+        }
+      </section>`,
+      `<section id="medicatie-route-beheer" class="medication-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
+        <header class="medication-route-section__header">
+          <p class="kp-card__eyebrow">Beheer</p>
+          <h2 id="medicatie-route-beheer-title">Middel beheren</h2>
+          <p>Bewaar kliniektekst, voorraad, instructie en lokale video zonder doseeradvies.</p>
+        </header>
+        <div class="panel-heading"><h2>Middel beheren</h2>${deleteMedicatieButton}</div>
+        ${disclosure({
+          summary: selected ? 'Medicatie bewerken' : 'Medicatie toevoegen',
+          open: !selected,
+          body: renderMedicatieForm(selected?.medicatie),
+        })}
+      </section>`,
+      `<section id="medicatie-route-import" class="medication-route-section" aria-labelledby="medicatie-route-import-title" data-medication-route="import"${renderMedicationRouteVisibility(activeMedicationRoute, 'import')}>
+        <header class="medication-route-section__header">
+          <p class="kp-card__eyebrow">Import</p>
+          <h2 id="medicatie-route-import-title">Schema importeren</h2>
+          <p>Importeer geplande momenten uit eigen klinieklijst zonder doseringen over te nemen of te berekenen.</p>
+        </header>
+        ${disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) })}
+      </section>`,
+      `<section id="medicatie-route-historie" class="medication-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
+        <header class="medication-route-section__header">
+          <p class="kp-card__eyebrow">Historie</p>
+          <h2 id="medicatie-route-historie-title">Middelen, voorraad en historie</h2>
+          <p>Bekijk middelen, voorraad, instructies en innameloghistorie los van het beheerscherm.</p>
+        </header>
+        <h2 class="section-subheading">Middelen</h2>
+        ${
+          state.medicatie.length > 0
+            ? renderMedicatieList(state.medicatie)
+            : '<p class="empty-state">Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.</p>'
+        }
+        ${renderPolicyPanel()}
+      </section>`,
     ],
-    { ariaLabel: 'Medicatie beheren' },
+    { className: 'medication-command-layout', ariaLabel: 'Medicatie beheren' },
   );
+}
+
+function renderMedicationTaskRoutes(input: {
+  todayCount: number;
+  plannedCount: number;
+  medicationCount: number;
+  hasImportFeedback: boolean;
+  activeRoute: MedicationRoute;
+}): string {
+  const routes = [
+    {
+      id: 'vandaag',
+      href: '#medicatie?route=vandaag',
+      label: 'Vandaag',
+      meta: `${input.todayCount} gepland`,
+    },
+    {
+      id: 'planning',
+      href: '#medicatie?route=planning',
+      label: 'Planning',
+      meta: `${input.plannedCount} later`,
+    },
+    {
+      id: 'beheer',
+      href: '#medicatie?route=beheer',
+      label: 'Beheer',
+      meta: `${input.medicationCount} middel(en)`,
+    },
+    {
+      id: 'import',
+      href: '#medicatie?route=import',
+      label: 'Import',
+      meta: input.hasImportFeedback ? 'feedback' : 'schema',
+    },
+    {
+      id: 'historie',
+      href: '#medicatie?route=historie',
+      label: 'Historie',
+      meta: 'voorraad',
+    },
+  ];
+
+  return `
+    <nav class="medication-task-routes" aria-label="Medicatie taakroutes" data-medication-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="medication-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
+}
+
+function renderMedicationRouteVisibility(
+  activeRoute: MedicationRoute,
+  route: MedicationRoute,
+): string {
+  return route === activeRoute
+    ? ' data-medication-route-state="active"'
+    : ' data-medication-route-state="inactive" hidden';
 }
 
 function renderMedicatieImportForm(state: AppShellState): string {

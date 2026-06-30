@@ -208,8 +208,12 @@
 - **G1194 scheduleroutes:** het agendascherm heeft nu een routebalk en duidelijke
   clusters voor agendaoverzicht, komende afspraken, plannen/bewerken, ICS-import en
   historie, met behoud van `afspraak-form`, `ics-import-form`, reminderhooks,
-  vraagkoppeling en privacyfeedback; G1195 staat open voor medicationroutes in het
-  medicatiescherm.
+  vraagkoppeling en privacyfeedback.
+- **G1195 medicationroutes:** het medicatiescherm heeft nu een routebalk en duidelijke
+  clusters voor vandaag, planning, beheer, schema-import en historie/voorraad, met
+  behoud van `medicatie-form`, `medicatie-import-form`, dose-log hooks,
+  voorraadvelden en doseringsprivacycopy; G1196 staat open voor questionroutes in
+  het vragenscherm.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

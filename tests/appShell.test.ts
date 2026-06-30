@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
+  normalizeMedicationRoute,
   normalizeScheduleRoute,
   normalizeScreenId,
   normalizeTreatmentRoute,
@@ -1654,6 +1655,10 @@ describe('app shell', () => {
     expect(normalizeScheduleRoute('#agenda?route=plannen')).toBe('plannen');
     expect(normalizeScheduleRoute('#/agenda?route=historie')).toBe('historie');
     expect(normalizeScheduleRoute('#agenda?route=bestaat-niet')).toBe('overzicht');
+    expect(normalizeScreenId('#medicatie?route=beheer')).toBe('medicatie');
+    expect(normalizeMedicationRoute('#medicatie?route=beheer')).toBe('beheer');
+    expect(normalizeMedicationRoute('#/medicatie?route=historie')).toBe('historie');
+    expect(normalizeMedicationRoute('#medicatie?route=bestaat-niet')).toBe('vandaag');
     expect(normalizeScreenId('#traject?route=fasen')).toBe('traject');
     expect(normalizeTreatmentRoute('#traject?route=fasen')).toBe('fasen');
     expect(normalizeTreatmentRoute('#traject?route=context')).toBe('context');
@@ -3631,6 +3636,30 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Progesteron');
+    expect(html).toContain('class="section-stack medication-command-layout"');
+    expect(html).toContain('class="medication-task-routes"');
+    expect(html).toContain('aria-label="Medicatie taakroutes"');
+    expect(html).toContain('data-medication-task-routes="ready"');
+    expect(html).toContain('href="#medicatie?route=vandaag" aria-current="page"');
+    expect(html).toContain('href="#medicatie?route=planning"');
+    expect(html).toContain('href="#medicatie?route=beheer"');
+    expect(html).toContain('href="#medicatie?route=import"');
+    expect(html).toContain('href="#medicatie?route=historie"');
+    expect(html).toContain('id="medicatie-route-vandaag"');
+    expect(html).toContain('data-medication-route="vandaag"');
+    expect(html).toContain('data-medication-route-state="active"');
+    expect(html).toContain('id="medicatie-route-planning"');
+    expect(html).toContain('data-medication-route="planning"');
+    expect(html).toContain('id="medicatie-route-beheer"');
+    expect(html).toContain('data-medication-route="beheer"');
+    expect(html).toContain('id="medicatie-route-import"');
+    expect(html).toContain('data-medication-route="import"');
+    expect(html).toContain('id="medicatie-route-historie"');
+    expect(html).toContain('data-medication-route="historie"');
+    expect(html).toContain('Medicatie vandaag');
+    expect(html).toContain('Komende medicatiemomenten');
+    expect(html).toContain('Middel beheren');
+    expect(html).toContain('Middelen, voorraad en historie');
     expect(html).toContain('Schema importeren');
     expect(html).toContain('id="medicatie-import-form"');
     expect(html).toContain('Progesteron | 2026-06-23 | 08:00');
@@ -3651,6 +3680,35 @@ describe('app shell', () => {
     expect(html).toContain('Historie van innames');
     expect(html).toContain('plek links');
     expect(html).toContain('Doseringen worden nooit door Kiempad berekend');
+  });
+
+  it('toont één actieve medicationroute tegelijk', () => {
+    const html = renderAppShell('medicatie', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeMedicationRoute: 'beheer',
+    });
+
+    const vandaagStart = html.indexOf('id="medicatie-route-vandaag"');
+    const planningStart = html.indexOf('id="medicatie-route-planning"');
+    const beheerStart = html.indexOf('id="medicatie-route-beheer"');
+    const importStart = html.indexOf('id="medicatie-route-import"');
+
+    expect(html).toContain('href="#medicatie?route=beheer" aria-current="page"');
+    expect(html.slice(vandaagStart, planningStart)).toContain(
+      'data-medication-route-state="inactive" hidden',
+    );
+    expect(html.slice(beheerStart, importStart)).toContain('data-medication-route-state="active"');
+    expect(html.slice(beheerStart, importStart)).not.toContain(
+      'data-medication-route-state="inactive" hidden',
+    );
+    expect(html).toContain('id="medicatie-form"');
   });
 
   it('rendert herinneringen met permissiestatus en generieke notificatie-uitleg', () => {
