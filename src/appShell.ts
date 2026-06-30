@@ -988,7 +988,7 @@ function renderGroupedNavigation(activeId: ScreenId): string {
 
 function renderWorkspaceContext(activeId: ScreenId): string {
   if (activeId === 'start') return '';
-  if (activeId === 'dossier' || activeId === 'kennis') return '';
+  if (activeId === 'dossier' || activeId === 'kennis' || activeId === 'traject') return '';
 
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   if (!activeGroup) return '';
@@ -12754,6 +12754,16 @@ function renderTrajectScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderTreatmentWorkbench({
+        selected,
+        activeCount: actieveTrajecten.length,
+        archivedCount: gearchiveerdeTrajecten.length,
+        vergoeding,
+        overview: overzicht,
+        timeline: fertilityTimeline,
+        graph: graphWeergave,
+        activeRoute: activeTreatmentRoute,
+      }),
       renderTreatmentTaskRoutes({
         activeCount: actieveTrajecten.length,
         archivedCount: gearchiveerdeTrajecten.length,
@@ -12832,6 +12842,105 @@ function renderTrajectScreen(state: AppShellState): string {
     ],
     { className: 'treatment-command-layout', ariaLabel: 'Traject beheren' },
   );
+}
+
+function renderTreatmentWorkbench(input: {
+  selected: TrajectMetFasen | undefined;
+  activeCount: number;
+  archivedCount: number;
+  vergoeding: ReturnType<typeof berekenVergoedePogingenTeller>;
+  overview: ReturnType<typeof berekenTrajectOverzicht>;
+  timeline: FertilityTimeline;
+  graph: FertilityGraphTrajectWeergave | undefined;
+  activeRoute: TreatmentRoute;
+}): string {
+  const sortedFasen = input.selected ? sorteerFasen(input.selected.fasen) : [];
+  const huidigeFase = input.selected ? bepaalHuidigeFase(input.selected.fasen) : undefined;
+  const currentPhaseIndex = huidigeFase
+    ? sortedFasen.findIndex((fase) => fase.fase === huidigeFase.fase) + 1
+    : 0;
+  const phaseSteps = sortedFasen.map((fase) => ({
+    label: TRAJECT_FASE_LABELS[fase.fase],
+    state: (fase.eindDatum
+      ? 'done'
+      : huidigeFase && fase.fase === huidigeFase.fase
+        ? 'current'
+        : 'todo') as StepState,
+  }));
+  const phaseHero = phaseHeroCard(
+    input.selected
+      ? {
+          id: 'traject-treatment-workbench-phase',
+          eyebrow:
+            huidigeFase && currentPhaseIndex > 0
+              ? `Huidige fase · ${currentPhaseIndex} van ${sortedFasen.length}`
+              : 'Trajectfase kiezen',
+          phaseLabel: huidigeFase
+            ? TRAJECT_FASE_LABELS[huidigeFase.fase]
+            : input.selected.traject.naam,
+          subtitle: bepaalVolgendeStap(input.selected),
+          steps: phaseSteps,
+          cta: { href: '#traject?route=fasen', label: 'Fasen openen' },
+        }
+      : {
+          id: 'traject-treatment-workbench-phase',
+          eyebrow: 'Aan de slag',
+          phaseLabel: 'Begin jullie traject',
+          subtitle: bepaalVolgendeStap(undefined),
+          steps: [],
+          cta: { href: '#traject?route=beheer', label: 'Traject aanmaken' },
+        },
+  );
+  const nextAction = input.selected
+    ? huidigeFase
+      ? `${input.selected.traject.naam}: controleer fase, timeline en consultcontext.`
+      : `${input.selected.traject.naam}: kies eerst de huidige fase.`
+    : 'Maak een traject aan om faseplanning en timelinecontext te bundelen.';
+  const activeRouteCopy = renderTreatmentActiveRouteCopy(input.activeRoute);
+
+  return `
+    <section class="treatment-workbench" aria-label="Behandelwerkbank" data-treatment-first-viewport="workbench">
+      <header class="treatment-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Behandelwerkbank</p>
+          <h2>Traject, fase en context eerst</h2>
+          <p>Start met de actuele fase, volgende actie en gekoppelde timeline voordat je beheer of details opent.</p>
+        </div>
+        <p class="treatment-workbench__status">Actief: ${escapeHtml(activeRouteCopy)}</p>
+      </header>
+      <div class="treatment-workbench__grid">
+        ${phaseHero}
+        <section class="treatment-workbench__panel" aria-label="Trajectcontext">
+          <div class="treatment-workbench__next">
+            <p class="kp-card__eyebrow">Nu eerst</p>
+            <h3>${escapeHtml(nextAction)}</h3>
+            <p>Kiempad toont context en administratie, geen medisch advies.</p>
+          </div>
+          ${statRow([
+            { label: 'Actief', value: String(input.activeCount) },
+            { label: 'Fases', value: String(sortedFasen.length) },
+            { label: 'Timeline', value: String(input.timeline.items.length) },
+            { label: 'Graph', value: String(input.graph?.edges.length ?? 0) },
+            { label: 'Resterend', value: String(input.vergoeding.resterend) },
+            { label: 'Archief', value: String(input.archivedCount) },
+          ])}
+          <nav class="treatment-workbench__actions" aria-label="Behandelwerkbank acties">
+            <a href="#traject?route=overzicht">Overzicht</a>
+            <a href="#traject?route=context">Timeline</a>
+            <a href="#traject?route=vergoeding">Vergoeding</a>
+          </nav>
+        </section>
+      </div>
+    </section>
+  `;
+}
+
+function renderTreatmentActiveRouteCopy(route: TreatmentRoute): string {
+  if (route === 'fasen') return 'faseplanning';
+  if (route === 'vergoeding') return 'vergoeding';
+  if (route === 'context') return 'timeline en graph';
+  if (route === 'beheer') return 'beheer en archief';
+  return 'overzicht';
 }
 
 function renderTreatmentTaskRoutes(input: {

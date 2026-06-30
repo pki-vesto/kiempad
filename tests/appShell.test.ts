@@ -1716,6 +1716,7 @@ describe('app shell', () => {
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
     const dossierHtml = renderAppShell('dossier');
     const kennisHtml = renderAppShell('kennis');
+    const trajectHtml = renderAppShell('traject');
 
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1725,6 +1726,10 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(kennisHtml).toContain('data-knowledge-first-viewport="research-workbench"');
+    expect(trajectHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(trajectHtml).toContain('data-treatment-first-viewport="workbench"');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -3220,6 +3225,20 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Knowledge graph');
+    expect(html).toContain(
+      '<section class="treatment-workbench" aria-label="Behandelwerkbank" data-treatment-first-viewport="workbench">',
+    );
+    expect(html).toContain('Traject, fase en context eerst');
+    expect(html).toContain('Actief: overzicht');
+    expect(html).toContain('id="traject-treatment-workbench-phase"');
+    expect(html).toContain('Fasen openen');
+    expect(html).toContain('aria-label="Trajectcontext"');
+    expect(html).toContain('aria-label="Behandelwerkbank acties"');
+    expect(html).toContain('href="#traject?route=context"');
+    const workbenchIndex = html.indexOf('data-treatment-first-viewport="workbench"');
+    const routeNavIndex = html.indexOf('data-treatment-task-routes="ready"');
+    expect(workbenchIndex).toBeGreaterThan(-1);
+    expect(routeNavIndex).toBeGreaterThan(workbenchIndex);
     expect(html).toContain('Fertility timeline');
     expect(html).toContain('id="timeline-filter-form"');
     expect(html).toContain('name="timelineSoort"');
@@ -3326,6 +3345,26 @@ describe('app shell', () => {
     const graphRelationships = html.slice(graphRelationshipsStart, graphRelationshipsEnd);
     expect(graphRelationships).not.toContain('base64');
     expect(graphRelationships).not.toMatch(/diagnose|dosering|kansberekening|behandelkeuzeadvies/i);
+  });
+
+  it('bewaakt de traject behandelwerkbank als eerste-viewport laag', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain('.treatment-workbench {');
+    expect(css).toContain('[data-treatment-first-viewport="workbench"]');
+    expect(css).toContain('.treatment-workbench__header {');
+    expect(css).toContain('.treatment-workbench__grid {');
+    expect(css).toContain('grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);');
+    expect(css).toContain('.treatment-workbench__actions {');
+    expect(css).toContain('.treatment-task-routes {');
+    expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.treatment-workbench :where(.phase-hero__label) {');
+    expect(css).toContain('font-size: 1.32rem;');
+    expect(css).toContain('.treatment-workbench :where(.stat-row) {');
+    expect(css).toContain('scroll-snap-type: x proximity;');
+    expect(css).toContain('.treatment-workbench :where(.stat) {');
+    expect(css).toContain('flex: 0 0 88px;');
+    expect(css).toContain('grid-template-columns: 1fr;');
   });
 
   it('bewaakt knowledge graph relationship states met lege graph, gemengde relaties en veilige bronpaden', () => {
