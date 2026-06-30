@@ -13048,4 +13048,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 63
+- **Status:** ☑ done
+
+### G1162 — dossier add feedback return pressed state audit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Hover- en taptoon maken de teruglink duidelijker, maar de ingedrukte staat moet nog expliciet bewaakt worden op geen layoutshift en voldoende rust.
+- **User Impact:** Gebruikers kunnen bij snelle taps minder vertrouwen krijgen als de pressed state de feedbackregel verplaatst of te nadrukkelijk voelt.
+- **Desired Outcome:** Bewaak en verfijn de pressed state van feedback focus-return links zonder copy, volgorde, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers voelen direct dat de terugactie reageert zonder dat de feedback onrustig of springerig wordt.
+- **Acceptance Criteria:** Pressed state is compact, rustig en veroorzaakt geen layoutshift; bestaande ankers, form-id's, input names en data-hooks blijven intact; return interaction tone, return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 62
 - **Status:** ☐ open
