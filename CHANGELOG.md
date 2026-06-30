@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1129/G1130 Premium Claude Design UI: dossierdocumentuploadvelden zijn nu gegroepeerd in compacte subsecties voor documentbasis, koppelingen, beeldcontext en embryo/labcontext zonder inputcontracten of privacyhooks te breken; G1130 is toegevoegd voor consult- en embryo-subform scan grouping.
 - G1128/G1129 Premium Claude Design UI: de dossierinhoud heeft nu een compacte sectie-index met ankers naar consulten, imaging, dossierindex, embryo's, tijdlijn en behandelgeschiedenis zonder payloadlekken; G1129 is toegevoegd voor compacte groepering van de dossieruploadvelden.
 - G1127/G1128 Premium Claude Design UI: secundaire dossierprivacy-, audit- en assistive-panelen staan nu achter een compacte progressive disclosure, terwijl zoeken, consulten, imaging en reviewroutes direct bereikbaar blijven; G1128 is toegevoegd voor scanankers naar de belangrijkste dossierinhoud.
 - G1126/G1127 Premium Claude Design UI: de dossierpagina opent nu met een compact startoverzicht voor uploads, beeldreview en OCR-review, met veilige workflowmetadata, primaire snelacties en responsive guards voor de primaire dossierflow; G1127 is toegevoegd voor progressive disclosure van secundaire dossierpanelen.

@@ -12536,4 +12536,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 95
+- **Status:** ☑ done
+
+### G1130 — consult and embryo upload subform scan grouping
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na de gegroepeerde dossierdocumentupload staan consultverslag-, embryokwaliteit- en embryo-statusformulieren nog als lange losse veldreeksen in dezelfde disclosure.
+- **User Impact:** Gebruikers die consultnotities of embryo-informatie willen toevoegen moeten nog veel velden scannen zonder duidelijke subtaakstructuur.
+- **Desired Outcome:** Groepeer consult- en embryo-subformulieren in compacte, begrijpelijke subsecties met behoud van bestaande form-id's, input names en privacyhooks.
+- **User Value:** Gebruikers kunnen sneller onderscheid maken tussen consultupload, embryokwaliteit en embryo-status zonder velden verkeerd te interpreteren.
+- **Acceptance Criteria:** Consultverslag-, embryokwaliteit- en embryo-statusformulieren hebben compacte subsecties; bestaande input names, form-id's en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 94
 - **Status:** ☐ open
