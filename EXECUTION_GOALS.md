@@ -12552,4 +12552,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 94
+- **Status:** ☑ done
+
+### G1131 — dossier add flow task selector
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Na het groeperen van de uploadformulieren blijft de toevoeg-disclosure nog een lange stapel routes voor document, consult, embryokwaliteit en embryo-status.
+- **User Impact:** Gebruikers moeten nog steeds scannen welk formulier bij hun taak past, vooral op mobiel of tijdens stressvolle behandelupdates.
+- **Desired Outcome:** Voeg een compacte taakselector of scanbare routekop toe die documentupload, consultverslag, embryokwaliteit en embryo-status snel onderscheidt zonder bestaande formcontracten te breken.
+- **User Value:** Gebruikers kiezen sneller de juiste toevoegroute en zien minder niet-relevante invoer tegelijk.
+- **Acceptance Criteria:** Toevoegen-aan-dossier heeft een compacte taakselector of routeoverzicht; bestaande form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 93
 - **Status:** ☐ open

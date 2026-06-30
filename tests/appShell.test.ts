@@ -140,6 +140,13 @@ function extractDossierUploadForm(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractFormById(html: string, formId: string): string {
+  const escapedFormId = formId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = html.match(new RegExp(`<form id="${escapedFormId}"[\\s\\S]*?<\\/form>`));
+  if (!match?.[0]) throw new Error(`Formulier ontbreekt: ${formId}.`);
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentConsentExportSurface(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Attachment consent en export privacy states"[\s\S]*?<\/section>/,
@@ -4326,6 +4333,159 @@ describe('app shell', () => {
     expect(lockedForm).toContain('data-dossier-upload-group="embryo-labcontext"');
     expect(lockedForm).not.toContain('locked-upload-secret.jpg');
     expect(lockedForm).not.toContain('bG9ja2VkLXVwbG9hZA==');
+  });
+
+  it('groepeert consult- en embryo-subformulieren zonder privacy- of inputcontracten te breken', () => {
+    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const consultForm = extractFormById(emptyHtml, 'consult-verslag-form');
+    const embryoQualityForm = extractFormById(emptyHtml, 'embryo-quality-form');
+    const embryoStatusForm = extractFormById(emptyHtml, 'embryo-status-event-form');
+
+    expect(consultForm).toContain('data-upload-privacy-kind="consult"');
+    expect(consultForm).toContain('data-consult-upload-privacy-state="encrypted-text-or-file"');
+    expect(consultForm).toContain('data-consult-upload-group="consult-basis"');
+    expect(consultForm).toContain('data-consult-upload-group="consult-koppelingen"');
+    expect(consultForm).toContain('data-consult-upload-group="consult-context"');
+    expect(consultForm).toContain('<legend>Consultbasis</legend>');
+    expect(consultForm).toContain('<legend>Koppelingen</legend>');
+    expect(consultForm).toContain('<legend>Bron en context</legend>');
+    expect(consultForm).toContain('name="datum" type="date" required');
+    expect(consultForm).toContain('name="titel"');
+    expect(consultForm).toContain(
+      'name="consultBestand" type="file" accept="application/pdf,image/*,text/*"',
+    );
+    expect(consultForm).toContain('name="tekst"');
+    expect(consultForm).toContain('name="samenvattingCorrectie"');
+    expect(consultForm).toContain('name="afspraakId"');
+    expect(consultForm).toContain('name="trajectId"');
+    expect(consultForm).toContain('name="consultPogingId"');
+    expect(consultForm).toContain('name="consultAuteur"');
+    expect(consultForm).toContain('name="consultContext"');
+    expect(consultForm).toContain('name="notitie"');
+
+    expect(embryoQualityForm).toContain('data-upload-privacy-kind="embryo"');
+    expect(embryoQualityForm).toContain(
+      'data-embryo-upload-privacy-state="encrypted-quality-registration"',
+    );
+    expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-identificatie"');
+    expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-beoordeling"');
+    expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-koppelingen"');
+    expect(embryoQualityForm).toContain('<legend>Embryo-identificatie</legend>');
+    expect(embryoQualityForm).toContain('<legend>Beoordeling</legend>');
+    expect(embryoQualityForm).toContain('name="embryoLabel"');
+    expect(embryoQualityForm).toContain('name="embryoDag"');
+    expect(embryoQualityForm).toContain('name="embryoMeetmoment"');
+    expect(embryoQualityForm).toContain('name="embryoKwaliteit"');
+    expect(embryoQualityForm).toContain('name="embryoKliniekTerminologie"');
+    expect(embryoQualityForm).toContain('name="embryoBron"');
+    expect(embryoQualityForm).toContain('name="embryoReviewStatus"');
+    expect(embryoQualityForm).toContain('name="embryoStatus"');
+    expect(embryoQualityForm).toContain('name="trajectId"');
+    expect(embryoQualityForm).toContain('name="afspraakId"');
+    expect(embryoQualityForm).toContain('name="notitie"');
+
+    expect(embryoStatusForm).toContain('data-upload-privacy-kind="embryo-status"');
+    expect(embryoStatusForm).toContain('data-embryo-status-event-state="concept-editor"');
+    expect(embryoStatusForm).toContain('data-embryo-status-group="status-basis"');
+    expect(embryoStatusForm).toContain('data-embryo-status-group="status-bron"');
+    expect(embryoStatusForm).toContain('data-embryo-status-group="status-koppelingen"');
+    expect(embryoStatusForm).toContain('<legend>Statusbasis</legend>');
+    expect(embryoStatusForm).toContain('<legend>Broncontrole</legend>');
+    expect(embryoStatusForm).toContain('name="embryoLabel"');
+    expect(embryoStatusForm).toContain('name="embryoStatus"');
+    expect(embryoStatusForm).toContain('name="embryoBron"');
+    expect(embryoStatusForm).toContain('name="embryoReviewStatus"');
+    expect(embryoStatusForm).toContain('name="trajectId"');
+    expect(embryoStatusForm).toContain('name="afspraakId"');
+    expect(embryoStatusForm).toContain('name="notitie"');
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        uploadAttachmentFeedback: {
+          'consult-upload': {
+            state: 'error',
+            error:
+              'Consultupload bevat secret-consult.txt OCR-payload diagnose 150 mg behandelkeuzeadvies.',
+          },
+          'embryo-upload': {
+            state: 'needs-review',
+            status: 'Embryoupload bevat secret-embryo.jpg base64 diagnose 100 IU embryo payload.',
+          },
+        },
+      }),
+    );
+    const populatedConsultForm = extractFormById(populatedHtml, 'consult-verslag-form');
+    const populatedEmbryoForm = extractFormById(populatedHtml, 'embryo-quality-form');
+    const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
+
+    expect(populatedConsultForm).toContain('data-consult-upload-group="consult-basis"');
+    expect(populatedEmbryoForm).toContain('data-embryo-quality-group="embryo-beoordeling"');
+    expect(populatedConsultForm).not.toContain('secret-consult.txt');
+    expect(populatedConsultForm).not.toContain('OCR-payload');
+    expect(populatedConsultForm).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies/i);
+    expect(populatedEmbryoForm).not.toContain('secret-embryo.jpg');
+    expect(populatedEmbryoForm).not.toContain('base64');
+    expect(populatedEmbryoForm).not.toMatch(/diagnose|100 IU|embryo payload/i);
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-kind="consult-upload"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="error"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-kind="embryo-upload"');
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="needs-review"');
+    expect(uploadFeedback).not.toContain('secret-consult.txt');
+    expect(uploadFeedback).not.toContain('secret-embryo.jpg');
+    expect(uploadFeedback).not.toContain('OCR-payload');
+    expect(uploadFeedback).not.toContain('base64');
+    expect(uploadFeedback).not.toMatch(
+      /diagnose|150 mg|100 IU|behandelkeuzeadvies|embryo payload/i,
+    );
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-subform-locked',
+            datum: '2026-05-11',
+            titel: 'Locked embryo subform',
+            categorie: 'embryo',
+            bestandsNaam: 'locked-embryo-subform-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'c3ViZm9ybS1sb2NrZWQ=',
+            analyse: {
+              samenvatting: 'Embryobijlage opgeslagen zonder medisch advies.',
+              signalen: ['Embryometadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-11',
+              documenttype: 'Embryokwaliteit',
+              bronbestand: 'locked-embryo-subform-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            embryo: {
+              label: 'Embryo 1',
+              kwaliteit: 'Kliniektekst',
+              bron: 'locked-embryo-subform-secret.jpg',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedConsultForm = extractFormById(lockedHtml, 'consult-verslag-form');
+    const lockedEmbryoQualityForm = extractFormById(lockedHtml, 'embryo-quality-form');
+    const lockedEmbryoStatusForm = extractFormById(lockedHtml, 'embryo-status-event-form');
+
+    expect(lockedConsultForm).toContain('data-consult-upload-group="consult-context"');
+    expect(lockedEmbryoQualityForm).toContain('data-embryo-quality-group="embryo-koppelingen"');
+    expect(lockedEmbryoStatusForm).toContain('data-embryo-status-group="status-koppelingen"');
+    expect(lockedConsultForm).not.toContain('locked-embryo-subform-secret.jpg');
+    expect(lockedEmbryoQualityForm).not.toContain('locked-embryo-subform-secret.jpg');
+    expect(lockedEmbryoStatusForm).not.toContain('locked-embryo-subform-secret.jpg');
+    expect(lockedEmbryoQualityForm).not.toContain('c3ViZm9ybS1sb2NrZWQ=');
+    expect(lockedEmbryoStatusForm).not.toContain('c3ViZm9ybS1sb2NrZWQ=');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
