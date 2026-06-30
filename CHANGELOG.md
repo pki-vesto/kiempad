@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G480/G1056 Fertility Intelligence: embryovergelijking toont nu feitelijke kliniekvelden naast elkaar met embryo-label alfabetische sortering, kliniektekst, bron, notitie en status zonder score-, kleur-, voorkeur- of kanslabels; G1056 is toegevoegd voor embryo comparison language audit evidence.
 - G478/G1055 Fertility Intelligence: embryokwaliteit bewaart nu een expliciete kliniekbeoordeling met tekst, bron en datum naast de bestaande kwaliteitvelden; dossier- en app-shellregressies tonen de bronregistratie als kliniekopgave zonder kansberekening, rangorde of behandelkeuzeadvies; G1055 is toegevoegd voor embryo grading source audit evidence.
 - G477/G1054 Fertility Intelligence: consultsamenvattingen hebben nu een expliciete lokale reviewflow met concept-, aangepast- en verworpen-statussen, bronverwijzing, correctie/verwerpformulieren en encrypted-store regressies die adviesachtige correcties blokkeren; G1054 is toegevoegd voor consult summary review audit evidence.
 - G476/G1053 Fertility Intelligence: consultactie-extractie bewaart concepttaken en conceptvragen nu met bronfragment, eigenaar, optionele datum en conceptstatus; lokale reviewhelpers maken herinneringsvoorstellen en zetten alleen bevestigde vraagactiepunten om naar vragenlijst-items zonder diagnose, dosering of behandelkeuzeadvies; G1053 is toegevoegd voor consult action review audit evidence.

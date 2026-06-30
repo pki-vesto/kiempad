@@ -41,13 +41,16 @@ export type EmbryoDossierItem = {
 
 export type EmbryoVergelijking = {
   trajectId: string;
+  sortering: 'embryo_label_alfabetisch';
   embryos: {
     embryoLabel: string;
     embryoDagen: number[];
     kwaliteiten: string[];
+    kliniekTeksten: string[];
     statussen: string[];
     meetmomenten: string[];
     bronnen: string[];
+    notities: string[];
     historieAantal: number;
   }[];
   waarschuwing: string;
@@ -92,19 +95,24 @@ export function bouwEmbryoVergelijkingen(
     .filter(([, items]) => items.length > 1)
     .map(([trajectId, items]) => ({
       trajectId,
+      sortering: 'embryo_label_alfabetisch' as const,
       embryos: [...items]
         .sort((a, b) => a.embryoLabel.localeCompare(b.embryoLabel, 'nl-NL'))
         .map((item) => ({
           embryoLabel: item.embryoLabel,
           embryoDagen: item.embryoDagen,
           kwaliteiten: item.kwaliteiten,
+          kliniekTeksten: uniekeWaarden(
+            item.historie.map((moment) => extraheerKliniekTekst(moment.detail)).filter(isString),
+          ),
           statussen: item.statussen,
           meetmomenten: item.meetmomenten,
           bronnen: item.bronnen,
+          notities: uniekeWaarden(item.behandelContext.notities),
           historieAantal: item.historie.length,
         })),
       waarschuwing:
-        'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar. Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
+        'Deze vergelijking zet alleen feitelijke kliniekvelden naast elkaar voor bespreking met de kliniek. Kiempad voegt geen oordeel toe en geeft geen behandelkeuzeadvies.',
     }))
     .sort((a, b) => a.trajectId.localeCompare(b.trajectId, 'nl-NL'));
 }
@@ -244,9 +252,10 @@ function bepaalHistorieGebeurtenis(document: DossierDocument): string {
 }
 
 function beschrijfHistorieDetail(document: DossierDocument): string {
+  const kliniekTekst = document.embryo?.kliniekBeoordeling?.tekst ?? document.embryo?.kwaliteit;
   const details = [
     document.embryo?.dag ? `dag ${document.embryo.dag}` : undefined,
-    document.embryo?.kwaliteit ? `kwaliteit ${document.embryo.kwaliteit}` : undefined,
+    kliniekTekst ? `kliniektekst ${kliniekTekst}` : undefined,
     document.embryo?.kliniekTerminologie
       ? `terminologie ${document.embryo.kliniekTerminologie}`
       : undefined,
@@ -256,6 +265,11 @@ function beschrijfHistorieDetail(document: DossierDocument): string {
   ].filter(isString);
 
   return details.length > 0 ? details.join(' · ') : document.titel;
+}
+
+function extraheerKliniekTekst(detail: string): string | undefined {
+  const match = detail.match(/(?:^| · )kliniektekst ([^·]+)/u);
+  return match?.[1]?.trim();
 }
 
 function beschrijfKwaliteitBronLabel(document: DossierDocument): string {

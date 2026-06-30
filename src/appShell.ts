@@ -7160,7 +7160,7 @@ function renderEmbryoVergelijkingen(vergelijkingen: readonly EmbryoVergelijking[
 function renderEmbryoVergelijking(vergelijking: EmbryoVergelijking): string {
   return `
     <section>
-      <p class="small-print">Poging: ${escapeHtml(vergelijking.trajectId)}</p>
+      <p class="small-print">Poging: ${escapeHtml(vergelijking.trajectId)} · Sortering: embryo-label alfabetisch</p>
       <ul class="compact-list">
         ${vergelijking.embryos
           .map((embryo) => {
@@ -7169,11 +7169,15 @@ function renderEmbryoVergelijking(vergelijking: EmbryoVergelijking): string {
               embryo.kwaliteiten.length > 0
                 ? `Kwaliteit: ${embryo.kwaliteiten.join(', ')}`
                 : undefined,
+              embryo.kliniekTeksten.length > 0
+                ? `Kliniektekst: ${embryo.kliniekTeksten.join(', ')}`
+                : undefined,
               embryo.statussen.length > 0 ? `Status: ${embryo.statussen.join(', ')}` : undefined,
               embryo.meetmomenten.length > 0
                 ? `Meetmoment: ${embryo.meetmomenten.join(', ')}`
                 : undefined,
               embryo.bronnen.length > 0 ? `Bron: ${embryo.bronnen.join(', ')}` : undefined,
+              embryo.notities.length > 0 ? `Notitie: ${embryo.notities.join(' | ')}` : undefined,
               `Historiemomenten: ${embryo.historieAantal}`,
             ].filter((detail): detail is string => Boolean(detail));
 

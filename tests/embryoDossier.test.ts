@@ -167,21 +167,21 @@ describe('embryoDossier', () => {
         id: 'doc-bevrucht',
         datum: '2026-06-10',
         gebeurtenis: 'Bevruchting',
-        detail: 'dag 1 · kwaliteit 2PN',
+        detail: 'dag 1 · kliniektekst 2PN',
         bron: 'Labrapport',
       }),
       expect.objectContaining({
         id: 'doc-meting',
         datum: '2026-06-13',
         gebeurtenis: 'Dag 4 beoordeling',
-        detail: 'dag 4 · kwaliteit morula · terminologie morfologie',
+        detail: 'dag 4 · kliniektekst morula · terminologie morfologie',
         bron: 'Embryoloog',
       }),
       expect.objectContaining({
         id: 'doc-terugplaatsing',
         datum: '2026-06-14',
         gebeurtenis: 'Terugplaatsing',
-        detail: 'dag 5 · kwaliteit 4AA',
+        detail: 'dag 5 · kliniektekst 4AA',
         bron: 'Labrapport',
       }),
     ]);
@@ -289,30 +289,39 @@ describe('embryoDossier', () => {
     expect(bouwEmbryoVergelijkingen(bouwEmbryoDossiers([embryo2, anderTraject, embryo1]))).toEqual([
       {
         trajectId: 'traject-1',
+        sortering: 'embryo_label_alfabetisch',
         embryos: [
           {
             embryoLabel: 'Embryo 1',
             embryoDagen: [5],
             kwaliteiten: ['4AA'],
+            kliniekTeksten: ['4AA'],
             statussen: ['teruggeplaatst'],
             meetmomenten: ['Dag 5 blastocyst'],
             bronnen: ['Labrapport'],
+            notities: [],
             historieAantal: 1,
           },
           {
             embryoLabel: 'Embryo 2',
             embryoDagen: [5],
             kwaliteiten: ['4BB'],
+            kliniekTeksten: ['4BB'],
             statussen: ['ingevroren'],
             meetmomenten: ['Dag 5 blastocyst'],
             bronnen: ['Labrapport'],
+            notities: [],
             historieAantal: 1,
           },
         ],
         waarschuwing:
-          'Deze vergelijking zet alleen feitelijke kliniekgegevens naast elkaar. Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
+          'Deze vergelijking zet alleen feitelijke kliniekvelden naast elkaar voor bespreking met de kliniek. Kiempad voegt geen oordeel toe en geeft geen behandelkeuzeadvies.',
       },
     ]);
+    const vergelijkingJson = JSON.stringify(
+      bouwEmbryoVergelijkingen(bouwEmbryoDossiers([embryo2, anderTraject, embryo1])),
+    );
+    expect(vergelijkingJson).not.toMatch(/\b(beste|slechtste|kans|score|kleuradvies)\b/i);
   });
 
   it('integreert embryo-tijdlijn met afspraken, labrapporten en terugplaatsing', () => {
