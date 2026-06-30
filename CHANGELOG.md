@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1137/G1138 Premium Claude Design UI: de dossier-toevoegroutekaarten hebben nu een expliciete keyboardfocus-ring die losstaat van de actieve anchorstate zonder ankers, formcontracten of privacyhooks te breken; G1138 is toegevoegd voor screenreader-actieve-routecontext.
 - G1136/G1137 Premium Claude Design UI: de dossier-toevoegroute-selector markeert nu de actieve anchorroute en dempt niet-actieve routekaarten zonder ankers, formcontracten of privacyhooks te breken; G1137 is toegevoegd voor keyboardfocus-verfijning.
 - G1135/G1136 Premium Claude Design UI: de dossier-toevoegroutekaartcopy onderscheidt nu document toevoegen, consult vastleggen, labkwaliteit en status bijwerken met kortere readiness-cues zonder ankers, formcontracten of privacyhooks te breken; G1136 is toegevoegd voor actieve route-affordance.
 - G1134/G1135 Premium Claude Design UI: de dossier-toevoegroute-selector is op smalle mobiele schermen compacter met tweekoloms routekaarten, kortere spacing en zichtbare readiness-cues zonder ankers, formcontracten of privacyhooks te breken; G1135 is toegevoegd voor routecopy-verfijning.

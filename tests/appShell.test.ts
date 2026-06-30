@@ -4760,6 +4760,9 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route:not([href="#consult-verslag-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#embryo-quality-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#embryo-status-event-form"])');
+    expect(css).toContain('.dossier-add-route:focus-visible');
+    expect(css).toContain('0 0 0 4px color-mix(in srgb, var(--accent) 70%, transparent)');
+    expect(css).toContain('outline: none;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

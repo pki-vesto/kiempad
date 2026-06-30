@@ -12664,4 +12664,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 87
+- **Status:** ☑ done
+
+### G1138 — dossier add route screen reader active context
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Keyboardfocus is duidelijker, maar de actieve routecontext is nog vooral visueel en mist een expliciete screenreader-hint.
+- **User Impact:** Screenreadergebruikers krijgen minder directe bevestiging welke toevoegroute actief is na anchor-navigatie.
+- **Desired Outcome:** Voeg een compacte screenreader-veilige actieve routecontext toe zonder ankers, formcontracten of privacyhooks te wijzigen.
+- **User Value:** Assistive-tech gebruikers begrijpen sneller welke route actief is en waar het formulier bij hoort.
+- **Acceptance Criteria:** Actieve routecontext is beschikbaar voor screenreaders zonder visuele ruis; readiness-cues blijven zichtbaar; bestaande ankers, form-id's, input names en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 86
 - **Status:** ☐ open

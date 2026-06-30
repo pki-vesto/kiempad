@@ -2040,10 +2040,16 @@ a.action-card:active {
   text-decoration: none;
 }
 
-.dossier-add-route:hover,
-.dossier-add-route:focus-visible {
+.dossier-add-route:hover {
   border-color: var(--accent);
   box-shadow: var(--shadow-soft);
+}
+
+.dossier-add-route:focus-visible {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px color-mix(in srgb, var(--accent) 70%, transparent);
   outline: none;
 }
 
