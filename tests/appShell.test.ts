@@ -219,14 +219,26 @@ function expectDossierLandingCueParity(css: string, expectedDeclarations: readon
 }
 
 function extractDossierAddRoutePanel(html: string, panelId: string): string {
-  const escapedPanelId = panelId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = html.match(
-    new RegExp(
-      `<section class="dossier-add-route-panel" data-dossier-add-route-panel="${escapedPanelId}">[\\s\\S]*?<\\/section>`,
-    ),
-  );
-  if (!match?.[0]) throw new Error(`Toevoegroutepaneel ontbreekt: ${panelId}.`);
-  return match[0].replace(/\s+/g, ' ').trim();
+  const marker = `<section class="dossier-add-route-panel" data-dossier-add-route-panel="${panelId}">`;
+  const start = html.indexOf(marker);
+  if (start < 0) throw new Error(`Toevoegroutepaneel ontbreekt: ${panelId}.`);
+  const tagPattern = /<\/?section\b[^>]*>/g;
+  let depth = 0;
+  let end = -1;
+  for (const match of html.slice(start).matchAll(tagPattern)) {
+    const tag = match[0];
+    if (tag.startsWith('</')) {
+      depth -= 1;
+      if (depth === 0) {
+        end = start + match.index + tag.length;
+        break;
+      }
+    } else {
+      depth += 1;
+    }
+  }
+  if (end < 0) throw new Error(`Toevoegroutepaneel mist sluiting: ${panelId}.`);
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
 function extractDossierAddFormStart(html: string): string {
@@ -4877,6 +4889,15 @@ describe('app shell', () => {
     const embryoStatusRequiredCue = extractDossierRequiredCue(emptyHtml, 'embryo-status');
 
     expect(addSection).toContain('data-dossier-add-route-panel="dossier-upload"');
+    expect(dossierPanel).toContain('class="kp-workflow-panel dossier-upload-workflow"');
+    expect(dossierPanel).toContain('aria-label="Begeleide dossierdocument upload"');
+    expect(dossierPanel).toContain('data-upload-workflow="dossier-document"');
+    expect(dossierPanel).toContain('data-upload-workflow-state="guided"');
+    expect(dossierPanel).toContain('Begeleide upload');
+    expect(dossierPanel).toContain('Workflowstappen');
+    expect(dossierPanel).toContain('data-state="current"><span>1</span>Basis');
+    expect(dossierPanel).toContain('data-state="todo"><span>2</span>Context');
+    expect(dossierPanel).toContain('data-state="todo"><span>3</span>Controle');
     expect(addSection).toContain('data-dossier-add-form-start="document-first-step"');
     expect(formStart).toContain(
       'Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.',

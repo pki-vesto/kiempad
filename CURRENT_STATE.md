@@ -142,6 +142,9 @@
 - **G146 consult-PDF:** vragenscherm kan een lokaal printbaar consultoverzicht openen
   met afspraken, vragen en medicatie; de browser kan dit zonder externe dienst als PDF
   opslaan.
+- **G1179 uploadworkflowcomponent:** dossierdocument-upload gebruikt nu een herbruikbaar
+  workflowpanel met begeleide stappen Basis, Context en Controle; G1180 staat open om
+  consultupload dezelfde componentstructuur te geven.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
