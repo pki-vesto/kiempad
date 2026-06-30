@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G506/G1057 Fertility Intelligence: historische labwaarden worden nu feitelijk genormaliseerd als naam, waarde, eenheid, datum, bron en reviewstatus met correctiepad zonder interpretatie; dossier-, app-shell-, datamodel- en encrypted-store regressies bewaken geen diagnose, referentiewaarde, kansberekening of behandelkeuzeadvies; G1057 is toegevoegd voor historical labvalue normalization audit evidence.
 - G480/G1056 Fertility Intelligence: embryovergelijking toont nu feitelijke kliniekvelden naast elkaar met embryo-label alfabetische sortering, kliniektekst, bron, notitie en status zonder score-, kleur-, voorkeur- of kanslabels; G1056 is toegevoegd voor embryo comparison language audit evidence.
 - G478/G1055 Fertility Intelligence: embryokwaliteit bewaart nu een expliciete kliniekbeoordeling met tekst, bron en datum naast de bestaande kwaliteitvelden; dossier- en app-shellregressies tonen de bronregistratie als kliniekopgave zonder kansberekening, rangorde of behandelkeuzeadvies; G1055 is toegevoegd voor embryo grading source audit evidence.
 - G477/G1054 Fertility Intelligence: consultsamenvattingen hebben nu een expliciete lokale reviewflow met concept-, aangepast- en verworpen-statussen, bronverwijzing, correctie/verwerpformulieren en encrypted-store regressies die adviesachtige correcties blokkeren; G1054 is toegevoegd voor consult summary review audit evidence.

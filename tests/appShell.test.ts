@@ -3749,6 +3749,18 @@ describe('app shell', () => {
               bron: 'Erasmus MC',
               documenttype: 'Labuitslag',
               onderzoekstype: 'Labwaarde',
+              labwaarden: [
+                {
+                  naam: 'AMH',
+                  waarde: '1.7',
+                  eenheid: 'ng/ml',
+                  datum: '2026-05-01',
+                  bron: 'Erasmus MC',
+                  reviewStatus: 'concept',
+                  origineleTekst: 'AMH 1,7 ng/ml',
+                  overschrevenDoorGebruiker: false,
+                },
+              ],
               pogingId: 'traject-1',
               afspraakId: 'afspraak-1',
               onzekerheid: 'laag',
@@ -3899,6 +3911,12 @@ describe('app shell', () => {
     expect(html).toContain('Lokale OCR-status: klaargezet voor lokale OCR.');
     expect(html).toContain('Lokale OCR-pipeline is expliciet gestart zonder netwerkstap.');
     expect(html).toContain('Bestandsnaam lijkt op laboratoriumuitslag.');
+    expect(html).toContain('Genormaliseerde labwaarden');
+    expect(html).toContain(
+      'AMH: 1.7 ng/ml · Datum: 2026-05-01 · Bron: Erasmus MC · Review: concept',
+    );
+    expect(html).toContain('data-labvalue-normalization-state="concept-review"');
+    expect(html).toContain('Kiempad toont geen referentiewaarden, diagnose of behandeladvies');
     expect(html).toContain('Bestandstype is PDF.');
     expect(html).toContain('Afspraak: Intakegesprek (2026-05-01 09:30)');
     expect(html).toContain('Traject: Poging 1');
