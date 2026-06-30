@@ -359,7 +359,29 @@ const SCREEN_GROUPS: readonly ScreenGroup[] = [
 const DEFAULT_SCREEN = SCREENS[0] as Screen;
 
 export function normalizeScreenId(value: string | null | undefined): ScreenId {
-  const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0];
+  const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
+  if (
+    [
+      'dossier-route-upload',
+      'dossier-route-search',
+      'dossier-route-imaging',
+      'dossier-route-timeline',
+      'dossier-upload-form',
+      'consult-verslag-form',
+      'embryo-quality-form',
+      'embryo-status-event-form',
+      'dossier-search-form',
+      'imaging-filter-form',
+      'dossier-documenttijdlijn',
+      'dossier-behandelgeschiedenis',
+      'dossier-consultverslagen',
+      'dossier-imaging-repository',
+      'dossier-index',
+      'dossier-embryo-dossiers',
+    ].includes(candidate)
+  ) {
+    return 'dossier';
+  }
   return SCREENS.some((screen) => screen.id === candidate) ? (candidate as ScreenId) : 'start';
 }
 
@@ -431,6 +453,48 @@ export function normalizeQuestionRoute(value: string | null | undefined): Questi
   return QUESTION_ROUTES.includes(route as QuestionRoute) ? (route as QuestionRoute) : 'open';
 }
 
+type DossierRoute = 'upload' | 'search' | 'imaging' | 'timeline';
+
+const DOSSIER_ROUTES: readonly DossierRoute[] = ['upload', 'search', 'imaging', 'timeline'];
+
+export function normalizeDossierRoute(value: string | null | undefined): DossierRoute {
+  const target = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
+  if (
+    [
+      'dossier-route-upload',
+      'dossier-upload-form',
+      'consult-verslag-form',
+      'embryo-quality-form',
+      'embryo-status-event-form',
+    ].includes(target)
+  ) {
+    return 'upload';
+  }
+  if (['dossier-route-search', 'dossier-search-form'].includes(target)) return 'search';
+  if (
+    [
+      'dossier-route-imaging',
+      'imaging-filter-form',
+      'dossier-consultverslagen',
+      'dossier-imaging-repository',
+      'dossier-index',
+      'dossier-embryo-dossiers',
+    ].includes(target)
+  ) {
+    return 'imaging';
+  }
+  if (
+    ['dossier-route-timeline', 'dossier-documenttijdlijn', 'dossier-behandelgeschiedenis'].includes(
+      target,
+    )
+  ) {
+    return 'timeline';
+  }
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return DOSSIER_ROUTES.includes(route as DossierRoute) ? (route as DossierRoute) : 'upload';
+}
+
 type CommandTaskRoute<RouteId extends string> = {
   id: RouteId;
   href: string;
@@ -500,6 +564,7 @@ export type AppShellState = {
   activeScheduleRoute?: ScheduleRoute;
   activeMedicationRoute?: MedicationRoute;
   activeQuestionRoute?: QuestionRoute;
+  activeDossierRoute?: DossierRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -1794,6 +1859,7 @@ function renderDossierScreen(state: AppShellState): string {
     consultVerslagen,
     dossierDocumenten: zichtbareDocumenten,
   });
+  const activeDossierRoute = state.activeDossierRoute ?? 'upload';
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
       renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
@@ -1812,6 +1878,7 @@ function renderDossierScreen(state: AppShellState): string {
         embryoCount: embryoDossiers.length,
         timelineCount: tijdlijn.length,
         searchCount: zoekterm ? zoekResultaten.length : undefined,
+        activeRoute: activeDossierRoute,
       })}
       ${renderDossierCommandCenter({
         documenten: zichtbareDocumenten,
@@ -1822,7 +1889,7 @@ function renderDossierScreen(state: AppShellState): string {
         embryoDossiers,
         state,
       })}
-      <section id="dossier-route-upload" class="dossier-route-section" aria-labelledby="dossier-route-upload-title" data-dossier-route="upload">
+      <section id="dossier-route-upload" class="dossier-route-section" aria-labelledby="dossier-route-upload-title" data-dossier-route="upload"${renderDossierRouteVisibility(activeDossierRoute, 'upload')}>
       <header class="dossier-route-section__header">
         <p class="kp-card__eyebrow">Uploaden</p>
         <h2 id="dossier-route-upload-title">Nieuwe medische records toevoegen</h2>
@@ -1889,7 +1956,7 @@ function renderDossierScreen(state: AppShellState): string {
           Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.
         </p>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-feedback-focus-target="dossier-upload" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment" tabindex="-1">
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis" data-dossier-field-section="document-basis" data-dossier-field-section-label="Stap 1 · basis">
             <legend>Documentbasis</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload">
             Verplicht: datum, bestand en controlebevestiging.
@@ -1935,7 +2002,7 @@ function renderDossierScreen(state: AppShellState): string {
             Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan afspraak
@@ -1956,7 +2023,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="notitie" rows="4"></textarea>
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 3 · beeld">
             <legend>Beeldcontext</legend>
           <label>
             Beeldcontext
@@ -1971,7 +2038,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-embryo-labcontext" data-dossier-field-section-label="Stap 4 · lab">
             <legend>Embryo en labcontext</legend>
           <label>
             Beeld embryo
@@ -2056,7 +2123,7 @@ function renderDossierScreen(state: AppShellState): string {
           ],
           body: `
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-dossier-feedback-focus-target="consult-upload" data-consult-upload-privacy-state="encrypted-text-or-file" tabindex="-1">
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis">
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis" data-dossier-field-section="consult-basis" data-dossier-field-section-label="Stap 1 · verslag">
             <legend>Consultbasis</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="consult-upload">
             Verplicht: datum; voeg daarna tekst of bestand toe.
@@ -2078,7 +2145,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional">
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="consult-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan afspraak
@@ -2099,7 +2166,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional">
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional" data-dossier-field-section="consult-context" data-dossier-field-section-label="Stap 3 · context">
             <legend>Bron en context</legend>
           <label>
             Correctie op conceptsamenvatting
@@ -2144,7 +2211,7 @@ function renderDossierScreen(state: AppShellState): string {
           ],
           body: `
         <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-dossier-feedback-focus-target="embryo-quality" data-embryo-upload-privacy-state="encrypted-quality-registration" tabindex="-1">
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie">
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie" data-dossier-field-section="embryo-identificatie" data-dossier-field-section-label="Stap 1 · embryo">
             <legend>Embryo-identificatie</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="embryo-quality">
             Verplicht: datum, embryo en kwaliteit.
@@ -2166,7 +2233,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="embryoMeetmoment" autocomplete="off" placeholder="Bijvoorbeeld: dag 3 cleavage of dag 5 blastocyst" />
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-beoordeling">
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-beoordeling" data-dossier-field-section="embryo-beoordeling" data-dossier-field-section-label="Stap 2 · beoordeling">
             <legend>Beoordeling</legend>
           <label>
             Kwaliteit volgens kliniek
@@ -2196,7 +2263,7 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen" data-dossier-context-priority="optional">
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="embryo-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan traject
@@ -2242,7 +2309,7 @@ function renderDossierScreen(state: AppShellState): string {
           ],
           body: `
         <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-dossier-feedback-focus-target="embryo-status" data-embryo-status-event-state="concept-editor" tabindex="-1">
-          <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis">
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis" data-dossier-field-section="status-basis" data-dossier-field-section-label="Stap 1 · status">
             <legend>Statusbasis</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="embryo-status">
             Verplicht: datum en embryo.
@@ -2264,7 +2331,7 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-status-group="status-bron" data-dossier-context-priority="optional">
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-bron" data-dossier-context-priority="optional" data-dossier-field-section="status-bron" data-dossier-field-section-label="Stap 2 · bron">
             <legend>Broncontrole</legend>
           <label>
             Bron status
@@ -2278,7 +2345,7 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-status-group="status-koppelingen" data-dossier-context-priority="optional">
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="status-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan traject
@@ -2309,7 +2376,7 @@ function renderDossierScreen(state: AppShellState): string {
         </div>
       </details>
       </section>
-        <section id="dossier-route-search" class="dossier-route-section" aria-labelledby="dossier-route-search-title" data-dossier-route="search">
+        <section id="dossier-route-search" class="dossier-route-section" aria-labelledby="dossier-route-search-title" data-dossier-route="search"${renderDossierRouteVisibility(activeDossierRoute, 'search')}>
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Zoeken</p>
           <h2 id="dossier-route-search-title">Dossier zoeken en privacycontrole</h2>
@@ -2426,7 +2493,7 @@ function renderDossierScreen(state: AppShellState): string {
           locked: Boolean(state.imagingPreviewLocked),
         })}
         </section>
-        <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging">
+        <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging"${renderDossierRouteVisibility(activeDossierRoute, 'imaging')}>
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Beelden en embryo's</p>
           <h2 id="dossier-route-imaging-title">Imaging, consulten en embryo-dossiers</h2>
@@ -2462,7 +2529,7 @@ function renderDossierScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
         }
         </section>
-        <section id="dossier-route-timeline" class="dossier-route-section" aria-labelledby="dossier-route-timeline-title" data-dossier-route="timeline">
+        <section id="dossier-route-timeline" class="dossier-route-section" aria-labelledby="dossier-route-timeline-title" data-dossier-route="timeline"${renderDossierRouteVisibility(activeDossierRoute, 'timeline')}>
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Tijdlijn</p>
           <h2 id="dossier-route-timeline-title">Tijdlijn en behandelgeschiedenis</h2>
@@ -2533,6 +2600,12 @@ function renderDossierSectionIndex(input: {
   `;
 }
 
+function renderDossierRouteVisibility(activeRoute: DossierRoute, route: DossierRoute): string {
+  return route === activeRoute
+    ? ' data-dossier-route-state="active"'
+    : ' data-dossier-route-state="inactive" hidden';
+}
+
 function renderDossierTaskRoutes(input: {
   uploadCount: number;
   reviewCount: number;
@@ -2540,38 +2613,52 @@ function renderDossierTaskRoutes(input: {
   embryoCount: number;
   timelineCount: number;
   searchCount?: number;
+  activeRoute: DossierRoute;
 }): string {
-  const routes = [
-    { href: '#dossier-route-upload', label: 'Uploaden', meta: `${input.uploadCount} records` },
-    { href: '#dossier-route-review', label: 'Review', meta: `${input.reviewCount} wachtrij` },
+  const routes: readonly CommandTaskRoute<DossierRoute>[] = [
     {
-      href: '#dossier-route-imaging',
-      label: "Beelden & embryo's",
-      meta: `${input.imagingCount} beelden · ${input.embryoCount} embryo's`,
+      id: 'upload',
+      href: '#dossier?route=upload',
+      label: 'Upload & review',
+      meta: `${input.uploadCount} records · ${input.reviewCount} review`,
+      badge: input.reviewCount > 0 ? String(input.reviewCount) : String(input.uploadCount),
+      density: input.reviewCount > 0 || input.uploadCount > 0 ? 'filled' : 'action',
     },
-    { href: '#dossier-route-timeline', label: 'Tijdlijn', meta: `${input.timelineCount} items` },
     {
-      href: '#dossier-route-search',
+      id: 'search',
+      href: '#dossier?route=search',
       label: 'Zoeken',
       meta:
         input.searchCount === undefined ? 'Encrypted dataset' : `${input.searchCount} resultaten`,
+      badge: input.searchCount === undefined ? 'zoek' : String(input.searchCount),
+      density: input.searchCount === undefined ? 'empty' : 'filled',
+    },
+    {
+      id: 'imaging',
+      href: '#dossier?route=imaging',
+      label: "Beelden & embryo's",
+      meta: `${input.imagingCount} beelden · ${input.embryoCount} embryo's`,
+      badge: String(input.imagingCount + input.embryoCount),
+      density: input.imagingCount + input.embryoCount > 0 ? 'filled' : 'empty',
+    },
+    {
+      id: 'timeline',
+      href: '#dossier?route=timeline',
+      label: 'Tijdlijn',
+      meta: `${input.timelineCount} items`,
+      badge: String(input.timelineCount),
+      density: input.timelineCount > 0 ? 'filled' : 'empty',
     },
   ];
 
-  return `
-    <nav class="dossier-task-routes" aria-label="Dossier taakroutes" data-dossier-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="dossier-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
-  `;
+  return renderCommandTaskRoutes({
+    className: 'dossier-task-routes',
+    routeClassName: 'dossier-task-route',
+    ariaLabel: 'Dossier taakroutes',
+    dataAttribute: 'dossier-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
 }
 
 function renderDossierCommandCenter(input: {
@@ -2630,21 +2717,21 @@ function renderDossierCommandCenter(input: {
         ${actionCard({
           title: 'Upload dossierstuk',
           subtitle: 'Onderzoeken, PDF’s, foto’s of echo’s',
-          href: '#dossier-upload-form',
+          href: '#dossier?route=upload',
           iconName: 'file',
           tone: 'sage',
         })}
         ${actionCard({
           title: 'Bekijk beeldreview',
           subtitle: `${input.imagingItems.length} beeldmoment${input.imagingItems.length === 1 ? '' : 'en'} · ${previewStatus}`,
-          href: '#imaging-filter-form',
+          href: '#dossier?route=imaging',
           iconName: 'sprout',
           tone: 'category',
         })}
         ${actionCard({
           title: 'Zoek dossier',
           subtitle: 'Zoek in ontgrendelde metadata, OCR en notities',
-          href: '#dossier-search-form',
+          href: '#dossier?route=search',
           iconName: 'question',
           tone: 'info',
         })}

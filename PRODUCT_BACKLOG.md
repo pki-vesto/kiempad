@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1005 |
+| ☑ klaar | 1007 |
 | ◐ bezig | 0 |
-| ☐ open | 101 |
+| ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1205** |
+| **Totaal** | **1206** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -625,7 +625,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G467 | Fertility Intelligence: OCR-confidence review voor kliniekdocumenten | P0 | F5 | ☑ |
 | G468 | Fertility Intelligence: metadata normaliseren voor lab- en onderzoeksrapporten | P0 | F5 | ☑ |
 | G469 | Fertility Intelligence: tijdlijnreconstructie uit historische records | P0 | F5 | ☑ |
-| G470 | Fertility Intelligence: fertility dossier packet per behandeltraject | P1 | F5 | ☐ |
+| G470 | Fertility Intelligence: fertility dossier packet per behandeltraject | P1 | F5 | ☑ |
 | G471 | Fertility Intelligence: ultrasound upload metadata schema | P0 | F5 | ☑ |
 | G472 | Fertility Intelligence: embryo image classification review | P1 | F5 | ☐ |
 | G473 | Fertility Intelligence: beeldvergelijking zonder medische interpretatie | P1 | F5 | ☐ |
@@ -1364,16 +1364,17 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1199 | Premium Claude Design UI: mobiele commandroutes verfijnen met sticky ruimte en bottom-nav affordance | P1 | F5 | ☑ |
 | G1200 | Premium Claude Design UI: mobiele formulierpanelen verdichten met duidelijke primaire actiezone | P1 | F5 | ☑ |
 | G1201 | Premium Claude Design UI: mobiele formulierinhoud groeperen met compacte veldsecties | P1 | F5 | ☑ |
-| G1202 | Premium Claude Design UI: veldsectiepatroon uitbreiden naar dossier- en uploadflows | P1 | F5 | ☐ |
+| G1202 | Premium Claude Design UI: veldsectiepatroon uitbreiden naar dossier- en uploadflows | P1 | F5 | ☑ |
 | G1203 | Premium Claude Design UI: startscherm openen met kernflow-werkbank | P1 | F5 | ☑ |
 | G1204 | Premium Claude Design UI: resterende startmodules omzetten naar echte flowpanelen | P1 | F5 | ☑ |
 | G1205 | Premium Claude Design UI: mobiele app-chrome boven Start compacter maken | P1 | F5 | ☑ |
+| G1206 | Premium Claude Design UI: dossierroute eerste viewport en live smoke verder verfijnen | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1205** (id's G001 t/m G1205, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1206** (id's G001 t/m G1206, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

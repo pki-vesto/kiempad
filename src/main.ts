@@ -1,4 +1,5 @@
 import {
+  normalizeDossierRoute,
   normalizeMedicationRoute,
   normalizeQuestionRoute,
   normalizeScheduleRoute,
@@ -195,6 +196,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     activeScheduleRoute: normalizeScheduleRoute(window.location.hash),
     activeMedicationRoute: normalizeMedicationRoute(window.location.hash),
     activeQuestionRoute: normalizeQuestionRoute(window.location.hash),
+    activeDossierRoute: normalizeDossierRoute(window.location.hash),
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,

@@ -3210,7 +3210,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier, trajectory, export, tests
 - **ADR Needed:** no
 - **Score:** 100
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G471 — ultrasound upload metadata schema
 
@@ -3574,7 +3574,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, upload workflow, forms, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 43
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G1203 — startscherm openen met kernflow-werkbank
 
@@ -3623,6 +3623,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **ADR Needed:** no
 - **Score:** 50
 - **Status:** ☑ done
+
+### G1206 — dossierroute eerste viewport en live smoke verder verfijnen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** G1202 maakt dossier- en uploadflows rustiger met veldsecties en taakroutes, maar de dossierroute moet verder bewijzen dat de eerste viewport ook in live ontgrendelde context niet terugvalt naar een lange alles-op-een-pagina ervaring.
+- **User Impact:** Gebruikers kunnen ondanks de nieuwe routeknoppen nog twijfel houden als live sessie, mobile viewport of unlock-state niet expliciet is gevalideerd.
+- **Desired Outcome:** Verfijn de dossier eerste viewport en voeg live browser-evidence toe voor routekeuze, actieve route en verborgen inactieve routes.
+- **User Value:** Gebruikers ervaren het dossier direct als een duidelijke werkruimte met gekozen taak, niet als een lange medische adminpagina.
+- **Acceptance Criteria:** Dossier eerste viewport toont een duidelijke routekeuze zonder lange alles-op-een-pagina indruk; upload, zoeken, imaging en timeline blijven via hashroutes bereikbaar; live/browser smoke bewijst minimaal één ontgrendelde dossierroute met precies één actieve route en verborgen inactieve routes; mobile, tablet en desktop tonen geen overlap; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Dossier
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, app shell, Claude Design, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 49
+- **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 

@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
+  normalizeDossierRoute,
   normalizeMedicationRoute,
   normalizeQuestionRoute,
   normalizeScheduleRoute,
@@ -1652,6 +1653,15 @@ describe('app shell', () => {
     expect(normalizeScreenId('#afwegingen')).toBe('afwegingen');
     expect(normalizeScreenId('#logboek')).toBe('logboek');
     expect(normalizeScreenId('#dossier')).toBe('dossier');
+    expect(normalizeScreenId('#dossier?route=imaging')).toBe('dossier');
+    expect(normalizeDossierRoute('#dossier?route=imaging')).toBe('imaging');
+    expect(normalizeDossierRoute('#dossier?route=bestaat-niet')).toBe('upload');
+    expect(normalizeScreenId('#consult-verslag-form')).toBe('dossier');
+    expect(normalizeDossierRoute('#consult-verslag-form')).toBe('upload');
+    expect(normalizeScreenId('#imaging-filter-form')).toBe('dossier');
+    expect(normalizeDossierRoute('#imaging-filter-form')).toBe('imaging');
+    expect(normalizeScreenId('#dossier-documenttijdlijn')).toBe('dossier');
+    expect(normalizeDossierRoute('#dossier-documenttijdlijn')).toBe('timeline');
     expect(normalizeScreenId('#agenda?route=plannen')).toBe('agenda');
     expect(normalizeScheduleRoute('#agenda?route=plannen')).toBe('plannen');
     expect(normalizeScheduleRoute('#/agenda?route=historie')).toBe('historie');
@@ -4858,6 +4868,14 @@ describe('app shell', () => {
     expect(emptyForm).toContain('data-dossier-upload-group="koppelingen"');
     expect(emptyForm).toContain('data-dossier-upload-group="beeldcontext"');
     expect(emptyForm).toContain('data-dossier-upload-group="embryo-labcontext"');
+    expect(emptyForm).toContain('data-dossier-field-section="document-basis"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 1 · basis"');
+    expect(emptyForm).toContain('data-dossier-field-section="document-koppelingen"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 2 · koppelen"');
+    expect(emptyForm).toContain('data-dossier-field-section="document-beeldcontext"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 3 · beeld"');
+    expect(emptyForm).toContain('data-dossier-field-section="document-embryo-labcontext"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 4 · lab"');
     expect(emptyForm).toContain('<legend>Documentbasis</legend>');
     expect(emptyForm).toContain('<legend>Koppelingen</legend>');
     expect(emptyForm).toContain('<legend>Beeldcontext</legend>');
@@ -4966,6 +4984,12 @@ describe('app shell', () => {
     expect(consultForm).toContain('data-consult-upload-group="consult-basis"');
     expect(consultForm).toContain('data-consult-upload-group="consult-koppelingen"');
     expect(consultForm).toContain('data-consult-upload-group="consult-context"');
+    expect(consultForm).toContain('data-dossier-field-section="consult-basis"');
+    expect(consultForm).toContain('data-dossier-field-section-label="Stap 1 · verslag"');
+    expect(consultForm).toContain('data-dossier-field-section="consult-koppelingen"');
+    expect(consultForm).toContain('data-dossier-field-section-label="Stap 2 · koppelen"');
+    expect(consultForm).toContain('data-dossier-field-section="consult-context"');
+    expect(consultForm).toContain('data-dossier-field-section-label="Stap 3 · context"');
     expect(consultForm).toContain('<legend>Consultbasis</legend>');
     expect(consultForm).toContain('<legend>Koppelingen</legend>');
     expect(consultForm).toContain('<legend>Bron en context</legend>');
@@ -4990,6 +5014,12 @@ describe('app shell', () => {
     expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-identificatie"');
     expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-beoordeling"');
     expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-koppelingen"');
+    expect(embryoQualityForm).toContain('data-dossier-field-section="embryo-identificatie"');
+    expect(embryoQualityForm).toContain('data-dossier-field-section-label="Stap 1 · embryo"');
+    expect(embryoQualityForm).toContain('data-dossier-field-section="embryo-beoordeling"');
+    expect(embryoQualityForm).toContain('data-dossier-field-section-label="Stap 2 · beoordeling"');
+    expect(embryoQualityForm).toContain('data-dossier-field-section="embryo-koppelingen"');
+    expect(embryoQualityForm).toContain('data-dossier-field-section-label="Stap 3 · koppelen"');
     expect(embryoQualityForm).toContain('<legend>Embryo-identificatie</legend>');
     expect(embryoQualityForm).toContain('<legend>Beoordeling</legend>');
     expect(embryoQualityForm).toContain('name="embryoLabel"');
@@ -5009,6 +5039,12 @@ describe('app shell', () => {
     expect(embryoStatusForm).toContain('data-embryo-status-group="status-basis"');
     expect(embryoStatusForm).toContain('data-embryo-status-group="status-bron"');
     expect(embryoStatusForm).toContain('data-embryo-status-group="status-koppelingen"');
+    expect(embryoStatusForm).toContain('data-dossier-field-section="status-basis"');
+    expect(embryoStatusForm).toContain('data-dossier-field-section-label="Stap 1 · status"');
+    expect(embryoStatusForm).toContain('data-dossier-field-section="status-bron"');
+    expect(embryoStatusForm).toContain('data-dossier-field-section-label="Stap 2 · bron"');
+    expect(embryoStatusForm).toContain('data-dossier-field-section="status-koppelingen"');
+    expect(embryoStatusForm).toContain('data-dossier-field-section-label="Stap 3 · koppelen"');
     expect(embryoStatusForm).toContain('<legend>Statusbasis</legend>');
     expect(embryoStatusForm).toContain('<legend>Broncontrole</legend>');
     expect(embryoStatusForm).toContain('name="embryoLabel"');
@@ -5677,6 +5713,10 @@ describe('app shell', () => {
     expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('font-weight: 650;');
+    expect(css).toContain('.dossier-upload-group[data-dossier-field-section]');
+    expect(css).toContain('.dossier-subform-group[data-dossier-field-section]');
+    expect(css).toContain('content: attr(data-dossier-field-section-label);');
+    expect(css).toContain('letter-spacing: 0.08em;');
     expect(css).toContain('[data-dossier-context-priority="optional"]');
     expect(css).toContain('border-style: dashed;');
     expect(css).toContain('content: "Optioneel";');
@@ -5687,6 +5727,12 @@ describe('app shell', () => {
     expect(css).toContain('gap: 10px 12px;');
     expect(css).toContain('padding: 12px;');
     expect(css).toContain('@media (max-width: 720px)');
+    expect(css).toContain('.dossier-upload-group[data-dossier-field-section]::before');
+    expect(css).toContain('.dossier-subform-group[data-dossier-field-section]::before');
+    expect(css).toContain(
+      'linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%)',
+    );
+    expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('padding-bottom: 8px;');
     expect(css).toContain('margin-top: 8px;');
     expect(css).toContain('.dossier-submit-action');
@@ -6034,24 +6080,32 @@ describe('app shell', () => {
     const emptyCenter = extractDossierCommandCenter(emptyHtml);
 
     expect(emptyHtml).toContain('class="section-stack dossier-command-layout"');
-    expect(emptyHtml).toContain('class="dossier-task-routes"');
+    expect(emptyHtml).toContain('class="dossier-task-routes command-task-routes"');
     expect(emptyHtml).toContain('aria-label="Dossier taakroutes"');
     expect(emptyHtml).toContain('data-dossier-task-routes="ready"');
-    expect(emptyHtml).toContain('href="#dossier-route-upload"');
-    expect(emptyHtml).toContain('href="#dossier-route-review"');
-    expect(emptyHtml).toContain('href="#dossier-route-imaging"');
-    expect(emptyHtml).toContain('href="#dossier-route-timeline"');
-    expect(emptyHtml).toContain('href="#dossier-route-search"');
+    expect(emptyHtml).toContain('data-command-task-routes="ready"');
+    expect(emptyHtml).toContain('href="#dossier?route=upload" aria-current="page"');
+    expect(emptyHtml).toContain('href="#dossier?route=search"');
+    expect(emptyHtml).toContain('href="#dossier?route=imaging"');
+    expect(emptyHtml).toContain('href="#dossier?route=timeline"');
+    expect(emptyHtml).toContain('Upload &amp; review');
     expect(emptyHtml).toContain('id="dossier-route-upload"');
     expect(emptyHtml).toContain('data-dossier-route="upload"');
     expect(emptyHtml).toContain('id="dossier-route-review"');
     expect(emptyHtml).toContain('data-dossier-route="review"');
     expect(emptyHtml).toContain('id="dossier-route-imaging"');
-    expect(emptyHtml).toContain('data-dossier-route="imaging"');
+    expect(emptyHtml).toContain(
+      'data-dossier-route="imaging" data-dossier-route-state="inactive" hidden',
+    );
     expect(emptyHtml).toContain('id="dossier-route-timeline"');
-    expect(emptyHtml).toContain('data-dossier-route="timeline"');
+    expect(emptyHtml).toContain(
+      'data-dossier-route="timeline" data-dossier-route-state="inactive" hidden',
+    );
     expect(emptyHtml).toContain('id="dossier-route-search"');
-    expect(emptyHtml).toContain('data-dossier-route="search"');
+    expect(emptyHtml).toContain(
+      'data-dossier-route="search" data-dossier-route-state="inactive" hidden',
+    );
+    expect(emptyHtml).toContain('data-dossier-route="upload" data-dossier-route-state="active"');
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');
     expect(emptyHtml).toContain('Dossier zoeken en privacycontrole');
@@ -6072,9 +6126,9 @@ describe('app shell', () => {
     expect(emptyCenter).toContain(
       '<span class="stat__value">0</span><span class="stat__label">Review</span>',
     );
-    expect(emptyCenter).toContain('href="#dossier-upload-form"');
-    expect(emptyCenter).toContain('href="#imaging-filter-form"');
-    expect(emptyCenter).toContain('href="#dossier-search-form"');
+    expect(emptyCenter).toContain('href="#dossier?route=upload"');
+    expect(emptyCenter).toContain('href="#dossier?route=imaging"');
+    expect(emptyCenter).toContain('href="#dossier?route=search"');
     expect(emptyCenter).toContain('Nog geen historische dossierstukken toegevoegd.');
     expect(emptyCenter).toContain(
       'geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies',
@@ -6228,6 +6282,35 @@ describe('app shell', () => {
     expect(lockedCenter).toContain('Beeldpreviews vergrendeld tot ontgrendeling.');
     expect(lockedCenter).not.toContain('locked-dashboard-secret.jpg');
     expect(lockedCenter).not.toContain('bG9ja2VkLWRhc2hib2FyZA==');
+  });
+
+  it('toont één actieve dossierroute tegelijk zodat dossier niet als lange stapel rendert', () => {
+    const html = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [],
+      consultVerslagen: [],
+      activeDossierRoute: 'imaging',
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(html).toContain('href="#dossier?route=imaging" aria-current="page"');
+    expect(html).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
+    expect(html).toContain(
+      'data-dossier-route="upload" data-dossier-route-state="inactive" hidden',
+    );
+    expect(html).toContain(
+      'data-dossier-route="search" data-dossier-route-state="inactive" hidden',
+    );
+    expect(html).toContain(
+      'data-dossier-route="timeline" data-dossier-route-state="inactive" hidden',
+    );
+    expect(html).toContain('Imaging, consulten en embryo-dossiers');
   });
 
   it('groepeert secundaire dossierprivacy achter progressive disclosure zonder primaire routes te verbergen', () => {
