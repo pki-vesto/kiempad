@@ -30,6 +30,7 @@ try {
 
 const expected = {
   status: 'ok',
+  contractVersion: 1,
   service: 'kiempad-central-encrypted-api',
   storageMode: 'central-api',
   encryptionBoundary: 'client-side-encrypted-envelopes',

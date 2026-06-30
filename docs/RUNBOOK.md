@@ -86,9 +86,10 @@ pad zonder lokale vault-hercreatie.
   medische plaintext.
 - **Centrale API health privacy audit (G503/G1078):** `GET /health` is publiek en
   read-only voor runtime checks. De response mag alleen technische contractvelden
-  bevatten: `status`, `service`, `storageMode`, `encryptionBoundary`,
-  `backendVisibility`, `medicalPlaintext`, `dataRoutes`, `emptyState` en
-  `errorStates`. Verwachte privacygrens: `storageMode=central-api`,
+  bevatten: `status`, `contractVersion`, `service`, `storageMode`,
+  `encryptionBoundary`, `backendVisibility`, `medicalPlaintext`, `dataRoutes`,
+  `emptyState` en `errorStates`. Verwachte contractversie:
+  `contractVersion=1`. Verwachte privacygrens: `storageMode=central-api`,
   `encryptionBoundary=client-side-encrypted-envelopes`,
   `backendVisibility=technical-metadata-only`, `medicalPlaintext=false`,
   `dataRoutes=bearer-session-required`, `emptyState=no-user-dataset-opened` en

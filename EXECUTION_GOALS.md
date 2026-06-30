@@ -11841,4 +11841,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Central API, Tailscale smoke, contract tests, docs
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1081 — central health contract migration notes
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1080 introduceert expliciete health contract versioning, maar beheerders hebben nog geen korte migratienotitie voor wat te doen wanneer `contractVersion` of de shape bewust wijzigt.
+- **Desired Outcome:** Documenteer en test een compacte migratie-/compatibilitynotitie voor centrale health-contractwijzigingen, inclusief deployvolgorde, smokeverwachting en privacygrens.
+- **User Value:** Beheer kan toekomstige healthcontractwijzigingen uitvoeren zonder onverwachte monitoringbreuk of privacyregressie.
+- **Acceptance Criteria:** Docs of tests verwijzen naar G1080; migratienotitie beschrijft wanneer `contractVersion` wijzigt, welke smokechecks moeten worden herhaald en hoe oude clients veilig falen; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Runbook, Tailscale deploy, contract tests
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

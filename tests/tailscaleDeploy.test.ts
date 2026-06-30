@@ -59,6 +59,7 @@ describe('Tailscale publicatieconfiguratie', () => {
     expect(smokeScript).toContain('check_health_contract');
     expect(smokeScript).toContain('G503/G1078');
     expect(smokeScript).toContain('/api/health');
+    expect(smokeScript).toContain('contractVersion: 1');
     expect(smokeScript).toContain('recordCount');
     expect(smokeScript).toContain('ciphertext');
     expect(smokeScript).toContain('Voor live /api/health check');
@@ -67,6 +68,7 @@ describe('Tailscale publicatieconfiguratie', () => {
     expect(deployDocs).toContain('npm run smoke:tailscale');
     expect(deployDocs).toContain('KIEMPAD_TAILSCALE_LOCAL_PORT=8098');
     expect(deployDocs).toContain('curl -fsS https://kiempad.tail9d0c71.ts.net/api/health');
+    expect(deployDocs).toContain('contractVersion=1');
     expect(deployDocs).toContain('client-side encrypted envelope boundary');
   });
 });
