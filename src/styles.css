@@ -2208,6 +2208,13 @@ a.action-card:active {
   gap: 12px;
 }
 
+.dossier-submit-action {
+  justify-self: start;
+  min-width: min(100%, 220px);
+  margin-top: 2px;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
 .dossier-upload-group legend,
 .dossier-subform-group legend {
   padding: 0 6px;
@@ -2286,6 +2293,11 @@ a.action-card:active {
 
   .dossier-add-route-panel:has(> form:target) {
     padding: 9px;
+  }
+
+  .dossier-submit-action {
+    justify-self: stretch;
+    width: 100%;
   }
 }
 
