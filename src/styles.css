@@ -2601,7 +2601,8 @@ h2 {
   display: grid;
   gap: 3px;
   min-width: 0;
-  padding: 10px 12px;
+  align-content: start;
+  padding: 9px 10px;
   border: 1px solid transparent;
   border-radius: 8px;
   color: var(--text);
@@ -2619,11 +2620,59 @@ h2 {
   background: color-mix(in srgb, var(--accent) 12%, var(--surface));
 }
 
-.command-task-route span {
+.command-task-route[data-command-route-density="empty"] {
+  color: var(--text-muted);
+}
+
+.command-task-route[data-command-route-density="action"] {
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-muted));
+}
+
+.command-task-route__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.command-task-route__top span {
   overflow: hidden;
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.command-task-route__badge {
+  flex: 0 0 auto;
+  max-width: min(72px, 46%);
+  overflow: hidden;
+  padding: 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--border-strong) 64%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-raised) 82%, var(--accent) 18%);
+  color: var(--text);
+  font-size: 0.68rem;
+  font-weight: 850;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-task-route[data-command-route-density="empty"] .command-task-route__badge {
+  border-color: var(--border);
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.command-task-route[data-command-route-density="filled"] .command-task-route__badge {
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--border-strong));
+  background: color-mix(in srgb, var(--accent) 18%, var(--surface-raised));
+}
+
+.command-task-route[data-command-route-density="action"] .command-task-route__badge {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border-strong));
+  background: color-mix(in srgb, var(--surface-raised) 90%, var(--accent) 10%);
 }
 
 .command-task-route small {
@@ -5250,12 +5299,30 @@ a.action-card:active {
   }
 
   .command-task-routes {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    overflow-x: auto;
     padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .command-task-routes::-webkit-scrollbar {
+    display: none;
   }
 
   .command-task-route {
+    flex: 0 0 min(168px, 72vw);
     min-width: 0;
+    padding: 9px 8px;
+    scroll-snap-align: start;
+  }
+
+  .command-task-route__top {
+    gap: 6px;
+  }
+
+  .command-task-route__badge {
+    max-width: min(62px, 44%);
+    padding-inline: 6px;
   }
 
   .treatment-task-routes {

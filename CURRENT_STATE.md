@@ -216,8 +216,10 @@
 - **G1196 questionroutes:** het vragenscherm heeft nu een routebalk en duidelijke
   clusters voor open vragen, consultvoorbereiding, beheer, verslagen en alle vragen,
   met behoud van `vraag-form`, `question-priority-form`, antwoordvelden,
-  afspraakkoppeling en exporthook; G1197 staat open voor gedeelde command-route
-  verfijning.
+  afspraakkoppeling en exporthook.
+- **G1198 commandroute-badges:** agenda, medicatie, vragen en traject tonen nu
+  compacte badges en density states op de gedeelde commandroutes, zodat tellingen,
+  acties en lege/gevulde routecontext direct scanbaar zijn.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
@@ -643,8 +645,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   reviewstatus en herkomst; de UI toont deze relatieherleiding zonder raw payload.
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
   taakroutes; traject, agenda, medicatie en vragen gebruiken nu gedeelde
-  command-routepanelen met consistente actieve state, header-spacing en routecontracten
-  zodat deze schermen minder als één lange pagina aanvoelen.
+  command-routepanelen met consistente actieve state, header-spacing, compacte
+  badges, density states en routecontracten zodat deze schermen minder als één lange
+  pagina aanvoelen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -660,7 +663,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1198: Premium Claude Design UI commandroutes uitbreiden met statusbadges en compactere density states heeft prioriteit na de gedeelde command-routepanelen van G1197.
+1. UI Improvement Evolution uitvoeren vanaf G1199: Premium Claude Design UI mobiele commandroutes verfijnen met sticky ruimte en bottom-nav affordance heeft prioriteit na de commandroute-badges van G1198.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
