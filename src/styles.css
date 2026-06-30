@@ -3701,7 +3701,7 @@ a.action-card:active {
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: 8px;
   border: 1px solid var(--border);
@@ -3725,6 +3725,12 @@ a.action-card:active {
 .dossier-task-route:hover {
   border-color: var(--border-strong);
   background: var(--surface-muted);
+}
+
+.dossier-task-route[aria-current="page"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 .dossier-task-route span {
@@ -4554,6 +4560,30 @@ a.action-card:active {
   font-weight: 750;
 }
 
+.dossier-upload-group[data-dossier-field-section],
+.dossier-subform-group[data-dossier-field-section] {
+  position: relative;
+  align-items: start;
+  border-color: color-mix(in srgb, var(--border) 78%, var(--accent) 22%);
+}
+
+.dossier-upload-group[data-dossier-field-section]::before,
+.dossier-subform-group[data-dossier-field-section]::before {
+  content: attr(data-dossier-field-section-label);
+  grid-column: 1 / -1;
+  width: fit-content;
+  margin-bottom: -4px;
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 82%, var(--surface-2));
+  color: var(--text-faint);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .dossier-upload-group > *,
 .dossier-subform-group > * {
   min-width: 0;
@@ -4610,8 +4640,22 @@ a.action-card:active {
   .dossier-upload-group,
   .dossier-subform-group {
     grid-template-columns: 1fr;
-    gap: 9px;
-    padding: 11px;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .dossier-upload-group[data-dossier-field-section],
+  .dossier-subform-group[data-dossier-field-section] {
+    background:
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, transparent), transparent 42%),
+      color-mix(in srgb, var(--surface) 86%, var(--surface-2));
+  }
+
+  .dossier-upload-group[data-dossier-field-section]::before,
+  .dossier-subform-group[data-dossier-field-section]::before {
+    margin-bottom: -2px;
+    font-size: 0.62rem;
   }
 
   .dossier-add-route-panel {
