@@ -164,8 +164,12 @@
 - **G1184 researchcomponenten:** researchbronnen en wetenschappelijke/eenvoudige
   researchsamenvattingen gebruiken nu herbruikbare `researchSourceList`,
   `researchSourceCard`, `researchSummaryList` en `researchSummaryCard` componenten
-  met bron-, citation-, review- en herverificatiecontext; G1185 staat open om de
-  kennispagina verder in taakgerichte researchroutes op te delen.
+  met bron-, citation-, review- en herverificatiecontext; G1185 deelt de
+  kennispagina verder op in taakgerichte researchroutes.
+- **G1185 kennisroutes:** de kennispagina heeft nu een routebalk en duidelijke
+  clusters voor research lezen, research/kennis toevoegen, AI & netwerk en
+  bibliotheek; G1186 staat open om de dossierpagina verder in taakgerichte
+  medical-record routes op te delen.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

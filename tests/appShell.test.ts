@@ -34014,6 +34014,27 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Research opslaan');
+    expect(html).toContain('class="section-stack knowledge-command-layout"');
+    expect(html).toContain('id="knowledge-overview"');
+    expect(html).toContain('class="knowledge-task-routes"');
+    expect(html).toContain('aria-label="Kennis taakroutes"');
+    expect(html).toContain('data-knowledge-task-routes="ready"');
+    expect(html).toContain('href="#knowledge-route-read"');
+    expect(html).toContain('href="#knowledge-route-add"');
+    expect(html).toContain('href="#knowledge-route-ai"');
+    expect(html).toContain('href="#knowledge-route-library"');
+    expect(html).toContain('id="knowledge-route-read"');
+    expect(html).toContain('data-knowledge-route="read"');
+    expect(html).toContain('id="knowledge-route-add"');
+    expect(html).toContain('data-knowledge-route="add"');
+    expect(html).toContain('id="knowledge-route-ai"');
+    expect(html).toContain('data-knowledge-route="ai"');
+    expect(html).toContain('id="knowledge-route-library"');
+    expect(html).toContain('data-knowledge-route="library"');
+    expect(html).toContain('Bronnen, samenvattingen en trends');
+    expect(html).toContain('Research en eigen kennis toevoegen');
+    expect(html).toContain('Opt-in, preview en opslag');
+    expect(html).toContain('Kennisitems per categorie');
     expect(html).toContain('id="research-item-form"');
     expect(html).toContain('name="researchTitel"');
     expect(html).toContain('name="researchBron" type="url"');
