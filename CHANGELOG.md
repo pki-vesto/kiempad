@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1181/G1182 Premium Claude Design UI: embryokwaliteit en embryo-status gebruiken nu herbruikbare workflowpanelen met begeleide stappen voor identificatie/beoordeling/controle en status/bron/koppeling, zonder formcontracten, privacyhooks of feedbackroutes te breken; G1182 is toegevoegd voor herbruikbare timelinecomponenten.
 - G1180/G1181 Premium Claude Design UI: consultupload gebruikt nu hetzelfde herbruikbare workflowpanel als dossierdocument-upload, met begeleide stappen Verslag, Context en Acties en behoud van formcontracten, privacyhooks en feedbackroutes; G1181 is toegevoegd voor embryoworkflows.
 - G1179/G1180 Premium Claude Design UI: dossierdocument-upload gebruikt nu een herbruikbaar workflowpanel met begeleide stappen Basis, Context en Controle, terwijl bestaande formcontracten, privacyhooks en feedbackroutes behouden blijven; G1180 is toegevoegd om consultupload dezelfde componentstructuur te geven.
 - G1178/G1179 Premium Claude Design UI: het startscherm gebruikt nu een herbruikbare dashboard-shell met primaire dagtaken en secundaire taakroutes voor volgende stap, aanbevelingen, setup en snelle invoer; G1179 is toegevoegd voor herbruikbare uploadworkflowcomponenten.

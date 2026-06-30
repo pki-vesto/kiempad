@@ -3240,6 +3240,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 100
 - **Status:** ☐ open
 
+### G1182 — tijdlijnweergaven omzetten naar herbruikbare timelinecomponenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Uploadflows gebruiken nu herbruikbare workflowpanelen, maar tijdlijnweergaven worden nog als route-specifieke lijsten opgebouwd.
+- **User Impact:** Gebruikers kunnen het volledige fertiliteitstraject nog minder makkelijk als rustig, samenhangend verhaal lezen.
+- **Desired Outcome:** Introduceer herbruikbare timelinecomponenten en pas ze zichtbaar toe op minimaal één fertiliteits- of dossiertijdlijnweergave.
+- **User Value:** Gebruikers zien onderzoeken, consulten, behandelingen, embryo-events en aanbevelingen consistenter in één scanbare trajectstructuur.
+- **Acceptance Criteria:** Componentlaag bevat herbruikbare timeline item/section helpers; minimaal één tijdlijnroute gebruikt de nieuwe structuur zichtbaar; bestaande ankers, privacygrenzen en lege/gevulde states blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde tijdlijncontext; geen medische payload, OCR-tekst, consulttekst, beeldpayload, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Fertility timeline, Dossier, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Timeline UI, Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 63
+- **Status:** ☐ open
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
@@ -3270,7 +3286,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Upload workflow, Embryo UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 64
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G473 — beeldvergelijking zonder medische interpretatie
 
