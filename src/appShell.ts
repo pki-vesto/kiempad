@@ -1409,7 +1409,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <label>
             Upload verslag
-            <input name="consultBestand" type="file" accept="application/pdf,text/*" />
+            <input name="consultBestand" type="file" accept="application/pdf,image/*,text/*" />
           </label>
           <label>
             Tekst of samenvatting
@@ -1432,6 +1432,18 @@ function renderDossierScreen(state: AppShellState): string {
               <option value="">Geen traject</option>
               ${trajectOpties}
             </select>
+          </label>
+          <label>
+            Poging of cycluscontext
+            <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
+          </label>
+          <label>
+            Auteur of bronpersoon
+            <input name="consultAuteur" autocomplete="off" placeholder="Bijvoorbeeld: fertiliteitsarts, embryoloog of eigen notitie" />
+          </label>
+          <label>
+            Consultcontext
+            <input name="consultContext" autocomplete="off" placeholder="Bijvoorbeeld: intake, evaluatie, belafspraak of labupdate" />
           </label>
           <label>
             Notitie
@@ -7277,6 +7289,9 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
       : undefined,
     afspraak ? `Afspraak: ${afspraak.titel}` : undefined,
     traject ? `Traject: ${traject.naam}` : undefined,
+    verslag.pogingId ? `Poging: ${verslag.pogingId}` : undefined,
+    verslag.auteur ? `Auteur: ${verslag.auteur}` : undefined,
+    verslag.context ? `Context: ${verslag.context}` : undefined,
   ].filter((detail): detail is string => Boolean(detail));
   const inzichten = koppelConsultInzichten({
     consult: verslag,

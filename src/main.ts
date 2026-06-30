@@ -482,6 +482,9 @@ async function saveConsultVerslagFromForm(
       samenvattingCorrectie: optionalString(data.get('samenvattingCorrectie')),
       afspraakId: optionalString(data.get('afspraakId')),
       trajectId: optionalString(data.get('trajectId')),
+      pogingId: optionalString(data.get('consultPogingId')),
+      auteur: optionalString(data.get('consultAuteur')),
+      context: optionalString(data.get('consultContext')),
       notitie: optionalString(data.get('notitie')),
     });
 

@@ -16,6 +16,9 @@ describe('consultVerslag', () => {
       tekst: 'Besproken wat de volgende stap wordt.',
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
+      pogingId: 'poging-1',
+      auteur: 'Fertiliteitsarts',
+      context: 'Evaluatie na punctie',
       uploadedAt: '2026-06-12T10:00:00.000Z',
     });
 
@@ -26,10 +29,18 @@ describe('consultVerslag', () => {
       tekst: 'Besproken wat de volgende stap wordt.',
       afspraakId: 'afspraak-1',
       trajectId: 'traject-1',
+      pogingId: 'poging-1',
+      auteur: 'Fertiliteitsarts',
+      context: 'Evaluatie na punctie',
       importMetadata: {
         bron: 'tekstveld',
         reviewStatus: 'concept',
         bronLabel: 'Tekstveld consultnotitie',
+        afspraakId: 'afspraak-1',
+        trajectId: 'traject-1',
+        pogingId: 'poging-1',
+        auteur: 'Fertiliteitsarts',
+        context: 'Evaluatie na punctie',
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
     });
@@ -51,6 +62,65 @@ describe('consultVerslag', () => {
         aangemaaktOp: '2026-06-12T10:00:00.000Z',
       },
     ]);
+  });
+
+  it('importeert consulttranscripten uit PDF en afbeelding met bronkoppeling', () => {
+    const pdf = maakConsultVerslag('consult-pdf', {
+      datum: '2026-06-13',
+      titel: 'PDF consult',
+      bestandsNaam: 'consult-evaluatie.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 4096,
+      inhoudBase64: 'Y29uc3VsdC1wZGY=',
+      afspraakId: 'afspraak-pdf',
+      trajectId: 'traject-pdf',
+      auteur: 'Verpleegkundige',
+      context: 'Telefonisch consult',
+      uploadedAt: '2026-06-13T10:00:00.000Z',
+    });
+    const image = maakConsultVerslag('consult-image', {
+      datum: '2026-06-14',
+      titel: 'Foto consultnotitie',
+      bestandsNaam: 'consult-notitie.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 2048,
+      inhoudBase64: 'Y29uc3VsdC1pbWFnZQ==',
+      afspraakId: 'afspraak-image',
+      trajectId: 'traject-image',
+      pogingId: 'poging-image',
+      auteur: 'Eigen notitie',
+      context: 'Foto van gespreksverslag',
+      uploadedAt: '2026-06-14T10:00:00.000Z',
+    });
+
+    expect(pdf).toMatchObject({
+      bron: 'upload',
+      importMetadata: {
+        bron: 'bestand',
+        reviewStatus: 'concept',
+        bronLabel: 'Bestand: consult-evaluatie.pdf',
+        afspraakId: 'afspraak-pdf',
+        trajectId: 'traject-pdf',
+        pogingId: 'traject-pdf',
+        auteur: 'Verpleegkundige',
+        context: 'Telefonisch consult',
+      },
+    });
+    expect(image).toMatchObject({
+      bron: 'upload',
+      mimeType: 'image/jpeg',
+      importMetadata: {
+        bron: 'bestand',
+        bronLabel: 'Bestand: consult-notitie.jpg',
+        afspraakId: 'afspraak-image',
+        trajectId: 'traject-image',
+        pogingId: 'poging-image',
+        auteur: 'Eigen notitie',
+        context: 'Foto van gespreksverslag',
+      },
+    });
+    expect(pdf.samenvatting).toBeUndefined();
+    expect(image.samenvatting).toBeUndefined();
   });
 
   it('vereist inhoud zonder medisch advies te genereren', () => {

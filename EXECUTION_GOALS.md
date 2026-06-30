@@ -3280,7 +3280,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consults, appointments, dossier, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G476 — actie-extractie uit consulten als taken en vragen
 
@@ -11433,6 +11433,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Timeline, imaging, privacy, maintenance tests, encrypted storage
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1052 — consult transcript source audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G475 beheert consulttranscripten nu als eigen bronsoort met afspraak-, traject-, poging-, auteur- en contextkoppeling, maar er is nog geen onderhoudsgericht auditbewijs dat deze bronmetadata en uploadtypen niet terugdriften of plaintext lekken.
+- **Desired Outcome:** Voeg een compacte audit of regressie toe die consult transcript source metadata, tekst/PDF/afbeelding-import, encrypted opslag en zichtbare importstatus als onderhoudsbewijs samenbrengt.
+- **User Value:** Gebruikers kunnen consultinformatie blijven terugvinden en voorbereiden zonder dat bronbestanden, transcriptpayloads of contextmetadata onbedoeld uitlekken.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G475; tekst-, PDF- en afbeeldingsconsulten blijven gedekt; afspraak/traject/poging/auteur/context-koppeling is aantoonbaar; encrypted-store bewijs toont geen plaintext transcript, bronbestand, base64, afspraak, traject, poging, auteur of context; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consults, encrypted storage, maintenance tests, dossier UI
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

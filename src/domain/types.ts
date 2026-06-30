@@ -302,11 +302,19 @@ export interface ConsultVerslag {
   tekst?: string;
   afspraakId?: string;
   trajectId?: string;
+  pogingId?: string;
+  auteur?: string;
+  context?: string;
   notitie?: string;
   importMetadata?: {
     bron: 'tekstveld' | 'bestand';
     reviewStatus: 'concept' | 'gereviewd';
     bronLabel: string;
+    afspraakId?: string;
+    trajectId?: string;
+    pogingId?: string;
+    auteur?: string;
+    context?: string;
     aangemaaktOp: IsoDate;
   };
   samenvatting?: {
