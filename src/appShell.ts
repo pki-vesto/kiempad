@@ -415,6 +415,22 @@ export function normalizeMedicationRoute(value: string | null | undefined): Medi
     : 'vandaag';
 }
 
+type QuestionRoute = 'open' | 'voorbereiden' | 'beheer' | 'verslagen' | 'alle';
+
+const QUESTION_ROUTES: readonly QuestionRoute[] = [
+  'open',
+  'voorbereiden',
+  'beheer',
+  'verslagen',
+  'alle',
+];
+
+export function normalizeQuestionRoute(value: string | null | undefined): QuestionRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return QUESTION_ROUTES.includes(route as QuestionRoute) ? (route as QuestionRoute) : 'open';
+}
+
 export type AppShellState = {
   trajecten: TrajectMetFasen[];
   afspraken: AfspraakBundle[];
@@ -447,6 +463,7 @@ export type AppShellState = {
   activeTreatmentRoute?: TreatmentRoute;
   activeScheduleRoute?: ScheduleRoute;
   activeMedicationRoute?: MedicationRoute;
+  activeQuestionRoute?: QuestionRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -10859,6 +10876,7 @@ function renderQuickEntryForm(): string {
 
 function renderVragenScreen(state: AppShellState): string {
   const selected = state.vragen[0];
+  const activeQuestionRoute = state.activeQuestionRoute ?? 'open';
   const nextWithQuestions = volgendeAfspraakMetOpenVragen(
     state.afspraken.map((bundle) => bundle.afspraak),
     state.vragen.map((bundle) => bundle.vraag),
@@ -10881,31 +10899,138 @@ function renderVragenScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      `<div class="panel-heading"><h2>Openstaand</h2><button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>${deleteVraagButton}</div>`,
-      nextWithQuestions
-        ? renderOpenVragenVoorAfspraak(nextWithQuestions)
-        : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>',
-      renderConsultPrepWizard(gegenereerdeVragenlijst),
-      '<h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>',
-      gegenereerdeVragenlijst
-        ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
-        : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>',
-      '<h2 class="section-subheading">Alle vragen</h2>',
-      state.vragen.length > 0
-        ? renderVragenList(state.vragen)
-        : '<p class="empty-state">Nog geen vragen. Voeg hieronder een vraag toe voor het volgende contactmoment.</p>',
-      '<h2 class="section-subheading">Verslag per afspraak</h2>',
-      vraagVerslagen.length > 0
-        ? renderVraagVerslagen(vraagVerslagen)
-        : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>',
-      disclosure({
-        summary: selected ? 'Vraag bewerken' : 'Vraag toevoegen',
-        open: !selected,
-        body: renderVraagForm(selected, state.afspraken),
+      renderQuestionTaskRoutes({
+        openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+        totalCount: state.vragen.length,
+        verslagCount: vraagVerslagen.length,
+        hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+        activeRoute: activeQuestionRoute,
       }),
+      `<section id="vragen-route-open" class="question-route-section" aria-labelledby="vragen-route-open-title" data-question-route="open"${renderQuestionRouteVisibility(activeQuestionRoute, 'open')}>
+        <header class="question-route-section__header">
+          <p class="kp-card__eyebrow">Open</p>
+          <h2 id="vragen-route-open-title">Openstaande vragen</h2>
+          <p>Bekijk de vragen die bij het eerstvolgende contactmoment horen.</p>
+        </header>
+        <div class="panel-heading"><h2>Openstaand</h2><button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>${deleteVraagButton}</div>
+        ${
+          nextWithQuestions
+            ? renderOpenVragenVoorAfspraak(nextWithQuestions)
+            : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
+        }
+      </section>`,
+      `<section id="vragen-route-voorbereiden" class="question-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
+        <header class="question-route-section__header">
+          <p class="kp-card__eyebrow">Voorbereiden</p>
+          <h2 id="vragen-route-voorbereiden-title">Consult voorbereiden</h2>
+          <p>Maak lokaal een prep-packet met open vragen en consultactiepunten.</p>
+        </header>
+        ${renderConsultPrepWizard(gegenereerdeVragenlijst)}
+        <h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>
+        ${
+          gegenereerdeVragenlijst
+            ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
+            : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>'
+        }
+      </section>`,
+      `<section id="vragen-route-beheer" class="question-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
+        <header class="question-route-section__header">
+          <p class="kp-card__eyebrow">Beheer</p>
+          <h2 id="vragen-route-beheer-title">Vraag toevoegen of beantwoorden</h2>
+          <p>Leg vraag, afspraak, prioriteit, status en antwoord vast zonder medisch advies.</p>
+        </header>
+        ${disclosure({
+          summary: selected ? 'Vraag bewerken' : 'Vraag toevoegen',
+          open: !selected,
+          body: renderVraagForm(selected, state.afspraken),
+        })}
+      </section>`,
+      `<section id="vragen-route-verslagen" class="question-route-section" aria-labelledby="vragen-route-verslagen-title" data-question-route="verslagen"${renderQuestionRouteVisibility(activeQuestionRoute, 'verslagen')}>
+        <header class="question-route-section__header">
+          <p class="kp-card__eyebrow">Verslagen</p>
+          <h2 id="vragen-route-verslagen-title">Beantwoorde vragen per afspraak</h2>
+          <p>Lees antwoorden terug per contactmoment, los van open vragen en beheer.</p>
+        </header>
+        <h2 class="section-subheading">Verslag per afspraak</h2>
+        ${
+          vraagVerslagen.length > 0
+            ? renderVraagVerslagen(vraagVerslagen)
+            : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>'
+        }
+      </section>`,
+      `<section id="vragen-route-alle" class="question-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
+        <header class="question-route-section__header">
+          <p class="kp-card__eyebrow">Alle vragen</p>
+          <h2 id="vragen-route-alle-title">Vraaglijst beheren</h2>
+          <p>Bekijk alle vragen met prioriteitsknoppen en antwoordstatus.</p>
+        </header>
+        <h2 class="section-subheading">Alle vragen</h2>
+        ${
+          state.vragen.length > 0
+            ? renderVragenList(state.vragen)
+            : '<p class="empty-state">Nog geen vragen. Voeg via Beheer een vraag toe voor het volgende contactmoment.</p>'
+        }
+      </section>`,
     ],
-    { ariaLabel: 'Vragen voor de arts beheren' },
+    { className: 'question-command-layout', ariaLabel: 'Vragen voor de arts beheren' },
   );
+}
+
+function renderQuestionTaskRoutes(input: {
+  openCount: number;
+  totalCount: number;
+  verslagCount: number;
+  hasPrepPacket: boolean;
+  activeRoute: QuestionRoute;
+}): string {
+  const routes = [
+    {
+      id: 'open',
+      href: '#vragen?route=open',
+      label: 'Open',
+      meta: `${input.openCount} open`,
+    },
+    {
+      id: 'voorbereiden',
+      href: '#vragen?route=voorbereiden',
+      label: 'Prep',
+      meta: input.hasPrepPacket ? 'packet' : 'wacht',
+    },
+    { id: 'beheer', href: '#vragen?route=beheer', label: 'Beheer', meta: 'vraag' },
+    {
+      id: 'verslagen',
+      href: '#vragen?route=verslagen',
+      label: 'Verslagen',
+      meta: `${input.verslagCount} afspraak`,
+    },
+    {
+      id: 'alle',
+      href: '#vragen?route=alle',
+      label: 'Alle',
+      meta: `${input.totalCount} totaal`,
+    },
+  ];
+
+  return `
+    <nav class="question-task-routes" aria-label="Vragen taakroutes" data-question-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="question-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
+}
+
+function renderQuestionRouteVisibility(activeRoute: QuestionRoute, route: QuestionRoute): string {
+  return route === activeRoute
+    ? ' data-question-route-state="active"'
+    : ' data-question-route-state="inactive" hidden';
 }
 
 function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefined): string {
