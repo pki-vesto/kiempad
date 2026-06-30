@@ -12856,4 +12856,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 75
+- **Status:** ☑ done
+
+### G1150 — dossier add feedback recovery hint
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedbackcopy is compacter, maar bij review nodig of fout ontbreekt nog een korte herstelhint direct in de route.
+- **User Impact:** Gebruikers zien dat aandacht nodig is, maar weten mogelijk niet welke volgende stap het veiligst is.
+- **Desired Outcome:** Voeg een compacte herstelhint toe voor aandacht- en foutstates zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers kunnen na een fout of reviewstate sneller corrigeren zonder extra zoeken.
+- **Acceptance Criteria:** Recovery hint is compact, statusgericht en privacyveilig; bestaande ankers, form-id's, input names en data-hooks blijven intact; feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 74
 - **Status:** ☐ open
