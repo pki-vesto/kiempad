@@ -1448,6 +1448,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           </fieldset>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
+          ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${renderUploadAttachmentFeedback(state)}
@@ -1550,6 +1551,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           </fieldset>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="consult-upload">Bewaar consultverslag</button>
+          ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         </section>
@@ -1630,6 +1632,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           </fieldset>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
+          ${renderDossierSubmitFeedback('embryo-quality', 'embryo-upload', state)}
         </form>
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status">
@@ -1693,6 +1696,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           </fieldset>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-status">Bewaar embryo-status</button>
+          ${renderDossierSubmitFeedback('embryo-status', 'embryo-upload', state)}
         </form>
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
         </section>
@@ -2040,6 +2044,23 @@ function renderUploadAttachmentFeedbackRow(
   );
 
   return `<div data-upload-attachment-feedback-kind="${kind}" data-upload-attachment-feedback-state="${state}"><dt>${defaults.label}</dt><dd>${escapeHtml(copy)}</dd></div>`;
+}
+
+function renderDossierSubmitFeedback(
+  route: 'dossier-upload' | 'consult-upload' | 'embryo-quality' | 'embryo-status',
+  kind: UploadAttachmentFeedbackKind,
+  state: AppShellState,
+): string {
+  const defaults = UPLOAD_ATTACHMENT_FEEDBACK_DEFAULTS[kind];
+  const item = state.uploadAttachmentFeedback?.[kind];
+  const feedbackState = item?.state ?? defaults.defaultState;
+  const fallback = `${defaults.label} bijgewerkt zonder broninhoud of attachmentdetails.`;
+  const copy = sanitizeSettingsPrivacyFeedback(
+    item?.error ?? item?.status ?? defaults.defaultCopy,
+    fallback,
+  );
+
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}">${escapeHtml(copy)}</p>`;
 }
 
 function renderAttachmentConsentExportPrivacy(state: AppShellState): string {

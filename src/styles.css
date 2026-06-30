@@ -2215,6 +2215,15 @@ a.action-card:active {
   box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
+.dossier-submit-feedback {
+  justify-self: start;
+  max-width: 58ch;
+  margin: -4px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .dossier-upload-group legend,
 .dossier-subform-group legend {
   padding: 0 6px;
@@ -2298,6 +2307,11 @@ a.action-card:active {
   .dossier-submit-action {
     justify-self: stretch;
     width: 100%;
+  }
+
+  .dossier-submit-feedback {
+    justify-self: stretch;
+    max-width: none;
   }
 }
 

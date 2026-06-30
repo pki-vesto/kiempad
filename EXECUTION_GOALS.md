@@ -12824,4 +12824,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 77
+- **Status:** ☑ done
+
+### G1148 — dossier add feedback state tone clarity
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Feedback staat nu dichter bij de submitactie, maar statusverschillen zoals klaar, verwerken, review nodig en fout hebben nog weinig visueel onderscheid.
+- **User Impact:** Gebruikers kunnen minder snel zien of een route klaar is, nog verwerkt, aandacht vraagt of een fout heeft.
+- **Desired Outcome:** Maak feedbackstatussen compact herkenbaar met rustige toonverschillen zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers herkennen sneller welke vervolgstap nodig is na uploaden of bewaren.
+- **Acceptance Criteria:** Feedbackstatussen hebben compacte, toegankelijke toonverschillen; bestaande ankers, form-id's, input names en data-hooks blijven intact; post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 76
 - **Status:** ☐ open

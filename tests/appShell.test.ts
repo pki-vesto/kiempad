@@ -4743,6 +4743,10 @@ describe('app shell', () => {
       'class="dossier-submit-action" data-dossier-submit-action="dossier-upload"',
     );
     expect(dossierPanel).toContain('Upload document naar dossier</button>');
+    expect(dossierPanel).toContain('data-dossier-submit-feedback="dossier-upload"');
+    expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
+    );
     expect(consultPanel).toContain('id="consult-verslag-form"');
     expect(consultPanel).toContain('data-upload-privacy-kind="consult"');
     expect(consultPanel).toContain('data-consult-upload-group="consult-basis"');
@@ -4762,6 +4766,7 @@ describe('app shell', () => {
       'class="dossier-submit-action" data-dossier-submit-action="consult-upload"',
     );
     expect(consultPanel).toContain('Bewaar consultverslag</button>');
+    expect(consultPanel).toContain('data-dossier-submit-feedback="consult-upload"');
     expect(embryoQualityPanel).toContain('id="embryo-quality-form"');
     expect(embryoQualityPanel).toContain('data-upload-privacy-kind="embryo"');
     expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-identificatie"');
@@ -4778,6 +4783,7 @@ describe('app shell', () => {
       'class="dossier-submit-action" data-dossier-submit-action="embryo-quality"',
     );
     expect(embryoQualityPanel).toContain('Bewaar embryokwaliteit</button>');
+    expect(embryoQualityPanel).toContain('data-dossier-submit-feedback="embryo-quality"');
     expect(embryoStatusPanel).toContain('id="embryo-status-event-form"');
     expect(embryoStatusPanel).toContain('data-upload-privacy-kind="embryo-status"');
     expect(embryoStatusPanel).toContain('data-embryo-status-group="status-basis"');
@@ -4794,6 +4800,7 @@ describe('app shell', () => {
       'class="dossier-submit-action" data-dossier-submit-action="embryo-status"',
     );
     expect(embryoStatusPanel).toContain('Bewaar embryo-status</button>');
+    expect(embryoStatusPanel).toContain('data-dossier-submit-feedback="embryo-status"');
 
     const routeOrder = [
       'data-dossier-add-route-selector="compact"',
@@ -4846,6 +4853,9 @@ describe('app shell', () => {
       expect(surface).not.toMatch(/150 mg|100 IU/i);
     }
     expect(uploadFeedback).not.toMatch(/diagnose|behandelkeuzeadvies/i);
+    expect(populatedDossierPanel).toContain('data-dossier-submit-feedback-state="needs-review"');
+    expect(populatedConsultPanel).toContain('data-dossier-submit-feedback-state="processing"');
+    expect(populatedEmbryoPanel).toContain('data-dossier-submit-feedback-state="error"');
 
     const lockedHtml = renderAppShell(
       'dossier',
@@ -4962,6 +4972,9 @@ describe('app shell', () => {
     expect(css).toContain('min-width: min(100%, 220px);');
     expect(css).toContain('box-shadow: 0 10px 24px');
     expect(css).toContain('justify-self: stretch;');
+    expect(css).toContain('.dossier-submit-feedback');
+    expect(css).toContain('max-width: 58ch;');
+    expect(css).toContain('margin: -4px 0 0;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
