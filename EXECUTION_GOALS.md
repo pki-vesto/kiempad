@@ -3350,6 +3350,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Decision UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 57
+- **Status:** ☑ done
+
+### G1189 — beheer- en instellingenschermen opdelen in taakgerichte privacyroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Meerdere beheer- en instellingenschermen bevatten nog gemengde privacy-, sync-, back-up- en configuratieblokken in lange pagina's.
+- **User Impact:** Gebruikers moeten bij gevoelige acties zoeken tussen instellingen, export, import, beveiliging en statusinformatie.
+- **Desired Outcome:** Deel minimaal één beheer- of instellingenscherm zichtbaar op in taakgerichte privacyroutes voor controleren, aanpassen, export/import en herstel.
+- **User Value:** Gevoelige beheeracties voelen rustiger, voorspelbaarder en minder als een adminpaneel.
+- **Acceptance Criteria:** Minimaal één beheer- of instellingenscherm bevat zichtbare taakroutes; bestaande form-id's, input names, backup/import/security hooks en privacycopy blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen secrets, raw exportpayload, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Instellingen, Back-up, Beheer
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Privacy UI, Settings UI, Backup UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 56
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

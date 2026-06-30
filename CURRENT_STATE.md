@@ -178,6 +178,11 @@
   clusters voor overzicht & trends, geschiedenis en vastleggen, met behoud van
   check-in-, symptoom- en cyclusformulieren; G1188 staat open voor decisionroutes
   in het afwegingenscherm.
+- **G1188 decisionroutes:** het afwegingenscherm heeft nu een routebalk en
+  duidelijke clusters voor voorbereiden, opties vergelijken, keuze vastleggen en
+  beslisverslagen, met behoud van `decision-form`, `decision-choice-form`,
+  `data-decision-id` en bestaande inputcontracten; G1189 staat open voor
+  taakgerichte privacyroutes in beheer- en instellingenschermen.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
