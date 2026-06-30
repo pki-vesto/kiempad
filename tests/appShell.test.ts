@@ -74,6 +74,14 @@ function extractDossierInboxOverview(html: string): string {
   return match[1].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierCommandCenter(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary dossier-command-center" aria-label="Dossier startoverzicht"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Dossier startoverzicht ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractDossierReviewQueue(html: string): string {
   const match = html.match(
     /<section class="dossier-review-queue" aria-label="Documentreview wachtrij per confidence"[\s\S]*?<\/section>/,
@@ -4344,6 +4352,194 @@ describe('app shell', () => {
     expect(overview).not.toContain('b2NyLXBheWxvYWQ=');
     expect(overview).not.toContain('YmVlbGQtcGF5bG9hZA==');
     expect(overview).not.toContain('cmV2aWV3LXBheWxvYWQ=');
+  });
+
+  it('toont een compact dossier startoverzicht voor upload, imaging en review zonder payloadlekken', () => {
+    const emptyHtml = renderAppShell('dossier', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [],
+      consultVerslagen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+    const emptyCenter = extractDossierCommandCenter(emptyHtml);
+
+    expect(emptyCenter).toContain('data-dossier-command-center="ready"');
+    expect(emptyCenter).toContain('data-dossier-command-preview="unlocked"');
+    expect(emptyCenter).toContain('Dossier vandaag');
+    expect(emptyCenter).toContain(
+      'Begin met uploaden; Kiempad toont daarna alleen veilige dossiermetadata.',
+    );
+    expect(emptyCenter).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Uploads</span>',
+    );
+    expect(emptyCenter).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Beelden</span>',
+    );
+    expect(emptyCenter).toContain(
+      '<span class="stat__value">0</span><span class="stat__label">Review</span>',
+    );
+    expect(emptyCenter).toContain('href="#dossier-upload-form"');
+    expect(emptyCenter).toContain('href="#imaging-filter-form"');
+    expect(emptyCenter).toContain('href="#dossier-search-form"');
+    expect(emptyCenter).toContain('Nog geen historische dossierstukken toegevoegd.');
+    expect(emptyCenter).toContain(
+      'geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies',
+    );
+    expect(emptyHtml).toContain('id="dossier-upload-form"');
+    expect(emptyHtml).toContain('id="imaging-filter-form"');
+    expect(emptyHtml).toContain('id="dossier-search-form"');
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        consultVerslagen: [
+          {
+            id: 'consult-dashboard',
+            datum: '2026-05-03',
+            titel: 'Consult dashboard',
+            bron: 'handmatig',
+            tekst: 'Veilige consultfixture.',
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+        ],
+        dossierDocuments: [
+          {
+            id: 'doc-dashboard-ocr',
+            datum: '2026-05-01',
+            titel: 'Dashboard OCR review',
+            categorie: 'onderzoek',
+            uploadProfiel: 'labuitslag',
+            bestandsNaam: 'dashboard-ocr-secret.pdf',
+            mimeType: 'application/pdf',
+            grootteBytes: 2048,
+            inhoudBase64: 'ZGFzaGJvYXJkLW9jcg==',
+            analyse: {
+              samenvatting: 'Onderzoek opgeslagen; analyse is lokaal en niet-medisch.',
+              signalen: ['OCR review nodig.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-01',
+              documenttype: 'Labuitslag',
+              bronbestand: 'dashboard-ocr-secret.pdf',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            ocr: {
+              status: 'tekst_uitgelezen',
+              bron: 'pdf',
+              explicieteLokaleVerwerking: true,
+              confidenceLabel: 'laag',
+              confidenceScore: 0.27,
+              reviewStatus: 'concept',
+              tekst: 'GEVOELIGE OCR TEKST diagnose 150 mg behandelkeuzeadvies',
+              waarschuwing: 'Controleer lokaal.',
+              verwerktOp: '2026-06-23T15:00:00.000Z',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-dashboard-image',
+            datum: '2026-05-04',
+            titel: 'Dashboard echo',
+            categorie: 'beeld',
+            bestandsNaam: 'dashboard-echo-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'ZGFzaGJvYXJkLWltYWdl',
+            analyse: {
+              samenvatting: 'Echo opgeslagen; analyse is lokaal en niet-medisch.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-04',
+              documenttype: 'Foto/echo',
+              bronbestand: 'dashboard-echo-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-04',
+              soort: 'echo',
+              context: 'Dashboard beeldcontext',
+              bron: 'Dashboard bron',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            embryo: {
+              label: 'Embryo dashboard',
+              kwaliteit: '4AA',
+              dag: 5,
+              status: 'onbekend',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const populatedCenter = extractDossierCommandCenter(populatedHtml);
+
+    expect(populatedCenter).toContain('1 OCR-review vraagt om controle.');
+    expect(populatedCenter).toContain(
+      '<span class="stat__value">2</span><span class="stat__label">Uploads</span>',
+    );
+    expect(populatedCenter).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">Beelden</span>',
+    );
+    expect(populatedCenter).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">Review</span>',
+    );
+    expect(populatedCenter).toContain(
+      '<span class="stat__value">1</span><span class="stat__label">Embryo&#039;s</span>',
+    );
+    expect(populatedCenter).toContain('Laatste import: 2026-05-04 · Foto/echo.');
+    expect(populatedCenter).toContain('1 consultverslag · 0 OCR wacht');
+    expect(populatedCenter).not.toContain('dashboard-ocr-secret.pdf');
+    expect(populatedCenter).not.toContain('dashboard-echo-secret.jpg');
+    expect(populatedCenter).not.toContain('GEVOELIGE OCR TEKST');
+    expect(populatedCenter).not.toContain('ZGFzaGJvYXJkLW9jcg==');
+    expect(populatedCenter).not.toContain('ZGFzaGJvYXJkLWltYWdl');
+    expect(populatedCenter).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies/i);
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-dashboard-locked',
+            datum: '2026-05-04',
+            titel: 'Locked dashboard echo',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-dashboard-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9ja2VkLWRhc2hib2FyZA==',
+            analyse: {
+              samenvatting: 'Echo opgeslagen; analyse is lokaal en niet-medisch.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-04',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-dashboard-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedCenter = extractDossierCommandCenter(lockedHtml);
+
+    expect(lockedCenter).toContain('data-dossier-command-preview="locked"');
+    expect(lockedCenter).toContain('Beeldpreviews vergrendeld tot ontgrendeling.');
+    expect(lockedCenter).not.toContain('locked-dashboard-secret.jpg');
+    expect(lockedCenter).not.toContain('bG9ja2VkLWRhc2hib2FyZA==');
   });
 
   it('rendert documentreview wachtrij per confidence zonder OCR-tekst of bronpayload', () => {
