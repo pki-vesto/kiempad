@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 867 |
+| ☑ klaar | 868 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1066** |
+| **Totaal** | **1067** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -636,7 +636,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G478 | Fertility Intelligence: embryo grading bronregistratie | P0 | F5 | ☑ |
 | G479 | Fertility Intelligence: embryo outcome event tracking | P1 | F5 | ☐ |
 | G480 | Fertility Intelligence: embryovergelijking taalgrens | P0 | F5 | ☑ |
-| G481 | Research Intelligence: fertility research source registry | P0 | F5 | ☐ |
+| G481 | Research Intelligence: fertility research source registry | P0 | F5 | ☑ |
 | G482 | Research Intelligence: literatuur discovery query builder | P1 | F5 | ☐ |
 | G483 | Research Intelligence: wetenschappelijke en patientvriendelijke samenvattingen | P0 | F5 | ☐ |
 | G484 | Research Intelligence: persoonlijke relevantiescore zonder behandeladvies | P0 | F5 | ☐ |
@@ -1229,12 +1229,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1064 | Fertility Intelligence: embryo status event audit evidence | P1 | F5 | ☐ |
 | G1065 | Fertility Timeline & Knowledge Graph: node schema audit evidence | P1 | F5 | ☐ |
 | G1066 | Fertility Timeline & Knowledge Graph: edge provenance audit evidence | P1 | F5 | ☐ |
+| G1067 | Research Intelligence: source registry audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1066** (id's G001 t/m G1066, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1067** (id's G001 t/m G1067, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

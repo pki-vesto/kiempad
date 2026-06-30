@@ -8661,6 +8661,22 @@ function renderResearchAggregatiePlan(plan: ResearchAggregatiePlan): string {
       <h3>Aggregatiestatus</h3>
       <p class="small-print">${escapeHtml(plan.waarschuwing)}</p>
       <p>${plan.status === 'klaar_voor_handmatige_start' ? `${plan.bronnen.length} bron(nen) klaar voor handmatige aggregatie.` : 'Aggregatie uitgeschakeld.'}</p>
+      <h4>Research bronregister</h4>
+      <p class="small-print">Bronnen met naam, type, URL, updatebeleid en opt-invereiste. Dit register start geen netwerkcalls.</p>
+      <ol class="compact-list" aria-label="Research bronregister">
+        ${plan.bronregister
+          .map(
+            (bron) => `
+              <li>
+                <strong>${escapeHtml(bron.naam)}</strong>
+                <span>${escapeHtml(bron.type)} · ${escapeHtml(bron.url)}</span>
+                <small>Updatebeleid: ${escapeHtml(bron.updatebeleid)} · ${escapeHtml(bron.optInVereist ? 'Opt-in vereist' : 'Geen netwerk-opt-in vereist')}</small>
+                <small>${escapeHtml(bron.bronmetadata.netwerkGedrag)} · ${escapeHtml(bron.bronmetadata.allowlistStatus)}</small>
+              </li>
+            `,
+          )
+          .join('')}
+      </ol>
       ${
         plan.bronnen.length > 0
           ? `<ol class="compact-list">${plan.bronnen

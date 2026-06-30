@@ -23,6 +23,33 @@ export type ResearchBron = {
   allowlistRationale: string;
 };
 
+export type ResearchSourceType =
+  | 'bibliografische_index'
+  | 'systematische_review'
+  | 'richtlijn'
+  | 'publicatie_link'
+  | 'lokale_notitie';
+
+export type ResearchUpdateBeleid =
+  | 'handmatig_bij_consultvoorbereiding'
+  | 'maandelijks_handmatig_controleren'
+  | 'per_publicatie_handmatig';
+
+export type ResearchSourceRegistryEntry = {
+  id: string;
+  naam: string;
+  type: ResearchSourceType;
+  url: string;
+  updatebeleid: ResearchUpdateBeleid;
+  optInVereist: boolean;
+  bronmetadata: {
+    host?: string;
+    allowlistStatus: ResearchBronAllowlistStatus;
+    rationale: string;
+    netwerkGedrag: 'geen_netwerk_zonder_opt_in';
+  };
+};
+
 export type ResearchBronAllowlistStatus =
   | 'toegestaan_met_rationale'
   | 'handmatige_review_nodig'
@@ -37,6 +64,7 @@ export type ResearchBronAllowlistEntry = {
 export type ResearchAggregatiePlan = {
   status: 'uitgeschakeld' | 'klaar_voor_handmatige_start';
   bronnen: ResearchBron[];
+  bronregister: ResearchSourceRegistryEntry[];
   waarschuwing: string;
 };
 
@@ -154,6 +182,83 @@ export const RESEARCH_SOURCE_ALLOWLIST: readonly ResearchBronAllowlistEntry[] = 
     label: 'DOI',
     rationale:
       'DOI-links zijn persistente publicatieverwijzingen; Kiempad bewaart ze alleen voor herleidbaarheid.',
+  },
+] as const;
+
+export const RESEARCH_SOURCE_REGISTRY: readonly ResearchSourceRegistryEntry[] = [
+  {
+    id: 'source-pubmed',
+    naam: 'PubMed',
+    type: 'bibliografische_index',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/',
+    updatebeleid: 'maandelijks_handmatig_controleren',
+    optInVereist: true,
+    bronmetadata: {
+      host: 'pubmed.ncbi.nlm.nih.gov',
+      allowlistStatus: 'toegestaan_met_rationale',
+      rationale:
+        'Bibliografische index voor biomedische literatuur; alleen gebruiken na expliciete netwerk-opt-in en handmatige zoekactie.',
+      netwerkGedrag: 'geen_netwerk_zonder_opt_in',
+    },
+  },
+  {
+    id: 'source-cochrane',
+    naam: 'Cochrane Library',
+    type: 'systematische_review',
+    url: 'https://www.cochranelibrary.com/',
+    updatebeleid: 'maandelijks_handmatig_controleren',
+    optInVereist: true,
+    bronmetadata: {
+      host: 'www.cochranelibrary.com',
+      allowlistStatus: 'toegestaan_met_rationale',
+      rationale:
+        'Systematische reviews als achtergrondbron; geen behandeladvies of automatische interpretatie.',
+      netwerkGedrag: 'geen_netwerk_zonder_opt_in',
+    },
+  },
+  {
+    id: 'source-eshre',
+    naam: 'ESHRE',
+    type: 'richtlijn',
+    url: 'https://www.eshre.eu/Guidelines-and-Legal/Guidelines',
+    updatebeleid: 'maandelijks_handmatig_controleren',
+    optInVereist: true,
+    bronmetadata: {
+      host: 'www.eshre.eu',
+      allowlistStatus: 'toegestaan_met_rationale',
+      rationale:
+        'Europese richtlijnen en updates rond fertiliteitszorg; relevantie blijft handmatig te controleren.',
+      netwerkGedrag: 'geen_netwerk_zonder_opt_in',
+    },
+  },
+  {
+    id: 'source-doi',
+    naam: 'DOI',
+    type: 'publicatie_link',
+    url: 'https://doi.org/',
+    updatebeleid: 'per_publicatie_handmatig',
+    optInVereist: true,
+    bronmetadata: {
+      host: 'doi.org',
+      allowlistStatus: 'toegestaan_met_rationale',
+      rationale:
+        'Persistente publicatieverwijzing; Kiempad bewaart DOI-links alleen voor herleidbaarheid.',
+      netwerkGedrag: 'geen_netwerk_zonder_opt_in',
+    },
+  },
+  {
+    id: 'source-local-note',
+    naam: 'Lokale researchnotitie',
+    type: 'lokale_notitie',
+    url: 'kiempad://local-research-note',
+    updatebeleid: 'handmatig_bij_consultvoorbereiding',
+    optInVereist: false,
+    bronmetadata: {
+      allowlistStatus: 'lokale_notitie',
+      rationale:
+        'Lokale notities blijven op het toestel en zijn geen geverifieerde externe publicatiebron.',
+      netwerkGedrag: 'geen_netwerk_zonder_opt_in',
+    },
   },
 ] as const;
 
@@ -288,13 +393,50 @@ export function bouwResearchBronnenCache(items: readonly KennisItem[]): Research
   );
 }
 
+export function bouwResearchSourceRegistry(
+  bronnen: readonly ResearchBron[] = [],
+): ResearchSourceRegistryEntry[] {
+  const registry = new Map<string, ResearchSourceRegistryEntry>();
+  for (const entry of RESEARCH_SOURCE_REGISTRY) registry.set(entry.id, entry);
+
+  for (const bron of bronnen) {
+    const beoordeling = beoordeelResearchBron(bron.bron);
+    const host = normaliseerResearchBronHost(bron.bron);
+    const registryId = `cache-source-${normaliseerResearchBron(bron.bron) || bron.id}`;
+    if (host && RESEARCH_SOURCE_REGISTRY.some((entry) => entry.bronmetadata.host === host))
+      continue;
+
+    registry.set(registryId, {
+      id: registryId,
+      naam: bron.titel,
+      type: beoordeling.allowlistStatus === 'lokale_notitie' ? 'lokale_notitie' : 'publicatie_link',
+      url: bron.bron,
+      updatebeleid:
+        beoordeling.allowlistStatus === 'lokale_notitie'
+          ? 'handmatig_bij_consultvoorbereiding'
+          : 'per_publicatie_handmatig',
+      optInVereist: beoordeling.allowlistStatus !== 'lokale_notitie',
+      bronmetadata: {
+        host,
+        allowlistStatus: beoordeling.allowlistStatus,
+        rationale: beoordeling.allowlistRationale,
+        netwerkGedrag: 'geen_netwerk_zonder_opt_in',
+      },
+    });
+  }
+
+  return [...registry.values()].sort((a, b) => a.naam.localeCompare(b.naam, 'nl-NL'));
+}
+
 export function bouwResearchAggregatiePlan(
   bronnen: readonly ResearchBron[],
   netwerkOptIn: boolean,
 ): ResearchAggregatiePlan {
+  const bronregister = bouwResearchSourceRegistry(bronnen);
   return {
     status: netwerkOptIn ? 'klaar_voor_handmatige_start' : 'uitgeschakeld',
     bronnen: netwerkOptIn ? [...bronnen] : [],
+    bronregister,
     waarschuwing: netwerkOptIn
       ? 'Netwerkresearch staat aan na expliciete opt-in. Kiempad haalt nog niet automatisch op; de gebruiker start aggregatie handmatig en controleert bronnen.'
       : 'Netwerkresearch staat uit. Kiempad toont alleen handmatige seed en lokale cache en haalt geen publicaties op.',

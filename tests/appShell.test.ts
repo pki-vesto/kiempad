@@ -32085,6 +32085,14 @@ describe('app shell', () => {
     expect(html).toContain('Bewaar research-opt-in');
     expect(html).toContain('Aggregatie uitgeschakeld.');
     expect(html).toContain('Netwerkresearch staat uit');
+    expect(html).toContain('Research bronregister');
+    expect(html).toContain('Bronnen met naam, type, URL, updatebeleid en opt-invereiste.');
+    expect(html).toContain('PubMed');
+    expect(html).toContain('bibliografische_index');
+    expect(html).toContain('https://pubmed.ncbi.nlm.nih.gov/');
+    expect(html).toContain('Updatebeleid: maandelijks_handmatig_controleren');
+    expect(html).toContain('Opt-in vereist');
+    expect(html).toContain('geen_netwerk_zonder_opt_in');
     expect(html).toContain('Kiempad start geen automatische netwerkrequest');
     expect(html).toContain('AI-instelling');
     expect(html).toContain('id="ai-settings-form"');
@@ -32248,6 +32256,9 @@ describe('app shell', () => {
     expect(html).toContain('value="true" selected');
     expect(html).toContain('Netwerkresearch staat aan na expliciete opt-in');
     expect(html).toContain('4 bron(nen) klaar voor handmatige aggregatie.');
+    expect(html).toContain('Research bronregister');
+    expect(html).toContain('Eigen artikel embryo-cultuur');
+    expect(html).toContain('Updatebeleid: per_publicatie_handmatig');
     expect(html).toContain(
       'Eigen artikel embryo-cultuur · https://voorbeeld.test/embryo-cultuur · Lokale cache',
     );
