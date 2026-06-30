@@ -130,6 +130,15 @@ pad zonder lokale vault-hercreatie.
   `CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION`. De maintenance-test moet dezelfde
   annotatievorm, `unexpected-contract-version`, `unexpected-field` en
   `unexpected-error-states` blijven vinden in runbook, helper en fixture.
+  **Health-monitor annotatie-CLI-fixture (G1085/G1086):**
+  `npm run smoke:central-health-monitor` draait
+  `scripts/central-health-monitor-annotation.mts --fixture=ok` en print alleen
+  `status` plus `ciAnnotation`. Voor driftfixtures kan automation hetzelfde script
+  met `--fixture=unexpected-contract-version`, `--fixture=unexpected-field` of
+  `--fixture=unexpected-error-states` draaien; failing fixtures eindigen non-zero
+  maar tonen geen responsebody, headers, user-id, session-id, record-id,
+  recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of
+  behandelkeuzeadvies.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

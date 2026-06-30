@@ -22,6 +22,7 @@
     "smoke:offline": "node scripts/offline-smoke.mjs",
     "smoke:central": "node scripts/central-browser-smoke.mjs",
     "smoke:central-bootstrap": "tsx scripts/central-dataset-bootstrap-smoke.mts",
+    "smoke:central-health-monitor": "tsx scripts/central-health-monitor-annotation.mts --fixture=ok",
     "backend:central": "tsx src/server/centralBackendCli.ts",
     "deploy:tailscale": "scripts/deploy-tailscale.sh",
     "smoke:tailscale": "scripts/smoke-tailscale.sh",
