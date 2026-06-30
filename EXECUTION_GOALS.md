@@ -13144,4 +13144,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 57
+- **Status:** ☑ done
+
+### G1168 — dossier add feedback return landing focus sync
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De feedback-terugactie scrolt nu naar het juiste formulierdeel, maar toetsenbord- en screenreaderfocus blijven nog op de teruglink staan.
+- **User Impact:** Gebruikers met toetsenbord of screenreader kunnen na de sprong context verliezen omdat focus niet meeverhuist naar het gelande formulier.
+- **Desired Outcome:** Synchroniseer focus met de feedback-return landingsactie zonder copy, volgorde, formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers kunnen na de terugactie direct verder werken in het juiste formulierdeel.
+- **Acceptance Criteria:** Feedback-return klik verplaatst focus op een veilige manier naar het targetformulier of de eerste relevante control; bestaande ankers, form-id's, input names en data-hooks blijven intact; landing forced-colors cue, landing context cue, anchor landing audit, forced-colors audit, reduced-motion audit, pressed state audit, return interaction tone, return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 56
 - **Status:** ☐ open
