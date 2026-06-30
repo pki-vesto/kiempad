@@ -10421,23 +10421,88 @@ function renderStartScreen(state: AppShellState): string {
       renderStartIntelligenceWorkbench(state, dailyRecommendations),
       renderStartTaskRouteNav(),
       dashboardShell({
-        className: 'start-dashboard-shell',
-        ariaLabel: 'Taakgericht startdashboard',
+        className: 'start-dashboard-shell start-flow-dashboard',
+        ariaLabel: 'Start flowdashboard',
         primary: [
           phasePanel,
           renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
         ],
         secondary: [
-          renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
-          dosePanel,
-          renderStartRecommendationRoute(state, dailyRecommendations),
-          setupPanel,
-          renderStartQuickEntryRoute(),
+          renderStartFlowRail([
+            {
+              summary: 'Planning',
+              eyebrow: 'Volgende stap',
+              key: 'planning',
+              open: true,
+              body: renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
+            },
+            {
+              summary: 'Medicatie vandaag',
+              eyebrow: 'Schema',
+              key: 'medicatie',
+              body: dosePanel,
+            },
+            {
+              summary: 'Dagadvies',
+              eyebrow: 'Aanbevelingen',
+              key: 'aanbevelingen',
+              body: renderStartRecommendationRoute(state, dailyRecommendations),
+            },
+            {
+              summary: 'Inrichting',
+              eyebrow: 'Setup',
+              key: 'setup',
+              body: setupPanel,
+            },
+            {
+              summary: 'Snelle invoer',
+              eyebrow: 'Vastleggen',
+              key: 'snelle-invoer',
+              body: renderStartQuickEntryRoute(),
+            },
+          ]),
         ],
       }),
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+type StartFlowRailPanel = {
+  summary: string;
+  eyebrow: string;
+  key: string;
+  body: string;
+  open?: boolean;
+};
+
+function renderStartFlowRail(panels: readonly StartFlowRailPanel[]): string {
+  const visiblePanels = panels.filter((panel) => Boolean(panel.body));
+  if (visiblePanels.length === 0) return '';
+
+  return `
+    <section class="start-flow-rail" aria-labelledby="start-flow-rail-title" data-start-flow-rail="progressive">
+      <header class="start-flow-rail__header">
+        <p class="start-flow-rail__eyebrow">Vervolgpanelen</p>
+        <h2 id="start-flow-rail-title">Open alleen wat je nu nodig hebt</h2>
+      </header>
+      <div class="start-flow-rail__panels">
+        ${visiblePanels
+          .map(
+            (panel) => `
+              <details class="start-flow-panel" data-start-flow-panel="${escapeAttribute(panel.key)}"${panel.open ? ' open' : ''}>
+                <summary class="start-flow-panel__summary">
+                  <span>${escapeHtml(panel.eyebrow)}</span>
+                  <strong>${escapeHtml(panel.summary)}</strong>
+                </summary>
+                <div class="start-flow-panel__body">${panel.body}</div>
+              </details>
+            `,
+          )
+          .join('')}
+      </div>
+    </section>
+  `;
 }
 
 function renderStartIntelligenceWorkbench(

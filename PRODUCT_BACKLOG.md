@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1003 |
+| ☑ klaar | 1004 |
 | ◐ bezig | 0 |
 | ☐ open | 102 |
 | ☒ archived | 99 |
-| **Totaal** | **1204** |
+| **Totaal** | **1205** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1366,13 +1366,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1201 | Premium Claude Design UI: mobiele formulierinhoud groeperen met compacte veldsecties | P1 | F5 | ☑ |
 | G1202 | Premium Claude Design UI: veldsectiepatroon uitbreiden naar dossier- en uploadflows | P1 | F5 | ☐ |
 | G1203 | Premium Claude Design UI: startscherm openen met kernflow-werkbank | P1 | F5 | ☑ |
-| G1204 | Premium Claude Design UI: resterende startmodules omzetten naar echte flowpanelen | P1 | F5 | ☐ |
+| G1204 | Premium Claude Design UI: resterende startmodules omzetten naar echte flowpanelen | P1 | F5 | ☑ |
+| G1205 | Premium Claude Design UI: mobiele app-chrome boven Start compacter maken | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1204** (id's G001 t/m G1204, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1205** (id's G001 t/m G1205, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -2087,10 +2087,17 @@ describe('app shell', () => {
     expect(html).toContain('id="start-recommendations"');
     expect(html).toContain('id="start-quick-entry"');
     expect(html).toContain(
-      '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
+      '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
     );
     expect(html).toContain('class="kp-dashboard__primary"');
     expect(html).toContain('class="kp-dashboard__secondary"');
+    expect(html).toContain('class="start-flow-rail"');
+    expect(html).toContain('data-start-flow-rail="progressive"');
+    expect(html).toContain('Open alleen wat je nu nodig hebt');
+    expect(html).toContain('data-start-flow-panel="planning" open');
+    expect(html).toContain('data-start-flow-panel="aanbevelingen"');
+    expect(html).toContain('data-start-flow-panel="setup"');
+    expect(html).toContain('data-start-flow-panel="snelle-invoer"');
     expect(html).toContain('class="daily-command-board"');
     expect(html).not.toContain('class="page-header"');
     expect(html).not.toContain('Vandaag op Kiempad');
@@ -2229,7 +2236,18 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.start-workbench-card {');
     expect(mobileCss).toContain('flex: 0 0 min(238px, 82vw);');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
-    expect(mobileCss).toContain('margin-top: 64px;');
+    expect(mobileCss).toContain('margin-top: 0;');
+    expect(mobileCss).toContain('.start-task-routes {');
+    expect(mobileCss).toContain('display: none;');
+    expect(css).toContain('.start-flow-rail {');
+    expect(css).toContain('.start-flow-panel {');
+    expect(css).toContain('.start-flow-panel[open] .start-flow-panel__summary');
+    expect(css).toContain('.start-flow-panel:not([open]) .start-flow-panel__body');
+    expect(css).toContain('.start-flow-panel__body > .kp-card');
+    expect(mobileCss).toContain('.start-flow-dashboard {');
+    expect(mobileCss).toContain('margin-top: 128px;');
+    expect(mobileCss).toContain('.start-flow-panel__summary {');
+    expect(mobileCss).toContain('min-height: 48px;');
   });
 
   it('houdt startschermmodules taakgericht verdeeld bij gevulde context', () => {
@@ -2271,7 +2289,7 @@ describe('app shell', () => {
     );
 
     const dashboardStart = html.indexOf(
-      '<section class="kp-dashboard start-dashboard-shell" aria-label="Taakgericht startdashboard">',
+      '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
     );
     const workbenchIndex = html.indexOf('data-start-workbench="multi-flow"');
     const routeNavIndex = html.indexOf('class="start-task-routes"');
@@ -2285,6 +2303,16 @@ describe('app shell', () => {
       secondaryStart,
     );
     const quickEntryIndex = html.indexOf('data-dashboard-route="quick-entry"', secondaryStart);
+    const flowRailIndex = html.indexOf('data-start-flow-rail="progressive"', secondaryStart);
+    const planningPanelIndex = html.indexOf('data-start-flow-panel="planning" open', flowRailIndex);
+    const recommendationsPanelIndex = html.indexOf(
+      'data-start-flow-panel="aanbevelingen"',
+      flowRailIndex,
+    );
+    const quickEntryPanelIndex = html.indexOf(
+      'data-start-flow-panel="snelle-invoer"',
+      flowRailIndex,
+    );
 
     expect(dashboardStart).toBeGreaterThan(-1);
     expect(workbenchIndex).toBeGreaterThan(-1);
@@ -2297,6 +2325,10 @@ describe('app shell', () => {
     expect(phaseIndex).toBeLessThan(secondaryStart);
     expect(todayIndex).toBeGreaterThan(primaryStart);
     expect(todayIndex).toBeLessThan(secondaryStart);
+    expect(flowRailIndex).toBeGreaterThan(secondaryStart);
+    expect(planningPanelIndex).toBeGreaterThan(flowRailIndex);
+    expect(recommendationsPanelIndex).toBeGreaterThan(planningPanelIndex);
+    expect(quickEntryPanelIndex).toBeGreaterThan(recommendationsPanelIndex);
     expect(nextStepIndex).toBeGreaterThan(secondaryStart);
     expect(recommendationsIndex).toBeGreaterThan(secondaryStart);
     expect(quickEntryIndex).toBeGreaterThan(recommendationsIndex);

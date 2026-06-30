@@ -1746,6 +1746,10 @@ h2 {
   gap: 12px;
 }
 
+.start-flow-dashboard > .kp-dashboard__secondary {
+  display: block;
+}
+
 .start-command-layout {
   gap: 18px;
 }
@@ -1846,6 +1850,87 @@ h2 {
   color: var(--text-muted);
   font-size: 0.84rem;
   line-height: 1.35;
+}
+
+.start-flow-rail {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.start-flow-rail__header {
+  display: grid;
+  gap: 4px;
+}
+
+.start-flow-rail__eyebrow,
+.start-flow-rail__header h2 {
+  margin: 0;
+}
+
+.start-flow-rail__eyebrow {
+  color: var(--text-faint);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.start-flow-rail__header h2 {
+  font-size: 1.05rem;
+}
+
+.start-flow-rail__panels {
+  display: grid;
+  gap: 8px;
+}
+
+.start-flow-panel {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.start-flow-panel__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3px;
+  padding: 11px 13px;
+  cursor: pointer;
+}
+
+.start-flow-panel__summary::-webkit-details-marker {
+  display: none;
+}
+
+.start-flow-panel__summary span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.start-flow-panel__summary strong {
+  color: var(--text);
+  font-size: 0.96rem;
+}
+
+.start-flow-panel[open] .start-flow-panel__summary {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 82%, var(--surface-2));
+}
+
+.start-flow-panel__body {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.start-flow-panel:not([open]) .start-flow-panel__body {
+  display: none;
 }
 
 .start-command-header {
@@ -3368,6 +3453,15 @@ h2 {
 .kp-card--danger {
   border-color: var(--danger-border);
   background: var(--surface-danger);
+}
+
+.start-flow-panel__body > .kp-card,
+.start-flow-panel__body > .kp-dashboard-section,
+.start-flow-panel__body > .summary-panel {
+  border: 0;
+  border-radius: 10px;
+  padding: 0;
+  background: transparent;
 }
 
 .kp-card__eyebrow {
@@ -5317,14 +5411,33 @@ a.action-card:active {
   }
 
   .start-workbench + .start-task-routes {
-    margin-top: 64px;
+    margin-top: 0;
+  }
+
+  .start-flow-dashboard {
+    gap: 12px;
+    margin-top: 128px;
+  }
+
+  .start-flow-rail {
+    gap: 8px;
+  }
+
+  .start-flow-rail__header {
+    padding: 0 2px;
+  }
+
+  .start-flow-panel__summary {
+    min-height: 48px;
+    padding: 10px 12px;
+  }
+
+  .start-flow-panel__body {
+    padding: 10px;
   }
 
   .start-task-routes {
-    display: flex;
-    overflow-x: auto;
-    padding: 7px;
-    scroll-snap-type: x proximity;
+    display: none;
   }
 
   .start-task-routes::-webkit-scrollbar {
