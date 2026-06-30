@@ -492,6 +492,12 @@ const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_TERMS = [
 ] as const;
 const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR =
   'Health monitor retention freshness release-state ontbreekt voor termen: health-monitor retention freshness releasecontext';
+const HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_RELEASE_TERMS = [
+  'G1098',
+  'compact contract',
+  'health-monitor retention release-state missing-term melding',
+  'veilige technische labels',
+] as const;
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 const maintenanceDocsRaw = readFileSync(
   new URL('./maintenanceDocs.test.ts', import.meta.url),
@@ -4120,6 +4126,47 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1099 health monitor retention compact contract release guard', () => {
+    const releaseGuardEvidence = [
+      'G1099 health-monitor-retention-compact-contract-release-guard',
+      'sources=CHANGELOG.md,CURRENT_STATE.md',
+      'references=G1098',
+      `terms=${HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_RELEASE_TERMS.slice(1).join('|')}`,
+    ].join('\n');
+
+    for (const releaseDoc of [changelog, currentState]) {
+      const releaseGuardContext =
+        extractHealthMonitorRetentionCompactContractReleaseContext(releaseDoc);
+
+      for (const releaseGuardTerm of HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_RELEASE_TERMS) {
+        expect(releaseGuardContext).toContain(releaseGuardTerm);
+      }
+    }
+
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(releaseGuardEvidence).not.toContain(forbiddenEvidenceTerm);
+    }
+
+    expect(releaseGuardEvidence).toMatchInlineSnapshot(`
+      "G1099 health-monitor-retention-compact-contract-release-guard
+      sources=CHANGELOG.md,CURRENT_STATE.md
+      references=G1098
+      terms=compact contract|health-monitor retention release-state missing-term melding|veilige technische labels"
+    `);
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',
@@ -4665,6 +4712,28 @@ function extractHealthMonitorRetentionFreshnessReleaseStateContext(releaseDoc: s
   if (missingTerms.length > 0) {
     throw new Error(
       `Health monitor retention freshness release-state ontbreekt voor termen: ${missingTerms.join(
+        ', ',
+      )}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractHealthMonitorRetentionCompactContractReleaseContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_RELEASE_TERMS.some((term) => line.includes(term)),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = HEALTH_MONITOR_RETENTION_COMPACT_CONTRACT_RELEASE_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Health monitor retention compact contract releasecontext ontbreekt voor termen: ${missingTerms.join(
         ', ',
       )}`,
     );
