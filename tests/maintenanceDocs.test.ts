@@ -3666,6 +3666,40 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('documenteert G1084 central health monitor CI annotation evidence', () => {
+    for (const requiredTerm of [
+      'Health-monitor CI-annotatie (G1083/G1084)',
+      'buildCentralHealthMonitorCiAnnotation',
+      'central-health-contract failed',
+      'failure=unexpected-contract-version',
+      'recovery=review-contractVersion-and-run-health-smokes',
+      'unexpected-field',
+      'unexpected-error-states',
+      'CI-output',
+    ]) {
+      expect(runbook + centralHealthContractSource + centralHealthContractTest).toContain(
+        requiredTerm,
+      );
+    }
+
+    for (const forbiddenLogTerm of [
+      'responsebody',
+      'headers',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(runbook).toContain(forbiddenLogTerm);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

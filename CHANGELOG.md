@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1084/G1085 Central Encrypted Platform: de central health monitor heeft nu een vaste CI-annotatiehelper met alleen technische failurelabels en een herstelhint; runbook en regressies tonen de annotatievorm voor contractversie-, veld- en errorstate-drift zonder responsebody of privacygevoelige waarden; G1085 is toegevoegd voor annotatie/runbook drift guard.
 - G1083/G1084 Central Encrypted Platform: het runbook documenteert nu veilige central health monitorfailure-output met toegestane gesanitized foutlabels, verboden payloadlogging en herstelstappen via `contractVersion` review plus lokale en tailnet-HTTPS `/api/health` smokes; G1084 is toegevoegd voor CI annotation evidence.
 - G1082/G1083 Central Encrypted Platform: er is nu een central health monitor compatibility fixture/testhelper die het `contractVersion=1` health-contract valideert, schema-/versiedrift detecteert en alleen gesanitized technische foutlabels teruggeeft; regressies bewaken dat fixturefailures geen user-, sessie-, record-, ciphertext- of medische waarden lekken; G1083 is toegevoegd voor monitor failure runbook evidence.
 - G1081/G1082 Central Encrypted Platform: het runbook bevat nu een health-contractmigratienotitie voor `contractVersion`-wijzigingen met compatibilityregel, deployvolgorde en veilige monitorfailure zonder responsebody of privacygevoelige velden te loggen; G1082 is toegevoegd voor central health monitor compatibility fixture.

@@ -14,6 +14,13 @@ export type CentralHealthContractValidation =
   | { ok: true; contractVersion: 1 }
   | { ok: false; failure: CentralHealthContractFailure };
 
+export type CentralHealthMonitorCiAnnotation =
+  | { ok: true; ciAnnotation: 'central-health-contract ok: contractVersion=1' }
+  | {
+      ok: false;
+      ciAnnotation: `central-health-contract failed: failure=${CentralHealthContractFailure} recovery=review-contractVersion-and-run-health-smokes`;
+    };
+
 const EXPECTED_HEALTH_CONTRACT: CentralHealthResponse = {
   status: 'ok',
   contractVersion: 1,
@@ -89,6 +96,22 @@ export function validateCentralHealthContract(value: unknown): CentralHealthCont
   }
 
   return { ok: true, contractVersion: 1 };
+}
+
+export function buildCentralHealthMonitorCiAnnotation(
+  validation: CentralHealthContractValidation,
+): CentralHealthMonitorCiAnnotation {
+  if (validation.ok) {
+    return {
+      ok: true,
+      ciAnnotation: 'central-health-contract ok: contractVersion=1',
+    };
+  }
+
+  return {
+    ok: false,
+    ciAnnotation: `central-health-contract failed: failure=${validation.failure} recovery=review-contractVersion-and-run-health-smokes`,
+  };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
