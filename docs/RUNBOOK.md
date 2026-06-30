@@ -139,6 +139,10 @@ pad zonder lokale vault-hercreatie.
   maar tonen geen responsebody, headers, user-id, session-id, record-id,
   recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of
   behandelkeuzeadvies.
+  **CI health-monitor smoke (G1086/G1087):** `.github/workflows/ci.yml` draait
+  `Central health monitor annotation smoke` met `npm run smoke:central-health-monitor`
+  na de centrale bootstrap smoke, zodat PR's de gesanitized annotatie-fixture
+  uitvoeren voordat build- en assetgates starten.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

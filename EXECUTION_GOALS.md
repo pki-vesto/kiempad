@@ -11939,4 +11939,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** CI, scripts, health contract fixture
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1088 — central health monitor CI failure artifact evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1087 draait de annotatiefixture in CI, maar failure-artifact evidence voor contractdrift is nog niet expliciet vastgelegd.
+- **Desired Outcome:** Leg vast hoe CI-failure-output voor de central health monitor annotation smoke wordt beoordeeld zonder responsebody of privacyvelden.
+- **User Value:** Beheer kan CI-failures sneller triageren en behoudt een verifieerbare privacygrens voor monitorartefacten.
+- **Acceptance Criteria:** Evidence verwijst naar G1087; failure-output voor onverwachte contractversie, onverwacht veld en errorstate-drift blijft herkenbaar; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** CI, runbook, health contract fixture
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
