@@ -7,7 +7,9 @@ describe('offline smoke script', () => {
     expect(pkg.scripts['smoke:offline']).toBe('node scripts/offline-smoke.mjs');
     expect(pkg.devDependencies).toHaveProperty('@playwright/test');
     expect(offlineSmokeScript).toContain("import { chromium } from '@playwright/test'");
+    expect(offlineSmokeScript).toContain("navigator.serviceWorker.register('/kiempad-sw.js')");
     expect(offlineSmokeScript).toContain('navigator.serviceWorker.ready');
+    expect(offlineSmokeScript).toContain('Service worker werd niet actief binnen 10 seconden.');
     expect(offlineSmokeScript).toContain('context.setOffline(true)');
     expect(offlineSmokeScript).toContain("page.reload({ waitUntil: 'domcontentloaded' })");
     expect(offlineSmokeScript).toContain('.vault-gate, .app-shell');
