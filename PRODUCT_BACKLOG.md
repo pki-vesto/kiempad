@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 878 |
+| ☑ klaar | 879 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1077** |
+| **Totaal** | **1078** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -665,7 +665,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G500 | Central Encrypted Platform: central session expiry user journey | P1 | F5 | ☐ |
 | G501 | Central Encrypted Platform: multi-device unlock copy consistency | P0 | F5 | ☑ |
 | G502 | Central Encrypted Platform: central persistence backup drill | P1 | F5 | ☐ |
-| G503 | Central Encrypted Platform: central API health endpoint privacy review | P1 | F5 | ☐ |
+| G503 | Central Encrypted Platform: central API health endpoint privacy review | P1 | F5 | ☑ |
 | G504 | Central Encrypted Platform: central encrypted dataset export manifest | P1 | F5 | ☐ |
 | G505 | Central Encrypted Platform: legacy fallback migration decision screen | P1 | F5 | ☐ |
 | G506 | Fertility Intelligence: historische labwaarde normalisatie zonder interpretatie | P0 | F5 | ☑ |
@@ -1240,12 +1240,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1075 | Daily Recommendations: woman cycle phase context audit evidence | P1 | F5 | ☐ |
 | G1076 | Daily Recommendations: man lifestyle context audit evidence | P1 | F5 | ☐ |
 | G1077 | Daily Recommendations: policy fixture audit evidence | P1 | F5 | ☐ |
+| G1078 | Central Encrypted Platform: central health endpoint audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1077** (id's G001 t/m G1077, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1078** (id's G001 t/m G1078, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -3672,7 +3672,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Backend, security docs, tests
 - **ADR Needed:** no
 - **Score:** 108
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G504 — central encrypted dataset export manifest
 
@@ -11797,6 +11797,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Daily Recommendations, policy tests, app shell
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1078 — central health endpoint audit evidence
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G503 introduceert een publieke centrale API-healthcheck met alleen technische privacygrensmetadata, maar er is nog geen compacte onderhoudsaudit die dit contract door toekomstige runtimewijzigingen heen bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat `/health` read-only blijft, geen auth-token vereist voor runtime checks, alleen technische metadata toont en nooit user-id, sessie-id, record-id, recordcount, ciphertext of medische termen teruggeeft.
+- **User Value:** Gebruikers en beheer houden zicht op centrale beschikbaarheid zonder dat healthchecks privacygevoelige dossierinhoud of metadata lekken.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G503; health-output behoudt status, centrale opslagmodus, client-side encrypted envelope boundary, backendVisibility technical-metadata-only, expliciete emptyState en foutstatussen; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Central API, Node runtime, privacy tests, runbook
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

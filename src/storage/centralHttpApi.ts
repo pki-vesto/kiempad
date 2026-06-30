@@ -32,6 +32,18 @@ export type CentralHttpResponse<T = unknown> = {
   body?: T;
 };
 
+export type CentralHealthResponse = {
+  status: 'ok';
+  service: 'kiempad-central-encrypted-api';
+  storageMode: 'central-api';
+  encryptionBoundary: 'client-side-encrypted-envelopes';
+  backendVisibility: 'technical-metadata-only';
+  medicalPlaintext: false;
+  dataRoutes: 'bearer-session-required';
+  emptyState: 'no-user-dataset-opened';
+  errorStates: readonly ['unauthorized', 'forbidden', 'central-api-error'];
+};
+
 type ErrorResponseBody = {
   error: string;
 };
@@ -57,6 +69,17 @@ const STORED_RECORD_TYPES = new Set<StoredRecordType>([
   'settings',
   'system',
 ]);
+const CENTRAL_HEALTH_RESPONSE: CentralHealthResponse = {
+  status: 'ok',
+  service: 'kiempad-central-encrypted-api',
+  storageMode: 'central-api',
+  encryptionBoundary: 'client-side-encrypted-envelopes',
+  backendVisibility: 'technical-metadata-only',
+  medicalPlaintext: false,
+  dataRoutes: 'bearer-session-required',
+  emptyState: 'no-user-dataset-opened',
+  errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+};
 
 export class CentralHttpBadRequestError extends Error {
   constructor(message = 'Ongeldig centraal Kiempad API-verzoek.') {
@@ -91,6 +114,13 @@ export class CentralEncryptedHttpApi {
   private async route(request: CentralHttpRequest): Promise<CentralHttpResponse> {
     const { pathname, searchParams } = parseApiPath(request.path);
     const segments = parsePathSegments(pathname);
+
+    if (pathname === '/health') {
+      if (request.method !== 'GET') {
+        throw new CentralHttpBadRequestError('Health endpoint ondersteunt alleen GET.');
+      }
+      return { status: 200, body: CENTRAL_HEALTH_RESPONSE };
+    }
 
     if (request.method === 'POST' && pathname === '/sessions') {
       const ticket = await this.server.issueSession(parseSessionIssueInput(request.body));

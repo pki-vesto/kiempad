@@ -33,6 +33,45 @@ afterEach(async () => {
 });
 
 describe('central encrypted Node backend runtime', () => {
+  it('serveert een publieke health check zonder database-inhoud of persistence write', async () => {
+    const { directory, persistenceFile } = await createTempPersistence();
+    const server = await startRuntime(persistenceFile);
+
+    const response = await fetch(`${server.baseUrl}/health`);
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expectSecurityHeaders(response);
+    expect(body).toEqual({
+      status: 'ok',
+      service: 'kiempad-central-encrypted-api',
+      storageMode: 'central-api',
+      encryptionBoundary: 'client-side-encrypted-envelopes',
+      backendVisibility: 'technical-metadata-only',
+      medicalPlaintext: false,
+      dataRoutes: 'bearer-session-required',
+      emptyState: 'no-user-dataset-opened',
+      errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+    });
+
+    const serialized = JSON.stringify(body);
+    for (const forbidden of [
+      'ownerUserId',
+      'sessionId',
+      'recordCount',
+      'ciphertext',
+      'Progesteron',
+      'embryo',
+      'labuitslag',
+      'api key',
+    ]) {
+      expect(serialized).not.toContain(forbidden);
+    }
+    await expect(readFile(persistenceFile, 'utf8')).rejects.toMatchObject({ code: 'ENOENT' });
+
+    await rm(directory, { recursive: true, force: true });
+  });
+
   it('normaliseert CORS allowlist naar exacte origins', async () => {
     const policy = createCorsPolicy([' http://localhost:5173/ ', 'https://kiempad.example.test']);
 
