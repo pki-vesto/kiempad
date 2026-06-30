@@ -2224,6 +2224,17 @@ describe('app shell', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
+    expect(mobileCss).toContain('.topbar {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(mobileCss).toContain('margin-bottom: 12px;');
+    expect(mobileCss).toContain('.brand-mark {');
+    expect(mobileCss).toContain('width: 36px;');
+    expect(mobileCss).toContain('.status-pill {');
+    expect(mobileCss).toContain('max-width: 44vw;');
+    expect(mobileCss).toContain('.theme-form {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(mobileCss).toContain('.lock-button {');
+    expect(mobileCss).toContain('grid-column: 2;');
     expect(css).toContain('.start-workbench {');
     expect(css).toContain('linear-gradient(135deg');
     expect(css).toContain('.start-workbench__grid {');
@@ -2231,10 +2242,11 @@ describe('app shell', () => {
     expect(css).toContain('.start-workbench-card {');
     expect(css).toContain('border-radius: 12px;');
     expect(mobileCss).toContain('.start-workbench__grid {');
-    expect(mobileCss).toContain('display: flex;');
-    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('display: grid;');
+    expect(mobileCss).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(mobileCss).toContain('overflow-x: visible;');
     expect(mobileCss).toContain('.start-workbench-card {');
-    expect(mobileCss).toContain('flex: 0 0 min(238px, 82vw);');
+    expect(mobileCss).toContain('padding: 10px;');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
     expect(mobileCss).toContain('margin-top: 0;');
     expect(mobileCss).toContain('.start-task-routes {');
@@ -2245,7 +2257,7 @@ describe('app shell', () => {
     expect(css).toContain('.start-flow-panel:not([open]) .start-flow-panel__body');
     expect(css).toContain('.start-flow-panel__body > .kp-card');
     expect(mobileCss).toContain('.start-flow-dashboard {');
-    expect(mobileCss).toContain('margin-top: 128px;');
+    expect(mobileCss).toContain('margin-top: 224px;');
     expect(mobileCss).toContain('.start-flow-panel__summary {');
     expect(mobileCss).toContain('min-height: 48px;');
   });

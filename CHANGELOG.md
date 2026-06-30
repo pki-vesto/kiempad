@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1205 Premium Claude Design UI: de mobiele app-chrome boven Start is compacter met brand/status op één rij, thema en vergrendelen naast elkaar, kleinere controls en een 2x2 Fertiliteitswerkbank zodat de kernflows hoger en vollediger in beeld komen zonder bottom-nav overlap.
 - G1204/G1205 Premium Claude Design UI: de resterende startmodules staan nu in een progressive start-flowrail met alleen Planning open, Dagadvies/Setup/Snelle invoer dichtgeklapt, mobiele start-taakroutes verborgen tegen dubbele navigatie en extra clearance onder de bottom-nav; G1205 is toegevoegd om de mobiele app-chrome boven Start compacter te maken.
 - G1203/G1204 Premium Claude Design UI: het startscherm opent nu met een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn begrijpen, dagadvies en research; de generieke start-werkruimtecontext is verwijderd, mobiel blijft de werkbank compact en vrij van bottom-nav overlap, en G1204 is toegevoegd om de resterende startmodules verder naar echte flowpanelen te brengen.
 - G1201/G1202 Premium Claude Design UI: mobiele commandroute-formulieren groeperen hun inhoud nu in compacte veldsecties voor vraag, afspraak, medicatie en traject, met behoud van alle form-id's en input names; G1202 is toegevoegd om dit veldsectiepatroon naar dossier- en uploadflows uit te breiden.
