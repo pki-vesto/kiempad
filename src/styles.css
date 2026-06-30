@@ -2581,6 +2581,115 @@ h2 {
   min-width: 0;
 }
 
+.command-task-routes {
+  --command-route-columns: 5;
+
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(var(--command-route-columns), minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent));
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.command-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.command-task-route:focus-visible,
+.command-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.command-task-route[aria-current="page"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.command-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.command-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.command-route-section[hidden] {
+  display: none;
+}
+
+.command-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.command-route-section__header h2,
+.command-route-section__header p {
+  margin: 0;
+}
+
+.command-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.command-route-section .summary-panel,
+.command-route-section .policy-panel,
+.command-route-section .linked-note,
+.command-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.command-route-section .definition-list > div,
+.command-route-section .summary-list > div,
+.command-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.command-route-section .definition-list dd,
+.command-route-section .summary-list dd,
+.command-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.command-route-section .data-form,
+.command-route-section .compact-form,
+.command-route-section .data-form label,
+.command-route-section .data-form input,
+.command-route-section .data-form select,
+.command-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .treatment-command-layout {
   gap: 18px;
 }
@@ -3023,6 +3132,19 @@ h2 {
 .question-route-section .data-form select,
 .question-route-section .data-form textarea {
   min-width: 0;
+}
+
+.command-task-routes {
+  border-color: color-mix(in srgb, var(--border-strong) 64%, var(--accent));
+  background: color-mix(in srgb, var(--surface-raised) 92%, var(--accent) 8%);
+}
+
+.command-task-route[aria-current="page"] {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 36%, transparent);
+}
+
+.command-route-section__header {
+  padding-block: 2px;
 }
 
 .daily-command-actions .panel-heading {
@@ -5125,6 +5247,15 @@ a.action-card:active {
   .finance-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .command-task-routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 7px;
+  }
+
+  .command-task-route {
+    min-width: 0;
   }
 
   .treatment-task-routes {

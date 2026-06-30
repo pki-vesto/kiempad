@@ -641,6 +641,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   als concept/gereviewd overzicht zonder bronpayload.
   Graph-relaties hebben gestructureerde provenance met bron, bronRecordIds, datum,
   reviewstatus en herkomst; de UI toont deze relatieherleiding zonder raw payload.
+  De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
+  taakroutes; traject, agenda, medicatie en vragen gebruiken nu gedeelde
+  command-routepanelen met consistente actieve state, header-spacing en routecontracten
+  zodat deze schermen minder als één lange pagina aanvoelen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -656,7 +660,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1179: Premium Claude Design UI uploadflows omzetten naar herbruikbare workflowcomponenten heeft prioriteit na de zichtbare startdashboard-architectuur van G1178.
+1. UI Improvement Evolution uitvoeren vanaf G1198: Premium Claude Design UI commandroutes uitbreiden met statusbadges en compactere density states heeft prioriteit na de gedeelde command-routepanelen van G1197.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
