@@ -988,6 +988,7 @@ function renderGroupedNavigation(activeId: ScreenId): string {
 
 function renderWorkspaceContext(activeId: ScreenId): string {
   if (activeId === 'start') return '';
+  if (activeId === 'dossier' || activeId === 'kennis') return '';
 
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   if (!activeGroup) return '';
@@ -9567,19 +9568,16 @@ function renderKennisScreen(state: AppShellState): string {
 
   return `
     <section class="section-stack knowledge-command-layout" aria-label="Kennisbank">
-      ${renderKennisTaskRoutes({
+      ${renderKnowledgeResearchWorkbench({
         researchBronnen: researchBronnen.length,
         researchSamenvattingen:
           researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
         researchTrends: researchTrendGroepen.length,
         kennisItems: filteredItems.length,
+        totalKennisItems: state.kennisItems.length,
+        netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+        filter,
       })}
-      <div id="knowledge-overview" class="summary-panel priority-panel knowledge-command-panel">
-        <h2>Kennisbank</h2>
-        <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
-        <p>${filteredItems.length} van ${state.kennisItems.length} item(s) getoond.</p>
-        ${renderKennisFilterForm(filter)}
-      </div>
       <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read">
         <header class="knowledge-route-section__header">
           <p class="kp-card__eyebrow">Research lezen</p>
@@ -9652,6 +9650,51 @@ function renderKennisScreen(state: AppShellState): string {
             .join('')}
         </div>
       </section>
+    </section>
+  `;
+}
+
+function renderKnowledgeResearchWorkbench(input: {
+  researchBronnen: number;
+  researchSamenvattingen: number;
+  researchTrends: number;
+  kennisItems: number;
+  totalKennisItems: number;
+  netwerkAan: boolean;
+  filter: KennisFilter;
+}): string {
+  return `
+    <section class="knowledge-research-workbench" aria-label="Researchwerkbank" data-knowledge-first-viewport="research-workbench">
+      <header class="knowledge-research-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Researchwerkbank</p>
+          <h2>Research begrijpen zonder alles tegelijk te lezen</h2>
+          <p>Start met publicaties, trends of broncontrole. Kiempad houdt research conceptmatig en brongekoppeld.</p>
+        </div>
+        <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
+      </header>
+      ${renderKennisTaskRoutes({
+        researchBronnen: input.researchBronnen,
+        researchSamenvattingen: input.researchSamenvattingen,
+        researchTrends: input.researchTrends,
+        kennisItems: input.kennisItems,
+      })}
+      <div id="knowledge-overview" class="summary-panel priority-panel knowledge-command-panel">
+        <div class="knowledge-command-panel__intro">
+          <div>
+            <h2>Kennisbank</h2>
+            <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
+            <p>${input.kennisItems} van ${input.totalKennisItems} item(s) getoond.</p>
+          </div>
+          ${statRow([
+            { label: 'Bronnen', value: String(input.researchBronnen) },
+            { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
+            { label: 'Trends', value: String(input.researchTrends) },
+            { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
+          ])}
+        </div>
+        ${renderKennisFilterForm(input.filter)}
+      </div>
     </section>
   `;
 }
