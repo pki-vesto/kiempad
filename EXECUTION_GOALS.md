@@ -12792,4 +12792,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 79
+- **Status:** ☑ done
+
+### G1146 — dossier add submit action hierarchy
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De toevoegsecties zijn compacter, maar submitknoppen hebben nog weinig context over welke actie minimaal nodig is per route.
+- **User Impact:** Gebruikers kunnen onderaan langere formulieren opnieuw moeten herlezen voordat zij zeker weten welke opslagactie zij uitvoeren.
+- **Desired Outcome:** Verduidelijk de primaire submitactie per toevoerroute compact en route-specifiek zonder formuliercontracten, ankers of privacyhooks te wijzigen.
+- **User Value:** Gebruikers ronden uploaden, consult vastleggen en embryo-updates sneller en met meer vertrouwen af.
+- **Acceptance Criteria:** Submitactie is compact, route-specifiek en visueel primair; bestaande ankers, form-id's, input names en data-hooks blijven intact; section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 78
 - **Status:** ☐ open

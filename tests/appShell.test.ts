@@ -4932,6 +4932,15 @@ describe('app shell', () => {
     expect(css).toContain('[data-dossier-context-priority="optional"]');
     expect(css).toContain('border-style: dashed;');
     expect(css).toContain('content: "Optioneel";');
+    expect(css).toContain('.dossier-add-route-panel + .dossier-add-route-panel');
+    expect(css).toContain('margin-top: 10px;');
+    expect(css).toContain('.dossier-add-route-panel .data-form');
+    expect(css).toContain('gap: 12px;');
+    expect(css).toContain('gap: 10px 12px;');
+    expect(css).toContain('padding: 12px;');
+    expect(css).toContain('@media (max-width: 720px)');
+    expect(css).toContain('padding-bottom: 8px;');
+    expect(css).toContain('margin-top: 8px;');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
