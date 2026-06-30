@@ -3576,6 +3576,38 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 43
 - **Status:** ☐ open
 
+### G1203 — startscherm openen met kernflow-werkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Ondanks werkruimtes en taakroutes opent het startscherm nog met meerdere lagen context en modules onder elkaar, waardoor gebruikers weinig verschil zien met een lange alles-op-een-pagina ervaring.
+- **User Impact:** Gebruikers moeten nog scannen voordat duidelijk is welke hoofdflow zij nodig hebben: dossier uploaden, tijdlijn begrijpen, dagadvies of research.
+- **Desired Outcome:** Laat het startscherm direct openen met een zichtbare Fertiliteitswerkbank die vier kernflows als aparte ingangen toont en generieke startcontext weglaat.
+- **User Value:** Gebruikers kiezen sneller een taak en ervaren Kiempad meer als een gestructureerde persoonlijke health-app dan als een lange lijst modules.
+- **Acceptance Criteria:** Startscherm toont een aparte multi-flow werkbank voor dossier uploaden, tijdlijn begrijpen, dagadvies en research; de generieke werkruimte-context wordt op Start niet meer boven de content getoond; mobiel is de werkbank compact, swipebaar en vrij van bottom-nav overlap; bestaande startdashboardmodules, ankers en quick-entry blijven bereikbaar; tests borgen HTML- en CSS-contracten; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload of secrets wordt toegevoegd.
+- **Affected Screens:** Start
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, startscreen, mobile navigation, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 52
+- **Status:** ☑ done
+
+### G1204 — resterende startmodules omzetten naar echte flowpanelen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De startwerkbank geeft nu duidelijke kernflow-ingangen, maar de resterende startmodules daaronder staan nog grotendeels als dashboardsecties in één scrollrichting.
+- **User Impact:** Na de eerste keuzezone kan het startscherm nog steeds lang worden wanneer setup, aanbevelingen, volgende stap en snelle invoer tegelijk zichtbaar zijn.
+- **Desired Outcome:** Zet de resterende startmodules verder om naar scherpere flowpanelen of progressive-disclosure oppervlakken met duidelijke prioriteit per taak.
+- **User Value:** Gebruikers krijgen een rustiger startscherm dat eerst keuzes toont en daarna alleen relevante vervolgpanelen opent.
+- **Acceptance Criteria:** Vandaag, volgende stap, setup, aanbevelingen en snelle invoer krijgen duidelijkere flowprioriteit of verdere progressive disclosure; mobiele eerste viewport toont geen concurrerende navigatielagen of half bedekte panelen; dashboard blijft bruikbaar op desktop zonder admin-panelgevoel; bestaande form-id's, input names, hashlinks en privacycopy blijven intact; Playwright-screenshot of vergelijkbare visuele evidence dekt mobiel en desktop; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload of secrets wordt toegevoegd.
+- **Affected Screens:** Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, startscreen, dashboard sections, mobile navigation, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 51
+- **Status:** ☐ open
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

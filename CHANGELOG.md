@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1203/G1204 Premium Claude Design UI: het startscherm opent nu met een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn begrijpen, dagadvies en research; de generieke start-werkruimtecontext is verwijderd, mobiel blijft de werkbank compact en vrij van bottom-nav overlap, en G1204 is toegevoegd om de resterende startmodules verder naar echte flowpanelen te brengen.
 - G1201/G1202 Premium Claude Design UI: mobiele commandroute-formulieren groeperen hun inhoud nu in compacte veldsecties voor vraag, afspraak, medicatie en traject, met behoud van alle form-id's en input names; G1202 is toegevoegd om dit veldsectiepatroon naar dossier- en uploadflows uit te breiden.
 - G1200/G1201 Premium Claude Design UI: mobiele commandroute-formulieren hebben nu compactere disclosure-, veld- en textarea-spacing plus een sticky full-width primaire submitactie boven de bottom-nav; G1201 is toegevoegd voor compacte veldsectie-groepering.
 - G1199/G1200 Premium Claude Design UI: mobiele commandroutes gebruiken nu een gedeelde bottom-nav clearance, scroll-padding en control scroll-margin zodat routepanelen en submitacties vrij blijven van de fixed bottom-nav; G1200 is toegevoegd voor compactere mobiele formulierpanelen en primaire actiezone.

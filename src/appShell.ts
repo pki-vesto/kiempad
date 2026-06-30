@@ -922,6 +922,8 @@ function renderGroupedNavigation(activeId: ScreenId): string {
 }
 
 function renderWorkspaceContext(activeId: ScreenId): string {
+  if (activeId === 'start') return '';
+
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   if (!activeGroup) return '';
 
@@ -10416,6 +10418,7 @@ function renderStartScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderStartCommandHeader(state),
+      renderStartIntelligenceWorkbench(state, dailyRecommendations),
       renderStartTaskRouteNav(),
       dashboardShell({
         className: 'start-dashboard-shell',
@@ -10435,6 +10438,91 @@ function renderStartScreen(state: AppShellState): string {
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartIntelligenceWorkbench(
+  state: AppShellState,
+  dailyRecommendations: DailyRecommendationOverview,
+): string {
+  const dossierCount = state.dossierDocuments?.length ?? 0;
+  const consultCount = state.consultVerslagen?.length ?? 0;
+  const timelineCount =
+    state.trajecten.length +
+    state.afspraken.length +
+    dossierCount +
+    consultCount +
+    state.vragen.length +
+    state.medicatie.length +
+    state.kennisItems.length;
+  const recommendationCount = (['vrouw', 'man', 'samen'] as const).reduce(
+    (total, owner) => total + dailyRecommendations[owner].length,
+    0,
+  );
+  const researchCount = state.kennisItems.length;
+
+  const tiles = [
+    {
+      href: '#dossier',
+      label: 'Dossier uploaden',
+      meta:
+        dossierCount > 0
+          ? `${dossierCount} document${dossierCount === 1 ? '' : 'en'} · ${consultCount} verslag${consultCount === 1 ? '' : 'en'}`
+          : 'Onderzoeken, echo’s en verslagen',
+      flow: 'uploads',
+    },
+    {
+      href: '#traject?route=context',
+      label: 'Tijdlijn begrijpen',
+      meta:
+        timelineCount > 0
+          ? `${timelineCount} gekoppelde tijdlijnpunten`
+          : 'Traject, consulten en embryo’s',
+      flow: 'timeline',
+    },
+    {
+      href: '#start-recommendations',
+      label: 'Dagadvies openen',
+      meta:
+        recommendationCount > 0
+          ? `${recommendationCount} aanbeveling${recommendationCount === 1 ? '' : 'en'} vandaag`
+          : 'Leefstijl, voorbereiding en vragen',
+      flow: 'recommendations',
+    },
+    {
+      href: '#kennis',
+      label: 'Research volgen',
+      meta:
+        researchCount > 0
+          ? `${researchCount} bron${researchCount === 1 ? '' : 'nen'} in kennisbank`
+          : 'Studies in gewone taal',
+      flow: 'research',
+    },
+  ];
+
+  return `
+    <section class="start-workbench" aria-labelledby="start-workbench-title" data-start-workbench="multi-flow">
+      <div class="start-workbench__header">
+        <div>
+          <p class="start-workbench__eyebrow">Fertiliteitswerkbank</p>
+          <h2 id="start-workbench-title">Kies eerst je werkstroom</h2>
+          <p>De belangrijkste onderdelen openen als aparte flows, zodat je niet door één lange pagina hoeft te zoeken.</p>
+        </div>
+        <span class="start-workbench__status">4 kernflows</span>
+      </div>
+      <nav class="start-workbench__grid" aria-label="Kernflows">
+        ${tiles
+          .map(
+            (tile) => `
+              <a class="start-workbench-card" href="${tile.href}" data-start-workbench-flow="${tile.flow}">
+                <span class="start-workbench-card__label">${escapeHtml(tile.label)}</span>
+                <span class="start-workbench-card__meta">${escapeHtml(tile.meta)}</span>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
 }
 
 function renderStartTaskRouteNav(): string {
