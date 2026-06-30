@@ -2163,6 +2163,14 @@ a.action-card:active {
   background: var(--surface-subtle);
 }
 
+.dossier-add-form-start {
+  max-width: 58ch;
+  margin: -6px 0 12px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
 .kp-disclosure__body:has(#dossier-upload-form:target)
   .dossier-add-route-panel:not(:has(#dossier-upload-form:target)),
 .kp-disclosure__body:has(#consult-verslag-form:target)
