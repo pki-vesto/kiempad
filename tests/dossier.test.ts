@@ -590,6 +590,11 @@ describe('dossier', () => {
         dag: 5,
         meetmoment: 'Dag 5 blastocyst',
         kwaliteit: '4AA',
+        kliniekBeoordeling: {
+          tekst: '4AA',
+          bron: 'Labrapport',
+          datum: '2026-05-04',
+        },
         kliniekTerminologie: 'Gardner-score',
         bron: 'Labrapport',
         reviewStatus: 'gereviewd',
@@ -602,6 +607,11 @@ describe('dossier', () => {
       dag: 5,
       meetmoment: 'Dag 5 blastocyst',
       kwaliteit: '4AA',
+      kliniekBeoordeling: {
+        tekst: '4AA',
+        bron: 'Labrapport',
+        datum: '2026-05-04',
+      },
       kliniekTerminologie: 'Gardner-score',
       bron: 'Labrapport',
       reviewStatus: 'gereviewd',
@@ -614,6 +624,7 @@ describe('dossier', () => {
     expect(document.analyse.signalen).toContain(
       'Embryokwaliteit is een feitelijke kliniekregistratie; Kiempad voorspelt geen uitkomst, rangschikt embryo’s niet, berekent geen kansen en geeft geen medisch advies.',
     );
+    expect(JSON.stringify(document)).not.toMatch(/\b(beste embryo|slechtste embryo|rangorde)\b/i);
   });
 
   it('sorteert dossierdocumenten aflopend op onderzoeksdatum', () => {

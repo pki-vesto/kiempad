@@ -3322,7 +3322,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Embryo dossier, domain types, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G479 — embryo outcome event tracking
 
@@ -11475,6 +11475,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Consults, encrypted storage, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1055 — embryo grading source audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G478 legt embryokwaliteit nu expliciet vast als kliniekbeoordeling met tekst, bron en datum, maar er is nog geen compacte audit die deze bronregistratie en niet-rangschikkende taalgrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat embryo grading source registration, kliniekopgave-labels, encrypted opslag en geen kans-/rankingtaal samen controleert.
+- **User Value:** Gebruikers kunnen embryokwaliteit blijven teruglezen als kliniekopgave zonder dat Kiempad selectieadvies, rangorde of kansberekening suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G478; kliniekBeoordeling tekst/bron/datum blijft gedekt; UI blijft labelen als kliniekopgave; encrypted-store bewijs toont geen plaintext kwaliteit, bron, embryo-id of payload; evidence bevat geen beste/slechtste/rangorde/kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Embryo dossier, dossier store, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

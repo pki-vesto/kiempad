@@ -216,6 +216,11 @@ export interface DossierDocument {
   embryo?: {
     label: string;
     kwaliteit: string;
+    kliniekBeoordeling?: {
+      tekst: string;
+      bron: string;
+      datum: IsoDate;
+    };
     dag?: number;
     status?: 'bevrucht' | 'ingevroren' | 'teruggeplaatst' | 'niet_gebruikt' | 'onbekend';
     meetmoment?: string;
