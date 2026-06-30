@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 923 |
+| ☑ klaar | 924 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1122** |
+| **Totaal** | **1123** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1284,13 +1284,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1119 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract | P1 | F5 | ☑ |
 | G1120 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard | P1 | F5 | ☑ |
 | G1121 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard missing-term fixture | P1 | F5 | ☑ |
-| G1122 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☐ |
+| G1122 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☑ |
+| G1123 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1122** (id's G001 t/m G1122, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1123** (id's G001 t/m G1123, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
