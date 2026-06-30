@@ -4882,8 +4882,14 @@ describe('app shell', () => {
     }
     expect(uploadFeedback).not.toMatch(/diagnose|behandelkeuzeadvies/i);
     expect(populatedDossierPanel).toContain('data-dossier-submit-feedback-state="needs-review"');
+    expect(populatedDossierPanel).toContain(
+      'data-dossier-submit-feedback-copy-order="status-target-action-focus-return"',
+    );
     expect(populatedConsultPanel).toContain('data-dossier-submit-feedback-state="processing"');
     expect(populatedEmbryoPanel).toContain('data-dossier-submit-feedback-state="error"');
+    expect(populatedEmbryoPanel).toContain(
+      'data-dossier-submit-feedback-copy-order="status-target-action-focus-return"',
+    );
     expect(populatedDossierPanel).toContain('aria-label="Feedback documentupload: review nodig."');
     expect(populatedConsultPanel).toContain(
       'aria-label="Feedback consultverslag: wordt lokaal verwerkt."',
@@ -4899,9 +4905,8 @@ describe('app shell', () => {
     expect(populatedDossierPanel).toContain('data-dossier-submit-recovery="dossier-upload"');
     expect(populatedDossierPanel).toContain('data-dossier-submit-next-action="dossier-upload"');
     expect(populatedDossierPanel).toContain('Controleer datum, bestand en koppeling.');
-    expect(populatedDossierPanel).toContain(
-      'data-dossier-submit-focus-return="dossier-upload" href="#dossier-upload-form"',
-    );
+    expect(populatedDossierPanel).toContain('data-dossier-submit-focus-return="dossier-upload"');
+    expect(populatedDossierPanel).toContain('href="#dossier-upload-form"');
     expect(populatedDossierPanel).toContain('Terug naar documentvelden');
     expect(populatedConsultPanel).not.toContain('data-dossier-submit-recovery="consult-upload"');
     expect(populatedConsultPanel).not.toContain('data-dossier-submit-next-action="consult-upload"');
@@ -4914,10 +4919,29 @@ describe('app shell', () => {
     expect(populatedEmbryoPanel).toContain('data-dossier-submit-recovery="embryo-quality"');
     expect(populatedEmbryoPanel).toContain('data-dossier-submit-next-action="embryo-quality"');
     expect(populatedEmbryoPanel).toContain('Pas invoer aan en probeer opnieuw.');
-    expect(populatedEmbryoPanel).toContain(
-      'data-dossier-submit-focus-return="embryo-quality" href="#embryo-quality-form"',
-    );
+    expect(populatedEmbryoPanel).toContain('data-dossier-submit-focus-return="embryo-quality"');
+    expect(populatedEmbryoPanel).toContain('href="#embryo-quality-form"');
     expect(populatedEmbryoPanel).toContain('Terug naar kwaliteitsvelden');
+    const dossierFeedbackCopyOrder = [
+      'data-dossier-submit-feedback-copy-order="1"',
+      'data-dossier-submit-feedback-copy-order="2"',
+      'data-dossier-submit-feedback-copy-order="3"',
+      'data-dossier-submit-feedback-copy-order="4"',
+    ].map((marker) => populatedDossierPanel.indexOf(marker));
+    expect(dossierFeedbackCopyOrder.every((position) => position >= 0)).toBe(true);
+    expect(dossierFeedbackCopyOrder).toEqual(
+      [...dossierFeedbackCopyOrder].sort((left, right) => left - right),
+    );
+    const embryoFeedbackCopyOrder = [
+      'data-dossier-submit-feedback-copy-order="1"',
+      'data-dossier-submit-feedback-copy-order="2"',
+      'data-dossier-submit-feedback-copy-order="3"',
+      'data-dossier-submit-feedback-copy-order="4"',
+    ].map((marker) => populatedEmbryoPanel.indexOf(marker));
+    expect(embryoFeedbackCopyOrder.every((position) => position >= 0)).toBe(true);
+    expect(embryoFeedbackCopyOrder).toEqual(
+      [...embryoFeedbackCopyOrder].sort((left, right) => left - right),
+    );
 
     const lockedHtml = renderAppShell(
       'dossier',

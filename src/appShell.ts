@@ -2059,18 +2059,18 @@ function renderDossierSubmitFeedback(
   const ariaLabel = `Feedback ${renderDossierSubmitRouteLabel(route)}: ${renderDossierSubmitFeedbackStateLabel(feedbackState)}.`;
   const announcementOrder = renderDossierSubmitFeedbackAnnouncementOrder(route);
   const recoveryMarkup = recoveryHint
-    ? `<span class="dossier-submit-recovery dossier-submit-next-action" data-dossier-submit-recovery="${route}" data-dossier-submit-next-action="${route}">${escapeHtml(recoveryHint)}</span>`
+    ? `<span class="dossier-submit-recovery dossier-submit-next-action" data-dossier-submit-recovery="${route}" data-dossier-submit-next-action="${route}" data-dossier-submit-feedback-copy-order="3">${escapeHtml(recoveryHint)}</span>`
     : '';
   const targetConfirmation = renderDossierSubmitTargetConfirmation(route, feedbackState);
   const targetConfirmationMarkup = targetConfirmation
-    ? `<span class="dossier-submit-target" data-dossier-submit-target="${route}">${escapeHtml(targetConfirmation)}</span>`
+    ? `<span class="dossier-submit-target" data-dossier-submit-target="${route}" data-dossier-submit-feedback-copy-order="2">${escapeHtml(targetConfirmation)}</span>`
     : '';
   const focusCue = renderDossierSubmitFocusReturnCue(route, feedbackState);
   const focusCueMarkup = focusCue
-    ? `<a class="dossier-submit-focus-return" data-dossier-submit-focus-return="${route}" href="#${focusCue.targetId}">${escapeHtml(focusCue.copy)}</a>`
+    ? `<a class="dossier-submit-focus-return" data-dossier-submit-focus-return="${route}" data-dossier-submit-feedback-copy-order="4" href="#${focusCue.targetId}">${escapeHtml(focusCue.copy)}</a>`
     : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${targetConfirmationMarkup}${recoveryMarkup}${focusCueMarkup}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" data-dossier-submit-feedback-copy-order="status-target-action-focus-return" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span data-dossier-submit-feedback-copy-order="1">${escapeHtml(copy)}</span>${targetConfirmationMarkup}${recoveryMarkup}${focusCueMarkup}</p>`;
 }
 
 function renderDossierSubmitFeedbackAnnouncementOrder(
