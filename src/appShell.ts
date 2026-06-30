@@ -7504,6 +7504,7 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
           : `<p>${escapeHtml(verslag.samenvatting.tekst)}</p>`
       }
       <small>Reviewstatus: ${escapeHtml(reviewLabel)} · Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
+      ${renderConsultSamenvattingBronparagraaf(verslag)}
       ${review?.reden ? `<p class="small-print">Reviewreden: ${escapeHtml(review.reden)}</p>` : ''}
       <form class="compact-form consult-samenvatting-review-form" data-consult-summary-review-kind="local-review">
         <input type="hidden" name="consultVerslagId" value="${escapeAttribute(verslag.id)}" />
@@ -7519,6 +7520,36 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
         <button type="submit" name="samenvattingReviewActie" value="verwerpen">Verwerp concept</button>
       </form>
     </div>
+  `;
+}
+
+function renderConsultSamenvattingBronparagraaf(verslag: ConsultVerslag): string {
+  if (!verslag.samenvatting) return '';
+  const bronParagraaf = verslag.samenvatting.bronParagraaf ?? {
+    tekst:
+      verslag.samenvatting.bronnen.length > 0
+        ? `Bronnen voor conceptsamenvatting: ${verslag.samenvatting.bronnen.join(', ')}.`
+        : 'Bronnen voor conceptsamenvatting: geen expliciete bron vastgelegd.',
+    bronnen: verslag.samenvatting.bronnen,
+    datum: verslag.samenvatting.gegenereerdOp,
+    reviewStatus:
+      verslag.samenvattingReview?.status === 'aangepast' ||
+      verslag.samenvattingReview?.status === 'verworpen'
+        ? 'gereviewd'
+        : 'concept',
+  };
+
+  return `
+    <section class="linked-note consult-summary-source-review" aria-label="Consultsamenvatting bronparagraaf review" data-consult-summary-source-review-state="${escapeAttribute(bronParagraaf.reviewStatus)}">
+      <strong>Bronparagraaf review</strong>
+      <p>${escapeHtml(bronParagraaf.tekst)}</p>
+      <dl class="summary-list">
+        <div><dt>Bronnen</dt><dd>${escapeHtml(bronParagraaf.bronnen.join(', ') || 'Geen expliciete bron')}</dd></div>
+        <div><dt>Datum</dt><dd>${escapeHtml(bronParagraaf.datum)}</dd></div>
+        <div><dt>Review</dt><dd>${escapeHtml(bronParagraaf.reviewStatus)}</dd></div>
+      </dl>
+      <p class="small-print">Controleer de bronparagraaf samen met de conceptsamenvatting; dit is bronherleiding, geen medisch advies.</p>
+    </section>
   `;
 }
 

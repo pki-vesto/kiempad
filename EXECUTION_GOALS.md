@@ -3966,7 +3966,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consults, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G525 — behandelgeschiedenis reconstructie vanuit consulten
 
@@ -11587,6 +11587,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Imaging, embryo dossier, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1063 — consult summary source paragraph audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G524 bewaart nu een bronparagraaf bij consultsamenvattingen, maar er is nog geen compacte audit die bronlabels, datum, reviewstatus en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat consult summary source paragraph review zichtbaar blijft zonder transcriptpayload, bestandsinhoud of medische interpretatie te lekken.
+- **User Value:** Gebruikers kunnen bronherleiding van consultsamenvattingen blijven controleren zonder dat Kiempad consulttekst of adviesachtige copy in auditoppervlakken herhaalt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G524; concept/gereviewd, consult-id of titel, bronlabels, datum en reviewstatus blijven gedekt; evidence bevat geen transcriptpayload, base64, data-url, bestandsinhoud, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Consults, app shell, encrypted storage, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

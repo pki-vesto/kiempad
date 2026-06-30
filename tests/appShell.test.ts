@@ -4439,6 +4439,12 @@ describe('app shell', () => {
             methode: 'lokale_tekstheuristiek',
             tekst: 'We bespraken de planning. Vraag de kliniek naar het vervolg.',
             bronnen: ['consulttekst'],
+            bronParagraaf: {
+              tekst: 'Bronnen voor conceptsamenvatting: consulttekst.',
+              bronnen: ['consulttekst'],
+              datum: '2026-06-23T15:05:00.000Z',
+              reviewStatus: 'gereviewd',
+            },
             waarschuwing:
               'Concept op basis van lokaal ingevoerde tekst. Consult-AI geeft geen diagnose of doseringsadvies; controleer altijd met de kliniek.',
             gegenereerdOp: '2026-06-23T15:00:00.000Z',
@@ -4486,6 +4492,12 @@ describe('app shell', () => {
     expect(section).toContain('Conceptsamenvatting');
     expect(section).toContain('Reviewstatus: Aangepast door gebruiker');
     expect(section).toContain('data-consult-summary-review-state="aangepast"');
+    expect(section).toContain('Consultsamenvatting bronparagraaf review');
+    expect(section).toContain('data-consult-summary-source-review-state="gereviewd"');
+    expect(section).toContain('Bronparagraaf review');
+    expect(section).toContain('Bronnen voor conceptsamenvatting: consulttekst.');
+    expect(section).toContain('Datum</dt><dd>2026-06-23T15:05:00.000Z</dd>');
+    expect(section).toContain('Review</dt><dd>gereviewd</dd>');
     expect(section).toContain('class="compact-form consult-samenvatting-review-form"');
     expect(section).toContain('name="samenvattingReviewActie" value="corrigeren"');
     expect(section).toContain('name="samenvattingReviewActie" value="verwerpen"');
@@ -4502,6 +4514,9 @@ describe('app shell', () => {
     expect(section).toContain('Status: concept');
     expect(section).not.toContain('Y29uc3VsdC1wYXlsb2Fk');
     expect(section).not.toContain('data:application/pdf;base64');
+    expect(section).not.toContain('diagnose stellen');
+    expect(section).not.toContain('dosering aanpassen');
+    expect(section).not.toContain('kansberekening');
     expect(section).not.toContain('behandelkeuzeadvies');
     expect(section).not.toContain('kies behandeling');
   });
