@@ -3702,6 +3702,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Wellbeing UI, decision UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1211 — kosten en backup eerste viewport als beheerwerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kosten en Back-up hebben taakroutes en formulieren, maar de eerste viewport moet nog sterker als financiële en veiligheidswerkbank voelen in plaats van als losse beheercontent.
+- **User Impact:** Gebruikers moeten financiële status, vergoeding, eigen risico, export, import en herstelstatus nog te veel scannen voordat duidelijk is welke beheerroute nu relevant is.
+- **Desired Outcome:** Maak Kosten en Back-up meer app-achtig met een eerste-viewport beheerwerkbank voor financiële status, export/restore-status en veilige vervolgroutes.
+- **User Value:** Gebruikers kunnen financiële en veiligheidsstatus sneller beoordelen zonder door alle invoer-, export- en historiecontent te scrollen.
+- **Acceptance Criteria:** Kosten opent met een duidelijke eerste-viewport beheerwerkbank voor totaal, vergoeding, eigen risico en historie; Back-up opent met een compacte veiligheidswerkbank voor laatste export, importstatus, herstelroute en vaultstatus; bestaande formulieren, export/import hooks, privacycopy en taakroutes blijven bereikbaar; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Kosten, Back-up
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Finance UI, backup UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 44
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

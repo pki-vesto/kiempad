@@ -2361,21 +2361,125 @@ h2 {
 }
 
 .wellbeing-command-layout {
-  gap: 18px;
+  gap: 16px;
+}
+
+.insight-workbench {
+  display: grid;
+  gap: 12px;
+  box-sizing: border-box;
+  width: min(100%, calc(100vw - 48px));
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--category) 8%, transparent), transparent 52%),
+    var(--surface);
+}
+
+.insight-workbench[data-wellbeing-first-viewport="insight-workbench"],
+.insight-workbench[data-decision-first-viewport="insight-workbench"] {
+  scroll-margin-top: 24px;
+}
+
+.insight-workbench__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.insight-workbench__header h2,
+.insight-workbench__header p {
+  margin: 0;
+}
+
+.insight-workbench__header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
+}
+
+.insight-workbench__header p:last-child {
+  max-width: 68ch;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.insight-workbench__status {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--category) 30%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--category) 10%, var(--surface) 90%);
+  color: var(--category-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.insight-workbench__grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.insight-workbench__focus,
+.insight-workbench__panel {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
+}
+
+.insight-workbench__focus h3,
+.insight-workbench__focus p {
+  margin: 0;
+}
+
+.insight-workbench__focus h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+}
+
+.insight-workbench__focus p:last-child {
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.insight-workbench__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.insight-workbench__actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .wellbeing-task-routes {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-soft);
 }
 
 .wellbeing-task-route {
@@ -2462,21 +2566,18 @@ h2 {
 }
 
 .decision-command-layout {
-  gap: 18px;
+  gap: 16px;
 }
 
 .decision-task-routes {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-soft);
 }
 
 .decision-task-route {
@@ -6041,6 +6142,64 @@ a.action-card:active {
   .dossier-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .insight-workbench {
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .insight-workbench__header {
+    display: grid;
+    gap: 8px;
+  }
+
+  .insight-workbench__header h2 {
+    font-size: 1.16rem;
+  }
+
+  .insight-workbench__header p:last-child {
+    display: none;
+  }
+
+  .insight-workbench__status {
+    width: fit-content;
+    padding: 5px 9px;
+  }
+
+  .insight-workbench__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .insight-workbench__focus,
+  .insight-workbench__panel {
+    padding: 10px;
+  }
+
+  .insight-workbench__focus h3 {
+    font-size: 1.05rem;
+  }
+
+  .insight-workbench :where(.stat-row) {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .insight-workbench :where(.stat) {
+    flex: 0 0 88px;
+    padding: 8px 10px;
+    scroll-snap-align: start;
+  }
+
+  .insight-workbench :where(.stat__value) {
+    font-size: 1.08rem;
+  }
+
+  .insight-workbench :where(.stat__label) {
+    font-size: 0.72rem;
   }
 
   .wellbeing-task-routes {

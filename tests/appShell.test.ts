@@ -1717,6 +1717,8 @@ describe('app shell', () => {
     const dossierHtml = renderAppShell('dossier');
     const kennisHtml = renderAppShell('kennis');
     const trajectHtml = renderAppShell('traject');
+    const welzijnHtml = renderAppShell('welzijn');
+    const afwegingenHtml = renderAppShell('afwegingen');
 
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1730,6 +1732,14 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(trajectHtml).toContain('data-treatment-first-viewport="workbench"');
+    expect(welzijnHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(welzijnHtml).toContain('data-wellbeing-first-viewport="insight-workbench"');
+    expect(afwegingenHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(afwegingenHtml).toContain('data-decision-first-viewport="insight-workbench"');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -34424,6 +34434,16 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('class="section-stack wellbeing-command-layout"');
+    expect(html).toContain(
+      '<section class="insight-workbench wellbeing-insight-workbench" aria-label="Inzichtwerkbank welzijn" data-wellbeing-first-viewport="insight-workbench">',
+    );
+    expect(html).toContain('Welzijn eerst rustig scannen');
+    expect(html).toContain('Recent signaal');
+    expect(html).toContain('Partner check-in: Zwaar');
+    expect(html).toContain('aria-label="Welzijn werkbank acties"');
+    expect(html).toContain('href="#welzijn-route-overview"');
+    expect(html).toContain('href="#welzijn-route-history"');
+    expect(html).toContain('href="#welzijn-route-log"');
     expect(html).toContain('class="wellbeing-task-routes"');
     expect(html).toContain('aria-label="Welzijn taakroutes"');
     expect(html).toContain('data-wellbeing-task-routes="ready"');
@@ -34476,6 +34496,26 @@ describe('app shell', () => {
     expect(html).toContain('Cyclusmetingen');
     expect(html).toContain('Temperatuur: 36.8');
     expect(html).toContain('Bloeding: licht');
+  });
+
+  it('bewaakt welzijn en afwegingen insight workbenches als eerste-viewport laag', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain('.insight-workbench {');
+    expect(css).toContain('[data-wellbeing-first-viewport="insight-workbench"]');
+    expect(css).toContain('[data-decision-first-viewport="insight-workbench"]');
+    expect(css).toContain('.insight-workbench__header {');
+    expect(css).toContain('.insight-workbench__grid {');
+    expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
+    expect(css).toContain('.insight-workbench__actions {');
+    expect(css).toContain('.wellbeing-task-routes {');
+    expect(css).toContain('.decision-task-routes {');
+    expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.insight-workbench :where(.stat-row) {');
+    expect(css).toContain('scroll-snap-type: x proximity;');
+    expect(css).toContain('.insight-workbench :where(.stat) {');
+    expect(css).toContain('flex: 0 0 88px;');
+    expect(css).toContain('grid-template-columns: 1fr;');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
@@ -35329,6 +35369,16 @@ describe('app shell', () => {
 
     expect(html).toContain('Afwegingen');
     expect(html).toContain('class="section-stack decision-command-layout"');
+    expect(html).toContain(
+      '<section class="insight-workbench decision-insight-workbench" aria-label="Besliswerkbank" data-decision-first-viewport="insight-workbench">',
+    );
+    expect(html).toContain('Afwegingen zonder score of stuuradvies');
+    expect(html).toContain('Keuze vastgelegd: Vandaag bellen');
+    expect(html).toContain('Geen open keuze');
+    expect(html).toContain('aria-label="Besliswerkbank acties"');
+    expect(html).toContain('href="#afwegingen-route-prepare"');
+    expect(html).toContain('href="#afwegingen-route-compare"');
+    expect(html).toContain('href="#afwegingen-route-choice"');
     expect(html).toContain('class="decision-task-routes"');
     expect(html).toContain('aria-label="Afwegingen taakroutes"');
     expect(html).toContain('data-decision-task-routes="ready"');
