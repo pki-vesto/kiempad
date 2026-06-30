@@ -4,6 +4,7 @@ import {
   type AppShellState,
   DISCLAIMER,
   normalizeScreenId,
+  normalizeTreatmentRoute,
   renderAppShell,
   renderStorageBootstrapError,
   renderVaultGate,
@@ -1648,6 +1649,11 @@ describe('app shell', () => {
     expect(normalizeScreenId('#afwegingen')).toBe('afwegingen');
     expect(normalizeScreenId('#logboek')).toBe('logboek');
     expect(normalizeScreenId('#dossier')).toBe('dossier');
+    expect(normalizeScreenId('#traject?route=fasen')).toBe('traject');
+    expect(normalizeTreatmentRoute('#traject?route=fasen')).toBe('fasen');
+    expect(normalizeTreatmentRoute('#traject?route=context')).toBe('context');
+    expect(normalizeTreatmentRoute('#/traject?route=beheer')).toBe('beheer');
+    expect(normalizeTreatmentRoute('#traject?route=bestaat-niet')).toBe('overzicht');
     expect(normalizeScreenId('#/bestaat-niet')).toBe('start');
   });
 
@@ -35576,6 +35582,32 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('id="traject-new-form"');
+    expect(html).toContain('class="section-stack treatment-command-layout"');
+    expect(html).toContain('class="treatment-task-routes"');
+    expect(html).toContain('aria-label="Traject taakroutes"');
+    expect(html).toContain('data-treatment-task-routes="ready"');
+    expect(html).toContain('href="#traject?route=overzicht" aria-current="page"');
+    expect(html).toContain('href="#traject?route=fasen"');
+    expect(html).toContain('href="#traject?route=vergoeding"');
+    expect(html).toContain('href="#traject?route=context"');
+    expect(html).toContain('href="#traject?route=beheer"');
+    expect(html).toContain('id="traject-route-overzicht"');
+    expect(html).toContain('data-treatment-route="overzicht"');
+    expect(html).toContain('data-treatment-route-state="active"');
+    expect(html).toContain('id="traject-route-fasen"');
+    expect(html).toContain('data-treatment-route="fasen"');
+    expect(html).toContain('data-treatment-route-state="inactive" hidden');
+    expect(html).toContain('id="traject-route-vergoeding"');
+    expect(html).toContain('data-treatment-route="vergoeding"');
+    expect(html).toContain('id="traject-route-context"');
+    expect(html).toContain('data-treatment-route="context"');
+    expect(html).toContain('id="traject-route-beheer"');
+    expect(html).toContain('data-treatment-route="beheer"');
+    expect(html).toContain('Trajectoverzicht');
+    expect(html).toContain('Faseplanning');
+    expect(html).toContain('Vergoeding');
+    expect(html).toContain('Timeline en graphcontext');
+    expect(html).toContain('Trajectbeheer en archief');
     expect(html).toContain('Alle actieve pogingen');
     expect(html).toContain('Archiveer traject');
     expect(html).toContain('Archief');
@@ -35601,6 +35633,33 @@ describe('app shell', () => {
     expect(html).toContain('telt nog niet mee');
     expect(html).toContain('aria-label="Verwijder traject: Poging 1"');
     expect(html).toContain('aria-label="Huidige fase: Stimulatie voor Poging 1"');
+  });
+
+  it('toont één actieve treatmentroute tegelijk', () => {
+    const html = renderAppShell('traject', {
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      trajecten: [],
+      activeTreatmentRoute: 'fasen',
+    });
+
+    const overzichtStart = html.indexOf('id="traject-route-overzicht"');
+    const fasenStart = html.indexOf('id="traject-route-fasen"');
+    const vergoedingStart = html.indexOf('id="traject-route-vergoeding"');
+
+    expect(html).toContain('href="#traject?route=fasen" aria-current="page"');
+    expect(html.slice(overzichtStart, fasenStart)).toContain(
+      'data-treatment-route-state="inactive" hidden',
+    );
+    expect(html.slice(fasenStart, vergoedingStart)).toContain(
+      'data-treatment-route-state="active"',
+    );
+    expect(html.slice(fasenStart, vergoedingStart)).not.toContain('hidden');
   });
 
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {

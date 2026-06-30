@@ -2581,6 +2581,117 @@ h2 {
   min-width: 0;
 }
 
+.treatment-command-layout {
+  gap: 18px;
+}
+
+.treatment-task-routes {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-soft);
+}
+
+.treatment-task-route {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.treatment-task-route:focus-visible,
+.treatment-task-route:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-muted);
+}
+
+.treatment-task-route[aria-current="page"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.treatment-task-route span {
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.treatment-task-route small {
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.treatment-route-section {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  scroll-margin-top: 84px;
+}
+
+.treatment-route-section[hidden] {
+  display: none;
+}
+
+.treatment-route-section__header {
+  display: grid;
+  gap: 4px;
+}
+
+.treatment-route-section__header h2,
+.treatment-route-section__header p {
+  margin: 0;
+}
+
+.treatment-route-section__header > p:last-child {
+  max-width: 78ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.treatment-route-section .summary-panel,
+.treatment-route-section .policy-panel,
+.treatment-route-section .linked-note,
+.treatment-route-section small {
+  overflow-wrap: anywhere;
+}
+
+.treatment-route-section .definition-list > div,
+.treatment-route-section .summary-list > div,
+.treatment-route-section .metadata-list > div {
+  min-width: 0;
+}
+
+.treatment-route-section .definition-list dd,
+.treatment-route-section .summary-list dd,
+.treatment-route-section .metadata-list dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.treatment-route-section .data-form,
+.treatment-route-section .compact-form,
+.treatment-route-section .data-form label,
+.treatment-route-section .data-form input,
+.treatment-route-section .data-form select,
+.treatment-route-section .data-form textarea {
+  min-width: 0;
+}
+
 .daily-command-actions .panel-heading {
   margin-bottom: 12px;
 }
@@ -4681,6 +4792,15 @@ a.action-card:active {
   .finance-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .treatment-task-routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 7px;
+  }
+
+  .treatment-task-route {
+    min-width: 0;
   }
 
   .knowledge-route-grid {

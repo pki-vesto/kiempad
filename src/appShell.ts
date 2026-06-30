@@ -359,8 +359,26 @@ const SCREEN_GROUPS: readonly ScreenGroup[] = [
 const DEFAULT_SCREEN = SCREENS[0] as Screen;
 
 export function normalizeScreenId(value: string | null | undefined): ScreenId {
-  const candidate = value?.replace(/^#\/?/, '') ?? '';
+  const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0];
   return SCREENS.some((screen) => screen.id === candidate) ? (candidate as ScreenId) : 'start';
+}
+
+type TreatmentRoute = 'overzicht' | 'fasen' | 'vergoeding' | 'context' | 'beheer';
+
+const TREATMENT_ROUTES: readonly TreatmentRoute[] = [
+  'overzicht',
+  'fasen',
+  'vergoeding',
+  'context',
+  'beheer',
+];
+
+export function normalizeTreatmentRoute(value: string | null | undefined): TreatmentRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return TREATMENT_ROUTES.includes(route as TreatmentRoute)
+    ? (route as TreatmentRoute)
+    : 'overzicht';
 }
 
 export type AppShellState = {
@@ -392,6 +410,7 @@ export type AppShellState = {
   imagingPreviewLocked?: boolean;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
   timelineFilter?: FertilityTimelineFilter;
+  activeTreatmentRoute?: TreatmentRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -11802,6 +11821,7 @@ function renderTrajectScreen(state: AppShellState): string {
   );
   const fertilityTimelineExport = maakFertilityTimelineTrajectExport(volledigeFertilityTimeline);
   const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
+  const activeTreatmentRoute = state.activeTreatmentRoute ?? 'overzicht';
 
   const trajectFormsBody = `${renderTrajectForm(selected?.traject)}${
     selected
@@ -11817,40 +11837,149 @@ function renderTrajectScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      disclosure({
-        summary: selected ? 'Traject bewerken of poging toevoegen' : 'Traject aanmaken',
-        open: !selected,
-        body: trajectFormsBody,
+      renderTreatmentTaskRoutes({
+        activeCount: actieveTrajecten.length,
+        archivedCount: gearchiveerdeTrajecten.length,
+        phaseCount: selected?.fasen.length ?? 0,
+        remainingReimbursements: vergoeding.resterend,
+        activeRoute: activeTreatmentRoute,
       }),
-      `<section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
-        <h2>Vergoede pogingen</h2>
-        <dl class="summary-list">
-          <div><dt>Meetellend</dt><dd>${vergoeding.meetellend} van ${vergoeding.maximum}</dd></div>
-          <div><dt>Resterend</dt><dd>${vergoeding.resterend}</dd></div>
-        </dl>
-        <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
+      `<section id="traject-route-overzicht" class="treatment-route-section" aria-labelledby="traject-route-overzicht-title" data-treatment-route="overzicht"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'overzicht')}>
+        <header class="treatment-route-section__header">
+          <p class="kp-card__eyebrow">Overzicht</p>
+          <h2 id="traject-route-overzicht-title">Trajectoverzicht</h2>
+          <p>Bekijk actieve en afgeronde pogingen, statusverdeling en de centrale trajectcontext.</p>
+        </header>
+        ${renderTrajectOverzicht(overzicht) || '<p class="empty-state">Nog geen poging vastgelegd.</p>'}
+        ${
+          actieveTrajecten.length > 0
+            ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen')
+            : '<p class="empty-state">Nog geen actieve pogingen.</p>'
+        }
       </section>`,
-      renderTrajectOverzicht(overzicht),
-      renderFertilityTimeline(
-        state,
-        fertilityTimeline,
-        state.timelineFilter,
-        fertilityTimelineExport,
-      ),
-      graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : '',
-      `<div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>`,
-      selected
-        ? renderTimeline(selected)
-        : '<p class="empty-state">Nog geen traject. Maak hierboven een poging aan om de vaste fasen te tonen.</p>',
-      actieveTrajecten.length > 0
-        ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen')
-        : '',
-      gearchiveerdeTrajecten.length > 0
-        ? renderTrajectList(gearchiveerdeTrajecten, 'Archief', true)
-        : '',
+      `<section id="traject-route-fasen" class="treatment-route-section" aria-labelledby="traject-route-fasen-title" data-treatment-route="fasen"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'fasen')}>
+        <header class="treatment-route-section__header">
+          <p class="kp-card__eyebrow">Fasen</p>
+          <h2 id="traject-route-fasen-title">Faseplanning</h2>
+          <p>Markeer de actuele fase binnen het geselecteerde traject zonder medische conclusie.</p>
+        </header>
+        <div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>
+        ${
+          selected
+            ? renderTimeline(selected)
+            : '<p class="empty-state">Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.</p>'
+        }
+      </section>`,
+      `<section id="traject-route-vergoeding" class="treatment-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
+        <header class="treatment-route-section__header">
+          <p class="kp-card__eyebrow">Vergoeding</p>
+          <h2 id="traject-route-vergoeding-title">Vergoeding</h2>
+          <p>Controleer meetellende pogingen en resterende ruimte als voorbereiding op eigen administratie.</p>
+        </header>
+        <section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
+          <h2>Vergoede pogingen</h2>
+          <dl class="summary-list">
+            <div><dt>Meetellend</dt><dd>${vergoeding.meetellend} van ${vergoeding.maximum}</dd></div>
+            <div><dt>Resterend</dt><dd>${vergoeding.resterend}</dd></div>
+          </dl>
+          <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
+        </section>
+      </section>`,
+      `<section id="traject-route-context" class="treatment-route-section" aria-labelledby="traject-route-context-title" data-treatment-route="context"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'context')}>
+        <header class="treatment-route-section__header">
+          <p class="kp-card__eyebrow">Context</p>
+          <h2 id="traject-route-context-title">Timeline en graphcontext</h2>
+          <p>Bekijk de centrale fertility timeline en kennisrelaties los van beheeracties.</p>
+        </header>
+        ${renderFertilityTimeline(
+          state,
+          fertilityTimeline,
+          state.timelineFilter,
+          fertilityTimelineExport,
+        )}
+        ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
+      </section>`,
+      `<section id="traject-route-beheer" class="treatment-route-section" aria-labelledby="traject-route-beheer-title" data-treatment-route="beheer"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'beheer')}>
+        <header class="treatment-route-section__header">
+          <p class="kp-card__eyebrow">Beheer</p>
+          <h2 id="traject-route-beheer-title">Trajectbeheer en archief</h2>
+          <p>Bewerk het geselecteerde traject, voeg een nieuwe poging toe of herstel een gearchiveerde poging.</p>
+        </header>
+        ${disclosure({
+          summary: selected ? 'Traject bewerken of poging toevoegen' : 'Traject aanmaken',
+          open: !selected,
+          body: trajectFormsBody,
+        })}
+        ${gearchiveerdeTrajecten.length > 0 ? renderTrajectList(gearchiveerdeTrajecten, 'Archief', true) : ''}
+      </section>`,
     ],
-    { ariaLabel: 'Traject beheren' },
+    { className: 'treatment-command-layout', ariaLabel: 'Traject beheren' },
   );
+}
+
+function renderTreatmentTaskRoutes(input: {
+  activeCount: number;
+  archivedCount: number;
+  phaseCount: number;
+  remainingReimbursements: number;
+  activeRoute: TreatmentRoute;
+}): string {
+  const routes = [
+    {
+      id: 'overzicht',
+      href: '#traject?route=overzicht',
+      label: 'Overzicht',
+      meta: `${input.activeCount} actief`,
+    },
+    {
+      id: 'fasen',
+      href: '#traject?route=fasen',
+      label: 'Fasen',
+      meta: `${input.phaseCount} fases`,
+    },
+    {
+      id: 'vergoeding',
+      href: '#traject?route=vergoeding',
+      label: 'Vergoeding',
+      meta: `${input.remainingReimbursements} resterend`,
+    },
+    {
+      id: 'context',
+      href: '#traject?route=context',
+      label: 'Context',
+      meta: 'timeline',
+    },
+    {
+      id: 'beheer',
+      href: '#traject?route=beheer',
+      label: 'Beheer',
+      meta: `${input.archivedCount} archief`,
+    },
+  ];
+
+  return `
+    <nav class="treatment-task-routes" aria-label="Traject taakroutes" data-treatment-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="treatment-task-route" href="${route.href}"${route.id === input.activeRoute ? ' aria-current="page"' : ''}>
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
+  `;
+}
+
+function renderTreatmentRouteVisibility(
+  activeRoute: TreatmentRoute,
+  route: TreatmentRoute,
+): string {
+  return route === activeRoute
+    ? ' data-treatment-route-state="active"'
+    : ' data-treatment-route-state="inactive" hidden';
 }
 
 const FERTILITY_GRAPH_RELATIE_LABELS: Record<FertilityGraphEdgeType, string> = {

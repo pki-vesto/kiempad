@@ -1,5 +1,6 @@
 import {
   normalizeScreenId,
+  normalizeTreatmentRoute,
   renderAppShell,
   renderStorageBootstrapError,
   renderVaultGate,
@@ -187,6 +188,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     imagingFilter: state.imagingFilter,
     graphFilter: state.graphFilter,
     timelineFilter: state.timelineFilter,
+    activeTreatmentRoute: normalizeTreatmentRoute(window.location.hash),
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,

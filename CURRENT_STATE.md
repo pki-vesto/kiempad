@@ -200,7 +200,12 @@
 - **G1192 financeroutes:** het kostenscherm heeft nu een routebalk en duidelijke
   clusters voor overzicht, toevoegen, vergoeding/eigen risico en historie, met
   behoud van `kosten-form`, kosten selectors, bewerk-/delete-hooks en
-  polisdisclaimers; G1193 staat open voor treatmentroutes in het trajectscherm.
+  polisdisclaimers.
+- **G1193 treatmentroutes:** het trajectscherm heeft nu een routebalk en duidelijke
+  clusters voor trajectoverzicht, faseplanning, vergoeding, timeline/graphcontext en
+  beheer/archief,
+  met behoud van `traject-form`, `traject-new-form`, faseknoppen en vergoedingcopy;
+  G1194 staat open voor scheduleroutes in het agendascherm.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

@@ -3430,6 +3430,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Treatment UI, Timeline UI, Finance UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 52
+- **Status:** ☑ done
+
+### G1194 — agendascherm opdelen in taakgerichte scheduleroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het agendascherm combineert komende afspraken, planning, voorbereiding, herinneringen en terugblik nog te makkelijk in één lange schedulerflow.
+- **User Impact:** Gebruikers moeten door afspraakdetails scrollen om snel te plannen, consultvoorbereiding te doen of eerdere afspraken terug te vinden.
+- **Desired Outcome:** Deel het agendascherm zichtbaar op in taakgerichte scheduleroutes voor overzicht, plannen, voorbereiding en historie/herinneringen.
+- **User Value:** Afspraken voelen meer als een rustige agenda-workflow en minder als een lange lijst met formulieren en details.
+- **Acceptance Criteria:** Agendascherm bevat zichtbare taakroutes; bestaande afspraakformulier-id's, input names, reminderhooks, vraagkoppeling en privacycopy blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen medische conclusie, behandeladvies, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Agenda, Start, Herinneringen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Schedule UI, Appointment UI, Reminder UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 51
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
