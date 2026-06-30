@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1094/G1095 Central Encrypted Platform: changelog en current-state hebben nu releasecontext-evidence voor de G1093 retention snapshot freshness guard met veilige labels voor snapshot freshness, runbook, goal-completion-audit en maintenance-test; G1095 is toegevoegd voor een missing-term fixture.
 - G1093/G1094 Central Encrypted Platform: de retention snapshot heeft nu freshness-guardrails in runbook, goal-completion-audit en maintenance-tests zodat snapshotdrift alleen met bewuste termuitleg wordt geaccepteerd; G1094 is toegevoegd voor freshness releasecontext evidence.
 - G1092/G1093 Central Encrypted Platform: de health-monitor retention drift guard publiceert nu een compacte inline CI-evidence snapshot met runbook, goal-completion-audit en maintenance-test als bronnen; G1093 is toegevoegd voor snapshot freshness guard.
 - G1091/G1092 Central Encrypted Platform: maintenance-tests bewaken nu drift tussen runbook-retentionregels en de goal-completion-audit voor health-monitor artifact cleanup- en forbidden-evidence termen; G1092 is toegevoegd voor CI evidence snapshot.
