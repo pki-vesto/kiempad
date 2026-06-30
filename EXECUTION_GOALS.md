@@ -3542,6 +3542,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, forms, command routes, mobile navigation, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1201 — mobiele formulierinhoud groeperen met compacte veldsecties
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Mobiele formulierpanelen hebben nu compactere spacing en een sticky primaire actie, maar de veldinhoud kan nog als één lange invoerlijst voelen.
+- **User Impact:** Gebruikers zien de bewaaractie sneller, maar moeten binnen lange formulieren nog zelf bepalen welke velden bij basis, context of details horen.
+- **Desired Outcome:** Groepeer mobiele formulierinhoud visueel rustiger met compacte veldsecties of section cues zonder form-id's, input names of privacygrenzen te wijzigen.
+- **User Value:** Gebruikers scannen mobiele formulieren sneller en ervaren invoer als een begeleide workflow in plaats van losse velden.
+- **Acceptance Criteria:** Minimaal agenda, medicatie, vragen en traject behouden sticky primaire actiezone; mobiele formulierinhoud krijgt herkenbare compacte sectie- of veldgroepcues; desktop blijft scanbaar; bestaande hashes, form-id's, input names en privacyhooks blijven intact; browsercheck bewaakt geen horizontale overflow en geen bottom-nav overlap; tests bewaken CSS-contracten; geen medische payload, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Agenda, Medicatie, Vragen, Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, forms, command routes, mobile navigation, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 44
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

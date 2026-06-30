@@ -5335,6 +5335,52 @@ a.action-card:active {
     scroll-margin-bottom: var(--mobile-bottom-nav-clearance);
   }
 
+  .command-route-section .kp-disclosure {
+    border-radius: 14px;
+  }
+
+  .command-route-section .kp-disclosure__summary {
+    min-height: 40px;
+    padding: 10px 13px;
+  }
+
+  .command-route-section .kp-disclosure__body {
+    padding: 0 13px 13px;
+  }
+
+  .command-route-section .data-form {
+    gap: 10px;
+  }
+
+  .command-route-section .form-grid {
+    gap: 10px;
+  }
+
+  .command-route-section .data-form label {
+    gap: 5px;
+  }
+
+  .command-route-section .data-form input,
+  .command-route-section .data-form select,
+  .command-route-section .data-form textarea {
+    min-height: 40px;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .command-route-section .data-form textarea {
+    max-height: 180px;
+  }
+
+  .command-route-section .data-form > button[type="submit"] {
+    position: sticky;
+    bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);
+    z-index: 30;
+    width: 100%;
+    min-height: 44px;
+    box-shadow: 0 10px 24px rgba(21, 48, 44, 0.18);
+  }
+
   .command-task-route__top {
     gap: 6px;
   }
