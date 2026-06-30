@@ -5017,19 +5017,26 @@ describe('app shell', () => {
     expect(css).toContain('scroll-margin-top: clamp(136px, 16vh, 176px);');
     expect(css).toContain('#dossier-upload-form:target > .dossier-upload-group:first-of-type');
     expect(css).toContain('#consult-verslag-form:target > .dossier-subform-group:first-of-type');
+    expect(css).toContain('#dossier-upload-form:focus > .dossier-upload-group:first-of-type');
     expect(css).toContain(
       '#dossier-upload-form:focus-visible > .dossier-upload-group:first-of-type',
     );
     expect(css).toContain(
       '#embryo-status-event-form:focus-visible > .dossier-subform-group:first-of-type',
     );
-    expect(css).toContain('outline: 2px solid color-mix(in srgb, var(--accent) 34%, transparent);');
+    expect(css).toContain(
+      '--dossier-feedback-landing-outline: color-mix(in srgb, var(--accent) 34%, transparent);',
+    );
+    expect(css).toContain('--dossier-feedback-landing-background: color-mix(');
+    expect(css).toContain(
+      '--dossier-feedback-landing-shadow: color-mix(in srgb, var(--accent) 24%, transparent);',
+    );
+    expect(css).toContain('outline: 2px solid var(--dossier-feedback-landing-outline);');
     expect(css).toContain('outline-offset: 2px;');
     expect(css).toContain('#dossier-upload-form > .dossier-upload-group:first-of-type');
     expect(css).toContain('outline-color 140ms ease;');
-    expect(css).toContain(
-      'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent);',
-    );
+    expect(css).toContain('background: var(--dossier-feedback-landing-background);');
+    expect(css).toContain('box-shadow: inset 0 0 0 1px var(--dossier-feedback-landing-shadow);');
     expect(css).toContain('.dossier-add-route:not([href="#dossier-upload-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#consult-verslag-form"])');
     expect(css).toContain('.dossier-add-route:not([href="#embryo-quality-form"])');
@@ -5130,10 +5137,13 @@ describe('app shell', () => {
     expect(css).toContain(
       '#embryo-status-event-form:target > .dossier-subform-group:first-of-type',
     );
+    expect(css).toContain('#embryo-status-event-form:focus > .dossier-subform-group:first-of-type');
     expect(css).toContain(
       '#embryo-status-event-form:focus-visible > .dossier-subform-group:first-of-type',
     );
-    expect(css).toContain('background: Canvas;');
+    expect(css).toContain('--dossier-feedback-landing-outline: Highlight;');
+    expect(css).toContain('--dossier-feedback-landing-background: Canvas;');
+    expect(css).toContain('background: var(--dossier-feedback-landing-background);');
     expect(css).toContain('color: LinkText;');
     expect(css).toContain('outline: 2px solid Highlight;');
     expect(css).toContain('box-shadow: none;');
