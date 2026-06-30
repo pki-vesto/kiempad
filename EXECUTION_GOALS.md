@@ -3366,6 +3366,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Privacy UI, Settings UI, Backup UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 56
+- **Status:** ☑ done
+
+### G1190 — herinneringen en notificatieprivacy opdelen in taakgerichte notificationroutes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Herinneringen combineert planning, notificatiestatus en lockscreenprivacy nog in één lange stroom.
+- **User Impact:** Gebruikers moeten bij gevoelige meldingen zoeken tussen planning, status en privacykeuzes.
+- **Desired Outcome:** Deel het herinneringenscherm zichtbaar op in taakgerichte notificationroutes voor planning, status, privacy en geschiedenis/herstel.
+- **User Value:** Notificaties voelen rustiger en privacybewuster, met sneller onderscheid tussen plannen en gevoelige lockscreeninstellingen.
+- **Acceptance Criteria:** Herinneringen bevat zichtbare taakroutes; bestaande reminder- en notificationprivacy form-id's, input names, notification hooks en privacycopy blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers en lege/gevulde context; geen medicatiepayload, afspraakdetails, secrets, trackingpayload of ontsleutelde data wordt toegevoegd.
+- **Affected Screens:** Herinneringen, Instellingen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Notification UI, Reminder UI, Privacy UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 55
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

@@ -1267,21 +1267,45 @@ function renderBackupScreen(state: AppShellState): string {
   const syncImportLabel = central ? 'Kiempad-recordpakket' : 'Kiempad-syncpakket';
   const syncImportButton = central ? 'Importeer recordpakket' : 'Importeer syncpakket';
 
-  return `
-    <section class="section-stack" aria-label="Back-up en import">
-        <h2>Versleutelde export</h2>
-        <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
-        <p class="small-print">${backupCopy}</p>
-        <h2 class="section-subheading">${syncTitle}</h2>
-        <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
-        <p class="small-print">${syncCopy}</p>
+  return sectionStack(
+    [
+      renderBackupTaskRoutes({
+        central,
+        reminderStatus: reminder.status,
+        hasWebAuthn: Boolean(state.webAuthnStatus),
+      }),
+      `<section id="backup-route-controleren" class="backup-route-section" aria-labelledby="backup-route-controleren-title" data-backup-route="controleren">
+        <header class="backup-route-section__header">
+          <p class="kp-card__eyebrow">Controleren</p>
+          <h2 id="backup-route-controleren-title">Back-upstatus controleren</h2>
+          <p>Controleer herinnering en centrale syncstatus zonder dossierinhoud te tonen.</p>
+        </header>
         ${renderCentralSyncFeedback(state)}
         <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
           <h2>${escapeHtml(reminder.titel)}</h2>
           <p>${escapeHtml(reminder.tekst)}</p>
           ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
         </section>
-        ${renderWebAuthnSettings(state)}
+      </section>`,
+      `<section id="backup-route-export" class="backup-route-section" aria-labelledby="backup-route-export-title" data-backup-route="export">
+        <header class="backup-route-section__header">
+          <p class="kp-card__eyebrow">Export</p>
+          <h2 id="backup-route-export-title">Encrypted export maken</h2>
+          <p>Download alleen versleutelde back-up- of recordpakketten voor eigen beheer.</p>
+        </header>
+        <h2>Versleutelde export</h2>
+        <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
+        <p class="small-print">${backupCopy}</p>
+        <h2 class="section-subheading">${syncTitle}</h2>
+        <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
+        <p class="small-print">${syncCopy}</p>
+      </section>`,
+      `<section id="backup-route-import" class="backup-route-section" aria-labelledby="backup-route-import-title" data-backup-route="import">
+        <header class="backup-route-section__header">
+          <p class="kp-card__eyebrow">Import</p>
+          <h2 id="backup-route-import-title">Versleutelde data importeren</h2>
+          <p>Importeer alleen Kiempad-exporten of encrypted recordpakketten die je vertrouwt.</p>
+        </header>
         <h2>Import</h2>
         <form id="import-backup-form" class="data-form" data-import-privacy-state="${central ? 'central-encrypted-backup' : 'legacy-encrypted-backup'}">
           <label>
@@ -1299,7 +1323,61 @@ function renderBackupScreen(state: AppShellState): string {
           <button type="submit">${syncImportButton}</button>
         </form>
         ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
-    </section>
+      </section>`,
+      `<section id="backup-route-herstel" class="backup-route-section" aria-labelledby="backup-route-herstel-title" data-backup-route="herstel">
+        <header class="backup-route-section__header">
+          <p class="kp-card__eyebrow">Herstel</p>
+          <h2 id="backup-route-herstel-title">Toegang en herstel voorbereiden</h2>
+          <p>Beheer optionele biometrie lokaal; herstelzin en versleutelde back-up blijven leidend.</p>
+        </header>
+        ${renderWebAuthnSettings(state)}
+      </section>`,
+    ],
+    { className: 'backup-command-layout', ariaLabel: 'Back-up en import' },
+  );
+}
+
+function renderBackupTaskRoutes(input: {
+  central: boolean;
+  reminderStatus: string;
+  hasWebAuthn: boolean;
+}): string {
+  const routes = [
+    {
+      href: '#backup-route-controleren',
+      label: 'Controleren',
+      meta: input.reminderStatus === 'ok' ? 'actueel' : input.reminderStatus,
+    },
+    {
+      href: '#backup-route-export',
+      label: 'Export',
+      meta: input.central ? 'centraal' : 'lokaal',
+    },
+    {
+      href: '#backup-route-import',
+      label: 'Import',
+      meta: input.central ? 'recordpakket' : 'backup',
+    },
+    {
+      href: '#backup-route-herstel',
+      label: 'Herstel',
+      meta: input.hasWebAuthn ? 'biometrie' : 'fallback',
+    },
+  ];
+
+  return `
+    <nav class="backup-task-routes" aria-label="Back-up taakroutes" data-backup-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="backup-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
   `;
 }
 

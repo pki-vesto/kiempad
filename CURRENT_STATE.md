@@ -183,6 +183,11 @@
   beslisverslagen, met behoud van `decision-form`, `decision-choice-form`,
   `data-decision-id` en bestaande inputcontracten; G1189 staat open voor
   taakgerichte privacyroutes in beheer- en instellingenschermen.
+- **G1189 back-uproutes:** het back-upscherm heeft nu een routebalk en duidelijke
+  privacyclusters voor controleren, exporteren, importeren en herstel/toegang, met
+  behoud van `export-backup`, `export-sync`, `import-backup-form`,
+  `import-sync-form`, WebAuthn hooks en privacycopy; G1190 staat open voor
+  herinneringen en notificatieprivacy.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.
