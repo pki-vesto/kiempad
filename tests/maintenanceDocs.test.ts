@@ -475,6 +475,15 @@ const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELE
   'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract missing-term melding';
 const RECOVERY_CONTRACT_HELPER_RELEASE_STATE_MESSAGE_ERROR_CONTRACT_RELEASE_RELEASE_RELEASE_RELEASE_MISSING_TERM_ERROR =
   'Recovery helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext contractcontext ontbreekt voor termen: recovery-helper release-state message-foutmeldingcontext contractcontext releasecontext releasecontextcontract releasecontext missing-term melding';
+const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS = [
+  'G1093',
+  'snapshot freshness',
+  'runbook',
+  'goal-completion-audit',
+  'maintenance-test',
+] as const;
+const HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR =
+  'Health monitor retention freshness releasecontext ontbreekt voor termen: goal-completion-audit, maintenance-test';
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 const maintenanceDocsRaw = readFileSync(
   new URL('./maintenanceDocs.test.ts', import.meta.url),
@@ -3933,23 +3942,18 @@ describe('onderhoudsdocumentatie', () => {
   });
 
   it('bewaakt G1094 health monitor retention freshness releasecontext evidence', () => {
-    const releaseContextTerms = [
-      'G1093',
-      'snapshot freshness',
-      'runbook',
-      'goal-completion-audit',
-      'maintenance-test',
-    ];
     const releaseContextEvidence = [
       'G1094 health-monitor-retention-freshness-releasecontext',
       'sources=CHANGELOG.md,CURRENT_STATE.md',
       'references=G1093',
-      `terms=${releaseContextTerms.slice(1).join('|')}`,
+      `terms=${HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS.slice(1).join('|')}`,
     ].join('\n');
 
     for (const releaseDoc of [changelog, currentState]) {
-      for (const releaseContextTerm of releaseContextTerms) {
-        expect(releaseDoc).toContain(releaseContextTerm);
+      const releaseContext = extractHealthMonitorRetentionFreshnessReleaseContext(releaseDoc);
+
+      for (const releaseContextTerm of HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS) {
+        expect(releaseContext).toContain(releaseContextTerm);
       }
     }
 
@@ -3975,6 +3979,37 @@ describe('onderhoudsdocumentatie', () => {
       references=G1093
       terms=snapshot freshness|runbook|goal-completion-audit|maintenance-test"
     `);
+  });
+
+  it('geeft ontbrekende G1095 health monitor retention releasecontexttermen technisch terug', () => {
+    expect(() =>
+      extractHealthMonitorRetentionFreshnessReleaseContext(
+        'G1093 retention snapshot freshness guard verwijst naar runbook.',
+      ),
+    ).toThrow(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR);
+    expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR).toBe(
+      'Health monitor retention freshness releasecontext ontbreekt voor termen: goal-completion-audit, maintenance-test',
+    );
+    for (const missingTerm of ['goal-completion-audit', 'maintenance-test']) {
+      expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR).toContain(missingTerm);
+    }
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_MISSING_TERM_ERROR).not.toContain(
+        forbiddenEvidenceTerm,
+      );
+    }
   });
 
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
@@ -4480,6 +4515,28 @@ function extractRecoveryContractHelperReleaseContext(releaseDoc: string): string
   if (missingTerms.length > 0) {
     throw new Error(
       `Recovery helper releasecontext ontbreekt voor termen: ${missingTerms.join(', ')}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractHealthMonitorRetentionFreshnessReleaseContext(releaseDoc: string): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS.some((term) => line.includes(term)),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms = HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_TERMS.filter(
+    (term) => !matchingContext.includes(term),
+  );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Health monitor retention freshness releasecontext ontbreekt voor termen: ${missingTerms.join(
+        ', ',
+      )}`,
     );
   }
 

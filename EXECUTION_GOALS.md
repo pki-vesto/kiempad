@@ -12051,4 +12051,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1096 — central health monitor retention releasecontext missing-term release-state guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1095 voegt een missing-term fixture toe, maar release-state bewaking voor die fixture ontbreekt nog.
+- **Desired Outcome:** Bewaak dat changelog en current state de G1095 missing-term fixture met veilige technische labels blijven noemen.
+- **User Value:** Beheer ziet in releasecontext wanneer de health-monitor retention freshness missing-term guard actief is.
+- **Acceptance Criteria:** Changelog en current-state noemen de G1095 missing-term fixture; onderhoudstests bewaken release-state tekst met veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
