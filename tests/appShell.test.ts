@@ -4719,6 +4719,8 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-add-route-panel="embryo-status"');
     expect(dossierPanel).toContain('id="dossier-upload-form"');
     expect(dossierPanel).toContain('data-upload-privacy-kind="dossier"');
+    expect(dossierPanel).toContain('data-dossier-feedback-focus-target="dossier-upload"');
+    expect(dossierPanel).toContain('tabindex="-1"');
     expect(dossierPanel).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies|OCR-payload|base64/i);
     expect(dossierPanel).toContain('data-dossier-upload-group="document-basis"');
     expect(dossierPanel).not.toContain(
@@ -4759,6 +4761,8 @@ describe('app shell', () => {
     );
     expect(consultPanel).toContain('id="consult-verslag-form"');
     expect(consultPanel).toContain('data-upload-privacy-kind="consult"');
+    expect(consultPanel).toContain('data-dossier-feedback-focus-target="consult-upload"');
+    expect(consultPanel).toContain('tabindex="-1"');
     expect(consultPanel).toContain('data-consult-upload-group="consult-basis"');
     expect(consultPanel).not.toContain(
       'data-consult-upload-group="consult-basis" data-dossier-context-priority="optional"',
@@ -4785,6 +4789,8 @@ describe('app shell', () => {
     expect(consultPanel).toContain('Klaar voor lokale opslag.');
     expect(embryoQualityPanel).toContain('id="embryo-quality-form"');
     expect(embryoQualityPanel).toContain('data-upload-privacy-kind="embryo"');
+    expect(embryoQualityPanel).toContain('data-dossier-feedback-focus-target="embryo-quality"');
+    expect(embryoQualityPanel).toContain('tabindex="-1"');
     expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-identificatie"');
     expect(embryoQualityPanel).toContain('data-dossier-required-cue="embryo-quality"');
     expect(embryoQualityRequiredCue).toContain('Verplicht: datum, embryo en kwaliteit.');
@@ -4808,6 +4814,8 @@ describe('app shell', () => {
     expect(embryoQualityPanel).toContain('Klaar voor lokale opslag.');
     expect(embryoStatusPanel).toContain('id="embryo-status-event-form"');
     expect(embryoStatusPanel).toContain('data-upload-privacy-kind="embryo-status"');
+    expect(embryoStatusPanel).toContain('data-dossier-feedback-focus-target="embryo-status"');
+    expect(embryoStatusPanel).toContain('tabindex="-1"');
     expect(embryoStatusPanel).toContain('data-embryo-status-group="status-basis"');
     expect(embryoStatusPanel).toContain('data-dossier-required-cue="embryo-status"');
     expect(embryoStatusRequiredCue).toContain('Verplicht: datum en embryo.');

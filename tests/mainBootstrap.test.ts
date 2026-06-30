@@ -61,5 +61,6 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('const targetId = link.hash.slice(1)');
     expect(mainSource).toContain("target.scrollIntoView({ block: 'start' })");
     expect(mainSource).toContain("window.history.replaceState(null, '', `#");
+    expect(mainSource).toContain('target.focus({ preventScroll: true })');
   });
 });
