@@ -53,6 +53,8 @@ const BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER = 'backlog-health-json-contrac
 const BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER = 'backlog-health-json-contract-matrix:end';
 const BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION = `herstel beide markercomments ${BACKLOG_HEALTH_CONTRACT_MATRIX_START_MARKER} en ${BACKLOG_HEALTH_CONTRACT_MATRIX_END_MARKER} rond dezelfde issueSnapshot-matrixgroepverwachting in tests/backlogHealth.test.ts`;
 const BACKLOG_HEALTH_CONTRACT_MATRIX_MISSING_ERROR = `Backlog-health contractmatrix ontbreekt: ${BACKLOG_HEALTH_CONTRACT_MATRIX_RECOVERY_ACTION}.`;
+const DOSSIER_CUE_PARITY_SMOKE_LABEL = 'Dossier cue parity smoke';
+const DOSSIER_CUE_PARITY_SMOKE_COMMAND = 'npm run test -- tests/appShell.test.ts';
 const BOOTSTRAP_GOVERNANCE_SCHEMA_ERROR_RELEASE_TERMS = [
   'ciAnnotation',
   'schemaValidation',
@@ -3870,8 +3872,8 @@ describe('onderhoudsdocumentatie', () => {
 
   it('documenteert G1173 dossier cue parity smoke CI evidence', () => {
     const requiredTerms = [
-      'Dossier cue parity smoke',
-      'npm run test -- tests/appShell.test.ts',
+      DOSSIER_CUE_PARITY_SMOKE_LABEL,
+      DOSSIER_CUE_PARITY_SMOKE_COMMAND,
       'documentupload, consult, embryokwaliteit en embryo-status',
       'standaard, reduced-motion en forced-colors context',
       'G1172/G1173',
@@ -3892,15 +3894,28 @@ describe('onderhoudsdocumentatie', () => {
         requiredTerm,
       );
     }
-    expect(ciWorkflow).toContain('Dossier cue parity smoke');
-    expect(ciWorkflow).toContain('run: npm run test -- tests/appShell.test.ts');
+    expect(ciWorkflow).toContain(`- name: ${DOSSIER_CUE_PARITY_SMOKE_LABEL}`);
+    expect(ciWorkflow).toContain(`run: ${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`);
+    expect(runbook).toContain(`\`${DOSSIER_CUE_PARITY_SMOKE_LABEL}\``);
+    expect(goalCompletionAudit).toContain(`\`${DOSSIER_CUE_PARITY_SMOKE_LABEL}\``);
     expectCiStepOrder('Secrets scan', 'Sensitive fixture scan');
-    expectCiStepOrder('Sensitive fixture scan', 'Dossier cue parity smoke');
-    expectCiStepOrder('Dossier cue parity smoke', 'Test');
+    expectCiStepOrder('Sensitive fixture scan', DOSSIER_CUE_PARITY_SMOKE_LABEL);
+    expectCiStepOrder(DOSSIER_CUE_PARITY_SMOKE_LABEL, 'Test');
     expect(appShellTestSource).toContain(
       'bewaakt target- en focuscue parity voor dossier-feedback return',
     );
     expect(appShellTestSource).toContain("extractCssMediaBlock(css, 'forced-colors: active')");
+    expect(
+      [
+        `workflowLabel=${DOSSIER_CUE_PARITY_SMOKE_LABEL}`,
+        `command=${DOSSIER_CUE_PARITY_SMOKE_COMMAND}`,
+        'docs=docs/RUNBOOK.md|docs/GOAL_COMPLETION_AUDIT.md|tests/maintenanceDocs.test.ts',
+      ].join('\n'),
+    ).toMatchInlineSnapshot(`
+      "workflowLabel=Dossier cue parity smoke
+      command=npm run test -- tests/appShell.test.ts
+      docs=docs/RUNBOOK.md|docs/GOAL_COMPLETION_AUDIT.md|tests/maintenanceDocs.test.ts"
+    `);
 
     for (const forbiddenTerm of forbiddenEvidenceTerms) {
       expect(goalCompletionAudit).toContain(forbiddenTerm);
