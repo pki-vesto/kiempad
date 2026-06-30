@@ -1719,6 +1719,8 @@ describe('app shell', () => {
     const trajectHtml = renderAppShell('traject');
     const welzijnHtml = renderAppShell('welzijn');
     const afwegingenHtml = renderAppShell('afwegingen');
+    const kostenHtml = renderAppShell('kosten');
+    const backupHtml = renderAppShell('backup');
 
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1740,6 +1742,34 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(afwegingenHtml).toContain('data-decision-first-viewport="insight-workbench"');
+    expect(kostenHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(kostenHtml).toContain('data-finance-first-viewport="management-workbench"');
+    expect(backupHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(backupHtml).toContain('data-backup-first-viewport="management-workbench"');
+  });
+
+  it('bewaakt kosten en backup management workbenches als eerste-viewport laag', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain('.management-workbench {');
+    expect(css).toContain('[data-finance-first-viewport="management-workbench"]');
+    expect(css).toContain('[data-backup-first-viewport="management-workbench"]');
+    expect(css).toContain('.management-workbench__header {');
+    expect(css).toContain('.management-workbench__grid {');
+    expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
+    expect(css).toContain('.management-workbench__actions {');
+    expect(css).toContain('.finance-task-routes {');
+    expect(css).toContain('.backup-task-routes {');
+    expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.management-workbench :where(.stat-row) {');
+    expect(css).toContain('scroll-snap-type: x proximity;');
+    expect(css).toContain('.management-workbench :where(.stat) {');
+    expect(css).toContain('flex: 0 0 102px;');
+    expect(css).toContain('grid-template-columns: 1fr;');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -35286,6 +35316,15 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('class="section-stack finance-command-layout"');
+    expect(html).toContain(
+      '<section class="management-workbench finance-management-workbench" aria-label="Financiële beheerwerkbank" data-finance-first-viewport="management-workbench">',
+    );
+    expect(html).toContain('Kosten, vergoeding en eigen risico eerst');
+    expect(html).toContain('Apotheekfactuur: €');
+    expect(html).toContain('aria-label="Kosten werkbank acties"');
+    expect(html).toContain('href="#kosten-route-overzicht"');
+    expect(html).toContain('href="#kosten-route-vergoeding"');
+    expect(html).toContain('href="#kosten-route-toevoegen"');
     expect(html).toContain('class="finance-task-routes"');
     expect(html).toContain('aria-label="Kosten taakroutes"');
     expect(html).toContain('data-finance-task-routes="ready"');
@@ -35571,6 +35610,16 @@ describe('app shell', () => {
 
     expect(html).toContain('Back-up &amp; import');
     expect(html).toContain('class="section-stack backup-command-layout"');
+    expect(html).toContain(
+      '<section class="management-workbench backup-management-workbench" aria-label="Veiligheidswerkbank" data-backup-first-viewport="management-workbench">',
+    );
+    expect(html).toContain('Back-up, import en herstel eerst controleren');
+    expect(html).toContain('Maak een versleutelde back-up');
+    expect(html).toContain('Legacy lokale kluis');
+    expect(html).toContain('aria-label="Veiligheidswerkbank acties"');
+    expect(html).toContain('href="#backup-route-controleren"');
+    expect(html).toContain('href="#backup-route-export"');
+    expect(html).toContain('href="#backup-route-herstel"');
     expect(html).toContain('class="backup-task-routes"');
     expect(html).toContain('aria-label="Back-up taakroutes"');
     expect(html).toContain('data-backup-task-routes="ready"');

@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1211/G1212 Premium Claude Design UI: Kosten en Back-up openen nu met een eerste-viewport beheerwerkbank/veiligheidswerkbank voor financiële status, vergoeding/eigen risico, vaultstatus, export, import en herstelroutes; browser-smoke bewaakt desktop en mobiel zonder generieke werkruimtekaart of horizontale overflow. G1212 is toegevoegd voor Logboek/Herinneringen als systeemwerkbank.
 - G1210/G1211 Premium Claude Design UI: Welzijn en Afwegingen openen nu met een eerste-viewport inzichtwerkbank/besliswerkbank voor recente signalen, eigenaarcontext, keuze-status, statistieken en vervolgroutes; mobiel passen werkbank en routekeuze binnen de viewport zonder horizontale overflow. G1211 is toegevoegd voor Kosten/Back-up als beheerwerkbank.
 - G1209/G1210 Premium Claude Design UI: Traject opent nu met een Behandelwerkbank in de eerste viewport voor actuele fase, volgende actie, vergoeding en timeline/graphcontext; mobiel past werkbank en routekeuze binnen de viewport zonder horizontale overflow. G1210 is toegevoegd voor Welzijn/Afwegingen als inzichtwerkbank.
 - G1208/G1209 Premium Claude Design UI: Start toont nu een compacte dagadvies-advieswerkbank met aparte vrouw-, man- en samenkaarten, review-/artscheckstatus en een mobiele horizontale eigenaarrail zonder pagina-overflow; G1209 is toegevoegd voor traject/timeline als behandelwerkbank.

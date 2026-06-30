@@ -993,7 +993,9 @@ function renderWorkspaceContext(activeId: ScreenId): string {
     activeId === 'kennis' ||
     activeId === 'traject' ||
     activeId === 'welzijn' ||
-    activeId === 'afwegingen'
+    activeId === 'afwegingen' ||
+    activeId === 'kosten' ||
+    activeId === 'backup'
   )
     return '';
 
@@ -1613,6 +1615,13 @@ function renderBackupScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderBackupManagementWorkbench({
+        central,
+        reminder,
+        hasWebAuthn: Boolean(state.webAuthnStatus),
+        backupStatus: state.backupStatus,
+        backupError: state.backupError,
+      }),
       renderBackupTaskRoutes({
         central,
         reminderStatus: reminder.status,
@@ -1679,6 +1688,57 @@ function renderBackupScreen(state: AppShellState): string {
     ],
     { className: 'backup-command-layout', ariaLabel: 'Back-up en import' },
   );
+}
+
+function renderBackupManagementWorkbench(input: {
+  central: boolean;
+  reminder: ReturnType<typeof bepaalBackupReminder>;
+  hasWebAuthn: boolean;
+  backupStatus?: string;
+  backupError?: string;
+}): string {
+  const storageMode = input.central ? 'Centrale encrypted dataset' : 'Legacy lokale kluis';
+  const lastKnown = input.reminder.laatsteBackupLabel ?? 'Nog geen back-updatum';
+  const actionCopy = input.backupError
+    ? 'Controleer import- of exportmelding'
+    : input.backupStatus
+      ? input.backupStatus
+      : input.reminder.status === 'recent'
+        ? 'Controleer periodiek je export'
+        : 'Maak een versleutelde back-up';
+
+  return `
+    <section class="management-workbench backup-management-workbench" aria-label="Veiligheidswerkbank" data-backup-first-viewport="management-workbench">
+      <header class="management-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Veiligheidswerkbank</p>
+          <h2>Back-up, import en herstel eerst controleren</h2>
+          <p>Start met vaultstatus, laatste export en herstelroute zonder dossierinhoud te tonen.</p>
+        </div>
+        <p class="management-workbench__status">${escapeHtml(input.reminder.titel)}</p>
+      </header>
+      <div class="management-workbench__grid">
+        <section class="management-workbench__focus" aria-label="Back-up volgende stap">
+          <p class="kp-card__eyebrow">Nu eerst</p>
+          <h3>${escapeHtml(actionCopy)}</h3>
+          <p>${escapeHtml(storageMode)} · ${escapeHtml(lastKnown)}</p>
+        </section>
+        <div class="management-workbench__panel">
+          ${statRow([
+            { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
+            { label: 'Export', value: input.reminder.status === 'recent' ? 'OK' : 'Nodig' },
+            { label: 'Import', value: input.backupError ? 'Check' : 'Klaar' },
+            { label: 'Herstel', value: input.hasWebAuthn ? 'Bio' : 'Fallback' },
+          ])}
+          <nav class="management-workbench__actions" aria-label="Veiligheidswerkbank acties">
+            <a href="#backup-route-controleren">Controleren</a>
+            <a href="#backup-route-export">Export</a>
+            <a href="#backup-route-herstel">Herstel</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderBackupTaskRoutes(input: {
@@ -9918,6 +9978,14 @@ function renderKostenScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderFinanceManagementWorkbench({
+        costCount: kosten.length,
+        vergoedCount,
+        eigenRisicoCount,
+        onbekendCount,
+        overview: overzicht,
+        latestCost: kosten[0],
+      }),
       renderFinanceTaskRoutes({
         costCount: kosten.length,
         vergoedCount,
@@ -9978,6 +10046,58 @@ function renderKostenScreen(state: AppShellState): string {
     ],
     { className: 'finance-command-layout', ariaLabel: 'Kosten en vergoedingen' },
   );
+}
+
+function renderFinanceManagementWorkbench(input: {
+  costCount: number;
+  vergoedCount: number;
+  eigenRisicoCount: number;
+  onbekendCount: number;
+  overview: ReturnType<typeof berekenKostenOverzicht>;
+  latestCost: CostItem | undefined;
+}): string {
+  const focus = input.latestCost
+    ? `${input.latestCost.omschrijving}: ${formatEuro(input.latestCost.bedrag)}`
+    : 'Leg een kostenpost vast om totalen en vergoedingstatus te zien.';
+  const status =
+    input.onbekendCount > 0
+      ? `${input.onbekendCount} onbekend`
+      : input.costCount > 0
+        ? 'Alles gecategoriseerd'
+        : 'Nog geen posten';
+
+  return `
+    <section class="management-workbench finance-management-workbench" aria-label="Financiële beheerwerkbank" data-finance-first-viewport="management-workbench">
+      <header class="management-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Beheerwerkbank</p>
+          <h2>Kosten, vergoeding en eigen risico eerst</h2>
+          <p>Scan totalen, vergoedingstatus en eigen-risicocontext zonder financieel advies of polisinterpretatie.</p>
+        </div>
+        <p class="management-workbench__status">${escapeHtml(status)}</p>
+      </header>
+      <div class="management-workbench__grid">
+        <section class="management-workbench__focus" aria-label="Financiële status">
+          <p class="kp-card__eyebrow">Nu eerst</p>
+          <h3>${escapeHtml(focus)}</h3>
+          <p>${input.costCount} post(en) · ${input.vergoedCount} vergoed · ${input.eigenRisicoCount} eigen risico</p>
+        </section>
+        <div class="management-workbench__panel">
+          ${statRow([
+            { label: 'Totaal', value: formatEuro(input.overview.totaal) },
+            { label: 'Vergoed', value: formatEuro(input.overview.vergoed) },
+            { label: 'Eigen bijdrage', value: formatEuro(input.overview.eigenBijdrage) },
+            { label: 'Onbekend', value: formatEuro(input.overview.onbekend) },
+          ])}
+          <nav class="management-workbench__actions" aria-label="Kosten werkbank acties">
+            <a href="#kosten-route-overzicht">Overzicht</a>
+            <a href="#kosten-route-vergoeding">Vergoeding</a>
+            <a href="#kosten-route-toevoegen">Toevoegen</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderFinanceTaskRoutes(input: {
