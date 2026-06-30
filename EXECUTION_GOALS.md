@@ -12261,4 +12261,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1111 — central health monitor retention missing-term-contract release guard compact contract release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1110 legt de exacte missing-term-contract releaseguard foutmelding vast, maar releasecontext rond dit compacte contract wordt nog niet apart bewaakt.
+- **Desired Outcome:** Bewaak dat changelog en current state het G1110 compacte contract met veilige technische labels blijven noemen.
+- **User Value:** Beheer ziet in releasecontext wanneer het health-monitor retention missing-term-contract releaseguard compact contract actief is.
+- **Acceptance Criteria:** Changelog en current-state noemen het G1110 compacte contract; onderhoudstests bewaken release-tekst met veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

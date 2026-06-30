@@ -7,6 +7,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
 ## [Unreleased]
 
 ### Added
+- G1110/G1111 Central Encrypted Platform: de exacte health-monitor retention missing-term-contract releaseguard foutmelding is nu als compact contract gesnapshott met veilige technische labels; G1111 is toegevoegd voor releaseguard-bewaking van dit compacte contract.
 - G1109/G1110 Central Encrypted Platform: de health-monitor retention missing-term-contract releaseguard heeft nu een compacte missing-term fixture voor ontbrekende foutmelding- en veilige-technische-labels termen; G1110 is toegevoegd voor het compacte foutmeldingcontract van deze fixture.
 - G1108/G1109 Central Encrypted Platform: changelog en current-state hebben nu releaseguard-bewaking voor het G1107 health-monitor retention compact-contract missing-term-contract releaseguard foutmeldingcontract met veilige technische labels; G1109 is toegevoegd voor de missing-term fixture van deze releaseguard.
 - G1107/G1108 Central Encrypted Platform: de exacte health-monitor retention compact-contract missing-term-contract releaseguard foutmelding is nu als compact contract gesnapshott met veilige technische labels; G1108 is toegevoegd voor releaseguard-bewaking van dit compacte contract.
