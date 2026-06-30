@@ -3392,7 +3392,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, knowledge, AI summaries, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G484 — persoonlijke relevantiescore zonder behandeladvies
 
@@ -11657,6 +11657,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Research, AI settings, privacy, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1068 — dual summary audit evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** G483 introduceert scientificSummary, patientSummary en sourceCitation voor researchpublicaties, maar er is nog geen compacte audit die bronkoppeling, conceptstatus en begrijpelijke taalgrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat duale researchsamenvattingen brongekoppeld, conceptmatig en begrijpelijk blijven zonder behandeladvies.
+- **User Value:** Gebruikers blijven publicaties in vakinhoudelijke en gewone taal lezen met duidelijke bron en waarschuwing.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G483; scientificSummary, patientSummary en sourceCitation blijven gedekt; AI-output blijft als concept en brongekoppeld gelabeld; patientSummary blijft begrijpelijk Nederlands en vermijdt vaktaal zonder uitleg; evidence bevat geen plaintext medische payload, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research, knowledge, AI summaries, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

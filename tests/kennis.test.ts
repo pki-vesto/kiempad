@@ -11,6 +11,7 @@ import {
   bouwResearchHerverificatieStatus,
   bouwResearchKaartMetadata,
   bouwResearchRelevantieVoorGebruiker,
+  bouwResearchSourceCitation,
   bouwResearchSourceRegistry,
   bouwWetenschappelijkeResearchSamenvattingen,
   filterKennisItems,
@@ -168,6 +169,8 @@ describe('kennis domeinregels', () => {
       notitie: 'Eigen aandachtspunt voor consult.',
       wetenschappelijkeSamenvatting:
         'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken en wat nog onzeker blijft.',
     });
 
     const samenvattingen = bouwWetenschappelijkeResearchSamenvattingen([
@@ -183,6 +186,12 @@ describe('kennis domeinregels', () => {
         bron: 'https://voorbeeld.test/embryo-cultuur',
         wetenschappelijkeSamenvatting:
           'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+        scientificSummary:
+          'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+        sourceCitation: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+        aiConcept: false,
+        waarschuwing:
+          'Conceptsamenvatting met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
       },
     ]);
   });
@@ -207,8 +216,47 @@ describe('kennis domeinregels', () => {
         bron: 'https://voorbeeld.test/embryo-cultuur',
         eenvoudigeSamenvatting:
           'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
+        patientSummary:
+          'Dit artikel beschrijft welke labfactoren zijn bekeken. Het bewijst geen beste behandeling.',
+        sourceCitation: 'https://voorbeeld.test/embryo-cultuur · publicatiedatum 2026-05-10',
+        aiConcept: false,
+        waarschuwing:
+          'Patientvriendelijke conceptsamenvatting in gewone taal met bronverwijzing; controleer publicatie en kliniekcontext. Dit is geen diagnose, dosering of behandelkeuzeadvies.',
       },
     ]);
+  });
+
+  it('maakt researchpublicaties met scientificSummary, patientSummary en sourceCitation', () => {
+    const item = maakResearchKennisItem('research-ai-concept', {
+      titel: 'Artikel over embryo-observaties',
+      bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+      publicatieDatum: '2026-05-10',
+      notitie: 'Eigen aandachtspunt voor consult.',
+      scientificSummary:
+        'Beschrijft methode, populatie, observaties en beperkingen zonder behandeladvies.',
+      patientSummary:
+        'Dit artikel legt uit welke embryo-observaties onderzoekers bekeken en wat nog onzeker blijft.',
+      sourceCitation: 'PubMed 123456, geraadpleegd voor consultvoorbereiding.',
+      aiGegenereerd: true,
+    });
+
+    expect(item.researchPublicatie).toMatchObject({
+      bron: 'https://pubmed.ncbi.nlm.nih.gov/123456/',
+      publicatieDatum: '2026-05-10',
+      wetenschappelijkeSamenvatting:
+        'Beschrijft methode, populatie, observaties en beperkingen zonder behandeladvies.',
+      scientificSummary:
+        'Beschrijft methode, populatie, observaties en beperkingen zonder behandeladvies.',
+      eenvoudigeSamenvatting:
+        'Dit artikel legt uit welke embryo-observaties onderzoekers bekeken en wat nog onzeker blijft.',
+      patientSummary:
+        'Dit artikel legt uit welke embryo-observaties onderzoekers bekeken en wat nog onzeker blijft.',
+      sourceCitation: 'PubMed 123456, geraadpleegd voor consultvoorbereiding.',
+    });
+    expect(item.ai_gegenereerd).toBe(true);
+    expect(bouwResearchSourceCitation('https://doi.org/10.1000/test', '2026-05-10')).toBe(
+      'https://doi.org/10.1000/test · publicatiedatum 2026-05-10',
+    );
   });
 
   it('koppelt researchrelevantie aan lokale dossiercontext zonder behandeladvies', () => {
@@ -309,6 +357,8 @@ describe('kennis domeinregels', () => {
         notitie: 'Artikel over IVF en embryo-ontwikkeling.',
         wetenschappelijkeSamenvatting:
           'Beschrijft IVF-labfactoren en embryo-observaties zonder behandeladvies.',
+        eenvoudigeSamenvatting:
+          'Dit artikel legt uit welke IVF-labfactoren onderzoekers bekeken en wat onzeker blijft.',
       }),
       maakResearchKennisItem('research-man-leefstijl', {
         titel: 'Mannelijke factor en leefstijl',
@@ -317,6 +367,8 @@ describe('kennis domeinregels', () => {
         notitie: 'Artikel over sperma, voeding en slaap.',
         wetenschappelijkeSamenvatting:
           'Beschrijft zaadkwaliteit, voeding en slaap als onderzoeksonderwerpen.',
+        eenvoudigeSamenvatting:
+          'Dit onderzoek legt uit welke leefstijlfactoren onderzoekers bekeken en wat onzeker blijft.',
       }),
       maakResearchKennisItem('research-icsi', {
         titel: 'ICSI achtergrond',
@@ -324,6 +376,8 @@ describe('kennis domeinregels', () => {
         publicatieDatum: '2026-03-01',
         notitie: 'Artikel over ICSI.',
         wetenschappelijkeSamenvatting: 'Beschrijft ICSI als laboratoriumtechniek.',
+        eenvoudigeSamenvatting:
+          'Dit artikel legt uit dat ICSI als laboratoriumtechniek wordt beschreven.',
       }),
     ];
 
@@ -352,6 +406,8 @@ describe('kennis domeinregels', () => {
       notitie: 'Eigen aandachtspunt voor consult.',
       wetenschappelijkeSamenvatting:
         'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken en wat onzeker blijft.',
     });
     const lokaleNotitie = maakResearchKennisItem('research-zonder-publicatiedatum', {
       titel: 'Lokale researchnotitie',
@@ -387,6 +443,8 @@ describe('kennis domeinregels', () => {
       notitie: 'Eigen aandachtspunt voor consult.',
       wetenschappelijkeSamenvatting:
         'Prospectieve cohortstudie; vergelijkt laboratoriumparameters en rapporteert beperkingen.',
+      eenvoudigeSamenvatting:
+        'Dit artikel beschrijft welke labfactoren zijn bekeken en wat onzeker blijft.',
     });
     const actueel = markeerKennisItemGeverifieerd(researchItem, true, '2026-06-24');
     const verouderd = markeerKennisItemGeverifieerd(researchItem, true, '2025-06-01');
@@ -482,11 +540,35 @@ describe('kennis domeinregels', () => {
 
     expect(() =>
       maakResearchKennisItem('research-ongeldig', {
+        titel: 'Artikel zonder patienttekst',
+        bron: 'https://voorbeeld.test/artikel',
+        publicatieDatum: '2026-06-24',
+        notitie: 'Eigen notitie.',
+        wetenschappelijkeSamenvatting: 'Samenvatting met methode en beperkingen.',
+      }),
+    ).toThrow('Patientvriendelijke samenvatting is verplicht');
+
+    expect(() =>
+      maakResearchKennisItem('research-ongeldig', {
+        titel: 'Artikel met te veel vaktaal',
+        bron: 'https://voorbeeld.test/artikel',
+        publicatieDatum: '2026-06-24',
+        notitie: 'Eigen notitie.',
+        wetenschappelijkeSamenvatting: 'Samenvatting met methode en beperkingen.',
+        eenvoudigeSamenvatting:
+          'Prospectieve cohortstudie met hazard ratio en laboratoriumparameters.',
+      }),
+    ).toThrow('Patientvriendelijke samenvatting moet begrijpelijk Nederlands');
+
+    expect(() =>
+      maakResearchKennisItem('research-ongeldig', {
         titel: 'Artikel met behandeladvies',
         bron: 'https://voorbeeld.test/artikel',
         publicatieDatum: '2026-06-24',
         notitie: 'Eigen notitie.',
         wetenschappelijkeSamenvatting: 'Samenvatting met methode en beperkingen.',
+        eenvoudigeSamenvatting:
+          'Dit artikel beschrijft waarom dit alleen achtergrondinformatie is.',
         relevantieVoorGebruiker: 'Jullie moeten deze behandeling kiezen.',
       }),
     ).toThrow('Relevantie voor gebruiker mag geen diagnose');
