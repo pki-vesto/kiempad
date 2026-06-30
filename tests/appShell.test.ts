@@ -32117,6 +32117,21 @@ describe('app shell', () => {
     expect(html).toContain('Bewaar research-opt-in');
     expect(html).toContain('Aggregatie uitgeschakeld.');
     expect(html).toContain('Netwerkresearch staat uit');
+    expect(html).toContain('aria-label="PubMed query preview zonder dossierplaintext"');
+    expect(html).toContain('PubMed query preview');
+    expect(html).toContain('Conceptpreview zonder netwerkactie');
+    expect(html).toContain('Reviewstatus');
+    expect(html).toContain('concept_te_controleren');
+    expect(html).toContain('Query</dt><dd>fertility IVF ICSI embryo male factor</dd>');
+    expect(html).toContain(
+      'https://pubmed.ncbi.nlm.nih.gov/?term=fertility+IVF+ICSI+embryo+male+factor',
+    );
+    expect(html).toContain('id="pubmed-query-preview-form"');
+    expect(html).toContain('name="pubmedZoektermen"');
+    expect(html).toContain('name="pubmedPreviewDatum" type="date"');
+    expect(html).toContain('name="pubmedReviewStatus"');
+    expect(html).toContain('Uitgesloten context: geen dossierdocumenttekst');
+    expect(html).toContain('geen consulttekst');
     expect(html).toContain('Research bronregister');
     expect(html).toContain('Bronnen met naam, type, URL, updatebeleid en opt-invereiste.');
     expect(html).toContain('PubMed');
@@ -32287,6 +32302,8 @@ describe('app shell', () => {
 
     expect(html).toContain('value="true" selected');
     expect(html).toContain('Netwerkresearch staat aan na expliciete opt-in');
+    expect(html).toContain('Conceptpreview na expliciete opt-in');
+    expect(html).toContain('Query</dt><dd>fertility IVF ICSI embryo male factor</dd>');
     expect(html).toContain('4 bron(nen) klaar voor handmatige aggregatie.');
     expect(html).toContain('Research bronregister');
     expect(html).toContain('Eigen artikel embryo-cultuur');

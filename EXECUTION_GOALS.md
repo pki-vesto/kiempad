@@ -4190,7 +4190,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, privacy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G541 — research item broncitatie parser
 
@@ -11713,6 +11713,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Daily Recommendations, app shell, tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1072 — PubMed query preview audit evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** G540 introduceert een PubMed query preview zonder dossierplaintext, maar er is nog geen compacte audit die queryterm-allowlisting, bron/datum/reviewstatus en geen-netwerk-zonder-opt-in bewaakt door toekomstige researchwijzigingen heen.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat PubMed query previews alleen algemene allowlist-termen gebruiken, bron/datum/reviewstatus tonen en geen dossier-, consult- of medische vrije tekst lekken.
+- **User Value:** Gebruikers kunnen researchzoektermen controleren zonder dat Kiempad persoonlijke medische inhoud naar een externe zoekdienst voorbereidt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G540; PubMed-bron, datum en reviewstatus blijven zichtbaar of testbaar; queryterm-allowlisting en correctievelden blijven bewaakt; geen netwerkactie zonder expliciete opt-in; evidence bevat geen secrets, dossierplaintext, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research, knowledge screen, privacy tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

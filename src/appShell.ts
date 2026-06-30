@@ -108,6 +108,7 @@ import {
   KENNIS_CATEGORIE_LABELS,
   type KennisFilter,
   kennisItemsPerCategorie,
+  type PubMedQueryPreview,
   type ResearchAggregatiePlan,
   type ResearchBron,
   type ResearchDossierRelatie,
@@ -8675,6 +8676,7 @@ function renderResearchAggregatiePlan(plan: ResearchAggregatiePlan): string {
       <h3>Aggregatiestatus</h3>
       <p class="small-print">${escapeHtml(plan.waarschuwing)}</p>
       <p>${plan.status === 'klaar_voor_handmatige_start' ? `${plan.bronnen.length} bron(nen) klaar voor handmatige aggregatie.` : 'Aggregatie uitgeschakeld.'}</p>
+      ${renderPubMedQueryPreview(plan.pubMedQueryPreview)}
       <h4>Research bronregister</h4>
       <p class="small-print">Bronnen met naam, type, URL, updatebeleid en opt-invereiste. Dit register start geen netwerkcalls.</p>
       <ol class="compact-list" aria-label="Research bronregister">
@@ -8702,6 +8704,42 @@ function renderResearchAggregatiePlan(plan: ResearchAggregatiePlan): string {
           : ''
       }
     </div>
+  `;
+}
+
+function renderPubMedQueryPreview(preview: PubMedQueryPreview): string {
+  return `
+    <section class="policy-panel embedded-summary" aria-label="PubMed query preview zonder dossierplaintext">
+      <h4>PubMed query preview</h4>
+      <p class="small-print">${escapeHtml(preview.waarschuwing)}</p>
+      <dl class="metadata-list compact-list">
+        <div><dt>Bron</dt><dd>${escapeHtml(preview.bron)} · ${escapeHtml(preview.bronUrl)}</dd></div>
+        <div><dt>Datum</dt><dd>${escapeHtml(preview.datum)}</dd></div>
+        <div><dt>Reviewstatus</dt><dd>${escapeHtml(preview.reviewStatus)}</dd></div>
+        <div><dt>Query</dt><dd>${escapeHtml(preview.query)}</dd></div>
+        <div><dt>Previewlink</dt><dd>${escapeHtml(preview.previewUrl)}</dd></div>
+      </dl>
+      <form id="pubmed-query-preview-form" class="data-form compact-form">
+        <input type="hidden" name="pubmedPreviewId" value="${escapeAttribute(preview.id)}" />
+        <label>
+          Zoektermen controleren
+          <input name="pubmedZoektermen" value="${escapeAttribute(preview.zoektermen.join(', '))}" />
+        </label>
+        <label>
+          Datum
+          <input name="pubmedPreviewDatum" type="date" value="${escapeAttribute(preview.datum)}" />
+        </label>
+        <label>
+          Reviewstatus
+          <select name="pubmedReviewStatus">
+            ${renderOption('concept_te_controleren', 'Concept te controleren', preview.reviewStatus)}
+          </select>
+        </label>
+        <button type="submit">Bewaar PubMed-previewcorrectie</button>
+      </form>
+      <p class="small-print">Uitgesloten context: ${preview.uitgeslotenContext.map(escapeHtml).join(' · ')}</p>
+      <p class="small-print">Correctievelden: ${preview.correctieVelden.map(escapeHtml).join(' · ')}</p>
+    </section>
   `;
 }
 
