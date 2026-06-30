@@ -3406,7 +3406,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research, knowledge graph, AI policy, tests
 - **ADR Needed:** no
 - **Score:** 119
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G485 — fertiliteitsresearch trend dashboard
 
@@ -11671,6 +11671,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Research, knowledge, AI summaries, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1069 — contextmatch relevance audit evidence
+
+- **Epic:** Research Intelligence
+- **Problem:** G484 toont persoonlijke researchrelevantie als contextmatch, maar er is nog geen compacte audit die contextfactoren, ontbrekende gegevens en artsbespreek-taal bewaakt zonder score- of adviesdrift.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat researchrelevantie gekoppelde contextfactoren, ontbrekende gegevens en artsbespreek-taal toont zonder numerieke score, kansclaim of behandelrichting.
+- **User Value:** Gebruikers begrijpen waarom een publicatie bespreekbaar kan zijn zonder dat Kiempad conclusies of keuzes suggereert.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G484; gekoppelde contextfactoren en ontbrekende gegevens blijven zichtbaar of testbaar; artsbespreek-taal blijft aanwezig; evidence bevat geen numerieke score, kansclaim, diagnose, dosering, rangorde of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research, knowledge graph, AI policy, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

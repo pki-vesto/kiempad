@@ -8565,7 +8565,7 @@ function renderResearchRelevantieVoorGebruiker(
 ): string {
   return `
     <h2>Relevantie voor jullie context</h2>
-    <p class="small-print">Handmatige contextnotities gekoppeld aan lokale dossierbronnen. Dit is geen diagnose, dosering of behandelkeuze.</p>
+    <p class="small-print">Handmatige contextnotities gekoppeld aan lokale dossierbronnen. Dit is alleen bespreekcontext voor de kliniek.</p>
     ${
       items.length > 0
         ? `<ol class="compact-list">${items
@@ -8575,6 +8575,11 @@ function renderResearchRelevantieVoorGebruiker(
                   <strong>${escapeHtml(item.titel)}</strong>
                   <span>${escapeHtml(item.publicatieDatum)} · ${escapeHtml(item.bron)}</span>
                   <small>${escapeHtml(item.relevantieVoorGebruiker)}</small>
+                  <small>Contextmatch: ${escapeHtml(item.contextMatch.label)}</small>
+                  <small>Gekoppelde contextfactoren: ${escapeHtml(item.contextMatch.gekoppeldeContextfactoren.join(' · ') || 'nog geen lokale contextfactoren')}</small>
+                  <small>Ontbrekende gegevens: ${escapeHtml(item.contextMatch.ontbrekendeGegevens.join(' · ') || 'geen ontbrekende context')}</small>
+                  <small>${escapeHtml(item.contextMatch.artsBespreekTaal)}</small>
+                  <small>${escapeHtml(item.contextMatch.uitleg)}</small>
                   ${
                     item.dossierContextBronnen.length > 0
                       ? `<small>Context: ${item.dossierContextBronnen.map((bron) => escapeHtml(bron.label)).join(' · ')}</small>`
