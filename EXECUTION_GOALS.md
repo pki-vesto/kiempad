@@ -3670,6 +3670,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Daily recommendation UI, start workbench, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 47
+- **Status:** ☑ done
+
+### G1209 — traject en timeline eerste viewport als behandelwerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Traject en timeline hebben taakroutes, maar kunnen nog te snel als behandeladministratie met losse routecontent voelen in plaats van als een rustige eerste-viewport behandelwerkbank.
+- **User Impact:** Gebruikers moeten faseplanning, vergoeding, tijdlijncontext en beheer nog actief scannen voordat duidelijk is wat nu belangrijk is.
+- **Desired Outcome:** Maak de traject/timeline eerste viewport meer app-achtig met een behandelwerkbank voor huidige fase, eerstvolgende actie en gekoppelde timelinecontext.
+- **User Value:** Gebruikers begrijpen sneller waar ze zitten in het traject en welke behandelcontext relevant is zonder door alle routecontent te scrollen.
+- **Acceptance Criteria:** Traject opent met een duidelijke eerste-viewport behandelwerkbank in plaats van meteen alle routecontent; faseplanning, vergoeding, timeline/graphcontext en beheer blijven via compacte taakroutes bereikbaar; de huidige fase, eerstvolgende actie en gekoppelde timelinecontext zijn direct scanbaar; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Traject, Fertility Timeline
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Traject UI, fertility timeline, treatment routes, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 46
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

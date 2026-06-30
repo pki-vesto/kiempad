@@ -2094,6 +2094,12 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workbench-flow="timeline"');
     expect(html).toContain('data-start-workbench-flow="recommendations"');
     expect(html).toContain('data-start-workbench-flow="research"');
+    expect(html).toContain('data-daily-advice-workbench="owner-routes"');
+    expect(html).toContain('class="daily-advice-workbench daily-advice-workbench--compact"');
+    expect(html).toContain('Dagadvies per persoon kiezen');
+    expect(html).toContain('data-daily-advice-owner="vrouw"');
+    expect(html).toContain('data-daily-advice-owner="man"');
+    expect(html).toContain('data-daily-advice-owner="samen"');
     expect(html).toContain('href="#dossier"');
     expect(html).toContain('href="#traject?route=context"');
     expect(html).toContain('href="#kennis"');
@@ -2265,12 +2271,23 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.start-workbench-card {');
     expect(css).toContain('border-radius: 12px;');
+    expect(css).toContain('.daily-advice-workbench {');
+    expect(css).toContain('.daily-advice-owner-grid {');
+    expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
+    expect(css).toContain('.daily-advice-owner-card {');
     expect(mobileCss).toContain('.start-workbench__grid {');
     expect(mobileCss).toContain('display: grid;');
     expect(mobileCss).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(mobileCss).toContain('overflow-x: visible;');
     expect(mobileCss).toContain('.start-workbench-card {');
     expect(mobileCss).toContain('padding: 10px;');
+    expect(mobileCss).toContain('.daily-advice-workbench__header {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.daily-advice-owner-grid {');
+    expect(mobileCss).toContain('display: flex;');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.daily-advice-owner-card {');
+    expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
     expect(mobileCss).toContain('margin-top: 0;');
     expect(mobileCss).toContain('.start-task-routes {');
@@ -2386,6 +2403,15 @@ describe('app shell', () => {
     const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
 
     expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-workbench="owner-routes"');
+    expect(emptyContextRecommendations).toContain('aria-label="Dagadvies werkbank"');
+    expect(emptyContextRecommendations).toContain('Dagadvies per persoon kiezen');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner="vrouw"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner="man"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner="samen"');
+    expect(emptyContextRecommendations).toContain('Leefstijl, voeding, supplementvragen');
+    expect(emptyContextRecommendations).toContain('review ·');
+    expect(emptyContextRecommendations).toContain('artscheck');
     expect(emptyContextRecommendations).toContain(
       'class="kp-recommendation-list daily-recommendation-list"',
     );
