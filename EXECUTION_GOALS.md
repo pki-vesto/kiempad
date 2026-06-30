@@ -13208,4 +13208,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 53
+- **Status:** ☑ done
+
+### G1172 — dossier add feedback return cue parity regression smoke
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Target- en focused-cues delen nu contextregels, maar de parity moet nog met een expliciete browser-smoke worden bewaakt tegen toekomstige CSS-drift.
+- **User Impact:** Gebruikers kunnen alsnog inconsistente contextfeedback krijgen als een selector later afwijkt zonder dat unit tests het visueel gedrag vergelijken.
+- **Desired Outcome:** Voeg een gerichte regressiesmoke toe of documenteer de browsercontrole voor cue parity in standaard, reduced-motion en forced-colors context zonder copy, formuliercontracten of privacyhooks te wijzigen.
+- **User Value:** Gebruikers blijven dezelfde feedbackcontext zien bij target- en focuslanding, ongeacht route of toegankelijkheidsinstelling.
+- **Acceptance Criteria:** Browser- of testbewaking vergelijkt target- en focused-cues voor documentupload, consult, embryokwaliteit en embryo-status in standaard, reduced-motion en forced-colors context; bestaande ankers, form-id's, input names en data-hooks blijven intact; focused cue target parity, focused cue contrast audit, focused landing cue, landing focus sync, landing forced-colors cue, landing context cue, anchor landing audit, forced-colors audit, reduced-motion audit, pressed state audit, return interaction tone, return touch target, compact rhythm, microcopy-volgorde, next-action contrast, feedbackdoel, focus-visible cue, focus-return cue, announcement order, aria-live configuratie, accessibility labels, recovery hint, feedbackcopy-brevity, feedbackstatus-tonen, post-submit feedbackplaatsing, submitactie-hierarchie, section spacing, optional-context hierarchy, verplichte-veldcues, eerste formulierstart, route-microcopy, screenreader-context en readiness-cues blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated feedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 52
 - **Status:** ☐ open
