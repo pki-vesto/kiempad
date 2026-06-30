@@ -1345,7 +1345,7 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="dossier-add-form-start" data-dossier-add-form-start="document-first-step">
           Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.
         </p>
-        <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
+        <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-feedback-focus-target="dossier-upload" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment" tabindex="-1">
           <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">
             <legend>Documentbasis</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload">
@@ -1487,7 +1487,7 @@ function renderDossierScreen(state: AppShellState): string {
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
         <h2>Consultverslag toevoegen</h2>
-        <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-consult-upload-privacy-state="encrypted-text-or-file">
+        <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-dossier-feedback-focus-target="consult-upload" data-consult-upload-privacy-state="encrypted-text-or-file" tabindex="-1">
           <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis">
             <legend>Consultbasis</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="consult-upload">
@@ -1557,7 +1557,7 @@ function renderDossierScreen(state: AppShellState): string {
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality">
         <h2>Embryokwaliteit vastleggen</h2>
-        <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-embryo-upload-privacy-state="encrypted-quality-registration">
+        <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-dossier-feedback-focus-target="embryo-quality" data-embryo-upload-privacy-state="encrypted-quality-registration" tabindex="-1">
           <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie">
             <legend>Embryo-identificatie</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="embryo-quality">
@@ -1637,7 +1637,7 @@ function renderDossierScreen(state: AppShellState): string {
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status">
         <h2>Embryo-status event vastleggen</h2>
-        <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-embryo-status-event-state="concept-editor">
+        <form id="embryo-status-event-form" class="data-form" data-upload-privacy-kind="embryo-status" data-dossier-feedback-focus-target="embryo-status" data-embryo-status-event-state="concept-editor" tabindex="-1">
           <fieldset class="dossier-subform-group" data-embryo-status-group="status-basis">
             <legend>Statusbasis</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="embryo-status">

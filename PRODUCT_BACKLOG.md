@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 969 |
+| ☑ klaar | 970 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1168** |
+| **Totaal** | **1169** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1330,13 +1330,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1165 | Premium Claude Design UI: dossier add feedback return anchor landing audit | P1 | F5 | ☑ |
 | G1166 | Premium Claude Design UI: dossier add feedback return landing context cue | P1 | F5 | ☑ |
 | G1167 | Premium Claude Design UI: dossier add feedback return landing forced-colors cue | P1 | F5 | ☑ |
-| G1168 | Premium Claude Design UI: dossier add feedback return landing focus sync | P1 | F5 | ☐ |
+| G1168 | Premium Claude Design UI: dossier add feedback return landing focus sync | P1 | F5 | ☑ |
+| G1169 | Premium Claude Design UI: dossier add feedback return focused landing cue | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1168** (id's G001 t/m G1168, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1169** (id's G001 t/m G1169, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

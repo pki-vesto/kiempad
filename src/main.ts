@@ -397,6 +397,7 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       event.preventDefault();
       target.scrollIntoView({ block: 'start' });
       window.history.replaceState(null, '', `#${targetId}`);
+      target.focus({ preventScroll: true });
     });
   });
 
