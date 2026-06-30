@@ -30,9 +30,9 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1004 |
+| ☑ klaar | 1005 |
 | ◐ bezig | 0 |
-| ☐ open | 102 |
+| ☐ open | 101 |
 | ☒ archived | 99 |
 | **Totaal** | **1205** |
 
@@ -1367,7 +1367,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1202 | Premium Claude Design UI: veldsectiepatroon uitbreiden naar dossier- en uploadflows | P1 | F5 | ☐ |
 | G1203 | Premium Claude Design UI: startscherm openen met kernflow-werkbank | P1 | F5 | ☑ |
 | G1204 | Premium Claude Design UI: resterende startmodules omzetten naar echte flowpanelen | P1 | F5 | ☑ |
-| G1205 | Premium Claude Design UI: mobiele app-chrome boven Start compacter maken | P1 | F5 | ☐ |
+| G1205 | Premium Claude Design UI: mobiele app-chrome boven Start compacter maken | P1 | F5 | ☑ |
 
 ---
 

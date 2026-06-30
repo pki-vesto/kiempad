@@ -5248,26 +5248,77 @@ a.action-card:active {
   }
 
   .topbar {
-    align-items: flex-start;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 10px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand strong {
+    font-size: 1.08rem;
+  }
+
+  .brand small {
+    font-size: 0.72rem;
   }
 
   .status-pill {
-    width: 100%;
+    width: auto;
+    max-width: 44vw;
+    justify-content: center;
+    padding: 4px 9px;
+    overflow: hidden;
+    font-size: 0.68rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .theme-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-column: 1;
+    gap: 6px;
+    align-items: end;
+    min-width: 0;
+  }
+
+  .theme-form label {
+    min-width: 0;
+    font-size: 0.68rem;
+  }
+
+  .theme-form select,
+  .theme-form button {
+    min-height: 36px;
+    padding: 7px 11px;
+    font-size: 0.8rem;
+  }
+
+  .theme-form select {
     width: 100%;
-    align-items: stretch;
-    flex-direction: column;
   }
 
   .theme-form button {
-    width: 100%;
+    white-space: nowrap;
   }
 
   .lock-button {
-    width: 100%;
+    grid-column: 2;
+    align-self: end;
+    min-height: 36px;
+    padding: 7px 12px;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 
   /* mobiele bottom-tabbalk, zoals het prototype */
@@ -5390,10 +5441,11 @@ a.action-card:active {
   }
 
   .start-workbench__grid {
-    display: flex;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: visible;
     padding-bottom: 2px;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: none;
   }
 
   .start-workbench__grid::-webkit-scrollbar {
@@ -5401,13 +5453,13 @@ a.action-card:active {
   }
 
   .start-workbench-card {
-    flex: 0 0 min(238px, 82vw);
-    padding: 11px;
-    scroll-snap-align: start;
+    padding: 10px;
+    scroll-snap-align: none;
   }
 
   .start-workbench-card__meta {
     min-height: 0;
+    font-size: 0.76rem;
   }
 
   .start-workbench + .start-task-routes {
@@ -5416,7 +5468,7 @@ a.action-card:active {
 
   .start-flow-dashboard {
     gap: 12px;
-    margin-top: 128px;
+    margin-top: 224px;
   }
 
   .start-flow-rail {

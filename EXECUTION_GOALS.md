@@ -3622,7 +3622,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, topbar, mobile navigation, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 50
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
