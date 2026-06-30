@@ -134,6 +134,12 @@ function extractUploadAttachmentFeedback(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractDossierUploadForm(html: string): string {
+  const match = html.match(/<form id="dossier-upload-form"[\s\S]*?<\/form>/);
+  if (!match?.[0]) throw new Error('Dossieruploadformulier ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractAttachmentConsentExportSurface(html: string): string {
   const match = html.match(
     /<section class="policy-panel embedded-summary" aria-label="Attachment consent en export privacy states"[\s\S]*?<\/section>/,
@@ -4211,6 +4217,115 @@ describe('app shell', () => {
     expect(uploadFeedback).not.toContain('Progesteron');
     expect(uploadFeedback).not.toContain('behandelkeuzeadvies');
     expect(uploadFeedback).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+  });
+
+  it('groepeert dossieruploadvelden in compacte subsecties zonder formcontracten te breken', () => {
+    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const emptyForm = extractDossierUploadForm(emptyHtml);
+
+    expect(emptyForm).toContain('id="dossier-upload-form"');
+    expect(emptyForm).toContain('data-upload-privacy-kind="dossier"');
+    expect(emptyForm).toContain('data-dossier-upload-privacy-state="encrypted-local-analysis"');
+    expect(emptyForm).toContain('data-imaging-upload-privacy-state="encrypted-attachment"');
+    expect(emptyForm).toContain('data-dossier-upload-group="document-basis"');
+    expect(emptyForm).toContain('data-dossier-upload-group="koppelingen"');
+    expect(emptyForm).toContain('data-dossier-upload-group="beeldcontext"');
+    expect(emptyForm).toContain('data-dossier-upload-group="embryo-labcontext"');
+    expect(emptyForm).toContain('<legend>Documentbasis</legend>');
+    expect(emptyForm).toContain('<legend>Koppelingen</legend>');
+    expect(emptyForm).toContain('<legend>Beeldcontext</legend>');
+    expect(emptyForm).toContain('<legend>Embryo en labcontext</legend>');
+    expect(emptyForm).toContain('name="datum" type="date" required');
+    expect(emptyForm).toContain('name="titel"');
+    expect(emptyForm).toContain('name="categorie"');
+    expect(emptyForm).toContain('name="uploadProfiel"');
+    expect(emptyForm).toContain(
+      'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
+    );
+    expect(emptyForm).toContain('name="lokaleOcr" type="checkbox" value="ja"');
+    expect(emptyForm).toContain('id="dossier-concept-preview"');
+    expect(emptyForm).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');
+    expect(emptyForm).toContain('name="afspraakId"');
+    expect(emptyForm).toContain('name="trajectId"');
+    expect(emptyForm).toContain('name="notitie"');
+    expect(emptyForm).toContain('name="beeldContext"');
+    expect(emptyForm).toContain('name="beeldBron"');
+    expect(emptyForm).toContain('name="beeldCyclusDag"');
+    expect(emptyForm).toContain('name="beeldEmbryoLabel"');
+    expect(emptyForm).toContain('name="beeldEmbryoId"');
+    expect(emptyForm).toContain('name="beeldEmbryoDag"');
+    expect(emptyForm).toContain('name="beeldLaboratoriumContext"');
+
+    const populatedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        dossierStatus:
+          'Uploadstatus met bronbestand secret-lab.pdf OCR-payload diagnose 150 mg behandelkeuzeadvies.',
+        uploadAttachmentFeedback: {
+          'dossier-upload': {
+            state: 'needs-review',
+            status:
+              'Dossierupload bevat secret-lab.pdf base64 OCR-payload diagnose 150 mg behandelkeuzeadvies.',
+          },
+        },
+      }),
+    );
+    const populatedForm = extractDossierUploadForm(populatedHtml);
+    const uploadFeedback = extractUploadAttachmentFeedback(populatedHtml);
+
+    expect(populatedForm).toContain('data-dossier-upload-group="document-basis"');
+    expect(populatedForm).toContain('data-dossier-upload-group="koppelingen"');
+    expect(populatedForm).not.toContain('secret-lab.pdf');
+    expect(populatedForm).not.toContain('OCR-payload');
+    expect(populatedForm).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies/i);
+    expect(uploadFeedback).toContain('data-upload-attachment-feedback-state="needs-review"');
+    expect(uploadFeedback).not.toContain('secret-lab.pdf');
+    expect(uploadFeedback).not.toContain('OCR-payload');
+    expect(uploadFeedback).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies/i);
+
+    const lockedHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-upload-locked',
+            datum: '2026-05-10',
+            titel: 'Locked upload echo',
+            categorie: 'beeld',
+            bestandsNaam: 'locked-upload-secret.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'bG9ja2VkLXVwbG9hZA==',
+            analyse: {
+              samenvatting: 'Beeldbijlage opgeslagen zonder medisch advies.',
+              signalen: ['Beeldmetadata beschikbaar.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-10',
+              documenttype: 'Foto/echo',
+              bronbestand: 'locked-upload-secret.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-10',
+              soort: 'echo',
+              context: 'Locked upload beeldcontext',
+              bron: 'Kliniekportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:10:00.000Z',
+          },
+        ],
+      }),
+    );
+    const lockedForm = extractDossierUploadForm(lockedHtml);
+
+    expect(lockedForm).toContain('data-dossier-upload-group="beeldcontext"');
+    expect(lockedForm).toContain('data-dossier-upload-group="embryo-labcontext"');
+    expect(lockedForm).not.toContain('locked-upload-secret.jpg');
+    expect(lockedForm).not.toContain('bG9ja2VkLXVwbG9hZA==');
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {

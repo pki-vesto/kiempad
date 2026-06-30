@@ -1306,6 +1306,8 @@ function renderDossierScreen(state: AppShellState): string {
         <div class="kp-disclosure__body">
         <h2>Dossierdocument uploaden</h2>
         <form id="dossier-upload-form" class="data-form" data-upload-privacy-kind="dossier" data-dossier-upload-privacy-state="encrypted-local-analysis" data-imaging-upload-privacy-state="encrypted-attachment">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="document-basis">
+            <legend>Documentbasis</legend>
           <label>
             Datum document
             <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
@@ -1346,6 +1348,9 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="conceptBevestigd" type="checkbox" value="ja" required />
             Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
           </label>
+          </fieldset>
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen">
+            <legend>Koppelingen</legend>
           <label>
             Koppel aan afspraak
             <select name="afspraakId">
@@ -1361,6 +1366,13 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           <label>
+            Notitie
+            <textarea name="notitie" rows="4"></textarea>
+          </label>
+          </fieldset>
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext">
+            <legend>Beeldcontext</legend>
+          <label>
             Beeldcontext
             <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
           </label>
@@ -1372,6 +1384,9 @@ function renderDossierScreen(state: AppShellState): string {
             Beeld cyclusdag
             <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
           </label>
+          </fieldset>
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext">
+            <legend>Embryo en labcontext</legend>
           <label>
             Beeld embryo
             <input name="beeldEmbryoLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo 1" />
@@ -1388,10 +1403,7 @@ function renderDossierScreen(state: AppShellState): string {
             Laboratoriumcontext
             <input name="beeldLaboratoriumContext" autocomplete="off" placeholder="Bijvoorbeeld: labfoto dag 5 of incubatorbeeld" />
           </label>
-          <label>
-            Notitie
-            <textarea name="notitie" rows="4"></textarea>
-          </label>
+          </fieldset>
           <button type="submit">Upload naar dossier</button>
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
