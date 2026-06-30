@@ -2323,6 +2323,16 @@ a.action-card:active {
 }
 
 @media (forced-colors: active) {
+  #dossier-upload-form:target > .dossier-upload-group:first-of-type,
+  #consult-verslag-form:target > .dossier-subform-group:first-of-type,
+  #embryo-quality-form:target > .dossier-subform-group:first-of-type,
+  #embryo-status-event-form:target > .dossier-subform-group:first-of-type {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+    background: Canvas;
+    box-shadow: none;
+  }
+
   .dossier-submit-focus-return {
     background: Canvas;
     color: LinkText;
