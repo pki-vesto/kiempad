@@ -1176,6 +1176,14 @@ function extractEchoAppointmentClassificationPanel(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+function extractEmbryoExifIsolationPanel(html: string): string {
+  const match = html.match(
+    /<section class="policy-panel embedded-summary embryo-exif-isolation" aria-label="Embryo-afbeelding EXIF-isolatie"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Embryo EXIF-isolatie ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractConsultVerslagenSection(html: string): string {
   const start = html.indexOf('<h2>Consultverslagen</h2>');
   const end = html.indexOf('<h2>Imaging-repository</h2>', start);
@@ -4750,6 +4758,107 @@ describe('app shell', () => {
     expect(panel).not.toContain('Portaal bron tweede');
     expect(panel).not.toContain('gevoelige-echo-eerste.jpg');
     expect(panel).not.toContain('Z2VoZWltLWVjaG8tMQ==');
+    expect(panel).not.toContain('diagnose');
+    expect(panel).not.toContain('dosering');
+    expect(panel).not.toContain('kans');
+    expect(panel).not.toContain('behandelkeuzeadvies');
+  });
+
+  it('rendert embryo-afbeelding EXIF-isolatie zonder locked bronpayload', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        imagingPreviewLocked: true,
+        dossierDocuments: [
+          {
+            id: 'doc-embryo-exif-isolatie',
+            datum: '2026-05-05',
+            titel: 'Embryo labfoto',
+            categorie: 'beeld',
+            bestandsNaam: 'embryo-labfoto-geheim.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 4096,
+            inhoudBase64: 'ZW1icnlvLWV4aWYtcGF5bG9hZA==',
+            analyse: {
+              samenvatting:
+                'Embryo-afbeelding opgeslagen als beeldbestand; analyse is lokaal en niet-medisch.',
+              signalen: ['Embryo-afbeelding met EXIF-isolatiestatus.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-05',
+              documenttype: 'Embryo-afbeelding',
+              bronbestand: 'embryo-labfoto-geheim.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-05',
+              soort: 'embryo_afbeelding',
+              context: 'Labfoto dag 5',
+              bron: 'Embryolab portaal',
+              embryoLabel: 'Embryo 1',
+              embryoId: 'E1',
+              embryoDag: 5,
+              laboratoriumContext: 'Labfoto dag 5',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'concept',
+            },
+            embryo: {
+              label: 'Embryo 1',
+              kwaliteit: '4AA',
+              dag: 5,
+              status: 'onbekend',
+              bron: 'embryo-labfoto-geheim.jpg',
+              reviewStatus: 'concept',
+            },
+            uploadedAt: '2026-06-23T15:00:00.000Z',
+          },
+          {
+            id: 'doc-echo-exif-geen-embryo',
+            datum: '2026-05-04',
+            titel: 'Echo controle',
+            categorie: 'beeld',
+            bestandsNaam: 'echo-geheim.jpg',
+            mimeType: 'image/jpeg',
+            grootteBytes: 2048,
+            inhoudBase64: 'ZWNoby1wYXlsb2Fk',
+            analyse: {
+              samenvatting: 'Echo opgeslagen als beeldbestand; analyse is lokaal.',
+              signalen: ['Echo bij dezelfde importbatch.'],
+            },
+            metadata: {
+              documentDatum: '2026-05-04',
+              documenttype: 'Foto/echo',
+              bronbestand: 'echo-geheim.jpg',
+              extractieBronnen: ['bronbestand', 'formulierdatum'],
+            },
+            beeldMetadata: {
+              datum: '2026-05-04',
+              soort: 'echo',
+              bron: 'Echoportaal',
+              exifStatus: 'geisoleerd',
+              reviewStatus: 'gereviewd',
+            },
+            uploadedAt: '2026-06-23T15:05:00.000Z',
+          },
+        ],
+      }),
+    );
+    const panel = extractEmbryoExifIsolationPanel(html);
+
+    expect(panel).toContain('data-embryo-exif-isolation-state="concept-review"');
+    expect(panel).toContain('Embryo 1 · E1');
+    expect(panel).toContain('2026-05-05');
+    expect(panel).toContain('Bron verborgen tot ontgrendeling');
+    expect(panel).toContain('EXIF</dt><dd>geisoleerd</dd>');
+    expect(panel).toContain('Review</dt><dd>concept</dd>');
+    expect(panel).toContain(
+      'EXIF geisoleerd; alleen expliciete embryo- en bronmetadata wordt gebruikt.',
+    );
+    expect(panel).toContain('Kiempad leest geen EXIF-inhoud uit in deze weergave');
+    expect(panel).not.toContain('Embryolab portaal');
+    expect(panel).not.toContain('embryo-labfoto-geheim.jpg');
+    expect(panel).not.toContain('ZW1icnlvLWV4aWYtcGF5bG9hZA==');
+    expect(panel).not.toContain('echo-geheim.jpg');
     expect(panel).not.toContain('diagnose');
     expect(panel).not.toContain('dosering');
     expect(panel).not.toContain('kans');
