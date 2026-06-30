@@ -10747,10 +10747,11 @@ function renderTrajectGraphEdge(
   const to = nodeMap.get(edge.to);
 
   return `
-    <li>
+    <li data-graph-edge-id="${escapeAttribute(edge.id)}">
       <strong>${escapeHtml(edge.label)}</strong>
       <span>${escapeHtml(from?.titel ?? edge.from)} -> ${escapeHtml(to?.titel ?? edge.to)}</span>
       <small>${escapeHtml(FERTILITY_GRAPH_RELATIE_LABELS[edge.type])} · Bron: ${escapeHtml(edge.bron)}</small>
+      <small>Provenance: ${escapeHtml(edge.provenance.bron)} · ${escapeHtml(edge.provenance.datum?.slice(0, 10) ?? 'datum onbekend')} · ${edge.provenance.reviewStatus === 'gereviewd' ? 'Gereviewd' : 'Concept'} · ${edge.provenance.bronRecordIds.length} bronrecord(s) · ${escapeHtml(edge.provenance.herkomst)}</small>
     </li>
   `;
 }

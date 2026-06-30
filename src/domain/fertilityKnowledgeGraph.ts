@@ -28,6 +28,20 @@ export type FertilityGraphEdgeType =
   | 'gebruikt_bron'
   | 'research_notitie';
 
+export type FertilityGraphEdgeProvenance = {
+  schemaVersie: 1;
+  bron: string;
+  bronRecordIds: string[];
+  datum?: string;
+  reviewStatus: FertilityGraphReviewStatus;
+  herkomst:
+    | 'expliciete_koppeling'
+    | 'metadata_koppeling'
+    | 'afgeleide_bron'
+    | 'handmatig_bevestigd';
+  waarschuwing: string;
+};
+
 export type FertilityGraphNode = {
   schemaVersie: 1;
   id: string;
@@ -54,6 +68,13 @@ export type FertilityGraphEdge = {
   type: FertilityGraphEdgeType;
   label: string;
   bron: string;
+  provenance: FertilityGraphEdgeProvenance;
+  waarschuwing: string;
+};
+
+export type FertilityGraphEdgeProvenanceControle = {
+  geldig: boolean;
+  ontbrekendeVelden: string[];
   waarschuwing: string;
 };
 
@@ -71,6 +92,7 @@ export type FertilityGraphRelatieVoorstel = {
   label: string;
   reden: string;
   bron: string;
+  datum?: string;
   status: 'voorgesteld';
   waarschuwing: string;
 };
@@ -186,6 +208,41 @@ export function controleerFertilityGraphNodeSchema(
   };
 }
 
+export function maakFertilityGraphEdgeProvenance(
+  input: Omit<FertilityGraphEdgeProvenance, 'schemaVersie' | 'waarschuwing'>,
+): FertilityGraphEdgeProvenance {
+  return {
+    schemaVersie: 1,
+    waarschuwing: GRAPH_WAARSCHUWING,
+    ...input,
+    bronRecordIds: [...new Set(input.bronRecordIds)].sort((a, b) => a.localeCompare(b)),
+  };
+}
+
+export function controleerFertilityGraphEdgeProvenance(
+  edge: FertilityGraphEdge,
+): FertilityGraphEdgeProvenanceControle {
+  const ontbrekendeVelden = [
+    ['provenance.schemaVersie', edge.provenance.schemaVersie],
+    ['provenance.bron', edge.provenance.bron],
+    ['provenance.bronRecordIds', edge.provenance.bronRecordIds.length],
+    ['provenance.reviewStatus', edge.provenance.reviewStatus],
+    ['provenance.herkomst', edge.provenance.herkomst],
+    ['provenance.waarschuwing', edge.provenance.waarschuwing],
+  ]
+    .filter(([, value]) => value === undefined || value === '' || value === 0)
+    .map(([veld]) => String(veld));
+
+  return {
+    geldig:
+      ontbrekendeVelden.length === 0 &&
+      edge.provenance.schemaVersie === 1 &&
+      (edge.provenance.reviewStatus === 'concept' || edge.provenance.reviewStatus === 'gereviewd'),
+    ontbrekendeVelden,
+    waarschuwing: GRAPH_WAARSCHUWING,
+  };
+}
+
 export function bouwFertilityKnowledgeGraph(
   input: FertilityGraphIndexRebuildInput,
 ): FertilityKnowledgeGraph {
@@ -239,6 +296,13 @@ export function bouwFertilityKnowledgeGraph(
         type: 'hoort_bij_behandeling',
         label: 'Afspraak hoort bij traject',
         bron: 'Agenda trajectkoppeling',
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: 'Agenda trajectkoppeling',
+          bronRecordIds: [`afspraak:${afspraak.id}`, `traject:${afspraak.trajectId}`],
+          datum: afspraak.datumTijd,
+          reviewStatus: 'gereviewd',
+          herkomst: 'expliciete_koppeling',
+        }),
       });
     }
   }
@@ -267,6 +331,13 @@ export function bouwFertilityKnowledgeGraph(
         type: 'hoort_bij_behandeling',
         label: 'Document hoort bij traject',
         bron: 'Dossiermetadata',
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: 'Dossiermetadata',
+          bronRecordIds: [`dossier_document:${document.id}`, `traject:${trajectId}`],
+          datum: document.metadata.documentDatum ?? document.datum,
+          reviewStatus: bepaalDossierDocumentGraphReviewStatus(document),
+          herkomst: 'metadata_koppeling',
+        }),
       });
     }
 
@@ -278,6 +349,13 @@ export function bouwFertilityKnowledgeGraph(
         type: 'hoort_bij_afspraak',
         label: 'Document hoort bij afspraak',
         bron: 'Dossiermetadata',
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: 'Dossiermetadata',
+          bronRecordIds: [`dossier_document:${document.id}`, `afspraak:${afspraakId}`],
+          datum: document.metadata.documentDatum ?? document.datum,
+          reviewStatus: bepaalDossierDocumentGraphReviewStatus(document),
+          herkomst: 'metadata_koppeling',
+        }),
       });
     }
 
@@ -305,6 +383,13 @@ export function bouwFertilityKnowledgeGraph(
         type: 'beschrijft_embryo',
         label: 'Document beschrijft embryo',
         bron: 'Embryometadata',
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: 'Embryometadata',
+          bronRecordIds: [`dossier_document:${document.id}`],
+          datum: document.beeldMetadata?.datum ?? document.metadata.documentDatum ?? document.datum,
+          reviewStatus: document.embryo?.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+          herkomst: 'metadata_koppeling',
+        }),
       });
       if (trajectId) {
         voegEdgeToe({
@@ -313,6 +398,14 @@ export function bouwFertilityKnowledgeGraph(
           type: 'hoort_bij_behandeling',
           label: 'Embryo hoort bij traject',
           bron: 'Embryometadata',
+          provenance: maakFertilityGraphEdgeProvenance({
+            bron: 'Embryometadata',
+            bronRecordIds: [`dossier_document:${document.id}`, `traject:${trajectId}`],
+            datum:
+              document.beeldMetadata?.datum ?? document.metadata.documentDatum ?? document.datum,
+            reviewStatus: document.embryo?.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept',
+            herkomst: 'metadata_koppeling',
+          }),
         });
       }
     }
@@ -339,6 +432,13 @@ export function bouwFertilityKnowledgeGraph(
         type: 'hoort_bij_behandeling',
         label: 'Gesprek hoort bij traject',
         bron: 'Consultmetadata',
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: 'Consultmetadata',
+          bronRecordIds: [`consult_verslag:${consult.id}`, `traject:${consult.trajectId}`],
+          datum: consult.datum,
+          reviewStatus: bepaalConsultGraphReviewStatus(consult),
+          herkomst: 'metadata_koppeling',
+        }),
       });
     }
     if (consult.afspraakId) {
@@ -348,6 +448,13 @@ export function bouwFertilityKnowledgeGraph(
         type: 'hoort_bij_afspraak',
         label: 'Gesprek hoort bij afspraak',
         bron: 'Consultmetadata',
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: 'Consultmetadata',
+          bronRecordIds: [`consult_verslag:${consult.id}`, `afspraak:${consult.afspraakId}`],
+          datum: consult.datum,
+          reviewStatus: bepaalConsultGraphReviewStatus(consult),
+          herkomst: 'metadata_koppeling',
+        }),
       });
     }
   }
@@ -384,6 +491,13 @@ export function bouwFertilityKnowledgeGraph(
       type: 'research_notitie',
       label: 'Research is lokale bronnotitie',
       bron: item.bron ?? 'Kennisbank',
+      provenance: maakFertilityGraphEdgeProvenance({
+        bron: item.bron ?? 'Kennisbank',
+        bronRecordIds: [`kennis_item:${item.id}`],
+        datum: item.researchPublicatie?.publicatieDatum,
+        reviewStatus: item.geverifieerd_met_arts ? 'gereviewd' : 'concept',
+        herkomst: 'afgeleide_bron',
+      }),
     });
   }
 
@@ -407,6 +521,12 @@ export function bouwFertilityKnowledgeGraph(
         type: 'gebruikt_bron',
         label: 'Aanbeveling gebruikt lokale bron',
         bron,
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron,
+          bronRecordIds: [`aanbeveling:${aanbeveling.id}`],
+          reviewStatus: 'gereviewd',
+          herkomst: 'afgeleide_bron',
+        }),
       });
       voegNodeToe(
         maakFertilityGraphNode({
@@ -495,6 +615,7 @@ export function stelFertilityGraphRelatiesVoor(
           : `${node.type === 'gesprek' ? 'Gesprek' : 'Document'} mogelijk bij behandeling`,
       reden: `Datum ${node.datum ?? 'onbekend'} ligt dicht bij ${match.titel}.`,
       bron: 'Automatisch voorstel op basis van lokale datum en type',
+      datum: node.datum ?? match.datum,
       status: 'voorgesteld',
       waarschuwing: GRAPH_WAARSCHUWING,
     });
@@ -514,6 +635,7 @@ export function stelFertilityGraphRelatiesVoor(
         label: 'Document mogelijk bij embryo',
         reden: `Titel bevat embryo-label "${embryo.titel}".`,
         bron: 'Automatisch voorstel op basis van lokale titelmatch',
+        datum: document.datum ?? embryo.datum,
         status: 'voorgesteld',
         waarschuwing: GRAPH_WAARSCHUWING,
       });
@@ -539,6 +661,13 @@ export function bevestigFertilityGraphRelaties(
         type: voorstel.type,
         label: `${voorstel.label} (bevestigd)`,
         bron: `Handmatig bevestigd: ${voorstel.bron}`,
+        provenance: maakFertilityGraphEdgeProvenance({
+          bron: `Handmatig bevestigd: ${voorstel.bron}`,
+          bronRecordIds: [voorstel.from, voorstel.to],
+          datum: voorstel.datum,
+          reviewStatus: 'gereviewd',
+          herkomst: 'handmatig_bevestigd',
+        }),
         waarschuwing: GRAPH_WAARSCHUWING,
       }),
     );

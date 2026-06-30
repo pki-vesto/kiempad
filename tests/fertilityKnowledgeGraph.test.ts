@@ -4,6 +4,7 @@ import {
   bevestigFertilityGraphRelaties,
   bouwFertilityGraphWeergavePerTraject,
   bouwFertilityKnowledgeGraph,
+  controleerFertilityGraphEdgeProvenance,
   controleerFertilityGraphNodeSchema,
   type FertilityGraphIndexRebuildInput,
   genereerFertilityGraphContextInzichten,
@@ -159,6 +160,35 @@ describe('fertility knowledge graph', () => {
       ]),
     );
     expect(graph.edges.every((edge) => edge.waarschuwing.includes('geen causaliteit'))).toBe(true);
+    expect(graph.edges.every((edge) => controleerFertilityGraphEdgeProvenance(edge).geldig)).toBe(
+      true,
+    );
+    expect(graph.edges).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          from: 'document:doc-1',
+          to: 'traject:traject-1',
+          provenance: expect.objectContaining({
+            schemaVersie: 1,
+            bron: 'Dossiermetadata',
+            bronRecordIds: ['dossier_document:doc-1', 'traject:traject-1'],
+            datum: '2026-06-24',
+            reviewStatus: 'concept',
+            herkomst: 'metadata_koppeling',
+          }),
+        }),
+        expect.objectContaining({
+          from: 'afspraak:afspraak-1',
+          to: 'traject:traject-1',
+          provenance: expect.objectContaining({
+            bron: 'Agenda trajectkoppeling',
+            bronRecordIds: ['afspraak:afspraak-1', 'traject:traject-1'],
+            reviewStatus: 'gereviewd',
+            herkomst: 'expliciete_koppeling',
+          }),
+        }),
+      ]),
+    );
     expect(graph.nodes.every((node) => controleerFertilityGraphNodeSchema(node).geldig)).toBe(true);
     expect(graph.nodes).toEqual(
       expect.arrayContaining([
@@ -308,6 +338,13 @@ describe('fertility knowledge graph', () => {
           id: geselecteerd ? `${geselecteerd.from}->${geselecteerd.type}->${geselecteerd.to}` : '',
           label: expect.stringContaining('(bevestigd)'),
           bron: expect.stringContaining('Handmatig bevestigd'),
+          provenance: expect.objectContaining({
+            bron: expect.stringContaining('Handmatig bevestigd'),
+            bronRecordIds: ['afspraak:afspraak-1', 'document:doc-los'],
+            datum: '2026-06-24',
+            reviewStatus: 'gereviewd',
+            herkomst: 'handmatig_bevestigd',
+          }),
         }),
       ]),
     );
