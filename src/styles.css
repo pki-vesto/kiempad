@@ -1747,6 +1747,65 @@ a.action-card:active {
   margin: 0;
 }
 
+.dossier-section-index {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.dossier-section-index__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--text-muted);
+}
+
+.dossier-section-index__header p {
+  margin: 0;
+}
+
+.dossier-section-index__links {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dossier-section-index__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  min-height: 42px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-subtle);
+  color: var(--text);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.dossier-section-index__link span {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dossier-section-index__link strong {
+  color: var(--accent-strong);
+  font-size: 0.95rem;
+}
+
+.dossier-section-index .small-print {
+  margin: 0;
+}
+
 @media (max-width: 720px) {
   .dossier-command-center__header {
     display: grid;
@@ -1759,6 +1818,14 @@ a.action-card:active {
 
   .dossier-command-center__actions {
     grid-template-columns: 1fr;
+  }
+
+  .dossier-section-index__header {
+    display: grid;
+  }
+
+  .dossier-section-index__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

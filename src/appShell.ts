@@ -1701,13 +1701,22 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
           </div>
         </details>
-        <h2>Consultverslagen</h2>
+        ${renderDossierSectionIndex({
+          consultCount: consultVerslagen.length,
+          imagingCount: imagingItems.length,
+          indexCount: indexItems.length,
+          embryoCount: embryoDossiers.length,
+          timelineCount: tijdlijn.length,
+          historyCount: behandelGeschiedenis.length,
+          locked: Boolean(state.imagingPreviewLocked),
+        })}
+        <h2 id="dossier-consultverslagen">Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
             ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
             : '<p class="empty-state">Nog geen consultverslagen als apart recordtype vastgelegd.</p>'
         }
-        <h2>Imaging-repository</h2>
+        <h2 id="dossier-imaging-repository">Imaging-repository</h2>
         ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
         ${renderEchoAfspraakClassificaties(echoAfspraakClassificaties, state)}
         ${renderEmbryoExifIsolaties(embryoExifIsolaties, state)}
@@ -1717,32 +1726,80 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
             : '<p class="empty-state">Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.</p>'
         }
-        <h2>Dossierindex</h2>
+        <h2 id="dossier-index">Dossierindex</h2>
         ${
           indexItems.length > 0
             ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
             : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
         }
-        <h2>Embryo-dossiers</h2>
+        <h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>
         ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
         ${
           embryoDossiers.length > 0
             ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
             : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
         }
-        <h2>Documenttijdlijn</h2>
+        <h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>
         ${
           tijdlijn.length > 0
             ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state, matchMap.get(item.id))).join('')}</ol>`
             : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
         }
-        <h2>Behandelgeschiedenis</h2>
+        <h2 id="dossier-behandelgeschiedenis">Behandelgeschiedenis</h2>
         ${
           behandelGeschiedenis.length > 0
             ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
             : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
         }
     </section>
+  `;
+}
+
+function renderDossierSectionIndex(input: {
+  consultCount: number;
+  imagingCount: number;
+  indexCount: number;
+  embryoCount: number;
+  timelineCount: number;
+  historyCount: number;
+  locked: boolean;
+}): string {
+  const items = [
+    { href: '#dossier-consultverslagen', label: 'Consulten', count: input.consultCount },
+    { href: '#dossier-imaging-repository', label: 'Beelden', count: input.imagingCount },
+    { href: '#dossier-index', label: 'Index', count: input.indexCount },
+    { href: '#dossier-embryo-dossiers', label: "Embryo's", count: input.embryoCount },
+    { href: '#dossier-documenttijdlijn', label: 'Tijdlijn', count: input.timelineCount },
+    { href: '#dossier-behandelgeschiedenis', label: 'Geschiedenis', count: input.historyCount },
+  ];
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const state = input.locked ? 'locked-preview' : totalCount > 0 ? 'has-content' : 'empty';
+  const status = input.locked
+    ? 'Beeldpreviews blijven vergrendeld; de index toont alleen aantallen en sectielinks.'
+    : totalCount > 0
+      ? 'Spring naar de dossiersectie die nu aandacht vraagt.'
+      : 'Secties staan klaar zodra uploads, consulten of beeldmomenten zijn toegevoegd.';
+
+  return `
+    <nav class="dossier-section-index" aria-label="Dossierinhoud" data-dossier-section-index="ready" data-dossier-section-index-state="${state}">
+      <div class="dossier-section-index__header">
+        <p class="kp-card__eyebrow">Inhoud</p>
+        <p>${escapeHtml(status)}</p>
+      </div>
+      <div class="dossier-section-index__links">
+        ${items
+          .map(
+            (item) => `
+              <a class="dossier-section-index__link" href="${item.href}" data-dossier-section-link="${item.href.slice(1)}">
+                <span>${escapeHtml(item.label)}</span>
+                <strong>${item.count}</strong>
+              </a>
+            `,
+          )
+          .join('')}
+      </div>
+      <p class="small-print">Deze inhoudsindex toont geen OCR-tekst, bestandsnamen, broninhoud of medische interpretatie.</p>
+    </nav>
   `;
 }
 

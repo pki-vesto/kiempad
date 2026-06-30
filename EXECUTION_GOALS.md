@@ -12520,4 +12520,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 96
+- **Status:** ☑ done
+
+### G1129 — dossier upload form section grouping
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossierupload-disclosure bevat nog een lange reeks velden voor document, beeldcontext, embryo, consulten en labstatus, waardoor de uploadtaak op mobiel zwaar blijft.
+- **User Impact:** Gebruikers die alleen een onderzoek, echo of consultverslag willen toevoegen moeten langs veel niet-relevante velden scannen voordat de juiste invoer rustig aanvoelt.
+- **Desired Outcome:** Groepeer de dossieruploadvelden in compacte, begrijpelijke subsecties met duidelijke labels en behoud alle bestaande form-id's, namen en privacyhooks.
+- **User Value:** Gebruikers kunnen sneller het juiste type dossierstuk toevoegen zonder medische of technische velden te verwarren.
+- **Acceptance Criteria:** Uploadformulier heeft compacte subsecties voor documentbasis, koppelingen, beeldcontext en embryo/labcontext; bestaande input names, form-id's en data-hooks blijven intact; mobile, tablet en desktop tonen geen overlap; tests dekken empty, populated statusfeedback en locked imaging context; assets:check blijft groen; geen secrets, gezondheidsdata, OCR-tekst, bestandsinhoud of beeldpayloads worden toegevoegd.
+- **Affected Screens:** Dossierupload, imaging upload, embryo tracking, consult upload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 95
 - **Status:** ☐ open
