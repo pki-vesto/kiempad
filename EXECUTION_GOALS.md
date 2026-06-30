@@ -3266,7 +3266,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Timeline, imaging, privacy, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 
 ### G475 — consult transcript import en bronkoppeling
 
@@ -11421,4 +11421,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Attachment assistive archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt UI, dossier UI, imaging repository, Claude Design, app shell tests
 - **ADR Needed:** no
 - **Score:** 98
+- **Status:** ☐ open
+
+### G1051 — imaging timeline privacy audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G474 bewaakt de imaging-tijdlijn privacy boundary in domein, UI en encrypted opslag, maar maintainers hebben nog geen compacte audit-evidence goal voor regressiedrift rond locked/unlocked timeline states, centrale previewbron en plaintext thumbnail-opslag.
+- **Desired Outcome:** Voeg een onderhoudsgerichte audit toe die G474 bewijsstukken voor locked labels, encrypted previewbron, centrale ciphertext en geen plaintext thumbnails als expliciete regressiecontrole samenbrengt.
+- **User Value:** Gebruikers behouden vertrouwen dat beeldmomenten op de tijdlijn niet opnieuw gevoelige thumbnails, medische bestandsnamen of image payloads gaan tonen.
+- **Acceptance Criteria:** Audit of tests verwijzen naar de G474 boundary; locked, unlocked en centrale opslagbewijs blijven zichtbaar in onderhoudsoutput; geen image base64, data-url, medische bestandsnaam of thumbnailpayload wordt in evidence snapshots opgeslagen; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Timeline, imaging, privacy, maintenance tests, encrypted storage
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

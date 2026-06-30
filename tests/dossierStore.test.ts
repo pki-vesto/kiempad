@@ -93,6 +93,9 @@ describe('DossierStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('Echo follikelmeting');
     expect(raw?.payload.ciphertext).not.toContain('echo-follikelmeting.jpg');
     expect(raw?.payload.ciphertext).not.toContain('anBnLWdlaGVpbQ');
+    expect(raw?.payload.ciphertext).not.toContain('data:image/jpeg;base64');
+    expect(raw?.payload.ciphertext).not.toContain('Thumbnail');
+    expect(raw?.payload.ciphertext).not.toContain('Preview beschikbaar');
     expect(raw?.payload.ciphertext).not.toContain('Follikelmeting links');
     expect(raw?.payload.ciphertext).not.toContain('Kliniekportaal');
     expect(raw?.payload.ciphertext).not.toContain('poging-1');

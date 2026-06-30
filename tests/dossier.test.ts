@@ -675,6 +675,62 @@ describe('dossier', () => {
     });
   });
 
+  it('bewaakt de imaging-tijdlijn privacy boundary voor lock-state en encrypted previews', () => {
+    const beeld = maakDossierDocument('img-tijdlijn-privacy', {
+      datum: '2026-05-08',
+      titel: 'Echo privacy bron',
+      categorie: 'beeld',
+      bestandsNaam: 'echo-privacy-geheim.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'Z2VoZWltLWltYWdlLXBheWxvYWQ=',
+      beeldMetadata: {
+        soort: 'echo',
+        bron: 'Kliniekportaal',
+        context: 'Follikelmeting links',
+        reviewStatus: 'gereviewd',
+      },
+    });
+
+    const locked = bouwDossierTijdlijn([beeld], { ontgrendeld: false })[0];
+    const unlocked = bouwDossierTijdlijn([beeld], { ontgrendeld: true })[0];
+
+    expect(locked).toMatchObject({
+      id: 'img-tijdlijn-privacy',
+      documenttype: 'Afbeelding',
+      privacy: {
+        isImaging: true,
+        titelLabel: 'Beeldmoment vergrendeld',
+        bronbestandLabel: 'Beeldbron verborgen tot ontgrendeling',
+        previewState: {
+          status: 'locked',
+          label: 'Preview beschikbaar na ontgrendeling',
+        },
+        previewBron: 'encrypted_dataset',
+        plaintextThumbnailOpgeslagen: false,
+      },
+    });
+    expect(locked?.privacy.titelLabel).not.toContain('Echo privacy bron');
+    expect(locked?.privacy.bronbestandLabel).not.toContain('echo-privacy-geheim.jpg');
+    expect(locked?.privacy).not.toHaveProperty('inhoudBase64');
+
+    expect(unlocked).toMatchObject({
+      titel: 'Echo privacy bron',
+      bronbestand: 'echo-privacy-geheim.jpg',
+      privacy: {
+        titelLabel: 'Echo privacy bron',
+        bronbestandLabel: 'echo-privacy-geheim.jpg',
+        previewState: {
+          status: 'thumbnail',
+          label: 'Thumbnail en preview beschikbaar',
+        },
+        previewBron: 'encrypted_dataset',
+        plaintextThumbnailOpgeslagen: false,
+      },
+    });
+    expect(unlocked?.privacy).not.toHaveProperty('inhoudBase64');
+  });
+
   it('bouwt een dossierindex met documenttype, bron, datum, traject en tags', () => {
     const document = maakDossierDocument('doc-index', {
       datum: '2026-05-01',

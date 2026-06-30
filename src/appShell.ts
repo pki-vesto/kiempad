@@ -1252,7 +1252,9 @@ function renderDossierScreen(state: AppShellState): string {
   const importInboxItems = bouwDossierImportInbox(zichtbareDocumenten, {
     vergrendeld: state.imagingPreviewLocked,
   });
-  const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten);
+  const tijdlijn = bouwDossierTijdlijn(zichtbareDocumenten, {
+    ontgrendeld: !state.imagingPreviewLocked,
+  });
   const embryoDossiers = bouwEmbryoDossiers(
     zichtbareDocumenten,
     state.afspraken.map((bundle) => bundle.afspraak),
@@ -7251,6 +7253,10 @@ function renderDossierTijdlijnItem(
     datum: item.datum,
     documenttype: item.documenttype,
     bron,
+    titelLabel: item.privacy.titelLabel,
+    bronbestandLabel: item.privacy.bronbestandLabel,
+    previewState: item.privacy.previewState,
+    previewBron: item.privacy.previewBron,
     matches,
   });
 }
@@ -7390,7 +7396,16 @@ function renderConsultActiepunten(verslag: ConsultVerslag): string {
 function renderDossierDocument(
   document: DossierDocument,
   state: AppShellState,
-  tijdlijn?: { datum: string; documenttype: string; bron: string; matches?: string[] },
+  tijdlijn?: {
+    datum: string;
+    documenttype: string;
+    bron: string;
+    titelLabel?: string;
+    bronbestandLabel?: string;
+    previewState?: ReturnType<typeof bouwDossierTijdlijn>[number]['privacy']['previewState'];
+    previewBron?: ReturnType<typeof bouwDossierTijdlijn>[number]['privacy']['previewBron'];
+    matches?: string[];
+  },
 ): string {
   const afspraak = document.afspraakId
     ? state.afspraken.find((item) => item.afspraak.id === document.afspraakId)?.afspraak
@@ -7406,17 +7421,20 @@ function renderDossierDocument(
     ? DOSSIER_UPLOAD_PROFIEL_LABELS[document.uploadProfiel]
     : undefined;
   const lockedImage = state.imagingPreviewLocked && document.categorie === 'beeld';
+  const titleLabel =
+    tijdlijn?.titelLabel ?? (lockedImage ? 'Beeldbijlage vergrendeld' : document.titel);
   const fileLabel = lockedImage
     ? 'Beeldbron verborgen tot ontgrendeling'
-    : `${document.bestandsNaam}${document.mimeType ? ` · ${document.mimeType}` : ''}`;
+    : (tijdlijn?.bronbestandLabel ??
+      `${document.bestandsNaam}${document.mimeType ? ` · ${document.mimeType}` : ''}`);
 
   return `
     <li class="phase-item">
       <div>
-        <h3>${escapeHtml(document.titel)}</h3>
+        <h3>${escapeHtml(titleLabel)}</h3>
         ${
           tijdlijn
-            ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}</p>`
+            ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}${tijdlijn.previewState ? ` · preview: ${escapeHtml(tijdlijn.previewState.label)} · ${escapeHtml(tijdlijn.previewBron === 'encrypted_dataset' ? 'encrypted dataset' : 'geen previewbron')}` : ''}</p>`
             : ''
         }
         ${
