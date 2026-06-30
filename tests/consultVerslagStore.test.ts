@@ -70,10 +70,17 @@ describe('ConsultVerslagStore', () => {
     const raw = await driver.getRecord(saved.id);
 
     expect(reviewed?.samenvattingReview?.status).toBe('aangepast');
+    expect(reviewed?.samenvatting?.bronParagraaf).toMatchObject({
+      bronnen: ['consulttekst'],
+      reviewStatus: 'gereviewd',
+      datum: '2026-06-12T11:00:00.000Z',
+    });
     expect(reviewed?.samenvattingCorrectie?.tekst).toBe(
       'Eigen correctie: uitslag later bespreken.',
     );
     expect(raw?.payload.ciphertext).not.toContain('Eigen correctie');
+    expect(raw?.payload.ciphertext).not.toContain('Bronnen voor conceptsamenvatting');
+    expect(raw?.payload.ciphertext).not.toContain('consulttekst');
     await expect(
       store.updateSummaryReview(saved.id, {
         actie: 'corrigeren',

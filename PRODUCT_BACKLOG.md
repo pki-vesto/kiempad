@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 863 |
+| ☑ klaar | 864 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1062** |
+| **Totaal** | **1063** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -686,7 +686,7 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G521 | Fertility Intelligence: consultnotitie import uit tekstveld | P0 | F5 | ☑ |
 | G522 | Fertility Intelligence: consultdocument koppelen aan open vragen | P1 | F5 | ☐ |
 | G523 | Fertility Intelligence: consultactie omzetten naar herinnering | P1 | F5 | ☐ |
-| G524 | Fertility Intelligence: consultsamenvatting bronparagraaf review | P0 | F5 | ☐ |
+| G524 | Fertility Intelligence: consultsamenvatting bronparagraaf review | P0 | F5 | ☑ |
 | G525 | Fertility Intelligence: behandelgeschiedenis reconstructie vanuit consulten | P1 | F5 | ☐ |
 | G526 | Fertility Intelligence: embryo-ID schema per poging | P0 | F5 | ☑ |
 | G527 | Fertility Intelligence: embryo-status event editor | P0 | F5 | ☐ |
@@ -1225,12 +1225,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1060 | Fertility Intelligence: timeline source reference audit evidence | P1 | F5 | ☐ |
 | G1061 | Fertility Intelligence: echo appointment classification audit evidence | P1 | F5 | ☐ |
 | G1062 | Fertility Intelligence: embryo EXIF isolation audit evidence | P1 | F5 | ☐ |
+| G1063 | Fertility Intelligence: consult summary source paragraph audit evidence | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1062** (id's G001 t/m G1062, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1063** (id's G001 t/m G1063, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

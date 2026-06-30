@@ -344,6 +344,12 @@ export interface ConsultVerslag {
     methode: 'lokale_tekstheuristiek';
     tekst: string;
     bronnen: string[];
+    bronParagraaf?: {
+      tekst: string;
+      bronnen: string[];
+      datum: IsoDate;
+      reviewStatus: 'concept' | 'gereviewd';
+    };
     waarschuwing: string;
     gegenereerdOp: IsoDate;
   };

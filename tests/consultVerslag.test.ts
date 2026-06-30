@@ -52,6 +52,12 @@ describe('consultVerslag', () => {
       methode: 'lokale_tekstheuristiek',
       tekst: 'Besproken wat de volgende stap wordt.',
       bronnen: ['consulttekst'],
+      bronParagraaf: {
+        tekst: 'Bronnen voor conceptsamenvatting: consulttekst.',
+        bronnen: ['consulttekst'],
+        datum: '2026-06-12T10:00:00.000Z',
+        reviewStatus: 'concept',
+      },
     });
     expect(verslag.samenvattingReview).toMatchObject({
       status: 'concept',
@@ -170,6 +176,12 @@ describe('consultVerslag', () => {
       status: 'concept',
       methode: 'lokale_tekstheuristiek',
       bronnen: ['consulttekst', 'notitie', 'bestand: consult.txt'],
+      bronParagraaf: {
+        tekst: 'Bronnen voor conceptsamenvatting: consulttekst, notitie, bestand: consult.txt.',
+        bronnen: ['consulttekst', 'notitie', 'bestand: consult.txt'],
+        datum: '2026-06-12T10:00:00.000Z',
+        reviewStatus: 'concept',
+      },
       gegenereerdOp: '2026-06-12T10:00:00.000Z',
     });
     expect(samenvatting?.tekst).toContain('Afgesproken');
@@ -219,6 +231,11 @@ describe('consultVerslag', () => {
       status: 'aangepast',
       bijgewerktOp: '2026-06-12T11:00:00.000Z',
     });
+    expect(aangepast.samenvatting?.bronParagraaf).toMatchObject({
+      bronnen: ['consulttekst'],
+      datum: '2026-06-12T11:00:00.000Z',
+      reviewStatus: 'gereviewd',
+    });
     expect(aangepast.samenvattingCorrectie).toEqual({
       tekst: 'Gebruikerscorrectie: uitslag bespreken tijdens de controle.',
       bijgewerktOp: '2026-06-12T11:00:00.000Z',
@@ -227,6 +244,11 @@ describe('consultVerslag', () => {
       status: 'verworpen',
       bijgewerktOp: '2026-06-12T12:00:00.000Z',
       reden: 'Concept was te kort.',
+    });
+    expect(verworpen.samenvatting?.bronParagraaf).toMatchObject({
+      bronnen: ['consulttekst'],
+      datum: '2026-06-12T12:00:00.000Z',
+      reviewStatus: 'gereviewd',
     });
     expect(verworpen.samenvattingCorrectie).toBeUndefined();
     expect(() =>

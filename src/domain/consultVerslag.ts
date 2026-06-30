@@ -58,6 +58,10 @@ export type ConsultSamenvattingVerschil = {
   waarschuwing: string;
 };
 
+export type ConsultSamenvattingBronparagraaf = NonNullable<
+  NonNullable<ConsultVerslag['samenvatting']>['bronParagraaf']
+>;
+
 export type ConsultSamenvattingReviewInput =
   | {
       actie: 'corrigeren';
@@ -187,6 +191,10 @@ export function reviewConsultSamenvatting(
         status: 'aangepast',
         bijgewerktOp,
       },
+      samenvatting: markeerConsultSamenvattingBronparagraafGereviewd(
+        verslag.samenvatting,
+        bijgewerktOp,
+      ),
     };
   }
 
@@ -199,6 +207,10 @@ export function reviewConsultSamenvatting(
       bijgewerktOp,
       reden: reden || undefined,
     },
+    samenvatting: markeerConsultSamenvattingBronparagraafGereviewd(
+      verslag.samenvatting,
+      bijgewerktOp,
+    ),
   };
 }
 
@@ -260,8 +272,41 @@ export function maakConsultSamenvatting(
     methode: 'lokale_tekstheuristiek',
     tekst,
     bronnen,
+    bronParagraaf: maakConsultSamenvattingBronparagraaf(bronnen, input.uploadedAt, 'concept'),
     waarschuwing: `Concept op basis van lokaal ingevoerde tekst. ${CONSULT_AI_SAFETY_POLICY}`,
     gegenereerdOp: input.uploadedAt,
+  };
+}
+
+export function maakConsultSamenvattingBronparagraaf(
+  bronnen: readonly string[],
+  datum: string,
+  reviewStatus: ConsultSamenvattingBronparagraaf['reviewStatus'],
+): ConsultSamenvattingBronparagraaf {
+  const veiligeBronnen = Array.from(
+    new Set(bronnen.map((bron) => bron.trim()).filter((bron) => bron.length > 0)),
+  );
+  const tekst =
+    veiligeBronnen.length > 0
+      ? `Bronnen voor conceptsamenvatting: ${veiligeBronnen.join(', ')}.`
+      : 'Bronnen voor conceptsamenvatting: geen expliciete bron vastgelegd.';
+
+  return {
+    tekst,
+    bronnen: veiligeBronnen,
+    datum,
+    reviewStatus,
+  };
+}
+
+function markeerConsultSamenvattingBronparagraafGereviewd(
+  samenvatting: ConsultVerslag['samenvatting'],
+  datum: string,
+): ConsultVerslag['samenvatting'] {
+  if (!samenvatting) return samenvatting;
+  return {
+    ...samenvatting,
+    bronParagraaf: maakConsultSamenvattingBronparagraaf(samenvatting.bronnen, datum, 'gereviewd'),
   };
 }
 
