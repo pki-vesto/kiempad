@@ -10775,6 +10775,7 @@ function renderStartIntelligenceWorkbench(
           )
           .join('')}
       </nav>
+      ${renderDailyAdviceWorkbench(dailyRecommendations, { compact: true })}
     </section>
   `;
 }
@@ -11037,6 +11038,98 @@ const DAILY_RECOMMENDATION_OWNER_LABELS: Record<DailyRecommendationOwner, string
   samen: 'Samen',
 };
 
+const DAILY_RECOMMENDATION_OWNER_COPY: Record<
+  DailyRecommendationOwner,
+  { route: string; empty: string }
+> = {
+  vrouw: {
+    route: 'Leefstijl, voeding, supplementvragen en cycluscontext',
+    empty: 'Nog geen vrouw-specifieke dagadviezen.',
+  },
+  man: {
+    route: 'Leefstijl, voeding, supplementvragen en vruchtbaarheidscontext',
+    empty: 'Nog geen man-specifieke dagadviezen.',
+  },
+  samen: {
+    route: 'Consultvoorbereiding, vragen en gezamenlijke planning',
+    empty: 'Nog geen gezamenlijke dagadviezen.',
+  },
+};
+
+function renderDailyAdviceWorkbench(
+  overview: DailyRecommendationOverview,
+  options: { compact?: boolean } = {},
+): string {
+  const owners: readonly DailyRecommendationOwner[] = ['vrouw', 'man', 'samen'];
+  const total = owners.reduce((count, owner) => count + overview[owner].length, 0);
+  const reviewCount = owners.reduce(
+    (count, owner) =>
+      count +
+      overview[owner].filter(
+        (item) => item.inputMinimisatie?.reviewStatus === 'concept_te_controleren',
+      ).length,
+    0,
+  );
+  const artscheckCount = owners.reduce(
+    (count, owner) =>
+      count +
+      overview[owner].filter((item) =>
+        item.checklist?.some((checklistItem) => checklistItem.artscheck),
+      ).length,
+    0,
+  );
+  const compactClass = options.compact ? ' daily-advice-workbench--compact' : '';
+
+  return `
+    <section class="daily-advice-workbench${compactClass}" aria-label="Dagadvies werkbank" data-daily-advice-workbench="owner-routes">
+      <header class="daily-advice-workbench__header">
+        <div>
+          <p class="daily-advice-workbench__eyebrow">Advieswerkbank</p>
+          <h3>Dagadvies per persoon kiezen</h3>
+          <p>Scan vrouw, man en samen apart. Alles blijft concept en Kiempad geeft geen medisch advies.</p>
+        </div>
+        <div class="daily-advice-workbench__summary" aria-label="Dagadvies status">
+          <span><strong>${total}</strong> adviezen</span>
+          <span><strong>${reviewCount}</strong> te controleren</span>
+          <span><strong>${artscheckCount}</strong> artscheck</span>
+        </div>
+      </header>
+      <div class="daily-advice-owner-grid" aria-label="Dagadvies eigenaars">
+        ${owners.map((owner) => renderDailyAdviceOwnerCard(owner, overview[owner])).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderDailyAdviceOwnerCard(
+  owner: DailyRecommendationOwner,
+  items: readonly DailyRecommendation[],
+): string {
+  const firstItem = items[0];
+  const artscheckCount = items.filter((item) =>
+    item.checklist?.some((checklistItem) => checklistItem.artscheck),
+  ).length;
+  const reviewCount = items.filter(
+    (item) => item.inputMinimisatie?.reviewStatus === 'concept_te_controleren',
+  ).length;
+  const label = DAILY_RECOMMENDATION_OWNER_LABELS[owner];
+  const copy = DAILY_RECOMMENDATION_OWNER_COPY[owner];
+
+  return `
+    <a class="daily-advice-owner-card" href="#start-recommendations" data-daily-advice-owner="${owner}">
+      <span class="daily-advice-owner-card__top">
+        <span>${escapeHtml(label)}</span>
+        <strong>${items.length}</strong>
+      </span>
+      <span class="daily-advice-owner-card__route">${escapeHtml(copy.route)}</span>
+      <span class="daily-advice-owner-card__focus">${escapeHtml(
+        firstItem ? firstItem.titel : copy.empty,
+      )}</span>
+      <span class="daily-advice-owner-card__meta">${reviewCount} review · ${artscheckCount} artscheck</span>
+    </a>
+  `;
+}
+
 function renderStartRecommendationRoute(
   state: AppShellState,
   overview: DailyRecommendationOverview,
@@ -11050,6 +11143,7 @@ function renderStartRecommendationRoute(
     body: `${
       state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
     }<p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
+    ${renderDailyAdviceWorkbench(overview)}
     <details class="kp-disclosure start-task-disclosure">
       <summary class="kp-disclosure__summary">Bekijk aanbevelingen</summary>
       <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
