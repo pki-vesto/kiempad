@@ -2061,8 +2061,12 @@ function renderDossierSubmitFeedback(
   const recoveryMarkup = recoveryHint
     ? `<span class="dossier-submit-recovery" data-dossier-submit-recovery="${route}">${escapeHtml(recoveryHint)}</span>`
     : '';
+  const focusCue = renderDossierSubmitFocusReturnCue(route, feedbackState);
+  const focusCueMarkup = focusCue
+    ? `<a class="dossier-submit-focus-return" data-dossier-submit-focus-return="${route}" href="#${focusCue.targetId}">${escapeHtml(focusCue.copy)}</a>`
+    : '';
 
-  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${recoveryMarkup}</p>`;
+  return `<p class="dossier-submit-feedback" data-dossier-submit-feedback="${route}" data-dossier-submit-feedback-state="${feedbackState}" data-dossier-feedback-announcement-order="${announcementOrder}" aria-label="${escapeAttribute(ariaLabel)}" aria-live="polite" aria-atomic="true"><span>${escapeHtml(copy)}</span>${recoveryMarkup}${focusCueMarkup}</p>`;
 }
 
 function renderDossierSubmitFeedbackAnnouncementOrder(
@@ -2077,6 +2081,24 @@ function renderDossierSubmitFeedbackAnnouncementOrder(
       return 3;
     case 'embryo-status':
       return 4;
+  }
+}
+
+function renderDossierSubmitFocusReturnCue(
+  route: 'dossier-upload' | 'consult-upload' | 'embryo-quality' | 'embryo-status',
+  state: UploadAttachmentFeedbackItem['state'],
+): { targetId: string; copy: string } | undefined {
+  if (state !== 'needs-review' && state !== 'error') return undefined;
+
+  switch (route) {
+    case 'dossier-upload':
+      return { targetId: 'dossier-upload-form', copy: 'Terug naar documentvelden' };
+    case 'consult-upload':
+      return { targetId: 'consult-verslag-form', copy: 'Terug naar consultvelden' };
+    case 'embryo-quality':
+      return { targetId: 'embryo-quality-form', copy: 'Terug naar kwaliteitsvelden' };
+    case 'embryo-status':
+      return { targetId: 'embryo-status-event-form', copy: 'Terug naar statusvelden' };
   }
 }
 

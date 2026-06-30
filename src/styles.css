@@ -2235,6 +2235,15 @@ a.action-card:active {
   font-weight: 650;
 }
 
+.dossier-submit-focus-return {
+  width: fit-content;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 750;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .dossier-submit-feedback[data-dossier-submit-feedback-state="ready"] {
   border-left-color: var(--accent);
 }
