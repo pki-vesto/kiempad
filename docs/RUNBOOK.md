@@ -124,6 +124,12 @@ pad zonder lokale vault-hercreatie.
   herkenbaar houden. Gebruik geen responsebody, headers, user-id, session-id,
   record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering,
   kansberekening of behandelkeuzeadvies in CI-output.
+  **Annotatie-driftbewaking (G1084/G1085):** houd de runbookterm, helperoutput en
+  testfixture synchroon met `CENTRAL_HEALTH_MONITOR_CI_FAILURE_PREFIX`,
+  `CENTRAL_HEALTH_MONITOR_CI_RECOVERY_HINT` en
+  `CENTRAL_HEALTH_MONITOR_CI_SUCCESS_ANNOTATION`. De maintenance-test moet dezelfde
+  annotatievorm, `unexpected-contract-version`, `unexpected-field` en
+  `unexpected-error-states` blijven vinden in runbook, helper en fixture.
 
   | phaseCode | Waarschijnlijke oorzaak | Technische check | Herstelactie | Eigenaar |
   |---|---|---|---|---|

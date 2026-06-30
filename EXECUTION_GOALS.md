@@ -11911,4 +11911,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, health contract fixture, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1086 — central health monitor annotation CLI fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1085 bewaakt de annotatietermen tussen runbook, helper en tests, maar er is nog geen kleine CLI-fixture die laat zien hoe automation de annotatie veilig kan produceren zonder responsebody te loggen.
+- **Desired Outcome:** Voeg een CLI- of scriptfixture toe die central health monitor validation omzet naar de gesanitized CI-annotatievorm.
+- **User Value:** Beheer kan dezelfde veilige annotatie lokaal en in CI reproduceren zonder privacygevoelige output.
+- **Acceptance Criteria:** Fixture verwijst naar G1085; CLI-output bevat alleen technische annotatie en herstelhint; onverwachte contractversie, onverwacht veld en errorstate-drift blijven herkenbaar; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Scripts, health contract fixture, CI
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
