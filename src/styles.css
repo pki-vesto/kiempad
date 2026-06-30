@@ -2219,6 +2219,23 @@ a.action-card:active {
   line-height: 1.35;
 }
 
+.dossier-upload-group[data-dossier-context-priority="optional"],
+.dossier-subform-group[data-dossier-context-priority="optional"] {
+  border-style: dashed;
+  background: color-mix(in srgb, var(--surface-subtle) 72%, var(--surface) 28%);
+}
+
+.dossier-upload-group[data-dossier-context-priority="optional"] legend::after,
+.dossier-subform-group[data-dossier-context-priority="optional"] legend::after {
+  content: "Optioneel";
+  display: inline-flex;
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .dossier-upload-group .check-row,
 .dossier-upload-group .linked-note,
 .dossier-upload-group label:has(textarea),

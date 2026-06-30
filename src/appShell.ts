@@ -1392,7 +1392,7 @@ function renderDossierScreen(state: AppShellState): string {
             Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan afspraak
@@ -1413,7 +1413,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="notitie" rows="4"></textarea>
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional">
             <legend>Beeldcontext</legend>
           <label>
             Beeldcontext
@@ -1428,7 +1428,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext">
+          <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional">
             <legend>Embryo en labcontext</legend>
           <label>
             Beeld embryo
@@ -1509,7 +1509,7 @@ function renderDossierScreen(state: AppShellState): string {
             <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen">
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan afspraak
@@ -1530,7 +1530,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-context">
+          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional">
             <legend>Bron en context</legend>
           <label>
             Correctie op conceptsamenvatting
@@ -1608,7 +1608,7 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen">
+          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen" data-dossier-context-priority="optional">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan traject
@@ -1657,7 +1657,7 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-status-group="status-bron">
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-bron" data-dossier-context-priority="optional">
             <legend>Broncontrole</legend>
           <label>
             Bron status
@@ -1671,7 +1671,7 @@ function renderDossierScreen(state: AppShellState): string {
             </select>
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-status-group="status-koppelingen">
+          <fieldset class="dossier-subform-group" data-embryo-status-group="status-koppelingen" data-dossier-context-priority="optional">
             <legend>Koppelingen</legend>
           <label>
             Koppel aan traject
