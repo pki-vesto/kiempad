@@ -140,6 +140,84 @@ function extractDossierAddRouteDraftNote(html: string): string {
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
+type DossierLandingCueTarget = {
+  formId: string;
+  groupSelector: string;
+};
+
+const DOSSIER_LANDING_CUE_TARGETS: readonly DossierLandingCueTarget[] = [
+  { formId: 'dossier-upload-form', groupSelector: '.dossier-upload-group:first-of-type' },
+  { formId: 'consult-verslag-form', groupSelector: '.dossier-subform-group:first-of-type' },
+  { formId: 'embryo-quality-form', groupSelector: '.dossier-subform-group:first-of-type' },
+  { formId: 'embryo-status-event-form', groupSelector: '.dossier-subform-group:first-of-type' },
+];
+
+function normalizeCssContract(css: string): string {
+  return css.replace(/\s+/g, ' ').trim();
+}
+
+function findCssBlockEnd(css: string, openBraceIndex: number): number {
+  let depth = 0;
+  for (let index = openBraceIndex; index < css.length; index += 1) {
+    const char = css[index];
+    if (char === '{') depth += 1;
+    if (char === '}') {
+      depth -= 1;
+      if (depth === 0) return index;
+    }
+  }
+  throw new Error('CSS-declaratieblok mist sluitende accolade.');
+}
+
+function extractCssRule(
+  css: string,
+  firstSelector: string,
+): { selectors: string; declarations: string } {
+  const selectorIndex = css.indexOf(firstSelector);
+  if (selectorIndex < 0) throw new Error(`CSS-selector ontbreekt: ${firstSelector}.`);
+  const openBraceIndex = css.indexOf('{', selectorIndex);
+  if (openBraceIndex < 0) throw new Error(`CSS-regel zonder declaratieblok: ${firstSelector}.`);
+  const previousCloseBraceIndex = css.lastIndexOf('}', selectorIndex);
+  const selectorStartIndex = previousCloseBraceIndex < 0 ? 0 : previousCloseBraceIndex + 1;
+  const closeBraceIndex = findCssBlockEnd(css, openBraceIndex);
+
+  return {
+    selectors: normalizeCssContract(css.slice(selectorStartIndex, openBraceIndex)),
+    declarations: normalizeCssContract(css.slice(openBraceIndex + 1, closeBraceIndex)),
+  };
+}
+
+function extractCssMediaBlock(css: string, mediaQuery: string): string {
+  const mediaIndex = css.indexOf(`@media (${mediaQuery})`);
+  if (mediaIndex < 0) throw new Error(`CSS-mediaquery ontbreekt: ${mediaQuery}.`);
+  const openBraceIndex = css.indexOf('{', mediaIndex);
+  if (openBraceIndex < 0) throw new Error(`CSS-mediaquery zonder blok: ${mediaQuery}.`);
+  const closeBraceIndex = findCssBlockEnd(css, openBraceIndex);
+  return css.slice(openBraceIndex + 1, closeBraceIndex);
+}
+
+function createDossierLandingCueSelectors(
+  pseudoClass: 'target' | 'focus' | 'focus-visible',
+): string[] {
+  return DOSSIER_LANDING_CUE_TARGETS.map(
+    ({ formId, groupSelector }) => `#${formId}:${pseudoClass} > ${groupSelector}`,
+  );
+}
+
+function expectDossierLandingCueParity(css: string, expectedDeclarations: readonly string[]): void {
+  const expectedSelectors = [
+    ...createDossierLandingCueSelectors('target'),
+    ...createDossierLandingCueSelectors('focus'),
+    ...createDossierLandingCueSelectors('focus-visible'),
+  ];
+  const rule = extractCssRule(css, expectedSelectors[0] ?? '');
+
+  expect(rule.selectors).toBe(expectedSelectors.join(', '));
+  for (const declaration of expectedDeclarations) {
+    expect(rule.declarations).toContain(declaration);
+  }
+}
+
 function extractDossierAddRoutePanel(html: string, panelId: string): string {
   const escapedPanelId = panelId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = html.match(
@@ -5152,6 +5230,107 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-submit-focus-return:focus-visible');
     expect(css).toContain('outline-offset: 3px;');
     expect(css).toContain('border-radius: 5px;');
+  });
+
+  it('bewaakt target- en focuscue parity voor dossier-feedback return in standaard, reduced-motion en forced-colors context', () => {
+    const populatedDocument: DossierDocument = {
+      id: 'cue-parity-populated',
+      datum: '2026-06-12',
+      titel: 'Cue parity populated',
+      categorie: 'onderzoek',
+      bestandsNaam: 'cue-parity-populated.pdf',
+      mimeType: 'application/pdf',
+      grootteBytes: 2048,
+      inhoudBase64: 'cGFyaXR5LXBvcHVsYXRlZA==',
+      analyse: {
+        samenvatting: 'Document opgeslagen zonder medisch advies.',
+        signalen: ['Metadata beschikbaar.'],
+      },
+      metadata: {
+        documentDatum: '2026-06-12',
+        documenttype: 'Onderzoek',
+        bronbestand: 'cue-parity-populated.pdf',
+        extractieBronnen: ['bronbestand', 'formulierdatum'],
+      },
+      uploadedAt: '2026-06-12T10:00:00.000Z',
+    };
+    const lockedImagingDocument: DossierDocument = {
+      id: 'cue-parity-locked-imaging',
+      datum: '2026-06-13',
+      titel: 'Cue parity locked imaging',
+      categorie: 'embryo',
+      bestandsNaam: 'cue-parity-secret-embryo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 4096,
+      inhoudBase64: 'Y3VlLXBhYml0eS1zZWNyZXQ=',
+      analyse: {
+        samenvatting: 'Embryobijlage opgeslagen zonder medisch advies.',
+        signalen: ['Embryometadata beschikbaar.'],
+      },
+      metadata: {
+        documentDatum: '2026-06-13',
+        documenttype: 'Embryokwaliteit',
+        bronbestand: 'cue-parity-secret-embryo.jpg',
+        extractieBronnen: ['bronbestand', 'formulierdatum'],
+      },
+      embryo: {
+        label: 'Embryo 1',
+        kwaliteit: 'Kliniektekst',
+        bron: 'cue-parity-secret-embryo.jpg',
+        reviewStatus: 'concept',
+      },
+      uploadedAt: '2026-06-13T10:00:00.000Z',
+    };
+    const renderedContexts = [
+      renderAppShell('dossier', makeStartState()),
+      renderAppShell('dossier', makeStartState({ dossierDocuments: [populatedDocument] })),
+      renderAppShell('dossier', makeStartState({ dossierDocuments: [lockedImagingDocument] })),
+    ];
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    for (const html of renderedContexts) {
+      for (const { formId } of DOSSIER_LANDING_CUE_TARGETS) {
+        expect(html).toContain(`id="${formId}"`);
+        expect(html).toContain('tabindex="-1"');
+      }
+      expect(html).toContain('data-dossier-feedback-focus-target="dossier-upload"');
+      expect(html).toContain('data-dossier-feedback-focus-target="consult-upload"');
+      expect(html).toContain('data-dossier-feedback-focus-target="embryo-quality"');
+      expect(html).toContain('data-dossier-feedback-focus-target="embryo-status"');
+    }
+    for (const panelId of ['dossier-upload', 'consult-upload', 'embryo-quality', 'embryo-status']) {
+      const panel = extractDossierAddRoutePanel(renderedContexts[2] ?? '', panelId);
+      expect(panel).not.toContain('cue-parity-secret-embryo.jpg');
+      expect(panel).not.toContain('Y3VlLXBhYml0eS1zZWNyZXQ=');
+    }
+
+    expectDossierLandingCueParity(css, [
+      'outline: 2px solid var(--dossier-feedback-landing-outline);',
+      'outline-offset: 2px;',
+      'background: var(--dossier-feedback-landing-background);',
+      'box-shadow: inset 0 0 0 1px var(--dossier-feedback-landing-shadow);',
+    ]);
+
+    const reducedMotionCss = extractCssMediaBlock(css, 'prefers-reduced-motion: reduce');
+    expectDossierLandingCueParity(reducedMotionCss, ['transition: none;']);
+
+    const forcedColorsCss = extractCssMediaBlock(css, 'forced-colors: active');
+    const forcedColorsVariables = extractCssRule(forcedColorsCss, '#dossier-upload-form');
+    expect(forcedColorsVariables.selectors).toBe(
+      DOSSIER_LANDING_CUE_TARGETS.map(({ formId }) => `#${formId}`).join(', '),
+    );
+    expect(forcedColorsVariables.declarations).toContain(
+      '--dossier-feedback-landing-outline: Highlight;',
+    );
+    expect(forcedColorsVariables.declarations).toContain(
+      '--dossier-feedback-landing-background: Canvas;',
+    );
+    expectDossierLandingCueParity(forcedColorsCss, [
+      'outline: 2px solid var(--dossier-feedback-landing-outline);',
+      'outline-offset: 2px;',
+      'background: var(--dossier-feedback-landing-background);',
+      'box-shadow: none;',
+    ]);
   });
 
   it('bewaakt dossierinbox-states in het Claude Design thema zonder payloadlekken', () => {
