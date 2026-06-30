@@ -540,6 +540,13 @@ const HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_TERMS
 ] as const;
 const HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_MISSING_TERM_ERROR =
   'Health monitor retention missing-term-contract compact releaseguardcontext ontbreekt voor termen: health-monitor retention missing-term-contract compact releasecontext foutmelding, veilige technische labels';
+const HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_CONTRACT_RELEASE_TERMS =
+  [
+    'G1116',
+    'compact contract',
+    'health-monitor retention missing-term-contract compact releaseguard foutmelding',
+    'veilige technische labels',
+  ] as const;
 const styles = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
 const maintenanceDocsRaw = readFileSync(
   new URL('./maintenanceDocs.test.ts', import.meta.url),
@@ -4836,6 +4843,49 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1117 health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard', () => {
+    const releaseGuardEvidence = [
+      'G1117 health-monitor-retention-missing-term-contract-compact-contract-release-guard-contract-release-guard-compact-contract-release-guard',
+      'sources=CHANGELOG.md,CURRENT_STATE.md',
+      'references=G1116',
+      `terms=${HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_CONTRACT_RELEASE_TERMS.slice(1).join('|')}`,
+    ].join('\n');
+
+    for (const releaseDoc of [changelog, currentState]) {
+      const releaseGuardContext =
+        extractHealthMonitorRetentionMissingTermContractCompactReleaseGuardContractReleaseContext(
+          releaseDoc,
+        );
+
+      for (const releaseGuardTerm of HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_CONTRACT_RELEASE_TERMS) {
+        expect(releaseGuardContext).toContain(releaseGuardTerm);
+      }
+    }
+
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(releaseGuardEvidence).not.toContain(forbiddenEvidenceTerm);
+    }
+
+    expect(releaseGuardEvidence).toMatchInlineSnapshot(`
+      "G1117 health-monitor-retention-missing-term-contract-compact-contract-release-guard-contract-release-guard-compact-contract-release-guard
+      sources=CHANGELOG.md,CURRENT_STATE.md
+      references=G1116
+      terms=compact contract|health-monitor retention missing-term-contract compact releaseguard foutmelding|veilige technische labels"
+    `);
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',
@@ -5535,6 +5585,33 @@ function extractHealthMonitorRetentionMissingTermContractCompactReleaseGuardCont
   if (missingTerms.length > 0) {
     throw new Error(
       `Health monitor retention missing-term-contract compact releaseguardcontext ontbreekt voor termen: ${missingTerms.join(
+        ', ',
+      )}`,
+    );
+  }
+
+  return matchingContext;
+}
+
+function extractHealthMonitorRetentionMissingTermContractCompactReleaseGuardContractReleaseContext(
+  releaseDoc: string,
+): string {
+  const matchingLines = releaseDoc
+    .split(/\n|;\s+|,\s+G\d{3}\s+/)
+    .filter((line) =>
+      HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_CONTRACT_RELEASE_TERMS.some(
+        (term) => line.includes(term),
+      ),
+    );
+
+  const matchingContext = matchingLines.join('\n');
+  const missingTerms =
+    HEALTH_MONITOR_RETENTION_MISSING_TERM_CONTRACT_COMPACT_RELEASE_GUARD_CONTRACT_RELEASE_TERMS.filter(
+      (term) => !matchingContext.includes(term),
+    );
+  if (missingTerms.length > 0) {
+    throw new Error(
+      `Health monitor retention missing-term-contract compact contract releaseguardcontext ontbreekt voor termen: ${missingTerms.join(
         ', ',
       )}`,
     );
