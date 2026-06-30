@@ -214,6 +214,17 @@ export type EchoAfspraakClassificatieItem = {
   classificatieLabel: string;
 };
 
+export type EmbryoAfbeeldingExifIsolatieItem = {
+  documentId: string;
+  datum: string;
+  embryoLabel?: string;
+  embryoId?: string;
+  bron: string;
+  exifStatus: NonNullable<DossierDocument['beeldMetadata']>['exifStatus'];
+  reviewStatus: 'concept' | 'gereviewd';
+  isolatieLabel: string;
+};
+
 export type DossierBeeldClassificatie = ImagingRepositoryItem['soort'];
 
 export const DOSSIER_CATEGORIE_LABELS: Record<DossierDocument['categorie'], string> = {
@@ -686,6 +697,38 @@ export function bouwEchoAfspraakClassificaties(
       };
     })
     .sort((a, b) => a.afspraakId.localeCompare(b.afspraakId));
+}
+
+export function bouwEmbryoAfbeeldingExifIsolaties(
+  items: readonly ImagingRepositoryItem[],
+): EmbryoAfbeeldingExifIsolatieItem[] {
+  return items
+    .filter((item) => item.soort === 'embryo_afbeelding')
+    .map((item) => {
+      const exifStatus = item.document.beeldMetadata?.exifStatus ?? 'onbekend';
+      const reviewStatus: EmbryoAfbeeldingExifIsolatieItem['reviewStatus'] =
+        item.document.beeldMetadata?.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
+      const embryoLabel =
+        item.tijdlijnKoppeling.embryoLabel ?? item.document.embryo?.label ?? undefined;
+      const embryoId = item.tijdlijnKoppeling.embryoId;
+
+      return {
+        documentId: item.id,
+        datum: item.datum,
+        embryoLabel,
+        embryoId,
+        bron: item.bronbestand,
+        exifStatus,
+        reviewStatus,
+        isolatieLabel:
+          exifStatus === 'geisoleerd'
+            ? 'EXIF geisoleerd; alleen expliciete embryo- en bronmetadata wordt gebruikt'
+            : exifStatus === 'geen_exif'
+              ? 'Geen EXIF-route vastgelegd; alleen expliciete embryo- en bronmetadata wordt gebruikt'
+              : 'EXIF-status onbekend; review nodig voor bronmetadata',
+      };
+    })
+    .sort((a, b) => b.datum.localeCompare(a.datum) || a.documentId.localeCompare(b.documentId));
 }
 
 export function bouwImagingVergelijking(

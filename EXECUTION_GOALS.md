@@ -3882,7 +3882,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Imaging, privacy, tests
 - **ADR Needed:** no
 - **Score:** 120
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G519 — beeldvergelijking selectieflow
 
@@ -11573,6 +11573,20 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Priority:** P1
 - **Complexity:** S
 - **Related Components:** Imaging, appointments, app shell, maintenance tests
+- **ADR Needed:** no
+- **Score:** 103
+- **Status:** ☐ open
+
+### G1062 — embryo EXIF isolation audit evidence
+
+- **Epic:** Fertility Intelligence
+- **Problem:** G518 toont nu embryo-afbeelding EXIF-isolatie, maar er is nog geen compacte audit die document-id, datum, embryo-label/id, bronstatus, EXIF-status, reviewstatus en privacygrens bewaakt.
+- **Desired Outcome:** Voeg onderhoudsbewijs toe dat embryo EXIF-isolatie zichtbaar blijft zonder bronbestandsnamen, EXIF-inhoud, beeldpayload of medische interpretatie te lekken.
+- **User Value:** Gebruikers kunnen embryo-afbeeldingen controleren zonder dat Kiempad EXIF-inhoud uitleest of beelden medisch beoordeelt.
+- **Acceptance Criteria:** Audit of tests verwijzen naar G518; concept/gereviewd, document-id of embryo-label/id, datum, bronstatus, EXIF-status en locked-preview privacy blijven gedekt; evidence bevat geen bronbestandsnaam, base64, data-url, EXIF-inhoud, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Imaging, embryo dossier, app shell, maintenance tests
 - **ADR Needed:** no
 - **Score:** 103
 - **Status:** ☐ open

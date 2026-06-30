@@ -9,6 +9,7 @@ import {
   bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
   bouwEchoAfspraakClassificaties,
+  bouwEmbryoAfbeeldingExifIsolaties,
   bouwImagingRepository,
   bouwImagingVergelijking,
   classificeerDossierBeeld,
@@ -1376,6 +1377,67 @@ describe('dossier', () => {
     ]);
     const serialized = JSON.stringify(classificaties);
     expect(serialized).not.toContain('cGF5bG9hZA==');
+    expect(serialized).not.toContain('diagnose');
+    expect(serialized).not.toContain('dosering');
+    expect(serialized).not.toContain('kans');
+    expect(serialized).not.toContain('behandelkeuzeadvies');
+  });
+
+  it('bouwt embryo-afbeelding EXIF-isolatie zonder beeldpayload of medisch advies', () => {
+    const embryoBeeld = maakDossierDocument('img-embryo-exif', {
+      datum: '2026-05-05',
+      titel: 'Embryo 1 labfoto',
+      categorie: 'beeld',
+      bestandsNaam: 'embryo-geheim.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'ZW1icnlvLXBheWxvYWQ=',
+      beeldMetadata: {
+        soort: 'embryo_afbeelding',
+        bron: 'Labportaal',
+        embryoLabel: 'Embryo 1',
+        embryoId: 'E1',
+        embryoDag: 5,
+        laboratoriumContext: 'Labfoto dag 5',
+        exifStatus: 'geisoleerd',
+        reviewStatus: 'concept',
+      },
+    });
+    const echoBeeld = maakDossierDocument('img-echo-exif', {
+      datum: '2026-05-04',
+      titel: 'Echo',
+      categorie: 'beeld',
+      bestandsNaam: 'echo.jpg',
+      mimeType: 'image/jpeg',
+      grootteBytes: 128 * 1024,
+      inhoudBase64: 'ZWNobw==',
+      beeldMetadata: {
+        soort: 'echo',
+        bron: 'Labportaal',
+        exifStatus: 'geisoleerd',
+        reviewStatus: 'gereviewd',
+      },
+    });
+
+    const isolaties = bouwEmbryoAfbeeldingExifIsolaties(
+      bouwImagingRepository([embryoBeeld, echoBeeld]),
+    );
+
+    expect(isolaties).toEqual([
+      {
+        documentId: 'img-embryo-exif',
+        datum: '2026-05-05',
+        embryoLabel: 'Embryo 1',
+        embryoId: 'E1',
+        bron: 'Labportaal',
+        exifStatus: 'geisoleerd',
+        reviewStatus: 'concept',
+        isolatieLabel: 'EXIF geisoleerd; alleen expliciete embryo- en bronmetadata wordt gebruikt',
+      },
+    ]);
+    const serialized = JSON.stringify(isolaties);
+    expect(serialized).not.toContain('ZW1icnlvLXBheWxvYWQ=');
+    expect(serialized).not.toContain('embryo-geheim.jpg');
     expect(serialized).not.toContain('diagnose');
     expect(serialized).not.toContain('dosering');
     expect(serialized).not.toContain('kans');

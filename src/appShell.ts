@@ -37,6 +37,7 @@ import {
   bouwDossierReviewWachtrij,
   bouwDossierTijdlijn,
   bouwEchoAfspraakClassificaties,
+  bouwEmbryoAfbeeldingExifIsolaties,
   bouwImagingRepository,
   bouwImagingVergelijking,
   classificeerBeeldLabel,
@@ -48,6 +49,7 @@ import {
   type EchoAfspraakClassificatieItem,
   EMBRYO_KWALITEIT_WAARSCHUWING,
   EMBRYO_STATUS_LABELS,
+  type EmbryoAfbeeldingExifIsolatieItem,
   filterImagingRepository,
   formatBytes,
   type ImagingRepositoryFilter,
@@ -1251,6 +1253,7 @@ function renderDossierScreen(state: AppShellState): string {
     ontgrendeld: !state.imagingPreviewLocked,
   });
   const echoAfspraakClassificaties = bouwEchoAfspraakClassificaties(alleImagingItems);
+  const embryoExifIsolaties = bouwEmbryoAfbeeldingExifIsolaties(alleImagingItems);
   const imagingItems = filterImagingRepository(alleImagingItems, state.imagingFilter ?? {});
   const imagingVergelijking = bouwImagingVergelijking(imagingItems.map((item) => item.document));
   const indexItems = bouwDossierIndex(zichtbareDocumenten);
@@ -1637,6 +1640,7 @@ function renderDossierScreen(state: AppShellState): string {
         <h2>Imaging-repository</h2>
         ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
         ${renderEchoAfspraakClassificaties(echoAfspraakClassificaties, state)}
+        ${renderEmbryoExifIsolaties(embryoExifIsolaties, state)}
         ${renderImagingVergelijking(imagingVergelijking)}
         ${
           imagingItems.length > 0
@@ -7062,6 +7066,58 @@ function renderEchoAfspraakClassificaties(
           .join('')}
       </ol>
       <p class="small-print">Classificatie is beschrijvend: echo per afspraak, geen beeldanalyse of medisch advies.</p>
+    </section>
+  `;
+}
+
+function renderEmbryoExifIsolaties(
+  items: readonly EmbryoAfbeeldingExifIsolatieItem[],
+  state: AppShellState,
+): string {
+  const status = items.some(
+    (item) => item.reviewStatus === 'concept' || item.exifStatus === 'onbekend',
+  )
+    ? 'concept-review'
+    : 'gereviewd';
+
+  if (items.length === 0) {
+    return `
+      <section class="policy-panel embedded-summary embryo-exif-isolation" aria-label="Embryo-afbeelding EXIF-isolatie" data-embryo-exif-isolation-state="leeg">
+        <h2>Embryo-afbeelding EXIF-isolatie</h2>
+        <p class="small-print">Nog geen embryo-afbeeldingen met EXIF-isolatiestatus gevonden.</p>
+      </section>
+    `;
+  }
+
+  return `
+    <section class="policy-panel embedded-summary embryo-exif-isolation" aria-label="Embryo-afbeelding EXIF-isolatie" data-embryo-exif-isolation-state="${status}">
+      <h2>Embryo-afbeelding EXIF-isolatie</h2>
+      <ol class="compact-list">
+        ${items
+          .map((item) => {
+            const embryoLabel = [item.embryoLabel, item.embryoId]
+              .filter((value): value is string => Boolean(value))
+              .join(' · ');
+            const bron = state.imagingPreviewLocked
+              ? 'Bron verborgen tot ontgrendeling'
+              : item.bron;
+
+            return `
+              <li>
+                <strong>${escapeHtml(embryoLabel || item.documentId)}</strong>
+                <dl class="summary-list">
+                  <div><dt>Datum</dt><dd>${escapeHtml(item.datum)}</dd></div>
+                  <div><dt>Bron</dt><dd>${escapeHtml(bron)}</dd></div>
+                  <div><dt>EXIF</dt><dd>${escapeHtml(item.exifStatus)}</dd></div>
+                  <div><dt>Review</dt><dd>${escapeHtml(item.reviewStatus)}</dd></div>
+                </dl>
+                <p class="small-print">${escapeHtml(item.isolatieLabel)}.</p>
+              </li>
+            `;
+          })
+          .join('')}
+      </ol>
+      <p class="small-print">Deze status gebruikt alleen expliciete metadata uit de encrypted dataset; Kiempad leest geen EXIF-inhoud uit in deze weergave en beoordeelt het beeld niet medisch.</p>
     </section>
   `;
 }
