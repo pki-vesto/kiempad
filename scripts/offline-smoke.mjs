@@ -32,12 +32,34 @@ async function waitForServiceWorker(page) {
     if (!('serviceWorker' in navigator)) {
       throw new Error('Service worker wordt niet ondersteund in deze browser.');
     }
-    await navigator.serviceWorker.ready;
+    const withTimeout = (promise, message) =>
+      new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error(message)), 10_000);
+        promise.then(
+          (value) => {
+            clearTimeout(timer);
+            resolve(value);
+          },
+          (error) => {
+            clearTimeout(timer);
+            reject(error);
+          },
+        );
+      });
+
+    await navigator.serviceWorker.register('/kiempad-sw.js');
+    await withTimeout(
+      navigator.serviceWorker.ready,
+      'Service worker werd niet actief binnen 10 seconden.',
+    );
     if (navigator.serviceWorker.controller) return;
 
-    await new Promise((resolve) => {
-      navigator.serviceWorker.addEventListener('controllerchange', resolve, { once: true });
-    });
+    await withTimeout(
+      new Promise((resolve) => {
+        navigator.serviceWorker.addEventListener('controllerchange', resolve, { once: true });
+      }),
+      'Service worker nam de pagina niet over binnen 10 seconden.',
+    );
   });
 }
 
