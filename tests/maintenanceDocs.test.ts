@@ -3558,6 +3558,41 @@ describe('onderhoudsdocumentatie', () => {
     expect(centralHttpApiTest).toContain('recordCount');
   });
 
+  it('documenteert G1080/G1081 central health contract migration notes', () => {
+    for (const requiredTerm of [
+      'Health-contractmigratie (G1080/G1081)',
+      'contractVersion',
+      'responsevorm bewust verandert',
+      'oude',
+      'nieuwe contractversie',
+      'compatibilityregel voor bestaande monitors',
+      'centrale API bouwen',
+      'Tailscale-stack herstarten',
+      'lokale',
+      '`/api/health` smoke',
+      'tailnet-HTTPS',
+      'Oude monitors moeten veilig falen',
+      'onverwachte contractversie',
+      'onverwacht',
+      'veld',
+    ]) {
+      expect(runbook).toContain(requiredTerm);
+    }
+
+    for (const forbiddenLogTerm of [
+      'responsebody',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'secrets',
+      'medische termen',
+    ]) {
+      expect(runbook).toContain(forbiddenLogTerm);
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

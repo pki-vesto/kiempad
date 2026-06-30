@@ -11855,4 +11855,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Runbook, Tailscale deploy, contract tests
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1082 — central health monitor compatibility fixture
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1081 documenteert health-contractmigratie, maar er is nog geen compacte fixture die laat zien hoe een monitor veilig faalt op een onverwachte `contractVersion` of onverwacht veld zonder payload te loggen.
+- **Desired Outcome:** Voeg een monitorcompatibiliteitsfixture of testhelper toe die version/field drift detecteert en alleen gesanitized technische foutlabels oplevert.
+- **User Value:** Beheer kan healthmonitoring aanpassen zonder privacygevoelige output of stille schemaacceptatie.
+- **Acceptance Criteria:** Fixture of tests verwijzen naar G1081; onverwachte contractversie en onverwachte velden geven gesanitized foutlabels; geldige `contractVersion=1` blijft groen; evidence bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Tailscale smoke, health contract tests, runbook
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
