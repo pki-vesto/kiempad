@@ -3894,6 +3894,9 @@ describe('onderhoudsdocumentatie', () => {
     }
     expect(ciWorkflow).toContain('Dossier cue parity smoke');
     expect(ciWorkflow).toContain('run: npm run test -- tests/appShell.test.ts');
+    expectCiStepOrder('Secrets scan', 'Sensitive fixture scan');
+    expectCiStepOrder('Sensitive fixture scan', 'Dossier cue parity smoke');
+    expectCiStepOrder('Dossier cue parity smoke', 'Test');
     expect(appShellTestSource).toContain(
       'bewaakt target- en focuscue parity voor dossier-feedback return',
     );
@@ -5361,6 +5364,15 @@ function countGoalStatuses(): Record<string, number> {
     counts[goal.status] += 1;
   }
   return counts;
+}
+
+function expectCiStepOrder(firstStep: string, secondStep: string): void {
+  const firstIndex = ciWorkflow.indexOf(`- name: ${firstStep}`);
+  const secondIndex = ciWorkflow.indexOf(`- name: ${secondStep}`);
+
+  expect(firstIndex).toBeGreaterThanOrEqual(0);
+  expect(secondIndex).toBeGreaterThanOrEqual(0);
+  expect(firstIndex).toBeLessThan(secondIndex);
 }
 
 function parseBacklogGoalRows(): Array<{ id: string; status: '☑' | '◐' | '☐' | '☒' }> {

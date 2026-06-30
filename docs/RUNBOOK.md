@@ -71,10 +71,11 @@ pad zonder lokale vault-hercreatie.
 - **PWA:** app laadt offline na eerste bezoek; service worker geregistreerd.
 - **Dossier cue parity smoke (G1172/G1173):**
   `.github/workflows/ci.yml` draait de expliciete stap `Dossier cue parity smoke`
-  met `npm run test -- tests/appShell.test.ts` voordat de volledige testset start.
-  Deze stap bewaakt de feedback-return cueparity voor documentupload, consult,
-  embryokwaliteit en embryo-status in standaard, reduced-motion en forced-colors
-  context zonder bestandsnaam, OCR-tekst, beeldpayload of medische inhoud te loggen.
+  met `npm run test -- tests/appShell.test.ts` na `Secrets scan` en
+  `Sensitive fixture scan`, maar voordat de volledige `Test`-stap start. Deze stap
+  bewaakt de feedback-return cueparity voor documentupload, consult, embryokwaliteit
+  en embryo-status in standaard, reduced-motion en forced-colors context zonder
+  bestandsnaam, OCR-tekst, beeldpayload of medische inhoud te loggen.
 - **Offline smoke:** `npm run build && npm run smoke:offline` opent de productiebuild
   via Vite preview, laat de service worker installeren, schakelt Playwright offline en
   herlaadt de app-shell.
