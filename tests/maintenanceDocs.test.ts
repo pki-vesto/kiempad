@@ -4092,6 +4092,34 @@ describe('onderhoudsdocumentatie', () => {
     }
   });
 
+  it('bewaakt G1098 health monitor retention release-state missing-term compact contract', () => {
+    expect(
+      HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR,
+    ).toMatchInlineSnapshot(`
+        "Health monitor retention freshness release-state ontbreekt voor termen: health-monitor retention freshness releasecontext"
+      `);
+    expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR).toContain(
+      'health-monitor retention freshness releasecontext',
+    );
+    for (const forbiddenEvidenceTerm of [
+      'secrets',
+      'user-id',
+      'session-id',
+      'record-id',
+      'recordcount',
+      'ciphertext',
+      'gezondheidsdata',
+      'diagnose',
+      'dosering',
+      'kansberekening',
+      'behandelkeuzeadvies',
+    ]) {
+      expect(HEALTH_MONITOR_RETENTION_FRESHNESS_RELEASE_STATE_MISSING_TERM_ERROR).not.toContain(
+        forbiddenEvidenceTerm,
+      );
+    }
+  });
+
   it('houdt de Personal Fertility Intelligence Platform-epic uitvoerbaar', () => {
     for (const requiredCapability of [
       'Historical Medical Record Ingestion',

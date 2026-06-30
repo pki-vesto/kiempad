@@ -12093,4 +12093,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1099 — central health monitor retention compact contract release guard
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1098 legt de exacte release-state missing-term melding vast, maar releasecontext rond dit compacte contract wordt nog niet apart bewaakt.
+- **Desired Outcome:** Bewaak dat changelog en current state het G1098 compacte contract met veilige technische labels blijven noemen.
+- **User Value:** Beheer ziet in releasecontext wanneer het health-monitor retention compact contract actief is.
+- **Acceptance Criteria:** Changelog en current-state noemen het G1098 compacte contract; onderhoudstests bewaken release-tekst met veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open
