@@ -1401,7 +1401,15 @@ function renderDossierScreen(state: AppShellState): string {
     .join('');
 
   return `
-    <section class="section-stack" aria-label="Dossier beheren">
+    <section class="section-stack dossier-command-layout" aria-label="Dossier beheren">
+      ${renderDossierTaskRoutes({
+        uploadCount: zichtbareDocumenten.length,
+        reviewCount: reviewWachtrij.length,
+        imagingCount: imagingItems.length,
+        embryoCount: embryoDossiers.length,
+        timelineCount: tijdlijn.length,
+        searchCount: zoekterm ? zoekResultaten.length : undefined,
+      })}
       ${renderDossierCommandCenter({
         documenten: zichtbareDocumenten,
         importInboxItems,
@@ -1411,6 +1419,12 @@ function renderDossierScreen(state: AppShellState): string {
         embryoDossiers,
         state,
       })}
+      <section id="dossier-route-upload" class="dossier-route-section" aria-labelledby="dossier-route-upload-title" data-dossier-route="upload">
+      <header class="dossier-route-section__header">
+        <p class="kp-card__eyebrow">Uploaden</p>
+        <h2 id="dossier-route-upload-title">Nieuwe medische records toevoegen</h2>
+        <p>Upload onderzoeken, beelden, consultverslagen en embryokwaliteit vanuit één begeleide route.</p>
+      </header>
       <details class="kp-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''}>
         <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
         <div class="kp-disclosure__body">
@@ -1585,6 +1599,12 @@ function renderDossierScreen(state: AppShellState): string {
         `,
         })}
         </section>
+        <section id="dossier-route-review" class="dossier-route-section embedded" aria-labelledby="dossier-route-review-title" data-dossier-route="review">
+        <header class="dossier-route-section__header">
+          <p class="kp-card__eyebrow">Review</p>
+          <h2 id="dossier-route-review-title">Import-inbox en documentreview</h2>
+          <p>Controleer OCR-status, duplicaten en reviewwachtrij zonder broninhoud te tonen.</p>
+        </header>
         <h2>Documentreview wachtrij</h2>
         ${renderDossierReviewWachtrij(reviewWachtrij, state)}
         <h2>Import-inbox</h2>
@@ -1613,6 +1633,7 @@ function renderDossierScreen(state: AppShellState): string {
                 .join('')}</ol>`
             : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
         }
+        </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
         ${workflowPanel({
           title: 'Consultverslag toevoegen',
@@ -1884,6 +1905,13 @@ function renderDossierScreen(state: AppShellState): string {
         </section>
         </div>
       </details>
+      </section>
+        <section id="dossier-route-search" class="dossier-route-section" aria-labelledby="dossier-route-search-title" data-dossier-route="search">
+        <header class="dossier-route-section__header">
+          <p class="kp-card__eyebrow">Zoeken</p>
+          <h2 id="dossier-route-search-title">Dossier zoeken en privacycontrole</h2>
+          <p>Zoek alleen binnen de ontgrendelde encrypted dataset en houd technische privacycontroles apart.</p>
+        </header>
         <h2>Dossier zoeken</h2>
         <form id="dossier-search-form" class="data-form">
           <label>
@@ -1994,6 +2022,13 @@ function renderDossierScreen(state: AppShellState): string {
           historyCount: behandelGeschiedenis.length,
           locked: Boolean(state.imagingPreviewLocked),
         })}
+        </section>
+        <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging">
+        <header class="dossier-route-section__header">
+          <p class="kp-card__eyebrow">Beelden en embryo's</p>
+          <h2 id="dossier-route-imaging-title">Imaging, consulten en embryo-dossiers</h2>
+          <p>Bekijk consultverslagen, echo's, foto's, scans en embryodossiers als eigen routecluster.</p>
+        </header>
         <h2 id="dossier-consultverslagen">Consultverslagen</h2>
         ${
           consultVerslagen.length > 0
@@ -2023,6 +2058,13 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
             : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
         }
+        </section>
+        <section id="dossier-route-timeline" class="dossier-route-section" aria-labelledby="dossier-route-timeline-title" data-dossier-route="timeline">
+        <header class="dossier-route-section__header">
+          <p class="kp-card__eyebrow">Tijdlijn</p>
+          <h2 id="dossier-route-timeline-title">Tijdlijn en behandelgeschiedenis</h2>
+          <p>Lees historische onderzoeken en behandelcontext achter elkaar, zonder uploadformulieren ertussen.</p>
+        </header>
         <h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>
         ${
           tijdlijn.length > 0
@@ -2035,6 +2077,7 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
             : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
         }
+        </section>
     </section>
   `;
 }
@@ -2083,6 +2126,47 @@ function renderDossierSectionIndex(input: {
           .join('')}
       </div>
       <p class="small-print">Deze inhoudsindex toont geen OCR-tekst, bestandsnamen, broninhoud of medische interpretatie.</p>
+    </nav>
+  `;
+}
+
+function renderDossierTaskRoutes(input: {
+  uploadCount: number;
+  reviewCount: number;
+  imagingCount: number;
+  embryoCount: number;
+  timelineCount: number;
+  searchCount?: number;
+}): string {
+  const routes = [
+    { href: '#dossier-route-upload', label: 'Uploaden', meta: `${input.uploadCount} records` },
+    { href: '#dossier-route-review', label: 'Review', meta: `${input.reviewCount} wachtrij` },
+    {
+      href: '#dossier-route-imaging',
+      label: "Beelden & embryo's",
+      meta: `${input.imagingCount} beelden · ${input.embryoCount} embryo's`,
+    },
+    { href: '#dossier-route-timeline', label: 'Tijdlijn', meta: `${input.timelineCount} items` },
+    {
+      href: '#dossier-route-search',
+      label: 'Zoeken',
+      meta:
+        input.searchCount === undefined ? 'Encrypted dataset' : `${input.searchCount} resultaten`,
+    },
+  ];
+
+  return `
+    <nav class="dossier-task-routes" aria-label="Dossier taakroutes" data-dossier-task-routes="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="dossier-task-route" href="${route.href}">
+              <span>${escapeHtml(route.label)}</span>
+              <small>${escapeHtml(route.meta)}</small>
+            </a>
+          `,
+        )
+        .join('')}
     </nav>
   `;
 }

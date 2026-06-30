@@ -168,8 +168,12 @@
   kennispagina verder op in taakgerichte researchroutes.
 - **G1185 kennisroutes:** de kennispagina heeft nu een routebalk en duidelijke
   clusters voor research lezen, research/kennis toevoegen, AI & netwerk en
-  bibliotheek; G1186 staat open om de dossierpagina verder in taakgerichte
-  medical-record routes op te delen.
+  bibliotheek; G1186 deelt de dossierpagina verder op in taakgerichte
+  medical-record routes.
+- **G1186 dossierroutes:** de dossierpagina heeft nu een vroege routebalk en
+  routecontainers voor uploaden, review, beelden & embryo's, tijdlijn en zoeken,
+  met behoud van uploadformulieren, attachment hooks en privacycontroles; G1187
+  staat open voor taakroutes in welzijn en afwegingen.
 - **G142 periodieke back-upaanmoediging:** het back-upscherm toont lokaal of er nog
   geen back-updatum bekend is, of een back-up oud wordt, en bewaart de laatste
   succesvolle exportdatum versleuteld in settings.

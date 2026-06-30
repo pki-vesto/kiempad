@@ -3318,6 +3318,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Medical record UI, Upload workflow, Dossier UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 62
+- **Status:** ☑ done
+
+### G1187 — welzijn en afwegingen opdelen in taakgerichte routes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dashboard, dossier, kennis en research hebben nu taakroutes, maar welzijn en afwegingen tonen nog meerdere registratie-, trend- en besluitblokken achter elkaar.
+- **User Impact:** Gebruikers moeten nog zoeken tussen mentale check-ins, symptomen, cyclusdata, trends en besliscontext wanneer zij snel iets willen vastleggen of teruglezen.
+- **Desired Outcome:** Deel welzijn en afwegingen zichtbaar op in taakgerichte routeclusters voor vastleggen, trends lezen, vragen/afwegingen voorbereiden en geschiedenis.
+- **User Value:** Gebruikers vinden sneller de juiste self-tracking of besluitvoorbereidingsworkflow zonder dat het als beheerpagina voelt.
+- **Acceptance Criteria:** Welzijn- en/of afwegingenscherm bevat een zichtbare taakroute- of subnavigatie; bestaande form-id's, input names, privacycopy en decision/wellbeing hooks blijven behouden; mobile, tablet en desktop tonen geen overlap; tests bewaken routeankers, lege staten en gevulde context; geen trackingpayload, behandelkeuzeadvies, diagnose, secrets of raw dossierpayload wordt toegevoegd.
+- **Affected Screens:** Welzijn, Afwegingen, Dashboard
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Wellbeing UI, Decision UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 58
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
