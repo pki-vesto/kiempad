@@ -1085,6 +1085,16 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
         render(root, state);
       });
   });
+
+  const toggle = root.querySelector('#passphrase-toggle');
+  toggle?.addEventListener('click', () => {
+    const input = root.querySelector('#passphrase');
+    if (!(input instanceof HTMLInputElement) || !(toggle instanceof HTMLButtonElement)) return;
+    const reveal = input.type === 'password';
+    input.type = reveal ? 'text' : 'password';
+    toggle.setAttribute('aria-pressed', reveal ? 'true' : 'false');
+    toggle.setAttribute('aria-label', reveal ? 'Verberg wachtwoordzin' : 'Toon wachtwoordzin');
+  });
 }
 
 function bindWebAuthnUnlock(root: HTMLElement, state: RuntimeState): void {

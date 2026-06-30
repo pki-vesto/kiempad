@@ -556,25 +556,32 @@ export function renderVaultGate(
   const recoveryStatus = classifyVaultRecoveryStatus(error);
   const central = options.storageMode !== 'legacy-indexeddb';
   const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale encrypted dataset';
-  const eyebrow = central ? 'Centrale encrypted opslag' : 'Legacy lokale encrypted opslag';
-  const title = hasVault ? 'Ontgrendel Kiempad' : `Start je ${datasetLabel}`;
-  const button = hasVault ? 'Ontgrendel' : 'Dataset starten';
+  const title = hasVault ? 'Welkom terug' : 'Welkom bij Kiempad';
+  const button = hasVault ? 'Ontgrendel Kiempad' : 'Dataset starten';
   const help = hasVault
-    ? `Voer je passphrase in om de sleutel voor je ${datasetLabel} tijdelijk in het geheugen te laden.`
-    : central
-      ? 'Kies een passphrase. Kiempad gebruikt die om je sleutel af te leiden; centrale opslag bewaart alleen versleutelde payloads.'
-      : 'Kies een passphrase. Kiempad gebruikt die om je sleutel af te leiden; deze legacy fallback bewaart alleen versleutelde payloads op dit toestel.';
+    ? 'Vul jullie wachtwoordzin in om Kiempad te openen. De sleutel blijft alleen tijdelijk in het geheugen.'
+    : `Kies een wachtwoordzin. Kiempad leidt daar jullie sleutel uit af; de ${datasetLabel} bewaart alleen versleutelde gegevens${central ? '' : ' op dit toestel'}.`;
+  const sproutSvg =
+    '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-7"/><path d="M12 14c0-3 2.2-5 5-5 .2 2.8-2 5-5 5z"/><path d="M12 14c0-2.6-1.9-4.4-4.3-4.4C7.5 12 9.5 14 12 14z"/></svg>';
+  const lockSvg =
+    '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  const eyeSvg =
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>';
 
   return `
     <main class="vault-gate" aria-labelledby="vault-title">
       <section class="vault-card">
-        <p class="eyebrow">${eyebrow}</p>
-        <h1 id="vault-title">${title}</h1>
-        <p>${help}</p>
-        <form id="vault-form" class="vault-form">
-          <label for="passphrase">Passphrase</label>
-          <input id="passphrase" name="passphrase" type="password" minlength="8" autocomplete="current-password" required />
-          <button type="submit">${button}</button>
+        <span class="vault-brand" aria-hidden="true">${sproutSvg}</span>
+        <p class="vault-badge">${lockSvg}<span>Versleuteld · alleen op dit toestel</span></p>
+        <h1 id="vault-title" class="kp-ser">${title}</h1>
+        <p class="vault-lead">${help}</p>
+        <form id="vault-form" class="vault-form data-form">
+          <label for="passphrase">Wachtwoordzin</label>
+          <div class="vault-field">
+            <input id="passphrase" name="passphrase" type="password" minlength="8" autocomplete="current-password" required />
+            <button id="passphrase-toggle" class="vault-eye" type="button" aria-label="Toon wachtwoordzin" aria-pressed="false">${eyeSvg}</button>
+          </div>
+          <button class="phase-button vault-submit" type="submit">${button}</button>
         </form>
         ${renderVaultWebAuthnUnlock(webAuthnStatus)}
         ${renderVaultRecoveryStatusAlert(recoveryStatus, error, options)}
@@ -631,7 +638,7 @@ function renderVaultRecoveryStatusAlert(
 }
 
 function renderVaultUnlockErrorCopy(): string {
-  return 'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.';
+  return 'Ontgrendelen is niet gelukt. Controleer rustig de wachtwoordzin, toetsenbordindeling en juiste datasetcontext.';
 }
 
 function buildVaultRecoveryHandoff(
@@ -700,17 +707,20 @@ function renderVaultDiagnostics(
     : `Nog niet ingesteld; start eerst je ${central ? 'centrale encrypted' : 'legacy lokale encrypted'} dataset en maak daarna een versleutelde back-up.`;
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Hersteldiagnose" data-vault-present="${hasVault ? 'true' : 'false'}">
-      <h2>Hersteldiagnose</h2>
-      <dl class="definition-list">
+    <details class="vault-details" data-vault-present="${hasVault ? 'true' : 'false'}">
+      <summary class="vault-status">
+        <span class="vault-status__label">${hasVault ? 'Klaar om te ontgrendelen' : 'Klaar om te starten'}</span>
+        <span class="vault-status__more">Details</span>
+      </summary>
+      <dl class="definition-list vault-checks">
         <div><dt>Opslagmodus</dt><dd>${escapeHtml(options.storageLabel ?? (central ? 'Centrale encrypted opslag' : 'Legacy lokale IndexedDB-kluis'))}</dd></div>
         <div><dt>Dataset</dt><dd>${datasetStatus}</dd></div>
-        <div><dt>WebAuthn runtime</dt><dd>${escapeHtml(webAuthnRuntime)}</dd></div>
-        <div><dt>WebAuthn koppeling</dt><dd>${escapeHtml(webAuthnEnrollment)}</dd></div>
+        <div><dt>Biometrie</dt><dd>${escapeHtml(webAuthnRuntime)}</dd></div>
+        <div><dt>Biometrie-koppeling</dt><dd>${escapeHtml(webAuthnEnrollment)}</dd></div>
         <div><dt>Back-upherinnering</dt><dd>${backupStatus}</dd></div>
       </dl>
       <p class="small-print">Deze diagnose toont geen recordaantallen en geen gezondheidsinhoud.</p>
-    </section>
+    </details>
   `;
 }
 
@@ -728,33 +738,33 @@ function renderVaultRecoveryHelp(
               <li>Gebruik alleen een gecontroleerde versleutelde back-up als de centrale dataset niet veilig kan worden hersteld.</li>
             </ol>`
       : `<ol class="compact-list">
-              <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
+              <li>Controleer rustig de wachtwoordzin, toetsenbordindeling en hoofdletters.</li>
               <li>Controleer of de centrale backend en gebruikersscope dezelfde dataset openen als op je andere apparaat.</li>
-              <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld; je passphrase blijft de herstelroute.</li>
+              <li>Gebruik biometrie alleen als dit eerder op dit toestel is gekoppeld; jullie wachtwoordzin blijft de herstelroute.</li>
             </ol>`
     : `<ol class="compact-list">
-              <li>Controleer rustig de passphrase, toetsenbordindeling en hoofdletters.</li>
-              <li>Gebruik WebAuthn/biometrie alleen als dit eerder op dit toestel is gekoppeld.</li>
+              <li>Controleer rustig de wachtwoordzin, toetsenbordindeling en hoofdletters.</li>
+              <li>Gebruik biometrie alleen als dit eerder op dit toestel is gekoppeld.</li>
               <li>Als de legacy lokale opslag leeg of beschadigd is: start een nieuwe encrypted dataset en importeer daarna je versleutelde back-up.</li>
             </ol>`;
 
   return `
-    <aside class="policy-panel" aria-labelledby="recovery-title">
-      <h2 id="recovery-title">${hasVault ? 'Hulp bij ontgrendelen' : 'Geen herstel-achterdeur'}</h2>
+    <details class="vault-help" aria-labelledby="recovery-title">
+      <summary id="recovery-title">Hulp bij ontgrendelen</summary>
       <p>
-        Kiempad bewaart je passphrase niet. Zonder passphrase is versleutelde data
+        Kiempad bewaart jullie wachtwoordzin niet. Zonder wachtwoordzin is versleutelde data
         niet te herstellen via een achterdeur.
       </p>
       ${
         hasVault
           ? existingHelp
-          : '<p>Maak straks regelmatig een versleutelde back-up en bewaar je passphrase apart van je apparaten.</p>'
+          : '<p>Maak straks regelmatig een versleutelde back-up en bewaar jullie wachtwoordzin apart van je apparaten.</p>'
       }
       <p class="small-print">
         Lees ook <a href="docs/RUNBOOK.md#debugging">unlock- en back-upstappen</a>
-        en <a href="docs/WEBAUTHN_UNLOCK.md">WebAuthn-grenzen</a>.
+        en <a href="docs/WEBAUTHN_UNLOCK.md">biometrie-grenzen</a>.
       </p>
-    </aside>
+    </details>
   `;
 }
 
@@ -762,10 +772,10 @@ function renderVaultWebAuthnUnlock(status?: WebAuthnViewStatus): string {
   if (!status?.gekoppeld) return '';
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="WebAuthn ontgrendeling">
-      <h2>Biometrie/WebAuthn</h2>
-      <p>${escapeHtml(status.label ?? 'Lokale WebAuthn-sleutel')} is gekoppeld als ontgrendelgemak. Je passphrase blijft de fallback en herstelroute.</p>
-      <button id="webauthn-unlock" class="secondary-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>Ontgrendel met WebAuthn</button>
+    <section class="policy-panel embedded-summary vault-biometrie" aria-label="Biometrie ontgrendeling">
+      <h2>Biometrie</h2>
+      <p>${escapeHtml(status.label ?? 'Lokale biometriesleutel')} is gekoppeld als ontgrendelgemak. Jullie wachtwoordzin blijft de terugvaloptie en herstelroute.</p>
+      <button id="webauthn-unlock" class="secondary-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>Ontgrendel met biometrie</button>
       <p class="small-print">${escapeHtml(status.reden)}</p>
       ${status.error ? `<p class="form-error" role="alert">${escapeHtml(status.error)}</p>` : ''}
     </section>

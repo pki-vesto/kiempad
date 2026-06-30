@@ -1531,7 +1531,7 @@ const UNLOCK_ERROR_HANDOFF_CONTRACT = {
 } as const;
 
 const UNLOCK_ERROR_GENERIC_COPY =
-  'Ontgrendelen is niet gelukt. Controleer rustig de passphrase, toetsenbordindeling en juiste datasetcontext.';
+  'Ontgrendelen is niet gelukt. Controleer rustig de wachtwoordzin, toetsenbordindeling en juiste datasetcontext.';
 
 const UNLOCK_ERROR_RAW_EXCEPTION_FIXTURE =
   'Passphrase klopt niet voor deze Kiempad-dataset. Bestand echo.png bevat OCR/base64 token en Progesteron.';
@@ -1682,10 +1682,10 @@ describe('app shell', () => {
   it('toont de passphrase-kluis met geen-herstel-uitleg', () => {
     const html = renderVaultGate(false);
 
-    expect(html).toContain('Start je centrale encrypted dataset');
-    expect(html).toContain('Centrale encrypted opslag');
-    expect(html).toContain('Geen herstel-achterdeur');
-    expect(html).toContain('Kiempad bewaart je passphrase niet');
+    expect(html).toContain('Welkom bij Kiempad');
+    expect(html).toContain('Versleuteld · alleen op dit toestel');
+    expect(html).toContain('Hulp bij ontgrendelen');
+    expect(html).toContain('Kiempad bewaart jullie wachtwoordzin niet');
     expect(html).toContain('versleutelde back-up');
     expect(html).toContain('docs/RUNBOOK.md#debugging');
     expect(html).toContain('docs/WEBAUTHN_UNLOCK.md');
@@ -1697,9 +1697,9 @@ describe('app shell', () => {
       storageLabel: 'Legacy lokale IndexedDB-kluis <script>',
     });
 
-    expect(html).toContain('Start je legacy lokale encrypted dataset');
-    expect(html).toContain('Legacy lokale encrypted opslag');
-    expect(html).toContain('legacy fallback bewaart alleen versleutelde payloads op dit toestel');
+    expect(html).toContain('Welkom bij Kiempad');
+    expect(html).toContain('Versleuteld · alleen op dit toestel');
+    expect(html).toContain('bewaart alleen versleutelde gegevens op dit toestel');
     expect(html).toContain('Legacy lokale IndexedDB-kluis &lt;script&gt;');
     expect(html).toContain('Geen legacy lokale encrypted dataset voor deze sessie gevonden.');
     expect(html).not.toContain('Start je centrale encrypted dataset');
@@ -1713,7 +1713,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Hulp bij ontgrendelen');
-    expect(html).toContain('Hersteldiagnose');
+    expect(html).toContain('Klaar om te ontgrendelen');
     expect(html).toContain('data-vault-present="true"');
     expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
     expect(html).toContain('Centrale encrypted API');
@@ -1723,10 +1723,10 @@ describe('app shell', () => {
     expect(html).toContain(UNLOCK_ERROR_GENERIC_COPY);
     expect(html).not.toContain('Ontgrendelen is mislukt');
     expect(html).not.toContain('Ontgrendelen is mislukt <script>');
-    expect(html).toContain('Controleer rustig de passphrase');
+    expect(html).toContain('Controleer rustig de wachtwoordzin');
     expect(html).toContain('toetsenbordindeling en hoofdletters');
     expect(html).toContain('centrale backend en gebruikersscope dezelfde dataset openen');
-    expect(html).toContain('je passphrase blijft de herstelroute');
+    expect(html).toContain('jullie wachtwoordzin blijft de herstelroute');
     expect(html).not.toContain('Als de legacy lokale opslag leeg of beschadigd is');
     expect(html).toContain('niet te herstellen via een achterdeur');
     expect(html).not.toContain('reset je passphrase');
@@ -1775,7 +1775,7 @@ describe('app shell', () => {
     expect(html).not.toContain('token');
     expect(html).not.toContain('Progesteron');
     expect(html).not.toMatch(/\b\d+\s+(records?|metadata-items?|dossier|embryo)/i);
-    expect(html).not.toContain('Controleer rustig de passphrase');
+    expect(html).not.toContain('Controleer rustig de wachtwoordzin');
   });
 
   it('legt missing-key-metadata support-handoff copy vast als privacycontract', () => {
@@ -1846,7 +1846,7 @@ describe('app shell', () => {
     expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
     expect(html).toContain(UNLOCK_ERROR_GENERIC_COPY);
     expect(html).not.toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
-    expect(html).toContain('Controleer rustig de passphrase');
+    expect(html).toContain('Controleer rustig de wachtwoordzin');
     expect(html).toContain('data-support-handoff="unlock-error"');
     expect(html).toContain('<dt>Supportcategorie</dt><dd>unlock-error</dd>');
     expect(html).toContain('<dt>Opslagmodus</dt><dd>central-api</dd>');
@@ -2015,10 +2015,10 @@ describe('app shell', () => {
       label: 'Laptop biometrie',
     });
 
-    expect(html).toContain('Biometrie/WebAuthn');
+    expect(html).toContain('Biometrie');
     expect(html).toContain('Laptop biometrie');
     expect(html).toContain('id="webauthn-unlock"');
-    expect(html).toContain('Je passphrase blijft de fallback');
+    expect(html).toContain('Jullie wachtwoordzin blijft de terugvaloptie');
   });
 
   it('rendert het startscherm met concrete volgende-stapblokken en lege-staten', () => {
