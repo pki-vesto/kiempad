@@ -2664,21 +2664,125 @@ h2 {
 }
 
 .backup-command-layout {
-  gap: 18px;
+  gap: 16px;
+}
+
+.management-workbench {
+  display: grid;
+  gap: 12px;
+  box-sizing: border-box;
+  width: min(100%, calc(100vw - 48px));
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 52%),
+    var(--surface);
+}
+
+.management-workbench[data-finance-first-viewport="management-workbench"],
+.management-workbench[data-backup-first-viewport="management-workbench"] {
+  scroll-margin-top: 24px;
+}
+
+.management-workbench__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.management-workbench__header h2,
+.management-workbench__header p {
+  margin: 0;
+}
+
+.management-workbench__header h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
+}
+
+.management-workbench__header p:last-child {
+  max-width: 68ch;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.management-workbench__status {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.management-workbench__grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.management-workbench__focus,
+.management-workbench__panel {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
+}
+
+.management-workbench__focus h3,
+.management-workbench__focus p {
+  margin: 0;
+}
+
+.management-workbench__focus h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+}
+
+.management-workbench__focus p:last-child {
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.management-workbench__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.management-workbench__actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .backup-task-routes {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-soft);
 }
 
 .backup-task-route {
@@ -2969,21 +3073,18 @@ h2 {
 }
 
 .finance-command-layout {
-  gap: 18px;
+  gap: 16px;
 }
 
 .finance-task-routes {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-soft);
 }
 
 .finance-task-route {
@@ -6232,6 +6333,64 @@ a.action-card:active {
   .decision-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .management-workbench {
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+  }
+
+  .management-workbench__header {
+    display: grid;
+    gap: 8px;
+  }
+
+  .management-workbench__header h2 {
+    font-size: 1.16rem;
+  }
+
+  .management-workbench__header p:last-child {
+    display: none;
+  }
+
+  .management-workbench__status {
+    width: fit-content;
+    padding: 5px 9px;
+  }
+
+  .management-workbench__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .management-workbench__focus,
+  .management-workbench__panel {
+    padding: 10px;
+  }
+
+  .management-workbench__focus h3 {
+    font-size: 1.05rem;
+  }
+
+  .management-workbench :where(.stat-row) {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .management-workbench :where(.stat) {
+    flex: 0 0 102px;
+    padding: 8px 10px;
+    scroll-snap-align: start;
+  }
+
+  .management-workbench :where(.stat__value) {
+    font-size: 1.02rem;
+  }
+
+  .management-workbench :where(.stat__label) {
+    font-size: 0.72rem;
   }
 
   .backup-task-routes {

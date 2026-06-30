@@ -3718,6 +3718,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Finance UI, backup UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 44
+- **Status:** ☑ done
+
+### G1212 — logboek en herinneringen eerste viewport als systeemwerkbank
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Logboek en Herinneringen hebben taakroutes, maar de eerste viewport kan nog steeds als audit- en notificatieadministratie onder elkaar voelen in plaats van als compacte systeemwerkbank.
+- **User Impact:** Gebruikers moeten auditstatus, notificatieprivacy, permissiestatus en aankomende meldingen nog te veel scannen voordat duidelijk is welke systeemroute nu relevant is.
+- **Desired Outcome:** Maak Logboek en Herinneringen meer app-achtig met een eerste-viewport systeemwerkbank voor auditstatus, notificatiestatus en veilige vervolgroutes.
+- **User Value:** Gebruikers kunnen systeem- en notificatiestatus sneller beoordelen zonder door alle audit-, privacy- en planningcontent te scrollen.
+- **Acceptance Criteria:** Logboek opent met een compacte eerste-viewport systeemwerkbank voor laatste activiteit, auditfilters en export/controle-routes; Herinneringen opent met een compacte systeemwerkbank voor aankomende reminders, notificatieprivacy en permissiestatus; bestaande formulieren, notification hooks, auditcopy, privacycopy en taakroutes blijven bereikbaar; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests of browser-evidence bewaken de nieuwe eerste viewport; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Logboek, Herinneringen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** History UI, notification UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 43
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
