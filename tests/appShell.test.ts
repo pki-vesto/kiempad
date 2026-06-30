@@ -1888,6 +1888,15 @@ describe('app shell', () => {
     expect(html).toContain('Reden: Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie');
     expect(html).toContain('Gebruikte bronnen:');
     expect(html).toContain('Gebruikte bronnen: Lokale dagstart zonder extra medicatiemoment');
+    expect(html).toContain('Inputminimalisatiebron');
+    expect(html).toContain('Reviewstatus</dt><dd>concept_te_controleren');
+    expect(html).toContain('Gebruikte inputcategorieen');
+    expect(html).toContain('Uitgesloten inputcategorieen');
+    expect(html).toContain('vrije dossier/OCR-tekst');
+    expect(html).toContain('Correctievelden</dt><dd>dagadviesTekst · bronselectie · reviewstatus');
+    expect(html).toContain('Input-minimalisatie: alleen lokale categorie- en planningcontext');
+    expect(html).toContain('name="dailyRecommendationCorrection"');
+    expect(html).toContain('name="dailyRecommendationReviewStatus"');
     expect(html).toContain('Mannelijke leefstijl- en voorbereidingskaart');
     expect(html).toContain(
       'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
@@ -1950,6 +1959,11 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('Eigenaar: Man');
     expect(emptyContextRecommendations).toContain('Reden: Eigenaar man; dagelijkse');
     expect(emptyContextRecommendations).toContain('Dagcheck zonder extra medicatiemoment');
+    expect(emptyContextRecommendations).toContain('Inputminimalisatiebron');
+    expect(emptyContextRecommendations).toContain('Reviewstatus</dt><dd>concept_te_controleren');
+    expect(emptyContextRecommendations).toContain('Correctievelden</dt><dd>dagadviesTekst');
+    expect(emptyContextRecommendations).toContain('name="dailyRecommendationCorrection"');
+    expect(emptyContextRecommendations).toContain('name="dailyRecommendationReviewStatus"');
     expect(emptyContextRecommendations).toContain('Mannelijke leefstijl- en voorbereidingskaart');
     expect(emptyContextRecommendations).toContain('Voeding en supplementen checklijst');
     expect(emptyContextRecommendations).toContain('Artscheck verplicht voor supplementvragen');
@@ -2046,6 +2060,10 @@ describe('app shell', () => {
     expect(contextualRecommendations).toContain(`Datum: ${vandaag}`);
     expect(contextualRecommendations).toContain('Eigenaar: Man');
     expect(contextualRecommendations).toContain('Trajectfase: cyclusfase Stimulatie');
+    expect(contextualRecommendations).toContain('Gebruikte inputcategorieen');
+    expect(contextualRecommendations).toContain('medicatieplanning');
+    expect(contextualRecommendations).toContain('vragenlijst');
+    expect(contextualRecommendations).toContain('trackingdata');
     expect(contextualRecommendations).toContain(
       'data-recommendation-id="samen-behandelvoorbereiding"',
     );

@@ -52,7 +52,20 @@ describe('dagelijkse aanbevelingen', () => {
       owner: 'vrouw',
       titel: 'Vrouw dagkaart met bronherleiding',
       bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+      inputMinimisatie: {
+        bron: 'Dossiercontext, cyclus/trajectfase, agenda, medicatieplanning en vragenlijst',
+        datum: '2026-06-24',
+        reviewStatus: 'concept_te_controleren',
+        correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+      },
     });
+    expect(overzicht.vrouw[0]?.inputMinimisatie?.gebruikteInputCategorieen).toEqual(
+      expect.arrayContaining(['agenda', 'medicatieplanning', 'vragenlijst']),
+    );
+    expect(overzicht.vrouw[0]?.inputMinimisatie?.uitgeslotenInputCategorieen).toEqual(
+      expect.arrayContaining(['vrije dossier/OCR-tekst', 'trackingdata', 'locatiegegevens']),
+    );
+    expect(overzicht.vrouw[0]?.inputMinimisatie?.waarschuwing).toContain('Input-minimalisatie');
     expect(overzicht.vrouw[0]?.checklist?.map((item) => item.bron)).toEqual([
       'Lokale dagstart',
       'Lokale leefstijlcontext',
@@ -213,6 +226,59 @@ describe('dagelijkse aanbevelingen', () => {
     expect(titelEnDetail).not.toMatch(/\bdosering|diagnose|behandelkeuze\b/i);
     expect(overzicht.samen.every((item) => item.waarschuwing.includes('geen diagnose'))).toBe(true);
     expect(controleerSupplementBoundary(overzicht)).toEqual([]);
+  });
+
+  it('maakt input-minimalisatie expliciet zonder vrije medische payload of behandeladvies', () => {
+    const overzicht = bouwDagelijksAanbevelingsoverzicht({
+      datum: '2026-06-24',
+      afspraken: [],
+      medicatie: [],
+      vragen: [
+        {
+          id: 'vraag-1',
+          vraag: 'Welke vraag nemen we mee?',
+          beantwoord: false,
+        },
+      ],
+      dossierDocuments: [
+        {
+          id: 'doc-1',
+          datum: '2026-06-23',
+          titel: 'Labuitslag',
+        } as DossierDocument,
+      ],
+      consultVerslagen: [
+        {
+          id: 'consult-1',
+          datum: '2026-06-22',
+          titel: 'Consult',
+          bron: 'handmatig',
+          uploadedAt: '2026-06-22T09:00:00.000Z',
+        } as ConsultVerslag,
+      ],
+    });
+
+    const alleMetadata = Object.values(overzicht)
+      .flat()
+      .map((item) => item.inputMinimisatie);
+    expect(alleMetadata.every(Boolean)).toBe(true);
+    expect(alleMetadata).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          datum: '2026-06-24',
+          reviewStatus: 'concept_te_controleren',
+          correctieVelden: ['dagadviesTekst', 'bronselectie', 'reviewstatus'],
+        }),
+      ]),
+    );
+    const policyText = JSON.stringify(alleMetadata);
+    expect(policyText).toContain('dossierdocument-metadata');
+    expect(policyText).toContain('consultverslag-metadata');
+    expect(policyText).toContain('vrije dossier/OCR-tekst');
+    expect(policyText).not.toContain('MEDISCHE PAYLOAD');
+    expect(policyText).not.toMatch(
+      /\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b|diagnose|kansberekening|behandelkeuzeadvies|beste behandeling|kies voor/i,
+    );
   });
 
   it('bewaakt supplementregels tegen dosering, interactieclaims en behandelvervanging', () => {

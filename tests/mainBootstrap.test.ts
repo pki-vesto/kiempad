@@ -44,6 +44,9 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('maakArtscheckVraagVoorAanbeveling({');
     expect(mainSource).toContain("gebeurtenis: 'Aanbeveling omgezet naar artscheck'");
     expect(mainSource).toContain('Artscheckvraag gemaakt:');
+    expect(mainSource).toContain('dailyRecommendationCorrection');
+    expect(mainSource).toContain('bevatDagadviesMedischeClaim');
+    expect(mainSource).toContain('reviewstatus ');
   });
 
   it('verwerkt dossierimport verwijderen zonder documentinhoud te loggen', () => {

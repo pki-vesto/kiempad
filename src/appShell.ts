@@ -9350,6 +9350,19 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
           ? `<p class="small-print">Gebruikte bronnen: ${item.gebruikteBronnen.map(escapeHtml).join(' · ')}</p>`
           : ''
       }
+      ${
+        item.inputMinimisatie
+          ? `<dl class="metadata-list compact-list">
+              <div><dt>Inputminimalisatiebron</dt><dd>${escapeHtml(item.inputMinimisatie.bron)}</dd></div>
+              <div><dt>Datum</dt><dd>${escapeHtml(item.inputMinimisatie.datum)}</dd></div>
+              <div><dt>Reviewstatus</dt><dd>${escapeHtml(item.inputMinimisatie.reviewStatus)}</dd></div>
+              <div><dt>Gebruikte inputcategorieen</dt><dd>${item.inputMinimisatie.gebruikteInputCategorieen.map(escapeHtml).join(' · ')}</dd></div>
+              <div><dt>Uitgesloten inputcategorieen</dt><dd>${item.inputMinimisatie.uitgeslotenInputCategorieen.map(escapeHtml).join(' · ')}</dd></div>
+              <div><dt>Correctievelden</dt><dd>${item.inputMinimisatie.correctieVelden.map(escapeHtml).join(' · ')}</dd></div>
+            </dl>
+            <small>${escapeHtml(item.inputMinimisatie.waarschuwing)}</small>`
+          : ''
+      }
       ${renderDailyRecommendationActions(item)}
       <small>Bron: ${escapeHtml(item.bron)} · ${escapeHtml(item.waarschuwing)}</small>
     </li>
@@ -9363,6 +9376,16 @@ function renderDailyRecommendationActions(item: DailyRecommendation): string {
       <input type="hidden" name="titel" value="${escapeAttribute(item.titel)}" />
       <input type="hidden" name="detail" value="${escapeAttribute(item.detail)}" />
       <input type="hidden" name="bron" value="${escapeAttribute(item.bron)}" />
+      <label>
+        Dagadviesconcept controleren
+        <input name="dailyRecommendationCorrection" value="${escapeAttribute(item.detail)}" />
+      </label>
+      <label>
+        Reviewstatus
+        <select name="dailyRecommendationReviewStatus">
+          ${renderOption('concept_te_controleren', 'Concept te controleren', item.inputMinimisatie?.reviewStatus)}
+        </select>
+      </label>
       <label>
         Herinner op
         <input name="reminderTijdstip" type="datetime-local" value="${escapeAttribute(defaultRecommendationReminderTime())}" />
