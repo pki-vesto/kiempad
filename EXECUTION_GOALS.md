@@ -12457,4 +12457,18 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Maintenance tests, changelog, current state
 - **ADR Needed:** no
 - **Score:** 103
+- **Status:** ☑ done
+
+### G1125 — central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard compact contract
+
+- **Epic:** Central Encrypted Platform
+- **Problem:** G1124 legt ontbrekende releaseguard-termen compact vast, maar de exacte foutmelding heeft nog geen apart compact contract.
+- **Desired Outcome:** Snapshot de exacte G1124 missing-term foutmelding als compact contract met veilige technische labels.
+- **User Value:** Beheer kan releaseguard-drift diagnosticeren met een stabiele foutmelding zonder medische inhoud of privacygevoelige identifiers.
+- **Acceptance Criteria:** Exacte missing-term foutmelding voor de G1124 fixture is gesnapshott; contract noemt alleen veilige technische labels; output bevat geen secrets, user-id, session-id, record-id, recordcount, ciphertext, gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies; backlog/docs blijven synchroon.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Maintenance tests, changelog, current state
+- **ADR Needed:** no
+- **Score:** 103
 - **Status:** ☐ open

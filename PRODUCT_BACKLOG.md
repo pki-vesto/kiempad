@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 925 |
+| ☑ klaar | 926 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1124** |
+| **Totaal** | **1125** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1286,13 +1286,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1121 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard missing-term fixture | P1 | F5 | ☑ |
 | G1122 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☑ |
 | G1123 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard | P1 | F5 | ☑ |
-| G1124 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard missing-term fixture | P1 | F5 | ☐ |
+| G1124 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard missing-term fixture | P1 | F5 | ☑ |
+| G1125 | Central Encrypted Platform: central health monitor retention missing-term-contract compact contract release guard contract release guard compact contract release guard compact contract release guard compact contract release guard compact contract | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1124** (id's G001 t/m G1124, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1125** (id's G001 t/m G1125, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
