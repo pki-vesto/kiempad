@@ -2048,7 +2048,8 @@ a.action-card:active {
 }
 
 .dossier-add-route strong,
-.dossier-add-route span {
+.dossier-add-route span,
+.dossier-add-route small {
   min-width: 0;
   overflow-wrap: anywhere;
 }
@@ -2062,6 +2063,14 @@ a.action-card:active {
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.3;
+}
+
+.dossier-add-route small {
+  align-self: end;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.25;
 }
 
 .dossier-add-route-panel {

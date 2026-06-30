@@ -1308,18 +1308,22 @@ function renderDossierScreen(state: AppShellState): string {
           <a href="#dossier-upload-form" class="dossier-add-route">
             <strong>Onderzoek of bestand</strong>
             <span>PDF, afbeelding, echo of scan</span>
+            <small data-dossier-add-route-cue="document">Bestand + conceptreview</small>
           </a>
           <a href="#consult-verslag-form" class="dossier-add-route">
             <strong>Consultverslag</strong>
             <span>Gesprek, notitie of samenvatting</span>
+            <small data-dossier-add-route-cue="consult">Tekst, PDF of foto</small>
           </a>
           <a href="#embryo-quality-form" class="dossier-add-route">
             <strong>Embryokwaliteit</strong>
             <span>Labscore en broncontrole</span>
+            <small data-dossier-add-route-cue="embryo-quality">Score + bronlabel</small>
           </a>
           <a href="#embryo-status-event-form" class="dossier-add-route">
             <strong>Embryo-status</strong>
             <span>Statusmoment of terugkoppeling</span>
+            <small data-dossier-add-route-cue="embryo-status">Status + koppeling</small>
           </a>
         </nav>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
