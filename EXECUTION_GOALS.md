@@ -3254,6 +3254,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Upload workflow, Consult UI, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 65
+- **Status:** ☑ done
+
+### G1181 — embryoworkflows omzetten naar herbruikbare workflowcomponenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossierdocument- en consultupload gebruiken nu begeleide workflowpanelen, maar embryokwaliteit en embryostatus blijven nog route-specifieke formulierblokken.
+- **User Impact:** Gebruikers krijgen bij embryo-invoer nog een minder rustige en minder consistente ervaring, terwijl embryo-informatie gevoelig en contextafhankelijk is.
+- **Desired Outcome:** Pas de herbruikbare workflowcomponentstructuur zichtbaar toe op embryokwaliteit en/of embryostatus met stappen voor identificatie, beoordeling/status en controle.
+- **User Value:** Gebruikers kunnen embryo-informatie consistenter registreren en zien sneller welke context of bron nog nodig is.
+- **Acceptance Criteria:** Minimaal één embryoroute gebruikt de herbruikbare workflowcomponent; `embryo-quality-form` en/of `embryo-status-event-form`, input names, ankers, aria-live feedback en privacydata-hooks blijven beschikbaar; mobile, tablet en desktop tonen geen overlap; tests dekken lege en gevulde embryocontext; geen beeldpayload, embryo-selectieadvies, medische conclusie, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Embryo tracking, Dossierupload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Upload workflow, Embryo UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 64
 - **Status:** ☐ open
 
 ### G473 — beeldvergelijking zonder medische interpretatie

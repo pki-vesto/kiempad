@@ -1730,7 +1730,8 @@ h2 {
   gap: 12px;
 }
 
-.dossier-upload-workflow {
+.dossier-upload-workflow,
+.consult-upload-workflow {
   margin-bottom: 16px;
 }
 

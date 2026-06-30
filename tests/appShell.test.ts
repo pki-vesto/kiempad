@@ -4950,6 +4950,15 @@ describe('app shell', () => {
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
     );
+    expect(consultPanel).toContain('class="kp-workflow-panel consult-upload-workflow"');
+    expect(consultPanel).toContain('aria-label="Begeleide consultupload"');
+    expect(consultPanel).toContain('data-upload-workflow="consult-document"');
+    expect(consultPanel).toContain('data-upload-workflow-state="guided"');
+    expect(consultPanel).toContain('Gespreksintelligentie');
+    expect(consultPanel).toContain('Workflowstappen');
+    expect(consultPanel).toContain('data-state="current"><span>1</span>Verslag');
+    expect(consultPanel).toContain('data-state="todo"><span>2</span>Context');
+    expect(consultPanel).toContain('data-state="todo"><span>3</span>Acties');
     expect(consultPanel).toContain('id="consult-verslag-form"');
     expect(consultPanel).toContain('data-upload-privacy-kind="consult"');
     expect(consultPanel).toContain('data-dossier-feedback-focus-target="consult-upload"');

@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1180/G1181 Premium Claude Design UI: consultupload gebruikt nu hetzelfde herbruikbare workflowpanel als dossierdocument-upload, met begeleide stappen Verslag, Context en Acties en behoud van formcontracten, privacyhooks en feedbackroutes; G1181 is toegevoegd voor embryoworkflows.
 - G1179/G1180 Premium Claude Design UI: dossierdocument-upload gebruikt nu een herbruikbaar workflowpanel met begeleide stappen Basis, Context en Controle, terwijl bestaande formcontracten, privacyhooks en feedbackroutes behouden blijven; G1180 is toegevoegd om consultupload dezelfde componentstructuur te geven.
 - G1178/G1179 Premium Claude Design UI: het startscherm gebruikt nu een herbruikbare dashboard-shell met primaire dagtaken en secundaire taakroutes voor volgende stap, aanbevelingen, setup en snelle invoer; G1179 is toegevoegd voor herbruikbare uploadworkflowcomponenten.
 - G1177/G1178 Premium Claude Design UI: de app-shell groepeert hoofdschermen nu in werkruimtes Vandaag, Behandeling, Dossier, Inzicht en Beheer met een actieve werkruimte-context boven het scherm, zodat Kiempad minder als één platte alles-op-een-pagina ervaring voelt; G1178 is toegevoegd voor verdere startschermontlasting.
