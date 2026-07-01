@@ -162,11 +162,14 @@ const targets = [
   {
     screen: 'question-prep',
     hash: '#vragen?route=voorbereiden',
-    rootSelector: '#vragen-route-voorbereiden',
+    rootSelector: '[data-question-focus-shell="ready"]',
     expectedText: 'Consult Prep Wizard',
     activeRouteSelector: '[data-question-route="voorbereiden"][data-question-route-state="active"]',
     inactiveRouteSelector: '[data-question-route-state="inactive"]',
     requiredSelectors: [
+      '[data-question-focus-region="workbench"]',
+      '[data-question-focus-region="workspace"]',
+      '[data-question-split-workspace="ready"]',
       '[data-question-route-summary="voorbereiden"]',
       '[data-consult-prep-board="ready"]',
       '[data-consult-prep-lane="questions"]',
