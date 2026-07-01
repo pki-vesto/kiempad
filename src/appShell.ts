@@ -997,7 +997,9 @@ function renderWorkspaceContext(activeId: ScreenId): string {
     activeId === 'kosten' ||
     activeId === 'backup' ||
     activeId === 'herinneringen' ||
-    activeId === 'logboek'
+    activeId === 'logboek' ||
+    activeId === 'agenda' ||
+    activeId === 'medicatie'
   )
     return '';
 
@@ -12398,6 +12400,15 @@ function renderAgendaScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderSchedulePlanningWorkbench({
+        totalCount: state.afspraken.length,
+        upcomingCount: upcoming.length,
+        pastCount: past.length,
+        nextAppointment: upcoming[0],
+        hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
+        importStatus: state.agendaImportStatus,
+        importError: state.agendaImportError,
+      }),
       renderScheduleTaskRoutes({
         totalCount: state.afspraken.length,
         upcomingCount: upcoming.length,
@@ -12466,6 +12477,68 @@ function renderAgendaScreen(state: AppShellState): string {
     ],
     { className: 'schedule-command-layout', ariaLabel: 'Agenda beheren' },
   );
+}
+
+function renderSchedulePlanningWorkbench(input: {
+  totalCount: number;
+  upcomingCount: number;
+  pastCount: number;
+  nextAppointment: AfspraakBundle | undefined;
+  hasImportFeedback: boolean;
+  importStatus?: string;
+  importError?: string;
+}): string {
+  const focus = input.nextAppointment
+    ? `${input.nextAppointment.afspraak.titel}: ${formatDateTime(input.nextAppointment.afspraak.datumTijd)}`
+    : 'Nog geen komende afspraak gepland.';
+  const status = input.importError
+    ? 'Import controleren'
+    : input.importStatus
+      ? 'Import verwerkt'
+      : input.upcomingCount > 0
+        ? `${input.upcomingCount} komend`
+        : 'Planning leeg';
+  const context = input.nextAppointment
+    ? `${AFSPRAAK_TYPE_LABELS[input.nextAppointment.afspraak.type]} · ${input.nextAppointment.herinnering ? 'herinnering actief' : 'geen herinnering'}`
+    : input.hasImportFeedback
+      ? 'Bekijk de importstatus voordat je verder plant.'
+      : 'Maak een afspraak of importeer een kliniekagenda.';
+
+  return `
+    <section class="planning-workbench schedule-planning-workbench" aria-label="Agenda dagplanningwerkbank" data-schedule-first-viewport="planning-workbench">
+      <header class="planning-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Dagplanningwerkbank</p>
+          <h2>Afspraak, planning en import eerst</h2>
+          <p>Start met de eerstvolgende afspraak, importstatus en planningroutes zonder door formulieren te scrollen.</p>
+        </div>
+        <p class="planning-workbench__status">${escapeHtml(status)}</p>
+      </header>
+      <div class="planning-workbench__grid">
+        <section class="planning-workbench__focus" aria-label="Eerstvolgende afspraak">
+          <p class="kp-card__eyebrow">Volgende afspraak</p>
+          <h3>${escapeHtml(focus)}</h3>
+          <p>${escapeHtml(context)}</p>
+        </section>
+        <div class="planning-workbench__panel">
+          ${statRow([
+            { label: 'Totaal', value: String(input.totalCount) },
+            { label: 'Komend', value: String(input.upcomingCount) },
+            { label: 'Historie', value: String(input.pastCount) },
+            {
+              label: 'Import',
+              value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS',
+            },
+          ])}
+          <nav class="planning-workbench__actions" aria-label="Agenda werkbank acties">
+            <a href="#agenda?route=overzicht">Overzicht</a>
+            <a href="#agenda?route=plannen">Plannen</a>
+            <a href="#agenda?route=import">Import</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderScheduleTaskRoutes(input: {
@@ -12741,9 +12814,21 @@ function renderMedicatieScreen(state: AppShellState): string {
   const deleteMedicatieButton = selected
     ? `<button class="danger-button" id="delete-medicatie" type="button" data-medicatie-id="${selected.medicatie.id}" aria-label="Verwijder medicatie: ${escapeAttribute(selected.medicatie.naam)}">Verwijder medicatie</button>`
     : '';
+  const completedToday = todayLogs.filter((doseLog) => doseLog.status === 'genomen').length;
 
   return sectionStack(
     [
+      renderMedicationPlanningWorkbench({
+        todayCount: todayLogs.length,
+        completedToday,
+        plannedCount: plannedLogs.length,
+        medicationCount: state.medicatie.length,
+        hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
+        importStatus: state.medicatieImportStatus,
+        importError: state.medicatieImportError,
+        nextDoseLog: todayLogs[0] ?? plannedLogs[0],
+        bundles: state.medicatie,
+      }),
       renderMedicationTaskRoutes({
         todayCount: todayLogs.length,
         plannedCount: plannedLogs.length,
@@ -12814,6 +12899,71 @@ function renderMedicatieScreen(state: AppShellState): string {
     ],
     { className: 'medication-command-layout', ariaLabel: 'Medicatie beheren' },
   );
+}
+
+function renderMedicationPlanningWorkbench(input: {
+  todayCount: number;
+  completedToday: number;
+  plannedCount: number;
+  medicationCount: number;
+  hasImportFeedback: boolean;
+  importStatus?: string;
+  importError?: string;
+  nextDoseLog: DoseLog | undefined;
+  bundles: MedicatieBundle[];
+}): string {
+  const nextMedication = input.nextDoseLog
+    ? input.bundles.find((bundle) => bundle.medicatie.id === input.nextDoseLog?.medicatieId)
+    : undefined;
+  const focus =
+    input.nextDoseLog && nextMedication
+      ? `${nextMedication.medicatie.naam}: ${formatDateTime(input.nextDoseLog.geplandOp)}`
+      : 'Nog geen geplande innames of injecties.';
+  const status = input.importError
+    ? 'Schema controleren'
+    : input.todayCount > 0
+      ? `${input.completedToday}/${input.todayCount} gedaan`
+      : input.importStatus
+        ? 'Schema verwerkt'
+        : 'Geen dagmomenten';
+  const context = input.nextDoseLog
+    ? `${input.nextDoseLog.status === 'genomen' ? 'Genomen' : input.nextDoseLog.status === 'overgeslagen' ? 'Overgeslagen' : 'Gepland'} · Kiempad berekent geen doseringen`
+    : input.hasImportFeedback
+      ? 'Bekijk importfeedback zonder doseringen over te nemen.'
+      : 'Voeg een middel toe of importeer een eigen schema.';
+
+  return `
+    <section class="planning-workbench medication-planning-workbench" aria-label="Medicatie innameswerkbank" data-medication-first-viewport="planning-workbench">
+      <header class="planning-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Innameswerkbank</p>
+          <h2>Vandaag, planning en voorraad eerst</h2>
+          <p>Start met afvinken, komende momenten en voorraadcontext zonder doseeradvies of berekeningen.</p>
+        </div>
+        <p class="planning-workbench__status">${escapeHtml(status)}</p>
+      </header>
+      <div class="planning-workbench__grid">
+        <section class="planning-workbench__focus" aria-label="Volgend medicatiemoment">
+          <p class="kp-card__eyebrow">Volgend moment</p>
+          <h3>${escapeHtml(focus)}</h3>
+          <p>${escapeHtml(context)}</p>
+        </section>
+        <div class="planning-workbench__panel">
+          ${statRow([
+            { label: 'Vandaag', value: String(input.todayCount) },
+            { label: 'Gedaan', value: String(input.completedToday) },
+            { label: 'Later', value: String(input.plannedCount) },
+            { label: 'Middelen', value: String(input.medicationCount) },
+          ])}
+          <nav class="planning-workbench__actions" aria-label="Medicatie werkbank acties">
+            <a href="#medicatie?route=vandaag">Vandaag</a>
+            <a href="#medicatie?route=beheer">Beheer</a>
+            <a href="#medicatie?route=import">Import</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderMedicationTaskRoutes(input: {

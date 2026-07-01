@@ -1698,7 +1698,7 @@ describe('app shell', () => {
   });
 
   it('groepeert navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
-    const html = renderAppShell('agenda');
+    const html = renderAppShell('vragen');
 
     expect(html).toContain('class="primary-nav__group" data-nav-group-active="true"');
     expect(html).toContain('<p class="primary-nav__title">Vandaag</p>');
@@ -1708,9 +1708,9 @@ describe('app shell', () => {
     expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
     expect(html).toContain('<section class="workspace-context" aria-label="Actieve werkruimte">');
     expect(html).toContain('<p class="workspace-context__eyebrow">Werkruimte</p>');
-    expect(html).toContain('<h2>Vandaag</h2>');
-    expect(html).toContain('Dagoverzicht en eerstvolgende acties');
-    expect(html).toContain('aria-label="Schermen binnen Vandaag"');
+    expect(html).toContain('<h2>Behandeling</h2>');
+    expect(html).toContain('Traject, medicatie en vragen voor de arts');
+    expect(html).toContain('aria-label="Schermen binnen Behandeling"');
   });
 
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
@@ -1723,6 +1723,8 @@ describe('app shell', () => {
     const backupHtml = renderAppShell('backup');
     const herinneringenHtml = renderAppShell('herinneringen');
     const logboekHtml = renderAppShell('logboek');
+    const agendaHtml = renderAppShell('agenda');
+    const medicatieHtml = renderAppShell('medicatie');
 
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1760,9 +1762,17 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(logboekHtml).toContain('data-eventlog-first-viewport="system-workbench"');
+    expect(agendaHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(agendaHtml).toContain('data-schedule-first-viewport="planning-workbench"');
+    expect(medicatieHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(medicatieHtml).toContain('data-medication-first-viewport="planning-workbench"');
   });
 
-  it('bewaakt beheer en systeem workbenches als eerste-viewport laag', () => {
+  it('bewaakt beheer, systeem en planning workbenches als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
 
     expect(css).toContain('.management-workbench {');
@@ -1790,6 +1800,16 @@ describe('app shell', () => {
     expect(css).toContain('.eventlog-task-routes {');
     expect(css).toContain('.system-workbench :where(.stat-row) {');
     expect(css).toContain('.system-workbench :where(.stat) {');
+    expect(css).toContain('.planning-workbench {');
+    expect(css).toContain('[data-schedule-first-viewport="planning-workbench"]');
+    expect(css).toContain('[data-medication-first-viewport="planning-workbench"]');
+    expect(css).toContain('.planning-workbench__header {');
+    expect(css).toContain('.planning-workbench__grid {');
+    expect(css).toContain('.planning-workbench__actions {');
+    expect(css).toContain('.schedule-task-routes {');
+    expect(css).toContain('.medication-task-routes {');
+    expect(css).toContain('.planning-workbench :where(.stat-row) {');
+    expect(css).toContain('.planning-workbench :where(.stat) {');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -3137,6 +3157,16 @@ describe('app shell', () => {
 
     expect(html).toContain('Echo controle');
     expect(html).toContain('class="section-stack schedule-command-layout"');
+    expect(html).toContain(
+      '<section class="planning-workbench schedule-planning-workbench" aria-label="Agenda dagplanningwerkbank" data-schedule-first-viewport="planning-workbench">',
+    );
+    expect(html).toContain('Afspraak, planning en import eerst');
+    expect(html).toContain('Volgende afspraak');
+    expect(html).toContain('Echo controle: 2099-06-24 09:30');
+    expect(html).toContain('aria-label="Agenda werkbank acties"');
+    expect(html).toContain('href="#agenda?route=overzicht"');
+    expect(html).toContain('href="#agenda?route=plannen"');
+    expect(html).toContain('href="#agenda?route=import"');
     expect(html).toContain('class="schedule-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Agenda taakroutes"');
     expect(html).toContain('data-schedule-task-routes="ready"');
@@ -3880,6 +3910,17 @@ describe('app shell', () => {
 
     expect(html).toContain('Progesteron');
     expect(html).toContain('class="section-stack medication-command-layout"');
+    expect(html).toContain(
+      '<section class="planning-workbench medication-planning-workbench" aria-label="Medicatie innameswerkbank" data-medication-first-viewport="planning-workbench">',
+    );
+    expect(html).toContain('Vandaag, planning en voorraad eerst');
+    expect(html).toContain('Volgend moment');
+    expect(html).toContain(`Progesteron: ${vandaag} 08:00`);
+    expect(html).toContain('Kiempad berekent geen doseringen');
+    expect(html).toContain('aria-label="Medicatie werkbank acties"');
+    expect(html).toContain('href="#medicatie?route=vandaag"');
+    expect(html).toContain('href="#medicatie?route=beheer"');
+    expect(html).toContain('href="#medicatie?route=import"');
     expect(html).toContain('class="medication-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Medicatie taakroutes"');
     expect(html).toContain('data-medication-task-routes="ready"');
