@@ -118,6 +118,36 @@ const targets = [
     ],
   },
   {
+    screen: 'daily-advice-console',
+    hash: '#start-recommendations',
+    rootSelector: '[data-daily-advice-focus-shell="ready"]',
+    expectedText: 'Dagadvies console',
+    openSelectors: ['#start-flow-panel-aanbevelingen'],
+    requiredSelectors: [
+      '[data-daily-advice-focus-shell="ready"]',
+      '[data-daily-advice-focus-region="workflow"]',
+      '[data-daily-advice-focus-region="workbench"]',
+      '[data-daily-advice-focus-region="planner"]',
+      '[data-daily-advice-focus-region="list"]',
+      '[data-hub-workflow="daily-recommendations"]',
+      '[data-daily-advice-workbench="owner-routes"]',
+      '[data-daily-advice-snapshot="ready"]',
+      '[data-daily-advice-action-planner="ready"]',
+      '[data-daily-advice-action-lane="lifestyle"]',
+      '[data-daily-advice-action-lane="nutrition"]',
+      '[data-daily-advice-action-lane="supplements"]',
+      '[data-daily-advice-action-lane="clinician"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+    ],
+    desktopHiddenSelectors: [
+      '.daily-advice-focus-shell__header p:last-child',
+      '.daily-advice-action-planner__header > p',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
+    ],
+    dailyAdviceConsole: true,
+  },
+  {
     screen: 'dossier-imaging',
     hash: '#dossier?route=imaging',
     rootSelector: '#dossier-route-imaging',
@@ -382,11 +412,18 @@ async function assertRouteflows(browser, options) {
           const rect = element?.getBoundingClientRect();
           const textNodes = [...(element?.querySelectorAll('span, strong, small, p, h2, h3, em') ?? [])]
             .filter((node) => {
-              if (!routeflow.startCommandCenter || viewportLabel !== 'desktop') return true;
-              const region = node.closest('[data-start-focus-region]');
+              if (
+                (!routeflow.startCommandCenter && !routeflow.dailyAdviceConsole) ||
+                viewportLabel !== 'desktop'
+              ) {
+                return true;
+              }
+              const region = node.closest(
+                '[data-start-focus-region], [data-daily-advice-focus-region]',
+              );
               const regionRect = region?.getBoundingClientRect();
               const nodeRect = node.getBoundingClientRect();
-              return !regionRect || (nodeRect.bottom >= regionRect.top && nodeRect.top <= regionRect.bottom);
+              return !regionRect || (nodeRect.top >= regionRect.top && nodeRect.bottom <= regionRect.bottom);
             })
             .map((node) => ({
               clientWidth: node.clientWidth,
@@ -502,6 +539,45 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const dailyAdviceConsole = routeflow.dailyAdviceConsole
+          ? (() => {
+              const workflow = document.querySelector('[data-daily-advice-focus-region="workflow"]');
+              const workbench = document.querySelector('[data-daily-advice-focus-region="workbench"]');
+              const planner = document.querySelector('[data-daily-advice-focus-region="planner"]');
+              const list = document.querySelector('[data-daily-advice-focus-region="list"]');
+              const workflowRect = workflow?.getBoundingClientRect();
+              const workbenchRect = workbench?.getBoundingClientRect();
+              const plannerRect = planner?.getBoundingClientRect();
+              const listRect = list?.getBoundingClientRect();
+              const workflowStyle = workflow ? getComputedStyle(workflow) : null;
+              const workbenchStyle = workbench ? getComputedStyle(workbench) : null;
+              const plannerStyle = planner ? getComputedStyle(planner) : null;
+              const listStyle = list ? getComputedStyle(list) : null;
+              return {
+                workflowVisible: Boolean(
+                  workflowRect && workflowRect.width > 0 && workflowRect.height > 0,
+                ),
+                workbenchVisible: Boolean(
+                  workbenchRect && workbenchRect.width > 0 && workbenchRect.height > 0,
+                ),
+                plannerVisible: Boolean(
+                  plannerRect && plannerRect.width > 0 && plannerRect.height > 0,
+                ),
+                listVisible: Boolean(listRect && listRect.width > 0 && listRect.height > 0),
+                workflowTop: workflowRect?.top ?? 0,
+                workbenchTop: workbenchRect?.top ?? 0,
+                plannerTop: plannerRect?.top ?? 0,
+                listTop: listRect?.top ?? 0,
+                workbenchRight: workbenchRect?.right ?? 0,
+                plannerLeft: plannerRect?.left ?? 0,
+                workflowOverflowY: workflowStyle?.overflowY ?? '',
+                workbenchOverflowY: workbenchStyle?.overflowY ?? '',
+                plannerOverflowY: plannerStyle?.overflowY ?? '',
+                listOverflowY: listStyle?.overflowY ?? '',
+                listMaxHeight: listStyle?.maxHeight ?? '',
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -513,6 +589,7 @@ async function assertRouteflows(browser, options) {
           openDetails,
           focusLayout,
           startCommandCenter,
+          dailyAdviceConsole,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -592,6 +669,29 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: Start command-center staat niet in drie begrensde werkvlakken (${JSON.stringify(evidence.startCommandCenter)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.dailyAdviceConsole &&
+        (!evidence.dailyAdviceConsole.workflowVisible ||
+          !evidence.dailyAdviceConsole.workbenchVisible ||
+          !evidence.dailyAdviceConsole.plannerVisible ||
+          !evidence.dailyAdviceConsole.listVisible ||
+          evidence.dailyAdviceConsole.workbenchTop < evidence.dailyAdviceConsole.workflowTop - 1 ||
+          Math.abs(
+            evidence.dailyAdviceConsole.plannerTop - evidence.dailyAdviceConsole.workbenchTop,
+          ) > 2 ||
+          evidence.dailyAdviceConsole.plannerLeft < evidence.dailyAdviceConsole.workbenchRight - 1 ||
+          evidence.dailyAdviceConsole.listTop < evidence.dailyAdviceConsole.workbenchTop - 1 ||
+          evidence.dailyAdviceConsole.workflowOverflowY !== 'auto' ||
+          evidence.dailyAdviceConsole.workbenchOverflowY !== 'auto' ||
+          evidence.dailyAdviceConsole.plannerOverflowY !== 'auto' ||
+          evidence.dailyAdviceConsole.listOverflowY !== 'auto' ||
+          evidence.dailyAdviceConsole.listMaxHeight === 'none')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: Dagadvies console staat niet in begrensde adviesvlakken (${JSON.stringify(evidence.dailyAdviceConsole)}).`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);

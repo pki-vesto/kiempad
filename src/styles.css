@@ -2611,6 +2611,10 @@ h2 {
     align-items: stretch;
   }
 
+  .start-focus-shell:has(#start-flow-panel-aanbevelingen[open]) {
+    grid-template-columns: minmax(0, 0.48fr) minmax(180px, 0.42fr) minmax(520px, 1.62fr);
+  }
+
   .start-focus-shell__header {
     grid-area: header;
     max-width: none;
@@ -3088,6 +3092,70 @@ h2 {
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+@media (min-width: 961px) {
+  .daily-advice-focus-shell {
+    max-height: min(760px, calc(100vh - 248px));
+    align-content: start;
+  }
+
+  .daily-advice-focus-shell__body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "workflow workflow"
+      "workbench planner"
+      "list list";
+    align-items: stretch;
+  }
+
+  .daily-advice-focus-shell__workflow,
+  .daily-advice-focus-shell__workbench,
+  .daily-advice-focus-shell__planner,
+  .daily-advice-focus-shell__list {
+    max-height: min(390px, calc(100vh - 366px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .daily-advice-focus-shell__workflow {
+    grid-area: workflow;
+    padding-right: 4px;
+  }
+
+  .daily-advice-focus-shell__workbench {
+    grid-area: workbench;
+    padding-right: 4px;
+  }
+
+  .daily-advice-focus-shell__planner {
+    grid-area: planner;
+    padding-right: 4px;
+  }
+
+  .daily-advice-focus-shell__list {
+    grid-area: list;
+    padding-right: 4px;
+  }
+
+  .daily-advice-focus-shell .daily-advice-workbench__header {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .daily-advice-focus-shell .daily-advice-workbench__summary {
+    justify-content: start;
+  }
+
+  .daily-advice-focus-shell .daily-advice-snapshot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .daily-advice-focus-shell .daily-advice-snapshot__card strong {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
 }
 
 .daily-advice-action-planner {

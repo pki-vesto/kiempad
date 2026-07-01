@@ -2505,7 +2505,7 @@ describe('app shell', () => {
     expect(html).toContain('id="start-recommendations"');
     expect(html).toContain('class="daily-advice-focus-shell"');
     expect(html).toContain('data-daily-advice-focus-shell="ready"');
-    expect(html).toContain('Eerst eigenaar en adviesroute kiezen');
+    expect(html).toContain('Dagadvies console');
     expect(html).toContain('data-daily-advice-focus-region="workflow"');
     expect(html).toContain('data-daily-advice-focus-region="workbench"');
     expect(html).toContain('data-daily-advice-focus-region="planner"');
@@ -2741,6 +2741,10 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-areas:');
     expect(css).toContain('"workflows scan daily";');
     expect(css).toContain('max-height: min(900px, calc(100vh - 126px));');
+    expect(css).toContain('.start-focus-shell:has(#start-flow-panel-aanbevelingen[open]) {');
+    expect(css).toContain(
+      'grid-template-columns: minmax(0, 0.48fr) minmax(180px, 0.42fr) minmax(520px, 1.62fr);',
+    );
     expect(css).toContain('.start-focus-shell__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);');
     expect(css).toContain('display: contents;');
@@ -2789,6 +2793,17 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-focus-shell__header {');
     expect(css).toContain('.daily-advice-focus-shell__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);');
+    expect(css).toContain('"workbench planner"');
+    expect(css).toContain('max-height: min(760px, calc(100vh - 248px));');
+    expect(css).toContain('max-height: min(390px, calc(100vh - 366px));');
+    expect(css).toContain('grid-area: workflow;');
+    expect(css).toContain('grid-area: workbench;');
+    expect(css).toContain('grid-area: planner;');
+    expect(css).toContain('grid-area: list;');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-workbench__header {');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-workbench__summary {');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot {');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot__card strong {');
     expect(css).toContain('.daily-advice-focus-shell__workflow,');
     expect(css).toContain('.daily-advice-focus-shell__workbench > .daily-advice-workbench,');
     expect(css).toContain('.daily-advice-snapshot {');

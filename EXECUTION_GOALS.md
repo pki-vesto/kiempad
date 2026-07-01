@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1295 — Premium Claude Design UI: Dagadvies als begrensde advies-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dagadvies had al workflow-, eigenaar-, planner- en lijstcomponenten, maar kon op desktop nog als verticale aanbevelingenpagina lezen.
+- **Desired Outcome:** Maak Dagadvies op desktop een begrensde advies-console met eigen werkvlakken voor workflow, eigenaarwerkbank, planner en lijst.
+- **User Value:** De gebruiker kan dagelijkse aanbevelingen scannen als controleruimte in plaats van door één lange lijst te werken.
+- **Acceptance Criteria:** Desktop Dagadvies gebruikt grid-areas voor workflow, workbench, planner en list; workbench en planner staan naast elkaar; alle regio's gebruiken `overflow-y: auto` en viewport-afhankelijke max-height; mobiel behoudt de éénkoloms flow; routeflow screenshot-smoke opent het aanbevelingenpaneel en bewaakt de console-layout; app-shell tests bewaken het CSS-contract.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2365
+
 ### G1294 — Premium Claude Design UI: Start command-center met drie werkvlakken
 
 - **Epic:** Onboarding & Daily Use
