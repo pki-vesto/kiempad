@@ -1331,6 +1331,7 @@ function renderLogboekScreen(state: AppShellState): string {
           categoryCount: Object.keys(categoryCounts).length,
           central: isCentralStorage(state),
           latestLog: logs[0],
+          activeRoute: activeEventLogRoute,
         }),
       }),
     ],
@@ -1450,6 +1451,7 @@ function renderEventLogWorkspaceContext(input: {
   categoryCount: number;
   central: boolean;
   latestLog: EventLog | undefined;
+  activeRoute: EventLogRoute;
 }): string {
   const latest = input.latestLog
     ? `${input.latestLog.categorie}: ${formatDateTime(input.latestLog.datum)}`
@@ -1458,6 +1460,7 @@ function renderEventLogWorkspaceContext(input: {
     label: 'Auditfocus',
     title: 'Logboek aandacht',
     data: { 'workspace-context-signals': 'eventlog' },
+    microstate: getEventLogContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Privacy',
@@ -2241,6 +2244,7 @@ function renderBackupScreen(state: AppShellState): string {
           hasWebAuthn: Boolean(state.webAuthnStatus),
           backupStatus: state.backupStatus,
           backupError: state.backupError,
+          activeRoute: activeBackupRoute,
         }),
       }),
     ],
@@ -2356,6 +2360,7 @@ function renderBackupWorkspaceContext(input: {
   hasWebAuthn: boolean;
   backupStatus?: string;
   backupError?: string;
+  activeRoute: BackupRoute;
 }): string {
   const importState = input.backupError
     ? 'Check melding'
@@ -2366,6 +2371,7 @@ function renderBackupWorkspaceContext(input: {
     label: 'Veiligheidsfocus',
     title: 'Back-up aandacht',
     data: { 'workspace-context-signals': 'backup' },
+    microstate: getBackupContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Export',
@@ -3427,6 +3433,7 @@ function renderDossierScreen(state: AppShellState): string {
           consultVerslagen,
           embryoDossiers,
           state,
+          activeRoute: activeDossierRoute,
         }),
       })}
     </section>
@@ -3593,6 +3600,7 @@ function renderDossierCommandCenter(input: {
   consultVerslagen: readonly ConsultVerslag[];
   embryoDossiers: readonly EmbryoDossierItem[];
   state: AppShellState;
+  activeRoute: DossierRoute;
 }): string {
   const ocrWacht = input.importInboxItems.filter(
     (item) => item.importstatus === 'ocr_wacht',
@@ -3620,6 +3628,7 @@ function renderDossierCommandCenter(input: {
     label: 'Dossierfocus',
     title: 'Wat verdient aandacht?',
     data: { 'workspace-context-signals': 'dossier' },
+    microstate: getDossierContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Review',
@@ -3698,9 +3707,172 @@ function renderDossierCommandCenter(input: {
   `;
 }
 
+type WorkspaceContextMicrostate = {
+  id: string;
+  label: string;
+  detail: string;
+};
+
+function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicrostate {
+  const states: Record<DossierRoute, WorkspaceContextMicrostate> = {
+    upload: {
+      id: 'dossier-upload',
+      label: 'Uploadroute',
+      detail: 'Nieuwe stukken eerst door OCR, metadata en review leiden.',
+    },
+    search: {
+      id: 'dossier-search',
+      label: 'Zoekroute',
+      detail: 'Context focust op vindbaarheid in veilige dossiermetadata.',
+    },
+    imaging: {
+      id: 'dossier-imaging',
+      label: 'Beeldenroute',
+      detail: 'Prioriteit ligt bij beeldmetadata, echo’s en embryo-overzicht.',
+    },
+    timeline: {
+      id: 'dossier-timeline',
+      label: 'Tijdlijnroute',
+      detail: 'Historie, consulten en imports worden chronologisch gebundeld.',
+    },
+  };
+  return states[route];
+}
+
+function getWellbeingContextMicrostate(route: WellbeingRoute): WorkspaceContextMicrostate {
+  const states: Record<WellbeingRoute, WorkspaceContextMicrostate> = {
+    overview: {
+      id: 'wellbeing-overview',
+      label: 'Trendroute',
+      detail: 'Context toont rustige trendtellingen zonder score of oordeel.',
+    },
+    history: {
+      id: 'wellbeing-history',
+      label: 'Geschiedenisroute',
+      detail: 'Recent vastgelegde signalen blijven terugleesbaar gescheiden.',
+    },
+    log: {
+      id: 'wellbeing-log',
+      label: 'Vastlegroute',
+      detail: 'Nieuwe observaties blijven feitelijk en los van interpretatie.',
+    },
+  };
+  return states[route];
+}
+
+function getFinanceContextMicrostate(route: FinanceRoute): WorkspaceContextMicrostate {
+  const states: Record<FinanceRoute, WorkspaceContextMicrostate> = {
+    overzicht: {
+      id: 'finance-overzicht',
+      label: 'Kostenoverzicht',
+      detail: 'Totalen, eigen bijdrage en onbekende posten blijven vooraan.',
+    },
+    toevoegen: {
+      id: 'finance-toevoegen',
+      label: 'Toevoegroute',
+      detail: 'Nieuwe kostenposten krijgen eerst bedrag en vergoedingstatus.',
+    },
+    vergoeding: {
+      id: 'finance-vergoeding',
+      label: 'Vergoedingcontext',
+      detail: 'Vergoed, eigen risico en onbekend blijven administratief gescheiden.',
+    },
+    historie: {
+      id: 'finance-historie',
+      label: 'Historieroute',
+      detail: 'Eerdere posten blijven terugleesbaar zonder polisinterpretatie.',
+    },
+  };
+  return states[route];
+}
+
+function getEventLogContextMicrostate(route: EventLogRoute): WorkspaceContextMicrostate {
+  const states: Record<EventLogRoute, WorkspaceContextMicrostate> = {
+    overzicht: {
+      id: 'eventlog-overzicht',
+      label: 'Auditoverzicht',
+      detail: 'Opslagstatus en totalen blijven zichtbaar zonder details vooraf.',
+    },
+    recent: {
+      id: 'eventlog-recent',
+      label: 'Recente route',
+      detail: 'Laatste gebeurtenissen staan centraal met minimale detailweergave.',
+    },
+    categorieen: {
+      id: 'eventlog-categorieen',
+      label: 'Categorieroute',
+      detail: 'Gebeurtenissen worden gegroepeerd zonder gevoelige payload.',
+    },
+    privacy: {
+      id: 'eventlog-privacy',
+      label: 'Privacycontrole',
+      detail: 'Privacysignalen krijgen prioriteit zonder auditdetails open te klappen.',
+    },
+  };
+  return states[route];
+}
+
+function getBackupContextMicrostate(route: BackupRoute): WorkspaceContextMicrostate {
+  const states: Record<BackupRoute, WorkspaceContextMicrostate> = {
+    controleren: {
+      id: 'backup-controleren',
+      label: 'Controle-route',
+      detail: 'Vaultstatus, exportleeftijd en herstelopties blijven eerst zichtbaar.',
+    },
+    export: {
+      id: 'backup-export',
+      label: 'Exportroute',
+      detail: 'Versleutelde export staat centraal zonder dossierinhoud te tonen.',
+    },
+    import: {
+      id: 'backup-import',
+      label: 'Importcontrole',
+      detail: 'Importmeldingen en pakketstatus blijven gescheiden van payload.',
+    },
+    herstel: {
+      id: 'backup-herstel',
+      label: 'Herstelroute',
+      detail: 'Biometrie en wachtwoordzin blijven als herstelcontext zichtbaar.',
+    },
+  };
+  return states[route];
+}
+
+function getTreatmentContextMicrostate(route: TreatmentRoute): WorkspaceContextMicrostate {
+  const states: Record<TreatmentRoute, WorkspaceContextMicrostate> = {
+    overzicht: {
+      id: 'treatment-overzicht',
+      label: 'Trajectoverzicht',
+      detail: 'Actieve pogingen en statusverdeling blijven de contextbasis.',
+    },
+    fasen: {
+      id: 'treatment-fasen',
+      label: 'Faseplanning',
+      detail: 'Actuele fase, volgende stap en timelinecontext blijven gekoppeld.',
+    },
+    vergoeding: {
+      id: 'treatment-vergoeding',
+      label: 'Vergoedingsroute',
+      detail: 'Meetellende pogingen blijven administratie, geen polisadvies.',
+    },
+    context: {
+      id: 'treatment-context',
+      label: 'Contextlaag',
+      detail: 'Timeline en graphrelaties krijgen prioriteit naast de taak.',
+    },
+    beheer: {
+      id: 'treatment-beheer',
+      label: 'Beheerroute',
+      detail: 'Bewerken en archief blijven gescheiden van fase-inzicht.',
+    },
+  };
+  return states[route];
+}
+
 function renderWorkspaceContextSignals(input: {
   label: string;
   title: string;
+  microstate?: WorkspaceContextMicrostate;
   items: readonly {
     label: string;
     value: string;
@@ -3712,12 +3884,16 @@ function renderWorkspaceContextSignals(input: {
   const dataAttrs = Object.entries(input.data ?? {})
     .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
     .join('');
+  const microstate = input.microstate
+    ? `<p class="workspace-context-signals__microstate" data-workspace-context-microstate="${escapeAttribute(input.microstate.id)}" data-workspace-context-microstate-label="${escapeAttribute(input.microstate.label)}"><span>Actief</span><strong>${escapeHtml(input.microstate.label)}</strong><em>${escapeHtml(input.microstate.detail)}</em></p>`
+    : '';
   return `
     <div class="workspace-context-signals"${dataAttrs}>
       <div class="workspace-context-signals__header">
         <p class="kp-card__eyebrow">${escapeHtml(input.label)}</p>
         <h3>${escapeHtml(input.title)}</h3>
       </div>
+      ${microstate}
       <ol class="workspace-context-signals__list">
         ${input.items
           .map(
@@ -10333,6 +10509,7 @@ function renderWelzijnScreen(state: AppShellState): string {
           cycleCount: cycleData.length,
           trendCount: trends.length,
           latestDate: overzicht.laatsteDatum,
+          activeRoute: activeWellbeingRoute,
         }),
       }),
     ],
@@ -10443,11 +10620,13 @@ function renderWellbeingWorkspaceContext(input: {
   cycleCount: number;
   trendCount: number;
   latestDate: string | undefined;
+  activeRoute: WellbeingRoute;
 }): string {
   const contextSignals = renderWorkspaceContextSignals({
     label: 'Welzijnfocus',
     title: 'Wat wil je bekijken?',
     data: { 'workspace-context-signals': 'wellbeing' },
+    microstate: getWellbeingContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Recent',
@@ -11241,6 +11420,7 @@ function renderKostenScreen(state: AppShellState): string {
           onbekendCount,
           overview: overzicht,
           latestCost: kosten[0],
+          activeRoute: activeFinanceRoute,
         }),
       }),
     ],
@@ -11359,6 +11539,7 @@ function renderFinanceWorkspaceContext(input: {
   onbekendCount: number;
   overview: ReturnType<typeof berekenKostenOverzicht>;
   latestCost: CostItem | undefined;
+  activeRoute: FinanceRoute;
 }): string {
   const latest = input.latestCost
     ? `${input.latestCost.omschrijving} · ${formatEuro(input.latestCost.bedrag)}`
@@ -11367,6 +11548,7 @@ function renderFinanceWorkspaceContext(input: {
     label: 'Kostenfocus',
     title: 'Administratie eerst',
     data: { 'workspace-context-signals': 'finance' },
+    microstate: getFinanceContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Onbekend',
@@ -15344,6 +15526,7 @@ function renderTrajectScreen(state: AppShellState): string {
           vergoeding,
           timeline: fertilityTimeline,
           graph: graphWeergave,
+          activeRoute: activeTreatmentRoute,
         }),
       }),
     ],
@@ -15517,6 +15700,7 @@ function renderTreatmentWorkspaceContext(input: {
   vergoeding: ReturnType<typeof berekenVergoedePogingenTeller>;
   timeline: FertilityTimeline;
   graph: FertilityGraphTrajectWeergave | undefined;
+  activeRoute: TreatmentRoute;
 }): string {
   const huidigeFase = input.selected ? bepaalHuidigeFase(input.selected.fasen) : undefined;
   const faseLabel = huidigeFase
@@ -15531,6 +15715,7 @@ function renderTreatmentWorkspaceContext(input: {
     label: 'Trajectfocus',
     title: 'Behandelcontext',
     data: { 'workspace-context-signals': 'treatment' },
+    microstate: getTreatmentContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Fase',

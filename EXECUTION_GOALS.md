@@ -4070,6 +4070,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, context signal state, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1234 — route-specifieke microstates uitbreiden naar resterende contextkolommen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Zes kernwerkruimtes tonen nu route-specifieke microstates, maar Agenda, Kennis, Afwegingen en Herinneringen gebruiken nog alleen generieke contextsignalen.
+- **User Impact:** Gebruikers krijgen op die schermen minder snel route-eigen context en kunnen alsnog scannen welke secundaire kolom bij hun actieve taak hoort.
+- **Desired Outcome:** Breid het microstatepatroon uit naar de resterende contextkolommen met route-eigen statuscopy en compacte visuele behandeling.
+- **User Value:** Gebruikers herkennen per werkruimte sneller de actieve route, prioriteit en veilige vervolgstap zonder extra routecontent te openen.
+- **Acceptance Criteria:** Agenda, Kennis, Afwegingen en Herinneringen tonen route-specifieke microstates in de contextkolom; browser- of unit-evidence bewaakt desktop en mobiel; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Agenda, Kennis, Afwegingen, Herinneringen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, context signal state, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 39
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

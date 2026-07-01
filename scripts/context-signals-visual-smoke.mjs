@@ -10,12 +10,42 @@ const url = `http://${host}:${port}/`;
 const passphrase = 'context signals visual smoke passphrase';
 
 const targets = [
-  { screen: 'dossier', hash: '#dossier?route=imaging', signal: 'dossier' },
-  { screen: 'traject', hash: '#traject?route=fasen', signal: 'treatment' },
-  { screen: 'welzijn', hash: '#welzijn?route=history', signal: 'wellbeing' },
-  { screen: 'kosten', hash: '#kosten?route=vergoeding', signal: 'finance' },
-  { screen: 'logboek', hash: '#logboek?route=privacy', signal: 'eventlog' },
-  { screen: 'backup', hash: '#backup?route=import', signal: 'backup' },
+  {
+    screen: 'dossier',
+    hash: '#dossier?route=imaging',
+    signal: 'dossier',
+    microstate: 'dossier-imaging',
+  },
+  {
+    screen: 'traject',
+    hash: '#traject?route=fasen',
+    signal: 'treatment',
+    microstate: 'treatment-fasen',
+  },
+  {
+    screen: 'welzijn',
+    hash: '#welzijn?route=history',
+    signal: 'wellbeing',
+    microstate: 'wellbeing-history',
+  },
+  {
+    screen: 'kosten',
+    hash: '#kosten?route=vergoeding',
+    signal: 'finance',
+    microstate: 'finance-vergoeding',
+  },
+  {
+    screen: 'logboek',
+    hash: '#logboek?route=privacy',
+    signal: 'eventlog',
+    microstate: 'eventlog-privacy',
+  },
+  {
+    screen: 'backup',
+    hash: '#backup?route=import',
+    signal: 'backup',
+    microstate: 'backup-import',
+  },
 ];
 
 const viewports = [
@@ -82,11 +112,15 @@ async function assertContextSignals(browser, options) {
       await signals.scrollIntoViewIfNeeded();
 
       const screenshot = await signals.screenshot({ animations: 'disabled' });
-      const evidence = await page.evaluate((signal) => {
+      const evidence = await page.evaluate(({ signal, microstate }) => {
         const root = document.querySelector(`[data-workspace-context-signals="${signal}"]`);
         const contextColumn = root?.closest('.domain-split-workspace__context');
         const rootRect = root?.getBoundingClientRect();
         const contextRect = contextColumn?.getBoundingClientRect();
+        const microstateElement = root?.querySelector(
+          `[data-workspace-context-microstate="${microstate}"]`,
+        );
+        const microstateRect = microstateElement?.getBoundingClientRect();
         const cards = [...(root?.querySelectorAll('.workspace-context-signal') ?? [])].map(
           (element) => {
             const rect = element.getBoundingClientRect();
@@ -119,6 +153,21 @@ async function assertContextSignals(browser, options) {
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
+          microstateVisible: Boolean(
+            microstateRect &&
+              microstateRect.width > 0 &&
+              microstateRect.height > 0 &&
+              contextRect &&
+              microstateRect.left >= contextRect.left - 1 &&
+              microstateRect.right <= contextRect.right + 1,
+          ),
+          microstateTextFits: microstateElement
+            ? [...microstateElement.querySelectorAll('span, strong, em')].every(
+                (node) =>
+                  node.scrollWidth <= node.clientWidth + 1 &&
+                  node.scrollHeight <= node.clientHeight + 24,
+              )
+            : false,
           cardCount: cards.length,
           contextWidth: contextRect?.width ?? 0,
           cardsInsideContext: cards.every(
@@ -148,7 +197,7 @@ async function assertContextSignals(browser, options) {
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
             document.body.scrollWidth > document.body.clientWidth + 1,
         };
-      }, target.signal);
+      }, target);
 
       if (pageErrors.length > 0) {
         throw new Error(
@@ -157,6 +206,9 @@ async function assertContextSignals(browser, options) {
       }
       if (!evidence.rootVisible || evidence.cardCount < 3) {
         throw new Error(`${options.label}/${target.screen}: contextsignalen zijn niet volledig zichtbaar.`);
+      }
+      if (!evidence.microstateVisible || !evidence.microstateTextFits) {
+        throw new Error(`${options.label}/${target.screen}: route-microstate is niet zichtbaar of past niet.`);
       }
       if (!evidence.cardsInsideContext || evidence.contextWidth <= 0) {
         throw new Error(`${options.label}/${target.screen}: contextkaarten vallen buiten de contextkolom.`);
@@ -180,6 +232,7 @@ async function assertContextSignals(browser, options) {
       checked.push({
         screen: target.screen,
         signal: target.signal,
+        microstate: target.microstate,
         cards: evidence.cardCount,
         screenshotBytes: screenshot.byteLength,
       });
