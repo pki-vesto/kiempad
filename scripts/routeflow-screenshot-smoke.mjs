@@ -55,11 +55,14 @@ const targets = [
   {
     screen: 'knowledge-research',
     hash: '#kennis?route=read',
-    rootSelector: '#knowledge-route-read',
+    rootSelector: '[data-knowledge-focus-shell="ready"]',
     expectedText: 'Lees research in lagen',
     activeRouteSelector: '[data-knowledge-route="read"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
     requiredSelectors: [
+      '[data-knowledge-focus-region="workbench"]',
+      '[data-knowledge-focus-region="workspace"]',
+      '#knowledge-route-read',
       '[data-hub-workflow="knowledge-research"]',
       '[data-hub-workflow-tab="research"][aria-current="page"]',
       '[data-hub-workflow-tab="summaries"]',

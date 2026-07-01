@@ -247,6 +247,10 @@
   één `dossier-focus-shell` met oriëntatie- en werkruimteregio's. Op mobiel worden
   de redundante globale werkruimtekaart en pagina-header voor Dossier verborgen,
   zodat upload/review, beelden en tijdlijn vanuit één compacte werkruimte starten.
+- **G1266 Knowledge focus-shell:** Kennis/Research bundelt researchwerkbank en
+  split-workspace in één `knowledge-focus-shell` met workbench- en
+  workspace-regio's. De researchroute opent als compacte kennisruimte voor bronnen,
+  samenvattingen, relevantie en trends; mobiel verbergt dubbele globale context.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1266 — Premium Claude Design UI: knowledge focus-shell bundelen
+
+- **Epic:** AI & Research
+- **Problem:** Kennis/Research had een researchwerkbank en split-view, maar die stonden nog als losse lagen onder elkaar waardoor de researchflow minder als één gefocuste werkruimte voelde.
+- **Desired Outcome:** Bundel researchwerkbank en Kennis split-workspace in één `knowledge-focus-shell` met aparte workbench- en workspace-regio's; verberg op mobiel redundante globale context boven Kennis.
+- **User Value:** De gebruiker leest bronnen, samenvattingen, relevantie en trends vanuit één rustige researchruimte in plaats van eerst door losse werkbank- en routeblokken te moeten scannen.
+- **Acceptance Criteria:** Kennis rendert `data-knowledge-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; desktop geeft de actieve researchworkspace meer breedte dan de compacte werkbank; mobiel houdt de researchroute éénkoloms zonder dubbele workspace-map; routeflow-smoke bewaakt de focus-shell.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 95
+- **Status:** ☑ klaar
+- **Issue:** #2307
+
 ### G1265 — Premium Claude Design UI: dossier focus-shell bundelen
 
 - **Epic:** Security & DevEx
