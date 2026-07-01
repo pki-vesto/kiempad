@@ -291,6 +291,10 @@
   split-workspace in één `backup-focus-shell` met workbench- en workspace-regio's.
   Status, encrypted export, import en herstelopties starten als één veiligheidsruimte
   zonder dossierinhoud of plaintext payloads.
+- **G1277 Eventlog focus-shell:** Logboek bundelt de systeemwerkbank en
+  split-workspace in één `eventlog-focus-shell` met workbench- en workspace-regio's.
+  Auditstatus, recente gebeurtenissen, categorieën en privacyregels starten als één
+  auditruimte zonder gevoelige details direct uit te klappen.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
