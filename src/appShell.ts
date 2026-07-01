@@ -3528,6 +3528,34 @@ function renderDossierCommandCenter(input: {
     : input.imagingItems.length > 0
       ? 'Beeldpreviews alleen zichtbaar binnen de ontgrendelde encrypted sessie.'
       : 'Nog geen beeldpreviews in dit dossier.';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Dossierfocus',
+    title: 'Wat verdient aandacht?',
+    data: { 'workspace-context-signals': 'dossier' },
+    items: [
+      {
+        label: 'Review',
+        value: reviewOpen > 0 ? `${reviewOpen} concept` : 'Rustig',
+        detail:
+          reviewOpen > 0
+            ? 'Open de reviewroute voor OCR- en metadata-controle.'
+            : 'Geen open OCR-review in de huidige selectie.',
+        href: '#dossier?route=upload',
+      },
+      {
+        label: 'Beelden',
+        value: String(input.imagingItems.length),
+        detail: previewStatus,
+        href: '#dossier?route=imaging',
+      },
+      {
+        label: 'Historie',
+        value: String(input.documenten.length),
+        detail: laatsteImport,
+        href: '#dossier?route=timeline',
+      },
+    ],
+  });
 
   return `
     <section class="policy-panel embedded-summary dossier-command-center" aria-label="Dossier startoverzicht" data-dossier-command-center="ready" data-dossier-workspace-context="command-center" data-dossier-command-preview="${input.state.imagingPreviewLocked ? 'locked' : 'unlocked'}">
@@ -3576,8 +3604,49 @@ function renderDossierCommandCenter(input: {
         <p>${escapeHtml(laatsteImport)}</p>
         <p>${input.consultVerslagen.length} consultverslag${input.consultVerslagen.length === 1 ? '' : 'en'} · ${ocrWacht} OCR wacht · ${previewStatus}</p>
       </div>
+      ${contextSignals}
       <p class="small-print">Dit startoverzicht toont alleen aantallen, datums, types en workflowstatussen; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
     </section>
+  `;
+}
+
+function renderWorkspaceContextSignals(input: {
+  label: string;
+  title: string;
+  items: readonly {
+    label: string;
+    value: string;
+    detail: string;
+    href?: string;
+  }[];
+  data?: Record<string, string>;
+}): string {
+  const dataAttrs = Object.entries(input.data ?? {})
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+  return `
+    <div class="workspace-context-signals"${dataAttrs}>
+      <div class="workspace-context-signals__header">
+        <p class="kp-card__eyebrow">${escapeHtml(input.label)}</p>
+        <h3>${escapeHtml(input.title)}</h3>
+      </div>
+      <ol class="workspace-context-signals__list">
+        ${input.items
+          .map(
+            (item) => `
+              <li class="workspace-context-signal">
+                <div>
+                  <span>${escapeHtml(item.label)}</span>
+                  <strong>${escapeHtml(item.value)}</strong>
+                  <p>${escapeHtml(item.detail)}</p>
+                </div>
+                ${item.href ? `<a href="${escapeAttribute(item.href)}" aria-label="${escapeAttribute(`${item.label}: open route`)}">Open</a>` : ''}
+              </li>
+            `,
+          )
+          .join('')}
+      </ol>
+    </div>
   `;
 }
 
@@ -10801,6 +10870,37 @@ function renderKnowledgeWorkspaceContext(input: {
   totalKennisItems: number;
   netwerkAan: boolean;
 }): string {
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Researchfocus',
+    title: 'Leesvolgorde',
+    data: { 'workspace-context-signals': 'knowledge' },
+    items: [
+      {
+        label: 'Bronnen',
+        value: String(input.researchBronnen),
+        detail:
+          input.researchBronnen > 0
+            ? 'Start met bron en publicatiedatum voordat je samenvattingen leest.'
+            : 'Voeg eerst een researchbron toe voor bronverwijzing.',
+        href: '#kennis?route=read',
+      },
+      {
+        label: 'Samenvattingen',
+        value: String(input.researchSamenvattingen),
+        detail: 'Wetenschappelijke en eenvoudige uitleg blijven naast elkaar controleerbaar.',
+        href: '#kennis?route=read',
+      },
+      {
+        label: 'Netwerk',
+        value: input.netwerkAan ? 'Aan' : 'Uit',
+        detail: input.netwerkAan
+          ? 'Controleer payload-preview voordat je netwerkresearch gebruikt.'
+          : 'Lokale cache blijft leidend zolang netwerkresearch uit staat.',
+        href: '#kennis?route=ai',
+      },
+    ],
+  });
+
   return `
     <section class="summary-panel" aria-label="Kennis context" data-knowledge-workspace-context="metrics">
       <p class="kp-card__eyebrow">Context</p>
@@ -10812,6 +10912,7 @@ function renderKnowledgeWorkspaceContext(input: {
         { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
       ])}
       <p class="linked-note">${input.netwerkAan ? 'Netwerkresearch staat bewust aan.' : 'Lokale researchcache zonder netwerkopt-in.'}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Kennis werkruimtegrens" data-knowledge-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -14033,6 +14134,31 @@ function renderScheduleWorkspaceContext(input: {
       : input.hasImportFeedback
         ? 'Importstatus beschikbaar'
         : 'Geen importfeedback';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Planningfocus',
+    title: 'Volgende planningsactie',
+    data: { 'workspace-context-signals': 'schedule' },
+    items: [
+      {
+        label: 'Volgende',
+        value: input.nextAppointment ? 'Gepland' : 'Leeg',
+        detail: nextLabel,
+        href: input.nextAppointment ? '#agenda?route=komend' : '#agenda?route=plannen',
+      },
+      {
+        label: 'Import',
+        value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS',
+        detail: importLabel,
+        href: '#agenda?route=import',
+      },
+      {
+        label: 'Historie',
+        value: String(input.pastCount),
+        detail: 'Terugbliknotities blijven gescheiden van plannen.',
+        href: '#agenda?route=historie',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Agenda context" data-schedule-workspace-context="metrics">
@@ -14045,6 +14171,7 @@ function renderScheduleWorkspaceContext(input: {
         { label: 'Import', value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS' },
       ])}
       <p class="linked-note">${escapeHtml(nextLabel)}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Agenda werkruimtegrens" data-schedule-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -15228,6 +15355,34 @@ function renderTreatmentWorkspaceContext(input: {
   const nextAction = input.selected
     ? bepaalVolgendeStap(input.selected)
     : 'Maak een traject aan om faseplanning en context te bundelen.';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Trajectfocus',
+    title: 'Behandelcontext',
+    data: { 'workspace-context-signals': 'treatment' },
+    items: [
+      {
+        label: 'Fase',
+        value: faseLabel,
+        detail: nextAction,
+        href: '#traject?route=fasen',
+      },
+      {
+        label: 'Timeline',
+        value: String(input.timeline.items.length),
+        detail:
+          input.timeline.contextSignalen.length > 0
+            ? `${input.timeline.contextSignalen.length} contextsignaal${input.timeline.contextSignalen.length === 1 ? '' : 'en'} vraagt om aanvulling.`
+            : 'Geen ontbrekende timelinecontext zichtbaar.',
+        href: '#traject?route=context',
+      },
+      {
+        label: 'Vergoeding',
+        value: String(input.vergoeding.resterend),
+        detail: 'Gebruik dit alleen als administratievoorbereiding naast je polis.',
+        href: '#traject?route=vergoeding',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Traject context" data-treatment-workspace-context="metrics">
@@ -15242,6 +15397,7 @@ function renderTreatmentWorkspaceContext(input: {
         { label: 'Archief', value: String(input.archivedCount) },
       ])}
       <p class="linked-note">${escapeHtml(faseLabel)} · ${escapeHtml(nextAction)}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Traject werkruimtegrens" data-treatment-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
