@@ -1775,7 +1775,16 @@ describe('app shell', () => {
 
   it('bewaakt beheer, systeem en planning workbenches als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
+    const appShell = readFileSync('src/appShell.ts', 'utf8');
+    const components = readFileSync('src/ui/components.ts', 'utf8');
 
+    expect(components).toContain('export function firstViewportWorkbench');
+    expect(components).toContain('classPrefix: string');
+    expect(components).toContain('focusAriaLabel: string');
+    expect(components).toContain('actionsAriaLabel: string');
+    expect(appShell).toContain('firstViewportWorkbench({');
+    expect(appShell).toContain("className: 'schedule-planning-workbench'");
+    expect(appShell).toContain("className: 'question-preparation-workbench'");
     expect(css).toContain('.management-workbench {');
     expect(css).toContain('[data-finance-first-viewport="management-workbench"]');
     expect(css).toContain('[data-backup-first-viewport="management-workbench"]');

@@ -181,6 +181,7 @@ import {
   dashboardSection,
   dashboardShell,
   disclosure,
+  firstViewportWorkbench,
   pageHeader,
   phaseHeroCard,
   recommendationCard,
@@ -11789,38 +11790,33 @@ function renderQuestionPreparationWorkbench(input: {
       ? `${input.answeredCount} beantwoord · ${input.verslagCount} verslag${input.verslagCount === 1 ? '' : 'en'}`
       : 'Voeg een vraag toe of koppel vragen aan een komende afspraak.';
 
-  return `
-    <section class="planning-workbench question-preparation-workbench" aria-label="Consultvoorbereidingswerkbank" data-question-first-viewport="consult-workbench">
-      <header class="planning-workbench__header">
-        <div>
-          <p class="kp-card__eyebrow">Consultvoorbereidingswerkbank</p>
-          <h2>Open vragen, afspraak en prioriteit eerst</h2>
-          <p>Start met de volgende afspraak, open vraagstatus en prep-routes zonder door alle vragen of antwoorden te scrollen.</p>
-        </div>
-        <p class="planning-workbench__status">${escapeHtml(status)}</p>
-      </header>
-      <div class="planning-workbench__grid">
-        <section class="planning-workbench__focus" aria-label="Volgende consultvoorbereiding">
-          <p class="kp-card__eyebrow">Volgend gesprek</p>
-          <h3>${escapeHtml(focus)}</h3>
-          <p>${escapeHtml(context)}</p>
-        </section>
-        <div class="planning-workbench__panel">
-          ${statRow([
-            { label: 'Open', value: String(input.openCount) },
-            { label: 'Beantwoord', value: String(input.answeredCount) },
-            { label: 'Verslagen', value: String(input.verslagCount) },
-            { label: 'Prep', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
-          ])}
-          <nav class="planning-workbench__actions" aria-label="Vragen werkbank acties">
-            <a href="#vragen?route=open">Open</a>
-            <a href="#vragen?route=voorbereiden">Voorbereiden</a>
-            <a href="#vragen?route=beheer">Beheer</a>
-          </nav>
-        </div>
-      </div>
-    </section>
-  `;
+  return firstViewportWorkbench({
+    classPrefix: 'planning-workbench',
+    className: 'question-preparation-workbench',
+    ariaLabel: 'Consultvoorbereidingswerkbank',
+    data: { 'question-first-viewport': 'consult-workbench' },
+    eyebrow: 'Consultvoorbereidingswerkbank',
+    title: 'Open vragen, afspraak en prioriteit eerst',
+    intro:
+      'Start met de volgende afspraak, open vraagstatus en prep-routes zonder door alle vragen of antwoorden te scrollen.',
+    status,
+    focusAriaLabel: 'Volgende consultvoorbereiding',
+    focusEyebrow: 'Volgend gesprek',
+    focusTitle: focus,
+    focusDetail: context,
+    stats: [
+      { label: 'Open', value: String(input.openCount) },
+      { label: 'Beantwoord', value: String(input.answeredCount) },
+      { label: 'Verslagen', value: String(input.verslagCount) },
+      { label: 'Prep', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
+    ],
+    actionsAriaLabel: 'Vragen werkbank acties',
+    actions: [
+      { href: '#vragen?route=open', label: 'Open' },
+      { href: '#vragen?route=voorbereiden', label: 'Voorbereiden' },
+      { href: '#vragen?route=beheer', label: 'Beheer' },
+    ],
+  });
 }
 
 function renderQuestionTaskRoutes(input: {
@@ -12575,41 +12571,36 @@ function renderSchedulePlanningWorkbench(input: {
       ? 'Bekijk de importstatus voordat je verder plant.'
       : 'Maak een afspraak of importeer een kliniekagenda.';
 
-  return `
-    <section class="planning-workbench schedule-planning-workbench" aria-label="Agenda dagplanningwerkbank" data-schedule-first-viewport="planning-workbench">
-      <header class="planning-workbench__header">
-        <div>
-          <p class="kp-card__eyebrow">Dagplanningwerkbank</p>
-          <h2>Afspraak, planning en import eerst</h2>
-          <p>Start met de eerstvolgende afspraak, importstatus en planningroutes zonder door formulieren te scrollen.</p>
-        </div>
-        <p class="planning-workbench__status">${escapeHtml(status)}</p>
-      </header>
-      <div class="planning-workbench__grid">
-        <section class="planning-workbench__focus" aria-label="Eerstvolgende afspraak">
-          <p class="kp-card__eyebrow">Volgende afspraak</p>
-          <h3>${escapeHtml(focus)}</h3>
-          <p>${escapeHtml(context)}</p>
-        </section>
-        <div class="planning-workbench__panel">
-          ${statRow([
-            { label: 'Totaal', value: String(input.totalCount) },
-            { label: 'Komend', value: String(input.upcomingCount) },
-            { label: 'Historie', value: String(input.pastCount) },
-            {
-              label: 'Import',
-              value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS',
-            },
-          ])}
-          <nav class="planning-workbench__actions" aria-label="Agenda werkbank acties">
-            <a href="#agenda?route=overzicht">Overzicht</a>
-            <a href="#agenda?route=plannen">Plannen</a>
-            <a href="#agenda?route=import">Import</a>
-          </nav>
-        </div>
-      </div>
-    </section>
-  `;
+  return firstViewportWorkbench({
+    classPrefix: 'planning-workbench',
+    className: 'schedule-planning-workbench',
+    ariaLabel: 'Agenda dagplanningwerkbank',
+    data: { 'schedule-first-viewport': 'planning-workbench' },
+    eyebrow: 'Dagplanningwerkbank',
+    title: 'Afspraak, planning en import eerst',
+    intro:
+      'Start met de eerstvolgende afspraak, importstatus en planningroutes zonder door formulieren te scrollen.',
+    status,
+    focusAriaLabel: 'Eerstvolgende afspraak',
+    focusEyebrow: 'Volgende afspraak',
+    focusTitle: focus,
+    focusDetail: context,
+    stats: [
+      { label: 'Totaal', value: String(input.totalCount) },
+      { label: 'Komend', value: String(input.upcomingCount) },
+      { label: 'Historie', value: String(input.pastCount) },
+      {
+        label: 'Import',
+        value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS',
+      },
+    ],
+    actionsAriaLabel: 'Agenda werkbank acties',
+    actions: [
+      { href: '#agenda?route=overzicht', label: 'Overzicht' },
+      { href: '#agenda?route=plannen', label: 'Plannen' },
+      { href: '#agenda?route=import', label: 'Import' },
+    ],
+  });
 }
 
 function renderScheduleTaskRoutes(input: {
