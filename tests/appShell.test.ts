@@ -6685,6 +6685,9 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-focus-shell__header {');
     expect(css).toContain('.dossier-focus-shell__body {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1.42fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
     expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-stage__header {');
     expect(css).toContain(
@@ -7149,8 +7152,11 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('class="dossier-focus-shell"');
     expect(emptyHtml).toContain('data-dossier-focus-shell="ready"');
     expect(emptyHtml).toContain('Eerst route kiezen, dan pas dossierinhoud openen');
+    expect(emptyHtml).toContain('data-dossier-console="ready"');
     expect(emptyHtml).toContain('data-dossier-focus-region="orientation"');
     expect(emptyHtml).toContain('data-dossier-focus-region="workspace"');
+    expect(emptyHtml).toContain('data-dossier-console-region="orientation"');
+    expect(emptyHtml).toContain('data-dossier-console-region="workspace"');
     expect(emptyHtml).not.toContain(')}');
     expect(emptyHtml).toContain(
       '<section class="dossier-route-stage" aria-label="Dossierwerkbank" data-dossier-first-viewport="route-stage">',

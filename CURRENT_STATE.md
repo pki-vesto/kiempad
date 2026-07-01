@@ -382,6 +382,10 @@
   in één launchpad met aparte header-, cockpit- en deckregio's. Desktop toont
   deze regio's naast elkaar in de eerste viewport; mobiel behoudt de verticale
   volgorde. Routeflow-smoke bewaakt de dashboardlayout en tekstfit.
+- **G1301 Dossier-console:** Dossier toont op desktop routekaart/orientation en
+  actieve split-workspace naast elkaar in één begrensde console. Orientation,
+  workspace en split-container hebben containment en eigen scrollgedrag, zodat
+  lange upload- en imagingpanelen de body niet meer oprekken.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

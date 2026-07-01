@@ -179,6 +179,7 @@ const targets = [
       '[data-dossier-imaging-lane="consults"]',
       '[data-dossier-imaging-disclosure="consults"]',
     ],
+    dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
       '.dossier-route-section__header > p:last-child',
@@ -256,6 +257,7 @@ const targets = [
       '[data-consult-upload-group="consult-context"]',
     ],
     presentSelectors: ['[data-dossier-upload-console="ready"]'],
+    dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
       '.dossier-route-section__header > p:last-child',
@@ -668,6 +670,36 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const dossierConsole = routeflow.dossierConsole
+          ? (() => {
+              const body = document.querySelector('[data-dossier-console="ready"]');
+              const orientation = document.querySelector('[data-dossier-console-region="orientation"]');
+              const workspace = document.querySelector('[data-dossier-console-region="workspace"]');
+              const bodyRect = body?.getBoundingClientRect();
+              const orientationRect = orientation?.getBoundingClientRect();
+              const workspaceRect = workspace?.getBoundingClientRect();
+              const bodyStyle = body ? getComputedStyle(body) : null;
+              const orientationStyle = orientation ? getComputedStyle(orientation) : null;
+              const workspaceStyle = workspace ? getComputedStyle(workspace) : null;
+              return {
+                bodyVisible: Boolean(bodyRect && bodyRect.width > 0 && bodyRect.height > 0),
+                orientationVisible: Boolean(
+                  orientationRect && orientationRect.width > 0 && orientationRect.height > 0,
+                ),
+                workspaceVisible: Boolean(
+                  workspaceRect && workspaceRect.width > 0 && workspaceRect.height > 0,
+                ),
+                orientationTop: orientationRect?.top ?? 0,
+                workspaceTop: workspaceRect?.top ?? 0,
+                orientationRight: orientationRect?.right ?? 0,
+                workspaceLeft: workspaceRect?.left ?? 0,
+                bodyOverflow: bodyStyle?.overflow ?? '',
+                bodyMaxHeight: bodyStyle?.maxHeight ?? '',
+                orientationOverflowY: orientationStyle?.overflowY ?? '',
+                workspaceOverflowY: workspaceStyle?.overflowY ?? '',
+              };
+            })()
+          : null;
         const timelineConsole = routeflow.timelineConsole
           ? (() => {
               const reader = document.querySelector(
@@ -727,6 +759,7 @@ async function assertRouteflows(browser, options) {
           dailyAdviceConsole,
           startLaunchpad,
           uploadConsole,
+          dossierConsole,
           timelineConsole,
           appFrame: {
             shellVisible: Boolean(appShellRect && appShellRect.width > 0 && appShellRect.height > 0),
@@ -822,6 +855,7 @@ async function assertRouteflows(browser, options) {
       if (
         options.label === 'desktop' &&
         evidence.focusLayout &&
+        !evidence.dossierConsole &&
         (!evidence.focusLayout.supportVisible ||
           !evidence.focusLayout.workspaceVisible ||
           evidence.focusLayout.workspaceTop < evidence.focusLayout.supportBottom - 1 ||
@@ -893,6 +927,23 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: upload-console staat niet in begrensde werkvlakken (${JSON.stringify(evidence.uploadConsole)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.dossierConsole &&
+        (!evidence.dossierConsole.bodyVisible ||
+          !evidence.dossierConsole.orientationVisible ||
+          !evidence.dossierConsole.workspaceVisible ||
+          evidence.dossierConsole.workspaceTop < evidence.dossierConsole.orientationTop - 1 ||
+          evidence.dossierConsole.workspaceLeft < evidence.dossierConsole.orientationRight - 1 ||
+          evidence.dossierConsole.bodyOverflow !== 'hidden' ||
+          evidence.dossierConsole.bodyMaxHeight === 'none' ||
+          evidence.dossierConsole.orientationOverflowY !== 'auto' ||
+          evidence.dossierConsole.workspaceOverflowY !== 'auto')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: dossier-console staat niet in compacte werkvlakken (${JSON.stringify(evidence.dossierConsole)}).`,
         );
       }
       if (

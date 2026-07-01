@@ -8026,6 +8026,35 @@ a.action-card:active {
   align-items: start;
 }
 
+@media (min-width: 961px) {
+  .dossier-focus-shell__body {
+    grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1.42fr);
+    align-items: stretch;
+    max-height: min(860px, calc(100vh - 126px));
+    overflow: hidden;
+  }
+
+  .dossier-focus-shell__orientation,
+  .dossier-focus-shell__workspace {
+    max-height: min(820px, calc(100vh - 164px));
+    overflow-y: auto;
+    contain: layout paint;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .dossier-focus-shell__workspace {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .dossier-focus-shell__workspace .domain-split-workspace {
+    max-height: min(820px, calc(100vh - 164px));
+    overflow: hidden;
+    contain: layout paint;
+  }
+}
+
 @media (min-width: 761px) {
   .command-route-section__header,
   .dossier-route-section__header,
