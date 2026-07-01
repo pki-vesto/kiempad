@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1264 — Premium Claude Design UI: start focus-shell verdichten
+
+- **Epic:** Security & DevEx
+- **Problem:** Start bevatte na de cockpit en werkbanen nog meerdere losse verdiepingsmodules onder elkaar, waardoor de pagina ondanks routing nog als een lange dashboardstapel kon voelen.
+- **Desired Outcome:** Bundel intelligence hub, startscan, taakroutes en flowdashboard in één zichtbare start focus-shell met hoofdregio, scanregio en dagelijkse verdiepingsregio.
+- **User Value:** De gebruiker ziet Start als één rustige commandolaag met duidelijke verdiepingszones in plaats van losse modules die onder elkaar blijven groeien.
+- **Acceptance Criteria:** Start rendert `data-start-focus-shell="ready"`; workflows, scan en daily-regio hebben eigen hooks; desktop gebruikt een hoofd/zij-grid; mobiel houdt de scanregio swipebaar; routeflow-smoke bewaakt de nieuwe shell en tekstfit.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☑ klaar
+- **Issue:** #2303
+
 ### G1263 — Premium Claude Design UI: werkruimte-architectuur zichtbaar maken
 
 - **Epic:** Security & DevEx

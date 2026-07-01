@@ -660,7 +660,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Dossier, Inzicht en Beheer met eigen primaire route, route-aantal en actieve state,
   zodat de app niet meer als één lange pagina hoeft te worden gescand. Start toont
   daarnaast een apart workflowdeck voor planning, uploads/beelden, research/dagadvies
-  en kluis/beheer. De dossieruploadroute toont vóór de formulier-intake een compacte
+  en kluis/beheer. De verdere Start-verdieping staat nu in één `start-focus-shell`
+  met workflow-, scan- en daily-regio, zodat intelligence hub, startscan, taakroutes
+  en flowdashboard niet meer als losse modules onder elkaar lezen. De dossieruploadroute toont vóór de formulier-intake een compacte
   upload-triage voor document, consult, beeld/embryo en lokale OCR/review, zodat de
   uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. De dossier
   imaging-route toont vóór consultverslagen, imaging-repository en embryo-dossiers

@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1264 Premium Claude Design UI: Start bundelt de intelligence hub, startscan, taakroutes en flowdashboard nu in één `start-focus-shell` met aparte workflow-, scan- en daily-regio. Desktop gebruikt een hoofd/zij-grid, mobiel houdt de scanregio swipebaar, en routeflow-smoke bewaakt de nieuwe shell inclusief tekstfit.
 - G1263 Premium Claude Design UI: de app-shell toont nu boven elke pagina een zichtbare werkruimtekaart voor Vandaag, Behandeling, Dossier, Inzicht en Beheer. Start heeft daarnaast een `start-workspace-deck` met aparte routes voor planning, uploads/beelden, research/dagadvies en kluis/beheer, met desktop grids en mobiele swipebare werkbanen tegen de één-paginaervaring.
 - G1262 Premium Claude Design UI: de welzijn-geschiedenisroute toont nu vóór check-ins, symptomen en cyclusmetingen een compact terugleesbord met lanes voor check-ins, symptomen, cyclus en trends. Desktop gebruikt een vierkoloms grid, mobiel een swipebare rij, en routeflow-smoke bewaakt `#welzijn?route=history`.
 - G1261 Premium Claude Design UI: de consultvoorbereidingsroute toont nu vóór de Consult Prep Wizard een compact prep-bord met lanes voor open vragen, actiepunten, context en packet/verslagen. Desktop gebruikt een vierkoloms grid, mobiel een swipebare rij, en routeflow-smoke bewaakt `#vragen?route=voorbereiden`.
