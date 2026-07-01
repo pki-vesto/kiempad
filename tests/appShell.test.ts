@@ -2698,6 +2698,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.lock-button {');
     expect(mobileCss).toContain('grid-column: 2;');
     expect(css).toContain('.workspace-strip {');
+    expect(css).toContain('height: 100vh;');
+    expect(css).toContain('overflow: hidden;');
+    expect(css).toContain('max-height: calc(100vh - 48px);');
+    expect(css).toContain('overflow-y: auto;');
+    expect(css).toContain('scrollbar-gutter: stable;');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip--compact {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');

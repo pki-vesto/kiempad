@@ -414,6 +414,12 @@ async function assertRouteflows(browser, options) {
       const evidence = await page.evaluate(({ routeflow, viewportLabel }) => {
         const rootElement = document.querySelector(routeflow.rootSelector);
         const rootRect = rootElement?.getBoundingClientRect();
+        const appShell = document.querySelector('.app-shell');
+        const content = document.querySelector('.content');
+        const appShellRect = appShell?.getBoundingClientRect();
+        const contentRect = content?.getBoundingClientRect();
+        const appShellStyle = appShell ? getComputedStyle(appShell) : null;
+        const contentStyle = content ? getComputedStyle(content) : null;
         const required = routeflow.requiredSelectors.map((selector) => {
           const element = rootElement?.matches(selector)
             ? rootElement
@@ -692,6 +698,19 @@ async function assertRouteflows(browser, options) {
           dailyAdviceConsole,
           uploadConsole,
           timelineConsole,
+          appFrame: {
+            shellVisible: Boolean(appShellRect && appShellRect.width > 0 && appShellRect.height > 0),
+            shellHeight: appShellRect?.height ?? 0,
+            viewportHeight: window.innerHeight,
+            shellOverflow: appShellStyle?.overflow ?? '',
+            contentVisible: Boolean(contentRect && contentRect.width > 0 && contentRect.height > 0),
+            contentMaxHeight: contentStyle?.maxHeight ?? '',
+            contentOverflowY: contentStyle?.overflowY ?? '',
+            contentScrolls: Boolean(content && content.scrollHeight > content.clientHeight + 1),
+            bodyScrolls:
+              document.documentElement.scrollHeight > document.documentElement.clientHeight + 1 ||
+              document.body.scrollHeight > document.body.clientHeight + 1,
+          },
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -709,6 +728,20 @@ async function assertRouteflows(browser, options) {
       }
       if (!evidence.activeVisible) {
         throw new Error(`${options.label}/${target.screen}: actieve routeflow is niet zichtbaar.`);
+      }
+      if (
+        options.label === 'desktop' &&
+        (!evidence.appFrame.shellVisible ||
+          Math.abs(evidence.appFrame.shellHeight - evidence.appFrame.viewportHeight) > 1 ||
+          evidence.appFrame.shellOverflow !== 'hidden' ||
+          !evidence.appFrame.contentVisible ||
+          evidence.appFrame.contentOverflowY !== 'auto' ||
+          evidence.appFrame.contentMaxHeight === 'none' ||
+          evidence.appFrame.bodyScrolls)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: desktop app-workspace is niet begrensd (${JSON.stringify(evidence.appFrame)}).`,
+        );
       }
       const missingSelectors = evidence.required.filter((item) => !item.visible);
       if (missingSelectors.length > 0) {
