@@ -14433,8 +14433,8 @@ function renderDailyAdviceFocusShell(input: {
     <section class="daily-advice-focus-shell" aria-labelledby="daily-advice-focus-shell-title" data-daily-advice-focus-shell="ready">
       <header class="daily-advice-focus-shell__header">
         <p class="kp-card__eyebrow">Dagadvies focus</p>
-        <h2 id="daily-advice-focus-shell-title">Eerst eigenaar en adviesroute kiezen</h2>
-        <p>Dagadvies blijft een rustige controleruimte: vrouw, man, samen, leefstijl, voeding, supplementen en artscheck staan vóór de volledige lijst.</p>
+        <h2 id="daily-advice-focus-shell-title">Dagadvies console</h2>
+        <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken, zodat dagadvies niet als lange aanbevelingenpagina hoeft te lezen.</p>
       </header>
       ${input.status}
       <div class="daily-advice-focus-shell__body">

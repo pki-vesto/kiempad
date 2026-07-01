@@ -15,10 +15,16 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'Dagadvies console staat niet in begrensde adviesvlakken',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('listMaxHeight');
 
     for (const route of [
       '#start',
       '#kennis?route=read',
+      '#start-recommendations',
       '#dossier?route=imaging',
       '#traject?route=context',
       '#dossier?route=upload',
@@ -59,6 +65,8 @@ describe('routeflow screenshot smoke script', () => {
       '[data-daily-advice-action-lane="nutrition"]',
       '[data-daily-advice-action-lane="supplements"]',
       '[data-daily-advice-action-lane="clinician"]',
+      '[data-hub-workflow="daily-recommendations"]',
+      '[data-daily-advice-workbench="owner-routes"]',
       '[data-hub-workflow="knowledge-research"]',
       '[data-knowledge-focus-region="workbench"]',
       '[data-knowledge-focus-region="workspace"]',

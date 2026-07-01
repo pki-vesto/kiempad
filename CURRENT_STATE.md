@@ -360,6 +360,9 @@
 - **G1294 Start command-center:** Start gebruikt op desktop drie begrensde
   werkvlakken naast elkaar voor workflows, startscan/routes en dagelijks
   vervolgwerk. Elk vlak heeft eigen scrollgedrag; mobiel blijft éénkoloms.
+- **G1295 Dagadvies advies-console:** Dagadvies gebruikt op desktop aparte
+  begrensde werkvlakken voor workflow, eigenaarwerkbank, actieplanner en volledige
+  lijst. De routeflow-smoke opent het aanbevelingenpaneel en bewaakt deze console.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
