@@ -13334,7 +13334,13 @@ function renderStartScreen(state: AppShellState): string {
           route: 'medicatie',
           ariaLabel: 'Vandaag te zetten',
         })
-      : '';
+      : dashboardSection({
+          title: 'Vandaag te zetten',
+          eyebrow: 'Rustig',
+          body: '<p class="empty-state">Geen medicatiemomenten voor vandaag.</p>',
+          route: 'medicatie',
+          ariaLabel: 'Vandaag te zetten',
+        });
   const setupPanel = renderFirstRunSetup(state);
   const startSnapshot = renderStartSnapshot({
     activeTraject,
@@ -13679,16 +13685,32 @@ function renderStartFlowRail(panels: readonly StartFlowRailPanel[]): string {
   if (visiblePanels.length === 0) return '';
 
   return `
-    <section class="start-flow-rail" aria-labelledby="start-flow-rail-title" data-start-flow-rail="progressive">
+    <section class="start-flow-rail" aria-labelledby="start-flow-rail-title" data-start-flow-rail="progressive" data-start-flow-rail-mode="contained">
       <header class="start-flow-rail__header">
-        <p class="start-flow-rail__eyebrow">Vervolgpanelen</p>
-        <h2 id="start-flow-rail-title">Open alleen wat je nu nodig hebt</h2>
+        <div>
+          <p class="start-flow-rail__eyebrow">Vervolgpanelen</p>
+          <h2 id="start-flow-rail-title">Open alleen wat je nu nodig hebt</h2>
+        </div>
+        <span class="start-flow-rail__status">${visiblePanels.length} routes</span>
       </header>
-      <div class="start-flow-rail__panels">
+      <nav class="start-flow-switchboard" aria-label="Vervolgpanelen kiezen" data-start-flow-switchboard="ready">
         ${visiblePanels
           .map(
             (panel) => `
-              <details class="start-flow-panel" data-start-flow-panel="${escapeAttribute(panel.key)}"${panel.open ? ' open' : ''}>
+              <a href="#start-flow-panel-${escapeAttribute(panel.key)}" data-start-flow-switchboard-card="${escapeAttribute(panel.key)}">
+                <span>${escapeHtml(panel.eyebrow)}</span>
+                <strong>${escapeHtml(panel.summary)}</strong>
+                <small>Open paneel</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+      <div class="start-flow-rail__panels" data-start-flow-panel-stack="contained">
+        ${visiblePanels
+          .map(
+            (panel) => `
+              <details id="start-flow-panel-${escapeAttribute(panel.key)}" class="start-flow-panel" data-start-flow-panel="${escapeAttribute(panel.key)}"${panel.open ? ' open' : ''}>
                 <summary class="start-flow-panel__summary">
                   <span>${escapeHtml(panel.eyebrow)}</span>
                   <strong>${escapeHtml(panel.summary)}</strong>

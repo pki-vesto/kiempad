@@ -2391,7 +2391,20 @@ describe('app shell', () => {
     expect(html).toContain('class="kp-dashboard__secondary"');
     expect(html).toContain('class="start-flow-rail"');
     expect(html).toContain('data-start-flow-rail="progressive"');
+    expect(html).toContain('data-start-flow-rail-mode="contained"');
     expect(html).toContain('Open alleen wat je nu nodig hebt');
+    expect(html).toContain('class="start-flow-rail__status"');
+    expect(html).toContain('5 routes');
+    expect(html).toContain('class="start-flow-switchboard"');
+    expect(html).toContain('data-start-flow-switchboard="ready"');
+    expect(html).toContain('data-start-flow-switchboard-card="planning"');
+    expect(html).toContain('data-start-flow-switchboard-card="medicatie"');
+    expect(html).toContain('data-start-flow-switchboard-card="aanbevelingen"');
+    expect(html).toContain('data-start-flow-switchboard-card="setup"');
+    expect(html).toContain('data-start-flow-switchboard-card="snelle-invoer"');
+    expect(html).toContain('data-start-flow-panel-stack="contained"');
+    expect(html).toContain('id="start-flow-panel-planning"');
+    expect(html).toContain('href="#start-flow-panel-aanbevelingen"');
     expect(html).toContain('data-start-flow-panel="planning" open');
     expect(html).toContain('data-start-flow-panel="aanbevelingen" open');
     expect(html).toContain('data-start-flow-panel="setup"');
@@ -2662,12 +2675,26 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.start-task-routes {');
     expect(mobileCss).toContain('display: none;');
     expect(css).toContain('.start-flow-rail {');
+    expect(css).toContain('.start-flow-rail__status {');
+    expect(css).toContain('.start-flow-switchboard {');
+    expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');
+    expect(css).toContain('.start-flow-switchboard a {');
+    expect(css).toContain('.start-flow-switchboard a:hover,');
+    expect(css).toContain('.start-flow-rail__panels {');
+    expect(css).toContain('max-height: min(760px, 76vh);');
+    expect(css).toContain('scrollbar-width: thin;');
     expect(css).toContain('.start-flow-panel {');
     expect(css).toContain('.start-flow-panel[open] .start-flow-panel__summary');
     expect(css).toContain('.start-flow-panel:not([open]) .start-flow-panel__body');
     expect(css).toContain('.start-flow-panel__body > .kp-card');
     expect(mobileCss).toContain('.start-flow-dashboard {');
     expect(mobileCss).toContain('margin-top: 14px;');
+    expect(mobileCss).toContain('.start-flow-switchboard {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.start-flow-switchboard a {');
+    expect(mobileCss).toContain('flex: 0 0 min(168px, 54vw);');
+    expect(mobileCss).toContain('.start-flow-rail__panels {');
+    expect(mobileCss).toContain('max-height: min(680px, 72vh);');
     expect(mobileCss).toContain('.start-flow-panel__summary {');
     expect(mobileCss).toContain('min-height: 48px;');
     expect(css).toContain('.hub-workflow-header {');
@@ -2755,6 +2782,8 @@ describe('app shell', () => {
       'data-start-flow-panel="snelle-invoer"',
       flowRailIndex,
     );
+    const switchboardIndex = html.indexOf('data-start-flow-switchboard="ready"', flowRailIndex);
+    const panelStackIndex = html.indexOf('data-start-flow-panel-stack="contained"', flowRailIndex);
 
     expect(dashboardStart).toBeGreaterThan(-1);
     expect(workbenchIndex).toBeGreaterThan(-1);
@@ -2763,6 +2792,8 @@ describe('app shell', () => {
     expect(workbenchIndex).toBeLessThan(snapshotIndex);
     expect(snapshotIndex).toBeLessThan(routeNavIndex);
     expect(routeNavIndex).toBeLessThan(dashboardStart);
+    expect(switchboardIndex).toBeGreaterThan(flowRailIndex);
+    expect(panelStackIndex).toBeGreaterThan(switchboardIndex);
     expect(primaryStart).toBeGreaterThan(dashboardStart);
     expect(secondaryStart).toBeGreaterThan(primaryStart);
     expect(phaseIndex).toBeGreaterThan(primaryStart);
