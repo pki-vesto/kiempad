@@ -36532,6 +36532,33 @@ describe('app shell', () => {
     expect(mobileCss).toContain('min-height: 44px;');
   });
 
+  it('bewaakt dat alle route-secties een zichtbare route-summary hebben', () => {
+    const source = readFileSync('src/appShell.ts', 'utf8');
+    const routeRegex =
+      /<section id="([^"]+)" class="([^"]*route-section[^"]*)"[^>]*data-([a-z]+)-route="([^"]+)"/g;
+    const missingSummaries: string[] = [];
+    let totalRoutes = 0;
+    for (let match = routeRegex.exec(source); match !== null; match = routeRegex.exec(source)) {
+      const [fullMatch, id, , kind, route] = match;
+      const start = match.index;
+      const nextRouteOffset = source
+        .slice(start + fullMatch.length)
+        .search(/<section id="[^"]+" class="[^"]*route-section/);
+      const block =
+        nextRouteOffset >= 0
+          ? source.slice(start, start + fullMatch.length + nextRouteOffset)
+          : source.slice(start, start + 6000);
+      totalRoutes += 1;
+
+      if (!block.includes(`'${kind}-route-summary': '${route}'`)) {
+        missingSummaries.push(`${id} verwacht '${kind}-route-summary': '${route}'`);
+      }
+    }
+
+    expect(totalRoutes).toBeGreaterThanOrEqual(50);
+    expect(missingSummaries).toEqual([]);
+  });
+
   it('bewaakt commandroutes als zichtbare app-dock in plaats van platte paginalinks', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
