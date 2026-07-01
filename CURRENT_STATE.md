@@ -666,7 +666,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Dagadvies toont vóór de volledige aanbevelingenlijst een compacte actieplanner voor
   leefstijl, voeding, supplementen en artscheck. De kennis/research leesroute toont
   vóór bronnen, samenvattingen en trends een compacte leeslaag voor wetenschappelijk
-  lezen, eenvoudige uitleg, relevantie en trends. Het
+  lezen, eenvoudige uitleg, relevantie en trends. Back-up & import toont op de
+  controle-route een encrypted-sync bord voor status, export, import en herstel. Het
   startscherm opent zonder generieke werkruimte-context met een
   compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
   gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn

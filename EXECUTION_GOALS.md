@@ -4500,6 +4500,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2293
 - **Status:** ☑ done
 
+### G1260 — encrypted-sync bord toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Back-up & import heeft routepanelen voor controleren, export, import en herstel, maar de gebruiker start nog in technische statusdetails zonder duidelijke keuze voor encrypted overdracht.
+- **User Impact:** Cross-device encrypted data voelt administratief en technisch, terwijl de gebruiker vooral wil weten of status, export, import of herstel nu aandacht vraagt.
+- **Desired Outcome:** Toon op de back-up controle-route een compact encrypted-sync bord met vier taaklanes voor status, export, import en herstel.
+- **User Value:** Gebruikers kiezen eerst de veilige overdrachtstaak en hoeven niet door export/importdetails te scrollen voordat de intentie duidelijk is.
+- **Acceptance Criteria:** Back-uproute `#backup?route=controleren` toont `data-backup-sync-board="ready"` vóór de statusdisclosure; lanes linken naar bestaande status-, export-, import- en herstelroutes; bestaande exportknoppen, importformulieren, WebAuthn-herstel, routeankers en privacyhooks blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt de back-up sync-route op desktop en mobiel; geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata, ontsleutelde gezondheidsdata, trackingdata of secrets wordt toegevoegd.
+- **Affected Screens:** Back-up, encrypted sync, cross-device data
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Backup UI, encrypted sync, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 13
+- **GitHub Issue:** #2295
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

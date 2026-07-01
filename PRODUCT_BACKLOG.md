@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1060 |
+| ☑ klaar | 1061 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1259** |
+| **Totaal** | **1260** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1422,12 +1422,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1257 | Premium Claude Design UI: dagadvies-actieplanner toevoegen | P1 | F5 | ☑ |
 | G1258 | Premium Claude Design UI: research-leeslaag toevoegen | P1 | F5 | ☑ |
 | G1259 | Premium Claude Design UI: imaging-inspectiebord toevoegen | P1 | F5 | ☑ |
+| G1260 | Premium Claude Design UI: encrypted-sync bord toevoegen | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1259** (id's G001 t/m G1259, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1260** (id's G001 t/m G1260, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
