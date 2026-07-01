@@ -11,6 +11,9 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain("rootSelector: '.content'");
     expect(routeflowScreenshotSmokeScript).toContain('startCommandCenter: true');
     expect(routeflowScreenshotSmokeScript).toContain('[data-compact-workspace-deck="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('appFrame');
+    expect(routeflowScreenshotSmokeScript).toContain('desktop app-workspace is niet begrensd');
+    expect(routeflowScreenshotSmokeScript).toContain('bodyScrolls');
     expect(routeflowScreenshotSmokeScript).toContain(
       'Start command-center staat niet in drie begrensde werkvlakken',
     );

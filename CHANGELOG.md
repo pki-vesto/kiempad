@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1299 Premium Claude Design UI: de desktop shell is nu een begrensde app-workspace. Sidebar en hoofdcontent blijven binnen de viewport, `.content` is het eigen scrollvlak en routeflow-smoke bewaakt dat detailroutes niet terugvallen naar body-scroll als één lange pagina.
 - G1298 Premium Claude Design UI: de globale workspace-map wordt niet meer in elke shell-route gerenderd. Detailroutes plaatsen de compacte workspace-deck in de sidebar met alleen actieve werkruimte en sibling routes, waardoor de hoofdcontent direct met de taakruimte begint; split-workspace en routeflow-smokes bewaken de compacte deck.
 - G1297 Premium Claude Design UI: Fertility Timeline is op desktop een begrensde timeline-console geworden. Reader, filter/export, inzichten en itemlijst hebben eigen werkvlakken en scrollgedrag; routeflow-smoke bewaakt dat de trajectcontext niet terugvalt naar één lange timelinepagina.
 - G1296 Premium Claude Design UI: de Dossier uploadroute is op desktop een begrensde upload-console geworden. Routekeuze, documentupload, consultupload en review hebben eigen werkvlakken en scrollgedrag; routeflow-smoke opent het intakepaneel en bewaakt dat upload niet terugvalt naar één lange formulierpagina.

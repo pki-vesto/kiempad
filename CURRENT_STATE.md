@@ -374,6 +374,10 @@
   de sidebar met actieve werkruimte en sibling routes; split-workspace smoke
   bewaakt dat de hoofdcontent geen brede productkaart, quick-link stapeling of
   routechrome terugkrijgt.
+- **G1299 Begrensde desktop app-workspace:** op desktop is `.app-shell`
+  viewport-hoog en verborgen voor body-scroll. `.content` is het eigen
+  scrollpaneel, zodat de app als vaste werkruimte blijft staan; routeflow-smoke
+  bewaakt shellhoogte, overflow en body-scroll.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

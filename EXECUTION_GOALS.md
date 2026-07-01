@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1299 — Premium Claude Design UI: desktop shell als begrensde app-workspace
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De desktopervaring kon nog als een doorlopende webpagina voelen, omdat de hele shell met de body kon scrollen.
+- **Desired Outcome:** Maak de desktop app-shell viewport-hoog met sidebar en content binnen één vaste werkruimte, waarbij alleen `.content` intern scrolt.
+- **User Value:** De gebruiker ervaart Kiempad als een duidelijke app-workspace: navigatie blijft stabiel, taakruimte blijft centraal en routes voelen minder als één lange pagina.
+- **Acceptance Criteria:** Desktop `.app-shell` gebruikt `height: 100vh`, `min-height: 0` en `overflow: hidden`; `.content` gebruikt `max-height: calc(100vh - 48px)`, `overflow-y: auto` en stabiele scrollbar-gutter; mobiel behoudt documentflow; routeflow-smoke faalt als desktop body-scroll terugkomt of `.content` geen eigen scrollpaneel meer is.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2373
+
 ### G1298 — Premium Claude Design UI: compacte workspace-deck voor detailroutes
 
 - **Epic:** Onboarding & Daily Use
