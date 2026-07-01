@@ -6452,6 +6452,11 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-route-summary="search"');
     expect(emptyHtml).toContain('Dossierindex en routetellingen openen');
     expect(emptyHtml).toContain('data-dossier-route-summary="imaging"');
+    expect(emptyHtml).toContain('id="dossier-imaging-workflow-header"');
+    expect(emptyHtml).toContain('data-hub-workflow="dossier-imaging"');
+    expect(emptyHtml).toContain('Embryo en beelden als eigen werkbaan');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="imaging" aria-current="page"');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="embryos"');
     expect(emptyHtml).toContain('Imaging-repository, filters en vergelijkingen openen');
     expect(emptyHtml).toContain('data-dossier-imaging-disclosure="embryos"');
     expect(emptyHtml).toContain('data-dossier-route-summary="timeline"');
@@ -34873,6 +34878,12 @@ describe('app shell', () => {
     expect(html).toContain('href="#kennis?route=library"');
     expect(html).toContain('id="knowledge-route-read"');
     expect(html).toContain('data-knowledge-route="read"');
+    expect(html).toContain('id="knowledge-research-workflow-header"');
+    expect(html).toContain('data-hub-workflow="knowledge-research"');
+    expect(html).toContain('Research als zelfstandige leesflow');
+    expect(html).toContain('data-hub-workflow-tab="research" aria-current="page"');
+    expect(html).toContain('data-hub-workflow-tab="summaries"');
+    expect(html).toContain('data-hub-workflow-tab="trends"');
     expect(html).toContain('id="knowledge-route-add"');
     expect(html).toContain('data-knowledge-route="add"');
     expect(html).toContain('id="knowledge-route-ai"');
