@@ -14,6 +14,7 @@ import {
   normalizeQuestionRoute,
   normalizeScheduleRoute,
   normalizeScreenId,
+  normalizeStartRoute,
   normalizeTreatmentRoute,
   normalizeWellbeingRoute,
   renderAppShell,
@@ -1666,6 +1667,9 @@ describe('app shell', () => {
   it('normaliseert onbekende routes naar het startscherm', () => {
     expect(normalizeScreenId('')).toBe('start');
     expect(normalizeScreenId('#start')).toBe('start');
+    expect(normalizeScreenId('#start-recommendations')).toBe('start');
+    expect(normalizeStartRoute('#start-recommendations')).toBe('recommendations');
+    expect(normalizeStartRoute('#start')).toBe('overview');
     expect(normalizeScreenId('#/agenda')).toBe('agenda');
     expect(normalizeScreenId('#welzijn')).toBe('welzijn');
     expect(normalizeScreenId('#afwegingen')).toBe('afwegingen');
@@ -2558,11 +2562,16 @@ describe('app shell', () => {
     expect(html).toContain('id="start-recommendations"');
     expect(html).toContain('class="daily-advice-focus-shell"');
     expect(html).toContain('data-daily-advice-focus-shell="ready"');
+    expect(html).toContain('data-daily-advice-console="ready"');
     expect(html).toContain('Dagadvies console');
     expect(html).toContain('data-daily-advice-focus-region="workflow"');
     expect(html).toContain('data-daily-advice-focus-region="workbench"');
     expect(html).toContain('data-daily-advice-focus-region="planner"');
     expect(html).toContain('data-daily-advice-focus-region="list"');
+    expect(html).toContain('data-daily-advice-console-region="workflow"');
+    expect(html).toContain('data-daily-advice-console-region="workbench"');
+    expect(html).toContain('data-daily-advice-console-region="planner"');
+    expect(html).toContain('data-daily-advice-console-region="list"');
     expect(html).toContain('id="start-recommendations-workflow-header"');
     expect(html).toContain('data-hub-workflow="daily-recommendations"');
     expect(html).toContain('Dagadvies als eigen controleruimte');
@@ -2719,6 +2728,20 @@ describe('app shell', () => {
     expect(html).toContain('Vragen voor de arts');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
     expect(html).toContain('Nog geen komende herinneringen');
+  });
+
+  it('rendert dagadvies direct als start-subroute', () => {
+    const html = renderAppShell('start', makeStartState({ activeStartRoute: 'recommendations' }));
+
+    expect(html).toContain('data-start-daily-advice-route="ready"');
+    expect(html).toContain('data-daily-advice-console="ready"');
+    expect(html).toContain('data-daily-advice-console-region="workflow"');
+    expect(html).toContain('data-daily-advice-console-region="workbench"');
+    expect(html).toContain('data-daily-advice-console-region="planner"');
+    expect(html).toContain('data-daily-advice-console-region="list"');
+    expect(html).toContain('Dagadvies als eigen controleruimte');
+    expect(html).not.toContain('data-start-launchpad="ready"');
+    expect(html).not.toContain('data-start-console="ready"');
   });
 
   it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
@@ -2888,6 +2911,10 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-focus-shell .daily-advice-workbench__summary {');
     expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot {');
     expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot__card strong {');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot__card span,');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot__card small {');
+    expect(css).toContain('.daily-advice-focus-shell .daily-advice-action-planner__lanes {');
+    expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(css).toContain('.daily-advice-focus-shell__workflow,');
     expect(css).toContain('.daily-advice-focus-shell__workbench > .daily-advice-workbench,');
     expect(css).toContain('.daily-advice-snapshot {');

@@ -3249,6 +3249,14 @@ h2 {
     overflow-wrap: anywhere;
     white-space: normal;
   }
+
+  .daily-advice-focus-shell .daily-advice-snapshot__card span,
+  .daily-advice-focus-shell .daily-advice-snapshot__card small {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: initial;
+    white-space: normal;
+  }
 }
 
 .daily-advice-action-planner {
@@ -13819,6 +13827,12 @@ a.action-card:active {
 .daily-advice-focus-shell__workbench > .daily-advice-workbench,
 .daily-advice-focus-shell__planner > .daily-advice-action-planner {
   height: 100%;
+}
+
+@media (min-width: 961px) {
+  .daily-advice-focus-shell .daily-advice-action-planner__lanes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 761px) {

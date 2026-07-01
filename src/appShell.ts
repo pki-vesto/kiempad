@@ -419,6 +419,14 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
   return SCREENS.some((screen) => screen.id === candidate) ? (candidate as ScreenId) : 'start';
 }
 
+type StartRoute = 'overview' | 'recommendations';
+
+export function normalizeStartRoute(value: string | null | undefined): StartRoute {
+  const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
+  if (candidate === 'start-recommendations') return 'recommendations';
+  return 'overview';
+}
+
 type TreatmentRoute = 'overzicht' | 'fasen' | 'vergoeding' | 'context' | 'beheer';
 
 const TREATMENT_ROUTES: readonly TreatmentRoute[] = [
@@ -690,6 +698,7 @@ export type AppShellState = {
   activeEventLogRoute?: EventLogRoute;
   activeBackupRoute?: BackupRoute;
   activeNotificationRoute?: NotificationRoute;
+  activeStartRoute?: StartRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -13464,6 +13473,15 @@ function renderStartScreen(state: AppShellState): string {
     costCount: state.kosten?.length ?? 0,
     secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
   });
+  const dailyAdviceConsole = renderDailyAdviceConsole(state, dailyRecommendations);
+
+  if (state.activeStartRoute === 'recommendations') {
+    return sectionStack([dailyAdviceConsole], {
+      className: 'start-daily-advice-route-layout',
+      ariaLabel: 'Dagadvies beheren',
+      data: { 'start-daily-advice-route': 'ready' },
+    });
+  }
 
   return sectionStack(
     [
@@ -13502,7 +13520,7 @@ function renderStartScreen(state: AppShellState): string {
                 summary: 'Dagadvies',
                 eyebrow: 'Aanbevelingen',
                 key: 'aanbevelingen',
-                body: renderStartRecommendationRoute(state, dailyRecommendations),
+                body: renderStartRecommendationRoute(dailyAdviceConsole),
               },
               {
                 summary: 'Inrichting',
@@ -14341,7 +14359,18 @@ function renderDailyAdviceOwnerCard(
   `;
 }
 
-function renderStartRecommendationRoute(
+function renderStartRecommendationRoute(dailyAdviceConsole: string): string {
+  return dashboardSection({
+    title: 'Dagelijkse aanbevelingen',
+    id: 'start-recommendations',
+    eyebrow: 'Dagadvies',
+    route: 'recommendations',
+    ariaLabel: 'Dagelijkse aanbevelingen taakroute',
+    body: dailyAdviceConsole,
+  });
+}
+
+function renderDailyAdviceConsole(
   state: AppShellState,
   overview: DailyRecommendationOverview,
 ): string {
@@ -14350,37 +14379,31 @@ function renderStartRecommendationRoute(
     0,
   );
 
-  return dashboardSection({
-    title: 'Dagelijkse aanbevelingen',
-    id: 'start-recommendations',
-    eyebrow: 'Dagadvies',
-    route: 'recommendations',
-    ariaLabel: 'Dagelijkse aanbevelingen taakroute',
-    body: renderDailyAdviceFocusShell({
-      status: state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : '',
-      workflow: renderHubWorkflowHeader({
-        id: 'start-recommendations-workflow-header',
-        eyebrow: 'Hubroute',
-        title: 'Dagadvies als eigen controleruimte',
-        intro:
-          'Kies eerst de eigenaar en open daarna pas de volledige lijst. Adviezen blijven concept, brongeleid en gekoppeld aan artscheck waar nodig.',
-        activeTab: 'recommendations',
-        data: { 'hub-workflow': 'daily-recommendations' },
-        tabs: [
-          { id: 'today', href: '#start-today', label: 'Vandaag', meta: 'Taken scannen' },
-          {
-            id: 'recommendations',
-            href: '#start-recommendations',
-            label: 'Dagadvies',
-            meta: 'Per persoon',
-          },
-          { id: 'questions', href: '#vragen', label: 'Vragen', meta: 'Artscheck' },
-          { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
-        ],
-      }),
-      workbench: renderDailyAdviceWorkbench(overview),
-      planner: renderDailyAdviceActionPlanner(overview),
-      list: `
+  return renderDailyAdviceFocusShell({
+    status: state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : '',
+    workflow: renderHubWorkflowHeader({
+      id: 'start-recommendations-workflow-header',
+      eyebrow: 'Hubroute',
+      title: 'Dagadvies als eigen controleruimte',
+      intro:
+        'Kies eerst de eigenaar en open daarna pas de volledige lijst. Adviezen blijven concept, brongeleid en gekoppeld aan artscheck waar nodig.',
+      activeTab: 'recommendations',
+      data: { 'hub-workflow': 'daily-recommendations' },
+      tabs: [
+        { id: 'today', href: '#start-today', label: 'Vandaag', meta: 'Taken scannen' },
+        {
+          id: 'recommendations',
+          href: '#start-recommendations',
+          label: 'Dagadvies',
+          meta: 'Per persoon',
+        },
+        { id: 'questions', href: '#vragen', label: 'Vragen', meta: 'Artscheck' },
+        { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
+      ],
+    }),
+    workbench: renderDailyAdviceWorkbench(overview),
+    planner: renderDailyAdviceActionPlanner(overview),
+    list: `
         <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
@@ -14392,7 +14415,6 @@ function renderStartRecommendationRoute(
           <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
         </details>
       `,
-    }),
   });
 }
 
@@ -14404,24 +14426,24 @@ function renderDailyAdviceFocusShell(input: {
   list: string;
 }): string {
   return `
-    <section class="daily-advice-focus-shell" aria-labelledby="daily-advice-focus-shell-title" data-daily-advice-focus-shell="ready">
+    <section class="daily-advice-focus-shell" aria-labelledby="daily-advice-focus-shell-title" data-daily-advice-focus-shell="ready" data-daily-advice-console="ready">
       <header class="daily-advice-focus-shell__header">
         <p class="kp-card__eyebrow">Dagadvies focus</p>
         <h2 id="daily-advice-focus-shell-title">Dagadvies console</h2>
         <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken, zodat dagadvies niet als lange aanbevelingenpagina hoeft te lezen.</p>
       </header>
       ${input.status}
-      <div class="daily-advice-focus-shell__body">
-        <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow">
+      <div class="daily-advice-focus-shell__body" data-daily-advice-console-region="body">
+        <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow" data-daily-advice-console-region="workflow">
           ${input.workflow}
         </div>
-        <div class="daily-advice-focus-shell__workbench" data-daily-advice-focus-region="workbench">
+        <div class="daily-advice-focus-shell__workbench" data-daily-advice-focus-region="workbench" data-daily-advice-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="daily-advice-focus-shell__planner" data-daily-advice-focus-region="planner">
+        <div class="daily-advice-focus-shell__planner" data-daily-advice-focus-region="planner" data-daily-advice-console-region="planner">
           ${input.planner}
         </div>
-        <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list">
+        <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list" data-daily-advice-console-region="list">
           <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
           ${input.list}
         </div>

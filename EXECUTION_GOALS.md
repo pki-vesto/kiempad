@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1314 — Premium Claude Design UI: Dagadvies als directe compacte advice-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** `#start-recommendations` kwam nog uit in de brede Start-opbouw, waardoor Dagadvies ondanks de interne advies-console niet als een directe taakruimte voelde.
+- **Desired Outcome:** Maak Dagadvies bereikbaar als eigen compacte start-subroute waarin workflow, eigenaarwerkbank, actieplanner en lijst direct bovenaan staan.
+- **User Value:** De gebruiker kan dagelijkse aanbevelingen scannen en ordenen zonder eerst door Start-launchpad of vervolgpanelen te moeten navigeren.
+- **Acceptance Criteria:** `#start-recommendations` rendert `data-start-daily-advice-route="ready"` en `data-daily-advice-console="ready"`; workflow, workbench, planner en lijst hebben expliciete console-regio's; de console start zichtbaar binnen de eerste viewport; planner- en snapshotteksten passen zonder afkapping; de bestaande Start-overview blijft beschikbaar; routeflow-smoke bewaakt desktop en mobiel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/main.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2403
+
 ### G1313 — Premium Claude Design UI: Start als compactere eerste-viewport console
 
 - **Epic:** Onboarding & Daily Use
