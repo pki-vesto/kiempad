@@ -700,7 +700,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   documenttijdlijn en dagadvieslijst tonen nu compacte disclosure-headers met status
   en korte routehint in plaats van alleen losse tekstregels. Research en embryo/beelden
   hebben nu ook eigen hubroute-headers, zodat de start-hubroutes naar research en
-  imaging niet meer als generieke kennis- of dossiersecties openen.
+  imaging niet meer als generieke kennis- of dossiersecties openen. De imaging-
+  repository, embryo-dossiers en researchsamenvattingen hebben daarnaast compacte
+  taakheaders met statusaantallen, waardoor gesloten detailpanelen niet meer als een
+  tweede lange tekststapel lezen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -716,7 +719,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1242: research en embryo hubflows inhoudelijk verdichten.
+1. UI Improvement Evolution uitvoeren vanaf G1243: routeflow-screenshots automatiseren voor start, research en imaging.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
