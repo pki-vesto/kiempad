@@ -2367,6 +2367,58 @@ h2 {
   gap: 12px;
 }
 
+.start-today-console {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--sage) 18%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.start-today-console__header {
+  display: grid;
+  max-width: 820px;
+  gap: 5px;
+}
+
+.start-today-console__header h2,
+.start-today-console__header p {
+  margin: 0;
+}
+
+.start-today-console__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.start-today-console__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.start-today-console__body {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.start-today-console__planning,
+.start-today-console__command,
+.start-today-console__quick {
+  min-width: 0;
+}
+
+.start-today-console__planning {
+  display: grid;
+  gap: 12px;
+}
+
 .start-launchpad {
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
@@ -3188,6 +3240,55 @@ h2 {
 }
 
 @media (min-width: 961px) {
+  .start-today-console {
+    max-height: min(760px, calc(100vh - 248px));
+    align-content: start;
+  }
+
+  .start-today-console__header p:last-child {
+    display: none;
+  }
+
+  .start-today-console__body {
+    grid-template-columns: minmax(240px, 0.58fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(168px, 0.42fr);
+    grid-template-areas:
+      "planning command"
+      "quick command";
+    align-items: stretch;
+    height: min(560px, calc(100vh - 366px));
+  }
+
+  .start-today-console__planning,
+  .start-today-console__command,
+  .start-today-console__quick {
+    height: 100%;
+    max-height: none;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .start-today-console__planning {
+    grid-area: planning;
+    padding-right: 4px;
+  }
+
+  .start-today-console__command {
+    grid-area: command;
+    padding-right: 4px;
+  }
+
+  .start-today-console__quick {
+    grid-area: quick;
+    padding-right: 4px;
+  }
+
+  .start-today-console .command-route-section__header > p:last-child,
+  .start-today-console .summary-panel > .small-print {
+    display: none;
+  }
+
   .daily-advice-focus-shell {
     max-height: min(760px, calc(100vh - 248px));
     align-content: start;
@@ -13730,6 +13831,14 @@ a.action-card:active {
 }
 
 @media (min-width: 961px) {
+  .start-today-console .daily-command-board {
+    grid-template-columns: 1fr;
+  }
+
+  .start-today-console .daily-command-actions .action-card {
+    min-height: 0;
+  }
+
   .question-focus-shell__workspace .consult-prep-board__lanes {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

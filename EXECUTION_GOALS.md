@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1315 — Premium Claude Design UI: Vandaag als directe compacte start-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** `#start-today`, `#start-current-phase`, `#start-next-step` en `#start-quick-entry` kwamen nog uit in de volledige Start-overview met launchpad en flowrail, waardoor dagelijkse taken alsnog als onderdeel van één lange startpagina voelden.
+- **Desired Outcome:** Maak de dagelijkse Start-subroutes bereikbaar als eigen compacte Vandaag-console met gescheiden planning, dagcommand en snelle invoer.
+- **User Value:** De gebruiker kan de dag starten, eerstvolgende acties scannen en snel iets vastleggen zonder door de volledige Startpagina te navigeren.
+- **Acceptance Criteria:** `#start-today` rendert `data-start-today-route="ready"` en `data-start-today-console="ready"`; planning, command en quick-entry hebben expliciete console-regio's; de route toont geen Start-launchpad, Start-console of flowrail; desktop gebruikt begrensde werkvlakken met eigen scrollgedrag en zonder horizontale tekstoverlap; mobiel behoudt een leesbare éénkoloms flow; routeflow-smoke bewaakt desktop en mobiel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2405
+
 ### G1314 — Premium Claude Design UI: Dagadvies als directe compacte advice-console
 
 - **Epic:** Onboarding & Daily Use
