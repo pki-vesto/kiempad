@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1269 — Premium Claude Design UI: start vervolgpanelen als contained workspace
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Start-vervolgpanelen waren wel gegroepeerd, maar konden nog steeds als een lange doorlopende pagina voelen doordat planning, medicatie, dagadvies, setup en snelle invoer onder elkaar doorliepen.
+- **Desired Outcome:** Maak de Start flow rail een begrensde workspace met een compact switchboard, panel-stack en interne scrollruimte.
+- **User Value:** De gebruiker ziet eerst scanbare routes naar de vervolgpanelen en hoeft niet door een volledige dashboardstapel heen te scrollen om overzicht te krijgen.
+- **Acceptance Criteria:** Start rendert `data-start-flow-rail-mode="contained"`; de rail toont `data-start-flow-switchboard="ready"` met kaarten voor planning, medicatie, dagadvies, setup en snelle invoer; de panel-stack gebruikt `data-start-flow-panel-stack="contained"`; desktop en mobiel begrenzen de railhoogte met interne scroll; routeflow-smoke bewaakt de nieuwe selectors.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2313
+
 ### G1268 — Premium Claude Design UI: daily advice focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use
