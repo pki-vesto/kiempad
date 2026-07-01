@@ -36708,7 +36708,7 @@ describe('app shell', () => {
 
     expect(css).toContain('.domain-split-workspace {');
     expect(css).toContain(
-      'grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.9fr) minmax(240px, 0.88fr);',
+      'grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.92fr) minmax(250px, 0.9fr);',
     );
     expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
     expect(css).toContain('grid-template-columns: 1fr;');

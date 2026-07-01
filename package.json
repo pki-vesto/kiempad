@@ -21,6 +21,7 @@
     "drill:backup": "vitest run tests/backupRestoreDrill.test.ts",
     "smoke:offline": "node scripts/offline-smoke.mjs",
     "smoke:dossier-routes": "node scripts/dossier-route-smoke.mjs",
+    "smoke:split-workspaces": "node scripts/split-workspace-smoke.mjs",
     "smoke:central": "node scripts/central-browser-smoke.mjs",
     "smoke:central-bootstrap": "tsx scripts/central-dataset-bootstrap-smoke.mts",
     "smoke:central-health-monitor": "tsx scripts/central-health-monitor-annotation.mts --fixture=ok",

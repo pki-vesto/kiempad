@@ -42,5 +42,9 @@ jobs:
         run: npm audit --audit-level=high
       - name: Build
         run: npm run build
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Split workspace smoke
+        run: npm run smoke:split-workspaces
       - name: External asset scan
         run: npm run assets:check
