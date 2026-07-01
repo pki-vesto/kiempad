@@ -721,6 +721,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   eerste viewport minder als administratiepagina leest.
   Het startscherm heeft nu ook een compacte startscan tussen de fertility hub en
   vervolgpanelen voor traject, vandaag, dagadvies en kluis/context.
+  De kennis/research-werkbank heeft nu een researchscan voor bronnen,
+  samenvattingen, trends en netwerkstatus voordat de filterkaart of detailpanelen
+  openen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen

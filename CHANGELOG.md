@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1250 Premium Claude Design UI: de kennis/research-werkbank toont nu een compacte researchscan boven de filterkaart. Bronnen, samenvattingen, trends en netwerkstatus staan als vier responsieve tegels in de eerste viewport, met een mobiele swipebare rij.
 - G1249 Premium Claude Design UI: Start toont nu een compacte startscan tussen de fertility hub en de vervolgpanelen. Vier tegels vatten traject, vandaag, dagadvies en kluis/context samen, met een mobiele swipebare rij zodat de eerste viewport minder als lange dashboardstapel voelt.
 - G1248 Premium Claude Design UI: de traject/timeline-werkbank toont nu een compacte trajectscan boven de routepanelen. De scanrij vat huidige fase, volgende actie, laatste timelinecontext en werkgrens samen in vier responsieve tegels, zodat Traject minder als losse administratie en meer als eerste-viewport behandelwerkbank leest.
 - G1246/G1247 Premium Claude Design UI: gevulde consultkaarten zijn nu intern scanbaarder. De kaart toont een compacte consultheader met datum, statuschips voor metadata/samenvatting/actiepunten/koppelingen, een losse veilige metadataregel en duidelijke secties voor verslagtekst, conceptsamenvatting, correctieverschil, actiepunten en inzichten. G1247 is toegevoegd om deze gevulde consultkaart ook met browser-evidence te bewaken.
