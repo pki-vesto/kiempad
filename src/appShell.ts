@@ -498,6 +498,53 @@ export function normalizeDossierRoute(value: string | null | undefined): Dossier
   return DOSSIER_ROUTES.includes(route as DossierRoute) ? (route as DossierRoute) : 'upload';
 }
 
+type KnowledgeRoute = 'read' | 'add' | 'ai' | 'library';
+
+const KNOWLEDGE_ROUTES: readonly KnowledgeRoute[] = ['read', 'add', 'ai', 'library'];
+
+export function normalizeKnowledgeRoute(value: string | null | undefined): KnowledgeRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return KNOWLEDGE_ROUTES.includes(route as KnowledgeRoute) ? (route as KnowledgeRoute) : 'read';
+}
+
+type WellbeingRoute = 'overview' | 'history' | 'log';
+
+const WELLBEING_ROUTES: readonly WellbeingRoute[] = ['overview', 'history', 'log'];
+
+export function normalizeWellbeingRoute(value: string | null | undefined): WellbeingRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return WELLBEING_ROUTES.includes(route as WellbeingRoute)
+    ? (route as WellbeingRoute)
+    : 'overview';
+}
+
+type DecisionRoute = 'prepare' | 'compare' | 'choice' | 'history';
+
+const DECISION_ROUTES: readonly DecisionRoute[] = ['prepare', 'compare', 'choice', 'history'];
+
+export function normalizeDecisionRoute(value: string | null | undefined): DecisionRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return DECISION_ROUTES.includes(route as DecisionRoute) ? (route as DecisionRoute) : 'prepare';
+}
+
+type FinanceRoute = 'overzicht' | 'toevoegen' | 'vergoeding' | 'historie';
+
+const FINANCE_ROUTES: readonly FinanceRoute[] = [
+  'overzicht',
+  'toevoegen',
+  'vergoeding',
+  'historie',
+];
+
+export function normalizeFinanceRoute(value: string | null | undefined): FinanceRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return FINANCE_ROUTES.includes(route as FinanceRoute) ? (route as FinanceRoute) : 'overzicht';
+}
+
 type CommandTaskRoute<RouteId extends string> = {
   id: RouteId;
   href: string;
@@ -568,6 +615,10 @@ export type AppShellState = {
   activeMedicationRoute?: MedicationRoute;
   activeQuestionRoute?: QuestionRoute;
   activeDossierRoute?: DossierRoute;
+  activeKnowledgeRoute?: KnowledgeRoute;
+  activeWellbeingRoute?: WellbeingRoute;
+  activeDecisionRoute?: DecisionRoute;
+  activeFinanceRoute?: FinanceRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -1401,6 +1452,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
   const decisions = state.decisions ?? [];
   const chosenCount = decisions.filter((decision) => Boolean(decision.keuze)).length;
   const linkedQuestionCount = decisions.filter((decision) => Boolean(decision.vraagId)).length;
+  const activeDecisionRoute = state.activeDecisionRoute ?? 'prepare';
 
   return sectionStack(
     [
@@ -1410,12 +1462,18 @@ function renderAfwegingenScreen(state: AppShellState): string {
         linkedQuestionCount,
         latestDecision: decisions[0],
       }),
-      renderDecisionTaskRoutes({
-        decisionCount: decisions.length,
-        chosenCount,
-        linkedQuestionCount,
-      }),
-      `<section id="afwegingen-route-prepare" class="decision-route-section" aria-labelledby="afwegingen-route-prepare-title" data-decision-route="prepare">
+      domainSplitWorkspace({
+        className: 'decision-split-workspace',
+        ariaLabel: 'Afwegingen split-view werkruimte',
+        data: { 'decision-split-workspace': 'ready' },
+        rail: renderDecisionTaskRoutes({
+          decisionCount: decisions.length,
+          chosenCount,
+          linkedQuestionCount,
+          activeRoute: activeDecisionRoute,
+        }),
+        main: `
+      <section id="afwegingen-route-prepare" class="decision-route-section" aria-labelledby="afwegingen-route-prepare-title" data-decision-route="prepare"${renderDecisionRouteVisibility(activeDecisionRoute, 'prepare')}>
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Voorbereiden</p>
           <h2 id="afwegingen-route-prepare-title">Beslisnotitie toevoegen</h2>
@@ -1437,8 +1495,8 @@ function renderAfwegingenScreen(state: AppShellState): string {
           open: decisions.length === 0,
           body: renderDecisionForm(state),
         })}
-      </section>`,
-      `<section id="afwegingen-route-compare" class="decision-route-section" aria-labelledby="afwegingen-route-compare-title" data-decision-route="compare">
+      </section>
+      <section id="afwegingen-route-compare" class="decision-route-section" aria-labelledby="afwegingen-route-compare-title" data-decision-route="compare"${renderDecisionRouteVisibility(activeDecisionRoute, 'compare')}>
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Vergelijken</p>
           <h2 id="afwegingen-route-compare-title">Opties vergelijken</h2>
@@ -1465,8 +1523,8 @@ function renderAfwegingenScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
-      `<section id="afwegingen-route-choice" class="decision-route-section" aria-labelledby="afwegingen-route-choice-title" data-decision-route="choice">
+      </section>
+      <section id="afwegingen-route-choice" class="decision-route-section" aria-labelledby="afwegingen-route-choice-title" data-decision-route="choice"${renderDecisionRouteVisibility(activeDecisionRoute, 'choice')}>
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Keuze</p>
           <h2 id="afwegingen-route-choice-title">Keuze vastleggen</h2>
@@ -1493,8 +1551,8 @@ function renderAfwegingenScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
-      `<section id="afwegingen-route-history" class="decision-route-section" aria-labelledby="afwegingen-route-history-title" data-decision-route="history">
+      </section>
+      <section id="afwegingen-route-history" class="decision-route-section" aria-labelledby="afwegingen-route-history-title" data-decision-route="history"${renderDecisionRouteVisibility(activeDecisionRoute, 'history')}>
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Geschiedenis</p>
           <h2 id="afwegingen-route-history-title">Beslisverslagen</h2>
@@ -1520,7 +1578,15 @@ function renderAfwegingenScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
+      </section>
+        `,
+        context: renderDecisionWorkspaceContext({
+          decisionCount: decisions.length,
+          chosenCount,
+          linkedQuestionCount,
+          latestDecision: decisions[0],
+        }),
+      }),
     ],
     { className: 'decision-command-layout', ariaLabel: 'Afwegingen beheren' },
   );
@@ -1577,40 +1643,90 @@ function renderDecisionTaskRoutes(input: {
   decisionCount: number;
   chosenCount: number;
   linkedQuestionCount: number;
+  activeRoute: DecisionRoute;
 }): string {
-  const routes = [
+  const openCount = input.decisionCount - input.chosenCount;
+  const routes: readonly CommandTaskRoute<DecisionRoute>[] = [
     {
-      href: '#afwegingen-route-prepare',
+      id: 'prepare',
+      href: '#afwegingen?route=prepare',
       label: 'Voorbereiden',
       meta: `${input.linkedQuestionCount} gekoppeld`,
+      badge: 'nieuw',
+      density: 'action',
     },
     {
-      href: '#afwegingen-route-compare',
+      id: 'compare',
+      href: '#afwegingen?route=compare',
       label: 'Vergelijken',
       meta: `${input.decisionCount} notities`,
+      badge: String(input.decisionCount),
+      density: input.decisionCount > 0 ? 'filled' : 'empty',
     },
-    { href: '#afwegingen-route-choice', label: 'Keuze', meta: `${input.chosenCount} vastgelegd` },
     {
-      href: '#afwegingen-route-history',
+      id: 'choice',
+      href: '#afwegingen?route=choice',
+      label: 'Keuze',
+      meta: `${input.chosenCount} vastgelegd`,
+      badge: String(openCount),
+      density: openCount > 0 ? 'action' : 'empty',
+    },
+    {
+      id: 'history',
+      href: '#afwegingen?route=history',
       label: 'Verslag',
       meta: `${input.decisionCount} verslagen`,
+      badge: String(input.decisionCount),
+      density: input.decisionCount > 0 ? 'filled' : 'empty',
     },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'decision-task-routes',
+    routeClassName: 'decision-task-route',
+    ariaLabel: 'Afwegingen taakroutes',
+    dataAttribute: 'decision-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderDecisionWorkspaceContext(input: {
+  decisionCount: number;
+  chosenCount: number;
+  linkedQuestionCount: number;
+  latestDecision: Decision | undefined;
+}): string {
+  const openCount = input.decisionCount - input.chosenCount;
+  const latest = input.latestDecision
+    ? `${input.latestDecision.onderwerp} · ${input.latestDecision.opties.length} optie(s)`
+    : 'Nog geen beslisnotitie.';
+
   return `
-    <nav class="decision-task-routes" aria-label="Afwegingen taakroutes" data-decision-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="decision-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Afwegingen context" data-decision-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Besluiten in beeld</h2>
+      ${statRow([
+        { label: 'Notities', value: String(input.decisionCount) },
+        { label: 'Keuzes', value: String(input.chosenCount) },
+        { label: 'Open', value: String(openCount) },
+        { label: 'Gekoppeld', value: String(input.linkedQuestionCount) },
+      ])}
+      <p class="linked-note">${escapeHtml(latest)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Afwegingen werkruimtegrens" data-decision-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Structuur zonder stuuradvies</h2>
+      <p>Voorbereiden, vergelijken, kiezen en teruglezen blijven aparte routes zodat Kiempad geen keuze suggereert.</p>
+      <p class="small-print">Deze kolom toont alleen beslismetadata en geen behandeladvies of voorkeur.</p>
+    </section>
   `;
+}
+
+function renderDecisionRouteVisibility(activeRoute: DecisionRoute, route: DecisionRoute): string {
+  return route === activeRoute
+    ? ' data-decision-route-state="active"'
+    : ' data-decision-route-state="inactive" hidden';
 }
 
 function renderDecisionForm(state: AppShellState): string {
@@ -9757,6 +9873,7 @@ function renderWelzijnScreen(state: AppShellState): string {
   const perDag = symptomenPerDag(logs);
   const overzicht = berekenWelzijnOverzicht(logs, checkIns);
   const trends = berekenWelzijnTrends(logs, checkIns);
+  const activeWellbeingRoute = state.activeWellbeingRoute ?? 'overview';
 
   return sectionStack(
     [
@@ -9769,13 +9886,19 @@ function renderWelzijnScreen(state: AppShellState): string {
         latestCheckIn: checkIns[0],
         latestSymptom: logs[0],
       }),
-      renderWelzijnTaskRoutes({
-        checkInCount: checkIns.length,
-        symptomCount: logs.length,
-        cycleCount: cycleData.length,
-        trendCount: trends.length,
-      }),
-      `<section id="welzijn-route-overview" class="wellbeing-route-section" aria-labelledby="welzijn-route-overview-title" data-wellbeing-route="overview">
+      domainSplitWorkspace({
+        className: 'wellbeing-split-workspace',
+        ariaLabel: 'Welzijn split-view werkruimte',
+        data: { 'wellbeing-split-workspace': 'ready' },
+        rail: renderWelzijnTaskRoutes({
+          checkInCount: checkIns.length,
+          symptomCount: logs.length,
+          cycleCount: cycleData.length,
+          trendCount: trends.length,
+          activeRoute: activeWellbeingRoute,
+        }),
+        main: `
+      <section id="welzijn-route-overview" class="wellbeing-route-section" aria-labelledby="welzijn-route-overview-title" data-wellbeing-route="overview"${renderWellbeingRouteVisibility(activeWellbeingRoute, 'overview')}>
         <header class="wellbeing-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="welzijn-route-overview-title">Welzijn en trends</h2>
@@ -9799,8 +9922,8 @@ function renderWelzijnScreen(state: AppShellState): string {
             ${renderWelzijnTrends(trends)}
           </div>
         </details>
-      </section>`,
-      `<section id="welzijn-route-history" class="wellbeing-route-section" aria-labelledby="welzijn-route-history-title" data-wellbeing-route="history">
+      </section>
+      <section id="welzijn-route-history" class="wellbeing-route-section" aria-labelledby="welzijn-route-history-title" data-wellbeing-route="history"${renderWellbeingRouteVisibility(activeWellbeingRoute, 'history')}>
         <header class="wellbeing-route-section__header">
           <p class="kp-card__eyebrow">Geschiedenis</p>
           <h2 id="welzijn-route-history-title">Check-ins, symptomen en cyclusmetingen</h2>
@@ -9850,8 +9973,8 @@ function renderWelzijnScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
-      `<section id="welzijn-route-log" class="wellbeing-route-section" aria-labelledby="welzijn-route-log-title" data-wellbeing-route="log">
+      </section>
+      <section id="welzijn-route-log" class="wellbeing-route-section" aria-labelledby="welzijn-route-log-title" data-wellbeing-route="log"${renderWellbeingRouteVisibility(activeWellbeingRoute, 'log')}>
         <header class="wellbeing-route-section__header">
           <p class="kp-card__eyebrow">Vastleggen</p>
           <h2 id="welzijn-route-log-title">Check-in, symptoom of cyclusmeting toevoegen</h2>
@@ -9873,7 +9996,16 @@ function renderWelzijnScreen(state: AppShellState): string {
           open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,
           body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm()}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm()}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
         })}
-      </section>`,
+      </section>
+        `,
+        context: renderWellbeingWorkspaceContext({
+          checkInCount: checkIns.length,
+          symptomCount: logs.length,
+          cycleCount: cycleData.length,
+          trendCount: trends.length,
+          latestDate: overzicht.laatsteDatum,
+        }),
+      }),
     ],
     { className: 'wellbeing-command-layout', ariaLabel: 'Symptomen en welzijn' },
   );
@@ -9937,31 +10069,80 @@ function renderWelzijnTaskRoutes(input: {
   symptomCount: number;
   cycleCount: number;
   trendCount: number;
+  activeRoute: WellbeingRoute;
 }): string {
-  const routes = [
-    { href: '#welzijn-route-overview', label: 'Overzicht', meta: `${input.trendCount} trends` },
+  const routes: readonly CommandTaskRoute<WellbeingRoute>[] = [
     {
-      href: '#welzijn-route-history',
+      id: 'overview',
+      href: '#welzijn?route=overview',
+      label: 'Overzicht',
+      meta: `${input.trendCount} trends`,
+      badge: String(input.trendCount),
+      density: input.trendCount > 0 ? 'filled' : 'empty',
+    },
+    {
+      id: 'history',
+      href: '#welzijn?route=history',
       label: 'Geschiedenis',
       meta: `${input.checkInCount} check-ins · ${input.symptomCount} logs`,
+      badge: String(input.checkInCount + input.symptomCount),
+      density: input.checkInCount + input.symptomCount > 0 ? 'filled' : 'empty',
     },
-    { href: '#welzijn-route-log', label: 'Vastleggen', meta: `${input.cycleCount} metingen` },
+    {
+      id: 'log',
+      href: '#welzijn?route=log',
+      label: 'Vastleggen',
+      meta: `${input.cycleCount} metingen`,
+      badge: 'nieuw',
+      density: 'action',
+    },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'wellbeing-task-routes',
+    routeClassName: 'wellbeing-task-route',
+    ariaLabel: 'Welzijn taakroutes',
+    dataAttribute: 'wellbeing-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderWellbeingWorkspaceContext(input: {
+  checkInCount: number;
+  symptomCount: number;
+  cycleCount: number;
+  trendCount: number;
+  latestDate: string | undefined;
+}): string {
   return `
-    <nav class="wellbeing-task-routes" aria-label="Welzijn taakroutes" data-wellbeing-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="wellbeing-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Welzijn context" data-wellbeing-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Welzijn in beeld</h2>
+      ${statRow([
+        { label: 'Check-ins', value: String(input.checkInCount) },
+        { label: 'Logs', value: String(input.symptomCount) },
+        { label: 'Cyclus', value: String(input.cycleCount) },
+        { label: 'Trends', value: String(input.trendCount) },
+      ])}
+      <p class="linked-note">Laatst vastgelegd: ${escapeHtml(input.latestDate ?? 'nog niets')}.</p>
+    </section>
+    <section class="policy-panel" aria-label="Welzijn werkruimtegrens" data-wellbeing-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Feiten zonder score</h2>
+      <p>Overzicht, geschiedenis en vastleggen blijven gescheiden zodat self-tracking niet als diagnosepaneel leest.</p>
+      <p class="small-print">Deze kolom toont alleen lokale tellingen en geen medisch oordeel of behandeladvies.</p>
+    </section>
   `;
+}
+
+function renderWellbeingRouteVisibility(
+  activeRoute: WellbeingRoute,
+  route: WellbeingRoute,
+): string {
+  return route === activeRoute
+    ? ' data-wellbeing-route-state="active"'
+    : ' data-wellbeing-route-state="inactive" hidden';
 }
 
 function renderWelzijnTrends(trends: WelzijnTrendPeriode[]): string {
@@ -10168,6 +10349,7 @@ function renderKennisScreen(state: AppShellState): string {
     researchBronnen,
     state.settings.researchNetwerk.ingeschakeld,
   );
+  const activeKnowledgeRoute = state.activeKnowledgeRoute ?? 'read';
 
   return `
     <section class="section-stack knowledge-command-layout" aria-label="Kennisbank">
@@ -10181,7 +10363,20 @@ function renderKennisScreen(state: AppShellState): string {
         netwerkAan: state.settings.researchNetwerk.ingeschakeld,
         filter,
       })}
-      <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read">
+      ${domainSplitWorkspace({
+        className: 'knowledge-split-workspace',
+        ariaLabel: 'Kennis split-view werkruimte',
+        data: { 'knowledge-split-workspace': 'ready' },
+        rail: renderKennisTaskRoutes({
+          researchBronnen: researchBronnen.length,
+          researchSamenvattingen:
+            researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+          researchTrends: researchTrendGroepen.length,
+          kennisItems: filteredItems.length,
+          activeRoute: activeKnowledgeRoute,
+        }),
+        main: `
+      <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'read')}>
         <header class="knowledge-route-section__header">
           <p class="kp-card__eyebrow">Research lezen</p>
           <h2 id="knowledge-route-read-title">Bronnen, samenvattingen en trends</h2>
@@ -10226,7 +10421,7 @@ function renderKennisScreen(state: AppShellState): string {
           </div>
         </details>
       </section>
-      <section id="knowledge-route-add" class="knowledge-route-section" aria-labelledby="knowledge-route-add-title" data-knowledge-route="add">
+      <section id="knowledge-route-add" class="knowledge-route-section" aria-labelledby="knowledge-route-add-title" data-knowledge-route="add"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'add')}>
         <header class="knowledge-route-section__header">
           <p class="kp-card__eyebrow">Vastleggen</p>
           <h2 id="knowledge-route-add-title">Research en eigen kennis toevoegen</h2>
@@ -10254,7 +10449,7 @@ function renderKennisScreen(state: AppShellState): string {
           </div>
         </div>
       </section>
-      <section id="knowledge-route-ai" class="knowledge-route-section" aria-labelledby="knowledge-route-ai-title" data-knowledge-route="ai">
+      <section id="knowledge-route-ai" class="knowledge-route-section" aria-labelledby="knowledge-route-ai-title" data-knowledge-route="ai"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'ai')}>
         <header class="knowledge-route-section__header">
           <p class="kp-card__eyebrow">AI en netwerk</p>
           <h2 id="knowledge-route-ai-title">Opt-in, preview en opslag</h2>
@@ -10291,7 +10486,7 @@ function renderKennisScreen(state: AppShellState): string {
           </div>
         </div>
       </section>
-      <section id="knowledge-route-library" class="knowledge-route-section" aria-labelledby="knowledge-route-library-title" data-knowledge-route="library">
+      <section id="knowledge-route-library" class="knowledge-route-section" aria-labelledby="knowledge-route-library-title" data-knowledge-route="library"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'library')}>
         <header class="knowledge-route-section__header">
           <p class="kp-card__eyebrow">Bibliotheek</p>
           <h2 id="knowledge-route-library-title">Kennisitems per categorie</h2>
@@ -10320,6 +10515,17 @@ function renderKennisScreen(state: AppShellState): string {
           </div>
         </details>
       </section>
+      `,
+        context: renderKnowledgeWorkspaceContext({
+          researchBronnen: researchBronnen.length,
+          researchSamenvattingen:
+            researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+          researchTrends: researchTrendGroepen.length,
+          kennisItems: filteredItems.length,
+          totalKennisItems: state.kennisItems.length,
+          netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+        }),
+      })}
     </section>
   `;
 }
@@ -10343,12 +10549,6 @@ function renderKnowledgeResearchWorkbench(input: {
         </div>
         <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
       </header>
-      ${renderKennisTaskRoutes({
-        researchBronnen: input.researchBronnen,
-        researchSamenvattingen: input.researchSamenvattingen,
-        researchTrends: input.researchTrends,
-        kennisItems: input.kennisItems,
-      })}
       <div id="knowledge-overview" class="summary-panel priority-panel knowledge-command-panel">
         <div class="knowledge-command-panel__intro">
           <div>
@@ -10374,36 +10574,89 @@ function renderKennisTaskRoutes(input: {
   researchSamenvattingen: number;
   researchTrends: number;
   kennisItems: number;
+  activeRoute: KnowledgeRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<KnowledgeRoute>[] = [
     {
-      href: '#knowledge-route-read',
+      id: 'read',
+      href: '#kennis?route=read',
       label: 'Research lezen',
       meta: `${input.researchBronnen} bronnen · ${input.researchSamenvattingen} samenvattingen`,
+      badge: String(input.researchBronnen),
+      density: input.researchBronnen > 0 ? 'filled' : 'empty',
     },
-    { href: '#knowledge-route-add', label: 'Toevoegen', meta: 'Research of kennisitem' },
     {
-      href: '#knowledge-route-ai',
+      id: 'add',
+      href: '#kennis?route=add',
+      label: 'Toevoegen',
+      meta: 'Research of kennisitem',
+      badge: 'nieuw',
+      density: 'action',
+    },
+    {
+      id: 'ai',
+      href: '#kennis?route=ai',
       label: 'AI & netwerk',
       meta: `${input.researchTrends} trendgroepen`,
+      badge: String(input.researchTrends),
+      density: input.researchTrends > 0 ? 'filled' : 'action',
     },
-    { href: '#knowledge-route-library', label: 'Bibliotheek', meta: `${input.kennisItems} items` },
+    {
+      id: 'library',
+      href: '#kennis?route=library',
+      label: 'Bibliotheek',
+      meta: `${input.kennisItems} items`,
+      badge: String(input.kennisItems),
+      density: input.kennisItems > 0 ? 'filled' : 'empty',
+    },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'knowledge-task-routes',
+    routeClassName: 'knowledge-task-route',
+    ariaLabel: 'Kennis taakroutes',
+    dataAttribute: 'knowledge-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderKnowledgeWorkspaceContext(input: {
+  researchBronnen: number;
+  researchSamenvattingen: number;
+  researchTrends: number;
+  kennisItems: number;
+  totalKennisItems: number;
+  netwerkAan: boolean;
+}): string {
   return `
-    <nav class="knowledge-task-routes" aria-label="Kennis taakroutes" data-knowledge-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="knowledge-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Kennis context" data-knowledge-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Research in beeld</h2>
+      ${statRow([
+        { label: 'Bronnen', value: String(input.researchBronnen) },
+        { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
+        { label: 'Trends', value: String(input.researchTrends) },
+        { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
+      ])}
+      <p class="linked-note">${input.netwerkAan ? 'Netwerkresearch staat bewust aan.' : 'Lokale researchcache zonder netwerkopt-in.'}</p>
+    </section>
+    <section class="policy-panel" aria-label="Kennis werkruimtegrens" data-knowledge-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Bronnen naast de taak</h2>
+      <p>Lezen, toevoegen, AI/netwerk en bibliotheek blijven gescheiden zodat research niet als één lange publicatielijst opent.</p>
+      <p class="small-print">Deze kolom toont alleen tellingen en opt-instatus; geen medisch advies of behandelkeuze.</p>
+    </section>
   `;
+}
+
+function renderKnowledgeRouteVisibility(
+  activeRoute: KnowledgeRoute,
+  route: KnowledgeRoute,
+): string {
+  return route === activeRoute
+    ? ' data-knowledge-route-state="active"'
+    : ' data-knowledge-route-state="inactive" hidden';
 }
 
 function renderEigenKennisItemForm(item?: KennisItem): string {
@@ -10463,6 +10716,7 @@ function renderKostenScreen(state: AppShellState): string {
   const vergoedCount = kosten.filter((item) => item.vergoed === 'ja').length;
   const eigenRisicoCount = kosten.filter((item) => item.vergoed === 'eigen_risico').length;
   const onbekendCount = kosten.filter((item) => item.vergoed === 'onbekend').length;
+  const activeFinanceRoute = state.activeFinanceRoute ?? 'overzicht';
 
   return sectionStack(
     [
@@ -10474,13 +10728,19 @@ function renderKostenScreen(state: AppShellState): string {
         overview: overzicht,
         latestCost: kosten[0],
       }),
-      renderFinanceTaskRoutes({
-        costCount: kosten.length,
-        vergoedCount,
-        eigenRisicoCount,
-        onbekendCount,
-      }),
-      `<section id="kosten-route-overzicht" class="finance-route-section" aria-labelledby="kosten-route-overzicht-title" data-finance-route="overzicht">
+      domainSplitWorkspace({
+        className: 'finance-split-workspace',
+        ariaLabel: 'Kosten split-view werkruimte',
+        data: { 'finance-split-workspace': 'ready' },
+        rail: renderFinanceTaskRoutes({
+          costCount: kosten.length,
+          vergoedCount,
+          eigenRisicoCount,
+          onbekendCount,
+          activeRoute: activeFinanceRoute,
+        }),
+        main: `
+      <section id="kosten-route-overzicht" class="finance-route-section" aria-labelledby="kosten-route-overzicht-title" data-finance-route="overzicht"${renderFinanceRouteVisibility(activeFinanceRoute, 'overzicht')}>
         <header class="finance-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="kosten-route-overzicht-title">Lokale kostenbibliotheek</h2>
@@ -10503,8 +10763,8 @@ function renderKostenScreen(state: AppShellState): string {
           <div><dt>Mogelijke eigen bijdrage</dt><dd>${formatEuro(overzicht.eigenBijdrage)}</dd></div>
           <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
         </dl>
-      </section>`,
-      `<section id="kosten-route-toevoegen" class="finance-route-section" aria-labelledby="kosten-route-toevoegen-title" data-finance-route="toevoegen">
+      </section>
+      <section id="kosten-route-toevoegen" class="finance-route-section" aria-labelledby="kosten-route-toevoegen-title" data-finance-route="toevoegen"${renderFinanceRouteVisibility(activeFinanceRoute, 'toevoegen')}>
         <header class="finance-route-section__header">
           <p class="kp-card__eyebrow">Toevoegen</p>
           <h2 id="kosten-route-toevoegen-title">Kostenpost toevoegen</h2>
@@ -10526,8 +10786,8 @@ function renderKostenScreen(state: AppShellState): string {
           open: kosten.length === 0,
           body: renderKostenForm(),
         })}
-      </section>`,
-      `<section id="kosten-route-vergoeding" class="finance-route-section" aria-labelledby="kosten-route-vergoeding-title" data-finance-route="vergoeding">
+      </section>
+      <section id="kosten-route-vergoeding" class="finance-route-section" aria-labelledby="kosten-route-vergoeding-title" data-finance-route="vergoeding"${renderFinanceRouteVisibility(activeFinanceRoute, 'vergoeding')}>
         <header class="finance-route-section__header">
           <p class="kp-card__eyebrow">Vergoeding</p>
           <h2 id="kosten-route-vergoeding-title">Vergoeding en eigen risico</h2>
@@ -10556,8 +10816,8 @@ function renderKostenScreen(state: AppShellState): string {
             <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
           </div>
         </details>
-      </section>`,
-      `<section id="kosten-route-historie" class="finance-route-section" aria-labelledby="kosten-route-historie-title" data-finance-route="historie">
+      </section>
+      <section id="kosten-route-historie" class="finance-route-section" aria-labelledby="kosten-route-historie-title" data-finance-route="historie"${renderFinanceRouteVisibility(activeFinanceRoute, 'historie')}>
         <header class="finance-route-section__header">
           <p class="kp-card__eyebrow">Historie</p>
           <h2 id="kosten-route-historie-title">Kostenhistorie</h2>
@@ -10584,7 +10844,17 @@ function renderKostenScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
+      </section>
+        `,
+        context: renderFinanceWorkspaceContext({
+          costCount: kosten.length,
+          vergoedCount,
+          eigenRisicoCount,
+          onbekendCount,
+          overview: overzicht,
+          latestCost: kosten[0],
+        }),
+      }),
     ],
     { className: 'finance-command-layout', ariaLabel: 'Kosten en vergoedingen' },
   );
@@ -10647,32 +10917,90 @@ function renderFinanceTaskRoutes(input: {
   vergoedCount: number;
   eigenRisicoCount: number;
   onbekendCount: number;
+  activeRoute: FinanceRoute;
 }): string {
-  const routes = [
-    { href: '#kosten-route-overzicht', label: 'Overzicht', meta: `${input.costCount} posten` },
-    { href: '#kosten-route-toevoegen', label: 'Toevoegen', meta: 'nieuwe post' },
+  const routes: readonly CommandTaskRoute<FinanceRoute>[] = [
     {
-      href: '#kosten-route-vergoeding',
+      id: 'overzicht',
+      href: '#kosten?route=overzicht',
+      label: 'Overzicht',
+      meta: `${input.costCount} posten`,
+      badge: String(input.costCount),
+      density: input.costCount > 0 ? 'filled' : 'empty',
+    },
+    {
+      id: 'toevoegen',
+      href: '#kosten?route=toevoegen',
+      label: 'Toevoegen',
+      meta: 'nieuwe post',
+      badge: 'nieuw',
+      density: 'action',
+    },
+    {
+      id: 'vergoeding',
+      href: '#kosten?route=vergoeding',
       label: 'Vergoeding',
       meta: `${input.vergoedCount} vergoed · ${input.eigenRisicoCount} ER`,
+      badge: String(input.vergoedCount + input.eigenRisicoCount),
+      density: input.vergoedCount + input.eigenRisicoCount > 0 ? 'filled' : 'empty',
     },
-    { href: '#kosten-route-historie', label: 'Historie', meta: `${input.onbekendCount} onbekend` },
+    {
+      id: 'historie',
+      href: '#kosten?route=historie',
+      label: 'Historie',
+      meta: `${input.onbekendCount} onbekend`,
+      badge: String(input.onbekendCount),
+      density: input.onbekendCount > 0 ? 'action' : 'empty',
+    },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'finance-task-routes',
+    routeClassName: 'finance-task-route',
+    ariaLabel: 'Kosten taakroutes',
+    dataAttribute: 'finance-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderFinanceWorkspaceContext(input: {
+  costCount: number;
+  vergoedCount: number;
+  eigenRisicoCount: number;
+  onbekendCount: number;
+  overview: ReturnType<typeof berekenKostenOverzicht>;
+  latestCost: CostItem | undefined;
+}): string {
+  const latest = input.latestCost
+    ? `${input.latestCost.omschrijving} · ${formatEuro(input.latestCost.bedrag)}`
+    : 'Nog geen kostenpost.';
+
   return `
-    <nav class="finance-task-routes" aria-label="Kosten taakroutes" data-finance-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="finance-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Kosten context" data-finance-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Kosten in beeld</h2>
+      ${statRow([
+        { label: 'Totaal', value: formatEuro(input.overview.totaal) },
+        { label: 'Vergoed', value: formatEuro(input.overview.vergoed) },
+        { label: 'Eigen bijdrage', value: formatEuro(input.overview.eigenBijdrage) },
+        { label: 'Onbekend', value: formatEuro(input.overview.onbekend) },
+      ])}
+      <p class="linked-note">${escapeHtml(latest)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Kosten werkruimtegrens" data-finance-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Geen polisinterpretatie</h2>
+      <p>${input.costCount} post(en) · ${input.vergoedCount} vergoed · ${input.eigenRisicoCount} eigen risico · ${input.onbekendCount} onbekend.</p>
+      <p class="small-print">Deze kolom toont alleen lokale administratie en geen financieel advies.</p>
+    </section>
   `;
+}
+
+function renderFinanceRouteVisibility(activeRoute: FinanceRoute, route: FinanceRoute): string {
+  return route === activeRoute
+    ? ' data-finance-route-state="active"'
+    : ' data-finance-route-state="inactive" hidden';
 }
 
 function renderKostenForm(selected?: CostItem): string {

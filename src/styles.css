@@ -2303,10 +2303,6 @@ h2 {
   scroll-margin-top: 84px;
 }
 
-.knowledge-route-section[hidden] {
-  display: none;
-}
-
 .knowledge-route-section__header {
   display: grid;
   gap: 4px;
@@ -3340,6 +3336,13 @@ h2 {
   min-width: 0;
   gap: 12px;
   scroll-margin-top: 84px;
+}
+
+.knowledge-route-section[hidden],
+.wellbeing-route-section[hidden],
+.decision-route-section[hidden],
+.finance-route-section[hidden] {
+  display: none;
 }
 
 .finance-route-section__header {

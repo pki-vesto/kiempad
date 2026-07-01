@@ -3,12 +3,16 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
+  normalizeDecisionRoute,
   normalizeDossierRoute,
+  normalizeFinanceRoute,
+  normalizeKnowledgeRoute,
   normalizeMedicationRoute,
   normalizeQuestionRoute,
   normalizeScheduleRoute,
   normalizeScreenId,
   normalizeTreatmentRoute,
+  normalizeWellbeingRoute,
   renderAppShell,
   renderStorageBootstrapError,
   renderVaultGate,
@@ -1676,6 +1680,18 @@ describe('app shell', () => {
     expect(normalizeTreatmentRoute('#traject?route=context')).toBe('context');
     expect(normalizeTreatmentRoute('#/traject?route=beheer')).toBe('beheer');
     expect(normalizeTreatmentRoute('#traject?route=bestaat-niet')).toBe('overzicht');
+    expect(normalizeScreenId('#kennis?route=ai')).toBe('kennis');
+    expect(normalizeKnowledgeRoute('#kennis?route=ai')).toBe('ai');
+    expect(normalizeKnowledgeRoute('#kennis?route=bestaat-niet')).toBe('read');
+    expect(normalizeScreenId('#welzijn?route=history')).toBe('welzijn');
+    expect(normalizeWellbeingRoute('#welzijn?route=history')).toBe('history');
+    expect(normalizeWellbeingRoute('#welzijn?route=bestaat-niet')).toBe('overview');
+    expect(normalizeScreenId('#afwegingen?route=choice')).toBe('afwegingen');
+    expect(normalizeDecisionRoute('#afwegingen?route=choice')).toBe('choice');
+    expect(normalizeDecisionRoute('#afwegingen?route=bestaat-niet')).toBe('prepare');
+    expect(normalizeScreenId('#kosten?route=vergoeding')).toBe('kosten');
+    expect(normalizeFinanceRoute('#kosten?route=vergoeding')).toBe('vergoeding');
+    expect(normalizeFinanceRoute('#kosten?route=bestaat-niet')).toBe('overzicht');
     expect(normalizeScreenId('#/bestaat-niet')).toBe('start');
   });
 
@@ -34605,12 +34621,12 @@ describe('app shell', () => {
     expect(html).toContain('href="#welzijn-route-overview"');
     expect(html).toContain('href="#welzijn-route-history"');
     expect(html).toContain('href="#welzijn-route-log"');
-    expect(html).toContain('class="wellbeing-task-routes"');
+    expect(html).toContain('class="wellbeing-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Welzijn taakroutes"');
     expect(html).toContain('data-wellbeing-task-routes="ready"');
-    expect(html).toContain('href="#welzijn-route-overview"');
-    expect(html).toContain('href="#welzijn-route-history"');
-    expect(html).toContain('href="#welzijn-route-log"');
+    expect(html).toContain('href="#welzijn?route=overview"');
+    expect(html).toContain('href="#welzijn?route=history"');
+    expect(html).toContain('href="#welzijn?route=log"');
     expect(html).toContain('id="welzijn-route-overview"');
     expect(html).toContain('data-wellbeing-route="overview"');
     expect(html).toContain('id="welzijn-route-history"');
@@ -34764,13 +34780,13 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-overview"');
     expect(html).toContain('class="knowledge-command-panel__intro"');
     expect(html).toContain('<span class="stat__value">');
-    expect(html).toContain('class="knowledge-task-routes"');
+    expect(html).toContain('class="knowledge-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Kennis taakroutes"');
     expect(html).toContain('data-knowledge-task-routes="ready"');
-    expect(html).toContain('href="#knowledge-route-read"');
-    expect(html).toContain('href="#knowledge-route-add"');
-    expect(html).toContain('href="#knowledge-route-ai"');
-    expect(html).toContain('href="#knowledge-route-library"');
+    expect(html).toContain('href="#kennis?route=read"');
+    expect(html).toContain('href="#kennis?route=add"');
+    expect(html).toContain('href="#kennis?route=ai"');
+    expect(html).toContain('href="#kennis?route=library"');
     expect(html).toContain('id="knowledge-route-read"');
     expect(html).toContain('data-knowledge-route="read"');
     expect(html).toContain('id="knowledge-route-add"');
@@ -34917,7 +34933,11 @@ describe('app shell', () => {
     expect(css).toContain('[data-knowledge-first-viewport="research-workbench"]');
     expect(css).toContain('.knowledge-research-workbench__header {');
     expect(css).toContain('.knowledge-research-workbench__status {');
-    expect(css).toContain('.knowledge-route-section[hidden] {');
+    expect(css).toContain('.knowledge-route-section[hidden],');
+    expect(css).toContain('.wellbeing-route-section[hidden],');
+    expect(css).toContain('.decision-route-section[hidden],');
+    expect(css).toContain('.finance-route-section[hidden] {');
+    expect(css).toContain('display: none;');
     expect(css).toContain('.dossier-route-section[hidden] {');
     expect(css).toContain('.knowledge-command-panel__intro {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
@@ -35481,13 +35501,13 @@ describe('app shell', () => {
     expect(html).toContain('href="#kosten-route-overzicht"');
     expect(html).toContain('href="#kosten-route-vergoeding"');
     expect(html).toContain('href="#kosten-route-toevoegen"');
-    expect(html).toContain('class="finance-task-routes"');
+    expect(html).toContain('class="finance-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Kosten taakroutes"');
     expect(html).toContain('data-finance-task-routes="ready"');
-    expect(html).toContain('href="#kosten-route-overzicht"');
-    expect(html).toContain('href="#kosten-route-toevoegen"');
-    expect(html).toContain('href="#kosten-route-vergoeding"');
-    expect(html).toContain('href="#kosten-route-historie"');
+    expect(html).toContain('href="#kosten?route=overzicht"');
+    expect(html).toContain('href="#kosten?route=toevoegen"');
+    expect(html).toContain('href="#kosten?route=vergoeding"');
+    expect(html).toContain('href="#kosten?route=historie"');
     expect(html).toContain('id="kosten-route-overzicht"');
     expect(html).toContain('data-finance-route="overzicht"');
     expect(html).toContain('id="kosten-route-toevoegen"');
@@ -35586,13 +35606,13 @@ describe('app shell', () => {
     expect(html).toContain('href="#afwegingen-route-prepare"');
     expect(html).toContain('href="#afwegingen-route-compare"');
     expect(html).toContain('href="#afwegingen-route-choice"');
-    expect(html).toContain('class="decision-task-routes"');
+    expect(html).toContain('class="decision-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Afwegingen taakroutes"');
     expect(html).toContain('data-decision-task-routes="ready"');
-    expect(html).toContain('href="#afwegingen-route-prepare"');
-    expect(html).toContain('href="#afwegingen-route-compare"');
-    expect(html).toContain('href="#afwegingen-route-choice"');
-    expect(html).toContain('href="#afwegingen-route-history"');
+    expect(html).toContain('href="#afwegingen?route=prepare"');
+    expect(html).toContain('href="#afwegingen?route=compare"');
+    expect(html).toContain('href="#afwegingen?route=choice"');
+    expect(html).toContain('href="#afwegingen?route=history"');
     expect(html).toContain('id="afwegingen-route-prepare"');
     expect(html).toContain('data-decision-route="prepare"');
     expect(html).toContain('id="afwegingen-route-compare"');
@@ -36574,6 +36594,19 @@ describe('app shell', () => {
       'medicatie',
       makeStartState({ activeMedicationRoute: 'beheer' }),
     );
+    const kennisHtml = renderAppShell('kennis', makeStartState({ activeKnowledgeRoute: 'ai' }));
+    const welzijnHtml = renderAppShell(
+      'welzijn',
+      makeStartState({ activeWellbeingRoute: 'history' }),
+    );
+    const afwegingenHtml = renderAppShell(
+      'afwegingen',
+      makeStartState({ activeDecisionRoute: 'choice' }),
+    );
+    const kostenHtml = renderAppShell(
+      'kosten',
+      makeStartState({ activeFinanceRoute: 'vergoeding' }),
+    );
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
@@ -36583,6 +36616,10 @@ describe('app shell', () => {
       ['question', vragenHtml],
       ['treatment', trajectHtml],
       ['medication', medicatieHtml],
+      ['knowledge', kennisHtml],
+      ['wellbeing', welzijnHtml],
+      ['decision', afwegingenHtml],
+      ['finance', kostenHtml],
     ] as const) {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
@@ -36610,6 +36647,24 @@ describe('app shell', () => {
     expect(medicatieHtml).toContain('data-medication-workspace-context="metrics"');
     expect(medicatieHtml).toContain(
       'data-medication-route="beheer" data-medication-route-state="active"',
+    );
+    expect(kennisHtml).toContain('class="domain-split-workspace knowledge-split-workspace"');
+    expect(kennisHtml).toContain('data-knowledge-workspace-context="metrics"');
+    expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
+    expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
+    expect(welzijnHtml).toContain('data-wellbeing-workspace-context="metrics"');
+    expect(welzijnHtml).toContain(
+      'data-wellbeing-route="history" data-wellbeing-route-state="active"',
+    );
+    expect(afwegingenHtml).toContain('class="domain-split-workspace decision-split-workspace"');
+    expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
+    expect(afwegingenHtml).toContain(
+      'data-decision-route="choice" data-decision-route-state="active"',
+    );
+    expect(kostenHtml).toContain('class="domain-split-workspace finance-split-workspace"');
+    expect(kostenHtml).toContain('data-finance-workspace-context="metrics"');
+    expect(kostenHtml).toContain(
+      'data-finance-route="vergoeding" data-finance-route-state="active"',
     );
 
     expect(css).toContain('.domain-split-workspace {');
