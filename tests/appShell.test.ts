@@ -3946,6 +3946,9 @@ describe('app shell', () => {
     const timelineReader = extractFertilityTimelineReader(html);
     expect(html).toContain('class="treatment-focus-shell"');
     expect(html).toContain('data-treatment-focus-shell="ready"');
+    expect(html).toContain('data-treatment-console="ready"');
+    expect(html).toContain('data-treatment-console-region="workbench"');
+    expect(html).toContain('data-treatment-console-region="workspace"');
     expect(html).toContain('Eerst fase en tijdlijn lezen, daarna beheren');
     expect(html).toContain('data-treatment-focus-region="workbench"');
     expect(html).toContain('data-treatment-focus-region="workspace"');
@@ -4114,6 +4117,9 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-focus-shell__header {');
     expect(css).toContain('.treatment-focus-shell__body {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.treatment-focus-shell__workbench > .treatment-workbench {');
     expect(css).toContain('.treatment-focus-shell__workbench .treatment-workbench__grid {');
     expect(css).toContain('grid-template-columns: minmax(220px, 0.54fr) minmax(0, 1.46fr);');
@@ -4125,6 +4131,7 @@ describe('app shell', () => {
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
     );
+    expect(css).toContain('"rail context";');
     expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace__context {');
     expect(css).toContain('gap: 10px;');
     expect(css).toContain('.treatment-workbench {');
@@ -37837,6 +37844,9 @@ describe('app shell', () => {
     expect(vragenHtml).toContain('data-question-workspace-context="metrics"');
     expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
     expect(trajectHtml).toContain('class="domain-split-workspace treatment-split-workspace"');
+    expect(trajectHtml).toContain('data-treatment-console="ready"');
+    expect(trajectHtml).toContain('data-treatment-console-region="workbench"');
+    expect(trajectHtml).toContain('data-treatment-console-region="workspace"');
     expect(trajectHtml).toContain('data-treatment-workspace-context="metrics"');
     expect(trajectHtml).toContain('data-workspace-context-signals="treatment"');
     expect(trajectHtml).toContain('data-workspace-context-microstate="treatment-fasen"');
