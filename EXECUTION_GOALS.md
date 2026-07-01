@@ -4038,6 +4038,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Browser smoke, screenshots, app shell, styles, tests
 - **ADR Needed:** no
 - **Score:** 42
+- **Status:** ☑ done
+
+### G1232 — contextsignalen visueel verfijnen na screenshotaudit
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Contextsignalen hebben nu screenshot-buffer evidence, maar de visuele hiërarchie, dichtheid en touch targets kunnen nog verder gepolijst worden op basis van die audit.
+- **User Impact:** Gebruikers kunnen contextkaarten op sommige schermen nog als vrij gelijkwaardig of compact ervaren, terwijl de rechterkolom snel scanbaar moet blijven.
+- **Desired Outcome:** Verfijn de contextsignalen zichtbaar met betere hiërarchie, mobiele dichtheid of interactie-affordance terwijl de nieuwe browser-evidence groen blijft.
+- **User Value:** Gebruikers zien sneller welk contextsignaal prioriteit heeft zonder dat de rechterkolom te druk wordt.
+- **Acceptance Criteria:** Contextsignalen krijgen aantoonbaar verfijnde visuele hiërarchie of mobiele dichtheid; minimaal zes representatieve split-view werkruimtes blijven gedekt door browser-evidence; mobile blijft zonder horizontale overflow en tekst blijft binnen contextkaarten; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, context signal styles, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 41
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

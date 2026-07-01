@@ -46,5 +46,7 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Split workspace smoke
         run: npm run smoke:split-workspaces
+      - name: Context signals visual smoke
+        run: npm run smoke:context-signals
       - name: External asset scan
         run: npm run assets:check

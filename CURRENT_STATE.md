@@ -674,6 +674,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   en behandelcontext. Welzijn, Afwegingen, Kosten, Logboek, Herinneringen en
   Back-up gebruiken dezelfde contextsignalenlaag voor respectievelijk welzijn,
   keuzes, administratie, auditprivacy, meldingsprivacy en back-upveiligheid.
+  `npm run smoke:context-signals` levert privacyveilige screenshot-buffer evidence
+  en layoutchecks voor Dossier, Traject, Welzijn, Kosten, Logboek en Back-up op
+  desktop en mobiel.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -689,7 +692,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1231: split-view contextsignalen visueel toetsen met screenshots.
+1. UI Improvement Evolution uitvoeren vanaf G1232: contextsignalen visueel verfijnen na screenshotaudit.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
