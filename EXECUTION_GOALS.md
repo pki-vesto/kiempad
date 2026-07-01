@@ -4134,6 +4134,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Context signal styles, design tokens, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 36
+- **Status:** ☑ done
+
+### G1238 — contextkolom scanritme verfijnen na flow-accenten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Contextkolommen hebben nu microstates, next-actions, flow en domeinaccenten, maar het verticale scanritme tussen microstate en signaalkaarten kan nog compacter en rustiger.
+- **User Impact:** Gebruikers zien de routecontext beter, maar kunnen op kleinere schermen nog relatief veel verticale ruimte besteden aan de rechterkolom.
+- **Desired Outcome:** Verfijn spacing, line-height en compactheid van contextkolommen zodat de flow zichtbaar blijft zonder extra hoogte of drukte.
+- **User Value:** Gebruikers scannen de secundaire context sneller terwijl het actieve hoofdvlak leidend blijft.
+- **Acceptance Criteria:** Minimaal zes contextkolommen tonen een compacter scanritme zonder tekstoverlap; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Context signal styles, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 35
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

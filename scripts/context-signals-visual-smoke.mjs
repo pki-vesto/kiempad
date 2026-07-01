@@ -253,6 +253,7 @@ async function assertContextSignals(browser, options) {
             cards[0].flowMarker.content !== 'none' &&
             cards[0].flowMarker.width >= 8 &&
             cards[0].flowMarker.height >= 8,
+          flowAccent: cards[0]?.flowMarker.borderColor ?? '',
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
             document.body.scrollWidth > document.body.clientWidth + 1,
@@ -299,9 +300,17 @@ async function assertContextSignals(browser, options) {
         screen: target.screen,
         signal: target.signal,
         microstate: target.microstate,
+        flowAccent: evidence.flowAccent,
         cards: evidence.cardCount,
         screenshotBytes: screenshot.byteLength,
       });
+    }
+
+    const distinctFlowAccents = new Set(checked.map((target) => target.flowAccent).filter(Boolean));
+    if (distinctFlowAccents.size < 4) {
+      throw new Error(
+        `${options.label}: contextflow mist route-eigen accentbalans (${distinctFlowAccents.size} accentfamilies).`,
+      );
     }
 
     return { viewport: options.label, checked: checked.length, targets: checked };

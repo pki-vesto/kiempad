@@ -65,6 +65,8 @@ describe('context signals visual smoke script', () => {
     expect(contextSignalsVisualSmokeScript).toContain('data-workspace-context-flow');
     expect(contextSignalsVisualSmokeScript).toContain('flowConnectorVisible');
     expect(contextSignalsVisualSmokeScript).toContain('firstCardFlowLinked');
+    expect(contextSignalsVisualSmokeScript).toContain('flowAccent');
+    expect(contextSignalsVisualSmokeScript).toContain('distinctFlowAccents');
     expect(contextSignalsVisualSmokeScript).toContain('textFits');
     expect(contextSignalsVisualSmokeScript).toContain('actionTargets');
     expect(contextSignalsVisualSmokeScript).toContain('firstCardPrioritized');
