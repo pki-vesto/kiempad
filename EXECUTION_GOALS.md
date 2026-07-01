@@ -4006,6 +4006,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, context columns, styles, tests
 - **ADR Needed:** no
 - **Score:** 44
+- **Status:** ☑ done
+
+### G1230 — split-view contextsignalen uitbreiden naar beheer- en welzijnsdomeinen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossier, Agenda, Kennis en Traject hebben nu domeinspecifieke contextsignalen, maar de resterende split-view werkruimtes tonen nog vooral metrics en werkgrenzen.
+- **User Impact:** Beheer-, welzijns- en systeemschermen voelen daardoor minder rijk en minder domeinspecifiek dan de eerste verdiepte werkruimtes.
+- **Desired Outcome:** Breid de contextsignalen uit naar meerdere resterende split-view werkruimtes met compacte, taakgerichte signalen.
+- **User Value:** Gebruikers herkennen ook in beheer- en welzijnsdomeinen sneller welke context aandacht vraagt zonder door extra routecontent te scrollen.
+- **Acceptance Criteria:** Minimaal vier resterende split-view werkruimtes krijgen domeinspecifieke contextsignalen; contextsignalen blijven compact en secundair naast het actieve hoofdvlak; mobile blijft vrij van horizontale overflow; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; tests of browser-smoke bewaken de aangepakte schermen; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Welzijn, Afwegingen, Kosten, Logboek, Herinneringen, Back-up, Medicatie, Vragen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, context columns, styles, tests
+- **ADR Needed:** no
+- **Score:** 43
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

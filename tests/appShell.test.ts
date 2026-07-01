@@ -36653,9 +36653,13 @@ describe('app shell', () => {
 
     expect(dossierHtml).toContain('class="domain-split-workspace dossier-split-workspace"');
     expect(dossierHtml).toContain('data-dossier-workspace-context');
+    expect(dossierHtml).toContain('data-workspace-context-signals="dossier"');
+    expect(dossierHtml).toContain('Dossierfocus');
     expect(dossierHtml).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
     expect(agendaHtml).toContain('class="domain-split-workspace schedule-split-workspace"');
     expect(agendaHtml).toContain('data-schedule-workspace-context="metrics"');
+    expect(agendaHtml).toContain('data-workspace-context-signals="schedule"');
+    expect(agendaHtml).toContain('Planningfocus');
     expect(agendaHtml).toContain(
       'data-schedule-route="plannen" data-schedule-route-state="active"',
     );
@@ -36664,6 +36668,8 @@ describe('app shell', () => {
     expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
     expect(trajectHtml).toContain('class="domain-split-workspace treatment-split-workspace"');
     expect(trajectHtml).toContain('data-treatment-workspace-context="metrics"');
+    expect(trajectHtml).toContain('data-workspace-context-signals="treatment"');
+    expect(trajectHtml).toContain('Trajectfocus');
     expect(trajectHtml).toContain(
       'data-treatment-route="fasen" data-treatment-route-state="active"',
     );
@@ -36674,6 +36680,8 @@ describe('app shell', () => {
     );
     expect(kennisHtml).toContain('class="domain-split-workspace knowledge-split-workspace"');
     expect(kennisHtml).toContain('data-knowledge-workspace-context="metrics"');
+    expect(kennisHtml).toContain('data-workspace-context-signals="knowledge"');
+    expect(kennisHtml).toContain('Researchfocus');
     expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
     expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
     expect(welzijnHtml).toContain('data-wellbeing-workspace-context="metrics"');
@@ -36712,6 +36720,8 @@ describe('app shell', () => {
     );
     expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('.workspace-context-signals {');
+    expect(css).toContain('.workspace-context-signal {');
     expect(mobileCss).toContain('.domain-split-workspace {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.domain-split-workspace__rail {');
