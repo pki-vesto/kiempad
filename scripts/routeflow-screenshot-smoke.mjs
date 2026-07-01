@@ -51,6 +51,8 @@ const targets = [
       '[data-start-flow-switchboard-card="setup"]',
       '[data-start-flow-switchboard-card="snelle-invoer"]',
       '[data-start-flow-panel-stack="contained"]',
+    ],
+    presentSelectors: [
       '[data-daily-advice-focus-shell="ready"]',
       '[data-daily-advice-focus-region="workflow"]',
       '[data-daily-advice-focus-region="workbench"]',
@@ -63,6 +65,7 @@ const targets = [
       '[data-daily-advice-action-lane="clinician"]',
     ],
     hiddenSelectors: ['[data-workspace-map="ready"]'],
+    maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 },
   },
   {
     screen: 'knowledge-research',
@@ -315,6 +318,12 @@ async function assertRouteflows(browser, options) {
             ),
           };
         });
+        const present = (routeflow.presentSelectors ?? []).map((selector) => {
+          const element = rootElement?.matches(selector)
+            ? rootElement
+            : rootElement?.querySelector(selector);
+          return { selector, exists: Boolean(element) };
+        });
         const inactiveLayouts = routeflow.inactiveRouteSelector
           ? [...document.querySelectorAll(routeflow.inactiveRouteSelector)]
               .map((element) => {
@@ -344,13 +353,21 @@ async function assertRouteflows(browser, options) {
             visible: Boolean(rect && rect.width > 0 && rect.height > 0),
           };
         });
+        const openDetails = routeflow.maxOpenDetails
+          ? [...document.querySelectorAll(routeflow.maxOpenDetails.selector)].map((element) => ({
+              id: element.id,
+              selector: routeflow.maxOpenDetails.selector,
+            }))
+          : [];
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
           rootText: rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           activeVisible: Boolean(activeRect && activeRect.width > 0 && activeRect.height > 0),
           required,
+          present,
           hidden,
+          openDetails,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -377,12 +394,27 @@ async function assertRouteflows(browser, options) {
             .join(', ')}.`,
         );
       }
+      const absentSelectors = evidence.present.filter((item) => !item.exists);
+      if (absentSelectors.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: gesloten routeflow-selectors ontbreken: ${absentSelectors
+            .map((item) => item.selector)
+            .join(', ')}.`,
+        );
+      }
       const visibleHiddenSelectors = evidence.hidden.filter((item) => item.visible);
       if (visibleHiddenSelectors.length > 0) {
         throw new Error(
           `${options.label}/${target.screen}: verborgen routeflow-chrome is zichtbaar: ${visibleHiddenSelectors
             .map((item) => item.selector)
             .join(', ')}.`,
+        );
+      }
+      if (target.maxOpenDetails && evidence.openDetails.length > target.maxOpenDetails.max) {
+        throw new Error(
+          `${options.label}/${target.screen}: te veel open routeflow-panelen: ${JSON.stringify(
+            evidence.openDetails,
+          )}.`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);

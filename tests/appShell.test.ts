@@ -2536,7 +2536,8 @@ describe('app shell', () => {
     expect(html).toContain('id="start-flow-panel-planning"');
     expect(html).toContain('href="#start-flow-panel-aanbevelingen"');
     expect(html).toContain('data-start-flow-panel="planning" open');
-    expect(html).toContain('data-start-flow-panel="aanbevelingen" open');
+    expect(html).toContain('data-start-flow-panel="aanbevelingen"');
+    expect(html).not.toContain('data-start-flow-panel="aanbevelingen" open');
     expect(html).toContain('data-start-flow-panel="setup"');
     expect(html).toContain('data-start-flow-panel="snelle-invoer"');
     expect(html).toContain('class="daily-command-board"');
@@ -2909,6 +2910,10 @@ describe('app shell', () => {
       'data-start-flow-panel="aanbevelingen"',
       flowRailIndex,
     );
+    const recommendationsOpenIndex = html.indexOf(
+      'data-start-flow-panel="aanbevelingen" open',
+      flowRailIndex,
+    );
     const quickEntryPanelIndex = html.indexOf(
       'data-start-flow-panel="snelle-invoer"',
       flowRailIndex,
@@ -2933,6 +2938,7 @@ describe('app shell', () => {
     expect(todayIndex).toBeLessThan(secondaryStart);
     expect(flowRailIndex).toBeGreaterThan(secondaryStart);
     expect(planningPanelIndex).toBeGreaterThan(flowRailIndex);
+    expect(recommendationsOpenIndex).toBe(-1);
     expect(recommendationsPanelIndex).toBeGreaterThan(planningPanelIndex);
     expect(quickEntryPanelIndex).toBeGreaterThan(recommendationsPanelIndex);
     expect(nextStepIndex).toBeGreaterThan(secondaryStart);

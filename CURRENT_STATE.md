@@ -308,6 +308,10 @@
   de `start-focus-shell` aanwezig is. De compacte workspace-strip blijft zichtbaar,
   terwijl `start-workspace-deck`, startscan, kernflows en dagadvies direct de eerste
   startwerkruimte vormen.
+- **G1281 Start-flowrail één open paneel:** De Start-flowrail opent standaard alleen
+  planning als primaire volgende stap. Dagadvies, setup en snelle invoer blijven
+  gesloten achter hun summary en switchboard, zodat de contained workspace niet meer
+  als lange detailkolom start.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

@@ -109,10 +109,16 @@ describe('routeflow screenshot smoke script', () => {
     }
 
     expect(routeflowScreenshotSmokeScript).toContain('openSelectors');
+    expect(routeflowScreenshotSmokeScript).toContain('presentSelectors');
+    expect(routeflowScreenshotSmokeScript).toContain('gesloten routeflow-selectors ontbreken');
     expect(routeflowScreenshotSmokeScript).toContain(
       'hiddenSelectors: [\'[data-workspace-map="ready"]\']',
     );
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 }",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('te veel open routeflow-panelen');
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
     expect(routeflowScreenshotSmokeScript).toContain('horizontalOverflow');

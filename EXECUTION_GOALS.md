@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1281 — Premium Claude Design UI: start-flowrail één open paneel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Start-flowrail had meerdere detailpanelen standaard open, waardoor de contained workspace alsnog als lange detailkolom voelde.
+- **Desired Outcome:** Start opent met één primair flowpaneel en houdt de overige vervolgroutes compact gesloten achter hun summary en switchboard.
+- **User Value:** De gebruiker ziet eerst planning als concrete volgende stap en kan daarna gericht dagadvies, setup of snelle invoer openen zonder door meerdere open panelen te scrollen.
+- **Acceptance Criteria:** Alleen het planningpaneel staat standaard open; dagadvies, setup en snelle invoer starten gesloten; routeflow-smoke bewaakt maximaal één open start-flow-panel; app-shell tests bewaken de gesloten dagadviesstatus; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2337
+
 ### G1280 — Premium Claude Design UI: start chrome reduceren
 
 - **Epic:** Onboarding & Daily Use
