@@ -275,6 +275,10 @@
   split-workspace in één `decision-focus-shell` met workbench- en workspace-regio's.
   Voorbereiden, vergelijken, keuze en geschiedenis starten als één beslisruimte
   zonder score, voorkeur of behandeladvies.
+- **G1273 Medication focus-shell:** Medicatie bundelt de innameswerkbank en
+  split-workspace in één `medication-focus-shell` met workbench- en
+  workspace-regio's. Vandaag afvinken, planning, beheer, import en historie starten
+  als één medicatieruimte zonder doseeradvies of berekening.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

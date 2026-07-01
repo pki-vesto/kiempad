@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1273 — Premium Claude Design UI: medication focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Medicatie had een innameswerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor vandaag afvinken, planning, beheer, import en historie minder als één medicatieruimte voelden.
+- **Desired Outcome:** Bundel de medicatiewerkbank en Medicatie split-workspace in één `medication-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker ziet eerst wat vandaag telt en opent daarna gericht planning, beheer, import of historie zonder door alle medicatielagen tegelijk te werken.
+- **Acceptance Criteria:** Medicatie rendert `data-medication-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; dose-log, beheer, import en historie blijven bereikbaar; mobiel verbergt redundante globale context boven Medicatie; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2321
+
 ### G1272 — Premium Claude Design UI: decision focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use
