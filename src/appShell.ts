@@ -781,6 +781,7 @@ export function renderAppShell(
   const screenContent = renderScreenContent(activeId, activeScreen, state);
   const screenTitle = storageAwareScreenTitle(activeScreen, state);
   const screenIntro = storageAwareScreenIntro(activeScreen, state);
+  const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   const storageStatus =
     state.storageMode === 'central-api'
       ? 'Centrale encrypted opslag'
@@ -820,7 +821,7 @@ export function renderAppShell(
       ${activeId === 'start' ? '' : renderWorkspaceStrip(activeId)}
       </div>
 
-      <main class="content" id="inhoud" tabindex="-1">
+      <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}">
         ${activeId === 'start' ? renderWorkspaceStrip(activeId) : ''}
         ${
           activeId === 'start'
@@ -832,7 +833,9 @@ export function renderAppShell(
               })
         }
 
-        ${screenContent}
+        <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active">
+          ${screenContent}
+        </section>
       </main>
     </div>
   `;

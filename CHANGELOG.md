@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1317 Premium Claude Design UI: de hoofdcontent heeft nu een afgebakende `screen-stage` per actieve werkruimte. Desktop toont sidebar en actief scherm als gescheiden productvlakken met eigen scrollzone; mobiel houdt dezelfde inhoud in een zachtere stage zonder tekstoverlap.
 - G1316 Premium Claude Design UI: Dossier upload opent nu als directe intake-console. Op `#dossier?route=upload` verdwijnen desktop routekaart, taakrail en contextkolom ten gunste van brede document- en consultwerkvlakken; de intake staat niet meer achter een extra disclosure en routeflow bewaakt de console-regio's.
 - G1315 Premium Claude Design UI: Vandaag opent via `#start-today` nu als directe compacte start-console. De route toont planning/volgende stap, dagcommand en snelle invoer als aparte werkvlakken zonder Start-launchpad of flowrail erboven; routeflow bewaakt dat deze dagelijkse route niet terugvalt naar de volledige Startpagina.
 - G1314 Premium Claude Design UI: Dagadvies opent via `#start-recommendations` nu als directe compacte advice-console. De route toont workflow, eigenaarwerkbank, actieplanner en lijst bovenaan als eigen werkruimte in plaats van diep in een Start-vervolgpaneel; routeflow bewaakt dat de console niet opnieuw onder de startpagina verdwijnt.

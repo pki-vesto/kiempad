@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1317 — Premium Claude Design UI: Hoofdcontent als actieve screen-stage
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Ondanks compacte routeflows voelde de app-shell nog te veel als een losse contentkolom onder navigatie, waardoor de gebruiker onvoldoende ervaart dat er één actief scherm/werkgebied openstaat.
+- **Desired Outcome:** Voeg een zichtbare `screen-stage` toe rond de actieve hoofdcontent met eigen paneel, werkruimtecontext en begrensd desktop-scrollgedrag.
+- **User Value:** De gebruiker ziet sneller waar hij is en ervaart Kiempad als gescheiden werkruimtes in plaats van als één lange pagina.
+- **Acceptance Criteria:** `renderAppShell` rendert `data-screen-stage="ready"` op de hoofdcontent met actief scherm en werkruimtegroep; de actieve inhoud staat in `data-screen-stage-panel="active"`; desktop toont sidebar en stage als gescheiden productvlakken met eigen scrollzone; mobiel behoudt een leesbare stage zonder tekstoverlap; app-shell tests en visuele Playwright-screenshots dekken desktop en mobiel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2409
+
 ### G1316 — Premium Claude Design UI: Dossier upload als directe intake-console
 
 - **Epic:** Onboarding & Daily Use
