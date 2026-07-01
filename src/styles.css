@@ -5271,6 +5271,61 @@ a.action-card:active {
   white-space: nowrap;
 }
 
+.dossier-route-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.dossier-route-snapshot__card {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+}
+
+.dossier-route-snapshot__card:hover,
+.dossier-route-snapshot__card:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border-strong));
+  background: var(--surface);
+}
+
+.dossier-route-snapshot__card span,
+.dossier-route-snapshot__card strong,
+.dossier-route-snapshot__card small {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-route-snapshot__card span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dossier-route-snapshot__card strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.28;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dossier-route-snapshot__card small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .dossier-task-routes {
   z-index: 20;
   display: grid;
@@ -7054,6 +7109,23 @@ a.action-card:active {
   .dossier-route-stage__status {
     width: fit-content;
     padding: 5px 9px;
+  }
+
+  .dossier-route-snapshot {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .dossier-route-snapshot::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dossier-route-snapshot__card {
+    flex: 0 0 min(230px, 76vw);
+    padding: 10px 11px;
+    scroll-snap-align: start;
   }
 
   .dossier-route-stage .dossier-command-center {

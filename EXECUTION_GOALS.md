@@ -4347,6 +4347,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2275
 - **Status:** ☑ done
 
+### G1251 — dossierscan in dossierwerkbank toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossier eerste viewport heeft route-stage en taakroutes, maar mist nog een compacte scanlaag die upload/review, zoeken, beelden/embryo's en tijdlijn direct samenvat.
+- **User Impact:** Gebruikers zien dossierroutekeuzes, maar moeten nog naar de taakrail en detailpanelen kijken om te begrijpen waar uploads, beelden en tijdlijn staan.
+- **Desired Outcome:** Voeg een compacte dossierscan toe onder de route-stage header met upload, zoeken, beelden/embryo's en tijdlijn.
+- **User Value:** Dossier voelt meer als een rustige medische recordwerkbank en minder als een startpunt naar veel losse dossierblokken.
+- **Acceptance Criteria:** Dossier toont een desktop/mobile responsieve snapshotrij met upload/review, zoeken, beelden/embryo's en tijdlijn; bestaande dossierroutes, uploadflow, consultupload, imaging, embryo-dossiers, zoekroute, tijdlijn, data-hooks en tests blijven werken; mobile toont geen overlap of horizontale pagina-overflow; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload, diagnose, dosering, kansberekening, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossier, Uploads, Imaging Repository, Embryo Tracking, Fertility Timeline
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier route stage, upload route, imaging route, timeline route, CSS, app shell tests
+- **ADR Needed:** no
+- **Score:** 22
+- **GitHub Issue:** #2277
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
