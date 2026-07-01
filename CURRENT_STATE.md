@@ -418,6 +418,11 @@
   rechts. De workspace gebruikt een hoofdvlak met contextstrip, zodat status,
   recente gebeurtenissen, categorieën en privacy niet als één lange beheerpagina
   starten.
+- **G1309 Notification-console:** Herinneringen toont op desktop een compacte
+  console met systeemwerkbank links, taakroute-rail in het midden en actieve
+  meldingswerkruimte rechts. De workspace gebruikt een hoofdvlak met contextstrip,
+  zodat status, privacy, plannen en komende meldingen niet als één lange
+  beheerpagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

@@ -15592,11 +15592,11 @@ function renderNotificationFocusShell(input: { workbench: string; workspace: str
         <h2 id="notification-focus-shell-title">Eerst status en privacy checken, daarna plannen of teruglezen</h2>
         <p>Runtime-status, lockscreenprivacy, planning en komende meldingen blijven in één meldingsruimte zonder details op het vergrendelscherm te lekken.</p>
       </header>
-      <div class="notification-focus-shell__body">
-        <div class="notification-focus-shell__workbench" data-notification-focus-region="workbench">
+      <div class="notification-focus-shell__body" data-notification-console="ready">
+        <div class="notification-focus-shell__workbench" data-notification-focus-region="workbench" data-notification-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="notification-focus-shell__workspace" data-notification-focus-region="workspace">
+        <div class="notification-focus-shell__workspace" data-notification-focus-region="workspace" data-notification-console-region="workspace">
           ${input.workspace}
         </div>
       </div>
