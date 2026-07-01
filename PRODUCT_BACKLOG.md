@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1055 |
+| ☑ klaar | 1056 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1254** |
+| **Totaal** | **1255** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1417,12 +1417,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1252 | Premium Claude Design UI: dagadvies-scan in advieswerkbank toevoegen | P1 | F5 | ☑ |
 | G1253 | Premium Claude Design UI: start-cockpit boven fertility hub toevoegen | P1 | F5 | ☑ |
 | G1254 | Premium Claude Design UI: globale workspace-strip boven content toevoegen | P1 | F5 | ☑ |
+| G1255 | Premium Claude Design UI: upload-triage in dossierroute toevoegen | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1254** (id's G001 t/m G1254, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1255** (id's G001 t/m G1255, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

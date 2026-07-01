@@ -2723,6 +2723,13 @@ function renderDossierScreen(state: AppShellState): string {
         ariaLabel: 'Dossier upload route-samenvatting',
         data: { 'dossier-route-summary': 'upload' },
       })}
+      ${renderDossierUploadTriage({
+        documentCount: zichtbareDocumenten.length,
+        consultCount: consultVerslagen.length,
+        imagingCount: imagingItems.length,
+        reviewCount: reviewWachtrij.length,
+        ocrWaitCount: importInboxItems.filter((item) => item.importstatus === 'ocr_wacht').length,
+      })}
       <details class="kp-disclosure hub-detail-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''} data-hub-detail-panel="upload-intake">
         <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
           <span>
@@ -3734,6 +3741,76 @@ function renderDossierRouteSnapshot(input: {
         <strong>${input.timelineCount} moment${input.timelineCount === 1 ? '' : 'en'}</strong>
         <small>Historische onderzoeken pas openen als leesroute.</small>
       </a>
+    </section>
+  `;
+}
+
+function renderDossierUploadTriage(input: {
+  documentCount: number;
+  consultCount: number;
+  imagingCount: number;
+  reviewCount: number;
+  ocrWaitCount: number;
+}): string {
+  const lanes = [
+    {
+      id: 'document',
+      href: '#dossier-upload-form',
+      label: 'Document',
+      title: 'Onderzoek of labuitslag',
+      detail: `${input.documentCount} record${input.documentCount === 1 ? '' : 's'} · metadata eerst`,
+      cue: 'PDF, scan of foto',
+    },
+    {
+      id: 'consult',
+      href: '#consult-verslag-form',
+      label: 'Consult',
+      title: 'Gespreksverslag',
+      detail: `${input.consultCount} verslag${input.consultCount === 1 ? '' : 'en'} · acties later`,
+      cue: 'Notitie of bestand',
+    },
+    {
+      id: 'imaging',
+      href: '#dossier?route=imaging',
+      label: 'Beeld',
+      title: 'Echo of embryo',
+      detail: `${input.imagingCount} beeld${input.imagingCount === 1 ? '' : 'en'} · vergelijken apart`,
+      cue: "Foto's en labbeelden",
+    },
+    {
+      id: 'ocr',
+      href: '#dossier-route-review',
+      label: 'OCR',
+      title: 'Lokale tekstherkenning',
+      detail: `${input.ocrWaitCount} wacht${input.ocrWaitCount === 1 ? '' : 'en'} · ${input.reviewCount} review`,
+      cue: 'Controle voor opslag',
+    },
+  ];
+
+  return `
+    <section class="dossier-upload-triage" aria-label="Uploadkeuze voor dossier" data-dossier-upload-triage="ready">
+      <header class="dossier-upload-triage__header">
+        <div>
+          <p class="kp-card__eyebrow">Uploadkeuze</p>
+          <h3>Kies eerst wat je toevoegt</h3>
+        </div>
+        <p>Elke route opent alleen de relevante velden of vervolgstap.</p>
+      </header>
+      <nav class="dossier-upload-triage__lanes" aria-label="Uploadtype kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="dossier-upload-triage__lane" href="${lane.href}" data-dossier-upload-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze keuze toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
     </section>
   `;
 }

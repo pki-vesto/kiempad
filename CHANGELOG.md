@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1255 Premium Claude Design UI: de dossieruploadroute toont nu vóór de formulier-intake een compacte upload-triage met vier lanes voor document, consult, beeld/embryo en lokale OCR/review. Desktop gebruikt een vierkoloms keuzegrid, mobiel een swipebare rij, en tests bewaken dat bestaande formulierankers en privacygrenzen intact blijven.
 - G1254 Premium Claude Design UI: alle hoofdschermen tonen nu boven de content een compacte workspace-strip met actieve werkruimtegroep, zusterschermen en snelle routes naar Start, Dossier en Tijdlijn. De split-workspace browser-smoke bewaakt de strip per kernroute op desktop en mobiel.
 - G1253 Premium Claude Design UI: Start opent nu met een compacte cockpit direct onder de begroeting. De eerste viewport bundelt eerstvolgende aandacht, dossierbasis en kernwerkbanen voor upload, tijdlijn, imaging en dagadvies in drie responsieve panelen, met een mobiele swipebare rij.
 - G1252 Premium Claude Design UI: de dagadvieswerkbank toont nu een compacte dagadvies-scan boven de eigenaar-kaarten. Vandaag, review, artscheck en vrouw/man/samen-verdeling staan als vier responsieve tegels in de eerste viewport, met een mobiele swipebare rij voordat de volledige aanbevelingslijst opent.
