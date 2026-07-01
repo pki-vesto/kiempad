@@ -2079,6 +2079,17 @@ function renderDossierScreen(state: AppShellState): string {
         <h2 id="dossier-route-upload-title">Nieuwe medische records toevoegen</h2>
         <p>Upload onderzoeken, beelden, consultverslagen en embryokwaliteit vanuit één begeleide route.</p>
       </header>
+      ${commandRouteSummary({
+        eyebrow: 'Dossierroute',
+        title: 'Eerst uploaden, daarna pas reviewen',
+        detail:
+          'Deze route bundelt documentuploads, consultverslagen en embryokwaliteit, maar houdt de lange formulieren achter één duidelijke stap.',
+        primary: { href: '#dossier-upload-form', label: 'Start upload' },
+        secondary: { href: '#dossier-route-review', label: 'Review inbox' },
+        status: `${zichtbareDocumenten.length} records`,
+        ariaLabel: 'Dossier upload route-samenvatting',
+        data: { 'dossier-route-summary': 'upload' },
+      })}
       <details class="kp-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''}>
         <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
         <div class="kp-disclosure__body">
@@ -2566,6 +2577,19 @@ function renderDossierScreen(state: AppShellState): string {
           <h2 id="dossier-route-search-title">Dossier zoeken en privacycontrole</h2>
           <p>Zoek alleen binnen de ontgrendelde encrypted dataset en houd technische privacycontroles apart.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Dossierroute',
+          title: 'Zoeken zonder de hele dossierkaart uit te klappen',
+          detail:
+            'De zoekactie blijft direct beschikbaar; indexen, tellingen en privacycontroles staan compact onder aparte panelen.',
+          primary: { href: '#dossier-search-form', label: 'Zoeken' },
+          secondary: { href: '#dossier-route-index-disclosure', label: 'Index openen' },
+          status: zoekterm
+            ? `${zoekResultaten.length} resultaten`
+            : `${indexItems.length} indexitems`,
+          ariaLabel: 'Dossier zoeken route-samenvatting',
+          data: { 'dossier-route-summary': 'search' },
+        })}
         <h2>Dossier zoeken</h2>
         <form id="dossier-search-form" class="data-form">
           <label>
@@ -2667,15 +2691,20 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
           </div>
         </details>
-        ${renderDossierSectionIndex({
-          consultCount: consultVerslagen.length,
-          imagingCount: imagingItems.length,
-          indexCount: indexItems.length,
-          embryoCount: embryoDossiers.length,
-          timelineCount: tijdlijn.length,
-          historyCount: behandelGeschiedenis.length,
-          locked: Boolean(state.imagingPreviewLocked),
-        })}
+        <details id="dossier-route-index-disclosure" class="kp-disclosure" data-dossier-secondary-index="collapsed">
+          <summary class="kp-disclosure__summary">Dossierindex en routetellingen openen</summary>
+          <div class="kp-disclosure__body">
+            ${renderDossierSectionIndex({
+              consultCount: consultVerslagen.length,
+              imagingCount: imagingItems.length,
+              indexCount: indexItems.length,
+              embryoCount: embryoDossiers.length,
+              timelineCount: tijdlijn.length,
+              historyCount: behandelGeschiedenis.length,
+              locked: Boolean(state.imagingPreviewLocked),
+            })}
+          </div>
+        </details>
         </section>
         <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging"${renderDossierRouteVisibility(activeDossierRoute, 'imaging')}>
         <header class="dossier-route-section__header">
@@ -2683,35 +2712,66 @@ function renderDossierScreen(state: AppShellState): string {
           <h2 id="dossier-route-imaging-title">Imaging, consulten en embryo-dossiers</h2>
           <p>Bekijk consultverslagen, echo's, foto's, scans en embryodossiers als eigen routecluster.</p>
         </header>
-        <h2 id="dossier-consultverslagen">Consultverslagen</h2>
-        ${
-          consultVerslagen.length > 0
-            ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
-            : '<p class="empty-state">Nog geen consultverslagen als apart recordtype vastgelegd.</p>'
-        }
-        <h2 id="dossier-imaging-repository">Imaging-repository</h2>
-        ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
-        ${renderEchoAfspraakClassificaties(echoAfspraakClassificaties, state)}
-        ${renderEmbryoExifIsolaties(embryoExifIsolaties, state)}
-        ${renderImagingVergelijking(imagingVergelijking)}
-        ${
-          imagingItems.length > 0
-            ? `<ol class="phase-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
-            : '<p class="empty-state">Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.</p>'
-        }
-        <h2 id="dossier-index">Dossierindex</h2>
-        ${
-          indexItems.length > 0
-            ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
-            : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
-        }
-        <h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>
-        ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
-        ${
-          embryoDossiers.length > 0
-            ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
-            : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Dossierroute',
+          title: 'Beelden en embryo’s als aparte werkruimte',
+          detail:
+            'Consultverslagen, imagingfilters, vergelijkingen en embryodossiers staan niet meer allemaal direct onder elkaar.',
+          primary: { href: '#dossier-imaging-repository', label: 'Beelden openen' },
+          secondary: { href: '#dossier-embryo-dossiers', label: 'Embryo’s openen' },
+          status: `${imagingItems.length} beelden · ${embryoDossiers.length} embryo's`,
+          ariaLabel: 'Dossier imaging route-samenvatting',
+          data: { 'dossier-route-summary': 'imaging' },
+        })}
+        <details class="kp-disclosure" data-dossier-imaging-disclosure="consults">
+          <summary class="kp-disclosure__summary">Consultverslagen openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 id="dossier-consultverslagen">Consultverslagen</h2>
+            ${
+              consultVerslagen.length > 0
+                ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
+                : '<p class="empty-state">Nog geen consultverslagen als apart recordtype vastgelegd.</p>'
+            }
+          </div>
+        </details>
+        <details class="kp-disclosure" data-dossier-imaging-disclosure="repository">
+          <summary class="kp-disclosure__summary">Imaging-repository, filters en vergelijkingen openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 id="dossier-imaging-repository">Imaging-repository</h2>
+            ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
+            ${renderEchoAfspraakClassificaties(echoAfspraakClassificaties, state)}
+            ${renderEmbryoExifIsolaties(embryoExifIsolaties, state)}
+            ${renderImagingVergelijking(imagingVergelijking)}
+            ${
+              imagingItems.length > 0
+                ? `<ol class="phase-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
+                : '<p class="empty-state">Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.</p>'
+            }
+          </div>
+        </details>
+        <details class="kp-disclosure" data-dossier-imaging-disclosure="index">
+          <summary class="kp-disclosure__summary">Dossierindex openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 id="dossier-index">Dossierindex</h2>
+            ${
+              indexItems.length > 0
+                ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
+                : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
+            }
+          </div>
+        </details>
+        <details class="kp-disclosure" data-dossier-imaging-disclosure="embryos">
+          <summary class="kp-disclosure__summary">Embryo-dossiers en vergelijkingen openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>
+            ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
+            ${
+              embryoDossiers.length > 0
+                ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
+                : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
+            }
+          </div>
+        </details>
         </section>
         <section id="dossier-route-timeline" class="dossier-route-section" aria-labelledby="dossier-route-timeline-title" data-dossier-route="timeline"${renderDossierRouteVisibility(activeDossierRoute, 'timeline')}>
         <header class="dossier-route-section__header">
@@ -2719,18 +2779,39 @@ function renderDossierScreen(state: AppShellState): string {
           <h2 id="dossier-route-timeline-title">Tijdlijn en behandelgeschiedenis</h2>
           <p>Lees historische onderzoeken en behandelcontext achter elkaar, zonder uploadformulieren ertussen.</p>
         </header>
-        <h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>
-        ${
-          tijdlijn.length > 0
-            ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state, matchMap.get(item.id))).join('')}</ol>`
-            : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
-        }
-        <h2 id="dossier-behandelgeschiedenis">Behandelgeschiedenis</h2>
-        ${
-          behandelGeschiedenis.length > 0
-            ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
-            : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Dossierroute',
+          title: 'Tijdlijn eerst begrijpen, details daarna openen',
+          detail:
+            'Historische onderzoeken en behandelgeschiedenis zijn gescheiden zodat de route scanbaar blijft op mobiel en desktop.',
+          primary: { href: '#dossier-documenttijdlijn', label: 'Tijdlijn openen' },
+          secondary: { href: '#dossier-behandelgeschiedenis', label: 'Geschiedenis openen' },
+          status: `${tijdlijn.length} momenten`,
+          ariaLabel: 'Dossier tijdlijn route-samenvatting',
+          data: { 'dossier-route-summary': 'timeline' },
+        })}
+        <details class="kp-disclosure" data-dossier-timeline-disclosure="documents">
+          <summary class="kp-disclosure__summary">Documenttijdlijn openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>
+            ${
+              tijdlijn.length > 0
+                ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state, matchMap.get(item.id))).join('')}</ol>`
+                : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
+            }
+          </div>
+        </details>
+        <details class="kp-disclosure" data-dossier-timeline-disclosure="history">
+          <summary class="kp-disclosure__summary">Behandelgeschiedenis openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 id="dossier-behandelgeschiedenis">Behandelgeschiedenis</h2>
+            ${
+              behandelGeschiedenis.length > 0
+                ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
+                : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
+            }
+          </div>
+        </details>
         </section>
     </section>
   `;
@@ -9831,14 +9912,44 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-read-title">Bronnen, samenvattingen en trends</h2>
           <p>Lees brongekoppelde publicaties, eenvoudige uitleg en contextrelaties zonder naar beheerinstellingen te hoeven zoeken.</p>
         </header>
-        <div class="knowledge-route-grid knowledge-route-grid--research">
-          <div class="summary-panel">${renderResearchBronnenCache(researchBronnen)}</div>
-          <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
-          <div class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
-          <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
-          <div class="summary-panel">${renderResearchDossierRelaties(researchDossierRelaties)}</div>
-          <div class="summary-panel">${renderResearchTrendGroepen(researchTrendGroepen)}</div>
-        </div>
+        ${commandRouteSummary({
+          eyebrow: 'Kennisroute',
+          title: 'Lees research in lagen',
+          detail:
+            'Bronnen, wetenschappelijke uitleg, eenvoudige uitleg en dossierrelaties zijn gescheiden zodat de route niet als één grote lijst start.',
+          primary: { href: '#knowledge-research-summaries', label: 'Samenvattingen' },
+          secondary: { href: '#knowledge-research-trends', label: 'Trends' },
+          status: `${researchBronnen.length} bronnen`,
+          ariaLabel: 'Kennis lezen route-samenvatting',
+          data: { 'knowledge-route-summary': 'read' },
+        })}
+        <details class="kp-disclosure" data-knowledge-research-disclosure="sources">
+          <summary class="kp-disclosure__summary">Researchbronnen openen</summary>
+          <div class="kp-disclosure__body">
+            <div class="knowledge-route-grid knowledge-route-grid--research">
+              <div class="summary-panel">${renderResearchBronnenCache(researchBronnen)}</div>
+            </div>
+          </div>
+        </details>
+        <details id="knowledge-research-summaries" class="kp-disclosure" data-knowledge-research-disclosure="summaries">
+          <summary class="kp-disclosure__summary">Wetenschappelijke en eenvoudige samenvattingen openen</summary>
+          <div class="kp-disclosure__body">
+            <div class="knowledge-route-grid knowledge-route-grid--research">
+              <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
+              <div class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
+            </div>
+          </div>
+        </details>
+        <details id="knowledge-research-trends" class="kp-disclosure" data-knowledge-research-disclosure="context">
+          <summary class="kp-disclosure__summary">Relevantie, relaties en trends openen</summary>
+          <div class="kp-disclosure__body">
+            <div class="knowledge-route-grid knowledge-route-grid--research">
+              <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
+              <div class="summary-panel">${renderResearchDossierRelaties(researchDossierRelaties)}</div>
+              <div class="summary-panel">${renderResearchTrendGroepen(researchTrendGroepen)}</div>
+            </div>
+          </div>
+        </details>
       </section>
       <section id="knowledge-route-add" class="knowledge-route-section" aria-labelledby="knowledge-route-add-title" data-knowledge-route="add">
         <header class="knowledge-route-section__header">
@@ -9846,6 +9957,17 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-add-title">Research en eigen kennis toevoegen</h2>
           <p>Leg een publicatie of eigen kennisitem vast als controleerbaar concept, zonder AI- of netwerkstappen.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Kennisroute',
+          title: 'Nieuwe kennis toevoegen zonder leesruis',
+          detail:
+            'Publicaties en eigen kennisitems staan naast elkaar als invoerroute; researchoverzichten blijven in de leesroute.',
+          primary: { href: '#research-item-form', label: 'Research' },
+          secondary: { href: '#knowledge-item-form', label: 'Eigen kennis' },
+          status: `${state.kennisItems.length} items`,
+          ariaLabel: 'Kennis toevoegen route-samenvatting',
+          data: { 'knowledge-route-summary': 'add' },
+        })}
         <div class="knowledge-route-grid">
           <div class="summary-panel">
             <h3>Research opslaan</h3>
@@ -9863,6 +9985,17 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-ai-title">Opt-in, preview en opslag</h2>
           <p>Beheer expliciete opt-ins en payloadpreviews los van de lees- en invoerroute.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Kennisroute',
+          title: 'AI alleen als bewuste beheerroute',
+          detail:
+            'Opt-in, netwerkpreview en samenvatting opslaan blijven bij elkaar, maar los van gewone researchlezing.',
+          primary: { href: '#research-network-form', label: 'Opt-in' },
+          secondary: { href: '#ai-preview-form', label: 'Preview' },
+          status: state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit',
+          ariaLabel: 'Kennis AI route-samenvatting',
+          data: { 'knowledge-route-summary': 'ai' },
+        })}
         <div class="knowledge-route-grid">
           <div class="summary-panel">
             ${renderResearchNetworkSettingsForm(state.settings)}
@@ -9889,13 +10022,28 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-library-title">Kennisitems per categorie</h2>
           <p>Bekijk gefilterde kennisitems als bibliotheek nadat de research- en AI-routes zijn afgehandeld.</p>
         </header>
-        <div class="timeline-panel knowledge-library-panel">
-          ${Object.entries(KENNIS_CATEGORIE_LABELS)
-            .map(([categorie, label]) =>
-              renderKennisCategorie(label, grouped[categorie as KennisItem['categorie']]),
-            )
-            .join('')}
-        </div>
+        ${commandRouteSummary({
+          eyebrow: 'Kennisroute',
+          title: 'Bibliotheek per categorie pas openen wanneer nodig',
+          detail:
+            'De categorieen blijven beschikbaar, maar nemen niet meer direct de volledige pagina over onder de researchroutes.',
+          primary: { href: '#knowledge-library-panel', label: 'Bibliotheek' },
+          status: `${filteredItems.length} zichtbaar`,
+          ariaLabel: 'Kennis bibliotheek route-samenvatting',
+          data: { 'knowledge-route-summary': 'library' },
+        })}
+        <details class="kp-disclosure" data-knowledge-library-disclosure="categories">
+          <summary class="kp-disclosure__summary">Kennisbibliotheek per categorie openen</summary>
+          <div class="kp-disclosure__body">
+            <div id="knowledge-library-panel" class="timeline-panel knowledge-library-panel">
+              ${Object.entries(KENNIS_CATEGORIE_LABELS)
+                .map(([categorie, label]) =>
+                  renderKennisCategorie(label, grouped[categorie as KennisItem['categorie']]),
+                )
+                .join('')}
+            </div>
+          </div>
+        </details>
       </section>
     </section>
   `;
