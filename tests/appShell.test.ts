@@ -2367,6 +2367,13 @@ describe('app shell', () => {
     expect(html).toContain('id="start-today"');
     expect(html).toContain('id="start-next-step"');
     expect(html).toContain('id="start-recommendations"');
+    expect(html).toContain('class="daily-advice-focus-shell"');
+    expect(html).toContain('data-daily-advice-focus-shell="ready"');
+    expect(html).toContain('Eerst eigenaar en adviesroute kiezen');
+    expect(html).toContain('data-daily-advice-focus-region="workflow"');
+    expect(html).toContain('data-daily-advice-focus-region="workbench"');
+    expect(html).toContain('data-daily-advice-focus-region="planner"');
+    expect(html).toContain('data-daily-advice-focus-region="list"');
     expect(html).toContain('id="start-recommendations-workflow-header"');
     expect(html).toContain('data-hub-workflow="daily-recommendations"');
     expect(html).toContain('Dagadvies als eigen controleruimte');
@@ -2592,6 +2599,12 @@ describe('app shell', () => {
     expect(css).toContain('.start-workbench-card__eyebrow {');
     expect(css).toContain('.start-workbench-card__detail {');
     expect(css).toContain('.daily-advice-workbench {');
+    expect(css).toContain('.daily-advice-focus-shell {');
+    expect(css).toContain('.daily-advice-focus-shell__header {');
+    expect(css).toContain('.daily-advice-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);');
+    expect(css).toContain('.daily-advice-focus-shell__workflow,');
+    expect(css).toContain('.daily-advice-focus-shell__workbench > .daily-advice-workbench,');
     expect(css).toContain('.daily-advice-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.daily-advice-snapshot__card {');
@@ -2626,6 +2639,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.start-snapshot__card {');
     expect(mobileCss).toContain('flex: 0 0 min(220px, 72vw);');
+    expect(mobileCss).toContain('.daily-advice-focus-shell {');
+    expect(mobileCss).toContain('box-shadow: none;');
+    expect(mobileCss).toContain('.daily-advice-focus-shell__body {');
+    expect(mobileCss).toContain('.daily-advice-focus-shell__workflow,');
     expect(mobileCss).toContain('.daily-advice-workbench__header {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.daily-advice-snapshot {');

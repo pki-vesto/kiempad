@@ -255,6 +255,10 @@
   in één `treatment-focus-shell` met workbench- en workspace-regio's. De
   contextroute opent als focusruimte voor fase, fertility timeline en graphcontext;
   mobiel verbergt dubbele globale context.
+- **G1268 Daily advice focus-shell:** Dagadvies bundelt workflowtabs,
+  eigenaarwerkbank, actieplanner en aanbevelingenlijst in één
+  `daily-advice-focus-shell` met workflow-, workbench-, planner- en lijstregio's.
+  De aanbevelingenroute start met eigenaar en adviesroute voordat de volledige lijst opent.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
