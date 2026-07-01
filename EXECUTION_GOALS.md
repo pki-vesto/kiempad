@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1287 — Premium Claude Design UI: compacte actieve routeheaders
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Actieve taakroutes begonnen nog met een routeheader en lange introzin, waardoor de eigenlijke workflow lager in beeld kwam.
+- **Desired Outcome:** Maak routeheaders op desktop compact door de titel kleiner te maken en de lange introcopy te verbergen.
+- **User Value:** De gebruiker ziet sneller de actieve workflow, summary en invoerpanelen zonder eerst door herhalende uitleg te moeten scannen.
+- **Acceptance Criteria:** Desktop routeheaders hebben compactere spacing en typografie; lange route-introcopy is op desktop verborgen; routeflow-smoke bewaakt de verborgen route-intro's; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2349
+
 ### G1286 — Premium Claude Design UI: compacte focus-shell headers
 
 - **Epic:** Onboarding & Daily Use

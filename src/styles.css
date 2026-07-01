@@ -7625,6 +7625,57 @@ a.action-card:active {
   align-items: start;
 }
 
+@media (min-width: 761px) {
+  .command-route-section__header,
+  .dossier-route-section__header,
+  .knowledge-route-section__header,
+  .treatment-route-section__header,
+  .schedule-route-section__header,
+  .medication-route-section__header,
+  .question-route-section__header,
+  .wellbeing-route-section__header,
+  .decision-route-section__header,
+  .finance-route-section__header,
+  .backup-route-section__header,
+  .eventlog-route-section__header,
+  .notification-route-section__header {
+    gap: 2px;
+  }
+
+  .command-route-section__header h2,
+  .dossier-route-section__header h2,
+  .knowledge-route-section__header h2,
+  .treatment-route-section__header h2,
+  .schedule-route-section__header h2,
+  .medication-route-section__header h2,
+  .question-route-section__header h2,
+  .wellbeing-route-section__header h2,
+  .decision-route-section__header h2,
+  .finance-route-section__header h2,
+  .backup-route-section__header h2,
+  .eventlog-route-section__header h2,
+  .notification-route-section__header h2 {
+    font-size: 1.08rem;
+    line-height: 1.16;
+  }
+
+  .command-route-section__header > p:last-child,
+  .dossier-route-section__header > p:last-child,
+  .knowledge-route-section__header > p:last-child,
+  .treatment-route-section__header > p:last-child,
+  .schedule-route-section__header > p:last-child,
+  .medication-route-section__header > p:last-child,
+  .question-route-section__header > p:last-child,
+  .wellbeing-route-section__header > p:last-child,
+  .decision-route-section__header > p:last-child,
+  .finance-route-section__header > p:last-child,
+  .backup-route-section__header > p:last-child,
+  .eventlog-route-section__header > p:last-child,
+  .notification-route-section__header > p:last-child {
+    display: none;
+  }
+}
+
 .dossier-focus-shell__orientation,
 .dossier-focus-shell__workspace {
   min-width: 0;

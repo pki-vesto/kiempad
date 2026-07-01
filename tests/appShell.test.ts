@@ -2706,6 +2706,10 @@ describe('app shell', () => {
     expect(css).toContain('.notification-focus-shell__header {');
     expect(css).toContain('.start-focus-shell__header p:last-child,');
     expect(css).toContain('.notification-focus-shell__header p:last-child {');
+    expect(css).toContain('.command-route-section__header,');
+    expect(css).toContain('.notification-route-section__header {');
+    expect(css).toContain('.command-route-section__header > p:last-child,');
+    expect(css).toContain('.notification-route-section__header > p:last-child {');
     expect(css).toContain('.workspace-map {');
     expect(css).toContain('.workspace-map__grid {');
     expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');

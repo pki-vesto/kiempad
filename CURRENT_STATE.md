@@ -332,6 +332,9 @@
   shellpadding, kleinere header-titels en verborgen introcopy boven de taakruimte.
   De routeflow screenshot-smoke bewaakt dat deze herhalende bovenlaag verborgen
   blijft.
+- **G1287 Compacte actieve routeheaders:** Actieve taakroutes gebruiken op desktop
+  compactere routekoppen met verborgen introcopy. Daardoor starten workflowkaarten,
+  summaries en invoerpanelen hoger in de taakruimte.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
