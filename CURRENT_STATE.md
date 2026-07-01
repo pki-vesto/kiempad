@@ -271,6 +271,10 @@
   split-workspace in één `wellbeing-focus-shell` met workbench- en
   workspace-regio's. De history-route opent als rustige terugleesruimte voor
   check-ins, symptomen, cyclusmetingen en trendperiodes zonder score of diagnose.
+- **G1272 Decision focus-shell:** Afwegingen bundelt de besliswerkbank en
+  split-workspace in één `decision-focus-shell` met workbench- en workspace-regio's.
+  Voorbereiden, vergelijken, keuze en geschiedenis starten als één beslisruimte
+  zonder score, voorkeur of behandeladvies.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
