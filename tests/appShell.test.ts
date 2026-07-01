@@ -1884,6 +1884,11 @@ describe('app shell', () => {
     expect(css).toContain('.system-workbench {');
     expect(css).toContain('[data-notification-first-viewport="system-workbench"]');
     expect(css).toContain('[data-eventlog-first-viewport="system-workbench"]');
+    expect(css).toContain('.eventlog-focus-shell {');
+    expect(css).toContain('.eventlog-focus-shell__header {');
+    expect(css).toContain('.eventlog-focus-shell__body {');
+    expect(css).toContain('.eventlog-focus-shell__workbench > .eventlog-system-workbench {');
+    expect(css).toContain('.eventlog-focus-shell__workspace {');
     expect(css).toContain('.system-workbench__header {');
     expect(css).toContain('.system-workbench__grid {');
     expect(css).toContain('.system-workbench__actions {');
@@ -1924,6 +1929,15 @@ describe('app shell', () => {
     expect(css).toContain('.consult-prep-board__lane:hover,');
     expect(css).toContain('.consult-prep-board__lane:focus-visible {');
     expect(css).toContain('.consult-prep-board__lane em {');
+    expect(mobileCss).toContain(
+      '.content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-eventlog-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.eventlog-focus-shell {');
+    expect(mobileCss).toContain('.eventlog-focus-shell__body {');
+    expect(mobileCss).toContain('.eventlog-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain(
       '.content:has([data-question-focus-shell="ready"]) > .workspace-map,',
     );
@@ -37142,6 +37156,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Lokaal logboek');
     expect(html).toContain('class="section-stack eventlog-command-layout"');
+    expect(html).toContain('class="eventlog-focus-shell"');
+    expect(html).toContain('data-eventlog-focus-shell="ready"');
+    expect(html).toContain('Eerst auditstatus scannen, daarna privacyregels openen');
+    expect(html).toContain('data-eventlog-focus-region="workbench"');
+    expect(html).toContain('data-eventlog-focus-region="workspace"');
     expect(html).toContain(
       '<section class="system-workbench eventlog-system-workbench" aria-label="Logboek systeemwerkbank" data-eventlog-first-viewport="system-workbench">',
     );

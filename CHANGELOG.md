@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1277 Premium Claude Design UI: Logboek bundelt de systeemwerkbank en split-workspace nu in één `eventlog-focus-shell` met aparte workbench- en workspace-regio's. Auditstatus, recente gebeurtenissen, categorieën en privacyregels starten vanuit één auditruimte zonder gevoelige details direct uit te klappen; mobiel verbergt redundante globale context.
 - G1276 Premium Claude Design UI: Back-up bundelt de veiligheidswerkbank en split-workspace nu in één `backup-focus-shell` met aparte workbench- en workspace-regio's. Status, encrypted export, import en herstelopties starten vanuit één veiligheidsruimte zonder dossierinhoud of plaintext payloads; mobiel verbergt redundante globale context.
 - G1275 Premium Claude Design UI: Kosten bundelt de financiële beheerwerkbank en split-workspace nu in één `finance-focus-shell` met aparte workbench- en workspace-regio's. Totalen, vergoeding, toevoegen en historie starten vanuit één administratieruimte zonder financieel advies of polisinterpretatie; mobiel verbergt redundante globale context.
 - G1274 Premium Claude Design UI: Agenda bundelt de dagplanningwerkbank en split-workspace nu in één `schedule-focus-shell` met aparte workbench- en workspace-regio's. Overzicht, komende afspraken, plannen, ICS-import en historie starten vanuit één planningsruimte; mobiel verbergt redundante globale context.

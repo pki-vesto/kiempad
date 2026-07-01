@@ -1273,27 +1273,25 @@ function renderLogboekScreen(state: AppShellState): string {
     : `Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
   const activeEventLogRoute = state.activeEventLogRoute ?? 'overzicht';
 
-  return sectionStack(
-    [
-      renderEventLogSystemWorkbench({
-        eventCount: logs.length,
-        highRiskCount: highRiskLogs.length,
-        categoryCount: Object.keys(categoryCounts).length,
-        central: isCentralStorage(state),
-        latestLog: logs[0],
-      }),
-      domainSplitWorkspace({
-        className: 'eventlog-split-workspace',
-        ariaLabel: 'Logboek split-view werkruimte',
-        data: { 'eventlog-split-workspace': 'ready' },
-        rail: renderEventLogTaskRoutes({
-          eventCount: logs.length,
-          highRiskCount: highRiskLogs.length,
-          categoryCount: Object.keys(categoryCounts).length,
-          central: isCentralStorage(state),
-          activeRoute: activeEventLogRoute,
-        }),
-        main: `
+  const eventLogWorkbench = renderEventLogSystemWorkbench({
+    eventCount: logs.length,
+    highRiskCount: highRiskLogs.length,
+    categoryCount: Object.keys(categoryCounts).length,
+    central: isCentralStorage(state),
+    latestLog: logs[0],
+  });
+  const eventLogWorkspace = domainSplitWorkspace({
+    className: 'eventlog-split-workspace',
+    ariaLabel: 'Logboek split-view werkruimte',
+    data: { 'eventlog-split-workspace': 'ready' },
+    rail: renderEventLogTaskRoutes({
+      eventCount: logs.length,
+      highRiskCount: highRiskLogs.length,
+      categoryCount: Object.keys(categoryCounts).length,
+      central: isCentralStorage(state),
+      activeRoute: activeEventLogRoute,
+    }),
+    main: `
       <section id="logboek-route-overzicht" class="eventlog-route-section" aria-labelledby="logboek-route-overzicht-title" data-eventlog-route="overzicht"${renderEventLogRouteVisibility(activeEventLogRoute, 'overzicht')}>
         <header class="eventlog-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
@@ -1395,14 +1393,21 @@ function renderLogboekScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-        context: renderEventLogWorkspaceContext({
-          eventCount: logs.length,
-          highRiskCount: highRiskLogs.length,
-          categoryCount: Object.keys(categoryCounts).length,
-          central: isCentralStorage(state),
-          latestLog: logs[0],
-          activeRoute: activeEventLogRoute,
-        }),
+    context: renderEventLogWorkspaceContext({
+      eventCount: logs.length,
+      highRiskCount: highRiskLogs.length,
+      categoryCount: Object.keys(categoryCounts).length,
+      central: isCentralStorage(state),
+      latestLog: logs[0],
+      activeRoute: activeEventLogRoute,
+    }),
+  });
+
+  return sectionStack(
+    [
+      renderEventLogFocusShell({
+        workbench: eventLogWorkbench,
+        workspace: eventLogWorkspace,
       }),
     ],
     {
@@ -1410,6 +1415,26 @@ function renderLogboekScreen(state: AppShellState): string {
       ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Legacy lokaal gebeurtenissenlog',
     },
   );
+}
+
+function renderEventLogFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="eventlog-focus-shell" aria-labelledby="eventlog-focus-shell-title" data-eventlog-focus-shell="ready">
+      <header class="eventlog-focus-shell__header">
+        <p class="kp-card__eyebrow">Auditfocus</p>
+        <h2 id="eventlog-focus-shell-title">Eerst auditstatus scannen, daarna privacyregels openen</h2>
+        <p>Opslagmodus, recente gebeurtenissen, categorieën en privacyregels blijven in één auditruimte zonder gevoelige details direct uit te klappen.</p>
+      </header>
+      <div class="eventlog-focus-shell__body">
+        <div class="eventlog-focus-shell__workbench" data-eventlog-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="eventlog-focus-shell__workspace" data-eventlog-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderEventLogSystemWorkbench(input: {

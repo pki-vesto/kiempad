@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1277 — Premium Claude Design UI: eventlog focus-shell bundelen
+
+- **Epic:** Security & DevEx
+- **Problem:** Logboek had een systeemwerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor auditstatus, recente events, categorieën en privacyregels minder als één auditruimte voelden.
+- **Desired Outcome:** Bundel de logboekwerkbank en Logboek split-workspace in één `eventlog-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker scant eerst auditstatus en opent daarna gericht recente gebeurtenissen, categorieën of privacyregels zonder alle auditdetails tegelijk te zien.
+- **Acceptance Criteria:** Logboek rendert `data-eventlog-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; auditstatus, categorieën, privacyregels en centrale/lokale opslagcopy blijven bereikbaar; mobiel verbergt redundante globale context boven Logboek; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☑ klaar
+- **Issue:** #2329
+
 ### G1276 — Premium Claude Design UI: backup focus-shell bundelen
 
 - **Epic:** Reliability & Operations

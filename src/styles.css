@@ -5039,6 +5039,61 @@ h2 {
   gap: 16px;
 }
 
+.eventlog-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 11%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.eventlog-focus-shell__header {
+  display: grid;
+  max-width: 900px;
+  gap: 5px;
+}
+
+.eventlog-focus-shell__header h2,
+.eventlog-focus-shell__header p {
+  margin: 0;
+}
+
+.eventlog-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.eventlog-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.eventlog-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.eventlog-focus-shell__workbench,
+.eventlog-focus-shell__workspace {
+  min-width: 0;
+}
+
+.eventlog-focus-shell__workbench > .eventlog-system-workbench {
+  height: 100%;
+}
+
+.eventlog-focus-shell .command-route-summary h3 {
+  overflow-wrap: anywhere;
+}
+
 .eventlog-task-routes {
   z-index: 20;
   display: grid;
@@ -10598,6 +10653,40 @@ a.action-card:active {
   }
 
   .knowledge-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
+  }
+
+  .content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-eventlog-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
+  .eventlog-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .eventlog-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .eventlog-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .eventlog-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .eventlog-focus-shell__workspace .domain-split-workspace,
+  .eventlog-focus-shell__workspace .domain-split-workspace__context {
+    grid-template-columns: 1fr;
+  }
+
+  .eventlog-focus-shell__workspace .domain-split-workspace__context {
     grid-column: auto;
   }
 
