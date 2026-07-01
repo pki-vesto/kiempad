@@ -14225,47 +14225,89 @@ function renderStartRecommendationRoute(
   state: AppShellState,
   overview: DailyRecommendationOverview,
 ): string {
+  const totalRecommendations = (['vrouw', 'man', 'samen'] as const).reduce(
+    (count, owner) => count + overview[owner].length,
+    0,
+  );
+
   return dashboardSection({
     title: 'Dagelijkse aanbevelingen',
     id: 'start-recommendations',
     eyebrow: 'Dagadvies',
     route: 'recommendations',
     ariaLabel: 'Dagelijkse aanbevelingen taakroute',
-    body: `${renderHubWorkflowHeader({
-      id: 'start-recommendations-workflow-header',
-      eyebrow: 'Hubroute',
-      title: 'Dagadvies als eigen controleruimte',
-      intro:
-        'Kies eerst de eigenaar en open daarna pas de volledige lijst. Adviezen blijven concept, brongeleid en gekoppeld aan artscheck waar nodig.',
-      activeTab: 'recommendations',
-      data: { 'hub-workflow': 'daily-recommendations' },
-      tabs: [
-        { id: 'today', href: '#start-today', label: 'Vandaag', meta: 'Taken scannen' },
-        {
-          id: 'recommendations',
-          href: '#start-recommendations',
-          label: 'Dagadvies',
-          meta: 'Per persoon',
-        },
-        { id: 'questions', href: '#vragen', label: 'Vragen', meta: 'Artscheck' },
-        { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
-      ],
-    })}${
-      state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
-    }<p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
-    ${renderDailyAdviceWorkbench(overview)}
-    ${renderDailyAdviceActionPlanner(overview)}
-    <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
-      <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
-        <span>
-          <strong>Bekijk aanbevelingen</strong>
-          <small>Volledige lijst pas openen na eigenaarselectie</small>
-        </span>
-        <em>${(['vrouw', 'man', 'samen'] as const).reduce((count, owner) => count + overview[owner].length, 0)} adviezen</em>
-      </summary>
-      <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
-    </details>`,
+    body: renderDailyAdviceFocusShell({
+      status: state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : '',
+      workflow: renderHubWorkflowHeader({
+        id: 'start-recommendations-workflow-header',
+        eyebrow: 'Hubroute',
+        title: 'Dagadvies als eigen controleruimte',
+        intro:
+          'Kies eerst de eigenaar en open daarna pas de volledige lijst. Adviezen blijven concept, brongeleid en gekoppeld aan artscheck waar nodig.',
+        activeTab: 'recommendations',
+        data: { 'hub-workflow': 'daily-recommendations' },
+        tabs: [
+          { id: 'today', href: '#start-today', label: 'Vandaag', meta: 'Taken scannen' },
+          {
+            id: 'recommendations',
+            href: '#start-recommendations',
+            label: 'Dagadvies',
+            meta: 'Per persoon',
+          },
+          { id: 'questions', href: '#vragen', label: 'Vragen', meta: 'Artscheck' },
+          { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
+        ],
+      }),
+      workbench: renderDailyAdviceWorkbench(overview),
+      planner: renderDailyAdviceActionPlanner(overview),
+      list: `
+        <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
+          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+            <span>
+              <strong>Bekijk aanbevelingen</strong>
+              <small>Volledige lijst pas openen na eigenaarselectie</small>
+            </span>
+            <em>${totalRecommendations} adviezen</em>
+          </summary>
+          <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
+        </details>
+      `,
+    }),
   });
+}
+
+function renderDailyAdviceFocusShell(input: {
+  status: string;
+  workflow: string;
+  workbench: string;
+  planner: string;
+  list: string;
+}): string {
+  return `
+    <section class="daily-advice-focus-shell" aria-labelledby="daily-advice-focus-shell-title" data-daily-advice-focus-shell="ready">
+      <header class="daily-advice-focus-shell__header">
+        <p class="kp-card__eyebrow">Dagadvies focus</p>
+        <h2 id="daily-advice-focus-shell-title">Eerst eigenaar en adviesroute kiezen</h2>
+        <p>Dagadvies blijft een rustige controleruimte: vrouw, man, samen, leefstijl, voeding, supplementen en artscheck staan vóór de volledige lijst.</p>
+      </header>
+      ${input.status}
+      <div class="daily-advice-focus-shell__body">
+        <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow">
+          ${input.workflow}
+        </div>
+        <div class="daily-advice-focus-shell__workbench" data-daily-advice-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="daily-advice-focus-shell__planner" data-daily-advice-focus-region="planner">
+          ${input.planner}
+        </div>
+        <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list">
+          <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
+          ${input.list}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderDailyAdviceActionPlanner(overview: DailyRecommendationOverview): string {

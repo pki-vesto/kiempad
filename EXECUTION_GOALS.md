@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1268 — Premium Claude Design UI: daily advice focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dagadvies had een werkbank, actieplanner en volledige lijst, maar die stonden binnen Start nog als losse onderdelen waardoor dagelijkse aanbevelingen minder als zelfstandige controleruimte voelden.
+- **Desired Outcome:** Bundel dagadvies-workflow, eigenaarwerkbank, actieplanner en lijst in één `daily-advice-focus-shell` met eigen regio-hooks.
+- **User Value:** De gebruiker kiest eerst eigenaar en adviesroute voordat de volledige aanbevelingenlijst opent, waardoor leefstijl, voeding, supplementen en artscheck rustiger scanbaar zijn.
+- **Acceptance Criteria:** Start recommendations rendert `data-daily-advice-focus-shell="ready"`; workflow, workbench, planner en lijst hebben eigen data-regio's; desktop gebruikt een compacte twee-koloms adviesruimte; mobiel blijft éénkoloms zonder zware extra framing; routeflow-smoke bewaakt de shell.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2311
+
 ### G1267 — Premium Claude Design UI: treatment focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use
