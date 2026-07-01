@@ -6344,6 +6344,16 @@ describe('app shell', () => {
       'data-dossier-route="search" data-dossier-route-state="inactive" hidden',
     );
     expect(emptyHtml).toContain('data-dossier-route="upload" data-dossier-route-state="active"');
+    expect(emptyHtml).toContain('aria-label="Dossier upload route-samenvatting"');
+    expect(emptyHtml).toContain('data-dossier-route-summary="upload"');
+    expect(emptyHtml).toContain('Eerst uploaden, daarna pas reviewen');
+    expect(emptyHtml).toContain('data-dossier-route-summary="search"');
+    expect(emptyHtml).toContain('Dossierindex en routetellingen openen');
+    expect(emptyHtml).toContain('data-dossier-route-summary="imaging"');
+    expect(emptyHtml).toContain('Imaging-repository, filters en vergelijkingen openen');
+    expect(emptyHtml).toContain('data-dossier-imaging-disclosure="embryos"');
+    expect(emptyHtml).toContain('data-dossier-route-summary="timeline"');
+    expect(emptyHtml).toContain('Documenttijdlijn openen');
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');
     expect(emptyHtml).toContain('Dossier zoeken en privacycontrole');
@@ -6540,6 +6550,12 @@ describe('app shell', () => {
     expect(html).toContain('href="#dossier?route=imaging" aria-current="page"');
     expect(html).toContain('class="dossier-route-stage__status">Actief: beelden en embryo&#039;s');
     expect(html).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
+    expect(html).toContain('aria-label="Dossier imaging route-samenvatting"');
+    expect(html).toContain('data-dossier-route-summary="imaging"');
+    expect(html).toContain('Beelden en embryo’s als aparte werkruimte');
+    expect(html).toContain('Consultverslagen openen');
+    expect(html).toContain('Imaging-repository, filters en vergelijkingen openen');
+    expect(html).toContain('Embryo-dossiers en vergelijkingen openen');
     expect(html).toContain(
       'data-dossier-route="upload" data-dossier-route-state="inactive" hidden',
     );
@@ -34742,6 +34758,18 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route="ai"');
     expect(html).toContain('id="knowledge-route-library"');
     expect(html).toContain('data-knowledge-route="library"');
+    expect(html).toContain('aria-label="Kennis lezen route-samenvatting"');
+    expect(html).toContain('data-knowledge-route-summary="read"');
+    expect(html).toContain('Lees research in lagen');
+    expect(html).toContain('Researchbronnen openen');
+    expect(html).toContain('Wetenschappelijke en eenvoudige samenvattingen openen');
+    expect(html).toContain('Relevantie, relaties en trends openen');
+    expect(html).toContain('data-knowledge-route-summary="add"');
+    expect(html).toContain('href="#knowledge-item-form"');
+    expect(html).toContain('data-knowledge-route-summary="ai"');
+    expect(html).toContain('href="#research-network-form"');
+    expect(html).toContain('data-knowledge-route-summary="library"');
+    expect(html).toContain('Kennisbibliotheek per categorie openen');
     expect(html).toContain('Bronnen, samenvattingen en trends');
     expect(html).toContain('Research en eigen kennis toevoegen');
     expect(html).toContain('Opt-in, preview en opslag');
@@ -34868,6 +34896,8 @@ describe('app shell', () => {
     expect(css).toContain('[data-knowledge-first-viewport="research-workbench"]');
     expect(css).toContain('.knowledge-research-workbench__header {');
     expect(css).toContain('.knowledge-research-workbench__status {');
+    expect(css).toContain('.knowledge-route-section[hidden] {');
+    expect(css).toContain('.dossier-route-section[hidden] {');
     expect(css).toContain('.knowledge-command-panel__intro {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-task-routes {');
@@ -36391,9 +36421,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);');
     expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-margin-top: 96px;');
-    expect(mobileCss).toContain('.command-route-section__header {');
+    expect(mobileCss).toContain('.command-route-section__header,');
+    expect(mobileCss).toContain('.dossier-route-section__header,');
+    expect(mobileCss).toContain('.knowledge-route-section__header {');
     expect(mobileCss).toContain('clip-path: inset(50%);');
-    expect(mobileCss).toContain('.command-route-section__header > p:last-child');
+    expect(mobileCss).toContain('.command-route-section__header > p:last-child,');
+    expect(mobileCss).toContain('.dossier-route-section__header > p:last-child,');
+    expect(mobileCss).toContain('.knowledge-route-section__header > p:last-child');
+    expect(mobileCss).toContain('.dossier-route-section .kp-disclosure,');
+    expect(mobileCss).toContain('.knowledge-route-section .kp-disclosure {');
     expect(mobileCss).toContain('.command-route-section .data-form {');
     expect(mobileCss).toContain('gap: 10px;');
     expect(mobileCss).toContain('.command-route-section .command-form-section {');

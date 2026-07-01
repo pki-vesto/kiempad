@@ -3846,6 +3846,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier routes, knowledge routes, upload UI, research UI, styles, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1220 — route-summary ontlasting uitbreiden naar welzijn en afwegingen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossier, Kennis, Agenda, Vragen, Medicatie en Traject hebben route-summary ontlasting, maar Welzijn en Afwegingen kunnen nog te veel detail tegelijk tonen.
+- **User Impact:** Dagelijkse signalen, logs en besliscontext kunnen druk voelen terwijl gebruikers juist rust en overzicht nodig hebben.
+- **Desired Outcome:** Pas dezelfde route-summary en progressive-panel aanpak toe op Welzijn en Afwegingen.
+- **User Value:** Gebruikers zien eerst de primaire welzijns- of beslistaak en openen trend-, historie- of detailcontext pas wanneer nodig.
+- **Acceptance Criteria:** Welzijn en Afwegingen krijgen route-summary kaarten met primaire taak, status en eerstvolgende actie; secundaire trends, histories, keuzecontext en lange lijsten worden waar passend achter disclosure geplaatst; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven behouden; mobile, tablet en desktop tonen geen overlap of horizontale overflow; browser-screenshots bewijzen zichtbare ontlasting; geen medische payload, advies, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Welzijn, Afwegingen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Wellbeing routes, decision routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

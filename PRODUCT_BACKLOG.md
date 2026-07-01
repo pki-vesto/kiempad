@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1020 |
+| ☑ klaar | 1021 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1219** |
+| **Totaal** | **1220** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1381,13 +1381,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1216 | Premium Claude Design UI: first-viewport workbench CSS consolideren met gedeelde basisklassen | P1 | F5 | ☑ |
 | G1217 | Premium Claude Design UI: actieve routepanelen verder ontlasten tegen lange-paginaervaring | P1 | F5 | ☑ |
 | G1218 | Premium Claude Design UI: route-summary ontlasting uitbreiden naar medicatie en traject | P1 | F5 | ☑ |
-| G1219 | Premium Claude Design UI: route-summary ontlasting uitbreiden naar dossier en kennis | P1 | F5 | ☐ |
+| G1219 | Premium Claude Design UI: route-summary ontlasting uitbreiden naar dossier en kennis | P1 | F5 | ☑ |
+| G1220 | Premium Claude Design UI: route-summary ontlasting uitbreiden naar welzijn en afwegingen | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1219** (id's G001 t/m G1219, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1220** (id's G001 t/m G1220, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
