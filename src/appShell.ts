@@ -11471,6 +11471,14 @@ function renderKennisScreen(state: AppShellState): string {
           ariaLabel: 'Kennis lezen route-samenvatting',
           data: { 'knowledge-route-summary': 'read' },
         })}
+        ${renderKnowledgeResearchReader({
+          sources: researchBronnen.length,
+          scientific: researchSamenvattingen.length,
+          patient: eenvoudigeResearchSamenvattingen.length,
+          relevance: researchRelevantie.length,
+          relations: researchDossierRelaties.length,
+          trends: researchTrendGroepen.length,
+        })}
         <details class="kp-disclosure" data-knowledge-research-disclosure="sources">
           <summary class="kp-disclosure__summary">Researchbronnen openen</summary>
           <div class="kp-disclosure__body">
@@ -11611,6 +11619,76 @@ function renderKennisScreen(state: AppShellState): string {
           activeRoute: activeKnowledgeRoute,
         }),
       })}
+    </section>
+  `;
+}
+
+function renderKnowledgeResearchReader(input: {
+  sources: number;
+  scientific: number;
+  patient: number;
+  relevance: number;
+  relations: number;
+  trends: number;
+}): string {
+  const lanes = [
+    {
+      id: 'scientific',
+      href: '#knowledge-research-summaries',
+      label: 'Wetenschappelijk',
+      title: `${input.scientific} samenvatting${input.scientific === 1 ? '' : 'en'}`,
+      detail: 'Methode, bevindingen en beperkingen blijven brongekoppeld.',
+      cue: 'Bronnen volgen',
+    },
+    {
+      id: 'patient',
+      href: '#knowledge-research-summaries',
+      label: 'Eenvoudig',
+      title: `${input.patient} uitleg${input.patient === 1 ? '' : 'en'}`,
+      detail: 'Gewone taal per publicatie voordat je dieper leest.',
+      cue: 'Lekenlaag',
+    },
+    {
+      id: 'relevance',
+      href: '#knowledge-research-trends',
+      label: 'Relevantie',
+      title: `${input.relevance} contextnotitie${input.relevance === 1 ? '' : 's'}`,
+      detail: 'Bespreekcontext naast jullie dossier, geen behandeladvies.',
+      cue: 'Kliniekvragen',
+    },
+    {
+      id: 'trends',
+      href: '#knowledge-research-trends',
+      label: 'Trends',
+      title: `${input.trends} groep${input.trends === 1 ? '' : 'en'}`,
+      detail: `${input.relations} relaties en ${input.sources} bronnen voor snelle scan.`,
+      cue: 'Signalen scannen',
+    },
+  ];
+
+  return `
+    <section class="knowledge-research-reader" aria-label="Research leeslaag" data-knowledge-research-reader="ready">
+      <header class="knowledge-research-reader__header">
+        <div>
+          <p class="kp-card__eyebrow">Leeslaag</p>
+          <h3>Kies eerst je researchlaag</h3>
+        </div>
+        <p>Start met de laag die past bij je vraag; bronnen, samenvattingen en trends blijven daarna uitklapbaar.</p>
+      </header>
+      <nav class="knowledge-research-reader__lanes" aria-label="Researchlaag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="knowledge-research-reader__lane" href="${lane.href}" data-knowledge-research-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${lane.title}</strong>
+          <small>${lane.detail}</small>
+          <em>${lane.cue}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Kiempad toont hier geen dossierplaintext of OCR-tekst en geeft geen behandeladvies; gebruik de lagen als voorbereiding op gesprek met je kliniek.</p>
     </section>
   `;
 }
