@@ -16627,30 +16627,54 @@ function renderMedicatieScreen(state: AppShellState): string {
       </section>`,
   ];
 
+  const medicationWorkspace = domainSplitWorkspace({
+    className: 'medication-split-workspace',
+    ariaLabel: 'Medicatie split-view werkruimte',
+    data: { 'medication-split-workspace': 'ready' },
+    rail: medicationTaskRoutes,
+    main: medicationRouteSections.join(''),
+    context: renderMedicationWorkspaceContext({
+      todayCount: todayLogs.length,
+      completedToday,
+      plannedCount: plannedLogs.length,
+      medicationCount: state.medicatie.length,
+      hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
+      importStatus: state.medicatieImportStatus,
+      importError: state.medicatieImportError,
+      nextDoseLog: todayLogs[0] ?? plannedLogs[0],
+      bundles: state.medicatie,
+    }),
+  });
+
   return sectionStack(
     [
-      medicationWorkbench,
-      domainSplitWorkspace({
-        className: 'medication-split-workspace',
-        ariaLabel: 'Medicatie split-view werkruimte',
-        data: { 'medication-split-workspace': 'ready' },
-        rail: medicationTaskRoutes,
-        main: medicationRouteSections.join(''),
-        context: renderMedicationWorkspaceContext({
-          todayCount: todayLogs.length,
-          completedToday,
-          plannedCount: plannedLogs.length,
-          medicationCount: state.medicatie.length,
-          hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
-          importStatus: state.medicatieImportStatus,
-          importError: state.medicatieImportError,
-          nextDoseLog: todayLogs[0] ?? plannedLogs[0],
-          bundles: state.medicatie,
-        }),
+      renderMedicationFocusShell({
+        workbench: medicationWorkbench,
+        workspace: medicationWorkspace,
       }),
     ],
     { className: 'medication-command-layout', ariaLabel: 'Medicatie beheren' },
   );
+}
+
+function renderMedicationFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="medication-focus-shell" aria-labelledby="medication-focus-shell-title" data-medication-focus-shell="ready">
+      <header class="medication-focus-shell__header">
+        <p class="kp-card__eyebrow">Medicatiefocus</p>
+        <h2 id="medication-focus-shell-title">Eerst vandaag afvinken, daarna planning of beheer openen</h2>
+        <p>Dagmomenten, schema-import, voorraad en historie blijven in één medicatieruimte zonder doseeradvies of berekening.</p>
+      </header>
+      <div class="medication-focus-shell__body">
+        <div class="medication-focus-shell__workbench" data-medication-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="medication-focus-shell__workspace" data-medication-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderMedicationPlanningWorkbench(input: {

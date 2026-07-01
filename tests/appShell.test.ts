@@ -1885,6 +1885,11 @@ describe('app shell', () => {
     expect(css).toContain('[data-schedule-first-viewport="planning-workbench"]');
     expect(css).toContain('[data-medication-first-viewport="planning-workbench"]');
     expect(css).toContain('[data-question-first-viewport="consult-workbench"]');
+    expect(css).toContain('.medication-focus-shell {');
+    expect(css).toContain('.medication-focus-shell__header {');
+    expect(css).toContain('.medication-focus-shell__body {');
+    expect(css).toContain('.medication-focus-shell__workbench > .medication-planning-workbench {');
+    expect(css).toContain('.medication-focus-shell__workspace {');
     expect(css).toContain('.planning-workbench__header {');
     expect(css).toContain('.planning-workbench__grid {');
     expect(css).toContain('.planning-workbench__actions {');
@@ -1913,6 +1918,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.question-focus-shell {');
     expect(mobileCss).toContain('.question-focus-shell__body {');
     expect(mobileCss).toContain('.question-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.content:has([data-medication-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-medication-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.medication-focus-shell {');
+    expect(mobileCss).toContain('.medication-focus-shell__body {');
+    expect(mobileCss).toContain('.medication-focus-shell__workspace .domain-split-workspace,');
     expect(css).toContain('.planning-workbench :where(.stat-row) {');
     expect(css).toContain('.planning-workbench :where(.stat) {');
     expect(css).toContain('.treatment-snapshot {');
@@ -4349,6 +4363,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Progesteron');
     expect(html).toContain('class="section-stack medication-command-layout"');
+    expect(html).toContain('class="medication-focus-shell"');
+    expect(html).toContain('data-medication-focus-shell="ready"');
+    expect(html).toContain('Eerst vandaag afvinken, daarna planning of beheer openen');
+    expect(html).toContain('data-medication-focus-region="workbench"');
+    expect(html).toContain('data-medication-focus-region="workspace"');
     expect(html).toContain(
       '<section class="planning-workbench medication-planning-workbench" aria-label="Medicatie innameswerkbank" data-medication-first-viewport="planning-workbench">',
     );

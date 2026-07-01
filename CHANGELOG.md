@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1273 Premium Claude Design UI: Medicatie bundelt de innameswerkbank en split-workspace nu in één `medication-focus-shell` met aparte workbench- en workspace-regio's. Vandaag afvinken, planning, beheer, import en historie starten vanuit één medicatieruimte zonder doseeradvies of berekening; mobiel verbergt redundante globale context.
 - G1272 Premium Claude Design UI: Afwegingen bundelt de besliswerkbank en split-workspace nu in één `decision-focus-shell` met aparte workbench- en workspace-regio's. Voorbereiden, vergelijken, keuze en geschiedenis starten vanuit één rustige beslisruimte zonder score, voorkeur of behandeladvies; mobiel verbergt redundante globale context.
 - G1271 Premium Claude Design UI: Welzijn bundelt de inzichtwerkbank en split-workspace nu in één `wellbeing-focus-shell` met aparte workbench- en workspace-regio's. De history-route blijft het terugleesbord met check-ins, symptomen, cyclus en trends tonen; mobiel verbergt redundante globale context zodat welzijn vanuit één rustige ruimte start.
 - G1270 Premium Claude Design UI: Vragen/consultvoorbereiding bundelt de consultvoorbereidingswerkbank en split-workspace nu in één `question-focus-shell` met aparte workbench- en workspace-regio's. De prep-route blijft de Consult Prep Wizard en prep board tonen; mobiel verbergt de redundante globale context zodat open vragen, prep-packet, verslagen en beheer vanuit één consultruimte starten.
