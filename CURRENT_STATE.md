@@ -251,6 +251,10 @@
   split-workspace in één `knowledge-focus-shell` met workbench- en
   workspace-regio's. De researchroute opent als compacte kennisruimte voor bronnen,
   samenvattingen, relevantie en trends; mobiel verbergt dubbele globale context.
+- **G1267 Treatment focus-shell:** Traject bundelt behandelwerkbank en split-workspace
+  in één `treatment-focus-shell` met workbench- en workspace-regio's. De
+  contextroute opent als focusruimte voor fase, fertility timeline en graphcontext;
+  mobiel verbergt dubbele globale context.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

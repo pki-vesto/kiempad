@@ -17096,26 +17096,48 @@ function renderTrajectScreen(state: AppShellState): string {
 
   return sectionStack(
     [
-      treatmentWorkbench,
-      domainSplitWorkspace({
-        className: 'treatment-split-workspace',
-        ariaLabel: 'Traject split-view werkruimte',
-        data: { 'treatment-split-workspace': 'ready' },
-        rail: treatmentTaskRoutes,
-        main: treatmentRouteSections.join(''),
-        context: renderTreatmentWorkspaceContext({
-          selected,
-          activeCount: actieveTrajecten.length,
-          archivedCount: gearchiveerdeTrajecten.length,
-          vergoeding,
-          timeline: fertilityTimeline,
-          graph: graphWeergave,
-          activeRoute: activeTreatmentRoute,
+      renderTreatmentFocusShell({
+        workbench: treatmentWorkbench,
+        workspace: domainSplitWorkspace({
+          className: 'treatment-split-workspace',
+          ariaLabel: 'Traject split-view werkruimte',
+          data: { 'treatment-split-workspace': 'ready' },
+          rail: treatmentTaskRoutes,
+          main: treatmentRouteSections.join(''),
+          context: renderTreatmentWorkspaceContext({
+            selected,
+            activeCount: actieveTrajecten.length,
+            archivedCount: gearchiveerdeTrajecten.length,
+            vergoeding,
+            timeline: fertilityTimeline,
+            graph: graphWeergave,
+            activeRoute: activeTreatmentRoute,
+          }),
         }),
       }),
     ],
     { className: 'treatment-command-layout', ariaLabel: 'Traject beheren' },
   );
+}
+
+function renderTreatmentFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="treatment-focus-shell" aria-labelledby="treatment-focus-shell-title" data-treatment-focus-shell="ready">
+      <header class="treatment-focus-shell__header">
+        <p class="kp-card__eyebrow">Traject focus</p>
+        <h2 id="treatment-focus-shell-title">Eerst fase en tijdlijn lezen, daarna beheren</h2>
+        <p>Behandelwerkbank, routekeuze en fertility timeline blijven één gefocuste trajectruimte zonder beheerformulieren door de context heen.</p>
+      </header>
+      <div class="treatment-focus-shell__body">
+        <div class="treatment-focus-shell__workbench" data-treatment-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="treatment-focus-shell__workspace" data-treatment-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderTreatmentWorkbench(input: {

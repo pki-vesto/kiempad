@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1267 — Premium Claude Design UI: treatment focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Traject had een behandelwerkbank en split-view, maar die stonden nog als losse lagen onder elkaar waardoor fertility timeline en graphcontext minder als één behandelruimte voelden.
+- **Desired Outcome:** Bundel behandelwerkbank en Traject split-workspace in één `treatment-focus-shell` met aparte workbench- en workspace-regio's; verberg op mobiel redundante globale context boven Traject.
+- **User Value:** De gebruiker leest fase, tijdlijn, context en beheer vanuit één rustige trajectruimte in plaats van losse blokken die de fertility timeline naar beneden drukken.
+- **Acceptance Criteria:** Traject rendert `data-treatment-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; desktop geeft de actieve trajectworkspace meer breedte dan de compacte behandelwerkbank; mobiel houdt de trajectroute éénkoloms zonder dubbele workspace-map; routeflow-smoke bewaakt de focus-shell.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2309
+
 ### G1266 — Premium Claude Design UI: knowledge focus-shell bundelen
 
 - **Epic:** AI & Research
