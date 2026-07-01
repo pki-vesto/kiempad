@@ -13,25 +13,44 @@ describe('context signals visual smoke script', () => {
 
     for (const route of [
       '#dossier?route=imaging',
+      '#agenda?route=plannen',
       '#traject?route=fasen',
+      '#kennis?route=ai',
       '#welzijn?route=history',
+      '#afwegingen?route=choice',
       '#kosten?route=vergoeding',
       '#logboek?route=privacy',
+      '#herinneringen?route=plannen',
       '#backup?route=import',
     ]) {
       expect(contextSignalsVisualSmokeScript).toContain(route);
     }
 
-    for (const signal of ['dossier', 'treatment', 'wellbeing', 'finance', 'eventlog', 'backup']) {
+    for (const signal of [
+      'dossier',
+      'schedule',
+      'treatment',
+      'knowledge',
+      'wellbeing',
+      'decision',
+      'finance',
+      'eventlog',
+      'notification',
+      'backup',
+    ]) {
       expect(contextSignalsVisualSmokeScript).toContain(`signal: '${signal}'`);
     }
 
     for (const microstate of [
       'dossier-imaging',
+      'schedule-plannen',
       'treatment-fasen',
+      'knowledge-ai',
       'wellbeing-history',
+      'decision-choice',
       'finance-vergoeding',
       'eventlog-privacy',
+      'notification-plannen',
       'backup-import',
     ]) {
       expect(contextSignalsVisualSmokeScript).toContain(`microstate: '${microstate}'`);

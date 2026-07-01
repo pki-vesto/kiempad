@@ -1726,6 +1726,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
           chosenCount,
           linkedQuestionCount,
           latestDecision: decisions[0],
+          activeRoute: activeDecisionRoute,
         }),
       }),
     ],
@@ -1837,6 +1838,7 @@ function renderDecisionWorkspaceContext(input: {
   chosenCount: number;
   linkedQuestionCount: number;
   latestDecision: Decision | undefined;
+  activeRoute: DecisionRoute;
 }): string {
   const openCount = input.decisionCount - input.chosenCount;
   const latest = input.latestDecision
@@ -1846,6 +1848,7 @@ function renderDecisionWorkspaceContext(input: {
     label: 'Keuzefocus',
     title: 'Besliscontext',
     data: { 'workspace-context-signals': 'decision' },
+    microstate: getDecisionContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Open',
@@ -3739,6 +3742,63 @@ function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicro
   return states[route];
 }
 
+function getScheduleContextMicrostate(route: ScheduleRoute): WorkspaceContextMicrostate {
+  const states: Record<ScheduleRoute, WorkspaceContextMicrostate> = {
+    overzicht: {
+      id: 'schedule-overzicht',
+      label: 'Planningoverzicht',
+      detail: 'Totaal, komende afspraken en importstatus blijven eerst zichtbaar.',
+    },
+    komend: {
+      id: 'schedule-komend',
+      label: 'Komende route',
+      detail: 'De eerstvolgende afspraak en herinnering blijven de planningsfocus.',
+    },
+    plannen: {
+      id: 'schedule-plannen',
+      label: 'Planroute',
+      detail: 'Nieuwe afspraak, voorbereiding en herinnering blijven taakgericht.',
+    },
+    import: {
+      id: 'schedule-import',
+      label: 'Importroute',
+      detail: 'ICS-feedback en importcontrole blijven los van afsprakeninhoud.',
+    },
+    historie: {
+      id: 'schedule-historie',
+      label: 'Historieroute',
+      detail: 'Terugblik en eerdere afspraken blijven gescheiden van plannen.',
+    },
+  };
+  return states[route];
+}
+
+function getKnowledgeContextMicrostate(route: KnowledgeRoute): WorkspaceContextMicrostate {
+  const states: Record<KnowledgeRoute, WorkspaceContextMicrostate> = {
+    read: {
+      id: 'knowledge-read',
+      label: 'Leesroute',
+      detail: 'Bronnen, samenvattingen en relevantie blijven in leesvolgorde.',
+    },
+    add: {
+      id: 'knowledge-add',
+      label: 'Toevoegroute',
+      detail: 'Nieuwe research en kennisitems starten met bron en reviewstatus.',
+    },
+    ai: {
+      id: 'knowledge-ai',
+      label: 'AI-context',
+      detail: 'Payload-preview, opt-in en netwerkstatus blijven expliciet zichtbaar.',
+    },
+    library: {
+      id: 'knowledge-library',
+      label: 'Bibliotheekroute',
+      detail: 'Categorieen en artsverificatie blijven als naslag gescheiden.',
+    },
+  };
+  return states[route];
+}
+
 function getWellbeingContextMicrostate(route: WellbeingRoute): WorkspaceContextMicrostate {
   const states: Record<WellbeingRoute, WorkspaceContextMicrostate> = {
     overview: {
@@ -3755,6 +3815,32 @@ function getWellbeingContextMicrostate(route: WellbeingRoute): WorkspaceContextM
       id: 'wellbeing-log',
       label: 'Vastlegroute',
       detail: 'Nieuwe observaties blijven feitelijk en los van interpretatie.',
+    },
+  };
+  return states[route];
+}
+
+function getDecisionContextMicrostate(route: DecisionRoute): WorkspaceContextMicrostate {
+  const states: Record<DecisionRoute, WorkspaceContextMicrostate> = {
+    prepare: {
+      id: 'decision-prepare',
+      label: 'Voorbereidroute',
+      detail: 'Onderwerp, artsvraag en opties krijgen eerst rustige structuur.',
+    },
+    compare: {
+      id: 'decision-compare',
+      label: 'Vergelijkroute',
+      detail: 'Voors en tegens blijven naast elkaar zonder keuzeadvies.',
+    },
+    choice: {
+      id: 'decision-choice',
+      label: 'Keuzeregistratie',
+      detail: 'Vastgelegde keuzes blijven eigen besluitcontext, geen stuuradvies.',
+    },
+    history: {
+      id: 'decision-history',
+      label: 'Verslagroute',
+      detail: 'Eerdere afwegingen blijven terugleesbaar als feitelijk verslag.',
     },
   };
   return states[route];
@@ -3781,6 +3867,32 @@ function getFinanceContextMicrostate(route: FinanceRoute): WorkspaceContextMicro
       id: 'finance-historie',
       label: 'Historieroute',
       detail: 'Eerdere posten blijven terugleesbaar zonder polisinterpretatie.',
+    },
+  };
+  return states[route];
+}
+
+function getNotificationContextMicrostate(route: NotificationRoute): WorkspaceContextMicrostate {
+  const states: Record<NotificationRoute, WorkspaceContextMicrostate> = {
+    status: {
+      id: 'notification-status',
+      label: 'Statusroute',
+      detail: 'Toestemming, service worker en fallback blijven eerst zichtbaar.',
+    },
+    privacy: {
+      id: 'notification-privacy',
+      label: 'Privacyroute',
+      detail: 'Lockscreenkeuze blijft expliciet voordat details worden getoond.',
+    },
+    plannen: {
+      id: 'notification-plannen',
+      label: 'Planroute',
+      detail: 'Nieuwe herinneringen blijven gescheiden van komende meldingen.',
+    },
+    komend: {
+      id: 'notification-komend',
+      label: 'Komende route',
+      detail: 'Actieve en fallbackmeldingen blijven scanbaar zonder inhoudslek.',
     },
   };
   return states[route];
@@ -11059,6 +11171,7 @@ function renderKennisScreen(state: AppShellState): string {
           kennisItems: filteredItems.length,
           totalKennisItems: state.kennisItems.length,
           netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+          activeRoute: activeKnowledgeRoute,
         }),
       })}
     </section>
@@ -11163,11 +11276,13 @@ function renderKnowledgeWorkspaceContext(input: {
   kennisItems: number;
   totalKennisItems: number;
   netwerkAan: boolean;
+  activeRoute: KnowledgeRoute;
 }): string {
   const contextSignals = renderWorkspaceContextSignals({
     label: 'Researchfocus',
     title: 'Leesvolgorde',
     data: { 'workspace-context-signals': 'knowledge' },
+    microstate: getKnowledgeContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Bronnen',
@@ -13811,6 +13926,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
           lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
           nextReminder: komende[0],
           defaultWarningMinutes: state.settings.afspraakWaarschuwingMinuten,
+          activeRoute: activeNotificationRoute,
         }),
       }),
     ],
@@ -13933,6 +14049,7 @@ function renderNotificationWorkspaceContext(input: {
   lockscreenDetails: boolean;
   nextReminder: ReturnType<typeof komendeHerinneringen>[number] | undefined;
   defaultWarningMinutes: number;
+  activeRoute: NotificationRoute;
 }): string {
   const next = input.nextReminder
     ? formatDateTime(input.nextReminder.volgendMoment)
@@ -13941,6 +14058,7 @@ function renderNotificationWorkspaceContext(input: {
     label: 'Meldingsfocus',
     title: 'Herinneringstatus',
     data: { 'workspace-context-signals': 'notification' },
+    microstate: getNotificationContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Volgende',
@@ -14345,6 +14463,7 @@ function renderAgendaScreen(state: AppShellState): string {
           hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
           importStatus: state.agendaImportStatus,
           importError: state.agendaImportError,
+          activeRoute: activeScheduleRoute,
         }),
       }),
     ],
@@ -14477,6 +14596,7 @@ function renderScheduleWorkspaceContext(input: {
   hasImportFeedback: boolean;
   importStatus?: string;
   importError?: string;
+  activeRoute: ScheduleRoute;
 }): string {
   const nextLabel = input.nextAppointment
     ? `${input.nextAppointment.afspraak.titel} · ${formatDateTime(input.nextAppointment.afspraak.datumTijd)}`
@@ -14492,6 +14612,7 @@ function renderScheduleWorkspaceContext(input: {
     label: 'Planningfocus',
     title: 'Volgende planningsactie',
     data: { 'workspace-context-signals': 'schedule' },
+    microstate: getScheduleContextMicrostate(input.activeRoute),
     items: [
       {
         label: 'Volgende',

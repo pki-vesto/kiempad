@@ -36661,6 +36661,8 @@ describe('app shell', () => {
     expect(agendaHtml).toContain('class="domain-split-workspace schedule-split-workspace"');
     expect(agendaHtml).toContain('data-schedule-workspace-context="metrics"');
     expect(agendaHtml).toContain('data-workspace-context-signals="schedule"');
+    expect(agendaHtml).toContain('data-workspace-context-microstate="schedule-plannen"');
+    expect(agendaHtml).toContain('Planroute');
     expect(agendaHtml).toContain('Planningfocus');
     expect(agendaHtml).toContain(
       'data-schedule-route="plannen" data-schedule-route-state="active"',
@@ -36685,6 +36687,8 @@ describe('app shell', () => {
     expect(kennisHtml).toContain('class="domain-split-workspace knowledge-split-workspace"');
     expect(kennisHtml).toContain('data-knowledge-workspace-context="metrics"');
     expect(kennisHtml).toContain('data-workspace-context-signals="knowledge"');
+    expect(kennisHtml).toContain('data-workspace-context-microstate="knowledge-ai"');
+    expect(kennisHtml).toContain('AI-context');
     expect(kennisHtml).toContain('Researchfocus');
     expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
     expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
@@ -36699,6 +36703,8 @@ describe('app shell', () => {
     expect(afwegingenHtml).toContain('class="domain-split-workspace decision-split-workspace"');
     expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
     expect(afwegingenHtml).toContain('data-workspace-context-signals="decision"');
+    expect(afwegingenHtml).toContain('data-workspace-context-microstate="decision-choice"');
+    expect(afwegingenHtml).toContain('Keuzeregistratie');
     expect(afwegingenHtml).toContain('Keuzefocus');
     expect(afwegingenHtml).toContain(
       'data-decision-route="choice" data-decision-route-state="active"',
@@ -36733,6 +36739,8 @@ describe('app shell', () => {
     );
     expect(herinneringenHtml).toContain('data-notification-workspace-context="metrics"');
     expect(herinneringenHtml).toContain('data-workspace-context-signals="notification"');
+    expect(herinneringenHtml).toContain('data-workspace-context-microstate="notification-plannen"');
+    expect(herinneringenHtml).toContain('Planroute');
     expect(herinneringenHtml).toContain('Meldingsfocus');
     expect(herinneringenHtml).toContain(
       'data-notification-route="plannen" data-notification-route-state="active"',
