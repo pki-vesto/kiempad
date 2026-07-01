@@ -12507,11 +12507,11 @@ function renderFinanceFocusShell(input: { workbench: string; workspace: string }
         <h2 id="finance-focus-shell-title">Eerst totalen scannen, daarna vergoeding of historie openen</h2>
         <p>Lokale kosten, eigen risico, vergoedingstatus en bewerkhistorie blijven in één administratieruimte zonder financieel advies of polisinterpretatie.</p>
       </header>
-      <div class="finance-focus-shell__body">
-        <div class="finance-focus-shell__workbench" data-finance-focus-region="workbench">
+      <div class="finance-focus-shell__body" data-finance-console="ready">
+        <div class="finance-focus-shell__workbench" data-finance-focus-region="workbench" data-finance-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="finance-focus-shell__workspace" data-finance-focus-region="workspace">
+        <div class="finance-focus-shell__workspace" data-finance-focus-region="workspace" data-finance-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

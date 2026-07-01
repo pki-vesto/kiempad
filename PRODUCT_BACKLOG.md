@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1106 |
+| ☑ klaar | 1107 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1305** |
+| **Totaal** | **1306** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1468,12 +1468,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1303 | Premium Claude Design UI: Vragen als compacte consult-console | P1 | F5 | ☑ |
 | G1304 | Premium Claude Design UI: Welzijn als compacte wellbeing-console | P1 | F5 | ☑ |
 | G1305 | Premium Claude Design UI: Afwegingen als compacte decision-console | P1 | F5 | ☑ |
+| G1306 | Premium Claude Design UI: Kosten als compacte finance-console | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1305** (id's G001 t/m G1305, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1306** (id's G001 t/m G1306, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
