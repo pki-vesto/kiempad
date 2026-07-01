@@ -3993,6 +3993,75 @@ h2 {
   border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
 }
 
+.consult-card {
+  align-items: stretch;
+}
+
+.consult-card__body {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.consult-card__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.consult-card__header h3,
+.consult-card__header p {
+  margin: 0;
+}
+
+.consult-card__date {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.consult-card__status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-end;
+  max-width: 34ch;
+}
+
+.consult-card__status span {
+  padding: 4px 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  color: var(--accent-strong);
+  font-size: 0.7rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.consult-card__metadata {
+  margin: 0;
+}
+
+.consult-card__section {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.consult-card__section h4 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.consult-card__section p,
+.consult-card__section ul,
+.consult-card__section dl {
+  margin-top: 0;
+}
+
 .command-route-summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -7637,6 +7706,16 @@ a.action-card:active {
     max-width: 34vw;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .consult-card__header {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .consult-card__status {
+    justify-content: flex-start;
+    max-width: none;
   }
 
   .command-route-section,

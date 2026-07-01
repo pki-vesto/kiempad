@@ -10275,17 +10275,39 @@ function renderConsultVerslag(verslag: ConsultVerslag, state: AppShellState): st
     medicatie: state.medicatie.map((item) => item.medicatie),
     dossierDocumenten: state.dossierDocuments ?? [],
   });
+  const statusChips = [
+    `${details.length} metadata`,
+    verslag.samenvatting ? 'samenvatting' : 'geen samenvatting',
+    verslag.actiepunten?.length
+      ? `${verslag.actiepunten.length} actiepunt${verslag.actiepunten.length === 1 ? '' : 'en'}`
+      : 'geen actiepunten',
+    inzichten.length
+      ? `${inzichten.length} koppeling${inzichten.length === 1 ? '' : 'en'}`
+      : 'geen koppelingen',
+  ];
 
   return `
-    <li class="phase-item">
-      <div>
-        <h3>${escapeHtml(verslag.titel)}</h3>
-        <p class="linked-note">Consultdatum: ${escapeHtml(verslag.datum)} · ${details.map(escapeHtml).join(' · ')}</p>
-        ${
-          verslag.tekst
-            ? `<p>${escapeHtml(verslag.tekst)}</p>`
-            : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
-        }
+    <li class="phase-item consult-card" data-consult-card="compact">
+      <div class="consult-card__body">
+        <header class="consult-card__header">
+          <div>
+            <p class="kp-card__eyebrow">Consultverslag</p>
+            <h3>${escapeHtml(verslag.titel)}</h3>
+            <p class="consult-card__date">Consultdatum: ${escapeHtml(verslag.datum)}</p>
+          </div>
+          <div class="consult-card__status" aria-label="Consultstatus">
+            ${statusChips.map((chip) => `<span>${escapeHtml(chip)}</span>`).join('')}
+          </div>
+        </header>
+        <p class="linked-note consult-card__metadata">${details.map(escapeHtml).join(' · ')}</p>
+        <section class="consult-card__section" data-consult-card-section="tekst">
+          <h4>Verslagtekst</h4>
+          ${
+            verslag.tekst
+              ? `<p>${escapeHtml(verslag.tekst)}</p>`
+              : '<p class="small-print">Bestand opgeslagen; tekst wordt pas zichtbaar na lokale extractie of handmatige invoer.</p>'
+          }
+        </section>
         ${renderConsultSamenvatting(verslag)}
         ${renderConsultSamenvattingVerschil(vergelijkConsultSamenvatting(verslag))}
         ${renderConsultActiepunten(verslag)}
@@ -10311,8 +10333,8 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
   const correctie = verslag.samenvattingCorrectie?.tekst ?? '';
 
   return `
-    <div class="linked-note" data-consult-summary-review-state="${escapeAttribute(reviewStatus)}">
-      <strong>Conceptsamenvatting</strong>
+    <section class="linked-note consult-card__section" data-consult-card-section="samenvatting" data-consult-summary-review-state="${escapeAttribute(reviewStatus)}">
+      <h4>Conceptsamenvatting</h4>
       ${
         reviewStatus === 'verworpen'
           ? '<p>Deze conceptsamenvatting is verworpen en wordt niet als gebruikerstekst gebruikt.</p>'
@@ -10334,7 +10356,7 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
         <button type="submit" name="samenvattingReviewActie" value="corrigeren">Bewaar correctie</button>
         <button type="submit" name="samenvattingReviewActie" value="verwerpen">Verwerp concept</button>
       </form>
-    </div>
+    </section>
   `;
 }
 
@@ -10377,8 +10399,8 @@ function renderConsultSamenvattingVerschil(
   }
 
   return `
-    <div class="linked-note">
-      <strong>Verschil met gebruikerscorrectie</strong>
+    <section class="linked-note consult-card__section" data-consult-card-section="correctieverschil">
+      <h4>Verschil met gebruikerscorrectie</h4>
       ${
         verschil.toegevoegd.length > 0
           ? `<p>Toegevoegd: ${verschil.toegevoegd.map(escapeHtml).join(' ')}</p>`
@@ -10390,7 +10412,7 @@ function renderConsultSamenvattingVerschil(
           : '<p>Verwijderd uit concept: geen zinnen.</p>'
       }
       <small>${escapeHtml(verschil.waarschuwing)}</small>
-    </div>
+    </section>
   `;
 }
 
@@ -10400,8 +10422,8 @@ function renderConsultInzichten(inzichten: ConsultInzichtKoppeling[]): string {
   }
 
   return `
-    <div class="linked-note">
-      <strong>Consultinzichten</strong>
+    <section class="linked-note consult-card__section" data-consult-card-section="inzichten">
+      <h4>Consultinzichten</h4>
       <ul class="compact-list">
         ${inzichten
           .map(
@@ -10410,7 +10432,7 @@ function renderConsultInzichten(inzichten: ConsultInzichtKoppeling[]): string {
           )
           .join('')}
       </ul>
-    </div>
+    </section>
   `;
 }
 
@@ -10427,8 +10449,8 @@ function renderConsultActiepunten(verslag: ConsultVerslag): string {
   }
 
   return `
-    <div class="linked-note">
-      <strong>Conceptactiepunten</strong>
+    <section class="linked-note consult-card__section" data-consult-card-section="actiepunten">
+      <h4>Conceptactiepunten</h4>
       <ul class="compact-list">
         ${verslag.actiepunten
           .map((actiepunt) => {
@@ -10439,7 +10461,7 @@ function renderConsultActiepunten(verslag: ConsultVerslag): string {
           .join('')}
       </ul>
       <small>Concepten uit lokale consulttekst; controleer ze voordat je ze gebruikt.</small>
-    </div>
+    </section>
   `;
 }
 
