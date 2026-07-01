@@ -11731,29 +11731,30 @@ function renderKennisScreen(state: AppShellState): string {
 
   return `
     <section class="section-stack knowledge-command-layout" aria-label="Kennisbank">
-      ${renderKnowledgeResearchWorkbench({
-        researchBronnen: researchBronnen.length,
-        researchSamenvattingen:
-          researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
-        researchTrends: researchTrendGroepen.length,
-        kennisItems: filteredItems.length,
-        totalKennisItems: state.kennisItems.length,
-        netwerkAan: state.settings.researchNetwerk.ingeschakeld,
-        filter,
-      })}
-      ${domainSplitWorkspace({
-        className: 'knowledge-split-workspace',
-        ariaLabel: 'Kennis split-view werkruimte',
-        data: { 'knowledge-split-workspace': 'ready' },
-        rail: renderKennisTaskRoutes({
+      ${renderKnowledgeFocusShell({
+        workbench: renderKnowledgeResearchWorkbench({
           researchBronnen: researchBronnen.length,
           researchSamenvattingen:
             researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
           researchTrends: researchTrendGroepen.length,
           kennisItems: filteredItems.length,
-          activeRoute: activeKnowledgeRoute,
+          totalKennisItems: state.kennisItems.length,
+          netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+          filter,
         }),
-        main: `
+        workspace: domainSplitWorkspace({
+          className: 'knowledge-split-workspace',
+          ariaLabel: 'Kennis split-view werkruimte',
+          data: { 'knowledge-split-workspace': 'ready' },
+          rail: renderKennisTaskRoutes({
+            researchBronnen: researchBronnen.length,
+            researchSamenvattingen:
+              researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+            researchTrends: researchTrendGroepen.length,
+            kennisItems: filteredItems.length,
+            activeRoute: activeKnowledgeRoute,
+          }),
+          main: `
       <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'read')}>
         <header class="knowledge-route-section__header">
           <p class="kp-card__eyebrow">Research lezen</p>
@@ -11943,17 +11944,38 @@ function renderKennisScreen(state: AppShellState): string {
         </details>
       </section>
       `,
-        context: renderKnowledgeWorkspaceContext({
-          researchBronnen: researchBronnen.length,
-          researchSamenvattingen:
-            researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
-          researchTrends: researchTrendGroepen.length,
-          kennisItems: filteredItems.length,
-          totalKennisItems: state.kennisItems.length,
-          netwerkAan: state.settings.researchNetwerk.ingeschakeld,
-          activeRoute: activeKnowledgeRoute,
+          context: renderKnowledgeWorkspaceContext({
+            researchBronnen: researchBronnen.length,
+            researchSamenvattingen:
+              researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+            researchTrends: researchTrendGroepen.length,
+            kennisItems: filteredItems.length,
+            totalKennisItems: state.kennisItems.length,
+            netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+            activeRoute: activeKnowledgeRoute,
+          }),
         }),
       })}
+    </section>
+  `;
+}
+
+function renderKnowledgeFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="knowledge-focus-shell" aria-labelledby="knowledge-focus-shell-title" data-knowledge-focus-shell="ready">
+      <header class="knowledge-focus-shell__header">
+        <p class="kp-card__eyebrow">Research focus</p>
+        <h2 id="knowledge-focus-shell-title">Eerst researchlaag kiezen, daarna bronnen openen</h2>
+        <p>Werkbank, routekeuze en leesflow horen bij elkaar: bronnen, samenvattingen, relevantie en trends blijven één gefocuste kennisruimte.</p>
+      </header>
+      <div class="knowledge-focus-shell__body">
+        <div class="knowledge-focus-shell__workbench" data-knowledge-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="knowledge-focus-shell__workspace" data-knowledge-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
     </section>
   `;
 }

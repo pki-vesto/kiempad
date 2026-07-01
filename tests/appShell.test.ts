@@ -35317,6 +35317,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Research opslaan');
     expect(html).toContain('class="section-stack knowledge-command-layout"');
+    expect(html).toContain('class="knowledge-focus-shell"');
+    expect(html).toContain('data-knowledge-focus-shell="ready"');
+    expect(html).toContain('Eerst researchlaag kiezen, daarna bronnen openen');
+    expect(html).toContain('data-knowledge-focus-region="workbench"');
+    expect(html).toContain('data-knowledge-focus-region="workspace"');
     expect(html).toContain(
       '<section class="knowledge-research-workbench" aria-label="Researchwerkbank" data-knowledge-first-viewport="research-workbench">',
     );
@@ -35508,6 +35513,19 @@ describe('app shell', () => {
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
     expect(css).toContain('.knowledge-research-workbench {');
+    expect(css).toContain('.knowledge-focus-shell {');
+    expect(css).toContain('.knowledge-focus-shell__header {');
+    expect(css).toContain('.knowledge-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(260px, 0.28fr) minmax(0, 1fr);');
+    expect(css).toContain('.knowledge-focus-shell__workbench > .knowledge-research-workbench {');
+    expect(css).toContain('.knowledge-focus-shell__workbench .knowledge-research-snapshot {');
+    expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain(
+      '.knowledge-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {',
+    );
     expect(css).toContain('[data-knowledge-first-viewport="research-workbench"]');
     expect(css).toContain('.knowledge-research-workbench__header {');
     expect(css).toContain('.knowledge-research-workbench__status {');
@@ -35534,6 +35552,17 @@ describe('app shell', () => {
     expect(css).toContain('font-size: 1.16rem;');
     expect(css).toContain('.knowledge-command-panel__intro {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain(
+      '.content:has([data-knowledge-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-knowledge-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.knowledge-focus-shell {');
+    expect(mobileCss).toContain('box-shadow: none;');
+    expect(mobileCss).toContain('.knowledge-focus-shell__body {');
+    expect(mobileCss).toContain('.knowledge-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('grid-column: auto;');
     expect(mobileCss).toContain('.knowledge-research-snapshot {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.knowledge-research-snapshot__card {');
