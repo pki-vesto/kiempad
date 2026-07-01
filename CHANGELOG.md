@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1285 Premium Claude Design UI: Dossier, Kennis en Traject gebruiken hun ondersteunende oriëntatie/workbench nu als compacte bovenstrip. De split-workspace krijgt op desktop de volledige focusbreedte eronder, en de routeflow screenshot-smoke bewaakt dat de workspace niet meer naast een concurrerende supportkolom staat.
 - G1284 Premium Claude Design UI: split-workspaces geven de actieve hoofdroute nu duidelijk meer desktopbreedte. De taakrail en contextkolom zijn compacter, en de split-workspace browser-smoke meet dat de main-kolom breder blijft dan rail en context zonder mobiele fallback of overflow te breken.
 - G1283 Premium Claude Design UI: focusroutes tonen de workspace-strip nu in compacte modus. De actieve werkruimte en switcher blijven zichtbaar, maar de beschrijvingsregel en snelle duplicaatlinks nemen geen ruimte meer in; routeflow- en split-workspace-smokes bewaken dit.
 - G1282 Premium Claude Design UI: de globale topbar gebruikt nu een compacte themacontrol in plaats van een vol formulier. De zichtbare knoptekst is teruggebracht naar `Opslaan`, de toegankelijke naam blijft `Bewaar thema`, en desktop/mobile CSS houdt brand, opslagstatus, themakeuze en vergrendelen compacter bij elkaar.

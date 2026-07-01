@@ -5585,8 +5585,8 @@ h2 {
 
 .knowledge-focus-shell__body {
   display: grid;
-  grid-template-columns: minmax(260px, 0.28fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
   align-items: start;
 }
 
@@ -5597,14 +5597,26 @@ h2 {
 
 .knowledge-focus-shell__workbench > .knowledge-research-workbench {
   width: 100%;
+  padding: 12px;
 }
 
 .knowledge-focus-shell__workbench .knowledge-research-snapshot {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .knowledge-focus-shell__workbench .knowledge-command-panel__intro {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.knowledge-focus-shell__workbench .knowledge-research-workbench__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.knowledge-focus-shell__workbench .knowledge-research-workbench__header p:last-child {
+  display: none;
 }
 
 .knowledge-focus-shell__workspace .domain-split-workspace {
@@ -6539,8 +6551,8 @@ h2 {
 
 .treatment-focus-shell__body {
   display: grid;
-  grid-template-columns: minmax(300px, 0.34fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
   align-items: start;
 }
 
@@ -6551,14 +6563,26 @@ h2 {
 
 .treatment-focus-shell__workbench > .treatment-workbench {
   width: 100%;
+  padding: 12px;
 }
 
 .treatment-focus-shell__workbench .treatment-workbench__grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(220px, 0.54fr) minmax(0, 1.46fr);
 }
 
 .treatment-focus-shell__workbench .treatment-snapshot {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.treatment-focus-shell__workbench .treatment-workbench__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.treatment-focus-shell__workbench .treatment-workbench__header p:last-child {
+  display: none;
 }
 
 .treatment-focus-shell__workspace .domain-split-workspace {
@@ -7523,18 +7547,14 @@ a.action-card:active {
 
 .dossier-focus-shell__body {
   display: grid;
-  grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
   align-items: start;
 }
 
 .dossier-focus-shell__orientation,
 .dossier-focus-shell__workspace {
   min-width: 0;
-}
-
-.dossier-focus-shell__orientation > .dossier-route-stage {
-  width: 100%;
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace {
@@ -7659,6 +7679,28 @@ a.action-card:active {
   color: var(--text-muted);
   font-size: 0.78rem;
   line-height: 1.35;
+}
+
+@media (min-width: 761px) {
+  .dossier-focus-shell__orientation > .dossier-route-stage {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .dossier-focus-shell__orientation .dossier-route-stage__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .dossier-focus-shell__orientation .dossier-route-stage__header p:last-child {
+    display: none;
+  }
+
+  .dossier-focus-shell__orientation .dossier-route-snapshot {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 .dossier-upload-triage {
