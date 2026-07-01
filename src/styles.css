@@ -1891,6 +1891,61 @@ h2 {
   line-height: 1.4;
 }
 
+.start-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.start-snapshot__card {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 91%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+}
+
+.start-snapshot__card:hover,
+.start-snapshot__card:focus-visible {
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+.start-snapshot__card span,
+.start-snapshot__card strong,
+.start-snapshot__card small {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.start-snapshot__card span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.start-snapshot__card strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.28;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.start-snapshot__card small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .daily-advice-workbench {
   display: grid;
   gap: 10px;
@@ -7044,6 +7099,27 @@ a.action-card:active {
 
   .start-workbench-card__detail {
     display: none;
+  }
+
+  .start-snapshot {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .start-snapshot::-webkit-scrollbar {
+    display: none;
+  }
+
+  .start-snapshot__card {
+    flex: 0 0 min(220px, 72vw);
+    padding: 10px 11px;
+    scroll-snap-align: start;
+  }
+
+  .start-snapshot__card strong {
+    font-size: 0.9rem;
   }
 
   .daily-advice-workbench {
