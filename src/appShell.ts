@@ -13585,8 +13585,8 @@ function renderStartFocusShell(input: {
     <section class="start-focus-shell" aria-labelledby="start-focus-shell-title" data-start-focus-shell="ready">
       <header class="start-focus-shell__header">
         <p class="start-cockpit__eyebrow">Verdieping</p>
-        <h2 id="start-focus-shell-title">Werk verder in één gefocuste startlaag</h2>
-        <p>De snelle werkbanen blijven bovenaan; detailcontrole, dagadvies en setup staan hieronder gebundeld in één rustige laag.</p>
+        <h2 id="start-focus-shell-title">Start command-center</h2>
+        <p>Werkbanen, startscan en dagadvies staan op desktop naast elkaar als vaste werkvlakken; mobiel behoudt dezelfde volgorde onder elkaar.</p>
       </header>
       <div class="start-focus-shell__body">
         <div class="start-focus-shell__primary" data-start-focus-region="workflows">
