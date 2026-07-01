@@ -1838,6 +1838,7 @@ describe('app shell', () => {
 
   it('bewaakt beheer, systeem en planning workbenches als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
+    const desktopCss = css.slice(0, css.indexOf('@media (max-width: 760px)'));
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
     const appShell = readFileSync('src/appShell.ts', 'utf8');
     const components = readFileSync('src/ui/components.ts', 'utf8');
@@ -1936,6 +1937,33 @@ describe('app shell', () => {
     expect(css).toContain('.consult-prep-board__lane:hover,');
     expect(css).toContain('.consult-prep-board__lane:focus-visible {');
     expect(css).toContain('.consult-prep-board__lane em {');
+    expect(desktopCss).toContain(
+      '.content:has([data-schedule-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-medication-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-question-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-finance-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-backup-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-notification-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-schedule-focus-shell="ready"]) > .page-header,',
+    );
+    expect(desktopCss).toContain(
+      '.content:has([data-notification-focus-shell="ready"]) > .page-header {',
+    );
     expect(mobileCss).toContain(
       '.content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,',
     );

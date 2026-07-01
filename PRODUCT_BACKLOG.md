@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1079 |
+| ☑ klaar | 1080 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1278** |
+| **Totaal** | **1279** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1441,12 +1441,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1276 | Premium Claude Design UI: backup focus-shell bundelen | P1 | F5 | ☑ |
 | G1277 | Premium Claude Design UI: eventlog focus-shell bundelen | P1 | F5 | ☑ |
 | G1278 | Premium Claude Design UI: notification focus-shell bundelen | P1 | F5 | ☑ |
+| G1279 | Premium Claude Design UI: focusroute desktop chrome reduceren | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1278** (id's G001 t/m G1278, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1279** (id's G001 t/m G1279, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

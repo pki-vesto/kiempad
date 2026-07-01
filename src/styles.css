@@ -7075,6 +7075,33 @@ h2 {
   line-height: 1.55;
 }
 
+.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,
+.content:has([data-knowledge-focus-shell="ready"]) > .workspace-map,
+.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,
+.content:has([data-question-focus-shell="ready"]) > .workspace-map,
+.content:has([data-schedule-focus-shell="ready"]) > .workspace-map,
+.content:has([data-medication-focus-shell="ready"]) > .workspace-map,
+.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-map,
+.content:has([data-decision-focus-shell="ready"]) > .workspace-map,
+.content:has([data-finance-focus-shell="ready"]) > .workspace-map,
+.content:has([data-backup-focus-shell="ready"]) > .workspace-map,
+.content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,
+.content:has([data-notification-focus-shell="ready"]) > .workspace-map,
+.content:has([data-dossier-focus-shell="ready"]) > .page-header,
+.content:has([data-knowledge-focus-shell="ready"]) > .page-header,
+.content:has([data-treatment-focus-shell="ready"]) > .page-header,
+.content:has([data-question-focus-shell="ready"]) > .page-header,
+.content:has([data-schedule-focus-shell="ready"]) > .page-header,
+.content:has([data-medication-focus-shell="ready"]) > .page-header,
+.content:has([data-wellbeing-focus-shell="ready"]) > .page-header,
+.content:has([data-decision-focus-shell="ready"]) > .page-header,
+.content:has([data-finance-focus-shell="ready"]) > .page-header,
+.content:has([data-backup-focus-shell="ready"]) > .page-header,
+.content:has([data-eventlog-focus-shell="ready"]) > .page-header,
+.content:has([data-notification-focus-shell="ready"]) > .page-header {
+  display: none;
+}
+
 .kp-card {
   padding: 18px;
   border: 1px solid var(--border);

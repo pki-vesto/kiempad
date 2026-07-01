@@ -299,6 +299,11 @@
   split-workspace in één `notification-focus-shell` met workbench- en
   workspace-regio's. Runtime-status, lockscreenprivacy, planning, komende meldingen
   en fallback starten als één meldingsruimte.
+- **G1279 Focusroute chrome reducer:** Focusroutes verbergen nu ook op desktop de
+  redundante globale `workspace-map` en `page-header`, zodat Dossier, Kennis,
+  Traject, Vragen, Welzijn, Afwegingen, Medicatie, Agenda, Kosten, Back-up,
+  Logboek en Herinneringen direct in hun eigen focusruimte openen. De workspace-strip
+  blijft zichtbaar als compacte bovencontext en de split-workspace smoke bewaakt dit.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
