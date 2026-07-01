@@ -1743,6 +1743,10 @@ describe('app shell', () => {
     expect(html).toContain('class="workspace-map"');
     expect(html).toContain('data-workspace-map="ready"');
     expect(html).toContain('data-workspace-map-active="Vandaag"');
+    expect(html).toContain('id="theme-form"');
+    expect(html).toContain('data-theme-control="compact"');
+    expect(html).toContain('class="theme-form__label">Thema</span>');
+    expect(html).toContain('<button type="submit" aria-label="Bewaar thema">Opslaan</button>');
     expect(html).toContain('Kiempad is verdeeld in duidelijke werkbanen');
     expect(html).toContain('data-workspace-map-card="Dossier"');
     expect(html).toContain('data-workspace-map-state="active"');
@@ -2675,6 +2679,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('max-width: 44vw;');
     expect(mobileCss).toContain('.theme-form {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(mobileCss).toContain('.theme-form__label {');
+    expect(css).toContain('.theme-form[data-theme-control="compact"] {');
+    expect(css).toContain('.theme-form__label {');
+    expect(css).toContain('max-width: 92px;');
     expect(mobileCss).toContain('.lock-button {');
     expect(mobileCss).toContain('grid-column: 2;');
     expect(css).toContain('.workspace-strip {');

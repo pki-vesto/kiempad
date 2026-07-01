@@ -312,6 +312,10 @@
   planning als primaire volgende stap. Dagadvies, setup en snelle invoer blijven
   gesloten achter hun summary en switchboard, zodat de contained workspace niet meer
   als lange detailkolom start.
+- **G1282 Compacte topbar chrome:** De globale topbar toont themakeuze nu als
+  compacte control-strip met korte zichtbare opslaanactie. Brand, opslagstatus,
+  themakeuze en vergrendelen blijven beschikbaar, maar lezen minder als formulier
+  boven de app.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

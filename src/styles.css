@@ -420,29 +420,46 @@ h3 {
   background: var(--owner-samen-dot);
 }
 
-.theme-form {
+.theme-form,
+.theme-form[data-theme-control="compact"] {
   display: flex;
   flex: 0 0 auto;
-  align-items: end;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
 }
 
 .theme-form label {
-  display: grid;
-  gap: 4px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
   color: var(--text-strong);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
+}
+
+.theme-form__label {
+  color: var(--text-faint);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .theme-form select,
 .theme-form button {
-  min-height: 40px;
+  min-height: 32px;
   border-radius: var(--radius-pill);
-  padding: 8px 14px;
+  padding: 6px 10px;
   color: var(--text);
   font: inherit;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 750;
   transition:
     background var(--motion),
     border-color var(--motion),
@@ -450,19 +467,20 @@ h3 {
 }
 
 .theme-form select {
-  border: 1px solid var(--border-strong);
-  background: var(--field-bg);
+  max-width: 92px;
+  border: 1px solid transparent;
+  background: transparent;
 }
 
 .theme-form button {
-  border: 0;
-  background: var(--accent);
-  color: var(--on-accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  background: var(--surface);
+  color: var(--accent);
   cursor: pointer;
 }
 
 .theme-form button:hover {
-  background: var(--accent-strong);
+  background: var(--surface-active);
 }
 
 .lock-button,
@@ -9190,12 +9208,19 @@ a.action-card:active {
   }
 
   .theme-form {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
+    justify-content: space-between;
+    width: 100%;
   }
 
-  .theme-form button,
+  .theme-form label {
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+
+  .theme-form select {
+    max-width: 96px;
+  }
+
   .lock-button {
     width: 100%;
   }
@@ -9433,25 +9458,32 @@ a.action-card:active {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-column: 1;
-    gap: 6px;
-    align-items: end;
+    gap: 4px;
+    align-items: center;
     min-width: 0;
+    padding: 4px;
   }
 
   .theme-form label {
+    display: flex;
     min-width: 0;
     font-size: 0.68rem;
   }
 
+  .theme-form__label {
+    font-size: 0.6rem;
+  }
+
   .theme-form select,
   .theme-form button {
-    min-height: 36px;
-    padding: 7px 11px;
-    font-size: 0.8rem;
+    min-height: 30px;
+    padding: 5px 8px;
+    font-size: 0.74rem;
   }
 
   .theme-form select {
     width: 100%;
+    max-width: 76px;
   }
 
   .theme-form button {

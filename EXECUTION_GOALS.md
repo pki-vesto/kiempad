@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1282 — Premium Claude Design UI: compacte topbar chrome
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De globale topbar bevatte een volle themakeuze met label, select en brede bewaarknop, waardoor de app-chrome formulierachtig en administratief voelde.
+- **Desired Outcome:** Maak de themakeuze een compacte control-strip met korte zichtbare copy, behoud van toegankelijke naam en dezelfde submit-flow.
+- **User Value:** De gebruiker ziet minder globale chrome en meer productwerkruimte, terwijl thema wijzigen en vergrendelen direct beschikbaar blijven.
+- **Acceptance Criteria:** `theme-form` rendert met `data-theme-control="compact"`; de knop gebruikt korte zichtbare tekst met behoud van aria-label; CSS definieert compacte control-styling voor desktop en mobiel; app-shell tests bewaken markup en CSS; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2339
+
 ### G1281 — Premium Claude Design UI: start-flowrail één open paneel
 
 - **Epic:** Onboarding & Daily Use
