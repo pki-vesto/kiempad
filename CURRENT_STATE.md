@@ -351,6 +351,9 @@
   consultvoorbereiding, welzijnsgeschiedenis en back-up gebruiken op desktop nu ook
   lagere boardpadding, compactere lane-kaarten en verborgen board-introcopy. De
   mobiele swipebanen blijven ongewijzigd.
+- **G1292 Compacte routedetails:** Actieve route-disclosures, summary-/policy-
+  panels en phase-/compactlijsten gebruiken op desktop een strakker ritme. Details
+  blijven toegankelijk via dezelfde anchors, maar nemen minder verticale ruimte in.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

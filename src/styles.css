@@ -8621,6 +8621,88 @@ a.action-card:active {
   padding: 0 16px 16px;
 }
 
+@media (min-width: 761px) {
+  .command-route-section .kp-disclosure,
+  .dossier-route-section .kp-disclosure,
+  .knowledge-route-section .kp-disclosure,
+  .treatment-route-section .kp-disclosure,
+  .question-route-section .kp-disclosure,
+  .wellbeing-route-section .kp-disclosure,
+  .backup-route-section .kp-disclosure {
+    border-radius: 10px;
+  }
+
+  .command-route-section .kp-disclosure__summary,
+  .dossier-route-section .kp-disclosure__summary,
+  .knowledge-route-section .kp-disclosure__summary,
+  .treatment-route-section .kp-disclosure__summary,
+  .question-route-section .kp-disclosure__summary,
+  .wellbeing-route-section .kp-disclosure__summary,
+  .backup-route-section .kp-disclosure__summary {
+    min-height: 36px;
+    padding: 8px 10px;
+    font-size: 0.86rem;
+  }
+
+  .command-route-section .kp-disclosure__body,
+  .dossier-route-section .kp-disclosure__body,
+  .knowledge-route-section .kp-disclosure__body,
+  .treatment-route-section .kp-disclosure__body,
+  .question-route-section .kp-disclosure__body,
+  .wellbeing-route-section .kp-disclosure__body,
+  .backup-route-section .kp-disclosure__body {
+    padding: 0 10px 10px;
+  }
+
+  .command-route-section .summary-panel,
+  .command-route-section .policy-panel,
+  .dossier-route-section .summary-panel,
+  .dossier-route-section .policy-panel,
+  .knowledge-route-section .summary-panel,
+  .knowledge-route-section .policy-panel,
+  .treatment-route-section .summary-panel,
+  .treatment-route-section .policy-panel,
+  .question-route-section .summary-panel,
+  .question-route-section .policy-panel,
+  .wellbeing-route-section .summary-panel,
+  .wellbeing-route-section .policy-panel,
+  .backup-route-section .summary-panel,
+  .backup-route-section .policy-panel {
+    min-height: 112px;
+    padding: 14px;
+    line-height: 1.45;
+  }
+
+  .command-route-section .phase-list,
+  .dossier-route-section .phase-list,
+  .knowledge-route-section .phase-list,
+  .treatment-route-section .phase-list,
+  .question-route-section .phase-list,
+  .wellbeing-route-section .phase-list,
+  .backup-route-section .phase-list,
+  .command-route-section .compact-list,
+  .dossier-route-section .compact-list,
+  .knowledge-route-section .compact-list,
+  .treatment-route-section .compact-list,
+  .question-route-section .compact-list,
+  .wellbeing-route-section .compact-list,
+  .backup-route-section .compact-list {
+    gap: 7px;
+  }
+
+  .command-route-section .phase-item,
+  .dossier-route-section .phase-item,
+  .knowledge-route-section .phase-item,
+  .treatment-route-section .phase-item,
+  .question-route-section .phase-item,
+  .wellbeing-route-section .phase-item,
+  .backup-route-section .phase-item {
+    gap: 9px;
+    padding: 11px;
+    border-radius: 10px;
+  }
+}
+
 .section-stack[aria-label="Dossier beheren"] .kp-disclosure__body,
 .section-stack[aria-label="Dossier beheren"] .data-form {
   min-width: 0;

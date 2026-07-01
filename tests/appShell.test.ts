@@ -37526,6 +37526,13 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.backup-route-section .kp-disclosure,');
     expect(mobileCss).toContain('.eventlog-route-section .kp-disclosure,');
     expect(mobileCss).toContain('.notification-route-section .kp-disclosure {');
+    expect(css).toContain('.treatment-route-section .kp-disclosure__summary,');
+    expect(css).toContain('min-height: 36px;');
+    expect(css).toContain('padding: 8px 10px;');
+    expect(css).toContain('.treatment-route-section .summary-panel,');
+    expect(css).toContain('min-height: 112px;');
+    expect(css).toContain('.treatment-route-section .phase-item,');
+    expect(css).toContain('padding: 11px;');
     expect(mobileCss).toContain('.command-route-section .data-form {');
     expect(mobileCss).toContain('gap: 10px;');
     expect(mobileCss).toContain('.command-route-section .command-form-section {');
