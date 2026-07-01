@@ -2493,6 +2493,7 @@ describe('app shell', () => {
     expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).not.toContain('data-workspace-map="ready"');
     expect(html).toContain('Start command-center');
+    expect(html).toContain('mobiel opent dit als compacte scrollbare routekaart');
     expect(html).toContain('data-start-focus-region="workflows"');
     expect(html).toContain('data-start-focus-region="scan"');
     expect(html).toContain('data-start-focus-region="daily"');
@@ -2899,6 +2900,11 @@ describe('app shell', () => {
     expect(css).toContain('"workflows scan daily";');
     expect(css).toContain('max-height: min(900px, calc(100vh - 126px));');
     expect(css).toContain('.start-focus-shell:has(#start-flow-panel-aanbevelingen[open]) {');
+    expect(mobileCss).toContain(
+      '.start-command-layout[data-start-console="ready"] .start-focus-shell {',
+    );
+    expect(mobileCss).toContain('max-height: min(680px, calc(100vh - 164px));');
+    expect(mobileCss).toContain('overflow-y: auto;');
     expect(css).toContain(
       'grid-template-columns: minmax(0, 0.48fr) minmax(180px, 0.42fr) minmax(520px, 1.62fr);',
     );

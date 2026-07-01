@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1318 — Premium Claude Design UI: Start mobiel als compacte route-ingang
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Op mobiel voelde de Start-overview na de launchpad nog als één lange tweede pagina doordat command-center, startscan en flowdashboard volledig onder elkaar doorliepen.
+- **Desired Outcome:** Begrens de mobiele Start-verdieping als compacte scrollbare routekaart, terwijl desktop de bestaande drie vaste Start-werkvlakken behoudt.
+- **User Value:** De gebruiker ziet op mobiel eerst de belangrijkste ingang en hoeft niet door duizenden pixels extra Start-content te scrollen voordat andere schermen bereikbaar voelen.
+- **Acceptance Criteria:** Mobiele Start rendert de command-center laag als scrollbaar vlak met `max-height`; `#start-today` en `#start-recommendations` blijven directe routes; desktop behoudt de bestaande Start launchpad en drie begrensde werkvlakken; app-shell tests en Playwright screenshots bewaken dat er geen tekstoverflow ontstaat.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2411
+
 ### G1317 — Premium Claude Design UI: Hoofdcontent als actieve screen-stage
 
 - **Epic:** Onboarding & Daily Use
