@@ -4022,6 +4022,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, context columns, styles, tests
 - **ADR Needed:** no
 - **Score:** 43
+- **Status:** ☑ done
+
+### G1231 — split-view contextsignalen visueel toetsen met screenshots
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De contextsignalenlaag is nu breed uitgerold, maar de regressiebewaking kijkt vooral naar DOM-contracten en smoke-output in plaats van concrete visuele bewijsvoering.
+- **User Impact:** Layoutdrift in contextkaarten, mobiele dichtheid of tekstafbreking kan minder snel zichtbaar worden dan structurele routefouten.
+- **Desired Outcome:** Voeg browser- of screenshot-evidence toe voor representatieve contextsignalen over desktop en mobiel.
+- **User Value:** Gebruikers behouden een rustige, scanbare rechterkolom doordat regressies in leesbaarheid en dichtheid sneller worden gevonden.
+- **Acceptance Criteria:** Browseraudit of screenshotflow dekt representatieve contextsignalen op desktop en mobiel; minimaal Dossier, Traject, Welzijn, Kosten, Logboek en Back-up worden visueel gecontroleerd; mobile blijft zonder horizontale overflow en tekst blijft binnen contextkaarten; tests of smoke-output blijven privacyveilig zonder OCR-tekst, medische payload, secrets of beeldpayload; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Browser smoke, screenshots, app shell, styles, tests
+- **ADR Needed:** no
+- **Score:** 42
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

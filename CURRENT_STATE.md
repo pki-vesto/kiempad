@@ -671,7 +671,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Afwegingen, Kosten, Logboek, Herinneringen en Back-up op desktop en mobiel.
   Dossier, Agenda, Kennis en Traject tonen nu domeinspecifieke contextsignalen in
   de rechterkolom voor review/beeldhistorie, planning/import, researchleesvolgorde
-  en behandelcontext.
+  en behandelcontext. Welzijn, Afwegingen, Kosten, Logboek, Herinneringen en
+  Back-up gebruiken dezelfde contextsignalenlaag voor respectievelijk welzijn,
+  keuzes, administratie, auditprivacy, meldingsprivacy en back-upveiligheid.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -687,7 +689,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1230: split-view contextsignalen uitbreiden naar beheer- en welzijnsdomeinen.
+1. UI Improvement Evolution uitvoeren vanaf G1231: split-view contextsignalen visueel toetsen met screenshots.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

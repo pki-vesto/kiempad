@@ -1454,6 +1454,34 @@ function renderEventLogWorkspaceContext(input: {
   const latest = input.latestLog
     ? `${input.latestLog.categorie}: ${formatDateTime(input.latestLog.datum)}`
     : 'Nog geen gebeurtenis.';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Auditfocus',
+    title: 'Logboek aandacht',
+    data: { 'workspace-context-signals': 'eventlog' },
+    items: [
+      {
+        label: 'Privacy',
+        value: String(input.highRiskCount),
+        detail:
+          input.highRiskCount > 0
+            ? 'Open privacyregels apart; details blijven terughoudend.'
+            : 'Geen privacygevoelige auditregels gevonden.',
+        href: '#logboek?route=privacy',
+      },
+      {
+        label: 'Recent',
+        value: String(input.eventCount),
+        detail: latest,
+        href: '#logboek?route=recent',
+      },
+      {
+        label: 'Categorieën',
+        value: String(input.categoryCount),
+        detail: input.central ? 'Centrale encrypted dataset.' : 'Legacy lokale kluis.',
+        href: '#logboek?route=categorieen',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Logboek context" data-eventlog-workspace-context="metrics">
@@ -1466,6 +1494,7 @@ function renderEventLogWorkspaceContext(input: {
         { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
       ])}
       <p class="linked-note">${escapeHtml(latest)}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Logboek werkruimtegrens" data-eventlog-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -1810,6 +1839,34 @@ function renderDecisionWorkspaceContext(input: {
   const latest = input.latestDecision
     ? `${input.latestDecision.onderwerp} · ${input.latestDecision.opties.length} optie(s)`
     : 'Nog geen beslisnotitie.';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Keuzefocus',
+    title: 'Besliscontext',
+    data: { 'workspace-context-signals': 'decision' },
+    items: [
+      {
+        label: 'Open',
+        value: String(openCount),
+        detail:
+          openCount > 0
+            ? 'Vergelijk opties zonder dat Kiempad een keuze suggereert.'
+            : 'Geen open afwegingen in de huidige selectie.',
+        href: '#afwegingen?route=compare',
+      },
+      {
+        label: 'Keuzes',
+        value: String(input.chosenCount),
+        detail: 'Vastgelegde keuzes blijven terugleesbaar als eigen besluitcontext.',
+        href: '#afwegingen?route=choice',
+      },
+      {
+        label: 'Vragen',
+        value: String(input.linkedQuestionCount),
+        detail: 'Gekoppelde consultvragen helpen de keuze met de kliniek te bespreken.',
+        href: '#vragen?route=prep',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Afwegingen context" data-decision-workspace-context="metrics">
@@ -1822,6 +1879,7 @@ function renderDecisionWorkspaceContext(input: {
         { label: 'Gekoppeld', value: String(input.linkedQuestionCount) },
       ])}
       <p class="linked-note">${escapeHtml(latest)}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Afwegingen werkruimtegrens" data-decision-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -2304,6 +2362,35 @@ function renderBackupWorkspaceContext(input: {
     : input.backupStatus
       ? 'Melding'
       : 'Klaar';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Veiligheidsfocus',
+    title: 'Back-up aandacht',
+    data: { 'workspace-context-signals': 'backup' },
+    items: [
+      {
+        label: 'Export',
+        value: input.reminder.status === 'recent' ? 'OK' : 'Nodig',
+        detail: input.reminder.tekst,
+        href: '#backup?route=export',
+      },
+      {
+        label: 'Import',
+        value: importState,
+        detail: input.backupError
+          ? 'Controleer importmelding zonder back-uppayload te tonen.'
+          : 'Import staat klaar voor versleutelde pakketten.',
+        href: '#backup?route=import',
+      },
+      {
+        label: 'Herstel',
+        value: input.hasWebAuthn ? 'Bio' : 'Fallback',
+        detail: input.hasWebAuthn
+          ? 'Biometrische ontgrendeling is gekoppeld als gemak.'
+          : 'Wachtwoordzin blijft de herstelroute.',
+        href: '#backup?route=herstel',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Back-up context" data-backup-workspace-context="metrics">
@@ -2316,6 +2403,7 @@ function renderBackupWorkspaceContext(input: {
         { label: 'Herstel', value: input.hasWebAuthn ? 'Bio' : 'Fallback' },
       ])}
       <p class="linked-note">${escapeHtml(input.reminder.tekst)}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Back-up werkruimtegrens" data-backup-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -10356,6 +10444,32 @@ function renderWellbeingWorkspaceContext(input: {
   trendCount: number;
   latestDate: string | undefined;
 }): string {
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Welzijnfocus',
+    title: 'Wat wil je bekijken?',
+    data: { 'workspace-context-signals': 'wellbeing' },
+    items: [
+      {
+        label: 'Recent',
+        value: input.latestDate ?? 'Geen',
+        detail: 'Bekijk geschiedenis zonder score of oordeel.',
+        href: '#welzijn?route=history',
+      },
+      {
+        label: 'Trends',
+        value: String(input.trendCount),
+        detail: 'Trendkaarten blijven feitelijke tellingen, geen diagnose.',
+        href: '#welzijn?route=overview',
+      },
+      {
+        label: 'Vastleggen',
+        value: String(input.checkInCount + input.symptomCount + input.cycleCount),
+        detail: 'Leg alleen eigen observaties vast wanneer dat nuttig is.',
+        href: '#welzijn?route=log',
+      },
+    ],
+  });
+
   return `
     <section class="summary-panel" aria-label="Welzijn context" data-wellbeing-workspace-context="metrics">
       <p class="kp-card__eyebrow">Context</p>
@@ -10367,6 +10481,7 @@ function renderWellbeingWorkspaceContext(input: {
         { label: 'Trends', value: String(input.trendCount) },
       ])}
       <p class="linked-note">Laatst vastgelegd: ${escapeHtml(input.latestDate ?? 'nog niets')}.</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Welzijn werkruimtegrens" data-wellbeing-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -11248,6 +11363,34 @@ function renderFinanceWorkspaceContext(input: {
   const latest = input.latestCost
     ? `${input.latestCost.omschrijving} · ${formatEuro(input.latestCost.bedrag)}`
     : 'Nog geen kostenpost.';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Kostenfocus',
+    title: 'Administratie eerst',
+    data: { 'workspace-context-signals': 'finance' },
+    items: [
+      {
+        label: 'Onbekend',
+        value: String(input.onbekendCount),
+        detail:
+          input.onbekendCount > 0
+            ? 'Controleer onbekende posten voordat totalen rustig lezen.'
+            : 'Alle posten hebben een vergoedingstatus.',
+        href: '#kosten?route=historie',
+      },
+      {
+        label: 'Vergoed',
+        value: String(input.vergoedCount),
+        detail: 'Vergoeding blijft eigen administratie, geen polisinterpretatie.',
+        href: '#kosten?route=vergoeding',
+      },
+      {
+        label: 'Toevoegen',
+        value: String(input.costCount),
+        detail: latest,
+        href: '#kosten?route=toevoegen',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Kosten context" data-finance-workspace-context="metrics">
@@ -11260,6 +11403,7 @@ function renderFinanceWorkspaceContext(input: {
         { label: 'Onbekend', value: formatEuro(input.overview.onbekend) },
       ])}
       <p class="linked-note">${escapeHtml(latest)}</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Kosten werkruimtegrens" data-finance-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
@@ -13611,6 +13755,33 @@ function renderNotificationWorkspaceContext(input: {
   const next = input.nextReminder
     ? formatDateTime(input.nextReminder.volgendMoment)
     : 'Geen komende herinnering.';
+  const contextSignals = renderWorkspaceContextSignals({
+    label: 'Meldingsfocus',
+    title: 'Herinneringstatus',
+    data: { 'workspace-context-signals': 'notification' },
+    items: [
+      {
+        label: 'Volgende',
+        value: input.nextReminder ? 'Gepland' : 'Leeg',
+        detail: next,
+        href: '#herinneringen?route=komend',
+      },
+      {
+        label: 'Privacy',
+        value: input.lockscreenDetails ? 'Details' : 'Generiek',
+        detail: input.lockscreenDetails
+          ? 'Lockscreen-details staan bewust aan.'
+          : 'Lockscreen toont generieke tekst.',
+        href: '#herinneringen?route=privacy',
+      },
+      {
+        label: 'Fallback',
+        value: String(input.fallbackCount),
+        detail: `${renderPermissionLabel(input.permission)} · ${renderServiceWorkerLabel(input.serviceWorker)}`,
+        href: '#herinneringen?route=status',
+      },
+    ],
+  });
 
   return `
     <section class="summary-panel" aria-label="Herinneringen context" data-notification-workspace-context="metrics">
@@ -13623,6 +13794,7 @@ function renderNotificationWorkspaceContext(input: {
         { label: 'Fallback', value: String(input.fallbackCount) },
       ])}
       <p class="linked-note">Volgende: ${escapeHtml(next)} · standaard ${input.defaultWarningMinutes} min</p>
+      ${contextSignals}
     </section>
     <section class="policy-panel" aria-label="Herinneringen werkruimtegrens" data-notification-workspace-context="privacy">
       <p class="kp-card__eyebrow">Werkgrens</p>
