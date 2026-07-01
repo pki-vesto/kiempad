@@ -7075,6 +7075,7 @@ h2 {
   line-height: 1.55;
 }
 
+.content:has([data-start-focus-shell="ready"]) > .workspace-map,
 .content:has([data-dossier-focus-shell="ready"]) > .workspace-map,
 .content:has([data-knowledge-focus-shell="ready"]) > .workspace-map,
 .content:has([data-treatment-focus-shell="ready"]) > .workspace-map,

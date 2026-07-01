@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1280 — Premium Claude Design UI: start chrome reduceren
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Start had al een eigen `start-workspace-deck` en `start-focus-shell`, maar de globale `workspace-map` stond daar nog boven. Daardoor bleef de eerste viewport aanvoelen als dubbele navigatie en een gestapelde één-pagina UI.
+- **Desired Outcome:** Start opent direct met de compacte workspace-strip, start-workspace en start-focus-shell; de globale `workspace-map` neemt geen zichtbare ruimte meer in op Start.
+- **User Value:** De gebruiker ziet meteen de startwerkruimte en kernflows in plaats van eerst een tweede productstructuurkaart te passeren.
+- **Acceptance Criteria:** CSS verbergt de globale `workspace-map` wanneer `data-start-focus-shell="ready"` aanwezig is; routeflow-smoke bewaakt dat de start-workspace en workspace-strip zichtbaar blijven en de globale kaart verborgen is; app-shell tests bewaken de startregel; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2335
+
 ### G1279 — Premium Claude Design UI: focusroute desktop chrome reduceren
 
 - **Epic:** Onboarding & Daily Use

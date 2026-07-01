@@ -2412,6 +2412,8 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workspace-card="control"');
     expect(html).toContain('class="start-focus-shell"');
     expect(html).toContain('data-start-focus-shell="ready"');
+    expect(html).toContain('data-workspace-strip="ready"');
+    expect(html).toContain('data-workspace-map="ready"');
     expect(html).toContain('Werk verder in één gefocuste startlaag');
     expect(html).toContain('data-start-focus-region="workflows"');
     expect(html).toContain('data-start-focus-region="scan"');
@@ -2682,6 +2684,7 @@ describe('app shell', () => {
     expect(css).toContain('.workspace-map__grid {');
     expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');
     expect(css).toContain('.workspace-map__card[data-workspace-map-state="active"]');
+    expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-map,');
     expect(mobileCss).toContain('.workspace-strip {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.workspace-strip > div,');

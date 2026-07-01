@@ -24,9 +24,7 @@ const targets = [
       '[data-start-cockpit-route="timeline"]',
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
-      '[data-workspace-map="ready"]',
-      '[data-workspace-map-card="Vandaag"]',
-      '[data-workspace-map-card="Dossier"]',
+      '[data-workspace-strip="ready"]',
       '[data-start-workspace-deck="ready"]',
       '[data-start-workspace-card="today"]',
       '[data-start-workspace-card="record"]',
@@ -64,6 +62,7 @@ const targets = [
       '[data-daily-advice-action-lane="supplements"]',
       '[data-daily-advice-action-lane="clinician"]',
     ],
+    hiddenSelectors: ['[data-workspace-map="ready"]'],
   },
   {
     screen: 'knowledge-research',
@@ -337,12 +336,21 @@ async function assertRouteflows(browser, options) {
           ? document.querySelector(routeflow.activeRouteSelector)
           : rootElement;
         const activeRect = activeElement?.getBoundingClientRect();
+        const hidden = (routeflow.hiddenSelectors ?? []).map((selector) => {
+          const element = document.querySelector(selector);
+          const rect = element?.getBoundingClientRect();
+          return {
+            selector,
+            visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+          };
+        });
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
           rootText: rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           activeVisible: Boolean(activeRect && activeRect.width > 0 && activeRect.height > 0),
           required,
+          hidden,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -365,6 +373,14 @@ async function assertRouteflows(browser, options) {
       if (missingSelectors.length > 0) {
         throw new Error(
           `${options.label}/${target.screen}: routeflow-selectors ontbreken: ${missingSelectors
+            .map((item) => item.selector)
+            .join(', ')}.`,
+        );
+      }
+      const visibleHiddenSelectors = evidence.hidden.filter((item) => item.visible);
+      if (visibleHiddenSelectors.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: verborgen routeflow-chrome is zichtbaar: ${visibleHiddenSelectors
             .map((item) => item.selector)
             .join(', ')}.`,
         );

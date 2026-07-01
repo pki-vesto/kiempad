@@ -304,6 +304,10 @@
   Traject, Vragen, Welzijn, Afwegingen, Medicatie, Agenda, Kosten, Back-up,
   Logboek en Herinneringen direct in hun eigen focusruimte openen. De workspace-strip
   blijft zichtbaar als compacte bovencontext en de split-workspace smoke bewaakt dit.
+- **G1280 Start chrome reducer:** Start verbergt nu de globale `workspace-map` zodra
+  de `start-focus-shell` aanwezig is. De compacte workspace-strip blijft zichtbaar,
+  terwijl `start-workspace-deck`, startscan, kernflows en dagadvies direct de eerste
+  startwerkruimte vormen.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
