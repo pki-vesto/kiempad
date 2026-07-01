@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1289 — Premium Claude Design UI: compacte eerste contentboards
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na het compacter maken van de hublaag bleven uploadtriage, imaging-inspectie en research-reader als eerste contentboards nog veel verticale ruimte innemen.
+- **Desired Outcome:** Maak deze eerste contentboards op desktop compacter door board-introcopy te verbergen, padding te verlagen en lane-kaarten lager te maken.
+- **User Value:** De gebruiker ziet sneller de daadwerkelijke upload-, beeld- en researchinhoud en hoeft minder door opeenvolgende uitleg- en kaartlagen te scrollen.
+- **Acceptance Criteria:** Desktop uploadtriage-, imaging-inspection- en research-reader boards gebruiken compactere padding en lanehoogtes; board-introcopy is op desktop verborgen; mobiele swipebanen blijven behouden; routeflow-smoke bewaakt verborgen boardchrome; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2353
+
 ### G1288 — Premium Claude Design UI: compacte hub-workflow laag
 
 - **Epic:** Onboarding & Daily Use

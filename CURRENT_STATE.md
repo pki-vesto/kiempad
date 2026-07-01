@@ -339,6 +339,10 @@
   summaries zijn op desktop lager en scanbaarder. Lange hub-introcopy en
   detailhintregels verdwijnen uit de desktop-flow, zodat de inhoud van dossier,
   research, consultupload en dagadvies sneller zichtbaar wordt.
+- **G1289 Compacte eerste contentboards:** Uploadtriage, dossier imaging-inspectie
+  en research-reader gebruiken op desktop lagere boardpadding, kleinere lane-kaarten
+  en verborgen board-introcopy. Daardoor start de eerste echte werklaag hoger in de
+  viewport zonder de mobiele swipebanen te verliezen.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
