@@ -15,6 +15,9 @@
 - **M1.1 app-skelet:** een Nederlandstalige, responsive Vite-app-shell met
   hash-navigatie tussen de hoofdschermen, rustige start-/werkruimte en zichtbare
   niet-medische disclaimer.
+- **G1317 screen-stage werkruimtes:** de hoofdcontent rendert nu een expliciete
+  actieve `screen-stage` per scherm met eigen paneel en desktop-scrollvlak, zodat
+  Kiempad niet meer als één doorlopende pagina onder de navigatie leest.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

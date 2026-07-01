@@ -1734,6 +1734,14 @@ describe('app shell', () => {
 
     expect(html).toContain('Ga naar inhoud');
     expect(html).toContain('href="#inhoud"');
+    expect(html).toContain(
+      '<main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready"',
+    );
+    expect(html).toContain('data-screen-stage-screen="agenda"');
+    expect(html).toContain('data-screen-stage-group="Vandaag"');
+    expect(html).toContain('class="screen-stage__panel"');
+    expect(html).toContain('data-screen-stage-panel="active"');
+    expect(html).toContain('aria-label="Agenda actief scherm"');
     expect(html).toContain('aria-label="Werkruimtes en schermen"');
     for (const screen of SCREENS) {
       expect(html).toContain(`href="#${screen.id}"`);
@@ -1773,6 +1781,9 @@ describe('app shell', () => {
     expect(html).toContain('<p class="primary-nav__title">Dossier</p>');
     expect(html).toContain('<p class="primary-nav__title">Inzicht</p>');
     expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
+    expect(html).toContain('data-screen-stage="ready"');
+    expect(html).toContain('data-screen-stage-screen="vragen"');
+    expect(html).toContain('data-screen-stage-group="Behandeling"');
     expect(html).toContain('data-workspace-strip-group="Behandeling"');
     expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).toContain('<p class="workspace-strip__eyebrow">Werkruimte</p>');
@@ -2811,6 +2822,12 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(css).toContain('.app-sidebar > .workspace-strip {');
     expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');
+    expect(css).toContain('.content[data-screen-stage="ready"] {');
+    expect(css).toContain('.screen-stage__panel {');
+    expect(css).toContain('border-radius: calc(var(--radius-card) + 4px);');
+    expect(css).toContain('.screen-stage__panel {');
+    expect(mobileCss).toContain('.content[data-screen-stage="ready"] {');
+    expect(mobileCss).toContain('border-radius: 18px;');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-strip,');
