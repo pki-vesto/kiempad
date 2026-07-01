@@ -36655,6 +36655,9 @@ describe('app shell', () => {
     expect(dossierHtml).toContain('data-dossier-workspace-context');
     expect(dossierHtml).toContain('data-workspace-context-signals="dossier"');
     expect(dossierHtml).toContain('data-workspace-context-microstate="dossier-imaging"');
+    expect(dossierHtml).toContain(
+      'data-workspace-context-next-action="Volgende: beeldmetadata controleren"',
+    );
     expect(dossierHtml).toContain('Beeldenroute');
     expect(dossierHtml).toContain('Dossierfocus');
     expect(dossierHtml).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
@@ -36662,6 +36665,9 @@ describe('app shell', () => {
     expect(agendaHtml).toContain('data-schedule-workspace-context="metrics"');
     expect(agendaHtml).toContain('data-workspace-context-signals="schedule"');
     expect(agendaHtml).toContain('data-workspace-context-microstate="schedule-plannen"');
+    expect(agendaHtml).toContain(
+      'data-workspace-context-next-action="Volgende: afspraakgegevens invullen"',
+    );
     expect(agendaHtml).toContain('Planroute');
     expect(agendaHtml).toContain('Planningfocus');
     expect(agendaHtml).toContain(
@@ -36674,6 +36680,9 @@ describe('app shell', () => {
     expect(trajectHtml).toContain('data-treatment-workspace-context="metrics"');
     expect(trajectHtml).toContain('data-workspace-context-signals="treatment"');
     expect(trajectHtml).toContain('data-workspace-context-microstate="treatment-fasen"');
+    expect(trajectHtml).toContain(
+      'data-workspace-context-next-action="Volgende: fase controleren"',
+    );
     expect(trajectHtml).toContain('Faseplanning');
     expect(trajectHtml).toContain('Trajectfocus');
     expect(trajectHtml).toContain(
@@ -36688,6 +36697,9 @@ describe('app shell', () => {
     expect(kennisHtml).toContain('data-knowledge-workspace-context="metrics"');
     expect(kennisHtml).toContain('data-workspace-context-signals="knowledge"');
     expect(kennisHtml).toContain('data-workspace-context-microstate="knowledge-ai"');
+    expect(kennisHtml).toContain(
+      'data-workspace-context-next-action="Volgende: payload-preview checken"',
+    );
     expect(kennisHtml).toContain('AI-context');
     expect(kennisHtml).toContain('Researchfocus');
     expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
@@ -36695,6 +36707,9 @@ describe('app shell', () => {
     expect(welzijnHtml).toContain('data-wellbeing-workspace-context="metrics"');
     expect(welzijnHtml).toContain('data-workspace-context-signals="wellbeing"');
     expect(welzijnHtml).toContain('data-workspace-context-microstate="wellbeing-history"');
+    expect(welzijnHtml).toContain(
+      'data-workspace-context-next-action="Volgende: recente log bekijken"',
+    );
     expect(welzijnHtml).toContain('Geschiedenisroute');
     expect(welzijnHtml).toContain('Welzijnfocus');
     expect(welzijnHtml).toContain(
@@ -36704,6 +36719,9 @@ describe('app shell', () => {
     expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
     expect(afwegingenHtml).toContain('data-workspace-context-signals="decision"');
     expect(afwegingenHtml).toContain('data-workspace-context-microstate="decision-choice"');
+    expect(afwegingenHtml).toContain(
+      'data-workspace-context-next-action="Volgende: keuzecontext controleren"',
+    );
     expect(afwegingenHtml).toContain('Keuzeregistratie');
     expect(afwegingenHtml).toContain('Keuzefocus');
     expect(afwegingenHtml).toContain(
@@ -36713,6 +36731,9 @@ describe('app shell', () => {
     expect(kostenHtml).toContain('data-finance-workspace-context="metrics"');
     expect(kostenHtml).toContain('data-workspace-context-signals="finance"');
     expect(kostenHtml).toContain('data-workspace-context-microstate="finance-vergoeding"');
+    expect(kostenHtml).toContain(
+      'data-workspace-context-next-action="Volgende: status controleren"',
+    );
     expect(kostenHtml).toContain('Vergoedingcontext');
     expect(kostenHtml).toContain('Kostenfocus');
     expect(kostenHtml).toContain(
@@ -36722,6 +36743,9 @@ describe('app shell', () => {
     expect(logboekHtml).toContain('data-eventlog-workspace-context="metrics"');
     expect(logboekHtml).toContain('data-workspace-context-signals="eventlog"');
     expect(logboekHtml).toContain('data-workspace-context-microstate="eventlog-privacy"');
+    expect(logboekHtml).toContain(
+      'data-workspace-context-next-action="Volgende: privacyregels openen"',
+    );
     expect(logboekHtml).toContain('Privacycontrole');
     expect(logboekHtml).toContain('Auditfocus');
     expect(logboekHtml).toContain(
@@ -36731,6 +36755,9 @@ describe('app shell', () => {
     expect(backupHtml).toContain('data-backup-workspace-context="metrics"');
     expect(backupHtml).toContain('data-workspace-context-signals="backup"');
     expect(backupHtml).toContain('data-workspace-context-microstate="backup-import"');
+    expect(backupHtml).toContain(
+      'data-workspace-context-next-action="Volgende: pakketstatus controleren"',
+    );
     expect(backupHtml).toContain('Importcontrole');
     expect(backupHtml).toContain('Veiligheidsfocus');
     expect(backupHtml).toContain('data-backup-route="import" data-backup-route-state="active"');
@@ -36740,6 +36767,9 @@ describe('app shell', () => {
     expect(herinneringenHtml).toContain('data-notification-workspace-context="metrics"');
     expect(herinneringenHtml).toContain('data-workspace-context-signals="notification"');
     expect(herinneringenHtml).toContain('data-workspace-context-microstate="notification-plannen"');
+    expect(herinneringenHtml).toContain(
+      'data-workspace-context-next-action="Volgende: herinnering instellen"',
+    );
     expect(herinneringenHtml).toContain('Planroute');
     expect(herinneringenHtml).toContain('Meldingsfocus');
     expect(herinneringenHtml).toContain(
@@ -36754,6 +36784,7 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.workspace-context-signals {');
     expect(css).toContain('.workspace-context-signals__microstate {');
+    expect(css).toContain('.workspace-context-signals__microstate b {');
     expect(css).toContain('.workspace-context-signal {');
     expect(css).toContain('.workspace-context-signal:first-child {');
     expect(css).toContain('inset 3px 0 0 color-mix(in srgb, var(--accent) 70%, transparent)');
@@ -36768,6 +36799,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 0 min(172px, 72vw);');
     expect(mobileCss).toContain('.workspace-context-signal {');
     expect(mobileCss).toContain('.workspace-context-signals__microstate {');
+    expect(mobileCss).toContain('.workspace-context-signals__microstate b {');
     expect(mobileCss).toContain('min-height: 58px;');
     expect(mobileCss).toContain('min-width: 42px;');
   });
