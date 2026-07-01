@@ -137,6 +137,11 @@ const targets = [
     inactiveRouteSelector: '[data-question-route-state="inactive"]',
     requiredSelectors: [
       '[data-question-route-summary="voorbereiden"]',
+      '[data-consult-prep-board="ready"]',
+      '[data-consult-prep-lane="questions"]',
+      '[data-consult-prep-lane="actions"]',
+      '[data-consult-prep-lane="context"]',
+      '[data-consult-prep-lane="packet"]',
       '[data-hub-detail-panel="consult-prep-wizard"]',
       '.consult-detail-panel__header',
       '[aria-label="Consult Prep Wizard"]',

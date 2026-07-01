@@ -1881,6 +1881,13 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
     expect(css).toContain('.question-task-routes {');
+    expect(css).toContain('.consult-prep-board {');
+    expect(css).toContain('.consult-prep-board__header {');
+    expect(css).toContain('.consult-prep-board__lanes {');
+    expect(css).toContain('.consult-prep-board__lane {');
+    expect(css).toContain('.consult-prep-board__lane:hover,');
+    expect(css).toContain('.consult-prep-board__lane:focus-visible {');
+    expect(css).toContain('.consult-prep-board__lane em {');
     expect(css).toContain('.planning-workbench :where(.stat-row) {');
     expect(css).toContain('.planning-workbench :where(.stat) {');
     expect(css).toContain('.treatment-snapshot {');
@@ -4828,6 +4835,22 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
     expect(html).toContain('Verslag per afspraak');
     expect(html).toContain('aria-label="Consult Prep Wizard"');
+    expect(html).toContain('data-consult-prep-board="ready"');
+    expect(html).toContain('aria-label="Consultvoorbereiding startlaag"');
+    expect(html).toContain('Kies eerst je gesprekstaak');
+    expect(html).toContain('data-consult-prep-lane="questions"');
+    expect(html).toContain('data-consult-prep-lane="actions"');
+    expect(html).toContain('data-consult-prep-lane="context"');
+    expect(html).toContain('data-consult-prep-lane="packet"');
+    expect(html).toContain('Open vragen');
+    expect(html).toContain('Actiepunten');
+    expect(html).toContain('Packet');
+    expect(html).toContain(
+      'Deze laag toont alleen voorbereidingstaken en tellingen; geen diagnose, behandeladvies, transcriptpayload of behandelkeuze.',
+    );
+    expect(html.indexOf('data-consult-prep-board="ready"')).toBeLessThan(
+      html.indexOf('data-hub-detail-panel="consult-prep-wizard"'),
+    );
     expect(html).toContain('data-hub-detail-panel="consult-prep-wizard"');
     expect(html).toContain('class="hub-detail-disclosure__summary consult-detail-panel__header"');
     expect(html).toContain('Vragenlijst, context en eigen packet');

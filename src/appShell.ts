@@ -14318,6 +14318,12 @@ function renderVragenScreen(state: AppShellState): string {
           data: { 'question-route-summary': 'voorbereiden' },
           ariaLabel: 'Consultvoorbereiding route-samenvatting',
         })}
+        ${renderConsultPrepBoard({
+          vragenlijst: gegenereerdeVragenlijst,
+          openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+          verslagCount: vraagVerslagen.length,
+          nextWithQuestions,
+        })}
         ${renderConsultPrepWizard(gegenereerdeVragenlijst)}
         ${disclosure({
           summary: 'Vragenlijst voor volgende afspraak',
@@ -14591,6 +14597,83 @@ function renderQuestionRouteVisibility(activeRoute: QuestionRoute, route: Questi
   return route === activeRoute
     ? ' data-question-route-state="active"'
     : ' data-question-route-state="inactive" hidden';
+}
+
+function renderConsultPrepBoard(input: {
+  vragenlijst: GegenereerdeVragenlijst | undefined;
+  openCount: number;
+  verslagCount: number;
+  nextWithQuestions: ReturnType<typeof volgendeAfspraakMetOpenVragen>;
+}): string {
+  const itemCount = input.vragenlijst?.items.length ?? 0;
+  const consultActionCount =
+    input.vragenlijst?.items.filter((item) => item.bron === 'consult_actiepunt').length ?? 0;
+  const linkedOpenCount = input.nextWithQuestions?.vragen.length ?? 0;
+  const appointmentLabel = input.vragenlijst
+    ? input.vragenlijst.afspraak.titel
+    : input.nextWithQuestions?.afspraak.titel;
+  const lanes = [
+    {
+      id: 'questions',
+      href: '#vragen?route=open',
+      label: 'Open vragen',
+      title: `${input.openCount} open`,
+      detail: linkedOpenCount
+        ? `${linkedOpenCount} vraag${linkedOpenCount === 1 ? '' : 'en'} gekoppeld aan het volgende gesprek.`
+        : 'Orden vragen voordat je een prep-packet maakt.',
+      cue: 'Prioriteren',
+    },
+    {
+      id: 'actions',
+      href: '#vragen?route=voorbereiden',
+      label: 'Actiepunten',
+      title: `${consultActionCount} consultpunt${consultActionCount === 1 ? '' : 'en'}`,
+      detail: 'Vraag-actiepunten uit consultverslagen blijven bij de voorbereiding.',
+      cue: input.vragenlijst ? 'In packet' : 'Wacht',
+    },
+    {
+      id: 'context',
+      href: '#traject?route=context',
+      label: 'Context',
+      title: appointmentLabel ? escapeHtml(appointmentLabel) : 'Geen afspraak',
+      detail: 'Open timeline en graphcontext pas wanneer je dossiercontext wilt meenemen.',
+      cue: 'Timeline',
+    },
+    {
+      id: 'packet',
+      href: '#vragen?route=verslagen',
+      label: 'Packet',
+      title: input.vragenlijst ? `${itemCount} item${itemCount === 1 ? '' : 's'}` : 'Nog leeg',
+      detail: 'Gebruik Markdown alleen als eigen voorbereiding voor het gesprek.',
+      cue: `${input.verslagCount} verslag${input.verslagCount === 1 ? '' : 'en'}`,
+    },
+  ];
+
+  return `
+    <section class="consult-prep-board" aria-label="Consultvoorbereiding startlaag" data-consult-prep-board="ready">
+      <header class="consult-prep-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Prep bord</p>
+          <h3>Kies eerst je gesprekstaak</h3>
+        </div>
+        <p>Begin met vragen ordenen, consultactiepunten checken, context openen of je packet teruglezen.</p>
+      </header>
+      <nav class="consult-prep-board__lanes" aria-label="Consultvoorbereiding taak kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="consult-prep-board__lane" href="${lane.href}" data-consult-prep-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${lane.title}</strong>
+          <small>${lane.detail}</small>
+          <em>${lane.cue}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze laag toont alleen voorbereidingstaken en tellingen; geen diagnose, behandeladvies, transcriptpayload of behandelkeuze.</p>
+    </section>
+  `;
 }
 
 function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefined): string {

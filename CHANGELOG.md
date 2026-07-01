@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1261 Premium Claude Design UI: de consultvoorbereidingsroute toont nu vóór de Consult Prep Wizard een compact prep-bord met lanes voor open vragen, actiepunten, context en packet/verslagen. Desktop gebruikt een vierkoloms grid, mobiel een swipebare rij, en routeflow-smoke bewaakt `#vragen?route=voorbereiden`.
 - G1260 Premium Claude Design UI: Back-up & import toont nu op de controle-route een compact encrypted-sync bord met lanes voor status, export, import en herstel. Desktop gebruikt een vierkoloms grid, mobiel een swipebare rij, en routeflow-smoke bewaakt `#backup?route=controleren`.
 - G1259 Premium Claude Design UI: de dossier imaging-route toont nu vóór consultverslagen, imaging-repository en embryo-dossiers een compact inspectiebord met lanes voor beelden, vergelijken, embryo’s en consultcontext. Desktop gebruikt een vierkoloms grid, mobiel een swipebare rij, en routeflow-smoke bewaakt de laag.
 - G1258 Premium Claude Design UI: de kennis/research leesroute toont nu vóór bronnen, samenvattingen en trends een compacte research-leeslaag met lanes voor wetenschappelijk, eenvoudig, relevantie en trends. Desktop gebruikt een vierkoloms grid, mobiel een swipebare rij, en routeflow-smoke bewaakt de reader.
