@@ -295,6 +295,10 @@
   split-workspace in één `eventlog-focus-shell` met workbench- en workspace-regio's.
   Auditstatus, recente gebeurtenissen, categorieën en privacyregels starten als één
   auditruimte zonder gevoelige details direct uit te klappen.
+- **G1278 Notification focus-shell:** Herinneringen bundelt de systeemwerkbank en
+  split-workspace in één `notification-focus-shell` met workbench- en
+  workspace-regio's. Runtime-status, lockscreenprivacy, planning, komende meldingen
+  en fallback starten als één meldingsruimte.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

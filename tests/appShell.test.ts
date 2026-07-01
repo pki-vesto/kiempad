@@ -1889,6 +1889,13 @@ describe('app shell', () => {
     expect(css).toContain('.eventlog-focus-shell__body {');
     expect(css).toContain('.eventlog-focus-shell__workbench > .eventlog-system-workbench {');
     expect(css).toContain('.eventlog-focus-shell__workspace {');
+    expect(css).toContain('.notification-focus-shell {');
+    expect(css).toContain('.notification-focus-shell__header {');
+    expect(css).toContain('.notification-focus-shell__body {');
+    expect(css).toContain(
+      '.notification-focus-shell__workbench > .notification-system-workbench {',
+    );
+    expect(css).toContain('.notification-focus-shell__workspace {');
     expect(css).toContain('.system-workbench__header {');
     expect(css).toContain('.system-workbench__grid {');
     expect(css).toContain('.system-workbench__actions {');
@@ -1938,6 +1945,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.eventlog-focus-shell {');
     expect(mobileCss).toContain('.eventlog-focus-shell__body {');
     expect(mobileCss).toContain('.eventlog-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.content:has([data-notification-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-notification-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.notification-focus-shell {');
+    expect(mobileCss).toContain('.notification-focus-shell__body {');
+    expect(mobileCss).toContain('.notification-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain(
       '.content:has([data-question-focus-shell="ready"]) > .workspace-map,',
     );
@@ -4567,6 +4583,11 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('class="section-stack notification-command-layout"');
+    expect(html).toContain('class="notification-focus-shell"');
+    expect(html).toContain('data-notification-focus-shell="ready"');
+    expect(html).toContain('Eerst status en privacy checken, daarna plannen of teruglezen');
+    expect(html).toContain('data-notification-focus-region="workbench"');
+    expect(html).toContain('data-notification-focus-region="workspace"');
     expect(html).toContain(
       '<section class="system-workbench notification-system-workbench" aria-label="Herinneringen systeemwerkbank" data-notification-first-viewport="system-workbench">',
     );

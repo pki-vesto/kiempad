@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1278 — Premium Claude Design UI: notification focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Herinneringen had een systeemwerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor status, privacy, plannen en komende meldingen minder als één meldingsruimte voelden.
+- **Desired Outcome:** Bundel de herinneringenwerkbank en Herinneringen split-workspace in één `notification-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker controleert eerst runtime-status en lockscreenprivacy en opent daarna gericht planning of komende meldingen zonder herinneringsdetails onnodig te tonen.
+- **Acceptance Criteria:** Herinneringen rendert `data-notification-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; notificatiestatus, lockscreenprivacy, planning, komende herinneringen en fallback blijven bereikbaar; mobiel verbergt redundante globale context boven Herinneringen; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2331
+
 ### G1277 — Premium Claude Design UI: eventlog focus-shell bundelen
 
 - **Epic:** Security & DevEx
