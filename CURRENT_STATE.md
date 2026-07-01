@@ -408,6 +408,11 @@
   financiële werkruimte rechts. De workspace gebruikt een hoofdvlak met
   contextstrip, zodat totalen, vergoeding, toevoegen en historie niet als één
   lange financiële pagina starten.
+- **G1307 Backup-console:** Back-up toont op desktop een compacte console met
+  veiligheidswerkbank links, taakroute-rail in het midden en actieve
+  back-upwerkruimte rechts. De workspace gebruikt een hoofdvlak met contextstrip,
+  zodat controleren, exporteren, importeren en herstellen niet als één lange
+  beheerpagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

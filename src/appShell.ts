@@ -2341,11 +2341,11 @@ function renderBackupFocusShell(input: { workbench: string; workspace: string })
         <h2 id="backup-focus-shell-title">Eerst veiligheid controleren, daarna export of herstel openen</h2>
         <p>Status, encrypted export, import en herstelopties blijven in één veiligheidsruimte zonder dossierinhoud of plaintext payloads te tonen.</p>
       </header>
-      <div class="backup-focus-shell__body">
-        <div class="backup-focus-shell__workbench" data-backup-focus-region="workbench">
+      <div class="backup-focus-shell__body" data-backup-console="ready">
+        <div class="backup-focus-shell__workbench" data-backup-focus-region="workbench" data-backup-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="backup-focus-shell__workspace" data-backup-focus-region="workspace">
+        <div class="backup-focus-shell__workspace" data-backup-focus-region="workspace" data-backup-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

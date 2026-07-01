@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1307 — Premium Claude Design UI: Back-up als compacte backup-console
+
+- **Epic:** Reliability & Operations
+- **Problem:** Back-up had al een veiligheidswerkbank en split-workspace, maar kon op desktop nog als gestapelde beheerpagina met losse status, export, import en herstel lezen.
+- **Desired Outcome:** Maak Back-up op desktop een begrensde backup-console met veiligheidswerkbank, taakroute-rail, actieve back-upwerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan back-upstatus, export, import en herstel scannen zonder door één lange beheerpagina te scrollen.
+- **Acceptance Criteria:** Back-up rendert `data-backup-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de veiligheidswerkbank start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; route-labels en route-summary blijven leesbaar zonder woordbreuk; mobiel behoudt de bestaande éénkoloms flow; split-workspace en context-signals smokes blijven groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☑ klaar
+- **Issue:** #2389
+
 ### G1306 — Premium Claude Design UI: Kosten als compacte finance-console
 
 - **Epic:** Onboarding & Daily Use

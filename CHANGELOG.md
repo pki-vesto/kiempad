@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1307 Premium Claude Design UI: Back-up is op desktop een compacte backup-console geworden. Veiligheidswerkbank, routekeuze en actieve back-upwerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat controleren, exporteren, importeren en herstellen niet meer als één lange beheerpagina starten.
 - G1306 Premium Claude Design UI: Kosten is op desktop een compacte finance-console geworden. Beheerwerkbank, routekeuze en actieve financiële werkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat totalen, vergoeding, toevoegen en historie niet meer als één lange financiële pagina starten.
 - G1305 Premium Claude Design UI: Afwegingen is op desktop een compacte decision-console geworden. Besliswerkbank, routekeuze en actieve keuzewerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat voorbereiden, vergelijken, kiezen en teruglezen niet meer als één lange beslispagina starten.
 - G1304 Premium Claude Design UI: Welzijn is op desktop een compacte wellbeing-console geworden. Inzichtwerkbank, routekeuze en actieve welzijnswerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat check-ins, symptomen, cyclusmetingen en vastleggen niet meer als één lange welzijnspagina starten.
