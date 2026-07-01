@@ -93,6 +93,34 @@ export function dashboardShell(opts: {
   </section>`;
 }
 
+export function domainSplitWorkspace(opts: {
+  rail: string;
+  main: string;
+  context: string;
+  className?: string;
+  ariaLabel: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+
+  return `<section class="domain-split-workspace${cls}" aria-label="${escapeAttribute(opts.ariaLabel)}"${dataAttrs}>
+    <aside class="domain-split-workspace__rail" aria-label="Taakrail">
+      ${opts.rail}
+    </aside>
+    <div class="domain-split-workspace__main">
+      ${opts.main}
+    </div>
+    <aside class="domain-split-workspace__context" aria-label="Contextkolom">
+      ${opts.context}
+    </aside>
+  </section>`;
+}
+
 /** Task-oriented dashboard section. `body` is raw HTML. */
 export function dashboardSection(opts: {
   title: string;

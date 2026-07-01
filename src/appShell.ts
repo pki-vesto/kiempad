@@ -182,6 +182,7 @@ import {
   dashboardSection,
   dashboardShell,
   disclosure,
+  domainSplitWorkspace,
   firstViewportWorkbench,
   pageHeader,
   phaseHeroCard,
@@ -2266,7 +2267,21 @@ function renderDossierScreen(state: AppShellState): string {
         embryoDossiers,
         state,
       })}
-      <section id="dossier-route-upload" class="dossier-route-section" aria-labelledby="dossier-route-upload-title" data-dossier-route="upload"${renderDossierRouteVisibility(activeDossierRoute, 'upload')}>
+      ${domainSplitWorkspace({
+        className: 'dossier-split-workspace',
+        ariaLabel: 'Dossier split-view werkruimte',
+        data: { 'dossier-split-workspace': 'ready' },
+        rail: renderDossierTaskRoutes({
+          uploadCount: zichtbareDocumenten.length,
+          reviewCount: reviewWachtrij.length,
+          imagingCount: imagingItems.length,
+          embryoCount: embryoDossiers.length,
+          timelineCount: tijdlijn.length,
+          searchCount: zoekterm ? zoekResultaten.length : undefined,
+          activeRoute: activeDossierRoute,
+        }),
+        main: `
+          <section id="dossier-route-upload" class="dossier-route-section" aria-labelledby="dossier-route-upload-title" data-dossier-route="upload"${renderDossierRouteVisibility(activeDossierRoute, 'upload')}>
       <header class="dossier-route-section__header">
         <p class="kp-card__eyebrow">Uploaden</p>
         <h2 id="dossier-route-upload-title">Nieuwe medische records toevoegen</h2>
@@ -3027,6 +3042,17 @@ function renderDossierScreen(state: AppShellState): string {
           </div>
         </details>
         </section>
+        `,
+        context: renderDossierCommandCenter({
+          documenten: zichtbareDocumenten,
+          importInboxItems,
+          imagingItems,
+          reviewWachtrij,
+          consultVerslagen,
+          embryoDossiers,
+          state,
+        }),
+      })}
     </section>
   `;
 }
@@ -3111,24 +3137,6 @@ function renderDossierRouteStage(input: {
         </div>
         <p class="dossier-route-stage__status">${escapeHtml(renderDossierActiveRouteCopy(input.activeRoute))}</p>
       </header>
-      ${renderDossierTaskRoutes({
-        uploadCount: input.uploadCount,
-        reviewCount: input.reviewCount,
-        imagingCount: input.imagingCount,
-        embryoCount: input.embryoCount,
-        timelineCount: input.timelineCount,
-        searchCount: input.searchCount,
-        activeRoute: input.activeRoute,
-      })}
-      ${renderDossierCommandCenter({
-        documenten: input.documenten,
-        importInboxItems: input.importInboxItems,
-        imagingItems: input.imagingItems,
-        reviewWachtrij: input.reviewWachtrij,
-        consultVerslagen: input.consultVerslagen,
-        embryoDossiers: input.embryoDossiers,
-        state: input.state,
-      })}
     </section>
   `;
 }
@@ -3234,7 +3242,7 @@ function renderDossierCommandCenter(input: {
       : 'Nog geen beeldpreviews in dit dossier.';
 
   return `
-    <section class="policy-panel embedded-summary dossier-command-center" aria-label="Dossier startoverzicht" data-dossier-command-center="ready" data-dossier-command-preview="${input.state.imagingPreviewLocked ? 'locked' : 'unlocked'}">
+    <section class="policy-panel embedded-summary dossier-command-center" aria-label="Dossier startoverzicht" data-dossier-command-center="ready" data-dossier-workspace-context="command-center" data-dossier-command-preview="${input.state.imagingPreviewLocked ? 'locked' : 'unlocked'}">
       <div class="dossier-command-center__header">
         <div>
           <p class="kp-card__eyebrow">Dossier</p>
@@ -12145,24 +12153,23 @@ function renderVragenScreen(state: AppShellState): string {
     ? `<button class="danger-button" id="delete-vraag" type="button" data-vraag-id="${selected.vraag.id}" aria-label="Verwijder vraag: ${escapeAttribute(selected.vraag.vraag)}">Verwijder vraag</button>`
     : '';
 
-  return sectionStack(
-    [
-      renderQuestionPreparationWorkbench({
-        openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
-        totalCount: state.vragen.length,
-        answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
-        verslagCount: vraagVerslagen.length,
-        hasPrepPacket: Boolean(gegenereerdeVragenlijst),
-        nextWithQuestions,
-      }),
-      renderQuestionTaskRoutes({
-        openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
-        totalCount: state.vragen.length,
-        verslagCount: vraagVerslagen.length,
-        hasPrepPacket: Boolean(gegenereerdeVragenlijst),
-        activeRoute: activeQuestionRoute,
-      }),
-      `<section id="vragen-route-open" class="question-route-section command-route-section" aria-labelledby="vragen-route-open-title" data-question-route="open"${renderQuestionRouteVisibility(activeQuestionRoute, 'open')}>
+  const questionWorkbench = renderQuestionPreparationWorkbench({
+    openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+    totalCount: state.vragen.length,
+    answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
+    verslagCount: vraagVerslagen.length,
+    hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+    nextWithQuestions,
+  });
+  const questionTaskRoutes = renderQuestionTaskRoutes({
+    openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+    totalCount: state.vragen.length,
+    verslagCount: vraagVerslagen.length,
+    hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+    activeRoute: activeQuestionRoute,
+  });
+  const questionRouteSections = [
+    `<section id="vragen-route-open" class="question-route-section command-route-section" aria-labelledby="vragen-route-open-title" data-question-route="open"${renderQuestionRouteVisibility(activeQuestionRoute, 'open')}>
         <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Open</p>
           <h2 id="vragen-route-open-title">Openstaande vragen</h2>
@@ -12189,7 +12196,7 @@ function renderVragenScreen(state: AppShellState): string {
             : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
         }
       </section>`,
-      `<section id="vragen-route-voorbereiden" class="question-route-section command-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
+    `<section id="vragen-route-voorbereiden" class="question-route-section command-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
         <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Voorbereiden</p>
           <h2 id="vragen-route-voorbereiden-title">Consult voorbereiden</h2>
@@ -12218,7 +12225,7 @@ function renderVragenScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>',
         })}
       </section>`,
-      `<section id="vragen-route-beheer" class="question-route-section command-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
+    `<section id="vragen-route-beheer" class="question-route-section command-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
         <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="vragen-route-beheer-title">Vraag toevoegen of beantwoorden</h2>
@@ -12241,7 +12248,7 @@ function renderVragenScreen(state: AppShellState): string {
           body: renderVraagForm(selected, state.afspraken),
         })}
       </section>`,
-      `<section id="vragen-route-verslagen" class="question-route-section command-route-section" aria-labelledby="vragen-route-verslagen-title" data-question-route="verslagen"${renderQuestionRouteVisibility(activeQuestionRoute, 'verslagen')}>
+    `<section id="vragen-route-verslagen" class="question-route-section command-route-section" aria-labelledby="vragen-route-verslagen-title" data-question-route="verslagen"${renderQuestionRouteVisibility(activeQuestionRoute, 'verslagen')}>
         <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Verslagen</p>
           <h2 id="vragen-route-verslagen-title">Beantwoorde vragen per afspraak</h2>
@@ -12270,7 +12277,7 @@ function renderVragenScreen(state: AppShellState): string {
               : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>',
         })}
       </section>`,
-      `<section id="vragen-route-alle" class="question-route-section command-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
+    `<section id="vragen-route-alle" class="question-route-section command-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
         <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Alle vragen</p>
           <h2 id="vragen-route-alle-title">Vraaglijst beheren</h2>
@@ -12299,6 +12306,26 @@ function renderVragenScreen(state: AppShellState): string {
               : '<p class="empty-state">Nog geen vragen. Voeg via Beheer een vraag toe voor het volgende contactmoment.</p>',
         })}
       </section>`,
+  ];
+
+  return sectionStack(
+    [
+      questionWorkbench,
+      domainSplitWorkspace({
+        className: 'question-split-workspace',
+        ariaLabel: 'Vragen split-view werkruimte',
+        data: { 'question-split-workspace': 'ready' },
+        rail: questionTaskRoutes,
+        main: questionRouteSections.join(''),
+        context: renderQuestionWorkspaceContext({
+          openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+          totalCount: state.vragen.length,
+          answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
+          verslagCount: vraagVerslagen.length,
+          hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+          nextWithQuestions,
+        }),
+      }),
     ],
     { className: 'question-command-layout', ariaLabel: 'Vragen voor de arts beheren' },
   );
@@ -12419,6 +12446,43 @@ function renderQuestionTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
+}
+
+function renderQuestionWorkspaceContext(input: {
+  openCount: number;
+  totalCount: number;
+  answeredCount: number;
+  verslagCount: number;
+  hasPrepPacket: boolean;
+  nextWithQuestions: ReturnType<typeof volgendeAfspraakMetOpenVragen>;
+}): string {
+  const nextLabel = input.nextWithQuestions
+    ? `${input.nextWithQuestions.afspraak.titel} · ${input.nextWithQuestions.vragen.length} open`
+    : 'Nog geen afspraak met open vragen.';
+
+  return `
+    <section class="summary-panel" aria-label="Vragen context" data-question-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Consultfocus</h2>
+      ${statRow([
+        {
+          label: 'Open',
+          value: String(input.openCount),
+          tone: input.openCount > 0 ? 'warning' : 'default',
+        },
+        { label: 'Beantwoord', value: String(input.answeredCount) },
+        { label: 'Verslagen', value: String(input.verslagCount) },
+        { label: 'Prep', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
+      ])}
+      <p class="linked-note">${escapeHtml(nextLabel)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Vragen werkruimtegrens" data-question-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Een route tegelijk</h2>
+      <p>Open vragen, voorbereiding, beheer en verslagen blijven gescheiden zodat de gebruiker niet door alle vraaglijsten tegelijk werkt.</p>
+      <p class="small-print">${input.totalCount} vraag${input.totalCount === 1 ? '' : 'en'} in metadataoverzicht; geen medische conclusie of behandeladvies.</p>
+    </section>
+  `;
 }
 
 function renderQuestionRouteVisibility(activeRoute: QuestionRoute, route: QuestionRoute): string {
@@ -13078,25 +13142,24 @@ function renderAgendaScreen(state: AppShellState): string {
         </div>`
       : '';
 
-  return sectionStack(
-    [
-      renderSchedulePlanningWorkbench({
-        totalCount: state.afspraken.length,
-        upcomingCount: upcoming.length,
-        pastCount: past.length,
-        nextAppointment: upcoming[0],
-        hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
-        importStatus: state.agendaImportStatus,
-        importError: state.agendaImportError,
-      }),
-      renderScheduleTaskRoutes({
-        totalCount: state.afspraken.length,
-        upcomingCount: upcoming.length,
-        pastCount: past.length,
-        hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
-        activeRoute: activeScheduleRoute,
-      }),
-      `<section id="agenda-route-overzicht" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-overzicht-title" data-schedule-route="overzicht"${renderScheduleRouteVisibility(activeScheduleRoute, 'overzicht')}>
+  const scheduleWorkbench = renderSchedulePlanningWorkbench({
+    totalCount: state.afspraken.length,
+    upcomingCount: upcoming.length,
+    pastCount: past.length,
+    nextAppointment: upcoming[0],
+    hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
+    importStatus: state.agendaImportStatus,
+    importError: state.agendaImportError,
+  });
+  const scheduleTaskRoutes = renderScheduleTaskRoutes({
+    totalCount: state.afspraken.length,
+    upcomingCount: upcoming.length,
+    pastCount: past.length,
+    hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
+    activeRoute: activeScheduleRoute,
+  });
+  const scheduleRouteSections = [
+    `<section id="agenda-route-overzicht" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-overzicht-title" data-schedule-route="overzicht"${renderScheduleRouteVisibility(activeScheduleRoute, 'overzicht')}>
         <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="agenda-route-overzicht-title">Agendaoverzicht</h2>
@@ -13123,7 +13186,7 @@ function renderAgendaScreen(state: AppShellState): string {
             agendaOverview || '<p class="empty-state">Nog geen agenda-overzicht beschikbaar.</p>',
         })}
       </section>`,
-      `<section id="agenda-route-komend" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
+    `<section id="agenda-route-komend" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
         <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Komend</p>
           <h2 id="agenda-route-komend-title">Komende afspraken</h2>
@@ -13154,7 +13217,7 @@ function renderAgendaScreen(state: AppShellState): string {
           `,
         })}
       </section>`,
-      `<section id="agenda-route-plannen" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-plannen-title" data-schedule-route="plannen"${renderScheduleRouteVisibility(activeScheduleRoute, 'plannen')}>
+    `<section id="agenda-route-plannen" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-plannen-title" data-schedule-route="plannen"${renderScheduleRouteVisibility(activeScheduleRoute, 'plannen')}>
         <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Plannen</p>
           <h2 id="agenda-route-plannen-title">Afspraak plannen of bewerken</h2>
@@ -13177,7 +13240,7 @@ function renderAgendaScreen(state: AppShellState): string {
           body: renderAfspraakForm(selected, state.trajecten, state.settings),
         })}
       </section>`,
-      `<section id="agenda-route-import" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-import-title" data-schedule-route="import"${renderScheduleRouteVisibility(activeScheduleRoute, 'import')}>
+    `<section id="agenda-route-import" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-import-title" data-schedule-route="import"${renderScheduleRouteVisibility(activeScheduleRoute, 'import')}>
         <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="agenda-route-import-title">Kliniekagenda importeren</h2>
@@ -13204,7 +13267,7 @@ function renderAgendaScreen(state: AppShellState): string {
           body: renderAgendaImportForm(state),
         })}
       </section>`,
-      `<section id="agenda-route-historie" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-historie-title" data-schedule-route="historie"${renderScheduleRouteVisibility(activeScheduleRoute, 'historie')}>
+    `<section id="agenda-route-historie" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-historie-title" data-schedule-route="historie"${renderScheduleRouteVisibility(activeScheduleRoute, 'historie')}>
         <header class="schedule-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Historie</p>
           <h2 id="agenda-route-historie-title">Afgelopen afspraken</h2>
@@ -13232,6 +13295,27 @@ function renderAgendaScreen(state: AppShellState): string {
               : '<p class="empty-state">Nog geen afgelopen afspraken.</p>',
         })}
       </section>`,
+  ];
+
+  return sectionStack(
+    [
+      scheduleWorkbench,
+      domainSplitWorkspace({
+        className: 'schedule-split-workspace',
+        ariaLabel: 'Agenda split-view werkruimte',
+        data: { 'schedule-split-workspace': 'ready' },
+        rail: scheduleTaskRoutes,
+        main: scheduleRouteSections.join(''),
+        context: renderScheduleWorkspaceContext({
+          totalCount: state.afspraken.length,
+          upcomingCount: upcoming.length,
+          pastCount: past.length,
+          nextAppointment: upcoming[0],
+          hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
+          importStatus: state.agendaImportStatus,
+          importError: state.agendaImportError,
+        }),
+      }),
     ],
     { className: 'schedule-command-layout', ariaLabel: 'Agenda beheren' },
   );
@@ -13352,6 +13436,47 @@ function renderScheduleTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
+}
+
+function renderScheduleWorkspaceContext(input: {
+  totalCount: number;
+  upcomingCount: number;
+  pastCount: number;
+  nextAppointment: AfspraakBundle | undefined;
+  hasImportFeedback: boolean;
+  importStatus?: string;
+  importError?: string;
+}): string {
+  const nextLabel = input.nextAppointment
+    ? `${input.nextAppointment.afspraak.titel} · ${formatDateTime(input.nextAppointment.afspraak.datumTijd)}`
+    : 'Nog geen komende afspraak.';
+  const importLabel = input.importError
+    ? 'Import vraagt controle'
+    : input.importStatus
+      ? 'Importfeedback beschikbaar'
+      : input.hasImportFeedback
+        ? 'Importstatus beschikbaar'
+        : 'Geen importfeedback';
+
+  return `
+    <section class="summary-panel" aria-label="Agenda context" data-schedule-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Planning in beeld</h2>
+      ${statRow([
+        { label: 'Totaal', value: String(input.totalCount) },
+        { label: 'Komend', value: String(input.upcomingCount) },
+        { label: 'Historie', value: String(input.pastCount) },
+        { label: 'Import', value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS' },
+      ])}
+      <p class="linked-note">${escapeHtml(nextLabel)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Agenda werkruimtegrens" data-schedule-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Context los van taak</h2>
+      <p>${escapeHtml(importLabel)}. De actieve route blijft het enige hoofdvlak voor plannen, importeren of teruglezen.</p>
+      <p class="small-print">Deze kolom toont alleen planningmetadata en geen medische inhoud.</p>
+    </section>
+  `;
 }
 
 function renderScheduleRouteVisibility(activeRoute: ScheduleRoute, route: ScheduleRoute): string {

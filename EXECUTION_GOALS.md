@@ -3926,6 +3926,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, command routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1225 — split-view werkruimtes uitbreiden naar Traject en Medicatie
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossier, Agenda en Vragen hebben nu een split-view werkruimte, maar Traject en Medicatie blijven nog dichter bij verticale routepagina's terwijl ze veel context tegelijk tonen.
+- **User Impact:** Gebruikers kunnen bij behandelstatus en medicatieplanning alsnog door meerdere routeblokken of lijsten moeten scannen voordat de primaire taak duidelijk is.
+- **Desired Outcome:** Breid de split-view architectuur uit naar Traject en Medicatie met een taakrail, gefocust hoofdvlak en contextkolom.
+- **User Value:** De kernworkflow van behandeling en medicatie voelt net zo rustig en taakgericht als Dossier, Agenda en Vragen.
+- **Acceptance Criteria:** Traject krijgt een split-view werkruimte met route/taakrail, actieve behandelroute en contextkolom; Medicatie krijgt een split-view werkruimte met route/taakrail, actieve medicatieroute en contextkolom; mobiel gebruikt dezelfde segmentrail-aanpak zonder horizontale overflow; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; browser-screenshots tonen desktop en mobiel voor beide schermen; tests bewaken de nieuwe layoutcontracten; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Traject, Medicatie
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, command routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

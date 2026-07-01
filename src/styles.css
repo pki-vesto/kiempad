@@ -3500,6 +3500,58 @@ h2 {
   white-space: nowrap;
 }
 
+.domain-split-workspace {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.9fr) minmax(240px, 0.88fr);
+  gap: 14px;
+  align-items: start;
+  min-width: 0;
+}
+
+.domain-split-workspace__rail,
+.domain-split-workspace__main,
+.domain-split-workspace__context {
+  min-width: 0;
+}
+
+.domain-split-workspace__rail {
+  position: sticky;
+  top: 12px;
+  z-index: 24;
+}
+
+.domain-split-workspace__rail .command-task-routes {
+  position: static;
+  grid-template-columns: 1fr;
+}
+
+.domain-split-workspace__main {
+  display: grid;
+  gap: 12px;
+}
+
+.domain-split-workspace__context {
+  display: grid;
+  gap: 12px;
+}
+
+.domain-split-workspace__context .summary-panel,
+.domain-split-workspace__context .policy-panel {
+  min-height: 0;
+  padding: 16px;
+  border-radius: 14px;
+}
+
+.domain-split-workspace__context h2,
+.domain-split-workspace__context h3,
+.domain-split-workspace__context p {
+  margin-top: 0;
+}
+
+.domain-split-workspace__context .small-print {
+  margin-bottom: 0;
+}
+
 .command-route-section {
   display: grid;
   min-width: 0;
@@ -6982,6 +7034,45 @@ a.action-card:active {
 
   .command-task-route small {
     font-size: 0.72rem;
+  }
+
+  .domain-split-workspace {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .domain-split-workspace__rail {
+    position: sticky;
+    top: 0;
+    z-index: 26;
+    margin-inline: -8px;
+    padding-inline: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .domain-split-workspace__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .domain-split-workspace__rail .command-task-routes {
+    width: max-content;
+    min-width: 100%;
+    max-width: none;
+  }
+
+  .domain-split-workspace__rail .command-task-route {
+    flex: 0 0 min(172px, 72vw);
+  }
+
+  .domain-split-workspace__context {
+    gap: 10px;
+  }
+
+  .domain-split-workspace__context .summary-panel,
+  .domain-split-workspace__context .policy-panel {
+    padding: 13px;
+    border-radius: 14px;
   }
 
   .command-route-summary {
