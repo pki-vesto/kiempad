@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1288 — Premium Claude Design UI: compacte hub-workflow laag
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na de compacte routeheaders bleef de hub-workflow laag zelf nog relatief hoog door introcopy, hoge tabkaarten en detailhintregels.
+- **Desired Outcome:** Maak de hub-workflow laag op desktop compacter door hub-introcopy en detailhints te verbergen en tabs/summaries lager te maken.
+- **User Value:** De gebruiker ziet sneller de daadwerkelijke dossier-, research-, consult- en adviesinhoud in plaats van opnieuw een tussenlaag met uitleg.
+- **Acceptance Criteria:** Desktop hub-workflow headers gebruiken compactere grid-, padding- en titelwaarden; hub-introcopy en detailhintregels zijn op desktop verborgen; tabs en detailsummaries zijn lager; routeflow-smoke bewaakt de verborgen workflowchrome; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2351
+
 ### G1287 — Premium Claude Design UI: compacte actieve routeheaders
 
 - **Epic:** Onboarding & Daily Use

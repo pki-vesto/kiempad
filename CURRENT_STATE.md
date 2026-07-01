@@ -335,6 +335,10 @@
 - **G1287 Compacte actieve routeheaders:** Actieve taakroutes gebruiken op desktop
   compactere routekoppen met verborgen introcopy. Daardoor starten workflowkaarten,
   summaries en invoerpanelen hoger in de taakruimte.
+- **G1288 Compacte hub-workflow laag:** Hub-workflow headers, tabs en detail-
+  summaries zijn op desktop lager en scanbaarder. Lange hub-introcopy en
+  detailhintregels verdwijnen uit de desktop-flow, zodat de inhoud van dossier,
+  research, consultupload en dagadvies sneller zichtbaar wordt.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
