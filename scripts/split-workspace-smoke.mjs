@@ -192,6 +192,8 @@ async function assertSplitWorkspaces(browser, options) {
         const railRect = rail?.getBoundingClientRect();
         const mainRect = main?.getBoundingClientRect();
         const contextRect = contextColumn?.getBoundingClientRect();
+        const mainStyle = main ? getComputedStyle(main) : null;
+        const contextStyle = contextColumn ? getComputedStyle(contextColumn) : null;
         const activeRect = active?.getBoundingClientRect();
         const stripRect = workspaceStrip?.getBoundingClientRect();
         const stripDescriptionRect = workspaceStripDescription?.getBoundingClientRect();
@@ -226,6 +228,9 @@ async function assertSplitWorkspaces(browser, options) {
           railWidth: railRect?.width ?? 0,
           mainWidth: mainRect?.width ?? 0,
           contextWidth: contextRect?.width ?? 0,
+          mainOverflowY: mainStyle?.overflowY ?? '',
+          mainMaxHeight: mainStyle?.maxHeight ?? '',
+          contextOverflowY: contextStyle?.overflowY ?? '',
           activeRouteVisible: Boolean(
             activeRect && activeRect.width > 0 && activeRect.height > 0 && routeId,
           ),
@@ -253,6 +258,20 @@ async function assertSplitWorkspaces(browser, options) {
             rail: result.railWidth,
             main: result.mainWidth,
             context: result.contextWidth,
+          })}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        (result.mainOverflowY !== 'auto' ||
+          result.contextOverflowY !== 'auto' ||
+          result.mainMaxHeight === 'none')
+      ) {
+        throw new Error(
+          `${options.label}/${route.screen}: split-workspace mist begrensde workbench-scroll (${JSON.stringify({
+            mainOverflowY: result.mainOverflowY,
+            contextOverflowY: result.contextOverflowY,
+            mainMaxHeight: result.mainMaxHeight,
           })}).`,
         );
       }

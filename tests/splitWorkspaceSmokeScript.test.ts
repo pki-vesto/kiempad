@@ -36,6 +36,9 @@ describe('split workspace smoke script', () => {
     expect(splitWorkspaceSmokeScript).toContain('railWidth');
     expect(splitWorkspaceSmokeScript).toContain('mainWidth');
     expect(splitWorkspaceSmokeScript).toContain('contextWidth');
+    expect(splitWorkspaceSmokeScript).toContain('mainOverflowY');
+    expect(splitWorkspaceSmokeScript).toContain('mainMaxHeight');
+    expect(splitWorkspaceSmokeScript).toContain('split-workspace mist begrensde workbench-scroll');
     expect(splitWorkspaceSmokeScript).toContain('hoofdruimte krijgt geen prioriteit in split-view');
     expect(splitWorkspaceSmokeScript).toContain("group: 'Vandaag'");
     expect(splitWorkspaceSmokeScript).toContain("group: 'Behandeling'");

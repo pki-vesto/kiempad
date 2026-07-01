@@ -37777,6 +37777,9 @@ describe('app shell', () => {
       'grid-template-columns: minmax(184px, 0.5fr) minmax(0, 2.28fr) minmax(216px, 0.66fr);',
     );
     expect(css).toContain('gap: 12px;');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 148px));');
+    expect(css).toContain('overflow-y: auto;');
+    expect(css).toContain('scrollbar-gutter: stable;');
     expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.domain-split-workspace__rail .command-task-route span,');

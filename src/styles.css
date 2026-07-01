@@ -5632,6 +5632,27 @@ h2 {
   margin-bottom: 0;
 }
 
+@media (min-width: 761px) {
+  .domain-split-workspace {
+    max-height: min(860px, calc(100vh - 148px));
+    align-items: stretch;
+  }
+
+  .domain-split-workspace__rail,
+  .domain-split-workspace__main,
+  .domain-split-workspace__context {
+    max-height: min(860px, calc(100vh - 148px));
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .domain-split-workspace__main,
+  .domain-split-workspace__context {
+    padding-right: 4px;
+    scrollbar-gutter: stable;
+  }
+}
+
 .knowledge-focus-shell {
   display: grid;
   gap: 14px;
