@@ -6804,6 +6804,82 @@ a.action-card:active {
     font-size: 0.72rem;
   }
 
+  .treatment-workbench {
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .treatment-workbench__header {
+    display: grid;
+    gap: 6px;
+  }
+
+  .treatment-workbench__header h2 {
+    font-size: 1.14rem;
+  }
+
+  .treatment-workbench__header p:last-child {
+    display: none;
+  }
+
+  .treatment-workbench__status {
+    width: fit-content;
+    padding: 5px 9px;
+  }
+
+  .treatment-workbench__grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .treatment-workbench :where(.phase-hero) {
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .treatment-workbench :where(.phase-hero__subtitle) {
+    display: none;
+  }
+
+  .treatment-workbench__panel {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .treatment-workbench__next {
+    display: none;
+  }
+
+  .treatment-workbench__next h3 {
+    font-size: 0.98rem;
+  }
+
+  .treatment-workbench__next p {
+    display: none;
+  }
+
+  .treatment-workbench :where(.stat-row) {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .treatment-workbench :where(.stat) {
+    flex: 0 0 82px;
+    padding: 8px 10px;
+    scroll-snap-align: start;
+  }
+
+  .treatment-workbench :where(.stat__value) {
+    font-size: 1.02rem;
+  }
+
+  .treatment-workbench :where(.stat__label) {
+    font-size: 0.72rem;
+  }
+
   .backup-task-routes {
     display: flex;
     overflow-x: auto;

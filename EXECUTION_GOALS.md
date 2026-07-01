@@ -3830,6 +3830,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Route panels, medication UI, treatment UI, styles, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1219 — route-summary ontlasting uitbreiden naar dossier en kennis
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Agenda, Vragen, Medicatie en Traject gebruiken route-summary ontlasting, maar Dossier en Kennis/Research kunnen nog lange actieve routecontent tonen.
+- **User Impact:** Juist uploads, medische documenten en research kunnen nog als zware pagina's voelen terwijl dit kernflows zijn voor de premium fertility intelligence ervaring.
+- **Desired Outcome:** Pas dezelfde route-summary en progressive-panel aanpak toe op Dossier en Kennis/Research.
+- **User Value:** Gebruikers zien bij uploads, tijdlijn, zoeken en research eerst de primaire taak en openen details pas wanneer nodig.
+- **Acceptance Criteria:** Dossier en Kennis/Research krijgen route-summary kaarten met primaire taak, status en eerstvolgende actie; secundaire details, bibliotheken, researchlijsten of lange contextblokken worden waar passend achter disclosure geplaatst; bestaande form-id's, data-hooks, aria-labels, uploadhooks en route-ankers blijven behouden; mobile, tablet en desktop tonen geen overlap of horizontale overflow; browser-screenshots bewijzen zichtbare ontlasting; geen medische payload, OCR-tekst, bestandsinhoud, researchpayload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Dossier, Kennis/Research
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier routes, knowledge routes, upload UI, research UI, styles, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

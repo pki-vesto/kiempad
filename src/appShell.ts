@@ -13012,6 +13012,20 @@ function renderMedicatieScreen(state: AppShellState): string {
           <h2 id="medicatie-route-vandaag-title">Medicatie vandaag</h2>
           <p>Vink geplande momenten af zonder dosering te laten berekenen of interpreteren.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Nu eerst',
+          title:
+            todayLogs.length > 0
+              ? `${completedToday}/${todayLogs.length} momenten afgevinkt`
+              : 'Geen geplande medicatiemomenten vandaag',
+          detail:
+            'Vink alleen feitelijke innames of injecties af; Kiempad berekent of adviseert geen dosering.',
+          status: `${todayLogs.length} vandaag`,
+          primary: { href: '#medicatie?route=beheer', label: 'Middel beheren' },
+          secondary: { href: '#medicatie?route=planning', label: 'Planning bekijken' },
+          data: { 'medication-route-summary': 'vandaag' },
+          ariaLabel: 'Medicatie vandaag route-samenvatting',
+        })}
         <div class="panel-heading"><h2>Vandaag</h2></div>
         ${
           todayLogs.length > 0
@@ -13025,6 +13039,20 @@ function renderMedicatieScreen(state: AppShellState): string {
           <h2 id="medicatie-route-planning-title">Komende medicatiemomenten</h2>
           <p>Bekijk toekomstige afvinkmomenten uit eigen invoer of import.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Later',
+          title:
+            plannedLogs.length > 0
+              ? `${plannedLogs.length} toekomstig moment${plannedLogs.length === 1 ? '' : 'en'}`
+              : 'Geen toekomstige momenten buiten vandaag',
+          detail:
+            'Gebruik planning als vooruitblik; beheer of importeer alleen schema’s die door de kliniek zijn opgegeven.',
+          status: `${plannedLogs.length} later`,
+          primary: { href: '#medicatie?route=vandaag', label: 'Vandaag' },
+          secondary: { href: '#medicatie?route=import', label: 'Schema importeren' },
+          data: { 'medication-route-summary': 'planning' },
+          ariaLabel: 'Medicatieplanning route-samenvatting',
+        })}
         ${
           plannedLogs.length > 0
             ? renderDoseLogList(plannedLogs, state.medicatie)
@@ -13037,6 +13065,17 @@ function renderMedicatieScreen(state: AppShellState): string {
           <h2 id="medicatie-route-beheer-title">Middel beheren</h2>
           <p>Bewaar kliniektekst, voorraad, instructie en lokale video zonder doseeradvies.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Beheer',
+          title: selected ? `${selected.medicatie.naam} bewerken` : 'Nieuw middel toevoegen',
+          detail:
+            'Leg alleen de tekst vast zoals de kliniek die heeft gegeven; geen interpretatie of berekening.',
+          status: `${state.medicatie.length} middel${state.medicatie.length === 1 ? '' : 'en'}`,
+          primary: { href: '#medicatie?route=vandaag', label: 'Vandaag bekijken' },
+          secondary: { href: '#medicatie?route=historie', label: 'Historie' },
+          data: { 'medication-route-summary': 'beheer' },
+          ariaLabel: 'Medicatiebeheer route-samenvatting',
+        })}
         <div class="panel-heading"><h2>Middel beheren</h2>${deleteMedicatieButton}</div>
         ${disclosure({
           summary: selected ? 'Medicatie bewerken' : 'Medicatie toevoegen',
@@ -13050,6 +13089,25 @@ function renderMedicatieScreen(state: AppShellState): string {
           <h2 id="medicatie-route-import-title">Schema importeren</h2>
           <p>Importeer geplande momenten uit eigen klinieklijst zonder doseringen over te nemen of te berekenen.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Import',
+          title: state.medicatieImportError
+            ? 'Schema vraagt controle'
+            : state.medicatieImportStatus
+              ? 'Schemafeedback beschikbaar'
+              : 'Eigen schema lokaal importeren',
+          detail:
+            'Import maakt alleen geplande momenten aan; doseringen worden niet overgenomen of berekend.',
+          status: state.medicatieImportError
+            ? 'Check'
+            : state.medicatieImportStatus
+              ? 'Feedback'
+              : 'Schema',
+          primary: { href: '#medicatie?route=beheer', label: 'Middel beheren' },
+          secondary: { href: '#medicatie?route=planning', label: 'Planning' },
+          data: { 'medication-route-summary': 'import' },
+          ariaLabel: 'Medicatie-import route-samenvatting',
+        })}
         ${disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) })}
       </section>`,
       `<section id="medicatie-route-historie" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
@@ -13058,13 +13116,28 @@ function renderMedicatieScreen(state: AppShellState): string {
           <h2 id="medicatie-route-historie-title">Middelen, voorraad en historie</h2>
           <p>Bekijk middelen, voorraad, instructies en innameloghistorie los van het beheerscherm.</p>
         </header>
-        <h2 class="section-subheading">Middelen</h2>
-        ${
-          state.medicatie.length > 0
-            ? renderMedicatieList(state.medicatie)
-            : '<p class="empty-state">Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.</p>'
-        }
-        ${renderPolicyPanel()}
+        ${commandRouteSummary({
+          eyebrow: 'Teruglezen',
+          title:
+            state.medicatie.length > 0
+              ? `${state.medicatie.length} middel${state.medicatie.length === 1 ? '' : 'en'} in dossier`
+              : 'Nog geen middelen in dossier',
+          detail: 'Historie en voorraad blijven bereikbaar zonder de dagroute te verlengen.',
+          status: `${state.medicatie.length} middel${state.medicatie.length === 1 ? '' : 'en'}`,
+          primary: { href: '#medicatie?route=vandaag', label: 'Vandaag' },
+          secondary: { href: '#medicatie?route=beheer', label: 'Middel toevoegen' },
+          data: { 'medication-route-summary': 'historie' },
+          ariaLabel: 'Medicatiehistorie route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Middelen, voorraad en historie tonen',
+          open: state.medicatie.length > 0,
+          body:
+            (state.medicatie.length > 0
+              ? renderMedicatieList(state.medicatie)
+              : '<p class="empty-state">Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.</p>') +
+            renderPolicyPanel(),
+        })}
       </section>`,
     ],
     { className: 'medication-command-layout', ariaLabel: 'Medicatie beheren' },
@@ -13459,12 +13532,28 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-overzicht-title">Trajectoverzicht</h2>
           <p>Bekijk actieve en afgeronde pogingen, statusverdeling en de centrale trajectcontext.</p>
         </header>
-        ${renderTrajectOverzicht(overzicht) || '<p class="empty-state">Nog geen poging vastgelegd.</p>'}
-        ${
-          actieveTrajecten.length > 0
-            ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen')
-            : '<p class="empty-state">Nog geen actieve pogingen.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Trajectstatus',
+          title: selected
+            ? `${selected.traject.naam} is ${selected.traject.status}`
+            : 'Nog geen actief traject',
+          detail:
+            'Open details alleen wanneer je statusverdeling of poginglijst nodig hebt; de actuele fase blijft bovenaan.',
+          status: `${actieveTrajecten.length} actief`,
+          primary: { href: '#traject?route=fasen', label: 'Fasen openen' },
+          secondary: { href: '#traject?route=beheer', label: 'Traject beheren' },
+          data: { 'treatment-route-summary': 'overzicht' },
+          ariaLabel: 'Trajectoverzicht route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Statusverdeling en actieve pogingen',
+          open: actieveTrajecten.length > 0,
+          body: `${renderTrajectOverzicht(overzicht) || '<p class="empty-state">Nog geen poging vastgelegd.</p>'}${
+            actieveTrajecten.length > 0
+              ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen')
+              : '<p class="empty-state">Nog geen actieve pogingen.</p>'
+          }`,
+        })}
       </section>`,
       `<section id="traject-route-fasen" class="treatment-route-section command-route-section" aria-labelledby="traject-route-fasen-title" data-treatment-route="fasen"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'fasen')}>
         <header class="treatment-route-section__header command-route-section__header">
@@ -13472,6 +13561,20 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-fasen-title">Faseplanning</h2>
           <p>Markeer de actuele fase binnen het geselecteerde traject zonder medische conclusie.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Fasefocus',
+          title: selected ? `Fasen voor ${selected.traject.naam}` : 'Maak eerst een traject aan',
+          detail:
+            'Gebruik faseplanning alleen als feitelijke trajectadministratie; Kiempad trekt geen medische conclusie.',
+          status: `${selected?.fasen.length ?? 0} fases`,
+          primary: {
+            href: '#traject?route=beheer',
+            label: selected ? 'Traject bewerken' : 'Traject aanmaken',
+          },
+          secondary: { href: '#traject?route=context', label: 'Timeline' },
+          data: { 'treatment-route-summary': 'fasen' },
+          ariaLabel: 'Faseplanning route-samenvatting',
+        })}
         <div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>
         ${
           selected
@@ -13485,6 +13588,17 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-vergoeding-title">Vergoeding</h2>
           <p>Controleer meetellende pogingen en resterende ruimte als voorbereiding op eigen administratie.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Administratie',
+          title: `${vergoeding.resterend} van ${vergoeding.maximum} vergoede pogingen resterend`,
+          detail:
+            'Gebruik dit als eigen administratievoorbereiding; polis en kliniek blijven leidend.',
+          status: `${vergoeding.meetellend}/${vergoeding.maximum} meetellend`,
+          primary: { href: '#traject?route=overzicht', label: 'Overzicht' },
+          secondary: { href: '#kosten?route=vergoeding', label: 'Kosten' },
+          data: { 'treatment-route-summary': 'vergoeding' },
+          ariaLabel: 'Vergoeding route-samenvatting',
+        })}
         <section class="policy-panel embedded-summary" aria-label="Vergoede pogingen">
           <h2>Vergoede pogingen</h2>
           <dl class="summary-list">
@@ -13500,13 +13614,35 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-context-title">Timeline en graphcontext</h2>
           <p>Bekijk de centrale fertility timeline en kennisrelaties los van beheeracties.</p>
         </header>
-        ${renderFertilityTimeline(
-          state,
-          fertilityTimeline,
-          state.timelineFilter,
-          fertilityTimelineExport,
-        )}
-        ${graphWeergave ? renderTrajectGraphWeergave(graphWeergave, state.trajecten) : ''}
+        ${commandRouteSummary({
+          eyebrow: 'Contextlaag',
+          title: `${fertilityTimeline.items.length} timeline-item${fertilityTimeline.items.length === 1 ? '' : 's'} · ${graphWeergave?.edges.length ?? 0} relaties`,
+          detail:
+            'Open timeline of graph alleen wanneer je context nodig hebt; beheeracties blijven gescheiden.',
+          status: graphWeergave ? 'Graph klaar' : 'Timeline',
+          primary: { href: '#traject?route=overzicht', label: 'Overzicht' },
+          secondary: { href: '#dossier?route=timeline', label: 'Dossierlijn' },
+          data: { 'treatment-route-summary': 'context' },
+          ariaLabel: 'Timeline en graphcontext route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Fertility timeline openen',
+          open: fertilityTimeline.items.length > 0,
+          body: renderFertilityTimeline(
+            state,
+            fertilityTimeline,
+            state.timelineFilter,
+            fertilityTimelineExport,
+          ),
+        })}
+        ${
+          graphWeergave
+            ? disclosure({
+                summary: 'Graphcontext openen',
+                body: renderTrajectGraphWeergave(graphWeergave, state.trajecten),
+              })
+            : ''
+        }
       </section>`,
       `<section id="traject-route-beheer" class="treatment-route-section command-route-section" aria-labelledby="traject-route-beheer-title" data-treatment-route="beheer"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'beheer')}>
         <header class="treatment-route-section__header command-route-section__header">
@@ -13514,12 +13650,30 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-beheer-title">Trajectbeheer en archief</h2>
           <p>Bewerk het geselecteerde traject, voeg een nieuwe poging toe of herstel een gearchiveerde poging.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Beheer',
+          title: selected ? `${selected.traject.naam} beheren` : 'Nieuw traject aanmaken',
+          detail:
+            'Beheer blijft apart van fase- en contextoverzicht zodat de route niet als lange formulierpagina start.',
+          status: `${gearchiveerdeTrajecten.length} archief`,
+          primary: { href: '#traject?route=fasen', label: 'Fasen' },
+          secondary: { href: '#traject?route=overzicht', label: 'Overzicht' },
+          data: { 'treatment-route-summary': 'beheer' },
+          ariaLabel: 'Trajectbeheer route-samenvatting',
+        })}
         ${disclosure({
           summary: selected ? 'Traject bewerken of poging toevoegen' : 'Traject aanmaken',
           open: !selected,
           body: trajectFormsBody,
         })}
-        ${gearchiveerdeTrajecten.length > 0 ? renderTrajectList(gearchiveerdeTrajecten, 'Archief', true) : ''}
+        ${
+          gearchiveerdeTrajecten.length > 0
+            ? disclosure({
+                summary: 'Archief tonen',
+                body: renderTrajectList(gearchiveerdeTrajecten, 'Archief', true),
+              })
+            : ''
+        }
       </section>`,
     ],
     { className: 'treatment-command-layout', ariaLabel: 'Traject beheren' },
