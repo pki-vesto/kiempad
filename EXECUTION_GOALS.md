@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1298 — Premium Claude Design UI: compacte workspace-deck voor detailroutes
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De shell renderde op detailroutes nog globale productstructuur boven de taakruimte, waardoor schermen ondanks split-workspaces als één lange pagina konden voelen.
+- **Desired Outcome:** Verwijder de generieke workspace-map uit de shell en plaats op detailroutes een compacte workspace-deck met actieve werkruimte en sibling routes in de sidebar.
+- **User Value:** De gebruiker komt sneller bij upload, tijdlijn, advies, research of beheer zonder eerst door globale productkaart en quick-links te scannen.
+- **Acceptance Criteria:** `renderAppShell` rendert geen `data-workspace-map="ready"` meer; `data-compact-workspace-deck="ready"` staat op de workspace-strip; detailroutes plaatsen die deck buiten `.content`; quick-links en workspace-description worden niet meer in de shellstrip gerenderd; bestaande route- en split-workspace ids blijven intact; routeflow en split-workspace smokes bewaken dat detailroutes compact blijven.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `scripts/split-workspace-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`, `tests/splitWorkspaceSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2371
+
 ### G1297 — Premium Claude Design UI: Fertility Timeline als begrensde timeline-console
 
 - **Epic:** Onboarding & Daily Use

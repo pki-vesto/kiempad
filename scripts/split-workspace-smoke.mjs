@@ -160,6 +160,9 @@ async function assertSplitWorkspaces(browser, options) {
       const result = await page.evaluate(({ prefix, routeId, group }) => {
         const workspace = document.querySelector(`[data-${prefix}-split-workspace="ready"]`);
         const workspaceStrip = document.querySelector('[data-workspace-strip="ready"]');
+        const contentWorkspaceStrip = document.querySelector(
+          '.content > [data-workspace-strip="ready"]',
+        );
         const workspaceStripDescription = workspaceStrip?.querySelector(
           '.workspace-strip__description',
         );
@@ -206,6 +209,9 @@ async function assertSplitWorkspaces(browser, options) {
           currentRouteText: currentRoute?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           hasWorkspace: Boolean(workspace),
           hasWorkspaceStrip: Boolean(workspaceStrip),
+          workspaceStripInContent: Boolean(contentWorkspaceStrip),
+          hasCompactWorkspaceDeck:
+            workspaceStrip?.getAttribute('data-compact-workspace-deck') === 'ready',
           workspaceStripGroup: workspaceStrip?.getAttribute('data-workspace-strip-group') ?? null,
           workspaceStripVisible: Boolean(stripRect && stripRect.width > 0 && stripRect.height > 0),
           workspaceStripDescriptionVisible: Boolean(
@@ -277,11 +283,13 @@ async function assertSplitWorkspaces(browser, options) {
       }
       if (
         !result.hasWorkspaceStrip ||
+        !result.hasCompactWorkspaceDeck ||
+        result.workspaceStripInContent ||
         !result.workspaceStripVisible ||
         !result.workspaceStripMatchesGroup
       ) {
         throw new Error(
-          `${options.label}/${route.screen}: workspace-strip mist of toont verkeerde groep ${result.workspaceStripGroup}.`,
+          `${options.label}/${route.screen}: compacte workspace-deck mist, staat in hoofdcontent of toont verkeerde groep ${result.workspaceStripGroup}.`,
         );
       }
       if (result.workspaceMapVisible || result.pageHeaderVisible) {

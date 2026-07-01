@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1098 |
+| ☑ klaar | 1099 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1297** |
+| **Totaal** | **1298** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1460,12 +1460,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1295 | Premium Claude Design UI: Dagadvies als begrensde advies-console | P1 | F5 | ☑ |
 | G1296 | Premium Claude Design UI: Dossier uploadroute als begrensde upload-console | P1 | F5 | ☑ |
 | G1297 | Premium Claude Design UI: Fertility Timeline als begrensde timeline-console | P1 | F5 | ☑ |
+| G1298 | Premium Claude Design UI: Compacte workspace-deck voor detailroutes | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1297** (id's G001 t/m G1297, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1298** (id's G001 t/m G1298, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

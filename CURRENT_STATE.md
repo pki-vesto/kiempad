@@ -369,6 +369,11 @@
 - **G1297 Timeline-console:** Fertility Timeline gebruikt op desktop aparte
   begrensde werkvlakken voor reader, filter/export, inzichten en timeline-items.
   Timeline-id's blijven gelijk; routeflow-smoke bewaakt de console.
+- **G1298 Compacte workspace-deck:** de generieke workspace-map wordt niet meer
+  boven elke route gerenderd. Detailroutes tonen de compacte workspace-deck in
+  de sidebar met actieve werkruimte en sibling routes; split-workspace smoke
+  bewaakt dat de hoofdcontent geen brede productkaart, quick-link stapeling of
+  routechrome terugkrijgt.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

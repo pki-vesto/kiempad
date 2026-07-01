@@ -586,6 +586,13 @@ h3 {
     var(--surface);
 }
 
+.workspace-strip--compact {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+}
+
 .workspace-strip__eyebrow,
 .workspace-strip h2,
 .workspace-strip__description {
@@ -10087,6 +10094,23 @@ a.action-card:active {
     width: 100%;
     border-radius: 11px;
     text-align: left;
+  }
+
+  .app-sidebar > .workspace-strip {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .app-sidebar > .workspace-strip .workspace-strip__switcher {
+    display: grid;
+    justify-content: stretch;
+  }
+
+  .app-sidebar > .workspace-strip .workspace-strip__switcher a {
+    justify-content: flex-start;
+    width: 100%;
+    border-radius: 10px;
   }
 
   .content {
