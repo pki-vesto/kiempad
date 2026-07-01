@@ -441,6 +441,11 @@
   console. Launchpad en command-center hebben expliciete regio's; de launchpad is
   begrensd, de cockpit is compacter en het verdiepings-command-center start zichtbaar
   binnen de eerste viewport in plaats van onder een hoge introductielaag.
+- **G1314 Directe advice-console:** Dagadvies opent via `#start-recommendations` als
+  eigen compacte console bovenaan de content. Workflow, eigenaarwerkbank,
+  actieplanner en aanbevelingenlijst staan in aparte begrensde werkvlakken, zodat
+  dagadvies niet eerst als onderdeel van een lange startpagina gelezen hoeft te
+  worden.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

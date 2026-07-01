@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1114 |
+| ☑ klaar | 1115 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1313** |
+| **Totaal** | **1314** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1476,12 +1476,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1311 | Premium Claude Design UI: Medicatie als compacte medication-console | P1 | F5 | ☑ |
 | G1312 | Premium Claude Design UI: Traject als compacte treatment-console | P1 | F5 | ☑ |
 | G1313 | Premium Claude Design UI: Start als compactere eerste-viewport console | P1 | F5 | ☑ |
+| G1314 | Premium Claude Design UI: Dagadvies als directe compacte advice-console | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1313** (id's G001 t/m G1313, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1314** (id's G001 t/m G1314, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

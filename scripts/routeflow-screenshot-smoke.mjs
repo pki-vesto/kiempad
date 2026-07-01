@@ -136,10 +136,15 @@ const targets = [
     openSelectors: ['#start-flow-panel-aanbevelingen'],
     requiredSelectors: [
       '[data-daily-advice-focus-shell="ready"]',
+      '[data-daily-advice-console="ready"]',
       '[data-daily-advice-focus-region="workflow"]',
       '[data-daily-advice-focus-region="workbench"]',
       '[data-daily-advice-focus-region="planner"]',
       '[data-daily-advice-focus-region="list"]',
+      '[data-daily-advice-console-region="workflow"]',
+      '[data-daily-advice-console-region="workbench"]',
+      '[data-daily-advice-console-region="planner"]',
+      '[data-daily-advice-console-region="list"]',
       '[data-hub-workflow="daily-recommendations"]',
       '[data-daily-advice-workbench="owner-routes"]',
       '[data-daily-advice-snapshot="ready"]',
@@ -603,10 +608,12 @@ async function assertRouteflows(browser, options) {
           : null;
         const dailyAdviceConsole = routeflow.dailyAdviceConsole
           ? (() => {
+              const shell = document.querySelector('[data-daily-advice-console="ready"]');
               const workflow = document.querySelector('[data-daily-advice-focus-region="workflow"]');
               const workbench = document.querySelector('[data-daily-advice-focus-region="workbench"]');
               const planner = document.querySelector('[data-daily-advice-focus-region="planner"]');
               const list = document.querySelector('[data-daily-advice-focus-region="list"]');
+              const shellRect = shell?.getBoundingClientRect();
               const workflowRect = workflow?.getBoundingClientRect();
               const workbenchRect = workbench?.getBoundingClientRect();
               const plannerRect = planner?.getBoundingClientRect();
@@ -616,6 +623,9 @@ async function assertRouteflows(browser, options) {
               const plannerStyle = planner ? getComputedStyle(planner) : null;
               const listStyle = list ? getComputedStyle(list) : null;
               return {
+                shellVisible: Boolean(shellRect && shellRect.width > 0 && shellRect.height > 0),
+                shellTop: shellRect?.top ?? 0,
+                viewportHeight: window.innerHeight,
                 workflowVisible: Boolean(
                   workflowRect && workflowRect.width > 0 && workflowRect.height > 0,
                 ),
@@ -1071,7 +1081,8 @@ async function assertRouteflows(browser, options) {
       if (
         options.label === 'desktop' &&
         evidence.dailyAdviceConsole &&
-        (!evidence.dailyAdviceConsole.workflowVisible ||
+        (!evidence.dailyAdviceConsole.shellVisible ||
+          !evidence.dailyAdviceConsole.workflowVisible ||
           !evidence.dailyAdviceConsole.workbenchVisible ||
           !evidence.dailyAdviceConsole.plannerVisible ||
           !evidence.dailyAdviceConsole.listVisible ||
@@ -1081,6 +1092,7 @@ async function assertRouteflows(browser, options) {
           ) > 2 ||
           evidence.dailyAdviceConsole.plannerLeft < evidence.dailyAdviceConsole.workbenchRight - 1 ||
           evidence.dailyAdviceConsole.listTop < evidence.dailyAdviceConsole.workbenchTop - 1 ||
+          evidence.dailyAdviceConsole.shellTop > evidence.dailyAdviceConsole.viewportHeight * 0.28 ||
           evidence.dailyAdviceConsole.workflowOverflowY !== 'auto' ||
           evidence.dailyAdviceConsole.workbenchOverflowY !== 'auto' ||
           evidence.dailyAdviceConsole.plannerOverflowY !== 'auto' ||
