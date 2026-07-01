@@ -12012,11 +12012,11 @@ function renderKnowledgeFocusShell(input: { workbench: string; workspace: string
         <h2 id="knowledge-focus-shell-title">Eerst researchlaag kiezen, daarna bronnen openen</h2>
         <p>Werkbank, routekeuze en leesflow horen bij elkaar: bronnen, samenvattingen, relevantie en trends blijven één gefocuste kennisruimte.</p>
       </header>
-      <div class="knowledge-focus-shell__body">
-        <div class="knowledge-focus-shell__workbench" data-knowledge-focus-region="workbench">
+      <div class="knowledge-focus-shell__body" data-knowledge-console="ready">
+        <div class="knowledge-focus-shell__workbench" data-knowledge-focus-region="workbench" data-knowledge-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="knowledge-focus-shell__workspace" data-knowledge-focus-region="workspace">
+        <div class="knowledge-focus-shell__workspace" data-knowledge-focus-region="workspace" data-knowledge-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

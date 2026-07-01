@@ -5898,6 +5898,41 @@ h2 {
   align-items: start;
 }
 
+@media (min-width: 961px) {
+  .knowledge-focus-shell__body {
+    grid-template-columns: minmax(318px, 0.78fr) minmax(0, 1.22fr);
+    align-items: stretch;
+    max-height: min(860px, calc(100vh - 126px));
+    overflow: hidden;
+  }
+
+  .knowledge-focus-shell__workbench,
+  .knowledge-focus-shell__workspace {
+    max-height: min(820px, calc(100vh - 164px));
+    overflow-y: auto;
+    contain: layout paint;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .knowledge-focus-shell__workspace {
+    overflow-x: hidden;
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace {
+    max-height: min(820px, calc(100vh - 164px));
+    overflow: hidden;
+    contain: layout paint;
+  }
+
+  .knowledge-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+  }
+}
+
 .knowledge-focus-shell__workbench,
 .knowledge-focus-shell__workspace {
   min-width: 0;
@@ -6632,6 +6667,100 @@ h2 {
     min-height: 28px;
     padding: 4px 8px;
     font-size: 0.72rem;
+  }
+}
+
+@media (min-width: 961px) {
+  .knowledge-focus-shell__workbench .knowledge-research-snapshot {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .knowledge-focus-shell__workbench .knowledge-research-snapshot__card {
+    grid-template-columns: minmax(92px, 0.7fr) minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 2px;
+    align-items: center;
+    padding: 9px 10px;
+  }
+
+  .knowledge-focus-shell__workbench .knowledge-research-snapshot__card span,
+  .knowledge-focus-shell__workbench .knowledge-research-snapshot__card strong,
+  .knowledge-focus-shell__workbench .knowledge-research-snapshot__card small {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .knowledge-focus-shell__workbench .knowledge-research-snapshot__card small {
+    grid-column: 1 / -1;
+  }
+
+  .knowledge-focus-shell__workbench .knowledge-command-panel__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace {
+    grid-template-areas:
+      "rail main"
+      "rail context";
+    grid-template-columns: minmax(136px, 0.34fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace__rail {
+    grid-area: rail;
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace__main {
+    grid-area: main;
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace__context {
+    display: block;
+    grid-area: context;
+    width: min(100%, 320px);
+    max-height: 124px;
+    justify-self: start;
+    overflow-y: auto;
+    padding-top: 8px;
+  }
+
+  .knowledge-focus-shell__workspace .knowledge-research-reader__header {
+    display: grid;
+    gap: 6px;
+  }
+
+  .knowledge-focus-shell__workspace .knowledge-research-reader__lanes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowledge-focus-shell__workspace .hub-workflow-header {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-focus-shell__workspace .hub-workflow-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace__main .command-route-summary,
+  .knowledge-focus-shell__workspace .command-route-summary {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .knowledge-focus-shell__workspace .command-route-summary > div,
+  .knowledge-focus-shell__workspace .command-route-summary__meta {
+    min-width: 0;
+  }
+
+  .knowledge-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow) {
+    display: none;
+  }
+
+  .knowledge-focus-shell__workspace .domain-split-workspace__main .command-route-summary__meta,
+  .knowledge-focus-shell__workspace .command-route-summary__meta {
+    justify-content: flex-start;
   }
 }
 
@@ -7849,6 +7978,12 @@ a.action-card:active {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
   gap: 10px;
+}
+
+@media (min-width: 961px) {
+  .knowledge-focus-shell__workbench .knowledge-command-panel__intro .stat-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .stat {

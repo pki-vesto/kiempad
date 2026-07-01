@@ -386,6 +386,10 @@
   actieve split-workspace naast elkaar in één begrensde console. Orientation,
   workspace en split-container hebben containment en eigen scrollgedrag, zodat
   lange upload- en imagingpanelen de body niet meer oprekken.
+- **G1302 Knowledge-console:** Kennis/Research toont op desktop een compacte
+  console met researchwerkbank links, taakroute-rail in het midden en actieve
+  leesworkspace rechts. De workspace verbergt de krappe contextkolom, gebruikt
+  een leesbare 2x2 researchlaag en bewaakt tekstfit/overflow via routeflow-smoke.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

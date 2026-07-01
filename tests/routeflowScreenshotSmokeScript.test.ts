@@ -37,6 +37,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'dossier-console staat niet in compacte werkvlakken',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('knowledgeConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'knowledge-console staat niet in compacte werkvlakken',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('timelineConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
       'timeline-console staat niet in begrensde werkvlakken',
@@ -77,6 +81,9 @@ describe('routeflow screenshot smoke script', () => {
       '[data-start-workspace-card="insight"]',
       '[data-start-workspace-card="control"]',
       '[data-start-focus-shell="ready"]',
+      '[data-knowledge-console="ready"]',
+      '[data-knowledge-console-region="workbench"]',
+      '[data-knowledge-console-region="workspace"]',
       '[data-start-focus-region="workflows"]',
       '[data-start-focus-region="scan"]',
       '[data-start-focus-region="daily"]',
