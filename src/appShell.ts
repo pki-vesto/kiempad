@@ -14485,7 +14485,7 @@ function renderDailyAdviceFocusShell(input: {
       <header class="daily-advice-focus-shell__header">
         <p class="kp-card__eyebrow">Dagadvies focus</p>
         <h2 id="daily-advice-focus-shell-title">Dagadvies console</h2>
-        <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken, zodat dagadvies niet als lange aanbevelingenpagina hoeft te lezen.</p>
+        <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken; mobiel opent Dagadvies als compacte scrollbare adviesconsole.</p>
       </header>
       ${input.status}
       <div class="daily-advice-focus-shell__body" data-daily-advice-console-region="body">

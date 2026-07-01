@@ -21,6 +21,9 @@
 - **G1318 mobiele Start-routekaart:** de Start-overview houdt op mobiel de zware
   command-center verdieping binnen een eigen scrollbaar vlak, zodat de startpagina
   korter blijft en de primaire werkbanen als route-ingang blijven functioneren.
+- **G1319 mobiele Dagadvies-console:** `#start-recommendations` begrenst op mobiel
+  workflow, eigenaarwerkbank, actieplanner en lijst binnen één scrollbare
+  adviesconsole, terwijl desktop de gescheiden advieswerkvlakken behoudt.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

@@ -2751,6 +2751,7 @@ describe('app shell', () => {
 
     expect(html).toContain('data-start-daily-advice-route="ready"');
     expect(html).toContain('data-daily-advice-console="ready"');
+    expect(html).toContain('mobiel opent Dagadvies als compacte scrollbare adviesconsole');
     expect(html).toContain('data-daily-advice-console-region="workflow"');
     expect(html).toContain('data-daily-advice-console-region="workbench"');
     expect(html).toContain('data-daily-advice-console-region="planner"');
@@ -3014,6 +3015,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 0 min(220px, 72vw);');
     expect(mobileCss).toContain('.daily-advice-focus-shell {');
     expect(mobileCss).toContain('box-shadow: none;');
+    expect(mobileCss).toContain('max-height: min(680px, calc(100vh - 164px));');
+    expect(mobileCss).toContain('overflow-y: auto;');
     expect(mobileCss).toContain('.daily-advice-focus-shell__body {');
     expect(mobileCss).toContain('.daily-advice-focus-shell__workflow,');
     expect(mobileCss).toContain('.daily-advice-workbench__header {');
