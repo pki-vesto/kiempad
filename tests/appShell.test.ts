@@ -36654,6 +36654,7 @@ describe('app shell', () => {
     expect(dossierHtml).toContain('class="domain-split-workspace dossier-split-workspace"');
     expect(dossierHtml).toContain('data-dossier-workspace-context');
     expect(dossierHtml).toContain('data-workspace-context-signals="dossier"');
+    expect(dossierHtml).toContain('data-workspace-context-flow="linked"');
     expect(dossierHtml).toContain('data-workspace-context-microstate="dossier-imaging"');
     expect(dossierHtml).toContain(
       'data-workspace-context-next-action="Volgende: beeldmetadata controleren"',
@@ -36785,6 +36786,9 @@ describe('app shell', () => {
     expect(css).toContain('.workspace-context-signals {');
     expect(css).toContain('.workspace-context-signals__microstate {');
     expect(css).toContain('.workspace-context-signals__microstate b {');
+    expect(css).toContain('.workspace-context-signals[data-workspace-context-flow="linked"]');
+    expect(css).toContain('.workspace-context-signals__microstate::after');
+    expect(css).toContain('.workspace-context-signal:first-child::before');
     expect(css).toContain('.workspace-context-signal {');
     expect(css).toContain('.workspace-context-signal:first-child {');
     expect(css).toContain('inset 3px 0 0 color-mix(in srgb, var(--accent) 70%, transparent)');
@@ -36800,6 +36804,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.workspace-context-signal {');
     expect(mobileCss).toContain('.workspace-context-signals__microstate {');
     expect(mobileCss).toContain('.workspace-context-signals__microstate b {');
+    expect(mobileCss).toContain('.workspace-context-signals[data-workspace-context-flow="linked"]');
     expect(mobileCss).toContain('min-height: 58px;');
     expect(mobileCss).toContain('min-width: 42px;');
   });

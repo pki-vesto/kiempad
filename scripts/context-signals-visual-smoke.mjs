@@ -150,9 +150,13 @@ async function assertContextSignals(browser, options) {
         const nextActionAttribute = microstateElement?.getAttribute(
           'data-workspace-context-next-action',
         );
+        const microstateFlowStyle = microstateElement
+          ? getComputedStyle(microstateElement, '::after')
+          : undefined;
         const cards = [...(root?.querySelectorAll('.workspace-context-signal') ?? [])].map(
           (element) => {
             const rect = element.getBoundingClientRect();
+            const flowStyle = getComputedStyle(element, '::before');
             const textNodes = [...element.querySelectorAll('span, strong, p, a')].map((node) => ({
               tag: node.tagName.toLowerCase(),
               clientWidth: node.clientWidth,
@@ -168,6 +172,12 @@ async function assertContextSignals(browser, options) {
               borderColor: getComputedStyle(element).borderColor,
               backgroundColor: getComputedStyle(element).backgroundColor,
               boxShadow: getComputedStyle(element).boxShadow,
+              flowMarker: {
+                content: flowStyle.content,
+                width: Number.parseFloat(flowStyle.width),
+                height: Number.parseFloat(flowStyle.height),
+                borderColor: flowStyle.borderColor,
+              },
               textNodes,
               action: (() => {
                 const action = element.querySelector('a');
@@ -206,6 +216,13 @@ async function assertContextSignals(browser, options) {
               nextActionRect.left >= microstateRect.left - 1 &&
               nextActionRect.right <= microstateRect.right + 1,
           ),
+          flowLinked: root?.getAttribute('data-workspace-context-flow') === 'linked',
+          flowConnectorVisible: Boolean(
+            microstateFlowStyle &&
+              microstateFlowStyle.content !== 'none' &&
+              Number.parseFloat(microstateFlowStyle.height) >= 10 &&
+              Number.parseFloat(microstateFlowStyle.width) >= 1,
+          ),
           cardCount: cards.length,
           contextWidth: contextRect?.width ?? 0,
           cardsInsideContext: cards.every(
@@ -231,6 +248,11 @@ async function assertContextSignals(browser, options) {
             (cards[0].borderColor !== cards[1].borderColor ||
               cards[0].backgroundColor !== cards[1].backgroundColor ||
               cards[0].boxShadow !== cards[1].boxShadow),
+          firstCardFlowLinked:
+            cards.length > 0 &&
+            cards[0].flowMarker.content !== 'none' &&
+            cards[0].flowMarker.width >= 8 &&
+            cards[0].flowMarker.height >= 8,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
             document.body.scrollWidth > document.body.clientWidth + 1,
@@ -250,6 +272,9 @@ async function assertContextSignals(browser, options) {
       }
       if (!evidence.nextActionVisible) {
         throw new Error(`${options.label}/${target.screen}: route-next-action is niet zichtbaar.`);
+      }
+      if (!evidence.flowLinked || !evidence.flowConnectorVisible || !evidence.firstCardFlowLinked) {
+        throw new Error(`${options.label}/${target.screen}: contextflow is niet zichtbaar gekoppeld.`);
       }
       if (!evidence.cardsInsideContext || evidence.contextWidth <= 0) {
         throw new Error(`${options.label}/${target.screen}: contextkaarten vallen buiten de contextkolom.`);

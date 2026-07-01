@@ -4118,6 +4118,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, context signal styles, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 37
+- **Status:** ☑ done
+
+### G1237 — contextkolom flowstates verfijnen met route-eigen accentbalans
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De contextkolom toont nu een flow van microstate naar eerste signaalkaart, maar alle routes gebruiken nog dezelfde accentbalans.
+- **User Impact:** Gebruikers zien de flow, maar domeinen kunnen nog visueel te gelijk aanvoelen terwijl hun taken verschillen.
+- **Desired Outcome:** Verfijn de contextflow met subtiele route- of domeineigen accentbalans zonder een druk of kleurrijk dashboard te maken.
+- **User Value:** Gebruikers herkennen sneller het domein en de actieve taak, terwijl de app rustig en premium blijft.
+- **Acceptance Criteria:** Minimaal zes contextkolommen tonen subtiel herkenbare accentbalans per domein of route; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Context signal styles, design tokens, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 36
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
