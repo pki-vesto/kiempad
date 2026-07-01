@@ -1369,11 +1369,11 @@ function renderEventLogFocusShell(input: { workbench: string; workspace: string 
         <h2 id="eventlog-focus-shell-title">Eerst auditstatus scannen, daarna privacyregels openen</h2>
         <p>Opslagmodus, recente gebeurtenissen, categorieën en privacyregels blijven in één auditruimte zonder gevoelige details direct uit te klappen.</p>
       </header>
-      <div class="eventlog-focus-shell__body">
-        <div class="eventlog-focus-shell__workbench" data-eventlog-focus-region="workbench">
+      <div class="eventlog-focus-shell__body" data-eventlog-console="ready">
+        <div class="eventlog-focus-shell__workbench" data-eventlog-focus-region="workbench" data-eventlog-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="eventlog-focus-shell__workspace" data-eventlog-focus-region="workspace">
+        <div class="eventlog-focus-shell__workspace" data-eventlog-focus-region="workspace" data-eventlog-console-region="workspace">
           ${input.workspace}
         </div>
       </div>
