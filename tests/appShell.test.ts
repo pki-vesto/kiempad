@@ -35635,8 +35635,13 @@ describe('app shell', () => {
     expect(css).toContain('.decision-focus-shell {');
     expect(css).toContain('.decision-focus-shell__header {');
     expect(css).toContain('.decision-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.decision-focus-shell__workbench > .decision-insight-workbench {');
     expect(css).toContain('.decision-focus-shell__workspace {');
+    expect(css).toContain('.decision-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('"rail context";');
     expect(css).toContain('.insight-workbench {');
     expect(css).toContain('[data-wellbeing-first-viewport="insight-workbench"]');
     expect(css).toContain('[data-decision-first-viewport="insight-workbench"]');
@@ -36668,9 +36673,12 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack decision-command-layout"');
     expect(html).toContain('class="decision-focus-shell"');
     expect(html).toContain('data-decision-focus-shell="ready"');
+    expect(html).toContain('data-decision-console="ready"');
     expect(html).toContain('Eerst opties structureren, daarna keuze vastleggen');
     expect(html).toContain('data-decision-focus-region="workbench"');
     expect(html).toContain('data-decision-focus-region="workspace"');
+    expect(html).toContain('data-decision-console-region="workbench"');
+    expect(html).toContain('data-decision-console-region="workspace"');
     expect(html).toContain(
       '<section class="insight-workbench decision-insight-workbench" aria-label="Besliswerkbank" data-decision-first-viewport="insight-workbench">',
     );
@@ -37823,8 +37831,11 @@ describe('app shell', () => {
     expect(afwegingenHtml).toContain('class="domain-split-workspace decision-split-workspace"');
     expect(afwegingenHtml).toContain('class="decision-focus-shell"');
     expect(afwegingenHtml).toContain('data-decision-focus-shell="ready"');
+    expect(afwegingenHtml).toContain('data-decision-console="ready"');
     expect(afwegingenHtml).toContain('data-decision-focus-region="workbench"');
     expect(afwegingenHtml).toContain('data-decision-focus-region="workspace"');
+    expect(afwegingenHtml).toContain('data-decision-console-region="workbench"');
+    expect(afwegingenHtml).toContain('data-decision-console-region="workspace"');
     expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
     expect(afwegingenHtml).toContain('data-workspace-context-signals="decision"');
     expect(afwegingenHtml).toContain('data-workspace-context-microstate="decision-choice"');

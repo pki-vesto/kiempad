@@ -1786,11 +1786,11 @@ function renderDecisionFocusShell(input: { workbench: string; workspace: string 
         <h2 id="decision-focus-shell-title">Eerst opties structureren, daarna keuze vastleggen</h2>
         <p>Voorbereiden, vergelijken, kiezen en teruglezen blijven in één beslisruimte zonder score, voorkeur of behandeladvies.</p>
       </header>
-      <div class="decision-focus-shell__body">
-        <div class="decision-focus-shell__workbench" data-decision-focus-region="workbench">
+      <div class="decision-focus-shell__body" data-decision-console="ready">
+        <div class="decision-focus-shell__workbench" data-decision-focus-region="workbench" data-decision-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="decision-focus-shell__workspace" data-decision-focus-region="workspace">
+        <div class="decision-focus-shell__workspace" data-decision-focus-region="workspace" data-decision-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

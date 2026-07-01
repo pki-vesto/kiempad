@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1305 — Premium Claude Design UI: Afwegingen als compacte decision-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Afwegingen had al een besliswerkbank en split-workspace, maar kon op desktop nog als gestapelde beslispagina met krappe route/contextweergave lezen.
+- **Desired Outcome:** Maak Afwegingen op desktop een begrensde decision-console met besliswerkbank, taakroute-rail, actieve keuzewerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan voorbereiden, vergelijken, kiezen en teruglezen rustig scannen zonder door één lange beslispagina te scrollen.
+- **Acceptance Criteria:** Afwegingen rendert `data-decision-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de besliswerkbank start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; route-labels blijven leesbaar zonder woordbreuk; mobiel behoudt de bestaande éénkoloms flow; split-workspace en context-signals smokes blijven groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2385
+
 ### G1304 — Premium Claude Design UI: Welzijn als compacte wellbeing-console
 
 - **Epic:** Onboarding & Daily Use
