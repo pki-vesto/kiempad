@@ -658,7 +658,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   met actieve werkruimtegroep, zusterschermen en snelle routes naar Start, Dossier en
   Tijdlijn. De dossieruploadroute toont vóór de formulier-intake een compacte
   upload-triage voor document, consult, beeld/embryo en lokale OCR/review, zodat de
-  uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. Het
+  uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. De centrale
+  fertility timeline in Traject toont vóór filter, export en itemlijst een compacte
+  leesmodus voor gebeurtenissen, mijlpalen, contextcontrole en consult-export. Het
   startscherm opent zonder generieke werkruimte-context met een
   compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
   gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn

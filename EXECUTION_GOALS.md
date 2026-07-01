@@ -4432,6 +4432,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2285
 - **Status:** ☑ done
 
+### G1256 — timeline-leesmodus in trajectcontext toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De centrale fertility timeline heeft filters, overzichtslinks, mijlpalen en export, maar opent nog te veel als een technische timeline-lijst in plaats van als rustige leesruimte.
+- **User Impact:** Gebruikers moeten eerst door filtervelden, export en lijststructuur scannen voordat duidelijk is of zij gebeurtenissen, mijlpalen, ontbrekende context of consultvoorbereiding nodig hebben.
+- **Desired Outcome:** Toon boven de fertility timeline een compacte leesmodus met vier taaklanes voor gebeurtenissen, mijlpalen, contextcontrole en consult-export.
+- **User Value:** Gebruikers kiezen eerst hoe zij hun traject willen lezen, waardoor de timeline minder als administratie en meer als begrijpelijke trajectreconstructie voelt.
+- **Acceptance Criteria:** Trajectcontext toont `data-fertility-timeline-reader="ready"` vóór de timelinefilter; lanes linken naar bestaande timeline-items, mijlpalen, context en export; bestaande filterform, timeline-items, mijlpaalpanelen, contextsignalen, export en routeankers blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt `#traject?route=context`; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayloads, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Traject, fertility timeline, consultvoorbereiding
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Treatment UI, timeline components, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 17
+- **GitHub Issue:** #2287
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

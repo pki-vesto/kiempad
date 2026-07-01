@@ -1421,6 +1421,14 @@ function extractFertilityTimelineSection(html: string): string {
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
+function extractFertilityTimelineReader(html: string): string {
+  const match = html.match(
+    /<section class="fertility-timeline-reader" aria-label="Timeline leesmodus"[\s\S]*?<\/section>/,
+  );
+  if (!match?.[0]) throw new Error('Fertility timeline leesmodus ontbreekt.');
+  return match[0].replace(/\s+/g, ' ').trim();
+}
+
 function extractFertilityTimelineItems(html: string): string {
   const start = html.indexOf('<ol id="fertility-timeline-items"');
   const end = html.indexOf('<p class="small-print">', start);
@@ -3515,6 +3523,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Knowledge graph');
+    const timelineReader = extractFertilityTimelineReader(html);
     expect(html).toContain(
       '<section class="treatment-workbench" aria-label="Behandelwerkbank" data-treatment-first-viewport="workbench">',
     );
@@ -3548,6 +3557,27 @@ describe('app shell', () => {
     expect(html).toContain('name="timelineEigenaar"');
     expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
+    expect(timelineReader).toContain('data-fertility-timeline-reader="ready"');
+    expect(timelineReader).toContain('Kies eerst je tijdlijnlaag');
+    expect(timelineReader).toContain('data-fertility-timeline-lane="events"');
+    expect(timelineReader).toContain('data-fertility-timeline-lane="milestones"');
+    expect(timelineReader).toContain('data-fertility-timeline-lane="context"');
+    expect(timelineReader).toContain('data-fertility-timeline-lane="export"');
+    expect(timelineReader).toContain('href="#fertility-timeline-items"');
+    expect(timelineReader).toContain('href="#fertility-timeline-mijlpalen"');
+    expect(timelineReader).toContain('href="#fertility-timeline-context"');
+    expect(timelineReader).toContain('href="#fertility-timeline-export"');
+    expect(timelineReader).toContain('Gebeurtenissen');
+    expect(timelineReader).toContain('Mijlpalen');
+    expect(timelineReader).toContain('Context');
+    expect(timelineReader).toContain('Consult');
+    expect(timelineReader).toContain('1 item');
+    expect(timelineReader).toContain('Export klaar');
+    expect(timelineReader).not.toContain('base64');
+    expect(timelineReader).not.toMatch(/diagnose|dosering|behandelkeuzeadvies|OCR-payload/i);
+    expect(html.indexOf('data-fertility-timeline-reader="ready"')).toBeLessThan(
+      html.indexOf('id="timeline-filter-form"'),
+    );
     expect(html).toContain('class="timeline-overview-bar" aria-label="Timeline overzicht"');
     expect(html).toContain('href="#fertility-timeline-items"');
     expect(html).toContain('href="#fertility-timeline-mijlpalen"');
@@ -3664,6 +3694,17 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-workbench :where(.stat) {');
     expect(css).toContain('flex: 0 0 88px;');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('.fertility-timeline-reader {');
+    expect(css).toContain('.fertility-timeline-reader__header {');
+    expect(css).toContain('.fertility-timeline-reader__lanes {');
+    expect(css).toContain('.fertility-timeline-reader__lane {');
+    expect(css).toContain('.fertility-timeline-reader__lane:hover,');
+    expect(css).toContain('.fertility-timeline-reader__lane:focus-visible {');
+    expect(css).toContain('.fertility-timeline-reader__lane em {');
+    expect(css).toContain('@media (max-width: 720px)');
+    expect(css).toContain('.fertility-timeline-reader__lanes {');
+    expect(css).toContain('scroll-snap-type: x proximity;');
+    expect(css).toContain('flex: 0 0 min(236px, 78vw);');
   });
 
   it('bewaakt knowledge graph relationship states met lege graph, gemengde relaties en veilige bronpaden', () => {

@@ -16774,6 +16774,7 @@ function renderFertilityTimeline(
     <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline" data-timeline-state="${timeline.items.length > 0 ? 'gevuld' : 'leeg'}">
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research ${bronBeschrijving}.</p>
+      ${renderFertilityTimelineReaderModes(timeline, Boolean(trajectExport))}
       ${renderFertilityTimelineMobielOverzicht(timeline)}
       ${renderFertilityTimelineFilterForm(filter)}
       ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
@@ -16794,6 +16795,76 @@ function renderFertilityTimeline(
           : '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
       }
       <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+    </section>
+  `;
+}
+
+function renderFertilityTimelineReaderModes(
+  timeline: FertilityTimeline,
+  hasExport: boolean,
+): string {
+  const reviewCount = timeline.items.filter(
+    (item) => item.historischConcept?.reviewStatus === 'concept',
+  ).length;
+  const lanes = [
+    {
+      id: 'events',
+      href: '#fertility-timeline-items',
+      label: 'Gebeurtenissen',
+      title: `${timeline.items.length} item${timeline.items.length === 1 ? '' : 's'}`,
+      detail: 'Onderzoeken, consulten en behandelingen in volgorde.',
+      cue: reviewCount > 0 ? `${reviewCount} conceptreview` : 'Timeline klaar',
+    },
+    {
+      id: 'milestones',
+      href: '#fertility-timeline-mijlpalen',
+      label: 'Mijlpalen',
+      title: `${timeline.mijlpalen.length} mijlpaal${timeline.mijlpalen.length === 1 ? '' : 'palen'}`,
+      detail: 'Belangrijke momenten zonder door alle records te bladeren.',
+      cue: 'Snel scannen',
+    },
+    {
+      id: 'context',
+      href: '#fertility-timeline-context',
+      label: 'Context',
+      title: `${timeline.contextSignalen.length} signaal${timeline.contextSignalen.length === 1 ? '' : 'en'}`,
+      detail: 'Ontbrekende koppelingen of reviewpunten apart bekijken.',
+      cue: timeline.contextSignalen.length > 0 ? 'Aanvullen' : 'Geen gaten',
+    },
+    {
+      id: 'export',
+      href: '#fertility-timeline-export',
+      label: 'Consult',
+      title: hasExport ? 'Export klaar' : 'Export leeg',
+      detail: 'Gebruik de Markdown-samenvatting alleen voor eigen consultvoorbereiding.',
+      cue: hasExport ? 'MD openen' : 'Wacht op data',
+    },
+  ];
+
+  return `
+    <section class="fertility-timeline-reader" aria-label="Timeline leesmodus" data-fertility-timeline-reader="ready">
+      <header class="fertility-timeline-reader__header">
+        <div>
+          <p class="kp-card__eyebrow">Leesmodus</p>
+          <h3>Kies eerst je tijdlijnlaag</h3>
+        </div>
+        <p>Open de timeline als gebeurtenissen, mijlpalen, contextcontrole of consultvoorbereiding.</p>
+      </header>
+      <nav class="fertility-timeline-reader__lanes" aria-label="Timeline laag kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="fertility-timeline-reader__lane" href="${lane.href}" data-fertility-timeline-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze leesmodus toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of behandeladvies.</p>
     </section>
   `;
 }

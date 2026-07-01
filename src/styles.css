@@ -847,6 +847,113 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+.fertility-timeline-reader {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 6%, transparent), transparent 54%),
+    var(--surface);
+}
+
+.fertility-timeline-reader__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.fertility-timeline-reader__header h3,
+.fertility-timeline-reader__header p {
+  margin: 0;
+}
+
+.fertility-timeline-reader__header h3 {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.fertility-timeline-reader__header > p {
+  max-width: 40ch;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.fertility-timeline-reader__lanes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.fertility-timeline-reader__lane {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 5px;
+  min-width: 0;
+  min-height: 116px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+}
+
+.fertility-timeline-reader__lane:hover,
+.fertility-timeline-reader__lane:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border-strong));
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+  outline: none;
+}
+
+.fertility-timeline-reader__lane span,
+.fertility-timeline-reader__lane strong,
+.fertility-timeline-reader__lane small,
+.fertility-timeline-reader__lane em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fertility-timeline-reader__lane span {
+  width: fit-content;
+  padding: 3px 7px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
+  color: var(--accent-strong);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fertility-timeline-reader__lane strong {
+  font-size: 0.96rem;
+  line-height: 1.24;
+}
+
+.fertility-timeline-reader__lane small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.34;
+}
+
+.fertility-timeline-reader__lane em {
+  align-self: end;
+  color: var(--text-faint);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.25;
+}
+
 .timeline-overview-bar {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -8869,6 +8976,37 @@ a.action-card:active {
 
   .timeline-overview-bar a {
     min-height: 56px;
+  }
+
+  .fertility-timeline-reader {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .fertility-timeline-reader__header {
+    display: grid;
+    gap: 6px;
+  }
+
+  .fertility-timeline-reader__header > p {
+    max-width: none;
+  }
+
+  .fertility-timeline-reader__lanes {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .fertility-timeline-reader__lanes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .fertility-timeline-reader__lane {
+    flex: 0 0 min(236px, 78vw);
+    min-height: 112px;
+    scroll-snap-align: start;
   }
 
   .timeline-export-panel textarea {
