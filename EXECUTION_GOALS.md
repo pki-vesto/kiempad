@@ -4166,6 +4166,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Dossier routes, start hub, recommendation route, timeline route, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 34
+- **Status:** ☑ done
+
+### G1240 — hubroutes verdichten met compacte detailpanelen en lege staten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Upload, tijdlijn en dagadvies hebben nu een herkenbare hubroute-tablaag, maar de onderliggende detailpanelen kunnen nog compacter worden zodat gebruikers minder hoeven te scrollen na het kiezen van een tab.
+- **User Impact:** Gebruikers houden beter overzicht in de gekozen route, maar sommige details nemen nog relatief veel verticale ruimte in wanneer disclosures worden geopend.
+- **Desired Outcome:** Verdicht minimaal drie detailpanelen achter de hubtabs met compacte lege/error/loading-staten, betere disclosure-headers en minder herhaling in microcopy.
+- **User Value:** Gebruikers blijven sneller in taakmodus en hoeven minder door secundaire uitleg te scannen.
+- **Acceptance Criteria:** Minimaal drie detailpanelen achter upload, timeline of dagadvies zijn compacter en duidelijker; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Start, Dossier, Dagadvies
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Hub workflow headers, dossier disclosures, recommendation route, tests, browser smoke
+- **ADR Needed:** no
+- **Score:** 33
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
