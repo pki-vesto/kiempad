@@ -4278,6 +4278,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult card rendering, consult summaries, action points, tests, browser smoke
 - **ADR Needed:** no
 - **Score:** 27
+- **Status:** ☑ done
+
+### G1247 — consultkaart browser-evidence uitbreiden met gevulde fixture
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De gevulde consultkaart is nu intern compacter, maar de browser-smoke bewaakt vooral lege/default routeflows en niet expliciet een gevulde consultkaart met samenvatting en actiepunten.
+- **User Impact:** Regressies in de gevulde consultkaart kunnen visueel terugkeren zonder dat de routeflow-smoke dit direct ziet.
+- **Desired Outcome:** Voeg browser-evidence toe voor een gevulde consultkaart of een representatieve seeded consultstate zodat de compacte consultkaart visueel bewaakt wordt.
+- **User Value:** Gebruikers houden een scanbare consultkaart zodra echte consultdata, samenvattingen en actiepunten aanwezig zijn.
+- **Acceptance Criteria:** Desktop/mobile browsercheck bewijst een gevulde consultkaart met compacte header, statuschips en secties; bestaande routeflow-smoke, consultrecord-rendering, privacyhooks en tests blijven werken; geen transcripttekst, medische payload, bestandsinhoud, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossier imaging, Consult intelligence
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Routeflow smoke, seeded browser state, consult cards, tests
+- **ADR Needed:** no
+- **Score:** 26
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

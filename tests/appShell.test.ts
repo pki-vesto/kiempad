@@ -5052,7 +5052,8 @@ describe('app shell', () => {
     expect(html).toContain('Traject: Poging 1');
     expect(html).toContain('Notitie: Historisch onderzoek');
     expect(html).toContain('Intakegesprek verslag');
-    expect(html).toContain('Consultdatum: 2026-05-01 · Handmatig');
+    expect(html).toContain('Consultdatum: 2026-05-01');
+    expect(html).toContain('class="linked-note consult-card__metadata">Handmatig');
     expect(html).toContain('Import: Tekstveld consultnotitie · review concept');
     expect(html).toContain('Afgesproken om bloeduitslagen mee te nemen.');
     expect(html).toContain('Conceptsamenvatting');
@@ -7276,9 +7277,20 @@ describe('app shell', () => {
     expect(html).toContain('data-hub-detail-panel="consult-verslagen"');
     expect(html).toContain('Gesprekken, actiepunten en bronreview');
     expect(html).toContain('<em>1 verslagen</em>');
+    expect(section).toContain('data-consult-card="compact"');
+    expect(section).toContain('class="consult-card__header"');
+    expect(section).toContain('aria-label="Consultstatus"');
+    expect(section).toContain('8 metadata');
+    expect(section).toContain('samenvatting');
+    expect(section).toContain('1 actiepunt');
+    expect(section).toContain('data-consult-card-section="tekst"');
+    expect(section).toContain('data-consult-card-section="samenvatting"');
+    expect(section).toContain('data-consult-card-section="actiepunten"');
+    expect(section).toContain('data-consult-card-section="correctieverschil"');
     expect(section).toContain('Consult review state');
+    expect(section).toContain('Consultdatum: 2026-05-08');
     expect(section).toContain(
-      'Consultdatum: 2026-05-08 · Upload · consult-review-state.pdf · 4 KB',
+      'class="linked-note consult-card__metadata">Upload · consult-review-state.pdf · 4 KB',
     );
     expect(section).toContain('Import: PDF consultverslag · review concept');
     expect(section).toContain('Afspraak: Evaluatiegesprek');
