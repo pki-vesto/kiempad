@@ -2689,6 +2689,16 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
+    expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-strip,');
+    expect(css).toContain(
+      '.content:has([data-notification-focus-shell="ready"]) > .workspace-strip {',
+    );
+    expect(css).toContain(
+      '.content:has([data-start-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,',
+    );
+    expect(css).toContain(
+      '.content:has([data-notification-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick {',
+    );
     expect(css).toContain('.workspace-map {');
     expect(css).toContain('.workspace-map__grid {');
     expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');

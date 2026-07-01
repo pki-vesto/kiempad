@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1283 — Premium Claude Design UI: compacte focusroute workspace-strip
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Focusroutes hielden de workspace-strip zichtbaar, maar met beschrijving en snelle duplicaatlinks nam die strip nog te veel eerste-viewport ruimte in.
+- **Desired Outcome:** Houd de workspace-strip zichtbaar als context, maar maak hem compact op focusroutes door beschrijving en quick-links te verbergen.
+- **User Value:** De gebruiker behoudt oriëntatie en routewissel, terwijl de taakgerichte focusruimte sneller in beeld komt.
+- **Acceptance Criteria:** Focus-shell routes stylen de workspace-strip compact; beschrijving en quick-links nemen geen zichtbare ruimte in; routeflow- en split-workspace-smokes bewaken dit; app-shell tests bewaken de CSS; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `scripts/split-workspace-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2341
+
 ### G1282 — Premium Claude Design UI: compacte topbar chrome
 
 - **Epic:** Onboarding & Daily Use
