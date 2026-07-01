@@ -9421,6 +9421,47 @@ a.action-card:active {
   padding: 7px 8px;
 }
 
+@media (min-width: 961px) {
+  .dossier-focus-shell:has(#dossier-route-upload[data-dossier-route-state="active"])
+    .dossier-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .dossier-focus-shell:has(#dossier-route-upload[data-dossier-route-state="active"])
+    .dossier-focus-shell__orientation,
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+    .domain-split-workspace__rail,
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+    .domain-split-workspace__context {
+    display: none;
+  }
+
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+    #dossier-route-upload {
+    display: grid;
+    gap: 10px;
+  }
+
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+    #dossier-route-upload
+    > .hub-workflow-header,
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+    #dossier-route-upload
+    > .command-route-summary {
+    display: none;
+  }
+}
+
 .dossier-route-stage {
   display: grid;
   gap: 12px;
@@ -10282,6 +10323,61 @@ a.action-card:active {
   box-shadow: var(--shadow-soft);
 }
 
+.dossier-upload-console {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.dossier-upload-console__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+}
+
+.dossier-upload-console__header h3,
+.dossier-upload-console__header p {
+  margin: 0;
+}
+
+.dossier-upload-console__header h3 {
+  color: var(--text);
+  font-size: 1.1rem;
+  line-height: 1.18;
+}
+
+.dossier-upload-console__header p:last-child {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.dossier-upload-console__header > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.dossier-upload-console__body {
+  min-width: 0;
+}
+
 .dossier-add-route:focus-visible {
   border-color: var(--accent);
   box-shadow:
@@ -10747,6 +10843,10 @@ a.action-card:active {
 }
 
 @media (max-width: 720px) {
+  .dossier-upload-console .dossier-add-route-selector {
+    grid-template-columns: 1fr;
+  }
+
   .dossier-add-route-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -10792,6 +10892,10 @@ a.action-card:active {
 }
 
 @media (max-width: 420px) {
+  .dossier-upload-console .dossier-add-route-selector {
+    grid-template-columns: 1fr;
+  }
+
   .dossier-add-route-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
@@ -10824,10 +10928,19 @@ a.action-card:active {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .dossier-upload-console .dossier-add-route strong,
+  .dossier-upload-console .dossier-add-route span,
+  .dossier-upload-console .dossier-add-route small {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: initial;
+    white-space: normal;
+  }
 }
 
 @media (min-width: 961px) {
-  .dossier-upload-console[open] > .kp-disclosure__body {
+  .dossier-upload-console__body {
     display: grid;
     grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
     grid-template-areas:
@@ -10842,6 +10955,10 @@ a.action-card:active {
     scrollbar-width: thin;
   }
 
+  .dossier-upload-console__header p:last-child {
+    display: none;
+  }
+
   .dossier-upload-console .dossier-add-route-selector {
     grid-area: selector;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -10854,6 +10971,7 @@ a.action-card:active {
   .dossier-upload-console [data-dossier-add-route-panel="dossier-upload"],
   .dossier-upload-console [data-dossier-add-route-panel="consult-upload"],
   .dossier-upload-console #dossier-route-review {
+    height: min(560px, calc(100vh - 386px));
     max-height: min(560px, calc(100vh - 386px));
     overflow-y: auto;
     scrollbar-gutter: stable;
@@ -13827,6 +13945,15 @@ a.action-card:active {
 
   .timeline-export-panel textarea {
     min-height: 220px;
+  }
+}
+
+@media (min-width: 961px) {
+  .dossier-focus-shell__workspace
+    .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+    #dossier-route-upload
+    > .dossier-upload-triage {
+    display: none;
   }
 }
 

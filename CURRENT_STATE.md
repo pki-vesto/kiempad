@@ -451,6 +451,11 @@
   zonder Start-launchpad. Planning/volgende stap, dagcommand en snelle invoer staan
   in aparte werkvlakken met eigen scrollgedrag, zodat dagelijkse taken niet als
   onderdeel van één lange Startpagina hoeven te lezen.
+- **G1316 Directe upload-intake:** `#dossier?route=upload` opent de dossierintake nu
+  als directe console. Op desktop verdwijnen routekaart, taakrail en contextkolom
+  voor deze route, zodat documentupload en consultupload breed naast elkaar starten
+  met eigen scrollgedrag in plaats van achter een extra disclosure of smalle
+  routekolom.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

@@ -238,7 +238,7 @@ function expectDossierLandingCueParity(css: string, expectedDeclarations: readon
 }
 
 function extractDossierAddRoutePanel(html: string, panelId: string): string {
-  const marker = `<section class="dossier-add-route-panel" data-dossier-add-route-panel="${panelId}">`;
+  const marker = `<section class="dossier-add-route-panel" data-dossier-add-route-panel="${panelId}"`;
   const start = html.indexOf(marker);
   if (start < 0) throw new Error(`Toevoegroutepaneel ontbreekt: ${panelId}.`);
   const tagPattern = /<\/?section\b[^>]*>/g;
@@ -6827,7 +6827,9 @@ describe('app shell', () => {
       '.dossier-focus-shell__orientation .dossier-route-stage__header p:last-child {',
     );
     expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-snapshot {');
-    expect(css).toContain('.dossier-upload-console[open] > .kp-disclosure__body {');
+    expect(css).toContain('.dossier-upload-console {');
+    expect(css).toContain('.dossier-upload-console__header {');
+    expect(css).toContain('.dossier-upload-console__body {');
     expect(css).toContain('"document consult"');
     expect(css).toContain('max-height: min(760px, calc(100vh - 238px));');
     expect(css).toContain(
@@ -7319,6 +7321,16 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Upload &amp; review');
     expect(emptyHtml).toContain('id="dossier-route-upload"');
     expect(emptyHtml).toContain('data-dossier-upload-console="ready"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-region="header"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-region="body"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-region="selector"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-region="document"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-region="consult"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-region="review"');
+    expect(emptyHtml).toContain('class="dossier-upload-console"');
+    expect(emptyHtml).not.toContain(
+      'class="kp-disclosure hub-detail-disclosure dossier-upload-console"',
+    );
     expect(emptyHtml).toContain('data-dossier-route="upload"');
     expect(emptyHtml).toContain('id="dossier-route-review"');
     expect(emptyHtml).toContain('data-dossier-route="review"');
@@ -7343,8 +7355,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-hub-workflow-tab="consult"');
     expect(emptyHtml).toContain('Verslag vastleggen');
     expect(emptyHtml).toContain('data-hub-detail-panel="upload-intake"');
-    expect(emptyHtml).toContain('Document, consult, labkwaliteit of embryostatus');
-    expect(emptyHtml).toContain('<em>0 records</em>');
+    expect(emptyHtml).toContain('Intake-console');
+    expect(emptyHtml).toContain('Document, consult, labkwaliteit en embryostatus');
+    expect(emptyHtml).toContain('<span>0 records</span>');
     expect(emptyHtml).toContain('aria-label="Dossier upload route-samenvatting"');
     expect(emptyHtml).toContain('data-dossier-route-summary="upload"');
     expect(emptyHtml).toContain('Eerst uploaden, daarna pas reviewen');
