@@ -1697,7 +1697,7 @@ describe('app shell', () => {
     expect(html).toContain('Afspraken');
   });
 
-  it('groepeert navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
+  it('groepeert primaire navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
     const html = renderAppShell('vragen');
 
     expect(html).toContain('class="primary-nav__group" data-nav-group-active="true"');
@@ -1706,11 +1706,7 @@ describe('app shell', () => {
     expect(html).toContain('<p class="primary-nav__title">Dossier</p>');
     expect(html).toContain('<p class="primary-nav__title">Inzicht</p>');
     expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
-    expect(html).toContain('<section class="workspace-context" aria-label="Actieve werkruimte">');
-    expect(html).toContain('<p class="workspace-context__eyebrow">Werkruimte</p>');
-    expect(html).toContain('<h2>Behandeling</h2>');
-    expect(html).toContain('Traject, medicatie en vragen voor de arts');
-    expect(html).toContain('aria-label="Schermen binnen Behandeling"');
+    expect(html).toContain('data-question-first-viewport="consult-workbench"');
   });
 
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
@@ -1725,6 +1721,7 @@ describe('app shell', () => {
     const logboekHtml = renderAppShell('logboek');
     const agendaHtml = renderAppShell('agenda');
     const medicatieHtml = renderAppShell('medicatie');
+    const vragenHtml = renderAppShell('vragen');
 
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1770,6 +1767,10 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(medicatieHtml).toContain('data-medication-first-viewport="planning-workbench"');
+    expect(vragenHtml).not.toContain(
+      '<section class="workspace-context" aria-label="Actieve werkruimte">',
+    );
+    expect(vragenHtml).toContain('data-question-first-viewport="consult-workbench"');
   });
 
   it('bewaakt beheer, systeem en planning workbenches als eerste-viewport laag', () => {
@@ -1803,11 +1804,13 @@ describe('app shell', () => {
     expect(css).toContain('.planning-workbench {');
     expect(css).toContain('[data-schedule-first-viewport="planning-workbench"]');
     expect(css).toContain('[data-medication-first-viewport="planning-workbench"]');
+    expect(css).toContain('[data-question-first-viewport="consult-workbench"]');
     expect(css).toContain('.planning-workbench__header {');
     expect(css).toContain('.planning-workbench__grid {');
     expect(css).toContain('.planning-workbench__actions {');
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
+    expect(css).toContain('.question-task-routes {');
     expect(css).toContain('.planning-workbench :where(.stat-row) {');
     expect(css).toContain('.planning-workbench :where(.stat) {');
   });
@@ -4463,6 +4466,17 @@ describe('app shell', () => {
 
     expect(html).toContain('Wat is de volgende stap?');
     expect(html).toContain('class="section-stack question-command-layout"');
+    expect(html).toContain(
+      '<section class="planning-workbench question-preparation-workbench" aria-label="Consultvoorbereidingswerkbank" data-question-first-viewport="consult-workbench">',
+    );
+    expect(html).toContain('Open vragen, afspraak en prioriteit eerst');
+    expect(html).toContain('Volgend gesprek');
+    expect(html).toContain('Consult: 2099-06-24 09:00');
+    expect(html).toContain('Hoogste prioriteit 1 · 1 open vraag');
+    expect(html).toContain('aria-label="Vragen werkbank acties"');
+    expect(html).toContain('href="#vragen?route=open"');
+    expect(html).toContain('href="#vragen?route=voorbereiden"');
+    expect(html).toContain('href="#vragen?route=beheer"');
     expect(html).toContain('class="question-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Vragen taakroutes"');
     expect(html).toContain('data-question-task-routes="ready"');

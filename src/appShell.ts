@@ -999,7 +999,8 @@ function renderWorkspaceContext(activeId: ScreenId): string {
     activeId === 'herinneringen' ||
     activeId === 'logboek' ||
     activeId === 'agenda' ||
-    activeId === 'medicatie'
+    activeId === 'medicatie' ||
+    activeId === 'vragen'
   )
     return '';
 
@@ -11675,6 +11676,14 @@ function renderVragenScreen(state: AppShellState): string {
 
   return sectionStack(
     [
+      renderQuestionPreparationWorkbench({
+        openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+        totalCount: state.vragen.length,
+        answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
+        verslagCount: vraagVerslagen.length,
+        hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+        nextWithQuestions,
+      }),
       renderQuestionTaskRoutes({
         openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
         totalCount: state.vragen.length,
@@ -11750,6 +11759,68 @@ function renderVragenScreen(state: AppShellState): string {
     ],
     { className: 'question-command-layout', ariaLabel: 'Vragen voor de arts beheren' },
   );
+}
+
+function renderQuestionPreparationWorkbench(input: {
+  openCount: number;
+  totalCount: number;
+  answeredCount: number;
+  verslagCount: number;
+  hasPrepPacket: boolean;
+  nextWithQuestions: ReturnType<typeof volgendeAfspraakMetOpenVragen>;
+}): string {
+  const priorityQuestion = input.nextWithQuestions?.vragen
+    .slice()
+    .sort(
+      (a, b) =>
+        (a.prioriteit ?? Number.MAX_SAFE_INTEGER) - (b.prioriteit ?? Number.MAX_SAFE_INTEGER),
+    )[0];
+  const focus = input.nextWithQuestions
+    ? `${input.nextWithQuestions.afspraak.titel}: ${formatDateTime(input.nextWithQuestions.afspraak.datumTijd)}`
+    : 'Nog geen afspraak met open vragen.';
+  const status = input.hasPrepPacket
+    ? 'Prep-packet klaar'
+    : input.openCount > 0
+      ? `${input.openCount} open`
+      : 'Geen open vragen';
+  const context = priorityQuestion
+    ? `Hoogste prioriteit ${priorityQuestion.prioriteit ?? '-'} · ${input.openCount} open vraag${input.openCount === 1 ? '' : 'en'}`
+    : input.totalCount > 0
+      ? `${input.answeredCount} beantwoord · ${input.verslagCount} verslag${input.verslagCount === 1 ? '' : 'en'}`
+      : 'Voeg een vraag toe of koppel vragen aan een komende afspraak.';
+
+  return `
+    <section class="planning-workbench question-preparation-workbench" aria-label="Consultvoorbereidingswerkbank" data-question-first-viewport="consult-workbench">
+      <header class="planning-workbench__header">
+        <div>
+          <p class="kp-card__eyebrow">Consultvoorbereidingswerkbank</p>
+          <h2>Open vragen, afspraak en prioriteit eerst</h2>
+          <p>Start met de volgende afspraak, open vraagstatus en prep-routes zonder door alle vragen of antwoorden te scrollen.</p>
+        </div>
+        <p class="planning-workbench__status">${escapeHtml(status)}</p>
+      </header>
+      <div class="planning-workbench__grid">
+        <section class="planning-workbench__focus" aria-label="Volgende consultvoorbereiding">
+          <p class="kp-card__eyebrow">Volgend gesprek</p>
+          <h3>${escapeHtml(focus)}</h3>
+          <p>${escapeHtml(context)}</p>
+        </section>
+        <div class="planning-workbench__panel">
+          ${statRow([
+            { label: 'Open', value: String(input.openCount) },
+            { label: 'Beantwoord', value: String(input.answeredCount) },
+            { label: 'Verslagen', value: String(input.verslagCount) },
+            { label: 'Prep', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
+          ])}
+          <nav class="planning-workbench__actions" aria-label="Vragen werkbank acties">
+            <a href="#vragen?route=open">Open</a>
+            <a href="#vragen?route=voorbereiden">Voorbereiden</a>
+            <a href="#vragen?route=beheer">Beheer</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderQuestionTaskRoutes(input: {

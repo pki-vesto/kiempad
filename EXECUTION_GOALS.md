@@ -3766,6 +3766,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Question UI, consult preparation, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 41
+- **Status:** ☑ done
+
+### G1215 — first-viewport workbenches consolideren naar gedeelde componenthelper
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Meerdere hoofdschermen hebben nu eigen eerste-viewport werkbanken, maar de markup en CSS-patronen worden nog te vaak per scherm herhaald.
+- **User Impact:** Verdere UI-verbeteringen worden trager en foutgevoeliger, waardoor zichtbare kwaliteit per scherm kan gaan divergeren.
+- **Desired Outcome:** Consolideer de eerste-viewport werkbanken naar een gedeelde renderhelper voor header, focuspaneel, stats en acties.
+- **User Value:** Gebruikers krijgen consistenter gedrag en snellere zichtbare verbeteringen doordat nieuwe schermwerkbanken uit hetzelfde componentpatroon komen.
+- **Acceptance Criteria:** Introduceer een herbruikbare workbench-renderhelper voor header, focuspaneel, stats en acties; migreer minimaal twee bestaande eerste-viewport werkbanken naar de helper zonder zichtbaar kwaliteitsverlies; bestaande data-hooks, aria-labels, route-ankers, form-id's en privacycopy blijven intact; mobile, tablet en desktop tonen geen overlap of horizontale overflow; tests bewaken helperoutput en minimaal twee gemigreerde schermen; geen medische payload, behandeladvies, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Eerste-viewport werkbanken
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, workbench components, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
