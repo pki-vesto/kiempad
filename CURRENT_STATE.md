@@ -423,6 +423,11 @@
   meldingswerkruimte rechts. De workspace gebruikt een hoofdvlak met contextstrip,
   zodat status, privacy, plannen en komende meldingen niet als één lange
   beheerpagina starten.
+- **G1310 Schedule-console:** Agenda toont op desktop een compacte console met
+  dagplanningwerkbank links, taakroute-rail in het midden en actieve
+  planningswerkruimte rechts. De workspace gebruikt een hoofdvlak met contextstrip,
+  zodat overzicht, plannen, ICS-import en historie niet als één lange
+  planningspagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

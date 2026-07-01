@@ -16153,11 +16153,11 @@ function renderScheduleFocusShell(input: { workbench: string; workspace: string 
         <h2 id="schedule-focus-shell-title">Eerst de volgende afspraak, daarna plannen of importeren</h2>
         <p>Overzicht, komende afspraken, plannen, ICS-import en historie blijven in één planningsruimte zonder medische inhoud in contextfeedback.</p>
       </header>
-      <div class="schedule-focus-shell__body">
-        <div class="schedule-focus-shell__workbench" data-schedule-focus-region="workbench">
+      <div class="schedule-focus-shell__body" data-schedule-console="ready">
+        <div class="schedule-focus-shell__workbench" data-schedule-focus-region="workbench" data-schedule-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="schedule-focus-shell__workspace" data-schedule-focus-region="workspace">
+        <div class="schedule-focus-shell__workspace" data-schedule-focus-region="workspace" data-schedule-console-region="workspace">
           ${input.workspace}
         </div>
       </div>
