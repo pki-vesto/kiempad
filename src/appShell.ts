@@ -11321,11 +11321,11 @@ function renderWellbeingFocusShell(input: { workbench: string; workspace: string
         <h2 id="wellbeing-focus-shell-title">Eerst welzijn scannen, daarna teruglezen of vastleggen</h2>
         <p>Overzicht, geschiedenis en invoer blijven in één rustige welzijnsruimte zonder score, diagnose of behandeladvies.</p>
       </header>
-      <div class="wellbeing-focus-shell__body">
-        <div class="wellbeing-focus-shell__workbench" data-wellbeing-focus-region="workbench">
+      <div class="wellbeing-focus-shell__body" data-wellbeing-console="ready">
+        <div class="wellbeing-focus-shell__workbench" data-wellbeing-focus-region="workbench" data-wellbeing-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="wellbeing-focus-shell__workspace" data-wellbeing-focus-region="workspace">
+        <div class="wellbeing-focus-shell__workspace" data-wellbeing-focus-region="workspace" data-wellbeing-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

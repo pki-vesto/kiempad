@@ -35523,9 +35523,12 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack wellbeing-command-layout"');
     expect(html).toContain('class="wellbeing-focus-shell"');
     expect(html).toContain('data-wellbeing-focus-shell="ready"');
+    expect(html).toContain('data-wellbeing-console="ready"');
     expect(html).toContain('Eerst welzijn scannen, daarna teruglezen of vastleggen');
     expect(html).toContain('data-wellbeing-focus-region="workbench"');
     expect(html).toContain('data-wellbeing-focus-region="workspace"');
+    expect(html).toContain('data-wellbeing-console-region="workbench"');
+    expect(html).toContain('data-wellbeing-console-region="workspace"');
     expect(html).toContain(
       '<section class="insight-workbench wellbeing-insight-workbench" aria-label="Inzichtwerkbank welzijn" data-wellbeing-first-viewport="insight-workbench">',
     );
@@ -35622,8 +35625,13 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-focus-shell {');
     expect(css).toContain('.wellbeing-focus-shell__header {');
     expect(css).toContain('.wellbeing-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {');
     expect(css).toContain('.wellbeing-focus-shell__workspace {');
+    expect(css).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('"rail context";');
     expect(css).toContain('.decision-focus-shell {');
     expect(css).toContain('.decision-focus-shell__header {');
     expect(css).toContain('.decision-focus-shell__body {');

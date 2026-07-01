@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1304 — Premium Claude Design UI: Welzijn als compacte wellbeing-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Welzijn had al een inzichtwerkbank en split-workspace, maar kon op desktop nog als gestapelde welzijnspagina met krappe contextkolom lezen.
+- **Desired Outcome:** Maak Welzijn op desktop een begrensde wellbeing-console met inzichtwerkbank, taakroute-rail, actieve welzijnswerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan check-ins, symptomen, cyclusmetingen, trends en vastleggen rustig scannen zonder door één lange welzijnspagina te scrollen.
+- **Acceptance Criteria:** Welzijn rendert `data-wellbeing-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de inzichtwerkbank start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; mobiel behoudt de bestaande éénkoloms flow; routeflow-smoke bewaakt console-geometrie, tekstfit en app-frame body-scroll.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2383
+
 ### G1303 — Premium Claude Design UI: Vragen als compacte consult-console
 
 - **Epic:** Onboarding & Daily Use
