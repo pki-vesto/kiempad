@@ -12321,10 +12321,18 @@ a.action-card:active {
 
   .daily-advice-focus-shell {
     gap: 12px;
-    padding: 0;
+    padding: 0 6px 0 2px;
     border: 0;
     background: transparent;
     box-shadow: none;
+    max-height: min(680px, calc(100vh - 164px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .daily-advice-focus-shell::-webkit-scrollbar {
+    width: 0;
   }
 
   .daily-advice-focus-shell__header h2 {

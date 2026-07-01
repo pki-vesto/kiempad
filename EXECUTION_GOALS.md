@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1319 — Premium Claude Design UI: Dagadvies mobiel als compacte adviesconsole
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** `#start-recommendations` opende op mobiel nog als een verticale stapel met workflow, eigenaarwerkbank, actieplanner en lijst volledig onder elkaar.
+- **Desired Outcome:** Begrens Dagadvies op mobiel als compacte scrollbare adviesconsole, terwijl desktop de bestaande gescheiden werkvlakken behoudt.
+- **User Value:** De gebruiker kan dagelijkse aanbevelingen scannen zonder dat Dagadvies als lange aanbevelingenpagina voelt.
+- **Acceptance Criteria:** Mobiele Dagadvies-route rendert `data-daily-advice-focus-shell="ready"` als scrollbaar vlak met `max-height`; workflow, workbench, planner en lijst blijven aanwezig; desktop houdt de bestaande grid en afzonderlijke scrollvlakken; routeflow-smoke en Playwright screenshots bewaken geen tekstoverflow.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`, `scripts/routeflow-screenshot-smoke.mjs`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2413
+
 ### G1318 — Premium Claude Design UI: Start mobiel als compacte route-ingang
 
 - **Epic:** Onboarding & Daily Use
