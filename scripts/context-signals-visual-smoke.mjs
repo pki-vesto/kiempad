@@ -145,6 +145,11 @@ async function assertContextSignals(browser, options) {
           `[data-workspace-context-microstate="${microstate}"]`,
         );
         const microstateRect = microstateElement?.getBoundingClientRect();
+        const nextActionElement = microstateElement?.querySelector('b');
+        const nextActionRect = nextActionElement?.getBoundingClientRect();
+        const nextActionAttribute = microstateElement?.getAttribute(
+          'data-workspace-context-next-action',
+        );
         const cards = [...(root?.querySelectorAll('.workspace-context-signal') ?? [])].map(
           (element) => {
             const rect = element.getBoundingClientRect();
@@ -186,12 +191,21 @@ async function assertContextSignals(browser, options) {
               microstateRect.right <= contextRect.right + 1,
           ),
           microstateTextFits: microstateElement
-            ? [...microstateElement.querySelectorAll('span, strong, em')].every(
+            ? [...microstateElement.querySelectorAll('span, strong, em, b')].every(
                 (node) =>
                   node.scrollWidth <= node.clientWidth + 1 &&
                   node.scrollHeight <= node.clientHeight + 24,
               )
             : false,
+          nextActionVisible: Boolean(
+            nextActionAttribute &&
+            nextActionRect &&
+              nextActionRect.width > 0 &&
+              nextActionRect.height > 0 &&
+              microstateRect &&
+              nextActionRect.left >= microstateRect.left - 1 &&
+              nextActionRect.right <= microstateRect.right + 1,
+          ),
           cardCount: cards.length,
           contextWidth: contextRect?.width ?? 0,
           cardsInsideContext: cards.every(
@@ -233,6 +247,9 @@ async function assertContextSignals(browser, options) {
       }
       if (!evidence.microstateVisible || !evidence.microstateTextFits) {
         throw new Error(`${options.label}/${target.screen}: route-microstate is niet zichtbaar of past niet.`);
+      }
+      if (!evidence.nextActionVisible) {
+        throw new Error(`${options.label}/${target.screen}: route-next-action is niet zichtbaar.`);
       }
       if (!evidence.cardsInsideContext || evidence.contextWidth <= 0) {
         throw new Error(`${options.label}/${target.screen}: contextkaarten vallen buiten de contextkolom.`);

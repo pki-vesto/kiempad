@@ -60,6 +60,8 @@ describe('context signals visual smoke script', () => {
     expect(contextSignalsVisualSmokeScript).toContain('cardsInsideContext');
     expect(contextSignalsVisualSmokeScript).toContain('microstateVisible');
     expect(contextSignalsVisualSmokeScript).toContain('microstateTextFits');
+    expect(contextSignalsVisualSmokeScript).toContain('nextActionVisible');
+    expect(contextSignalsVisualSmokeScript).toContain('data-workspace-context-next-action');
     expect(contextSignalsVisualSmokeScript).toContain('textFits');
     expect(contextSignalsVisualSmokeScript).toContain('actionTargets');
     expect(contextSignalsVisualSmokeScript).toContain('firstCardPrioritized');

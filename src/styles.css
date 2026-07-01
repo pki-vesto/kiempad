@@ -3633,6 +3633,22 @@ h2 {
   overflow-wrap: anywhere;
 }
 
+.workspace-context-signals__microstate b {
+  grid-column: 1 / -1;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 2px;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-raised) 82%, var(--accent) 8%);
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
 .workspace-context-signals__list {
   display: grid;
   gap: 9px;
@@ -7249,6 +7265,11 @@ a.action-card:active {
 
   .workspace-context-signals__microstate span {
     min-width: 0;
+  }
+
+  .workspace-context-signals__microstate b {
+    padding: 3px 7px;
+    font-size: 0.7rem;
   }
 
   .workspace-context-signal {

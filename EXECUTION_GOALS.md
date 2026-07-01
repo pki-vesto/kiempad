@@ -4102,6 +4102,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, context signal state, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 38
+- **Status:** ☑ done
+
+### G1236 — contextkolom actieflow visueel koppelen aan eerste signaalkaart
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De contextkolom toont nu route, volgende actie en signaalkaarten, maar de visuele relatie tussen de next-action cue en de eerste prioriteitskaart kan nog sterker.
+- **User Impact:** Gebruikers zien de volgende actie, maar kunnen alsnog kort twijfelen welke signaalkaart daarbij hoort.
+- **Desired Outcome:** Verbind de next-action cue visueel met de eerste signaalkaart via ritme, accent of compacte flow affordance zonder extra tekstlaag.
+- **User Value:** Gebruikers begrijpen sneller hoe actieve route, volgende actie en prioriteit samenhangen.
+- **Acceptance Criteria:** Minimaal zes contextkolommen tonen een herkenbare visuele flow van microstate/next-action naar de eerste prioriteitskaart; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, context signal styles, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 37
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

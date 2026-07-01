@@ -681,7 +681,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   touch target en compactere mobiele dichtheid. Alle tien bewaakte contextkolommen
   tonen route-specifieke microstates, zoals beeldroute, planroute, AI-context,
   faseplanning, keuzeregistratie, vergoedingcontext, privacycontrole en
-  importcontrole; de browser-smoke bewaakt deze microstates op desktop en mobiel.
+  importcontrole. Deze microstates tonen nu ook een compacte route-eigen volgende
+  actie, zoals beeldmetadata controleren, afspraakgegevens invullen,
+  payload-preview checken, fase controleren, privacyregels openen en pakketstatus
+  controleren; de browser-smoke bewaakt microstate en next-action zichtbaarheid op
+  desktop en mobiel.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -697,7 +701,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1235: contextkolommen uitbreiden met route-eigen volgende-actie compactheid.
+1. UI Improvement Evolution uitvoeren vanaf G1236: contextkolom actieflow visueel koppelen aan de eerste signaalkaart.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

@@ -3714,6 +3714,7 @@ type WorkspaceContextMicrostate = {
   id: string;
   label: string;
   detail: string;
+  action: string;
 };
 
 function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicrostate {
@@ -3722,21 +3723,25 @@ function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicro
       id: 'dossier-upload',
       label: 'Uploadroute',
       detail: 'Nieuwe stukken eerst door OCR, metadata en review leiden.',
+      action: 'Volgende: review wachtrij',
     },
     search: {
       id: 'dossier-search',
       label: 'Zoekroute',
       detail: 'Context focust op vindbaarheid in veilige dossiermetadata.',
+      action: 'Volgende: zoekfilter scherp zetten',
     },
     imaging: {
       id: 'dossier-imaging',
       label: 'Beeldenroute',
       detail: 'Prioriteit ligt bij beeldmetadata, echo’s en embryo-overzicht.',
+      action: 'Volgende: beeldmetadata controleren',
     },
     timeline: {
       id: 'dossier-timeline',
       label: 'Tijdlijnroute',
       detail: 'Historie, consulten en imports worden chronologisch gebundeld.',
+      action: 'Volgende: ontbrekende datum checken',
     },
   };
   return states[route];
@@ -3748,26 +3753,31 @@ function getScheduleContextMicrostate(route: ScheduleRoute): WorkspaceContextMic
       id: 'schedule-overzicht',
       label: 'Planningoverzicht',
       detail: 'Totaal, komende afspraken en importstatus blijven eerst zichtbaar.',
+      action: 'Volgende: komende afspraak scannen',
     },
     komend: {
       id: 'schedule-komend',
       label: 'Komende route',
       detail: 'De eerstvolgende afspraak en herinnering blijven de planningsfocus.',
+      action: 'Volgende: voorbereiding nalopen',
     },
     plannen: {
       id: 'schedule-plannen',
       label: 'Planroute',
       detail: 'Nieuwe afspraak, voorbereiding en herinnering blijven taakgericht.',
+      action: 'Volgende: afspraakgegevens invullen',
     },
     import: {
       id: 'schedule-import',
       label: 'Importroute',
       detail: 'ICS-feedback en importcontrole blijven los van afsprakeninhoud.',
+      action: 'Volgende: ICS-feedback controleren',
     },
     historie: {
       id: 'schedule-historie',
       label: 'Historieroute',
       detail: 'Terugblik en eerdere afspraken blijven gescheiden van plannen.',
+      action: 'Volgende: terugblik openen',
     },
   };
   return states[route];
@@ -3779,21 +3789,25 @@ function getKnowledgeContextMicrostate(route: KnowledgeRoute): WorkspaceContextM
       id: 'knowledge-read',
       label: 'Leesroute',
       detail: 'Bronnen, samenvattingen en relevantie blijven in leesvolgorde.',
+      action: 'Volgende: bron en datum lezen',
     },
     add: {
       id: 'knowledge-add',
       label: 'Toevoegroute',
       detail: 'Nieuwe research en kennisitems starten met bron en reviewstatus.',
+      action: 'Volgende: bronnotitie toevoegen',
     },
     ai: {
       id: 'knowledge-ai',
       label: 'AI-context',
       detail: 'Payload-preview, opt-in en netwerkstatus blijven expliciet zichtbaar.',
+      action: 'Volgende: payload-preview checken',
     },
     library: {
       id: 'knowledge-library',
       label: 'Bibliotheekroute',
       detail: 'Categorieen en artsverificatie blijven als naslag gescheiden.',
+      action: 'Volgende: categorie filteren',
     },
   };
   return states[route];
@@ -3805,16 +3819,19 @@ function getWellbeingContextMicrostate(route: WellbeingRoute): WorkspaceContextM
       id: 'wellbeing-overview',
       label: 'Trendroute',
       detail: 'Context toont rustige trendtellingen zonder score of oordeel.',
+      action: 'Volgende: trendkaart openen',
     },
     history: {
       id: 'wellbeing-history',
       label: 'Geschiedenisroute',
       detail: 'Recent vastgelegde signalen blijven terugleesbaar gescheiden.',
+      action: 'Volgende: recente log bekijken',
     },
     log: {
       id: 'wellbeing-log',
       label: 'Vastlegroute',
       detail: 'Nieuwe observaties blijven feitelijk en los van interpretatie.',
+      action: 'Volgende: observatie vastleggen',
     },
   };
   return states[route];
@@ -3826,21 +3843,25 @@ function getDecisionContextMicrostate(route: DecisionRoute): WorkspaceContextMic
       id: 'decision-prepare',
       label: 'Voorbereidroute',
       detail: 'Onderwerp, artsvraag en opties krijgen eerst rustige structuur.',
+      action: 'Volgende: onderwerp scherp maken',
     },
     compare: {
       id: 'decision-compare',
       label: 'Vergelijkroute',
       detail: 'Voors en tegens blijven naast elkaar zonder keuzeadvies.',
+      action: 'Volgende: opties naast elkaar zetten',
     },
     choice: {
       id: 'decision-choice',
       label: 'Keuzeregistratie',
       detail: 'Vastgelegde keuzes blijven eigen besluitcontext, geen stuuradvies.',
+      action: 'Volgende: keuzecontext controleren',
     },
     history: {
       id: 'decision-history',
       label: 'Verslagroute',
       detail: 'Eerdere afwegingen blijven terugleesbaar als feitelijk verslag.',
+      action: 'Volgende: verslag teruglezen',
     },
   };
   return states[route];
@@ -3852,21 +3873,25 @@ function getFinanceContextMicrostate(route: FinanceRoute): WorkspaceContextMicro
       id: 'finance-overzicht',
       label: 'Kostenoverzicht',
       detail: 'Totalen, eigen bijdrage en onbekende posten blijven vooraan.',
+      action: 'Volgende: onbekend bedrag checken',
     },
     toevoegen: {
       id: 'finance-toevoegen',
       label: 'Toevoegroute',
       detail: 'Nieuwe kostenposten krijgen eerst bedrag en vergoedingstatus.',
+      action: 'Volgende: kostenpost invullen',
     },
     vergoeding: {
       id: 'finance-vergoeding',
       label: 'Vergoedingcontext',
       detail: 'Vergoed, eigen risico en onbekend blijven administratief gescheiden.',
+      action: 'Volgende: status controleren',
     },
     historie: {
       id: 'finance-historie',
       label: 'Historieroute',
       detail: 'Eerdere posten blijven terugleesbaar zonder polisinterpretatie.',
+      action: 'Volgende: historie filteren',
     },
   };
   return states[route];
@@ -3878,21 +3903,25 @@ function getNotificationContextMicrostate(route: NotificationRoute): WorkspaceCo
       id: 'notification-status',
       label: 'Statusroute',
       detail: 'Toestemming, service worker en fallback blijven eerst zichtbaar.',
+      action: 'Volgende: runtime status lezen',
     },
     privacy: {
       id: 'notification-privacy',
       label: 'Privacyroute',
       detail: 'Lockscreenkeuze blijft expliciet voordat details worden getoond.',
+      action: 'Volgende: lockscreenkeuze checken',
     },
     plannen: {
       id: 'notification-plannen',
       label: 'Planroute',
       detail: 'Nieuwe herinneringen blijven gescheiden van komende meldingen.',
+      action: 'Volgende: herinnering instellen',
     },
     komend: {
       id: 'notification-komend',
       label: 'Komende route',
       detail: 'Actieve en fallbackmeldingen blijven scanbaar zonder inhoudslek.',
+      action: 'Volgende: komende melding scannen',
     },
   };
   return states[route];
@@ -3904,21 +3933,25 @@ function getEventLogContextMicrostate(route: EventLogRoute): WorkspaceContextMic
       id: 'eventlog-overzicht',
       label: 'Auditoverzicht',
       detail: 'Opslagstatus en totalen blijven zichtbaar zonder details vooraf.',
+      action: 'Volgende: opslagstatus checken',
     },
     recent: {
       id: 'eventlog-recent',
       label: 'Recente route',
       detail: 'Laatste gebeurtenissen staan centraal met minimale detailweergave.',
+      action: 'Volgende: laatste regel scannen',
     },
     categorieen: {
       id: 'eventlog-categorieen',
       label: 'Categorieroute',
       detail: 'Gebeurtenissen worden gegroepeerd zonder gevoelige payload.',
+      action: 'Volgende: categorie kiezen',
     },
     privacy: {
       id: 'eventlog-privacy',
       label: 'Privacycontrole',
       detail: 'Privacysignalen krijgen prioriteit zonder auditdetails open te klappen.',
+      action: 'Volgende: privacyregels openen',
     },
   };
   return states[route];
@@ -3930,21 +3963,25 @@ function getBackupContextMicrostate(route: BackupRoute): WorkspaceContextMicrost
       id: 'backup-controleren',
       label: 'Controle-route',
       detail: 'Vaultstatus, exportleeftijd en herstelopties blijven eerst zichtbaar.',
+      action: 'Volgende: exportleeftijd checken',
     },
     export: {
       id: 'backup-export',
       label: 'Exportroute',
       detail: 'Versleutelde export staat centraal zonder dossierinhoud te tonen.',
+      action: 'Volgende: exportpakket maken',
     },
     import: {
       id: 'backup-import',
       label: 'Importcontrole',
       detail: 'Importmeldingen en pakketstatus blijven gescheiden van payload.',
+      action: 'Volgende: pakketstatus controleren',
     },
     herstel: {
       id: 'backup-herstel',
       label: 'Herstelroute',
       detail: 'Biometrie en wachtwoordzin blijven als herstelcontext zichtbaar.',
+      action: 'Volgende: hersteloptie nalopen',
     },
   };
   return states[route];
@@ -3956,26 +3993,31 @@ function getTreatmentContextMicrostate(route: TreatmentRoute): WorkspaceContextM
       id: 'treatment-overzicht',
       label: 'Trajectoverzicht',
       detail: 'Actieve pogingen en statusverdeling blijven de contextbasis.',
+      action: 'Volgende: actieve poging openen',
     },
     fasen: {
       id: 'treatment-fasen',
       label: 'Faseplanning',
       detail: 'Actuele fase, volgende stap en timelinecontext blijven gekoppeld.',
+      action: 'Volgende: fase controleren',
     },
     vergoeding: {
       id: 'treatment-vergoeding',
       label: 'Vergoedingsroute',
       detail: 'Meetellende pogingen blijven administratie, geen polisadvies.',
+      action: 'Volgende: meetellend nalopen',
     },
     context: {
       id: 'treatment-context',
       label: 'Contextlaag',
       detail: 'Timeline en graphrelaties krijgen prioriteit naast de taak.',
+      action: 'Volgende: timeline openen',
     },
     beheer: {
       id: 'treatment-beheer',
       label: 'Beheerroute',
       detail: 'Bewerken en archief blijven gescheiden van fase-inzicht.',
+      action: 'Volgende: beheeractie kiezen',
     },
   };
   return states[route];
@@ -3997,7 +4039,7 @@ function renderWorkspaceContextSignals(input: {
     .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
     .join('');
   const microstate = input.microstate
-    ? `<p class="workspace-context-signals__microstate" data-workspace-context-microstate="${escapeAttribute(input.microstate.id)}" data-workspace-context-microstate-label="${escapeAttribute(input.microstate.label)}"><span>Actief</span><strong>${escapeHtml(input.microstate.label)}</strong><em>${escapeHtml(input.microstate.detail)}</em></p>`
+    ? `<p class="workspace-context-signals__microstate" data-workspace-context-microstate="${escapeAttribute(input.microstate.id)}" data-workspace-context-microstate-label="${escapeAttribute(input.microstate.label)}" data-workspace-context-next-action="${escapeAttribute(input.microstate.action)}"><span>Actief</span><strong>${escapeHtml(input.microstate.label)}</strong><em>${escapeHtml(input.microstate.detail)}</em><b>${escapeHtml(input.microstate.action)}</b></p>`
     : '';
   return `
     <div class="workspace-context-signals"${dataAttrs}>
