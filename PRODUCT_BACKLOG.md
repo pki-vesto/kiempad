@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1041 |
+| ☑ klaar | 1042 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1240** |
+| **Totaal** | **1241** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1402,13 +1402,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1237 | Premium Claude Design UI: contextkolom flowstates verfijnen met route-eigen accentbalans | P1 | F5 | ☑ |
 | G1238 | Premium Claude Design UI: startscherm opdelen in fertility intelligence werkbanen | P1 | F5 | ☑ |
 | G1239 | Premium Claude Design UI: dossier en intelligence workflows uitwerken als eigen tabbladen na start-hub | P1 | F5 | ☑ |
-| G1240 | Premium Claude Design UI: hubroutes verdichten met compacte detailpanelen en lege staten | P1 | F5 | ☐ |
+| G1240 | Premium Claude Design UI: hubroutes verdichten met compacte detailpanelen en lege staten | P1 | F5 | ☑ |
+| G1241 | Premium Claude Design UI: research en embryo routes als zelfstandige hubflows versterken | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1240** (id's G001 t/m G1240, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1241** (id's G001 t/m G1241, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -120,9 +120,7 @@ function extractDossierReviewQueue(html: string): string {
 }
 
 function extractDossierAddSection(html: string): string {
-  const start = html.indexOf(
-    '<summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>',
-  );
+  const start = html.indexOf('data-hub-detail-panel="upload-intake"');
   const end = html.indexOf('<h2>Dossier zoeken</h2>', start);
   if (start < 0 || end < 0) throw new Error('Dossier toevoegsectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
@@ -2260,6 +2258,9 @@ describe('app shell', () => {
     expect(html).toContain('data-hub-workflow-tab="recommendations" aria-current="page"');
     expect(html).toContain('data-hub-workflow-tab="questions"');
     expect(html).toContain('data-hub-workflow-tab="research"');
+    expect(html).toContain('data-hub-detail-panel="daily-recommendation-list"');
+    expect(html).toContain('class="kp-disclosure__summary hub-detail-disclosure__summary"');
+    expect(html).toContain('Volledige lijst pas openen na eigenaarselectie');
     expect(html).toContain('id="start-quick-entry"');
     expect(html).toContain(
       '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
@@ -2293,7 +2294,7 @@ describe('app shell', () => {
     expect(html).toContain('Volgende stap');
     expect(html).toContain('data-dashboard-route="recommendations"');
     expect(html).toContain('aria-label="Dagelijkse aanbevelingen taakroute"');
-    expect(html).toContain('class="kp-disclosure start-task-disclosure"');
+    expect(html).toContain('class="kp-disclosure start-task-disclosure hub-detail-disclosure"');
     expect(html).toContain('Bekijk aanbevelingen');
     expect(html).toContain('data-dashboard-route="quick-entry"');
     expect(html).toContain('aria-label="Snelle invoer taakroute"');
@@ -2464,12 +2465,20 @@ describe('app shell', () => {
     expect(css).toContain('.hub-workflow-tabs {');
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(css).toContain('.hub-workflow-tab[aria-current="page"]');
+    expect(css).toContain('.hub-detail-disclosure {');
+    expect(css).toContain('.hub-detail-disclosure__summary {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.hub-detail-disclosure__summary em {');
     expect(mobileCss).toContain('.hub-workflow-header {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.hub-workflow-tabs {');
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.hub-workflow-tab {');
     expect(mobileCss).toContain('flex: 0 0 min(156px, 62vw);');
+    expect(mobileCss).toContain('.hub-detail-disclosure__summary {');
+    expect(mobileCss).toContain('min-height: 48px;');
+    expect(mobileCss).toContain('.hub-detail-disclosure__summary small {');
+    expect(mobileCss).toContain('display: none;');
   });
 
   it('houdt startschermmodules taakgericht verdeeld bij gevulde context', () => {
@@ -6434,6 +6443,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Upload als zelfstandige intakeflow');
     expect(emptyHtml).toContain('data-hub-workflow-tab="upload" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="review"');
+    expect(emptyHtml).toContain('data-hub-detail-panel="upload-intake"');
+    expect(emptyHtml).toContain('Document, consult, labkwaliteit of embryostatus');
+    expect(emptyHtml).toContain('<em>0 records</em>');
     expect(emptyHtml).toContain('aria-label="Dossier upload route-samenvatting"');
     expect(emptyHtml).toContain('data-dossier-route-summary="upload"');
     expect(emptyHtml).toContain('Eerst uploaden, daarna pas reviewen');
@@ -6448,6 +6460,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Tijdlijn als leesruimte');
     expect(emptyHtml).toContain('data-hub-workflow-tab="timeline" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="history"');
+    expect(emptyHtml).toContain('data-hub-detail-panel="timeline-documents"');
+    expect(emptyHtml).toContain('Historische onderzoeken in volgorde');
+    expect(emptyHtml).toContain('<em>0 momenten</em>');
     expect(emptyHtml).toContain('Documenttijdlijn openen');
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');

@@ -2718,8 +2718,14 @@ function renderDossierScreen(state: AppShellState): string {
         ariaLabel: 'Dossier upload route-samenvatting',
         data: { 'dossier-route-summary': 'upload' },
       })}
-      <details class="kp-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''}>
-        <summary class="kp-disclosure__summary">Toevoegen aan dossier</summary>
+      <details class="kp-disclosure hub-detail-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''} data-hub-detail-panel="upload-intake">
+        <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+          <span>
+            <strong>Toevoegen aan dossier</strong>
+            <small>Document, consult, labkwaliteit of embryostatus</small>
+          </span>
+          <em>${zichtbareDocumenten.length} records</em>
+        </summary>
         <div class="kp-disclosure__body">
         <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact">
           <a href="#dossier-upload-form" class="dossier-add-route">
@@ -3474,8 +3480,14 @@ function renderDossierScreen(state: AppShellState): string {
           ariaLabel: 'Dossier tijdlijn route-samenvatting',
           data: { 'dossier-route-summary': 'timeline' },
         })}
-        <details class="kp-disclosure" data-dossier-timeline-disclosure="documents">
-          <summary class="kp-disclosure__summary">Documenttijdlijn openen</summary>
+        <details class="kp-disclosure hub-detail-disclosure" data-dossier-timeline-disclosure="documents" data-hub-detail-panel="timeline-documents">
+          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+            <span>
+              <strong>Documenttijdlijn openen</strong>
+              <small>Historische onderzoeken in volgorde</small>
+            </span>
+            <em>${tijdlijn.length} momenten</em>
+          </summary>
           <div class="kp-disclosure__body">
             <h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>
             ${
@@ -13189,8 +13201,14 @@ function renderStartRecommendationRoute(
       state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
     }<p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
     ${renderDailyAdviceWorkbench(overview)}
-    <details class="kp-disclosure start-task-disclosure">
-      <summary class="kp-disclosure__summary">Bekijk aanbevelingen</summary>
+    <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
+      <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+        <span>
+          <strong>Bekijk aanbevelingen</strong>
+          <small>Volledige lijst pas openen na eigenaarselectie</small>
+        </span>
+        <em>${(['vrouw', 'man', 'samen'] as const).reduce((count, owner) => count + overview[owner].length, 0)} adviezen</em>
+      </summary>
       <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
     </details>`,
   });

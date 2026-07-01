@@ -696,6 +696,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   viewport niet meer als een lange modulelijst leest. De belangrijkste routes achter
   deze hub hebben nu ook een eigen hubroute-tablaag: dossierupload, dossiertijdlijn
   en dagadvies tonen een compacte workflowheader met tabs naar de verwante routes.
+  De eerste detailpanelen achter deze routes zijn verder verdicht: upload-intake,
+  documenttijdlijn en dagadvieslijst tonen nu compacte disclosure-headers met status
+  en korte routehint in plaats van alleen losse tekstregels.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -711,7 +714,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1240: hubroutes verdichten met compacte detailpanelen en lege staten.
+1. UI Improvement Evolution uitvoeren vanaf G1241: research en embryo routes als zelfstandige hubflows versterken.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
