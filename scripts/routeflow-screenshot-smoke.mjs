@@ -73,6 +73,7 @@ const targets = [
       '.start-focus-shell__header p:last-child',
       '.daily-advice-focus-shell__header p:last-child',
       '.command-route-section__header > p:last-child',
+      '.daily-advice-action-planner__header > p',
       '.hub-workflow-header__copy p',
       '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
     ],
@@ -180,6 +181,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.treatment-focus-shell__header p:last-child',
       '.treatment-route-section__header > p:last-child',
+      '.fertility-timeline-reader__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
@@ -243,6 +245,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.question-focus-shell__header p:last-child',
       '.question-route-section__header > p:last-child',
+      '.consult-prep-board__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="consult-prep-wizard"] .hub-detail-disclosure__summary small',
     ],
@@ -269,6 +272,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.wellbeing-focus-shell__header p:last-child',
       '.wellbeing-route-section__header > p:last-child',
+      '.wellbeing-history-board__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
@@ -290,6 +294,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.backup-focus-shell__header p:last-child',
       '.backup-route-section__header > p:last-child',
+      '.backup-sync-board__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
