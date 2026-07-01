@@ -1665,25 +1665,23 @@ function renderAfwegingenScreen(state: AppShellState): string {
   const linkedQuestionCount = decisions.filter((decision) => Boolean(decision.vraagId)).length;
   const activeDecisionRoute = state.activeDecisionRoute ?? 'prepare';
 
-  return sectionStack(
-    [
-      renderDecisionInsightWorkbench({
-        decisionCount: decisions.length,
-        chosenCount,
-        linkedQuestionCount,
-        latestDecision: decisions[0],
-      }),
-      domainSplitWorkspace({
-        className: 'decision-split-workspace',
-        ariaLabel: 'Afwegingen split-view werkruimte',
-        data: { 'decision-split-workspace': 'ready' },
-        rail: renderDecisionTaskRoutes({
-          decisionCount: decisions.length,
-          chosenCount,
-          linkedQuestionCount,
-          activeRoute: activeDecisionRoute,
-        }),
-        main: `
+  const decisionWorkbench = renderDecisionInsightWorkbench({
+    decisionCount: decisions.length,
+    chosenCount,
+    linkedQuestionCount,
+    latestDecision: decisions[0],
+  });
+  const decisionWorkspace = domainSplitWorkspace({
+    className: 'decision-split-workspace',
+    ariaLabel: 'Afwegingen split-view werkruimte',
+    data: { 'decision-split-workspace': 'ready' },
+    rail: renderDecisionTaskRoutes({
+      decisionCount: decisions.length,
+      chosenCount,
+      linkedQuestionCount,
+      activeRoute: activeDecisionRoute,
+    }),
+    main: `
       <section id="afwegingen-route-prepare" class="decision-route-section" aria-labelledby="afwegingen-route-prepare-title" data-decision-route="prepare"${renderDecisionRouteVisibility(activeDecisionRoute, 'prepare')}>
         <header class="decision-route-section__header">
           <p class="kp-card__eyebrow">Voorbereiden</p>
@@ -1791,17 +1789,44 @@ function renderAfwegingenScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-        context: renderDecisionWorkspaceContext({
-          decisionCount: decisions.length,
-          chosenCount,
-          linkedQuestionCount,
-          latestDecision: decisions[0],
-          activeRoute: activeDecisionRoute,
-        }),
+    context: renderDecisionWorkspaceContext({
+      decisionCount: decisions.length,
+      chosenCount,
+      linkedQuestionCount,
+      latestDecision: decisions[0],
+      activeRoute: activeDecisionRoute,
+    }),
+  });
+
+  return sectionStack(
+    [
+      renderDecisionFocusShell({
+        workbench: decisionWorkbench,
+        workspace: decisionWorkspace,
       }),
     ],
     { className: 'decision-command-layout', ariaLabel: 'Afwegingen beheren' },
   );
+}
+
+function renderDecisionFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="decision-focus-shell" aria-labelledby="decision-focus-shell-title" data-decision-focus-shell="ready">
+      <header class="decision-focus-shell__header">
+        <p class="kp-card__eyebrow">Keuzefocus</p>
+        <h2 id="decision-focus-shell-title">Eerst opties structureren, daarna keuze vastleggen</h2>
+        <p>Voorbereiden, vergelijken, kiezen en teruglezen blijven in één beslisruimte zonder score, voorkeur of behandeladvies.</p>
+      </header>
+      <div class="decision-focus-shell__body">
+        <div class="decision-focus-shell__workbench" data-decision-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="decision-focus-shell__workspace" data-decision-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderDecisionInsightWorkbench(input: {

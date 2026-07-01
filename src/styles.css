@@ -4032,6 +4032,61 @@ h2 {
   gap: 16px;
 }
 
+.decision-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--category) 14%, transparent), transparent 56%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.decision-focus-shell__header {
+  display: grid;
+  max-width: 860px;
+  gap: 5px;
+}
+
+.decision-focus-shell__header h2,
+.decision-focus-shell__header p {
+  margin: 0;
+}
+
+.decision-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.decision-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.decision-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.decision-focus-shell__workbench,
+.decision-focus-shell__workspace {
+  min-width: 0;
+}
+
+.decision-focus-shell__workbench > .decision-insight-workbench {
+  height: 100%;
+}
+
+.decision-focus-shell .command-route-summary h3 {
+  overflow-wrap: anywhere;
+}
+
 .decision-task-routes {
   z-index: 20;
   display: grid;
@@ -9812,6 +9867,36 @@ a.action-card:active {
     flex: 0 0 min(236px, 78vw);
     min-height: 112px;
     scroll-snap-align: start;
+  }
+
+  .content:has([data-decision-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-decision-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
+  .decision-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .decision-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .decision-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .decision-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-focus-shell__workspace .domain-split-workspace,
+  .decision-focus-shell__workspace .domain-split-workspace__context {
+    grid-template-columns: 1fr;
   }
 
   .decision-task-routes {

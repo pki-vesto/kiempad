@@ -35335,6 +35335,11 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-focus-shell__body {');
     expect(css).toContain('.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {');
     expect(css).toContain('.wellbeing-focus-shell__workspace {');
+    expect(css).toContain('.decision-focus-shell {');
+    expect(css).toContain('.decision-focus-shell__header {');
+    expect(css).toContain('.decision-focus-shell__body {');
+    expect(css).toContain('.decision-focus-shell__workbench > .decision-insight-workbench {');
+    expect(css).toContain('.decision-focus-shell__workspace {');
     expect(css).toContain('.insight-workbench {');
     expect(css).toContain('[data-wellbeing-first-viewport="insight-workbench"]');
     expect(css).toContain('[data-decision-first-viewport="insight-workbench"]');
@@ -35366,6 +35371,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.wellbeing-focus-shell {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.content:has([data-decision-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-decision-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.decision-focus-shell {');
+    expect(mobileCss).toContain('.decision-focus-shell__body {');
+    expect(mobileCss).toContain('.decision-focus-shell__workspace .domain-split-workspace,');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
@@ -36337,6 +36351,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Afwegingen');
     expect(html).toContain('class="section-stack decision-command-layout"');
+    expect(html).toContain('class="decision-focus-shell"');
+    expect(html).toContain('data-decision-focus-shell="ready"');
+    expect(html).toContain('Eerst opties structureren, daarna keuze vastleggen');
+    expect(html).toContain('data-decision-focus-region="workbench"');
+    expect(html).toContain('data-decision-focus-region="workspace"');
     expect(html).toContain(
       '<section class="insight-workbench decision-insight-workbench" aria-label="Besliswerkbank" data-decision-first-viewport="insight-workbench">',
     );
@@ -37470,6 +37489,10 @@ describe('app shell', () => {
       'data-wellbeing-route="history" data-wellbeing-route-state="active"',
     );
     expect(afwegingenHtml).toContain('class="domain-split-workspace decision-split-workspace"');
+    expect(afwegingenHtml).toContain('class="decision-focus-shell"');
+    expect(afwegingenHtml).toContain('data-decision-focus-shell="ready"');
+    expect(afwegingenHtml).toContain('data-decision-focus-region="workbench"');
+    expect(afwegingenHtml).toContain('data-decision-focus-region="workspace"');
     expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
     expect(afwegingenHtml).toContain('data-workspace-context-signals="decision"');
     expect(afwegingenHtml).toContain('data-workspace-context-microstate="decision-choice"');

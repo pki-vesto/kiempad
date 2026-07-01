@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1272 — Premium Claude Design UI: decision focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Afwegingen had een besliswerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor voorbereiden, vergelijken, kiezen en teruglezen minder als één beslisruimte voelden.
+- **Desired Outcome:** Bundel de besliswerkbank en Afwegingen split-workspace in één `decision-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker structureert eerst opties en kiest daarna gericht vergelijken, keuze of geschiedenis zonder dat Kiempad als score- of stuuradviespaneel leest.
+- **Acceptance Criteria:** Afwegingen rendert `data-decision-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; choice route blijft keuzeregistratie en context tonen; mobiel verbergt redundante globale context boven Afwegingen; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2319
+
 ### G1271 — Premium Claude Design UI: wellbeing focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use
