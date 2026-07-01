@@ -13442,10 +13442,49 @@ function renderDailyAdviceWorkbench(
           <span><strong>${artscheckCount}</strong> artscheck</span>
         </div>
       </header>
+      ${renderDailyAdviceSnapshot(overview, { total, reviewCount, artscheckCount })}
       <div class="daily-advice-owner-grid" aria-label="Dagadvies eigenaars">
         ${owners.map((owner) => renderDailyAdviceOwnerCard(owner, overview[owner])).join('')}
       </div>
     </section>
+  `;
+}
+
+function renderDailyAdviceSnapshot(
+  overview: DailyRecommendationOverview,
+  counts: { total: number; reviewCount: number; artscheckCount: number },
+): string {
+  const ownerDistribution = (['vrouw', 'man', 'samen'] as const)
+    .map((owner) => `${DAILY_RECOMMENDATION_OWNER_LABELS[owner]} ${overview[owner].length}`)
+    .join(' · ');
+  const reviewCopy =
+    counts.reviewCount > 0 ? 'Controleer bron en formulering' : 'Geen open conceptreview';
+  const artscheckCopy =
+    counts.artscheckCount > 0 ? 'Zet vragen klaar voor consult' : 'Geen artscheck open';
+
+  return `
+    <div class="daily-advice-snapshot" aria-label="Dagadviezen scan" data-daily-advice-snapshot="ready">
+      <a class="daily-advice-snapshot__card" href="#start-recommendations" data-daily-advice-snapshot-card="today">
+        <span>Vandaag</span>
+        <strong>${counts.total} adviezen</strong>
+        <small>Gesplitst per persoon en samen</small>
+      </a>
+      <a class="daily-advice-snapshot__card" href="#start-recommendations" data-daily-advice-snapshot-card="review">
+        <span>Review</span>
+        <strong>${counts.reviewCount} concepten</strong>
+        <small>${reviewCopy}</small>
+      </a>
+      <a class="daily-advice-snapshot__card" href="#vragen" data-daily-advice-snapshot-card="artscheck">
+        <span>Artscheck</span>
+        <strong>${counts.artscheckCount} punten</strong>
+        <small>${artscheckCopy}</small>
+      </a>
+      <a class="daily-advice-snapshot__card" href="#start-recommendations" data-daily-advice-snapshot-card="owners">
+        <span>Eigenaars</span>
+        <strong>Vrouw · Man · Samen</strong>
+        <small>${ownerDistribution}</small>
+      </a>
+    </div>
   `;
 }
 
