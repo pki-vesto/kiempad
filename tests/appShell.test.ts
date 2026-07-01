@@ -2209,6 +2209,19 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack start-command-layout"');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
+    expect(html).toContain('class="start-cockpit"');
+    expect(html).toContain('data-start-cockpit="ready"');
+    expect(html).toContain('aria-label="Start cockpit"');
+    expect(html).toContain('data-start-cockpit-panel="focus"');
+    expect(html).toContain('data-start-cockpit-panel="record"');
+    expect(html).toContain('data-start-cockpit-panel="routes"');
+    expect(html).toContain('Nu eerst');
+    expect(html).toContain('Dossierbasis');
+    expect(html).toContain('Kernwerkbanen');
+    expect(html).toContain('data-start-cockpit-route="uploads"');
+    expect(html).toContain('data-start-cockpit-route="timeline"');
+    expect(html).toContain('data-start-cockpit-route="imaging"');
+    expect(html).toContain('data-start-cockpit-route="advice"');
     expect(html).not.toContain('class="workspace-context"');
     expect(html).toContain('class="start-workbench start-intelligence-hub"');
     expect(html).toContain('data-start-workbench="multi-flow"');
@@ -2433,6 +2446,18 @@ describe('app shell', () => {
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(mobileCss).toContain('.lock-button {');
     expect(mobileCss).toContain('grid-column: 2;');
+    expect(css).toContain('.start-cockpit {');
+    expect(css).toContain(
+      'grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr) minmax(210px, 0.7fr);',
+    );
+    expect(css).toContain('.start-cockpit__panel {');
+    expect(css).toContain('.start-cockpit__routes {');
+    expect(mobileCss).toContain('.start-cockpit {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.start-cockpit__panel {');
+    expect(mobileCss).toContain('flex: 0 0 min(292px, 86vw);');
+    expect(mobileCss).toContain('.start-cockpit__routes {');
+    expect(mobileCss).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(css).toContain('.start-workbench {');
     expect(css).toContain('linear-gradient(135deg');
     expect(css).toContain('.start-workbench__grid {');

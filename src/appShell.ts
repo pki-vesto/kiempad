@@ -12852,6 +12852,22 @@ function renderStartScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderStartCommandHeader(state),
+      renderStartCockpit({
+        activeTraject,
+        huidigeFase,
+        nextAppointment,
+        nextReminder,
+        openQuestions,
+        doseCount: todayDoseLogs.length,
+        recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+          (total, owner) => total + dailyRecommendations[owner].length,
+          0,
+        ),
+        dossierCount: state.dossierDocuments?.length ?? 0,
+        consultCount: state.consultVerslagen?.length ?? 0,
+        researchCount: state.kennisItems.length,
+        secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
+      }),
       renderStartIntelligenceWorkbench(state, dailyRecommendations),
       startSnapshot,
       renderStartTaskRouteNav(),
@@ -12902,6 +12918,70 @@ function renderStartScreen(state: AppShellState): string {
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartCockpit(input: {
+  activeTraject: TrajectMetFasen | undefined;
+  huidigeFase: Fase | undefined;
+  nextAppointment: string;
+  nextReminder: string;
+  openQuestions: string;
+  doseCount: number;
+  recommendationCount: number;
+  dossierCount: number;
+  consultCount: number;
+  researchCount: number;
+  secureMode: string;
+}): string {
+  const phaseLabel = input.huidigeFase
+    ? TRAJECT_FASE_LABELS[input.huidigeFase.fase]
+    : input.activeTraject
+      ? input.activeTraject.traject.naam
+      : 'Traject nog leeg';
+  const doseLabel =
+    input.doseCount > 0
+      ? `${input.doseCount} medicatiemoment${input.doseCount === 1 ? '' : 'en'} vandaag`
+      : 'Geen medicatiemomenten vandaag';
+  const dossierLabel = `${input.dossierCount} document${input.dossierCount === 1 ? '' : 'en'} · ${input.consultCount} consult${input.consultCount === 1 ? '' : 'en'}`;
+
+  return `
+    <section class="start-cockpit" aria-label="Start cockpit" data-start-cockpit="ready">
+      <article class="start-cockpit__panel start-cockpit__panel--focus" data-start-cockpit-panel="focus">
+        <p class="start-cockpit__eyebrow">Nu eerst</p>
+        <h2>${escapeHtml(input.nextAppointment)}</h2>
+        <dl class="start-cockpit__metrics">
+          <div><dt>Fase</dt><dd>${escapeHtml(phaseLabel)}</dd></div>
+          <div><dt>Medicatie</dt><dd>${escapeHtml(doseLabel)}</dd></div>
+          <div><dt>Vragen</dt><dd>${escapeHtml(input.openQuestions)}</dd></div>
+        </dl>
+        <div class="start-cockpit__actions">
+          <a href="#agenda">Agenda</a>
+          <a href="#vragen">Vragen</a>
+          <a href="#medicatie">Medicatie</a>
+        </div>
+      </article>
+      <article class="start-cockpit__panel" data-start-cockpit-panel="record">
+        <p class="start-cockpit__eyebrow">Dossierbasis</p>
+        <h2>${escapeHtml(dossierLabel)}</h2>
+        <dl class="start-cockpit__metrics">
+          <div><dt>Research</dt><dd>${input.researchCount} bron${input.researchCount === 1 ? '' : 'nen'}</dd></div>
+          <div><dt>Dagadvies</dt><dd>${input.recommendationCount} kaart${input.recommendationCount === 1 ? '' : 'en'}</dd></div>
+          <div><dt>Kluis</dt><dd>${escapeHtml(input.secureMode)}</dd></div>
+        </dl>
+        <div class="start-cockpit__actions">
+          <a href="#dossier">Dossier</a>
+          <a href="#kennis">Research</a>
+          <a href="#backup">Kluis</a>
+        </div>
+      </article>
+      <nav class="start-cockpit__panel start-cockpit__routes" aria-label="Kernwerkbanen" data-start-cockpit-panel="routes">
+        <a href="#dossier" data-start-cockpit-route="uploads"><span>Upload</span><strong>Onderzoeken</strong></a>
+        <a href="#traject?route=context" data-start-cockpit-route="timeline"><span>Tijdlijn</span><strong>Traject</strong></a>
+        <a href="#dossier?route=imaging" data-start-cockpit-route="imaging"><span>Beelden</span><strong>Embryo</strong></a>
+        <a href="#start-recommendations" data-start-cockpit-route="advice"><span>Advies</span><strong>Vandaag</strong></a>
+      </nav>
+    </section>
+  `;
 }
 
 function renderStartSnapshot(input: {

@@ -655,8 +655,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   reviewstatus en herkomst; de UI toont deze relatieherleiding zonder raw payload.
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
   taakroutes; het startscherm opent nu zonder generieke werkruimte-context met een
-  aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn begrijpen, dagadvies
-  en research; de resterende startmodules staan in een progressive flowrail waarin
+  compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
+  gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn
+  begrijpen, dagadvies en research; de resterende startmodules staan in een progressive flowrail waarin
   alleen Planning open staat en Dagadvies, Setup en Snelle invoer dichtgeklapt
   blijven, met mobiele start-taakroutes verborgen tegen dubbele navigatie. De mobiele
   app-chrome boven Start is compacter met brand/status op één rij, thema en
@@ -690,7 +691,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   nu subtiele domeinaccentfamilies voor Dossier/Traject, Agenda/Herinneringen,
   Kennis/Welzijn, Afwegingen/Kosten en Logboek/Back-up; de smoke bewaakt dat deze
   accentbalans over de tien contextkolommen onderscheidbaar blijft. Het startscherm
-  heeft nu een zichtbare fertility intelligence hub met zes werkbanen voor
+  heeft nu een zichtbare cockpit voor focus, dossierbasis en routes naar upload,
+  tijdlijn, imaging en dagadvies, plus een fertility intelligence hub met zes werkbanen voor
   dossierupload, tijdlijn, embryo/beelden, dagadvies, research en encrypted sync,
   met twee primaire banen bovenaan en ondersteunende routes eronder zodat de eerste
   viewport niet meer als een lange modulelijst leest. De belangrijkste routes achter
@@ -721,6 +723,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   eerste viewport minder als administratiepagina leest.
   Het startscherm heeft nu ook een compacte startscan tussen de fertility hub en
   vervolgpanelen voor traject, vandaag, dagadvies en kluis/context.
+  Daarboven bundelt de start-cockpit focus, dossierbasis en kernroutes in de eerste
+  viewport.
   De kennis/research-werkbank heeft nu een researchscan voor bronnen,
   samenvattingen, trends en netwerkstatus voordat de filterkaart of detailpanelen
   openen.
