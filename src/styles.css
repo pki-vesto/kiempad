@@ -2363,6 +2363,10 @@ h2 {
   gap: 18px;
 }
 
+.start-command-layout[data-start-console="ready"] {
+  gap: 12px;
+}
+
 .start-launchpad {
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
@@ -13856,6 +13860,106 @@ a.action-card:active {
 
   .start-launchpad .start-workspace-deck__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 961px) {
+  .start-command-layout[data-start-console="ready"] .start-launchpad {
+    grid-template-columns: minmax(270px, 0.52fr) minmax(0, 1.48fr);
+    grid-template-areas:
+      "header cockpit"
+      "deck deck";
+    max-height: min(430px, calc(56vh - 42px));
+    overflow: hidden;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad__header,
+  .start-command-layout[data-start-console="ready"] .start-launchpad__cockpit,
+  .start-command-layout[data-start-console="ready"] .start-launchpad__deck {
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-command-header,
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit,
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-workspace-deck {
+    height: auto;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-command-header {
+    padding: 4px 0 0;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-command-header h1 {
+    font-size: 2.05rem;
+    line-height: 1.05;
+  }
+
+  .start-command-layout[data-start-console="ready"]
+    .start-launchpad
+    .start-command-header
+    p:last-child {
+    max-width: 34ch;
+    margin-top: 6px;
+    font-size: 0.92rem;
+    line-height: 1.38;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(176px, 0.72fr);
+    align-content: start;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit__panel {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit__metrics div {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit__routes {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit__routes a {
+    padding: 8px 10px;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-workspace-deck {
+    grid-template-columns: minmax(180px, 0.44fr) minmax(0, 1.56fr);
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-workspace-deck__header {
+    align-content: start;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-workspace-deck__header h2 {
+    font-size: 1.05rem;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-workspace-deck__header p {
+    display: none;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-launchpad .start-workspace-deck__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-workspace-deck__card {
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-workspace-deck__card small {
+    display: none;
   }
 }
 

@@ -13521,7 +13521,11 @@ function renderStartScreen(state: AppShellState): string {
         }),
       }),
     ],
-    { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
+    {
+      className: 'start-command-layout',
+      ariaLabel: 'Startoverzicht',
+      data: { 'start-console': 'ready' },
+    },
   );
 }
 
@@ -13531,7 +13535,7 @@ function renderStartLaunchpad(input: {
   workspaceDeck: string;
 }): string {
   return `
-    <section class="start-launchpad" aria-label="Start launchpad" data-start-launchpad="ready">
+    <section class="start-launchpad" aria-label="Start launchpad" data-start-launchpad="ready" data-start-console-region="launchpad">
       <div class="start-launchpad__header" data-start-launchpad-region="header">
         ${input.header}
       </div>
@@ -13552,7 +13556,7 @@ function renderStartFocusShell(input: {
   dashboard: string;
 }): string {
   return `
-    <section class="start-focus-shell" aria-labelledby="start-focus-shell-title" data-start-focus-shell="ready">
+    <section class="start-focus-shell" aria-labelledby="start-focus-shell-title" data-start-focus-shell="ready" data-start-console-region="commandcenter">
       <header class="start-focus-shell__header">
         <p class="start-cockpit__eyebrow">Verdieping</p>
         <h2 id="start-focus-shell-title">Start command-center</h2>

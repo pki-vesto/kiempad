@@ -2438,8 +2438,10 @@ describe('app shell', () => {
     const html = renderAppShell('start');
 
     expect(html).toContain('class="section-stack start-command-layout"');
+    expect(html).toContain('data-start-console="ready"');
     expect(html).toContain('class="start-launchpad"');
     expect(html).toContain('data-start-launchpad="ready"');
+    expect(html).toContain('data-start-console-region="launchpad"');
     expect(html).toContain('data-start-launchpad-region="header"');
     expect(html).toContain('data-start-launchpad-region="cockpit"');
     expect(html).toContain('data-start-launchpad-region="deck"');
@@ -2467,6 +2469,7 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workspace-card="control"');
     expect(html).toContain('class="start-focus-shell"');
     expect(html).toContain('data-start-focus-shell="ready"');
+    expect(html).toContain('data-start-console-region="commandcenter"');
     expect(html).toContain('data-workspace-strip="ready"');
     expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).not.toContain('data-workspace-map="ready"');
@@ -2787,6 +2790,18 @@ describe('app shell', () => {
     expect(mobileCss).toContain('flex: 0 0 min(238px, 76vw);');
     expect(css).toContain('.start-cockpit {');
     expect(css).toContain('.start-launchpad {');
+    expect(css).toContain('.start-command-layout[data-start-console="ready"] {');
+    expect(css).toContain('.start-command-layout[data-start-console="ready"] .start-launchpad {');
+    expect(css).toContain('max-height: min(430px, calc(56vh - 42px));');
+    expect(css).toContain(
+      '.start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit {',
+    );
+    expect(css).toContain(
+      'grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(176px, 0.72fr);',
+    );
+    expect(css).toContain(
+      '.start-command-layout[data-start-console="ready"] .start-launchpad .start-workspace-deck__grid {',
+    );
     expect(css).toContain('"header cockpit"');
     expect(css).toContain('"deck cockpit"');
     expect(css).toContain('grid-area: header;');

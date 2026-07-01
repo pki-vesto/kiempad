@@ -437,6 +437,10 @@
   rechts. De workspace gebruikt een hoofdvlak met contextstrip, zodat overzicht,
   fasen, vergoeding, timeline/graphcontext en beheer niet als één lange
   trajectpagina starten.
+- **G1313 Start-console:** Start toont op desktop een compactere eerste-viewport
+  console. Launchpad en command-center hebben expliciete regio's; de launchpad is
+  begrensd, de cockpit is compacter en het verdiepings-command-center start zichtbaar
+  binnen de eerste viewport in plaats van onder een hoge introductielaag.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

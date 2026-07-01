@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1313 Premium Claude Design UI: Start is op desktop een compactere eerste-viewport console geworden. Launchpad en command-center hebben expliciete console-regio's; de launchpad is begrensd en compacter, waardoor de verdiepingswerkvlakken binnen de eerste viewport zichtbaar starten in plaats van onder een hoge introductielaag.
 - G1312 Premium Claude Design UI: Traject is op desktop een compacte treatment-console geworden. Behandelwerkbank, routekeuze en actieve trajectwerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat overzicht, fasen, vergoeding, timeline/graphcontext en beheer niet meer als één lange trajectpagina starten.
 - G1311 Premium Claude Design UI: Medicatie is op desktop een compacte medication-console geworden. Innamewerkbank, routekeuze en actieve medicatiewerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat vandaag, planning, beheer, import en historie niet meer als één lange medicatiepagina starten.
 - G1310 Premium Claude Design UI: Agenda is op desktop een compacte schedule-console geworden. Dagplanningwerkbank, routekeuze en actieve planningswerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat overzicht, plannen, ICS-import en historie niet meer als één lange planningspagina starten.
