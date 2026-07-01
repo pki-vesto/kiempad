@@ -3367,6 +3367,41 @@ function renderDossierScreen(state: AppShellState): string {
           <h2 id="dossier-route-imaging-title">Imaging, consulten en embryo-dossiers</h2>
           <p>Bekijk consultverslagen, echo's, foto's, scans en embryodossiers als eigen routecluster.</p>
         </header>
+        ${renderHubWorkflowHeader({
+          id: 'dossier-imaging-workflow-header',
+          eyebrow: 'Hubroute',
+          title: 'Embryo en beelden als eigen werkbaan',
+          intro:
+            'Beelden, vergelijkingen en embryo-dossiers blijven bij elkaar als inspectieroute, los van uploadformulieren en tijdlijnlezing.',
+          activeTab: 'imaging',
+          data: { 'hub-workflow': 'dossier-imaging' },
+          tabs: [
+            {
+              id: 'upload',
+              href: '#dossier?route=upload',
+              label: 'Upload',
+              meta: 'Bronnen toevoegen',
+            },
+            {
+              id: 'imaging',
+              href: '#dossier?route=imaging',
+              label: 'Beelden',
+              meta: `${imagingItems.length} items`,
+            },
+            {
+              id: 'embryos',
+              href: '#dossier-embryo-dossiers',
+              label: "Embryo's",
+              meta: `${embryoDossiers.length} dossiers`,
+            },
+            {
+              id: 'timeline',
+              href: '#dossier?route=timeline',
+              label: 'Tijdlijn',
+              meta: `${tijdlijn.length} momenten`,
+            },
+          ],
+        })}
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
           title: 'Beelden en embryo’s als aparte werkruimte',
@@ -11197,6 +11232,41 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-read-title">Bronnen, samenvattingen en trends</h2>
           <p>Lees brongekoppelde publicaties, eenvoudige uitleg en contextrelaties zonder naar beheerinstellingen te hoeven zoeken.</p>
         </header>
+        ${renderHubWorkflowHeader({
+          id: 'knowledge-research-workflow-header',
+          eyebrow: 'Hubroute',
+          title: 'Research als zelfstandige leesflow',
+          intro:
+            'Bronnen, wetenschappelijke samenvattingen, eenvoudige uitleg en trends blijven samen als researchwerkbaan met duidelijke lagen.',
+          activeTab: 'research',
+          data: { 'hub-workflow': 'knowledge-research' },
+          tabs: [
+            {
+              id: 'research',
+              href: '#kennis?route=read',
+              label: 'Research',
+              meta: `${researchBronnen.length} bronnen`,
+            },
+            {
+              id: 'summaries',
+              href: '#knowledge-research-summaries',
+              label: 'Samenvattingen',
+              meta: `${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items`,
+            },
+            {
+              id: 'trends',
+              href: '#knowledge-research-trends',
+              label: 'Trends',
+              meta: `${researchTrendGroepen.length} groepen`,
+            },
+            {
+              id: 'add',
+              href: '#kennis?route=add',
+              label: 'Toevoegen',
+              meta: 'Bron vastleggen',
+            },
+          ],
+        })}
         ${commandRouteSummary({
           eyebrow: 'Kennisroute',
           title: 'Lees research in lagen',
