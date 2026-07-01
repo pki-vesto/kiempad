@@ -2254,6 +2254,12 @@ describe('app shell', () => {
     expect(html).toContain('id="start-today"');
     expect(html).toContain('id="start-next-step"');
     expect(html).toContain('id="start-recommendations"');
+    expect(html).toContain('id="start-recommendations-workflow-header"');
+    expect(html).toContain('data-hub-workflow="daily-recommendations"');
+    expect(html).toContain('Dagadvies als eigen controleruimte');
+    expect(html).toContain('data-hub-workflow-tab="recommendations" aria-current="page"');
+    expect(html).toContain('data-hub-workflow-tab="questions"');
+    expect(html).toContain('data-hub-workflow-tab="research"');
     expect(html).toContain('id="start-quick-entry"');
     expect(html).toContain(
       '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
@@ -2264,7 +2270,7 @@ describe('app shell', () => {
     expect(html).toContain('data-start-flow-rail="progressive"');
     expect(html).toContain('Open alleen wat je nu nodig hebt');
     expect(html).toContain('data-start-flow-panel="planning" open');
-    expect(html).toContain('data-start-flow-panel="aanbevelingen"');
+    expect(html).toContain('data-start-flow-panel="aanbevelingen" open');
     expect(html).toContain('data-start-flow-panel="setup"');
     expect(html).toContain('data-start-flow-panel="snelle-invoer"');
     expect(html).toContain('class="daily-command-board"');
@@ -2453,6 +2459,17 @@ describe('app shell', () => {
     expect(mobileCss).toContain('margin-top: 14px;');
     expect(mobileCss).toContain('.start-flow-panel__summary {');
     expect(mobileCss).toContain('min-height: 48px;');
+    expect(css).toContain('.hub-workflow-header {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);');
+    expect(css).toContain('.hub-workflow-tabs {');
+    expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(css).toContain('.hub-workflow-tab[aria-current="page"]');
+    expect(mobileCss).toContain('.hub-workflow-header {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.hub-workflow-tabs {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.hub-workflow-tab {');
+    expect(mobileCss).toContain('flex: 0 0 min(156px, 62vw);');
   });
 
   it('houdt startschermmodules taakgericht verdeeld bij gevulde context', () => {
@@ -6412,6 +6429,11 @@ describe('app shell', () => {
       'data-dossier-route="search" data-dossier-route-state="inactive" hidden',
     );
     expect(emptyHtml).toContain('data-dossier-route="upload" data-dossier-route-state="active"');
+    expect(emptyHtml).toContain('id="dossier-upload-workflow-header"');
+    expect(emptyHtml).toContain('data-hub-workflow="dossier-upload"');
+    expect(emptyHtml).toContain('Upload als zelfstandige intakeflow');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="upload" aria-current="page"');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="review"');
     expect(emptyHtml).toContain('aria-label="Dossier upload route-samenvatting"');
     expect(emptyHtml).toContain('data-dossier-route-summary="upload"');
     expect(emptyHtml).toContain('Eerst uploaden, daarna pas reviewen');
@@ -6421,6 +6443,11 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Imaging-repository, filters en vergelijkingen openen');
     expect(emptyHtml).toContain('data-dossier-imaging-disclosure="embryos"');
     expect(emptyHtml).toContain('data-dossier-route-summary="timeline"');
+    expect(emptyHtml).toContain('id="dossier-timeline-workflow-header"');
+    expect(emptyHtml).toContain('data-hub-workflow="dossier-timeline"');
+    expect(emptyHtml).toContain('Tijdlijn als leesruimte');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="timeline" aria-current="page"');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="history"');
     expect(emptyHtml).toContain('Documenttijdlijn openen');
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');

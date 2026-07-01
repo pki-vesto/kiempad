@@ -2672,6 +2672,41 @@ function renderDossierScreen(state: AppShellState): string {
         <h2 id="dossier-route-upload-title">Nieuwe medische records toevoegen</h2>
         <p>Upload onderzoeken, beelden, consultverslagen en embryokwaliteit vanuit één begeleide route.</p>
       </header>
+      ${renderHubWorkflowHeader({
+        id: 'dossier-upload-workflow-header',
+        eyebrow: 'Hubroute',
+        title: 'Upload als zelfstandige intakeflow',
+        intro:
+          'Start hier met medische records; review, beelden en tijdlijn blijven aparte vervolgroutes zodat de uploadflow niet voelt als een dossierdump.',
+        activeTab: 'upload',
+        data: { 'hub-workflow': 'dossier-upload' },
+        tabs: [
+          {
+            id: 'upload',
+            href: '#dossier?route=upload',
+            label: 'Upload',
+            meta: 'Records toevoegen',
+          },
+          {
+            id: 'review',
+            href: '#dossier-route-review',
+            label: 'Review',
+            meta: 'Inbox controleren',
+          },
+          {
+            id: 'imaging',
+            href: '#dossier?route=imaging',
+            label: 'Beelden',
+            meta: "Echo's en embryo's",
+          },
+          {
+            id: 'timeline',
+            href: '#dossier?route=timeline',
+            label: 'Tijdlijn',
+            meta: 'Historie lezen',
+          },
+        ],
+      })}
       ${commandRouteSummary({
         eyebrow: 'Dossierroute',
         title: 'Eerst uploaden, daarna pas reviewen',
@@ -3393,6 +3428,41 @@ function renderDossierScreen(state: AppShellState): string {
           <h2 id="dossier-route-timeline-title">Tijdlijn en behandelgeschiedenis</h2>
           <p>Lees historische onderzoeken en behandelcontext achter elkaar, zonder uploadformulieren ertussen.</p>
         </header>
+        ${renderHubWorkflowHeader({
+          id: 'dossier-timeline-workflow-header',
+          eyebrow: 'Hubroute',
+          title: 'Tijdlijn als leesruimte',
+          intro:
+            'Deze route houdt historische onderzoeken en behandelgeschiedenis bij elkaar, met details achter disclosures zodat de volgorde leidend blijft.',
+          activeTab: 'timeline',
+          data: { 'hub-workflow': 'dossier-timeline' },
+          tabs: [
+            {
+              id: 'upload',
+              href: '#dossier?route=upload',
+              label: 'Upload',
+              meta: 'Bronnen toevoegen',
+            },
+            {
+              id: 'imaging',
+              href: '#dossier?route=imaging',
+              label: 'Beelden',
+              meta: 'Momenten vergelijken',
+            },
+            {
+              id: 'timeline',
+              href: '#dossier?route=timeline',
+              label: 'Tijdlijn',
+              meta: `${tijdlijn.length} momenten`,
+            },
+            {
+              id: 'history',
+              href: '#dossier-behandelgeschiedenis',
+              label: 'Geschiedenis',
+              meta: `${behandelGeschiedenis.length} items`,
+            },
+          ],
+        })}
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
           title: 'Tijdlijn eerst begrijpen, details daarna openen',
@@ -3538,6 +3608,49 @@ function renderDossierActiveRouteCopy(route: DossierRoute): string {
     case 'timeline':
       return 'Actief: tijdlijn';
   }
+}
+
+type HubWorkflowTab = {
+  id: string;
+  href: string;
+  label: string;
+  meta: string;
+};
+
+function renderHubWorkflowHeader(input: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  activeTab: string;
+  tabs: readonly HubWorkflowTab[];
+  data: Record<string, string>;
+}): string {
+  const dataAttrs = Object.entries(input.data)
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+
+  return `
+    <section id="${escapeAttribute(input.id)}" class="hub-workflow-header" aria-labelledby="${escapeAttribute(input.id)}-title"${dataAttrs}>
+      <div class="hub-workflow-header__copy">
+        <p class="hub-workflow-header__eyebrow">${escapeHtml(input.eyebrow)}</p>
+        <h3 id="${escapeAttribute(input.id)}-title">${escapeHtml(input.title)}</h3>
+        <p>${escapeHtml(input.intro)}</p>
+      </div>
+      <nav class="hub-workflow-tabs" aria-label="${escapeAttribute(input.title)} tabs">
+        ${input.tabs
+          .map(
+            (tab) => `
+              <a class="hub-workflow-tab" href="${escapeAttribute(tab.href)}" data-hub-workflow-tab="${escapeAttribute(tab.id)}" aria-current="${tab.id === input.activeTab ? 'page' : 'false'}">
+                <span>${escapeHtml(tab.label)}</span>
+                <small>${escapeHtml(tab.meta)}</small>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+    </section>
+  `;
 }
 
 function renderDossierTaskRoutes(input: {
@@ -12504,6 +12617,7 @@ function renderStartScreen(state: AppShellState): string {
               summary: 'Dagadvies',
               eyebrow: 'Aanbevelingen',
               key: 'aanbevelingen',
+              open: true,
               body: renderStartRecommendationRoute(state, dailyRecommendations),
             },
             {
@@ -13052,7 +13166,26 @@ function renderStartRecommendationRoute(
     eyebrow: 'Dagadvies',
     route: 'recommendations',
     ariaLabel: 'Dagelijkse aanbevelingen taakroute',
-    body: `${
+    body: `${renderHubWorkflowHeader({
+      id: 'start-recommendations-workflow-header',
+      eyebrow: 'Hubroute',
+      title: 'Dagadvies als eigen controleruimte',
+      intro:
+        'Kies eerst de eigenaar en open daarna pas de volledige lijst. Adviezen blijven concept, brongeleid en gekoppeld aan artscheck waar nodig.',
+      activeTab: 'recommendations',
+      data: { 'hub-workflow': 'daily-recommendations' },
+      tabs: [
+        { id: 'today', href: '#start-today', label: 'Vandaag', meta: 'Taken scannen' },
+        {
+          id: 'recommendations',
+          href: '#start-recommendations',
+          label: 'Dagadvies',
+          meta: 'Per persoon',
+        },
+        { id: 'questions', href: '#vragen', label: 'Vragen', meta: 'Artscheck' },
+        { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
+      ],
+    })}${
       state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
     }<p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
     ${renderDailyAdviceWorkbench(overview)}

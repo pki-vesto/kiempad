@@ -3840,6 +3840,97 @@ h2 {
   line-height: 1.5;
 }
 
+.hub-workflow-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);
+  gap: 14px;
+  align-items: stretch;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 62%),
+    var(--surface-raised);
+}
+
+.hub-workflow-header__copy {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.hub-workflow-header__eyebrow,
+.hub-workflow-header__copy h3,
+.hub-workflow-header__copy p {
+  margin: 0;
+}
+
+.hub-workflow-header__eyebrow {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.hub-workflow-header__copy h3 {
+  font-family: var(--font-serif);
+  font-size: 1.14rem;
+}
+
+.hub-workflow-header__copy p {
+  max-width: 66ch;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.42;
+}
+
+.hub-workflow-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  min-width: 0;
+}
+
+.hub-workflow-tab {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  min-height: 54px;
+  align-content: center;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.hub-workflow-tab[aria-current="page"] {
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  color: var(--accent-strong);
+}
+
+.hub-workflow-tab span,
+.hub-workflow-tab small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hub-workflow-tab span {
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.hub-workflow-tab small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
 .command-route-summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -7434,6 +7525,43 @@ a.action-card:active {
   .command-route-summary__action {
     min-height: 32px;
     padding: 5px 9px;
+  }
+
+  .hub-workflow-header {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .hub-workflow-header__copy {
+    gap: 4px;
+  }
+
+  .hub-workflow-header__copy h3 {
+    font-size: 1.02rem;
+  }
+
+  .hub-workflow-header__copy p {
+    display: none;
+  }
+
+  .hub-workflow-tabs {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .hub-workflow-tab {
+    flex: 0 0 min(156px, 62vw);
+    min-height: 48px;
+    padding: 7px 9px;
+    scroll-snap-align: start;
+  }
+
+  .hub-workflow-tab span {
+    font-size: 0.8rem;
   }
 
   .command-route-section,
