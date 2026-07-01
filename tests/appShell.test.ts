@@ -1734,23 +1734,26 @@ describe('app shell', () => {
 
     expect(html).toContain('href="#agenda" aria-current="page"');
     expect(html).toContain('Afspraken');
-    expect(html).toContain('class="workspace-strip"');
+    expect(html).toContain('class="workspace-strip workspace-strip--compact"');
     expect(html).toContain('data-workspace-strip="ready"');
+    expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).toContain('data-workspace-strip-group="Vandaag"');
     expect(html).toContain('aria-label="Actieve werkruimte"');
     expect(html).toContain('aria-label="Schermen binnen Vandaag"');
-    expect(html).toContain('aria-label="Snelle kernroutes"');
-    expect(html).toContain('class="workspace-map"');
-    expect(html).toContain('data-workspace-map="ready"');
-    expect(html).toContain('data-workspace-map-active="Vandaag"');
+    expect(html).not.toContain('aria-label="Snelle kernroutes"');
+    expect(html).not.toContain('class="workspace-map"');
+    expect(html).not.toContain('data-workspace-map="ready"');
     expect(html).toContain('id="theme-form"');
     expect(html).toContain('data-theme-control="compact"');
     expect(html).toContain('class="theme-form__label">Thema</span>');
     expect(html).toContain('<button type="submit" aria-label="Bewaar thema">Opslaan</button>');
-    expect(html).toContain('Kiempad is verdeeld in duidelijke werkbanen');
-    expect(html).toContain('data-workspace-map-card="Dossier"');
-    expect(html).toContain('data-workspace-map-state="active"');
-    expect(html).toContain('href="#traject?route=context"');
+    expect(html).not.toContain('Kiempad is verdeeld in duidelijke werkbanen');
+    expect(html).not.toContain('data-workspace-map-card="Dossier"');
+    expect(html).toContain('href="#agenda" aria-current="page"');
+    expect(html).not.toContain('href="#traject?route=context"');
+    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+      html.indexOf('<main class="content"'),
+    );
   });
 
   it('groepeert primaire navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
@@ -1763,13 +1766,17 @@ describe('app shell', () => {
     expect(html).toContain('<p class="primary-nav__title">Inzicht</p>');
     expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
     expect(html).toContain('data-workspace-strip-group="Behandeling"');
+    expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).toContain('<p class="workspace-strip__eyebrow">Werkruimte</p>');
     expect(html).toContain('class="workspace-strip__switcher"');
-    expect(html).toContain('class="workspace-strip__quick"');
-    expect(html).toContain('data-workspace-map-active="Behandeling"');
-    expect(html).toContain('Werk behandelcontext, medicatie en consultvragen apart af.');
-    expect(html).toContain('Open traject');
+    expect(html).not.toContain('class="workspace-strip__quick"');
+    expect(html).not.toContain('data-workspace-map-active="Behandeling"');
+    expect(html).not.toContain('Werk behandelcontext, medicatie en consultvragen apart af.');
+    expect(html).not.toContain('Open traject');
     expect(html).toContain('data-question-first-viewport="consult-workbench"');
+    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+      html.indexOf('<main class="content"'),
+    );
   });
 
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
@@ -1790,7 +1797,9 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(dossierHtml).toContain('data-workspace-strip="ready"');
+    expect(dossierHtml).toContain('data-compact-workspace-deck="ready"');
     expect(dossierHtml).toContain('data-workspace-strip-group="Dossier"');
+    expect(dossierHtml).not.toContain('data-workspace-map="ready"');
     expect(dossierHtml).toContain('data-dossier-first-viewport="route-stage"');
     expect(kennisHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -2419,7 +2428,8 @@ describe('app shell', () => {
     expect(html).toContain('class="start-focus-shell"');
     expect(html).toContain('data-start-focus-shell="ready"');
     expect(html).toContain('data-workspace-strip="ready"');
-    expect(html).toContain('data-workspace-map="ready"');
+    expect(html).toContain('data-compact-workspace-deck="ready"');
+    expect(html).not.toContain('data-workspace-map="ready"');
     expect(html).toContain('Start command-center');
     expect(html).toContain('data-start-focus-region="workflows"');
     expect(html).toContain('data-start-focus-region="scan"');
@@ -2689,6 +2699,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('grid-column: 2;');
     expect(css).toContain('.workspace-strip {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
+    expect(css).toContain('.workspace-strip--compact {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.app-sidebar > .workspace-strip {');
+    expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-strip,');

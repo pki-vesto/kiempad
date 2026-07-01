@@ -25,6 +25,7 @@ const targets = [
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
       '[data-workspace-strip="ready"]',
+      '[data-compact-workspace-deck="ready"]',
       '[data-start-workspace-deck="ready"]',
       '[data-start-workspace-card="today"]',
       '[data-start-workspace-card="record"]',

@@ -800,11 +800,11 @@ export function renderAppShell(
       <nav class="primary-nav" aria-label="Werkruimtes en schermen">
         ${renderGroupedNavigation(activeId)}
       </nav>
+      ${activeId === 'start' ? '' : renderWorkspaceStrip(activeId)}
       </div>
 
       <main class="content" id="inhoud" tabindex="-1">
-        ${renderWorkspaceStrip(activeId)}
-        ${renderWorkspaceMap(activeId)}
+        ${activeId === 'start' ? renderWorkspaceStrip(activeId) : ''}
         ${
           activeId === 'start'
             ? ''
@@ -818,46 +818,6 @@ export function renderAppShell(
         ${screenContent}
       </main>
     </div>
-  `;
-}
-
-function renderWorkspaceMap(activeId: ScreenId): string {
-  const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
-  const activeGroupLabel = activeGroup?.label ?? 'Werkruimte';
-
-  return `
-    <section class="workspace-map" aria-label="Werkruimtekaart" data-workspace-map="ready" data-workspace-map-active="${escapeAttribute(activeGroupLabel)}">
-      <header class="workspace-map__header">
-        <p class="workspace-map__eyebrow">Productstructuur</p>
-        <h2>Kiempad is verdeeld in duidelijke werkbanen</h2>
-        <p>Kies eerst de werkruimte, daarna pas de detailroute. Zo blijven uploads, tijdlijn, adviezen en beheer uit elkaar.</p>
-      </header>
-      <div class="workspace-map__grid">
-        ${SCREEN_GROUPS.map((group) => renderWorkspaceMapCard(group, activeId)).join('')}
-      </div>
-    </section>
-  `;
-}
-
-function renderWorkspaceMapCard(group: ScreenGroup, activeId: ScreenId): string {
-  const isActive = group.screenIds.includes(activeId);
-  const screenMap = new Map(SCREENS.map((screen) => [screen.id, screen]));
-  const labels = group.screenIds
-    .map((screenId) => screenMap.get(screenId)?.label)
-    .filter((label): label is string => Boolean(label))
-    .join(' · ');
-
-  return `
-    <article class="workspace-map__card" data-workspace-map-card="${escapeAttribute(group.label)}" data-workspace-map-state="${isActive ? 'active' : 'idle'}">
-      <div class="workspace-map__card-top">
-        <span>${escapeHtml(group.statusLabel)}</span>
-        <strong>${group.routeCount} route${group.routeCount === 1 ? '' : 's'}</strong>
-      </div>
-      <h3>${escapeHtml(group.label)}</h3>
-      <p>${escapeHtml(group.intent)}</p>
-      <small>${escapeHtml(labels)}</small>
-      <a href="${escapeAttribute(group.primaryHref)}"${isActive ? ' aria-current="page"' : ''}>${escapeHtml(group.primaryLabel)}</a>
-    </article>
   `;
 }
 
@@ -1167,33 +1127,17 @@ function renderWorkspaceStrip(activeId: ScreenId): string {
       )}</a>`;
     })
     .join('');
-  const quickLinks = [
-    { href: '#start', label: 'Start', meta: 'Vandaag' },
-    { href: '#dossier', label: 'Dossier', meta: 'Upload' },
-    { href: '#traject?route=context', label: 'Tijdlijn', meta: 'Context' },
-  ];
 
   return `
-    <section class="workspace-strip" aria-label="Actieve werkruimte" data-workspace-strip="ready" data-workspace-strip-group="${escapeAttribute(activeGroup.label)}">
+    <section class="workspace-strip workspace-strip--compact" aria-label="Actieve werkruimte" data-workspace-strip="ready" data-compact-workspace-deck="ready" data-workspace-strip-group="${escapeAttribute(activeGroup.label)}">
       <div>
         <p class="workspace-strip__eyebrow">Werkruimte</p>
         <h2>${escapeHtml(activeGroup.label)}</h2>
-        <p class="workspace-strip__description">${escapeHtml(activeGroup.description)}</p>
       </div>
       <nav class="workspace-strip__switcher" aria-label="Schermen binnen ${escapeAttribute(
         activeGroup.label,
       )}">
         ${siblingLinks}
-      </nav>
-      <nav class="workspace-strip__quick" aria-label="Snelle kernroutes">
-        ${quickLinks
-          .map(
-            (link) =>
-              `<a href="${link.href}"><span>${escapeHtml(link.label)}</span><small>${escapeHtml(
-                link.meta,
-              )}</small></a>`,
-          )
-          .join('')}
       </nav>
     </section>
   `;

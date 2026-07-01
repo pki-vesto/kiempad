@@ -10,6 +10,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(ciWorkflow).toContain('npm run smoke:routeflows');
     expect(routeflowScreenshotSmokeScript).toContain("rootSelector: '.content'");
     expect(routeflowScreenshotSmokeScript).toContain('startCommandCenter: true');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-compact-workspace-deck="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain(
       'Start command-center staat niet in drie begrensde werkvlakken',
     );
