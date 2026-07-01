@@ -130,6 +130,15 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       "'.treatment-focus-shell__header p:last-child'",
     );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "'.knowledge-route-section__header > p:last-child'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "'.dossier-route-section__header > p:last-child'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "'.treatment-route-section__header > p:last-child'",
+    );
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
     expect(routeflowScreenshotSmokeScript).toContain(
       "maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 }",

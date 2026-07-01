@@ -72,6 +72,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.start-focus-shell__header p:last-child',
       '.daily-advice-focus-shell__header p:last-child',
+      '.command-route-section__header > p:last-child',
     ],
     maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 },
   },
@@ -103,7 +104,10 @@ const targets = [
       '[data-knowledge-research-disclosure="sources"]',
       '#knowledge-research-trends',
     ],
-    desktopHiddenSelectors: ['.knowledge-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.knowledge-focus-shell__header p:last-child',
+      '.knowledge-route-section__header > p:last-child',
+    ],
   },
   {
     screen: 'dossier-imaging',
@@ -131,7 +135,10 @@ const targets = [
       '[data-dossier-imaging-lane="consults"]',
       '[data-dossier-imaging-disclosure="consults"]',
     ],
-    desktopHiddenSelectors: ['.dossier-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+    ],
   },
   {
     screen: 'treatment-context',
@@ -158,7 +165,10 @@ const targets = [
       '.timeline-overview-bar',
       '#fertility-timeline-items',
     ],
-    desktopHiddenSelectors: ['.treatment-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.treatment-focus-shell__header p:last-child',
+      '.treatment-route-section__header > p:last-child',
+    ],
   },
   {
     screen: 'consult-upload',
@@ -187,7 +197,10 @@ const targets = [
       '[data-consult-upload-group="consult-basis"]',
       '[data-consult-upload-group="consult-context"]',
     ],
-    desktopHiddenSelectors: ['.dossier-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+    ],
   },
   {
     screen: 'question-prep',
@@ -210,7 +223,10 @@ const targets = [
       '.consult-detail-panel__header',
       '[aria-label="Consult Prep Wizard"]',
     ],
-    desktopHiddenSelectors: ['.question-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.question-focus-shell__header p:last-child',
+      '.question-route-section__header > p:last-child',
+    ],
   },
   {
     screen: 'wellbeing-history',
@@ -231,7 +247,10 @@ const targets = [
       '[data-wellbeing-history-lane="trends"]',
       '[data-wellbeing-disclosure="checkins"]',
     ],
-    desktopHiddenSelectors: ['.wellbeing-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.wellbeing-focus-shell__header p:last-child',
+      '.wellbeing-route-section__header > p:last-child',
+    ],
   },
   {
     screen: 'backup-sync',
@@ -248,7 +267,10 @@ const targets = [
       '[data-backup-sync-lane="recovery"]',
       '[data-backup-disclosure="controleren"]',
     ],
-    desktopHiddenSelectors: ['.backup-focus-shell__header p:last-child'],
+    desktopHiddenSelectors: [
+      '.backup-focus-shell__header p:last-child',
+      '.backup-route-section__header > p:last-child',
+    ],
   },
 ];
 

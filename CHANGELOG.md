@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1287 Premium Claude Design UI: actieve routeheaders zijn op desktop compacter. Routekoppen gebruiken kleinere titels en verbergen de lange introcopy, zodat workflows, summaries en invoerpanelen hoger in beeld starten; routeflow-smoke bewaakt dit per route.
 - G1286 Premium Claude Design UI: focus-shell headers zijn op desktop compacter. De shell-padding en titelgrootte zijn kleiner en de herhalende introcopy boven de taakruimte wordt verborgen; routeflow-smoke bewaakt dat deze bovenlaag niet terugkomt.
 - G1285 Premium Claude Design UI: Dossier, Kennis en Traject gebruiken hun ondersteunende oriëntatie/workbench nu als compacte bovenstrip. De split-workspace krijgt op desktop de volledige focusbreedte eronder, en de routeflow screenshot-smoke bewaakt dat de workspace niet meer naast een concurrerende supportkolom staat.
 - G1284 Premium Claude Design UI: split-workspaces geven de actieve hoofdroute nu duidelijk meer desktopbreedte. De taakrail en contextkolom zijn compacter, en de split-workspace browser-smoke meet dat de main-kolom breder blijft dan rail en context zonder mobiele fallback of overflow te breken.
