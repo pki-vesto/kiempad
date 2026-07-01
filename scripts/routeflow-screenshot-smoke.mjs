@@ -61,6 +61,25 @@ const targets = [
       '[data-dossier-imaging-disclosure="consults"]',
     ],
   },
+  {
+    screen: 'consult-upload',
+    hash: '#dossier?route=upload',
+    rootSelector: '[data-dossier-add-route-panel="consult-upload"]',
+    expectedText: 'Consultupload als eigen werkbaan',
+    activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: ['[data-hub-detail-panel="upload-intake"]'],
+    requiredSelectors: [
+      '[data-hub-workflow="consult-upload"]',
+      '[data-hub-workflow-tab="consult"][aria-current="page"]',
+      '[data-hub-workflow-tab="context"]',
+      '[data-hub-workflow-tab="questions"]',
+      '[data-dossier-add-route-panel="consult-upload"]',
+      '#consult-verslag-form',
+      '[data-consult-upload-group="consult-basis"]',
+      '[data-consult-upload-group="consult-context"]',
+    ],
+  },
 ];
 
 const viewports = [
@@ -120,6 +139,14 @@ async function assertRouteflows(browser, options) {
     for (const target of targets) {
       await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
       await unlockIfNeeded(page, target.hash);
+      if (target.openSelectors) {
+        await page.evaluate((selectors) => {
+          for (const selector of selectors) {
+            const details = document.querySelector(selector);
+            if (details instanceof HTMLDetailsElement) details.open = true;
+          }
+        }, target.openSelectors);
+      }
 
       const root = page.locator(target.rootSelector);
       await root.waitFor({ timeout: 10_000 });

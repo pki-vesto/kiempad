@@ -2694,6 +2694,12 @@ function renderDossierScreen(state: AppShellState): string {
             meta: 'Inbox controleren',
           },
           {
+            id: 'consult',
+            href: '#consult-verslag-form',
+            label: 'Consult',
+            meta: 'Verslag vastleggen',
+          },
+          {
             id: 'imaging',
             href: '#dossier?route=imaging',
             label: 'Beelden',
@@ -2955,6 +2961,35 @@ function renderDossierScreen(state: AppShellState): string {
         </details>
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
+        ${renderHubWorkflowHeader({
+          id: 'consult-upload-workflow-header',
+          eyebrow: 'Consultflow',
+          title: 'Consultupload als eigen werkbaan',
+          intro:
+            'Gespreksverslagen, broncontext en vragenvoorbereiding blijven bij elkaar zonder de documentupload opnieuw te openen.',
+          activeTab: 'consult',
+          data: { 'hub-workflow': 'consult-upload' },
+          tabs: [
+            {
+              id: 'consult',
+              href: '#consult-verslag-form',
+              label: 'Verslag',
+              meta: 'Tekst of bestand',
+            },
+            {
+              id: 'context',
+              href: '#consult-context-fields',
+              label: 'Context',
+              meta: 'Bron en poging',
+            },
+            {
+              id: 'questions',
+              href: '#vragen?route=voorbereiden',
+              label: 'Vragen',
+              meta: 'Vragen maken',
+            },
+          ],
+        })}
         ${workflowPanel({
           title: 'Consultverslag toevoegen',
           eyebrow: 'Gespreksintelligentie',
@@ -3016,7 +3051,7 @@ function renderDossierScreen(state: AppShellState): string {
             <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
           </label>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional" data-dossier-field-section="consult-context" data-dossier-field-section-label="Stap 3 · context">
+          <fieldset id="consult-context-fields" class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional" data-dossier-field-section="consult-context" data-dossier-field-section-label="Stap 3 · context">
             <legend>Bron en context</legend>
           <label>
             Correctie op conceptsamenvatting
