@@ -10,6 +10,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(ciWorkflow).toContain('npm run smoke:routeflows');
     expect(routeflowScreenshotSmokeScript).toContain("rootSelector: '.content'");
     expect(routeflowScreenshotSmokeScript).toContain('startCommandCenter: true');
+    expect(routeflowScreenshotSmokeScript).toContain('startConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'Start console valt terug naar een hoge eerste laag',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('[data-compact-workspace-deck="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain('appFrame');
     expect(routeflowScreenshotSmokeScript).toContain('desktop app-workspace is niet begrensd');

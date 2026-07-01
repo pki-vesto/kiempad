@@ -76,6 +76,7 @@ const targets = [
       '.workspace-strip__quick',
     ],
     startCommandCenter: true,
+    startConsole: true,
     desktopHiddenSelectors: [
       '.start-focus-shell__header p:last-child',
       '.daily-advice-focus-shell__header p:last-child',
@@ -574,6 +575,32 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const startConsole = routeflow.startConsole
+          ? (() => {
+              const shell = document.querySelector('[data-start-console="ready"]');
+              const launchpad = document.querySelector('[data-start-console-region="launchpad"]');
+              const commandCenter = document.querySelector(
+                '[data-start-console-region="commandcenter"]',
+              );
+              const launchpadRect = launchpad?.getBoundingClientRect();
+              const commandCenterRect = commandCenter?.getBoundingClientRect();
+              const launchpadStyle = launchpad ? getComputedStyle(launchpad) : null;
+              return {
+                shellVisible: Boolean(shell),
+                launchpadVisible: Boolean(
+                  launchpadRect && launchpadRect.width > 0 && launchpadRect.height > 0,
+                ),
+                commandCenterVisible: Boolean(
+                  commandCenterRect && commandCenterRect.width > 0 && commandCenterRect.height > 0,
+                ),
+                launchpadHeight: launchpadRect?.height ?? 0,
+                commandCenterTop: commandCenterRect?.top ?? 0,
+                viewportHeight: window.innerHeight,
+                launchpadOverflow: launchpadStyle?.overflow ?? '',
+                launchpadMaxHeight: launchpadStyle?.maxHeight ?? '',
+              };
+            })()
+          : null;
         const dailyAdviceConsole = routeflow.dailyAdviceConsole
           ? (() => {
               const workflow = document.querySelector('[data-daily-advice-focus-region="workflow"]');
@@ -889,6 +916,7 @@ async function assertRouteflows(browser, options) {
           openDetails,
           focusLayout,
           startCommandCenter,
+          startConsole,
           dailyAdviceConsole,
           startLaunchpad,
           uploadConsole,
@@ -936,9 +964,8 @@ async function assertRouteflows(browser, options) {
           !evidence.startLaunchpad.cockpitVisible ||
           !evidence.startLaunchpad.deckVisible ||
           evidence.startLaunchpad.cockpitLeft < evidence.startLaunchpad.headerRight - 1 ||
-          evidence.startLaunchpad.cockpitLeft < evidence.startLaunchpad.deckRight - 1 ||
           evidence.startLaunchpad.deckTop < evidence.startLaunchpad.headerTop - 1 ||
-          evidence.startLaunchpad.deckTop > evidence.startLaunchpad.cockpitBottom + 1)
+          evidence.startLaunchpad.deckTop < evidence.startLaunchpad.cockpitTop - 1)
       ) {
         throw new Error(
           `${options.label}/${target.screen}: start-launchpad staat niet in compacte dashboardlayout (${JSON.stringify(evidence.startLaunchpad)}).`,
@@ -1024,6 +1051,21 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: Start command-center staat niet in drie begrensde werkvlakken (${JSON.stringify(evidence.startCommandCenter)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.startConsole &&
+        (!evidence.startConsole.shellVisible ||
+          !evidence.startConsole.launchpadVisible ||
+          !evidence.startConsole.commandCenterVisible ||
+          evidence.startConsole.launchpadHeight > evidence.startConsole.viewportHeight * 0.5 ||
+          evidence.startConsole.commandCenterTop > evidence.startConsole.viewportHeight * 0.64 ||
+          evidence.startConsole.launchpadOverflow !== 'hidden' ||
+          evidence.startConsole.launchpadMaxHeight === 'none')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: Start console valt terug naar een hoge eerste laag (${JSON.stringify(evidence.startConsole)}).`,
         );
       }
       if (

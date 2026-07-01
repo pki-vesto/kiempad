@@ -70,11 +70,16 @@ export function pageHeader(opts: {
 /** Vertical single-column stack — replaces the dense 2-column grids. */
 export function sectionStack(
   children: string[],
-  opts: { className?: string; ariaLabel?: string } = {},
+  opts: { className?: string; ariaLabel?: string; data?: Record<string, string> } = {},
 ): string {
   const cls = opts.className ? ` ${opts.className}` : '';
   const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
-  return `<div class="section-stack${cls}"${label}>${children.join('')}</div>`;
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<div class="section-stack${cls}"${label}${dataAttrs}>${children.join('')}</div>`;
 }
 
 /** Responsive dashboard shell with a primary task lane and secondary route lane. */

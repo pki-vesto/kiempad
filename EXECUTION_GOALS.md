@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1313 — Premium Claude Design UI: Start als compactere eerste-viewport console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Start had al een launchpad en command-center, maar op desktop vulde de launchpad bijna de hele eerste viewport waardoor de gebruiker alsnog eerst een hoge introductielaag zag voordat de echte werkvlakken begonnen.
+- **Desired Outcome:** Maak Start op desktop een compactere eerste-viewport console waarin launchpad en command-center expliciete regio's hebben en het command-center zichtbaar binnen de eerste viewport start.
+- **User Value:** De gebruiker ziet direct de dagelijkse cockpit én de verdiepingswerkvlakken zonder het gevoel dat Start opnieuw één lange introductiepagina is.
+- **Acceptance Criteria:** Start rendert `data-start-console="ready"` met regio's `launchpad` en `commandcenter`; desktop begrenst de launchpadhoogte en gebruikt interne scroll waar nodig; de cockpit is compacter met drie kolommen en een lage werkbanenrouteband; het command-center start zichtbaar binnen de eerste viewport; mobiel behoudt de bestaande éénkoloms/swipe-flow; routeflow-smoke bewaakt dat Start niet terugvalt naar een hoge eerste laag.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/ui/components.ts`, `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2401
+
 ### G1312 — Premium Claude Design UI: Traject als compacte treatment-console
 
 - **Epic:** Onboarding & Daily Use
