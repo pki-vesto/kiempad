@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1265 — Premium Claude Design UI: dossier focus-shell bundelen
+
+- **Epic:** Security & DevEx
+- **Problem:** Dossier had wel routekeuze en split-view, maar die stonden nog als losse lagen onder de globale werkruimtekaart waardoor de pagina op mobiel en desktop alsnog als één lange stapel kon lezen.
+- **Desired Outcome:** Bundel route-stage en Dossier split-workspace in één `dossier-focus-shell` met aparte oriëntatie- en werkruimteregio's; verberg op mobiel de redundante globale werkruimtekaart en pagina-header voor Dossier.
+- **User Value:** De gebruiker ziet Dossier als één duidelijke werkruimte voor upload, review, beelden en tijdlijn in plaats van een reeks blokken onder elkaar.
+- **Acceptance Criteria:** Dossier rendert `data-dossier-focus-shell="ready"`; oriëntatie en workspace hebben eigen data-regio's; desktop gebruikt een tweekoloms focus-layout; mobiel houdt de routekeuze in de eerste viewport; dossier-route-smoke bewaakt desktop en mobiel.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/dossier-route-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☑ klaar
+- **Issue:** #2305
+
 ### G1264 — Premium Claude Design UI: start focus-shell verdichten
 
 - **Epic:** Security & DevEx

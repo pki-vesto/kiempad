@@ -2793,36 +2793,37 @@ function renderDossierScreen(state: AppShellState): string {
 
   return `
     <section class="section-stack dossier-command-layout" aria-label="Dossier beheren">
-      ${renderDossierRouteStage({
-        activeRoute: activeDossierRoute,
-        uploadCount: zichtbareDocumenten.length,
-        reviewCount: reviewWachtrij.length,
-        imagingCount: imagingItems.length,
-        embryoCount: embryoDossiers.length,
-        timelineCount: tijdlijn.length,
-        searchCount: zoekterm ? zoekResultaten.length : undefined,
-        documenten: zichtbareDocumenten,
-        importInboxItems,
-        imagingItems,
-        reviewWachtrij,
-        consultVerslagen,
-        embryoDossiers,
-        state,
-      })}
-      ${domainSplitWorkspace({
-        className: 'dossier-split-workspace',
-        ariaLabel: 'Dossier split-view werkruimte',
-        data: { 'dossier-split-workspace': 'ready' },
-        rail: renderDossierTaskRoutes({
+      ${renderDossierFocusShell({
+        orientation: renderDossierRouteStage({
+          activeRoute: activeDossierRoute,
           uploadCount: zichtbareDocumenten.length,
           reviewCount: reviewWachtrij.length,
           imagingCount: imagingItems.length,
           embryoCount: embryoDossiers.length,
           timelineCount: tijdlijn.length,
           searchCount: zoekterm ? zoekResultaten.length : undefined,
-          activeRoute: activeDossierRoute,
+          documenten: zichtbareDocumenten,
+          importInboxItems,
+          imagingItems,
+          reviewWachtrij,
+          consultVerslagen,
+          embryoDossiers,
+          state,
         }),
-        main: `
+        workspace: domainSplitWorkspace({
+          className: 'dossier-split-workspace',
+          ariaLabel: 'Dossier split-view werkruimte',
+          data: { 'dossier-split-workspace': 'ready' },
+          rail: renderDossierTaskRoutes({
+            uploadCount: zichtbareDocumenten.length,
+            reviewCount: reviewWachtrij.length,
+            imagingCount: imagingItems.length,
+            embryoCount: embryoDossiers.length,
+            timelineCount: tijdlijn.length,
+            searchCount: zoekterm ? zoekResultaten.length : undefined,
+            activeRoute: activeDossierRoute,
+          }),
+          main: `
           <section id="dossier-route-upload" class="dossier-route-section" aria-labelledby="dossier-route-upload-title" data-dossier-route="upload"${renderDossierRouteVisibility(activeDossierRoute, 'upload')}>
       <header class="dossier-route-section__header">
         <p class="kp-card__eyebrow">Uploaden</p>
@@ -3769,17 +3770,38 @@ function renderDossierScreen(state: AppShellState): string {
         </details>
         </section>
         `,
-        context: renderDossierCommandCenter({
-          documenten: zichtbareDocumenten,
-          importInboxItems,
-          imagingItems,
-          reviewWachtrij,
-          consultVerslagen,
-          embryoDossiers,
-          state,
-          activeRoute: activeDossierRoute,
+          context: renderDossierCommandCenter({
+            documenten: zichtbareDocumenten,
+            importInboxItems,
+            imagingItems,
+            reviewWachtrij,
+            consultVerslagen,
+            embryoDossiers,
+            state,
+            activeRoute: activeDossierRoute,
+          }),
         }),
       })}
+    </section>
+  `;
+}
+
+function renderDossierFocusShell(input: { orientation: string; workspace: string }): string {
+  return `
+    <section class="dossier-focus-shell" aria-labelledby="dossier-focus-shell-title" data-dossier-focus-shell="ready">
+      <header class="dossier-focus-shell__header">
+        <p class="kp-card__eyebrow">Dossier focus</p>
+        <h2 id="dossier-focus-shell-title">Eerst route kiezen, dan pas dossierinhoud openen</h2>
+        <p>De routekaart en split-view horen bij elkaar: upload, review, beelden en tijdlijn blijven één gefocuste dossierwerkruimte.</p>
+      </header>
+      <div class="dossier-focus-shell__body">
+        <div class="dossier-focus-shell__orientation" data-dossier-focus-region="orientation">
+          ${input.orientation}
+        </div>
+        <div class="dossier-focus-shell__workspace" data-dossier-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
     </section>
   `;
 }

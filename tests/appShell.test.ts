@@ -6332,6 +6332,18 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route-switch-hint');
     expect(css).toContain('.dossier-add-route-draft-note');
     expect(css).toContain('.dossier-add-route-microcopy');
+    expect(css).toContain('.dossier-focus-shell {');
+    expect(css).toContain('.dossier-focus-shell__header {');
+    expect(css).toContain('.dossier-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
+    expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain(
+      '.dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {',
+    );
     expect(css).toContain('.dossier-route-stage {');
     expect(css).toContain('[data-dossier-first-viewport="route-stage"]');
     expect(css).toContain('.dossier-route-stage__header {');
@@ -6355,6 +6367,22 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-imaging-inspection-board__lane:hover,');
     expect(css).toContain('.dossier-imaging-inspection-board__lane:focus-visible {');
     expect(css).toContain('.dossier-imaging-inspection-board__lane em {');
+    expect(mobileCss).toContain('.dossier-focus-shell {');
+    expect(mobileCss).toContain(
+      '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-dossier-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('box-shadow: none;');
+    expect(mobileCss).toContain('.dossier-focus-shell__header h2 {');
+    expect(mobileCss).toContain('.dossier-focus-shell__body {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).toContain(
+      '.dossier-focus-shell__workspace .domain-split-workspace__context {',
+    );
+    expect(mobileCss).toContain('grid-column: auto;');
     expect(mobileCss).toContain('.dossier-route-snapshot {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-route-snapshot__card {');
@@ -6747,6 +6775,12 @@ describe('app shell', () => {
     const emptyCenter = extractDossierCommandCenter(emptyHtml);
 
     expect(emptyHtml).toContain('class="section-stack dossier-command-layout"');
+    expect(emptyHtml).toContain('class="dossier-focus-shell"');
+    expect(emptyHtml).toContain('data-dossier-focus-shell="ready"');
+    expect(emptyHtml).toContain('Eerst route kiezen, dan pas dossierinhoud openen');
+    expect(emptyHtml).toContain('data-dossier-focus-region="orientation"');
+    expect(emptyHtml).toContain('data-dossier-focus-region="workspace"');
+    expect(emptyHtml).not.toContain(')}');
     expect(emptyHtml).toContain(
       '<section class="dossier-route-stage" aria-label="Dossierwerkbank" data-dossier-first-viewport="route-stage">',
     );
