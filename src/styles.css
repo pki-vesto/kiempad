@@ -7987,6 +7987,72 @@ a.action-card:active {
   line-height: 1.25;
 }
 
+@media (min-width: 761px) {
+  .dossier-upload-triage,
+  .dossier-imaging-inspection-board,
+  .knowledge-research-reader {
+    gap: 9px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .dossier-upload-triage__header,
+  .dossier-imaging-inspection-board__header,
+  .knowledge-research-reader__header {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dossier-upload-triage__header h3,
+  .dossier-imaging-inspection-board__header h3,
+  .knowledge-research-reader__header h3 {
+    font-size: 0.98rem;
+    line-height: 1.18;
+  }
+
+  .dossier-upload-triage__header > p,
+  .dossier-imaging-inspection-board__header > p,
+  .knowledge-research-reader__header > p {
+    display: none;
+  }
+
+  .dossier-upload-triage__lane,
+  .dossier-imaging-inspection-board__lane,
+  .knowledge-research-reader__lane {
+    gap: 4px;
+    min-height: 96px;
+    padding: 9px;
+    border-radius: 8px;
+  }
+
+  .dossier-upload-triage__lane span,
+  .dossier-imaging-inspection-board__lane span,
+  .knowledge-research-reader__lane span {
+    font-size: 0.64rem;
+  }
+
+  .dossier-upload-triage__lane strong,
+  .dossier-imaging-inspection-board__lane strong,
+  .knowledge-research-reader__lane strong {
+    font-size: 0.88rem;
+    line-height: 1.18;
+  }
+
+  .dossier-upload-triage__lane small,
+  .dossier-imaging-inspection-board__lane small,
+  .knowledge-research-reader__lane small {
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .dossier-upload-triage__lane em,
+  .dossier-imaging-inspection-board__lane em,
+  .knowledge-research-reader__lane em {
+    padding: 3px 7px;
+    font-size: 0.66rem;
+  }
+}
+
 .dossier-task-routes {
   z-index: 20;
   display: grid;

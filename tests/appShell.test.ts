@@ -6636,6 +6636,10 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-triage__lanes {');
     expect(css).toContain('.dossier-upload-triage__lane {');
     expect(css).toContain('min-height: 116px;');
+    expect(css).toContain('.dossier-upload-triage__header > p,');
+    expect(css).toContain('.dossier-imaging-inspection-board__header > p,');
+    expect(css).toContain('.knowledge-research-reader__header > p {');
+    expect(css).toContain('min-height: 96px;');
     expect(css).toContain('.dossier-upload-triage__lane:hover,');
     expect(css).toContain('.dossier-upload-triage__lane:focus-visible {');
     expect(css).toContain('.dossier-upload-triage__lane em {');
@@ -35853,6 +35857,7 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-snapshot__card strong {');
     expect(css).toContain('.knowledge-research-reader {');
     expect(css).toContain('.knowledge-research-reader__header {');
+    expect(css).toContain('.knowledge-research-reader__header > p {');
     expect(css).toContain('.knowledge-research-reader__lanes {');
     expect(css).toContain('.knowledge-research-reader__lane {');
     expect(css).toContain('grid-template-rows: auto auto 1fr auto;');

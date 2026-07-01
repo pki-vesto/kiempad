@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1289 Premium Claude Design UI: eerste contentboards voor upload, imaging en research zijn op desktop compacter. Board-introcopy verdwijnt uit de desktop-flow, lane-kaarten zijn lager en de routeflow-smoke bewaakt dat uploadtriage, imaging-inspectie en research-reader de inhoud niet opnieuw naar beneden drukken.
 - G1288 Premium Claude Design UI: hub-workflow headers en detail-summaries zijn op desktop compacter. Lange hub-introcopy en detailhintregels zijn verborgen, tabs en summarychips zijn lager, en de routeflow-smoke bewaakt dat deze workflowlaag de echte content niet opnieuw naar beneden duwt.
 - G1287 Premium Claude Design UI: actieve routeheaders zijn op desktop compacter. Routekoppen gebruiken kleinere titels en verbergen de lange introcopy, zodat workflows, summaries en invoerpanelen hoger in beeld starten; routeflow-smoke bewaakt dit per route.
 - G1286 Premium Claude Design UI: focus-shell headers zijn op desktop compacter. De shell-padding en titelgrootte zijn kleiner en de herhalende introcopy boven de taakruimte wordt verborgen; routeflow-smoke bewaakt dat deze bovenlaag niet terugkomt.

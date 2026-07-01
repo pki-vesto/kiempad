@@ -140,6 +140,11 @@ describe('routeflow screenshot smoke script', () => {
       "'.treatment-route-section__header > p:last-child'",
     );
     expect(routeflowScreenshotSmokeScript).toContain("'.hub-workflow-header__copy p'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.dossier-upload-triage__header > p'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "'.dossier-imaging-inspection-board__header > p'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain("'.knowledge-research-reader__header > p'");
     expect(routeflowScreenshotSmokeScript).toContain(
       '\'[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small\'',
     );
