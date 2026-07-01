@@ -4330,6 +4330,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2273
 - **Status:** ☑ done
 
+### G1250 — researchscan in kenniswerkbank toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De kennis/research eerste viewport heeft een werkbank en filters, maar mist nog een compacte scanlaag voor bronnen, samenvattingen, trends en netwerkstatus.
+- **User Impact:** Gebruikers zien researchroutes, maar moeten nog naar de filterkaart en detailpanelen kijken om de researchstand te begrijpen.
+- **Desired Outcome:** Voeg een compacte researchscan toe boven de filterkaart met bronnen, samenvattingen, trends en netwerkstatus.
+- **User Value:** Research voelt meer als een rustige leeswerkbank en minder als een verzameling losse publicatielijsten.
+- **Acceptance Criteria:** Kennis toont een desktop/mobile responsieve snapshotrij met bronnen, samenvattingen, trends en netwerkstatus; bestaande kennisroutes, researchsamenvattingen, broncache, trends, AI/netwerk, bibliotheek, data-hooks en tests blijven werken; mobile toont geen overlap of horizontale pagina-overflow; geen medische payload, providerpayload, OCR-tekst, diagnose, dosering, kansberekening, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Kennis, Research Intelligence
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge research workbench, research summaries, research trends, CSS, app shell tests
+- **ADR Needed:** no
+- **Score:** 23
+- **GitHub Issue:** #2275
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

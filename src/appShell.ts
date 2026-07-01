@@ -11517,6 +11517,7 @@ function renderKnowledgeResearchWorkbench(input: {
         </div>
         <p class="knowledge-research-workbench__status">${input.netwerkAan ? 'Netwerkresearch: opt-in aan' : 'Netwerkresearch: lokale cache'}</p>
       </header>
+      ${renderKnowledgeResearchSnapshot(input)}
       <div id="knowledge-overview" class="summary-panel priority-panel knowledge-command-panel">
         <div class="knowledge-command-panel__intro">
           <div>
@@ -11533,6 +11534,40 @@ function renderKnowledgeResearchWorkbench(input: {
         </div>
         ${renderKennisFilterForm(input.filter)}
       </div>
+    </section>
+  `;
+}
+
+function renderKnowledgeResearchSnapshot(input: {
+  researchBronnen: number;
+  researchSamenvattingen: number;
+  researchTrends: number;
+  kennisItems: number;
+  totalKennisItems: number;
+  netwerkAan: boolean;
+}): string {
+  return `
+    <section class="knowledge-research-snapshot" aria-label="Researchscan" data-knowledge-research-snapshot="ready">
+      <a class="knowledge-research-snapshot__card" href="#kennis?route=read" data-knowledge-research-snapshot-card="sources">
+        <span>Bronnen</span>
+        <strong>${input.researchBronnen} bron${input.researchBronnen === 1 ? '' : 'nen'}</strong>
+        <small>Start met bron en publicatiedatum.</small>
+      </a>
+      <a class="knowledge-research-snapshot__card" href="#knowledge-research-summaries" data-knowledge-research-snapshot-card="summaries">
+        <span>Samenvattingen</span>
+        <strong>${input.researchSamenvattingen} item${input.researchSamenvattingen === 1 ? '' : 's'}</strong>
+        <small>Wetenschappelijk en eenvoudig naast elkaar.</small>
+      </a>
+      <a class="knowledge-research-snapshot__card" href="#knowledge-research-trends" data-knowledge-research-snapshot-card="trends">
+        <span>Trends</span>
+        <strong>${input.researchTrends} groep${input.researchTrends === 1 ? '' : 'en'}</strong>
+        <small>Alleen lokale groepering, geen bewijsweging.</small>
+      </a>
+      <a class="knowledge-research-snapshot__card" href="#kennis?route=ai" data-knowledge-research-snapshot-card="network">
+        <span>Netwerk</span>
+        <strong>${input.netwerkAan ? 'Opt-in aan' : 'Lokale cache'}</strong>
+        <small>${input.kennisItems}/${input.totalKennisItems} items zichtbaar.</small>
+      </a>
     </section>
   `;
 }

@@ -34940,6 +34940,15 @@ describe('app shell', () => {
     );
     expect(html).toContain('Research begrijpen zonder alles tegelijk te lezen');
     expect(html).toContain('Netwerkresearch: lokale cache');
+    expect(html).toContain('data-knowledge-research-snapshot="ready"');
+    expect(html).toContain('aria-label="Researchscan"');
+    expect(html).toContain('data-knowledge-research-snapshot-card="sources"');
+    expect(html).toContain('data-knowledge-research-snapshot-card="summaries"');
+    expect(html).toContain('data-knowledge-research-snapshot-card="trends"');
+    expect(html).toContain('data-knowledge-research-snapshot-card="network"');
+    expect(html).toContain('Start met bron en publicatiedatum.');
+    expect(html).toContain('Wetenschappelijk en eenvoudig naast elkaar.');
+    expect(html).toContain('Alleen lokale groepering, geen bewijsweging.');
     expect(html).toContain('id="knowledge-overview"');
     expect(html).toContain('class="knowledge-command-panel__intro"');
     expect(html).toContain('<span class="stat__value">');
@@ -35099,11 +35108,16 @@ describe('app shell', () => {
 
   it('bewaakt de kennis researchwerkbank als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
     expect(css).toContain('.knowledge-research-workbench {');
     expect(css).toContain('[data-knowledge-first-viewport="research-workbench"]');
     expect(css).toContain('.knowledge-research-workbench__header {');
     expect(css).toContain('.knowledge-research-workbench__status {');
+    expect(css).toContain('.knowledge-research-snapshot {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.knowledge-research-snapshot__card {');
+    expect(css).toContain('.knowledge-research-snapshot__card strong {');
     expect(css).toContain('.knowledge-route-section[hidden],');
     expect(css).toContain('.wellbeing-route-section[hidden],');
     expect(css).toContain('.decision-route-section[hidden],');
@@ -35118,6 +35132,10 @@ describe('app shell', () => {
     expect(css).toContain('font-size: 1.16rem;');
     expect(css).toContain('.knowledge-command-panel__intro {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.knowledge-research-snapshot {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.knowledge-research-snapshot__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(230px, 76vw);');
   });
 
   it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {
