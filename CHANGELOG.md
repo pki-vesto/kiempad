@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1310 Premium Claude Design UI: Agenda is op desktop een compacte schedule-console geworden. Dagplanningwerkbank, routekeuze en actieve planningswerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat overzicht, plannen, ICS-import en historie niet meer als één lange planningspagina starten.
 - G1309 Premium Claude Design UI: Herinneringen is op desktop een compacte notification-console geworden. Systeemwerkbank, routekeuze en actieve meldingswerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat status, privacy, plannen en komende meldingen niet meer als één lange beheerpagina starten.
 - G1308 Premium Claude Design UI: Logboek is op desktop een compacte audit-console geworden. Systeemwerkbank, routekeuze en actieve auditwerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat status, recent, categorieën en privacy niet meer als één lange beheerpagina starten.
 - G1307 Premium Claude Design UI: Back-up is op desktop een compacte backup-console geworden. Veiligheidswerkbank, routekeuze en actieve back-upwerkruimte staan in begrensde werkvlakken; de workspace gebruikt route-rail, hoofdvlak en contextstrip zodat controleren, exporteren, importeren en herstellen niet meer als één lange beheerpagina starten.

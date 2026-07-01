@@ -7372,6 +7372,113 @@ h2 {
   }
 }
 
+@media (min-width: 961px) {
+  .schedule-focus-shell__body {
+    grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
+    align-items: stretch;
+    max-height: min(860px, calc(100vh - 126px));
+    overflow: hidden;
+  }
+
+  .schedule-focus-shell__workbench,
+  .schedule-focus-shell__workspace {
+    max-height: min(820px, calc(100vh - 164px));
+    overflow-y: auto;
+    contain: layout paint;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .schedule-focus-shell__workspace {
+    overflow-x: hidden;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace {
+    grid-template-areas:
+      "rail main"
+      "rail context";
+    grid-template-columns: minmax(172px, 0.42fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    max-height: min(820px, calc(100vh - 164px));
+    overflow: hidden;
+    contain: layout paint;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__rail {
+    grid-area: rail;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__main {
+    grid-area: main;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__context {
+    grid-area: context;
+    width: min(100%, 330px);
+    max-height: 132px;
+    justify-self: start;
+    overflow-y: auto;
+    padding-top: 8px;
+  }
+
+  .schedule-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
+    overflow: visible;
+    overflow-wrap: break-word;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .schedule-focus-shell__workbench > .schedule-planning-workbench {
+    align-content: start;
+    padding: 12px;
+  }
+
+  .schedule-focus-shell__workbench .planning-workbench__header p:last-child,
+  .schedule-focus-shell__workspace .command-route-summary__eyebrow,
+  .schedule-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow) {
+    display: none;
+  }
+
+  .schedule-focus-shell__workbench .planning-workbench__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__main .command-route-summary {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .schedule-focus-shell__workspace
+    .domain-split-workspace__main
+    .command-route-summary
+    > div:first-child,
+  .schedule-focus-shell__workspace .domain-split-workspace__main .command-route-summary__meta {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__main .command-route-summary__meta {
+    justify-content: flex-start;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__rail .command-task-route__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__rail .command-task-route span {
+    overflow: visible;
+    overflow-wrap: normal;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__rail .command-task-route__badge {
+    justify-self: end;
+  }
+}
+
 .command-form-section {
   display: grid;
   min-width: 0;

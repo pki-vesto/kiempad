@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1310 — Premium Claude Design UI: Agenda als compacte schedule-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Agenda had al een dagplanningwerkbank en split-workspace, maar kon op desktop nog als gestapelde planningspagina met losse volgende afspraak, plannen, ICS-import en historie lezen.
+- **Desired Outcome:** Maak Agenda op desktop een begrensde schedule-console met dagplanningwerkbank, taakroute-rail, actieve planningswerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan afspraken, planning, ICS-import en historie scannen zonder door één lange planningspagina te scrollen.
+- **Acceptance Criteria:** Agenda rendert `data-schedule-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de dagplanningwerkbank start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; route-labels en route-summary blijven leesbaar zonder woordbreuk; mobiel behoudt de bestaande éénkoloms flow; split-workspace en context-signals smokes blijven groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2395
+
 ### G1309 — Premium Claude Design UI: Herinneringen als compacte notification-console
 
 - **Epic:** Reliability & Operations
