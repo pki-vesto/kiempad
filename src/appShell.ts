@@ -3454,6 +3454,13 @@ function renderDossierScreen(state: AppShellState): string {
           ariaLabel: 'Dossier imaging route-samenvatting',
           data: { 'dossier-route-summary': 'imaging' },
         })}
+        ${renderDossierImagingInspectionBoard({
+          imagingCount: imagingItems.length,
+          embryoCount: embryoDossiers.length,
+          consultCount: consultVerslagen.length,
+          indexCount: indexItems.length,
+          locked: Boolean(state.imagingPreviewLocked),
+        })}
         <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="consults" data-hub-detail-panel="consult-verslagen">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
@@ -3700,6 +3707,75 @@ function renderDossierRouteStage(input: {
         <p class="dossier-route-stage__status">${escapeHtml(renderDossierActiveRouteCopy(input.activeRoute))}</p>
       </header>
       ${renderDossierRouteSnapshot(input)}
+    </section>
+  `;
+}
+
+function renderDossierImagingInspectionBoard(input: {
+  imagingCount: number;
+  embryoCount: number;
+  consultCount: number;
+  indexCount: number;
+  locked: boolean;
+}): string {
+  const lanes = [
+    {
+      id: 'images',
+      href: '#dossier-imaging-repository',
+      label: 'Beelden',
+      title: `${input.imagingCount} beeld${input.imagingCount === 1 ? '' : 'en'}`,
+      detail: 'Echo’s, foto’s en scans eerst als repository inspecteren.',
+      cue: input.locked ? 'Preview vergrendeld' : 'Metadata zichtbaar',
+    },
+    {
+      id: 'compare',
+      href: '#dossier-imaging-repository',
+      label: 'Vergelijken',
+      title: 'Momenten naast elkaar',
+      detail: 'Controleer verschillen alleen via metadata en lokale previews.',
+      cue: `${input.indexCount} indexitems`,
+    },
+    {
+      id: 'embryos',
+      href: '#dossier-embryo-dossiers',
+      label: "Embryo's",
+      title: `${input.embryoCount} dossier${input.embryoCount === 1 ? '' : 's'}`,
+      detail: 'Kwaliteit, status en historie blijven als bronregistratie bij elkaar.',
+      cue: 'Geen selectieadvies',
+    },
+    {
+      id: 'consults',
+      href: '#dossier-consultverslagen',
+      label: 'Consultcontext',
+      title: `${input.consultCount} verslag${input.consultCount === 1 ? '' : 'en'}`,
+      detail: 'Lees bespreekpunten naast beelden zonder tekstpayload in deze laag.',
+      cue: 'Acties volgen',
+    },
+  ];
+
+  return `
+    <section class="dossier-imaging-inspection-board" aria-label="Imaging inspectiebord" data-dossier-imaging-inspection-board="ready">
+      <header class="dossier-imaging-inspection-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Inspectiebord</p>
+          <h3>Kies eerst je beeldroute</h3>
+        </div>
+        <p>Start met beelden, vergelijken, embryo’s of consultcontext; de volledige repository blijft daarna uitklapbaar.</p>
+      </header>
+      <nav class="dossier-imaging-inspection-board__lanes" aria-label="Imaging route kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="dossier-imaging-inspection-board__lane" href="${lane.href}" data-dossier-imaging-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${lane.title}</strong>
+          <small>${lane.detail}</small>
+          <em>${lane.cue}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze laag toont alleen tellingen en veilige metadata; geen OCR-tekst, consulttekst, beeldpayload of embryo-selectieadvies.</p>
     </section>
   `;
 }

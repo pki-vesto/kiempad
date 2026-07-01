@@ -4483,6 +4483,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2291
 - **Status:** ☑ done
 
+### G1259 — imaging-inspectiebord toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossier imaging-route heeft hubtabs en disclosures, maar consultverslagen, imaging-repository, dossierindex en embryo-dossiers blijven zonder compacte beeldspecifieke startlaag naast elkaar staan.
+- **User Impact:** Gebruikers moeten nog bepalen of zij eerst beelden, vergelijkingen, embryo’s of consultcontext moeten openen.
+- **Desired Outcome:** Toon vóór de imagingdisclosures een compact inspectiebord met vier taaklanes voor beelden, vergelijken, embryo’s en consultcontext.
+- **User Value:** Gebruikers starten de beeldroute vanuit een duidelijke inspectiekeuze in plaats van een reeks detailpanelen.
+- **Acceptance Criteria:** Dossierroute `#dossier?route=imaging` toont `data-dossier-imaging-inspection-board="ready"` vóór de consultdisclosure; lanes linken naar bestaande imaging repository, embryo-dossiers en consultverslagen; bestaande filterformulieren, vergelijkingspanelen, embryo-dossiers, consultkaarten, routeankers en privacyhooks blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt het inspectiebord op desktop en mobiel; geen OCR-tekst, consulttekst, beeldpayload, embryo-selectieadvies, trackingdata of secrets wordt toegevoegd.
+- **Affected Screens:** Dossier, imaging repository, embryo tracking, consultation intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, imaging components, embryo components, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 14
+- **GitHub Issue:** #2293
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
