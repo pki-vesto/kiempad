@@ -3571,11 +3571,38 @@ h2 {
 }
 
 .workspace-context-signals {
+  --workspace-context-accent: var(--accent);
+
   display: grid;
   gap: 11px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+}
+
+.workspace-context-signals[data-workspace-context-signals="dossier"],
+.workspace-context-signals[data-workspace-context-signals="treatment"] {
+  --workspace-context-accent: var(--teal);
+}
+
+.workspace-context-signals[data-workspace-context-signals="schedule"],
+.workspace-context-signals[data-workspace-context-signals="notification"] {
+  --workspace-context-accent: var(--slate);
+}
+
+.workspace-context-signals[data-workspace-context-signals="knowledge"],
+.workspace-context-signals[data-workspace-context-signals="wellbeing"] {
+  --workspace-context-accent: var(--accent-strong);
+}
+
+.workspace-context-signals[data-workspace-context-signals="decision"],
+.workspace-context-signals[data-workspace-context-signals="finance"] {
+  --workspace-context-accent: var(--clay);
+}
+
+.workspace-context-signals[data-workspace-context-signals="eventlog"],
+.workspace-context-signals[data-workspace-context-signals="backup"] {
+  --workspace-context-accent: var(--amber);
 }
 
 .workspace-context-signals__header {
@@ -3600,11 +3627,11 @@ h2 {
   min-height: 42px;
   margin: 0;
   padding: 9px 10px;
-  border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--workspace-context-accent) 32%, var(--border));
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--accent) 10%, var(--surface-raised)),
+    color-mix(in srgb, var(--workspace-context-accent) 10%, var(--surface-raised)),
     color-mix(in srgb, var(--surface-raised) 92%, var(--surface-2))
   );
   color: var(--text-muted);
@@ -3620,13 +3647,13 @@ h2 {
   width: 2px;
   height: 14px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 46%, transparent);
+  background: color-mix(in srgb, var(--workspace-context-accent) 46%, transparent);
   content: "";
 }
 
 .workspace-context-signals__microstate span {
   min-width: 44px;
-  color: var(--accent-strong);
+  color: color-mix(in srgb, var(--workspace-context-accent) 82%, var(--text));
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -3652,9 +3679,9 @@ h2 {
   max-width: 100%;
   margin-top: 2px;
   padding: 3px 8px;
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--workspace-context-accent) 28%, var(--border));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-raised) 82%, var(--accent) 8%);
+  background: color-mix(in srgb, var(--surface-raised) 82%, var(--workspace-context-accent) 8%);
   color: var(--text);
   font-size: 0.72rem;
   font-weight: 800;
@@ -3685,10 +3712,10 @@ h2 {
 
 .workspace-context-signal:first-child {
   position: relative;
-  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface-raised));
+  border-color: color-mix(in srgb, var(--workspace-context-accent) 38%, var(--border));
+  background: color-mix(in srgb, var(--workspace-context-accent) 8%, var(--surface-raised));
   box-shadow:
-    inset 3px 0 0 color-mix(in srgb, var(--accent) 70%, transparent),
+    inset 3px 0 0 color-mix(in srgb, var(--workspace-context-accent) 70%, transparent),
     0 10px 24px rgba(21, 48, 44, 0.055);
 }
 
@@ -3699,7 +3726,7 @@ h2 {
   right: 18px;
   width: 10px;
   height: 10px;
-  border: 2px solid color-mix(in srgb, var(--accent) 50%, var(--border));
+  border: 2px solid color-mix(in srgb, var(--workspace-context-accent) 50%, var(--border));
   border-radius: 999px;
   background: var(--surface-raised);
   content: "";

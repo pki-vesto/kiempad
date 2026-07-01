@@ -36784,14 +36784,23 @@ describe('app shell', () => {
     expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.workspace-context-signals {');
+    expect(css).toContain('--workspace-context-accent: var(--accent);');
+    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="dossier"]');
+    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="schedule"]');
+    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="knowledge"]');
+    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="decision"]');
+    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="eventlog"]');
     expect(css).toContain('.workspace-context-signals__microstate {');
     expect(css).toContain('.workspace-context-signals__microstate b {');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-flow="linked"]');
+    expect(css).toContain('var(--workspace-context-accent)');
     expect(css).toContain('.workspace-context-signals__microstate::after');
     expect(css).toContain('.workspace-context-signal:first-child::before');
     expect(css).toContain('.workspace-context-signal {');
     expect(css).toContain('.workspace-context-signal:first-child {');
-    expect(css).toContain('inset 3px 0 0 color-mix(in srgb, var(--accent) 70%, transparent)');
+    expect(css).toContain(
+      'inset 3px 0 0 color-mix(in srgb, var(--workspace-context-accent) 70%, transparent)',
+    );
     expect(css).toContain('box-shadow: 0 8px 22px rgba(21, 48, 44, 0.045);');
     expect(css).toContain('min-width: 44px;');
     expect(css).toContain('min-height: 36px;');
