@@ -41,6 +41,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'knowledge-console staat niet in compacte werkvlakken',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('consultConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'consult-console staat niet in compacte werkvlakken',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('timelineConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
       'timeline-console staat niet in begrensde werkvlakken',
@@ -148,6 +152,9 @@ describe('routeflow screenshot smoke script', () => {
       '[data-hub-workflow-tab="questions"]',
       '[data-dossier-add-route-panel="consult-upload"]',
       '#consult-verslag-form',
+      '[data-consult-console="ready"]',
+      '[data-consult-console-region="workbench"]',
+      '[data-consult-console-region="workspace"]',
       '[data-question-route-summary="voorbereiden"]',
       '[data-consult-prep-board="ready"]',
       '[data-consult-prep-lane="questions"]',

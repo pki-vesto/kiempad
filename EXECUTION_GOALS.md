@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1303 — Premium Claude Design UI: Vragen als compacte consult-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Vragen/consultvoorbereiding had al een consultwerkbank en split-workspace, maar kon op desktop nog als focusroute met brede vraaglijststapeling en krappe drie-koloms workspace lezen.
+- **Desired Outcome:** Maak Vragen op desktop een begrensde consult-console met consultwerkbank, taakroute-rail, actieve prep-workspace en compacte contextstrip.
+- **User Value:** De gebruiker kan open vragen, prep-packet, beheer en verslagen scannen zonder door één lange vraaglijstpagina te scrollen.
+- **Acceptance Criteria:** Vragen rendert `data-consult-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de prep-workbench start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; mobiel behoudt de bestaande éénkoloms flow; routeflow-smoke bewaakt console-geometrie, tekstfit en app-frame body-scroll.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2381
+
 ### G1302 — Premium Claude Design UI: Research als compacte knowledge-console
 
 - **Epic:** Onboarding & Daily Use

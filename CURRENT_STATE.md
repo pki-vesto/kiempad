@@ -390,6 +390,11 @@
   console met researchwerkbank links, taakroute-rail in het midden en actieve
   leesworkspace rechts. De workspace verbergt de krappe contextkolom, gebruikt
   een leesbare 2x2 researchlaag en bewaakt tekstfit/overflow via routeflow-smoke.
+- **G1303 Consult-console:** Vragen/consultvoorbereiding toont op desktop een
+  compacte console met consultwerkbank links, taakroute-rail in het midden en
+  actieve prep-workspace rechts. De workspace gebruikt een hoofdvlak met
+  contextstrip, zodat prep-board, wizard, open vragen en verslagen niet als één
+  lange vraaglijstpagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
