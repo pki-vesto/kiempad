@@ -2699,6 +2699,13 @@ describe('app shell', () => {
     expect(css).toContain(
       '.content:has([data-notification-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick {',
     );
+    expect(css).toContain('@media (min-width: 761px) {');
+    expect(css).toContain('.start-focus-shell,');
+    expect(css).toContain('.notification-focus-shell {');
+    expect(css).toContain('.start-focus-shell__header,');
+    expect(css).toContain('.notification-focus-shell__header {');
+    expect(css).toContain('.start-focus-shell__header p:last-child,');
+    expect(css).toContain('.notification-focus-shell__header p:last-child {');
     expect(css).toContain('.workspace-map {');
     expect(css).toContain('.workspace-map__grid {');
     expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');

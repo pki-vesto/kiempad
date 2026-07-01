@@ -118,9 +118,18 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('presentSelectors');
     expect(routeflowScreenshotSmokeScript).toContain('gesloten routeflow-selectors ontbreken');
     expect(routeflowScreenshotSmokeScript).toContain('hiddenSelectors: [');
+    expect(routeflowScreenshotSmokeScript).toContain('desktopHiddenSelectors');
     expect(routeflowScreenshotSmokeScript).toContain('\'[data-workspace-map="ready"]\'');
     expect(routeflowScreenshotSmokeScript).toContain("'.workspace-strip__description'");
     expect(routeflowScreenshotSmokeScript).toContain("'.workspace-strip__quick'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.start-focus-shell__header p:last-child'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "'.knowledge-focus-shell__header p:last-child'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain("'.dossier-focus-shell__header p:last-child'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      "'.treatment-focus-shell__header p:last-child'",
+    );
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
     expect(routeflowScreenshotSmokeScript).toContain(
       "maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 }",

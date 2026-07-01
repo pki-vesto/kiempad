@@ -69,6 +69,10 @@ const targets = [
       '.workspace-strip__description',
       '.workspace-strip__quick',
     ],
+    desktopHiddenSelectors: [
+      '.start-focus-shell__header p:last-child',
+      '.daily-advice-focus-shell__header p:last-child',
+    ],
     maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 },
   },
   {
@@ -99,6 +103,7 @@ const targets = [
       '[data-knowledge-research-disclosure="sources"]',
       '#knowledge-research-trends',
     ],
+    desktopHiddenSelectors: ['.knowledge-focus-shell__header p:last-child'],
   },
   {
     screen: 'dossier-imaging',
@@ -126,6 +131,7 @@ const targets = [
       '[data-dossier-imaging-lane="consults"]',
       '[data-dossier-imaging-disclosure="consults"]',
     ],
+    desktopHiddenSelectors: ['.dossier-focus-shell__header p:last-child'],
   },
   {
     screen: 'treatment-context',
@@ -152,6 +158,7 @@ const targets = [
       '.timeline-overview-bar',
       '#fertility-timeline-items',
     ],
+    desktopHiddenSelectors: ['.treatment-focus-shell__header p:last-child'],
   },
   {
     screen: 'consult-upload',
@@ -180,6 +187,7 @@ const targets = [
       '[data-consult-upload-group="consult-basis"]',
       '[data-consult-upload-group="consult-context"]',
     ],
+    desktopHiddenSelectors: ['.dossier-focus-shell__header p:last-child'],
   },
   {
     screen: 'question-prep',
@@ -202,6 +210,7 @@ const targets = [
       '.consult-detail-panel__header',
       '[aria-label="Consult Prep Wizard"]',
     ],
+    desktopHiddenSelectors: ['.question-focus-shell__header p:last-child'],
   },
   {
     screen: 'wellbeing-history',
@@ -222,6 +231,7 @@ const targets = [
       '[data-wellbeing-history-lane="trends"]',
       '[data-wellbeing-disclosure="checkins"]',
     ],
+    desktopHiddenSelectors: ['.wellbeing-focus-shell__header p:last-child'],
   },
   {
     screen: 'backup-sync',
@@ -238,6 +248,7 @@ const targets = [
       '[data-backup-sync-lane="recovery"]',
       '[data-backup-disclosure="controleren"]',
     ],
+    desktopHiddenSelectors: ['.backup-focus-shell__header p:last-child'],
   },
 ];
 
@@ -312,7 +323,7 @@ async function assertRouteflows(browser, options) {
       await root.scrollIntoViewIfNeeded();
 
       const screenshot = await root.screenshot({ animations: 'disabled' });
-      const evidence = await page.evaluate((routeflow) => {
+      const evidence = await page.evaluate(({ routeflow, viewportLabel }) => {
         const rootElement = document.querySelector(routeflow.rootSelector);
         const rootRect = rootElement?.getBoundingClientRect();
         const required = routeflow.requiredSelectors.map((selector) => {
@@ -365,7 +376,11 @@ async function assertRouteflows(browser, options) {
           ? document.querySelector(routeflow.activeRouteSelector)
           : rootElement;
         const activeRect = activeElement?.getBoundingClientRect();
-        const hidden = (routeflow.hiddenSelectors ?? []).map((selector) => {
+        const hiddenSelectors = [
+          ...(routeflow.hiddenSelectors ?? []),
+          ...(viewportLabel === 'desktop' ? (routeflow.desktopHiddenSelectors ?? []) : []),
+        ];
+        const hidden = hiddenSelectors.map((selector) => {
           const element = document.querySelector(selector);
           const rect = element?.getBoundingClientRect();
           return {
@@ -416,7 +431,7 @@ async function assertRouteflows(browser, options) {
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
             document.body.scrollWidth > document.body.clientWidth + 1,
         };
-      }, target);
+      }, { routeflow: target, viewportLabel: options.label });
 
       if (pageErrors.length > 0) {
         throw new Error(

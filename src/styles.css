@@ -7545,6 +7545,79 @@ a.action-card:active {
   line-height: 1.45;
 }
 
+@media (min-width: 761px) {
+  .start-focus-shell,
+  .daily-advice-focus-shell,
+  .dossier-focus-shell,
+  .knowledge-focus-shell,
+  .treatment-focus-shell,
+  .question-focus-shell,
+  .schedule-focus-shell,
+  .medication-focus-shell,
+  .wellbeing-focus-shell,
+  .decision-focus-shell,
+  .finance-focus-shell,
+  .backup-focus-shell,
+  .eventlog-focus-shell,
+  .notification-focus-shell {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .start-focus-shell__header,
+  .daily-advice-focus-shell__header,
+  .dossier-focus-shell__header,
+  .knowledge-focus-shell__header,
+  .treatment-focus-shell__header,
+  .question-focus-shell__header,
+  .schedule-focus-shell__header,
+  .medication-focus-shell__header,
+  .wellbeing-focus-shell__header,
+  .decision-focus-shell__header,
+  .finance-focus-shell__header,
+  .backup-focus-shell__header,
+  .eventlog-focus-shell__header,
+  .notification-focus-shell__header {
+    max-width: none;
+    gap: 3px;
+  }
+
+  .start-focus-shell__header h2,
+  .daily-advice-focus-shell__header h2,
+  .dossier-focus-shell__header h2,
+  .knowledge-focus-shell__header h2,
+  .treatment-focus-shell__header h2,
+  .question-focus-shell__header h2,
+  .schedule-focus-shell__header h2,
+  .medication-focus-shell__header h2,
+  .wellbeing-focus-shell__header h2,
+  .decision-focus-shell__header h2,
+  .finance-focus-shell__header h2,
+  .backup-focus-shell__header h2,
+  .eventlog-focus-shell__header h2,
+  .notification-focus-shell__header h2 {
+    font-size: 1.12rem;
+    line-height: 1.16;
+  }
+
+  .start-focus-shell__header p:last-child,
+  .daily-advice-focus-shell__header p:last-child,
+  .dossier-focus-shell__header p:last-child,
+  .knowledge-focus-shell__header p:last-child,
+  .treatment-focus-shell__header p:last-child,
+  .question-focus-shell__header p:last-child,
+  .schedule-focus-shell__header p:last-child,
+  .medication-focus-shell__header p:last-child,
+  .wellbeing-focus-shell__header p:last-child,
+  .decision-focus-shell__header p:last-child,
+  .finance-focus-shell__header p:last-child,
+  .backup-focus-shell__header p:last-child,
+  .eventlog-focus-shell__header p:last-child,
+  .notification-focus-shell__header p:last-child {
+    display: none;
+  }
+}
+
 .dossier-focus-shell__body {
   display: grid;
   grid-template-columns: 1fr;
