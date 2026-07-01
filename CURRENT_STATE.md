@@ -656,7 +656,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
   taakroutes; alle hoofdschermen tonen nu boven de content een compacte workspace-strip
   met actieve werkruimtegroep, zusterschermen en snelle routes naar Start, Dossier en
-  Tijdlijn. Het startscherm opent zonder generieke werkruimte-context met een
+  Tijdlijn. De dossieruploadroute toont vóór de formulier-intake een compacte
+  upload-triage voor document, consult, beeld/embryo en lokale OCR/review, zodat de
+  uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. Het
+  startscherm opent zonder generieke werkruimte-context met een
   compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
   gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn
   begrijpen, dagadvies en research; de resterende startmodules staan in een progressive flowrail waarin

@@ -4415,6 +4415,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2283
 - **Status:** ☑ done
 
+### G1255 — upload-triage in dossierroute toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dossierupload heeft al hubtabs en routepanelen, maar de eerste uploadroute voelt nog te snel als een lange stapeling van formulieren voor documenten, consulten, beelden, embryo's en OCR-review.
+- **User Impact:** Gebruikers moeten scannen door meerdere formulierblokken voordat zij weten waar zij een onderzoek, echo, embryo-afbeelding of gespreksverslag moeten toevoegen.
+- **Desired Outcome:** Toon boven de upload-intake een zichtbare upload-triage met vier taaklanes voor document, consult, beeld/embryo en lokale OCR/review.
+- **User Value:** Gebruikers kiezen eerst hun toevoegtype en ervaren de dossierupload meer als een begeleide intake dan als één lange pagina.
+- **Acceptance Criteria:** Dossierupload toont vóór de intake-disclosure een `data-dossier-upload-triage="ready"` component; lanes linken naar bestaande document-, consult-, imaging- en reviewroutes; bestaande form-id's, input names, ankers en privacyhooks blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; tests bewaken empty, populated en locked context; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayloads, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Dossierupload, consult intelligence, imaging repository, embryo tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Dossier UI, upload workflow, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 18
+- **GitHub Issue:** #2285
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
