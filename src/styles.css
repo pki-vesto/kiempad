@@ -1106,6 +1106,59 @@ h2 {
   line-height: 1.25;
 }
 
+@media (min-width: 961px) {
+  .fertility-timeline-console {
+    max-height: min(820px, calc(100vh - 228px));
+    overflow: hidden;
+  }
+
+  .fertility-timeline-console__body {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    grid-template-areas:
+      "reader reader"
+      "controls items"
+      "insights items";
+    gap: 12px;
+    min-height: 0;
+  }
+
+  .fertility-timeline-console__reader,
+  .fertility-timeline-console__controls,
+  .fertility-timeline-console__insights,
+  .fertility-timeline-console__items {
+    min-width: 0;
+    max-height: min(520px, calc(100vh - 368px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .fertility-timeline-console__reader {
+    grid-area: reader;
+    max-height: 184px;
+  }
+
+  .fertility-timeline-console__controls {
+    grid-area: controls;
+    padding-right: 4px;
+  }
+
+  .fertility-timeline-console__insights {
+    grid-area: insights;
+    padding-right: 4px;
+  }
+
+  .fertility-timeline-console__items {
+    grid-area: items;
+    padding-right: 4px;
+  }
+
+  .fertility-timeline-console .fertility-timeline-reader {
+    margin: 0;
+  }
+}
+
 @media (min-width: 761px) {
   .fertility-timeline-reader,
   .daily-advice-action-planner,

@@ -366,6 +366,9 @@
 - **G1296 Upload-console:** Dossierupload gebruikt op desktop een begrensde
   console voor routekeuze, documentupload, consultupload en review. Formulier-id's
   blijven gelijk; de routeflow-smoke bewaakt de werkvlakken.
+- **G1297 Timeline-console:** Fertility Timeline gebruikt op desktop aparte
+  begrensde werkvlakken voor reader, filter/export, inzichten en timeline-items.
+  Timeline-id's blijven gelijk; routeflow-smoke bewaakt de console.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

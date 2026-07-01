@@ -1411,7 +1411,7 @@ function extractResearchTrendDashboard(html: string): string {
 
 function extractFertilityTimelineSection(html: string): string {
   const start = html.indexOf(
-    '<section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline"',
+    '<section class="summary-panel embedded-summary fertility-timeline-console" aria-label="Centrale fertility timeline" data-fertility-timeline-console="ready"',
   );
   const end = html.indexOf(
     '<section class="summary-panel embedded-summary" aria-label="Fertility knowledge graph per traject"',
@@ -3901,6 +3901,11 @@ describe('app shell', () => {
     expect(workbenchIndex).toBeGreaterThan(-1);
     expect(routeNavIndex).toBeGreaterThan(workbenchIndex);
     expect(html).toContain('Fertility timeline');
+    expect(html).toContain('data-fertility-timeline-console="ready"');
+    expect(html).toContain('data-fertility-timeline-console-region="reader"');
+    expect(html).toContain('data-fertility-timeline-console-region="controls"');
+    expect(html).toContain('data-fertility-timeline-console-region="insights"');
+    expect(html).toContain('data-fertility-timeline-console-region="items"');
     expect(html).toContain('id="timeline-filter-form"');
     expect(html).toContain('name="timelineSoort"');
     expect(html).toContain('value="onderzoek" selected');
@@ -4066,6 +4071,15 @@ describe('app shell', () => {
     expect(css).toContain('flex: 0 0 88px;');
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.fertility-timeline-reader {');
+    expect(css).toContain('.fertility-timeline-console {');
+    expect(css).toContain('.fertility-timeline-console__body {');
+    expect(css).toContain('"controls items"');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 228px));');
+    expect(css).toContain('max-height: min(520px, calc(100vh - 368px));');
+    expect(css).toContain('grid-area: reader;');
+    expect(css).toContain('grid-area: controls;');
+    expect(css).toContain('grid-area: insights;');
+    expect(css).toContain('grid-area: items;');
     expect(css).toContain('.fertility-timeline-reader__header {');
     expect(css).toContain('.fertility-timeline-reader__lanes {');
     expect(css).toContain('.fertility-timeline-reader__lane {');
