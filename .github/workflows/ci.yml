@@ -48,5 +48,7 @@ jobs:
         run: npm run smoke:split-workspaces
       - name: Context signals visual smoke
         run: npm run smoke:context-signals
+      - name: Routeflow screenshot smoke
+        run: npm run smoke:routeflows
       - name: External asset scan
         run: npm run assets:check

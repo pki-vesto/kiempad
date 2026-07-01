@@ -12881,7 +12881,7 @@ function renderStartIntelligenceWorkbench(
     <section class="start-workbench start-intelligence-hub" aria-labelledby="start-workbench-title" data-start-workbench="multi-flow" data-start-intelligence-hub="six-workflows">
       <div class="start-workbench__header">
         <div>
-          <p class="start-workbench__eyebrow">Personal Fertility Intelligence Platform</p>
+          <p class="start-workbench__eyebrow">Fertility hub</p>
           <h2 id="start-workbench-title">Kies eerst je werkstroom</h2>
           <p>Uploads, tijdlijn, embryo’s, research en aanbevelingen starten als eigen werkbanen, zodat de startpagina niet als één lange lijst voelt.</p>
         </div>

@@ -4230,6 +4230,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Playwright smoke, hub workflow headers, hub detail panels, visual regression evidence
 - **ADR Needed:** no
 - **Score:** 30
+- **Status:** ☑ done
+
+### G1244 — consultupload als zelfstandige hubflow zichtbaar maken
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dossierupload, tijdlijn, dagadvies, research en imaging hebben nu hubflows, maar consultupload staat nog vooral als formulierroute binnen upload waardoor gespreksverslagen minder als eigen intelligence-werkbaan voelen.
+- **User Impact:** Gebruikers die behandelgesprekken en consultnotities uploaden moeten nog te veel tussen documentupload en losse formulierblokken scannen.
+- **Desired Outcome:** Maak consultupload zichtbaar als zelfstandige hubflow met compacte workflowheader, taakgerichte tabs en verdichte consultdetailpanelen.
+- **User Value:** Gespreksverslagen, actiepunten en vragenvoorbereiding voelen als een duidelijke route in plaats van als een bijlage bij dossierupload.
+- **Acceptance Criteria:** Consultupload krijgt een eigen hubflow-header of duidelijk gelijkwaardige routecontext; `consult-verslag-form`, input names, ankers, aria-live feedback en privacydata-hooks blijven beschikbaar; desktop/mobile browser-evidence blijft groen; bestaande upload-, dossier- en consulttests blijven werken; geen transcripttekst, medische payload, bestandsinhoud, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossierupload, Consult intelligence, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult upload UI, hub workflow headers, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 29
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

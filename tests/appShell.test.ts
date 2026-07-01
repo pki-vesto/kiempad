@@ -2209,7 +2209,7 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workbench="multi-flow"');
     expect(html).toContain('data-start-intelligence-hub="six-workflows"');
     expect(html).toContain('aria-label="Fertility intelligence werkbanen"');
-    expect(html).toContain('Personal Fertility Intelligence Platform');
+    expect(html).toContain('Fertility hub');
     expect(html).toContain('Kies eerst je werkstroom');
     expect(html).toContain(
       'Uploads, tijdlijn, embryo’s, research en aanbevelingen starten als eigen werkbanen',
@@ -2443,10 +2443,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.daily-advice-workbench__header {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.daily-advice-owner-grid {');
-    expect(mobileCss).toContain('display: flex;');
-    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('display: grid;');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(mobileCss).toContain('overflow: visible;');
     expect(mobileCss).toContain('.daily-advice-owner-card {');
-    expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
     expect(mobileCss).toContain('margin-top: 0;');
     expect(mobileCss).toContain('.start-task-routes {');
