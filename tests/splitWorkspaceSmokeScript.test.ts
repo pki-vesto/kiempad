@@ -28,6 +28,13 @@ describe('split workspace smoke script', () => {
     }
 
     expect(splitWorkspaceSmokeScript).toContain('-split-workspace="ready"]');
+    expect(splitWorkspaceSmokeScript).toContain('[data-workspace-strip="ready"]');
+    expect(splitWorkspaceSmokeScript).toContain('workspaceStripMatchesGroup');
+    expect(splitWorkspaceSmokeScript).toContain("group: 'Vandaag'");
+    expect(splitWorkspaceSmokeScript).toContain("group: 'Behandeling'");
+    expect(splitWorkspaceSmokeScript).toContain("group: 'Dossier'");
+    expect(splitWorkspaceSmokeScript).toContain("group: 'Inzicht'");
+    expect(splitWorkspaceSmokeScript).toContain("group: 'Beheer'");
     expect(splitWorkspaceSmokeScript).toContain('-route-state="active"]');
     expect(splitWorkspaceSmokeScript).toContain('-route-state="inactive"]');
     expect(splitWorkspaceSmokeScript).toContain('horizontalOverflow');

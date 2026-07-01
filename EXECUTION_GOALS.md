@@ -4398,6 +4398,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2281
 - **Status:** ☑ done
 
+### G1254 — globale workspace-strip boven content toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De hoofdschermen hebben split-view werkruimtes en een gegroepeerde sidebar, maar boven de actieve content mist nog een consistente oriëntatielaag die de actieve werkruimtegroep en zusterbestemmingen zichtbaar maakt.
+- **User Impact:** Gebruikers kunnen alsnog het gevoel krijgen dat ze in een reeks losse pagina's zitten, vooral op mobiel waar de sidebar minder als structuurdrager werkt.
+- **Desired Outcome:** Voeg een compacte globale workspace-strip toe boven de content met actieve groep, zusterlinks en snelle kernroutes naar Start, Dossier en Tijdlijn.
+- **User Value:** Gebruikers zien op elk hoofdscherm direct waar ze zijn, welke schermen erbij horen en hoe ze terug naar kernflows gaan.
+- **Acceptance Criteria:** App-shell toont `data-workspace-strip="ready"` boven de content; de strip toont correcte groepen voor Vandaag, Behandeling, Dossier, Inzicht en Beheer; desktop toont compacte groep/switcher/quickroutes, mobiel een horizontale snapstrip zonder pagina-overflow; split-workspace browser-smoke bewaakt de strip per route; bestaande sidebar, bottom-nav, routewerkbanken, form-id's, data-hooks en ankers blijven werken; geen medisch advies, dosering, kansclaim, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, navigation, workspace strip, split-workspace smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 19
+- **GitHub Issue:** #2283
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
