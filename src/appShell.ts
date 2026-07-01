@@ -545,6 +545,43 @@ export function normalizeFinanceRoute(value: string | null | undefined): Finance
   return FINANCE_ROUTES.includes(route as FinanceRoute) ? (route as FinanceRoute) : 'overzicht';
 }
 
+type EventLogRoute = 'overzicht' | 'recent' | 'categorieen' | 'privacy';
+
+const EVENTLOG_ROUTES: readonly EventLogRoute[] = ['overzicht', 'recent', 'categorieen', 'privacy'];
+
+export function normalizeEventLogRoute(value: string | null | undefined): EventLogRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return EVENTLOG_ROUTES.includes(route as EventLogRoute) ? (route as EventLogRoute) : 'overzicht';
+}
+
+type BackupRoute = 'controleren' | 'export' | 'import' | 'herstel';
+
+const BACKUP_ROUTES: readonly BackupRoute[] = ['controleren', 'export', 'import', 'herstel'];
+
+export function normalizeBackupRoute(value: string | null | undefined): BackupRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return BACKUP_ROUTES.includes(route as BackupRoute) ? (route as BackupRoute) : 'controleren';
+}
+
+type NotificationRoute = 'status' | 'privacy' | 'plannen' | 'komend';
+
+const NOTIFICATION_ROUTES: readonly NotificationRoute[] = [
+  'status',
+  'privacy',
+  'plannen',
+  'komend',
+];
+
+export function normalizeNotificationRoute(value: string | null | undefined): NotificationRoute {
+  const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
+  const route = new URLSearchParams(query).get('route');
+  return NOTIFICATION_ROUTES.includes(route as NotificationRoute)
+    ? (route as NotificationRoute)
+    : 'status';
+}
+
 type CommandTaskRoute<RouteId extends string> = {
   id: RouteId;
   href: string;
@@ -619,6 +656,9 @@ export type AppShellState = {
   activeWellbeingRoute?: WellbeingRoute;
   activeDecisionRoute?: DecisionRoute;
   activeFinanceRoute?: FinanceRoute;
+  activeEventLogRoute?: EventLogRoute;
+  activeBackupRoute?: BackupRoute;
+  activeNotificationRoute?: NotificationRoute;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -1161,6 +1201,7 @@ function renderLogboekScreen(state: AppShellState): string {
   const body = isCentralStorage(state)
     ? `Dit logboek staat in je centrale encrypted dataset en toont alleen privacyrelevante gebeurtenisdetails. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`
     : `Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
+  const activeEventLogRoute = state.activeEventLogRoute ?? 'overzicht';
 
   return sectionStack(
     [
@@ -1171,13 +1212,19 @@ function renderLogboekScreen(state: AppShellState): string {
         central: isCentralStorage(state),
         latestLog: logs[0],
       }),
-      renderEventLogTaskRoutes({
-        eventCount: logs.length,
-        highRiskCount: highRiskLogs.length,
-        categoryCount: Object.keys(categoryCounts).length,
-        central: isCentralStorage(state),
-      }),
-      `<section id="logboek-route-overzicht" class="eventlog-route-section" aria-labelledby="logboek-route-overzicht-title" data-eventlog-route="overzicht">
+      domainSplitWorkspace({
+        className: 'eventlog-split-workspace',
+        ariaLabel: 'Logboek split-view werkruimte',
+        data: { 'eventlog-split-workspace': 'ready' },
+        rail: renderEventLogTaskRoutes({
+          eventCount: logs.length,
+          highRiskCount: highRiskLogs.length,
+          categoryCount: Object.keys(categoryCounts).length,
+          central: isCentralStorage(state),
+          activeRoute: activeEventLogRoute,
+        }),
+        main: `
+      <section id="logboek-route-overzicht" class="eventlog-route-section" aria-labelledby="logboek-route-overzicht-title" data-eventlog-route="overzicht"${renderEventLogRouteVisibility(activeEventLogRoute, 'overzicht')}>
         <header class="eventlog-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="logboek-route-overzicht-title">Logboekstatus</h2>
@@ -1198,8 +1245,8 @@ function renderLogboekScreen(state: AppShellState): string {
           title: 'Gebeurtenissen',
           body: `<p data-event-log-storage="${isCentralStorage(state) ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-event-log-state="${logs.length > 0 ? 'active' : 'empty'}" data-event-log-high-risk="${highRiskLogs.length > 0 ? 'present' : 'none'}">${body}</p>`,
         })}
-      </section>`,
-      `<section id="logboek-route-recent" class="eventlog-route-section" aria-labelledby="logboek-route-recent-title" data-eventlog-route="recent">
+      </section>
+      <section id="logboek-route-recent" class="eventlog-route-section" aria-labelledby="logboek-route-recent-title" data-eventlog-route="recent"${renderEventLogRouteVisibility(activeEventLogRoute, 'recent')}>
         <header class="eventlog-route-section__header">
           <p class="kp-card__eyebrow">Recent</p>
           <h2 id="logboek-route-recent-title">Recente gebeurtenissen</h2>
@@ -1226,8 +1273,8 @@ function renderLogboekScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
-      `<section id="logboek-route-categorieen" class="eventlog-route-section" aria-labelledby="logboek-route-categorieen-title" data-eventlog-route="categorieen">
+      </section>
+      <section id="logboek-route-categorieen" class="eventlog-route-section" aria-labelledby="logboek-route-categorieen-title" data-eventlog-route="categorieen"${renderEventLogRouteVisibility(activeEventLogRoute, 'categorieen')}>
         <header class="eventlog-route-section__header">
           <p class="kp-card__eyebrow">Categorieën</p>
           <h2 id="logboek-route-categorieen-title">Categorieën scannen</h2>
@@ -1249,8 +1296,8 @@ function renderLogboekScreen(state: AppShellState): string {
             ${renderEventLogCategorySummary(categoryCounts)}
           </div>
         </details>
-      </section>`,
-      `<section id="logboek-route-privacy" class="eventlog-route-section" aria-labelledby="logboek-route-privacy-title" data-eventlog-route="privacy">
+      </section>
+      <section id="logboek-route-privacy" class="eventlog-route-section" aria-labelledby="logboek-route-privacy-title" data-eventlog-route="privacy"${renderEventLogRouteVisibility(activeEventLogRoute, 'privacy')}>
         <header class="eventlog-route-section__header">
           <p class="kp-card__eyebrow">Privacy</p>
           <h2 id="logboek-route-privacy-title">Privacygevoelige gebeurtenissen</h2>
@@ -1276,7 +1323,16 @@ function renderLogboekScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
+      </section>
+        `,
+        context: renderEventLogWorkspaceContext({
+          eventCount: logs.length,
+          highRiskCount: highRiskLogs.length,
+          categoryCount: Object.keys(categoryCounts).length,
+          central: isCentralStorage(state),
+          latestLog: logs[0],
+        }),
+      }),
     ],
     {
       className: 'eventlog-command-layout',
@@ -1341,36 +1397,89 @@ function renderEventLogTaskRoutes(input: {
   highRiskCount: number;
   categoryCount: number;
   central: boolean;
+  activeRoute: EventLogRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<EventLogRoute>[] = [
     {
-      href: '#logboek-route-overzicht',
+      id: 'overzicht',
+      href: '#logboek?route=overzicht',
       label: 'Overzicht',
       meta: input.central ? 'centraal' : 'lokaal',
+      badge: input.central ? 'centraal' : 'lokaal',
+      density: 'filled',
     },
-    { href: '#logboek-route-recent', label: 'Recent', meta: `${input.eventCount} events` },
     {
-      href: '#logboek-route-categorieen',
+      id: 'recent',
+      href: '#logboek?route=recent',
+      label: 'Recent',
+      meta: `${input.eventCount} events`,
+      badge: String(input.eventCount),
+      density: input.eventCount > 0 ? 'filled' : 'empty',
+    },
+    {
+      id: 'categorieen',
+      href: '#logboek?route=categorieen',
       label: 'Categorieën',
       meta: `${input.categoryCount} soorten`,
+      badge: String(input.categoryCount),
+      density: input.categoryCount > 0 ? 'filled' : 'empty',
     },
-    { href: '#logboek-route-privacy', label: 'Privacy', meta: `${input.highRiskCount} signalen` },
+    {
+      id: 'privacy',
+      href: '#logboek?route=privacy',
+      label: 'Privacy',
+      meta: `${input.highRiskCount} signalen`,
+      badge: String(input.highRiskCount),
+      density: input.highRiskCount > 0 ? 'action' : 'empty',
+    },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'eventlog-task-routes',
+    routeClassName: 'eventlog-task-route',
+    ariaLabel: 'Logboek taakroutes',
+    dataAttribute: 'eventlog-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderEventLogWorkspaceContext(input: {
+  eventCount: number;
+  highRiskCount: number;
+  categoryCount: number;
+  central: boolean;
+  latestLog: EventLog | undefined;
+}): string {
+  const latest = input.latestLog
+    ? `${input.latestLog.categorie}: ${formatDateTime(input.latestLog.datum)}`
+    : 'Nog geen gebeurtenis.';
+
   return `
-    <nav class="eventlog-task-routes" aria-label="Logboek taakroutes" data-eventlog-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="eventlog-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Logboek context" data-eventlog-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Audit in beeld</h2>
+      ${statRow([
+        { label: 'Events', value: String(input.eventCount) },
+        { label: 'Categorieën', value: String(input.categoryCount) },
+        { label: 'Privacy', value: String(input.highRiskCount) },
+        { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
+      ])}
+      <p class="linked-note">${escapeHtml(latest)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Logboek werkruimtegrens" data-eventlog-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Audit zonder details vooraf</h2>
+      <p>Status, recente regels, categorieën en privacycontrole blijven apart zodat het logboek niet als volledige auditlijst opent.</p>
+      <p class="small-print">Deze kolom toont alleen tellingen en opslagcontext; geen extra gebeurtenisdetails.</p>
+    </section>
   `;
+}
+
+function renderEventLogRouteVisibility(activeRoute: EventLogRoute, route: EventLogRoute): string {
+  return route === activeRoute
+    ? ' data-eventlog-route-state="active"'
+    : ' data-eventlog-route-state="inactive" hidden';
 }
 
 function renderEventLogCategorySummary(
@@ -1909,6 +2018,7 @@ function renderBackupScreen(state: AppShellState): string {
   const syncImportTitle = central ? 'Recordpakket importeren' : 'Sync importeren';
   const syncImportLabel = central ? 'Kiempad-recordpakket' : 'Kiempad-syncpakket';
   const syncImportButton = central ? 'Importeer recordpakket' : 'Importeer syncpakket';
+  const activeBackupRoute = state.activeBackupRoute ?? 'controleren';
 
   return sectionStack(
     [
@@ -1919,12 +2029,18 @@ function renderBackupScreen(state: AppShellState): string {
         backupStatus: state.backupStatus,
         backupError: state.backupError,
       }),
-      renderBackupTaskRoutes({
-        central,
-        reminderStatus: reminder.status,
-        hasWebAuthn: Boolean(state.webAuthnStatus),
-      }),
-      `<section id="backup-route-controleren" class="backup-route-section" aria-labelledby="backup-route-controleren-title" data-backup-route="controleren">
+      domainSplitWorkspace({
+        className: 'backup-split-workspace',
+        ariaLabel: 'Back-up split-view werkruimte',
+        data: { 'backup-split-workspace': 'ready' },
+        rail: renderBackupTaskRoutes({
+          central,
+          reminderStatus: reminder.status,
+          hasWebAuthn: Boolean(state.webAuthnStatus),
+          activeRoute: activeBackupRoute,
+        }),
+        main: `
+      <section id="backup-route-controleren" class="backup-route-section" aria-labelledby="backup-route-controleren-title" data-backup-route="controleren"${renderBackupRouteVisibility(activeBackupRoute, 'controleren')}>
         <header class="backup-route-section__header">
           <p class="kp-card__eyebrow">Controleren</p>
           <h2 id="backup-route-controleren-title">Back-upstatus controleren</h2>
@@ -1952,8 +2068,8 @@ function renderBackupScreen(state: AppShellState): string {
         </section>
           </div>
         </details>
-      </section>`,
-      `<section id="backup-route-export" class="backup-route-section" aria-labelledby="backup-route-export-title" data-backup-route="export">
+      </section>
+      <section id="backup-route-export" class="backup-route-section" aria-labelledby="backup-route-export-title" data-backup-route="export"${renderBackupRouteVisibility(activeBackupRoute, 'export')}>
         <header class="backup-route-section__header">
           <p class="kp-card__eyebrow">Export</p>
           <h2 id="backup-route-export-title">Encrypted export maken</h2>
@@ -1986,8 +2102,8 @@ function renderBackupScreen(state: AppShellState): string {
             <p class="small-print">${syncCopy}</p>
           </div>
         </details>
-      </section>`,
-      `<section id="backup-route-import" class="backup-route-section" aria-labelledby="backup-route-import-title" data-backup-route="import">
+      </section>
+      <section id="backup-route-import" class="backup-route-section" aria-labelledby="backup-route-import-title" data-backup-route="import"${renderBackupRouteVisibility(activeBackupRoute, 'import')}>
         <header class="backup-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="backup-route-import-title">Versleutelde data importeren</h2>
@@ -2036,8 +2152,8 @@ function renderBackupScreen(state: AppShellState): string {
             ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
           </div>
         </details>
-      </section>`,
-      `<section id="backup-route-herstel" class="backup-route-section" aria-labelledby="backup-route-herstel-title" data-backup-route="herstel">
+      </section>
+      <section id="backup-route-herstel" class="backup-route-section" aria-labelledby="backup-route-herstel-title" data-backup-route="herstel"${renderBackupRouteVisibility(activeBackupRoute, 'herstel')}>
         <header class="backup-route-section__header">
           <p class="kp-card__eyebrow">Herstel</p>
           <h2 id="backup-route-herstel-title">Toegang en herstel voorbereiden</h2>
@@ -2059,7 +2175,16 @@ function renderBackupScreen(state: AppShellState): string {
             ${renderWebAuthnSettings(state)}
           </div>
         </details>
-      </section>`,
+      </section>
+        `,
+        context: renderBackupWorkspaceContext({
+          central,
+          reminder,
+          hasWebAuthn: Boolean(state.webAuthnStatus),
+          backupStatus: state.backupStatus,
+          backupError: state.backupError,
+        }),
+      }),
     ],
     { className: 'backup-command-layout', ariaLabel: 'Back-up en import' },
   );
@@ -2120,44 +2245,91 @@ function renderBackupTaskRoutes(input: {
   central: boolean;
   reminderStatus: string;
   hasWebAuthn: boolean;
+  activeRoute: BackupRoute;
 }): string {
-  const routes = [
+  const routes: readonly CommandTaskRoute<BackupRoute>[] = [
     {
-      href: '#backup-route-controleren',
+      id: 'controleren',
+      href: '#backup?route=controleren',
       label: 'Controleren',
       meta: input.reminderStatus === 'ok' ? 'actueel' : input.reminderStatus,
+      badge: input.reminderStatus === 'recent' ? 'OK' : 'check',
+      density: input.reminderStatus === 'recent' ? 'filled' : 'action',
     },
     {
-      href: '#backup-route-export',
+      id: 'export',
+      href: '#backup?route=export',
       label: 'Export',
       meta: input.central ? 'centraal' : 'lokaal',
+      badge: input.central ? 'record' : 'kluis',
+      density: 'action',
     },
     {
-      href: '#backup-route-import',
+      id: 'import',
+      href: '#backup?route=import',
       label: 'Import',
       meta: input.central ? 'recordpakket' : 'backup',
+      badge: 'in',
+      density: 'empty',
     },
     {
-      href: '#backup-route-herstel',
+      id: 'herstel',
+      href: '#backup?route=herstel',
       label: 'Herstel',
       meta: input.hasWebAuthn ? 'biometrie' : 'fallback',
+      badge: input.hasWebAuthn ? 'bio' : 'safe',
+      density: input.hasWebAuthn ? 'filled' : 'empty',
     },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'backup-task-routes',
+    routeClassName: 'backup-task-route',
+    ariaLabel: 'Back-up taakroutes',
+    dataAttribute: 'backup-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderBackupWorkspaceContext(input: {
+  central: boolean;
+  reminder: ReturnType<typeof bepaalBackupReminder>;
+  hasWebAuthn: boolean;
+  backupStatus?: string;
+  backupError?: string;
+}): string {
+  const importState = input.backupError
+    ? 'Check melding'
+    : input.backupStatus
+      ? 'Melding'
+      : 'Klaar';
+
   return `
-    <nav class="backup-task-routes" aria-label="Back-up taakroutes" data-backup-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="backup-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Back-up context" data-backup-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Veiligheid in beeld</h2>
+      ${statRow([
+        { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
+        { label: 'Export', value: input.reminder.status === 'recent' ? 'OK' : 'Nodig' },
+        { label: 'Import', value: importState },
+        { label: 'Herstel', value: input.hasWebAuthn ? 'Bio' : 'Fallback' },
+      ])}
+      <p class="linked-note">${escapeHtml(input.reminder.tekst)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Back-up werkruimtegrens" data-backup-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Versleuteld beheer</h2>
+      <p>Controleren, exporteren, importeren en herstel blijven losse taken zodat back-upbeheer niet als formulierstapel opent.</p>
+      <p class="small-print">Deze kolom toont alleen statusmetadata; geen dossierinhoud of back-uppayload.</p>
+    </section>
   `;
+}
+
+function renderBackupRouteVisibility(activeRoute: BackupRoute, route: BackupRoute): string {
+  return route === activeRoute
+    ? ' data-backup-route-state="active"'
+    : ' data-backup-route-state="inactive" hidden';
 }
 
 const CENTRAL_SYNC_FEEDBACK_DEFAULTS: Record<
@@ -13034,6 +13206,7 @@ function beschrijfOpenstaandeVragen(state: AppShellState): string {
 function renderHerinneringenScreen(state: AppShellState): string {
   const komende = komendeHerinneringen(state.herinneringen, localDateTimeIso(new Date()));
   const fallback = state.inAppFallbackNotifications ?? [];
+  const activeNotificationRoute = state.activeNotificationRoute ?? 'status';
 
   return sectionStack(
     [
@@ -13045,14 +13218,20 @@ function renderHerinneringenScreen(state: AppShellState): string {
         lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
         nextReminder: komende[0],
       }),
-      renderNotificationTaskRoutes({
-        reminderCount: komende.length,
-        fallbackCount: fallback.length,
-        permission: state.notificaties.permission,
-        serviceWorker: state.notificaties.serviceWorker,
-        lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
-      }),
-      `<section id="herinneringen-route-status" class="notification-route-section" aria-labelledby="herinneringen-route-status-title" data-notification-route="status">
+      domainSplitWorkspace({
+        className: 'notification-split-workspace',
+        ariaLabel: 'Herinneringen split-view werkruimte',
+        data: { 'notification-split-workspace': 'ready' },
+        rail: renderNotificationTaskRoutes({
+          reminderCount: komende.length,
+          fallbackCount: fallback.length,
+          permission: state.notificaties.permission,
+          serviceWorker: state.notificaties.serviceWorker,
+          lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+          activeRoute: activeNotificationRoute,
+        }),
+        main: `
+      <section id="herinneringen-route-status" class="notification-route-section" aria-labelledby="herinneringen-route-status-title" data-notification-route="status"${renderNotificationRouteVisibility(activeNotificationRoute, 'status')}>
         <header class="notification-route-section__header">
           <p class="kp-card__eyebrow">Status</p>
           <h2 id="herinneringen-route-status-title">Notificatiestatus controleren</h2>
@@ -13090,8 +13269,8 @@ function renderHerinneringenScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
-      `<section id="herinneringen-route-privacy" class="notification-route-section" aria-labelledby="herinneringen-route-privacy-title" data-notification-route="privacy">
+      </section>
+      <section id="herinneringen-route-privacy" class="notification-route-section" aria-labelledby="herinneringen-route-privacy-title" data-notification-route="privacy"${renderNotificationRouteVisibility(activeNotificationRoute, 'privacy')}>
         <header class="notification-route-section__header">
           <p class="kp-card__eyebrow">Privacy</p>
           <h2 id="herinneringen-route-privacy-title">Lockscreenprivacy instellen</h2>
@@ -13126,8 +13305,8 @@ function renderHerinneringenScreen(state: AppShellState): string {
             </form>
           </div>
         </details>
-      </section>`,
-      `<section id="herinneringen-route-plannen" class="notification-route-section" aria-labelledby="herinneringen-route-plannen-title" data-notification-route="plannen">
+      </section>
+      <section id="herinneringen-route-plannen" class="notification-route-section" aria-labelledby="herinneringen-route-plannen-title" data-notification-route="plannen"${renderNotificationRouteVisibility(activeNotificationRoute, 'plannen')}>
         <header class="notification-route-section__header">
           <p class="kp-card__eyebrow">Plannen</p>
           <h2 id="herinneringen-route-plannen-title">Herinnering plannen</h2>
@@ -13158,8 +13337,8 @@ function renderHerinneringenScreen(state: AppShellState): string {
             ${renderEigenHerinneringForm()}
           </div>
         </details>
-      </section>`,
-      `<section id="herinneringen-route-komend" class="notification-route-section" aria-labelledby="herinneringen-route-komend-title" data-notification-route="komend">
+      </section>
+      <section id="herinneringen-route-komend" class="notification-route-section" aria-labelledby="herinneringen-route-komend-title" data-notification-route="komend"${renderNotificationRouteVisibility(activeNotificationRoute, 'komend')}>
         <header class="notification-route-section__header">
           <p class="kp-card__eyebrow">Komend</p>
           <h2 id="herinneringen-route-komend-title">Komende herinneringen en fallback</h2>
@@ -13195,7 +13374,18 @@ function renderHerinneringenScreen(state: AppShellState): string {
             }
           </div>
         </details>
-      </section>`,
+      </section>
+        `,
+        context: renderNotificationWorkspaceContext({
+          reminderCount: komende.length,
+          fallbackCount: fallback.length,
+          permission: state.notificaties.permission,
+          serviceWorker: state.notificaties.serviceWorker,
+          lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+          nextReminder: komende[0],
+          defaultWarningMinutes: state.settings.afspraakWaarschuwingMinuten,
+        }),
+      }),
     ],
     { className: 'notification-command-layout', ariaLabel: 'Herinneringen beheren' },
   );
@@ -13259,38 +13449,96 @@ function renderNotificationTaskRoutes(input: {
   permission: NotificationRuntimeStatus['permission'];
   serviceWorker: NotificationRuntimeStatus['serviceWorker'];
   lockscreenDetails: boolean;
+  activeRoute: NotificationRoute;
 }): string {
   const statusMeta =
     input.permission === 'granted' && input.serviceWorker === 'ready' ? 'klaar' : input.permission;
-  const routes = [
-    { href: '#herinneringen-route-status', label: 'Status', meta: statusMeta },
+  const routes: readonly CommandTaskRoute<NotificationRoute>[] = [
     {
-      href: '#herinneringen-route-privacy',
+      id: 'status',
+      href: '#herinneringen?route=status',
+      label: 'Status',
+      meta: statusMeta,
+      badge: statusMeta,
+      density: statusMeta === 'klaar' ? 'filled' : 'action',
+    },
+    {
+      id: 'privacy',
+      href: '#herinneringen?route=privacy',
       label: 'Privacy',
       meta: input.lockscreenDetails ? 'details' : 'generiek',
+      badge: input.lockscreenDetails ? 'opt-in' : 'safe',
+      density: input.lockscreenDetails ? 'action' : 'filled',
     },
-    { href: '#herinneringen-route-plannen', label: 'Plannen', meta: 'instellen' },
     {
-      href: '#herinneringen-route-komend',
+      id: 'plannen',
+      href: '#herinneringen?route=plannen',
+      label: 'Plannen',
+      meta: 'instellen',
+      badge: 'nieuw',
+      density: 'action',
+    },
+    {
+      id: 'komend',
+      href: '#herinneringen?route=komend',
       label: 'Komend',
       meta: `${input.reminderCount} actief · ${input.fallbackCount} fallback`,
+      badge: String(input.reminderCount),
+      density: input.reminderCount > 0 ? 'filled' : 'empty',
     },
   ];
 
+  return renderCommandTaskRoutes({
+    className: 'notification-task-routes',
+    routeClassName: 'notification-task-route',
+    ariaLabel: 'Herinneringen taakroutes',
+    dataAttribute: 'notification-task-routes',
+    routes,
+    activeRoute: input.activeRoute,
+  });
+}
+
+function renderNotificationWorkspaceContext(input: {
+  reminderCount: number;
+  fallbackCount: number;
+  permission: NotificationRuntimeStatus['permission'];
+  serviceWorker: NotificationRuntimeStatus['serviceWorker'];
+  lockscreenDetails: boolean;
+  nextReminder: ReturnType<typeof komendeHerinneringen>[number] | undefined;
+  defaultWarningMinutes: number;
+}): string {
+  const next = input.nextReminder
+    ? formatDateTime(input.nextReminder.volgendMoment)
+    : 'Geen komende herinnering.';
+
   return `
-    <nav class="notification-task-routes" aria-label="Herinneringen taakroutes" data-notification-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="notification-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
+    <section class="summary-panel" aria-label="Herinneringen context" data-notification-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Meldingen in beeld</h2>
+      ${statRow([
+        { label: 'Toestemming', value: renderPermissionLabel(input.permission) },
+        { label: 'Worker', value: renderServiceWorkerLabel(input.serviceWorker) },
+        { label: 'Actief', value: String(input.reminderCount) },
+        { label: 'Fallback', value: String(input.fallbackCount) },
+      ])}
+      <p class="linked-note">Volgende: ${escapeHtml(next)} · standaard ${input.defaultWarningMinutes} min</p>
+    </section>
+    <section class="policy-panel" aria-label="Herinneringen werkruimtegrens" data-notification-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Privacy voorop</h2>
+      <p>Status, lockscreenprivacy, planning en komende meldingen blijven gescheiden zodat herinneringen niet als meldingenlijst openen.</p>
+      <p class="small-print">${input.lockscreenDetails ? 'Details op lockscreen staan expliciet aan.' : 'Lockscreen gebruikt standaard generieke tekst.'}</p>
+    </section>
   `;
+}
+
+function renderNotificationRouteVisibility(
+  activeRoute: NotificationRoute,
+  route: NotificationRoute,
+): string {
+  return route === activeRoute
+    ? ' data-notification-route-state="active"'
+    : ' data-notification-route-state="inactive" hidden';
 }
 
 function renderInAppFallbackNotifications(items: InAppFallbackNotification[]): string {
