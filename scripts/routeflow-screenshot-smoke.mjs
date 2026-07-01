@@ -73,6 +73,8 @@ const targets = [
       '.start-focus-shell__header p:last-child',
       '.daily-advice-focus-shell__header p:last-child',
       '.command-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
     ],
     maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 },
   },
@@ -107,6 +109,8 @@ const targets = [
     desktopHiddenSelectors: [
       '.knowledge-focus-shell__header p:last-child',
       '.knowledge-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small',
     ],
   },
   {
@@ -138,6 +142,10 @@ const targets = [
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
       '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="consult-verslagen"] .hub-detail-disclosure__summary small',
+      '[data-hub-detail-panel="imaging-repository"] .hub-detail-disclosure__summary small',
+      '[data-hub-detail-panel="embryo-dossiers"] .hub-detail-disclosure__summary small',
     ],
   },
   {
@@ -200,6 +208,8 @@ const targets = [
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
       '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="upload-intake"] .hub-detail-disclosure__summary small',
     ],
   },
   {
@@ -226,6 +236,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.question-focus-shell__header p:last-child',
       '.question-route-section__header > p:last-child',
+      '[data-hub-detail-panel="consult-prep-wizard"] .hub-detail-disclosure__summary small',
     ],
   },
   {

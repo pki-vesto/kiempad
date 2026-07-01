@@ -2860,12 +2860,16 @@ describe('app shell', () => {
     expect(mobileCss).toContain('min-height: 48px;');
     expect(css).toContain('.hub-workflow-header {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(310px, 0.78fr);');
     expect(css).toContain('.hub-workflow-tabs {');
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(css).toContain('.hub-workflow-tab[aria-current="page"]');
+    expect(css).toContain('min-height: 42px;');
+    expect(css).toContain('.hub-workflow-header__copy p {');
     expect(css).toContain('.hub-detail-disclosure {');
     expect(css).toContain('.hub-detail-disclosure__summary {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.hub-detail-disclosure__summary small {');
     expect(css).toContain('.hub-detail-disclosure__summary em {');
     expect(mobileCss).toContain('.hub-workflow-header {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');

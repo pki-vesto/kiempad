@@ -139,6 +139,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       "'.treatment-route-section__header > p:last-child'",
     );
+    expect(routeflowScreenshotSmokeScript).toContain("'.hub-workflow-header__copy p'");
+    expect(routeflowScreenshotSmokeScript).toContain(
+      '\'[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small\'',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
     expect(routeflowScreenshotSmokeScript).toContain(
       "maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 }",

@@ -6010,6 +6010,60 @@ h2 {
   white-space: nowrap;
 }
 
+@media (min-width: 761px) {
+  .hub-workflow-header {
+    grid-template-columns: minmax(0, 1fr) minmax(310px, 0.78fr);
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .hub-workflow-header__copy {
+    gap: 3px;
+  }
+
+  .hub-workflow-header__copy h3 {
+    font-size: 1rem;
+    line-height: 1.16;
+  }
+
+  .hub-workflow-header__copy p {
+    display: none;
+  }
+
+  .hub-workflow-tab {
+    min-height: 42px;
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+
+  .hub-workflow-tab span {
+    font-size: 0.78rem;
+  }
+
+  .hub-workflow-tab small {
+    font-size: 0.68rem;
+  }
+
+  .hub-detail-disclosure__summary {
+    gap: 8px;
+    min-height: 42px;
+  }
+
+  .hub-detail-disclosure__summary strong {
+    font-size: 0.86rem;
+  }
+
+  .hub-detail-disclosure__summary small {
+    display: none;
+  }
+
+  .hub-detail-disclosure__summary em {
+    padding: 3px 7px;
+    font-size: 0.68rem;
+  }
+}
+
 .consult-detail-panel {
   display: grid;
   gap: 12px;
