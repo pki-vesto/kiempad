@@ -1852,6 +1852,11 @@ describe('app shell', () => {
     expect(css).toContain('.management-workbench {');
     expect(css).toContain('[data-finance-first-viewport="management-workbench"]');
     expect(css).toContain('[data-backup-first-viewport="management-workbench"]');
+    expect(css).toContain('.finance-focus-shell {');
+    expect(css).toContain('.finance-focus-shell__header {');
+    expect(css).toContain('.finance-focus-shell__body {');
+    expect(css).toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
+    expect(css).toContain('.finance-focus-shell__workspace {');
     expect(css).toContain('.management-workbench__header {');
     expect(css).toContain('.management-workbench__grid {');
     expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
@@ -1923,6 +1928,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.question-focus-shell {');
     expect(mobileCss).toContain('.question-focus-shell__body {');
     expect(mobileCss).toContain('.question-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.content:has([data-finance-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-finance-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.finance-focus-shell {');
+    expect(mobileCss).toContain('.finance-focus-shell__body {');
+    expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain(
       '.content:has([data-schedule-focus-shell="ready"]) > .workspace-map,',
     );
@@ -36285,6 +36299,11 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('class="section-stack finance-command-layout"');
+    expect(html).toContain('class="finance-focus-shell"');
+    expect(html).toContain('data-finance-focus-shell="ready"');
+    expect(html).toContain('Eerst totalen scannen, daarna vergoeding of historie openen');
+    expect(html).toContain('data-finance-focus-region="workbench"');
+    expect(html).toContain('data-finance-focus-region="workspace"');
     expect(html).toContain(
       '<section class="management-workbench finance-management-workbench" aria-label="Financiële beheerwerkbank" data-finance-first-viewport="management-workbench">',
     );

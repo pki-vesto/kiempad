@@ -4185,6 +4185,65 @@ h2 {
   gap: 16px;
 }
 
+.finance-command-layout {
+  gap: 16px;
+}
+
+.finance-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--category) 11%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.finance-focus-shell__header {
+  display: grid;
+  max-width: 900px;
+  gap: 5px;
+}
+
+.finance-focus-shell__header h2,
+.finance-focus-shell__header p {
+  margin: 0;
+}
+
+.finance-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.finance-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.finance-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.finance-focus-shell__workbench,
+.finance-focus-shell__workspace {
+  min-width: 0;
+}
+
+.finance-focus-shell__workbench > .finance-management-workbench {
+  height: 100%;
+}
+
+.finance-focus-shell .command-route-summary h3 {
+  overflow-wrap: anywhere;
+}
+
 .management-workbench {
   display: grid;
   gap: 12px;
@@ -10556,6 +10615,40 @@ a.action-card:active {
   }
 
   .schedule-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
+  }
+
+  .content:has([data-finance-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-finance-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
+  .finance-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .finance-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .finance-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .finance-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-focus-shell__workspace .domain-split-workspace,
+  .finance-focus-shell__workspace .domain-split-workspace__context {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-focus-shell__workspace .domain-split-workspace__context {
     grid-column: auto;
   }
 
