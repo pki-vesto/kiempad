@@ -64,7 +64,11 @@ const targets = [
       '[data-daily-advice-action-lane="supplements"]',
       '[data-daily-advice-action-lane="clinician"]',
     ],
-    hiddenSelectors: ['[data-workspace-map="ready"]'],
+    hiddenSelectors: [
+      '[data-workspace-map="ready"]',
+      '.workspace-strip__description',
+      '.workspace-strip__quick',
+    ],
     maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 },
   },
   {

@@ -7121,6 +7121,58 @@ h2 {
   display: none;
 }
 
+.content:has([data-start-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-dossier-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-knowledge-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-treatment-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-question-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-schedule-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-medication-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-decision-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-finance-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-backup-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-eventlog-focus-shell="ready"]) > .workspace-strip,
+.content:has([data-notification-focus-shell="ready"]) > .workspace-strip {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+}
+
+.content:has([data-start-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-dossier-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-knowledge-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-treatment-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-question-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-schedule-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-medication-focus-shell="ready"])
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-decision-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-finance-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-backup-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-eventlog-focus-shell="ready"]) > .workspace-strip .workspace-strip__description,
+.content:has([data-notification-focus-shell="ready"])
+  > .workspace-strip
+  .workspace-strip__description,
+.content:has([data-start-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-dossier-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-knowledge-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-treatment-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-question-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-schedule-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-medication-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-decision-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-finance-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-backup-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-eventlog-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick,
+.content:has([data-notification-focus-shell="ready"]) > .workspace-strip .workspace-strip__quick {
+  display: none;
+}
+
 .kp-card {
   padding: 18px;
   border: 1px solid var(--border);

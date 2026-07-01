@@ -316,6 +316,10 @@
   compacte control-strip met korte zichtbare opslaanactie. Brand, opslagstatus,
   themakeuze en vergrendelen blijven beschikbaar, maar lezen minder als formulier
   boven de app.
+- **G1283 Compacte focusroute workspace-strip:** Focusroutes houden de
+  workspace-strip als oriëntatie zichtbaar, maar verbergen de beschrijvingsregel en
+  snelle duplicaatlinks. Daardoor start de taakruimte hoger in de eerste viewport
+  zonder de werkruimtewissel te verliezen.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

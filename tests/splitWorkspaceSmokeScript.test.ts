@@ -29,7 +29,10 @@ describe('split workspace smoke script', () => {
 
     expect(splitWorkspaceSmokeScript).toContain('-split-workspace="ready"]');
     expect(splitWorkspaceSmokeScript).toContain('[data-workspace-strip="ready"]');
+    expect(splitWorkspaceSmokeScript).toContain('.workspace-strip__description');
+    expect(splitWorkspaceSmokeScript).toContain('.workspace-strip__quick');
     expect(splitWorkspaceSmokeScript).toContain('workspaceStripMatchesGroup');
+    expect(splitWorkspaceSmokeScript).toContain('workspace-strip is niet compact op focusroute');
     expect(splitWorkspaceSmokeScript).toContain("group: 'Vandaag'");
     expect(splitWorkspaceSmokeScript).toContain("group: 'Behandeling'");
     expect(splitWorkspaceSmokeScript).toContain("group: 'Dossier'");

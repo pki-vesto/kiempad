@@ -160,6 +160,10 @@ async function assertSplitWorkspaces(browser, options) {
       const result = await page.evaluate(({ prefix, routeId, group }) => {
         const workspace = document.querySelector(`[data-${prefix}-split-workspace="ready"]`);
         const workspaceStrip = document.querySelector('[data-workspace-strip="ready"]');
+        const workspaceStripDescription = workspaceStrip?.querySelector(
+          '.workspace-strip__description',
+        );
+        const workspaceStripQuick = workspaceStrip?.querySelector('.workspace-strip__quick');
         const workspaceMap = document.querySelector('.workspace-map');
         const pageHeader = document.querySelector('.page-header');
         const active = document.querySelector(`[data-${prefix}-route-state="active"]`);
@@ -187,6 +191,8 @@ async function assertSplitWorkspaces(browser, options) {
         const contextColumn = workspace?.querySelector('.domain-split-workspace__context');
         const activeRect = active?.getBoundingClientRect();
         const stripRect = workspaceStrip?.getBoundingClientRect();
+        const stripDescriptionRect = workspaceStripDescription?.getBoundingClientRect();
+        const stripQuickRect = workspaceStripQuick?.getBoundingClientRect();
         const workspaceMapRect = workspaceMap?.getBoundingClientRect();
         const pageHeaderRect = pageHeader?.getBoundingClientRect();
 
@@ -197,6 +203,12 @@ async function assertSplitWorkspaces(browser, options) {
           hasWorkspaceStrip: Boolean(workspaceStrip),
           workspaceStripGroup: workspaceStrip?.getAttribute('data-workspace-strip-group') ?? null,
           workspaceStripVisible: Boolean(stripRect && stripRect.width > 0 && stripRect.height > 0),
+          workspaceStripDescriptionVisible: Boolean(
+            stripDescriptionRect && stripDescriptionRect.width > 0 && stripDescriptionRect.height > 0,
+          ),
+          workspaceStripQuickVisible: Boolean(
+            stripQuickRect && stripQuickRect.width > 0 && stripQuickRect.height > 0,
+          ),
           workspaceMapVisible: Boolean(
             workspaceMapRect && workspaceMapRect.width > 0 && workspaceMapRect.height > 0,
           ),
@@ -238,6 +250,11 @@ async function assertSplitWorkspaces(browser, options) {
       if (result.workspaceMapVisible || result.pageHeaderVisible) {
         throw new Error(
           `${options.label}/${route.screen}: redundante globale chrome is zichtbaar op focusroute.`,
+        );
+      }
+      if (result.workspaceStripDescriptionVisible || result.workspaceStripQuickVisible) {
+        throw new Error(
+          `${options.label}/${route.screen}: workspace-strip is niet compact op focusroute.`,
         );
       }
       if (result.activeRoute !== route.route || !result.activeRouteVisible) {
