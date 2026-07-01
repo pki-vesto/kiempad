@@ -283,6 +283,10 @@
   split-workspace in één `schedule-focus-shell` met workbench- en
   workspace-regio's. Overzicht, komende afspraken, plannen, ICS-import en historie
   starten als één planningsruimte met de volgende afspraak als eerste focus.
+- **G1275 Finance focus-shell:** Kosten bundelt de financiële beheerwerkbank en
+  split-workspace in één `finance-focus-shell` met workbench- en workspace-regio's.
+  Totalen, vergoeding, toevoegen en historie starten als één administratieruimte
+  zonder financieel advies of polisinterpretatie.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

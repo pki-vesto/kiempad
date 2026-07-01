@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1275 — Premium Claude Design UI: finance focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kosten had een financiële beheerwerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor totalen, vergoeding, toevoegen en historie minder als één administratieruimte voelden.
+- **Desired Outcome:** Bundel de kostenwerkbank en Kosten split-workspace in één `finance-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker scant eerst totalen en vergoedingstatus en opent daarna gericht toevoegen, vergoeding of historie zonder door alle kostenposten tegelijk te werken.
+- **Acceptance Criteria:** Kosten rendert `data-finance-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; kostenposten, vergoedingcontext, CRUD-formulieren en historie blijven bereikbaar; mobiel verbergt redundante globale context boven Kosten; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2325
+
 ### G1274 — Premium Claude Design UI: schedule focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use
