@@ -3813,11 +3813,11 @@ function renderDossierFocusShell(input: { orientation: string; workspace: string
         <h2 id="dossier-focus-shell-title">Eerst route kiezen, dan pas dossierinhoud openen</h2>
         <p>De routekaart en split-view horen bij elkaar: upload, review, beelden en tijdlijn blijven één gefocuste dossierwerkruimte.</p>
       </header>
-      <div class="dossier-focus-shell__body">
-        <div class="dossier-focus-shell__orientation" data-dossier-focus-region="orientation">
+      <div class="dossier-focus-shell__body" data-dossier-console="ready">
+        <div class="dossier-focus-shell__orientation" data-dossier-focus-region="orientation" data-dossier-console-region="orientation">
           ${input.orientation}
         </div>
-        <div class="dossier-focus-shell__workspace" data-dossier-focus-region="workspace">
+        <div class="dossier-focus-shell__workspace" data-dossier-focus-region="workspace" data-dossier-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

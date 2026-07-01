@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1301 — Premium Claude Design UI: Dossier als compacte eerste-viewport console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier had al route-stage en split-workspace, maar de routekaart en actieve inhoud konden op desktop nog als introductieblok plus routecontent-stapeling voelen.
+- **Desired Outcome:** Maak Dossier op desktop een begrensde dossier-console waarin orientation/routekaart en actieve workspace naast elkaar staan.
+- **User Value:** De gebruiker kan upload, zoeken, imaging en tijdlijn sneller als taakruimte bedienen zonder door een medische contentstapel te scrollen.
+- **Acceptance Criteria:** Dossier rendert `data-dossier-console="ready"` met regio's `orientation` en `workspace`; desktop gebruikt een tweekoloms layout met orientation links en workspace rechts; beide regio's hebben viewport-afhankelijke max-height en eigen scrollgedrag; de workspace/split-container gebruikt containment zodat lange uploadpanelen geen body-scroll veroorzaken; mobiel behoudt de éénkoloms flow; routeflow-smoke bewaakt console-geometrie, overflow en app-frame body-scroll.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2377
+
 ### G1300 — Premium Claude Design UI: Start als compacte eerste-viewport launchpad
 
 - **Epic:** Onboarding & Daily Use
