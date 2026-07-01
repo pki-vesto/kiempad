@@ -22,6 +22,7 @@
     "smoke:offline": "node scripts/offline-smoke.mjs",
     "smoke:dossier-routes": "node scripts/dossier-route-smoke.mjs",
     "smoke:split-workspaces": "node scripts/split-workspace-smoke.mjs",
+    "smoke:context-signals": "node scripts/context-signals-visual-smoke.mjs",
     "smoke:central": "node scripts/central-browser-smoke.mjs",
     "smoke:central-bootstrap": "tsx scripts/central-dataset-bootstrap-smoke.mts",
     "smoke:central-health-monitor": "tsx scripts/central-health-monitor-annotation.mts --fixture=ok",
