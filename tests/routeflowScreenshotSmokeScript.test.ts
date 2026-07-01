@@ -9,7 +9,12 @@ describe('routeflow screenshot smoke script', () => {
     expect(ciWorkflow).toContain('Routeflow screenshot smoke');
     expect(ciWorkflow).toContain('npm run smoke:routeflows');
 
-    for (const route of ['#start', '#kennis?route=read', '#dossier?route=imaging']) {
+    for (const route of [
+      '#start',
+      '#kennis?route=read',
+      '#dossier?route=imaging',
+      '#dossier?route=upload',
+    ]) {
       expect(routeflowScreenshotSmokeScript).toContain(route);
     }
 
@@ -26,10 +31,17 @@ describe('routeflow screenshot smoke script', () => {
       '[data-hub-workflow="dossier-imaging"]',
       '[data-hub-detail-panel="imaging-repository"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
+      '[data-hub-workflow="consult-upload"]',
+      '[data-hub-workflow-tab="consult"][aria-current="page"]',
+      '[data-hub-workflow-tab="context"]',
+      '[data-hub-workflow-tab="questions"]',
+      '[data-dossier-add-route-panel="consult-upload"]',
+      '#consult-verslag-form',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(selector);
     }
 
+    expect(routeflowScreenshotSmokeScript).toContain('openSelectors');
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
     expect(routeflowScreenshotSmokeScript).toContain('horizontalOverflow');

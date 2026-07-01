@@ -4246,6 +4246,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult upload UI, hub workflow headers, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 29
+- **Status:** ☑ done
+
+### G1245 — consult intelligence detailpanelen verdichten na consult-hubflow
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Consultupload heeft nu eigen hubflowcontext, maar de consultinzichten en consultverslagen in dossier/imaging en vragenvoorbereiding kunnen nog compacter worden gepresenteerd.
+- **User Impact:** Gebruikers kunnen consultverslagen sneller vastleggen, maar moeten bij teruglezen nog relatief veel consultdetails scannen.
+- **Desired Outcome:** Verdicht consultverslagen, consultactiepunten en vragenvoorbereiding met compacte taakheaders of route-eigen detailpanelen.
+- **User Value:** Gesprekken teruglezen en vervolgvragen voorbereiden voelt als één rustige consult-intelligence workflow.
+- **Acceptance Criteria:** Minimaal twee consultdetailpanelen tonen compacte taakheaders of lege staten; bestaande consultrecord-rendering, `consult-verslag-form`, vraagvoorbereidingsroute, privacyhooks en routeflow-smoke blijven werken; desktop/mobile browser-evidence blijft groen; geen transcripttekst, medische payload, bestandsinhoud, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossier imaging, Dossierupload, Vragen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult rendering, question preparation, hub detail panels, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 28
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

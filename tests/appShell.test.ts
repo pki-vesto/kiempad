@@ -5688,6 +5688,12 @@ describe('app shell', () => {
     expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
     );
+    expect(consultPanel).toContain('id="consult-upload-workflow-header"');
+    expect(consultPanel).toContain('data-hub-workflow="consult-upload"');
+    expect(consultPanel).toContain('Consultupload als eigen werkbaan');
+    expect(consultPanel).toContain('data-hub-workflow-tab="consult" aria-current="page"');
+    expect(consultPanel).toContain('data-hub-workflow-tab="context"');
+    expect(consultPanel).toContain('data-hub-workflow-tab="questions"');
     expect(consultPanel).toContain('class="kp-workflow-panel consult-upload-workflow"');
     expect(consultPanel).toContain('aria-label="Begeleide consultupload"');
     expect(consultPanel).toContain('data-upload-workflow="consult-document"');
@@ -5710,6 +5716,7 @@ describe('app shell', () => {
     expect(consultPanel).toContain(
       'data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional"',
     );
+    expect(consultPanel).toContain('id="consult-context-fields"');
     expect(consultPanel).toContain('data-consult-upload-group="consult-context"');
     expect(consultPanel).toContain(
       'data-consult-upload-group="consult-context" data-dossier-context-priority="optional"',
@@ -6443,6 +6450,8 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Upload als zelfstandige intakeflow');
     expect(emptyHtml).toContain('data-hub-workflow-tab="upload" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="review"');
+    expect(emptyHtml).toContain('data-hub-workflow-tab="consult"');
+    expect(emptyHtml).toContain('Verslag vastleggen');
     expect(emptyHtml).toContain('data-hub-detail-panel="upload-intake"');
     expect(emptyHtml).toContain('Document, consult, labkwaliteit of embryostatus');
     expect(emptyHtml).toContain('<em>0 records</em>');
