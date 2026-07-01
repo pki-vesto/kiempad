@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1309 — Premium Claude Design UI: Herinneringen als compacte notification-console
+
+- **Epic:** Reliability & Operations
+- **Problem:** Herinneringen had al een systeemwerkbank en split-workspace, maar kon op desktop nog als gestapelde beheerpagina met losse runtime-status, privacy, planning en komende meldingen lezen.
+- **Desired Outcome:** Maak Herinneringen op desktop een begrensde notification-console met systeemwerkbank, taakroute-rail, actieve meldingswerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan meldingsstatus, lockscreenprivacy, planning en komende meldingen scannen zonder door één lange beheerpagina te scrollen.
+- **Acceptance Criteria:** Herinneringen rendert `data-notification-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de systeemwerkbank start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; route-labels en route-summary blijven leesbaar zonder woordbreuk; mobiel behoudt de bestaande éénkoloms flow; split-workspace en context-signals smokes blijven groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☑ klaar
+- **Issue:** #2393
+
 ### G1308 — Premium Claude Design UI: Logboek als compacte audit-console
 
 - **Epic:** Reliability & Operations
