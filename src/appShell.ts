@@ -13705,6 +13705,7 @@ function renderStartRecommendationRoute(
       state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : ''
     }<p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
     ${renderDailyAdviceWorkbench(overview)}
+    ${renderDailyAdviceActionPlanner(overview)}
     <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
       <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
         <span>
@@ -13716,6 +13717,83 @@ function renderStartRecommendationRoute(
       <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
     </details>`,
   });
+}
+
+function renderDailyAdviceActionPlanner(overview: DailyRecommendationOverview): string {
+  const allItems = (['vrouw', 'man', 'samen'] as const).flatMap((owner) => overview[owner]);
+  const countByText = (patterns: readonly RegExp[]) =>
+    allItems.filter((item) => {
+      const text = `${item.titel} ${item.detail} ${item.bron} ${(item.gebruikteBronnen ?? []).join(' ')} ${item.checklist?.map((checklistItem) => checklistItem.label).join(' ') ?? ''}`;
+      return patterns.some((pattern) => pattern.test(text));
+    }).length;
+  const lifestyleCount = countByText([/leefstijl|observatie|dagcheck|aandachtspunt/i]);
+  const nutritionCount = countByText([/voeding|eet|maaltijd/i]);
+  const supplementCount = countByText([/supplement|medicatie|apotheek/i]);
+  const artscheckCount = allItems.filter((item) =>
+    item.checklist?.some((checklistItem) => checklistItem.artscheck),
+  ).length;
+
+  const lanes = [
+    {
+      id: 'lifestyle',
+      href: '#start-recommendations',
+      label: 'Leefstijl',
+      title: `${lifestyleCount} punt${lifestyleCount === 1 ? '' : 'en'}`,
+      detail: 'Feitelijke observaties voor vandaag apart scannen.',
+      cue: 'Geen oordeel',
+    },
+    {
+      id: 'nutrition',
+      href: '#start-recommendations',
+      label: 'Voeding',
+      title: `${nutritionCount} vraag${nutritionCount === 1 ? '' : 'vragen'}`,
+      detail: 'Notities of vragen voor kliniek of eigen voorbereiding.',
+      cue: 'Bespreken',
+    },
+    {
+      id: 'supplements',
+      href: '#start-recommendations',
+      label: 'Supplementen',
+      title: `${supplementCount} check${supplementCount === 1 ? '' : 's'}`,
+      detail: 'Medicatie- en supplementcontext zonder doseringsadvies.',
+      cue: 'Bron volgen',
+    },
+    {
+      id: 'clinician',
+      href: '#vragen',
+      label: 'Artscheck',
+      title: `${artscheckCount} punt${artscheckCount === 1 ? '' : 'en'}`,
+      detail: 'Zet bespreekpunten klaar voor consultvoorbereiding.',
+      cue: artscheckCount > 0 ? 'Vragen maken' : 'Geen open check',
+    },
+  ];
+
+  return `
+    <section class="daily-advice-action-planner" aria-label="Dagadvies actieplanner" data-daily-advice-action-planner="ready">
+      <header class="daily-advice-action-planner__header">
+        <div>
+          <p class="kp-card__eyebrow">Actieplanner</p>
+          <h3>Kies eerst je adviesroute</h3>
+        </div>
+        <p>Orden dagadvies op leefstijl, voeding, supplementen en artscheck voordat je de volledige lijst opent.</p>
+      </header>
+      <nav class="daily-advice-action-planner__lanes" aria-label="Dagadvies route kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+              <a class="daily-advice-action-planner__lane" href="${lane.href}" data-daily-advice-action-lane="${lane.id}">
+                <span>${escapeHtml(lane.label)}</span>
+                <strong>${escapeHtml(lane.title)}</strong>
+                <small>${escapeHtml(lane.detail)}</small>
+                <em>${escapeHtml(lane.cue)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze planner toont alleen aantallen en routes; geen dosering, diagnose, behandelkeuzeadvies of trackingdata.</p>
+    </section>
+  `;
 }
 
 function renderStartQuickEntryRoute(): string {

@@ -2483,6 +2483,113 @@ h2 {
   white-space: nowrap;
 }
 
+.daily-advice-action-planner {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--category) 20%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--category) 7%, transparent), transparent 54%),
+    var(--surface);
+}
+
+.daily-advice-action-planner__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.daily-advice-action-planner__header h3,
+.daily-advice-action-planner__header p {
+  margin: 0;
+}
+
+.daily-advice-action-planner__header h3 {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.daily-advice-action-planner__header > p {
+  max-width: 40ch;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.daily-advice-action-planner__lanes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.daily-advice-action-planner__lane {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 5px;
+  min-width: 0;
+  min-height: 116px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+}
+
+.daily-advice-action-planner__lane:hover,
+.daily-advice-action-planner__lane:focus-visible {
+  border-color: color-mix(in srgb, var(--category) 48%, var(--border-strong));
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--category) 18%, transparent);
+  outline: none;
+}
+
+.daily-advice-action-planner__lane span,
+.daily-advice-action-planner__lane strong,
+.daily-advice-action-planner__lane small,
+.daily-advice-action-planner__lane em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.daily-advice-action-planner__lane span {
+  width: fit-content;
+  padding: 3px 7px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--category) 12%, var(--surface) 88%);
+  color: var(--category-strong);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.daily-advice-action-planner__lane strong {
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.24;
+}
+
+.daily-advice-action-planner__lane small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.34;
+}
+
+.daily-advice-action-planner__lane em {
+  align-self: end;
+  color: var(--text-faint);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.25;
+}
+
 .start-flow-rail {
   display: grid;
   gap: 10px;
@@ -7928,6 +8035,38 @@ a.action-card:active {
 
   .daily-advice-owner-card__route {
     display: none;
+  }
+
+  .daily-advice-action-planner {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .daily-advice-action-planner__header {
+    display: grid;
+    gap: 6px;
+  }
+
+  .daily-advice-action-planner__header > p {
+    max-width: none;
+  }
+
+  .daily-advice-action-planner__lanes {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .daily-advice-action-planner__lanes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .daily-advice-action-planner__lane {
+    flex: 0 0 min(232px, 78vw);
+    min-height: 112px;
+    scroll-snap-align: start;
   }
 
   .start-workbench + .start-task-routes {

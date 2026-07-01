@@ -33,6 +33,11 @@ const targets = [
       '[data-start-workbench-flow="secure-sync"]',
       '[data-start-workbench-tier="primary"]',
       '[data-start-workbench-tier="supporting"]',
+      '[data-daily-advice-action-planner="ready"]',
+      '[data-daily-advice-action-lane="lifestyle"]',
+      '[data-daily-advice-action-lane="nutrition"]',
+      '[data-daily-advice-action-lane="supplements"]',
+      '[data-daily-advice-action-lane="clinician"]',
     ],
   },
   {
