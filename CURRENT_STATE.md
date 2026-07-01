@@ -711,6 +711,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Consultupload heeft nu ook eigen routecontext: de uploadhub bevat een consulttab,
   het consultpanel toont een `consult-upload` hubflowheader met verslag-, context- en
   vragentabs, en de routeflow-smoke bewaakt deze consultwerkbaan op desktop en mobiel.
+  Consultverslagen en de Consult Prep Wizard hebben nu compacte taakheaders met status,
+  en de routeflow-smoke bewaakt ook de vragenvoorbereidingsroute op desktop en mobiel.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -726,7 +728,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1245: consult intelligence detailpanelen verdichten na consult-hubflow.
+1. UI Improvement Evolution uitvoeren vanaf G1246: consultkaarten inhoudelijk scannen met compacte samenvatting en acties.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

@@ -56,6 +56,7 @@ const targets = [
       '[data-hub-workflow-tab="imaging"][aria-current="page"]',
       '[data-hub-workflow-tab="embryos"]',
       '[data-hub-workflow-tab="timeline"]',
+      '[data-hub-detail-panel="consult-verslagen"]',
       '[data-hub-detail-panel="imaging-repository"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
       '[data-dossier-imaging-disclosure="consults"]',
@@ -78,6 +79,20 @@ const targets = [
       '#consult-verslag-form',
       '[data-consult-upload-group="consult-basis"]',
       '[data-consult-upload-group="consult-context"]',
+    ],
+  },
+  {
+    screen: 'question-prep',
+    hash: '#vragen?route=voorbereiden',
+    rootSelector: '#vragen-route-voorbereiden',
+    expectedText: 'Consult Prep Wizard',
+    activeRouteSelector: '[data-question-route="voorbereiden"][data-question-route-state="active"]',
+    inactiveRouteSelector: '[data-question-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-question-route-summary="voorbereiden"]',
+      '[data-hub-detail-panel="consult-prep-wizard"]',
+      '.consult-detail-panel__header',
+      '[aria-label="Consult Prep Wizard"]',
     ],
   },
 ];

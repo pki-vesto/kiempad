@@ -14,6 +14,7 @@ describe('routeflow screenshot smoke script', () => {
       '#kennis?route=read',
       '#dossier?route=imaging',
       '#dossier?route=upload',
+      '#vragen?route=voorbereiden',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(route);
     }
@@ -29,6 +30,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-hub-workflow="knowledge-research"]',
       '[data-hub-detail-panel="research-summaries"]',
       '[data-hub-workflow="dossier-imaging"]',
+      '[data-hub-detail-panel="consult-verslagen"]',
       '[data-hub-detail-panel="imaging-repository"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
       '[data-hub-workflow="consult-upload"]',
@@ -37,6 +39,9 @@ describe('routeflow screenshot smoke script', () => {
       '[data-hub-workflow-tab="questions"]',
       '[data-dossier-add-route-panel="consult-upload"]',
       '#consult-verslag-form',
+      '[data-question-route-summary="voorbereiden"]',
+      '[data-hub-detail-panel="consult-prep-wizard"]',
+      '.consult-detail-panel__header',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(selector);
     }
