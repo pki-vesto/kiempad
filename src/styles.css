@@ -3572,15 +3572,17 @@ h2 {
 
 .workspace-context-signals {
   display: grid;
-  gap: 10px;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  gap: 11px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
 }
 
 .workspace-context-signals__header {
-  display: grid;
-  gap: 3px;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .workspace-context-signals__header h3 {
@@ -3591,7 +3593,7 @@ h2 {
 
 .workspace-context-signals__list {
   display: grid;
-  gap: 8px;
+  gap: 9px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -3600,12 +3602,22 @@ h2 {
 .workspace-context-signal {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
-  padding: 10px;
-  border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  min-height: 64px;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
+  background: color-mix(in srgb, var(--surface-raised) 88%, var(--surface-2));
+  box-shadow: 0 8px 22px rgba(21, 48, 44, 0.045);
+}
+
+.workspace-context-signal:first-child {
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface-raised));
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--accent) 70%, transparent),
+    0 10px 24px rgba(21, 48, 44, 0.055);
 }
 
 .workspace-context-signal span,
@@ -3617,23 +3629,30 @@ h2 {
 
 .workspace-context-signal strong {
   display: block;
-  margin-top: 2px;
+  width: fit-content;
+  margin-top: 3px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-2) 78%, transparent);
   color: var(--text);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
+  line-height: 1.2;
 }
 
 .workspace-context-signal p {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
 }
 
 .workspace-context-signal a {
   display: inline-flex;
-  min-height: 32px;
+  min-width: 44px;
+  min-height: 36px;
   align-items: center;
   justify-content: center;
-  padding: 0 10px;
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  padding: 0 11px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
   border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 86%, var(--accent) 14%);
   color: var(--accent-strong);
   font-size: 0.74rem;
   font-weight: 800;
@@ -7167,6 +7186,37 @@ a.action-card:active {
   .domain-split-workspace__context .policy-panel {
     padding: 13px;
     border-radius: 14px;
+  }
+
+  .workspace-context-signals {
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .workspace-context-signals__header {
+    align-items: start;
+  }
+
+  .workspace-context-signal {
+    min-height: 58px;
+    gap: 9px;
+    padding: 9px 10px;
+  }
+
+  .workspace-context-signal strong {
+    font-size: 0.84rem;
+  }
+
+  .workspace-context-signal p {
+    margin-top: 5px;
+    font-size: 0.72rem;
+  }
+
+  .workspace-context-signal a {
+    min-width: 42px;
+    min-height: 34px;
+    padding: 0 9px;
   }
 
   .command-route-summary {

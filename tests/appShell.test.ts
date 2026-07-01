@@ -36734,12 +36734,20 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.workspace-context-signals {');
     expect(css).toContain('.workspace-context-signal {');
+    expect(css).toContain('.workspace-context-signal:first-child {');
+    expect(css).toContain('inset 3px 0 0 color-mix(in srgb, var(--accent) 70%, transparent)');
+    expect(css).toContain('box-shadow: 0 8px 22px rgba(21, 48, 44, 0.045);');
+    expect(css).toContain('min-width: 44px;');
+    expect(css).toContain('min-height: 36px;');
     expect(mobileCss).toContain('.domain-split-workspace {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.domain-split-workspace__rail {');
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.domain-split-workspace__rail .command-task-route {');
     expect(mobileCss).toContain('flex: 0 0 min(172px, 72vw);');
+    expect(mobileCss).toContain('.workspace-context-signal {');
+    expect(mobileCss).toContain('min-height: 58px;');
+    expect(mobileCss).toContain('min-width: 42px;');
   });
 
   it('bewaakt commandroutes als zichtbare app-dock in plaats van platte paginalinks', () => {

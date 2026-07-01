@@ -102,7 +102,17 @@ async function assertContextSignals(browser, options) {
               height: rect.height,
               left: rect.left,
               right: rect.right,
+              borderColor: getComputedStyle(element).borderColor,
+              backgroundColor: getComputedStyle(element).backgroundColor,
+              boxShadow: getComputedStyle(element).boxShadow,
               textNodes,
+              action: (() => {
+                const action = element.querySelector('a');
+                const actionRect = action?.getBoundingClientRect();
+                return actionRect
+                  ? { width: actionRect.width, height: actionRect.height }
+                  : undefined;
+              })(),
             };
           },
         );
@@ -126,6 +136,14 @@ async function assertContextSignals(browser, options) {
                 node.scrollHeight <= node.clientHeight + 24,
             ),
           ),
+          actionTargets: cards.every(
+            (card) => card.action && card.action.width >= 42 && card.action.height >= 34,
+          ),
+          firstCardPrioritized:
+            cards.length > 1 &&
+            (cards[0].borderColor !== cards[1].borderColor ||
+              cards[0].backgroundColor !== cards[1].backgroundColor ||
+              cards[0].boxShadow !== cards[1].boxShadow),
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
             document.body.scrollWidth > document.body.clientWidth + 1,
@@ -145,6 +163,12 @@ async function assertContextSignals(browser, options) {
       }
       if (!evidence.textFits) {
         throw new Error(`${options.label}/${target.screen}: tekst past niet binnen contextkaarten.`);
+      }
+      if (!evidence.actionTargets) {
+        throw new Error(`${options.label}/${target.screen}: contextactie heeft te kleine touch target.`);
+      }
+      if (!evidence.firstCardPrioritized) {
+        throw new Error(`${options.label}/${target.screen}: eerste contextkaart mist visuele prioriteit.`);
       }
       if (evidence.horizontalOverflow) {
         throw new Error(`${options.label}/${target.screen}: contextsignalen veroorzaken horizontale overflow.`);
