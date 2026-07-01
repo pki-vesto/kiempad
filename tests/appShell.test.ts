@@ -1740,6 +1740,12 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Actieve werkruimte"');
     expect(html).toContain('aria-label="Schermen binnen Vandaag"');
     expect(html).toContain('aria-label="Snelle kernroutes"');
+    expect(html).toContain('class="workspace-map"');
+    expect(html).toContain('data-workspace-map="ready"');
+    expect(html).toContain('data-workspace-map-active="Vandaag"');
+    expect(html).toContain('Kiempad is verdeeld in duidelijke werkbanen');
+    expect(html).toContain('data-workspace-map-card="Dossier"');
+    expect(html).toContain('data-workspace-map-state="active"');
     expect(html).toContain('href="#traject?route=context"');
   });
 
@@ -1756,6 +1762,9 @@ describe('app shell', () => {
     expect(html).toContain('<p class="workspace-strip__eyebrow">Werkruimte</p>');
     expect(html).toContain('class="workspace-strip__switcher"');
     expect(html).toContain('class="workspace-strip__quick"');
+    expect(html).toContain('data-workspace-map-active="Behandeling"');
+    expect(html).toContain('Werk behandelcontext, medicatie en consultvragen apart af.');
+    expect(html).toContain('Open traject');
     expect(html).toContain('data-question-first-viewport="consult-workbench"');
   });
 
@@ -2266,6 +2275,13 @@ describe('app shell', () => {
     expect(html).toContain('data-start-cockpit-route="timeline"');
     expect(html).toContain('data-start-cockpit-route="imaging"');
     expect(html).toContain('data-start-cockpit-route="advice"');
+    expect(html).toContain('class="start-workspace-deck"');
+    expect(html).toContain('data-start-workspace-deck="ready"');
+    expect(html).toContain('Niet alles op één pagina');
+    expect(html).toContain('data-start-workspace-card="today"');
+    expect(html).toContain('data-start-workspace-card="record"');
+    expect(html).toContain('data-start-workspace-card="insight"');
+    expect(html).toContain('data-start-workspace-card="control"');
     expect(html).not.toContain('class="workspace-context"');
     expect(html).toContain('class="start-workbench start-intelligence-hub"');
     expect(html).toContain('data-start-workbench="multi-flow"');
@@ -2508,23 +2524,39 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
+    expect(css).toContain('.workspace-map {');
+    expect(css).toContain('.workspace-map__grid {');
+    expect(css).toContain('grid-template-columns: repeat(5, minmax(0, 1fr));');
+    expect(css).toContain('.workspace-map__card[data-workspace-map-state="active"]');
     expect(mobileCss).toContain('.workspace-strip {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.workspace-strip > div,');
     expect(mobileCss).toContain('.workspace-strip__description {');
     expect(mobileCss).toContain('display: none;');
+    expect(mobileCss).toContain('.workspace-map__grid {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.workspace-map__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(238px, 76vw);');
     expect(css).toContain('.start-cockpit {');
     expect(css).toContain(
       'grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr) minmax(210px, 0.7fr);',
     );
     expect(css).toContain('.start-cockpit__panel {');
     expect(css).toContain('.start-cockpit__routes {');
+    expect(css).toContain('.start-workspace-deck {');
+    expect(css).toContain('grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);');
+    expect(css).toContain('.start-workspace-deck__grid {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.start-workspace-deck__card {');
     expect(mobileCss).toContain('.start-cockpit {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.start-cockpit__panel {');
     expect(mobileCss).toContain('flex: 0 0 min(292px, 86vw);');
     expect(mobileCss).toContain('.start-cockpit__routes {');
     expect(mobileCss).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(mobileCss).toContain('.start-workspace-deck {');
+    expect(mobileCss).toContain('.start-workspace-deck__header,');
+    expect(mobileCss).toContain('.start-workspace-deck__grid {');
     expect(css).toContain('.start-workbench {');
     expect(css).toContain('linear-gradient(135deg');
     expect(css).toContain('.start-workbench__grid {');

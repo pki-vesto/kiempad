@@ -8,6 +8,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(pkg.scripts['smoke:routeflows']).toBe('node scripts/routeflow-screenshot-smoke.mjs');
     expect(ciWorkflow).toContain('Routeflow screenshot smoke');
     expect(ciWorkflow).toContain('npm run smoke:routeflows');
+    expect(routeflowScreenshotSmokeScript).toContain("rootSelector: '.content'");
 
     for (const route of [
       '#start',
@@ -31,6 +32,14 @@ describe('routeflow screenshot smoke script', () => {
       '[data-start-cockpit-route="timeline"]',
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
+      '[data-workspace-map="ready"]',
+      '[data-workspace-map-card="Vandaag"]',
+      '[data-workspace-map-card="Dossier"]',
+      '[data-start-workspace-deck="ready"]',
+      '[data-start-workspace-card="today"]',
+      '[data-start-workspace-card="record"]',
+      '[data-start-workspace-card="insight"]',
+      '[data-start-workspace-card="control"]',
       '[data-start-workbench-flow="uploads"]',
       '[data-start-workbench-flow="timeline"]',
       '[data-start-workbench-flow="embryo"]',
