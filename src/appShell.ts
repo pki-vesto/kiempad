@@ -12582,63 +12582,106 @@ function renderStartIntelligenceWorkbench(
     0,
   );
   const researchCount = state.kennisItems.length;
+  const embryoCount =
+    state.dossierDocuments?.filter(
+      (document) =>
+        document.embryo ||
+        document.beeldMetadata?.soort === 'embryo_afbeelding' ||
+        document.categorie === 'embryo',
+    ).length ?? 0;
+  const secureMode = isCentralStorage(state) ? 'Centrale dataset actief' : 'Lokale kluis actief';
 
   const tiles = [
     {
       href: '#dossier',
       label: 'Dossier uploaden',
+      eyebrow: 'Medische intake',
       meta:
         dossierCount > 0
           ? `${dossierCount} document${dossierCount === 1 ? '' : 'en'} · ${consultCount} verslag${consultCount === 1 ? '' : 'en'}`
           : 'Onderzoeken, echo’s en verslagen',
+      detail: 'Start met upload, OCR-review en indexering voordat je conclusies trekt.',
       flow: 'uploads',
+      tier: 'primary',
     },
     {
       href: '#traject?route=context',
       label: 'Tijdlijn begrijpen',
+      eyebrow: 'Trajectoverzicht',
       meta:
         timelineCount > 0
           ? `${timelineCount} gekoppelde tijdlijnpunten`
           : 'Traject, consulten en embryo’s',
+      detail: 'Bekijk de volgorde van onderzoeken, consulten, afspraken en behandelcontext.',
       flow: 'timeline',
+      tier: 'primary',
+    },
+    {
+      href: '#dossier?route=imaging',
+      label: 'Embryo & beelden',
+      eyebrow: 'Imaging',
+      meta:
+        embryoCount > 0
+          ? `${embryoCount} embryo-afbeelding${embryoCount === 1 ? '' : 'en'}`
+          : 'Echo’s, scans en embryo’s',
+      detail: 'Houd beeldmateriaal apart van documenten, met vergelijking per moment.',
+      flow: 'embryo',
+      tier: 'supporting',
     },
     {
       href: '#start-recommendations',
       label: 'Dagadvies openen',
+      eyebrow: 'Vandaag',
       meta:
         recommendationCount > 0
           ? `${recommendationCount} aanbeveling${recommendationCount === 1 ? '' : 'en'} vandaag`
           : 'Leefstijl, voorbereiding en vragen',
+      detail: 'Aanbevelingen blijven gekoppeld aan dossier, planning en artscheck.',
       flow: 'recommendations',
+      tier: 'supporting',
     },
     {
       href: '#kennis',
       label: 'Research volgen',
+      eyebrow: 'Wetenschap',
       meta:
         researchCount > 0
           ? `${researchCount} bron${researchCount === 1 ? '' : 'nen'} in kennisbank`
           : 'Studies in gewone taal',
+      detail: 'Lees wetenschappelijke en eenvoudige samenvattingen met broncontext.',
       flow: 'research',
+      tier: 'supporting',
+    },
+    {
+      href: '#backup',
+      label: 'Veilig meenemen',
+      eyebrow: 'Encrypted sync',
+      meta: secureMode,
+      detail: 'Controleer opslag, back-up en import voordat je op een ander apparaat verdergaat.',
+      flow: 'secure-sync',
+      tier: 'supporting',
     },
   ];
 
   return `
-    <section class="start-workbench" aria-labelledby="start-workbench-title" data-start-workbench="multi-flow">
+    <section class="start-workbench start-intelligence-hub" aria-labelledby="start-workbench-title" data-start-workbench="multi-flow" data-start-intelligence-hub="six-workflows">
       <div class="start-workbench__header">
         <div>
-          <p class="start-workbench__eyebrow">Fertiliteitswerkbank</p>
+          <p class="start-workbench__eyebrow">Personal Fertility Intelligence Platform</p>
           <h2 id="start-workbench-title">Kies eerst je werkstroom</h2>
-          <p>De belangrijkste onderdelen openen als aparte flows, zodat je niet door één lange pagina hoeft te zoeken.</p>
+          <p>Uploads, tijdlijn, embryo’s, research en aanbevelingen starten als eigen werkbanen, zodat de startpagina niet als één lange lijst voelt.</p>
         </div>
-        <span class="start-workbench__status">4 kernflows</span>
+        <span class="start-workbench__status">6 werkbanen</span>
       </div>
-      <nav class="start-workbench__grid" aria-label="Kernflows">
+      <nav class="start-workbench__grid" aria-label="Fertility intelligence werkbanen">
         ${tiles
           .map(
             (tile) => `
-              <a class="start-workbench-card" href="${tile.href}" data-start-workbench-flow="${tile.flow}">
+              <a class="start-workbench-card start-workbench-card--${tile.tier}" href="${tile.href}" data-start-workbench-flow="${tile.flow}" data-start-workbench-tier="${tile.tier}">
+                <span class="start-workbench-card__eyebrow">${escapeHtml(tile.eyebrow)}</span>
                 <span class="start-workbench-card__label">${escapeHtml(tile.label)}</span>
                 <span class="start-workbench-card__meta">${escapeHtml(tile.meta)}</span>
+                <span class="start-workbench-card__detail">${escapeHtml(tile.detail)}</span>
               </a>
             `,
           )

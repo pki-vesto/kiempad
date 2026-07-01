@@ -689,7 +689,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   next-action en flow-connector zichtbaarheid op desktop en mobiel. De flow gebruikt
   nu subtiele domeinaccentfamilies voor Dossier/Traject, Agenda/Herinneringen,
   Kennis/Welzijn, Afwegingen/Kosten en Logboek/Back-up; de smoke bewaakt dat deze
-  accentbalans over de tien contextkolommen onderscheidbaar blijft.
+  accentbalans over de tien contextkolommen onderscheidbaar blijft. Het startscherm
+  heeft nu een zichtbare fertility intelligence hub met zes werkbanen voor
+  dossierupload, tijdlijn, embryo/beelden, dagadvies, research en encrypted sync,
+  met twee primaire banen bovenaan en ondersteunende routes eronder zodat de eerste
+  viewport niet meer als een lange modulelijst leest.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -705,7 +709,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1238: contextkolom scanritme verfijnen na flow-accenten.
+1. UI Improvement Evolution uitvoeren vanaf G1239: dossier en intelligence workflows uitwerken als eigen tabbladen na start-hub.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
