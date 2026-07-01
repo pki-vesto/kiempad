@@ -24,6 +24,10 @@ const targets = [
       '[data-start-cockpit-route="timeline"]',
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
+      '[data-start-launchpad="ready"]',
+      '[data-start-launchpad-region="header"]',
+      '[data-start-launchpad-region="cockpit"]',
+      '[data-start-launchpad-region="deck"]',
       '[data-workspace-strip="ready"]',
       '[data-compact-workspace-deck="ready"]',
       '[data-start-workspace-deck="ready"]',
@@ -53,6 +57,7 @@ const targets = [
       '[data-start-flow-switchboard-card="snelle-invoer"]',
       '[data-start-flow-panel-stack="contained"]',
     ],
+    startLaunchpad: true,
     presentSelectors: [
       '[data-daily-advice-focus-shell="ready"]',
       '[data-daily-advice-focus-region="workflow"]',
@@ -593,6 +598,30 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const startLaunchpad = routeflow.startLaunchpad
+          ? (() => {
+              const header = document.querySelector('[data-start-launchpad-region="header"]');
+              const cockpit = document.querySelector('[data-start-launchpad-region="cockpit"]');
+              const deck = document.querySelector('[data-start-launchpad-region="deck"]');
+              const headerRect = header?.getBoundingClientRect();
+              const cockpitRect = cockpit?.getBoundingClientRect();
+              const deckRect = deck?.getBoundingClientRect();
+              return {
+                headerVisible: Boolean(headerRect && headerRect.width > 0 && headerRect.height > 0),
+                cockpitVisible: Boolean(
+                  cockpitRect && cockpitRect.width > 0 && cockpitRect.height > 0,
+                ),
+                deckVisible: Boolean(deckRect && deckRect.width > 0 && deckRect.height > 0),
+                headerTop: headerRect?.top ?? 0,
+                headerRight: headerRect?.right ?? 0,
+                deckTop: deckRect?.top ?? 0,
+                deckRight: deckRect?.right ?? 0,
+                cockpitTop: cockpitRect?.top ?? 0,
+                cockpitLeft: cockpitRect?.left ?? 0,
+                cockpitBottom: cockpitRect?.bottom ?? 0,
+              };
+            })()
+          : null;
         const uploadConsole = routeflow.uploadConsole
           ? (() => {
               const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
@@ -696,6 +725,7 @@ async function assertRouteflows(browser, options) {
           focusLayout,
           startCommandCenter,
           dailyAdviceConsole,
+          startLaunchpad,
           uploadConsole,
           timelineConsole,
           appFrame: {
@@ -728,6 +758,21 @@ async function assertRouteflows(browser, options) {
       }
       if (!evidence.activeVisible) {
         throw new Error(`${options.label}/${target.screen}: actieve routeflow is niet zichtbaar.`);
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.startLaunchpad &&
+        (!evidence.startLaunchpad.headerVisible ||
+          !evidence.startLaunchpad.cockpitVisible ||
+          !evidence.startLaunchpad.deckVisible ||
+          evidence.startLaunchpad.cockpitLeft < evidence.startLaunchpad.headerRight - 1 ||
+          evidence.startLaunchpad.cockpitLeft < evidence.startLaunchpad.deckRight - 1 ||
+          evidence.startLaunchpad.deckTop < evidence.startLaunchpad.headerTop - 1 ||
+          evidence.startLaunchpad.deckTop > evidence.startLaunchpad.cockpitBottom + 1)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: start-launchpad staat niet in compacte dashboardlayout (${JSON.stringify(evidence.startLaunchpad)}).`,
+        );
       }
       if (
         options.label === 'desktop' &&

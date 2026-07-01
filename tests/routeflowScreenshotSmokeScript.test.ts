@@ -14,6 +14,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('appFrame');
     expect(routeflowScreenshotSmokeScript).toContain('desktop app-workspace is niet begrensd');
     expect(routeflowScreenshotSmokeScript).toContain('bodyScrolls');
+    expect(routeflowScreenshotSmokeScript).toContain('startLaunchpad: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'start-launchpad staat niet in compacte dashboardlayout',
+    );
     expect(routeflowScreenshotSmokeScript).toContain(
       'Start command-center staat niet in drie begrensde werkvlakken',
     );
@@ -58,6 +62,10 @@ describe('routeflow screenshot smoke script', () => {
       '[data-start-cockpit-route="timeline"]',
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
+      '[data-start-launchpad="ready"]',
+      '[data-start-launchpad-region="header"]',
+      '[data-start-launchpad-region="cockpit"]',
+      '[data-start-launchpad-region="deck"]',
       '[data-workspace-strip="ready"]',
       '[data-start-workspace-deck="ready"]',
       '[data-start-workspace-card="today"]',

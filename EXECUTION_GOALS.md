@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1300 — Premium Claude Design UI: Start als compacte eerste-viewport launchpad
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Start toonde header, cockpit, werkbanen en command-center nog als opeenvolgende blokken, waardoor het eerste scherm alsnog als een verticale pagina kon voelen.
+- **Desired Outcome:** Bundel header, cockpit en werkbanen in één start-launchpad met aparte regio's voor context, cockpit en deck.
+- **User Value:** De gebruiker opent Kiempad direct in een dashboardachtige eerste viewport met duidelijke werkbanen en acties zonder eerst door losse introductieblokken te scrollen.
+- **Acceptance Criteria:** Start rendert `data-start-launchpad="ready"` met regio's `header`, `cockpit` en `deck`; desktop gebruikt grid-areas `"header cockpit"` en `"deck cockpit"`; cockpit- en decktekst blijft leesbaar zonder truncatie; mobiel behoudt de volgorde header/cockpit/deck; routeflow-smoke bewaakt de compacte launchpad-geometrie en tekstfit.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2375
+
 ### G1299 — Premium Claude Design UI: desktop shell als begrensde app-workspace
 
 - **Epic:** Onboarding & Daily Use
