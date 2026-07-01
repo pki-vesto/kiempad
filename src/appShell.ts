@@ -11116,6 +11116,14 @@ function renderWelzijnScreen(state: AppShellState): string {
           ariaLabel: 'Welzijn geschiedenis route-samenvatting',
           data: { 'wellbeing-route-summary': 'history' },
         })}
+        ${renderWellbeingHistoryBoard({
+          checkInCount: checkIns.length,
+          symptomCount: logs.length,
+          cycleCount: cycleData.length,
+          trendCount: trends.length,
+          daysWithSymptoms: perDag.length,
+          latestDate: overzicht.laatsteDatum,
+        })}
         <details id="welzijn-history-checkins" class="kp-disclosure" data-wellbeing-disclosure="checkins">
           <summary class="kp-disclosure__summary">Mentale check-ins openen</summary>
           <div class="kp-disclosure__body">
@@ -11349,6 +11357,77 @@ function renderWellbeingRouteVisibility(
   return route === activeRoute
     ? ' data-wellbeing-route-state="active"'
     : ' data-wellbeing-route-state="inactive" hidden';
+}
+
+function renderWellbeingHistoryBoard(input: {
+  checkInCount: number;
+  symptomCount: number;
+  cycleCount: number;
+  trendCount: number;
+  daysWithSymptoms: number;
+  latestDate: string | undefined;
+}): string {
+  const latest = input.latestDate ?? 'Nog geen datum';
+  const lanes = [
+    {
+      id: 'checkins',
+      href: '#welzijn-history-checkins',
+      label: 'Check-ins',
+      title: `${input.checkInCount} check-in${input.checkInCount === 1 ? '' : 's'}`,
+      detail: 'Lees stemming per dag terug zonder score of advies.',
+      cue: latest,
+    },
+    {
+      id: 'symptoms',
+      href: '#welzijn-history-symptoms',
+      label: 'Symptomen',
+      title: `${input.symptomCount} log${input.symptomCount === 1 ? '' : 's'}`,
+      detail: `${input.daysWithSymptoms} dag${input.daysWithSymptoms === 1 ? '' : 'en'} met observaties, gegroepeerd per datum.`,
+      cue: 'Per dag',
+    },
+    {
+      id: 'cycle',
+      href: '#welzijn-history-cycle',
+      label: 'Cyclus',
+      title: `${input.cycleCount} meting${input.cycleCount === 1 ? '' : 'en'}`,
+      detail: 'Cyclusmetingen blijven feitelijke registraties naast het traject.',
+      cue: 'Geen duiding',
+    },
+    {
+      id: 'trends',
+      href: '#welzijn-overview-trends-disclosure',
+      label: 'Trends',
+      title: `${input.trendCount} periode${input.trendCount === 1 ? '' : 's'}`,
+      detail: 'Trendperiodes tonen alleen aantallen, geen diagnose of conclusie.',
+      cue: 'Feiten',
+    },
+  ];
+
+  return `
+    <section class="wellbeing-history-board" aria-label="Welzijn geschiedenis startlaag" data-wellbeing-history-board="ready">
+      <header class="wellbeing-history-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Terugleesbord</p>
+          <h3>Kies eerst je welzijnslaag</h3>
+        </div>
+        <p>Open check-ins, symptomen, cyclusmetingen of trendperiodes zonder meteen alle registraties te tonen.</p>
+      </header>
+      <nav class="wellbeing-history-board__lanes" aria-label="Welzijnsgeschiedenis kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="wellbeing-history-board__lane" href="${lane.href}" data-wellbeing-history-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${lane.title}</strong>
+          <small>${lane.detail}</small>
+          <em>${escapeHtml(lane.cue)}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze laag toont alleen lokale tellingen en datums; geen notities, diagnose, score, behandeladvies of trackingdata.</p>
+    </section>
+  `;
 }
 
 function renderWelzijnTrends(trends: WelzijnTrendPeriode[]): string {

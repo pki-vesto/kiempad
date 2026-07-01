@@ -4534,6 +4534,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2297
 - **Status:** ☑ done
 
+### G1262 — welzijn-geschiedenisbord toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De welzijn-geschiedenisroute splitst check-ins, symptomen en cyclusmetingen in disclosures, maar start nog zonder compacte keuze voor de laag die de gebruiker wil teruglezen.
+- **User Impact:** Gebruikers moeten eerst door losse panelen scannen om te bepalen of zij stemming, symptomen, cyclusmetingen of trends willen zien.
+- **Desired Outcome:** Toon vóór de welzijn-geschiedenisdisclosures een compact terugleesbord met vier taaklanes voor check-ins, symptomen, cyclus en trends.
+- **User Value:** Gebruikers lezen self-tracking rustiger terug vanuit een duidelijke keuze, zonder dat het als diagnose- of scorepaneel voelt.
+- **Acceptance Criteria:** Welzijnroute `#welzijn?route=history` toont `data-wellbeing-history-board="ready"` vóór `data-wellbeing-disclosure="checkins"`; lanes linken naar bestaande check-in-, symptoom-, cyclus- en trendankers; bestaande formulieren, disclosures, routeankers en privacycopy blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt het welzijn-geschiedenisbord op desktop en mobiel; geen notities, diagnose, score, behandeladvies, trackingdata of secrets wordt toegevoegd.
+- **Affected Screens:** Welzijn, dagelijkse leefstijlcontext, self-tracking
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Wellbeing UI, daily recommendations context, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 11
+- **GitHub Issue:** #2299
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

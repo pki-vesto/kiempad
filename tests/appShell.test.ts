@@ -35075,6 +35075,20 @@ describe('app shell', () => {
     expect(html).toContain('Trendperiodes openen');
     expect(html).toContain('aria-label="Welzijn geschiedenis route-samenvatting"');
     expect(html).toContain('data-wellbeing-route-summary="history"');
+    expect(html).toContain('data-wellbeing-history-board="ready"');
+    expect(html).toContain('aria-label="Welzijn geschiedenis startlaag"');
+    expect(html).toContain('Kies eerst je welzijnslaag');
+    expect(html).toContain('data-wellbeing-history-lane="checkins"');
+    expect(html).toContain('data-wellbeing-history-lane="symptoms"');
+    expect(html).toContain('data-wellbeing-history-lane="cycle"');
+    expect(html).toContain('data-wellbeing-history-lane="trends"');
+    expect(html).toContain('Terugleesbord');
+    expect(html).toContain(
+      'Deze laag toont alleen lokale tellingen en datums; geen notities, diagnose, score, behandeladvies of trackingdata.',
+    );
+    expect(html.indexOf('data-wellbeing-history-board="ready"')).toBeLessThan(
+      html.indexOf('data-wellbeing-disclosure="checkins"'),
+    );
     expect(html).toContain('Mentale check-ins openen');
     expect(html).toContain('Symptoomlogboek per dag openen');
     expect(html).toContain('Cyclusmetingen openen');
@@ -35133,6 +35147,13 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
     expect(css).toContain('.insight-workbench__actions {');
     expect(css).toContain('.wellbeing-task-routes {');
+    expect(css).toContain('.wellbeing-history-board {');
+    expect(css).toContain('.wellbeing-history-board__header {');
+    expect(css).toContain('.wellbeing-history-board__lanes {');
+    expect(css).toContain('.wellbeing-history-board__lane {');
+    expect(css).toContain('.wellbeing-history-board__lane:hover,');
+    expect(css).toContain('.wellbeing-history-board__lane:focus-visible {');
+    expect(css).toContain('.wellbeing-history-board__lane em {');
     expect(css).toContain('.decision-task-routes {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.insight-workbench :where(.stat-row) {');
