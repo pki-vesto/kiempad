@@ -36559,6 +36559,53 @@ describe('app shell', () => {
     expect(missingSummaries).toEqual([]);
   });
 
+  it('toont dossier agenda en vragen als split-view werkruimtes met rail hoofdvlak en context', () => {
+    const dossierHtml = renderAppShell(
+      'dossier',
+      makeStartState({ activeDossierRoute: 'imaging' }),
+    );
+    const agendaHtml = renderAppShell('agenda', makeStartState({ activeScheduleRoute: 'plannen' }));
+    const vragenHtml = renderAppShell('vragen', makeStartState({ activeQuestionRoute: 'beheer' }));
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+
+    for (const [label, html] of [
+      ['dossier', dossierHtml],
+      ['schedule', agendaHtml],
+      ['question', vragenHtml],
+    ] as const) {
+      expect(html).toContain(`data-${label}-split-workspace="ready"`);
+      expect(html).toContain('class="domain-split-workspace__rail"');
+      expect(html).toContain('class="domain-split-workspace__main"');
+      expect(html).toContain('class="domain-split-workspace__context"');
+    }
+
+    expect(dossierHtml).toContain('class="domain-split-workspace dossier-split-workspace"');
+    expect(dossierHtml).toContain('data-dossier-workspace-context');
+    expect(dossierHtml).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
+    expect(agendaHtml).toContain('class="domain-split-workspace schedule-split-workspace"');
+    expect(agendaHtml).toContain('data-schedule-workspace-context="metrics"');
+    expect(agendaHtml).toContain(
+      'data-schedule-route="plannen" data-schedule-route-state="active"',
+    );
+    expect(vragenHtml).toContain('class="domain-split-workspace question-split-workspace"');
+    expect(vragenHtml).toContain('data-question-workspace-context="metrics"');
+    expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
+
+    expect(css).toContain('.domain-split-workspace {');
+    expect(css).toContain(
+      'grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.9fr) minmax(240px, 0.88fr);',
+    );
+    expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
+    expect(css).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.domain-split-workspace {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.domain-split-workspace__rail {');
+    expect(mobileCss).toContain('overflow-x: auto;');
+    expect(mobileCss).toContain('.domain-split-workspace__rail .command-task-route {');
+    expect(mobileCss).toContain('flex: 0 0 min(172px, 72vw);');
+  });
+
   it('bewaakt commandroutes als zichtbare app-dock in plaats van platte paginalinks', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
