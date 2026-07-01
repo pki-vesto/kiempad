@@ -2363,6 +2363,35 @@ h2 {
   gap: 18px;
 }
 
+.start-launchpad {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  grid-template-areas:
+    "header cockpit"
+    "deck cockpit";
+  gap: 12px;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.start-launchpad__header,
+.start-launchpad__cockpit,
+.start-launchpad__deck {
+  min-width: 0;
+}
+
+.start-launchpad__header {
+  grid-area: header;
+}
+
+.start-launchpad__cockpit {
+  grid-area: cockpit;
+}
+
+.start-launchpad__deck {
+  grid-area: deck;
+}
+
 .start-cockpit {
   display: grid;
   grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr) minmax(210px, 0.7fr);
@@ -10653,6 +10682,20 @@ a.action-card:active {
     align-items: start;
   }
 
+  .start-launchpad {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "cockpit"
+      "deck";
+  }
+
+  .start-launchpad .start-command-header,
+  .start-launchpad .start-cockpit,
+  .start-launchpad .start-workspace-deck {
+    height: auto;
+  }
+
   .start-cockpit {
     display: flex;
     gap: 10px;
@@ -12556,6 +12599,48 @@ a.action-card:active {
 .daily-advice-focus-shell__workbench > .daily-advice-workbench,
 .daily-advice-focus-shell__planner > .daily-advice-action-planner {
   height: 100%;
+}
+
+@media (min-width: 761px) {
+  .start-launchpad .start-command-header,
+  .start-launchpad .start-cockpit,
+  .start-launchpad .start-workspace-deck {
+    height: 100%;
+  }
+
+  .start-launchpad :where(h2, h3, p, span, strong, small, em, dd, dt) {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .start-launchpad .start-cockpit {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .start-launchpad .start-cockpit__routes {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .start-launchpad .start-cockpit__panel h2,
+  .start-launchpad .start-cockpit__metrics dd,
+  .start-launchpad .start-cockpit__routes span,
+  .start-launchpad .start-cockpit__routes strong {
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .start-launchpad .start-workspace-deck {
+    grid-template-columns: 1fr;
+  }
+
+  .start-launchpad .start-workspace-deck__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media print {

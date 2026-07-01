@@ -378,6 +378,10 @@
   viewport-hoog en verborgen voor body-scroll. `.content` is het eigen
   scrollpaneel, zodat de app als vaste werkruimte blijft staan; routeflow-smoke
   bewaakt shellhoogte, overflow en body-scroll.
+- **G1300 Start-launchpad:** Start bundelt commandheader, cockpit en werkbanen
+  in één launchpad met aparte header-, cockpit- en deckregio's. Desktop toont
+  deze regio's naast elkaar in de eerste viewport; mobiel behoudt de verticale
+  volgorde. Routeflow-smoke bewaakt de dashboardlayout en tekstfit.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

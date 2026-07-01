@@ -2403,6 +2403,11 @@ describe('app shell', () => {
     const html = renderAppShell('start');
 
     expect(html).toContain('class="section-stack start-command-layout"');
+    expect(html).toContain('class="start-launchpad"');
+    expect(html).toContain('data-start-launchpad="ready"');
+    expect(html).toContain('data-start-launchpad-region="header"');
+    expect(html).toContain('data-start-launchpad-region="cockpit"');
+    expect(html).toContain('data-start-launchpad-region="deck"');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
     expect(html).toContain('class="start-cockpit"');
@@ -2746,6 +2751,12 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.workspace-map__card {');
     expect(mobileCss).toContain('flex: 0 0 min(238px, 76vw);');
     expect(css).toContain('.start-cockpit {');
+    expect(css).toContain('.start-launchpad {');
+    expect(css).toContain('"header cockpit"');
+    expect(css).toContain('"deck cockpit"');
+    expect(css).toContain('grid-area: header;');
+    expect(css).toContain('grid-area: cockpit;');
+    expect(css).toContain('grid-area: deck;');
     expect(css).toContain(
       'grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr) minmax(210px, 0.7fr);',
     );
@@ -2782,6 +2793,10 @@ describe('app shell', () => {
     expect(css).toContain('.start-focus-shell__dashboard .daily-advice-snapshot__card span,');
     expect(css).toContain('.start-focus-shell__primary .daily-advice-snapshot__card span,');
     expect(mobileCss).toContain('.start-cockpit {');
+    expect(mobileCss).toContain('.start-launchpad {');
+    expect(mobileCss).toContain('"header"');
+    expect(mobileCss).toContain('"cockpit"');
+    expect(mobileCss).toContain('"deck"');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.start-cockpit__panel {');
     expect(mobileCss).toContain('flex: 0 0 min(292px, 86vw);');

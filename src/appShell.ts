@@ -13434,37 +13434,43 @@ function renderStartScreen(state: AppShellState): string {
     secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
   });
 
+  const startHeader = renderStartCommandHeader(state);
+  const startCockpit = renderStartCockpit({
+    activeTraject,
+    huidigeFase,
+    nextAppointment,
+    nextReminder,
+    openQuestions,
+    doseCount: todayDoseLogs.length,
+    recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+      (total, owner) => total + dailyRecommendations[owner].length,
+      0,
+    ),
+    dossierCount: state.dossierDocuments?.length ?? 0,
+    consultCount: state.consultVerslagen?.length ?? 0,
+    researchCount: state.kennisItems.length,
+    secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
+  });
+  const startWorkspaceDeck = renderStartWorkspaceDeck({
+    appointmentCount: state.afspraken.length,
+    reminderCount: state.herinneringen.length,
+    dossierCount: state.dossierDocuments?.length ?? 0,
+    consultCount: state.consultVerslagen?.length ?? 0,
+    researchCount: state.kennisItems.length,
+    recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+      (total, owner) => total + dailyRecommendations[owner].length,
+      0,
+    ),
+    costCount: state.kosten?.length ?? 0,
+    secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
+  });
+
   return sectionStack(
     [
-      renderStartCommandHeader(state),
-      renderStartCockpit({
-        activeTraject,
-        huidigeFase,
-        nextAppointment,
-        nextReminder,
-        openQuestions,
-        doseCount: todayDoseLogs.length,
-        recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
-          (total, owner) => total + dailyRecommendations[owner].length,
-          0,
-        ),
-        dossierCount: state.dossierDocuments?.length ?? 0,
-        consultCount: state.consultVerslagen?.length ?? 0,
-        researchCount: state.kennisItems.length,
-        secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
-      }),
-      renderStartWorkspaceDeck({
-        appointmentCount: state.afspraken.length,
-        reminderCount: state.herinneringen.length,
-        dossierCount: state.dossierDocuments?.length ?? 0,
-        consultCount: state.consultVerslagen?.length ?? 0,
-        researchCount: state.kennisItems.length,
-        recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
-          (total, owner) => total + dailyRecommendations[owner].length,
-          0,
-        ),
-        costCount: state.kosten?.length ?? 0,
-        secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
+      renderStartLaunchpad({
+        header: startHeader,
+        cockpit: startCockpit,
+        workspaceDeck: startWorkspaceDeck,
       }),
       renderStartFocusShell({
         intelligence: renderStartIntelligenceWorkbench(state, dailyRecommendations),
@@ -13517,6 +13523,26 @@ function renderStartScreen(state: AppShellState): string {
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartLaunchpad(input: {
+  header: string;
+  cockpit: string;
+  workspaceDeck: string;
+}): string {
+  return `
+    <section class="start-launchpad" aria-label="Start launchpad" data-start-launchpad="ready">
+      <div class="start-launchpad__header" data-start-launchpad-region="header">
+        ${input.header}
+      </div>
+      <div class="start-launchpad__cockpit" data-start-launchpad-region="cockpit">
+        ${input.cockpit}
+      </div>
+      <div class="start-launchpad__deck" data-start-launchpad-region="deck">
+        ${input.workspaceDeck}
+      </div>
+    </section>
+  `;
 }
 
 function renderStartFocusShell(input: {
