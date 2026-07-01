@@ -36559,13 +36559,21 @@ describe('app shell', () => {
     expect(missingSummaries).toEqual([]);
   });
 
-  it('toont dossier agenda en vragen als split-view werkruimtes met rail hoofdvlak en context', () => {
+  it('toont kerndomeinen als split-view werkruimtes met rail hoofdvlak en context', () => {
     const dossierHtml = renderAppShell(
       'dossier',
       makeStartState({ activeDossierRoute: 'imaging' }),
     );
     const agendaHtml = renderAppShell('agenda', makeStartState({ activeScheduleRoute: 'plannen' }));
     const vragenHtml = renderAppShell('vragen', makeStartState({ activeQuestionRoute: 'beheer' }));
+    const trajectHtml = renderAppShell(
+      'traject',
+      makeStartState({ activeTreatmentRoute: 'fasen' }),
+    );
+    const medicatieHtml = renderAppShell(
+      'medicatie',
+      makeStartState({ activeMedicationRoute: 'beheer' }),
+    );
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
@@ -36573,6 +36581,8 @@ describe('app shell', () => {
       ['dossier', dossierHtml],
       ['schedule', agendaHtml],
       ['question', vragenHtml],
+      ['treatment', trajectHtml],
+      ['medication', medicatieHtml],
     ] as const) {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
@@ -36591,6 +36601,16 @@ describe('app shell', () => {
     expect(vragenHtml).toContain('class="domain-split-workspace question-split-workspace"');
     expect(vragenHtml).toContain('data-question-workspace-context="metrics"');
     expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
+    expect(trajectHtml).toContain('class="domain-split-workspace treatment-split-workspace"');
+    expect(trajectHtml).toContain('data-treatment-workspace-context="metrics"');
+    expect(trajectHtml).toContain(
+      'data-treatment-route="fasen" data-treatment-route-state="active"',
+    );
+    expect(medicatieHtml).toContain('class="domain-split-workspace medication-split-workspace"');
+    expect(medicatieHtml).toContain('data-medication-workspace-context="metrics"');
+    expect(medicatieHtml).toContain(
+      'data-medication-route="beheer" data-medication-route-state="active"',
+    );
 
     expect(css).toContain('.domain-split-workspace {');
     expect(css).toContain(
