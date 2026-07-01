@@ -6264,6 +6264,13 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-triage__lane:hover,');
     expect(css).toContain('.dossier-upload-triage__lane:focus-visible {');
     expect(css).toContain('.dossier-upload-triage__lane em {');
+    expect(css).toContain('.dossier-imaging-inspection-board {');
+    expect(css).toContain('.dossier-imaging-inspection-board__header {');
+    expect(css).toContain('.dossier-imaging-inspection-board__lanes {');
+    expect(css).toContain('.dossier-imaging-inspection-board__lane {');
+    expect(css).toContain('.dossier-imaging-inspection-board__lane:hover,');
+    expect(css).toContain('.dossier-imaging-inspection-board__lane:focus-visible {');
+    expect(css).toContain('.dossier-imaging-inspection-board__lane em {');
     expect(mobileCss).toContain('.dossier-route-snapshot {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.dossier-route-snapshot__card {');
@@ -6274,6 +6281,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.dossier-upload-triage__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
+    expect(mobileCss).toContain('.dossier-imaging-inspection-board {');
+    expect(mobileCss).toContain('.dossier-imaging-inspection-board__lanes {');
+    expect(mobileCss).toContain('.dossier-imaging-inspection-board__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(236px, 78vw);');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('max-width: 76ch;');
     expect(css).toContain('flex-wrap: wrap;');
@@ -6716,6 +6727,21 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Embryo en beelden als eigen werkbaan');
     expect(emptyHtml).toContain('data-hub-workflow-tab="imaging" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="embryos"');
+    expect(emptyHtml).toContain('data-dossier-imaging-inspection-board="ready"');
+    expect(emptyHtml).toContain('aria-label="Imaging inspectiebord"');
+    expect(emptyHtml).toContain('Kies eerst je beeldroute');
+    expect(emptyHtml).toContain('data-dossier-imaging-lane="images"');
+    expect(emptyHtml).toContain('data-dossier-imaging-lane="compare"');
+    expect(emptyHtml).toContain('data-dossier-imaging-lane="embryos"');
+    expect(emptyHtml).toContain('data-dossier-imaging-lane="consults"');
+    expect(emptyHtml).toContain('Metadata zichtbaar');
+    expect(emptyHtml).toContain('Geen selectieadvies');
+    expect(emptyHtml).toContain(
+      'Deze laag toont alleen tellingen en veilige metadata; geen OCR-tekst, consulttekst, beeldpayload of embryo-selectieadvies.',
+    );
+    expect(emptyHtml.indexOf('data-dossier-imaging-inspection-board="ready"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-imaging-disclosure="consults"'),
+    );
     expect(emptyHtml).toContain('data-hub-detail-panel="imaging-repository"');
     expect(emptyHtml).toContain('Filters, classificaties en vergelijkingen');
     expect(emptyHtml).toContain('<em>0 beelden</em>');
@@ -6932,6 +6958,12 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Dossier imaging route-samenvatting"');
     expect(html).toContain('data-dossier-route-summary="imaging"');
     expect(html).toContain('Beelden en embryo’s als aparte werkruimte');
+    expect(html).toContain('data-dossier-imaging-inspection-board="ready"');
+    expect(html).toContain('Kies eerst je beeldroute');
+    expect(html).toContain('data-dossier-imaging-lane="images"');
+    expect(html).toContain('data-dossier-imaging-lane="compare"');
+    expect(html).toContain('data-dossier-imaging-lane="embryos"');
+    expect(html).toContain('data-dossier-imaging-lane="consults"');
     expect(html).toContain('Consultverslagen openen');
     expect(html).toContain('data-hub-detail-panel="imaging-repository"');
     expect(html).toContain('Imaging-repository openen');
