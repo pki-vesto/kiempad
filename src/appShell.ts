@@ -1363,6 +1363,17 @@ function renderAfwegingenScreen(state: AppShellState): string {
           <h2 id="afwegingen-route-prepare-title">Beslisnotitie toevoegen</h2>
           <p>Leg onderwerp, gekoppelde artsvraag en opties vast voordat je een keuze maakt.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Afwegingenroute',
+          title: 'Eerst de beslisnotitie scherp krijgen',
+          detail:
+            'Onderwerp, artsvraag en opties blijven in één invoerstap, los van vergelijking, keuze en verslag.',
+          primary: { href: '#decision-form', label: 'Notitie toevoegen' },
+          secondary: { href: '#afwegingen-route-compare', label: 'Vergelijken' },
+          status: `${decisions.length} notities`,
+          ariaLabel: 'Afwegingen voorbereiden route-samenvatting',
+          data: { 'decision-route-summary': 'prepare' },
+        })}
         ${disclosure({
           summary: 'Beslisnotitie toevoegen',
           open: decisions.length === 0,
@@ -1375,11 +1386,27 @@ function renderAfwegingenScreen(state: AppShellState): string {
           <h2 id="afwegingen-route-compare-title">Opties vergelijken</h2>
           <p>Bekijk voors en tegens per optie zonder behandeladvies of score.</p>
         </header>
-        ${
-          decisions.length > 0
-            ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionCompareItem(decision, state)).join('')}</ol>`
-            : '<p class="empty-state">Nog geen opties om te vergelijken.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Afwegingenroute',
+          title: 'Vergelijk opties pas wanneer je die context nodig hebt',
+          detail:
+            'Voors, tegens en gekoppelde artsvragen staan achter een disclosure zodat de pagina niet als beslisdossier opent.',
+          primary: { href: '#afwegingen-compare-disclosure', label: 'Opties openen' },
+          secondary: { href: '#afwegingen-route-choice', label: 'Keuze vastleggen' },
+          status: `${decisions.length} notities`,
+          ariaLabel: 'Afwegingen vergelijken route-samenvatting',
+          data: { 'decision-route-summary': 'compare' },
+        })}
+        <details id="afwegingen-compare-disclosure" class="kp-disclosure" data-decision-disclosure="compare">
+          <summary class="kp-disclosure__summary">Opties, voors en tegens openen</summary>
+          <div class="kp-disclosure__body">
+            ${
+              decisions.length > 0
+                ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionCompareItem(decision, state)).join('')}</ol>`
+                : '<p class="empty-state">Nog geen opties om te vergelijken.</p>'
+            }
+          </div>
+        </details>
       </section>`,
       `<section id="afwegingen-route-choice" class="decision-route-section" aria-labelledby="afwegingen-route-choice-title" data-decision-route="choice">
         <header class="decision-route-section__header">
@@ -1387,11 +1414,27 @@ function renderAfwegingenScreen(state: AppShellState): string {
           <h2 id="afwegingen-route-choice-title">Keuze vastleggen</h2>
           <p>Registreer alleen de gemaakte keuze en onderbouwing; Kiempad kiest niet voor jou.</p>
         </header>
-        ${
-          decisions.length > 0
-            ? `<ol class="phase-list">${decisions.map(renderDecisionChoiceItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen beslisnotitie om een keuze bij vast te leggen.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Afwegingenroute',
+          title: 'Keuze registreren zonder vergelijking opnieuw uit te stallen',
+          detail:
+            'De keuzeformulieren blijven bereikbaar, maar openen pas wanneer je bewust de beslisnotities toont.',
+          primary: { href: '#afwegingen-choice-disclosure', label: 'Keuzes openen' },
+          secondary: { href: '#afwegingen-route-history', label: 'Verslag' },
+          status: `${chosenCount} vastgelegd`,
+          ariaLabel: 'Afwegingen keuze route-samenvatting',
+          data: { 'decision-route-summary': 'choice' },
+        })}
+        <details id="afwegingen-choice-disclosure" class="kp-disclosure" data-decision-disclosure="choice">
+          <summary class="kp-disclosure__summary">Keuzeformulieren per beslisnotitie openen</summary>
+          <div class="kp-disclosure__body">
+            ${
+              decisions.length > 0
+                ? `<ol class="phase-list">${decisions.map(renderDecisionChoiceItem).join('')}</ol>`
+                : '<p class="empty-state">Nog geen beslisnotitie om een keuze bij vast te leggen.</p>'
+            }
+          </div>
+        </details>
       </section>`,
       `<section id="afwegingen-route-history" class="decision-route-section" aria-labelledby="afwegingen-route-history-title" data-decision-route="history">
         <header class="decision-route-section__header">
@@ -1399,11 +1442,26 @@ function renderAfwegingenScreen(state: AppShellState): string {
           <h2 id="afwegingen-route-history-title">Beslisverslagen</h2>
           <p>Lees eerdere afwegingen terug als feitelijk verslag van opties, keuze en onderbouwing.</p>
         </header>
-        ${
-          decisions.length > 0
-            ? `<ol class="phase-list">${decisions.map(renderDecisionHistoryItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen beslisverslagen vastgelegd.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Afwegingenroute',
+          title: 'Verslagen als naslag, niet als startscherm',
+          detail:
+            'Eerdere beslisverslagen blijven compleet terugleesbaar achter één rustige openactie.',
+          primary: { href: '#afwegingen-history-disclosure', label: 'Verslagen openen' },
+          status: `${decisions.length} verslagen`,
+          ariaLabel: 'Afwegingen geschiedenis route-samenvatting',
+          data: { 'decision-route-summary': 'history' },
+        })}
+        <details id="afwegingen-history-disclosure" class="kp-disclosure" data-decision-disclosure="history">
+          <summary class="kp-disclosure__summary">Beslisverslagen openen</summary>
+          <div class="kp-disclosure__body">
+            ${
+              decisions.length > 0
+                ? `<ol class="phase-list">${decisions.map(renderDecisionHistoryItem).join('')}</ol>`
+                : '<p class="empty-state">Nog geen beslisverslagen vastgelegd.</p>'
+            }
+          </div>
+        </details>
       </section>`,
     ],
     { className: 'decision-command-layout', ariaLabel: 'Afwegingen beheren' },
@@ -9559,8 +9617,24 @@ function renderWelzijnScreen(state: AppShellState): string {
           <h2 id="welzijn-route-overview-title">Welzijn en trends</h2>
           <p>Bekijk feitelijke aantallen en trendperiodes zonder score, diagnose of behandeladvies.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Welzijnsroute',
+          title: 'Eerst de feiten, trends pas openklappen',
+          detail:
+            'Het overzicht toont lokale tellingen direct; trendperiodes blijven beschikbaar zonder de route lang te maken.',
+          primary: { href: '#welzijn-overview-trends-disclosure', label: 'Trends openen' },
+          secondary: { href: '#welzijn-route-log', label: 'Vastleggen' },
+          status: `${trends.length} trends`,
+          ariaLabel: 'Welzijn overzicht route-samenvatting',
+          data: { 'wellbeing-route-summary': 'overview' },
+        })}
         ${renderWelzijnOverzicht(overzicht)}
-        ${renderWelzijnTrends(trends)}
+        <details id="welzijn-overview-trends-disclosure" class="kp-disclosure" data-wellbeing-disclosure="trends">
+          <summary class="kp-disclosure__summary">Trendperiodes openen</summary>
+          <div class="kp-disclosure__body">
+            ${renderWelzijnTrends(trends)}
+          </div>
+        </details>
       </section>`,
       `<section id="welzijn-route-history" class="wellbeing-route-section" aria-labelledby="welzijn-route-history-title" data-wellbeing-route="history">
         <header class="wellbeing-route-section__header">
@@ -9568,24 +9642,50 @@ function renderWelzijnScreen(state: AppShellState): string {
           <h2 id="welzijn-route-history-title">Check-ins, symptomen en cyclusmetingen</h2>
           <p>Lees terug wat lokaal is vastgelegd, gescheiden van de invoerroute.</p>
         </header>
-        <h2>Mentale check-ins</h2>
-        ${
-          checkIns.length > 0
-            ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
-        }
-        <h2 class="section-subheading">Symptoomlogboek</h2>
-        ${
-          perDag.length > 0
-            ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
-            : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
-        }
-        <h2 class="section-subheading">Cyclusmetingen</h2>
-        ${
-          cycleData.length > 0
-            ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Welzijnsroute',
+          title: 'Geschiedenis per soort openen',
+          detail:
+            'Check-ins, symptoomdagen en cyclusmetingen staan los van elkaar, zodat de route scanbaar blijft.',
+          primary: { href: '#welzijn-history-checkins', label: 'Check-ins' },
+          secondary: { href: '#welzijn-history-symptoms', label: 'Symptomen' },
+          status: `${checkIns.length + logs.length + cycleData.length} registraties`,
+          ariaLabel: 'Welzijn geschiedenis route-samenvatting',
+          data: { 'wellbeing-route-summary': 'history' },
+        })}
+        <details id="welzijn-history-checkins" class="kp-disclosure" data-wellbeing-disclosure="checkins">
+          <summary class="kp-disclosure__summary">Mentale check-ins openen</summary>
+          <div class="kp-disclosure__body">
+            <h2>Mentale check-ins</h2>
+            ${
+              checkIns.length > 0
+                ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
+                : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
+            }
+          </div>
+        </details>
+        <details id="welzijn-history-symptoms" class="kp-disclosure" data-wellbeing-disclosure="symptoms">
+          <summary class="kp-disclosure__summary">Symptoomlogboek per dag openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 class="section-subheading">Symptoomlogboek</h2>
+            ${
+              perDag.length > 0
+                ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
+                : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
+            }
+          </div>
+        </details>
+        <details id="welzijn-history-cycle" class="kp-disclosure" data-wellbeing-disclosure="cycle">
+          <summary class="kp-disclosure__summary">Cyclusmetingen openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 class="section-subheading">Cyclusmetingen</h2>
+            ${
+              cycleData.length > 0
+                ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
+                : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
+            }
+          </div>
+        </details>
       </section>`,
       `<section id="welzijn-route-log" class="wellbeing-route-section" aria-labelledby="welzijn-route-log-title" data-wellbeing-route="log">
         <header class="wellbeing-route-section__header">
@@ -9593,6 +9693,17 @@ function renderWelzijnScreen(state: AppShellState): string {
           <h2 id="welzijn-route-log-title">Check-in, symptoom of cyclusmeting toevoegen</h2>
           <p>Leg alleen feitelijke self-tracking vast; Kiempad maakt hier geen medische conclusie van.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Welzijnsroute',
+          title: 'Nieuwe registratie toevoegen zonder historie erboven',
+          detail:
+            'De drie formulieren blijven samen beschikbaar, maar de geschiedenis blijft in de terugleesroute.',
+          primary: { href: '#mental-check-in-form', label: 'Check-in' },
+          secondary: { href: '#symptom-log-form', label: 'Symptoom' },
+          status: `${cycleData.length} metingen`,
+          ariaLabel: 'Welzijn vastleggen route-samenvatting',
+          data: { 'wellbeing-route-summary': 'log' },
+        })}
         ${disclosure({
           summary: 'Vastleggen: check-in, symptoom of cyclusmeting',
           open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,

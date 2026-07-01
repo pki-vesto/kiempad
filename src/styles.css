@@ -7010,7 +7010,9 @@ a.action-card:active {
 
   .command-route-section,
   .dossier-route-section,
-  .knowledge-route-section {
+  .knowledge-route-section,
+  .wellbeing-route-section,
+  .decision-route-section {
     gap: 9px;
     scroll-margin-top: 96px;
     padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);
@@ -7018,7 +7020,9 @@ a.action-card:active {
 
   .command-route-section__header,
   .dossier-route-section__header,
-  .knowledge-route-section__header {
+  .knowledge-route-section__header,
+  .wellbeing-route-section__header,
+  .decision-route-section__header {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -7031,13 +7035,17 @@ a.action-card:active {
 
   .command-route-section__header h2,
   .dossier-route-section__header h2,
-  .knowledge-route-section__header h2 {
+  .knowledge-route-section__header h2,
+  .wellbeing-route-section__header h2,
+  .decision-route-section__header h2 {
     font-size: 1.08rem;
   }
 
   .command-route-section__header > p:last-child,
   .dossier-route-section__header > p:last-child,
-  .knowledge-route-section__header > p:last-child {
+  .knowledge-route-section__header > p:last-child,
+  .wellbeing-route-section__header > p:last-child,
+  .decision-route-section__header > p:last-child {
     display: none;
   }
 
@@ -7050,20 +7058,26 @@ a.action-card:active {
 
   .command-route-section .kp-disclosure,
   .dossier-route-section .kp-disclosure,
-  .knowledge-route-section .kp-disclosure {
+  .knowledge-route-section .kp-disclosure,
+  .wellbeing-route-section .kp-disclosure,
+  .decision-route-section .kp-disclosure {
     border-radius: 14px;
   }
 
   .command-route-section .kp-disclosure__summary,
   .dossier-route-section .kp-disclosure__summary,
-  .knowledge-route-section .kp-disclosure__summary {
+  .knowledge-route-section .kp-disclosure__summary,
+  .wellbeing-route-section .kp-disclosure__summary,
+  .decision-route-section .kp-disclosure__summary {
     min-height: 40px;
     padding: 10px 13px;
   }
 
   .command-route-section .kp-disclosure__body,
   .dossier-route-section .kp-disclosure__body,
-  .knowledge-route-section .kp-disclosure__body {
+  .knowledge-route-section .kp-disclosure__body,
+  .wellbeing-route-section .kp-disclosure__body,
+  .decision-route-section .kp-disclosure__body {
     padding: 0 13px 13px;
   }
 
