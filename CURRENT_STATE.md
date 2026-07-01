@@ -724,6 +724,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De kennis/research-werkbank heeft nu een researchscan voor bronnen,
   samenvattingen, trends en netwerkstatus voordat de filterkaart of detailpanelen
   openen.
+  De dossierwerkbank heeft nu een dossierscan voor upload/review, zoeken,
+  beelden/embryo's en tijdlijn voordat de taakroutes en detailpanelen openen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen

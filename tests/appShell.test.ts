@@ -6000,6 +6000,7 @@ describe('app shell', () => {
     const html = renderAppShell('dossier', makeStartState());
     const selector = extractDossierAddRouteSelector(html);
     const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
     expect(selector).toContain('href="#dossier-upload-form"');
     expect(selector).toContain('href="#consult-verslag-form"');
@@ -6071,7 +6072,14 @@ describe('app shell', () => {
     expect(css).toContain('[data-dossier-first-viewport="route-stage"]');
     expect(css).toContain('.dossier-route-stage__header {');
     expect(css).toContain('.dossier-route-stage__status {');
+    expect(css).toContain('.dossier-route-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.dossier-route-snapshot__card {');
+    expect(css).toContain('.dossier-route-snapshot__card strong {');
+    expect(mobileCss).toContain('.dossier-route-snapshot {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.dossier-route-snapshot__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(230px, 76vw);');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('max-width: 76ch;');
     expect(css).toContain('flex-wrap: wrap;');
@@ -6458,6 +6466,15 @@ describe('app shell', () => {
       'Uploaden, zoeken, beelden en tijdlijn blijven gescheiden zodat je niet door alle medische blokken tegelijk hoeft.',
     );
     expect(emptyHtml).toContain('class="dossier-route-stage__status">Actief: upload en review');
+    expect(emptyHtml).toContain('data-dossier-route-snapshot="ready"');
+    expect(emptyHtml).toContain('aria-label="Dossierscan"');
+    expect(emptyHtml).toContain('data-dossier-route-snapshot-card="upload"');
+    expect(emptyHtml).toContain('data-dossier-route-snapshot-card="search"');
+    expect(emptyHtml).toContain('data-dossier-route-snapshot-card="imaging"');
+    expect(emptyHtml).toContain('data-dossier-route-snapshot-card="timeline"');
+    expect(emptyHtml).toContain('Documenten en consulten eerst veilig toevoegen.');
+    expect(emptyHtml).toContain('Alleen metadata en index, geen broninhoud.');
+    expect(emptyHtml).toContain('Historische onderzoeken pas openen als leesroute.');
     expect(emptyHtml).toContain('class="dossier-task-routes command-task-routes"');
     expect(emptyHtml).toContain('aria-label="Dossier taakroutes"');
     expect(emptyHtml).toContain('data-dossier-task-routes="ready"');

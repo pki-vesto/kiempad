@@ -3694,6 +3694,48 @@ function renderDossierRouteStage(input: {
         </div>
         <p class="dossier-route-stage__status">${escapeHtml(renderDossierActiveRouteCopy(input.activeRoute))}</p>
       </header>
+      ${renderDossierRouteSnapshot(input)}
+    </section>
+  `;
+}
+
+function renderDossierRouteSnapshot(input: {
+  uploadCount: number;
+  reviewCount: number;
+  imagingCount: number;
+  embryoCount: number;
+  timelineCount: number;
+  searchCount?: number;
+  state: AppShellState;
+}): string {
+  const searchLabel =
+    input.searchCount === undefined
+      ? 'Zoeken klaar'
+      : `${input.searchCount} resultaat${input.searchCount === 1 ? '' : 'en'}`;
+  const previewLabel = input.state.imagingPreviewLocked ? 'Previews vergrendeld' : 'Veilige sessie';
+
+  return `
+    <section class="dossier-route-snapshot" aria-label="Dossierscan" data-dossier-route-snapshot="ready">
+      <a class="dossier-route-snapshot__card" href="#dossier?route=upload" data-dossier-route-snapshot-card="upload">
+        <span>Upload</span>
+        <strong>${input.uploadCount} record${input.uploadCount === 1 ? '' : 's'} · ${input.reviewCount} review</strong>
+        <small>Documenten en consulten eerst veilig toevoegen.</small>
+      </a>
+      <a class="dossier-route-snapshot__card" href="#dossier?route=search" data-dossier-route-snapshot-card="search">
+        <span>Zoeken</span>
+        <strong>${escapeHtml(searchLabel)}</strong>
+        <small>Alleen metadata en index, geen broninhoud.</small>
+      </a>
+      <a class="dossier-route-snapshot__card" href="#dossier?route=imaging" data-dossier-route-snapshot-card="imaging">
+        <span>Beelden</span>
+        <strong>${input.imagingCount} beeld${input.imagingCount === 1 ? '' : 'en'} · ${input.embryoCount} embryo${input.embryoCount === 1 ? '' : "'s"}</strong>
+        <small>${escapeHtml(previewLabel)} voor echo's, foto's en embryo's.</small>
+      </a>
+      <a class="dossier-route-snapshot__card" href="#dossier?route=timeline" data-dossier-route-snapshot-card="timeline">
+        <span>Tijdlijn</span>
+        <strong>${input.timelineCount} moment${input.timelineCount === 1 ? '' : 'en'}</strong>
+        <small>Historische onderzoeken pas openen als leesroute.</small>
+      </a>
     </section>
   `;
 }
