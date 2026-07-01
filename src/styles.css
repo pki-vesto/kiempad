@@ -2445,6 +2445,59 @@ h2 {
   font-weight: 850;
 }
 
+.start-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 7%, transparent), transparent 56%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.start-focus-shell__header {
+  display: grid;
+  max-width: 760px;
+  gap: 5px;
+}
+
+.start-focus-shell__header h2,
+.start-focus-shell__header p {
+  margin: 0;
+}
+
+.start-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.32rem;
+  line-height: 1.16;
+}
+
+.start-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.start-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.start-focus-shell__primary,
+.start-focus-shell__side,
+.start-focus-shell__dashboard {
+  min-width: 0;
+}
+
+.start-focus-shell__side {
+  display: grid;
+  gap: 10px;
+}
+
 .start-workbench {
   display: grid;
   gap: 16px;
@@ -2556,10 +2609,8 @@ h2 {
 }
 
 .start-workbench-card__label {
-  overflow: hidden;
   font-weight: 850;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .start-workbench-card--primary .start-workbench-card__label {
@@ -8384,6 +8435,41 @@ a.action-card:active {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .start-focus-shell {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .start-focus-shell__header h2 {
+    font-size: 1.14rem;
+  }
+
+  .start-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .start-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .start-focus-shell__side {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .start-focus-shell__side::-webkit-scrollbar {
+    display: none;
+  }
+
+  .start-focus-shell__side > * {
+    flex: 0 0 min(292px, 86vw);
+    scroll-snap-align: start;
+  }
+
   .topbar {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -10139,6 +10225,68 @@ a.action-card:active {
 @media (prefers-reduced-motion: reduce) {
   :root {
     --motion: 0s;
+  }
+}
+
+.start-focus-shell__primary > .start-workbench,
+.start-focus-shell__dashboard > .kp-dashboard {
+  height: 100%;
+}
+
+.start-focus-shell__primary .start-workbench__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.start-focus-shell__primary .start-workbench-card,
+.start-focus-shell__primary .start-workbench-card--primary {
+  grid-column: span 1;
+  min-height: 156px;
+}
+
+.start-focus-shell__side .start-snapshot {
+  grid-template-columns: 1fr;
+}
+
+.start-focus-shell__side .start-snapshot__card strong {
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
+}
+
+.start-focus-shell__side .start-task-routes {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  position: static;
+}
+
+.start-focus-shell__dashboard .kp-dashboard {
+  grid-template-columns: 1fr;
+}
+
+.start-focus-shell__dashboard .daily-advice-snapshot__card span,
+.start-focus-shell__dashboard .daily-advice-snapshot__card strong,
+.start-focus-shell__dashboard .daily-advice-snapshot__card small {
+  overflow: visible;
+  text-overflow: initial;
+  white-space: normal;
+}
+
+.start-focus-shell__primary .daily-advice-snapshot__card span,
+.start-focus-shell__primary .daily-advice-snapshot__card strong,
+.start-focus-shell__primary .daily-advice-snapshot__card small,
+.start-focus-shell__primary .daily-advice-owner-card__route,
+.start-focus-shell__primary .daily-advice-owner-card__focus,
+.start-focus-shell__primary .daily-advice-owner-card__meta {
+  overflow: visible;
+  overflow-wrap: anywhere;
+  text-overflow: initial;
+  white-space: normal;
+}
+
+@media (max-width: 760px) {
+  .start-focus-shell__primary .start-workbench-card--primary {
+    grid-column: 1 / -1;
+    min-height: 148px;
   }
 }
 

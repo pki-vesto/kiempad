@@ -13347,56 +13347,87 @@ function renderStartScreen(state: AppShellState): string {
         costCount: state.kosten?.length ?? 0,
         secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
       }),
-      renderStartIntelligenceWorkbench(state, dailyRecommendations),
-      startSnapshot,
-      renderStartTaskRouteNav(),
-      dashboardShell({
-        className: 'start-dashboard-shell start-flow-dashboard',
-        ariaLabel: 'Start flowdashboard',
-        primary: [
-          phasePanel,
-          renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
-        ],
-        secondary: [
-          renderStartFlowRail([
-            {
-              summary: 'Planning',
-              eyebrow: 'Volgende stap',
-              key: 'planning',
-              open: true,
-              body: renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
-            },
-            {
-              summary: 'Medicatie vandaag',
-              eyebrow: 'Schema',
-              key: 'medicatie',
-              body: dosePanel,
-            },
-            {
-              summary: 'Dagadvies',
-              eyebrow: 'Aanbevelingen',
-              key: 'aanbevelingen',
-              open: true,
-              body: renderStartRecommendationRoute(state, dailyRecommendations),
-            },
-            {
-              summary: 'Inrichting',
-              eyebrow: 'Setup',
-              key: 'setup',
-              body: setupPanel,
-            },
-            {
-              summary: 'Snelle invoer',
-              eyebrow: 'Vastleggen',
-              key: 'snelle-invoer',
-              body: renderStartQuickEntryRoute(),
-            },
-          ]),
-        ],
+      renderStartFocusShell({
+        intelligence: renderStartIntelligenceWorkbench(state, dailyRecommendations),
+        snapshot: startSnapshot,
+        taskRoutes: renderStartTaskRouteNav(),
+        dashboard: dashboardShell({
+          className: 'start-dashboard-shell start-flow-dashboard',
+          ariaLabel: 'Start flowdashboard',
+          primary: [
+            phasePanel,
+            renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
+          ],
+          secondary: [
+            renderStartFlowRail([
+              {
+                summary: 'Planning',
+                eyebrow: 'Volgende stap',
+                key: 'planning',
+                open: true,
+                body: renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
+              },
+              {
+                summary: 'Medicatie vandaag',
+                eyebrow: 'Schema',
+                key: 'medicatie',
+                body: dosePanel,
+              },
+              {
+                summary: 'Dagadvies',
+                eyebrow: 'Aanbevelingen',
+                key: 'aanbevelingen',
+                open: true,
+                body: renderStartRecommendationRoute(state, dailyRecommendations),
+              },
+              {
+                summary: 'Inrichting',
+                eyebrow: 'Setup',
+                key: 'setup',
+                body: setupPanel,
+              },
+              {
+                summary: 'Snelle invoer',
+                eyebrow: 'Vastleggen',
+                key: 'snelle-invoer',
+                body: renderStartQuickEntryRoute(),
+              },
+            ]),
+          ],
+        }),
       }),
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartFocusShell(input: {
+  intelligence: string;
+  snapshot: string;
+  taskRoutes: string;
+  dashboard: string;
+}): string {
+  return `
+    <section class="start-focus-shell" aria-labelledby="start-focus-shell-title" data-start-focus-shell="ready">
+      <header class="start-focus-shell__header">
+        <p class="start-cockpit__eyebrow">Verdieping</p>
+        <h2 id="start-focus-shell-title">Werk verder in één gefocuste startlaag</h2>
+        <p>De snelle werkbanen blijven bovenaan; detailcontrole, dagadvies en setup staan hieronder gebundeld in één rustige laag.</p>
+      </header>
+      <div class="start-focus-shell__body">
+        <div class="start-focus-shell__primary" data-start-focus-region="workflows">
+          ${input.intelligence}
+        </div>
+        <aside class="start-focus-shell__side" aria-label="Startscan en routekeuze" data-start-focus-region="scan">
+          ${input.snapshot}
+          ${input.taskRoutes}
+        </aside>
+      </div>
+      <div class="start-focus-shell__dashboard" data-start-focus-region="daily">
+        ${input.dashboard}
+      </div>
+    </section>
+  `;
 }
 
 function renderStartCockpit(input: {
