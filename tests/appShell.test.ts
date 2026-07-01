@@ -37824,6 +37824,8 @@ describe('app shell', () => {
     expect(css).toContain('inset 3px 0 0 var(--accent)');
     expect(css).toContain('.command-route-summary {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('padding: 9px 10px;');
+    expect(css).toContain('.command-route-summary p:not(.command-route-summary__eyebrow) {');
     expect(css).toContain('.command-route-summary__status,');
     expect(css).toContain('.command-route-summary__action--secondary');
     expect(mobileCss).toContain('flex: 0 0 min(156px, 68vw);');

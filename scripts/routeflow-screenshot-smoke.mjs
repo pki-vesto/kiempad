@@ -111,6 +111,7 @@ const targets = [
       '.knowledge-route-section__header > p:last-child',
       '.hub-workflow-header__copy p',
       '.knowledge-research-reader__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small',
     ],
   },
@@ -145,6 +146,7 @@ const targets = [
       '.dossier-route-section__header > p:last-child',
       '.hub-workflow-header__copy p',
       '.dossier-imaging-inspection-board__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="consult-verslagen"] .hub-detail-disclosure__summary small',
       '[data-hub-detail-panel="imaging-repository"] .hub-detail-disclosure__summary small',
       '[data-hub-detail-panel="embryo-dossiers"] .hub-detail-disclosure__summary small',
@@ -178,6 +180,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.treatment-focus-shell__header p:last-child',
       '.treatment-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
   {
@@ -212,6 +215,7 @@ const targets = [
       '.dossier-route-section__header > p:last-child',
       '.hub-workflow-header__copy p',
       '.dossier-upload-triage__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="upload-intake"] .hub-detail-disclosure__summary small',
     ],
   },
@@ -239,6 +243,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.question-focus-shell__header p:last-child',
       '.question-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="consult-prep-wizard"] .hub-detail-disclosure__summary small',
     ],
   },
@@ -264,6 +269,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.wellbeing-focus-shell__header p:last-child',
       '.wellbeing-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
   {
@@ -284,6 +290,7 @@ const targets = [
     desktopHiddenSelectors: [
       '.backup-focus-shell__header p:last-child',
       '.backup-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
 ];

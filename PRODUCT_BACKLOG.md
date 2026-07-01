@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1090 |
+| ☑ klaar | 1091 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1289** |
+| **Totaal** | **1290** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1452,12 +1452,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1287 | Premium Claude Design UI: compacte actieve routeheaders | P1 | F5 | ☑ |
 | G1288 | Premium Claude Design UI: compacte hub-workflow laag | P1 | F5 | ☑ |
 | G1289 | Premium Claude Design UI: compacte eerste contentboards | P1 | F5 | ☑ |
+| G1290 | Premium Claude Design UI: compacte route-samenvattingen | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1289** (id's G001 t/m G1289, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1290** (id's G001 t/m G1290, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

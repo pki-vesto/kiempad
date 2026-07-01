@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1290 — Premium Claude Design UI: compacte route-samenvattingen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Elke actieve route toont nog een command-route-summary als relatief grote kaart met detailcopy, waardoor routes na eerdere verdichting alsnog als opeenvolgende uitlegkaarten kunnen voelen.
+- **Desired Outcome:** Maak command-route summaries op desktop compacte actiebalken met verborgen detailcopy, lagere padding/typografie en inline status- en actieknoppen.
+- **User Value:** De gebruiker behoudt routecontext en acties, maar ziet sneller de daadwerkelijke werkruimte zonder steeds een extra summarykaart te moeten scannen.
+- **Acceptance Criteria:** Desktop command-route summaries zijn lager en houden acties inline; summary-detailcopy is op desktop verborgen; mobiele summarygedrag blijft behouden; routeflow-smoke bewaakt verborgen summarycopy; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2355
+
 ### G1289 — Premium Claude Design UI: compacte eerste contentboards
 
 - **Epic:** Onboarding & Daily Use

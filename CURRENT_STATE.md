@@ -343,6 +343,10 @@
   en research-reader gebruiken op desktop lagere boardpadding, kleinere lane-kaarten
   en verborgen board-introcopy. Daardoor start de eerste echte werklaag hoger in de
   viewport zonder de mobiele swipebanen te verliezen.
+- **G1290 Compacte route-samenvattingen:** Command-route summaries zijn op desktop
+  verlaagd tot compacte actiebalken met verborgen detailcopy en inline status- en
+  actieknoppen. Daardoor stapelt iedere actieve route minder uitlegkaarten boven de
+  echte werkruimte.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

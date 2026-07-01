@@ -146,6 +146,9 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain("'.knowledge-research-reader__header > p'");
     expect(routeflowScreenshotSmokeScript).toContain(
+      "'.command-route-summary p:not(.command-route-summary__eyebrow)'",
+    );
+    expect(routeflowScreenshotSmokeScript).toContain(
       '\'[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small\'',
     );
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
