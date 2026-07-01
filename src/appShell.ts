@@ -4038,11 +4038,12 @@ function renderWorkspaceContextSignals(input: {
   const dataAttrs = Object.entries(input.data ?? {})
     .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
     .join('');
+  const flowState = input.microstate ? 'linked' : 'standalone';
   const microstate = input.microstate
     ? `<p class="workspace-context-signals__microstate" data-workspace-context-microstate="${escapeAttribute(input.microstate.id)}" data-workspace-context-microstate-label="${escapeAttribute(input.microstate.label)}" data-workspace-context-next-action="${escapeAttribute(input.microstate.action)}"><span>Actief</span><strong>${escapeHtml(input.microstate.label)}</strong><em>${escapeHtml(input.microstate.detail)}</em><b>${escapeHtml(input.microstate.action)}</b></p>`
     : '';
   return `
-    <div class="workspace-context-signals"${dataAttrs}>
+    <div class="workspace-context-signals" data-workspace-context-flow="${flowState}"${dataAttrs}>
       <div class="workspace-context-signals__header">
         <p class="kp-card__eyebrow">${escapeHtml(input.label)}</p>
         <h3>${escapeHtml(input.title)}</h3>
