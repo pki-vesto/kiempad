@@ -4214,6 +4214,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Research disclosures, imaging disclosures, hub detail headers, tests, browser smoke
 - **ADR Needed:** no
 - **Score:** 31
+- **Status:** ☑ done
+
+### G1243 — routeflow-screenshots automatiseren voor start, research en imaging
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Start, research en embryo/beelden zijn nu opgesplitst in hubflows, maar de visuele verbetering moet structureel met screenshots bewaakt worden zodat regressies naar lange pagina's sneller opvallen.
+- **User Impact:** Gebruikers merken regressies in overzichtelijkheid direct, terwijl die in alleen HTML-tests of unit-tests makkelijk verborgen blijven.
+- **Desired Outcome:** Voeg een gerichte screenshot-smoke toe voor start, research en imaging die hubtabs, compacte detailpanelen en mobiele scanbaarheid bewaakt.
+- **User Value:** De belangrijkste schermen blijven aantoonbaar als rustige werkbanen aanvoelen in plaats van als één lange pagina.
+- **Acceptance Criteria:** Desktop en mobiel toetsen start, kennis-research en dossier-imaging; selectors voor hubflows en compacte detailpanelen worden expliciet gecontroleerd; screenshots zijn nonblank en layout-overlap wordt afgewezen; bestaande routes, form-id's, data-hooks en aria-labels blijven werken; geen medische payload, beeldpayload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Start, Kennis, Dossier imaging
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Playwright smoke, hub workflow headers, hub detail panels, visual regression evidence
+- **ADR Needed:** no
+- **Score:** 30
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

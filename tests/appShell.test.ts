@@ -6457,8 +6457,13 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Embryo en beelden als eigen werkbaan');
     expect(emptyHtml).toContain('data-hub-workflow-tab="imaging" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="embryos"');
-    expect(emptyHtml).toContain('Imaging-repository, filters en vergelijkingen openen');
+    expect(emptyHtml).toContain('data-hub-detail-panel="imaging-repository"');
+    expect(emptyHtml).toContain('Filters, classificaties en vergelijkingen');
+    expect(emptyHtml).toContain('<em>0 beelden</em>');
     expect(emptyHtml).toContain('data-dossier-imaging-disclosure="embryos"');
+    expect(emptyHtml).toContain('data-hub-detail-panel="embryo-dossiers"');
+    expect(emptyHtml).toContain('Embryohistorie en vergelijkingen');
+    expect(emptyHtml).toContain('<em>0 dossiers</em>');
     expect(emptyHtml).toContain('data-dossier-route-summary="timeline"');
     expect(emptyHtml).toContain('id="dossier-timeline-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-timeline"');
@@ -6669,8 +6674,12 @@ describe('app shell', () => {
     expect(html).toContain('data-dossier-route-summary="imaging"');
     expect(html).toContain('Beelden en embryo’s als aparte werkruimte');
     expect(html).toContain('Consultverslagen openen');
-    expect(html).toContain('Imaging-repository, filters en vergelijkingen openen');
-    expect(html).toContain('Embryo-dossiers en vergelijkingen openen');
+    expect(html).toContain('data-hub-detail-panel="imaging-repository"');
+    expect(html).toContain('Imaging-repository openen');
+    expect(html).toContain('Filters, classificaties en vergelijkingen');
+    expect(html).toContain('data-hub-detail-panel="embryo-dossiers"');
+    expect(html).toContain('Embryo-dossiers openen');
+    expect(html).toContain('Embryohistorie en vergelijkingen');
     expect(html).toContain(
       'data-dossier-route="upload" data-dossier-route-state="inactive" hidden',
     );
@@ -34894,7 +34903,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route-summary="read"');
     expect(html).toContain('Lees research in lagen');
     expect(html).toContain('Researchbronnen openen');
-    expect(html).toContain('Wetenschappelijke en eenvoudige samenvattingen openen');
+    expect(html).toContain('data-hub-detail-panel="research-summaries"');
+    expect(html).toContain('Researchsamenvattingen openen');
+    expect(html).toContain('Wetenschappelijke en eenvoudige uitleg');
     expect(html).toContain('Relevantie, relaties en trends openen');
     expect(html).toContain('data-knowledge-route-summary="add"');
     expect(html).toContain('href="#knowledge-item-form"');

@@ -3424,8 +3424,14 @@ function renderDossierScreen(state: AppShellState): string {
             }
           </div>
         </details>
-        <details class="kp-disclosure" data-dossier-imaging-disclosure="repository">
-          <summary class="kp-disclosure__summary">Imaging-repository, filters en vergelijkingen openen</summary>
+        <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="repository" data-hub-detail-panel="imaging-repository">
+          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+            <span>
+              <strong>Imaging-repository openen</strong>
+              <small>Filters, classificaties en vergelijkingen</small>
+            </span>
+            <em>${imagingItems.length} beelden</em>
+          </summary>
           <div class="kp-disclosure__body">
             <h2 id="dossier-imaging-repository">Imaging-repository</h2>
             ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
@@ -3450,8 +3456,14 @@ function renderDossierScreen(state: AppShellState): string {
             }
           </div>
         </details>
-        <details class="kp-disclosure" data-dossier-imaging-disclosure="embryos">
-          <summary class="kp-disclosure__summary">Embryo-dossiers en vergelijkingen openen</summary>
+        <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="embryos" data-hub-detail-panel="embryo-dossiers">
+          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+            <span>
+              <strong>Embryo-dossiers openen</strong>
+              <small>Embryohistorie en vergelijkingen</small>
+            </span>
+            <em>${embryoDossiers.length} dossiers</em>
+          </summary>
           <div class="kp-disclosure__body">
             <h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>
             ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
@@ -11286,8 +11298,14 @@ function renderKennisScreen(state: AppShellState): string {
             </div>
           </div>
         </details>
-        <details id="knowledge-research-summaries" class="kp-disclosure" data-knowledge-research-disclosure="summaries">
-          <summary class="kp-disclosure__summary">Wetenschappelijke en eenvoudige samenvattingen openen</summary>
+        <details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries">
+          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+            <span>
+              <strong>Researchsamenvattingen openen</strong>
+              <small>Wetenschappelijke en eenvoudige uitleg</small>
+            </span>
+            <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items</em>
+          </summary>
           <div class="kp-disclosure__body">
             <div class="knowledge-route-grid knowledge-route-grid--research">
               <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
