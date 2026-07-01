@@ -654,6 +654,140 @@ h3 {
   font-weight: 750;
 }
 
+.workspace-map {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 62%),
+    color-mix(in srgb, var(--surface) 92%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.workspace-map__header {
+  display: grid;
+  max-width: 760px;
+  gap: 4px;
+}
+
+.workspace-map__eyebrow,
+.workspace-map__header h2,
+.workspace-map__header p,
+.workspace-map__card h3,
+.workspace-map__card p,
+.workspace-map__card small {
+  margin: 0;
+}
+
+.workspace-map__eyebrow {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.workspace-map__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.16;
+}
+
+.workspace-map__header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.workspace-map__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.workspace-map__card {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.workspace-map__card[data-workspace-map-state="active"] {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 74%),
+    var(--surface);
+}
+
+.workspace-map__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.workspace-map__card-top span,
+.workspace-map__card-top strong,
+.workspace-map__card small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.workspace-map__card-top span {
+  color: var(--text-faint);
+  font-size: 0.65rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workspace-map__card-top strong {
+  color: var(--accent);
+  font-size: 0.72rem;
+}
+
+.workspace-map__card h3 {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.workspace-map__card p {
+  min-height: 44px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.workspace-map__card small {
+  color: var(--text-faint);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.workspace-map__card a {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 32px;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
 .workspace-context {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -734,7 +868,7 @@ h3 {
   text-transform: uppercase;
 }
 
-p {
+:where(p) {
   overflow-wrap: anywhere;
 }
 
@@ -2205,6 +2339,110 @@ h2 {
 .start-cockpit__routes strong {
   color: var(--text);
   font-size: 0.9rem;
+}
+
+.start-workspace-deck {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  gap: 14px;
+  align-items: stretch;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--teal-soft) 34%, transparent), transparent 62%),
+    var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.start-workspace-deck__header {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.start-workspace-deck__header h2,
+.start-workspace-deck__header p {
+  margin: 0;
+}
+
+.start-workspace-deck__header h2 {
+  color: var(--text);
+  font-size: 1.35rem;
+  line-height: 1.16;
+}
+
+.start-workspace-deck__header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.start-workspace-deck__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.start-workspace-deck__card {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    border-color var(--motion),
+    background var(--motion),
+    transform 80ms ease;
+}
+
+.start-workspace-deck__card:hover,
+.start-workspace-deck__card:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: var(--surface);
+}
+
+.start-workspace-deck__card:active {
+  transform: scale(0.985);
+}
+
+.start-workspace-deck__card span,
+.start-workspace-deck__card strong,
+.start-workspace-deck__card small,
+.start-workspace-deck__card em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.start-workspace-deck__card span {
+  color: var(--text-faint);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.start-workspace-deck__card strong {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.start-workspace-deck__card small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.start-workspace-deck__card em {
+  color: var(--accent);
+  font-size: 0.73rem;
+  font-style: normal;
+  font-weight: 850;
 }
 
 .start-workbench {
@@ -8090,6 +8328,60 @@ a.action-card:active {
 
   .workspace-strip__description {
     display: none;
+  }
+
+  .workspace-map {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .workspace-map__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .workspace-map__header p {
+    font-size: 0.82rem;
+  }
+
+  .workspace-map__grid {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .workspace-map__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .workspace-map__card {
+    flex: 0 0 min(238px, 76vw);
+    scroll-snap-align: start;
+  }
+
+  .start-workspace-deck {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 12px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .start-workspace-deck::-webkit-scrollbar {
+    display: none;
+  }
+
+  .start-workspace-deck__header,
+  .start-workspace-deck__grid {
+    flex: 0 0 min(292px, 86vw);
+    scroll-snap-align: start;
+  }
+
+  .start-workspace-deck__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .topbar {

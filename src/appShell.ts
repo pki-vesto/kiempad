@@ -234,6 +234,11 @@ type Screen = {
 type ScreenGroup = {
   label: string;
   description: string;
+  intent: string;
+  statusLabel: string;
+  primaryHref: string;
+  primaryLabel: string;
+  routeCount: number;
   screenIds: readonly ScreenId[];
 };
 
@@ -336,26 +341,51 @@ const SCREEN_GROUPS: readonly ScreenGroup[] = [
   {
     label: 'Vandaag',
     description: 'Dagoverzicht en eerstvolgende acties',
+    intent: 'Begin met planning, herinneringen en de eerstvolgende actie.',
+    statusLabel: 'Dagplanning',
+    primaryHref: '#start',
+    primaryLabel: 'Open vandaag',
+    routeCount: 3,
     screenIds: ['start', 'agenda', 'herinneringen'],
   },
   {
     label: 'Behandeling',
     description: 'Traject, medicatie en vragen voor de arts',
+    intent: 'Werk behandelcontext, medicatie en consultvragen apart af.',
+    statusLabel: 'Behandelspoor',
+    primaryHref: '#traject?route=context',
+    primaryLabel: 'Open traject',
+    routeCount: 3,
     screenIds: ['traject', 'medicatie', 'vragen'],
   },
   {
     label: 'Dossier',
     description: 'Documenten, beelden en medische context',
+    intent: 'Upload onderzoeken, beelden en consultstukken zonder de tijdlijn te stapelen.',
+    statusLabel: 'Medisch archief',
+    primaryHref: '#dossier',
+    primaryLabel: 'Open dossier',
+    routeCount: 4,
     screenIds: ['dossier'],
   },
   {
     label: 'Inzicht',
     description: 'Kennis, welzijn en afwegingen',
+    intent: 'Lees research, welzijnssignalen en beslisnotities als gescheiden inzichten.',
+    statusLabel: 'Intelligentie',
+    primaryHref: '#kennis?route=research',
+    primaryLabel: 'Open inzicht',
+    routeCount: 3,
     screenIds: ['kennis', 'welzijn', 'afwegingen'],
   },
   {
     label: 'Beheer',
     description: 'Kosten, logboek en back-up',
+    intent: 'Controleer financiële context, auditspoor en encrypted synchronisatie.',
+    statusLabel: 'Beheerlaag',
+    primaryHref: '#backup',
+    primaryLabel: 'Open beheer',
+    routeCount: 3,
     screenIds: ['kosten', 'logboek', 'backup'],
   },
 ] as const;
@@ -774,6 +804,7 @@ export function renderAppShell(
 
       <main class="content" id="inhoud" tabindex="-1">
         ${renderWorkspaceStrip(activeId)}
+        ${renderWorkspaceMap(activeId)}
         ${
           activeId === 'start'
             ? ''
@@ -787,6 +818,46 @@ export function renderAppShell(
         ${screenContent}
       </main>
     </div>
+  `;
+}
+
+function renderWorkspaceMap(activeId: ScreenId): string {
+  const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
+  const activeGroupLabel = activeGroup?.label ?? 'Werkruimte';
+
+  return `
+    <section class="workspace-map" aria-label="Werkruimtekaart" data-workspace-map="ready" data-workspace-map-active="${escapeAttribute(activeGroupLabel)}">
+      <header class="workspace-map__header">
+        <p class="workspace-map__eyebrow">Productstructuur</p>
+        <h2>Kiempad is verdeeld in duidelijke werkbanen</h2>
+        <p>Kies eerst de werkruimte, daarna pas de detailroute. Zo blijven uploads, tijdlijn, adviezen en beheer uit elkaar.</p>
+      </header>
+      <div class="workspace-map__grid">
+        ${SCREEN_GROUPS.map((group) => renderWorkspaceMapCard(group, activeId)).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderWorkspaceMapCard(group: ScreenGroup, activeId: ScreenId): string {
+  const isActive = group.screenIds.includes(activeId);
+  const screenMap = new Map(SCREENS.map((screen) => [screen.id, screen]));
+  const labels = group.screenIds
+    .map((screenId) => screenMap.get(screenId)?.label)
+    .filter((label): label is string => Boolean(label))
+    .join(' · ');
+
+  return `
+    <article class="workspace-map__card" data-workspace-map-card="${escapeAttribute(group.label)}" data-workspace-map-state="${isActive ? 'active' : 'idle'}">
+      <div class="workspace-map__card-top">
+        <span>${escapeHtml(group.statusLabel)}</span>
+        <strong>${group.routeCount} route${group.routeCount === 1 ? '' : 's'}</strong>
+      </div>
+      <h3>${escapeHtml(group.label)}</h3>
+      <p>${escapeHtml(group.intent)}</p>
+      <small>${escapeHtml(labels)}</small>
+      <a href="${escapeAttribute(group.primaryHref)}"${isActive ? ' aria-current="page"' : ''}>${escapeHtml(group.primaryLabel)}</a>
+    </article>
   `;
 }
 
@@ -13263,6 +13334,19 @@ function renderStartScreen(state: AppShellState): string {
         researchCount: state.kennisItems.length,
         secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
       }),
+      renderStartWorkspaceDeck({
+        appointmentCount: state.afspraken.length,
+        reminderCount: state.herinneringen.length,
+        dossierCount: state.dossierDocuments?.length ?? 0,
+        consultCount: state.consultVerslagen?.length ?? 0,
+        researchCount: state.kennisItems.length,
+        recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+          (total, owner) => total + dailyRecommendations[owner].length,
+          0,
+        ),
+        costCount: state.kosten?.length ?? 0,
+        secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
+      }),
       renderStartIntelligenceWorkbench(state, dailyRecommendations),
       startSnapshot,
       renderStartTaskRouteNav(),
@@ -13375,6 +13459,76 @@ function renderStartCockpit(input: {
         <a href="#dossier?route=imaging" data-start-cockpit-route="imaging"><span>Beelden</span><strong>Embryo</strong></a>
         <a href="#start-recommendations" data-start-cockpit-route="advice"><span>Advies</span><strong>Vandaag</strong></a>
       </nav>
+    </section>
+  `;
+}
+
+function renderStartWorkspaceDeck(input: {
+  appointmentCount: number;
+  reminderCount: number;
+  dossierCount: number;
+  consultCount: number;
+  researchCount: number;
+  recommendationCount: number;
+  costCount: number;
+  secureMode: string;
+}): string {
+  const cards = [
+    {
+      key: 'today',
+      label: 'Vandaag',
+      title: 'Planning en acties',
+      meta: `${input.appointmentCount} afspraken · ${input.reminderCount} herinneringen`,
+      href: '#agenda',
+      action: 'Open planning',
+    },
+    {
+      key: 'record',
+      label: 'Dossier',
+      title: 'Uploads en beelden',
+      meta: `${input.dossierCount} documenten · ${input.consultCount} consulten`,
+      href: '#dossier',
+      action: 'Open uploads',
+    },
+    {
+      key: 'insight',
+      label: 'Inzicht',
+      title: 'Research en dagadvies',
+      meta: `${input.researchCount} bronnen · ${input.recommendationCount} adviezen`,
+      href: '#kennis?route=research',
+      action: 'Open research',
+    },
+    {
+      key: 'control',
+      label: 'Beheer',
+      title: 'Kluis, kosten en audit',
+      meta: `${input.costCount} kosten · ${input.secureMode}`,
+      href: '#backup',
+      action: 'Open beheer',
+    },
+  ];
+
+  return `
+    <section class="start-workspace-deck" aria-label="Kiempad werkbanen" data-start-workspace-deck="ready">
+      <header class="start-workspace-deck__header">
+        <p class="start-cockpit__eyebrow">Werkbanen</p>
+        <h2>Niet alles op één pagina</h2>
+        <p>Kiempad splitst het traject in compacte werkbanen met eigen routes voor planning, dossier, inzicht en beheer.</p>
+      </header>
+      <div class="start-workspace-deck__grid">
+        ${cards
+          .map(
+            (card) => `
+              <a class="start-workspace-deck__card" href="${card.href}" data-start-workspace-card="${card.key}">
+                <span>${escapeHtml(card.label)}</span>
+                <strong>${escapeHtml(card.title)}</strong>
+                <small>${escapeHtml(card.meta)}</small>
+                <em>${escapeHtml(card.action)}</em>
+              </a>
+            `,
+          )
+          .join('')}
+      </div>
     </section>
   `;
 }

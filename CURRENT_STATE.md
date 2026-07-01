@@ -656,7 +656,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
   taakroutes; alle hoofdschermen tonen nu boven de content een compacte workspace-strip
   met actieve werkruimtegroep, zusterschermen en snelle routes naar Start, Dossier en
-  Tijdlijn. De dossieruploadroute toont vóór de formulier-intake een compacte
+  Tijdlijn. Direct daaronder staat nu een werkruimtekaart voor Vandaag, Behandeling,
+  Dossier, Inzicht en Beheer met eigen primaire route, route-aantal en actieve state,
+  zodat de app niet meer als één lange pagina hoeft te worden gescand. Start toont
+  daarnaast een apart workflowdeck voor planning, uploads/beelden, research/dagadvies
+  en kluis/beheer. De dossieruploadroute toont vóór de formulier-intake een compacte
   upload-triage voor document, consult, beeld/embryo en lokale OCR/review, zodat de
   uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. De dossier
   imaging-route toont vóór consultverslagen, imaging-repository en embryo-dossiers

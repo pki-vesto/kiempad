@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1263 — Premium Claude Design UI: werkruimte-architectuur zichtbaar maken
+
+- **Epic:** Security & DevEx
+- **Problem:** De app heeft wel losse routepanelen, maar de gebruiker ervaart de bovenkant nog te snel als een lange pagina zonder duidelijke informatiearchitectuur.
+- **Desired Outcome:** Voeg een zichtbare werkruimtekaart en start-workflowdeck toe die planning, behandeling, dossier, inzicht en beheer als gescheiden werkbanen tonen.
+- **User Value:** De gebruiker ziet direct waar uploads, tijdlijn, research, dagadvies en beheer thuishoren en hoeft niet door één lange pagina te scrollen.
+- **Acceptance Criteria:** App-shell toont een `workspace-map` met actieve werkruimte; Start toont een `start-workspace-deck`; desktop gebruikt grids; mobiel gebruikt swipebare compacte werkbanen; tests bewaken markup en CSS.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☑ klaar
+- **Issue:** #2301
+
 ### G244 — Goal Expansion Engine
 
 - **Epic:** Continuous Evolution

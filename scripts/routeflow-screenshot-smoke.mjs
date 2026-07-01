@@ -13,7 +13,7 @@ const targets = [
   {
     screen: 'start',
     hash: '#start',
-    rootSelector: '.start-command-layout',
+    rootSelector: '.content',
     expectedText: 'Kies eerst je werkstroom',
     requiredSelectors: [
       '[data-start-cockpit="ready"]',
@@ -24,6 +24,14 @@ const targets = [
       '[data-start-cockpit-route="timeline"]',
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
+      '[data-workspace-map="ready"]',
+      '[data-workspace-map-card="Vandaag"]',
+      '[data-workspace-map-card="Dossier"]',
+      '[data-start-workspace-deck="ready"]',
+      '[data-start-workspace-card="today"]',
+      '[data-start-workspace-card="record"]',
+      '[data-start-workspace-card="insight"]',
+      '[data-start-workspace-card="control"]',
       '[data-start-workbench="multi-flow"]',
       '[data-start-workbench-flow="uploads"]',
       '[data-start-workbench-flow="timeline"]',
