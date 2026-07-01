@@ -3958,6 +3958,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, command routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1227 — split-view werkruimtes afronden voor Logboek Herinneringen en Back-up
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kennis, Welzijn, Afwegingen en Kosten gebruiken nu split-view werkruimtes, maar Logboek, Herinneringen en Back-up moeten nog dezelfde werkruimtearchitectuur krijgen.
+- **User Impact:** Gebruikers ervaren systeem- en herstelroutes nog minder consistent dan de nieuwe inzicht- en beheerschermen.
+- **Desired Outcome:** Rond de split-view architectuur af voor Logboek, Herinneringen en Back-up met taakrail, gefocust hoofdvlak en contextkolom.
+- **User Value:** Kiempad voelt overal als een consistente, scanbare werkruimte in plaats van een combinatie van moderne en oudere routepagina's.
+- **Acceptance Criteria:** Logboek krijgt een split-view werkruimte met taakrail, actief hoofdvlak en contextkolom; Herinneringen krijgt dezelfde structuur; Back-up krijgt dezelfde structuur; mobiel gebruikt dezelfde segmentrail-aanpak zonder horizontale overflow; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; browser-screenshots tonen desktop en mobiel voor alle aangepakte schermen; tests bewaken de nieuwe layoutcontracten; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Logboek, Herinneringen, Back-up
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, command routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
