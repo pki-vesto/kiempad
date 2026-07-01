@@ -2082,13 +2082,14 @@ function renderBackupScreen(state: AppShellState): string {
   const syncImportLabel = central ? 'Kiempad-recordpakket' : 'Kiempad-syncpakket';
   const syncImportButton = central ? 'Importeer recordpakket' : 'Importeer syncpakket';
   const activeBackupRoute = state.activeBackupRoute ?? 'controleren';
+  const webAuthnGekoppeld = Boolean(state.webAuthnStatus?.gekoppeld);
 
   return sectionStack(
     [
       renderBackupManagementWorkbench({
         central,
         reminder,
-        hasWebAuthn: Boolean(state.webAuthnStatus),
+        hasWebAuthn: webAuthnGekoppeld,
         backupStatus: state.backupStatus,
         backupError: state.backupError,
       }),
@@ -2099,7 +2100,7 @@ function renderBackupScreen(state: AppShellState): string {
         rail: renderBackupTaskRoutes({
           central,
           reminderStatus: reminder.status,
-          hasWebAuthn: Boolean(state.webAuthnStatus),
+          hasWebAuthn: webAuthnGekoppeld,
           activeRoute: activeBackupRoute,
         }),
         main: `
@@ -2119,6 +2120,14 @@ function renderBackupScreen(state: AppShellState): string {
           status: reminder.titel,
           ariaLabel: 'Back-up controleren route-samenvatting',
           data: { 'backup-route-summary': 'controleren' },
+        })}
+        ${renderBackupSyncBoard({
+          central,
+          reminderStatus: reminder.status,
+          reminderTitle: reminder.titel,
+          hasWebAuthn: webAuthnGekoppeld,
+          hasFeedback: Boolean(state.backupStatus || state.backupError),
+          hasError: Boolean(state.backupError),
         })}
         <details id="backup-control-status-disclosure" class="kp-disclosure" data-backup-disclosure="controleren">
           <summary class="kp-disclosure__summary">Syncstatus en back-upherinnering openen</summary>
@@ -2228,7 +2237,7 @@ function renderBackupScreen(state: AppShellState): string {
           detail:
             'Biometrie blijft optioneel en lokaal; de volledige WebAuthn-context opent alleen wanneer je herstelinstellingen beheert.',
           primary: { href: '#backup-recovery-webauthn-disclosure', label: 'Herstel openen' },
-          status: state.webAuthnStatus ? 'Biometrie gekoppeld' : 'Fallback actief',
+          status: webAuthnGekoppeld ? 'Biometrie gekoppeld' : 'Fallback actief',
           ariaLabel: 'Back-up herstel route-samenvatting',
           data: { 'backup-route-summary': 'herstel' },
         })}
@@ -2243,7 +2252,7 @@ function renderBackupScreen(state: AppShellState): string {
         context: renderBackupWorkspaceContext({
           central,
           reminder,
-          hasWebAuthn: Boolean(state.webAuthnStatus),
+          hasWebAuthn: webAuthnGekoppeld,
           backupStatus: state.backupStatus,
           backupError: state.backupError,
           activeRoute: activeBackupRoute,
@@ -2252,6 +2261,84 @@ function renderBackupScreen(state: AppShellState): string {
     ],
     { className: 'backup-command-layout', ariaLabel: 'Back-up en import' },
   );
+}
+
+function renderBackupSyncBoard(input: {
+  central: boolean;
+  reminderStatus: string;
+  reminderTitle: string;
+  hasWebAuthn: boolean;
+  hasFeedback: boolean;
+  hasError: boolean;
+}): string {
+  const storageLabel = input.central ? 'Centrale encrypted dataset' : 'Legacy lokale kluis';
+  const feedbackCue = input.hasError
+    ? 'Melding checken'
+    : input.hasFeedback
+      ? 'Feedback aanwezig'
+      : input.reminderStatus === 'ok'
+        ? 'Status actueel'
+        : 'Export plannen';
+  const lanes = [
+    {
+      id: 'status',
+      href: '#backup-control-status-disclosure',
+      label: 'Status',
+      title: feedbackCue,
+      detail: `${input.reminderTitle}; controleer alleen technische syncmetadata.`,
+      cue: storageLabel,
+    },
+    {
+      id: 'export',
+      href: '#backup?route=export',
+      label: 'Export',
+      title: 'Encrypted pakket maken',
+      detail: 'Download back-up of recordpakket zonder ontsleutelde gezondheidsdata.',
+      cue: input.central ? 'Centraal' : 'Lokaal',
+    },
+    {
+      id: 'import',
+      href: '#backup?route=import',
+      label: 'Import',
+      title: 'Bewust herstellen',
+      detail: 'Importeer alleen vertrouwde Kiempad-exporten of encrypted recordpakketten.',
+      cue: input.hasError ? 'Controle nodig' : 'Klaar',
+    },
+    {
+      id: 'recovery',
+      href: '#backup?route=herstel',
+      label: 'Herstel',
+      title: input.hasWebAuthn ? 'Biometrie gekoppeld' : 'Wachtwoordzin leidend',
+      detail: 'Biometrie blijft lokaal en optioneel; herstelzin en back-up blijven fallback.',
+      cue: 'Lokaal beheer',
+    },
+  ];
+
+  return `
+    <section class="backup-sync-board" aria-label="Encrypted sync startlaag" data-backup-sync-board="ready">
+      <header class="backup-sync-board__header">
+        <div>
+          <p class="kp-card__eyebrow">Encrypted sync</p>
+          <h3>Kies eerst je veilige overdracht</h3>
+        </div>
+        <p>Start met status, export, import of herstel zonder door technische back-updetails te scrollen.</p>
+      </header>
+      <nav class="backup-sync-board__lanes" aria-label="Encrypted sync taak kiezen">
+        ${lanes
+          .map(
+            (lane) => `
+        <a class="backup-sync-board__lane" href="${lane.href}" data-backup-sync-lane="${lane.id}">
+          <span>${lane.label}</span>
+          <strong>${lane.title}</strong>
+          <small>${lane.detail}</small>
+          <em>${lane.cue}</em>
+        </a>`,
+          )
+          .join('')}
+      </nav>
+      <p class="small-print">Deze laag toont geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata of ontsleutelde gezondheidsdata.</p>
+    </section>
+  `;
 }
 
 function renderBackupManagementWorkbench(input: {

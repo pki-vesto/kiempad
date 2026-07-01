@@ -142,6 +142,22 @@ const targets = [
       '[aria-label="Consult Prep Wizard"]',
     ],
   },
+  {
+    screen: 'backup-sync',
+    hash: '#backup?route=controleren',
+    rootSelector: '#backup-route-controleren',
+    expectedText: 'Kies eerst je veilige overdracht',
+    activeRouteSelector: '[data-backup-route="controleren"][data-backup-route-state="active"]',
+    inactiveRouteSelector: '[data-backup-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-backup-sync-board="ready"]',
+      '[data-backup-sync-lane="status"]',
+      '[data-backup-sync-lane="export"]',
+      '[data-backup-sync-lane="import"]',
+      '[data-backup-sync-lane="recovery"]',
+      '[data-backup-disclosure="controleren"]',
+    ],
+  },
 ];
 
 const viewports = [

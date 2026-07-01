@@ -1848,6 +1848,13 @@ describe('app shell', () => {
     expect(css).toContain('.management-workbench__actions {');
     expect(css).toContain('.finance-task-routes {');
     expect(css).toContain('.backup-task-routes {');
+    expect(css).toContain('.backup-sync-board {');
+    expect(css).toContain('.backup-sync-board__header {');
+    expect(css).toContain('.backup-sync-board__lanes {');
+    expect(css).toContain('.backup-sync-board__lane {');
+    expect(css).toContain('.backup-sync-board__lane:hover,');
+    expect(css).toContain('.backup-sync-board__lane:focus-visible {');
+    expect(css).toContain('.backup-sync-board__lane em {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.management-workbench :where(.stat-row) {');
     expect(css).toContain('scroll-snap-type: x proximity;');
@@ -36293,6 +36300,22 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-route="herstel"');
     expect(html).toContain('aria-label="Back-up controleren route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="controleren"');
+    expect(html).toContain('data-backup-sync-board="ready"');
+    expect(html).toContain('aria-label="Encrypted sync startlaag"');
+    expect(html).toContain('Kies eerst je veilige overdracht');
+    expect(html).toContain('data-backup-sync-lane="status"');
+    expect(html).toContain('data-backup-sync-lane="export"');
+    expect(html).toContain('data-backup-sync-lane="import"');
+    expect(html).toContain('data-backup-sync-lane="recovery"');
+    expect(html).toContain('Encrypted pakket maken');
+    expect(html).toContain('Bewust herstellen');
+    expect(html).toContain('Wachtwoordzin leidend');
+    expect(html).toContain(
+      'Deze laag toont geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata of ontsleutelde gezondheidsdata.',
+    );
+    expect(html.indexOf('data-backup-sync-board="ready"')).toBeLessThan(
+      html.indexOf('data-backup-disclosure="controleren"'),
+    );
     expect(html).toContain('Syncstatus en back-upherinnering openen');
     expect(html).toContain('aria-label="Back-up export route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="export"');

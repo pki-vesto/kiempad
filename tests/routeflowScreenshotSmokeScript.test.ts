@@ -16,6 +16,7 @@ describe('routeflow screenshot smoke script', () => {
       '#traject?route=context',
       '#dossier?route=upload',
       '#vragen?route=voorbereiden',
+      '#backup?route=controleren',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(route);
     }
@@ -76,6 +77,11 @@ describe('routeflow screenshot smoke script', () => {
       '[data-question-route-summary="voorbereiden"]',
       '[data-hub-detail-panel="consult-prep-wizard"]',
       '.consult-detail-panel__header',
+      '[data-backup-sync-board="ready"]',
+      '[data-backup-sync-lane="status"]',
+      '[data-backup-sync-lane="export"]',
+      '[data-backup-sync-lane="import"]',
+      '[data-backup-sync-lane="recovery"]',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(selector);
     }
