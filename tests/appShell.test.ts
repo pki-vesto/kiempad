@@ -1955,8 +1955,13 @@ describe('app shell', () => {
     expect(css).toContain('.medication-focus-shell {');
     expect(css).toContain('.medication-focus-shell__header {');
     expect(css).toContain('.medication-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.medication-focus-shell__workbench > .medication-planning-workbench {');
     expect(css).toContain('.medication-focus-shell__workspace {');
+    expect(css).toContain('.medication-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('"rail context";');
     expect(css).toContain('.planning-workbench__header {');
     expect(css).toContain('.planning-workbench__grid {');
     expect(css).toContain('.planning-workbench__actions {');
@@ -4626,6 +4631,9 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack medication-command-layout"');
     expect(html).toContain('class="medication-focus-shell"');
     expect(html).toContain('data-medication-focus-shell="ready"');
+    expect(html).toContain('data-medication-console="ready"');
+    expect(html).toContain('data-medication-console-region="workbench"');
+    expect(html).toContain('data-medication-console-region="workspace"');
     expect(html).toContain('Eerst vandaag afvinken, daarna planning of beheer openen');
     expect(html).toContain('data-medication-focus-region="workbench"');
     expect(html).toContain('data-medication-focus-region="workspace"');
@@ -37841,6 +37849,9 @@ describe('app shell', () => {
       'data-treatment-route="fasen" data-treatment-route-state="active"',
     );
     expect(medicatieHtml).toContain('class="domain-split-workspace medication-split-workspace"');
+    expect(medicatieHtml).toContain('data-medication-console="ready"');
+    expect(medicatieHtml).toContain('data-medication-console-region="workbench"');
+    expect(medicatieHtml).toContain('data-medication-console-region="workspace"');
     expect(medicatieHtml).toContain('data-medication-workspace-context="metrics"');
     expect(medicatieHtml).toContain(
       'data-medication-route="beheer" data-medication-route-state="active"',

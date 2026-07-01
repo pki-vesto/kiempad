@@ -428,6 +428,10 @@
   planningswerkruimte rechts. De workspace gebruikt een hoofdvlak met contextstrip,
   zodat overzicht, plannen, ICS-import en historie niet als één lange
   planningspagina starten.
+- **G1311 Medication-console:** Medicatie toont op desktop een compacte console met
+  innamewerkbank links, taakroute-rail in het midden en actieve medicatiewerkruimte
+  rechts. De workspace gebruikt een hoofdvlak met contextstrip, zodat vandaag,
+  planning, beheer, import en historie niet als één lange medicatiepagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

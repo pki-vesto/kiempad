@@ -16758,11 +16758,11 @@ function renderMedicationFocusShell(input: { workbench: string; workspace: strin
         <h2 id="medication-focus-shell-title">Eerst vandaag afvinken, daarna planning of beheer openen</h2>
         <p>Dagmomenten, schema-import, voorraad en historie blijven in één medicatieruimte zonder doseeradvies of berekening.</p>
       </header>
-      <div class="medication-focus-shell__body">
-        <div class="medication-focus-shell__workbench" data-medication-focus-region="workbench">
+      <div class="medication-focus-shell__body" data-medication-console="ready">
+        <div class="medication-focus-shell__workbench" data-medication-focus-region="workbench" data-medication-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="medication-focus-shell__workspace" data-medication-focus-region="workspace">
+        <div class="medication-focus-shell__workspace" data-medication-focus-region="workspace" data-medication-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

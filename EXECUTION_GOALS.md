@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1311 — Premium Claude Design UI: Medicatie als compacte medication-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Medicatie had al een innameswerkbank en split-workspace, maar kon op desktop nog als gestapelde medicatiepagina met losse vandaag-, planning-, beheer-, import- en historieblokken lezen.
+- **Desired Outcome:** Maak Medicatie op desktop een begrensde medication-console met innameswerkbank, taakroute-rail, actieve medicatiewerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan vandaag afvinken, planning beheren, import controleren en historie scannen zonder door één lange medicatiepagina te scrollen.
+- **Acceptance Criteria:** Medicatie rendert `data-medication-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de innameswerkbank start bovenaan zonder lege uitrekking; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; route-labels en route-summary blijven leesbaar zonder woordbreuk; mobiel behoudt de bestaande éénkoloms flow; split-workspace en context-signals smokes blijven groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2397
+
 ### G1310 — Premium Claude Design UI: Agenda als compacte schedule-console
 
 - **Epic:** Onboarding & Daily Use
