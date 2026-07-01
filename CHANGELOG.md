@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1293 Premium Claude Design UI: desktop split-workspaces zijn begrensde workbenches geworden. Rail, main en context krijgen een vaste viewport-hoogte en eigen scrollgedrag, zodat focusroutes minder als één lange documentpagina lezen; split-workspace smoke bewaakt main-prioriteit, overflow en bounded scroll.
 - G1292 Premium Claude Design UI: routedetails zijn op desktop compacter. Actieve route-disclosures hebben lagere summaries en bodypadding, summary-/policy-panels zijn minder hoog en phase-/compactlijsten gebruiken strakker ritme zodat de werkruimte minder als lange detailstapel leest.
 - G1291 Premium Claude Design UI: resterende routeboards voor fertility timeline, dagadvies, consultvoorbereiding, welzijnsgeschiedenis en back-up zijn op desktop compacter. Board-introcopy is verborgen, lane-kaarten zijn lager en routeflow-smoke bewaakt dat deze eerste werklaag niet opnieuw als hoge kaartstapel terugkomt.
 - G1290 Premium Claude Design UI: route-samenvattingen zijn op desktop compacte actiebalken geworden. Detailcopy is verborgen, padding en titelgrootte zijn lager, acties/statuspills blijven inline beschikbaar en routeflow-smoke bewaakt dat deze herhalende summarylaag niet opnieuw als grote kaart terugkomt.

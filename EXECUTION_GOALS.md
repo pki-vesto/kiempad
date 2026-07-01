@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1293 — Premium Claude Design UI: begrensde desktop split-workspace
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De actieve split-workspace scrollt op desktop nog als één lange documentpagina, waardoor routekeuze, hoofdinhoud en context niet als vaste werkruimte aanvoelen.
+- **Desired Outcome:** Maak de desktop split-workspace een begrensde workbench met eigen scrollvlakken voor rail, main en context.
+- **User Value:** De gebruiker houdt routekeuze en context in een herkenbare werkruimte en hoeft minder door een lange pagina te zoeken.
+- **Acceptance Criteria:** Desktop split-workspace heeft een viewport-afhankelijke max-height; rail, main en context gebruiken `overflow-y: auto`; main blijft breder dan rail en context; er ontstaat geen horizontale overflow; mobiele fallback blijft éénkoloms; split-workspace smoke en CSS-tests bewaken bounded scroll.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/split-workspace-smoke.mjs`, `tests/appShell.test.ts`, `tests/splitWorkspaceSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2361
+
 ### G1292 — Premium Claude Design UI: compacte routedetails en panels
 
 - **Epic:** Onboarding & Daily Use
