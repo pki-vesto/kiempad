@@ -3878,6 +3878,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Finance routes, backup routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1222 — route-summary ontlasting uitbreiden naar logboek en herinneringen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Logboek en Herinneringen hebben eerste-viewport werkbanken, maar routecontent kan nog lange audit-, categorie-, planning- of fallbackdetails direct tonen.
+- **User Impact:** Gebruikers moeten systeemstatus en meldingen snel kunnen scannen zonder meteen door technische historie of privacydetails te moeten lezen.
+- **Desired Outcome:** Pas dezelfde route-summary en progressive-panel aanpak toe op Logboek en Herinneringen.
+- **User Value:** Gebruikers zien eerst de primaire systeem- of meldingstaak en openen auditregels, fallbackdetails en privacycontext pas wanneer nodig.
+- **Acceptance Criteria:** Logboek en Herinneringen krijgen route-summary kaarten met primaire taak, status en eerstvolgende actie; secundaire auditregels, categorieën, fallbackmeldingen, notificatieprivacy en lange lijsten worden waar passend achter disclosure geplaatst; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven behouden; mobile, tablet en desktop tonen geen overlap of horizontale overflow; browser-screenshots bewijzen zichtbare ontlasting; geen eventpayload, notificatiedetail op lockscreen, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Logboek, Herinneringen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Eventlog routes, notification routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
