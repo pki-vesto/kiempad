@@ -104,6 +104,7 @@
   /* aliassen: bestaande tokennamen -> nieuw palet (donker werkt via deze namen) */
   --surface-raised: var(--surface);
   --surface-subtle: var(--surface-2);
+  --surface-muted: color-mix(in srgb, var(--surface-2) 82%, var(--surface));
   --surface-active: var(--teal-soft);
   --surface-complete: var(--surface-2);
   --surface-complete-border: var(--line);
@@ -181,6 +182,7 @@
   --radius-pill: 999px;
   --ring: 0 0 0 3px rgba(44, 110, 99, 0.28);
   --shadow-1: none;
+  --shadow-soft: 0 10px 26px rgba(21, 48, 44, 0.08);
   --shadow-2: 0 40px 90px rgba(21, 48, 44, 0.13);
   --motion: 0.16s ease;
   --mobile-bottom-nav-clearance: calc(92px + env(safe-area-inset-bottom, 0px));
@@ -212,6 +214,7 @@
   --amber-ink: #d9bc7e;
 
   --ring: 0 0 0 3px rgba(111, 174, 159, 0.34);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.22);
   --shadow-2: 0 40px 90px rgba(0, 0, 0, 0.45);
 }
 
@@ -3384,28 +3387,34 @@ h2 {
   --command-route-columns: 5;
 
   position: sticky;
-  top: 0;
-  z-index: 20;
+  top: 12px;
+  z-index: 28;
   display: grid;
   grid-template-columns: repeat(var(--command-route-columns), minmax(0, 1fr));
-  gap: 8px;
-  padding: 8px;
+  gap: 6px;
+  padding: 6px;
   border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent));
-  border-radius: var(--radius-card);
-  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface-raised) 90%, transparent);
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
 }
 
 .command-task-route {
   display: grid;
-  gap: 3px;
+  gap: 2px;
   min-width: 0;
   align-content: start;
-  padding: 9px 10px;
+  padding: 8px 10px;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 10px;
   color: var(--text);
   text-decoration: none;
+  transition:
+    background var(--motion),
+    border-color var(--motion),
+    box-shadow var(--motion),
+    color var(--motion);
 }
 
 .command-task-route:focus-visible,
@@ -3417,6 +3426,10 @@ h2 {
 .command-task-route[aria-current="page"] {
   border-color: var(--accent);
   background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  color: var(--accent-strong);
+  box-shadow:
+    inset 3px 0 0 var(--accent),
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .command-task-route[data-command-route-density="empty"] {
@@ -3438,6 +3451,7 @@ h2 {
 .command-task-route__top span {
   overflow: hidden;
   font-weight: 800;
+  letter-spacing: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4101,11 +4115,14 @@ h2 {
 
 .command-task-routes {
   border-color: color-mix(in srgb, var(--border-strong) 64%, var(--accent));
+  border-radius: 14px;
   background: color-mix(in srgb, var(--surface-raised) 92%, var(--accent) 8%);
 }
 
 .command-task-route[aria-current="page"] {
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 36%, transparent);
+  box-shadow:
+    inset 3px 0 0 var(--accent),
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 36%, transparent);
 }
 
 .command-route-section__header {
@@ -6776,9 +6793,11 @@ a.action-card:active {
   .command-task-routes {
     display: flex;
     overflow-x: auto;
-    padding: 7px;
+    gap: 6px;
+    padding: 6px;
     scroll-snap-type: x proximity;
     scroll-padding-inline: 7px;
+    border-radius: 14px;
   }
 
   .command-task-routes::-webkit-scrollbar {
@@ -6786,11 +6805,21 @@ a.action-card:active {
   }
 
   .command-task-route {
-    flex: 0 0 min(168px, 72vw);
+    flex: 0 0 min(156px, 68vw);
     min-width: 0;
-    padding: 9px 8px;
+    padding: 8px 9px;
     scroll-snap-align: start;
     scroll-margin-inline: 7px;
+  }
+
+  .command-task-route[aria-current="page"] {
+    box-shadow:
+      inset 0 3px 0 var(--accent),
+      inset 0 0 0 1px color-mix(in srgb, var(--accent) 36%, transparent);
+  }
+
+  .command-task-route small {
+    font-size: 0.72rem;
   }
 
   .command-route-section {
