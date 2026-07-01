@@ -2925,16 +2925,17 @@ function renderDossierScreen(state: AppShellState): string {
         reviewCount: reviewWachtrij.length,
         ocrWaitCount: importInboxItems.filter((item) => item.importstatus === 'ocr_wacht').length,
       })}
-      <details class="kp-disclosure hub-detail-disclosure dossier-upload-console"${state.dossierStatus || state.dossierError ? ' open' : ''} data-hub-detail-panel="upload-intake" data-dossier-upload-console="ready">
-        <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
-          <span>
-            <strong>Toevoegen aan dossier</strong>
-            <small>Document, consult, labkwaliteit of embryostatus</small>
-          </span>
-          <em>${zichtbareDocumenten.length} records</em>
-        </summary>
-        <div class="kp-disclosure__body">
-        <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact">
+      <section class="dossier-upload-console" aria-labelledby="dossier-upload-console-title" data-hub-detail-panel="upload-intake" data-dossier-upload-console="ready">
+        <header class="dossier-upload-console__header" data-dossier-upload-console-region="header">
+          <div>
+            <p class="kp-card__eyebrow">Intake-console</p>
+            <h3 id="dossier-upload-console-title">Toevoegen aan dossier</h3>
+            <p>Document, consult, labkwaliteit en embryostatus starten direct als aparte werkvlakken.</p>
+          </div>
+          <span>${zichtbareDocumenten.length} records</span>
+        </header>
+        <div class="dossier-upload-console__body" data-dossier-upload-console-region="body">
+        <nav class="dossier-add-route-selector" aria-label="Toevoegroute kiezen" data-dossier-add-route-selector="compact" data-dossier-upload-console-region="selector">
           <a href="#dossier-upload-form" class="dossier-add-route">
             <strong>Document toevoegen</strong>
             <span>Onderzoek, echo, foto of scan</span>
@@ -2962,7 +2963,7 @@ function renderDossierScreen(state: AppShellState): string {
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-quality">Actieve toevoegroute: labkwaliteit registreren met bronlabel.</p>
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-status">Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.</p>
         </div>
-        <div class="dossier-add-route-microcopy" data-dossier-add-route-microcopy="compact">
+        <div class="dossier-add-route-microcopy" data-dossier-add-route-microcopy="compact" data-dossier-upload-console-region="microcopy">
           <p class="dossier-add-route-switch-hint" data-dossier-add-route-switch-hint="safe-switch">
             Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.
           </p>
@@ -2970,7 +2971,7 @@ function renderDossierScreen(state: AppShellState): string {
             Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.
           </p>
         </div>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload">
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload" data-dossier-upload-console-region="document">
         ${workflowPanel({
           title: 'Dossierdocument uploaden',
           eyebrow: 'Begeleide upload',
@@ -3105,7 +3106,7 @@ function renderDossierScreen(state: AppShellState): string {
         `,
         })}
         </section>
-        <section id="dossier-route-review" class="dossier-route-section embedded" aria-labelledby="dossier-route-review-title" data-dossier-route="review">
+        <section id="dossier-route-review" class="dossier-route-section embedded" aria-labelledby="dossier-route-review-title" data-dossier-route="review" data-dossier-upload-console-region="review">
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Review</p>
           <h2 id="dossier-route-review-title">Import-inbox en documentreview</h2>
@@ -3161,7 +3162,7 @@ function renderDossierScreen(state: AppShellState): string {
           </div>
         </details>
         </section>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload" data-dossier-upload-console-region="consult">
         ${renderHubWorkflowHeader({
           id: 'consult-upload-workflow-header',
           eyebrow: 'Consultflow',
@@ -3278,7 +3279,7 @@ function renderDossierScreen(state: AppShellState): string {
         `,
         })}
         </section>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality">
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality" data-dossier-upload-console-region="embryo-quality">
         ${workflowPanel({
           title: 'Embryokwaliteit vastleggen',
           eyebrow: 'Embryodossier',
@@ -3376,7 +3377,7 @@ function renderDossierScreen(state: AppShellState): string {
         `,
         })}
         </section>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status">
+        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status" data-dossier-upload-console-region="embryo-status">
         ${workflowPanel({
           title: 'Embryo-status event vastleggen',
           eyebrow: 'Statusmoment',
@@ -3460,7 +3461,7 @@ function renderDossierScreen(state: AppShellState): string {
         })}
         </section>
         </div>
-      </details>
+      </section>
       </section>
         <section id="dossier-route-search" class="dossier-route-section" aria-labelledby="dossier-route-search-title" data-dossier-route="search"${renderDossierRouteVisibility(activeDossierRoute, 'search')}>
         <header class="dossier-route-section__header">

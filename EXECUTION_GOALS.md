@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1316 — Premium Claude Design UI: Dossier upload als directe intake-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** `#dossier?route=upload` had wel triage en uploadpanelen, maar de eigenlijke intake zat achter een extra disclosure en werd op desktop geplet tussen routekaart, taakrail en contextkolom.
+- **Desired Outcome:** Maak de dossieruploadroute een directe intake-console waarin documentupload, consultupload en review als brede begrensde werkvlakken starten.
+- **User Value:** De gebruiker kan onderzoeken, beelden, gespreksverslagen en embryocontext meteen toevoegen zonder eerst door routechrome of een verborgen formulierstapel te gaan.
+- **Acceptance Criteria:** `#dossier?route=upload` rendert `data-dossier-upload-console="ready"` als directe sectie; console-regio's voor header, body, selector, document, consult en review zijn aanwezig; desktop verbergt routekaart, taakrail en contextkolom voor actieve upload; document- en consultpanelen zijn breed, zichtbaar en scrollbaar; mobiel houdt een leesbare éénkoloms flow; routeflow-smoke bewaakt desktop en mobiel.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2407
+
 ### G1315 — Premium Claude Design UI: Vandaag als directe compacte start-console
 
 - **Epic:** Onboarding & Daily Use

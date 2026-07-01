@@ -277,17 +277,14 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
-    focusLayout: {
-      supportSelector: '[data-dossier-focus-region="orientation"]',
-      workspaceSelector: '[data-dossier-focus-region="workspace"]',
-    },
-    openSelectors: ['[data-hub-detail-panel="upload-intake"]'],
     requiredSelectors: [
-      '[data-dossier-upload-triage="ready"]',
-      '[data-dossier-upload-lane="document"]',
-      '[data-dossier-upload-lane="consult"]',
-      '[data-dossier-upload-lane="imaging"]',
-      '[data-dossier-upload-lane="ocr"]',
+      '[data-dossier-upload-console="ready"]',
+      '[data-dossier-upload-console-region="header"]',
+      '[data-dossier-upload-console-region="body"]',
+      '[data-dossier-upload-console-region="selector"]',
+      '[data-dossier-upload-console-region="document"]',
+      '[data-dossier-upload-console-region="consult"]',
+      '[data-dossier-upload-console-region="review"]',
       '[data-hub-workflow="consult-upload"]',
       '[data-hub-workflow-tab="consult"][aria-current="page"]',
       '[data-hub-workflow-tab="context"]',
@@ -298,14 +295,15 @@ const targets = [
       '[data-consult-upload-group="consult-context"]',
     ],
     presentSelectors: ['[data-dossier-upload-console="ready"]'],
-    dossierConsole: true,
     desktopHiddenSelectors: [
+      '[data-dossier-focus-region="orientation"]',
+      '.dossier-split-workspace .domain-split-workspace__rail',
+      '.dossier-split-workspace .domain-split-workspace__context',
       '.dossier-focus-shell__header p:last-child',
       '.dossier-route-section__header > p:last-child',
       '.hub-workflow-header__copy p',
       '.dossier-upload-triage__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
-      '[data-hub-detail-panel="upload-intake"] .hub-detail-disclosure__summary small',
     ],
     uploadConsole: true,
   },
@@ -707,7 +705,7 @@ async function assertRouteflows(browser, options) {
         const uploadConsole = routeflow.uploadConsole
           ? (() => {
               const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
-              const body = consoleElement?.querySelector('.kp-disclosure__body');
+              const body = consoleElement?.querySelector('[data-dossier-upload-console-region="body"]');
               const selector = consoleElement?.querySelector('.dossier-add-route-selector');
               const documentPanel = consoleElement?.querySelector(
                 '[data-dossier-add-route-panel="dossier-upload"]',
