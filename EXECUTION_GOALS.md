@@ -3942,6 +3942,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, command routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1226 — split-view werkruimtes uitbreiden naar inzicht- en beheerschermen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De kernschermen gebruiken nu split-view werkruimtes, maar meerdere inzicht- en beheerschermen hebben nog dezelfde route-summary boven verticale content.
+- **User Impact:** Gebruikers ervaren de app nog niet overal als één consistente premium werkruimte, vooral bij research, welzijn, keuzes en beheer.
+- **Desired Outcome:** Breid de split-view architectuur uit naar inzicht- en beheerschermen met taakrail, gefocust hoofdvlak en contextkolom.
+- **User Value:** Kiempad voelt over alle domeinen rustiger, consistenter en minder als een stapel routepanelen.
+- **Acceptance Criteria:** Minimaal Kennis, Welzijn en Afwegingen krijgen een split-view werkruimte; minimaal één beheerscherm, bijvoorbeeld Kosten of Back-up, krijgt dezelfde structuur; mobiel gebruikt dezelfde segmentrail-aanpak zonder horizontale overflow; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; browser-screenshots tonen desktop en mobiel voor alle aangepakte schermen; tests bewaken de nieuwe layoutcontracten; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Kennis, Welzijn, Afwegingen, Kosten/Back-up
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, command routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

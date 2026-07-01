@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1026 |
+| ☑ klaar | 1027 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1225** |
+| **Totaal** | **1226** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1387,13 +1387,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1222 | Premium Claude Design UI: route-summary ontlasting uitbreiden naar logboek en herinneringen | P1 | F5 | ☑ |
 | G1223 | Premium Claude Design UI: route-summary consistentie-audit en resterende lange-pagina restanten oplossen | P1 | F5 | ☑ |
 | G1224 | Premium Claude Design UI: domeinschermen omzetten naar split-view werkruimtes | P1 | F5 | ☑ |
-| G1225 | Premium Claude Design UI: split-view werkruimtes uitbreiden naar Traject en Medicatie | P1 | F5 | ☐ |
+| G1225 | Premium Claude Design UI: split-view werkruimtes uitbreiden naar Traject en Medicatie | P1 | F5 | ☑ |
+| G1226 | Premium Claude Design UI: split-view werkruimtes uitbreiden naar inzicht- en beheerschermen | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1225** (id's G001 t/m G1225, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1226** (id's G001 t/m G1226, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

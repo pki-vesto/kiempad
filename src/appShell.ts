@@ -13694,27 +13694,26 @@ function renderMedicatieScreen(state: AppShellState): string {
     : '';
   const completedToday = todayLogs.filter((doseLog) => doseLog.status === 'genomen').length;
 
-  return sectionStack(
-    [
-      renderMedicationPlanningWorkbench({
-        todayCount: todayLogs.length,
-        completedToday,
-        plannedCount: plannedLogs.length,
-        medicationCount: state.medicatie.length,
-        hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
-        importStatus: state.medicatieImportStatus,
-        importError: state.medicatieImportError,
-        nextDoseLog: todayLogs[0] ?? plannedLogs[0],
-        bundles: state.medicatie,
-      }),
-      renderMedicationTaskRoutes({
-        todayCount: todayLogs.length,
-        plannedCount: plannedLogs.length,
-        medicationCount: state.medicatie.length,
-        hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
-        activeRoute: activeMedicationRoute,
-      }),
-      `<section id="medicatie-route-vandaag" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-vandaag-title" data-medication-route="vandaag"${renderMedicationRouteVisibility(activeMedicationRoute, 'vandaag')}>
+  const medicationWorkbench = renderMedicationPlanningWorkbench({
+    todayCount: todayLogs.length,
+    completedToday,
+    plannedCount: plannedLogs.length,
+    medicationCount: state.medicatie.length,
+    hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
+    importStatus: state.medicatieImportStatus,
+    importError: state.medicatieImportError,
+    nextDoseLog: todayLogs[0] ?? plannedLogs[0],
+    bundles: state.medicatie,
+  });
+  const medicationTaskRoutes = renderMedicationTaskRoutes({
+    todayCount: todayLogs.length,
+    plannedCount: plannedLogs.length,
+    medicationCount: state.medicatie.length,
+    hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
+    activeRoute: activeMedicationRoute,
+  });
+  const medicationRouteSections = [
+    `<section id="medicatie-route-vandaag" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-vandaag-title" data-medication-route="vandaag"${renderMedicationRouteVisibility(activeMedicationRoute, 'vandaag')}>
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Vandaag</p>
           <h2 id="medicatie-route-vandaag-title">Medicatie vandaag</h2>
@@ -13741,7 +13740,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>'
         }
       </section>`,
-      `<section id="medicatie-route-planning" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
+    `<section id="medicatie-route-planning" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Planning</p>
           <h2 id="medicatie-route-planning-title">Komende medicatiemomenten</h2>
@@ -13767,7 +13766,7 @@ function renderMedicatieScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen toekomstige medicatiemomenten buiten vandaag.</p>'
         }
       </section>`,
-      `<section id="medicatie-route-beheer" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
+    `<section id="medicatie-route-beheer" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="medicatie-route-beheer-title">Middel beheren</h2>
@@ -13791,7 +13790,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           body: renderMedicatieForm(selected?.medicatie),
         })}
       </section>`,
-      `<section id="medicatie-route-import" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-import-title" data-medication-route="import"${renderMedicationRouteVisibility(activeMedicationRoute, 'import')}>
+    `<section id="medicatie-route-import" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-import-title" data-medication-route="import"${renderMedicationRouteVisibility(activeMedicationRoute, 'import')}>
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="medicatie-route-import-title">Schema importeren</h2>
@@ -13818,7 +13817,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         })}
         ${disclosure({ summary: 'Schema importeren', body: renderMedicatieImportForm(state) })}
       </section>`,
-      `<section id="medicatie-route-historie" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
+    `<section id="medicatie-route-historie" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-historie-title" data-medication-route="historie"${renderMedicationRouteVisibility(activeMedicationRoute, 'historie')}>
         <header class="medication-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Historie</p>
           <h2 id="medicatie-route-historie-title">Middelen, voorraad en historie</h2>
@@ -13847,6 +13846,29 @@ function renderMedicatieScreen(state: AppShellState): string {
             renderPolicyPanel(),
         })}
       </section>`,
+  ];
+
+  return sectionStack(
+    [
+      medicationWorkbench,
+      domainSplitWorkspace({
+        className: 'medication-split-workspace',
+        ariaLabel: 'Medicatie split-view werkruimte',
+        data: { 'medication-split-workspace': 'ready' },
+        rail: medicationTaskRoutes,
+        main: medicationRouteSections.join(''),
+        context: renderMedicationWorkspaceContext({
+          todayCount: todayLogs.length,
+          completedToday,
+          plannedCount: plannedLogs.length,
+          medicationCount: state.medicatie.length,
+          hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
+          importStatus: state.medicatieImportStatus,
+          importError: state.medicatieImportError,
+          nextDoseLog: todayLogs[0] ?? plannedLogs[0],
+          bundles: state.medicatie,
+        }),
+      }),
     ],
     { className: 'medication-command-layout', ariaLabel: 'Medicatie beheren' },
   );
@@ -13975,6 +13997,53 @@ function renderMedicationTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
+}
+
+function renderMedicationWorkspaceContext(input: {
+  todayCount: number;
+  completedToday: number;
+  plannedCount: number;
+  medicationCount: number;
+  hasImportFeedback: boolean;
+  importStatus?: string;
+  importError?: string;
+  nextDoseLog: DoseLog | undefined;
+  bundles: MedicatieBundle[];
+}): string {
+  const nextMedication = input.nextDoseLog
+    ? input.bundles.find((bundle) => bundle.medicatie.id === input.nextDoseLog?.medicatieId)
+    : undefined;
+  const nextLabel =
+    input.nextDoseLog && nextMedication
+      ? `${nextMedication.medicatie.naam} · ${formatDateTime(input.nextDoseLog.geplandOp)}`
+      : 'Nog geen gepland medicatiemoment.';
+  const importLabel = input.importError
+    ? 'Import vraagt controle'
+    : input.importStatus
+      ? 'Importfeedback beschikbaar'
+      : input.hasImportFeedback
+        ? 'Importstatus beschikbaar'
+        : 'Geen importfeedback';
+
+  return `
+    <section class="summary-panel" aria-label="Medicatie context" data-medication-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Medicatie in beeld</h2>
+      ${statRow([
+        { label: 'Vandaag', value: String(input.todayCount) },
+        { label: 'Gedaan', value: String(input.completedToday) },
+        { label: 'Later', value: String(input.plannedCount) },
+        { label: 'Middelen', value: String(input.medicationCount) },
+      ])}
+      <p class="linked-note">${escapeHtml(nextLabel)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Medicatie werkruimtegrens" data-medication-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Geen dosering berekenen</h2>
+      <p>${escapeHtml(importLabel)}. Afvinken, planning, beheer, import en historie blijven gescheiden zodat de actieve route de hoofdtaak blijft.</p>
+      <p class="small-print">Deze kolom toont alleen planningmetadata en geen doseeradvies, interpretatie of medische conclusie.</p>
+    </section>
+  `;
 }
 
 function renderMedicationRouteVisibility(
@@ -14215,26 +14284,25 @@ function renderTrajectScreen(state: AppShellState): string {
         </div>`
     : '';
 
-  return sectionStack(
-    [
-      renderTreatmentWorkbench({
-        selected,
-        activeCount: actieveTrajecten.length,
-        archivedCount: gearchiveerdeTrajecten.length,
-        vergoeding,
-        overview: overzicht,
-        timeline: fertilityTimeline,
-        graph: graphWeergave,
-        activeRoute: activeTreatmentRoute,
-      }),
-      renderTreatmentTaskRoutes({
-        activeCount: actieveTrajecten.length,
-        archivedCount: gearchiveerdeTrajecten.length,
-        phaseCount: selected?.fasen.length ?? 0,
-        remainingReimbursements: vergoeding.resterend,
-        activeRoute: activeTreatmentRoute,
-      }),
-      `<section id="traject-route-overzicht" class="treatment-route-section command-route-section" aria-labelledby="traject-route-overzicht-title" data-treatment-route="overzicht"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'overzicht')}>
+  const treatmentWorkbench = renderTreatmentWorkbench({
+    selected,
+    activeCount: actieveTrajecten.length,
+    archivedCount: gearchiveerdeTrajecten.length,
+    vergoeding,
+    overview: overzicht,
+    timeline: fertilityTimeline,
+    graph: graphWeergave,
+    activeRoute: activeTreatmentRoute,
+  });
+  const treatmentTaskRoutes = renderTreatmentTaskRoutes({
+    activeCount: actieveTrajecten.length,
+    archivedCount: gearchiveerdeTrajecten.length,
+    phaseCount: selected?.fasen.length ?? 0,
+    remainingReimbursements: vergoeding.resterend,
+    activeRoute: activeTreatmentRoute,
+  });
+  const treatmentRouteSections = [
+    `<section id="traject-route-overzicht" class="treatment-route-section command-route-section" aria-labelledby="traject-route-overzicht-title" data-treatment-route="overzicht"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'overzicht')}>
         <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Overzicht</p>
           <h2 id="traject-route-overzicht-title">Trajectoverzicht</h2>
@@ -14263,7 +14331,7 @@ function renderTrajectScreen(state: AppShellState): string {
           }`,
         })}
       </section>`,
-      `<section id="traject-route-fasen" class="treatment-route-section command-route-section" aria-labelledby="traject-route-fasen-title" data-treatment-route="fasen"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'fasen')}>
+    `<section id="traject-route-fasen" class="treatment-route-section command-route-section" aria-labelledby="traject-route-fasen-title" data-treatment-route="fasen"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'fasen')}>
         <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Fasen</p>
           <h2 id="traject-route-fasen-title">Faseplanning</h2>
@@ -14290,7 +14358,7 @@ function renderTrajectScreen(state: AppShellState): string {
             : '<p class="empty-state">Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.</p>'
         }
       </section>`,
-      `<section id="traject-route-vergoeding" class="treatment-route-section command-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
+    `<section id="traject-route-vergoeding" class="treatment-route-section command-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
         <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Vergoeding</p>
           <h2 id="traject-route-vergoeding-title">Vergoeding</h2>
@@ -14316,7 +14384,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <p class="small-print">Markeer een poging pas als meetellend na een geslaagde punctie. Voor vergoeding gelden leeftijd, medische indicatie en eigen polis/verzekeraar.</p>
         </section>
       </section>`,
-      `<section id="traject-route-context" class="treatment-route-section command-route-section" aria-labelledby="traject-route-context-title" data-treatment-route="context"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'context')}>
+    `<section id="traject-route-context" class="treatment-route-section command-route-section" aria-labelledby="traject-route-context-title" data-treatment-route="context"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'context')}>
         <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Context</p>
           <h2 id="traject-route-context-title">Timeline en graphcontext</h2>
@@ -14352,7 +14420,7 @@ function renderTrajectScreen(state: AppShellState): string {
             : ''
         }
       </section>`,
-      `<section id="traject-route-beheer" class="treatment-route-section command-route-section" aria-labelledby="traject-route-beheer-title" data-treatment-route="beheer"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'beheer')}>
+    `<section id="traject-route-beheer" class="treatment-route-section command-route-section" aria-labelledby="traject-route-beheer-title" data-treatment-route="beheer"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'beheer')}>
         <header class="treatment-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Beheer</p>
           <h2 id="traject-route-beheer-title">Trajectbeheer en archief</h2>
@@ -14383,6 +14451,26 @@ function renderTrajectScreen(state: AppShellState): string {
             : ''
         }
       </section>`,
+  ];
+
+  return sectionStack(
+    [
+      treatmentWorkbench,
+      domainSplitWorkspace({
+        className: 'treatment-split-workspace',
+        ariaLabel: 'Traject split-view werkruimte',
+        data: { 'treatment-split-workspace': 'ready' },
+        rail: treatmentTaskRoutes,
+        main: treatmentRouteSections.join(''),
+        context: renderTreatmentWorkspaceContext({
+          selected,
+          activeCount: actieveTrajecten.length,
+          archivedCount: gearchiveerdeTrajecten.length,
+          vergoeding,
+          timeline: fertilityTimeline,
+          graph: graphWeergave,
+        }),
+      }),
     ],
     { className: 'treatment-command-layout', ariaLabel: 'Traject beheren' },
   );
@@ -14545,6 +14633,47 @@ function renderTreatmentTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
+}
+
+function renderTreatmentWorkspaceContext(input: {
+  selected: TrajectMetFasen | undefined;
+  activeCount: number;
+  archivedCount: number;
+  vergoeding: ReturnType<typeof berekenVergoedePogingenTeller>;
+  timeline: FertilityTimeline;
+  graph: FertilityGraphTrajectWeergave | undefined;
+}): string {
+  const huidigeFase = input.selected ? bepaalHuidigeFase(input.selected.fasen) : undefined;
+  const faseLabel = huidigeFase
+    ? TRAJECT_FASE_LABELS[huidigeFase.fase]
+    : input.selected
+      ? 'Geen actuele fase gekozen'
+      : 'Nog geen traject';
+  const nextAction = input.selected
+    ? bepaalVolgendeStap(input.selected)
+    : 'Maak een traject aan om faseplanning en context te bundelen.';
+
+  return `
+    <section class="summary-panel" aria-label="Traject context" data-treatment-workspace-context="metrics">
+      <p class="kp-card__eyebrow">Context</p>
+      <h2>Behandeling in beeld</h2>
+      ${statRow([
+        { label: 'Actief', value: String(input.activeCount) },
+        { label: 'Fases', value: String(input.selected?.fasen.length ?? 0) },
+        { label: 'Timeline', value: String(input.timeline.items.length) },
+        { label: 'Graph', value: String(input.graph?.edges.length ?? 0) },
+        { label: 'Resterend', value: String(input.vergoeding.resterend) },
+        { label: 'Archief', value: String(input.archivedCount) },
+      ])}
+      <p class="linked-note">${escapeHtml(faseLabel)} · ${escapeHtml(nextAction)}</p>
+    </section>
+    <section class="policy-panel" aria-label="Traject werkruimtegrens" data-treatment-workspace-context="privacy">
+      <p class="kp-card__eyebrow">Werkgrens</p>
+      <h2>Context naast de taak</h2>
+      <p>Overzicht, fasen, vergoeding, timeline en beheer blijven gescheiden zodat de actieve behandelroute de hoofdtaak blijft.</p>
+      <p class="small-print">Deze kolom toont alleen trajectmetadata en geen diagnose, behandeladvies of behandelkeuze.</p>
+    </section>
+  `;
 }
 
 function renderTreatmentRouteVisibility(
