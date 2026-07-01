@@ -6643,6 +6643,17 @@ describe('app shell', () => {
       '.dossier-focus-shell__orientation .dossier-route-stage__header p:last-child {',
     );
     expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-snapshot {');
+    expect(css).toContain('.dossier-upload-console[open] > .kp-disclosure__body {');
+    expect(css).toContain('"document consult"');
+    expect(css).toContain('max-height: min(760px, calc(100vh - 238px));');
+    expect(css).toContain(
+      '.dossier-upload-console [data-dossier-add-route-panel="dossier-upload"],',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console [data-dossier-add-route-panel="consult-upload"],',
+    );
+    expect(css).toContain('.dossier-upload-console #dossier-route-review {');
+    expect(css).toContain('max-height: min(560px, calc(100vh - 386px));');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
@@ -7120,6 +7131,7 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('href="#dossier?route=timeline"');
     expect(emptyHtml).toContain('Upload &amp; review');
     expect(emptyHtml).toContain('id="dossier-route-upload"');
+    expect(emptyHtml).toContain('data-dossier-upload-console="ready"');
     expect(emptyHtml).toContain('data-dossier-route="upload"');
     expect(emptyHtml).toContain('id="dossier-route-review"');
     expect(emptyHtml).toContain('data-dossier-route="review"');

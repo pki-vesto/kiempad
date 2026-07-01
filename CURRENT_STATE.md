@@ -363,6 +363,9 @@
 - **G1295 Dagadvies advies-console:** Dagadvies gebruikt op desktop aparte
   begrensde werkvlakken voor workflow, eigenaarwerkbank, actieplanner en volledige
   lijst. De routeflow-smoke opent het aanbevelingenpaneel en bewaakt deze console.
+- **G1296 Upload-console:** Dossierupload gebruikt op desktop een begrensde
+  console voor routekeuze, documentupload, consultupload en review. Formulier-id's
+  blijven gelijk; de routeflow-smoke bewaakt de werkvlakken.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
