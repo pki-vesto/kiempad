@@ -3952,6 +3952,10 @@ describe('app shell', () => {
     expect(html).toContain('href="#medicatie?route=historie"');
     expect(html).toContain('id="medicatie-route-vandaag"');
     expect(html).toContain('class="medication-route-section command-route-section"');
+    expect(html).toContain('data-medication-route-summary="vandaag"');
+    expect(html).toContain('Medicatie vandaag route-samenvatting');
+    expect(html).toContain('data-medication-route-summary="historie"');
+    expect(html).toContain('Middelen, voorraad en historie tonen');
     expect(html).toContain('data-command-form-section="medicatie-basis"');
     expect(html).toContain('data-command-form-section="medicatie-voorraad"');
     expect(html).toContain('data-command-form-section="medicatie-schema"');
@@ -36295,6 +36299,11 @@ describe('app shell', () => {
     expect(html).toContain('id="traject-route-overzicht"');
     expect(html).toContain('class="treatment-route-section command-route-section"');
     expect(html).toContain('class="treatment-route-section__header command-route-section__header"');
+    expect(html).toContain('data-treatment-route-summary="overzicht"');
+    expect(html).toContain('Trajectoverzicht route-samenvatting');
+    expect(html).toContain('data-treatment-route-summary="context"');
+    expect(html).toContain('Fertility timeline openen');
+    expect(html).toContain('Archief tonen');
     expect(html).toContain('data-command-form-section="traject-basis"');
     expect(html).toContain('data-command-form-section="traject-planning"');
     expect(html).toContain('data-command-form-section="traject-context"');
@@ -36421,6 +36430,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.command-route-summary {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.command-route-summary p {');
+    expect(mobileCss).toContain('.treatment-workbench {');
+    expect(mobileCss).toContain('.treatment-workbench :where(.phase-hero__subtitle)');
+    expect(mobileCss).toContain('.treatment-workbench__next {');
+    expect(mobileCss).toContain('flex: 0 0 82px;');
   });
 
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
