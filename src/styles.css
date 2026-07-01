@@ -2896,7 +2896,8 @@ h2 {
 }
 
 .planning-workbench[data-schedule-first-viewport="planning-workbench"],
-.planning-workbench[data-medication-first-viewport="planning-workbench"] {
+.planning-workbench[data-medication-first-viewport="planning-workbench"],
+.planning-workbench[data-question-first-viewport="consult-workbench"] {
   scroll-margin-top: 24px;
 }
 
@@ -3991,21 +3992,18 @@ h2 {
 }
 
 .question-command-layout {
-  gap: 18px;
+  gap: 16px;
 }
 
 .question-task-routes {
-  position: sticky;
-  top: 0;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  box-shadow: var(--shadow-soft);
 }
 
 .question-task-route {
@@ -6999,12 +6997,19 @@ a.action-card:active {
   }
 
   .question-task-routes {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    overflow-x: auto;
     padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .question-task-routes::-webkit-scrollbar {
+    display: none;
   }
 
   .question-task-route {
-    min-width: 0;
+    flex: 0 0 min(190px, 76vw);
+    scroll-snap-align: start;
   }
 
   .knowledge-route-grid {
