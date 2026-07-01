@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1296 — Premium Claude Design UI: Dossier uploadroute als begrensde upload-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Dossier uploadroute ondersteunt meerdere uploadtypen, maar de actieve toevoegpanelen en formulieren konden op desktop nog als één lange formulierpagina lezen.
+- **Desired Outcome:** Maak de uploadroute op desktop een begrensde upload-console met eigen werkvlakken voor routekeuze, documentupload, consultupload en review.
+- **User Value:** De gebruiker kan medische records, consultverslagen en reviewstappen als één intakewerkruimte scannen zonder door een lange formulierstapel te werken.
+- **Acceptance Criteria:** Desktop upload-intake gebruikt grid-areas voor selector, microcopy, document, consult en review; document-, consult- en reviewpanelen gebruiken `overflow-y: auto` en viewport-afhankelijke max-height; bestaande formulier-id's blijven intact; mobiel behoudt de éénkoloms flow; routeflow screenshot-smoke opent het intakepaneel en bewaakt de upload-console; app-shell tests bewaken het CSS-contract.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2367
+
 ### G1295 — Premium Claude Design UI: Dagadvies als begrensde advies-console
 
 - **Epic:** Onboarding & Daily Use

@@ -2964,7 +2964,7 @@ function renderDossierScreen(state: AppShellState): string {
         reviewCount: reviewWachtrij.length,
         ocrWaitCount: importInboxItems.filter((item) => item.importstatus === 'ocr_wacht').length,
       })}
-      <details class="kp-disclosure hub-detail-disclosure"${state.dossierStatus || state.dossierError ? ' open' : ''} data-hub-detail-panel="upload-intake">
+      <details class="kp-disclosure hub-detail-disclosure dossier-upload-console"${state.dossierStatus || state.dossierError ? ' open' : ''} data-hub-detail-panel="upload-intake" data-dossier-upload-console="ready">
         <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
           <span>
             <strong>Toevoegen aan dossier</strong>

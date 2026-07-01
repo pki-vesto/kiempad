@@ -20,6 +20,11 @@ describe('routeflow screenshot smoke script', () => {
       'Dagadvies console staat niet in begrensde adviesvlakken',
     );
     expect(routeflowScreenshotSmokeScript).toContain('listMaxHeight');
+    expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'upload-console staat niet in begrensde werkvlakken',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('documentOverflowY');
 
     for (const route of [
       '#start',
@@ -67,6 +72,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-daily-advice-action-lane="clinician"]',
       '[data-hub-workflow="daily-recommendations"]',
       '[data-daily-advice-workbench="owner-routes"]',
+      '[data-dossier-upload-console="ready"]',
       '[data-hub-workflow="knowledge-research"]',
       '[data-knowledge-focus-region="workbench"]',
       '[data-knowledge-focus-region="workspace"]',

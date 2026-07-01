@@ -243,6 +243,7 @@ const targets = [
       '[data-consult-upload-group="consult-basis"]',
       '[data-consult-upload-group="consult-context"]',
     ],
+    presentSelectors: ['[data-dossier-upload-console="ready"]'],
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
       '.dossier-route-section__header > p:last-child',
@@ -251,6 +252,7 @@ const targets = [
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="upload-intake"] .hub-detail-disclosure__summary small',
     ],
+    uploadConsole: true,
   },
   {
     screen: 'question-prep',
@@ -578,6 +580,52 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const uploadConsole = routeflow.uploadConsole
+          ? (() => {
+              const consoleElement = document.querySelector('[data-dossier-upload-console="ready"]');
+              const body = consoleElement?.querySelector('.kp-disclosure__body');
+              const selector = consoleElement?.querySelector('.dossier-add-route-selector');
+              const documentPanel = consoleElement?.querySelector(
+                '[data-dossier-add-route-panel="dossier-upload"]',
+              );
+              const consultPanel = consoleElement?.querySelector(
+                '[data-dossier-add-route-panel="consult-upload"]',
+              );
+              const reviewPanel = consoleElement?.querySelector('#dossier-route-review');
+              const bodyRect = body?.getBoundingClientRect();
+              const selectorRect = selector?.getBoundingClientRect();
+              const documentRect = documentPanel?.getBoundingClientRect();
+              const consultRect = consultPanel?.getBoundingClientRect();
+              const reviewRect = reviewPanel?.getBoundingClientRect();
+              const bodyStyle = body ? getComputedStyle(body) : null;
+              const documentStyle = documentPanel ? getComputedStyle(documentPanel) : null;
+              const consultStyle = consultPanel ? getComputedStyle(consultPanel) : null;
+              const reviewStyle = reviewPanel ? getComputedStyle(reviewPanel) : null;
+              return {
+                bodyVisible: Boolean(bodyRect && bodyRect.width > 0 && bodyRect.height > 0),
+                selectorVisible: Boolean(
+                  selectorRect && selectorRect.width > 0 && selectorRect.height > 0,
+                ),
+                documentVisible: Boolean(
+                  documentRect && documentRect.width > 0 && documentRect.height > 0,
+                ),
+                consultVisible: Boolean(
+                  consultRect && consultRect.width > 0 && consultRect.height > 0,
+                ),
+                reviewVisible: Boolean(reviewRect && reviewRect.width > 0 && reviewRect.height > 0),
+                documentTop: documentRect?.top ?? 0,
+                consultTop: consultRect?.top ?? 0,
+                reviewTop: reviewRect?.top ?? 0,
+                documentRight: documentRect?.right ?? 0,
+                consultLeft: consultRect?.left ?? 0,
+                bodyOverflowY: bodyStyle?.overflowY ?? '',
+                documentOverflowY: documentStyle?.overflowY ?? '',
+                consultOverflowY: consultStyle?.overflowY ?? '',
+                reviewOverflowY: reviewStyle?.overflowY ?? '',
+                documentMaxHeight: documentStyle?.maxHeight ?? '',
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -590,6 +638,7 @@ async function assertRouteflows(browser, options) {
           focusLayout,
           startCommandCenter,
           dailyAdviceConsole,
+          uploadConsole,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -692,6 +741,27 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: Dagadvies console staat niet in begrensde adviesvlakken (${JSON.stringify(evidence.dailyAdviceConsole)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.uploadConsole &&
+        (!evidence.uploadConsole.bodyVisible ||
+          !evidence.uploadConsole.selectorVisible ||
+          !evidence.uploadConsole.documentVisible ||
+          !evidence.uploadConsole.consultVisible ||
+          !evidence.uploadConsole.reviewVisible ||
+          Math.abs(evidence.uploadConsole.consultTop - evidence.uploadConsole.documentTop) > 2 ||
+          evidence.uploadConsole.consultLeft < evidence.uploadConsole.documentRight - 1 ||
+          evidence.uploadConsole.reviewTop < evidence.uploadConsole.documentTop - 1 ||
+          evidence.uploadConsole.bodyOverflowY !== 'auto' ||
+          evidence.uploadConsole.documentOverflowY !== 'auto' ||
+          evidence.uploadConsole.consultOverflowY !== 'auto' ||
+          evidence.uploadConsole.reviewOverflowY !== 'auto' ||
+          evidence.uploadConsole.documentMaxHeight === 'none')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: upload-console staat niet in begrensde werkvlakken (${JSON.stringify(evidence.uploadConsole)}).`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);

@@ -9414,6 +9414,56 @@ a.action-card:active {
   }
 }
 
+@media (min-width: 961px) {
+  .dossier-upload-console[open] > .kp-disclosure__body {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    grid-template-areas:
+      "selector selector"
+      "microcopy microcopy"
+      "document consult"
+      "review review";
+    gap: 12px;
+    max-height: min(760px, calc(100vh - 238px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .dossier-upload-console .dossier-add-route-selector {
+    grid-area: selector;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .dossier-upload-console .dossier-add-route-microcopy {
+    grid-area: microcopy;
+  }
+
+  .dossier-upload-console [data-dossier-add-route-panel="dossier-upload"],
+  .dossier-upload-console [data-dossier-add-route-panel="consult-upload"],
+  .dossier-upload-console #dossier-route-review {
+    max-height: min(560px, calc(100vh - 386px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .dossier-upload-console [data-dossier-add-route-panel="dossier-upload"] {
+    grid-area: document;
+    padding-right: 4px;
+  }
+
+  .dossier-upload-console [data-dossier-add-route-panel="consult-upload"] {
+    grid-area: consult;
+    padding-right: 4px;
+  }
+
+  .dossier-upload-console #dossier-route-review {
+    grid-area: review;
+    padding-right: 4px;
+  }
+}
+
 .dossier-secondary-privacy {
   background: var(--surface);
 }
