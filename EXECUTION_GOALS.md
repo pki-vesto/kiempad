@@ -4136,20 +4136,36 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 36
 - **Status:** ☑ done
 
-### G1238 — contextkolom scanritme verfijnen na flow-accenten
+### G1238 — startscherm opdelen in fertility intelligence werkbanen
 
 - **Epic:** Premium Claude Design UI
-- **Problem:** Contextkolommen hebben nu microstates, next-actions, flow en domeinaccenten, maar het verticale scanritme tussen microstate en signaalkaarten kan nog compacter en rustiger.
-- **User Impact:** Gebruikers zien de routecontext beter, maar kunnen op kleinere schermen nog relatief veel verticale ruimte besteden aan de rechterkolom.
-- **Desired Outcome:** Verfijn spacing, line-height en compactheid van contextkolommen zodat de flow zichtbaar blijft zonder extra hoogte of drukte.
-- **User Value:** Gebruikers scannen de secundaire context sneller terwijl het actieve hoofdvlak leidend blijft.
-- **Acceptance Criteria:** Minimaal zes contextkolommen tonen een compacter scanritme zonder tekstoverlap; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
-- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Problem:** Ondanks split-workspaces voelt het startscherm nog te veel als een lange stapeling van modules, waardoor de gebruiker niet direct ziet welke hoofdworkflow hij moet openen.
+- **User Impact:** Gebruikers ervaren weinig verschil tussen dashboard, upload, timeline, embryo, research en aanbevelingen, terwijl dit juist aparte werkbanen moeten zijn.
+- **Desired Outcome:** Voeg bovenaan het startscherm een zichtbare fertility intelligence hub toe met zes duidelijke werkbanen voor dossierupload, tijdlijn, embryo/beelden, dagadvies, research en encrypted sync.
+- **User Value:** Gebruikers kiezen eerst de juiste werkstroom en hoeven niet door een lang dashboard te scannen om de volgende taak te vinden.
+- **Acceptance Criteria:** Startscherm toont zes werkbanen met primaire/supporting hiërarchie; uploads, timeline, embryo, recommendations, research en sync hebben eigen routekaart; desktop/mobile tonen geen horizontale overflow of tekstoverlap; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Startscherm, Dashboard, Dossier, Traject, Kennis, Back-up
 - **Priority:** P1
 - **Complexity:** M
-- **Related Components:** Context signal styles, browser smoke, tests
+- **Related Components:** Start shell, dashboard hub, responsive CSS, tests
 - **ADR Needed:** no
 - **Score:** 35
+- **Status:** ☑ done
+
+### G1239 — dossier en intelligence workflows uitwerken als eigen tabbladen na start-hub
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De start-hub geeft nu duidelijke ingangen, maar achter die ingangen staan nog meerdere workflowdetails dicht bij elkaar waardoor uploads, timeline, embryo’s, research en aanbevelingen nog verder als zelfstandige werkruimtes moeten voelen.
+- **User Impact:** Gebruikers zien op de startpagina sneller waar ze heen moeten, maar kunnen in de detailroutes nog steeds te veel verticale content tegelijk krijgen.
+- **Desired Outcome:** Werk de belangrijkste hubroutes verder uit met tabachtige subnavigatie, compacte routeheaders en duidelijke lege/loading/error-staten per workflow.
+- **User Value:** Gebruikers blijven na het kiezen van een werkbaan in dezelfde rustige taakcontext en verliezen minder overzicht.
+- **Acceptance Criteria:** Minimaal drie hubroutes krijgen een zelfstandiger tab/screen-ritme; upload, timeline en aanbevelingen tonen duidelijke routeheaders; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossier, Start, Traject, Kennis
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Dossier routes, start hub, recommendation route, timeline route, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 34
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
