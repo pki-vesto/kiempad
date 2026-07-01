@@ -419,10 +419,18 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
   return SCREENS.some((screen) => screen.id === candidate) ? (candidate as ScreenId) : 'start';
 }
 
-type StartRoute = 'overview' | 'recommendations';
+type StartRoute = 'overview' | 'today' | 'recommendations';
 
 export function normalizeStartRoute(value: string | null | undefined): StartRoute {
   const candidate = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
+  if (
+    candidate === 'start-today' ||
+    candidate === 'start-current-phase' ||
+    candidate === 'start-next-step' ||
+    candidate === 'start-quick-entry'
+  ) {
+    return 'today';
+  }
   if (candidate === 'start-recommendations') return 'recommendations';
   return 'overview';
 }
@@ -13474,6 +13482,20 @@ function renderStartScreen(state: AppShellState): string {
     secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
   });
   const dailyAdviceConsole = renderDailyAdviceConsole(state, dailyRecommendations);
+  const startTodayConsole = renderStartTodayConsole({
+    phase: phasePanel,
+    planning: renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
+    command: renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
+    quickEntry: renderStartQuickEntryRoute(),
+  });
+
+  if (state.activeStartRoute === 'today') {
+    return sectionStack([startTodayConsole], {
+      className: 'start-today-route-layout',
+      ariaLabel: 'Vandaag beheren',
+      data: { 'start-today-route': 'ready' },
+    });
+  }
 
   if (state.activeStartRoute === 'recommendations') {
     return sectionStack([dailyAdviceConsole], {
@@ -13545,6 +13567,35 @@ function renderStartScreen(state: AppShellState): string {
       data: { 'start-console': 'ready' },
     },
   );
+}
+
+function renderStartTodayConsole(input: {
+  phase: string;
+  planning: string;
+  command: string;
+  quickEntry: string;
+}): string {
+  return `
+    <section class="start-today-console" aria-labelledby="start-today-console-title" data-start-today-console="ready">
+      <header class="start-today-console__header" data-start-today-console-region="header">
+        <p class="kp-card__eyebrow">Vandaag focus</p>
+        <h2 id="start-today-console-title">Vandaag console</h2>
+        <p>Planning, dagtaken en snelle vastlegging staan als aparte werkvlakken bij elkaar, zonder de volledige Startpagina erboven.</p>
+      </header>
+      <div class="start-today-console__body">
+        <div class="start-today-console__planning" data-start-today-console-region="planning">
+          ${input.phase}
+          ${input.planning}
+        </div>
+        <div class="start-today-console__command" data-start-today-console-region="command">
+          ${input.command}
+        </div>
+        <div class="start-today-console__quick" data-start-today-console-region="quick-entry">
+          ${input.quickEntry}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderStartLaunchpad(input: {

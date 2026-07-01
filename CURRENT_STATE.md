@@ -446,6 +446,11 @@
   actieplanner en aanbevelingenlijst staan in aparte begrensde werkvlakken, zodat
   dagadvies niet eerst als onderdeel van een lange startpagina gelezen hoeft te
   worden.
+- **G1315 Directe Vandaag-console:** `#start-today`, `#start-current-phase`,
+  `#start-next-step` en `#start-quick-entry` openen als één compacte Vandaag-console
+  zonder Start-launchpad. Planning/volgende stap, dagcommand en snelle invoer staan
+  in aparte werkvlakken met eigen scrollgedrag, zodat dagelijkse taken niet als
+  onderdeel van één lange Startpagina hoeven te lezen.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

@@ -1667,6 +1667,10 @@ describe('app shell', () => {
   it('normaliseert onbekende routes naar het startscherm', () => {
     expect(normalizeScreenId('')).toBe('start');
     expect(normalizeScreenId('#start')).toBe('start');
+    expect(normalizeStartRoute('#start-today')).toBe('today');
+    expect(normalizeStartRoute('#start-current-phase')).toBe('today');
+    expect(normalizeStartRoute('#start-next-step')).toBe('today');
+    expect(normalizeStartRoute('#start-quick-entry')).toBe('today');
     expect(normalizeScreenId('#start-recommendations')).toBe('start');
     expect(normalizeStartRoute('#start-recommendations')).toBe('recommendations');
     expect(normalizeStartRoute('#start')).toBe('overview');
@@ -2742,6 +2746,39 @@ describe('app shell', () => {
     expect(html).toContain('Dagadvies als eigen controleruimte');
     expect(html).not.toContain('data-start-launchpad="ready"');
     expect(html).not.toContain('data-start-console="ready"');
+  });
+
+  it('rendert vandaag direct als start-subroute', () => {
+    const html = renderAppShell('start', makeStartState({ activeStartRoute: 'today' }));
+
+    expect(html).toContain('data-start-today-route="ready"');
+    expect(html).toContain('data-start-today-console="ready"');
+    expect(html).toContain('data-start-today-console-region="header"');
+    expect(html).toContain('data-start-today-console-region="planning"');
+    expect(html).toContain('data-start-today-console-region="command"');
+    expect(html).toContain('data-start-today-console-region="quick-entry"');
+    expect(html).toContain('Vandaag console');
+    expect(html).toContain('id="start-current-phase"');
+    expect(html).toContain('id="start-next-step"');
+    expect(html).toContain('id="start-today"');
+    expect(html).toContain('id="start-quick-entry"');
+    expect(html).not.toContain('data-start-launchpad="ready"');
+    expect(html).not.toContain('data-start-console="ready"');
+    expect(html).not.toContain('data-start-flow-rail="progressive"');
+  });
+
+  it('bewaakt de vandaag-console als directe compacte start-route', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain('.start-today-console {');
+    expect(css).toContain('.start-today-console__body {');
+    expect(css).toContain('grid-template-areas:');
+    expect(css).toContain('"planning command"');
+    expect(css).toContain('"quick command"');
+    expect(css).toContain('.start-today-console__planning,');
+    expect(css).toContain('.start-today-console__command,');
+    expect(css).toContain('.start-today-console__quick {');
+    expect(css).toContain('overflow-y: auto;');
   });
 
   it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
