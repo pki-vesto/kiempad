@@ -403,6 +403,11 @@
   besliswerkbank links, taakroute-rail in het midden en actieve keuzewerkruimte
   rechts. De workspace gebruikt een hoofdvlak met contextstrip, zodat voorbereiden,
   vergelijken, kiezen en teruglezen niet als één lange beslispagina starten.
+- **G1306 Finance-console:** Kosten toont op desktop een compacte console met
+  financiële beheerwerkbank links, taakroute-rail in het midden en actieve
+  financiële werkruimte rechts. De workspace gebruikt een hoofdvlak met
+  contextstrip, zodat totalen, vergoeding, toevoegen en historie niet als één
+  lange financiële pagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

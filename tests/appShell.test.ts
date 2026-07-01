@@ -1869,8 +1869,13 @@ describe('app shell', () => {
     expect(css).toContain('.finance-focus-shell {');
     expect(css).toContain('.finance-focus-shell__header {');
     expect(css).toContain('.finance-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
     expect(css).toContain('.finance-focus-shell__workspace {');
+    expect(css).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('"rail context";');
     expect(css).toContain('.backup-focus-shell {');
     expect(css).toContain('.backup-focus-shell__header {');
     expect(css).toContain('.backup-focus-shell__body {');
@@ -36564,9 +36569,12 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack finance-command-layout"');
     expect(html).toContain('class="finance-focus-shell"');
     expect(html).toContain('data-finance-focus-shell="ready"');
+    expect(html).toContain('data-finance-console="ready"');
     expect(html).toContain('Eerst totalen scannen, daarna vergoeding of historie openen');
     expect(html).toContain('data-finance-focus-region="workbench"');
     expect(html).toContain('data-finance-focus-region="workspace"');
+    expect(html).toContain('data-finance-console-region="workbench"');
+    expect(html).toContain('data-finance-console-region="workspace"');
     expect(html).toContain(
       '<section class="management-workbench finance-management-workbench" aria-label="Financiële beheerwerkbank" data-finance-first-viewport="management-workbench">',
     );
@@ -37848,6 +37856,9 @@ describe('app shell', () => {
       'data-decision-route="choice" data-decision-route-state="active"',
     );
     expect(kostenHtml).toContain('class="domain-split-workspace finance-split-workspace"');
+    expect(kostenHtml).toContain('data-finance-console="ready"');
+    expect(kostenHtml).toContain('data-finance-console-region="workbench"');
+    expect(kostenHtml).toContain('data-finance-console-region="workspace"');
     expect(kostenHtml).toContain('data-finance-workspace-context="metrics"');
     expect(kostenHtml).toContain('data-workspace-context-signals="finance"');
     expect(kostenHtml).toContain('data-workspace-context-microstate="finance-vergoeding"');
