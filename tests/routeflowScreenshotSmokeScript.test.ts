@@ -145,6 +145,11 @@ describe('routeflow screenshot smoke script', () => {
       "'.dossier-imaging-inspection-board__header > p'",
     );
     expect(routeflowScreenshotSmokeScript).toContain("'.knowledge-research-reader__header > p'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.daily-advice-action-planner__header > p'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.fertility-timeline-reader__header > p'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.consult-prep-board__header > p'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.wellbeing-history-board__header > p'");
+    expect(routeflowScreenshotSmokeScript).toContain("'.backup-sync-board__header > p'");
     expect(routeflowScreenshotSmokeScript).toContain(
       "'.command-route-summary p:not(.command-route-summary__eyebrow)'",
     );

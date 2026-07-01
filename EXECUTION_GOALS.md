@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1291 — Premium Claude Design UI: compacte resterende routeboards
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na eerdere verdichting bleven vergelijkbare eerste routeboards voor fertility timeline, dagadvies, consultvoorbereiding, welzijnsgeschiedenis en back-up op desktop nog hoog door board-introcopy en grote lane-kaarten.
+- **Desired Outcome:** Maak deze resterende routeboards op desktop compacter met verborgen board-introcopy, lagere padding en lagere lane-kaarten, zonder de mobiele swipebanen te verliezen.
+- **User Value:** De app voelt consistenter en minder als een verticale stapel, omdat alle bewaakte kernroutes sneller bij hun echte werkruimte komen.
+- **Acceptance Criteria:** Desktop routeboards voor timeline, dagadvies, consultprep, welzijn en back-up gebruiken compactere padding/lanehoogtes; board-introcopy is op desktop verborgen; mobiele swipebanen blijven behouden; routeflow-smoke bewaakt verborgen boardcopy; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2357
+
 ### G1290 — Premium Claude Design UI: compacte route-samenvattingen
 
 - **Epic:** Onboarding & Daily Use

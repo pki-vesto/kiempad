@@ -1106,6 +1106,90 @@ h2 {
   line-height: 1.25;
 }
 
+@media (min-width: 761px) {
+  .fertility-timeline-reader,
+  .daily-advice-action-planner,
+  .consult-prep-board,
+  .wellbeing-history-board,
+  .backup-sync-board {
+    gap: 9px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .fertility-timeline-reader__header,
+  .daily-advice-action-planner__header,
+  .consult-prep-board__header,
+  .wellbeing-history-board__header,
+  .backup-sync-board__header {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .fertility-timeline-reader__header h3,
+  .daily-advice-action-planner__header h3,
+  .consult-prep-board__header h3,
+  .wellbeing-history-board__header h3,
+  .backup-sync-board__header h3 {
+    font-size: 0.98rem;
+    line-height: 1.18;
+  }
+
+  .fertility-timeline-reader__header > p,
+  .daily-advice-action-planner__header > p,
+  .consult-prep-board__header > p,
+  .wellbeing-history-board__header > p,
+  .backup-sync-board__header > p {
+    display: none;
+  }
+
+  .fertility-timeline-reader__lane,
+  .daily-advice-action-planner__lane,
+  .consult-prep-board__lane,
+  .wellbeing-history-board__lane,
+  .backup-sync-board__lane {
+    gap: 4px;
+    min-height: 96px;
+    padding: 9px;
+    border-radius: 8px;
+  }
+
+  .fertility-timeline-reader__lane span,
+  .daily-advice-action-planner__lane span,
+  .consult-prep-board__lane span,
+  .wellbeing-history-board__lane span,
+  .backup-sync-board__lane span {
+    font-size: 0.64rem;
+  }
+
+  .fertility-timeline-reader__lane strong,
+  .daily-advice-action-planner__lane strong,
+  .consult-prep-board__lane strong,
+  .wellbeing-history-board__lane strong,
+  .backup-sync-board__lane strong {
+    font-size: 0.88rem;
+    line-height: 1.18;
+  }
+
+  .fertility-timeline-reader__lane small,
+  .daily-advice-action-planner__lane small,
+  .consult-prep-board__lane small,
+  .wellbeing-history-board__lane small,
+  .backup-sync-board__lane small {
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .fertility-timeline-reader__lane em,
+  .daily-advice-action-planner__lane em,
+  .consult-prep-board__lane em,
+  .wellbeing-history-board__lane em,
+  .backup-sync-board__lane em {
+    padding: 3px 7px;
+    font-size: 0.66rem;
+  }
+}
+
 .timeline-overview-bar {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

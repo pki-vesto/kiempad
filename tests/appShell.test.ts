@@ -1877,6 +1877,7 @@ describe('app shell', () => {
     expect(css).toContain('.backup-sync-board__header {');
     expect(css).toContain('.backup-sync-board__lanes {');
     expect(css).toContain('.backup-sync-board__lane {');
+    expect(css).toContain('.backup-sync-board__header > p {');
     expect(css).toContain('.backup-sync-board__lane:hover,');
     expect(css).toContain('.backup-sync-board__lane:focus-visible {');
     expect(css).toContain('.backup-sync-board__lane em {');
@@ -1938,6 +1939,7 @@ describe('app shell', () => {
     expect(css).toContain('.consult-prep-board__header {');
     expect(css).toContain('.consult-prep-board__lanes {');
     expect(css).toContain('.consult-prep-board__lane {');
+    expect(css).toContain('.consult-prep-board__header > p,');
     expect(css).toContain('.consult-prep-board__lane:hover,');
     expect(css).toContain('.consult-prep-board__lane:focus-visible {');
     expect(css).toContain('.consult-prep-board__lane em {');
@@ -2789,6 +2791,7 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-action-planner__header {');
     expect(css).toContain('.daily-advice-action-planner__lanes {');
     expect(css).toContain('.daily-advice-action-planner__lane {');
+    expect(css).toContain('.daily-advice-action-planner__header > p,');
     expect(css).toContain('.daily-advice-action-planner__lane:hover,');
     expect(css).toContain('.daily-advice-action-planner__lane:focus-visible {');
     expect(css).toContain('.daily-advice-action-planner__lane em {');
@@ -4041,6 +4044,7 @@ describe('app shell', () => {
     expect(css).toContain('.fertility-timeline-reader__header {');
     expect(css).toContain('.fertility-timeline-reader__lanes {');
     expect(css).toContain('.fertility-timeline-reader__lane {');
+    expect(css).toContain('.fertility-timeline-reader__header > p,');
     expect(css).toContain('.fertility-timeline-reader__lane:hover,');
     expect(css).toContain('.fertility-timeline-reader__lane:focus-visible {');
     expect(css).toContain('.fertility-timeline-reader__lane em {');
@@ -35538,6 +35542,7 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-history-board__header {');
     expect(css).toContain('.wellbeing-history-board__lanes {');
     expect(css).toContain('.wellbeing-history-board__lane {');
+    expect(css).toContain('.wellbeing-history-board__header > p,');
     expect(css).toContain('.wellbeing-history-board__lane:hover,');
     expect(css).toContain('.wellbeing-history-board__lane:focus-visible {');
     expect(css).toContain('.wellbeing-history-board__lane em {');

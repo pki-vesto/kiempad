@@ -347,6 +347,10 @@
   verlaagd tot compacte actiebalken met verborgen detailcopy en inline status- en
   actieknoppen. Daardoor stapelt iedere actieve route minder uitlegkaarten boven de
   echte werkruimte.
+- **G1291 Compacte resterende routeboards:** Fertility timeline, dagadvies,
+  consultvoorbereiding, welzijnsgeschiedenis en back-up gebruiken op desktop nu ook
+  lagere boardpadding, compactere lane-kaarten en verborgen board-introcopy. De
+  mobiele swipebanen blijven ongewijzigd.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
