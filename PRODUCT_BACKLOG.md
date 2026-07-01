@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1074 |
+| ☑ klaar | 1075 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1273** |
+| **Totaal** | **1274** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1436,12 +1436,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1271 | Premium Claude Design UI: wellbeing focus-shell bundelen | P1 | F5 | ☑ |
 | G1272 | Premium Claude Design UI: decision focus-shell bundelen | P1 | F5 | ☑ |
 | G1273 | Premium Claude Design UI: medication focus-shell bundelen | P1 | F5 | ☑ |
+| G1274 | Premium Claude Design UI: schedule focus-shell bundelen | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1273** (id's G001 t/m G1273, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1274** (id's G001 t/m G1274, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

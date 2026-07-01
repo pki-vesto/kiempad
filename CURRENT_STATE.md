@@ -279,6 +279,10 @@
   split-workspace in één `medication-focus-shell` met workbench- en
   workspace-regio's. Vandaag afvinken, planning, beheer, import en historie starten
   als één medicatieruimte zonder doseeradvies of berekening.
+- **G1274 Schedule focus-shell:** Agenda bundelt de dagplanningwerkbank en
+  split-workspace in één `schedule-focus-shell` met workbench- en
+  workspace-regio's. Overzicht, komende afspraken, plannen, ICS-import en historie
+  starten als één planningsruimte met de volgende afspraak als eerste focus.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

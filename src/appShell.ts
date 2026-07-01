@@ -16047,29 +16047,53 @@ function renderAgendaScreen(state: AppShellState): string {
       </section>`,
   ];
 
+  const scheduleWorkspace = domainSplitWorkspace({
+    className: 'schedule-split-workspace',
+    ariaLabel: 'Agenda split-view werkruimte',
+    data: { 'schedule-split-workspace': 'ready' },
+    rail: scheduleTaskRoutes,
+    main: scheduleRouteSections.join(''),
+    context: renderScheduleWorkspaceContext({
+      totalCount: state.afspraken.length,
+      upcomingCount: upcoming.length,
+      pastCount: past.length,
+      nextAppointment: upcoming[0],
+      hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
+      importStatus: state.agendaImportStatus,
+      importError: state.agendaImportError,
+      activeRoute: activeScheduleRoute,
+    }),
+  });
+
   return sectionStack(
     [
-      scheduleWorkbench,
-      domainSplitWorkspace({
-        className: 'schedule-split-workspace',
-        ariaLabel: 'Agenda split-view werkruimte',
-        data: { 'schedule-split-workspace': 'ready' },
-        rail: scheduleTaskRoutes,
-        main: scheduleRouteSections.join(''),
-        context: renderScheduleWorkspaceContext({
-          totalCount: state.afspraken.length,
-          upcomingCount: upcoming.length,
-          pastCount: past.length,
-          nextAppointment: upcoming[0],
-          hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
-          importStatus: state.agendaImportStatus,
-          importError: state.agendaImportError,
-          activeRoute: activeScheduleRoute,
-        }),
+      renderScheduleFocusShell({
+        workbench: scheduleWorkbench,
+        workspace: scheduleWorkspace,
       }),
     ],
     { className: 'schedule-command-layout', ariaLabel: 'Agenda beheren' },
   );
+}
+
+function renderScheduleFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="schedule-focus-shell" aria-labelledby="schedule-focus-shell-title" data-schedule-focus-shell="ready">
+      <header class="schedule-focus-shell__header">
+        <p class="kp-card__eyebrow">Agendafocus</p>
+        <h2 id="schedule-focus-shell-title">Eerst de volgende afspraak, daarna plannen of importeren</h2>
+        <p>Overzicht, komende afspraken, plannen, ICS-import en historie blijven in één planningsruimte zonder medische inhoud in contextfeedback.</p>
+      </header>
+      <div class="schedule-focus-shell__body">
+        <div class="schedule-focus-shell__workbench" data-schedule-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="schedule-focus-shell__workspace" data-schedule-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderSchedulePlanningWorkbench(input: {

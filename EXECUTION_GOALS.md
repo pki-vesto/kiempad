@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1274 — Premium Claude Design UI: schedule focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Agenda had een dagplanningwerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor overzicht, komende afspraken, plannen, import en historie minder als één planningsruimte voelden.
+- **Desired Outcome:** Bundel de agendawerkbank en Agenda split-workspace in één `schedule-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker ziet eerst de volgende afspraak en kiest daarna gericht overzicht, komende afspraken, plannen, import of historie zonder door alle agendalagen tegelijk te werken.
+- **Acceptance Criteria:** Agenda rendert `data-schedule-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; afspraak, ICS-import, herinnering, vraagkoppeling en historie blijven bereikbaar; mobiel verbergt redundante globale context boven Agenda; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2323
+
 ### G1273 — Premium Claude Design UI: medication focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use

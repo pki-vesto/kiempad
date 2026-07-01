@@ -4419,6 +4419,65 @@ h2 {
   scroll-margin-top: 24px;
 }
 
+.schedule-command-layout {
+  gap: 16px;
+}
+
+.schedule-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 11%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.schedule-focus-shell__header {
+  display: grid;
+  max-width: 880px;
+  gap: 5px;
+}
+
+.schedule-focus-shell__header h2,
+.schedule-focus-shell__header p {
+  margin: 0;
+}
+
+.schedule-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.schedule-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.schedule-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.schedule-focus-shell__workbench,
+.schedule-focus-shell__workspace {
+  min-width: 0;
+}
+
+.schedule-focus-shell__workbench > .schedule-planning-workbench {
+  height: 100%;
+}
+
+.schedule-focus-shell .command-route-summary h3 {
+  overflow-wrap: anywhere;
+}
+
 .medication-command-layout {
   gap: 16px;
 }
@@ -10464,6 +10523,40 @@ a.action-card:active {
 
   .treatment-focus-shell__workbench .treatment-snapshot {
     display: flex;
+  }
+
+  .content:has([data-schedule-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-schedule-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
+  .schedule-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .schedule-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .schedule-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .schedule-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace,
+  .schedule-focus-shell__workspace .domain-split-workspace__context {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
   }
 
   .content:has([data-medication-focus-shell="ready"]) > .workspace-map,
