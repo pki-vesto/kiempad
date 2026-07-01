@@ -1939,8 +1939,13 @@ describe('app shell', () => {
     expect(css).toContain('.question-focus-shell__header {');
     expect(css).toContain('.question-focus-shell__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.question-focus-shell__workbench > .question-preparation-workbench {');
     expect(css).toContain('.question-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('grid-template-areas:');
+    expect(css).toContain('"rail context";');
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
     expect(css).toContain('.question-task-routes {');
@@ -5173,9 +5178,12 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack question-command-layout"');
     expect(html).toContain('class="question-focus-shell"');
     expect(html).toContain('data-question-focus-shell="ready"');
+    expect(html).toContain('data-consult-console="ready"');
     expect(html).toContain('Eerst gesprek voorbereiden, daarna vragen beheren');
     expect(html).toContain('data-question-focus-region="workbench"');
     expect(html).toContain('data-question-focus-region="workspace"');
+    expect(html).toContain('data-consult-console-region="workbench"');
+    expect(html).toContain('data-consult-console-region="workspace"');
     expect(html).toContain(
       '<section class="planning-workbench question-preparation-workbench" aria-label="Consultvoorbereidingswerkbank" data-question-first-viewport="consult-workbench">',
     );

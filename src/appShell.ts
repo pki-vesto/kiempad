@@ -14917,11 +14917,11 @@ function renderQuestionFocusShell(input: { workbench: string; workspace: string 
         <h2 id="question-focus-shell-title">Eerst gesprek voorbereiden, daarna vragen beheren</h2>
         <p>Open vragen, prep-packet, verslagen en beheer staan in één consultwerkruimte zodat de gebruiker niet door alle vraaglijsten tegelijk werkt.</p>
       </header>
-      <div class="question-focus-shell__body">
-        <div class="question-focus-shell__workbench" data-question-focus-region="workbench">
+      <div class="question-focus-shell__body" data-consult-console="ready">
+        <div class="question-focus-shell__workbench" data-question-focus-region="workbench" data-consult-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="question-focus-shell__workspace" data-question-focus-region="workspace">
+        <div class="question-focus-shell__workspace" data-question-focus-region="workspace" data-consult-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

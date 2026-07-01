@@ -282,6 +282,9 @@ const targets = [
     requiredSelectors: [
       '[data-question-focus-region="workbench"]',
       '[data-question-focus-region="workspace"]',
+      '[data-consult-console="ready"]',
+      '[data-consult-console-region="workbench"]',
+      '[data-consult-console-region="workspace"]',
       '[data-question-split-workspace="ready"]',
       '[data-question-route-summary="voorbereiden"]',
       '[data-consult-prep-board="ready"]',
@@ -300,6 +303,7 @@ const targets = [
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="consult-prep-wizard"] .hub-detail-disclosure__summary small',
     ],
+    consultConsole: true,
   },
   {
     screen: 'wellbeing-history',
@@ -734,6 +738,36 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const consultConsole = routeflow.consultConsole
+          ? (() => {
+              const body = document.querySelector('[data-consult-console="ready"]');
+              const workbench = document.querySelector('[data-consult-console-region="workbench"]');
+              const workspace = document.querySelector('[data-consult-console-region="workspace"]');
+              const bodyRect = body?.getBoundingClientRect();
+              const workbenchRect = workbench?.getBoundingClientRect();
+              const workspaceRect = workspace?.getBoundingClientRect();
+              const bodyStyle = body ? getComputedStyle(body) : null;
+              const workbenchStyle = workbench ? getComputedStyle(workbench) : null;
+              const workspaceStyle = workspace ? getComputedStyle(workspace) : null;
+              return {
+                bodyVisible: Boolean(bodyRect && bodyRect.width > 0 && bodyRect.height > 0),
+                workbenchVisible: Boolean(
+                  workbenchRect && workbenchRect.width > 0 && workbenchRect.height > 0,
+                ),
+                workspaceVisible: Boolean(
+                  workspaceRect && workspaceRect.width > 0 && workspaceRect.height > 0,
+                ),
+                workbenchTop: workbenchRect?.top ?? 0,
+                workspaceTop: workspaceRect?.top ?? 0,
+                workbenchRight: workbenchRect?.right ?? 0,
+                workspaceLeft: workspaceRect?.left ?? 0,
+                bodyOverflow: bodyStyle?.overflow ?? '',
+                bodyMaxHeight: bodyStyle?.maxHeight ?? '',
+                workbenchOverflowY: workbenchStyle?.overflowY ?? '',
+                workspaceOverflowY: workspaceStyle?.overflowY ?? '',
+              };
+            })()
+          : null;
         const timelineConsole = routeflow.timelineConsole
           ? (() => {
               const reader = document.querySelector(
@@ -795,6 +829,7 @@ async function assertRouteflows(browser, options) {
           uploadConsole,
           dossierConsole,
           knowledgeConsole,
+          consultConsole,
           timelineConsole,
           appFrame: {
             shellVisible: Boolean(appShellRect && appShellRect.width > 0 && appShellRect.height > 0),
@@ -892,6 +927,7 @@ async function assertRouteflows(browser, options) {
         evidence.focusLayout &&
         !evidence.dossierConsole &&
         !evidence.knowledgeConsole &&
+        !evidence.consultConsole &&
         (!evidence.focusLayout.supportVisible ||
           !evidence.focusLayout.workspaceVisible ||
           evidence.focusLayout.workspaceTop < evidence.focusLayout.supportBottom - 1 ||
@@ -997,6 +1033,23 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: knowledge-console staat niet in compacte werkvlakken (${JSON.stringify(evidence.knowledgeConsole)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.consultConsole &&
+        (!evidence.consultConsole.bodyVisible ||
+          !evidence.consultConsole.workbenchVisible ||
+          !evidence.consultConsole.workspaceVisible ||
+          evidence.consultConsole.workspaceTop < evidence.consultConsole.workbenchTop - 1 ||
+          evidence.consultConsole.workspaceLeft < evidence.consultConsole.workbenchRight - 1 ||
+          evidence.consultConsole.bodyOverflow !== 'hidden' ||
+          evidence.consultConsole.bodyMaxHeight === 'none' ||
+          evidence.consultConsole.workbenchOverflowY !== 'auto' ||
+          evidence.consultConsole.workspaceOverflowY !== 'auto')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: consult-console staat niet in compacte werkvlakken (${JSON.stringify(evidence.consultConsole)}).`,
         );
       }
       if (
