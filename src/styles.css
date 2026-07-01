@@ -4248,6 +4248,49 @@ h2 {
   align-items: stretch;
 }
 
+.treatment-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.treatment-snapshot__card {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
+}
+
+.treatment-snapshot__card p,
+.treatment-snapshot__card strong,
+.treatment-snapshot__card span {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.treatment-snapshot__card p {
+  color: var(--text-faint);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.treatment-snapshot__card strong {
+  color: var(--text);
+  font-size: 0.94rem;
+  line-height: 1.25;
+}
+
+.treatment-snapshot__card span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .treatment-workbench :where(.phase-hero) {
   min-height: 100%;
   box-shadow: none;
@@ -4404,6 +4447,20 @@ h2 {
 .treatment-route-section .data-form select,
 .treatment-route-section .data-form textarea {
   min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .treatment-snapshot {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .treatment-snapshot__card {
+    flex: 0 0 min(260px, 82vw);
+    scroll-snap-align: start;
+  }
 }
 
 .schedule-command-layout {

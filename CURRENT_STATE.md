@@ -716,6 +716,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Gevulde consultkaarten zijn intern opgesplitst in een compacte header met statuschips,
   veilige metadata en secties voor verslagtekst, samenvatting, correctieverschil,
   actiepunten en inzichten.
+  De traject/timeline-werkbank heeft nu een compacte trajectscan boven de routepanelen
+  voor huidige fase, volgende actie, laatste timelinecontext en werkgrens, zodat de
+  eerste viewport minder als administratiepagina leest.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen

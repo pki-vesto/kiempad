@@ -153,6 +153,7 @@ import type {
   DoseLog,
   DossierDocument,
   EventLog,
+  Fase,
   Herinnering,
   KennisItem,
   Medicatie,
@@ -16108,6 +16109,16 @@ function renderTreatmentWorkbench(input: {
       : `${input.selected.traject.naam}: kies eerst de huidige fase.`
     : 'Maak een traject aan om faseplanning en timelinecontext te bundelen.';
   const activeRouteCopy = renderTreatmentActiveRouteCopy(input.activeRoute);
+  const latestTimelineItem = input.timeline.items[0];
+  const treatmentSnapshot = renderTreatmentSnapshot({
+    selected: input.selected,
+    huidigeFase,
+    nextAction,
+    latestTimelineItem,
+    timelineContextCount: input.timeline.contextSignalen.length,
+    graphCount: input.graph?.edges.length ?? 0,
+    remainingReimbursements: input.vergoeding.resterend,
+  });
 
   return `
     <section class="treatment-workbench" aria-label="Behandelwerkbank" data-treatment-first-viewport="workbench">
@@ -16119,6 +16130,7 @@ function renderTreatmentWorkbench(input: {
         </div>
         <p class="treatment-workbench__status">Actief: ${escapeHtml(activeRouteCopy)}</p>
       </header>
+      ${treatmentSnapshot}
       <div class="treatment-workbench__grid">
         ${phaseHero}
         <section class="treatment-workbench__panel" aria-label="Trajectcontext">
@@ -16142,6 +16154,62 @@ function renderTreatmentWorkbench(input: {
           </nav>
         </section>
       </div>
+    </section>
+  `;
+}
+
+function renderTreatmentSnapshot(input: {
+  selected: TrajectMetFasen | undefined;
+  huidigeFase: Fase | undefined;
+  nextAction: string;
+  latestTimelineItem: FertilityTimeline['items'][number] | undefined;
+  timelineContextCount: number;
+  graphCount: number;
+  remainingReimbursements: number;
+}): string {
+  const phaseLabel = input.huidigeFase
+    ? TRAJECT_FASE_LABELS[input.huidigeFase.fase]
+    : input.selected
+      ? 'Fase kiezen'
+      : 'Geen traject';
+  const phaseMeta = input.huidigeFase?.startDatum
+    ? `Sinds ${input.huidigeFase.startDatum}`
+    : input.selected
+      ? `Start ${input.selected.traject.startDatum}`
+      : 'Maak eerst een poging aan';
+  const timelineTitle = input.latestTimelineItem
+    ? input.latestTimelineItem.titel
+    : 'Nog geen timeline-item';
+  const timelineMeta = input.latestTimelineItem
+    ? `${input.latestTimelineItem.datum} · ${input.latestTimelineItem.label}`
+    : 'Upload dossierstukken of voeg consultcontext toe';
+  const contextMeta =
+    input.timelineContextCount > 0
+      ? `${input.timelineContextCount} contextsignaal${input.timelineContextCount === 1 ? '' : 'en'}`
+      : 'Geen ontbrekende context';
+
+  return `
+    <section class="treatment-snapshot" aria-label="Trajectscan" data-treatment-snapshot="ready">
+      <article class="treatment-snapshot__card" data-treatment-snapshot-card="phase">
+        <p>Huidige fase</p>
+        <strong>${escapeHtml(phaseLabel)}</strong>
+        <span>${escapeHtml(phaseMeta)}</span>
+      </article>
+      <article class="treatment-snapshot__card" data-treatment-snapshot-card="next-action">
+        <p>Volgende actie</p>
+        <strong>${escapeHtml(input.nextAction)}</strong>
+        <span>Feitelijke voorbereiding, geen behandeladvies.</span>
+      </article>
+      <article class="treatment-snapshot__card" data-treatment-snapshot-card="timeline">
+        <p>Laatste context</p>
+        <strong>${escapeHtml(timelineTitle)}</strong>
+        <span>${escapeHtml(timelineMeta)}</span>
+      </article>
+      <article class="treatment-snapshot__card" data-treatment-snapshot-card="safety">
+        <p>Werkgrens</p>
+        <strong>${escapeHtml(contextMeta)} · ${input.graphCount} relaties</strong>
+        <span>${input.remainingReimbursements} vergoeding resterend; polis blijft leidend.</span>
+      </article>
     </section>
   `;
 }
