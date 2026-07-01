@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1285 — Premium Claude Design UI: compacte focus-shell supportstrips
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier, Kennis en Traject hadden naast hun split-workspace nog een tweede oriëntatie- of workbenchkolom, waardoor de focusroute alsnog als twee dashboards naast elkaar kon voelen.
+- **Desired Outcome:** Maak de ondersteunende focuslaag een compacte bovenstrip en geef de taakworkspace de volledige desktopbreedte.
+- **User Value:** De gebruiker ziet eerst de taakruimte en gebruikt de ondersteunende context als rustige oriëntatie in plaats van als concurrerende zijruimte.
+- **Acceptance Criteria:** Dossier, Kennis en Traject gebruiken een éénkoloms focus-shell body op desktop; workbench/oriëntatiepanelen zijn compacter; routeflow-smoke meet dat workspace onder de supportstrip volle breedte krijgt; app-shell en routeflow tests bewaken het contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2345
+
 ### G1284 — Premium Claude Design UI: split-workspace hoofdruimte voorrang
 
 - **Epic:** Onboarding & Daily Use

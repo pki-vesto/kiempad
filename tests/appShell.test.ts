@@ -3993,10 +3993,14 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-focus-shell {');
     expect(css).toContain('.treatment-focus-shell__header {');
     expect(css).toContain('.treatment-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.34fr) minmax(0, 1fr);');
+    expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.treatment-focus-shell__workbench > .treatment-workbench {');
     expect(css).toContain('.treatment-focus-shell__workbench .treatment-workbench__grid {');
+    expect(css).toContain('grid-template-columns: minmax(220px, 0.54fr) minmax(0, 1.46fr);');
     expect(css).toContain('.treatment-focus-shell__workbench .treatment-snapshot {');
+    expect(css).toContain(
+      '.treatment-focus-shell__workbench .treatment-workbench__header p:last-child {',
+    );
     expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
@@ -6588,8 +6592,13 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-focus-shell {');
     expect(css).toContain('.dossier-focus-shell__header {');
     expect(css).toContain('.dossier-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
+    expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-stage__header {');
+    expect(css).toContain(
+      '.dossier-focus-shell__orientation .dossier-route-stage__header p:last-child {',
+    );
+    expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-snapshot {');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
@@ -35805,9 +35814,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-focus-shell {');
     expect(css).toContain('.knowledge-focus-shell__header {');
     expect(css).toContain('.knowledge-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(260px, 0.28fr) minmax(0, 1fr);');
+    expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.knowledge-focus-shell__workbench > .knowledge-research-workbench {');
     expect(css).toContain('.knowledge-focus-shell__workbench .knowledge-research-snapshot {');
+    expect(css).toContain(
+      '.knowledge-focus-shell__workbench .knowledge-research-workbench__header p:last-child {',
+    );
     expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',

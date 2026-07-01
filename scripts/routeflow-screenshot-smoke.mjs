@@ -78,6 +78,10 @@ const targets = [
     expectedText: 'Lees research in lagen',
     activeRouteSelector: '[data-knowledge-route="read"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
+    focusLayout: {
+      supportSelector: '[data-knowledge-focus-region="workbench"]',
+      workspaceSelector: '[data-knowledge-focus-region="workspace"]',
+    },
     requiredSelectors: [
       '[data-knowledge-focus-region="workbench"]',
       '[data-knowledge-focus-region="workspace"]',
@@ -103,6 +107,10 @@ const targets = [
     expectedText: 'Beelden en embryo’s als aparte werkruimte',
     activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    focusLayout: {
+      supportSelector: '[data-dossier-focus-region="orientation"]',
+      workspaceSelector: '[data-dossier-focus-region="workspace"]',
+    },
     requiredSelectors: [
       '[data-hub-workflow="dossier-imaging"]',
       '[data-hub-workflow-tab="imaging"][aria-current="page"]',
@@ -126,6 +134,10 @@ const targets = [
     expectedText: 'Timeline en graphcontext',
     activeRouteSelector: '[data-treatment-route="context"][data-treatment-route-state="active"]',
     inactiveRouteSelector: '[data-treatment-route-state="inactive"]',
+    focusLayout: {
+      supportSelector: '[data-treatment-focus-region="workbench"]',
+      workspaceSelector: '[data-treatment-focus-region="workspace"]',
+    },
     openSelectors: ['#traject-route-context details'],
     requiredSelectors: [
       '[data-treatment-focus-region="workbench"]',
@@ -148,6 +160,10 @@ const targets = [
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    focusLayout: {
+      supportSelector: '[data-dossier-focus-region="orientation"]',
+      workspaceSelector: '[data-dossier-focus-region="workspace"]',
+    },
     openSelectors: ['[data-hub-detail-panel="upload-intake"]'],
     requiredSelectors: [
       '[data-dossier-upload-triage="ready"]',
@@ -363,6 +379,28 @@ async function assertRouteflows(browser, options) {
               selector: routeflow.maxOpenDetails.selector,
             }))
           : [];
+        const focusLayout = routeflow.focusLayout
+          ? (() => {
+              const support = document.querySelector(routeflow.focusLayout.supportSelector);
+              const workspace = document.querySelector(routeflow.focusLayout.workspaceSelector);
+              const supportRect = support?.getBoundingClientRect();
+              const workspaceRect = workspace?.getBoundingClientRect();
+              return {
+                supportSelector: routeflow.focusLayout.supportSelector,
+                workspaceSelector: routeflow.focusLayout.workspaceSelector,
+                supportVisible: Boolean(
+                  supportRect && supportRect.width > 0 && supportRect.height > 0,
+                ),
+                workspaceVisible: Boolean(
+                  workspaceRect && workspaceRect.width > 0 && workspaceRect.height > 0,
+                ),
+                supportWidth: supportRect?.width ?? 0,
+                workspaceWidth: workspaceRect?.width ?? 0,
+                supportBottom: supportRect?.bottom ?? 0,
+                workspaceTop: workspaceRect?.top ?? 0,
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -372,6 +410,7 @@ async function assertRouteflows(browser, options) {
           present,
           hidden,
           openDetails,
+          focusLayout,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -419,6 +458,18 @@ async function assertRouteflows(browser, options) {
           `${options.label}/${target.screen}: te veel open routeflow-panelen: ${JSON.stringify(
             evidence.openDetails,
           )}.`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.focusLayout &&
+        (!evidence.focusLayout.supportVisible ||
+          !evidence.focusLayout.workspaceVisible ||
+          evidence.focusLayout.workspaceTop < evidence.focusLayout.supportBottom - 1 ||
+          evidence.focusLayout.workspaceWidth < evidence.focusLayout.supportWidth * 0.95)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: focus-workspace staat niet als volle breedte onder compacte supportstrip (${JSON.stringify(evidence.focusLayout)}).`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);

@@ -54,6 +54,8 @@ describe('routeflow screenshot smoke script', () => {
       '[data-daily-advice-action-lane="supplements"]',
       '[data-daily-advice-action-lane="clinician"]',
       '[data-hub-workflow="knowledge-research"]',
+      '[data-knowledge-focus-region="workbench"]',
+      '[data-knowledge-focus-region="workspace"]',
       '[data-hub-detail-panel="research-summaries"]',
       '[data-knowledge-research-reader="ready"]',
       '[data-knowledge-research-lane="scientific"]',
@@ -61,6 +63,8 @@ describe('routeflow screenshot smoke script', () => {
       '[data-knowledge-research-lane="relevance"]',
       '[data-knowledge-research-lane="trends"]',
       '[data-hub-workflow="dossier-imaging"]',
+      '[data-dossier-focus-region="orientation"]',
+      '[data-dossier-focus-region="workspace"]',
       '[data-hub-detail-panel="consult-verslagen"]',
       '[data-hub-detail-panel="imaging-repository"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
@@ -70,6 +74,8 @@ describe('routeflow screenshot smoke script', () => {
       '[data-dossier-imaging-lane="embryos"]',
       '[data-dossier-imaging-lane="consults"]',
       '[data-fertility-timeline-reader="ready"]',
+      '[data-treatment-focus-region="workbench"]',
+      '[data-treatment-focus-region="workspace"]',
       '[data-fertility-timeline-lane="events"]',
       '[data-fertility-timeline-lane="milestones"]',
       '[data-fertility-timeline-lane="context"]',
@@ -122,6 +128,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('te veel open routeflow-panelen');
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
+    expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'focus-workspace staat niet als volle breedte',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('horizontalOverflow');
     expect(routeflowScreenshotSmokeScript).toContain('inactiveLayouts');
     expect(routeflowScreenshotSmokeScript).toContain('textFits');

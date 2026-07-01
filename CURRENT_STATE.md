@@ -324,6 +324,10 @@
   hoofdroute nu meer breedte dan taakrail en contextkolom. Rail, contextpanelen en
   kolomgaps zijn compacter, terwijl de split-workspace smoke dit als gerenderde
   breedtecontrole bewaakt.
+- **G1285 Compacte focus-shell supportstrips:** Dossier, Kennis en Traject tonen hun
+  ondersteunende oriëntatie of workbench als compacte bovenstrip. De actieve
+  split-workspace krijgt daaronder de volle desktopbreedte en de routeflow
+  screenshot-smoke bewaakt deze stapeling.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
