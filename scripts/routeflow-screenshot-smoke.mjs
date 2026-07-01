@@ -69,6 +69,7 @@ const targets = [
       '.workspace-strip__description',
       '.workspace-strip__quick',
     ],
+    startCommandCenter: true,
     desktopHiddenSelectors: [
       '.start-focus-shell__header p:last-child',
       '.daily-advice-focus-shell__header p:last-child',
@@ -379,14 +380,20 @@ async function assertRouteflows(browser, options) {
             ? rootElement
             : rootElement?.querySelector(selector);
           const rect = element?.getBoundingClientRect();
-          const textNodes = [...(element?.querySelectorAll('span, strong, small, p, h2, h3, em') ?? [])].map(
-            (node) => ({
+          const textNodes = [...(element?.querySelectorAll('span, strong, small, p, h2, h3, em') ?? [])]
+            .filter((node) => {
+              if (!routeflow.startCommandCenter || viewportLabel !== 'desktop') return true;
+              const region = node.closest('[data-start-focus-region]');
+              const regionRect = region?.getBoundingClientRect();
+              const nodeRect = node.getBoundingClientRect();
+              return !regionRect || (nodeRect.bottom >= regionRect.top && nodeRect.top <= regionRect.bottom);
+            })
+            .map((node) => ({
               clientWidth: node.clientWidth,
               scrollWidth: node.scrollWidth,
               clientHeight: node.clientHeight,
               scrollHeight: node.scrollHeight,
-            }),
-          );
+            }));
           return {
             selector,
             visible: Boolean(rect && rect.width > 0 && rect.height > 0),
@@ -464,6 +471,37 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const startCommandCenter = routeflow.startCommandCenter
+          ? (() => {
+              const workflows = document.querySelector('[data-start-focus-region="workflows"]');
+              const scan = document.querySelector('[data-start-focus-region="scan"]');
+              const daily = document.querySelector('[data-start-focus-region="daily"]');
+              const workflowsRect = workflows?.getBoundingClientRect();
+              const scanRect = scan?.getBoundingClientRect();
+              const dailyRect = daily?.getBoundingClientRect();
+              const workflowsStyle = workflows ? getComputedStyle(workflows) : null;
+              const scanStyle = scan ? getComputedStyle(scan) : null;
+              const dailyStyle = daily ? getComputedStyle(daily) : null;
+              return {
+                workflowsVisible: Boolean(
+                  workflowsRect && workflowsRect.width > 0 && workflowsRect.height > 0,
+                ),
+                scanVisible: Boolean(scanRect && scanRect.width > 0 && scanRect.height > 0),
+                dailyVisible: Boolean(dailyRect && dailyRect.width > 0 && dailyRect.height > 0),
+                workflowsTop: workflowsRect?.top ?? 0,
+                scanTop: scanRect?.top ?? 0,
+                dailyTop: dailyRect?.top ?? 0,
+                workflowsRight: workflowsRect?.right ?? 0,
+                scanLeft: scanRect?.left ?? 0,
+                scanRight: scanRect?.right ?? 0,
+                dailyLeft: dailyRect?.left ?? 0,
+                workflowsOverflowY: workflowsStyle?.overflowY ?? '',
+                scanOverflowY: scanStyle?.overflowY ?? '',
+                dailyOverflowY: dailyStyle?.overflowY ?? '',
+                dailyMaxHeight: dailyStyle?.maxHeight ?? '',
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -474,6 +512,7 @@ async function assertRouteflows(browser, options) {
           hidden,
           openDetails,
           focusLayout,
+          startCommandCenter,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -533,6 +572,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: focus-workspace staat niet als volle breedte onder compacte supportstrip (${JSON.stringify(evidence.focusLayout)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.startCommandCenter &&
+        (!evidence.startCommandCenter.workflowsVisible ||
+          !evidence.startCommandCenter.scanVisible ||
+          !evidence.startCommandCenter.dailyVisible ||
+          Math.abs(
+            evidence.startCommandCenter.dailyTop - evidence.startCommandCenter.workflowsTop,
+          ) > 2 ||
+          evidence.startCommandCenter.scanLeft < evidence.startCommandCenter.workflowsRight - 1 ||
+          evidence.startCommandCenter.dailyLeft < evidence.startCommandCenter.scanRight - 1 ||
+          evidence.startCommandCenter.workflowsOverflowY !== 'auto' ||
+          evidence.startCommandCenter.scanOverflowY !== 'auto' ||
+          evidence.startCommandCenter.dailyOverflowY !== 'auto' ||
+          evidence.startCommandCenter.dailyMaxHeight === 'none')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: Start command-center staat niet in drie begrensde werkvlakken (${JSON.stringify(evidence.startCommandCenter)}).`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);

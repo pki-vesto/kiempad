@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1294 — Premium Claude Design UI: Start command-center met drie werkvlakken
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Start-ervaring bleef deels als verticale pagina lezen doordat de daily/workflowlaag onder de primaire startlaag stond.
+- **Desired Outcome:** Maak Start op desktop een command-center met drie begrensde werkvlakken voor workflows, startscan/routes en dagelijks vervolgwerk.
+- **User Value:** De gebruiker ziet de starttaken als één productwerkruimte in plaats van als een lange stapel secties.
+- **Acceptance Criteria:** Desktop Start gebruikt grid-areas voor workflows, scan en daily; de drie regio's staan naast elkaar; elke regio gebruikt `overflow-y: auto` en een viewport-afhankelijke max-height; mobiel behoudt de bestaande éénkoloms volgorde; routeflow screenshot-smoke bewaakt de command-center layout; app-shell tests bewaken het CSS-contract.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2363
+
 ### G1293 — Premium Claude Design UI: begrensde desktop split-workspace
 
 - **Epic:** Onboarding & Daily Use
