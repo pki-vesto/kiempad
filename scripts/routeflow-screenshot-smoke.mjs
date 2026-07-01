@@ -1,0 +1,288 @@
+#!/usr/bin/env node
+import { spawn } from 'node:child_process';
+import fs from 'node:fs';
+import process from 'node:process';
+import { chromium } from '@playwright/test';
+
+const host = '127.0.0.1';
+const port = Number(process.env.KIEMPAD_ROUTEFLOW_SMOKE_PORT ?? 4179);
+const url = `http://${host}:${port}/`;
+const passphrase = 'routeflow screenshot smoke passphrase';
+
+const targets = [
+  {
+    screen: 'start',
+    hash: '#start',
+    rootSelector: '[data-start-intelligence-hub="six-workflows"]',
+    expectedText: 'Kies eerst je werkstroom',
+    requiredSelectors: [
+      '[data-start-workbench="multi-flow"]',
+      '[data-start-workbench-flow="uploads"]',
+      '[data-start-workbench-flow="timeline"]',
+      '[data-start-workbench-flow="embryo"]',
+      '[data-start-workbench-flow="recommendations"]',
+      '[data-start-workbench-flow="research"]',
+      '[data-start-workbench-flow="secure-sync"]',
+      '[data-start-workbench-tier="primary"]',
+      '[data-start-workbench-tier="supporting"]',
+    ],
+  },
+  {
+    screen: 'knowledge-research',
+    hash: '#kennis?route=read',
+    rootSelector: '#knowledge-route-read',
+    expectedText: 'Lees research in lagen',
+    activeRouteSelector: '[data-knowledge-route="read"][data-knowledge-route-state="active"]',
+    inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-hub-workflow="knowledge-research"]',
+      '[data-hub-workflow-tab="research"][aria-current="page"]',
+      '[data-hub-workflow-tab="summaries"]',
+      '[data-hub-workflow-tab="trends"]',
+      '[data-hub-detail-panel="research-summaries"]',
+      '[data-knowledge-research-disclosure="sources"]',
+      '#knowledge-research-trends',
+    ],
+  },
+  {
+    screen: 'dossier-imaging',
+    hash: '#dossier?route=imaging',
+    rootSelector: '#dossier-route-imaging',
+    expectedText: 'Beelden en embryo’s als aparte werkruimte',
+    activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-hub-workflow="dossier-imaging"]',
+      '[data-hub-workflow-tab="imaging"][aria-current="page"]',
+      '[data-hub-workflow-tab="embryos"]',
+      '[data-hub-workflow-tab="timeline"]',
+      '[data-hub-detail-panel="imaging-repository"]',
+      '[data-hub-detail-panel="embryo-dossiers"]',
+      '[data-dossier-imaging-disclosure="consults"]',
+    ],
+  },
+];
+
+const viewports = [
+  { label: 'desktop', viewport: { width: 1440, height: 1000 } },
+  { label: 'mobile', viewport: { width: 390, height: 844 } },
+];
+
+function fail(message) {
+  process.stderr.write(`${message}\n`);
+  process.exitCode = 1;
+}
+
+async function runSmoke() {
+  if (!fs.existsSync('dist/index.html')) {
+    throw new Error('Geen dist/index.html gevonden. Draai eerst: npm run build');
+  }
+
+  const preview = spawn(
+    'npm',
+    ['run', 'preview', '--', '--host', host, '--port', String(port), '--strictPort'],
+    {
+      detached: true,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, BROWSER: 'none' },
+    },
+  );
+
+  try {
+    await waitForPreview();
+    const browser = await chromium.launch({ headless: true });
+    try {
+      const results = [];
+      for (const options of viewports) {
+        results.push(await assertRouteflows(browser, options));
+      }
+
+      process.stdout.write(`Routeflow screenshot smoke geslaagd: ${JSON.stringify(results)}\n`);
+    } finally {
+      await browser.close();
+    }
+  } finally {
+    stopPreview(preview);
+  }
+}
+
+async function assertRouteflows(browser, options) {
+  const context = await browser.newContext({
+    viewport: options.viewport,
+    serviceWorkers: 'block',
+  });
+  const page = await context.newPage();
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  try {
+    const checked = [];
+    for (const target of targets) {
+      await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
+      await unlockIfNeeded(page, target.hash);
+
+      const root = page.locator(target.rootSelector);
+      await root.waitFor({ timeout: 10_000 });
+      await root.scrollIntoViewIfNeeded();
+
+      const screenshot = await root.screenshot({ animations: 'disabled' });
+      const evidence = await page.evaluate((routeflow) => {
+        const rootElement = document.querySelector(routeflow.rootSelector);
+        const rootRect = rootElement?.getBoundingClientRect();
+        const required = routeflow.requiredSelectors.map((selector) => {
+          const element = rootElement?.matches(selector)
+            ? rootElement
+            : rootElement?.querySelector(selector);
+          const rect = element?.getBoundingClientRect();
+          const textNodes = [...(element?.querySelectorAll('span, strong, small, p, h2, h3, em') ?? [])].map(
+            (node) => ({
+              clientWidth: node.clientWidth,
+              scrollWidth: node.scrollWidth,
+              clientHeight: node.clientHeight,
+              scrollHeight: node.scrollHeight,
+            }),
+          );
+          return {
+            selector,
+            visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+            textFits: textNodes.every(
+              (node) =>
+                node.scrollWidth <= node.clientWidth + 1 &&
+                node.scrollHeight <= node.clientHeight + 24,
+            ),
+          };
+        });
+        const inactiveLayouts = routeflow.inactiveRouteSelector
+          ? [...document.querySelectorAll(routeflow.inactiveRouteSelector)]
+              .map((element) => {
+                const rect = element.getBoundingClientRect();
+                return {
+                  id: element.id,
+                  hidden: element.hasAttribute('hidden'),
+                  display: getComputedStyle(element).display,
+                  width: rect.width,
+                  height: rect.height,
+                };
+              })
+              .filter(
+                (item) =>
+                  !item.hidden || item.display !== 'none' || item.width > 0 || item.height > 0,
+              )
+          : [];
+        const activeElement = routeflow.activeRouteSelector
+          ? document.querySelector(routeflow.activeRouteSelector)
+          : rootElement;
+        const activeRect = activeElement?.getBoundingClientRect();
+
+        return {
+          rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
+          rootText: rootElement?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          activeVisible: Boolean(activeRect && activeRect.width > 0 && activeRect.height > 0),
+          required,
+          inactiveLayouts,
+          horizontalOverflow:
+            document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
+            document.body.scrollWidth > document.body.clientWidth + 1,
+        };
+      }, target);
+
+      if (pageErrors.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: paginafout tijdens routeflow-smoke: ${pageErrors.join('; ')}`,
+        );
+      }
+      if (!evidence.rootVisible || !evidence.rootText.includes(target.expectedText)) {
+        throw new Error(`${options.label}/${target.screen}: routeflow-root mist verwachte tekst.`);
+      }
+      if (!evidence.activeVisible) {
+        throw new Error(`${options.label}/${target.screen}: actieve routeflow is niet zichtbaar.`);
+      }
+      const missingSelectors = evidence.required.filter((item) => !item.visible);
+      if (missingSelectors.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: routeflow-selectors ontbreken: ${missingSelectors
+            .map((item) => item.selector)
+            .join(', ')}.`,
+        );
+      }
+      const overflowingText = evidence.required.filter((item) => !item.textFits);
+      if (overflowingText.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: routeflow-tekst past niet: ${overflowingText
+            .map((item) => item.selector)
+            .join(', ')}.`,
+        );
+      }
+      if (evidence.inactiveLayouts.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: inactieve routeflows nemen layout in: ${JSON.stringify(
+            evidence.inactiveLayouts,
+          )}.`,
+        );
+      }
+      if (evidence.horizontalOverflow) {
+        throw new Error(`${options.label}/${target.screen}: routeflow veroorzaakt horizontale overflow.`);
+      }
+      if (screenshot.byteLength < 2_000) {
+        throw new Error(`${options.label}/${target.screen}: screenshot-evidence is te klein.`);
+      }
+
+      checked.push({
+        screen: target.screen,
+        selectors: evidence.required.length,
+        screenshotBytes: screenshot.byteLength,
+      });
+    }
+
+    return { viewport: options.label, checked: checked.length, targets: checked };
+  } finally {
+    await context.close();
+  }
+}
+
+async function unlockIfNeeded(page, hash) {
+  const passInput = page.locator('#passphrase, #vault-passphrase').first();
+  if (!(await passInput.isVisible().catch(() => false))) return;
+
+  await passInput.fill(passphrase);
+  await page.locator('button[type="submit"]').first().click();
+  await page.locator('.app-shell').waitFor({ timeout: 10_000 });
+
+  const firstRunButton = page.locator('#first-run-complete-form button[type="submit"]').first();
+  if (await firstRunButton.isVisible().catch(() => false)) {
+    await firstRunButton.click();
+    await page.locator('.app-shell').waitFor({ timeout: 10_000 });
+  }
+
+  await page.evaluate((nextHash) => {
+    window.location.hash = nextHash;
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+  }, hash);
+}
+
+async function waitForPreview() {
+  const deadline = Date.now() + 15_000;
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch(url, { method: 'HEAD' });
+      if (response.ok) return;
+    } catch {
+      // Preview server is still starting.
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  throw new Error(`Vite preview reageert niet op ${url}`);
+}
+
+function stopPreview(preview) {
+  if (preview.killed || preview.pid === undefined) return;
+  try {
+    process.kill(-preview.pid, 'SIGTERM');
+  } catch {
+    preview.kill('SIGTERM');
+  }
+}
+
+runSmoke().catch((error) => {
+  fail(error instanceof Error ? error.message : 'Routeflow screenshot smoke is mislukt.');
+});

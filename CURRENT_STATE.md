@@ -703,7 +703,11 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   imaging niet meer als generieke kennis- of dossiersecties openen. De imaging-
   repository, embryo-dossiers en researchsamenvattingen hebben daarnaast compacte
   taakheaders met statusaantallen, waardoor gesloten detailpanelen niet meer als een
-  tweede lange tekststapel lezen.
+  tweede lange tekststapel lezen. `npm run smoke:routeflows` bewaakt nu Start,
+  kennis-research en dossier-imaging met desktop/mobile screenshot-evidence voor
+  hubtabs, compacte detailpanelen, tekstfit, verborgen inactieve routes en horizontale
+  overflow. De mobiele start-hub gebruikt bovendien kortere hubcopy en een éénkoloms
+  dagadviesgrid zodat de eerste hub niet meer een horizontale strip nodig heeft.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -719,7 +723,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1243: routeflow-screenshots automatiseren voor start, research en imaging.
+1. UI Improvement Evolution uitvoeren vanaf G1244: consultupload als zelfstandige hubflow zichtbaar maken.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 
