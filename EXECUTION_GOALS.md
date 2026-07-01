@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1302 — Premium Claude Design UI: Research als compacte knowledge-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Kennis/Research route had researchscan, hubflow en split-workspace, maar kon op desktop nog als één krappe contentstapel of samengedrukte drie-koloms workspace lezen.
+- **Desired Outcome:** Maak Research op desktop een begrensde knowledge-console met researchwerkbank, taakroute-rail en actieve leesworkspace als duidelijke werkvlakken.
+- **User Value:** De gebruiker kan bronnen, samenvattingen, trends en researchlagen scannen zonder door een lange kennispagina te scrollen of verticale tekstkolommen te lezen.
+- **Acceptance Criteria:** Research rendert `data-knowledge-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de researchscan en kennisbankstatistieken blijven leesbaar in de workbench; de actieve workspace gebruikt route-rail plus hoofdvlak zonder krappe contextkolom; mobiel behoudt de bestaande éénkoloms flow; routeflow-smoke bewaakt console-geometrie, tekstfit en app-frame body-scroll.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2379
+
 ### G1301 — Premium Claude Design UI: Dossier als compacte eerste-viewport console
 
 - **Epic:** Onboarding & Daily Use

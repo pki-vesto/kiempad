@@ -35732,6 +35732,9 @@ describe('app shell', () => {
     expect(html).toContain('class="section-stack knowledge-command-layout"');
     expect(html).toContain('class="knowledge-focus-shell"');
     expect(html).toContain('data-knowledge-focus-shell="ready"');
+    expect(html).toContain('data-knowledge-console="ready"');
+    expect(html).toContain('data-knowledge-console-region="workbench"');
+    expect(html).toContain('data-knowledge-console-region="workspace"');
     expect(html).toContain('Eerst researchlaag kiezen, daarna bronnen openen');
     expect(html).toContain('data-knowledge-focus-region="workbench"');
     expect(html).toContain('data-knowledge-focus-region="workspace"');
@@ -35930,6 +35933,9 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-focus-shell__header {');
     expect(css).toContain('.knowledge-focus-shell__body {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('grid-template-columns: minmax(318px, 0.78fr) minmax(0, 1.22fr);');
+    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
+    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.knowledge-focus-shell__workbench > .knowledge-research-workbench {');
     expect(css).toContain('.knowledge-focus-shell__workbench .knowledge-research-snapshot {');
     expect(css).toContain(

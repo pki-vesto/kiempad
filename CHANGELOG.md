@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1302 Premium Claude Design UI: Research/Kennis is op desktop een compacte knowledge-console geworden. Researchwerkbank, routekeuze en actieve leesworkspace staan in begrensde werkvlakken; de workspace gebruikt een tweekoloms route+leesvlak zonder krappe contextkolom, zodat research niet meer als één lange of samengedrukte pagina leest.
 - G1301 Premium Claude Design UI: Dossier is op desktop een compacte dossier-console geworden. Routekaart/orientation en actieve split-workspace staan naast elkaar in begrensde werkvlakken met containment, zodat upload- en imagingroutes niet terugvallen naar lange body-scroll of introductie-plus-content stapeling.
 - G1300 Premium Claude Design UI: Start bundelt header, cockpit en werkbanen nu in één compacte launchpad. Op desktop staan context/deck links en cockpit rechts in dezelfde eerste viewport; routeflow-smoke bewaakt dat Start niet terugvalt naar losse verticale header-, cockpit- en deckblokken.
 - G1299 Premium Claude Design UI: de desktop shell is nu een begrensde app-workspace. Sidebar en hoofdcontent blijven binnen de viewport, `.content` is het eigen scrollvlak en routeflow-smoke bewaakt dat detailroutes niet terugvallen naar body-scroll als één lange pagina.
