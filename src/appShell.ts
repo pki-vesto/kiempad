@@ -2463,15 +2463,34 @@ function renderDossierScreen(state: AppShellState): string {
           <h2 id="dossier-route-review-title">Import-inbox en documentreview</h2>
           <p>Controleer OCR-status, duplicaten en reviewwachtrij zonder broninhoud te tonen.</p>
         </header>
-        <h2>Documentreview wachtrij</h2>
-        ${renderDossierReviewWachtrij(reviewWachtrij, state)}
-        <h2>Import-inbox</h2>
-        ${renderDossierInboxOverview(importInboxItems)}
-        ${
-          importInboxItems.length > 0
-            ? `<ol class="phase-list">${importInboxItems
-                .map(
-                  (item) => `
+        ${commandRouteSummary({
+          eyebrow: 'Dossierroute',
+          title: 'Review alleen openen bij importcontrole',
+          detail:
+            'OCR-status, duplicaten en inboxdetails blijven beschikbaar zonder de uploadroute opnieuw als documentlijst te openen.',
+          primary: { href: '#dossier-review-queue-disclosure', label: 'Review openen' },
+          secondary: { href: '#dossier-inbox-disclosure', label: 'Inbox openen' },
+          status: `${reviewWachtrij.length} review · ${importInboxItems.length} inbox`,
+          ariaLabel: 'Dossier review route-samenvatting',
+          data: { 'dossier-route-summary': 'review' },
+        })}
+        <details id="dossier-review-queue-disclosure" class="kp-disclosure" data-dossier-review-disclosure="queue">
+          <summary class="kp-disclosure__summary">Documentreview wachtrij openen</summary>
+          <div class="kp-disclosure__body">
+            <h2>Documentreview wachtrij</h2>
+            ${renderDossierReviewWachtrij(reviewWachtrij, state)}
+          </div>
+        </details>
+        <details id="dossier-inbox-disclosure" class="kp-disclosure" data-dossier-review-disclosure="inbox">
+          <summary class="kp-disclosure__summary">Import-inbox openen</summary>
+          <div class="kp-disclosure__body">
+            <h2>Import-inbox</h2>
+            ${renderDossierInboxOverview(importInboxItems)}
+            ${
+              importInboxItems.length > 0
+                ? `<ol class="phase-list">${importInboxItems
+                    .map(
+                      (item) => `
                     <li class="phase-item">
                       <div>
                         <h3>${escapeHtml(item.titel)}</h3>
@@ -2487,10 +2506,12 @@ function renderDossierScreen(state: AppShellState): string {
                       <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}">Verwijder</button>
                     </li>
                   `,
-                )
-                .join('')}</ol>`
-            : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
-        }
+                    )
+                    .join('')}</ol>`
+                : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
+            }
+          </div>
+        </details>
         </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload">
         ${workflowPanel({
@@ -12203,6 +12224,17 @@ function renderVragenScreen(state: AppShellState): string {
           <h2 id="vragen-route-beheer-title">Vraag toevoegen of beantwoorden</h2>
           <p>Leg vraag, afspraak, prioriteit, status en antwoord vast zonder medisch advies.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Beheer',
+          title: selected ? 'Geselecteerde vraag bewerken' : 'Nieuwe vraag vastleggen',
+          detail:
+            'Vraag, afspraakkoppeling, prioriteit en antwoord blijven in één beheerroute, los van open vragen en verslagen.',
+          status: `${state.vragen.length} totaal`,
+          primary: { href: '#vraag-form', label: selected ? 'Vraag bewerken' : 'Vraag toevoegen' },
+          secondary: { href: '#vragen?route=open', label: 'Open vragen' },
+          data: { 'question-route-summary': 'beheer' },
+          ariaLabel: 'Vraagbeheer route-samenvatting',
+        })}
         ${disclosure({
           summary: selected ? 'Vraag bewerken' : 'Vraag toevoegen',
           open: !selected,
@@ -13109,12 +13141,18 @@ function renderAgendaScreen(state: AppShellState): string {
           data: { 'schedule-route-summary': 'komend' },
           ariaLabel: 'Komende afspraken route-samenvatting',
         })}
-        <div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>
-        ${
-          upcoming.length > 0
-            ? renderAgendaList(upcoming, state.trajecten)
-            : '<p class="empty-state">Geen komende afspraken. Maak via Plannen een nieuwe afspraak aan.</p>'
-        }
+        ${disclosure({
+          summary: 'Komende afspraken en acties tonen',
+          open: upcoming.length > 0 && upcoming.length <= 2,
+          body: `
+            <div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>
+            ${
+              upcoming.length > 0
+                ? renderAgendaList(upcoming, state.trajecten)
+                : '<p class="empty-state">Geen komende afspraken. Maak via Plannen een nieuwe afspraak aan.</p>'
+            }
+          `,
+        })}
       </section>`,
       `<section id="agenda-route-plannen" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-plannen-title" data-schedule-route="plannen"${renderScheduleRouteVisibility(activeScheduleRoute, 'plannen')}>
         <header class="schedule-route-section__header command-route-section__header">
@@ -13122,6 +13160,17 @@ function renderAgendaScreen(state: AppShellState): string {
           <h2 id="agenda-route-plannen-title">Afspraak plannen of bewerken</h2>
           <p>Leg tijd, type, trajectkoppeling, voorbereiding, vraag en herinnering in één rustige workflow vast.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Plannen',
+          title: selected ? 'Afspraak bewerken' : 'Nieuwe afspraak plannen',
+          detail:
+            'Datum, type, voorbereiding, vraag en herinnering staan in één formulier zonder de komende lijst erboven.',
+          status: `${state.afspraken.length} afspraken`,
+          primary: { href: '#afspraak-form', label: selected ? 'Bewerken' : 'Plannen' },
+          secondary: { href: '#agenda?route=komend', label: 'Komend' },
+          data: { 'schedule-route-summary': 'plannen' },
+          ariaLabel: 'Afspraak plannen route-samenvatting',
+        })}
         ${disclosure({
           summary: selected ? 'Afspraak bewerken' : 'Afspraak aanmaken',
           open: !selected,
@@ -13134,6 +13183,21 @@ function renderAgendaScreen(state: AppShellState): string {
           <h2 id="agenda-route-import-title">Kliniekagenda importeren</h2>
           <p>Importeer een ICS-bestand lokaal zonder bronregels of medische inhoud in statusfeedback te tonen.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Import',
+          title: 'ICS-import bewust starten',
+          detail:
+            'Kliniekagenda-import blijft apart van plannen en komende afspraken, met statusfeedback alleen na importactie.',
+          status: state.agendaImportError
+            ? 'Check import'
+            : state.agendaImportStatus
+              ? 'Status beschikbaar'
+              : 'Klaar',
+          primary: { href: '#ics-import-form', label: 'Importformulier' },
+          secondary: { href: '#agenda?route=plannen', label: 'Plannen' },
+          data: { 'schedule-route-summary': 'import' },
+          ariaLabel: 'Agenda import route-samenvatting',
+        })}
         ${disclosure({
           summary: 'ICS importeren',
           open: Boolean(state.agendaImportStatus || state.agendaImportError),

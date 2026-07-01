@@ -3910,6 +3910,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, shared route UI, styles, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1224 — domeinschermen omzetten naar split-view werkruimtes
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Route-summary's en disclosures verminderen de lange-paginaervaring, maar meerdere domeinschermen voelen nog te verticaal en informatiegedreven in plaats van als gefocuste werkruimte.
+- **User Impact:** Gebruikers kunnen alsnog het gevoel krijgen dat alle onderdelen onder elkaar staan, vooral bij dossier, agenda en vragen waar context, taken en lijsten concurreren.
+- **Desired Outcome:** Zet minimaal Dossier, Agenda en Vragen zichtbaar om naar split-view werkruimtes met een vaste taakrail, compacte contextkolom en gefocuste hoofdtaak.
+- **User Value:** Kiempad voelt minder als een lange pagina en meer als een rustige premium fertiliteitsassistent waarin de gebruiker direct weet waar hij werkt.
+- **Acceptance Criteria:** Minimaal Dossier, Agenda en Vragen krijgen een split-view werkruimte op desktop; mobiel gebruikt een duidelijke segment/rail-aanpak zonder horizontale overflow; primaire taak, context en secundaire lijsten zijn visueel gescheiden; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; browser-screenshots tonen desktop en mobiel voor alle aangepakte schermen; tests bewaken de nieuwe layoutcontracten; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossier, Agenda, Vragen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, command routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
