@@ -4517,6 +4517,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2295
 - **Status:** ☑ done
 
+### G1261 — consultvoorbereiding bord toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De vragenroute heeft een Consult Prep Wizard, maar de voorbereiding start nog direct met wizard- en vragenlijstdetails zonder compacte keuze voor gesprekstaak.
+- **User Impact:** Gebruikers moeten zelf bepalen of zij eerst vragen ordenen, consultactiepunten checken, context openen of het prep-packet teruglezen.
+- **Desired Outcome:** Toon vóór de Consult Prep Wizard een compact consultvoorbereiding-bord met vier taaklanes voor open vragen, actiepunten, context en packet/verslagen.
+- **User Value:** Gebruikers starten consult intelligence vanuit een duidelijke gesprekstaak in plaats van een detailpaneel.
+- **Acceptance Criteria:** Vragenroute `#vragen?route=voorbereiden` toont `data-consult-prep-board="ready"` vóór `data-hub-detail-panel="consult-prep-wizard"`; lanes linken naar bestaande open vragen, voorbereiden, trajectcontext en verslagen; bestaande wizard, vraagformulieren, vraagverslagen, routeankers en privacycopy blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt het consult-prep board op desktop en mobiel; geen diagnose, behandeladvies, transcriptpayload, behandelkeuze, trackingdata of secrets wordt toegevoegd.
+- **Affected Screens:** Vragen, consultation intelligence, consultvoorbereiding
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Question UI, consultation intelligence, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 12
+- **GitHub Issue:** #2297
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

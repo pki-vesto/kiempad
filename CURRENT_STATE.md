@@ -660,7 +660,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   upload-triage voor document, consult, beeld/embryo en lokale OCR/review, zodat de
   uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. De dossier
   imaging-route toont vóór consultverslagen, imaging-repository en embryo-dossiers
-  een compact inspectiebord voor beelden, vergelijken, embryo's en consultcontext. De centrale
+  een compact inspectiebord voor beelden, vergelijken, embryo's en consultcontext.
+  De consultvoorbereidingsroute toont vóór de Consult Prep Wizard een prep-bord voor
+  open vragen, actiepunten, context en packet/verslagen. De centrale
   fertility timeline in Traject toont vóór filter, export en itemlijst een compacte
   leesmodus voor gebeurtenissen, mijlpalen, contextcontrole en consult-export.
   Dagadvies toont vóór de volledige aanbevelingenlijst een compacte actieplanner voor
