@@ -3195,6 +3195,10 @@ describe('app shell', () => {
     expect(html).toContain('id="agenda-route-overzicht"');
     expect(html).toContain('class="schedule-route-section command-route-section"');
     expect(html).toContain('class="schedule-route-section__header command-route-section__header"');
+    expect(html).toContain('class="command-route-summary"');
+    expect(html).toContain('data-schedule-route-summary="overzicht"');
+    expect(html).toContain('Agendaoverzicht route-samenvatting');
+    expect(html).toContain('Week- en maandcontext');
     expect(html).toContain('data-command-form-section="afspraak-basis"');
     expect(html).toContain('data-command-form-section="afspraak-context"');
     expect(html).toContain('data-command-form-section="afspraak-voorbereiding"');
@@ -4502,6 +4506,10 @@ describe('app shell', () => {
     expect(html).toContain('id="vragen-route-open"');
     expect(html).toContain('class="question-route-section command-route-section"');
     expect(html).toContain('class="question-route-section__header command-route-section__header"');
+    expect(html).toContain('data-question-route-summary="open"');
+    expect(html).toContain('Open vragen route-samenvatting');
+    expect(html).toContain('data-question-route-summary="alle"');
+    expect(html).toContain('Alle vragen tonen');
     expect(html).toContain('data-command-form-section="vraag-basis"');
     expect(html).toContain('data-command-form-section="vraag-context"');
     expect(html).toContain('data-command-form-section="vraag-antwoord"');
@@ -36374,6 +36382,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);');
     expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-margin-top: 96px;');
+    expect(mobileCss).toContain('.command-route-section__header {');
+    expect(mobileCss).toContain('clip-path: inset(50%);');
+    expect(mobileCss).toContain('.command-route-section__header > p:last-child');
     expect(mobileCss).toContain('.command-route-section .data-form {');
     expect(mobileCss).toContain('gap: 10px;');
     expect(mobileCss).toContain('.command-route-section .command-form-section {');
@@ -36401,8 +36412,15 @@ describe('app shell', () => {
     expect(css).toContain('backdrop-filter: blur(18px);');
     expect(css).toContain('border-radius: 14px;');
     expect(css).toContain('inset 3px 0 0 var(--accent)');
+    expect(css).toContain('.command-route-summary {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.command-route-summary__status,');
+    expect(css).toContain('.command-route-summary__action--secondary');
     expect(mobileCss).toContain('flex: 0 0 min(156px, 68vw);');
     expect(mobileCss).toContain('inset 0 3px 0 var(--accent)');
+    expect(mobileCss).toContain('.command-route-summary {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain('.command-route-summary p {');
   });
 
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
