@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1286 — Premium Claude Design UI: compacte focus-shell headers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Focusroutes hadden na de workspace- en supportstrip-reductie nog ruime shellheaders met extra introcopy boven de taakruimte.
+- **Desired Outcome:** Maak focus-shell headers op desktop compact door padding/gaps te verminderen, titels kleiner te maken en introcopy boven de taak te verbergen.
+- **User Value:** De gebruiker komt sneller bij de actieve taakroute en ervaart minder herhalende uitleg boven elk scherm.
+- **Acceptance Criteria:** Focus-shells gebruiken desktop-compacte padding en header-typografie; introcopy in focus-shell headers is op desktop verborgen; routeflow-smoke bewaakt verborgen introcopy; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2347
+
 ### G1285 — Premium Claude Design UI: compacte focus-shell supportstrips
 
 - **Epic:** Onboarding & Daily Use

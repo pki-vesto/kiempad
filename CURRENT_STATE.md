@@ -328,6 +328,10 @@
   ondersteunende oriëntatie of workbench als compacte bovenstrip. De actieve
   split-workspace krijgt daaronder de volle desktopbreedte en de routeflow
   screenshot-smoke bewaakt deze stapeling.
+- **G1286 Compacte focus-shell headers:** Focusroutes gebruiken op desktop minder
+  shellpadding, kleinere header-titels en verborgen introcopy boven de taakruimte.
+  De routeflow screenshot-smoke bewaakt dat deze herhalende bovenlaag verborgen
+  blijft.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
