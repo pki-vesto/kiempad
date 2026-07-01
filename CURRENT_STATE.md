@@ -267,6 +267,10 @@
   consultvoorbereidingswerkbank en split-workspace in één `question-focus-shell`
   met workbench- en workspace-regio's. De prep-route opent als consultruimte voor
   open vragen, actiepunten, context, prep-packet, verslagen en beheer.
+- **G1271 Wellbeing focus-shell:** Welzijn bundelt de inzichtwerkbank en
+  split-workspace in één `wellbeing-focus-shell` met workbench- en
+  workspace-regio's. De history-route opent als rustige terugleesruimte voor
+  check-ins, symptomen, cyclusmetingen en trendperiodes zonder score of diagnose.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

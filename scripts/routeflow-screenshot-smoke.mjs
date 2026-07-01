@@ -184,11 +184,14 @@ const targets = [
   {
     screen: 'wellbeing-history',
     hash: '#welzijn?route=history',
-    rootSelector: '#welzijn-route-history',
+    rootSelector: '[data-wellbeing-focus-shell="ready"]',
     expectedText: 'Kies eerst je welzijnslaag',
     activeRouteSelector: '[data-wellbeing-route="history"][data-wellbeing-route-state="active"]',
     inactiveRouteSelector: '[data-wellbeing-route-state="inactive"]',
     requiredSelectors: [
+      '[data-wellbeing-focus-region="workbench"]',
+      '[data-wellbeing-focus-region="workspace"]',
+      '[data-wellbeing-split-workspace="ready"]',
       '[data-wellbeing-route-summary="history"]',
       '[data-wellbeing-history-board="ready"]',
       '[data-wellbeing-history-lane="checkins"]',

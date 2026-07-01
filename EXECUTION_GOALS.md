@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1271 — Premium Claude Design UI: wellbeing focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Welzijn had een inzichtwerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor overzicht, geschiedenis en vastleggen minder als één rustige welzijnsruimte voelden.
+- **Desired Outcome:** Bundel de welzijnswerkbank en Welzijn split-workspace in één `wellbeing-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker scant eerst recente welzijnssignalen en kiest daarna gericht overzicht, geschiedenis of vastleggen zonder door alle check-ins, symptomen en cyclusmetingen tegelijk te werken.
+- **Acceptance Criteria:** Welzijn rendert `data-wellbeing-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; de history-route blijft terugleesbord, lanes en disclosures tonen; mobiel verbergt redundante globale context boven Welzijn; routeflow-smoke bewaakt de focus-shell.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2317
+
 ### G1270 — Premium Claude Design UI: question focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use
