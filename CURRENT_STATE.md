@@ -678,6 +678,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   en layoutchecks voor Dossier, Traject, Welzijn, Kosten, Logboek en Back-up op
   desktop en mobiel. Contextkaarten hebben nu een zichtbare prioriteitskaart met
   accentlijn, waarde-pill, sterkere touch target en compactere mobiele dichtheid.
+  Dossier, Traject, Welzijn, Kosten, Logboek en Back-up tonen daarbij route-specifieke
+  microstates in de contextkolom, zoals beeldroute, faseplanning, vergoedingcontext,
+  privacycontrole en importcontrole; de browser-smoke bewaakt deze microstates op
+  desktop en mobiel.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -693,7 +697,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1233: contextsignalen uitbreiden met route-specifieke microstates.
+1. UI Improvement Evolution uitvoeren vanaf G1234: route-specifieke microstates uitbreiden naar de resterende contextkolommen.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

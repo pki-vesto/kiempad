@@ -26,8 +26,21 @@ describe('context signals visual smoke script', () => {
       expect(contextSignalsVisualSmokeScript).toContain(`signal: '${signal}'`);
     }
 
+    for (const microstate of [
+      'dossier-imaging',
+      'treatment-fasen',
+      'wellbeing-history',
+      'finance-vergoeding',
+      'eventlog-privacy',
+      'backup-import',
+    ]) {
+      expect(contextSignalsVisualSmokeScript).toContain(`microstate: '${microstate}'`);
+    }
+
     expect(contextSignalsVisualSmokeScript).toContain('signals.screenshot');
     expect(contextSignalsVisualSmokeScript).toContain('cardsInsideContext');
+    expect(contextSignalsVisualSmokeScript).toContain('microstateVisible');
+    expect(contextSignalsVisualSmokeScript).toContain('microstateTextFits');
     expect(contextSignalsVisualSmokeScript).toContain('textFits');
     expect(contextSignalsVisualSmokeScript).toContain('actionTargets');
     expect(contextSignalsVisualSmokeScript).toContain('firstCardPrioritized');
