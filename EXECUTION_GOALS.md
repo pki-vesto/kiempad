@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1312 — Premium Claude Design UI: Traject als compacte treatment-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Traject had al een behandelwerkbank en split-workspace, maar kon op desktop nog als gestapelde trajectpagina met losse overview-, fase-, vergoeding-, timeline/graph- en beheerblokken lezen.
+- **Desired Outcome:** Maak Traject op desktop een begrensde treatment-console met behandelwerkbank, taakroute-rail, actieve trajectwerkruimte en compacte contextstrip.
+- **User Value:** De gebruiker kan fase, tijdlijn, context, vergoeding en beheer scannen zonder door één lange trajectpagina te scrollen.
+- **Acceptance Criteria:** Traject rendert `data-treatment-console="ready"` met regio's `workbench` en `workspace`; desktop gebruikt een tweekoloms console met viewport-afhankelijke max-height en eigen scrollgedrag; de behandelwerkbank start bovenaan als scanbare éénkoloms werkbank; de actieve workspace gebruikt route-rail plus hoofdvlak en zichtbare contextstrip; route-labels en route-summary blijven leesbaar zonder woordbreuk; mobiel behoudt de bestaande éénkoloms flow; routeflow-, split-workspace- en context-signals smokes blijven groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2399
+
 ### G1311 — Premium Claude Design UI: Medicatie als compacte medication-console
 
 - **Epic:** Onboarding & Daily Use

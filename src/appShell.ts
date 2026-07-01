@@ -17383,11 +17383,11 @@ function renderTreatmentFocusShell(input: { workbench: string; workspace: string
         <h2 id="treatment-focus-shell-title">Eerst fase en tijdlijn lezen, daarna beheren</h2>
         <p>Behandelwerkbank, routekeuze en fertility timeline blijven één gefocuste trajectruimte zonder beheerformulieren door de context heen.</p>
       </header>
-      <div class="treatment-focus-shell__body">
-        <div class="treatment-focus-shell__workbench" data-treatment-focus-region="workbench">
+      <div class="treatment-focus-shell__body" data-treatment-console="ready">
+        <div class="treatment-focus-shell__workbench" data-treatment-focus-region="workbench" data-treatment-console-region="workbench">
           ${input.workbench}
         </div>
-        <div class="treatment-focus-shell__workspace" data-treatment-focus-region="workspace">
+        <div class="treatment-focus-shell__workspace" data-treatment-focus-region="workspace" data-treatment-console-region="workspace">
           ${input.workspace}
         </div>
       </div>

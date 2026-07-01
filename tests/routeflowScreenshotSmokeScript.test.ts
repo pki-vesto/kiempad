@@ -49,6 +49,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'wellbeing-console staat niet in compacte werkvlakken',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('treatmentConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'treatment-console staat niet in compacte werkvlakken',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('timelineConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
       'timeline-console staat niet in begrensde werkvlakken',
