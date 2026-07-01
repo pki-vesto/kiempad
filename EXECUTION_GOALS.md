@@ -3894,6 +3894,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Eventlog routes, notification routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1223 — route-summary consistentie-audit en resterende lange-pagina restanten oplossen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Route-summary ontlasting is inmiddels over alle hoofdschermen uitgerold, maar er is nog geen cross-screen audit die resterende lange-pagina restanten, inconsistente disclosures of mobiele route-spacing systematisch afvangt.
+- **User Impact:** Gebruikers kunnen nog incidenteel een scherm tegenkomen waar secundaire content te snel openstaat of routepanelen anders aanvoelen dan de rest van de app.
+- **Desired Outcome:** Audit alle hoofdschermen op route-summary consistentie, disclosuregedrag, eerste-viewport rust en mobiele overflow; los de resterende zichtbare UI-restanten op.
+- **User Value:** Kiempad voelt als één samenhangende premium app in plaats van een verzameling losse opgeknapte schermen.
+- **Acceptance Criteria:** Alle hoofdschermen zijn gecontroleerd op route-summary presence, disclosure states, routeheaders, first-viewport workbench en mobiele overflow; resterende lange-lijst of secundaire context-restanten worden achter passende disclosures geplaatst; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven behouden; browser-screenshots bewijzen representatieve desktop/mobiel consistentie; tests bewaken de auditcontracten; geen medische payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, shared route UI, styles, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
