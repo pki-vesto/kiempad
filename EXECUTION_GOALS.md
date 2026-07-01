@@ -3782,6 +3782,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, workbench components, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1216 — first-viewport workbench CSS consolideren met gedeelde basisklassen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De eerste-viewport werkbanken gebruiken inmiddels een gedeelde renderhelper, maar de CSS-basis is nog verspreid over management-, system-, planning- en insight-varianten.
+- **User Impact:** Zichtbare UI-verbeteringen blijven te traag omdat spacing, header, focuspaneel, status, acties en mobiele rails per werkbankfamilie opnieuw moeten worden aangepast.
+- **Desired Outcome:** Consolideer overlappende werkbank-CSS naar gedeelde basisklassen of tokens zonder de herkenbare schermcontext te verliezen.
+- **User Value:** Gebruikers krijgen sneller een rustiger, consistenter schermritme en minder lange-pagina-gevoel op mobile, tablet en desktop.
+- **Acceptance Criteria:** Introduceer gedeelde CSS-basisklassen of tokenized selectors voor header, status, grid, focuspaneel, panel, actions en mobiele stat-rails; migreer minimaal twee workbenchfamilies naar de gedeelde CSS-basis zonder data-hooks of aria-labels te wijzigen; bestaande first-viewport screenshots blijven zonder overlap of horizontale overflow op mobile, tablet en desktop; tests bewaken de gedeelde CSS-contracten; geen medische payload, behandeladvies, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Eerste-viewport werkbanken
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Styles, app shell, workbench components, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

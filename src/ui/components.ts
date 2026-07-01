@@ -493,6 +493,64 @@ export function statRow(
   return `<div class="stat-row">${cells}</div>`;
 }
 
+export function firstViewportWorkbench(opts: {
+  classPrefix: string;
+  className?: string;
+  ariaLabel: string;
+  data?: Record<string, string>;
+  eyebrow: string;
+  title: string;
+  intro: string;
+  status: string;
+  focusAriaLabel: string;
+  focusEyebrow: string;
+  focusTitle: string;
+  focusDetail: string;
+  stats: { label: string; value: string; tone?: 'default' | 'success' | 'warning' | 'danger' }[];
+  actions: readonly { href: string; label: string }[];
+  actionsAriaLabel: string;
+}): string {
+  const sectionClass = [opts.classPrefix, opts.className].filter(Boolean).join(' ');
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  const actions = opts.actions
+    .map((action) => `<a href="${escapeAttribute(action.href)}">${escapeHtml(action.label)}</a>`)
+    .join('');
+
+  return `
+    <section class="${escapeAttribute(sectionClass)}" aria-label="${escapeAttribute(opts.ariaLabel)}"${dataAttrs}>
+      <header class="${escapeAttribute(opts.classPrefix)}__header">
+        <div>
+          <p class="kp-card__eyebrow">${escapeHtml(opts.eyebrow)}</p>
+          <h2>${escapeHtml(opts.title)}</h2>
+          <p>${escapeHtml(opts.intro)}</p>
+        </div>
+        <p class="${escapeAttribute(opts.classPrefix)}__status">${escapeHtml(opts.status)}</p>
+      </header>
+      <div class="${escapeAttribute(opts.classPrefix)}__grid">
+        <section class="${escapeAttribute(opts.classPrefix)}__focus" aria-label="${escapeAttribute(
+          opts.focusAriaLabel,
+        )}">
+          <p class="kp-card__eyebrow">${escapeHtml(opts.focusEyebrow)}</p>
+          <h3>${escapeHtml(opts.focusTitle)}</h3>
+          <p>${escapeHtml(opts.focusDetail)}</p>
+        </section>
+        <div class="${escapeAttribute(opts.classPrefix)}__panel">
+          ${statRow(opts.stats)}
+          <nav class="${escapeAttribute(opts.classPrefix)}__actions" aria-label="${escapeAttribute(
+            opts.actionsAriaLabel,
+          )}">
+            ${actions}
+          </nav>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
 /** Vertical dot/line timeline with a highlighted current item. `body` is raw HTML. */
 export function timeline(
   items: { title: string; meta?: string; state?: StepState; body?: string }[],
