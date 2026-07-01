@@ -13552,7 +13552,6 @@ function renderStartScreen(state: AppShellState): string {
                 summary: 'Dagadvies',
                 eyebrow: 'Aanbevelingen',
                 key: 'aanbevelingen',
-                open: true,
                 body: renderStartRecommendationRoute(state, dailyRecommendations),
               },
               {
