@@ -35187,6 +35187,21 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Kennis lezen route-samenvatting"');
     expect(html).toContain('data-knowledge-route-summary="read"');
     expect(html).toContain('Lees research in lagen');
+    expect(html).toContain('data-knowledge-research-reader="ready"');
+    expect(html).toContain('aria-label="Research leeslaag"');
+    expect(html).toContain('Kies eerst je researchlaag');
+    expect(html).toContain('data-knowledge-research-lane="scientific"');
+    expect(html).toContain('data-knowledge-research-lane="patient"');
+    expect(html).toContain('data-knowledge-research-lane="relevance"');
+    expect(html).toContain('data-knowledge-research-lane="trends"');
+    expect(html).toContain('Wetenschappelijk');
+    expect(html).toContain('Eenvoudig');
+    expect(html).toContain('Relevantie');
+    expect(html).toContain('Trends');
+    expect(html).toContain('Kiempad toont hier geen dossierplaintext of OCR-tekst');
+    expect(html.indexOf('data-knowledge-research-reader="ready"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-disclosure="sources"'),
+    );
     expect(html).toContain('Researchbronnen openen');
     expect(html).toContain('data-hub-detail-panel="research-summaries"');
     expect(html).toContain('Researchsamenvattingen openen');
@@ -35329,6 +35344,11 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-research-snapshot__card {');
     expect(css).toContain('.knowledge-research-snapshot__card strong {');
+    expect(css).toContain('.knowledge-research-reader {');
+    expect(css).toContain('.knowledge-research-reader__header {');
+    expect(css).toContain('.knowledge-research-reader__lanes {');
+    expect(css).toContain('.knowledge-research-reader__lane {');
+    expect(css).toContain('grid-template-rows: auto auto 1fr auto;');
     expect(css).toContain('.knowledge-route-section[hidden],');
     expect(css).toContain('.wellbeing-route-section[hidden],');
     expect(css).toContain('.decision-route-section[hidden],');
@@ -35347,6 +35367,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.knowledge-research-snapshot__card {');
     expect(mobileCss).toContain('flex: 0 0 min(230px, 76vw);');
+    expect(mobileCss).toContain('.knowledge-research-reader__lanes {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.knowledge-research-reader__lane {');
+    expect(mobileCss).toContain('flex: 0 0 min(236px, 78vw);');
   });
 
   it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {

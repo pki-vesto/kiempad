@@ -662,7 +662,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   fertility timeline in Traject toont vóór filter, export en itemlijst een compacte
   leesmodus voor gebeurtenissen, mijlpalen, contextcontrole en consult-export.
   Dagadvies toont vóór de volledige aanbevelingenlijst een compacte actieplanner voor
-  leefstijl, voeding, supplementen en artscheck. Het
+  leefstijl, voeding, supplementen en artscheck. De kennis/research leesroute toont
+  vóór bronnen, samenvattingen en trends een compacte leeslaag voor wetenschappelijk
+  lezen, eenvoudige uitleg, relevantie en trends. Het
   startscherm opent zonder generieke werkruimte-context met een
   compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
   gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn

@@ -4466,6 +4466,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2289
 - **Status:** ☑ done
 
+### G1258 — research-leeslaag toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De kennisroute heeft researchbronnen, samenvattingen en trends al gescheiden, maar de leesroute opent nog met meerdere grote detailblokken waardoor research nog als een lange pagina kan voelen.
+- **User Impact:** Gebruikers weten minder snel of zij moeten starten met wetenschappelijke uitleg, eenvoudige uitleg, persoonlijke relevantie of trendcontext.
+- **Desired Outcome:** Toon vóór de researchdisclosures een compacte leeslaag met vier taaklanes voor wetenschappelijke samenvatting, eenvoudige uitleg, gebruikersrelevantie en trends.
+- **User Value:** Gebruikers kiezen eerst hun researchlaag en ervaren research als begeleide leesflow in plaats van als stapel details.
+- **Acceptance Criteria:** Kennisroute `#kennis?route=read` toont `data-knowledge-research-reader="ready"` vóór de researchbronnen-disclosure; lanes linken naar bestaande samenvattingen en trendcontext; bestaande broncache, samenvattingspanelen, relevantie, dossierrelaties, trendgroepen, routeankers en privacygrenzen blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt de reader op desktop en mobiel; geen dossierplaintext, OCR-tekst, medische payload, behandeladvies, trackingdata of secrets wordt toegevoegd.
+- **Affected Screens:** Kennis, research summaries, fertility knowledge graph
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Research UI, knowledge route, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 15
+- **GitHub Issue:** #2291
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
