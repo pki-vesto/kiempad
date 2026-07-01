@@ -35232,6 +35232,11 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('class="section-stack wellbeing-command-layout"');
+    expect(html).toContain('class="wellbeing-focus-shell"');
+    expect(html).toContain('data-wellbeing-focus-shell="ready"');
+    expect(html).toContain('Eerst welzijn scannen, daarna teruglezen of vastleggen');
+    expect(html).toContain('data-wellbeing-focus-region="workbench"');
+    expect(html).toContain('data-wellbeing-focus-region="workspace"');
     expect(html).toContain(
       '<section class="insight-workbench wellbeing-insight-workbench" aria-label="Inzichtwerkbank welzijn" data-wellbeing-first-viewport="insight-workbench">',
     );
@@ -35323,7 +35328,13 @@ describe('app shell', () => {
 
   it('bewaakt welzijn en afwegingen insight workbenches als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
+    expect(css).toContain('.wellbeing-focus-shell {');
+    expect(css).toContain('.wellbeing-focus-shell__header {');
+    expect(css).toContain('.wellbeing-focus-shell__body {');
+    expect(css).toContain('.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {');
+    expect(css).toContain('.wellbeing-focus-shell__workspace {');
     expect(css).toContain('.insight-workbench {');
     expect(css).toContain('[data-wellbeing-first-viewport="insight-workbench"]');
     expect(css).toContain('[data-decision-first-viewport="insight-workbench"]');
@@ -35346,6 +35357,15 @@ describe('app shell', () => {
     expect(css).toContain('.insight-workbench :where(.stat) {');
     expect(css).toContain('flex: 0 0 88px;');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(mobileCss).toContain(
+      '.content:has([data-wellbeing-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-wellbeing-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.wellbeing-focus-shell {');
+    expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
+    expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace,');
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
@@ -37434,6 +37454,10 @@ describe('app shell', () => {
     expect(kennisHtml).toContain('Researchfocus');
     expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
     expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
+    expect(welzijnHtml).toContain('class="wellbeing-focus-shell"');
+    expect(welzijnHtml).toContain('data-wellbeing-focus-shell="ready"');
+    expect(welzijnHtml).toContain('data-wellbeing-focus-region="workbench"');
+    expect(welzijnHtml).toContain('data-wellbeing-focus-region="workspace"');
     expect(welzijnHtml).toContain('data-wellbeing-workspace-context="metrics"');
     expect(welzijnHtml).toContain('data-workspace-context-signals="wellbeing"');
     expect(welzijnHtml).toContain('data-workspace-context-microstate="wellbeing-history"');

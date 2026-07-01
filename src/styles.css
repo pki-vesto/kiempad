@@ -3669,6 +3669,61 @@ h2 {
   gap: 16px;
 }
 
+.wellbeing-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--category) 14%, transparent), transparent 56%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.wellbeing-focus-shell__header {
+  display: grid;
+  max-width: 860px;
+  gap: 5px;
+}
+
+.wellbeing-focus-shell__header h2,
+.wellbeing-focus-shell__header p {
+  margin: 0;
+}
+
+.wellbeing-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.wellbeing-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.wellbeing-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.wellbeing-focus-shell__workbench,
+.wellbeing-focus-shell__workspace {
+  min-width: 0;
+}
+
+.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {
+  height: 100%;
+}
+
+.wellbeing-focus-shell .command-route-summary h3 {
+  overflow-wrap: anywhere;
+}
+
 .insight-workbench {
   display: grid;
   gap: 12px;
@@ -9622,6 +9677,36 @@ a.action-card:active {
   .dossier-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .content:has([data-wellbeing-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-wellbeing-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
+  .wellbeing-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .wellbeing-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .wellbeing-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .wellbeing-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .wellbeing-focus-shell__workspace .domain-split-workspace,
+  .wellbeing-focus-shell__workspace .domain-split-workspace__context {
+    grid-template-columns: 1fr;
   }
 
   .insight-workbench {
