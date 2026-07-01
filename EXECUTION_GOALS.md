@@ -4296,6 +4296,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Score:** 26
 - **Status:** ☐ open
 
+### G1248 — trajectscan in behandelwerkbank verdichten
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De traject/timeline-werkbank heeft routes en een fasehero, maar de directe scanlaag mist nog een compacte rij voor huidige fase, volgende actie, laatste timelinecontext en werkgrens.
+- **User Impact:** Gebruikers zien de trajectroute sneller, maar moeten nog naar losse blokken kijken om de belangrijkste behandelcontext in één oogopslag te begrijpen.
+- **Desired Outcome:** Voeg een compacte trajectscan toe boven de routepanelen met fase, volgende actie, laatste context en privacy/werkgrens.
+- **User Value:** De trajectpagina voelt minder als administratie en meer als een rustige behandelwerkbank die meteen laat zien wat nu belangrijk is.
+- **Acceptance Criteria:** Traject toont een desktop/mobile responsieve snapshotrij met huidige fase, volgende actie, laatste timelinecontext en werkgrens; bestaande trajectroutes, fertility timeline, graphcontext, vergoeding, beheer, data-hooks en tests blijven werken; geen medische payload, diagnose, dosering, kansberekening, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Traject, Fertility Timeline
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Treatment workbench, fertility timeline, route sections, CSS, app shell tests
+- **ADR Needed:** no
+- **Score:** 25
+- **GitHub Issue:** #2271
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

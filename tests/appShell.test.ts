@@ -1758,6 +1758,7 @@ describe('app shell', () => {
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
     expect(trajectHtml).toContain('data-treatment-first-viewport="workbench"');
+    expect(trajectHtml).toContain('data-treatment-snapshot="ready"');
     expect(welzijnHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
@@ -1845,6 +1846,10 @@ describe('app shell', () => {
     expect(css).toContain('.question-task-routes {');
     expect(css).toContain('.planning-workbench :where(.stat-row) {');
     expect(css).toContain('.planning-workbench :where(.stat) {');
+    expect(css).toContain('.treatment-snapshot {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.treatment-snapshot__card {');
+    expect(css).toContain('flex: 0 0 min(260px, 82vw);');
   });
 
   it('toont de niet-medische disclaimer in de app', () => {
@@ -3418,6 +3423,15 @@ describe('app shell', () => {
     expect(html).toContain('Traject, fase en context eerst');
     expect(html).toContain('Actief: overzicht');
     expect(html).toContain('id="traject-treatment-workbench-phase"');
+    expect(html).toContain('data-treatment-snapshot="ready"');
+    expect(html).toContain('data-treatment-snapshot-card="phase"');
+    expect(html).toContain('data-treatment-snapshot-card="next-action"');
+    expect(html).toContain('data-treatment-snapshot-card="timeline"');
+    expect(html).toContain('data-treatment-snapshot-card="safety"');
+    expect(html).toContain('Huidige fase');
+    expect(html).toContain('Volgende actie');
+    expect(html).toContain('Laatste context');
+    expect(html).toContain('Werkgrens');
     expect(html).toContain('Fasen openen');
     expect(html).toContain('aria-label="Trajectcontext"');
     expect(html).toContain('aria-label="Behandelwerkbank acties"');
