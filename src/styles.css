@@ -3441,7 +3441,7 @@ h2 {
   background: color-mix(in srgb, var(--accent) 12%, var(--surface));
   color: var(--accent-strong);
   box-shadow:
-    inset 3px 0 0 var(--accent),
+    inset 4px 0 0 var(--accent),
     inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
@@ -3511,8 +3511,8 @@ h2 {
 
 .domain-split-workspace {
   display: grid;
-  grid-template-columns: minmax(210px, 0.72fr) minmax(0, 1.9fr) minmax(240px, 0.88fr);
-  gap: 14px;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.92fr) minmax(250px, 0.9fr);
+  gap: 16px;
   align-items: start;
   min-width: 0;
 }
@@ -3527,27 +3527,36 @@ h2 {
   position: sticky;
   top: 12px;
   z-index: 24;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, var(--accent));
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-raised) 92%, var(--surface-2));
 }
 
 .domain-split-workspace__rail .command-task-routes {
   position: static;
   grid-template-columns: 1fr;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .domain-split-workspace__main {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .domain-split-workspace__context {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .domain-split-workspace__context .summary-panel,
 .domain-split-workspace__context .policy-panel {
   min-height: 0;
-  padding: 16px;
+  padding: 18px;
   border-radius: 14px;
 }
 

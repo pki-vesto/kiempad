@@ -665,6 +665,10 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   command-routepanelen met consistente actieve state, header-spacing, compacte
   badges, density states, mobiele bottom-nav clearance, sticky formulieracties en
   compacte veldsecties zodat deze schermen minder als één lange pagina aanvoelen.
+  Alle split-view hoofdwerkruimtes delen nu consistente railspacing, een sterkere
+  actieve route-affordance en contextkolomritme; `npm run smoke:split-workspaces`
+  bewaakt Dossier, Agenda, Vragen, Traject, Medicatie, Kennis, Welzijn,
+  Afwegingen, Kosten, Logboek, Herinneringen en Back-up op desktop en mobiel.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -680,7 +684,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1228: split-view werkruimtes visueel verfijnen en browser-smoke automatiseren.
+1. UI Improvement Evolution uitvoeren vanaf G1229: split-view contextkolommen inhoudelijk verdichten per domein.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

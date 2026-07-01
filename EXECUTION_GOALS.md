@@ -3990,6 +3990,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, Playwright/browser smoke, styles, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1229 — split-view contextkolommen inhoudelijk verdichten per domein
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De split-view structuur is nu consistent bewaakt, maar contextkolommen kunnen per domein nog inhoudelijk rijker en taakgerichter worden zonder terug te vallen naar lange pagina's.
+- **User Impact:** Gebruikers zien rechts nog niet overal even snel de meest nuttige vervolgsignalen voor uploads, planning, research, behandeling of beheer.
+- **Desired Outcome:** Verdiep de contextkolommen van meerdere split-view werkruimtes met domeinspecifieke, scanbare context die het actieve hoofdvlak ondersteunt.
+- **User Value:** Kiempad voelt minder generiek en helpt gebruikers sneller begrijpen welke context bij hun huidige taak hoort.
+- **Acceptance Criteria:** Minimaal vier split-view werkruimtes krijgen domeinspecifiekere contextkolomcontent of contextritme; de contextkolom blijft secundair en veroorzaakt geen alles-op-een-pagina ervaring; mobile blijft scanbaar zonder horizontale overflow; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; tests of browser-smoke bewaken de aangepakte schermen; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Meerdere split-view hoofdwerkruimtes
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, context columns, styles, tests
+- **ADR Needed:** no
+- **Score:** 44
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
