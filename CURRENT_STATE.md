@@ -660,7 +660,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   upload-triage voor document, consult, beeld/embryo en lokale OCR/review, zodat de
   uploadflow eerst als keuzegrid leest en pas daarna als detailformulier. De centrale
   fertility timeline in Traject toont vóór filter, export en itemlijst een compacte
-  leesmodus voor gebeurtenissen, mijlpalen, contextcontrole en consult-export. Het
+  leesmodus voor gebeurtenissen, mijlpalen, contextcontrole en consult-export.
+  Dagadvies toont vóór de volledige aanbevelingenlijst een compacte actieplanner voor
+  leefstijl, voeding, supplementen en artscheck. Het
   startscherm opent zonder generieke werkruimte-context met een
   compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
   gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn

@@ -2288,6 +2288,20 @@ describe('app shell', () => {
     expect(html).toContain('data-daily-advice-snapshot-card="owners"');
     expect(html).toContain('Gesplitst per persoon en samen');
     expect(html).toContain('Controleer bron en formulering');
+    expect(html).toContain('data-daily-advice-action-planner="ready"');
+    expect(html).toContain('Kies eerst je adviesroute');
+    expect(html).toContain('data-daily-advice-action-lane="lifestyle"');
+    expect(html).toContain('data-daily-advice-action-lane="nutrition"');
+    expect(html).toContain('data-daily-advice-action-lane="supplements"');
+    expect(html).toContain('data-daily-advice-action-lane="clinician"');
+    expect(html).toContain('Leefstijl');
+    expect(html).toContain('Voeding');
+    expect(html).toContain('Supplementen');
+    expect(html).toContain('Artscheck');
+    expect(html).toContain('geen dosering, diagnose, behandelkeuzeadvies of trackingdata');
+    expect(html.indexOf('data-daily-advice-action-planner="ready"')).toBeLessThan(
+      html.indexOf('data-hub-detail-panel="daily-recommendation-list"'),
+    );
     expect(html).toContain('data-daily-advice-owner="vrouw"');
     expect(html).toContain('data-daily-advice-owner="man"');
     expect(html).toContain('data-daily-advice-owner="samen"');
@@ -2516,6 +2530,13 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-owner-grid {');
     expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
     expect(css).toContain('.daily-advice-owner-card {');
+    expect(css).toContain('.daily-advice-action-planner {');
+    expect(css).toContain('.daily-advice-action-planner__header {');
+    expect(css).toContain('.daily-advice-action-planner__lanes {');
+    expect(css).toContain('.daily-advice-action-planner__lane {');
+    expect(css).toContain('.daily-advice-action-planner__lane:hover,');
+    expect(css).toContain('.daily-advice-action-planner__lane:focus-visible {');
+    expect(css).toContain('.daily-advice-action-planner__lane em {');
     expect(css).toContain('.start-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.start-snapshot__card {');
@@ -2548,6 +2569,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('overflow: visible;');
     expect(mobileCss).toContain('.daily-advice-owner-card {');
+    expect(mobileCss).toContain('.daily-advice-action-planner {');
+    expect(mobileCss).toContain('.daily-advice-action-planner__lanes {');
+    expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
     expect(mobileCss).toContain('margin-top: 0;');
     expect(mobileCss).toContain('.start-task-routes {');
@@ -2695,6 +2719,11 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('data-daily-advice-snapshot-card="owners"');
     expect(emptyContextRecommendations).toContain('Controleer bron en formulering');
     expect(emptyContextRecommendations).toContain('Zet vragen klaar voor consult');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-action-planner="ready"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-action-lane="lifestyle"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-action-lane="nutrition"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-action-lane="supplements"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-action-lane="clinician"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-owner="vrouw"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-owner="man"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-owner="samen"');

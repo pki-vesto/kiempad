@@ -4449,6 +4449,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2287
 - **Status:** ☑ done
 
+### G1257 — dagadvies-actieplanner toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Dagadvies heeft al owner-kaarten en een snapshot, maar de volledige aanbevelingen blijven inhoudelijk vooral als lijst per eigenaar openen.
+- **User Impact:** Gebruikers moeten nog door aanbevelingskaarten scannen om leefstijl, voeding, supplementen en artscheck van elkaar te scheiden.
+- **Desired Outcome:** Toon vóór de volledige aanbevelingenlijst een compacte actieplanner met vier taaklanes voor leefstijl, voeding, supplementen en artscheck.
+- **User Value:** Gebruikers kiezen eerst het type dagadvies dat zij willen afhandelen en ervaren aanbevelingen meer als rustige controleruimte dan als lijst.
+- **Acceptance Criteria:** Start/dagadvies toont `data-daily-advice-action-planner="ready"` vóór de aanbevelingen-disclosure; lanes linken naar bestaande aanbevelingenroute en vragenroute; bestaande owner-werkbank, snapshot, aanbevelingenlijst, form-id's, data-hooks en actieformulieren blijven intact; desktop gebruikt een compacte vierkoloms grid en mobiel een swipebare keuzerij; routeflow-smoke bewaakt de planner op desktop en mobiel; geen medische payload, dosering, behandelkeuzeadvies, trackingdata of secrets wordt toegevoegd.
+- **Affected Screens:** Start, Dagadvies, Vragen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily recommendations UI, recommendation components, routeflow smoke, app shell tests
+- **ADR Needed:** no
+- **Score:** 16
+- **GitHub Issue:** #2289
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
