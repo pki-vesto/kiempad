@@ -3,11 +3,14 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type AppShellState,
   DISCLAIMER,
+  normalizeBackupRoute,
   normalizeDecisionRoute,
   normalizeDossierRoute,
+  normalizeEventLogRoute,
   normalizeFinanceRoute,
   normalizeKnowledgeRoute,
   normalizeMedicationRoute,
+  normalizeNotificationRoute,
   normalizeQuestionRoute,
   normalizeScheduleRoute,
   normalizeScreenId,
@@ -1692,6 +1695,15 @@ describe('app shell', () => {
     expect(normalizeScreenId('#kosten?route=vergoeding')).toBe('kosten');
     expect(normalizeFinanceRoute('#kosten?route=vergoeding')).toBe('vergoeding');
     expect(normalizeFinanceRoute('#kosten?route=bestaat-niet')).toBe('overzicht');
+    expect(normalizeScreenId('#logboek?route=privacy')).toBe('logboek');
+    expect(normalizeEventLogRoute('#logboek?route=privacy')).toBe('privacy');
+    expect(normalizeEventLogRoute('#logboek?route=bestaat-niet')).toBe('overzicht');
+    expect(normalizeScreenId('#backup?route=import')).toBe('backup');
+    expect(normalizeBackupRoute('#backup?route=import')).toBe('import');
+    expect(normalizeBackupRoute('#backup?route=bestaat-niet')).toBe('controleren');
+    expect(normalizeScreenId('#herinneringen?route=plannen')).toBe('herinneringen');
+    expect(normalizeNotificationRoute('#herinneringen?route=plannen')).toBe('plannen');
+    expect(normalizeNotificationRoute('#herinneringen?route=bestaat-niet')).toBe('status');
     expect(normalizeScreenId('#/bestaat-niet')).toBe('start');
   });
 
@@ -4088,13 +4100,13 @@ describe('app shell', () => {
     expect(html).toContain('href="#herinneringen-route-status"');
     expect(html).toContain('href="#herinneringen-route-privacy"');
     expect(html).toContain('href="#herinneringen-route-komend"');
-    expect(html).toContain('class="notification-task-routes"');
+    expect(html).toContain('class="notification-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Herinneringen taakroutes"');
     expect(html).toContain('data-notification-task-routes="ready"');
-    expect(html).toContain('href="#herinneringen-route-status"');
-    expect(html).toContain('href="#herinneringen-route-privacy"');
-    expect(html).toContain('href="#herinneringen-route-plannen"');
-    expect(html).toContain('href="#herinneringen-route-komend"');
+    expect(html).toContain('href="#herinneringen?route=status"');
+    expect(html).toContain('href="#herinneringen?route=privacy"');
+    expect(html).toContain('href="#herinneringen?route=plannen"');
+    expect(html).toContain('href="#herinneringen?route=komend"');
     expect(html).toContain('id="herinneringen-route-status"');
     expect(html).toContain('data-notification-route="status"');
     expect(html).toContain('id="herinneringen-route-privacy"');
@@ -35820,13 +35832,13 @@ describe('app shell', () => {
     expect(html).toContain('href="#backup-route-controleren"');
     expect(html).toContain('href="#backup-route-export"');
     expect(html).toContain('href="#backup-route-herstel"');
-    expect(html).toContain('class="backup-task-routes"');
+    expect(html).toContain('class="backup-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Back-up taakroutes"');
     expect(html).toContain('data-backup-task-routes="ready"');
-    expect(html).toContain('href="#backup-route-controleren"');
-    expect(html).toContain('href="#backup-route-export"');
-    expect(html).toContain('href="#backup-route-import"');
-    expect(html).toContain('href="#backup-route-herstel"');
+    expect(html).toContain('href="#backup?route=controleren"');
+    expect(html).toContain('href="#backup?route=export"');
+    expect(html).toContain('href="#backup?route=import"');
+    expect(html).toContain('href="#backup?route=herstel"');
     expect(html).toContain('id="backup-route-controleren"');
     expect(html).toContain('data-backup-route="controleren"');
     expect(html).toContain('id="backup-route-export"');
@@ -36302,13 +36314,13 @@ describe('app shell', () => {
     expect(html).toContain('href="#logboek-route-overzicht"');
     expect(html).toContain('href="#logboek-route-recent"');
     expect(html).toContain('href="#logboek-route-privacy"');
-    expect(html).toContain('class="eventlog-task-routes"');
+    expect(html).toContain('class="eventlog-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Logboek taakroutes"');
     expect(html).toContain('data-eventlog-task-routes="ready"');
-    expect(html).toContain('href="#logboek-route-overzicht"');
-    expect(html).toContain('href="#logboek-route-recent"');
-    expect(html).toContain('href="#logboek-route-categorieen"');
-    expect(html).toContain('href="#logboek-route-privacy"');
+    expect(html).toContain('href="#logboek?route=overzicht"');
+    expect(html).toContain('href="#logboek?route=recent"');
+    expect(html).toContain('href="#logboek?route=categorieen"');
+    expect(html).toContain('href="#logboek?route=privacy"');
     expect(html).toContain('id="logboek-route-overzicht"');
     expect(html).toContain('data-eventlog-route="overzicht"');
     expect(html).toContain('id="logboek-route-recent"');
@@ -36607,6 +36619,15 @@ describe('app shell', () => {
       'kosten',
       makeStartState({ activeFinanceRoute: 'vergoeding' }),
     );
+    const logboekHtml = renderAppShell(
+      'logboek',
+      makeStartState({ activeEventLogRoute: 'privacy' }),
+    );
+    const backupHtml = renderAppShell('backup', makeStartState({ activeBackupRoute: 'import' }));
+    const herinneringenHtml = renderAppShell(
+      'herinneringen',
+      makeStartState({ activeNotificationRoute: 'plannen' }),
+    );
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
@@ -36620,6 +36641,9 @@ describe('app shell', () => {
       ['wellbeing', welzijnHtml],
       ['decision', afwegingenHtml],
       ['finance', kostenHtml],
+      ['eventlog', logboekHtml],
+      ['backup', backupHtml],
+      ['notification', herinneringenHtml],
     ] as const) {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
@@ -36665,6 +36689,21 @@ describe('app shell', () => {
     expect(kostenHtml).toContain('data-finance-workspace-context="metrics"');
     expect(kostenHtml).toContain(
       'data-finance-route="vergoeding" data-finance-route-state="active"',
+    );
+    expect(logboekHtml).toContain('class="domain-split-workspace eventlog-split-workspace"');
+    expect(logboekHtml).toContain('data-eventlog-workspace-context="metrics"');
+    expect(logboekHtml).toContain(
+      'data-eventlog-route="privacy" data-eventlog-route-state="active"',
+    );
+    expect(backupHtml).toContain('class="domain-split-workspace backup-split-workspace"');
+    expect(backupHtml).toContain('data-backup-workspace-context="metrics"');
+    expect(backupHtml).toContain('data-backup-route="import" data-backup-route-state="active"');
+    expect(herinneringenHtml).toContain(
+      'class="domain-split-workspace notification-split-workspace"',
+    );
+    expect(herinneringenHtml).toContain('data-notification-workspace-context="metrics"');
+    expect(herinneringenHtml).toContain(
+      'data-notification-route="plannen" data-notification-route-state="active"',
     );
 
     expect(css).toContain('.domain-split-workspace {');

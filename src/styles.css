@@ -3239,6 +3239,12 @@ h2 {
   scroll-margin-top: 84px;
 }
 
+.backup-route-section[hidden],
+.notification-route-section[hidden],
+.eventlog-route-section[hidden] {
+  display: none;
+}
+
 .eventlog-route-section__header {
   display: grid;
   gap: 4px;

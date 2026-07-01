@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1028 |
+| ☑ klaar | 1029 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1227** |
+| **Totaal** | **1228** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1389,13 +1389,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1224 | Premium Claude Design UI: domeinschermen omzetten naar split-view werkruimtes | P1 | F5 | ☑ |
 | G1225 | Premium Claude Design UI: split-view werkruimtes uitbreiden naar Traject en Medicatie | P1 | F5 | ☑ |
 | G1226 | Premium Claude Design UI: split-view werkruimtes uitbreiden naar inzicht- en beheerschermen | P1 | F5 | ☑ |
-| G1227 | Premium Claude Design UI: split-view werkruimtes afronden voor Logboek Herinneringen en Back-up | P1 | F5 | ☐ |
+| G1227 | Premium Claude Design UI: split-view werkruimtes afronden voor Logboek Herinneringen en Back-up | P1 | F5 | ☑ |
+| G1228 | Premium Claude Design UI: split-view werkruimtes visueel verfijnen en smoke automatiseren | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1227** (id's G001 t/m G1227, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1228** (id's G001 t/m G1228, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

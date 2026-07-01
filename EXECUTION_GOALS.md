@@ -3974,6 +3974,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route workspaces, command routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 45
+- **Status:** ☑ done
+
+### G1228 — split-view werkruimtes visueel verfijnen en smoke automatiseren
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Alle hoofdwerkruimtes gebruiken nu split-view, maar visuele polish en browser-smoke dekking zijn nog verspreid over losse controles.
+- **User Impact:** Gebruikers kunnen kleine inconsistenties in rail-spacing, actieve route-affordance of contextkolomritme ervaren als schermen later afzonderlijk wijzigen.
+- **Desired Outcome:** Verfijn de complete split-view werkruimtearchitectuur en maak de browser-smoke herhaalbaar over alle split-view schermen.
+- **User Value:** Kiempad voelt consistenter en regressies in de premium werkruimte-ervaring worden sneller gevonden.
+- **Acceptance Criteria:** Alle split-view schermen hebben consistente actieve route-affordance, rail-spacing en contextkolomritme; desktop en mobiel blijven vrij van horizontale overflow; een herhaalbare smoke of testhelper controleert minimaal Dossier, Agenda, Vragen, Traject, Medicatie, Kennis, Welzijn, Afwegingen, Kosten, Logboek, Herinneringen en Back-up; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Alle split-view hoofdwerkruimtes
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route workspaces, Playwright/browser smoke, styles, tests
+- **ADR Needed:** no
+- **Score:** 45
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
