@@ -2017,6 +2017,60 @@ h2 {
   color: var(--category-strong);
 }
 
+.daily-advice-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.daily-advice-snapshot__card {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 82%, white 18%);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgba(69, 52, 38, 0.06);
+}
+
+.daily-advice-snapshot__card:hover,
+.daily-advice-snapshot__card:focus-visible {
+  border-color: var(--category);
+  background: color-mix(in srgb, var(--category) 8%, var(--surface) 92%);
+}
+
+.daily-advice-snapshot__card span,
+.daily-advice-snapshot__card strong,
+.daily-advice-snapshot__card small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.daily-advice-snapshot__card span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.daily-advice-snapshot__card strong {
+  color: var(--category-strong);
+  font-size: 0.95rem;
+}
+
+.daily-advice-snapshot__card small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
 .daily-advice-owner-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -7286,6 +7340,25 @@ a.action-card:active {
 
   .daily-advice-workbench__summary {
     justify-content: start;
+  }
+
+  .daily-advice-snapshot {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .daily-advice-snapshot::-webkit-scrollbar {
+    display: none;
+  }
+
+  .daily-advice-snapshot__card {
+    flex: 0 0 min(218px, 74vw);
+    padding: 9px;
+    scroll-snap-align: start;
   }
 
   .daily-advice-owner-grid {

@@ -726,6 +726,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   openen.
   De dossierwerkbank heeft nu een dossierscan voor upload/review, zoeken,
   beelden/embryo's en tijdlijn voordat de taakroutes en detailpanelen openen.
+  De dagadvieswerkbank heeft nu een dagadvies-scan voor vandaag, review,
+  artscheck en vrouw/man/samen-verdeling voordat eigenaar-kaarten of de volledige
+  aanbevelingslijst openen.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen
@@ -741,7 +744,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1247: consultkaart browser-evidence uitbreiden met gevulde fixture.
+1. UI Improvement Evolution voortzetten met grotere, direct zichtbare eerste-viewport verbeteringen per kernroute in plaats van alleen smalle detailverdichting.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

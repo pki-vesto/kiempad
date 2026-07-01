@@ -4364,6 +4364,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2277
 - **Status:** ☑ done
 
+### G1252 — dagadvies-scan in advieswerkbank toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De dagadviesroute heeft al eigenaar-kaarten en een ingeklapte lijst, maar mist nog een eerste scanlaag voor totaal, review, artscheck en eigenaarverdeling.
+- **User Impact:** Gebruikers zien nog snel een route met kaarten en daarna een lange aanbevelingslijst, zonder vooraf te begrijpen wat vandaag aandacht vraagt.
+- **Desired Outcome:** Voeg boven de eigenaar-kaarten een compacte dagadvies-scan toe met vier responsieve tegels voor vandaag, review, artscheck en eigenaars.
+- **User Value:** Dagadvies voelt meer als een controleruimte met snelle triage en minder als een lijst aanbevelingen die je moet openen om context te krijgen.
+- **Acceptance Criteria:** Start/Dagadvies toont `data-daily-advice-snapshot="ready"` met kaarten voor today, review, artscheck en owners; desktop toont vier tegels, mobiel een swipebare snaprij; bestaande eigenaar-kaarten, aanbevelingslijst, form-id's, data-hooks en route-ankers blijven werken; geen medisch advies, dosering, kansclaim, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Start, Dagadvies, Vragen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Daily advice workbench, recommendation route, CSS, app shell tests
+- **ADR Needed:** no
+- **Score:** 21
+- **GitHub Issue:** #2279
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
