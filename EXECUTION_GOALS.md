@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1276 — Premium Claude Design UI: backup focus-shell bundelen
+
+- **Epic:** Reliability & Operations
+- **Problem:** Back-up had een veiligheidswerkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor status, export, import en herstel minder als één veiligheidsruimte voelden.
+- **Desired Outcome:** Bundel de back-upwerkbank en Back-up split-workspace in één `backup-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker controleert eerst veiligheid en opent daarna gericht export, import of herstel zonder door alle back-up- en syncpanelen tegelijk te werken.
+- **Acceptance Criteria:** Back-up rendert `data-backup-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; encrypted export/import, syncbord, WebAuthn-herstel en privacy states blijven bereikbaar; mobiel verbergt redundante globale context boven Back-up; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 97
+- **Status:** ☑ klaar
+- **Issue:** #2327
+
 ### G1275 — Premium Claude Design UI: finance focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use

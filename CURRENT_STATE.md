@@ -287,6 +287,10 @@
   split-workspace in één `finance-focus-shell` met workbench- en workspace-regio's.
   Totalen, vergoeding, toevoegen en historie starten als één administratieruimte
   zonder financieel advies of polisinterpretatie.
+- **G1276 Backup focus-shell:** Back-up bundelt de veiligheidswerkbank en
+  split-workspace in één `backup-focus-shell` met workbench- en workspace-regio's.
+  Status, encrypted export, import en herstelopties starten als één veiligheidsruimte
+  zonder dossierinhoud of plaintext payloads.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

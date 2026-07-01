@@ -1857,6 +1857,11 @@ describe('app shell', () => {
     expect(css).toContain('.finance-focus-shell__body {');
     expect(css).toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
     expect(css).toContain('.finance-focus-shell__workspace {');
+    expect(css).toContain('.backup-focus-shell {');
+    expect(css).toContain('.backup-focus-shell__header {');
+    expect(css).toContain('.backup-focus-shell__body {');
+    expect(css).toContain('.backup-focus-shell__workbench > .backup-management-workbench {');
+    expect(css).toContain('.backup-focus-shell__workspace {');
     expect(css).toContain('.management-workbench__header {');
     expect(css).toContain('.management-workbench__grid {');
     expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
@@ -1937,6 +1942,13 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.finance-focus-shell {');
     expect(mobileCss).toContain('.finance-focus-shell__body {');
     expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.content:has([data-backup-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain('.content:has([data-backup-focus-shell="ready"]) > .page-header {');
+    expect(mobileCss).toContain('.backup-focus-shell {');
+    expect(mobileCss).toContain('.backup-focus-shell__body {');
+    expect(mobileCss).toContain('.backup-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain(
       '.content:has([data-schedule-focus-shell="ready"]) > .workspace-map,',
     );
@@ -36627,6 +36639,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Back-up &amp; import');
     expect(html).toContain('class="section-stack backup-command-layout"');
+    expect(html).toContain('class="backup-focus-shell"');
+    expect(html).toContain('data-backup-focus-shell="ready"');
+    expect(html).toContain('Eerst veiligheid controleren, daarna export of herstel openen');
+    expect(html).toContain('data-backup-focus-region="workbench"');
+    expect(html).toContain('data-backup-focus-region="workspace"');
     expect(html).toContain(
       '<section class="management-workbench backup-management-workbench" aria-label="Veiligheidswerkbank" data-backup-first-viewport="management-workbench">',
     );
