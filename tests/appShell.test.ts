@@ -1500,15 +1500,12 @@ function extractStatusFeedback(html: string, kind: string): string {
 
 function extractBackupImportPrivacyZone(html: string): string {
   const exportStart = html.indexOf('<section id="backup-route-export"');
-  const exportEnd = html.indexOf('</section>', exportStart);
   const importStart = html.indexOf('<section id="backup-route-import"');
-  const importEnd = html.indexOf('</section>', importStart);
-  if (exportStart < 0 || exportEnd < 0 || importStart < 0 || importEnd < 0) {
+  const herstelStart = html.indexOf('<section id="backup-route-herstel"');
+  if (exportStart < 0 || importStart < 0 || herstelStart < 0) {
     throw new Error('Back-up/import privacyzone ontbreekt.');
   }
-  return `${html.slice(exportStart, exportEnd + '</section>'.length)} ${html.slice(importStart, importEnd + '</section>'.length)}`
-    .replace(/\s+/g, ' ')
-    .trim();
+  return html.slice(exportStart, herstelStart).replace(/\s+/g, ' ').trim();
 }
 
 function extractCentralSyncFeedback(html: string): string {
@@ -35486,6 +35483,18 @@ describe('app shell', () => {
     expect(html).toContain('data-finance-route="vergoeding"');
     expect(html).toContain('id="kosten-route-historie"');
     expect(html).toContain('data-finance-route="historie"');
+    expect(html).toContain('aria-label="Kosten overzicht route-samenvatting"');
+    expect(html).toContain('data-finance-route-summary="overzicht"');
+    expect(html).toContain('Eerst totalen scannen');
+    expect(html).toContain('aria-label="Kosten toevoegen route-samenvatting"');
+    expect(html).toContain('data-finance-route-summary="toevoegen"');
+    expect(html).toContain('Nieuwe kostenpost toevoegen zonder historie erboven');
+    expect(html).toContain('aria-label="Kosten vergoeding route-samenvatting"');
+    expect(html).toContain('data-finance-route-summary="vergoeding"');
+    expect(html).toContain('Eigen risico en poliscontext openen');
+    expect(html).toContain('aria-label="Kosten historie route-samenvatting"');
+    expect(html).toContain('data-finance-route-summary="historie"');
+    expect(html).toContain('Kostenhistorie en bewerken openen');
     expect(html).toContain('Lokale kostenbibliotheek');
     expect(html).toContain('Vergoeding en eigen risico');
     expect(html).toContain('Kostenhistorie');
@@ -35793,6 +35802,19 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-route="import"');
     expect(html).toContain('id="backup-route-herstel"');
     expect(html).toContain('data-backup-route="herstel"');
+    expect(html).toContain('aria-label="Back-up controleren route-samenvatting"');
+    expect(html).toContain('data-backup-route-summary="controleren"');
+    expect(html).toContain('Syncstatus en back-upherinnering openen');
+    expect(html).toContain('aria-label="Back-up export route-samenvatting"');
+    expect(html).toContain('data-backup-route-summary="export"');
+    expect(html).toContain('Versleutelde back-up export openen');
+    expect(html).toContain('aria-label="Back-up import route-samenvatting"');
+    expect(html).toContain('data-backup-route-summary="import"');
+    expect(html).toContain('Back-up importformulier openen');
+    expect(html).toContain('Import- en exportmeldingen openen');
+    expect(html).toContain('aria-label="Back-up herstel route-samenvatting"');
+    expect(html).toContain('data-backup-route-summary="herstel"');
+    expect(html).toContain('Biometrie en herstelcontext openen');
     expect(html).toContain('Back-upstatus controleren');
     expect(html).toContain('Encrypted export maken');
     expect(html).toContain('Versleutelde data importeren');
@@ -36448,17 +36470,23 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.dossier-route-section__header,');
     expect(mobileCss).toContain('.knowledge-route-section__header,');
     expect(mobileCss).toContain('.wellbeing-route-section__header,');
-    expect(mobileCss).toContain('.decision-route-section__header {');
+    expect(mobileCss).toContain('.decision-route-section__header,');
+    expect(mobileCss).toContain('.finance-route-section__header,');
+    expect(mobileCss).toContain('.backup-route-section__header {');
     expect(mobileCss).toContain('clip-path: inset(50%);');
     expect(mobileCss).toContain('.command-route-section__header > p:last-child,');
     expect(mobileCss).toContain('.dossier-route-section__header > p:last-child,');
     expect(mobileCss).toContain('.knowledge-route-section__header > p:last-child,');
     expect(mobileCss).toContain('.wellbeing-route-section__header > p:last-child,');
-    expect(mobileCss).toContain('.decision-route-section__header > p:last-child');
+    expect(mobileCss).toContain('.decision-route-section__header > p:last-child,');
+    expect(mobileCss).toContain('.finance-route-section__header > p:last-child,');
+    expect(mobileCss).toContain('.backup-route-section__header > p:last-child');
     expect(mobileCss).toContain('.dossier-route-section .kp-disclosure,');
     expect(mobileCss).toContain('.knowledge-route-section .kp-disclosure,');
     expect(mobileCss).toContain('.wellbeing-route-section .kp-disclosure,');
-    expect(mobileCss).toContain('.decision-route-section .kp-disclosure {');
+    expect(mobileCss).toContain('.decision-route-section .kp-disclosure,');
+    expect(mobileCss).toContain('.finance-route-section .kp-disclosure,');
+    expect(mobileCss).toContain('.backup-route-section .kp-disclosure {');
     expect(mobileCss).toContain('.command-route-section .data-form {');
     expect(mobileCss).toContain('gap: 10px;');
     expect(mobileCss).toContain('.command-route-section .command-form-section {');

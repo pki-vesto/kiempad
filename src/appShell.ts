@@ -1756,12 +1756,28 @@ function renderBackupScreen(state: AppShellState): string {
           <h2 id="backup-route-controleren-title">Back-upstatus controleren</h2>
           <p>Controleer herinnering en centrale syncstatus zonder dossierinhoud te tonen.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Back-uproute',
+          title: 'Eerst status controleren, details pas openen',
+          detail:
+            'Syncfeedback en back-upherinnering blijven beschikbaar zonder de veiligheidsroute als lange controlelijst te tonen.',
+          primary: { href: '#backup-control-status-disclosure', label: 'Status openen' },
+          secondary: { href: '#backup-route-export', label: 'Export' },
+          status: reminder.titel,
+          ariaLabel: 'Back-up controleren route-samenvatting',
+          data: { 'backup-route-summary': 'controleren' },
+        })}
+        <details id="backup-control-status-disclosure" class="kp-disclosure" data-backup-disclosure="controleren">
+          <summary class="kp-disclosure__summary">Syncstatus en back-upherinnering openen</summary>
+          <div class="kp-disclosure__body">
         ${renderCentralSyncFeedback(state)}
         <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
           <h2>${escapeHtml(reminder.titel)}</h2>
           <p>${escapeHtml(reminder.tekst)}</p>
           ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
         </section>
+          </div>
+        </details>
       </section>`,
       `<section id="backup-route-export" class="backup-route-section" aria-labelledby="backup-route-export-title" data-backup-route="export">
         <header class="backup-route-section__header">
@@ -1769,12 +1785,33 @@ function renderBackupScreen(state: AppShellState): string {
           <h2 id="backup-route-export-title">Encrypted export maken</h2>
           <p>Download alleen versleutelde back-up- of recordpakketten voor eigen beheer.</p>
         </header>
-        <h2>Versleutelde export</h2>
-        <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
-        <p class="small-print">${backupCopy}</p>
-        <h2 class="section-subheading">${syncTitle}</h2>
-        <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
-        <p class="small-print">${syncCopy}</p>
+        ${commandRouteSummary({
+          eyebrow: 'Back-uproute',
+          title: 'Export bewust starten',
+          detail:
+            'Back-up en recordpakket staan elk achter een eigen exportpaneel, met copy over encrypted inhoud zichtbaar bij openen.',
+          primary: { href: '#backup-export-vault-disclosure', label: 'Back-up export' },
+          secondary: { href: '#backup-export-sync-disclosure', label: syncTitle },
+          status: central ? 'Centraal encrypted' : 'Legacy encrypted',
+          ariaLabel: 'Back-up export route-samenvatting',
+          data: { 'backup-route-summary': 'export' },
+        })}
+        <details id="backup-export-vault-disclosure" class="kp-disclosure" data-backup-disclosure="export-backup">
+          <summary class="kp-disclosure__summary">Versleutelde back-up export openen</summary>
+          <div class="kp-disclosure__body">
+            <h2>Versleutelde export</h2>
+            <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
+            <p class="small-print">${backupCopy}</p>
+          </div>
+        </details>
+        <details id="backup-export-sync-disclosure" class="kp-disclosure" data-backup-disclosure="export-sync">
+          <summary class="kp-disclosure__summary">${escapeHtml(syncTitle)} openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 class="section-subheading">${syncTitle}</h2>
+            <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
+            <p class="small-print">${syncCopy}</p>
+          </div>
+        </details>
       </section>`,
       `<section id="backup-route-import" class="backup-route-section" aria-labelledby="backup-route-import-title" data-backup-route="import">
         <header class="backup-route-section__header">
@@ -1782,23 +1819,49 @@ function renderBackupScreen(state: AppShellState): string {
           <h2 id="backup-route-import-title">Versleutelde data importeren</h2>
           <p>Importeer alleen Kiempad-exporten of encrypted recordpakketten die je vertrouwt.</p>
         </header>
-        <h2>Import</h2>
-        <form id="import-backup-form" class="data-form" data-import-privacy-state="${central ? 'central-encrypted-backup' : 'legacy-encrypted-backup'}">
-          <label>
-            Kiempad-exportbestand
-            <input name="backupFile" type="file" accept=".kiempad-export,application/json" required />
-          </label>
-          <button type="submit">Importeer back-up</button>
-        </form>
-        <h2 class="section-subheading">${syncImportTitle}</h2>
-        <form id="import-sync-form" class="data-form" data-import-privacy-state="${central ? 'central-record-package' : 'legacy-sync-package'}">
-          <label>
-            ${syncImportLabel}
-            <input name="syncFile" type="file" accept=".kiempad-sync,application/json" required />
-          </label>
-          <button type="submit">${syncImportButton}</button>
-        </form>
-        ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
+        ${commandRouteSummary({
+          eyebrow: 'Back-uproute',
+          title: 'Import pas openen bij bewust herstel',
+          detail:
+            'Back-upimport en recordpakketimport blijven gescheiden zodat de route geen dubbele formulierstapel opent.',
+          primary: { href: '#backup-import-vault-disclosure', label: 'Back-up import' },
+          secondary: { href: '#backup-import-sync-disclosure', label: syncImportTitle },
+          status: state.backupError ? 'Check melding' : 'Klaar',
+          ariaLabel: 'Back-up import route-samenvatting',
+          data: { 'backup-route-summary': 'import' },
+        })}
+        <details id="backup-import-vault-disclosure" class="kp-disclosure" data-backup-disclosure="import-backup">
+          <summary class="kp-disclosure__summary">Back-up importformulier openen</summary>
+          <div class="kp-disclosure__body">
+            <h2>Import</h2>
+            <form id="import-backup-form" class="data-form" data-import-privacy-state="${central ? 'central-encrypted-backup' : 'legacy-encrypted-backup'}">
+              <label>
+                Kiempad-exportbestand
+                <input name="backupFile" type="file" accept=".kiempad-export,application/json" required />
+              </label>
+              <button type="submit">Importeer back-up</button>
+            </form>
+          </div>
+        </details>
+        <details id="backup-import-sync-disclosure" class="kp-disclosure" data-backup-disclosure="import-sync">
+          <summary class="kp-disclosure__summary">${escapeHtml(syncImportTitle)} formulier openen</summary>
+          <div class="kp-disclosure__body">
+            <h2 class="section-subheading">${syncImportTitle}</h2>
+            <form id="import-sync-form" class="data-form" data-import-privacy-state="${central ? 'central-record-package' : 'legacy-sync-package'}">
+              <label>
+                ${syncImportLabel}
+                <input name="syncFile" type="file" accept=".kiempad-sync,application/json" required />
+              </label>
+              <button type="submit">${syncImportButton}</button>
+            </form>
+          </div>
+        </details>
+        <details class="kp-disclosure" data-backup-disclosure="import-feedback"${state.backupStatus || state.backupError ? ' open' : ''}>
+          <summary class="kp-disclosure__summary">Import- en exportmeldingen openen</summary>
+          <div class="kp-disclosure__body">
+            ${renderStatusFeedback('backup', state.backupStatus, state.backupError)}
+          </div>
+        </details>
       </section>`,
       `<section id="backup-route-herstel" class="backup-route-section" aria-labelledby="backup-route-herstel-title" data-backup-route="herstel">
         <header class="backup-route-section__header">
@@ -1806,7 +1869,22 @@ function renderBackupScreen(state: AppShellState): string {
           <h2 id="backup-route-herstel-title">Toegang en herstel voorbereiden</h2>
           <p>Beheer optionele biometrie lokaal; herstelzin en versleutelde back-up blijven leidend.</p>
         </header>
-        ${renderWebAuthnSettings(state)}
+        ${commandRouteSummary({
+          eyebrow: 'Back-uproute',
+          title: 'Herstelopties rustig beheren',
+          detail:
+            'Biometrie blijft optioneel en lokaal; de volledige WebAuthn-context opent alleen wanneer je herstelinstellingen beheert.',
+          primary: { href: '#backup-recovery-webauthn-disclosure', label: 'Herstel openen' },
+          status: state.webAuthnStatus ? 'Biometrie gekoppeld' : 'Fallback actief',
+          ariaLabel: 'Back-up herstel route-samenvatting',
+          data: { 'backup-route-summary': 'herstel' },
+        })}
+        <details id="backup-recovery-webauthn-disclosure" class="kp-disclosure" data-backup-disclosure="herstel">
+          <summary class="kp-disclosure__summary">Biometrie en herstelcontext openen</summary>
+          <div class="kp-disclosure__body">
+            ${renderWebAuthnSettings(state)}
+          </div>
+        </details>
       </section>`,
     ],
     { className: 'backup-command-layout', ariaLabel: 'Back-up en import' },
@@ -10322,6 +10400,17 @@ function renderKostenScreen(state: AppShellState): string {
           <h2 id="kosten-route-overzicht-title">Lokale kostenbibliotheek</h2>
           <p>Bekijk totalen uit lokale invoer zonder financieel advies of polisinterpretatie.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Kostenroute',
+          title: 'Eerst totalen scannen',
+          detail:
+            'De belangrijkste bedragen blijven direct zichtbaar; detailhistorie en poliscontext staan in eigen routes.',
+          primary: { href: '#kosten-route-toevoegen', label: 'Post toevoegen' },
+          secondary: { href: '#kosten-route-historie', label: 'Historie' },
+          status: `${kosten.length} posten`,
+          ariaLabel: 'Kosten overzicht route-samenvatting',
+          data: { 'finance-route-summary': 'overzicht' },
+        })}
         <dl class="summary-list">
           <div><dt>Totaal</dt><dd>${formatEuro(overzicht.totaal)}</dd></div>
           <div><dt>Vergoed gemarkeerd</dt><dd>${formatEuro(overzicht.vergoed)}</dd></div>
@@ -10335,6 +10424,17 @@ function renderKostenScreen(state: AppShellState): string {
           <h2 id="kosten-route-toevoegen-title">Kostenpost toevoegen</h2>
           <p>Leg facturen of eigen betalingen vast met categorie en vergoedingstatus.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Kostenroute',
+          title: 'Nieuwe kostenpost toevoegen zonder historie erboven',
+          detail:
+            'Het invoerformulier blijft de primaire taak; bestaande kostenposten staan in de historieroute.',
+          primary: { href: '#kosten-form', label: 'Formulier' },
+          secondary: { href: '#kosten-route-overzicht', label: 'Overzicht' },
+          status: `${kosten.length} posten`,
+          ariaLabel: 'Kosten toevoegen route-samenvatting',
+          data: { 'finance-route-summary': 'toevoegen' },
+        })}
         ${disclosure({
           summary: 'Kostenpost toevoegen',
           open: kosten.length === 0,
@@ -10347,13 +10447,29 @@ function renderKostenScreen(state: AppShellState): string {
           <h2 id="kosten-route-vergoeding-title">Vergoeding en eigen risico</h2>
           <p>Controleer eigen-risicocontext en onbekende posten zonder financieel advies.</p>
         </header>
-        <dl class="summary-list">
-          <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
-          <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
-          <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
-          <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
-        </dl>
-        <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
+        ${commandRouteSummary({
+          eyebrow: 'Kostenroute',
+          title: 'Vergoedingscontext apart controleren',
+          detail:
+            'Eigen risico, onbekende posten en polisdisclaimer openen als controlepaneel, niet als lange startcontent.',
+          primary: { href: '#kosten-vergoeding-disclosure', label: 'Context openen' },
+          secondary: { href: '#kosten-route-historie', label: 'Onbekend checken' },
+          status: `${onbekendCount} onbekend`,
+          ariaLabel: 'Kosten vergoeding route-samenvatting',
+          data: { 'finance-route-summary': 'vergoeding' },
+        })}
+        <details id="kosten-vergoeding-disclosure" class="kp-disclosure" data-finance-disclosure="vergoeding">
+          <summary class="kp-disclosure__summary">Eigen risico en poliscontext openen</summary>
+          <div class="kp-disclosure__body">
+            <dl class="summary-list">
+              <div><dt>Eigen risico 2026 gebruikt</dt><dd>${formatEuro(overzicht.eigenRisicoGebruikt)}</dd></div>
+              <div><dt>Eigen risico 2026 resterend</dt><dd>${formatEuro(overzicht.eigenRisicoResterend)}</dd></div>
+              <div><dt>Boven eigen-risicogrens</dt><dd>${formatEuro(overzicht.eigenRisicoBovenGrens)}</dd></div>
+              <div><dt>Nog onbekend</dt><dd>${formatEuro(overzicht.onbekend)}</dd></div>
+            </dl>
+            <p class="small-print">Dit overzicht telt alleen wat lokaal is ingevoerd. Het verplichte eigen risico voor 2026 staat op €385. Dit is geen financieel advies; controleer altijd je eigen polis en verzekeraar.</p>
+          </div>
+        </details>
       </section>`,
       `<section id="kosten-route-historie" class="finance-route-section" aria-labelledby="kosten-route-historie-title" data-finance-route="historie">
         <header class="finance-route-section__header">
@@ -10361,11 +10477,27 @@ function renderKostenScreen(state: AppShellState): string {
           <h2 id="kosten-route-historie-title">Kostenhistorie</h2>
           <p>Bekijk en bewerk eerder vastgelegde kostenposten.</p>
         </header>
-        ${
-          kosten.length > 0
-            ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Kostenroute',
+          title: 'Historie pas openen om te bewerken',
+          detail:
+            'Eerdere kostenposten en bewerkformulieren staan achter één openactie zodat het scherm niet als facturenlijst start.',
+          primary: { href: '#kosten-historie-disclosure', label: 'Historie openen' },
+          secondary: { href: '#kosten-route-toevoegen', label: 'Toevoegen' },
+          status: `${kosten.length} posten`,
+          ariaLabel: 'Kosten historie route-samenvatting',
+          data: { 'finance-route-summary': 'historie' },
+        })}
+        <details id="kosten-historie-disclosure" class="kp-disclosure" data-finance-disclosure="historie">
+          <summary class="kp-disclosure__summary">Kostenhistorie en bewerken openen</summary>
+          <div class="kp-disclosure__body">
+            ${
+              kosten.length > 0
+                ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
+                : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>'
+            }
+          </div>
+        </details>
       </section>`,
     ],
     { className: 'finance-command-layout', ariaLabel: 'Kosten en vergoedingen' },
