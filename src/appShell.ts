@@ -17788,30 +17788,40 @@ function renderFertilityTimeline(
     : 'vanuit de legacy lokale encrypted dataset';
 
   return `
-    <section class="summary-panel embedded-summary" aria-label="Centrale fertility timeline" data-timeline-state="${timeline.items.length > 0 ? 'gevuld' : 'leeg'}">
+    <section class="summary-panel embedded-summary fertility-timeline-console" aria-label="Centrale fertility timeline" data-fertility-timeline-console="ready" data-timeline-state="${timeline.items.length > 0 ? 'gevuld' : 'leeg'}">
       <h2>Fertility timeline</h2>
       <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research ${bronBeschrijving}.</p>
-      ${renderFertilityTimelineReaderModes(timeline, Boolean(trajectExport))}
-      ${renderFertilityTimelineMobielOverzicht(timeline)}
-      ${renderFertilityTimelineFilterForm(filter)}
-      ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
-      ${renderFertilityTimelineMijlpalen(timeline)}
-      ${renderFertilityTimelineContextSignalen(timeline)}
-      ${
-        timeline.items.length > 0
-          ? timelineList({
-              id: 'fertility-timeline-items',
-              className: 'timeline-list fertility-timeline-list',
-              ariaLabel: 'Timeline-items',
-              data: {
-                'timeline-component': 'fertility-items',
-                'timeline-component-state': 'structured',
-              },
-              items: timeline.items.map(renderFertilityTimelineItem),
-            })
-          : '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
-      }
-      <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+      <div class="fertility-timeline-console__body">
+        <div class="fertility-timeline-console__reader" data-fertility-timeline-console-region="reader">
+          ${renderFertilityTimelineReaderModes(timeline, Boolean(trajectExport))}
+        </div>
+        <div class="fertility-timeline-console__controls" data-fertility-timeline-console-region="controls">
+          ${renderFertilityTimelineMobielOverzicht(timeline)}
+          ${renderFertilityTimelineFilterForm(filter)}
+          ${trajectExport ? renderFertilityTimelineTrajectExport(trajectExport) : ''}
+        </div>
+        <div class="fertility-timeline-console__insights" data-fertility-timeline-console-region="insights">
+          ${renderFertilityTimelineMijlpalen(timeline)}
+          ${renderFertilityTimelineContextSignalen(timeline)}
+        </div>
+        <div class="fertility-timeline-console__items" data-fertility-timeline-console-region="items">
+          ${
+            timeline.items.length > 0
+              ? timelineList({
+                  id: 'fertility-timeline-items',
+                  className: 'timeline-list fertility-timeline-list',
+                  ariaLabel: 'Timeline-items',
+                  data: {
+                    'timeline-component': 'fertility-items',
+                    'timeline-component-state': 'structured',
+                  },
+                  items: timeline.items.map(renderFertilityTimelineItem),
+                })
+              : '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
+          }
+          <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
+        </div>
+      </div>
     </section>
   `;
 }

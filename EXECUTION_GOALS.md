@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1297 — Premium Claude Design UI: Fertility Timeline als begrensde timeline-console
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De trajectcontext had al timeline-reader, filter, export en itemlijst, maar kon op desktop nog als reader/filter/lijst-stapeling lezen.
+- **Desired Outcome:** Maak Fertility Timeline op desktop een begrensde timeline-console met eigen werkvlakken voor reader, controls, insights en items.
+- **User Value:** De gebruiker begrijpt het volledige fertiliteitstraject vanuit één werkruimte zonder door één lange timelinepagina te hoeven werken.
+- **Acceptance Criteria:** Desktop timeline gebruikt grid-areas voor reader, controls, insights en items; controls/insights staan naast de itemlijst; regio's gebruiken `overflow-y: auto` en viewport-afhankelijke max-height; bestaande IDs zoals `timeline-filter-form` en `fertility-timeline-items` blijven intact; mobiel behoudt de éénkoloms flow; routeflow screenshot-smoke bewaakt de console-layout; app-shell tests bewaken het CSS-contract.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`, `tests/routeflowScreenshotSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2369
+
 ### G1296 — Premium Claude Design UI: Dossier uploadroute als begrensde upload-console
 
 - **Epic:** Onboarding & Daily Use

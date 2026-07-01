@@ -201,6 +201,11 @@ const targets = [
       '[data-treatment-focus-region="workspace"]',
       '#traject-route-context',
       '[data-fertility-timeline-reader="ready"]',
+      '[data-fertility-timeline-console="ready"]',
+      '[data-fertility-timeline-console-region="reader"]',
+      '[data-fertility-timeline-console-region="controls"]',
+      '[data-fertility-timeline-console-region="insights"]',
+      '[data-fertility-timeline-console-region="items"]',
       '[data-fertility-timeline-lane="events"]',
       '[data-fertility-timeline-lane="milestones"]',
       '[data-fertility-timeline-lane="context"]',
@@ -215,6 +220,7 @@ const targets = [
       '.fertility-timeline-reader__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
+    timelineConsole: true,
   },
   {
     screen: 'consult-upload',
@@ -626,6 +632,51 @@ async function assertRouteflows(browser, options) {
               };
             })()
           : null;
+        const timelineConsole = routeflow.timelineConsole
+          ? (() => {
+              const reader = document.querySelector(
+                '[data-fertility-timeline-console-region="reader"]',
+              );
+              const controls = document.querySelector(
+                '[data-fertility-timeline-console-region="controls"]',
+              );
+              const insights = document.querySelector(
+                '[data-fertility-timeline-console-region="insights"]',
+              );
+              const items = document.querySelector(
+                '[data-fertility-timeline-console-region="items"]',
+              );
+              const readerRect = reader?.getBoundingClientRect();
+              const controlsRect = controls?.getBoundingClientRect();
+              const insightsRect = insights?.getBoundingClientRect();
+              const itemsRect = items?.getBoundingClientRect();
+              const readerStyle = reader ? getComputedStyle(reader) : null;
+              const controlsStyle = controls ? getComputedStyle(controls) : null;
+              const insightsStyle = insights ? getComputedStyle(insights) : null;
+              const itemsStyle = items ? getComputedStyle(items) : null;
+              return {
+                readerVisible: Boolean(readerRect && readerRect.width > 0 && readerRect.height > 0),
+                controlsVisible: Boolean(
+                  controlsRect && controlsRect.width > 0 && controlsRect.height > 0,
+                ),
+                insightsVisible: Boolean(
+                  insightsRect && insightsRect.width > 0 && insightsRect.height > 0,
+                ),
+                itemsVisible: Boolean(itemsRect && itemsRect.width > 0 && itemsRect.height > 0),
+                readerTop: readerRect?.top ?? 0,
+                controlsTop: controlsRect?.top ?? 0,
+                insightsTop: insightsRect?.top ?? 0,
+                itemsTop: itemsRect?.top ?? 0,
+                controlsRight: controlsRect?.right ?? 0,
+                itemsLeft: itemsRect?.left ?? 0,
+                readerOverflowY: readerStyle?.overflowY ?? '',
+                controlsOverflowY: controlsStyle?.overflowY ?? '',
+                insightsOverflowY: insightsStyle?.overflowY ?? '',
+                itemsOverflowY: itemsStyle?.overflowY ?? '',
+                itemsMaxHeight: itemsStyle?.maxHeight ?? '',
+              };
+            })()
+          : null;
 
         return {
           rootVisible: Boolean(rootRect && rootRect.width > 0 && rootRect.height > 0),
@@ -639,6 +690,7 @@ async function assertRouteflows(browser, options) {
           startCommandCenter,
           dailyAdviceConsole,
           uploadConsole,
+          timelineConsole,
           inactiveLayouts,
           horizontalOverflow:
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
@@ -762,6 +814,26 @@ async function assertRouteflows(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${target.screen}: upload-console staat niet in begrensde werkvlakken (${JSON.stringify(evidence.uploadConsole)}).`,
+        );
+      }
+      if (
+        options.label === 'desktop' &&
+        evidence.timelineConsole &&
+        (!evidence.timelineConsole.readerVisible ||
+          !evidence.timelineConsole.controlsVisible ||
+          !evidence.timelineConsole.insightsVisible ||
+          !evidence.timelineConsole.itemsVisible ||
+          evidence.timelineConsole.controlsTop < evidence.timelineConsole.readerTop - 1 ||
+          evidence.timelineConsole.itemsTop < evidence.timelineConsole.readerTop - 1 ||
+          evidence.timelineConsole.itemsLeft < evidence.timelineConsole.controlsRight - 1 ||
+          evidence.timelineConsole.readerOverflowY !== 'auto' ||
+          evidence.timelineConsole.controlsOverflowY !== 'auto' ||
+          evidence.timelineConsole.insightsOverflowY !== 'auto' ||
+          evidence.timelineConsole.itemsOverflowY !== 'auto' ||
+          evidence.timelineConsole.itemsMaxHeight === 'none')
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: timeline-console staat niet in begrensde werkvlakken (${JSON.stringify(evidence.timelineConsole)}).`,
         );
       }
       const overflowingText = evidence.required.filter((item) => !item.textFits);

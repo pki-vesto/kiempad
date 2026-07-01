@@ -25,6 +25,11 @@ describe('routeflow screenshot smoke script', () => {
       'upload-console staat niet in begrensde werkvlakken',
     );
     expect(routeflowScreenshotSmokeScript).toContain('documentOverflowY');
+    expect(routeflowScreenshotSmokeScript).toContain('timelineConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'timeline-console staat niet in begrensde werkvlakken',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('itemsOverflowY');
 
     for (const route of [
       '#start',
@@ -94,6 +99,11 @@ describe('routeflow screenshot smoke script', () => {
       '[data-dossier-imaging-lane="embryos"]',
       '[data-dossier-imaging-lane="consults"]',
       '[data-fertility-timeline-reader="ready"]',
+      '[data-fertility-timeline-console="ready"]',
+      '[data-fertility-timeline-console-region="reader"]',
+      '[data-fertility-timeline-console-region="controls"]',
+      '[data-fertility-timeline-console-region="insights"]',
+      '[data-fertility-timeline-console-region="items"]',
       '[data-treatment-focus-region="workbench"]',
       '[data-treatment-focus-region="workspace"]',
       '[data-fertility-timeline-lane="events"]',
