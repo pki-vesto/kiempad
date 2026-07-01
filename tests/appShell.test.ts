@@ -3621,6 +3621,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Knowledge graph');
     const timelineReader = extractFertilityTimelineReader(html);
+    expect(html).toContain('class="treatment-focus-shell"');
+    expect(html).toContain('data-treatment-focus-shell="ready"');
+    expect(html).toContain('Eerst fase en tijdlijn lezen, daarna beheren');
+    expect(html).toContain('data-treatment-focus-region="workbench"');
+    expect(html).toContain('data-treatment-focus-region="workspace"');
     expect(html).toContain(
       '<section class="treatment-workbench" aria-label="Behandelwerkbank" data-treatment-first-viewport="workbench">',
     );
@@ -3775,7 +3780,19 @@ describe('app shell', () => {
 
   it('bewaakt de traject behandelwerkbank als eerste-viewport laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
+    expect(css).toContain('.treatment-focus-shell {');
+    expect(css).toContain('.treatment-focus-shell__header {');
+    expect(css).toContain('.treatment-focus-shell__body {');
+    expect(css).toContain('grid-template-columns: minmax(300px, 0.34fr) minmax(0, 1fr);');
+    expect(css).toContain('.treatment-focus-shell__workbench > .treatment-workbench {');
+    expect(css).toContain('.treatment-focus-shell__workbench .treatment-workbench__grid {');
+    expect(css).toContain('.treatment-focus-shell__workbench .treatment-snapshot {');
+    expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('.treatment-workbench {');
     expect(css).toContain('[data-treatment-first-viewport="workbench"]');
     expect(css).toContain('.treatment-workbench__header {');
@@ -3799,6 +3816,17 @@ describe('app shell', () => {
     expect(css).toContain('.fertility-timeline-reader__lane:focus-visible {');
     expect(css).toContain('.fertility-timeline-reader__lane em {');
     expect(css).toContain('@media (max-width: 720px)');
+    expect(mobileCss).toContain(
+      '.content:has([data-treatment-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-treatment-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.treatment-focus-shell {');
+    expect(mobileCss).toContain('box-shadow: none;');
+    expect(mobileCss).toContain('.treatment-focus-shell__body {');
+    expect(mobileCss).toContain('.treatment-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('grid-column: auto;');
     expect(css).toContain('.fertility-timeline-reader__lanes {');
     expect(css).toContain('scroll-snap-type: x proximity;');
     expect(css).toContain('flex: 0 0 min(236px, 78vw);');

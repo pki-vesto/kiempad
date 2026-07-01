@@ -103,12 +103,15 @@ const targets = [
   {
     screen: 'treatment-context',
     hash: '#traject?route=context',
-    rootSelector: '#traject-route-context',
+    rootSelector: '[data-treatment-focus-shell="ready"]',
     expectedText: 'Timeline en graphcontext',
     activeRouteSelector: '[data-treatment-route="context"][data-treatment-route-state="active"]',
     inactiveRouteSelector: '[data-treatment-route-state="inactive"]',
     openSelectors: ['#traject-route-context details'],
     requiredSelectors: [
+      '[data-treatment-focus-region="workbench"]',
+      '[data-treatment-focus-region="workspace"]',
+      '#traject-route-context',
       '[data-fertility-timeline-reader="ready"]',
       '[data-fertility-timeline-lane="events"]',
       '[data-fertility-timeline-lane="milestones"]',

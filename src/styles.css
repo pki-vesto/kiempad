@@ -5844,6 +5844,82 @@ h2 {
   min-width: 0;
 }
 
+.treatment-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.treatment-focus-shell__header {
+  display: grid;
+  max-width: 820px;
+  gap: 5px;
+}
+
+.treatment-focus-shell__header h2,
+.treatment-focus-shell__header p {
+  margin: 0;
+}
+
+.treatment-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.treatment-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.treatment-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.34fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.treatment-focus-shell__workbench,
+.treatment-focus-shell__workspace {
+  min-width: 0;
+}
+
+.treatment-focus-shell__workbench > .treatment-workbench {
+  width: 100%;
+}
+
+.treatment-focus-shell__workbench .treatment-workbench__grid {
+  grid-template-columns: 1fr;
+}
+
+.treatment-focus-shell__workbench .treatment-snapshot {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.treatment-focus-shell__workspace .domain-split-workspace {
+  grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);
+}
+
+.treatment-focus-shell__workspace .domain-split-workspace__context {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.treatment-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
+  grid-template-columns: 1fr;
+}
+
+.treatment-focus-shell__workspace .domain-split-workspace__rail .command-task-route {
+  padding: 7px 8px;
+}
+
 @media (max-width: 860px) {
   .treatment-snapshot {
     display: flex;
@@ -9846,6 +9922,44 @@ a.action-card:active {
 
   .knowledge-focus-shell__workspace .domain-split-workspace__context {
     grid-column: auto;
+  }
+
+  .content:has([data-treatment-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-treatment-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
+  .treatment-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .treatment-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .treatment-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .treatment-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .treatment-focus-shell__workspace .domain-split-workspace,
+  .treatment-focus-shell__workspace .domain-split-workspace__context {
+    grid-template-columns: 1fr;
+  }
+
+  .treatment-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
+  }
+
+  .treatment-focus-shell__workbench .treatment-snapshot {
+    display: flex;
   }
 
   .workspace-context-signals {
