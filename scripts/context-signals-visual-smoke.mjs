@@ -17,16 +17,34 @@ const targets = [
     microstate: 'dossier-imaging',
   },
   {
+    screen: 'agenda',
+    hash: '#agenda?route=plannen',
+    signal: 'schedule',
+    microstate: 'schedule-plannen',
+  },
+  {
     screen: 'traject',
     hash: '#traject?route=fasen',
     signal: 'treatment',
     microstate: 'treatment-fasen',
   },
   {
+    screen: 'kennis',
+    hash: '#kennis?route=ai',
+    signal: 'knowledge',
+    microstate: 'knowledge-ai',
+  },
+  {
     screen: 'welzijn',
     hash: '#welzijn?route=history',
     signal: 'wellbeing',
     microstate: 'wellbeing-history',
+  },
+  {
+    screen: 'afwegingen',
+    hash: '#afwegingen?route=choice',
+    signal: 'decision',
+    microstate: 'decision-choice',
   },
   {
     screen: 'kosten',
@@ -39,6 +57,12 @@ const targets = [
     hash: '#logboek?route=privacy',
     signal: 'eventlog',
     microstate: 'eventlog-privacy',
+  },
+  {
+    screen: 'herinneringen',
+    hash: '#herinneringen?route=plannen',
+    signal: 'notification',
+    microstate: 'notification-plannen',
   },
   {
     screen: 'backup',

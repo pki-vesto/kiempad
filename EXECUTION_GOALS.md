@@ -4086,6 +4086,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, context signal state, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 39
+- **Status:** ☑ done
+
+### G1235 — contextkolommen uitbreiden met route-eigen volgende-actie compactheid
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Alle contextkolommen tonen nu route-specifieke microstates, maar de eerste vervolgstap in de rechterkolom is nog vooral generiek gekoppeld aan bestaande signaalkaarten.
+- **User Impact:** Gebruikers herkennen de actieve route sneller, maar moeten soms nog scannen welke compacte volgende actie bij die route hoort.
+- **Desired Outcome:** Voeg route-eigen compacte next-action cues toe aan representatieve contextkolommen zonder de rechterkolom zwaarder te maken.
+- **User Value:** Gebruikers zien per route sneller wat de veilige, logische vervolgstap is zonder de hoofdroute of formulieren te openen.
+- **Acceptance Criteria:** Minimaal zes contextkolommen tonen een route-eigen compacte volgende-actie cue naast of onder de microstate; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, context signal state, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 38
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
