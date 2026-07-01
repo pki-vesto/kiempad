@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1279 — Premium Claude Design UI: focusroute desktop chrome reduceren
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Focusroutes hadden inmiddels eigen shells, maar op desktop stonden de globale pagina-header en workspace-map daar nog boven. Daardoor voelde de eerste viewport alsnog als een gestapelde één-pagina UI.
+- **Desired Outcome:** Verberg de globale `page-header` en `workspace-map` voor focus-shell routes op desktop en mobiel, terwijl de compacte workspace-strip en interne context zichtbaar blijven.
+- **User Value:** De gebruiker landt direct in de taakgerichte focusruimte in plaats van eerst globale productuitleg en kaartlagen te moeten passeren.
+- **Acceptance Criteria:** CSS bevat een focusroute chrome-regel buiten de mobiele mediaquery; split-workspace smoke bewaakt dat `workspace-map` en `page-header` niet zichtbaar zijn op focusroutes; `workspace-strip`, rail, hoofdruimte en contextkolom blijven zichtbaar; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/split-workspace-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2333
+
 ### G1278 — Premium Claude Design UI: notification focus-shell bundelen
 
 - **Epic:** Onboarding & Daily Use

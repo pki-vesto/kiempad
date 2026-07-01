@@ -160,6 +160,8 @@ async function assertSplitWorkspaces(browser, options) {
       const result = await page.evaluate(({ prefix, routeId, group }) => {
         const workspace = document.querySelector(`[data-${prefix}-split-workspace="ready"]`);
         const workspaceStrip = document.querySelector('[data-workspace-strip="ready"]');
+        const workspaceMap = document.querySelector('.workspace-map');
+        const pageHeader = document.querySelector('.page-header');
         const active = document.querySelector(`[data-${prefix}-route-state="active"]`);
         const currentRoute = document.querySelector(
           `[data-${prefix}-split-workspace="ready"] .command-task-route[aria-current="page"]`,
@@ -185,6 +187,8 @@ async function assertSplitWorkspaces(browser, options) {
         const contextColumn = workspace?.querySelector('.domain-split-workspace__context');
         const activeRect = active?.getBoundingClientRect();
         const stripRect = workspaceStrip?.getBoundingClientRect();
+        const workspaceMapRect = workspaceMap?.getBoundingClientRect();
+        const pageHeaderRect = pageHeader?.getBoundingClientRect();
 
         return {
           activeRoute: active?.getAttribute(`data-${prefix}-route`) ?? null,
@@ -193,6 +197,12 @@ async function assertSplitWorkspaces(browser, options) {
           hasWorkspaceStrip: Boolean(workspaceStrip),
           workspaceStripGroup: workspaceStrip?.getAttribute('data-workspace-strip-group') ?? null,
           workspaceStripVisible: Boolean(stripRect && stripRect.width > 0 && stripRect.height > 0),
+          workspaceMapVisible: Boolean(
+            workspaceMapRect && workspaceMapRect.width > 0 && workspaceMapRect.height > 0,
+          ),
+          pageHeaderVisible: Boolean(
+            pageHeaderRect && pageHeaderRect.width > 0 && pageHeaderRect.height > 0,
+          ),
           workspaceStripMatchesGroup:
             workspaceStrip?.getAttribute('data-workspace-strip-group') === group,
           hasRail: Boolean(rail),
@@ -223,6 +233,11 @@ async function assertSplitWorkspaces(browser, options) {
       ) {
         throw new Error(
           `${options.label}/${route.screen}: workspace-strip mist of toont verkeerde groep ${result.workspaceStripGroup}.`,
+        );
+      }
+      if (result.workspaceMapVisible || result.pageHeaderVisible) {
+        throw new Error(
+          `${options.label}/${route.screen}: redundante globale chrome is zichtbaar op focusroute.`,
         );
       }
       if (result.activeRoute !== route.route || !result.activeRouteVisible) {
