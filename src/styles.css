@@ -3983,6 +3983,16 @@ h2 {
   white-space: nowrap;
 }
 
+.consult-detail-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.consult-detail-panel__header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+}
+
 .command-route-summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

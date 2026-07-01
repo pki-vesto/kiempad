@@ -3448,8 +3448,14 @@ function renderDossierScreen(state: AppShellState): string {
           ariaLabel: 'Dossier imaging route-samenvatting',
           data: { 'dossier-route-summary': 'imaging' },
         })}
-        <details class="kp-disclosure" data-dossier-imaging-disclosure="consults">
-          <summary class="kp-disclosure__summary">Consultverslagen openen</summary>
+        <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="consults" data-hub-detail-panel="consult-verslagen">
+          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+            <span>
+              <strong>Consultverslagen openen</strong>
+              <small>Gesprekken, actiepunten en bronreview</small>
+            </span>
+            <em>${consultVerslagen.length} verslagen</em>
+          </summary>
           <div class="kp-disclosure__body">
             <h2 id="dossier-consultverslagen">Consultverslagen</h2>
             ${
@@ -13896,8 +13902,14 @@ function renderQuestionRouteVisibility(activeRoute: QuestionRoute, route: Questi
 function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefined): string {
   if (!vragenlijst) {
     return `
-      <section class="policy-panel embedded-summary" aria-label="Consult Prep Wizard">
-        <h2>Consult Prep Wizard</h2>
+      <section class="policy-panel embedded-summary consult-detail-panel" aria-label="Consult Prep Wizard" data-hub-detail-panel="consult-prep-wizard">
+        <header class="hub-detail-disclosure__summary consult-detail-panel__header">
+          <span>
+            <strong>Consult Prep Wizard</strong>
+            <small>Vragenlijst, context en eigen packet</small>
+          </span>
+          <em>Wacht</em>
+        </header>
         <p class="empty-state">Voeg een komende afspraak en open vragen toe om een lokaal prep-packet te maken.</p>
         <p class="small-print">Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.</p>
       </section>
@@ -13908,8 +13920,14 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
   const packet = maakConsultPrepPacket(vragenlijst, vragenTekst);
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Consult Prep Wizard">
-      <h2>Consult Prep Wizard</h2>
+    <section class="policy-panel embedded-summary consult-detail-panel" aria-label="Consult Prep Wizard" data-hub-detail-panel="consult-prep-wizard">
+      <header class="hub-detail-disclosure__summary consult-detail-panel__header">
+        <span>
+          <strong>Consult Prep Wizard</strong>
+          <small>Vragenlijst, context en eigen packet</small>
+        </span>
+        <em>${vragenlijst.items.length} vragen</em>
+      </header>
       <ol class="setup-steps compact-list">
         <li><strong>1. Afspraak:</strong> controleer ${escapeHtml(vragenlijst.afspraak.titel)} op ${escapeHtml(formatDateTime(vragenlijst.afspraak.datumTijd))}.</li>
         <li><strong>2. Vragen:</strong> bewerk de conceptvragen voordat je ze meeneemt.</li>

@@ -4639,6 +4639,10 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
     expect(html).toContain('Verslag per afspraak');
     expect(html).toContain('aria-label="Consult Prep Wizard"');
+    expect(html).toContain('data-hub-detail-panel="consult-prep-wizard"');
+    expect(html).toContain('class="hub-detail-disclosure__summary consult-detail-panel__header"');
+    expect(html).toContain('Vragenlijst, context en eigen packet');
+    expect(html).toContain('<em>2 vragen</em>');
     expect(html).toContain('Bewerkbare vragen');
     expect(html).toContain('name="consultPrepQuestions"');
     expect(html).toContain('Lokaal prep-packet');
@@ -7174,6 +7178,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('name="tekst"');
     expect(emptyHtml).toContain('name="samenvattingCorrectie"');
     expect(emptyHtml).toContain('name="notitie"');
+    expect(emptyHtml).toContain('data-hub-detail-panel="consult-verslagen"');
+    expect(emptyHtml).toContain('Gesprekken, actiepunten en bronreview');
+    expect(emptyHtml).toContain('<em>0 verslagen</em>');
     expect(emptySection).toContain('Nog geen consultverslagen als apart recordtype vastgelegd.');
 
     const html = renderAppShell('dossier', {
@@ -7266,6 +7273,9 @@ describe('app shell', () => {
     });
     const section = extractConsultVerslagenSection(html);
 
+    expect(html).toContain('data-hub-detail-panel="consult-verslagen"');
+    expect(html).toContain('Gesprekken, actiepunten en bronreview');
+    expect(html).toContain('<em>1 verslagen</em>');
     expect(section).toContain('Consult review state');
     expect(section).toContain(
       'Consultdatum: 2026-05-08 · Upload · consult-review-state.pdf · 4 KB',

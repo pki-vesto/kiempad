@@ -4262,6 +4262,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Consult rendering, question preparation, hub detail panels, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 28
+- **Status:** ☑ done
+
+### G1246 — consultkaarten inhoudelijk scannen met compacte samenvatting en acties
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Consultdetailpanelen zijn nu compacter vindbaar, maar individuele consultkaarten zelf tonen nog veel metadata, samenvatting, verschillen, actiepunten en inzichten achter elkaar.
+- **User Impact:** Gebruikers vinden de consultwerkbaan sneller, maar kunnen binnen een gevuld consult nog steeds te veel tekst in één kaart moeten scannen.
+- **Desired Outcome:** Maak individuele consultkaarten scanbaarder met compacte sectiekoppen, korte metadataregels en duidelijke scheiding tussen samenvatting, actiepunten en inzichten.
+- **User Value:** Een gevuld consultverslag is sneller te begrijpen zonder broninhoud, transcript of medisch advies te lekken.
+- **Acceptance Criteria:** Minimaal één gevulde consultkaart krijgt compacte interne secties; bestaande consultrecord-rendering, bronreview, actiepunten, `consult-verslag-form`, privacyhooks en routeflow-smoke blijven werken; desktop/mobile browser-evidence blijft groen; geen transcripttekst, medische payload, bestandsinhoud, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Dossier imaging, Consult intelligence
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Consult card rendering, consult summaries, action points, tests, browser smoke
+- **ADR Needed:** no
+- **Score:** 27
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
