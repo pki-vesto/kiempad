@@ -4182,6 +4182,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Hub workflow headers, dossier disclosures, recommendation route, tests, browser smoke
 - **ADR Needed:** no
 - **Score:** 33
+- **Status:** ☑ done
+
+### G1241 — research en embryo routes als zelfstandige hubflows versterken
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Upload, tijdlijn en dagadvies hebben nu hubtabs en compacte detailheaders, maar research en embryo/beelden hebben nog minder eigen route-identiteit achter de start-hub.
+- **User Impact:** Gebruikers zien research en embryo’s op de start-hub, maar ervaren achter de klik nog minder duidelijke schermritmes dan bij upload, tijdlijn en dagadvies.
+- **Desired Outcome:** Geef research en embryo/beelden vergelijkbare hubroute-oriëntatie met compacte tabs, duidelijke routeheaders en rustige lege staten.
+- **User Value:** Gebruikers herkennen ook wetenschappelijke inzichten en embryobeelden als zelfstandige werkbanen in plaats van losse secties in het dossier.
+- **Acceptance Criteria:** Research en embryo/beelden tonen zichtbare hubroute-oriëntatie; minimaal twee routes krijgen compacte tab- of detailheaders; desktop/mobile browser-evidence blijft groen; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, beeldpayload, OCR-tekst, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Kennis, Dossier imaging, Start
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Knowledge routes, dossier imaging route, hub workflow headers, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 32
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
