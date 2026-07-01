@@ -36685,31 +36685,43 @@ describe('app shell', () => {
     expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
     expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
     expect(welzijnHtml).toContain('data-wellbeing-workspace-context="metrics"');
+    expect(welzijnHtml).toContain('data-workspace-context-signals="wellbeing"');
+    expect(welzijnHtml).toContain('Welzijnfocus');
     expect(welzijnHtml).toContain(
       'data-wellbeing-route="history" data-wellbeing-route-state="active"',
     );
     expect(afwegingenHtml).toContain('class="domain-split-workspace decision-split-workspace"');
     expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
+    expect(afwegingenHtml).toContain('data-workspace-context-signals="decision"');
+    expect(afwegingenHtml).toContain('Keuzefocus');
     expect(afwegingenHtml).toContain(
       'data-decision-route="choice" data-decision-route-state="active"',
     );
     expect(kostenHtml).toContain('class="domain-split-workspace finance-split-workspace"');
     expect(kostenHtml).toContain('data-finance-workspace-context="metrics"');
+    expect(kostenHtml).toContain('data-workspace-context-signals="finance"');
+    expect(kostenHtml).toContain('Kostenfocus');
     expect(kostenHtml).toContain(
       'data-finance-route="vergoeding" data-finance-route-state="active"',
     );
     expect(logboekHtml).toContain('class="domain-split-workspace eventlog-split-workspace"');
     expect(logboekHtml).toContain('data-eventlog-workspace-context="metrics"');
+    expect(logboekHtml).toContain('data-workspace-context-signals="eventlog"');
+    expect(logboekHtml).toContain('Auditfocus');
     expect(logboekHtml).toContain(
       'data-eventlog-route="privacy" data-eventlog-route-state="active"',
     );
     expect(backupHtml).toContain('class="domain-split-workspace backup-split-workspace"');
     expect(backupHtml).toContain('data-backup-workspace-context="metrics"');
+    expect(backupHtml).toContain('data-workspace-context-signals="backup"');
+    expect(backupHtml).toContain('Veiligheidsfocus');
     expect(backupHtml).toContain('data-backup-route="import" data-backup-route-state="active"');
     expect(herinneringenHtml).toContain(
       'class="domain-split-workspace notification-split-workspace"',
     );
     expect(herinneringenHtml).toContain('data-notification-workspace-context="metrics"');
+    expect(herinneringenHtml).toContain('data-workspace-context-signals="notification"');
+    expect(herinneringenHtml).toContain('Meldingsfocus');
     expect(herinneringenHtml).toContain(
       'data-notification-route="plannen" data-notification-route-state="active"',
     );
