@@ -320,6 +320,10 @@
   workspace-strip als oriëntatie zichtbaar, maar verbergen de beschrijvingsregel en
   snelle duplicaatlinks. Daardoor start de taakruimte hoger in de eerste viewport
   zonder de werkruimtewissel te verliezen.
+- **G1284 Split-workspace hoofdruimte:** Desktop split-workspaces geven de actieve
+  hoofdroute nu meer breedte dan taakrail en contextkolom. Rail, contextpanelen en
+  kolomgaps zijn compacter, terwijl de split-workspace smoke dit als gerenderde
+  breedtecontrole bewaakt.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

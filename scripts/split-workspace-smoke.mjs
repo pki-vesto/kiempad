@@ -189,6 +189,9 @@ async function assertSplitWorkspaces(browser, options) {
         const rail = workspace?.querySelector('.domain-split-workspace__rail');
         const main = workspace?.querySelector('.domain-split-workspace__main');
         const contextColumn = workspace?.querySelector('.domain-split-workspace__context');
+        const railRect = rail?.getBoundingClientRect();
+        const mainRect = main?.getBoundingClientRect();
+        const contextRect = contextColumn?.getBoundingClientRect();
         const activeRect = active?.getBoundingClientRect();
         const stripRect = workspaceStrip?.getBoundingClientRect();
         const stripDescriptionRect = workspaceStripDescription?.getBoundingClientRect();
@@ -220,6 +223,9 @@ async function assertSplitWorkspaces(browser, options) {
           hasRail: Boolean(rail),
           hasMain: Boolean(main),
           hasContext: Boolean(contextColumn),
+          railWidth: railRect?.width ?? 0,
+          mainWidth: mainRect?.width ?? 0,
+          contextWidth: contextRect?.width ?? 0,
           activeRouteVisible: Boolean(
             activeRect && activeRect.width > 0 && activeRect.height > 0 && routeId,
           ),
@@ -237,6 +243,18 @@ async function assertSplitWorkspaces(browser, options) {
       }
       if (!result.hasWorkspace || !result.hasRail || !result.hasMain || !result.hasContext) {
         throw new Error(`${options.label}/${route.screen}: split-view structuur is incompleet.`);
+      }
+      if (
+        options.label === 'desktop' &&
+        (result.mainWidth <= result.railWidth || result.mainWidth <= result.contextWidth)
+      ) {
+        throw new Error(
+          `${options.label}/${route.screen}: hoofdruimte krijgt geen prioriteit in split-view (${JSON.stringify({
+            rail: result.railWidth,
+            main: result.mainWidth,
+            context: result.contextWidth,
+          })}).`,
+        );
       }
       if (
         !result.hasWorkspaceStrip ||

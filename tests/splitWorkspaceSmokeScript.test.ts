@@ -33,6 +33,10 @@ describe('split workspace smoke script', () => {
     expect(splitWorkspaceSmokeScript).toContain('.workspace-strip__quick');
     expect(splitWorkspaceSmokeScript).toContain('workspaceStripMatchesGroup');
     expect(splitWorkspaceSmokeScript).toContain('workspace-strip is niet compact op focusroute');
+    expect(splitWorkspaceSmokeScript).toContain('railWidth');
+    expect(splitWorkspaceSmokeScript).toContain('mainWidth');
+    expect(splitWorkspaceSmokeScript).toContain('contextWidth');
+    expect(splitWorkspaceSmokeScript).toContain('hoofdruimte krijgt geen prioriteit in split-view');
     expect(splitWorkspaceSmokeScript).toContain("group: 'Vandaag'");
     expect(splitWorkspaceSmokeScript).toContain("group: 'Behandeling'");
     expect(splitWorkspaceSmokeScript).toContain("group: 'Dossier'");
