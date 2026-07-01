@@ -5489,8 +5489,8 @@ h2 {
 
 .domain-split-workspace {
   display: grid;
-  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.92fr) minmax(250px, 0.9fr);
-  gap: 16px;
+  grid-template-columns: minmax(184px, 0.5fr) minmax(0, 2.28fr) minmax(216px, 0.66fr);
+  gap: 12px;
   align-items: start;
   min-width: 0;
 }
@@ -5505,9 +5505,9 @@ h2 {
   position: sticky;
   top: 12px;
   z-index: 24;
-  padding: 8px;
+  padding: 6px;
   border: 1px solid color-mix(in srgb, var(--border) 84%, var(--accent));
-  border-radius: 16px;
+  border-radius: 14px;
   background: color-mix(in srgb, var(--surface-raised) 92%, var(--surface-2));
 }
 
@@ -5528,13 +5528,13 @@ h2 {
 
 .domain-split-workspace__context {
   display: grid;
-  gap: 14px;
+  gap: 10px;
 }
 
 .domain-split-workspace__context .summary-panel,
 .domain-split-workspace__context .policy-panel {
   min-height: 0;
-  padding: 18px;
+  padding: 12px;
   border-radius: 14px;
 }
 
@@ -5608,12 +5608,11 @@ h2 {
 }
 
 .knowledge-focus-shell__workspace .domain-split-workspace {
-  grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);
+  grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);
 }
 
 .knowledge-focus-shell__workspace .domain-split-workspace__context {
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .knowledge-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
@@ -6185,6 +6184,44 @@ h2 {
   min-width: 0;
 }
 
+.domain-split-workspace__rail .command-task-route span,
+.domain-split-workspace__rail .command-task-route small {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.domain-split-workspace__main .command-route-summary {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.domain-split-workspace__main .command-route-summary__meta {
+  justify-content: flex-start;
+}
+
+.domain-split-workspace__main .hub-detail-disclosure__summary strong,
+.domain-split-workspace__main .hub-detail-disclosure__summary small {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.domain-split-workspace__main .kp-workflow-panel__header {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.domain-split-workspace__main .kp-workflow-panel__intro {
+  max-width: none;
+}
+
+.domain-split-workspace__context .workspace-context-signals__microstate {
+  grid-template-columns: 1fr;
+}
+
+.domain-split-workspace__context .workspace-context-signals__microstate span {
+  min-width: 0;
+}
+
 .command-form-section {
   display: grid;
   min-width: 0;
@@ -6525,12 +6562,11 @@ h2 {
 }
 
 .treatment-focus-shell__workspace .domain-split-workspace {
-  grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);
+  grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);
 }
 
 .treatment-focus-shell__workspace .domain-split-workspace__context {
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .treatment-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
@@ -7502,12 +7538,11 @@ a.action-card:active {
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace {
-  grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);
+  grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace__context {
-  grid-column: 1 / -1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {

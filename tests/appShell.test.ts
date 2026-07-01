@@ -3998,9 +3998,11 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-focus-shell__workbench .treatment-workbench__grid {');
     expect(css).toContain('.treatment-focus-shell__workbench .treatment-snapshot {');
     expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain(
+      'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
+    );
     expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace__context {');
-    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain('gap: 10px;');
     expect(css).toContain('.treatment-workbench {');
     expect(css).toContain('[data-treatment-first-viewport="workbench"]');
     expect(css).toContain('.treatment-workbench__header {');
@@ -6589,9 +6591,11 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain(
+      'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
+    );
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__context {');
-    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain('gap: 10px;');
     expect(css).toContain(
       '.dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {',
     );
@@ -35805,9 +35809,11 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-focus-shell__workbench > .knowledge-research-workbench {');
     expect(css).toContain('.knowledge-focus-shell__workbench .knowledge-research-snapshot {');
     expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);');
+    expect(css).toContain(
+      'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
+    );
     expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace__context {');
-    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain('gap: 10px;');
     expect(css).toContain(
       '.knowledge-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {',
     );
@@ -37724,10 +37730,18 @@ describe('app shell', () => {
 
     expect(css).toContain('.domain-split-workspace {');
     expect(css).toContain(
-      'grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.92fr) minmax(250px, 0.9fr);',
+      'grid-template-columns: minmax(184px, 0.5fr) minmax(0, 2.28fr) minmax(216px, 0.66fr);',
     );
+    expect(css).toContain('gap: 12px;');
     expect(css).toContain('.domain-split-workspace__rail .command-task-routes {');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('.domain-split-workspace__rail .command-task-route span,');
+    expect(css).toContain('.domain-split-workspace__main .command-route-summary {');
+    expect(css).toContain('.domain-split-workspace__main .hub-detail-disclosure__summary strong,');
+    expect(css).toContain('.domain-split-workspace__main .kp-workflow-panel__header {');
+    expect(css).toContain(
+      '.domain-split-workspace__context .workspace-context-signals__microstate {',
+    );
     expect(css).toContain('.workspace-context-signals {');
     expect(css).toContain('--workspace-context-accent: var(--accent);');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="dossier"]');

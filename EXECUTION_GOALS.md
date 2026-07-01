@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1284 — Premium Claude Design UI: split-workspace hoofdruimte voorrang
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De split-workspace had wel drie zones, maar taakrail en contextkolom bleven op desktop visueel te dominant, waardoor focusroutes nog steeds als brede alles-op-een-pagina schermen konden lezen.
+- **Desired Outcome:** Geef de actieve hoofdroute duidelijk meer breedte en maak rail/context compacter zonder de mobiele segmentrail of contextsignalen te breken.
+- **User Value:** De gebruiker ziet sneller waar het echte werk gebeurt en hoeft minder visuele ruis van navigatie en context te verwerken.
+- **Acceptance Criteria:** Desktop split-workspaces gebruiken een main-prioriteit grid; rail en contextpanelen zijn compacter; de split-workspace smoke meet dat main breder is dan rail en context op desktop; app-shell tests bewaken de CSS; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `scripts/split-workspace-smoke.mjs`, `tests/appShell.test.ts`, `tests/splitWorkspaceSmokeScript.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2343
+
 ### G1283 — Premium Claude Design UI: compacte focusroute workspace-strip
 
 - **Epic:** Onboarding & Daily Use
