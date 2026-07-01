@@ -15426,29 +15426,27 @@ function renderHerinneringenScreen(state: AppShellState): string {
   const fallback = state.inAppFallbackNotifications ?? [];
   const activeNotificationRoute = state.activeNotificationRoute ?? 'status';
 
-  return sectionStack(
-    [
-      renderNotificationSystemWorkbench({
-        reminderCount: komende.length,
-        fallbackCount: fallback.length,
-        permission: state.notificaties.permission,
-        serviceWorker: state.notificaties.serviceWorker,
-        lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
-        nextReminder: komende[0],
-      }),
-      domainSplitWorkspace({
-        className: 'notification-split-workspace',
-        ariaLabel: 'Herinneringen split-view werkruimte',
-        data: { 'notification-split-workspace': 'ready' },
-        rail: renderNotificationTaskRoutes({
-          reminderCount: komende.length,
-          fallbackCount: fallback.length,
-          permission: state.notificaties.permission,
-          serviceWorker: state.notificaties.serviceWorker,
-          lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
-          activeRoute: activeNotificationRoute,
-        }),
-        main: `
+  const notificationWorkbench = renderNotificationSystemWorkbench({
+    reminderCount: komende.length,
+    fallbackCount: fallback.length,
+    permission: state.notificaties.permission,
+    serviceWorker: state.notificaties.serviceWorker,
+    lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+    nextReminder: komende[0],
+  });
+  const notificationWorkspace = domainSplitWorkspace({
+    className: 'notification-split-workspace',
+    ariaLabel: 'Herinneringen split-view werkruimte',
+    data: { 'notification-split-workspace': 'ready' },
+    rail: renderNotificationTaskRoutes({
+      reminderCount: komende.length,
+      fallbackCount: fallback.length,
+      permission: state.notificaties.permission,
+      serviceWorker: state.notificaties.serviceWorker,
+      lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+      activeRoute: activeNotificationRoute,
+    }),
+    main: `
       <section id="herinneringen-route-status" class="notification-route-section" aria-labelledby="herinneringen-route-status-title" data-notification-route="status"${renderNotificationRouteVisibility(activeNotificationRoute, 'status')}>
         <header class="notification-route-section__header">
           <p class="kp-card__eyebrow">Status</p>
@@ -15594,20 +15592,47 @@ function renderHerinneringenScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-        context: renderNotificationWorkspaceContext({
-          reminderCount: komende.length,
-          fallbackCount: fallback.length,
-          permission: state.notificaties.permission,
-          serviceWorker: state.notificaties.serviceWorker,
-          lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
-          nextReminder: komende[0],
-          defaultWarningMinutes: state.settings.afspraakWaarschuwingMinuten,
-          activeRoute: activeNotificationRoute,
-        }),
+    context: renderNotificationWorkspaceContext({
+      reminderCount: komende.length,
+      fallbackCount: fallback.length,
+      permission: state.notificaties.permission,
+      serviceWorker: state.notificaties.serviceWorker,
+      lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
+      nextReminder: komende[0],
+      defaultWarningMinutes: state.settings.afspraakWaarschuwingMinuten,
+      activeRoute: activeNotificationRoute,
+    }),
+  });
+
+  return sectionStack(
+    [
+      renderNotificationFocusShell({
+        workbench: notificationWorkbench,
+        workspace: notificationWorkspace,
       }),
     ],
     { className: 'notification-command-layout', ariaLabel: 'Herinneringen beheren' },
   );
+}
+
+function renderNotificationFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="notification-focus-shell" aria-labelledby="notification-focus-shell-title" data-notification-focus-shell="ready">
+      <header class="notification-focus-shell__header">
+        <p class="kp-card__eyebrow">Meldingsfocus</p>
+        <h2 id="notification-focus-shell-title">Eerst status en privacy checken, daarna plannen of teruglezen</h2>
+        <p>Runtime-status, lockscreenprivacy, planning en komende meldingen blijven in één meldingsruimte zonder details op het vergrendelscherm te lekken.</p>
+      </header>
+      <div class="notification-focus-shell__body">
+        <div class="notification-focus-shell__workbench" data-notification-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="notification-focus-shell__workspace" data-notification-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderNotificationSystemWorkbench(input: {
