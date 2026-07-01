@@ -1885,6 +1885,11 @@ describe('app shell', () => {
     expect(css).toContain('[data-schedule-first-viewport="planning-workbench"]');
     expect(css).toContain('[data-medication-first-viewport="planning-workbench"]');
     expect(css).toContain('[data-question-first-viewport="consult-workbench"]');
+    expect(css).toContain('.schedule-focus-shell {');
+    expect(css).toContain('.schedule-focus-shell__header {');
+    expect(css).toContain('.schedule-focus-shell__body {');
+    expect(css).toContain('.schedule-focus-shell__workbench > .schedule-planning-workbench {');
+    expect(css).toContain('.schedule-focus-shell__workspace {');
     expect(css).toContain('.medication-focus-shell {');
     expect(css).toContain('.medication-focus-shell__header {');
     expect(css).toContain('.medication-focus-shell__body {');
@@ -1918,6 +1923,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.question-focus-shell {');
     expect(mobileCss).toContain('.question-focus-shell__body {');
     expect(mobileCss).toContain('.question-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.content:has([data-schedule-focus-shell="ready"]) > .workspace-map,',
+    );
+    expect(mobileCss).toContain(
+      '.content:has([data-schedule-focus-shell="ready"]) > .page-header {',
+    );
+    expect(mobileCss).toContain('.schedule-focus-shell {');
+    expect(mobileCss).toContain('.schedule-focus-shell__body {');
+    expect(mobileCss).toContain('.schedule-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain(
       '.content:has([data-medication-focus-shell="ready"]) > .workspace-map,',
     );
@@ -3536,6 +3550,11 @@ describe('app shell', () => {
 
     expect(html).toContain('Echo controle');
     expect(html).toContain('class="section-stack schedule-command-layout"');
+    expect(html).toContain('class="schedule-focus-shell"');
+    expect(html).toContain('data-schedule-focus-shell="ready"');
+    expect(html).toContain('Eerst de volgende afspraak, daarna plannen of importeren');
+    expect(html).toContain('data-schedule-focus-region="workbench"');
+    expect(html).toContain('data-schedule-focus-region="workspace"');
     expect(html).toContain(
       '<section class="planning-workbench schedule-planning-workbench" aria-label="Agenda dagplanningwerkbank" data-schedule-first-viewport="planning-workbench">',
     );
