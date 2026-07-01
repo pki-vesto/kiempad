@@ -13633,7 +13633,7 @@ function renderStartFocusShell(input: {
       <header class="start-focus-shell__header">
         <p class="start-cockpit__eyebrow">Verdieping</p>
         <h2 id="start-focus-shell-title">Start command-center</h2>
-        <p>Werkbanen, startscan en dagadvies staan op desktop naast elkaar als vaste werkvlakken; mobiel behoudt dezelfde volgorde onder elkaar.</p>
+        <p>Werkbanen, startscan en dagadvies staan op desktop naast elkaar als vaste werkvlakken; mobiel opent dit als compacte scrollbare routekaart.</p>
       </header>
       <div class="start-focus-shell__body">
         <div class="start-focus-shell__primary" data-start-focus-region="workflows">

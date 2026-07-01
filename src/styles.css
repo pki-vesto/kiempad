@@ -11762,6 +11762,17 @@ a.action-card:active {
     padding: 12px;
   }
 
+  .start-command-layout[data-start-console="ready"] .start-focus-shell {
+    max-height: min(680px, calc(100vh - 164px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .start-command-layout[data-start-console="ready"] .start-focus-shell::-webkit-scrollbar {
+    width: 0;
+  }
+
   .start-focus-shell__header h2 {
     font-size: 1.14rem;
   }
