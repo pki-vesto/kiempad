@@ -10,23 +10,90 @@ const url = `http://${host}:${port}/`;
 const passphrase = 'split workspace smoke passphrase';
 
 const routes = [
-  { screen: 'dossier', hash: '#dossier?route=imaging', prefix: 'dossier', route: 'imaging' },
-  { screen: 'agenda', hash: '#agenda?route=plannen', prefix: 'schedule', route: 'plannen' },
-  { screen: 'vragen', hash: '#vragen?route=beheer', prefix: 'question', route: 'beheer' },
-  { screen: 'traject', hash: '#traject?route=fasen', prefix: 'treatment', route: 'fasen' },
-  { screen: 'medicatie', hash: '#medicatie?route=beheer', prefix: 'medication', route: 'beheer' },
-  { screen: 'kennis', hash: '#kennis?route=ai', prefix: 'knowledge', route: 'ai' },
-  { screen: 'welzijn', hash: '#welzijn?route=history', prefix: 'wellbeing', route: 'history' },
-  { screen: 'afwegingen', hash: '#afwegingen?route=choice', prefix: 'decision', route: 'choice' },
-  { screen: 'kosten', hash: '#kosten?route=vergoeding', prefix: 'finance', route: 'vergoeding' },
-  { screen: 'logboek', hash: '#logboek?route=privacy', prefix: 'eventlog', route: 'privacy' },
+  {
+    screen: 'dossier',
+    hash: '#dossier?route=imaging',
+    prefix: 'dossier',
+    route: 'imaging',
+    group: 'Dossier',
+  },
+  {
+    screen: 'agenda',
+    hash: '#agenda?route=plannen',
+    prefix: 'schedule',
+    route: 'plannen',
+    group: 'Vandaag',
+  },
+  {
+    screen: 'vragen',
+    hash: '#vragen?route=beheer',
+    prefix: 'question',
+    route: 'beheer',
+    group: 'Behandeling',
+  },
+  {
+    screen: 'traject',
+    hash: '#traject?route=fasen',
+    prefix: 'treatment',
+    route: 'fasen',
+    group: 'Behandeling',
+  },
+  {
+    screen: 'medicatie',
+    hash: '#medicatie?route=beheer',
+    prefix: 'medication',
+    route: 'beheer',
+    group: 'Behandeling',
+  },
+  {
+    screen: 'kennis',
+    hash: '#kennis?route=ai',
+    prefix: 'knowledge',
+    route: 'ai',
+    group: 'Inzicht',
+  },
+  {
+    screen: 'welzijn',
+    hash: '#welzijn?route=history',
+    prefix: 'wellbeing',
+    route: 'history',
+    group: 'Inzicht',
+  },
+  {
+    screen: 'afwegingen',
+    hash: '#afwegingen?route=choice',
+    prefix: 'decision',
+    route: 'choice',
+    group: 'Inzicht',
+  },
+  {
+    screen: 'kosten',
+    hash: '#kosten?route=vergoeding',
+    prefix: 'finance',
+    route: 'vergoeding',
+    group: 'Beheer',
+  },
+  {
+    screen: 'logboek',
+    hash: '#logboek?route=privacy',
+    prefix: 'eventlog',
+    route: 'privacy',
+    group: 'Beheer',
+  },
   {
     screen: 'herinneringen',
     hash: '#herinneringen?route=plannen',
     prefix: 'notification',
     route: 'plannen',
+    group: 'Vandaag',
   },
-  { screen: 'backup', hash: '#backup?route=import', prefix: 'backup', route: 'import' },
+  {
+    screen: 'backup',
+    hash: '#backup?route=import',
+    prefix: 'backup',
+    route: 'import',
+    group: 'Beheer',
+  },
 ];
 
 const viewports = [
@@ -90,8 +157,9 @@ async function assertSplitWorkspaces(browser, options) {
         timeout: 10_000,
       });
 
-      const result = await page.evaluate(({ prefix, routeId }) => {
+      const result = await page.evaluate(({ prefix, routeId, group }) => {
         const workspace = document.querySelector(`[data-${prefix}-split-workspace="ready"]`);
+        const workspaceStrip = document.querySelector('[data-workspace-strip="ready"]');
         const active = document.querySelector(`[data-${prefix}-route-state="active"]`);
         const currentRoute = document.querySelector(
           `[data-${prefix}-split-workspace="ready"] .command-task-route[aria-current="page"]`,
@@ -116,11 +184,17 @@ async function assertSplitWorkspaces(browser, options) {
         const main = workspace?.querySelector('.domain-split-workspace__main');
         const contextColumn = workspace?.querySelector('.domain-split-workspace__context');
         const activeRect = active?.getBoundingClientRect();
+        const stripRect = workspaceStrip?.getBoundingClientRect();
 
         return {
           activeRoute: active?.getAttribute(`data-${prefix}-route`) ?? null,
           currentRouteText: currentRoute?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           hasWorkspace: Boolean(workspace),
+          hasWorkspaceStrip: Boolean(workspaceStrip),
+          workspaceStripGroup: workspaceStrip?.getAttribute('data-workspace-strip-group') ?? null,
+          workspaceStripVisible: Boolean(stripRect && stripRect.width > 0 && stripRect.height > 0),
+          workspaceStripMatchesGroup:
+            workspaceStrip?.getAttribute('data-workspace-strip-group') === group,
           hasRail: Boolean(rail),
           hasMain: Boolean(main),
           hasContext: Boolean(contextColumn),
@@ -132,7 +206,7 @@ async function assertSplitWorkspaces(browser, options) {
             document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 ||
             document.body.scrollWidth > document.body.clientWidth + 1,
         };
-      }, { prefix: route.prefix, routeId: route.route });
+      }, { prefix: route.prefix, routeId: route.route, group: route.group });
 
       if (pageErrors.length > 0) {
         throw new Error(
@@ -141,6 +215,15 @@ async function assertSplitWorkspaces(browser, options) {
       }
       if (!result.hasWorkspace || !result.hasRail || !result.hasMain || !result.hasContext) {
         throw new Error(`${options.label}/${route.screen}: split-view structuur is incompleet.`);
+      }
+      if (
+        !result.hasWorkspaceStrip ||
+        !result.workspaceStripVisible ||
+        !result.workspaceStripMatchesGroup
+      ) {
+        throw new Error(
+          `${options.label}/${route.screen}: workspace-strip mist of toont verkeerde groep ${result.workspaceStripGroup}.`,
+        );
       }
       if (result.activeRoute !== route.route || !result.activeRouteVisible) {
         throw new Error(

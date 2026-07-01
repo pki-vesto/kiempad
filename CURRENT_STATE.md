@@ -654,7 +654,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Graph-relaties hebben gestructureerde provenance met bron, bronRecordIds, datum,
   reviewstatus en herkomst; de UI toont deze relatieherleiding zonder raw payload.
   De recente Premium Claude Design UI-laag verdeelt hoofdschermen in werkruimtes en
-  taakroutes; het startscherm opent nu zonder generieke werkruimte-context met een
+  taakroutes; alle hoofdschermen tonen nu boven de content een compacte workspace-strip
+  met actieve werkruimtegroep, zusterschermen en snelle routes naar Start, Dossier en
+  Tijdlijn. Het startscherm opent zonder generieke werkruimte-context met een
   compacte start-cockpit voor eerstvolgende aandacht, dossierbasis en kernwerkbanen,
   gevolgd door een aparte Fertiliteitswerkbank voor dossier uploaden, tijdlijn
   begrijpen, dagadvies en research; de resterende startmodules staan in een progressive flowrail waarin
@@ -669,7 +671,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   Alle split-view hoofdwerkruimtes delen nu consistente railspacing, een sterkere
   actieve route-affordance en contextkolomritme; `npm run smoke:split-workspaces`
   bewaakt Dossier, Agenda, Vragen, Traject, Medicatie, Kennis, Welzijn,
-  Afwegingen, Kosten, Logboek, Herinneringen en Back-up op desktop en mobiel.
+  Afwegingen, Kosten, Logboek, Herinneringen en Back-up op desktop en mobiel,
+  inclusief de correcte workspace-stripgroep per route.
   Dossier, Agenda, Kennis en Traject tonen nu domeinspecifieke contextsignalen in
   de rechterkolom voor review/beeldhistorie, planning/import, researchleesvolgorde
   en behandelcontext. Welzijn, Afwegingen, Kosten, Logboek, Herinneringen en

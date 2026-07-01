@@ -1718,6 +1718,13 @@ describe('app shell', () => {
 
     expect(html).toContain('href="#agenda" aria-current="page"');
     expect(html).toContain('Afspraken');
+    expect(html).toContain('class="workspace-strip"');
+    expect(html).toContain('data-workspace-strip="ready"');
+    expect(html).toContain('data-workspace-strip-group="Vandaag"');
+    expect(html).toContain('aria-label="Actieve werkruimte"');
+    expect(html).toContain('aria-label="Schermen binnen Vandaag"');
+    expect(html).toContain('aria-label="Snelle kernroutes"');
+    expect(html).toContain('href="#traject?route=context"');
   });
 
   it('groepeert primaire navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
@@ -1729,6 +1736,10 @@ describe('app shell', () => {
     expect(html).toContain('<p class="primary-nav__title">Dossier</p>');
     expect(html).toContain('<p class="primary-nav__title">Inzicht</p>');
     expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
+    expect(html).toContain('data-workspace-strip-group="Behandeling"');
+    expect(html).toContain('<p class="workspace-strip__eyebrow">Werkruimte</p>');
+    expect(html).toContain('class="workspace-strip__switcher"');
+    expect(html).toContain('class="workspace-strip__quick"');
     expect(html).toContain('data-question-first-viewport="consult-workbench"');
   });
 
@@ -1749,6 +1760,8 @@ describe('app shell', () => {
     expect(dossierHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
+    expect(dossierHtml).toContain('data-workspace-strip="ready"');
+    expect(dossierHtml).toContain('data-workspace-strip-group="Dossier"');
     expect(dossierHtml).toContain('data-dossier-first-viewport="route-stage"');
     expect(kennisHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
@@ -1794,6 +1807,7 @@ describe('app shell', () => {
     expect(vragenHtml).not.toContain(
       '<section class="workspace-context" aria-label="Actieve werkruimte">',
     );
+    expect(vragenHtml).toContain('data-workspace-strip="ready"');
     expect(vragenHtml).toContain('data-question-first-viewport="consult-workbench"');
   });
 
@@ -2446,6 +2460,15 @@ describe('app shell', () => {
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(mobileCss).toContain('.lock-button {');
     expect(mobileCss).toContain('grid-column: 2;');
+    expect(css).toContain('.workspace-strip {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
+    expect(css).toContain('.workspace-strip__switcher,');
+    expect(css).toContain('.workspace-strip__quick {');
+    expect(mobileCss).toContain('.workspace-strip {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.workspace-strip > div,');
+    expect(mobileCss).toContain('.workspace-strip__description {');
+    expect(mobileCss).toContain('display: none;');
     expect(css).toContain('.start-cockpit {');
     expect(css).toContain(
       'grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr) minmax(210px, 0.7fr);',

@@ -773,6 +773,7 @@ export function renderAppShell(
       </div>
 
       <main class="content" id="inhoud" tabindex="-1">
+        ${renderWorkspaceStrip(activeId)}
         ${
           activeId === 'start'
             ? ''
@@ -783,7 +784,6 @@ export function renderAppShell(
               })
         }
 
-        ${renderWorkspaceContext(activeId)}
         ${screenContent}
       </main>
     </div>
@@ -1081,24 +1081,7 @@ function renderGroupedNavigation(activeId: ScreenId): string {
   }).join('');
 }
 
-function renderWorkspaceContext(activeId: ScreenId): string {
-  if (activeId === 'start') return '';
-  if (
-    activeId === 'dossier' ||
-    activeId === 'kennis' ||
-    activeId === 'traject' ||
-    activeId === 'welzijn' ||
-    activeId === 'afwegingen' ||
-    activeId === 'kosten' ||
-    activeId === 'backup' ||
-    activeId === 'herinneringen' ||
-    activeId === 'logboek' ||
-    activeId === 'agenda' ||
-    activeId === 'medicatie' ||
-    activeId === 'vragen'
-  )
-    return '';
-
+function renderWorkspaceStrip(activeId: ScreenId): string {
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   if (!activeGroup) return '';
 
@@ -1113,18 +1096,33 @@ function renderWorkspaceContext(activeId: ScreenId): string {
       )}</a>`;
     })
     .join('');
+  const quickLinks = [
+    { href: '#start', label: 'Start', meta: 'Vandaag' },
+    { href: '#dossier', label: 'Dossier', meta: 'Upload' },
+    { href: '#traject?route=context', label: 'Tijdlijn', meta: 'Context' },
+  ];
 
   return `
-    <section class="workspace-context" aria-label="Actieve werkruimte">
+    <section class="workspace-strip" aria-label="Actieve werkruimte" data-workspace-strip="ready" data-workspace-strip-group="${escapeAttribute(activeGroup.label)}">
       <div>
-        <p class="workspace-context__eyebrow">Werkruimte</p>
+        <p class="workspace-strip__eyebrow">Werkruimte</p>
         <h2>${escapeHtml(activeGroup.label)}</h2>
-        <p class="workspace-context__description">${escapeHtml(activeGroup.description)}</p>
+        <p class="workspace-strip__description">${escapeHtml(activeGroup.description)}</p>
       </div>
-      <nav class="workspace-context__switcher" aria-label="Schermen binnen ${escapeAttribute(
+      <nav class="workspace-strip__switcher" aria-label="Schermen binnen ${escapeAttribute(
         activeGroup.label,
       )}">
         ${siblingLinks}
+      </nav>
+      <nav class="workspace-strip__quick" aria-label="Snelle kernroutes">
+        ${quickLinks
+          .map(
+            (link) =>
+              `<a href="${link.href}"><span>${escapeHtml(link.label)}</span><small>${escapeHtml(
+                link.meta,
+              )}</small></a>`,
+          )
+          .join('')}
       </nav>
     </section>
   `;
