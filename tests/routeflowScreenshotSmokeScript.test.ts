@@ -20,7 +20,14 @@ describe('routeflow screenshot smoke script', () => {
     }
 
     for (const selector of [
-      '[data-start-intelligence-hub="six-workflows"]',
+      '[data-start-cockpit="ready"]',
+      '[data-start-cockpit-panel="focus"]',
+      '[data-start-cockpit-panel="record"]',
+      '[data-start-cockpit-panel="routes"]',
+      '[data-start-cockpit-route="uploads"]',
+      '[data-start-cockpit-route="timeline"]',
+      '[data-start-cockpit-route="imaging"]',
+      '[data-start-cockpit-route="advice"]',
       '[data-start-workbench-flow="uploads"]',
       '[data-start-workbench-flow="timeline"]',
       '[data-start-workbench-flow="embryo"]',

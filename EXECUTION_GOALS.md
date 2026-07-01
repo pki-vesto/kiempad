@@ -4381,6 +4381,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2279
 - **Status:** ☑ done
 
+### G1253 — start-cockpit boven fertility hub toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Start heeft nu een fertility hub en snapshotrijen, maar de eerste viewport mist nog een compacte cockpit die eerstvolgende aandacht, dossierbasis en kernwerkbanen direct samenbrengt.
+- **User Impact:** Gebruikers kunnen nog steeds het gevoel hebben dat Start uit meerdere losse lagen bestaat voordat duidelijk is wat nu eerst aandacht vraagt.
+- **Desired Outcome:** Voeg direct onder de startbegroeting een Start-cockpit toe met focus, dossierbasis en kernroutes naar upload, tijdlijn, imaging en dagadvies.
+- **User Value:** Gebruikers zien bij openen sneller wat vandaag relevant is en welke werkbaan daarbij hoort, zonder door de rest van de startpagina te scannen.
+- **Acceptance Criteria:** Start toont `data-start-cockpit="ready"` met panelen voor focus, record en routes; de cockpit bevat routes voor uploads, timeline, imaging en advice; desktop toont drie panelen, mobiel een swipebare snaprij; bestaande start-hub, startscan, dagadvieswerkbank, form-id's, data-hooks en route-ankers blijven werken; geen medisch advies, dosering, kansclaim, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Start, Dossier, Traject, Medicatie, Vragen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Start command layout, start workbench, CSS, app shell tests
+- **ADR Needed:** no
+- **Score:** 20
+- **GitHub Issue:** #2281
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI

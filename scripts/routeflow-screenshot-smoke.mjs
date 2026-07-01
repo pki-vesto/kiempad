@@ -13,9 +13,17 @@ const targets = [
   {
     screen: 'start',
     hash: '#start',
-    rootSelector: '[data-start-intelligence-hub="six-workflows"]',
+    rootSelector: '.start-command-layout',
     expectedText: 'Kies eerst je werkstroom',
     requiredSelectors: [
+      '[data-start-cockpit="ready"]',
+      '[data-start-cockpit-panel="focus"]',
+      '[data-start-cockpit-panel="record"]',
+      '[data-start-cockpit-panel="routes"]',
+      '[data-start-cockpit-route="uploads"]',
+      '[data-start-cockpit-route="timeline"]',
+      '[data-start-cockpit-route="imaging"]',
+      '[data-start-cockpit-route="advice"]',
       '[data-start-workbench="multi-flow"]',
       '[data-start-workbench-flow="uploads"]',
       '[data-start-workbench-flow="timeline"]',
