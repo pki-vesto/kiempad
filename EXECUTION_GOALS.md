@@ -3862,6 +3862,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Wellbeing routes, decision routes, styles, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1221 — route-summary ontlasting uitbreiden naar kosten en backup
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Kosten en Back-up hebben een eerste-viewport beheerwerkbank, maar routecontent kan nog lange financiële of veiligheidsdetails direct tonen.
+- **User Impact:** Gebruikers moeten beheer- en veiligheidsacties snel kunnen scannen zonder meteen door historie, exportcontext of detailpanelen te moeten lezen.
+- **Desired Outcome:** Pas dezelfde route-summary en progressive-panel aanpak toe op Kosten en Back-up.
+- **User Value:** Gebruikers zien eerst de primaire beheeractie en openen historie, export/importdetails en veiligheidscontext pas wanneer nodig.
+- **Acceptance Criteria:** Kosten en Back-up krijgen route-summary kaarten met primaire taak, status en eerstvolgende actie; secundaire historie, export/importcontext, herstelcontext en lange lijsten worden waar passend achter disclosure geplaatst; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven behouden; mobile, tablet en desktop tonen geen overlap of horizontale overflow; browser-screenshots bewijzen zichtbare ontlasting; geen financiële payload, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Kosten, Back-up
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Finance routes, backup routes, styles, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
