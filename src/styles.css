@@ -6288,6 +6288,45 @@ h2 {
   min-width: 0;
 }
 
+@media (min-width: 761px) {
+  .command-route-summary,
+  .domain-split-workspace__main .command-route-summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+  }
+
+  .command-route-summary h3 {
+    margin-top: 1px;
+    font-size: 0.98rem;
+    line-height: 1.16;
+  }
+
+  .command-route-summary p:not(.command-route-summary__eyebrow) {
+    display: none;
+  }
+
+  .command-route-summary__eyebrow {
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+  }
+
+  .command-route-summary__meta,
+  .domain-split-workspace__main .command-route-summary__meta {
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .command-route-summary__status,
+  .command-route-summary__action {
+    min-height: 28px;
+    padding: 4px 8px;
+    font-size: 0.72rem;
+  }
+}
+
 .command-form-section {
   display: grid;
   min-width: 0;
