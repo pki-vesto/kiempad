@@ -16,6 +16,7 @@ describe('routeflow screenshot smoke script', () => {
       '#traject?route=context',
       '#dossier?route=upload',
       '#vragen?route=voorbereiden',
+      '#welzijn?route=history',
       '#backup?route=controleren',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(route);
@@ -82,6 +83,11 @@ describe('routeflow screenshot smoke script', () => {
       '[data-consult-prep-lane="packet"]',
       '[data-hub-detail-panel="consult-prep-wizard"]',
       '.consult-detail-panel__header',
+      '[data-wellbeing-history-board="ready"]',
+      '[data-wellbeing-history-lane="checkins"]',
+      '[data-wellbeing-history-lane="symptoms"]',
+      '[data-wellbeing-history-lane="cycle"]',
+      '[data-wellbeing-history-lane="trends"]',
       '[data-backup-sync-board="ready"]',
       '[data-backup-sync-lane="status"]',
       '[data-backup-sync-lane="export"]',

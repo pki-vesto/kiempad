@@ -662,7 +662,9 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   imaging-route toont vóór consultverslagen, imaging-repository en embryo-dossiers
   een compact inspectiebord voor beelden, vergelijken, embryo's en consultcontext.
   De consultvoorbereidingsroute toont vóór de Consult Prep Wizard een prep-bord voor
-  open vragen, actiepunten, context en packet/verslagen. De centrale
+  open vragen, actiepunten, context en packet/verslagen. De welzijn-geschiedenisroute
+  toont vóór check-ins, symptomen en cyclusmetingen een terugleesbord voor check-ins,
+  symptomen, cyclus en trends. De centrale
   fertility timeline in Traject toont vóór filter, export en itemlijst een compacte
   leesmodus voor gebeurtenissen, mijlpalen, contextcontrole en consult-export.
   Dagadvies toont vóór de volledige aanbevelingenlijst een compacte actieplanner voor
