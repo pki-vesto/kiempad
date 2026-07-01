@@ -7014,7 +7014,9 @@ a.action-card:active {
   .wellbeing-route-section,
   .decision-route-section,
   .finance-route-section,
-  .backup-route-section {
+  .backup-route-section,
+  .eventlog-route-section,
+  .notification-route-section {
     gap: 9px;
     scroll-margin-top: 96px;
     padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);
@@ -7026,7 +7028,9 @@ a.action-card:active {
   .wellbeing-route-section__header,
   .decision-route-section__header,
   .finance-route-section__header,
-  .backup-route-section__header {
+  .backup-route-section__header,
+  .eventlog-route-section__header,
+  .notification-route-section__header {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -7043,7 +7047,9 @@ a.action-card:active {
   .wellbeing-route-section__header h2,
   .decision-route-section__header h2,
   .finance-route-section__header h2,
-  .backup-route-section__header h2 {
+  .backup-route-section__header h2,
+  .eventlog-route-section__header h2,
+  .notification-route-section__header h2 {
     font-size: 1.08rem;
   }
 
@@ -7053,7 +7059,9 @@ a.action-card:active {
   .wellbeing-route-section__header > p:last-child,
   .decision-route-section__header > p:last-child,
   .finance-route-section__header > p:last-child,
-  .backup-route-section__header > p:last-child {
+  .backup-route-section__header > p:last-child,
+  .eventlog-route-section__header > p:last-child,
+  .notification-route-section__header > p:last-child {
     display: none;
   }
 
@@ -7070,7 +7078,9 @@ a.action-card:active {
   .wellbeing-route-section .kp-disclosure,
   .decision-route-section .kp-disclosure,
   .finance-route-section .kp-disclosure,
-  .backup-route-section .kp-disclosure {
+  .backup-route-section .kp-disclosure,
+  .eventlog-route-section .kp-disclosure,
+  .notification-route-section .kp-disclosure {
     border-radius: 14px;
   }
 
@@ -7080,7 +7090,9 @@ a.action-card:active {
   .wellbeing-route-section .kp-disclosure__summary,
   .decision-route-section .kp-disclosure__summary,
   .finance-route-section .kp-disclosure__summary,
-  .backup-route-section .kp-disclosure__summary {
+  .backup-route-section .kp-disclosure__summary,
+  .eventlog-route-section .kp-disclosure__summary,
+  .notification-route-section .kp-disclosure__summary {
     min-height: 40px;
     padding: 10px 13px;
   }
@@ -7091,7 +7103,9 @@ a.action-card:active {
   .wellbeing-route-section .kp-disclosure__body,
   .decision-route-section .kp-disclosure__body,
   .finance-route-section .kp-disclosure__body,
-  .backup-route-section .kp-disclosure__body {
+  .backup-route-section .kp-disclosure__body,
+  .eventlog-route-section .kp-disclosure__body,
+  .notification-route-section .kp-disclosure__body {
     padding: 0 13px 13px;
   }
 

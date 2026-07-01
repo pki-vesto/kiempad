@@ -1131,6 +1131,17 @@ function renderLogboekScreen(state: AppShellState): string {
           <h2 id="logboek-route-overzicht-title">Logboekstatus</h2>
           <p>Controleer opslagmodus en privacyrisico's zonder gevoelige gebeurtenisdetails te tonen.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Logboekroute',
+          title: 'Eerst auditstatus scannen',
+          detail:
+            'Opslagmodus, eventaantal en privacyrisico blijven direct zichtbaar; auditregels open je pas in de detailroutes.',
+          primary: { href: '#logboek-route-recent', label: 'Recent' },
+          secondary: { href: '#logboek-route-privacy', label: 'Privacy' },
+          status: `${logs.length} events`,
+          ariaLabel: 'Logboek overzicht route-samenvatting',
+          data: { 'eventlog-route-summary': 'overzicht' },
+        })}
         ${card({
           title: 'Gebeurtenissen',
           body: `<p data-event-log-storage="${isCentralStorage(state) ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-event-log-state="${logs.length > 0 ? 'active' : 'empty'}" data-event-log-high-risk="${highRiskLogs.length > 0 ? 'present' : 'none'}">${body}</p>`,
@@ -1142,11 +1153,27 @@ function renderLogboekScreen(state: AppShellState): string {
           <h2 id="logboek-route-recent-title">Recente gebeurtenissen</h2>
           <p>Lees de laatste lokale auditregels terug in tijdsvolgorde.</p>
         </header>
-        ${
-          logs.length > 0
-            ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
-            : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Logboekroute',
+          title: 'Auditregels pas openen wanneer je ze nodig hebt',
+          detail:
+            'Recente gebeurtenissen blijven volledig terugleesbaar, maar staan achter één openactie tegen logboekstapeling.',
+          primary: { href: '#logboek-recent-disclosure', label: 'Events openen' },
+          secondary: { href: '#logboek-route-categorieen', label: 'Categorieën' },
+          status: `${logs.length} events`,
+          ariaLabel: 'Logboek recent route-samenvatting',
+          data: { 'eventlog-route-summary': 'recent' },
+        })}
+        <details id="logboek-recent-disclosure" class="kp-disclosure" data-eventlog-disclosure="recent">
+          <summary class="kp-disclosure__summary">Recente auditregels openen</summary>
+          <div class="kp-disclosure__body">
+            ${
+              logs.length > 0
+                ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
+                : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>'
+            }
+          </div>
+        </details>
       </section>`,
       `<section id="logboek-route-categorieen" class="eventlog-route-section" aria-labelledby="logboek-route-categorieen-title" data-eventlog-route="categorieen">
         <header class="eventlog-route-section__header">
@@ -1154,7 +1181,22 @@ function renderLogboekScreen(state: AppShellState): string {
           <h2 id="logboek-route-categorieen-title">Categorieën scannen</h2>
           <p>Bekijk hoeveel gebeurtenissen per categorie zijn vastgelegd.</p>
         </header>
-        ${renderEventLogCategorySummary(categoryCounts)}
+        ${commandRouteSummary({
+          eyebrow: 'Logboekroute',
+          title: 'Categorieën als compacte auditkaart',
+          detail:
+            'Categorieaantallen staan achter een disclosure zodat het logboek niet direct alle systeemdetails toont.',
+          primary: { href: '#logboek-categorieen-disclosure', label: 'Categorieën openen' },
+          status: `${Object.keys(categoryCounts).length} soorten`,
+          ariaLabel: 'Logboek categorieën route-samenvatting',
+          data: { 'eventlog-route-summary': 'categorieen' },
+        })}
+        <details id="logboek-categorieen-disclosure" class="kp-disclosure" data-eventlog-disclosure="categorieen">
+          <summary class="kp-disclosure__summary">Categorieaantallen openen</summary>
+          <div class="kp-disclosure__body">
+            ${renderEventLogCategorySummary(categoryCounts)}
+          </div>
+        </details>
       </section>`,
       `<section id="logboek-route-privacy" class="eventlog-route-section" aria-labelledby="logboek-route-privacy-title" data-eventlog-route="privacy">
         <header class="eventlog-route-section__header">
@@ -1162,11 +1204,26 @@ function renderLogboekScreen(state: AppShellState): string {
           <h2 id="logboek-route-privacy-title">Privacygevoelige gebeurtenissen</h2>
           <p>Controleer welke auditregels extra terughoudend worden weergegeven.</p>
         </header>
-        ${
-          highRiskLogs.length > 0
-            ? `<ol class="phase-list">${highRiskLogs.map(renderEventLogItem).join('')}</ol>`
-            : '<p class="empty-state">Geen privacygevoelige gebeurtenissen in dit logboek.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Logboekroute',
+          title: 'Privacyregels apart controleren',
+          detail:
+            'Hoog-risico auditregels openen alleen in deze route, zodat gevoelige context niet ongevraagd in beeld staat.',
+          primary: { href: '#logboek-privacy-disclosure', label: 'Privacy openen' },
+          status: `${highRiskLogs.length} signalen`,
+          ariaLabel: 'Logboek privacy route-samenvatting',
+          data: { 'eventlog-route-summary': 'privacy' },
+        })}
+        <details id="logboek-privacy-disclosure" class="kp-disclosure" data-eventlog-disclosure="privacy">
+          <summary class="kp-disclosure__summary">Privacygevoelige auditregels openen</summary>
+          <div class="kp-disclosure__body">
+            ${
+              highRiskLogs.length > 0
+                ? `<ol class="phase-list">${highRiskLogs.map(renderEventLogItem).join('')}</ol>`
+                : '<p class="empty-state">Geen privacygevoelige gebeurtenissen in dit logboek.</p>'
+            }
+          </div>
+        </details>
       </section>`,
     ],
     {
@@ -12577,22 +12634,38 @@ function renderHerinneringenScreen(state: AppShellState): string {
           <h2 id="herinneringen-route-status-title">Notificatiestatus controleren</h2>
           <p>Controleer browsertoestemming en service worker zonder medicatie- of afspraakdetails te tonen.</p>
         </header>
-        <h2>Notificaties</h2>
-        <div class="notification-status" data-notification-permission="${escapeAttribute(state.notificaties.permission)}" data-notification-service-worker="${escapeAttribute(state.notificaties.serviceWorker)}">
-          <p><strong>Toestemming:</strong> ${renderPermissionLabel(state.notificaties.permission)}</p>
-          <p><strong>Service worker:</strong> ${renderServiceWorkerLabel(state.notificaties.serviceWorker)}</p>
-        </div>
-        ${
-          state.notificaties.permission === 'default' ||
-          state.notificaties.serviceWorker === 'unregistered'
-            ? '<button id="request-notifications" type="button">Notificaties aanzetten</button>'
-            : ''
-        }
-        ${
-          state.notificaties.permission === 'denied'
-            ? '<p class="small-print">Notificaties zijn in de browser geweigerd. Kiempad blijft herinneringen in de app tonen.</p>'
-            : ''
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Herinneringenroute',
+          title: 'Eerst runtime-status controleren',
+          detail:
+            'Browsertoestemming, service worker en fallbackmelding staan achter één statuspaneel zonder herinneringsinhoud te lekken.',
+          primary: { href: '#herinneringen-status-disclosure', label: 'Status openen' },
+          secondary: { href: '#herinneringen-route-privacy', label: 'Privacy' },
+          status: renderPermissionLabel(state.notificaties.permission),
+          ariaLabel: 'Herinneringen status route-samenvatting',
+          data: { 'notification-route-summary': 'status' },
+        })}
+        <details id="herinneringen-status-disclosure" class="kp-disclosure" data-notification-disclosure="status">
+          <summary class="kp-disclosure__summary">Notificatiestatus en actie openen</summary>
+          <div class="kp-disclosure__body">
+            <h2>Notificaties</h2>
+            <div class="notification-status" data-notification-permission="${escapeAttribute(state.notificaties.permission)}" data-notification-service-worker="${escapeAttribute(state.notificaties.serviceWorker)}">
+              <p><strong>Toestemming:</strong> ${renderPermissionLabel(state.notificaties.permission)}</p>
+              <p><strong>Service worker:</strong> ${renderServiceWorkerLabel(state.notificaties.serviceWorker)}</p>
+            </div>
+            ${
+              state.notificaties.permission === 'default' ||
+              state.notificaties.serviceWorker === 'unregistered'
+                ? '<button id="request-notifications" type="button">Notificaties aanzetten</button>'
+                : ''
+            }
+            ${
+              state.notificaties.permission === 'denied'
+                ? '<p class="small-print">Notificaties zijn in de browser geweigerd. Kiempad blijft herinneringen in de app tonen.</p>'
+                : ''
+            }
+          </div>
+        </details>
       </section>`,
       `<section id="herinneringen-route-privacy" class="notification-route-section" aria-labelledby="herinneringen-route-privacy-title" data-notification-route="privacy">
         <header class="notification-route-section__header">
@@ -12600,17 +12673,35 @@ function renderHerinneringenScreen(state: AppShellState): string {
           <h2 id="herinneringen-route-privacy-title">Lockscreenprivacy instellen</h2>
           <p>Kies wat OS-notificaties mogen tonen op een vergrendeld scherm.</p>
         </header>
-        <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
-        <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
-          <label>
-            Inhoud op vergrendeld scherm
-            <select name="toonNotificatieDetailsOpVergrendelscherm">
-              ${renderOption('false', 'Altijd generieke tekst', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
-              ${renderOption('true', 'Details tonen na expliciete keuze', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
-            </select>
-          </label>
-          <button type="submit">Bewaar notificatieprivacy</button>
-        </form>
+        ${commandRouteSummary({
+          eyebrow: 'Herinneringenroute',
+          title: 'Lockscreenprivacy bewust beheren',
+          detail:
+            'Generieke tekst blijft standaard; details tonen kan alleen via deze expliciete privacyroute.',
+          primary: { href: '#notification-privacy-form', label: 'Privacyform' },
+          secondary: { href: '#herinneringen-route-status', label: 'Status' },
+          status: state.settings.toonNotificatieDetailsOpVergrendelscherm
+            ? 'Details opt-in'
+            : 'Generiek',
+          ariaLabel: 'Herinneringen privacy route-samenvatting',
+          data: { 'notification-route-summary': 'privacy' },
+        })}
+        <details class="kp-disclosure" data-notification-disclosure="privacy" open>
+          <summary class="kp-disclosure__summary">Lockscreenprivacy formulier openen</summary>
+          <div class="kp-disclosure__body">
+            <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
+            <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
+              <label>
+                Inhoud op vergrendeld scherm
+                <select name="toonNotificatieDetailsOpVergrendelscherm">
+                  ${renderOption('false', 'Altijd generieke tekst', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
+                  ${renderOption('true', 'Details tonen na expliciete keuze', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
+                </select>
+              </label>
+              <button type="submit">Bewaar notificatieprivacy</button>
+            </form>
+          </div>
+        </details>
       </section>`,
       `<section id="herinneringen-route-plannen" class="notification-route-section" aria-labelledby="herinneringen-route-plannen-title" data-notification-route="plannen">
         <header class="notification-route-section__header">
@@ -12618,15 +12709,31 @@ function renderHerinneringenScreen(state: AppShellState): string {
           <h2 id="herinneringen-route-plannen-title">Herinnering plannen</h2>
           <p>Stel standaard waarschuwtijd en eigen herinneringen in.</p>
         </header>
-        <form id="warning-default-form" class="data-form compact-form">
-          <label>
-            Standaard afspraakwaarschuwing (minuten vooraf)
-            <input name="afspraakWaarschuwingMinuten" type="number" min="0" max="1440" step="5" value="${state.settings.afspraakWaarschuwingMinuten}" />
-          </label>
-          <button type="submit">Bewaar standaardtijd</button>
-        </form>
-        <h2 class="section-subheading">Eigen herinnering</h2>
-        ${renderEigenHerinneringForm()}
+        ${commandRouteSummary({
+          eyebrow: 'Herinneringenroute',
+          title: 'Planning zonder komende lijst erboven',
+          detail:
+            'Standaardtijd en eigen herinnering blijven gescheiden van de komende meldingen en fallbacklijst.',
+          primary: { href: '#warning-default-form', label: 'Standaardtijd' },
+          secondary: { href: '#eigen-herinnering-form', label: 'Eigen herinnering' },
+          status: `${state.settings.afspraakWaarschuwingMinuten} min`,
+          ariaLabel: 'Herinneringen plannen route-samenvatting',
+          data: { 'notification-route-summary': 'plannen' },
+        })}
+        <details class="kp-disclosure" data-notification-disclosure="planning" open>
+          <summary class="kp-disclosure__summary">Planningsformulieren openen</summary>
+          <div class="kp-disclosure__body">
+            <form id="warning-default-form" class="data-form compact-form">
+              <label>
+                Standaard afspraakwaarschuwing (minuten vooraf)
+                <input name="afspraakWaarschuwingMinuten" type="number" min="0" max="1440" step="5" value="${state.settings.afspraakWaarschuwingMinuten}" />
+              </label>
+              <button type="submit">Bewaar standaardtijd</button>
+            </form>
+            <h2 class="section-subheading">Eigen herinnering</h2>
+            ${renderEigenHerinneringForm()}
+          </div>
+        </details>
       </section>`,
       `<section id="herinneringen-route-komend" class="notification-route-section" aria-labelledby="herinneringen-route-komend-title" data-notification-route="komend">
         <header class="notification-route-section__header">
@@ -12634,15 +12741,36 @@ function renderHerinneringenScreen(state: AppShellState): string {
           <h2 id="herinneringen-route-komend-title">Komende herinneringen en fallback</h2>
           <p>Bekijk actieve herinneringen en veilige in-app fallbackmeldingen.</p>
         </header>
-        <div class="panel-heading">
-          <h2>Komende herinneringen</h2>
-        </div>
-        ${renderInAppFallbackNotifications(fallback)}
-        ${
-          komende.length > 0
-            ? renderHerinneringenList(komende)
-            : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Herinneringenroute',
+          title: 'Komende meldingen pas openen om te handelen',
+          detail:
+            'Actieve herinneringen en in-app fallbackmeldingen blijven compleet, maar staan niet direct als lange lijst open.',
+          primary: { href: '#herinneringen-komend-disclosure', label: 'Komend openen' },
+          secondary: { href: '#herinneringen-fallback-disclosure', label: 'Fallback' },
+          status: `${komende.length} actief`,
+          ariaLabel: 'Herinneringen komend route-samenvatting',
+          data: { 'notification-route-summary': 'komend' },
+        })}
+        <details id="herinneringen-fallback-disclosure" class="kp-disclosure" data-notification-disclosure="fallback">
+          <summary class="kp-disclosure__summary">In-app fallbackmeldingen openen</summary>
+          <div class="kp-disclosure__body">
+            ${renderInAppFallbackNotifications(fallback)}
+          </div>
+        </details>
+        <details id="herinneringen-komend-disclosure" class="kp-disclosure" data-notification-disclosure="komend">
+          <summary class="kp-disclosure__summary">Komende herinneringen en acties openen</summary>
+          <div class="kp-disclosure__body">
+            <div class="panel-heading">
+              <h2>Komende herinneringen</h2>
+            </div>
+            ${
+              komende.length > 0
+                ? renderHerinneringenList(komende)
+                : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
+            }
+          </div>
+        </details>
       </section>`,
     ],
     { className: 'notification-command-layout', ariaLabel: 'Herinneringen beheren' },
