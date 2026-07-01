@@ -32,9 +32,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-start-cockpit-route="timeline"]',
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
-      '[data-workspace-map="ready"]',
-      '[data-workspace-map-card="Vandaag"]',
-      '[data-workspace-map-card="Dossier"]',
+      '[data-workspace-strip="ready"]',
       '[data-start-workspace-deck="ready"]',
       '[data-start-workspace-card="today"]',
       '[data-start-workspace-card="record"]',
@@ -111,6 +109,10 @@ describe('routeflow screenshot smoke script', () => {
     }
 
     expect(routeflowScreenshotSmokeScript).toContain('openSelectors');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'hiddenSelectors: [\'[data-workspace-map="ready"]\']',
+    );
+    expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
     expect(routeflowScreenshotSmokeScript).toContain('horizontalOverflow');
