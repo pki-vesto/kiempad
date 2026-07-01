@@ -680,7 +680,7 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
 
 ## 6. Hoogste Prioriteiten
 
-1. UI Improvement Evolution uitvoeren vanaf G1216: first-viewport werkbank-CSS consolideren met gedeelde basisklassen en zichtbare ritmeverbetering.
+1. UI Improvement Evolution uitvoeren vanaf G1217: actieve routepanelen verder ontlasten tegen de lange-paginaervaring.
 2. Tailscale-publicatie periodiek smoken met
    `KIEMPAD_TAILSCALE_LOCAL_PORT=8098 KIEMPAD_TAILNET_URL=https://kiempad.tail9d0c71.ts.net npm run smoke:tailscale`.
 

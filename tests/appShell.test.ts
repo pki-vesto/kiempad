@@ -36388,6 +36388,23 @@ describe('app shell', () => {
     expect(mobileCss).toContain('min-height: 44px;');
   });
 
+  it('bewaakt commandroutes als zichtbare app-dock in plaats van platte paginalinks', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+
+    expect(css).toContain(
+      '--surface-muted: color-mix(in srgb, var(--surface-2) 82%, var(--surface));',
+    );
+    expect(css).toContain('--shadow-soft: 0 10px 26px rgba(21, 48, 44, 0.08);');
+    expect(css).toContain('top: 12px;');
+    expect(css).toContain('z-index: 28;');
+    expect(css).toContain('backdrop-filter: blur(18px);');
+    expect(css).toContain('border-radius: 14px;');
+    expect(css).toContain('inset 3px 0 0 var(--accent)');
+    expect(mobileCss).toContain('flex: 0 0 min(156px, 68vw);');
+    expect(mobileCss).toContain('inset 0 3px 0 var(--accent)');
+  });
+
   it('bewaakt attachment assistive recovery archive purge receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention expiry cleanup archive receipt export delivery handoff confirmation receipt audit trail retention privacy states zonder zoekterm of bronpayload', () => {
     const html = renderAppShell(
       'dossier',

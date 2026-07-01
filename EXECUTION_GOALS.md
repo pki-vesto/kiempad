@@ -3798,6 +3798,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Styles, app shell, workbench components, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1217 — actieve routepanelen verder ontlasten tegen lange-paginaervaring
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** De app heeft werkbanken en route-docks, maar sommige actieve routepanelen tonen nog te veel secundaire content direct onder elkaar.
+- **User Impact:** Gebruikers ervaren delen van Kiempad nog als een lange documentpagina in plaats van als een rustige consumer health app met duidelijke werkstappen.
+- **Desired Outcome:** Maak de actieve routepanelen compacter en taakgerichter door secundaire inhoud achter duidelijke secties of progressive panels te plaatsen.
+- **User Value:** Gebruikers zien sneller de primaire taak, verliezen minder overzicht en hoeven minder te scrollen om de appstructuur te begrijpen.
+- **Acceptance Criteria:** Verfijn minimaal twee schermen met actieve routepanelen zodat primaire taak, status en eerstvolgende actie bovenaan staan en secundaire details niet direct als lange lijst volgen; behoud bestaande form-id's, data-hooks, aria-labels en route-ankers; mobile, tablet en desktop tonen geen overlap of horizontale overflow; browser-screenshots bewijzen zichtbare ontlasting; geen medische payload, behandeladvies, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Actieve routepanelen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Route panels, app shell, styles, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
