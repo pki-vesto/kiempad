@@ -784,15 +784,15 @@ export function renderAppShell(
           </span>
         </a>
         <p class="status-pill" data-storage-mode-copy="${storageStatusState}">${storageStatus}</p>
-        <form id="theme-form" class="theme-form" aria-label="Weergavethema">
+        <form id="theme-form" class="theme-form" aria-label="Weergavethema" data-theme-control="compact">
           <label>
-            Thema
+            <span class="theme-form__label">Thema</span>
             <select name="thema">
               ${renderOption('licht', 'Licht', state.settings.thema)}
               ${renderOption('donker', 'Donker', state.settings.thema)}
             </select>
           </label>
-          <button type="submit">Bewaar thema</button>
+          <button type="submit" aria-label="Bewaar thema">Opslaan</button>
         </form>
         <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
       </header>
