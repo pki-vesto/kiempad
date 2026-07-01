@@ -395,6 +395,10 @@
   actieve prep-workspace rechts. De workspace gebruikt een hoofdvlak met
   contextstrip, zodat prep-board, wizard, open vragen en verslagen niet als één
   lange vraaglijstpagina starten.
+- **G1304 Wellbeing-console:** Welzijn toont op desktop een compacte console met
+  inzichtwerkbank links, taakroute-rail in het midden en actieve welzijnswerkruimte
+  rechts. De workspace gebruikt een hoofdvlak met contextstrip, zodat check-ins,
+  symptomen, cyclusmetingen en vastleggen niet als één lange welzijnspagina starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is

@@ -45,6 +45,10 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain(
       'consult-console staat niet in compacte werkvlakken',
     );
+    expect(routeflowScreenshotSmokeScript).toContain('wellbeingConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'wellbeing-console staat niet in compacte werkvlakken',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('timelineConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
       'timeline-console staat niet in begrensde werkvlakken',
@@ -163,6 +167,9 @@ describe('routeflow screenshot smoke script', () => {
       '[data-consult-prep-lane="packet"]',
       '[data-hub-detail-panel="consult-prep-wizard"]',
       '.consult-detail-panel__header',
+      '[data-wellbeing-console="ready"]',
+      '[data-wellbeing-console-region="workbench"]',
+      '[data-wellbeing-console-region="workspace"]',
       '[data-wellbeing-history-board="ready"]',
       '[data-wellbeing-history-lane="checkins"]',
       '[data-wellbeing-history-lane="symptoms"]',
