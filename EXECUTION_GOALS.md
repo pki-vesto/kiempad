@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1292 — Premium Claude Design UI: compacte routedetails en panels
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na het compacter maken van routeheaders, summaries en eerste routeboards bleef de detailfase op desktop nog vaak als hoge stapel lezen door ruime disclosures, bodypadding en summary-/policy-panels.
+- **Desired Outcome:** Maak routedetails op desktop compacter met lagere disclosure summaries, minder bodypadding, compactere summary-/policy-panels en strakkere phase-/compactlijsten.
+- **User Value:** De gebruiker behoudt alle details en anchors, maar scant sneller door de route zonder telkens grote detailkaarten te moeten passeren.
+- **Acceptance Criteria:** Desktop route-disclosures hebben lagere summaries en bodypadding; summary-/policy-panels binnen actieve routes zijn minder hoog; phase-/compactlijsten hebben strakker ritme; mobiele regels blijven ongemoeid; app-shell tests bewaken het CSS-contract; volledige validatie blijft groen.
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** `src/styles.css`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2359
+
 ### G1291 — Premium Claude Design UI: compacte resterende routeboards
 
 - **Epic:** Onboarding & Daily Use
