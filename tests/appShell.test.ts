@@ -2245,6 +2245,15 @@ describe('app shell', () => {
     expect(html).toContain('href="#dossier?route=imaging"');
     expect(html).toContain('href="#kennis"');
     expect(html).toContain('href="#backup"');
+    expect(html).toContain('class="start-snapshot"');
+    expect(html).toContain('data-start-snapshot="ready"');
+    expect(html).toContain('aria-label="Startscan"');
+    expect(html).toContain('data-start-snapshot-card="phase"');
+    expect(html).toContain('data-start-snapshot-card="today"');
+    expect(html).toContain('data-start-snapshot-card="advice"');
+    expect(html).toContain('data-start-snapshot-card="vault"');
+    expect(html).toContain('Traject starten');
+    expect(html).toContain('Lokale kluis');
     expect(html).toContain('class="start-task-routes"');
     expect(html).toContain('aria-label="Start taakroutes"');
     expect(html).toContain('data-start-task-routes="ready"');
@@ -2432,6 +2441,10 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-owner-grid {');
     expect(css).toContain('grid-template-columns: repeat(3, minmax(0, 1fr));');
     expect(css).toContain('.daily-advice-owner-card {');
+    expect(css).toContain('.start-snapshot {');
+    expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
+    expect(css).toContain('.start-snapshot__card {');
+    expect(css).toContain('.start-snapshot__card strong {');
     expect(mobileCss).toContain('.start-workbench__grid {');
     expect(mobileCss).toContain('display: grid;');
     expect(mobileCss).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
@@ -2445,6 +2458,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('min-height: 148px;');
     expect(mobileCss).toContain('.start-workbench-card__detail {');
     expect(mobileCss).toContain('display: none;');
+    expect(mobileCss).toContain('.start-snapshot {');
+    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('.start-snapshot__card {');
+    expect(mobileCss).toContain('flex: 0 0 min(220px, 72vw);');
     expect(mobileCss).toContain('.daily-advice-workbench__header {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.daily-advice-owner-grid {');
@@ -2528,6 +2545,7 @@ describe('app shell', () => {
       '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
     );
     const workbenchIndex = html.indexOf('data-start-workbench="multi-flow"');
+    const snapshotIndex = html.indexOf('data-start-snapshot="ready"');
     const routeNavIndex = html.indexOf('class="start-task-routes"');
     const primaryStart = html.indexOf('class="kp-dashboard__primary"', dashboardStart);
     const secondaryStart = html.indexOf('class="kp-dashboard__secondary"', primaryStart);
@@ -2552,8 +2570,10 @@ describe('app shell', () => {
 
     expect(dashboardStart).toBeGreaterThan(-1);
     expect(workbenchIndex).toBeGreaterThan(-1);
+    expect(snapshotIndex).toBeGreaterThan(-1);
     expect(routeNavIndex).toBeGreaterThan(-1);
-    expect(workbenchIndex).toBeLessThan(routeNavIndex);
+    expect(workbenchIndex).toBeLessThan(snapshotIndex);
+    expect(snapshotIndex).toBeLessThan(routeNavIndex);
     expect(routeNavIndex).toBeLessThan(dashboardStart);
     expect(primaryStart).toBeGreaterThan(dashboardStart);
     expect(secondaryStart).toBeGreaterThan(primaryStart);

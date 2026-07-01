@@ -719,6 +719,8 @@ Zie [`PRODUCT_BACKLOG.md`](PRODUCT_BACKLOG.md) en [`ROADMAP.md`](ROADMAP.md).
   De traject/timeline-werkbank heeft nu een compacte trajectscan boven de routepanelen
   voor huidige fase, volgende actie, laatste timelinecontext en werkgrens, zodat de
   eerste viewport minder als administratiepagina leest.
+  Het startscherm heeft nu ook een compacte startscan tussen de fertility hub en
+  vervolgpanelen voor traject, vandaag, dagadvies en kluis/context.
   De app heeft een PWA-manifest en service worker voor offline gebruik na de eerste load.
 - Tailscale Serve publiceert de statische PWA en proxyt `/api/*` naar de centrale
   encrypted backend binnen dezelfde tailnet-node; de backend bewaart alleen

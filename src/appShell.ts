@@ -12749,11 +12749,34 @@ function renderStartScreen(state: AppShellState): string {
         })
       : '';
   const setupPanel = renderFirstRunSetup(state);
+  const startSnapshot = renderStartSnapshot({
+    activeTraject,
+    huidigeFase,
+    nextAppointment,
+    nextReminder,
+    doseCount: todayDoseLogs.length,
+    recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+      (total, owner) => total + dailyRecommendations[owner].length,
+      0,
+    ),
+    reviewCount: (['vrouw', 'man', 'samen'] as const).reduce(
+      (total, owner) =>
+        total +
+        dailyRecommendations[owner].filter(
+          (item) => item.inputMinimisatie?.reviewStatus === 'concept_te_controleren',
+        ).length,
+      0,
+    ),
+    dossierCount: state.dossierDocuments?.length ?? 0,
+    consultCount: state.consultVerslagen?.length ?? 0,
+    secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
+  });
 
   return sectionStack(
     [
       renderStartCommandHeader(state),
       renderStartIntelligenceWorkbench(state, dailyRecommendations),
+      startSnapshot,
       renderStartTaskRouteNav(),
       dashboardShell({
         className: 'start-dashboard-shell start-flow-dashboard',
@@ -12802,6 +12825,64 @@ function renderStartScreen(state: AppShellState): string {
     ],
     { className: 'start-command-layout', ariaLabel: 'Startoverzicht' },
   );
+}
+
+function renderStartSnapshot(input: {
+  activeTraject: TrajectMetFasen | undefined;
+  huidigeFase: Fase | undefined;
+  nextAppointment: string;
+  nextReminder: string;
+  doseCount: number;
+  recommendationCount: number;
+  reviewCount: number;
+  dossierCount: number;
+  consultCount: number;
+  secureMode: string;
+}): string {
+  const phaseTitle = input.huidigeFase
+    ? TRAJECT_FASE_LABELS[input.huidigeFase.fase]
+    : input.activeTraject
+      ? input.activeTraject.traject.naam
+      : 'Traject starten';
+  const phaseMeta = input.huidigeFase
+    ? 'Actuele fase zichtbaar'
+    : input.activeTraject
+      ? 'Kies de huidige fase'
+      : 'Nog geen poging';
+  const todayMeta =
+    input.doseCount > 0
+      ? `${input.doseCount} medicatiemoment${input.doseCount === 1 ? '' : 'en'}`
+      : input.nextReminder;
+  const adviceMeta =
+    input.reviewCount > 0
+      ? `${input.reviewCount} concept${input.reviewCount === 1 ? '' : 'en'} te controleren`
+      : 'Geen open reviewdruk';
+  const vaultMeta = `${input.dossierCount} document${input.dossierCount === 1 ? '' : 'en'} · ${input.consultCount} consult${input.consultCount === 1 ? '' : 'en'}`;
+
+  return `
+    <section class="start-snapshot" aria-label="Startscan" data-start-snapshot="ready">
+      <a class="start-snapshot__card" href="#start-current-phase" data-start-snapshot-card="phase">
+        <span>Traject</span>
+        <strong>${escapeHtml(phaseTitle)}</strong>
+        <small>${escapeHtml(phaseMeta)}</small>
+      </a>
+      <a class="start-snapshot__card" href="#start-next-step" data-start-snapshot-card="today">
+        <span>Vandaag</span>
+        <strong>${escapeHtml(input.nextAppointment)}</strong>
+        <small>${escapeHtml(todayMeta)}</small>
+      </a>
+      <a class="start-snapshot__card" href="#start-recommendations" data-start-snapshot-card="advice">
+        <span>Dagadvies</span>
+        <strong>${input.recommendationCount} aanbeveling${input.recommendationCount === 1 ? '' : 'en'}</strong>
+        <small>${escapeHtml(adviceMeta)}</small>
+      </a>
+      <a class="start-snapshot__card" href="#backup" data-start-snapshot-card="vault">
+        <span>Kluis</span>
+        <strong>${escapeHtml(input.secureMode)}</strong>
+        <small>${escapeHtml(vaultMeta)}</small>
+      </a>
+    </section>
+  `;
 }
 
 type StartFlowRailPanel = {

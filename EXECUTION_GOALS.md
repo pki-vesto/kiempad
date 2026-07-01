@@ -4313,6 +4313,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **GitHub Issue:** #2271
 - **Status:** ☑ done
 
+### G1249 — startscan tussen hub en vervolgpanelen toevoegen
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Het startscherm heeft een fertility hub en progressive panels, maar mist nog een compacte statuslaag tussen de hubkeuze en de vervolgpanelen.
+- **User Impact:** Gebruikers kiezen eerst een werkbaan, maar moeten daarna nog door routeknoppen en panelen scannen om de actuele startstatus te begrijpen.
+- **Desired Outcome:** Voeg een startscan toe met vier tegels voor traject, vandaag, dagadvies en kluis/context.
+- **User Value:** De startpagina voelt minder als een lange stapeling en geeft meteen een rustige samenvatting van wat nu aandacht vraagt.
+- **Acceptance Criteria:** Start toont tussen hub en routes een desktop/mobile responsieve snapshotrij met traject, vandaag, dagadvies en kluis; bestaande hubflows, hashlinks, daily recommendations, setup en quick entry blijven werken; mobile toont geen overlap of horizontale pagina-overflow; geen medische payload, OCR-tekst, bestandsinhoud, beeldpayload, diagnose, dosering, behandelkeuzeadvies, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Start, Dashboard, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Start shell, dashboard routes, daily recommendations, CSS, app shell tests
+- **ADR Needed:** no
+- **Score:** 24
+- **GitHub Issue:** #2273
+- **Status:** ☑ done
+
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
 
 - **Epic:** Premium Claude Design UI
