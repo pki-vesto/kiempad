@@ -14788,27 +14788,51 @@ function renderVragenScreen(state: AppShellState): string {
       </section>`,
   ];
 
+  const questionWorkspace = domainSplitWorkspace({
+    className: 'question-split-workspace',
+    ariaLabel: 'Vragen split-view werkruimte',
+    data: { 'question-split-workspace': 'ready' },
+    rail: questionTaskRoutes,
+    main: questionRouteSections.join(''),
+    context: renderQuestionWorkspaceContext({
+      openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+      totalCount: state.vragen.length,
+      answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
+      verslagCount: vraagVerslagen.length,
+      hasPrepPacket: Boolean(gegenereerdeVragenlijst),
+      nextWithQuestions,
+    }),
+  });
+
   return sectionStack(
     [
-      questionWorkbench,
-      domainSplitWorkspace({
-        className: 'question-split-workspace',
-        ariaLabel: 'Vragen split-view werkruimte',
-        data: { 'question-split-workspace': 'ready' },
-        rail: questionTaskRoutes,
-        main: questionRouteSections.join(''),
-        context: renderQuestionWorkspaceContext({
-          openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
-          totalCount: state.vragen.length,
-          answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
-          verslagCount: vraagVerslagen.length,
-          hasPrepPacket: Boolean(gegenereerdeVragenlijst),
-          nextWithQuestions,
-        }),
+      renderQuestionFocusShell({
+        workbench: questionWorkbench,
+        workspace: questionWorkspace,
       }),
     ],
     { className: 'question-command-layout', ariaLabel: 'Vragen voor de arts beheren' },
   );
+}
+
+function renderQuestionFocusShell(input: { workbench: string; workspace: string }): string {
+  return `
+    <section class="question-focus-shell" aria-labelledby="question-focus-shell-title" data-question-focus-shell="ready">
+      <header class="question-focus-shell__header">
+        <p class="kp-card__eyebrow">Consultfocus</p>
+        <h2 id="question-focus-shell-title">Eerst gesprek voorbereiden, daarna vragen beheren</h2>
+        <p>Open vragen, prep-packet, verslagen en beheer staan in één consultwerkruimte zodat de gebruiker niet door alle vraaglijsten tegelijk werkt.</p>
+      </header>
+      <div class="question-focus-shell__body">
+        <div class="question-focus-shell__workbench" data-question-focus-region="workbench">
+          ${input.workbench}
+        </div>
+        <div class="question-focus-shell__workspace" data-question-focus-region="workspace">
+          ${input.workspace}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 function renderQuestionPreparationWorkbench(input: {

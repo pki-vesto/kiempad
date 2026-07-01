@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1270 — Premium Claude Design UI: question focus-shell bundelen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Consultvoorbereiding had een werkbank en split-workspace, maar die stonden nog als losse lagen onder elkaar waardoor open vragen, prep-packet, verslagen en beheer minder als één gespreksruimte voelden.
+- **Desired Outcome:** Bundel de consultvoorbereidingswerkbank en Vragen split-workspace in één `question-focus-shell` met aparte workbench- en workspace-regio's.
+- **User Value:** De gebruiker start met gesprek voorbereiden en opent daarna gericht open vragen, prep, verslagen of beheer zonder door alle vraaglijsten tegelijk te werken.
+- **Acceptance Criteria:** Vragen rendert `data-question-focus-shell="ready"`; workbench en workspace hebben eigen data-regio's; de prep-route blijft Consult Prep Wizard en prep board tonen; mobiel verbergt redundante globale context boven Vragen; routeflow-smoke bewaakt de focus-shell.
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** `src/appShell.ts`, `src/styles.css`, `scripts/routeflow-screenshot-smoke.mjs`, `tests/appShell.test.ts`
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2315
+
 ### G1269 — Premium Claude Design UI: start vervolgpanelen als contained workspace
 
 - **Epic:** Onboarding & Daily Use

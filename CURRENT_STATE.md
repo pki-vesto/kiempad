@@ -263,6 +263,10 @@
   setup en snelle invoer nu als vervolgworkspace met een compact switchboard en
   begrensde panel-stack. De startpagina blijft daardoor korter en rustiger, terwijl
   de detailpanelen intern scrollbaar en direct aanklikbaar blijven.
+- **G1270 Question focus-shell:** Vragen/consultvoorbereiding bundelt de
+  consultvoorbereidingswerkbank en split-workspace in één `question-focus-shell`
+  met workbench- en workspace-regio's. De prep-route opent als consultruimte voor
+  open vragen, actiepunten, context, prep-packet, verslagen en beheer.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
