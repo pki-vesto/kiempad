@@ -29,6 +29,8 @@ describe('context signals visual smoke script', () => {
     expect(contextSignalsVisualSmokeScript).toContain('signals.screenshot');
     expect(contextSignalsVisualSmokeScript).toContain('cardsInsideContext');
     expect(contextSignalsVisualSmokeScript).toContain('textFits');
+    expect(contextSignalsVisualSmokeScript).toContain('actionTargets');
+    expect(contextSignalsVisualSmokeScript).toContain('firstCardPrioritized');
     expect(contextSignalsVisualSmokeScript).toContain('horizontalOverflow');
     expect(contextSignalsVisualSmokeScript).toContain('screenshotBytes');
     expect(contextSignalsVisualSmokeScript).not.toContain('OCR TEKST');

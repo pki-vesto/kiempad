@@ -4054,6 +4054,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, context signal styles, browser smoke, tests
 - **ADR Needed:** no
 - **Score:** 41
+- **Status:** ☑ done
+
+### G1233 — contextsignalen uitbreiden met route-specifieke microstates
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Contextsignalen zijn nu visueel sterker, maar de prioriteitskaart beweegt nog beperkt mee met de actieve route.
+- **User Impact:** Gebruikers krijgen in de rechterkolom nog niet altijd direct de meest taakgerichte microcontext voor upload, timeline, privacy, import of vergoeding.
+- **Desired Outcome:** Maak contextsignalen route-specifieker met subtiele microstates of prioriteitslabels voor meerdere werkruimtes.
+- **User Value:** Gebruikers herkennen sneller waarom een bepaald contextsignaal nu bovenaan staat zonder extra routecontent te openen.
+- **Acceptance Criteria:** Minimaal vier split-view werkruimtes tonen route-specifieke contextsignalen of prioriteitslabels; de rechterkolom blijft compact en secundair naast het actieve hoofdvlak; browser-evidence blijft groen voor desktop en mobiel; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven werken; geen medische payload, secrets, trackingdata of externe content wordt toegevoegd.
+- **Affected Screens:** Split-view werkruimtes met contextsignalen
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, context signal state, browser smoke, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten
