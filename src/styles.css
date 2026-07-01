@@ -6530,6 +6530,74 @@ a.action-card:active {
   gap: 16px;
 }
 
+.dossier-focus-shell {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--teal-soft) 30%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+  box-shadow: var(--shadow-soft);
+}
+
+.dossier-focus-shell__header {
+  display: grid;
+  max-width: 760px;
+  gap: 5px;
+}
+
+.dossier-focus-shell__header h2,
+.dossier-focus-shell__header p {
+  margin: 0;
+}
+
+.dossier-focus-shell__header h2 {
+  color: var(--text);
+  font-size: 1.28rem;
+  line-height: 1.18;
+}
+
+.dossier-focus-shell__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.dossier-focus-shell__body {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.dossier-focus-shell__orientation,
+.dossier-focus-shell__workspace {
+  min-width: 0;
+}
+
+.dossier-focus-shell__orientation > .dossier-route-stage {
+  width: 100%;
+}
+
+.dossier-focus-shell__workspace .domain-split-workspace {
+  grid-template-columns: minmax(210px, 0.38fr) minmax(0, 1fr);
+}
+
+.dossier-focus-shell__workspace .domain-split-workspace__context {
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-route {
+  padding: 7px 8px;
+}
+
 .dossier-route-stage {
   display: grid;
   gap: 12px;
@@ -8412,6 +8480,11 @@ a.action-card:active {
     scroll-snap-align: start;
   }
 
+  .content:has([data-dossier-focus-shell="ready"]) > .workspace-map,
+  .content:has([data-dossier-focus-shell="ready"]) > .page-header {
+    display: none;
+  }
+
   .start-workspace-deck {
     display: flex;
     gap: 10px;
@@ -8635,6 +8708,35 @@ a.action-card:active {
   .dossier-route-stage {
     gap: 10px;
     padding: 12px;
+  }
+
+  .dossier-focus-shell {
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .dossier-focus-shell__header h2 {
+    font-size: 1.12rem;
+  }
+
+  .dossier-focus-shell__header p:last-child {
+    font-size: 0.82rem;
+  }
+
+  .dossier-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .dossier-focus-shell__workspace .domain-split-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .dossier-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
+    grid-template-columns: 1fr;
   }
 
   .dossier-route-stage__header {

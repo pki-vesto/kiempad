@@ -6,6 +6,8 @@ describe('dossier route smoke script', () => {
   it('biedt een herhaalbare browser-smoke voor dossierroute first viewport', () => {
     expect(pkg.scripts['smoke:dossier-routes']).toBe('node scripts/dossier-route-smoke.mjs');
     expect(dossierRouteSmokeScript).toContain('#dossier?route=imaging');
+    expect(dossierRouteSmokeScript).toContain('[data-dossier-focus-shell="ready"]');
+    expect(dossierRouteSmokeScript).toContain('[data-dossier-focus-region="workspace"]');
     expect(dossierRouteSmokeScript).toContain('[data-dossier-first-viewport="route-stage"]');
     expect(dossierRouteSmokeScript).toContain('[data-dossier-route-state="active"]');
     expect(dossierRouteSmokeScript).toContain('[data-dossier-route-state="inactive"][hidden]');

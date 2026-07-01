@@ -89,6 +89,8 @@ async function assertDossierRoute(browser, options) {
         ...document.querySelectorAll('[data-dossier-route-state="inactive"][hidden]'),
       ].map((element) => element.getAttribute('data-dossier-route'));
       const routeStage = document.querySelector('[data-dossier-first-viewport="route-stage"]');
+      const focusShell = document.querySelector('[data-dossier-focus-shell="ready"]');
+      const focusWorkspace = document.querySelector('[data-dossier-focus-region="workspace"]');
       const routeNav = document.querySelector('[data-dossier-task-routes="ready"]');
       const currentRoute = document.querySelector('.dossier-task-route[aria-current="page"]');
       const stageRect = routeStage?.getBoundingClientRect();
@@ -99,6 +101,8 @@ async function assertDossierRoute(browser, options) {
         activeRoutes,
         hiddenRoutes,
         currentText,
+        hasFocusShell: Boolean(focusShell),
+        hasFocusWorkspace: Boolean(focusWorkspace),
         hasRouteStage: Boolean(routeStage),
         routeStageTop: stageRect?.top ?? null,
         routeNavBottom: navRect?.bottom ?? null,
@@ -112,6 +116,9 @@ async function assertDossierRoute(browser, options) {
     }
     if (!result.hasRouteStage) {
       throw new Error(`${options.label}: dossier first-viewport stage ontbreekt.`);
+    }
+    if (!result.hasFocusShell || !result.hasFocusWorkspace) {
+      throw new Error(`${options.label}: dossier focus-shell of workspace-regio ontbreekt.`);
     }
     if (result.activeRoutes.length !== 1 || result.activeRoutes[0] !== 'imaging') {
       throw new Error(`${options.label}: verwacht precies imaging als actieve route, kreeg ${result.activeRoutes.join(', ')}`);

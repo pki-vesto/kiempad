@@ -243,6 +243,10 @@
   phase-hero, timeline, accordion, disclosure, stat-row, lege-/laad-/foutstaten)
   als basis voor het mobiel-first herstel van de schermlayouts. Pure
   presentatielaag met inline-SVG iconen (CSP-veilig); geen gedragswijziging.
+- **G1265 Dossier focus-shell:** Dossier bundelt routekeuze en split-workspace in
+  één `dossier-focus-shell` met oriëntatie- en werkruimteregio's. Op mobiel worden
+  de redundante globale werkruimtekaart en pagina-header voor Dossier verborgen,
+  zodat upload/review, beelden en tijdlijn vanuit één compacte werkruimte starten.
 - **G148 navigatie-shell (Claude Design):** hoofdnavigatie toont per scherm een
   inline-SVG icoon; op mobiel is het een vaste, horizontaal scrollbare onderbalk
   (icoon boven label) en op desktop een pill-balk. De generieke `.hero` is
