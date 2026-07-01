@@ -551,6 +551,44 @@ export function firstViewportWorkbench(opts: {
   `;
 }
 
+export function commandRouteSummary(opts: {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  primary: { href: string; label: string };
+  secondary?: { href: string; label: string };
+  status?: string;
+  data?: Record<string, string>;
+  ariaLabel?: string;
+}): string {
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  const label = opts.ariaLabel ? ` aria-label="${escapeAttribute(opts.ariaLabel)}"` : '';
+  const secondary = opts.secondary
+    ? `<a class="command-route-summary__action command-route-summary__action--secondary" href="${escapeAttribute(
+        opts.secondary.href,
+      )}">${escapeHtml(opts.secondary.label)}</a>`
+    : '';
+
+  return `<section class="command-route-summary"${label}${dataAttrs}>
+    <div>
+      <p class="command-route-summary__eyebrow">${escapeHtml(opts.eyebrow)}</p>
+      <h3>${escapeHtml(opts.title)}</h3>
+      <p>${escapeHtml(opts.detail)}</p>
+    </div>
+    <div class="command-route-summary__meta">
+      ${opts.status ? `<span class="command-route-summary__status">${escapeHtml(opts.status)}</span>` : ''}
+      <a class="command-route-summary__action" href="${escapeAttribute(opts.primary.href)}">${escapeHtml(
+        opts.primary.label,
+      )}</a>
+      ${secondary}
+    </div>
+  </section>`;
+}
+
 /** Vertical dot/line timeline with a highlighted current item. `body` is raw HTML. */
 export function timeline(
   items: { title: string; meta?: string; state?: StepState; body?: string }[],

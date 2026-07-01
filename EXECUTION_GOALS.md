@@ -3814,6 +3814,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Route panels, app shell, styles, Claude Design, tests
 - **ADR Needed:** no
 - **Score:** 40
+- **Status:** ☑ done
+
+### G1218 — route-summary ontlasting uitbreiden naar medicatie en traject
+
+- **Epic:** Premium Claude Design UI
+- **Problem:** Agenda en Vragen hebben nu route-summary kaarten en progressive panels, maar Medicatie en Traject tonen nog veel routecontent direct onder elkaar.
+- **User Impact:** De app voelt per scherm nog wisselend rustig; gebruikers kunnen op Medicatie en Traject nog steeds in lange routecontent terechtkomen.
+- **Desired Outcome:** Pas dezelfde route-summary en progressive-panel aanpak toe op Medicatie en Traject.
+- **User Value:** Gebruikers herkennen hetzelfde rustige patroon voor planning, medicatie en behandeltraject en zien sneller de primaire taak per route.
+- **Acceptance Criteria:** Medicatie en Traject krijgen route-summary kaarten met primaire taak, status en eerstvolgende actie; secundaire details of lange lijsten worden waar passend achter disclosure geplaatst; bestaande form-id's, data-hooks, aria-labels en route-ankers blijven behouden; mobile, tablet en desktop tonen geen overlap of horizontale overflow; browser-screenshots bewijzen zichtbare ontlasting; geen medische payload, behandeladvies, dosering, secrets, trackingdata of ongecontroleerde externe inhoud wordt toegevoegd.
+- **Affected Screens:** Medicatie, Traject
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** Route panels, medication UI, treatment UI, styles, tests
+- **ADR Needed:** no
+- **Score:** 40
 - **Status:** ☐ open
 
 ### G1180 — consultupload omzetten naar herbruikbare workflowcomponenten

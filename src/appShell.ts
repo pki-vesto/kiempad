@@ -178,6 +178,7 @@ import type { InAppFallbackNotification, NotificationRuntimeStatus } from './not
 import {
   actionCard,
   card,
+  commandRouteSummary,
   dashboardSection,
   dashboardShell,
   disclosure,
@@ -11698,6 +11699,20 @@ function renderVragenScreen(state: AppShellState): string {
           <h2 id="vragen-route-open-title">Openstaande vragen</h2>
           <p>Bekijk de vragen die bij het eerstvolgende contactmoment horen.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Nu eerst',
+          title: nextWithQuestions
+            ? `${nextWithQuestions.vragen.length} open voor ${nextWithQuestions.afspraak.titel}`
+            : 'Geen open vragen voor het volgende contact',
+          detail: nextWithQuestions
+            ? 'Print of bespreek de prioriteitsvragen zonder door de volledige vragenlijst te scrollen.'
+            : 'Maak via Beheer een vraag aan of koppel vragen aan een komende afspraak.',
+          status: `${state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length} open`,
+          primary: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
+          secondary: { href: '#vragen?route=voorbereiden', label: 'Prep maken' },
+          data: { 'question-route-summary': 'open' },
+          ariaLabel: 'Open vragen route-samenvatting',
+        })}
         <div class="panel-heading"><h2>Openstaand</h2><button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>${deleteVraagButton}</div>
         ${
           nextWithQuestions
@@ -11711,13 +11726,28 @@ function renderVragenScreen(state: AppShellState): string {
           <h2 id="vragen-route-voorbereiden-title">Consult voorbereiden</h2>
           <p>Maak lokaal een prep-packet met open vragen en consultactiepunten.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Prep focus',
+          title: gegenereerdeVragenlijst
+            ? 'Vragenlijst klaar om te bespreken'
+            : 'Nog geen prep-packet beschikbaar',
+          detail: gegenereerdeVragenlijst
+            ? 'Controleer eerst de samenvatting en open daarna pas de volledige lijst.'
+            : 'Voeg een komende afspraak en open vragen toe om de voorbereiding te vullen.',
+          status: gegenereerdeVragenlijst ? 'Klaar' : 'Wacht',
+          primary: { href: '#vragen?route=open', label: 'Open vragen' },
+          secondary: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
+          data: { 'question-route-summary': 'voorbereiden' },
+          ariaLabel: 'Consultvoorbereiding route-samenvatting',
+        })}
         ${renderConsultPrepWizard(gegenereerdeVragenlijst)}
-        <h2 class="section-subheading">Vragenlijst voor volgende afspraak</h2>
-        ${
-          gegenereerdeVragenlijst
+        ${disclosure({
+          summary: 'Vragenlijst voor volgende afspraak',
+          open: Boolean(gegenereerdeVragenlijst),
+          body: gegenereerdeVragenlijst
             ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
-            : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>'
-        }
+            : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>',
+        })}
       </section>`,
       `<section id="vragen-route-beheer" class="question-route-section command-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
         <header class="question-route-section__header command-route-section__header">
@@ -11737,12 +11767,28 @@ function renderVragenScreen(state: AppShellState): string {
           <h2 id="vragen-route-verslagen-title">Beantwoorde vragen per afspraak</h2>
           <p>Lees antwoorden terug per contactmoment, los van open vragen en beheer.</p>
         </header>
-        <h2 class="section-subheading">Verslag per afspraak</h2>
-        ${
-          vraagVerslagen.length > 0
-            ? renderVraagVerslagen(vraagVerslagen)
-            : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Teruglezen',
+          title:
+            vraagVerslagen.length > 0
+              ? `${vraagVerslagen.length} afspraakverslag${vraagVerslagen.length === 1 ? '' : 'en'}`
+              : 'Nog geen afspraakverslagen',
+          detail:
+            'Open de verslagen alleen wanneer je terug wilt lezen; open vragen blijven apart.',
+          status: `${vraagVerslagen.length} verslag${vraagVerslagen.length === 1 ? '' : 'en'}`,
+          primary: { href: '#vragen?route=open', label: 'Open vragen' },
+          secondary: { href: '#vragen?route=alle', label: 'Alle vragen' },
+          data: { 'question-route-summary': 'verslagen' },
+          ariaLabel: 'Vraagverslagen route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Verslag per afspraak',
+          open: vraagVerslagen.length > 0,
+          body:
+            vraagVerslagen.length > 0
+              ? renderVraagVerslagen(vraagVerslagen)
+              : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>',
+        })}
       </section>`,
       `<section id="vragen-route-alle" class="question-route-section command-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
         <header class="question-route-section__header command-route-section__header">
@@ -11750,12 +11796,28 @@ function renderVragenScreen(state: AppShellState): string {
           <h2 id="vragen-route-alle-title">Vraaglijst beheren</h2>
           <p>Bekijk alle vragen met prioriteitsknoppen en antwoordstatus.</p>
         </header>
-        <h2 class="section-subheading">Alle vragen</h2>
-        ${
-          state.vragen.length > 0
-            ? renderVragenList(state.vragen)
-            : '<p class="empty-state">Nog geen vragen. Voeg via Beheer een vraag toe voor het volgende contactmoment.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Bibliotheek',
+          title:
+            state.vragen.length > 0
+              ? `${state.vragen.length} vragen in dossier`
+              : 'Nog geen vragen in dossier',
+          detail:
+            'Gebruik deze route voor beheer; de dagelijkse voorbereiding blijft in Open en Prep.',
+          status: `${state.vragen.length} totaal`,
+          primary: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
+          secondary: { href: '#vragen?route=open', label: 'Open bekijken' },
+          data: { 'question-route-summary': 'alle' },
+          ariaLabel: 'Alle vragen route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Alle vragen tonen',
+          open: state.vragen.length > 0,
+          body:
+            state.vragen.length > 0
+              ? renderVragenList(state.vragen)
+              : '<p class="empty-state">Nog geen vragen. Voeg via Beheer een vraag toe voor het volgende contactmoment.</p>',
+        })}
       </section>`,
     ],
     { className: 'question-command-layout', ariaLabel: 'Vragen voor de arts beheren' },
@@ -12489,7 +12551,26 @@ function renderAgendaScreen(state: AppShellState): string {
           <h2 id="agenda-route-overzicht-title">Agendaoverzicht</h2>
           <p>Scan week- en maandcontext zonder direct door formulieren of historie te scrollen.</p>
         </header>
-        ${agendaOverview || '<p class="empty-state">Nog geen agenda-overzicht beschikbaar.</p>'}
+        ${commandRouteSummary({
+          eyebrow: 'Planningstatus',
+          title: upcoming[0]
+            ? `Volgende afspraak: ${upcoming[0].afspraak.titel}`
+            : 'Nog geen komende afspraak gepland',
+          detail: upcoming[0]
+            ? `${formatDateTime(upcoming[0].afspraak.datumTijd)} · ${AFSPRAAK_TYPE_LABELS[upcoming[0].afspraak.type]}`
+            : 'Maak een afspraak of importeer een kliniekagenda zonder eerst door week- en maandlijsten te gaan.',
+          status: `${upcoming.length} komend`,
+          primary: { href: '#agenda?route=plannen', label: 'Afspraak plannen' },
+          secondary: { href: '#agenda?route=import', label: 'ICS importeren' },
+          data: { 'schedule-route-summary': 'overzicht' },
+          ariaLabel: 'Agendaoverzicht route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Week- en maandcontext',
+          open: state.afspraken.length > 0,
+          body:
+            agendaOverview || '<p class="empty-state">Nog geen agenda-overzicht beschikbaar.</p>',
+        })}
       </section>`,
       `<section id="agenda-route-komend" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
         <header class="schedule-route-section__header command-route-section__header">
@@ -12497,6 +12578,18 @@ function renderAgendaScreen(state: AppShellState): string {
           <h2 id="agenda-route-komend-title">Komende afspraken</h2>
           <p>Bekijk eerstvolgende afspraken met vraag- en herinneringscontext.</p>
         </header>
+        ${commandRouteSummary({
+          eyebrow: 'Eerstvolgend',
+          title: upcoming[0] ? upcoming[0].afspraak.titel : 'Geen komende afspraken',
+          detail: upcoming[0]
+            ? `${formatDateTime(upcoming[0].afspraak.datumTijd)} · ${upcoming[0].herinnering ? 'herinnering actief' : 'geen herinnering'}`
+            : 'Plan een nieuw contactmoment voordat je de volledige lijst nodig hebt.',
+          status: `${upcoming.length} komend`,
+          primary: { href: '#agenda?route=plannen', label: 'Plannen' },
+          secondary: { href: '#vragen?route=open', label: 'Vragen checken' },
+          data: { 'schedule-route-summary': 'komend' },
+          ariaLabel: 'Komende afspraken route-samenvatting',
+        })}
         <div class="panel-heading"><h2>Komende afspraken</h2>${exportIcsButton}${deleteAfspraakButton}</div>
         ${
           upcoming.length > 0
@@ -12534,12 +12627,27 @@ function renderAgendaScreen(state: AppShellState): string {
           <h2 id="agenda-route-historie-title">Afgelopen afspraken</h2>
           <p>Lees terugbliknotities en afspraakcontext los van het planscherm.</p>
         </header>
-        <h2 class="section-subheading">Afgelopen</h2>
-        ${
-          past.length > 0
-            ? renderAfgelopenAgendaList(past, state.trajecten)
-            : '<p class="empty-state">Nog geen afgelopen afspraken.</p>'
-        }
+        ${commandRouteSummary({
+          eyebrow: 'Terugblik',
+          title:
+            past.length > 0
+              ? `${past.length} afgelopen afspraak${past.length === 1 ? '' : 'en'}`
+              : 'Nog geen historie',
+          detail: 'Historie blijft beschikbaar zonder de dagelijkse planning direct te verlengen.',
+          status: `${past.length} terugblik`,
+          primary: { href: '#agenda?route=komend', label: 'Komend bekijken' },
+          secondary: { href: '#agenda?route=plannen', label: 'Nieuwe afspraak' },
+          data: { 'schedule-route-summary': 'historie' },
+          ariaLabel: 'Afgelopen afspraken route-samenvatting',
+        })}
+        ${disclosure({
+          summary: 'Afgelopen afspraken tonen',
+          open: past.length > 0,
+          body:
+            past.length > 0
+              ? renderAfgelopenAgendaList(past, state.trajecten)
+              : '<p class="empty-state">Nog geen afgelopen afspraken.</p>',
+        })}
       </section>`,
     ],
     { className: 'schedule-command-layout', ariaLabel: 'Agenda beheren' },

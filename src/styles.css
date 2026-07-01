@@ -3523,6 +3523,84 @@ h2 {
   line-height: 1.5;
 }
 
+.command-route-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.command-route-summary__eyebrow,
+.command-route-summary h3,
+.command-route-summary p {
+  margin: 0;
+}
+
+.command-route-summary__eyebrow {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.command-route-summary h3 {
+  margin-top: 2px;
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+}
+
+.command-route-summary p {
+  margin-top: 4px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.command-route-summary__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.command-route-summary__status,
+.command-route-summary__action {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.command-route-summary__status {
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  color: var(--accent-strong);
+}
+
+.command-route-summary__action {
+  background: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+}
+
+.command-route-summary__action--secondary {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
 .command-route-section .summary-panel,
 .command-route-section .policy-panel,
 .command-route-section .linked-note,
@@ -6822,9 +6900,53 @@ a.action-card:active {
     font-size: 0.72rem;
   }
 
+  .command-route-summary {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .command-route-summary h3 {
+    font-size: 1.04rem;
+  }
+
+  .command-route-summary p {
+    display: none;
+  }
+
+  .command-route-summary__meta {
+    justify-content: flex-start;
+  }
+
+  .command-route-summary__status,
+  .command-route-summary__action {
+    min-height: 32px;
+    padding: 5px 9px;
+  }
+
   .command-route-section {
+    gap: 9px;
     scroll-margin-top: 96px;
     padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);
+  }
+
+  .command-route-section__header {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    gap: 2px;
+    white-space: nowrap;
+  }
+
+  .command-route-section__header h2 {
+    font-size: 1.08rem;
+  }
+
+  .command-route-section__header > p:last-child {
+    display: none;
   }
 
   .command-route-section button,
