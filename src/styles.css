@@ -2136,6 +2136,42 @@ h2 {
   color: var(--ink-3);
 }
 
+.data-form input:is([type="date"], [type="datetime-local"], [type="time"]) {
+  color: var(--ink);
+  color-scheme: light;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-form input:is([type="date"], [type="datetime-local"], [type="time"]):not(:focus):invalid {
+  color: var(--ink-3);
+}
+
+.data-form
+  input:is([type="date"], [type="datetime-local"], [type="time"]):not(
+    :focus
+  ):invalid::-webkit-datetime-edit {
+  color: var(--ink-3);
+}
+
+.data-form
+  input:is(
+    [type="date"],
+    [type="datetime-local"],
+    [type="time"]
+  )::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.72;
+}
+
+.data-form
+  input:is(
+    [type="date"],
+    [type="datetime-local"],
+    [type="time"]
+  ):focus::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+
 .binary-toggle {
   display: grid;
   gap: 8px;

@@ -2862,6 +2862,22 @@ describe('app shell', () => {
     expect(css).toContain('.compact-form textarea::placeholder {');
   });
 
+  it('bewaakt de datum- en tijdveld-kit voor leesbare placeholderstaat', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain(
+      '.data-form input:is([type="date"], [type="datetime-local"], [type="time"]) {',
+    );
+    expect(css).toContain('font-variant-numeric: tabular-nums;');
+    expect(css).toContain(
+      '.data-form input:is([type="date"], [type="datetime-local"], [type="time"]):not(',
+    );
+    expect(css).toContain(':focus');
+    expect(css).toContain(':invalid');
+    expect(css).toContain('::-webkit-datetime-edit');
+    expect(css).toContain('::-webkit-calendar-picker-indicator');
+  });
+
   it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
