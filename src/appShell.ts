@@ -13499,11 +13499,7 @@ function renderKennisItem(item: KennisItem): string {
   const kostenJaar = bepaalKennisKostenJaar(item);
   const researchMetadata = bouwResearchKaartMetadata(item);
   const researchHerverificatie = bouwResearchHerverificatieStatus(item);
-  const badges = [
-    item.ai_gegenereerd ? 'AI-gegenereerd' : 'Niet AI-gegenereerd',
-    item.geverifieerd_met_arts ? 'Geverifieerd met arts' : 'Concept · niet geverifieerd',
-    ...(kostenJaar ? [`Kostenjaar ${kostenJaar}`] : []),
-  ];
+  const badges = renderKennisStatusBadges(item, kostenJaar);
 
   return `
     <li class="knowledge-library-card" data-knowledge-library-card="ready" data-knowledge-card-category="${escapeAttribute(item.categorie)}" data-knowledge-card-verification="${item.geverifieerd_met_arts ? 'verified' : 'concept'}">
@@ -13525,7 +13521,7 @@ function renderKennisItem(item: KennisItem): string {
             : '<p class="linked-note">Nog niet met behandelaar geverifieerd.</p>'
         }
         <div class="knowledge-library-card__badges" aria-label="Kennisitem status">
-          ${badges.map((badge) => `<span class="status-pill">${escapeHtml(badge)}</span>`).join('')}
+          ${badges}
         </div>
         <div class="knowledge-library-card__actions">
           ${
@@ -13545,6 +13541,42 @@ function renderKennisItem(item: KennisItem): string {
       </article>
     </li>
   `;
+}
+
+function renderKennisStatusBadges(item: KennisItem, kostenJaar: string | undefined): string {
+  return [
+    statusBadge({
+      label: item.ai_gegenereerd ? 'AI-gegenereerd' : 'Handmatig',
+      tone: item.ai_gegenereerd ? 'info' : 'neutral',
+      className: 'status-badge--knowledge',
+      data: {
+        'status-badge': 'knowledge',
+        'status-badge-state': item.ai_gegenereerd ? 'ai' : 'manual',
+      },
+    }),
+    statusBadge({
+      label: item.geverifieerd_met_arts ? 'Artscheck vastgelegd' : 'Concept',
+      tone: item.geverifieerd_met_arts ? 'success' : 'warning',
+      className: 'status-badge--knowledge',
+      data: {
+        'status-badge': 'knowledge',
+        'status-badge-state': item.geverifieerd_met_arts ? 'verified' : 'concept',
+      },
+    }),
+    ...(kostenJaar
+      ? [
+          statusBadge({
+            label: `Kostenjaar ${kostenJaar}`,
+            tone: 'info',
+            className: 'status-badge--knowledge',
+            data: {
+              'status-badge': 'knowledge',
+              'status-badge-state': 'cost-year',
+            },
+          }),
+        ]
+      : []),
+  ].join('');
 }
 
 function renderResearchHerverificatieStatus(status: ResearchHerverificatieStatus): string {
