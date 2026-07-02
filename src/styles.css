@@ -11295,7 +11295,7 @@ a.action-card:active {
 
 @media (min-width: 961px) {
   .dossier-focus-shell__body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
     align-items: start;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
@@ -11319,6 +11319,13 @@ a.action-card:active {
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
+  }
+
+  .dossier-focus-shell__workspace .domain-split-workspace__main {
+    max-height: min(780px, calc(100vh - 204px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
   }
 }
 
@@ -11379,7 +11386,7 @@ a.action-card:active {
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace {
-  grid-template-columns: minmax(156px, 0.42fr) minmax(0, 1.58fr);
+  grid-template-columns: minmax(144px, 0.38fr) minmax(0, 1.62fr);
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace__context {
@@ -13624,8 +13631,6 @@ a.action-card:active {
   display: none;
 }
 
-.dossier-focus-shell:has(#dossier-route-upload[data-dossier-route-state="active"])
-  .dossier-focus-shell__orientation,
 .dossier-focus-shell__workspace
   .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
   .domain-split-workspace__context,
@@ -13667,7 +13672,7 @@ a.action-card:active {
 @media (min-width: 961px) {
   .dossier-focus-shell:has(#dossier-route-upload[data-dossier-route-state="active"])
     .dossier-focus-shell__body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
   }
 
   .dossier-focus-shell__workspace

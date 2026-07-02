@@ -279,7 +279,6 @@ const targets = [
     ],
     expectedUploadFlow: 'consult',
     desktopHiddenSelectors: [
-      '[data-dossier-focus-region="orientation"]',
       '.dossier-split-workspace .domain-split-workspace__rail',
       '.dossier-split-workspace .domain-split-workspace__context',
       '.dossier-focus-shell__header p:last-child',
@@ -288,6 +287,7 @@ const targets = [
       '.dossier-upload-triage__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
+    dossierConsole: true,
     uploadConsole: true,
   },
   {
