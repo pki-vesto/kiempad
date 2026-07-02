@@ -13086,6 +13086,11 @@ function renderKostenForm(selected?: CostItem): string {
         <button type="submit">${selected ? 'Werk kostenpost bij' : 'Bewaar kostenpost'}</button>
         ${
           selected
+            ? '<a class="form-cancel-link" href="#kosten?route=historie" data-form-cancel-action="finance">Annuleer</a>'
+            : ''
+        }
+        ${
+          selected
             ? `<button class="danger-button delete-kosten" type="button" data-kosten-id="${escapeAttribute(selected.id)}" aria-label="Verwijder kostenpost: ${escapeAttribute(selected.omschrijving)}">Verwijder kostenpost</button>`
             : ''
         }
@@ -16503,6 +16508,11 @@ function renderAfspraakForm(
       </section>
       <div class="schedule-form-actions">
         <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
+        ${
+          afspraak
+            ? '<a class="form-cancel-link" href="#agenda?route=komend" data-form-cancel-action="schedule">Annuleer</a>'
+            : ''
+        }
       </div>
     </form>
   `;
@@ -17138,6 +17148,11 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
       </section>
       <div class="medication-form-actions">
         <button type="submit">${medicatie ? 'Bewaar medicatie' : 'Voeg medicatie toe'}</button>
+        ${
+          medicatie
+            ? '<a class="form-cancel-link" href="#medicatie?route=vandaag" data-form-cancel-action="medication">Annuleer</a>'
+            : ''
+        }
       </div>
     </form>
   `;

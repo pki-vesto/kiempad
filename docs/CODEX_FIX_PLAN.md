@@ -294,6 +294,9 @@
 - **CFX-027 form textarea kit — partial in G1406 / issue #2586.** Textareas in `.data-form` and
   standalone `.compact-form` now share the kit border, focus, placeholder, 74px minimum height,
   and vertical resize behavior.
+- **CFX-028 form cancel actions — partial in G1407 / issue #2588.** Kosten, Agenda, and Medicatie
+  edit forms now pair the primary save button with a ghost Annuleer link instead of leaving edit
+  rows with only save/delete actions.
 
 ---
 

@@ -2063,6 +2063,9 @@ describe('app shell', () => {
     expect(css).toContain('.finance-form-section--primary {');
     expect(css).toContain('.finance-amount-input {');
     expect(css).toContain('.finance-form-actions {');
+    expect(css).toContain('.form-cancel-link {');
+    expect(css).toContain('.form-cancel-link:hover,');
+    expect(css).toContain('.form-cancel-link:focus-visible {');
     expect(css).toContain('.cost-history-list {');
     expect(css).toContain('.cost-history-card > article {');
     expect(css).toContain('.cost-history-card__header {');
@@ -2327,6 +2330,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
     expect(mobileCss).toContain('.finance-form-section {');
     expect(mobileCss).toContain('.finance-form-actions {');
+    expect(mobileCss).toContain('.form-cancel-link,');
     expect(mobileCss).not.toContain(
       '.finance-focus-shell__workspace .domain-split-workspace__context {',
     );
@@ -3994,6 +3998,9 @@ describe('app shell', () => {
     expect(html).toContain('class="schedule-form-field schedule-form-field--wide"');
     expect(html).toContain('class="form-grid schedule-form-grid"');
     expect(html).toContain('class="schedule-form-actions"');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#agenda?route=komend" data-form-cancel-action="schedule"',
+    );
     expect(html).toContain('data-schedule-route="overzicht"');
     expect(html).toContain('data-schedule-route-state="active"');
     expect(html).toContain('id="agenda-route-komend"');
@@ -4916,6 +4923,9 @@ describe('app shell', () => {
     expect(html).toContain('class="medication-form-field medication-form-field--wide"');
     expect(html).toContain('class="form-grid medication-form-grid"');
     expect(html).toContain('class="medication-form-actions"');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#medicatie?route=vandaag" data-form-cancel-action="medication"',
+    );
     expect(html).toContain(
       'class="medication-route-section__header command-route-section__header"',
     );
@@ -37503,6 +37513,9 @@ describe('app shell', () => {
     expect(html).toContain('class="finance-amount-input" data-finance-amount-input="ready"');
     expect(html).toContain('<span aria-hidden="true">€</span>');
     expect(html).toContain('class="finance-form-actions"');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#kosten?route=historie" data-form-cancel-action="finance"',
+    );
     expect(html).toContain(
       'class="status-message finance-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="finance-toevoegen" data-finance-save-feedback="toevoegen"',
     );
