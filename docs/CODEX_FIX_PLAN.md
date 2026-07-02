@@ -99,6 +99,9 @@
   longer renders a visible third context column or technical "0 van 0 item(s)" counters; empty and
   filtered states now show a clear rich empty block with a route CTA while the active knowledge
   route stays central.
+- **CFX-039 wellbeing route-first scan — done in G1346 / issue #2466.** Welzijn no longer renders
+  a visible third context column; the workbench, route rail, and history board now carry the
+  screen while split/context smokes guard the compact route-first layout.
 
 ---
 
@@ -500,7 +503,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
 - **CFX-038** — Kennis: kit search/category, category-eyebrow cards, chevron, badges. **P2 · M**
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
-- **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list. **P1 · M**
+- **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
+  **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**

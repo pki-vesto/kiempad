@@ -6479,10 +6479,6 @@ h2 {
   --workspace-context-accent: var(--slate);
 }
 
-.workspace-context-signals[data-workspace-context-signals="wellbeing"] {
-  --workspace-context-accent: var(--accent-strong);
-}
-
 .workspace-context-signals[data-workspace-context-signals="decision"] {
   --workspace-context-accent: var(--clay);
 }
@@ -7252,11 +7248,8 @@ h2 {
   }
 
   .wellbeing-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas:
-      "rail main"
-      "rail context";
+    grid-template-areas: "rail main";
     grid-template-columns: minmax(136px, 0.34fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
@@ -7268,15 +7261,6 @@ h2 {
 
   .wellbeing-focus-shell__workspace .domain-split-workspace__main {
     grid-area: main;
-  }
-
-  .wellbeing-focus-shell__workspace .domain-split-workspace__context {
-    grid-area: context;
-    width: min(100%, 330px);
-    max-height: 132px;
-    justify-self: start;
-    overflow-y: auto;
-    padding-top: 8px;
   }
 
   .wellbeing-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
@@ -13380,8 +13364,7 @@ a.action-card:active {
     grid-template-columns: 1fr;
   }
 
-  .wellbeing-focus-shell__workspace .domain-split-workspace,
-  .wellbeing-focus-shell__workspace .domain-split-workspace__context {
+  .wellbeing-focus-shell__workspace .domain-split-workspace {
     grid-template-columns: 1fr;
   }
 

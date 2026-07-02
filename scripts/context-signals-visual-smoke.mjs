@@ -30,12 +30,6 @@ const targets = [
     microstate: 'treatment-fasen',
   },
   {
-    screen: 'welzijn',
-    hash: '#welzijn?route=history',
-    signal: 'wellbeing',
-    microstate: 'wellbeing-history',
-  },
-  {
     screen: 'afwegingen',
     hash: '#afwegingen?route=choice',
     signal: 'decision',

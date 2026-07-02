@@ -15,7 +15,6 @@ describe('context signals visual smoke script', () => {
       '#dossier?route=imaging',
       '#agenda?route=plannen',
       '#traject?route=fasen',
-      '#welzijn?route=history',
       '#afwegingen?route=choice',
       '#logboek?route=privacy',
       '#herinneringen?route=plannen',
@@ -28,7 +27,6 @@ describe('context signals visual smoke script', () => {
       'dossier',
       'schedule',
       'treatment',
-      'wellbeing',
       'decision',
       'eventlog',
       'notification',
@@ -41,7 +39,6 @@ describe('context signals visual smoke script', () => {
       'dossier-imaging',
       'schedule-plannen',
       'treatment-fasen',
-      'wellbeing-history',
       'decision-choice',
       'eventlog-privacy',
       'notification-plannen',
@@ -72,6 +69,9 @@ describe('context signals visual smoke script', () => {
     expect(contextSignalsVisualSmokeScript).not.toContain('#kosten?route=vergoeding');
     expect(contextSignalsVisualSmokeScript).not.toContain("signal: 'finance'");
     expect(contextSignalsVisualSmokeScript).not.toContain("microstate: 'finance-vergoeding'");
+    expect(contextSignalsVisualSmokeScript).not.toContain('#welzijn?route=history');
+    expect(contextSignalsVisualSmokeScript).not.toContain("signal: 'wellbeing'");
+    expect(contextSignalsVisualSmokeScript).not.toContain("microstate: 'wellbeing-history'");
     expect(contextSignalsVisualSmokeScript).not.toContain('OCR TEKST');
     expect(contextSignalsVisualSmokeScript).not.toContain('beeldpayload');
     expect(contextSignalsVisualSmokeScript).not.toContain('gezondheidsdata');
