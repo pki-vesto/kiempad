@@ -17,6 +17,8 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1326 CFX-015: de mobiele `Meer`-sheet blijft niet meer automatisch open staan boven secundaire routes. De knop blijft actief gemarkeerd, routeformulieren houden extra ruimte boven de bottom navigation en mobiele controls blijven aanklikbaar.
+- G1325 CFX-007 Welzijn ownerlabels: het welzijnsscherm gebruikt opgeslagen namen uit Instellingen voor recente signalen, `Van wie`-selects en check-in/symptoombadges. De onderliggende recordwaarden blijven `peter`/`partner`/`samen` voor compatibiliteit.
 - G1324 CFX-006/CFX-046 + CFX-007 startgroet: instellingen openen nu als eigen sheet met versleuteld bewaarde namen, gedeelde modus en live themawissel. De Start-groet gebruikt opgeslagen namen in plaats van de oude hardcoded placeholder.
 - G1323 CFX-009: Dagadvies gebruikt nu de veiligere framing `Te doen vandaag` en `suggesties` in plaats van zichtbare `Dagelijkse aanbevelingen`/`Aanbeveling` labels. Action feedback, timeline-, knowledge graph- en artscheckcopy volgen dezelfde terminologie, terwijl technische routes/hooks compatibel blijven.
 - G1322 CFX-013: de grote afgeronde grijze frame rond de actieve contentkolom is verwijderd. De `screen-stage` rust nu transparant op de pagina-achtergrond; diepte en borders zitten alleen nog op echte kaarten, panels en sheets.

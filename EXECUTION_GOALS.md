@@ -34,6 +34,38 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1326 — CFX-015: Mobiele Meer-sheet en routeformulieren overlappen niet
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Op mobiel kon de Meer-sheet automatisch open blijven staan wanneer een secundaire route actief was, waardoor content en formuliercontrols konden worden geblokkeerd.
+- **User Impact:** Gebruikers konden op kleinere schermen controls niet betrouwbaar aanklikken en ervaarden de navigatie als een overlay boven de taak.
+- **Desired Outcome:** Houd de Meer-trigger actief gemarkeerd voor secundaire routes zonder de sheet automatisch te openen; geef routeformulieren genoeg scrollruimte boven de bottom navigation.
+- **User Value:** Secundaire schermen blijven bereikbaar en herkenbaar, terwijl de taakruimte bruikbaar blijft zonder handmatig dichtklappen of scrolltrucs.
+- **Acceptance Criteria:** `Meer` toont actieve context zonder automatisch `open`; mobiele routeformulieren hebben bottom-nav scrollruimte; real-click validatie op mobiel kan controls in secundaire routes aanklikken; geen horizontale overflow; tests dekken het niet-auto-open gedrag; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Mobiele navigatie, Welzijn, secundaire routes
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, CSS, mobile navigation, route forms, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+
+### G1325 — CFX-007: Welzijn gebruikt persoonlijke namen voor eigenaarlabels
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het welzijnsscherm gebruikte generieke ownerlabels zoals Peter en Partner, terwijl gebruikers inmiddels eigen namen kunnen opslaan.
+- **User Impact:** Check-ins en symptoomlogs voelen minder persoonlijk en de nieuwe instellingen zijn buiten de startgroet nog te weinig zichtbaar.
+- **Desired Outcome:** Gebruik opgeslagen namen in de welzijnswerkbank, `Van wie`-selects en check-in/symptoombadges, zonder de onderliggende recordwaarden te wijzigen.
+- **User Value:** Gebruikers herkennen direct van wie een welzijnssignaal is en hoeven generieke labels niet mentaal te vertalen.
+- **Acceptance Criteria:** Recente welzijnssignalen gebruiken ingestelde namen; `Van wie`-selects tonen ingestelde namen met values `peter`/`partner`/`samen`; check-in- en symptoombadges tonen `Van: <naam>` of `Van: Samen`; bestaande records blijven compatibel; desktop, tablet en mobiel tonen geen overlap; tests dekken gepersonaliseerde en gedeelde ownerlabels; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Welzijn
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, welzijn, settings, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+
 ### G1324 — CFX-006/CFX-046 + CFX-007 startgroet: persoonlijke instellingen en namen
 
 - **Epic:** Onboarding & Daily Use

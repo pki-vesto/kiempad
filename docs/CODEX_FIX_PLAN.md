@@ -29,6 +29,12 @@
   are now opened from a dedicated sheet with encrypted names, shared-mode, and live theme
   selection. The Start greeting uses the saved names instead of the old hardcoded placeholder;
   the wider owner-label sweep remains tracked under CFX-007.
+- **CFX-007 Welzijn owner labels — done in G1325 / issue #2425.** The Wellbeing workbench,
+  `Van wie` selects, mental check-ins, and symptom badges now use saved names from Settings
+  while record values remain `peter`/`partner`/`samen` for compatibility.
+- **CFX-015 mobile non-overlap — done in G1326 / issue #2426.** The mobile `Meer` trigger
+  can stay visibly active for secondary routes without auto-opening its sheet over the
+  content, and mobile route forms now reserve scroll room above the bottom navigation.
 
 ---
 
@@ -388,8 +394,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-009** — ✅ Done in G1323 / issue #2421. Rename "Aanbeveling/Dagelijkse aanbevelingen" → "Suggestie"/"Te doen vandaag".
   Files: `src/appShell.ts`, `src/domain/dailyRecommendations.ts` (labels only, not logic).
   Accept: no user-visible "aanbeveling". **P1 · M**
-- **CFX-007** — ✅ Partly done in G1324 / issue #2423 for the Start greeting; remaining owner labels stay tracked here. Replace "Eigenaar: man/vrouw" with names + "Samen" everywhere (Welzijn
-  owner segments, check-in "Van wie"). Depends on CFX-006. Accept: no "man/vrouw" owner labels. **P1 · M**
+- **CFX-007** — ✅ Partly done in G1324 / issue #2423 for the Start greeting and G1325 /
+  issue #2425 for Welzijn owner labels. Remaining copy sweeps stay tracked under CFX-008.
+  Replace generic owner labels with names + "Samen" in personal tracking contexts. Depends on
+  CFX-006. **P1 · M**
 - **CFX-059** — Shorten + standardize disclaimers to one sentence per context (N59/N95). **P2 · M**
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
@@ -401,7 +409,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   separators in the desktop sidebar. **P2 · M**
 - **CFX-033b** — Move theme + lock controls out of the sidebar top into the Settings sheet / a quiet
   bottom-of-sidebar action (D32/D33). Depends on CFX-006. **P1 · M**
-- **CFX-015** — `env(safe-area-inset-bottom)` + non-overlap + scrollable bottom-nav (L83). **P1 · S**
+- **CFX-015** — ✅ Done in G1326 / issue #2426. `env(safe-area-inset-bottom)` +
+  non-overlap + scrollable bottom-nav (L83). **P1 · S**
 - **CFX-082** — Mobile: forms stack single-column; buttons full-width only where needed (L82). **P2 · S**
 - **CFX-081** — Verify desktop = sidebar + 720px content; mobile = topbar + bottom-nav + sheets;
   fix any full-bleed screens (L81/I63). **P1 · M**

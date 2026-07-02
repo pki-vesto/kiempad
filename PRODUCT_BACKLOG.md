@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1125 |
+| ☑ klaar | 1127 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1324** |
+| **Totaal** | **1326** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1487,12 +1487,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1322 | CFX-013: Grote content-frame verwijderen | P1 | F5 | ☑ |
 | G1323 | CFX-009: Dagadvies hernoemen naar suggesties | P1 | F5 | ☑ |
 | G1324 | CFX-006/CFX-046 + CFX-007 startgroet: persoonlijke instellingen en namen | P0 | F5 | ☑ |
+| G1325 | CFX-007: Welzijn gebruikt persoonlijke namen voor eigenaarlabels | P1 | F5 | ☑ |
+| G1326 | CFX-015: Mobiele Meer-sheet en routeformulieren overlappen niet | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1324** (id's G001 t/m G1324, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1326** (id's G001 t/m G1326, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

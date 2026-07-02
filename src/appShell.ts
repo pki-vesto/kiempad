@@ -1172,7 +1172,7 @@ function renderMobileMoreNavigation(
   }).join('');
 
   return `
-    <details class="primary-nav__more" data-mobile-more-nav="ready" data-mobile-more-active="${moreActive ? 'true' : 'false'}"${moreActive ? ' open' : ''}>
+    <details class="primary-nav__more" data-mobile-more-nav="ready" data-mobile-more-active="${moreActive ? 'true' : 'false'}">
       <summary class="primary-nav__more-summary" aria-label="Meer schermen">
         <span class="nav-item__ico" aria-hidden="true">${navMoreIcon()}</span>
         <span class="nav-item__label">Meer</span>
@@ -11315,6 +11315,7 @@ function renderWelzijnScreen(state: AppShellState): string {
     latestDate: overzicht.laatsteDatum,
     latestCheckIn: checkIns[0],
     latestSymptom: logs[0],
+    settings: state.settings,
   });
   const wellbeingWorkspace = domainSplitWorkspace({
     className: 'wellbeing-split-workspace',
@@ -11384,7 +11385,7 @@ function renderWelzijnScreen(state: AppShellState): string {
             <h2>Mentale check-ins</h2>
             ${
               checkIns.length > 0
-                ? `<ol class="phase-list">${checkIns.map(renderMentalCheckInItem).join('')}</ol>`
+                ? `<ol class="phase-list">${checkIns.map((item) => renderMentalCheckInItem(item, state.settings)).join('')}</ol>`
                 : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
             }
           </div>
@@ -11395,7 +11396,7 @@ function renderWelzijnScreen(state: AppShellState): string {
             <h2 class="section-subheading">Symptoomlogboek</h2>
             ${
               perDag.length > 0
-                ? `<ol class="phase-list">${perDag.map(renderSymptomDagGroep).join('')}</ol>`
+                ? `<ol class="phase-list">${perDag.map((group) => renderSymptomDagGroep(group, state.settings)).join('')}</ol>`
                 : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
             }
           </div>
@@ -11432,7 +11433,7 @@ function renderWelzijnScreen(state: AppShellState): string {
         ${disclosure({
           summary: 'Vastleggen: check-in, symptoom of cyclusmeting',
           open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,
-          body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm()}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm()}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
+          body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm(state.settings)}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm(state.settings)}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
         })}
       </section>
         `,
@@ -11485,15 +11486,18 @@ function renderWellbeingInsightWorkbench(input: {
   latestDate: string | undefined;
   latestCheckIn: MentalCheckIn | undefined;
   latestSymptom: SymptomLog | undefined;
+  settings: AppSettings;
 }): string {
   const owners = new Set<string>();
-  if (input.latestCheckIn) owners.add(OWNER_LABELS[input.latestCheckIn.owner]);
-  if (input.latestSymptom) owners.add(OWNER_LABELS[input.latestSymptom.owner]);
+  if (input.latestCheckIn)
+    owners.add(formatPersonalOwnerLabel(input.settings, input.latestCheckIn.owner));
+  if (input.latestSymptom)
+    owners.add(formatPersonalOwnerLabel(input.settings, input.latestSymptom.owner));
   const ownerCopy = owners.size > 0 ? [...owners].join(' · ') : 'Nog geen eigenaarcontext';
   const nextSignal = input.latestCheckIn
-    ? `${OWNER_LABELS[input.latestCheckIn.owner]} check-in: ${STEMMING_LABELS[input.latestCheckIn.stemming]}`
+    ? `${formatPersonalOwnerLabel(input.settings, input.latestCheckIn.owner)} check-in: ${STEMMING_LABELS[input.latestCheckIn.stemming]}`
     : input.latestSymptom
-      ? `${OWNER_LABELS[input.latestSymptom.owner]} symptoom: ${input.latestSymptom.symptoom}`
+      ? `${formatPersonalOwnerLabel(input.settings, input.latestSymptom.owner)} symptoom: ${input.latestSymptom.symptoom}`
       : 'Leg een check-in, symptoom of cyclusmeting vast.';
 
   return `
@@ -11754,7 +11758,7 @@ function renderWelzijnOverzicht(overzicht: WelzijnOverzicht): string {
   `;
 }
 
-function renderMentalCheckInForm(): string {
+function renderMentalCheckInForm(settings: AppSettings): string {
   return `
     <form id="mental-check-in-form" class="data-form">
       <label>
@@ -11764,9 +11768,7 @@ function renderMentalCheckInForm(): string {
       <label>
         Van wie
         <select name="owner">
-          ${Object.entries(OWNER_LABELS)
-            .map(([value, label]) => renderOption(value, label))
-            .join('')}
+          ${renderPersonalOwnerOptions(settings)}
         </select>
       </label>
       <label>
@@ -11786,13 +11788,13 @@ function renderMentalCheckInForm(): string {
   `;
 }
 
-function renderMentalCheckInItem(item: MentalCheckIn): string {
+function renderMentalCheckInItem(item: MentalCheckIn, settings: AppSettings): string {
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.datum)}</h3>
         <div class="label-row">
-          ${renderOwnerMarkering(item.owner)}
+          ${renderOwnerMarkering(item.owner, settings)}
           <span class="status-pill">${escapeHtml(STEMMING_LABELS[item.stemming])}</span>
         </div>
         ${item.notitie ? `<p class="linked-note">Privé notitie: ${escapeHtml(item.notitie)}</p>` : ''}
@@ -11801,7 +11803,7 @@ function renderMentalCheckInItem(item: MentalCheckIn): string {
   `;
 }
 
-function renderSymptomLogForm(): string {
+function renderSymptomLogForm(settings: AppSettings): string {
   return `
     <form id="symptom-log-form" class="data-form">
       <label>
@@ -11811,9 +11813,7 @@ function renderSymptomLogForm(): string {
       <label>
         Van wie
         <select name="owner">
-          ${Object.entries(OWNER_LABELS)
-            .map(([value, label]) => renderOption(value, label))
-            .join('')}
+          ${renderPersonalOwnerOptions(settings)}
         </select>
       </label>
       <label>
@@ -11865,32 +11865,44 @@ function renderCycleDataItem(item: CycleData): string {
   `;
 }
 
-function renderSymptomDagGroep(group: SymptomDagGroep): string {
+function renderSymptomDagGroep(group: SymptomDagGroep, settings: AppSettings): string {
   return `
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(group.datum)}</h3>
         <p>${group.logs.length} log${group.logs.length === 1 ? '' : 's'}${group.gemiddeldeIntensiteit ? ` · Gemiddelde intensiteit ${group.gemiddeldeIntensiteit}/5` : ''}</p>
         <ol class="compact-list">
-          ${group.logs.map(renderSymptomLogItem).join('')}
+          ${group.logs.map((log) => renderSymptomLogItem(log, settings)).join('')}
         </ol>
       </div>
     </li>
   `;
 }
 
-function renderSymptomLogItem(log: SymptomLog): string {
+function renderSymptomLogItem(log: SymptomLog, settings: AppSettings): string {
   return `
     <li>
       <strong>${escapeHtml(log.symptoom)}</strong>
-      <span>${renderOwnerMarkering(log.owner)}${log.intensiteit ? ` Intensiteit ${log.intensiteit}/5` : ''}</span>
+      <span>${renderOwnerMarkering(log.owner, settings)}${log.intensiteit ? ` Intensiteit ${log.intensiteit}/5` : ''}</span>
         ${log.notitie ? `<p class="linked-note">Notitie: ${escapeHtml(log.notitie)}</p>` : ''}
     </li>
   `;
 }
 
-function renderOwnerMarkering(owner: SymptomLog['owner']): string {
-  return `<span class="status-pill" data-owner="${escapeAttribute(owner)}">Eigenaar: ${escapeHtml(OWNER_LABELS[owner])}</span>`;
+function renderOwnerMarkering(owner: SymptomLog['owner'], settings: AppSettings): string {
+  return `<span class="status-pill" data-owner="${escapeAttribute(owner)}">Van: ${escapeHtml(formatPersonalOwnerLabel(settings, owner))}</span>`;
+}
+
+function renderPersonalOwnerOptions(settings: AppSettings): string {
+  return (Object.keys(OWNER_LABELS) as Array<SymptomLog['owner']>)
+    .map((value) => renderOption(value, formatPersonalOwnerLabel(settings, value)))
+    .join('');
+}
+
+function formatPersonalOwnerLabel(settings: AppSettings, owner: SymptomLog['owner']): string {
+  if (owner === 'peter') return settings.profielen.peter?.trim() || OWNER_LABELS.peter;
+  if (owner === 'partner') return settings.profielen.partner?.trim() || OWNER_LABELS.partner;
+  return OWNER_LABELS.samen;
 }
 
 function renderKennisScreen(state: AppShellState): string {
