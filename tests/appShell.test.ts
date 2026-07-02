@@ -3845,9 +3845,11 @@ describe('app shell', () => {
 
     expect(filteredRecommendations).toContain('Gefilterd op lokale feedbackstatus');
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-workflow-status="ready"');
+    expect(filteredRecommendations).toContain('data-daily-advice-feedback-list-open="ready"');
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-workflow-reset="ready"');
     expect(filteredRecommendations).toContain('Actieve feedbackfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
+    expect(filteredRecommendations).toContain('>Bekijk lijst</button>');
     expect(filteredRecommendations).toContain('>Reset</button>');
     expect(filteredRecommendations).toContain('value="gedaan" selected');
     expect(filteredRecommendations).toContain('data-daily-recommendation-feedback-control="ready"');
@@ -3899,6 +3901,7 @@ describe('app shell', () => {
     expect(emptyFilteredRecommendations).toContain(
       'data-daily-advice-feedback-workflow-reset="ready"',
     );
+    expect(emptyFilteredRecommendations).toContain('data-daily-advice-feedback-list-open="ready"');
     expect(emptyFilteredRecommendations).toContain('Actieve feedbackfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve filter: Artscheck');
     expect(emptyFilteredRecommendations).toContain('<strong>Artscheck</strong>');

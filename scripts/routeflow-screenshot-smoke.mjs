@@ -161,6 +161,7 @@ const targets = [
       '[data-daily-advice-focus-region="list"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
       '[data-daily-advice-feedback-workflow-status="ready"]',
+      '[data-daily-advice-feedback-list-open="ready"]',
       '[data-daily-advice-feedback-workflow-reset="ready"]',
       '[data-daily-recommendation-feedback-filter="ready"]',
       '[data-daily-recommendation-feedback-filter-chip="ready"]',
@@ -1593,6 +1594,21 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .filter({ hasText: 'Actieve filter: Artscheck' })
     .waitFor({ timeout: 10_000 });
   await expectHash(page, '#start-recommendations?feedback=artscheck');
+  await page.evaluate(() => {
+    const details = document.querySelector('[data-hub-detail-panel="daily-recommendation-list"]');
+    if (details instanceof HTMLDetailsElement) details.open = false;
+  });
+
+  await page.locator('[data-daily-advice-feedback-list-open="ready"]').click();
+  await expectHash(page, '#start-recommendations?feedback=artscheck');
+  await page.waitForFunction(
+    () => {
+      const details = document.querySelector('[data-hub-detail-panel="daily-recommendation-list"]');
+      return details instanceof HTMLDetailsElement && details.open && document.activeElement === details;
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
 
   await page.locator('[data-daily-advice-feedback-workflow-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');

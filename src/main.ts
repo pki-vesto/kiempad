@@ -1681,6 +1681,12 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 
 function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
   root
+    .querySelector<HTMLButtonElement>('[data-daily-advice-feedback-list-open="ready"]')
+    ?.addEventListener('click', () => {
+      openDailyRecommendationListPanel(root);
+    });
+
+  root
     .querySelectorAll<HTMLFormElement>('[data-daily-recommendation-feedback-control="ready"]')
     .forEach((form) => {
       form.addEventListener('submit', (event) => {
@@ -1705,6 +1711,21 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
       );
     });
   });
+}
+
+function openDailyRecommendationListPanel(root: HTMLElement): void {
+  const panel = root.querySelector<HTMLElement>(
+    '[data-hub-detail-panel="daily-recommendation-list"]',
+  );
+  if (!panel) return;
+  if (panel instanceof HTMLDetailsElement) {
+    panel.open = true;
+  }
+  if (!panel.hasAttribute('tabindex')) {
+    panel.setAttribute('tabindex', '-1');
+  }
+  panel.scrollIntoView({ block: 'center', inline: 'nearest' });
+  panel.focus({ preventScroll: true });
 }
 
 function applyDailyRecommendationFeedbackFilter(
