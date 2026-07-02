@@ -10615,6 +10615,32 @@ a.action-card:active {
   color: var(--text-muted);
 }
 
+.treatment-phase-timeline {
+  gap: 0;
+}
+
+.treatment-phase-timeline__item .kp-timeline__body {
+  align-content: start;
+}
+
+.treatment-phase-timeline__item[data-state="current"] .kp-timeline__body {
+  border-color: color-mix(in srgb, var(--amber) 44%, var(--border));
+  border-left: 4px solid var(--amber);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--amber) 13%, transparent), transparent 50%),
+    var(--surface-raised);
+}
+
+.treatment-phase-timeline__item[data-state="done"] .kp-timeline__body {
+  border-color: color-mix(in srgb, var(--teal) 24%, var(--border));
+}
+
+.treatment-phase-timeline__item .phase-button {
+  width: fit-content;
+  min-width: 104px;
+  margin-top: 4px;
+}
+
 .kp-accordion {
   border: 1px solid var(--border);
   border-radius: var(--radius-card);

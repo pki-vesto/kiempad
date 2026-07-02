@@ -4182,6 +4182,12 @@ describe('app shell', () => {
     expect(css).toContain('flex: 0 0 88px;');
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.fertility-timeline-reader {');
+    expect(css).toContain('.treatment-phase-timeline {');
+    expect(css).toContain(
+      '.treatment-phase-timeline__item[data-state="current"] .kp-timeline__body {',
+    );
+    expect(css).toContain('border-left: 4px solid var(--amber);');
+    expect(css).toContain('.treatment-phase-timeline__item .phase-button {');
     expect(css).toContain('.fertility-timeline-console {');
     expect(css).toContain('.fertility-timeline-console__body {');
     expect(css).toContain('"controls items"');
@@ -37881,6 +37887,17 @@ describe('app shell', () => {
     expect(html).toContain('data-treatment-route="beheer"');
     expect(html).toContain('Trajectoverzicht');
     expect(html).toContain('Faseplanning');
+    expect(html).toContain(
+      'class="kp-timeline treatment-phase-timeline" aria-label="Fasetijdlijn voor Poging 1" data-treatment-phase-timeline="ready"',
+    );
+    expect(html).toContain('class="kp-timeline__item treatment-phase-timeline__item"');
+    expect(html).toContain('data-treatment-phase="stimulatie"');
+    expect(html).toContain('data-treatment-phase-state="current"');
+    expect(html).toContain('class="kp-timeline__rail"');
+    expect(html).toContain('class="kp-timeline__dot"');
+    expect(html).toContain('class="kp-timeline__title">Stimulatie</h3>');
+    expect(html).toContain('class="kp-timeline__meta">Gestart op 2026-06-23</p>');
+    expect(html).toContain('class="kp-timeline__detail">Stimulatie loopt.</p>');
     expect(html).toContain('Vergoeding');
     expect(html).toContain('Timeline en graphcontext');
     expect(html).toContain('Trajectbeheer en archief');
