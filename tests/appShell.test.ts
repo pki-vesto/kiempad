@@ -3328,6 +3328,11 @@ describe('app shell', () => {
       'data-recommendation-component-state="structured"',
     );
     expect(emptyContextRecommendations).toContain('data-daily-advice-list-mode="dual-owner-cards"');
+    expect(emptyContextRecommendations).toContain('id="daily-recommendation-feedback-filter-form"');
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-recommendation-feedback-filter="ready"',
+    );
+    expect(emptyContextRecommendations).toContain('Alle feedbackstatussen');
     expect(emptyContextRecommendations).not.toContain('data-daily-advice-feedback-summary=');
     expect(emptyContextRecommendations).not.toContain('Lokale feedback:');
     expect(emptyContextRecommendations).not.toContain('data-daily-recommendation-feedback-status=');
@@ -3782,6 +3787,7 @@ describe('app shell', () => {
     expect(html).toContain('data-daily-advice-feedback-summary-count="ready"');
     expect(html).toContain('data-daily-advice-feedback-summary="ready"');
     expect(html).toContain('Lokale feedback: Gedaan: 1.');
+    expect(html).toContain('id="daily-recommendation-feedback-filter-form"');
     expect(html).toContain('data-daily-recommendation-feedback-status="gedaan"');
     expect(html).toContain('Feedbackstatus: Gedaan');
     expect(html).toContain('name="recommendationAction" value="gedaan"');
@@ -3790,6 +3796,66 @@ describe('app shell', () => {
 
     expect(feedbackSnippet).not.toContain('tracking-payload');
     expect(feedbackSnippet).not.toMatch(/diagnose|dosering|kansberekening|behandelkeuzeadvies/i);
+
+    const filteredHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [
+        {
+          id: 'event-feedback-1',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagelijkse suggestie gedaan',
+          detail: 'Dagcheck zonder extra medicatiemoment (vrouw-basisdag)',
+        },
+      ],
+      dailyRecommendationFeedbackFilter: 'gedaan',
+      activeStartRoute: 'recommendations',
+    });
+    const filteredRecommendations = extractDailyRecommendationsSection(filteredHtml);
+
+    expect(filteredRecommendations).toContain('Gefilterd op lokale feedbackstatus');
+    expect(filteredRecommendations).toContain('value="gedaan" selected');
+    expect(filteredRecommendations).toContain('data-recommendation-id="vrouw-basisdag"');
+    expect(filteredRecommendations).toContain('Feedbackstatus: Gedaan');
+    expect(filteredRecommendations).not.toContain(
+      'data-recommendation-id="samen-behandelvoorbereiding"',
+    );
+    expect(filteredRecommendations).not.toContain('tracking-payload');
+
+    const emptyFilteredHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [
+        {
+          id: 'event-feedback-1',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagelijkse suggestie gedaan',
+          detail: 'Dagcheck zonder extra medicatiemoment (vrouw-basisdag)',
+        },
+      ],
+      dailyRecommendationFeedbackFilter: 'artscheck',
+      activeStartRoute: 'recommendations',
+    });
+    const emptyFilteredRecommendations = extractDailyRecommendationsSection(emptyFilteredHtml);
+
+    expect(emptyFilteredRecommendations).toContain('value="artscheck" selected');
+    expect(emptyFilteredRecommendations).toContain('Geen feedbackmatch');
+    expect(emptyFilteredRecommendations).toContain('Geen suggesties met deze feedbackstatus.');
+    expect(emptyFilteredRecommendations).not.toContain('data-recommendation-id="vrouw-basisdag"');
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

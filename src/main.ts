@@ -175,6 +175,7 @@ type RuntimeState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   settingsOpen: boolean;
   webAuthnStatus: WebAuthnViewStatus;
@@ -246,6 +247,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
+    dailyRecommendationFeedbackFilter: state.dailyRecommendationFeedbackFilter,
     vraagStatus: state.vraagStatus,
     loadingState: state.loadingState,
     webAuthnStatus: state.webAuthnStatus,
@@ -1674,6 +1676,13 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
+  root
+    .querySelector<HTMLFormElement>('#daily-recommendation-feedback-filter-form')
+    ?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      applyDailyRecommendationFeedbackFilter(event.currentTarget, root, state);
+    });
+
   root.querySelectorAll<HTMLFormElement>('.daily-recommendation-action-form').forEach((form) => {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -1685,6 +1694,19 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
       );
     });
   });
+}
+
+function applyDailyRecommendationFeedbackFilter(
+  target: EventTarget | null,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  if (!(target instanceof HTMLFormElement)) return;
+  const data = new FormData(target);
+  state.dailyRecommendationFeedbackFilter = parseTimelineAanbevelingFeedbackStatus(
+    data.get('dailyRecommendationFeedbackStatus'),
+  );
+  render(root, state);
 }
 
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {

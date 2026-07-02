@@ -811,6 +811,7 @@ export type AppShellState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
   uploadAttachmentFeedback?: Partial<
@@ -14595,8 +14596,18 @@ function renderDailyAdviceConsole(
   state: AppShellState,
   overview: DailyRecommendationOverview,
 ): string {
+  const feedbackStatussen = bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []);
+  const filteredOverview = filterDailyRecommendationOverview(
+    overview,
+    feedbackStatussen,
+    state.dailyRecommendationFeedbackFilter,
+  );
   const totalRecommendations = (['vrouw', 'man', 'samen'] as const).reduce(
     (count, owner) => count + overview[owner].length,
+    0,
+  );
+  const filteredTotalRecommendations = (['vrouw', 'man', 'samen'] as const).reduce(
+    (count, owner) => count + filteredOverview[owner].length,
     0,
   );
 
@@ -14623,7 +14634,7 @@ function renderDailyAdviceConsole(
       ],
     }),
     workbench: renderDailyAdviceWorkbench(overview, {
-      feedbackStatussen: bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []),
+      feedbackStatussen,
     }),
     planner: renderDailyAdviceActionPlanner(overview),
     list: `
@@ -14631,17 +14642,55 @@ function renderDailyAdviceConsole(
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
               <strong>Bekijk suggesties</strong>
-              <small>Volledige lijst pas openen na eigenaarselectie</small>
+              <small>${state.dailyRecommendationFeedbackFilter ? 'Gefilterd op lokale feedbackstatus' : 'Volledige lijst pas openen na eigenaarselectie'}</small>
             </span>
-            <em>${totalRecommendations} adviezen</em>
+            <em>${state.dailyRecommendationFeedbackFilter ? `${filteredTotalRecommendations} van ${totalRecommendations}` : `${totalRecommendations} adviezen`}</em>
           </summary>
-          <div class="kp-disclosure__body">${renderDailyRecommendationList(
-            overview,
-            bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []),
-          )}</div>
+          <div class="kp-disclosure__body">
+            ${renderDailyRecommendationFeedbackFilter(state.dailyRecommendationFeedbackFilter)}
+            ${
+              filteredTotalRecommendations > 0
+                ? renderDailyRecommendationList(filteredOverview, feedbackStatussen)
+                : renderEmptyState('Geen suggesties met deze feedbackstatus.', {
+                    title: 'Geen feedbackmatch',
+                  })
+            }
+          </div>
         </details>
       `,
   });
+}
+
+function filterDailyRecommendationOverview(
+  overview: DailyRecommendationOverview,
+  feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>,
+  filter?: FertilityTimelineAanbevelingFeedbackStatus,
+): DailyRecommendationOverview {
+  if (!filter) return overview;
+  return {
+    vrouw: overview.vrouw.filter((item) => feedbackStatussen[item.id] === filter),
+    man: overview.man.filter((item) => feedbackStatussen[item.id] === filter),
+    samen: overview.samen.filter((item) => feedbackStatussen[item.id] === filter),
+  };
+}
+
+function renderDailyRecommendationFeedbackFilter(
+  filter?: FertilityTimelineAanbevelingFeedbackStatus,
+): string {
+  return `
+    <form id="daily-recommendation-feedback-filter-form" class="data-form compact-form" data-daily-recommendation-feedback-filter="ready">
+      <label>
+        Feedbackstatus
+        <select name="dailyRecommendationFeedbackStatus">
+          <option value="">Alle feedbackstatussen</option>
+          ${Object.entries(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS)
+            .map(([value, label]) => renderOption(value, label, filter))
+            .join('')}
+        </select>
+      </label>
+      <button type="submit">Filter suggesties</button>
+    </form>
+  `;
 }
 
 function renderDailyAdviceFocusShell(input: {
