@@ -727,6 +727,7 @@ export type AppShellState = {
   mentalCheckIns?: MentalCheckIn[];
   decisions?: Decision[];
   kosten?: CostItem[];
+  kostenStatus?: string;
   eventLogs?: EventLog[];
   settings: AppSettings;
   settingsFeedback?: SettingsFeedbackItem;
@@ -12781,6 +12782,7 @@ function renderKostenScreen(state: AppShellState): string {
           ariaLabel: 'Kosten toevoegen route-samenvatting',
           data: { 'finance-route-summary': 'toevoegen' },
         })}
+        ${renderKostenStatus(state.kostenStatus, 'toevoegen')}
         ${disclosure({
           summary: 'Kostenpost toevoegen',
           open: kosten.length === 0,
@@ -12834,6 +12836,7 @@ function renderKostenScreen(state: AppShellState): string {
           ariaLabel: 'Kosten historie route-samenvatting',
           data: { 'finance-route-summary': 'historie' },
         })}
+        ${renderKostenStatus(state.kostenStatus, 'historie')}
         <details id="kosten-historie-disclosure" class="kp-disclosure" data-finance-disclosure="historie">
           <summary class="kp-disclosure__summary">Kostenhistorie en bewerken openen</summary>
           <div class="kp-disclosure__body">
@@ -13063,6 +13066,12 @@ function renderFinanceRouteVisibility(activeRoute: FinanceRoute, route: FinanceR
   return route === activeRoute
     ? ' data-finance-route-state="active"'
     : ' data-finance-route-state="inactive" hidden';
+}
+
+function renderKostenStatus(status: string | undefined, surface: 'toevoegen' | 'historie'): string {
+  if (!status) return '';
+
+  return `<p class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="${surface}">${escapeHtml(status)}</p>`;
 }
 
 function renderKostenForm(selected?: CostItem): string {

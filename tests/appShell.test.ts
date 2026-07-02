@@ -36758,6 +36758,7 @@ describe('app shell', () => {
           vergoed: 'ja',
         },
       ],
+      kostenStatus: 'Kostenpost opgeslagen.',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
@@ -36812,6 +36813,13 @@ describe('app shell', () => {
     expect(html).toContain('Kostenhistorie');
     expect(html).toContain('Kostenpost toevoegen');
     expect(html).toContain('id="kosten-form"');
+    expect(html).toContain(
+      'class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="toevoegen"',
+    );
+    expect(html).toContain(
+      'class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="historie"',
+    );
+    expect(html).toContain('Kostenpost opgeslagen.');
     expect(html).toContain('Totaal');
     expect(html).toContain('Vergoed gemarkeerd');
     expect(html).toContain('Mogelijke eigen bijdrage');

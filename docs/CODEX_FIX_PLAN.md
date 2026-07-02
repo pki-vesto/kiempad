@@ -79,6 +79,9 @@
 - **CFX-016 finance badges — done in G1338 / issue #2450.** Kostenhistorie rows now render
   vergoedingstatus as consistent status badges with explicit states for vergoed, eigen risico,
   niet vergoed, and onbekend instead of burying the status in plain meta text.
+- **CFX-018 finance feedback — done in G1339 / issue #2452.** Kostenpost save/delete actions now
+  set inline `role="status"` feedback in the toevoegen and historie routes, so finance forms no
+  longer feel silent after mutation.
 
 ---
 
