@@ -26,6 +26,7 @@ import {
 import { EXAMPLE_DATA_IDS } from '../src/domain/exampleData';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { DossierDocument } from '../src/domain/types';
+import { DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE } from '../src/domain/uploadValidation';
 
 function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
   return {
@@ -5762,7 +5763,7 @@ describe('app shell', () => {
     expect(html).toContain('Behandelgeschiedenis');
     expect(html).toContain('id="dossier-upload-form"');
     expect(html).toContain(
-      'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
+      `name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required`,
     );
     expect(html).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
@@ -5903,7 +5904,7 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-upload-privacy-state="encrypted-local-analysis"');
     expect(addSection).toContain('data-imaging-upload-privacy-state="encrypted-attachment"');
     expect(addSection).toContain(
-      'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
+      `name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required`,
     );
     expect(addSection).toContain('name="beeldContext"');
     expect(addSection).toContain('name="beeldEmbryoLabel"');
@@ -5995,7 +5996,7 @@ describe('app shell', () => {
     expect(emptyForm).toContain('name="categorie"');
     expect(emptyForm).toContain('name="uploadProfiel"');
     expect(emptyForm).toContain(
-      'name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required',
+      `name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required`,
     );
     expect(emptyForm).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(emptyForm).toContain('id="dossier-concept-preview"');

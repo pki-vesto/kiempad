@@ -162,6 +162,7 @@ import type {
   SymptomLog,
   Traject,
 } from './domain/types';
+import { DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE } from './domain/uploadValidation';
 import {
   beantwoordeVragenPerAfspraak,
   type GegenereerdeVragenlijst,
@@ -3273,7 +3274,7 @@ function renderDossierScreen(state: AppShellState): string {
           </label>
           <label>
             Bestanden
-            <input name="dossierBestanden" type="file" accept="application/pdf,image/*,text/*" multiple required />
+            <input name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required />
           </label>
           <label class="check-row">
             <input name="lokaleOcr" type="checkbox" value="ja" />

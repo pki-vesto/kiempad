@@ -86,6 +86,10 @@ import type {
   TrajectFase,
   Vraag,
 } from './domain/types';
+import {
+  summarizeDossierUploadValidation,
+  validateDossierUploadFiles,
+} from './domain/uploadValidation';
 import { type VraagBundle, VraagStore } from './domain/vraagStore';
 import {
   buildInAppFallbackNotifications,
@@ -760,6 +764,13 @@ async function saveDossierDocumentsFromForm(
     return;
   }
 
+  const uploadValidation = validateDossierUploadFiles(files);
+  if (uploadValidation.rejected.length > 0) {
+    state.dossierError = summarizeDossierUploadValidation(uploadValidation);
+    render(root, state);
+    return;
+  }
+
   try {
     const datum = String(data.get('datum') ?? '');
     const titel = optionalString(data.get('titel'));
@@ -885,6 +896,7 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
   const data = new FormData(form);
   const categorie = parseDossierCategorie(data.get('categorie'));
   const gekozenProfiel = parseDossierUploadProfiel(data.get('uploadProfiel'));
+  const validation = validateDossierUploadFiles(files);
   const list = document.createElement('ul');
   list.className = 'compact-list';
 
@@ -896,15 +908,23 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
       mimeType: file.type || undefined,
     });
     const item = document.createElement('li');
-    item.textContent = `${file.name} · ${
-      profiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[profiel] : 'Onbekend profiel'
-    } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}`;
+    const rejected = validation.rejected.find((candidate) => candidate.file === file);
+    item.dataset.dossierUploadValidation = rejected ? 'rejected' : 'accepted';
+    item.textContent = rejected
+      ? `${file.name} · geweigerd · ${rejected.reason ?? 'controleer bestandstype of grootte'}`
+      : `${file.name} · ${
+          profiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[profiel] : 'Onbekend profiel'
+        } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}`;
     list.append(item);
   }
 
   const intro = document.createElement('p');
+  intro.dataset.dossierUploadValidationSummary =
+    validation.rejected.length > 0 ? 'blocked' : 'ready';
   intro.textContent =
-    'Conceptrecords klaar voor controle. Pas datum, categorie, uploadprofiel of koppelingen aan vóór opslag.';
+    validation.rejected.length > 0
+      ? summarizeDossierUploadValidation(validation)
+      : 'Conceptrecords klaar voor controle. Pas datum, categorie, uploadprofiel of koppelingen aan vóór opslag.';
   container.append(intro, list);
 }
 
