@@ -333,6 +333,10 @@
 - **Central replay conflict recovery status — done in G1418 / issue #938.** Central stale/replay
   writes now use a typed conflict, HTTP 409, health-contract errorstate, and generic UI recovery
   copy telling users to reload without falling back to plaintext local storage.
+- **Premium daily recommendation dual-owner cards — done in G1419 / issue #891.** The Dagadvies
+  full suggestion list now opens as a dual-owner lane for vrouw/man with a separate shared row,
+  preserving all review/reminder/question/action hooks while reducing the one-long-list feel on
+  desktop and stacking safely on mobile.
 
 ---
 

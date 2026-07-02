@@ -14504,10 +14504,32 @@ a.action-card:active {
   gap: 12px;
 }
 
+.daily-recommendation-list--dual-owner {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.daily-recommendation-dual-owner-lane {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
 .daily-recommendation-list .embedded-summary,
 .kp-recommendation-list .embedded-summary {
   min-height: 0;
   margin: 0;
+}
+
+.daily-recommendation-list--dual-owner .daily-recommendation-group {
+  min-width: 0;
+  padding: 12px;
+  border-color: color-mix(in srgb, var(--category) 18%, var(--border));
+  background: color-mix(in srgb, var(--surface) 94%, var(--category) 6%);
+}
+
+.daily-recommendation-list--dual-owner .daily-recommendation-group--samen {
+  background: var(--surface);
 }
 
 .kp-recommendation-group__items,
@@ -16103,6 +16125,14 @@ a.action-card:active {
     flex: 0 0 min(232px, 78vw);
     min-height: 112px;
     scroll-snap-align: start;
+  }
+
+  .daily-recommendation-dual-owner-lane {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .daily-recommendation-list--dual-owner .daily-recommendation-group {
+    padding: 10px;
   }
 
   .start-workbench + .start-task-routes {
