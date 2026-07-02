@@ -2109,6 +2109,13 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-focus-shell__workspace {');
     expect(css).toContain('.schedule-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('"rail context";');
+    expect(css).toContain('.schedule-date-blocks {');
+    expect(css).toContain('.schedule-date-block {');
+    expect(css).toContain('.schedule-appointment-card {');
+    expect(css).toContain('[data-schedule-appointment-type="echo"]');
+    expect(css).toContain(
+      '.schedule-appointment-card__status[data-schedule-appointment-status="past"]',
+    );
     expect(css).toContain('.medication-focus-shell {');
     expect(css).toContain('.medication-focus-shell__header {');
     expect(css).toContain('.medication-focus-shell__body {');
@@ -2232,6 +2239,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.schedule-focus-shell {');
     expect(mobileCss).toContain('.schedule-focus-shell__body {');
     expect(mobileCss).toContain('.schedule-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.schedule-date-block,');
+    expect(mobileCss).toContain('.schedule-appointment-card,');
     expect(mobileCss).toContain(
       '.content:has([data-medication-focus-shell="ready"]) > .workspace-map,',
     );
@@ -3870,11 +3879,28 @@ describe('app shell', () => {
     expect(html).toContain('Maandweergave');
     expect(html).toContain('Juni 2099');
     expect(html).toContain('Juli 2099');
+    expect(html).toContain('data-schedule-date-blocks="upcoming"');
+    expect(html).toContain('data-schedule-date-block="2099-06-24"');
+    expect(html).toContain('class="schedule-appointment-card"');
+    expect(html).toContain('data-schedule-appointment-card="upcoming"');
+    expect(html).toContain('data-schedule-appointment-type="echo"');
+    expect(html).toContain('data-schedule-appointment-status="upcoming"');
+    expect(html).toContain('Verwacht');
+    expect(html).toContain('24-06-2099');
+    expect(html).toContain('09:30');
     expect(html).toContain('Vraag: Wanneer horen we de uitslag?');
-    expect(html).toContain('Herinnering: 2099-06-24 08:30');
+    expect(html).toContain('data-schedule-appointment-chip="question"');
+    expect(html).toContain('Vraag klaar');
+    expect(html).toContain('data-schedule-appointment-chip="reminder"');
+    expect(html).toContain('Herinnering 08:30');
     expect(html).toContain('Traject: Poging 1');
     expect(html).toContain('Afgelopen');
-    expect(html).toContain('Geweest · Consult · 2020-01-02 10:00');
+    expect(html).toContain('data-schedule-date-blocks="past"');
+    expect(html).toContain('data-schedule-appointment-card="past"');
+    expect(html).toContain('data-schedule-appointment-type="consult"');
+    expect(html).toContain('data-schedule-appointment-status="past"');
+    expect(html).toContain('02-01-2020');
+    expect(html).toContain('Geweest');
     expect(html).toContain('Terugblik: Besproken wat de volgende stap wordt.');
     expect(html).toContain('aria-label="Verwijder afspraak: Echo controle"');
   });

@@ -8914,6 +8914,201 @@ h2 {
   min-width: 0;
 }
 
+.schedule-date-blocks {
+  display: grid;
+  gap: 12px;
+}
+
+.schedule-date-block {
+  display: grid;
+  grid-template-columns: minmax(72px, 0.18fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.schedule-date-block__header {
+  position: sticky;
+  top: 12px;
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.schedule-date-block__header span {
+  color: var(--accent-strong);
+  font-size: 1.32rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.schedule-date-block__header strong {
+  color: var(--text);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.schedule-date-block__header small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.schedule-date-block__cards {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.schedule-appointment-card {
+  display: grid;
+  grid-template-columns: minmax(54px, 0.18fr) minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.schedule-appointment-card[data-schedule-appointment-type="echo"] {
+  border-left-color: var(--accent);
+}
+
+.schedule-appointment-card[data-schedule-appointment-type="bloedprik"] {
+  border-left-color: var(--info);
+}
+
+.schedule-appointment-card[data-schedule-appointment-type="punctie"] {
+  border-left-color: var(--warning);
+}
+
+.schedule-appointment-card[data-schedule-appointment-type="terugplaatsing"] {
+  border-left-color: var(--success);
+}
+
+.schedule-appointment-card[data-schedule-appointment-type="consult"] {
+  border-left-color: var(--clay);
+}
+
+.schedule-appointment-card[data-schedule-appointment-type="overig"] {
+  border-left-color: var(--text-muted);
+}
+
+.schedule-appointment-card__date {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.schedule-appointment-card__date span {
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.schedule-appointment-card__date small {
+  width: fit-content;
+  padding: 4px 7px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.schedule-appointment-card[data-schedule-appointment-card="past"]
+  .schedule-appointment-card__date
+  small {
+  border-style: solid;
+  color: var(--text-muted);
+}
+
+.schedule-appointment-card__body {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.schedule-appointment-card__header {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.schedule-appointment-card__header h3,
+.schedule-appointment-card__header p {
+  margin: 0;
+}
+
+.schedule-appointment-card__header h3 {
+  font-size: 1rem;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+
+.schedule-appointment-card__status {
+  flex: 0 0 auto;
+  padding: 4px 7px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--accent-strong);
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.schedule-appointment-card__status[data-schedule-appointment-status="past"] {
+  border-style: solid;
+  background: var(--surface-subtle);
+  color: var(--text-muted);
+}
+
+.schedule-appointment-card__meta,
+.schedule-appointment-card__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.schedule-appointment-card__chips,
+.schedule-appointment-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.schedule-appointment-card__chips span,
+.schedule-appointment-card__actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.schedule-appointment-card__actions a {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--accent-strong);
+}
+
 .medication-command-layout {
   gap: 16px;
 }
@@ -15190,6 +15385,26 @@ a.action-card:active {
   .schedule-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .schedule-date-block,
+  .schedule-appointment-card,
+  .schedule-appointment-card__header {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-date-block__header {
+    position: static;
+  }
+
+  .schedule-date-block__header {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  .schedule-appointment-card__status {
+    width: fit-content;
   }
 
   .medication-task-routes {
