@@ -43,6 +43,7 @@ import {
 } from './domain/dossier';
 import { DossierStore } from './domain/dossierStore';
 import { EventLogStore } from './domain/eventLogStore';
+import { buildExampleData, EXAMPLE_DATA_IDS } from './domain/exampleData';
 import type {
   FertilityGraphEdgeType,
   FertilityGraphTrajectFilter,
@@ -238,6 +239,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindSettingsControls(root, state);
   bindThemeControls(root, state);
   bindFirstRunSetupControls(root, state);
+  bindExampleDataControls(root, state);
   bindTrajectControls(root, state);
   bindQuickEntryControls(root, state);
   bindDailyRecommendationControls(root, state);
@@ -390,6 +392,73 @@ function bindFirstRunSetupControls(root: HTMLElement, state: RuntimeState): void
       render(root, state);
     });
   });
+}
+
+function bindExampleDataControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelectorAll<HTMLFormElement>('form[data-example-data-action]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const action = form.dataset.exampleDataAction;
+      if (action === 'load') {
+        void loadExampleData(root, state);
+      }
+      if (action === 'clear') {
+        void clearExampleData(root, state);
+      }
+    });
+  });
+}
+
+async function loadExampleData(root: HTMLElement, state: RuntimeState): Promise<void> {
+  const agendaStore = state.agendaStore;
+  const medicatieStore = state.medicatieStore;
+  const mentaleCheckInStore = state.mentaleCheckInStore;
+  const kennisStore = state.kennisStore;
+  if (!agendaStore || !medicatieStore || !mentaleCheckInStore || !kennisStore) {
+    return;
+  }
+
+  const exampleData = buildExampleData();
+  await Promise.all([
+    ...exampleData.afspraken.map((afspraak) => agendaStore.save(afspraak)),
+    ...exampleData.medicatie.map((medicatie) => medicatieStore.save(medicatie)),
+    ...exampleData.mentalCheckIns.map((checkIn) => mentaleCheckInStore.save(checkIn)),
+    ...exampleData.kennisItems.map((item) => kennisStore.saveEigenKennisItem(item)),
+  ]);
+  await state.eventLogStore?.record({
+    categorie: 'systeem',
+    gebeurtenis: 'Voorbeelddata geladen',
+    detail: 'Synthetische demo-records toegevoegd voor agenda, medicatie, welzijn en kennis.',
+  });
+  await reloadAndRender(root, state);
+}
+
+async function clearExampleData(root: HTMLElement, state: RuntimeState): Promise<void> {
+  const tasks: Array<Promise<unknown>> = [];
+
+  if (state.agendaStore) {
+    const agendaStore = state.agendaStore;
+    tasks.push(...EXAMPLE_DATA_IDS.afspraken.map((id) => agendaStore.delete(id)));
+  }
+  if (state.medicatieStore) {
+    tasks.push(state.medicatieStore.delete(EXAMPLE_DATA_IDS.medicatie));
+  }
+  if (state.mentaleCheckInStore) {
+    const mentaleCheckInStore = state.mentaleCheckInStore;
+    tasks.push(...EXAMPLE_DATA_IDS.mentalCheckIns.map((id) => mentaleCheckInStore.delete(id)));
+  }
+  if (state.kennisStore) {
+    const kennisStore = state.kennisStore;
+    tasks.push(...EXAMPLE_DATA_IDS.kennisItems.map((id) => kennisStore.delete(id)));
+  }
+
+  await Promise.all(tasks);
+  await state.eventLogStore?.record({
+    categorie: 'systeem',
+    gebeurtenis: 'Voorbeelddata gewist',
+    detail: 'Alleen demo-records met vaste voorbeelddata-ID’s zijn verwijderd.',
+  });
+  await reloadAndRender(root, state);
 }
 
 async function mount(): Promise<void> {

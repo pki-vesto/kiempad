@@ -64,6 +64,7 @@ import {
   type EmbryoVergelijking,
 } from './domain/embryoDossier';
 import { EVENT_CATEGORIE_LABELS, isEventLogDetailPrivacySafe } from './domain/eventLog';
+import { EXAMPLE_DATA_IDS } from './domain/exampleData';
 import {
   bouwFertilityGraphWeergavePerTraject,
   type FertilityGraphConsultSamenvattingExport,
@@ -872,7 +873,7 @@ export function renderAppShell(
         <button class="lock-button sidebar-utility__button" id="lock-button" type="button">Vergrendel</button>
       </div>
       </div>
-      ${state.settingsOpen ? renderSettingsSheet(state.settings) : ''}
+      ${state.settingsOpen ? renderSettingsSheet(state) : ''}
 
       <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}">
         ${activeId === 'start' ? renderWorkspaceStrip(activeId) : ''}
@@ -1251,9 +1252,11 @@ function renderMobileMoreNavigation(
   `;
 }
 
-function renderSettingsSheet(settings: AppSettings): string {
+function renderSettingsSheet(state: AppShellState): string {
+  const settings = state.settings;
   const eigenNaam = settings.profielen.peter ?? '';
   const partnerNaam = settings.profielen.partner ?? '';
+  const exampleLoaded = hasExampleData(state);
 
   return `
     <div class="settings-sheet-backdrop" data-settings-sheet="ready" role="presentation">
@@ -1292,9 +1295,39 @@ function renderSettingsSheet(settings: AppSettings): string {
             </select>
           </label>
         </form>
+        ${renderExampleDataPanel(exampleLoaded, 'settings')}
       </section>
     </div>
   `;
+}
+
+function renderExampleDataPanel(loaded: boolean, surface: 'settings' | 'first-run'): string {
+  return `
+    <section class="policy-panel embedded-summary example-data-panel" aria-label="Voorbeelddata" data-example-data-panel="${surface}" data-example-data-state="${loaded ? 'loaded' : 'empty'}">
+      <div class="panel-heading">
+        <h3>Voorbeelddata</h3>
+        <span class="status-pill">${loaded ? 'Geladen' : 'Leeg'}</span>
+      </div>
+      <p class="small-print">${loaded ? 'Synthetische voorbeelddata staat in agenda, medicatie, welzijn en kennis. Je kunt alleen deze demo-records wissen.' : 'Vul de lege app tijdelijk met synthetische afspraken, drie medicatiemomenten, drie check-ins en kennisitems. Geen echte medische gegevens.'}</p>
+      <form data-example-data-action="${loaded ? 'clear' : 'load'}">
+        <button class="${loaded ? 'secondary-button' : 'phase-button'}" type="submit">${loaded ? 'Voorbeelddata wissen' : 'Voorbeelddata laden'}</button>
+      </form>
+    </section>
+  `;
+}
+
+function hasExampleData(state: AppShellState): boolean {
+  const afspraakIds = new Set(state.afspraken.map((bundle) => bundle.afspraak.id));
+  const medicatieIds = new Set(state.medicatie.map((bundle) => bundle.medicatie.id));
+  const checkInIds = new Set((state.mentalCheckIns ?? []).map((item) => item.id));
+  const kennisIds = new Set(state.kennisItems.map((item) => item.id));
+
+  return (
+    medicatieIds.has(EXAMPLE_DATA_IDS.medicatie) ||
+    EXAMPLE_DATA_IDS.afspraken.some((id) => afspraakIds.has(id)) ||
+    EXAMPLE_DATA_IDS.mentalCheckIns.some((id) => checkInIds.has(id)) ||
+    EXAMPLE_DATA_IDS.kennisItems.some((id) => kennisIds.has(id))
+  );
 }
 
 function renderWorkspaceStrip(activeId: ScreenId): string {
@@ -14160,6 +14193,7 @@ function renderFirstRunSetup(state: AppShellState): string {
           <button class="secondary-button" type="submit">Later doen</button>
         </form>
       </div>
+      ${renderExampleDataPanel(hasExampleData(state), 'first-run')}
       <p class="small-print">Je kunt alle stappen ook handmatig via de navigatie doen.</p>
     </section>
   `;

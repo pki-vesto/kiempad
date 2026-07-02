@@ -66,6 +66,10 @@
   compact route-first launchpad with personal header, cockpit, workspace cards, and optional setup
   panel only. The full Today console and Daily Advice console remain available as direct subroutes,
   while the old stacked focus-shell/dashboard/flowrail layer is removed from the default Start view.
+- **CFX-011 — done in G1335 / issue #2444.** First-run setup and Settings now expose
+  `Voorbeelddata laden` / `Voorbeelddata wissen` for a fixed synthetic dataset across agenda,
+  medicatie, welzijn, and kennis, so empty installs can be reviewed without entering real medical
+  data and demo records can be removed without touching user records.
 
 ---
 

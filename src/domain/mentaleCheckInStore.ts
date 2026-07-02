@@ -24,4 +24,8 @@ export class MentaleCheckInStore {
     await this.checkIns.saveWithId(checkIn);
     return checkIn;
   }
+
+  async delete(checkInId: string): Promise<void> {
+    await this.checkIns.delete(checkInId);
+  }
 }

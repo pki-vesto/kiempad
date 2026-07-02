@@ -23,6 +23,7 @@ import {
   renderVaultGate,
   SCREENS,
 } from '../src/appShell';
+import { EXAMPLE_DATA_IDS } from '../src/domain/exampleData';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { DossierDocument } from '../src/domain/types';
 
@@ -2616,6 +2617,10 @@ describe('app shell', () => {
     expect(html).toContain('Richt Kiempad rustig in');
     expect(html).toContain('id="first-run-complete-form"');
     expect(html).toContain('id="first-run-skip-form"');
+    expect(html).toContain('data-example-data-panel="first-run"');
+    expect(html).toContain('data-example-data-state="empty"');
+    expect(html).toContain('Voorbeelddata laden');
+    expect(html).toContain('drie medicatiemomenten, drie check-ins en kennisitems');
     expect(html).toContain('lokale kluis');
     expect(html).toContain('Configureer de centrale API');
     expect(html).toContain('href="#backup"');
@@ -36619,6 +36624,72 @@ describe('app shell', () => {
     expect(settingsHtml).toContain('data-theme-control="sheet"');
     expect(settingsHtml).toContain('name="thema"');
     expect(settingsHtml).toContain('value="donker" selected');
+  });
+
+  it('toont voorbeelddata laden en wissen in instellingen', () => {
+    const emptySettingsHtml = renderAppShell(
+      'start',
+      makeStartState({
+        settingsOpen: true,
+      }),
+    );
+
+    expect(emptySettingsHtml).toContain('data-example-data-panel="settings"');
+    expect(emptySettingsHtml).toContain('data-example-data-state="empty"');
+    expect(emptySettingsHtml).toContain('data-example-data-action="load"');
+    expect(emptySettingsHtml).toContain('Voorbeelddata laden');
+    expect(emptySettingsHtml).not.toContain('Voorbeelddata wissen');
+
+    const loadedSettingsHtml = renderAppShell(
+      'start',
+      makeStartState({
+        afspraken: [
+          {
+            afspraak: {
+              id: EXAMPLE_DATA_IDS.afspraken[0],
+              titel: 'Voorbeeld echo controle',
+              datumTijd: '2026-07-03T09:30',
+              type: 'echo',
+            },
+          },
+        ],
+        kennisItems: [
+          {
+            id: EXAMPLE_DATA_IDS.kennisItems[0],
+            titel: 'Voorbeeld: ICSI',
+            inhoud: 'Synthetisch',
+            categorie: 'research',
+            ai_gegenereerd: false,
+            geverifieerd_met_arts: false,
+          },
+        ],
+        medicatie: [
+          {
+            medicatie: {
+              id: EXAMPLE_DATA_IDS.medicatie,
+              naam: 'Voorbeeld FSH-injectie',
+              vorm: 'injectie',
+              actief: true,
+            },
+            doseLogs: [],
+          },
+        ],
+        mentalCheckIns: [
+          {
+            id: EXAMPLE_DATA_IDS.mentalCheckIns[0],
+            datum: '2026-07-02',
+            owner: 'samen',
+            stemming: 'goed',
+          },
+        ],
+        settingsOpen: true,
+      }),
+    );
+
+    expect(loadedSettingsHtml).toContain('data-example-data-panel="settings"');
+    expect(loadedSettingsHtml).toContain('data-example-data-state="loaded"');
+    expect(loadedSettingsHtml).toContain('data-example-data-action="clear"');
+    expect(loadedSettingsHtml).toContain('Voorbeelddata wissen');
   });
 
   it('rendert kostenposten met categorie, vergoedstatus en CRUD-formulieren', () => {
