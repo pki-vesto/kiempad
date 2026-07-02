@@ -3866,6 +3866,18 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner="samen"',
     );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-state="filled"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-state="empty"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-count="1"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-count="0"',
+    );
     expect(filteredRecommendations).toContain('Actieve feedbackfilter');
     expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
@@ -3933,6 +3945,15 @@ describe('app shell', () => {
     );
     expect(emptyFilteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owners="ready"',
+    );
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-state="empty"',
+    );
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-count="0"',
+    );
+    expect(emptyFilteredRecommendations).not.toContain(
+      'data-daily-recommendation-list-filter-owner-state="filled"',
     );
     expect(emptyFilteredRecommendations).toContain('Actieve feedbackfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve lijstfilter');

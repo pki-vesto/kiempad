@@ -4482,8 +4482,15 @@ h2 {
   border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface) 82%, white);
-  color: var(--text-muted);
+  color: var(--text);
   white-space: nowrap;
+}
+
+.daily-recommendation-list-filter-header__owners
+  [data-daily-recommendation-list-filter-owner-state="empty"] {
+  border-color: color-mix(in srgb, var(--border) 52%, transparent);
+  background: transparent;
+  color: color-mix(in srgb, var(--text-muted) 70%, transparent);
 }
 
 .daily-recommendation-list-filter-header form {

@@ -14717,10 +14717,11 @@ function renderDailyRecommendationListFilterHeader(input: {
   if (!input.filter) return '';
   const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
   const ownerDistribution = (['vrouw', 'man', 'samen'] as const)
-    .map(
-      (owner) =>
-        `<span data-daily-recommendation-list-filter-owner="${owner}">${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[owner])}: ${input.overview[owner].length}</span>`,
-    )
+    .map((owner) => {
+      const count = input.overview[owner].length;
+      const state = count === 0 ? 'empty' : 'filled';
+      return `<span data-daily-recommendation-list-filter-owner="${owner}" data-daily-recommendation-list-filter-owner-state="${state}" data-daily-recommendation-list-filter-owner-count="${count}">${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[owner])}: ${count}</span>`;
+    })
     .join('');
 
   return `
