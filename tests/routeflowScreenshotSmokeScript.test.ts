@@ -122,6 +122,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-dossier-search-console-region="search"]',
       '[data-dossier-search-console-region="privacy"]',
       '[data-dossier-search-console-region="index"]',
+      '[data-dossier-search-kit="ready"]',
       '[data-dossier-console="ready"]',
       '[data-dossier-console-region="orientation"]',
       '[data-dossier-console-region="workspace"]',

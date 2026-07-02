@@ -7684,6 +7684,12 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-search-console-region="index"');
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
     expect(emptyHtml).toContain('Zoek gericht in je dossier');
+    expect(emptyHtml).toContain('data-dossier-search-kit="ready"');
+    expect(emptyHtml).toContain('data-dossier-search-kit-state="idle"');
+    expect(emptyHtml).toContain('Zoeken zonder broninhoud te openen');
+    expect(emptyHtml).toContain('data-dossier-search-chip="idle"');
+    expect(emptyHtml).toContain('Geen zoekterm actief');
+    expect(emptyHtml).toContain('href="#dossier?route=search">Wis zoekterm</a>');
     expect(emptyHtml).toContain('Privacy en toegankelijkheid');
     expect(emptyHtml).toContain('Inhoudsindex');
     expect(emptyDisclosure).toContain('data-dossier-secondary-privacy="collapsed"');
@@ -7775,6 +7781,10 @@ describe('app shell', () => {
     );
     const populatedDisclosure = extractDossierSecondaryPrivacyDisclosure(populatedHtml);
 
+    expect(populatedHtml).toContain('data-dossier-search-kit-state="active-matches"');
+    expect(populatedHtml).toContain('data-dossier-search-chip="query"');
+    expect(populatedHtml).toContain('Zoekterm: private-disclosure-token');
+    expect(populatedHtml).toContain('data-dossier-search-chip="results"');
     expect(populatedDisclosure).toContain('data-attachment-search-state="active-matches"');
     expect(populatedDisclosure).toContain('data-attachment-list-state="results-counted"');
     expect(populatedDisclosure).toContain('data-attachment-bulk-selection-surface="privacy"');
