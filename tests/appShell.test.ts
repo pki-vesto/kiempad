@@ -3873,6 +3873,12 @@ describe('app shell', () => {
       'data-daily-recommendation-list-filter-owner-state="empty"',
     );
     expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-emphasis="dominant"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-emphasis="regular"',
+    );
+    expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner-count="1"',
     );
     expect(filteredRecommendations).toContain(
@@ -3898,6 +3904,9 @@ describe('app shell', () => {
     );
     expect(filteredRecommendations.indexOf('Man: 1')).toBeLessThan(
       filteredRecommendations.indexOf('Samen: 0'),
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner="man" data-daily-recommendation-list-filter-owner-state="filled" data-daily-recommendation-list-filter-owner-emphasis="dominant"',
     );
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-feedback-filter-reset="ready"',
@@ -3962,6 +3971,12 @@ describe('app shell', () => {
     expect(emptyFilteredRecommendations).not.toContain(
       'data-daily-recommendation-list-filter-owner-state="filled"',
     );
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-emphasis="regular"',
+    );
+    expect(emptyFilteredRecommendations).not.toContain(
+      'data-daily-recommendation-list-filter-owner-emphasis="dominant"',
+    );
     expect(emptyFilteredRecommendations).toContain('Actieve feedbackfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve lijstfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve filter: Artscheck');
@@ -3973,6 +3988,45 @@ describe('app shell', () => {
     expect(emptyFilteredRecommendations).toContain('Geen feedbackmatch');
     expect(emptyFilteredRecommendations).toContain('Geen suggesties met deze feedbackstatus.');
     expect(emptyFilteredRecommendations).not.toContain('data-recommendation-id="vrouw-basisdag"');
+
+    const tiedFilteredHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [
+        {
+          id: 'event-feedback-1',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagelijkse suggestie gedaan',
+          detail: 'Dagcheck zonder extra medicatiemoment (vrouw-basisdag)',
+        },
+        {
+          id: 'event-feedback-2',
+          datum: '2026-06-24T12:01:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagelijkse suggestie gedaan',
+          detail: 'Eigen aandachtspunten vastleggen (man-basisdag)',
+        },
+      ],
+      dailyRecommendationFeedbackFilter: 'gedaan',
+      activeStartRoute: 'recommendations',
+    });
+    const tiedFilteredRecommendations = extractDailyRecommendationsSection(tiedFilteredHtml);
+
+    expect(tiedFilteredRecommendations).toContain('Vrouw: 1');
+    expect(tiedFilteredRecommendations).toContain('Man: 1');
+    expect(tiedFilteredRecommendations).not.toContain(
+      'data-daily-recommendation-list-filter-owner-emphasis="dominant"',
+    );
+    expect(tiedFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner-emphasis="regular"',
+    );
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

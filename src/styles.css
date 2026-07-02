@@ -4487,6 +4487,12 @@ h2 {
 }
 
 .daily-recommendation-list-filter-header__owners
+  [data-daily-recommendation-list-filter-owner-emphasis="dominant"] {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.daily-recommendation-list-filter-header__owners
   [data-daily-recommendation-list-filter-owner-state="empty"] {
   border-color: color-mix(in srgb, var(--border) 52%, transparent);
   background: transparent;

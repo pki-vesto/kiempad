@@ -14716,8 +14716,15 @@ function renderDailyRecommendationListFilterHeader(input: {
 }): string {
   if (!input.filter) return '';
   const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
-  const ownerDistribution = (['vrouw', 'man', 'samen'] as const)
-    .map((owner, index) => ({ owner, count: input.overview[owner].length, index }))
+  const ownerCounts = (['vrouw', 'man', 'samen'] as const).map((owner, index) => ({
+    owner,
+    count: input.overview[owner].length,
+    index,
+  }));
+  const highestCount = Math.max(...ownerCounts.map((item) => item.count));
+  const hasSingleDominantOwner =
+    highestCount > 0 && ownerCounts.filter((item) => item.count === highestCount).length === 1;
+  const ownerDistribution = ownerCounts
     .sort((left, right) => {
       const leftHasResults = left.count > 0 ? 1 : 0;
       const rightHasResults = right.count > 0 ? 1 : 0;
@@ -14725,7 +14732,8 @@ function renderDailyRecommendationListFilterHeader(input: {
     })
     .map(({ owner, count }) => {
       const state = count === 0 ? 'empty' : 'filled';
-      return `<span data-daily-recommendation-list-filter-owner="${owner}" data-daily-recommendation-list-filter-owner-state="${state}" data-daily-recommendation-list-filter-owner-count="${count}">${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[owner])}: ${count}</span>`;
+      const emphasis = hasSingleDominantOwner && count === highestCount ? 'dominant' : 'regular';
+      return `<span data-daily-recommendation-list-filter-owner="${owner}" data-daily-recommendation-list-filter-owner-state="${state}" data-daily-recommendation-list-filter-owner-emphasis="${emphasis}" data-daily-recommendation-list-filter-owner-count="${count}">${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[owner])}: ${count}</span>`;
     })
     .join('');
 
