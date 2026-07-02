@@ -255,6 +255,7 @@ async function assertSplitWorkspaces(browser, options) {
       const contextOptional =
         route.prefix === 'question' ||
         route.prefix === 'knowledge' ||
+        route.prefix === 'decision' ||
         route.prefix === 'wellbeing' ||
         route.prefix === 'finance';
       if (

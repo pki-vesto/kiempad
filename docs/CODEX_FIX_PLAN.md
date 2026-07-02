@@ -108,6 +108,9 @@
 - **CFX-020 treatment phase timeline — done in G1348 / issue #2470.** Traject Fasen now uses the
   shared dot/line timeline component with done/current/todo states and an amber-accent current
   phase card while keeping the existing phase action buttons.
+- **CFX-041 decision route-first cards — done in G1349 / issue #2472.** Afwegingen no longer
+  renders a visible third context column; the active decision route owns the workspace while
+  decision cards show a chosen banner plus scan-friendly +/− option tags.
 
 ---
 
@@ -516,6 +519,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
+  Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
 - **CFX-044** — Back-up: export preview + Download/Kopieer, "Laatste back-up" reminder card,
   de-jargon. **P2 · M**
