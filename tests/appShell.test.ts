@@ -35959,6 +35959,22 @@ describe('app shell', () => {
     expect(html).toContain('Cyclusmetingen openen');
     expect(html).toContain('aria-label="Welzijn vastleggen route-samenvatting"');
     expect(html).toContain('data-wellbeing-route-summary="log"');
+    expect(html).toContain('Eerst check-in, daarna eventueel verdiepen');
+    expect(html).toContain(
+      'class="wellbeing-log-console" aria-label="Welzijn vastleggen" data-wellbeing-log-console="ready"',
+    );
+    expect(html).toContain(
+      'class="wellbeing-log-console__primary" data-wellbeing-log-primary="check-in"',
+    );
+    expect(html).toContain('class="wellbeing-log-console__continuations"');
+    expect(html).toContain('id="welzijn-log-symptom-panel"');
+    expect(html).toContain('id="welzijn-log-cycle-panel"');
+    expect(html.indexOf('data-wellbeing-log-primary="check-in"')).toBeLessThan(
+      html.indexOf('id="welzijn-log-symptom-panel"'),
+    );
+    expect(html.indexOf('id="welzijn-log-symptom-panel"')).toBeLessThan(
+      html.indexOf('id="welzijn-log-cycle-panel"'),
+    );
     expect(html).toContain('Welzijn en trends');
     expect(html).toContain('Check-ins, symptomen en cyclusmetingen');
     expect(html).toContain('Check-in, symptoom of cyclusmeting toevoegen');
@@ -36060,6 +36076,10 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
     expect(css).toContain('.insight-workbench__actions {');
     expect(css).toContain('.wellbeing-task-routes {');
+    expect(css).toContain('.wellbeing-log-console {');
+    expect(css).toContain('.wellbeing-log-console__header {');
+    expect(css).toContain('.wellbeing-log-console__primary {');
+    expect(css).toContain('.wellbeing-log-console__continuations {');
     expect(css).toContain('.wellbeing-history-board {');
     expect(css).toContain('.wellbeing-history-board__header {');
     expect(css).toContain('.wellbeing-history-board__lanes {');
@@ -36093,6 +36113,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.wellbeing-focus-shell {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).toContain('.wellbeing-log-console {');
+    expect(mobileCss).toContain('.wellbeing-log-console__header {');
+    expect(mobileCss).toContain('.wellbeing-log-console__continuations {');
     expect(mobileCss).toContain('.wellbeing-checkin-card__header {');
     expect(mobileCss).toContain('.wellbeing-checkin-card__mood {');
     expect(mobileCss).not.toContain(
