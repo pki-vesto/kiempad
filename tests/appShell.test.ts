@@ -36362,11 +36362,13 @@ describe('app shell', () => {
     expect(html).toContain('class="knowledge-focus-shell"');
     expect(html).toContain('data-knowledge-focus-shell="ready"');
     expect(html).toContain('data-knowledge-console="ready"');
-    expect(html).toContain('data-knowledge-console-region="workbench"');
+    expect(html).not.toContain('data-knowledge-console-region="workbench"');
     expect(html).toContain('data-knowledge-console-region="workspace"');
     expect(html).toContain('Eerst researchlaag kiezen, daarna bronnen openen');
-    expect(html).toContain('data-knowledge-focus-region="workbench"');
+    expect(html).not.toContain('data-knowledge-focus-region="workbench"');
     expect(html).toContain('data-knowledge-focus-region="workspace"');
+    expect(html).toContain('data-knowledge-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
     expect(html).toContain(
       '<section class="knowledge-research-workbench" aria-label="Researchwerkbank" data-knowledge-first-viewport="research-workbench">',
     );
@@ -36394,7 +36396,7 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-task-routes="ready"');
     expect(html).toContain('data-knowledge-compact-workspace="route-first"');
     expect(html).not.toContain('data-knowledge-workspace-context="metrics"');
-    expect(html).not.toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain('href="#kennis?route=read"');
     expect(html).toContain('href="#kennis?route=add"');
     expect(html).toContain('href="#kennis?route=ai"');
@@ -36589,18 +36591,22 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-focus-shell__header {');
     expect(css).toContain('.knowledge-focus-shell__body {');
     expect(css).toContain('grid-template-columns: 1fr;');
-    expect(css).toContain('grid-template-columns: minmax(318px, 0.78fr) minmax(0, 1.22fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.knowledge-focus-shell__workbench > .knowledge-research-workbench {');
-    expect(css).toContain('.knowledge-focus-shell__workbench .knowledge-research-snapshot {');
-    expect(css).toContain(
-      '.knowledge-focus-shell__workbench .knowledge-research-workbench__header p:last-child {',
-    );
-    expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('grid-template-columns: minmax(156px, 0.34fr) minmax(0, 1fr);');
     expect(css).not.toContain(
-      '.knowledge-focus-shell__workspace .domain-split-workspace__context {',
+      '.knowledge-focus-shell__workbench > .knowledge-research-workbench {',
+    );
+    expect(css).toContain('.knowledge-focus-shell__workspace');
+    expect(css).toContain('.domain-split-workspace__context');
+    expect(css).toContain('> .knowledge-research-workbench {');
+    expect(css).toContain('.knowledge-research-snapshot {');
+    expect(css).toContain('.knowledge-research-workbench__header');
+    expect(css).toContain('p:last-child {');
+    expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('"rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(156px, 0.24fr) minmax(0, 1fr) minmax(248px, 0.36fr);',
     );
     expect(css).toContain('gap: 10px;');
     expect(css).toContain(
@@ -36652,10 +36658,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.knowledge-focus-shell {');
     expect(mobileCss).toContain('box-shadow: none;');
     expect(mobileCss).toContain('.knowledge-focus-shell__body {');
-    expect(mobileCss).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
-    expect(mobileCss).not.toContain(
+    expect(mobileCss).toContain('.knowledge-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
       '.knowledge-focus-shell__workspace .domain-split-workspace__context {',
     );
+    expect(mobileCss).toContain('grid-column: auto;');
     expect(mobileCss).toContain('.knowledge-research-snapshot {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.knowledge-research-snapshot__card {');
@@ -38640,7 +38647,6 @@ describe('app shell', () => {
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
       if (
-        label === 'knowledge' ||
         label === 'wellbeing' ||
         label === 'decision' ||
         label === 'notification' ||

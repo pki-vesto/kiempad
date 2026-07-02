@@ -228,6 +228,10 @@
   the consult preparation workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact preparation context
   while mobile remains stacked.
+- **CFX-038 knowledge single workspace — partial in G1388 / issue #2550.** Kennis no longer renders
+  the research workbench as a separate focus-region above/next to the route workspace; desktop now
+  uses one split-view with route rail, active route, and compact research context while mobile
+  remains stacked.
 
 ---
 
@@ -671,7 +675,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1365/#2504: Kennisbibliotheek items render as category-eyebrow cards with chevrons,
   status badges, and quiet action/edit zones.
   Partial G1372/#2518: the knowledge search/category controls render as a filter kit with active
-  status copy and grouped actions.
+  status copy and grouped actions. Partial G1388/#2550: Kennis folds the research workbench into
+  the same split-view as route context, so desktop opens as one rail/main/context workspace instead
+  of a separate focus-region plus nested route workspace.
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.
