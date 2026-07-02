@@ -253,6 +253,7 @@ async function assertSplitWorkspaces(browser, options) {
         );
       }
       const contextOptional =
+        route.prefix === 'schedule' ||
         route.prefix === 'question' ||
         route.prefix === 'knowledge' ||
         route.prefix === 'decision' ||

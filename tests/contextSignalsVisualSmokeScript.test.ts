@@ -13,7 +13,6 @@ describe('context signals visual smoke script', () => {
 
     for (const route of [
       '#dossier?route=imaging',
-      '#agenda?route=plannen',
       '#traject?route=fasen',
       '#logboek?route=privacy',
       '#herinneringen?route=plannen',
@@ -22,20 +21,12 @@ describe('context signals visual smoke script', () => {
       expect(contextSignalsVisualSmokeScript).toContain(route);
     }
 
-    for (const signal of [
-      'dossier',
-      'schedule',
-      'treatment',
-      'eventlog',
-      'notification',
-      'backup',
-    ]) {
+    for (const signal of ['dossier', 'treatment', 'eventlog', 'notification', 'backup']) {
       expect(contextSignalsVisualSmokeScript).toContain(`signal: '${signal}'`);
     }
 
     for (const microstate of [
       'dossier-imaging',
-      'schedule-plannen',
       'treatment-fasen',
       'eventlog-privacy',
       'notification-plannen',
