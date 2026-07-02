@@ -14720,6 +14720,9 @@ function renderDailyRecommendationListFilterHeader(input: {
       <span>Actieve lijstfilter</span>
       <strong>${escapeHtml(filterLabel)}</strong>
       <em>${input.filteredTotal} van ${input.total} suggesties</em>
+      <form data-daily-recommendation-feedback-control="ready">
+        <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-list-filter-reset="ready">Reset</button>
+      </form>
     </div>
   `;
 }

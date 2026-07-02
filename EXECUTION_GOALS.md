@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1346 — Daily Recommendations: lijstfilterheader toont eigenaarverdeling
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lijstfilterheader toont label en totaalcount, maar nog niet bij wie de gefilterde suggesties horen.
+- **User Impact:** Gebruikers moeten de kaartgroepen scannen om te begrijpen of de gefilterde lijst vooral vrouw, man of samen betreft.
+- **Desired Outcome:** Toon in de actieve-filterheader een compacte verdeling voor vrouw, man en samen op basis van de gefilterde suggesties.
+- **User Value:** Gebruikers begrijpen sneller de context van de gefilterde suggestielijst.
+- **Acceptance Criteria:** Bij een actieve feedbackfilter toont de lijstfilterheader een compacte verdeling voor vrouw, man en samen; de verdeling gebruikt alleen lokale suggestiecounts en geen medische conclusies; zonder actieve filter blijft de header afwezig; reset verwijdert de header samen met de filterroute; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken rendering, lege gefilterde staat en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2638
+
 ### G1345 — Daily Recommendations: lijstfilterheader heeft resetactie
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2636
 
 ### G1344 — Daily Recommendations: lijstpaneel toont actieve filterheader
