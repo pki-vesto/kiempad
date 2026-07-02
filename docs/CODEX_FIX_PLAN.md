@@ -184,6 +184,9 @@
 - **CFX-035/CFX-012 medication form kit — partial in G1374 / issue #2522.** Medicatie Beheer now
   uses medication-specific form sections, field styling, and a compact action row instead of a
   generic flat medication form.
+- **CFX-040/CFX-012 dossier upload focus — partial in G1375 / issue #2524.** Dossier Upload now
+  opens as a focused add-flow: route overview, workflow tabs, triage, and duplicate microcopy stay
+  out of the active upload path so the document form appears immediately after the add-route strip.
 
 ---
 
@@ -623,6 +626,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1352/#2478: Zoeken route has a search-kit surface with status chips and reset.
   Partial G1366/#2506: Upload route has closed continuation panels for review, consult,
   embryokwaliteit, and embryostatus so only the primary document upload is immediately open.
+  Partial G1375/#2524: Upload route hides duplicate overview/triage layers in the active add-flow,
+  keeps continuation panels out of the document path, and gives tablet/mobile a compact selector so
+  the form starts near the top.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
@@ -648,6 +654,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   and a mobile-safe action wrapper.
   Partial G1374/#2522: Medicatie toevoegen/bewerken now uses medication-specific form sections
   and a mobile-safe action wrapper.
+  Partial G1375/#2524: Dossier document upload now uses a focused add-flow shell where route
+  selector, form sections, and submit path are prioritized over duplicate explanatory panels.
 - **CFX-025** — `€` prefix adornment in amount fields (C25). **P3 · S**
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**

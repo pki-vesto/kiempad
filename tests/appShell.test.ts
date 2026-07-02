@@ -6996,6 +6996,21 @@ describe('app shell', () => {
     expect(css).toContain(
       '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n  .dossier-add-route-disclosure[open]\n  > #dossier-route-review',
     );
+    expect(css).toContain(
+      '.dossier-focus-shell:has(#dossier-route-upload[data-dossier-route-state="active"])',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route-microcopy',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n  .dossier-upload-workflow\n  > .kp-workflow-panel__header',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="document"]',
+    );
+    expect(css).toContain('.dossier-add-route-disclosure:not([open]):not(:has(:target))');
+    expect(css).toContain('@media (min-width: 721px) and (max-width: 960px)');
+    expect(css).toContain('flex: 0 0 min(210px, 44vw);');
     expect(css).toContain('.dossier-add-route-disclosure[open]');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
