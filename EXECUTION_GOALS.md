@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1324 — CFX-006/CFX-046 + CFX-007 startgroet: persoonlijke instellingen en namen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De app had geen dedicated instellingen-sheet voor namen/gedeelde modus en de startgroet gebruikte een hardcoded placeholder.
+- **User Impact:** Gebruikers zagen een onpersoonlijke startkop en moesten thema-instellingen via een losse sidebar-control beheren.
+- **Desired Outcome:** Open instellingen als eigen sheet met namen, gedeelde modus en live themawissel; bewaar persoonlijke instellingen encrypted en gebruik de namen in de Start-groet.
+- **User Value:** Kiempad voelt direct persoonlijker en rustiger, zonder privacy- of opslagcontracten te verzwakken.
+- **Acceptance Criteria:** Instellingen openen vanuit topbar en mobiele Meer-sheet; `eigenNaam`, `partnerNaam` en `gedeeldeModus` worden genormaliseerd en encrypted bewaard; thema wisselt vanuit de sheet zonder aparte "Bewaar thema"-knop; Start toont opgeslagen namen in plaats van de hardcoded placeholder; desktop, tablet en mobiel tonen geen overlap; tests dekken render- en storecontracten; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Start, App shell, Instellingen
+- **Priority:** P0
+- **Complexity:** M
+- **Related Components:** App shell, settings store, encrypted settings, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 118
+- **Status:** ☑ klaar
+
 ### G1323 — CFX-009: Dagadvies hernoemen naar suggesties
 
 - **Epic:** Onboarding & Daily Use

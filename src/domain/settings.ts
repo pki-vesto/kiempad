@@ -18,9 +18,16 @@ export type FirstRunSetupSettings = {
   overgeslagenOp?: IsoDate;
 };
 
+export type ProfielSettings = {
+  peter?: string;
+  partner?: string;
+};
+
 export type AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: boolean;
   thema: 'licht' | 'donker';
+  profielen: ProfielSettings;
+  gedeeldeModus: boolean;
   ai: AiSettings;
   researchNetwerk: ResearchNetworkSettings;
   firstRunSetup: FirstRunSetupSettings;
@@ -31,6 +38,8 @@ export type AppSettings = {
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   toonNotificatieDetailsOpVergrendelscherm: false,
   thema: 'licht',
+  profielen: {},
+  gedeeldeModus: true,
   afspraakWaarschuwingMinuten: 30,
   ai: {
     ingeschakeld: false,
@@ -53,6 +62,8 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
     ...value,
     afspraakWaarschuwingMinuten,
     thema: value?.thema === 'donker' ? 'donker' : 'licht',
+    profielen: normaliseerProfielen(value?.profielen),
+    gedeeldeModus: value?.gedeeldeModus !== false,
     laatsteBackupOp: normaliseerIsoDatum(value?.laatsteBackupOp),
     ai: {
       ...DEFAULT_APP_SETTINGS.ai,
@@ -67,6 +78,22 @@ export function normaliseerAppSettings(value: Partial<AppSettings> | undefined):
       overgeslagenOp: normaliseerIsoDatum(value?.firstRunSetup?.overgeslagenOp),
     },
   };
+}
+
+function normaliseerProfielen(value: Partial<ProfielSettings> | undefined): ProfielSettings {
+  const peter = normaliseerNaam(value?.peter);
+  const partner = normaliseerNaam(value?.partner);
+
+  return {
+    ...(peter ? { peter } : {}),
+    ...(partner ? { partner } : {}),
+  };
+}
+
+function normaliseerNaam(value: string | undefined): string | undefined {
+  const normalized = value?.trim().replace(/\s+/g, ' ');
+  if (!normalized) return undefined;
+  return normalized.slice(0, 60);
 }
 
 function normaliseerWaarschuwingMinuten(value: number | undefined): number {

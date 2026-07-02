@@ -52,6 +52,24 @@ describe('SettingsStore', () => {
     expect(raw?.payload.ciphertext).not.toContain('thema');
   });
 
+  it('bewaart persoonlijke namen en gedeelde modus versleuteld', async () => {
+    const { driver, store } = await setupStore();
+
+    const saved = await store.setPersonalSettings({
+      profielen: { peter: '  Sam  ', partner: 'Noor   van Kiempad' },
+      gedeeldeModus: true,
+    });
+    const raw = await driver.getRecord('app-settings');
+
+    expect(saved.profielen).toEqual({ peter: 'Sam', partner: 'Noor van Kiempad' });
+    expect(saved.gedeeldeModus).toBe(true);
+    expect(raw?.type).toBe('settings');
+    expect(raw?.payload.ciphertext).not.toContain('Sam');
+    expect(raw?.payload.ciphertext).not.toContain('Noor');
+    expect(raw?.payload.ciphertext).not.toContain('profielen');
+    expect(raw?.payload.ciphertext).not.toContain('gedeeldeModus');
+  });
+
   it('bewaart AI-provider, model en API-sleutel versleuteld', async () => {
     const { driver, store } = await setupStore();
 

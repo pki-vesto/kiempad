@@ -157,6 +157,7 @@ type RuntimeState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  settingsOpen: boolean;
   webAuthnStatus: WebAuthnViewStatus;
   error?: string;
 };
@@ -213,6 +214,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     activeBackupRoute: normalizeBackupRoute(window.location.hash),
     activeNotificationRoute: normalizeNotificationRoute(window.location.hash),
     activeStartRoute: normalizeStartRoute(window.location.hash),
+    settingsOpen: state.settingsOpen,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
@@ -228,6 +230,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
       createNotificationDetailMap(state),
     ),
   });
+  bindSettingsControls(root, state);
   bindThemeControls(root, state);
   bindFirstRunSetupControls(root, state);
   bindTrajectControls(root, state);
@@ -295,23 +298,68 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.agendaImportError = undefined;
     state.medicatieImportStatus = undefined;
     state.medicatieImportError = undefined;
+    state.settingsOpen = false;
     clearScheduledNotifications();
     state.error = undefined;
     void refreshWebAuthnStatus(state).then(() => render(root, state));
   });
 }
 
-function bindThemeControls(root: HTMLElement, state: RuntimeState): void {
-  root.querySelector('#theme-form')?.addEventListener('submit', (event) => {
+function bindSettingsControls(root: HTMLElement, state: RuntimeState): void {
+  root.querySelectorAll<HTMLButtonElement>('[data-settings-open="true"]').forEach((button) => {
+    button.addEventListener('click', () => {
+      state.settingsOpen = true;
+      render(root, state);
+    });
+  });
+
+  root.querySelectorAll<HTMLButtonElement>('[data-settings-close="true"]').forEach((button) => {
+    button.addEventListener('click', () => {
+      state.settingsOpen = false;
+      render(root, state);
+    });
+  });
+
+  root.querySelector('#personal-settings-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (!(form instanceof HTMLFormElement) || !state.settingsStore) return;
-    const thema = parseThema(new FormData(form).get('thema'));
+    const data = new FormData(form);
 
+    void state.settingsStore
+      .setPersonalSettings({
+        profielen: {
+          peter: optionalString(data.get('eigenNaam')),
+          partner: optionalString(data.get('partnerNaam')),
+        },
+        gedeeldeModus: parseBoolean(data.get('gedeeldeModus'), true),
+      })
+      .then((settings) => {
+        state.settings = settings;
+        render(root, state);
+      });
+  });
+}
+
+function bindThemeControls(root: HTMLElement, state: RuntimeState): void {
+  const form = root.querySelector('#theme-form');
+  if (!(form instanceof HTMLFormElement)) return;
+
+  const saveTheme = () => {
+    if (!state.settingsStore) return;
+    const thema = parseThema(new FormData(form).get('thema'));
     void state.settingsStore.setThema(thema).then((settings) => {
       state.settings = settings;
       render(root, state);
     });
+  };
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    saveTheme();
+  });
+  form.querySelector('select[name="thema"]')?.addEventListener('change', () => {
+    saveTheme();
   });
 }
 
@@ -374,6 +422,7 @@ async function mount(): Promise<void> {
     kosten: [],
     eventLogs: [],
     settings: DEFAULT_APP_SETTINGS,
+    settingsOpen: false,
     notificaties: await getNotificationRuntimeStatus(),
     webAuthnStatus: await buildWebAuthnStatus(session),
   };
@@ -2728,6 +2777,12 @@ function parseEmbryoReviewStatus(
 
 function parseThema(value: FormDataEntryValue | null): AppSettings['thema'] {
   return value === 'donker' ? 'donker' : 'licht';
+}
+
+function parseBoolean(value: FormDataEntryValue | null, fallback: boolean): boolean {
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  return fallback;
 }
 
 function parseOwner(value: FormDataEntryValue | null): SymptomLog['owner'] {

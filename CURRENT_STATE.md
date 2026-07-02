@@ -38,6 +38,10 @@
   en `Bekijk suggesties` in plaats van aanbevelingstaal; statusfeedback,
   timeline/graph-labels en artscheckvragen gebruiken dezelfde niet-voorschrijvende
   framing.
+- **G1324 persoonlijke instellingen:** instellingen openen vanuit een dedicated
+  sheet met namen, gedeelde modus en thema. Namen en gedeelde modus worden encrypted
+  bewaard en de Start-groet gebruikt opgeslagen namen in plaats van een hardcoded
+  placeholder.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

@@ -1759,10 +1759,10 @@ describe('app shell', () => {
     expect(html).not.toContain('aria-label="Snelle kernroutes"');
     expect(html).not.toContain('class="workspace-map"');
     expect(html).not.toContain('data-workspace-map="ready"');
-    expect(html).toContain('id="theme-form"');
-    expect(html).toContain('data-theme-control="compact"');
-    expect(html).toContain('class="theme-form__label">Thema</span>');
-    expect(html).toContain('<button type="submit" aria-label="Bewaar thema">Opslaan</button>');
+    expect(html).toContain('class="topbar-actions"');
+    expect(html).toContain('data-settings-open="true"');
+    expect(html).not.toContain('data-theme-control="compact"');
+    expect(html).not.toContain('aria-label="Bewaar thema"');
     expect(html).not.toContain('Kiempad is verdeeld in duidelijke werkbanen');
     expect(html).not.toContain('data-workspace-map-card="Dossier"');
     expect(html).toContain('href="#agenda" aria-current="page"');
@@ -1817,6 +1817,53 @@ describe('app shell', () => {
     expect(html).toContain(
       'href="#kosten" data-mobile-nav-tier="mobile-more-sheet" aria-current="page"',
     );
+  });
+
+  it('rendert persoonlijke instellingen als sheet en gebruikt namen in de startgroet', () => {
+    const vandaag = new Date().toISOString().slice(0, 10);
+    const html = renderAppShell(
+      'start',
+      makeStartState({
+        settingsOpen: true,
+        settings: {
+          ...DEFAULT_APP_SETTINGS,
+          profielen: { peter: 'Sam', partner: 'Noor' },
+          gedeeldeModus: true,
+          thema: 'donker',
+        },
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-personal',
+              naam: 'Poging persoonlijk',
+              type: 'icsi',
+              startDatum: vandaag,
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [
+              {
+                id: 'fase-personal',
+                trajectId: 'traject-personal',
+                fase: 'stimulatie',
+                startDatum: vandaag,
+              },
+            ],
+          },
+        ],
+      }),
+    );
+
+    expect(html).toContain('Hoi Sam &amp; Noor');
+    expect(html).not.toContain('Hoi Peter &amp; partner');
+    expect(html).toContain('data-settings-sheet="ready"');
+    expect(html).toContain('id="personal-settings-form"');
+    expect(html).toContain('name="eigenNaam" type="text" maxlength="60" value="Sam"');
+    expect(html).toContain('name="partnerNaam" type="text" maxlength="60" value="Noor"');
+    expect(html).toContain('name="gedeeldeModus"');
+    expect(html).toContain('id="theme-form"');
+    expect(html).toContain('data-theme-control="sheet"');
+    expect(html).toContain('value="donker" selected');
   });
 
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
@@ -2826,8 +2873,13 @@ describe('app shell', () => {
     expect(mobileCss).toContain('width: 36px;');
     expect(mobileCss).toContain('.status-pill {');
     expect(mobileCss).toContain('max-width: 44vw;');
+    expect(mobileCss).toContain('.topbar-actions {');
+    expect(mobileCss).toContain('grid-column: 1 / -1;');
+    expect(mobileCss).toContain('.settings-button,');
+    expect(css).toContain('.settings-sheet-backdrop {');
+    expect(css).toContain('.settings-sheet {');
+    expect(css).toContain('.settings-theme-form {');
     expect(mobileCss).toContain('.theme-form {');
-    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(mobileCss).toContain('.theme-form__label {');
     expect(css).toContain('.theme-form[data-theme-control="compact"] {');
     expect(css).toContain('.theme-form__label {');
@@ -36726,9 +36778,24 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('data-theme="donker"');
-    expect(html).toContain('id="theme-form"');
-    expect(html).toContain('name="thema"');
-    expect(html).toContain('value="donker" selected');
+    expect(html).not.toContain('id="theme-form"');
+
+    const settingsHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: { ...DEFAULT_APP_SETTINGS, thema: 'donker' },
+      settingsOpen: true,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(settingsHtml).toContain('id="theme-form"');
+    expect(settingsHtml).toContain('data-theme-control="sheet"');
+    expect(settingsHtml).toContain('name="thema"');
+    expect(settingsHtml).toContain('value="donker" selected');
   });
 
   it('rendert kostenposten met categorie, vergoedstatus en CRUD-formulieren', () => {

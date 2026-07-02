@@ -5,6 +5,7 @@ import {
   type AppSettings,
   DEFAULT_APP_SETTINGS,
   normaliseerAppSettings,
+  type ProfielSettings,
   type ResearchNetworkSettings,
 } from './settings';
 import type { SettingsRecord } from './types';
@@ -35,6 +36,17 @@ export class SettingsStore {
     return this.save({
       ...(await this.get()),
       thema,
+    });
+  }
+
+  async setPersonalSettings(input: {
+    profielen: ProfielSettings;
+    gedeeldeModus: boolean;
+  }): Promise<AppSettings> {
+    return this.save({
+      ...(await this.get()),
+      profielen: input.profielen,
+      gedeeldeModus: input.gedeeldeModus,
     });
   }
 
