@@ -16687,20 +16687,12 @@ function renderMedicatieScreen(state: AppShellState): string {
   const medicationWorkspace = domainSplitWorkspace({
     className: 'medication-split-workspace',
     ariaLabel: 'Medicatie split-view werkruimte',
-    data: { 'medication-split-workspace': 'ready' },
+    data: {
+      'medication-split-workspace': 'ready',
+      'medication-compact-workspace': 'route-first',
+    },
     rail: medicationTaskRoutes,
     main: medicationRouteSections.join(''),
-    context: renderMedicationWorkspaceContext({
-      todayCount: todayLogs.length,
-      completedToday,
-      plannedCount: plannedLogs.length,
-      medicationCount: state.medicatie.length,
-      hasImportFeedback: Boolean(state.medicatieImportStatus || state.medicatieImportError),
-      importStatus: state.medicatieImportStatus,
-      importError: state.medicatieImportError,
-      nextDoseLog: todayLogs[0] ?? plannedLogs[0],
-      bundles: state.medicatie,
-    }),
   });
 
   return sectionStack(
@@ -16866,53 +16858,6 @@ function renderMedicationTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderMedicationWorkspaceContext(input: {
-  todayCount: number;
-  completedToday: number;
-  plannedCount: number;
-  medicationCount: number;
-  hasImportFeedback: boolean;
-  importStatus?: string;
-  importError?: string;
-  nextDoseLog: DoseLog | undefined;
-  bundles: MedicatieBundle[];
-}): string {
-  const nextMedication = input.nextDoseLog
-    ? input.bundles.find((bundle) => bundle.medicatie.id === input.nextDoseLog?.medicatieId)
-    : undefined;
-  const nextLabel =
-    input.nextDoseLog && nextMedication
-      ? `${nextMedication.medicatie.naam} · ${formatDateTime(input.nextDoseLog.geplandOp)}`
-      : 'Nog geen gepland medicatiemoment.';
-  const importLabel = input.importError
-    ? 'Import vraagt controle'
-    : input.importStatus
-      ? 'Importfeedback beschikbaar'
-      : input.hasImportFeedback
-        ? 'Importstatus beschikbaar'
-        : 'Geen importfeedback';
-
-  return `
-    <section class="summary-panel" aria-label="Medicatie context" data-medication-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Medicatie in beeld</h2>
-      ${statRow([
-        { label: 'Vandaag', value: String(input.todayCount) },
-        { label: 'Gedaan', value: String(input.completedToday) },
-        { label: 'Later', value: String(input.plannedCount) },
-        { label: 'Middelen', value: String(input.medicationCount) },
-      ])}
-      <p class="linked-note">${escapeHtml(nextLabel)}</p>
-    </section>
-    <section class="policy-panel" aria-label="Medicatie werkruimtegrens" data-medication-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Geen dosering berekenen</h2>
-      <p>${escapeHtml(importLabel)}. Afvinken, planning, beheer, import en historie blijven gescheiden zodat de actieve route de hoofdtaak blijft.</p>
-      <p class="small-print">Deze kolom toont alleen planningmetadata en geen doseeradvies, interpretatie of medische conclusie.</p>
-    </section>
-  `;
 }
 
 function renderMedicationRouteVisibility(
