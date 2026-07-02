@@ -3860,6 +3860,17 @@ describe('app shell', () => {
       'data-daily-recommendation-list-filter-owners="ready"',
     );
     expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-legend="ready"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-legend-item="accent"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-legend-item="empty"',
+    );
+    expect(filteredRecommendations).toContain('Accent = meeste');
+    expect(filteredRecommendations).toContain('Licht = geen match');
+    expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner="vrouw"',
     );
     expect(filteredRecommendations).toContain('data-daily-recommendation-list-filter-owner="man"');
@@ -3921,6 +3932,7 @@ describe('app shell', () => {
       'data-recommendation-id="samen-behandelvoorbereiding"',
     );
     expect(filteredRecommendations).not.toContain('tracking-payload');
+    expect(filteredRecommendations).not.toContain('behandeladvies');
 
     const emptyFilteredHtml = renderAppShell('start', {
       trajecten: [],
@@ -3961,6 +3973,9 @@ describe('app shell', () => {
     );
     expect(emptyFilteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owners="ready"',
+    );
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-legend="ready"',
     );
     expect(emptyFilteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner-state="empty"',
@@ -4026,6 +4041,27 @@ describe('app shell', () => {
     );
     expect(tiedFilteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-owner-emphasis="regular"',
+    );
+
+    const unfilteredHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [],
+      activeStartRoute: 'recommendations',
+    });
+    const unfilteredRecommendations = extractDailyRecommendationsSection(unfilteredHtml);
+
+    expect(unfilteredRecommendations).not.toContain(
+      'data-daily-recommendation-list-filter-legend="ready"',
+    );
+    expect(unfilteredRecommendations).not.toContain(
+      'data-daily-recommendation-list-filter-legend-item="accent"',
     );
   });
 
