@@ -3838,7 +3838,7 @@ describe('app shell', () => {
           datum: '2026-06-24T12:00:00.000Z',
           categorie: 'systeem',
           gebeurtenis: 'Dagelijkse suggestie gedaan',
-          detail: 'Dagcheck zonder extra medicatiemoment (vrouw-basisdag)',
+          detail: 'Eigen aandachtspunten vastleggen (man-basisdag)',
         },
       ],
       dailyRecommendationFeedbackFilter: 'gedaan',
@@ -3890,17 +3890,24 @@ describe('app shell', () => {
     );
     expect(filteredRecommendations).toContain('Actieve filter: Gedaan');
     expect(filteredRecommendations).toContain('1 van ');
-    expect(filteredRecommendations).toContain('Vrouw: 1');
-    expect(filteredRecommendations).toContain('Man: 0');
+    expect(filteredRecommendations).toContain('Man: 1');
+    expect(filteredRecommendations).toContain('Vrouw: 0');
     expect(filteredRecommendations).toContain('Samen: 0');
+    expect(filteredRecommendations.indexOf('Man: 1')).toBeLessThan(
+      filteredRecommendations.indexOf('Vrouw: 0'),
+    );
+    expect(filteredRecommendations.indexOf('Man: 1')).toBeLessThan(
+      filteredRecommendations.indexOf('Samen: 0'),
+    );
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-feedback-filter-reset="ready"',
     );
     expect(filteredRecommendations).toContain(
       'name="dailyRecommendationFeedbackFilterAction" value="reset"',
     );
-    expect(filteredRecommendations).toContain('data-recommendation-id="vrouw-basisdag"');
+    expect(filteredRecommendations).toContain('data-recommendation-id="man-basisdag"');
     expect(filteredRecommendations).toContain('Feedbackstatus: Gedaan');
+    expect(filteredRecommendations).not.toContain('data-recommendation-id="vrouw-basisdag"');
     expect(filteredRecommendations).not.toContain(
       'data-recommendation-id="samen-behandelvoorbereiding"',
     );
