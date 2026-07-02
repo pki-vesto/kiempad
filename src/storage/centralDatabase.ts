@@ -75,6 +75,13 @@ export class CentralDataValidationError extends Error {
   }
 }
 
+export class CentralReplayConflictError extends Error {
+  constructor(message = 'central-replay-conflict') {
+    super(message);
+    this.name = 'CentralReplayConflictError';
+  }
+}
+
 export interface CentralEncryptedDatabase {
   getMeta<T>(session: CentralAuthSession, key: string): Promise<T | undefined>;
   putMeta<T>(session: CentralAuthSession, key: string, value: T): Promise<void>;
@@ -456,7 +463,7 @@ function assertNotReplayedCentralRecord(
   const previousClientUpdatedAt = Date.parse(existing.replayProtection.clientUpdatedAt);
   const nextClientUpdatedAt = Date.parse(record.updatedAt);
   if (nextClientUpdatedAt <= previousClientUpdatedAt) {
-    throw new CentralDataValidationError('Centrale recordwrite is ouder dan de laatste versie.');
+    throw new CentralReplayConflictError();
   }
 }
 

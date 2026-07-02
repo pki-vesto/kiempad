@@ -330,6 +330,9 @@
   smoke now seeds a synthetic filled consult record through the real upload form and verifies the
   compact consult card header, status chips, sections, source review, screenshot bytes, and
   no-payload boundary on desktop and mobile.
+- **Central replay conflict recovery status — done in G1418 / issue #938.** Central stale/replay
+  writes now use a typed conflict, HTTP 409, health-contract errorstate, and generic UI recovery
+  copy telling users to reload without falling back to plaintext local storage.
 
 ---
 

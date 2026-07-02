@@ -51,7 +51,7 @@ for (const [key, value] of Object.entries(expected)) {
     process.exit(2);
   }
 }
-const expectedErrors = ['unauthorized', 'forbidden', 'central-api-error'];
+const expectedErrors = ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'];
 if (JSON.stringify(parsed.errorStates) !== JSON.stringify(expectedErrors)) {
   console.error('G503/G1078 health response mist expliciete foutstatussen.');
   process.exit(2);

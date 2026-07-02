@@ -21,7 +21,7 @@ const HEALTH_MONITOR_FIXTURES: Record<HealthMonitorFixture, unknown> = {
     medicalPlaintext: false,
     dataRoutes: 'bearer-session-required',
     emptyState: 'no-user-dataset-opened',
-    errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+    errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
   },
   'unexpected-contract-version': {
     status: 'ok',
@@ -33,7 +33,7 @@ const HEALTH_MONITOR_FIXTURES: Record<HealthMonitorFixture, unknown> = {
     medicalPlaintext: false,
     dataRoutes: 'bearer-session-required',
     emptyState: 'no-user-dataset-opened',
-    errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+    errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
   },
   'unexpected-field': {
     status: 'ok',
@@ -45,7 +45,7 @@ const HEALTH_MONITOR_FIXTURES: Record<HealthMonitorFixture, unknown> = {
     medicalPlaintext: false,
     dataRoutes: 'bearer-session-required',
     emptyState: 'no-user-dataset-opened',
-    errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+    errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
     uptimeSeconds: 123,
   },
   'unexpected-error-states': {
@@ -70,7 +70,7 @@ const HEALTH_MONITOR_FIXTURES: Record<HealthMonitorFixture, unknown> = {
     medicalPlaintext: false,
     dataRoutes: 'bearer-session-required',
     emptyState: 'no-user-dataset-opened',
-    errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+    errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
     userId: 'user-peter',
     sessionId: 'kiempad-session-secret',
     recordId: 'record-sensitive',

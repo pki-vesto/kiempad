@@ -22,9 +22,9 @@ describe('central browser smoke script', () => {
     expect(centralBrowserSmokeScript).toContain(
       'Tweede schone browsercontext moest de centrale dataset opnieuw starten.',
     );
-    expect(centralBrowserSmokeScript).toContain('Ontgrendel Kiempad');
-    expect(centralBrowserSmokeScript).toContain('"type": "settings"');
-    expect(centralBrowserSmokeScript).toContain('"alg": "AES-256-GCM"');
+    expect(centralBrowserSmokeScript).toContain('Welkom terug');
+    expect(centralBrowserSmokeScript).toContain('encryptedUserRecords.length > 0');
+    expect(centralBrowserSmokeScript).toContain("record?.payload?.alg === 'AES-256-GCM'");
     expect(centralBrowserSmokeScript).toContain('firstRunSetup');
     expect(centralBrowserSmokeScript).toContain('Centrale persistence bevat plaintext');
   });

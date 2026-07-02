@@ -104,6 +104,7 @@ import {
   scheduleLocalNotifications,
 } from './notificationRuntime';
 import { importeerVersleuteldeExport, maakVersleuteldeExport } from './storage/backup';
+import { CentralReplayConflictError } from './storage/centralDatabase';
 import { type ClientStorageMode, openClientStorage } from './storage/clientStorage';
 import { EncryptedRecordRepository } from './storage/encryptedRepository';
 import type { EncryptedStorageDriver } from './storage/records';
@@ -564,8 +565,21 @@ async function mount(): Promise<void> {
 }
 
 function formatStorageBootstrapError(error: unknown): string {
+  const centralRecoveryStatus = formatCentralReplayRecoveryStatus(error);
+  if (centralRecoveryStatus) return centralRecoveryStatus;
   const detail = error instanceof Error ? error.message : 'Onbekende opslagfout.';
   return `Centrale versleutelde opslag kon niet worden geopend. ${detail}`;
+}
+
+function formatCentralReplayRecoveryStatus(error: unknown): string | undefined {
+  if (!(error instanceof CentralReplayConflictError)) return undefined;
+  return 'Centrale opslag heeft een oudere of dubbele wijziging geweigerd. Herlaad Kiempad en probeer opnieuw; er is niets automatisch naar lokale plaintext teruggezet.';
+}
+
+function formatRecoverableStorageError(error: unknown, fallback: string): string {
+  return (
+    formatCentralReplayRecoveryStatus(error) ?? (error instanceof Error ? error.message : fallback)
+  );
 }
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
@@ -877,8 +891,7 @@ async function saveConsultVerslagFromForm(
     target.reset();
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError =
-      error instanceof Error ? error.message : 'Consultverslag opslaan is mislukt.';
+    state.dossierError = formatRecoverableStorageError(error, 'Consultverslag opslaan is mislukt.');
     render(root, state);
   }
 }
@@ -922,8 +935,10 @@ async function saveConsultSamenvattingReviewFromForm(
     state.dossierError = undefined;
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError =
-      error instanceof Error ? error.message : 'Consultsamenvatting reviewen is mislukt.';
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Consultsamenvatting reviewen is mislukt.',
+    );
     render(root, state);
   }
 }
@@ -1033,7 +1048,8 @@ async function saveDossierDocumentsFromForm(
     target.reset();
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError = describeDossierUploadFailure(error);
+    state.dossierError =
+      formatCentralReplayRecoveryStatus(error) ?? describeDossierUploadFailure(error);
     render(root, state);
   }
 }
@@ -1056,8 +1072,10 @@ async function deleteDossierDocument(
     state.dossierError = undefined;
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError =
-      error instanceof Error ? error.message : 'Dossierdocument verwijderen is mislukt.';
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Dossierdocument verwijderen is mislukt.',
+    );
     render(root, state);
   }
 }
@@ -1195,8 +1213,10 @@ async function saveEmbryoQualityFromForm(
     target.reset();
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError =
-      error instanceof Error ? error.message : 'Embryokwaliteit vastleggen is mislukt.';
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Embryokwaliteit vastleggen is mislukt.',
+    );
     render(root, state);
   }
 }
@@ -1270,8 +1290,10 @@ async function saveEmbryoStatusEventFromForm(
     target.reset();
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError =
-      error instanceof Error ? error.message : 'Embryo-status vastleggen is mislukt.';
+    state.dossierError = formatRecoverableStorageError(
+      error,
+      'Embryo-status vastleggen is mislukt.',
+    );
     render(root, state);
   }
 }

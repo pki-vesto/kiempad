@@ -4941,6 +4941,31 @@ describe('app shell', () => {
     );
   });
 
+  it('toont centrale replayconflict recovery als generieke dossierstatus zonder plaintextlek', () => {
+    const html = renderAppShell(
+      'dossier',
+      makeStartState({
+        storageMode: 'central-api',
+        dossierError:
+          'Centrale opslag heeft een oudere of dubbele wijziging geweigerd. Herlaad Kiempad en probeer opnieuw; er is niets automatisch naar lokale plaintext teruggezet.',
+      }),
+    );
+
+    expect(html).toContain('data-status-feedback-kind="dossier"');
+    expect(html).toContain('data-status-feedback-state="error"');
+    expect(html).toContain('role="alert"');
+    expect(html).toContain('oudere of dubbele wijziging geweigerd');
+    expect(html).toContain('Herlaad Kiempad en probeer opnieuw');
+    expect(html).toContain('niets automatisch naar lokale plaintext teruggezet');
+    expect(html).not.toContain('kiempad-session-forged');
+    expect(html).not.toContain('passphrase');
+    expect(html).not.toContain('echo-foto-privenaam.jpg');
+    expect(html).not.toContain('OCR_RAW_PAYLOAD');
+    expect(html).not.toContain('BASE64_MEDISCHE_PAYLOAD');
+    expect(html).not.toContain('diagnose stellen');
+    expect(html).not.toContain('behandelkeuzeadvies');
+  });
+
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {
     const vandaag = new Date().toISOString().slice(0, 10);
     const html = renderAppShell('medicatie', {

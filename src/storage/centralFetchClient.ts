@@ -1,6 +1,10 @@
 import type { CentralSessionToken } from './centralApi';
 import type { CentralRecordListPage, CentralRecordListPageOptions } from './centralDatabase';
-import { CentralAccessDeniedError, CentralSessionError } from './centralDatabase';
+import {
+  CentralAccessDeniedError,
+  CentralReplayConflictError,
+  CentralSessionError,
+} from './centralDatabase';
 import { CentralHttpBadRequestError } from './centralHttpApi';
 import type {
   EncryptedRecord,
@@ -171,6 +175,13 @@ export class CentralFetchApiClientDriver implements EncryptedStorageDriver {
       throw new CentralSessionError();
     }
     if (response.status === 403) throw new CentralAccessDeniedError();
+    if (response.status === 409) {
+      const errorMessage = await readErrorMessage(response);
+      if (errorMessage === 'central-replay-conflict') {
+        throw new CentralReplayConflictError();
+      }
+      throw new CentralHttpBadRequestError(errorMessage);
+    }
     if (response.status >= 400) {
       throw new CentralHttpBadRequestError(await readErrorMessage(response));
     }

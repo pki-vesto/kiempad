@@ -100,7 +100,8 @@ pad zonder lokale vault-hercreatie.
   `encryptionBoundary=client-side-encrypted-envelopes`,
   `backendVisibility=technical-metadata-only`, `medicalPlaintext=false`,
   `dataRoutes=bearer-session-required`, `emptyState=no-user-dataset-opened` en
-  foutstatussen `unauthorized`, `forbidden`, `central-api-error`. De healthcheck mag
+  foutstatussen `unauthorized`, `forbidden`, `central-api-error`,
+  `central-replay-conflict`. De healthcheck mag
   nooit user-id, session-id, record-id, recordcount, ciphertext, secrets,
   gezondheidsdata, diagnose, dosering, kansberekening of behandelkeuzeadvies
   teruggeven en mag geen persistence write veroorzaken.
@@ -329,6 +330,10 @@ Zie [`docs/TAILSCALE_DEPLOY.md`](TAILSCALE_DEPLOY.md).
   `KIEMPAD_CENTRAL_ALLOWED_USER_IDS`/`KIEMPAD_CENTRAL_ALLOWED_ORIGINS` de client
   toestaan. Malformed sessietickets blijven centrale contractfouten. De app valt bij
   centrale configuratie niet stil terug naar legacy lokaal.
+- **Centrale replay/stale-write conflict:** de API retourneert
+  `central-replay-conflict` en de app toont alleen generieke recoverycopy: herlaad
+  Kiempad en probeer opnieuw. Er is geen automatische plaintext fallback naar lokale
+  opslag; onderzoek alleen technische serverlogs en encrypted recordmetadata.
 - **Herinneringen komen niet:** controleer notificatie-permissie van de browser/PWA
   en of de service worker actief is.
 - **AI doet niets:** AI staat default uit; controleer opt-in + sleutel in de
