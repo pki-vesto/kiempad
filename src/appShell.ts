@@ -758,6 +758,7 @@ export type AppShellState = {
   activeNotificationRoute?: NotificationRoute;
   activeStartRoute?: StartRoute;
   settingsOpen?: boolean;
+  agendaStatus?: string;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -16147,6 +16148,7 @@ function renderAgendaScreen(state: AppShellState): string {
           data: { 'schedule-route-summary': 'komend' },
           ariaLabel: 'Komende afspraken route-samenvatting',
         })}
+        ${renderAgendaStatus(state.agendaStatus, 'komend')}
         ${disclosure({
           summary: 'Komende afspraken en acties tonen',
           open: upcoming.length > 0 && upcoming.length <= 2,
@@ -16183,6 +16185,7 @@ function renderAgendaScreen(state: AppShellState): string {
           data: { 'schedule-route-summary': 'plannen' },
           ariaLabel: 'Afspraak plannen route-samenvatting',
         })}
+        ${renderAgendaStatus(state.agendaStatus, 'plannen')}
         ${disclosure({
           summary: selected ? 'Afspraak bewerken' : 'Afspraak aanmaken',
           open: !selected,
@@ -16485,6 +16488,12 @@ function renderScheduleRouteVisibility(activeRoute: ScheduleRoute, route: Schedu
   return route === activeRoute
     ? ' data-schedule-route-state="active"'
     : ' data-schedule-route-state="inactive" hidden';
+}
+
+function renderAgendaStatus(status: string | undefined, surface: 'komend' | 'plannen'): string {
+  if (!status) return '';
+
+  return `<p class="status-message schedule-save-feedback" role="status" aria-live="polite" data-schedule-save-feedback="${surface}">${escapeHtml(status)}</p>`;
 }
 
 function renderAgendaImportForm(state: AppShellState): string {

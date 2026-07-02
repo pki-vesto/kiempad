@@ -3741,6 +3741,7 @@ describe('app shell', () => {
       kennisItems: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      agendaStatus: 'Afspraak opgeslagen.',
       afspraken: [
         {
           afspraak: {
@@ -3833,8 +3834,15 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-route-state="active"');
     expect(html).toContain('id="agenda-route-komend"');
     expect(html).toContain('data-schedule-route="komend"');
+    expect(html).toContain(
+      'class="status-message schedule-save-feedback" role="status" aria-live="polite" data-schedule-save-feedback="komend"',
+    );
     expect(html).toContain('id="agenda-route-plannen"');
     expect(html).toContain('data-schedule-route="plannen"');
+    expect(html).toContain(
+      'class="status-message schedule-save-feedback" role="status" aria-live="polite" data-schedule-save-feedback="plannen"',
+    );
+    expect(html).toContain('Afspraak opgeslagen.');
     expect(html).toContain('id="agenda-route-import"');
     expect(html).toContain('data-schedule-route="import"');
     expect(html).toContain('id="agenda-route-historie"');
