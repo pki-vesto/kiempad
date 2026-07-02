@@ -136,6 +136,9 @@
 - **Daily advice feedback reset guarded consistency — done in G1450 / issue #2660.** The workflow,
   list-header, and filter-form reset buttons now share one compact disabled/guarded treatment so
   unavailable local reset states stay calm and consistent without layout shift.
+- **Daily advice feedback reset forced-colors consistency — done in G1451 / issue #2662.** The
+  workflow, list-header, and filter-form reset buttons now share forced-colors states for default,
+  focus, active, and disabled contexts so high-contrast users keep clear local reset cues.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

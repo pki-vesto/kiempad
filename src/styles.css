@@ -14139,6 +14139,43 @@ a.action-card:active {
 }
 
 @media (forced-colors: active) {
+  [data-daily-advice-feedback-workflow-reset="ready"],
+  [data-daily-recommendation-list-filter-reset="ready"],
+  [data-daily-recommendation-feedback-filter-reset="ready"] {
+    border-color: ButtonText;
+    background: ButtonFace;
+    box-shadow: none;
+    color: ButtonText;
+    forced-color-adjust: auto;
+  }
+
+  [data-daily-advice-feedback-workflow-reset="ready"]:focus-visible,
+  [data-daily-recommendation-list-filter-reset="ready"]:focus-visible,
+  [data-daily-recommendation-feedback-filter-reset="ready"]:focus-visible,
+  [data-daily-advice-feedback-workflow-reset="ready"]:active,
+  [data-daily-recommendation-list-filter-reset="ready"]:active,
+  [data-daily-recommendation-feedback-filter-reset="ready"]:active {
+    border-color: Highlight;
+    background: Highlight;
+    box-shadow: none;
+    color: HighlightText;
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  [data-daily-advice-feedback-workflow-reset="ready"]:disabled,
+  [data-daily-advice-feedback-workflow-reset="ready"][aria-disabled="true"],
+  [data-daily-recommendation-list-filter-reset="ready"]:disabled,
+  [data-daily-recommendation-list-filter-reset="ready"][aria-disabled="true"],
+  [data-daily-recommendation-feedback-filter-reset="ready"]:disabled,
+  [data-daily-recommendation-feedback-filter-reset="ready"][aria-disabled="true"] {
+    border-color: GrayText;
+    background: Canvas;
+    box-shadow: none;
+    color: GrayText;
+    opacity: 1;
+  }
+
   #dossier-upload-form,
   #consult-verslag-form,
   #embryo-quality-form,
