@@ -2033,6 +2033,10 @@ describe('app shell', () => {
     expect(css).toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
     expect(css).toContain('.finance-focus-shell__workspace {');
     expect(css).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('.finance-form-section {');
+    expect(css).toContain('.finance-form-section--primary {');
+    expect(css).toContain('.finance-amount-input {');
+    expect(css).toContain('.finance-form-actions {');
     expect(css).toContain('.cost-history-list {');
     expect(css).toContain('.cost-history-card > article {');
     expect(css).toContain('.cost-history-card__header {');
@@ -2243,6 +2247,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.finance-focus-shell {');
     expect(mobileCss).toContain('.finance-focus-shell__body {');
     expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).toContain('.finance-form-section {');
+    expect(mobileCss).toContain('.finance-form-actions {');
     expect(mobileCss).not.toContain(
       '.finance-focus-shell__workspace .domain-split-workspace__context {',
     );
@@ -37171,6 +37177,17 @@ describe('app shell', () => {
     expect(html).toContain('Kostenhistorie');
     expect(html).toContain('Kostenpost toevoegen');
     expect(html).toContain('id="kosten-form"');
+    expect(html).toContain(
+      'class="finance-form-section finance-form-section--primary" data-finance-form-section="kostenpost"',
+    );
+    expect(html).toContain(
+      'class="finance-form-section" data-finance-form-section="vergoeding-context"',
+    );
+    expect(html).toContain('class="finance-form-field finance-form-field--wide"');
+    expect(html).toContain('class="finance-form-field finance-amount-field"');
+    expect(html).toContain('class="finance-amount-input" data-finance-amount-input="ready"');
+    expect(html).toContain('<span aria-hidden="true">€</span>');
+    expect(html).toContain('class="finance-form-actions"');
     expect(html).toContain(
       'class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="toevoegen"',
     );
