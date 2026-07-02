@@ -143,6 +143,7 @@ type RuntimeState = {
   dossierDocuments: DossierDocument[];
   consultVerslagen: ConsultVerslag[];
   kosten: CostItem[];
+  kostenStatus?: string;
   eventLogs: EventLog[];
   settings: AppSettings;
   settingsFeedback?: SettingsFeedbackItem;
@@ -194,6 +195,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     mentalCheckIns: state.mentalCheckIns,
     decisions: state.decisions,
     kosten: state.kosten,
+    kostenStatus: state.kostenStatus,
     eventLogs: state.eventLogs,
     settings: state.settings,
     settingsFeedback: state.settingsFeedback,
@@ -1665,7 +1667,10 @@ function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
       const confirmed = window.confirm(DELETE_CONFIRMATIONS.kosten);
       if (!confirmed) return;
 
-      void state.kostenStore.delete(kostenId).then(() => reloadAndRender(root, state));
+      void state.kostenStore.delete(kostenId).then(() => {
+        state.kostenStatus = 'Kostenpost verwijderd.';
+        return reloadAndRender(root, state);
+      });
     });
   });
 }
@@ -1794,6 +1799,7 @@ async function saveKostenFromForm(
     categorie: parseCostCategorie(data.get('categorie')),
     vergoed: parseCostVergoed(data.get('vergoed')),
   });
+  state.kostenStatus = 'Kostenpost opgeslagen.';
   await reloadAndRender(root, state);
 }
 
