@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1344 — Daily Recommendations: lijstpaneel toont actieve filterheader
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De actieve feedbackfilter is zichtbaar in de workflowstatus en lijstfocusstatus, maar het lijstpaneel zelf heeft nog geen vaste compacte filterheader.
+- **User Impact:** Binnen de volledige suggestielijst is minder direct zichtbaar welke feedbackfilter de inhoud bepaalt.
+- **Desired Outcome:** Toon boven de suggesties in het lijstpaneel een compacte actieve-filterheader met label en count bij een actieve filter.
+- **User Value:** Gebruikers begrijpen in de lijstcontext sneller waarom zij een gefilterde set suggesties zien.
+- **Acceptance Criteria:** Bij een actieve feedbackfilter toont het lijstpaneel boven de suggesties een compacte filterheader met label en count; de header blijft rustig en dupliceert geen medische conclusies; zonder actieve filter blijft het lijstpaneel ongewijzigd; reset verwijdert de header samen met de filterroute; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken rendering, ongefilterde staat, reset en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2634
+
 ### G1343 — Daily Recommendations: lijstfocusstatus kan rustig sluiten
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell runtime controls, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2632
 
 ### G1342 — Daily Recommendations: filterstatus toont actieve lijstfocus

@@ -1739,10 +1739,20 @@ function ensureDailyRecommendationListFocusStatus(panel: HTMLElement): void {
   );
   if (existingStatus) return;
 
-  const status = document.createElement('p');
+  const status = document.createElement('div');
   status.className = 'small-print daily-advice-list-focus-status';
   status.dataset.dailyAdviceListFocusStatus = 'ready';
-  status.textContent = 'Lijst geopend vanuit de actieve feedbackfilter.';
+  const statusText = document.createElement('span');
+  statusText.textContent = 'Lijst geopend vanuit de actieve feedbackfilter.';
+  const closeButton = document.createElement('button');
+  closeButton.type = 'button';
+  closeButton.dataset.dailyAdviceListFocusClose = 'ready';
+  closeButton.textContent = 'Sluit';
+  closeButton.addEventListener('click', () => {
+    delete panel.dataset.dailyAdviceListFocus;
+    status.remove();
+  });
+  status.append(statusText, closeButton);
   body.prepend(status);
 }
 
