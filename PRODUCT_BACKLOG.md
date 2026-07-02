@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1131 |
+| ☑ klaar | 1132 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1493,12 +1493,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1328 | CFX-003c: Rijke lege staten in app-shell | P1 | F5 | ☑ |
 | G1329 | CFX-004c: Skeleton-laadlaag voor unlock en reload | P1 | F5 | ☑ |
 | G1330 | Premium Claude Design UI: Dossier uploadconsole als single-flow intake | P1 | F5 | ☑ |
+| G1331 | Premium Claude Design UI: Dossier zoekroute als compacte zoekconsole | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1330** (id's G001 t/m G1330, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1331** (id's G001 t/m G1331, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

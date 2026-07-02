@@ -3665,8 +3665,8 @@ function renderDossierScreen(state: AppShellState): string {
         <section id="dossier-route-search" class="dossier-route-section" aria-labelledby="dossier-route-search-title" data-dossier-route="search"${renderDossierRouteVisibility(activeDossierRoute, 'search')}>
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Zoeken</p>
-          <h2 id="dossier-route-search-title">Dossier zoeken en privacycontrole</h2>
-          <p>Zoek alleen binnen de ontgrendelde encrypted dataset en houd technische privacycontroles apart.</p>
+          <h2 id="dossier-route-search-title">Dossier zoeken zonder alles te openen</h2>
+          <p>Zoek, open de inhoudsindex of controleer privacy vanuit drie aparte werkvlakken.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
@@ -3681,7 +3681,13 @@ function renderDossierScreen(state: AppShellState): string {
           ariaLabel: 'Dossier zoeken route-samenvatting',
           data: { 'dossier-route-summary': 'search' },
         })}
-        <h2>Dossier zoeken</h2>
+        <section class="dossier-search-console" aria-label="Dossier zoekconsole" data-dossier-search-console="ready">
+          <section class="dossier-search-console__panel dossier-search-console__panel--search" aria-labelledby="dossier-search-panel-title" data-dossier-search-console-region="search">
+            <header class="dossier-search-console__panel-header">
+              <p class="kp-card__eyebrow">Zoekvlak</p>
+              <h3 id="dossier-search-panel-title">Zoek gericht in je dossier</h3>
+              <span>${zoekterm ? `${zoekResultaten.length} resultaten` : `${zichtbareDocumenten.length} records`}</span>
+            </header>
         <form id="dossier-search-form" class="data-form">
           <label>
             Zoek in notities en OCR-tekst
@@ -3694,6 +3700,13 @@ function renderDossierScreen(state: AppShellState): string {
             ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde encrypted dataset.</p>`
             : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
+          </section>
+          <section class="dossier-search-console__panel" aria-labelledby="dossier-search-privacy-title" data-dossier-search-console-region="privacy">
+            <header class="dossier-search-console__panel-header">
+              <p class="kp-card__eyebrow">Controle</p>
+              <h3 id="dossier-search-privacy-title">Privacy en toegankelijkheid</h3>
+              <span>gesloten</span>
+            </header>
         <details class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">
           <summary class="kp-disclosure__summary">Privacy- en toegankelijkheidscontrole</summary>
           <div class="kp-disclosure__body dossier-secondary-privacy__body">
@@ -3782,6 +3795,13 @@ function renderDossierScreen(state: AppShellState): string {
         ${renderAttachmentAssistiveRecoveryArchivePurgeReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryHandoffConfirmationReceiptAuditTrailRetentionExpiryCleanupArchiveReceiptExportDeliveryPrivacy(state, zichtbareDocumenten, imagingItems)}
           </div>
         </details>
+          </section>
+          <section class="dossier-search-console__panel" aria-labelledby="dossier-search-index-title" data-dossier-search-console-region="index">
+            <header class="dossier-search-console__panel-header">
+              <p class="kp-card__eyebrow">Inhoud</p>
+              <h3 id="dossier-search-index-title">Inhoudsindex</h3>
+              <span>${indexItems.length} items</span>
+            </header>
         <details id="dossier-route-index-disclosure" class="kp-disclosure" data-dossier-secondary-index="collapsed">
           <summary class="kp-disclosure__summary">Dossierindex en routetellingen openen</summary>
           <div class="kp-disclosure__body">
@@ -3796,6 +3816,8 @@ function renderDossierScreen(state: AppShellState): string {
             })}
           </div>
         </details>
+          </section>
+        </section>
         </section>
         <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging"${renderDossierRouteVisibility(activeDossierRoute, 'imaging')}>
         <header class="dossier-route-section__header">

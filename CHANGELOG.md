@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1331 Premium Claude Design UI: de Dossier-zoekroute opent nu als compacte zoekconsole met aparte panelen voor zoeken, privacycontrole en inhoudsindex. De zichtbare routekop is minder technisch en routeflow bewaakt de nieuwe zoekconsole op desktop en mobiel.
 - G1330 Premium Claude Design UI: de Dossier-uploadconsole werkt nu als single-flow intake. Standaard staat alleen documentupload open; consult, embryokwaliteit, embryostatus en review openen pas via hun route/anker, zodat de uploadroute niet meer vier lange toevoegstromen tegelijk toont.
 - G1329 CFX-004c: unlock en data-reload tonen nu een skeleton-laadlaag binnen de actieve werkruimte met `aria-busy`, zodat dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten niet abrupt van leeg naar gevuld springen.
 - G1328 CFX-003c: lege routes gebruiken nu de rijke `emptyState()` component met icoontegel, titel, tekst en waar zinvol een CTA. Kale `<p class="empty-state">` fallbacks zijn uit de app-shell en research-lijsten gehaald.

@@ -50,6 +50,9 @@
   now defaults to one visible intake flow instead of showing document upload, consult upload,
   embryo quality, embryo status, and review together. Route cards stay visible, while consult,
   embryo, status, and review panels open only through their anchors.
+- **Dossier search console IA — done in G1331 / issue #2436.** The Dossier search route now
+  groups search, privacy checks, and the content index into three explicit panels, with less
+  technical route copy and routeflow coverage on desktop/mobile.
 
 ---
 
@@ -222,8 +225,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   quality, consult verslagen, behandelgeschiedenis.
 - **Problem**: single 1,045-line function; jargon ("Imaging-repository", "Dossierindex"); OCR/upload
   status is technical; thumbnails placeholder; bare empties (VERBETERINGEN O104). The upload
-  route no longer shows every intake panel at once after G1330, but renderer decomposition is
-  still open.
+  route no longer shows every intake panel at once after G1330, and the search route is grouped
+  into search/privacy/index panels after G1331, but renderer decomposition is still open.
 - **Desired**: split into sub-renderers; de-jargoned NL; kit filters; encrypted thumbnail tile;
   rich empty states.
 - **Fixes**: CFX-002, CFX-008, CFX-040.

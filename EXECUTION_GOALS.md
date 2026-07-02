@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1331 — Premium Claude Design UI: Dossier zoekroute als compacte zoekconsole
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Dossier-zoekroute stapelde zoekformulier, privacycontrole en inhoudsindex als losse blokken, waardoor de route nog technisch en lang voelde.
+- **User Impact:** Gebruikers moesten scannen door losse onderdelen en zagen privacy/index als extra technische secties in plaats van duidelijke keuzes.
+- **Desired Outcome:** Toon de zoekroute als compacte console met aparte regio's voor zoeken, privacycontrole en inhoudsindex.
+- **User Value:** Gebruikers kunnen gericht zoeken, privacy controleren of de inhoudsindex openen zonder dat de route als één lange dossierpagina leest.
+- **Acceptance Criteria:** De zoekroute bevat `data-dossier-search-console="ready"`; zoek-, privacy- en indexregio's hebben eigen data-selectors; bestaande `#dossier-search-form`, privacy-disclosure en `#dossier-route-index-disclosure` blijven intact; routeflow-smoke bewaakt de zoekconsole op desktop en mobiel; desktop en mobiel houden geen horizontale overflow; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Dossier zoekroute, dossier privacycontrole, dossierinhoudsindex
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, Dossier CSS, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+
 ### G1330 — Premium Claude Design UI: Dossier uploadconsole als single-flow intake
 
 - **Epic:** Onboarding & Daily Use
