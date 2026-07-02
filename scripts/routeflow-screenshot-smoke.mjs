@@ -146,6 +146,33 @@ const targets = [
     dailyAdviceConsole: true,
   },
   {
+    screen: 'daily-advice-feedback-filter-route',
+    hash: '#start-recommendations?feedback=artscheck',
+    rootSelector: '[data-daily-advice-focus-shell="ready"]',
+    expectedText: 'Te doen vandaag',
+    openSelectors: ['[data-hub-detail-panel="daily-recommendation-list"]'],
+    requiredSelectors: [
+      '[data-daily-advice-focus-shell="ready"]',
+      '[data-daily-advice-console="ready"]',
+      '[data-daily-advice-focus-region="workflow"]',
+      '[data-daily-advice-focus-region="workbench"]',
+      '[data-daily-advice-focus-region="planner"]',
+      '[data-daily-advice-focus-region="list"]',
+      '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-recommendation-feedback-filter="ready"]',
+      '[data-daily-recommendation-feedback-filter-chip="ready"]',
+      '[data-daily-recommendation-feedback-filter-reset="ready"]',
+    ],
+    desktopHiddenSelectors: [
+      '.daily-advice-focus-shell__header p:last-child',
+      '.daily-advice-action-planner__header > p',
+      '.hub-workflow-header__copy p',
+      '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
+    ],
+    dailyAdviceConsole: true,
+    dailyAdviceFeedbackNavigation: true,
+  },
+  {
     screen: 'dossier-imaging',
     hash: '#dossier?route=imaging',
     rootSelector: '#dossier-route-imaging',
@@ -576,6 +603,9 @@ async function assertRouteflows(browser, options) {
       await page.evaluate((selector) => {
         document.querySelector(selector)?.scrollIntoView({ block: 'center', inline: 'nearest' });
       }, target.rootSelector);
+      if (target.dailyAdviceFeedbackNavigation) {
+        await assertDailyAdviceFeedbackNavigation(page);
+      }
 
       const root = page.locator(target.rootSelector);
       const screenshot = await root.screenshot({ animations: 'disabled' });
@@ -1551,6 +1581,70 @@ async function prepareFilledConsultCard(page, targetHash) {
   );
 
   await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
+}
+
+async function assertDailyAdviceFeedbackNavigation(page) {
+  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .filter({ hasText: 'Actieve filter: Artscheck' })
+    .waitFor({ timeout: 10_000 });
+  await expectHash(page, '#start-recommendations?feedback=artscheck');
+
+  await page.locator('[data-daily-recommendation-feedback-filter-reset="ready"]').click();
+  await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
+
+  await page.goBack({ waitUntil: 'networkidle' });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await expectHash(page, '#start-recommendations?feedback=artscheck');
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .filter({ hasText: 'Actieve filter: Artscheck' })
+    .waitFor({ timeout: 10_000 });
+
+  await page.goForward({ waitUntil: 'networkidle' });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
+
+  await page.goBack({ waitUntil: 'networkidle' });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await expectHash(page, '#start-recommendations?feedback=artscheck');
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .filter({ hasText: 'Actieve filter: Artscheck' })
+    .waitFor({ timeout: 10_000 });
+
+  const rootText = await page.locator('[data-daily-advice-focus-shell="ready"]').innerText();
+  const verbodenPayloads = ['tracking-payload', 'trackingpayload', 'treatmentchoiceadvice'];
+  const gevondenPayload = verbodenPayloads.find((tekst) =>
+    rootText.toLowerCase().includes(tekst),
+  );
+  if (gevondenPayload) {
+    throw new Error(`dagadvies feedbackfilter toont verboden payloadtekst: ${gevondenPayload}`);
+  }
+}
+
+async function openDetails(page, selector) {
+  await page.evaluate((detailsSelector) => {
+    const details = document.querySelector(detailsSelector);
+    if (details instanceof HTMLDetailsElement) details.open = true;
+  }, selector);
+}
+
+async function expectHash(page, expectedHash) {
+  await page.waitForFunction(
+    (hash) => window.location.hash === hash,
+    expectedHash,
+    { timeout: 10_000 },
+  );
 }
 
 async function unlockIfNeeded(page, hash) {

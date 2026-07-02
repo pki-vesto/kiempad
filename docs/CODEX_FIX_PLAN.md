@@ -76,6 +76,9 @@
 - **Daily advice feedback filter deep-link — done in G1430 / issue #2620.** Active dagadvies
   feedback filters can now be restored from `#start-recommendations?feedback=...`, and reset returns
   to the plain `#start-recommendations` route without storing or transmitting feedback state.
+- **Daily advice feedback filter browser smoke — done in G1431 / issue #2622.** Routeflow smoke
+  now opens the filtered dagadvies hash, verifies reset, browser back/forward restoration, and
+  desktop/mobile non-overflow evidence without adding tracking payload state.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
