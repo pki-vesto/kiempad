@@ -12677,7 +12677,11 @@ function renderKostenScreen(state: AppShellState): string {
   const financeWorkspace = domainSplitWorkspace({
     className: 'finance-split-workspace',
     ariaLabel: 'Kosten split-view werkruimte',
-    data: { 'finance-split-workspace': 'ready', 'finance-compact-workspace': 'route-first' },
+    data: {
+      'finance-split-workspace': 'ready',
+      'finance-compact-workspace': 'route-first',
+      'finance-single-workspace': 'ready',
+    },
     rail: renderFinanceTaskRoutes({
       costCount: kosten.length,
       vergoedCount,
@@ -12685,6 +12689,7 @@ function renderKostenScreen(state: AppShellState): string {
       onbekendCount,
       activeRoute: activeFinanceRoute,
     }),
+    context: financeWorkbench,
     main: `
       <section id="kosten-route-overzicht" class="finance-route-section" aria-labelledby="kosten-route-overzicht-title" data-finance-route="overzicht"${renderFinanceRouteVisibility(activeFinanceRoute, 'overzicht')}>
         <header class="finance-route-section__header">
@@ -12802,7 +12807,6 @@ function renderKostenScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderFinanceFocusShell({
-        workbench: financeWorkbench,
         workspace: financeWorkspace,
       }),
     ],
@@ -12810,7 +12814,7 @@ function renderKostenScreen(state: AppShellState): string {
   );
 }
 
-function renderFinanceFocusShell(input: { workbench: string; workspace: string }): string {
+function renderFinanceFocusShell(input: { workspace: string }): string {
   return `
     <section class="finance-focus-shell" aria-labelledby="finance-focus-shell-title" data-finance-focus-shell="ready">
       <header class="finance-focus-shell__header">
@@ -12819,9 +12823,6 @@ function renderFinanceFocusShell(input: { workbench: string; workspace: string }
         <p>Lokale kosten, eigen risico, vergoedingstatus en bewerkhistorie blijven in één administratieruimte zonder financieel advies of polisinterpretatie.</p>
       </header>
       <div class="finance-focus-shell__body" data-finance-console="ready">
-        <div class="finance-focus-shell__workbench" data-finance-focus-region="workbench" data-finance-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="finance-focus-shell__workspace" data-finance-focus-region="workspace" data-finance-console-region="workspace">
           ${input.workspace}
         </div>
