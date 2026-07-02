@@ -6366,6 +6366,20 @@ h2 {
   gap: 8px;
 }
 
+.backup-export-preview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.backup-export-preview__actions button {
+  min-height: 34px;
+  padding: 6px 11px;
+  font-size: 0.78rem;
+}
+
 .backup-reminder-card__actions a,
 .backup-export-preview__grid a {
   display: inline-flex;
@@ -15295,6 +15309,14 @@ a.action-card:active {
   .backup-reminder-card__facts,
   .backup-export-preview__grid {
     grid-template-columns: 1fr;
+  }
+
+  .backup-export-preview__actions {
+    align-items: stretch;
+  }
+
+  .backup-export-preview__actions button {
+    width: 100%;
   }
 
   .notification-task-routes {

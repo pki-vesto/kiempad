@@ -163,6 +163,9 @@
 - **CFX-039 wellbeing check-in cards — partial in G1367 / issue #2508.** Welzijn geschiedenis now
   renders mental check-ins as owner/mood cards with a visible note area instead of generic
   phase-list rows.
+- **CFX-044 backup export actions — partial in G1368 / issue #2510.** Back-up exportpreview now
+  exposes Download and Kopieer samenvatting actions directly on encrypted export cards, while
+  disclosure panels keep only explanatory safety copy.
 
 ---
 
@@ -600,6 +603,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   de-jargon. **P2 · M** Partial G1356/#2486: latest-backup reminder card and encrypted export
   preview are visible before disclosure details.
   Partial G1362/#2498: Back-up uses a route-first workspace without a fixed third context column.
+  Partial G1368/#2510: export preview cards expose Download and Kopieer samenvatting actions
+  directly, with disclosures reduced to explanatory safety copy.
 - **CFX-045** — `renderStorageBootstrapError` + Dossier: apply the unified privacy phrasing +
   de-jargon (N91). **P2 · S**
 

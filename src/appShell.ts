@@ -2468,12 +2468,13 @@ function renderBackupScreen(state: AppShellState): string {
           backupCopy,
           syncTitle,
           syncCopy,
+          syncButton,
         })}
         <details id="backup-export-vault-disclosure" class="kp-disclosure" data-backup-disclosure="export-backup">
           <summary class="kp-disclosure__summary">Versleutelde back-up export openen</summary>
           <div class="kp-disclosure__body">
             <h2>Versleutelde export</h2>
-            <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
+            <p class="linked-note">Gebruik de Download- of Kopieeractie in de exportpreview hierboven; deze toelichting toont alleen de veiligheidsgrens.</p>
             <p class="small-print">${backupCopy}</p>
           </div>
         </details>
@@ -2481,7 +2482,7 @@ function renderBackupScreen(state: AppShellState): string {
           <summary class="kp-disclosure__summary">${escapeHtml(syncTitle)} openen</summary>
           <div class="kp-disclosure__body">
             <h2 class="section-subheading">${syncTitle}</h2>
-            <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${central ? 'central-record-package' : 'legacy-sync-package'}">${syncButton}</button>
+            <p class="linked-note">Gebruik de Download- of Kopieeractie in de exportpreview hierboven; recordinhoud blijft versleuteld.</p>
             <p class="small-print">${syncCopy}</p>
           </div>
         </details>
@@ -2726,9 +2727,12 @@ function renderBackupExportPreview(input: {
   backupCopy: string;
   syncTitle: string;
   syncCopy: string;
+  syncButton: string;
 }): string {
   const exportLabel = input.central ? 'Centrale noodexport' : 'Lokale kluisexport';
   const packageLabel = input.central ? 'Recordpakket' : 'Syncpakket';
+  const backupSummary = `${exportLabel}: ${input.backupCopy}`;
+  const syncSummary = `${packageLabel}: ${input.syncTitle}. ${input.syncCopy}`;
 
   return `
     <section class="backup-export-preview" aria-label="Back-up exportpreview" data-backup-export-preview="ready" data-backup-export-preview-mode="${input.central ? 'central' : 'legacy'}">
@@ -2742,13 +2746,21 @@ function renderBackupExportPreview(input: {
           <span>${escapeHtml(exportLabel)}</span>
           <strong>Download back-up</strong>
           <p>${escapeHtml(input.backupCopy)}</p>
-          <a href="#backup-export-vault-disclosure">Back-up openen</a>
+          <div class="backup-export-preview__actions" data-backup-export-actions="backup">
+            <button id="export-backup" class="phase-button" type="button" data-backup-export-state="${input.central ? 'central-encrypted-metadata' : 'legacy-encrypted-vault'}">Download back-up</button>
+            <button id="copy-backup-summary" class="secondary-button" type="button" data-backup-copy-kind="backup" data-backup-copy-text="${escapeAttribute(backupSummary)}">Kopieer samenvatting</button>
+          </div>
+          <a href="#backup-export-vault-disclosure">Toelichting openen</a>
         </article>
         <article data-backup-export-preview-card="sync">
           <span>${escapeHtml(packageLabel)}</span>
           <strong>${escapeHtml(input.syncTitle)}</strong>
           <p>${escapeHtml(input.syncCopy)}</p>
-          <a href="#backup-export-sync-disclosure">${escapeHtml(input.syncTitle)} openen</a>
+          <div class="backup-export-preview__actions" data-backup-export-actions="sync">
+            <button id="export-sync" class="phase-button" type="button" data-sync-export-state="${input.central ? 'central-record-package' : 'legacy-sync-package'}">${escapeHtml(input.syncButton)}</button>
+            <button id="copy-sync-summary" class="secondary-button" type="button" data-backup-copy-kind="sync" data-backup-copy-text="${escapeAttribute(syncSummary)}">Kopieer samenvatting</button>
+          </div>
+          <a href="#backup-export-sync-disclosure">Toelichting openen</a>
         </article>
       </div>
       <p class="small-print">Preview toont geen herstelzin, sleuteldata, recordinhoud of ontsleutelde gezondheidsdata.</p>
