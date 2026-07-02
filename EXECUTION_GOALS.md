@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1354 — Daily Recommendations: resetknoppen tonen uniforme focusstijl
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De drie dagadvies-resetknoppen binnen actieve feedbackfilters hebben dezelfde scope, maar focusweergave is nog niet expliciet als uniforme groep bewaakt.
+- **User Impact:** Toetsenbordgebruikers kunnen minder snel herkennen dat de resetacties dezelfde lokale filtercontext delen.
+- **Desired Outcome:** Geef workflowstatus, lijstfilterheader en filterformulier resetknoppen een consistente focusstijl zonder gedragswijziging.
+- **User Value:** Gebruikers kunnen resetacties voorspelbaar bedienen met toetsenbord en pointer.
+- **Acceptance Criteria:** Workflowstatus, lijstfilterheader en filterformulier resetknoppen hebben een consistente focusstijl; focusstijl verandert geen resetgedrag of routegedrag; resetknoppen blijven afwezig zonder actieve filter; de UI blijft compact en zonder horizontale overflow op desktop en mobiel; tests of smoke-dekking bewaken de drie resetpaden en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2654
+
 ### G1353 — Daily Recommendations: filterformulier reset maakt lokale scope duidelijker
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2652
 
 ### G1352 — Daily Recommendations: workflowreset maakt lokale scope duidelijker

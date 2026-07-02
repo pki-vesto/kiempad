@@ -3899,13 +3899,16 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
     expect(filteredRecommendations).toContain('>Bekijk lijst</button>');
-    expect(filteredRecommendations.match(/>Wis lokale filter<\/button>/g)?.length).toBe(2);
+    expect(filteredRecommendations.match(/>Wis lokale filter<\/button>/g)?.length).toBe(3);
     expect(filteredRecommendations).toContain('aria-label="Wis alleen de lokale feedbackfilter"');
     expect(filteredRecommendations).toContain(
       'data-daily-advice-feedback-workflow-reset="ready" aria-label="Wis alleen de lokale feedbackfilter"',
     );
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-reset="ready" aria-label="Wis alleen de lokale feedbackfilter"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-feedback-filter-reset="ready" aria-label="Wis alleen de lokale feedbackfilter"',
     );
     expect(filteredRecommendations).toContain('value="gedaan" selected');
     expect(filteredRecommendations).toContain('data-daily-recommendation-feedback-control="ready"');
@@ -4081,6 +4084,9 @@ describe('app shell', () => {
     expect(unfilteredRecommendations).not.toContain('Wis lokale filter');
     expect(unfilteredRecommendations).not.toContain(
       'data-daily-advice-feedback-workflow-reset="ready"',
+    );
+    expect(unfilteredRecommendations).not.toContain(
+      'data-daily-recommendation-feedback-filter-reset="ready"',
     );
   });
 
