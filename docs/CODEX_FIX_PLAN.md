@@ -341,6 +341,10 @@
   now render as scan-friendly dashboard cards with group/item stats, topic hooks, source metadata
   rows, and mobile single-column stacking while preserving the existing research forms and
   non-medical boundary.
+- **Premium embryo tracking compact cards — done in G1421 / issue #889.** Embryo dossiers now
+  render as compact tracking cards with fact tiles, history and source sections, stable
+  `data-embryo-tracking-*` hooks, and mobile single-column stacking while preserving factual
+  lab/source wording and non-medical boundaries.
 
 ---
 
