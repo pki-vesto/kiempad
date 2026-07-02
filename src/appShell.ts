@@ -18120,6 +18120,7 @@ function renderFertilityTimelineFilterForm(filter: FertilityTimelineFilter): str
 
 function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): string {
   const status: StepState = item.historischConcept ? 'current' : 'done';
+  const detailHref = getFertilityTimelineDetailHref(item);
   return timelineItem({
     title: item.titel,
     meta: `${item.datum} · ${item.label} · ${item.bron}`,
@@ -18133,9 +18134,12 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
     body: `
       ${item.eigenaar ? `<small>Eigenaar: ${escapeHtml(item.eigenaar)}</small>` : ''}
       ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
-      <details class="timeline-detail-panel">
-        <summary>Details</summary>
-        <dl class="summary-list">
+      <details class="timeline-detail-drawer" data-fertility-timeline-detail-drawer="ready" data-fertility-timeline-detail-review="${escapeAttribute(item.historischConcept ? item.historischConcept.reviewStatus : 'gereviewd')}">
+        <summary>
+          <span>Bron en review</span>
+          <small>${escapeHtml(item.historischConcept ? 'concept controleren' : 'broncontext')}</small>
+        </summary>
+        <dl class="timeline-detail-drawer__facts">
           <div><dt>Bron</dt><dd>${escapeHtml(item.bron)}</dd></div>
           <div><dt>Bronverwijzingen</dt><dd>${renderFertilityTimelineBronverwijzingen(item)}</dd></div>
           <div><dt>Context</dt><dd>${escapeHtml(item.context)}</dd></div>
@@ -18153,6 +18157,8 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
               : ''
           }
         </dl>
+        <p class="timeline-detail-drawer__review-cue">Controleer of corrigeer dit concept in het gekoppelde bronrecord; Kiempad toont hier alleen metadata en samenvatting.</p>
+        <a class="inline-action timeline-detail-drawer__action" href="${detailHref}">Controleer bronrecord</a>
         ${
           item.gekoppeldeRecords.length > 0
             ? `<ul class="linked-record-list">
@@ -18173,6 +18179,17 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
       </details>
     `,
   });
+}
+
+function getFertilityTimelineDetailHref(item: FertilityTimeline['items'][number]): string {
+  if (item.soort === 'onderzoek' || item.soort === 'embryo' || item.soort === 'consult') {
+    return '#dossier?route=timeline';
+  }
+  if (item.soort === 'research') return '#kennis?route=bibliotheek';
+  if (item.soort === 'vraag') return '#vragen?route=open';
+  if (item.soort === 'medicatie') return '#medicatie?route=vandaag';
+  if (item.soort === 'aanbeveling') return '#start-recommendations';
+  return '#traject?route=context';
 }
 
 function renderFertilityTimelineGroupedItems(timeline: FertilityTimeline): string[] {

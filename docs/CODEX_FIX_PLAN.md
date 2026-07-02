@@ -313,6 +313,9 @@
 - **CFX-020 fertility timeline month grouping — partial in G1412 / issue #865.** The fertility
   timeline now derives safe month groups with source/review metadata and renders scan-friendly
   month headers inside the timeline without adding medical payloads or advice.
+- **CFX-020 fertility timeline detail drawer — partial in G1413 / issue #866.** Timeline item
+  source/review details now open as an inline drawer strip with a source-record action instead of
+  a nested panel/card, while keeping metadata-only review context.
 
 ---
 
@@ -737,7 +740,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   as one rail/main/context workspace instead of a separate focus-region plus nested route
   workspace.
   Partial G1412/#865: fertility timeline items are grouped by month with safe source,
-  date-range, item-count, and concept-review cues while preserving existing detail review panels.
+  date-range, item-count, and concept-review cues while preserving item-level review access.
+  Partial G1413/#866: fertility timeline item details use an inline drawer with bron/review facts
+  and a source-record action, avoiding card-in-card nesting for item metadata.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
