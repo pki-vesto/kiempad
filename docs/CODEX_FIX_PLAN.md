@@ -64,6 +64,9 @@
 - **Daily suggestion feedback on advice cards — done in G1426 / issue #2612.** Dagadvieskaarten
   now show existing local feedbackstatus directly on the card when available, while cards without
   feedback stay quiet and tests guard against tracking or medical-claim leakage in the status line.
+- **Daily advice feedback summary — done in G1427 / issue #2614.** The dagadvies workbench now
+  summarizes local feedback counts when they exist, stays unchanged without feedback, and derives
+  counts only from local eventlog metadata for the current suggestion ids.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

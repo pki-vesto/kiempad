@@ -14439,7 +14439,10 @@ const DAILY_RECOMMENDATION_OWNER_COPY: Record<
 
 function renderDailyAdviceWorkbench(
   overview: DailyRecommendationOverview,
-  options: { compact?: boolean } = {},
+  options: {
+    compact?: boolean;
+    feedbackStatussen?: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>;
+  } = {},
 ): string {
   const owners: readonly DailyRecommendationOwner[] = ['vrouw', 'man', 'samen'];
   const total = owners.reduce((count, owner) => count + overview[owner].length, 0);
@@ -14460,6 +14463,7 @@ function renderDailyAdviceWorkbench(
     0,
   );
   const compactClass = options.compact ? ' daily-advice-workbench--compact' : '';
+  const feedbackSummary = bouwDailyAdviceFeedbackSummary(overview, options.feedbackStatussen ?? {});
 
   return `
     <section class="daily-advice-workbench${compactClass}" aria-label="Dagadvies werkbank" data-daily-advice-workbench="owner-routes">
@@ -14473,13 +14477,50 @@ function renderDailyAdviceWorkbench(
           <span><strong>${total}</strong> adviezen</span>
           <span><strong>${reviewCount}</strong> te controleren</span>
           <span><strong>${artscheckCount}</strong> artscheck</span>
+          ${feedbackSummary.total > 0 ? `<span data-daily-advice-feedback-summary-count="ready"><strong>${feedbackSummary.total}</strong> feedback</span>` : ''}
         </div>
       </header>
+      ${feedbackSummary.total > 0 ? renderDailyAdviceFeedbackSummary(feedbackSummary) : ''}
       ${renderDailyAdviceSnapshot(overview, { total, reviewCount, artscheckCount })}
       <div class="daily-advice-owner-grid" aria-label="Dagadvies eigenaars">
         ${owners.map((owner) => renderDailyAdviceOwnerCard(owner, overview[owner])).join('')}
       </div>
     </section>
+  `;
+}
+
+type DailyAdviceFeedbackSummary = {
+  total: number;
+  statussen: Partial<Record<FertilityTimelineAanbevelingFeedbackStatus, number>>;
+};
+
+function bouwDailyAdviceFeedbackSummary(
+  overview: DailyRecommendationOverview,
+  feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>,
+): DailyAdviceFeedbackSummary {
+  const summary: DailyAdviceFeedbackSummary = { total: 0, statussen: {} };
+  for (const owner of ['vrouw', 'man', 'samen'] as const) {
+    for (const item of overview[owner]) {
+      const status = feedbackStatussen[item.id];
+      if (!status) continue;
+      summary.total += 1;
+      summary.statussen[status] = (summary.statussen[status] ?? 0) + 1;
+    }
+  }
+  return summary;
+}
+
+function renderDailyAdviceFeedbackSummary(summary: DailyAdviceFeedbackSummary): string {
+  const parts = Object.entries(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS)
+    .map(([status, label]) => {
+      const count = summary.statussen[status as FertilityTimelineAanbevelingFeedbackStatus] ?? 0;
+      return count > 0 ? `${label}: ${count}` : '';
+    })
+    .filter(Boolean)
+    .join(' · ');
+
+  return `
+    <p class="small-print" data-daily-advice-feedback-summary="ready">Lokale feedback: ${escapeHtml(parts)}.</p>
   `;
 }
 
@@ -14581,7 +14622,9 @@ function renderDailyAdviceConsole(
         { id: 'research', href: '#kennis', label: 'Research', meta: 'Broncontext' },
       ],
     }),
-    workbench: renderDailyAdviceWorkbench(overview),
+    workbench: renderDailyAdviceWorkbench(overview, {
+      feedbackStatussen: bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []),
+    }),
     planner: renderDailyAdviceActionPlanner(overview),
     list: `
       <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">

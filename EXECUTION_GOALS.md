@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1335 — Daily Recommendations: feedbackfilter in dagadvieslijst
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dagadvies toont nu lokale feedbackstatussen op kaarten en in de werkbank, maar de volledige lijst is nog niet filterbaar op die status.
+- **User Impact:** Gebruikers moeten nog steeds de lijst scannen om alleen gedane, bewaarde of te bespreken suggesties terug te vinden.
+- **Desired Outcome:** Voeg een rustige feedbackfilter toe aan de dagadvieslijst zodat gebruikers alleen suggesties met bijvoorbeeld gedaan, bewaard, niet passend, herinnering, bespreken of artscheck kunnen bekijken.
+- **User Value:** Gebruikers kunnen sneller terugvinden welke suggesties nog aandacht vragen of al verwerkt zijn.
+- **Acceptance Criteria:** De dagadvieslijst kan lokaal op feedbackstatus gefilterd worden; zonder filter blijft de huidige lijst ongewijzigd; de filter gebruikt alleen lokale eventlogmetadata; tests dekken filtering, lege resultaten en privacygrenzen; geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt toegevoegd.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, event log, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2616
+
 ### G1334 — Daily Recommendations: feedbacksamenvatting in advieswerkbank
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, event log, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2614
 
 ### G1333 — Daily Recommendations: feedbackstatus gebruiken in dagadviesoverzicht
