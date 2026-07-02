@@ -138,6 +138,9 @@
 - **CFX-020 treatment route-first workspace — partial in G1359 / issue #2492.** Traject now removes
   the fixed third context column while keeping timeline and graph context inside the active Context
   route.
+- **CFX-017 notification route-first workspace — partial in G1360 / issue #2494.** Herinneringen
+  now removes the fixed third context column and keeps status, privacy, planning, and upcoming
+  reminders inside the active route workspace.
 
 ---
 
@@ -489,7 +492,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   (applies immediately, no "Bewaar thema"). Files: `src/appShell.ts`, `src/main.ts`, `src/styles.css`.
   Accept: names persist to encrypted Settings; theme toggles live. **P0 · L**
 - **CFX-017** — Toggle-switch component (`toggle({name,checked,label})`) with `role="switch"`;
-  adopt in Herinneringen + Gedeelde modus. Accept: single implementation, keyboard-operable. **P1 · M**
+  adopt in Herinneringen + Gedeelde modus. Accept: single implementation, keyboard-operable.
+  **P1 · M** Partial G1360/#2494: Herinneringen uses a route-first workspace without a fixed third
+  context column.
 - **CFX-016** — Status-badge component (`badge({label,tone})`) with the J68 color map; adopt in
   Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M**
 - **CFX-018** — Toast/inline success feedback primitive; fire after every store save. Accept: saves

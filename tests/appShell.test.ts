@@ -38289,6 +38289,7 @@ describe('app shell', () => {
         label === 'decision' ||
         label === 'medication' ||
         label === 'treatment' ||
+        label === 'notification' ||
         label === 'finance'
       ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
@@ -38454,13 +38455,17 @@ describe('app shell', () => {
     expect(herinneringenHtml).toContain('data-notification-console="ready"');
     expect(herinneringenHtml).toContain('data-notification-console-region="workbench"');
     expect(herinneringenHtml).toContain('data-notification-console-region="workspace"');
-    expect(herinneringenHtml).toContain('data-notification-workspace-context="metrics"');
-    expect(herinneringenHtml).toContain('data-workspace-context-signals="notification"');
-    expect(herinneringenHtml).toContain('data-workspace-context-microstate="notification-plannen"');
-    expect(herinneringenHtml).toContain(
+    expect(herinneringenHtml).toContain('data-notification-compact-workspace="route-first"');
+    expect(herinneringenHtml).not.toContain('data-notification-workspace-context="metrics"');
+    expect(herinneringenHtml).not.toContain('data-notification-workspace-context="privacy"');
+    expect(herinneringenHtml).not.toContain('data-workspace-context-signals="notification"');
+    expect(herinneringenHtml).not.toContain(
+      'data-workspace-context-microstate="notification-plannen"',
+    );
+    expect(herinneringenHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: herinnering instellen"',
     );
-    expect(herinneringenHtml).toContain('Planroute');
+    expect(herinneringenHtml).not.toContain('Planroute');
     expect(herinneringenHtml).toContain('Meldingsfocus');
     expect(herinneringenHtml).toContain(
       'data-notification-route="plannen" data-notification-route-state="active"',

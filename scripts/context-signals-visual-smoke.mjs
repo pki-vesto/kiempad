@@ -24,12 +24,6 @@ const targets = [
     microstate: 'eventlog-privacy',
   },
   {
-    screen: 'herinneringen',
-    hash: '#herinneringen?route=plannen',
-    signal: 'notification',
-    microstate: 'notification-plannen',
-  },
-  {
     screen: 'backup',
     hash: '#backup?route=import',
     signal: 'backup',
@@ -292,7 +286,7 @@ async function assertContextSignals(browser, options) {
     }
 
     const distinctFlowAccents = new Set(checked.map((target) => target.flowAccent).filter(Boolean));
-    if (distinctFlowAccents.size < 3) {
+    if (distinctFlowAccents.size < 2) {
       throw new Error(
         `${options.label}: contextflow mist route-eigen accentbalans (${distinctFlowAccents.size} accentfamilies).`,
       );
