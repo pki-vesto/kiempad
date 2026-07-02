@@ -50,6 +50,7 @@ import type {
   FertilityGraphTrajectFilter,
 } from './domain/fertilityKnowledgeGraph';
 import type {
+  FertilityTimelineBronverwijzing,
   FertilityTimelineFilter,
   FertilityTimelineItemSoort,
 } from './domain/fertilityTimeline';
@@ -2335,6 +2336,7 @@ function applyTimelineFilterFromForm(
     datumTot: optionalString(data.get('timelineDatumTot')),
     trajectId: optionalString(data.get('timelineTrajectId')),
     eigenaar: parseTimelineEigenaar(data.get('timelineEigenaar')),
+    bronSoort: parseTimelineBronSoort(data.get('timelineBronSoort')),
     bron: optionalString(data.get('timelineBron')),
   };
   render(root, state);
@@ -3088,6 +3090,26 @@ function parseTimelineEigenaar(
   value: FormDataEntryValue | null,
 ): DailyRecommendationOwner | undefined {
   if (value === 'vrouw' || value === 'man' || value === 'samen') return value;
+  return undefined;
+}
+
+function parseTimelineBronSoort(
+  value: FormDataEntryValue | null,
+): FertilityTimelineBronverwijzing['soort'] | undefined {
+  if (
+    value === 'traject' ||
+    value === 'agenda' ||
+    value === 'dossiermetadata' ||
+    value === 'ocr' ||
+    value === 'embryobron' ||
+    value === 'consult' ||
+    value === 'vraag' ||
+    value === 'medicatie' ||
+    value === 'kennis' ||
+    value === 'aanbeveling'
+  ) {
+    return value;
+  }
   return undefined;
 }
 

@@ -79,6 +79,7 @@ import {
 import {
   bouwFertilityTimeline,
   type FertilityTimeline,
+  type FertilityTimelineBronverwijzing,
   type FertilityTimelineFilter,
   type FertilityTimelineItemSoort,
   type FertilityTimelineRecordKoppeling,
@@ -17858,6 +17859,22 @@ const FERTILITY_TIMELINE_SOORT_LABELS: Record<FertilityTimelineItemSoort, string
   research: 'Research',
 };
 
+const FERTILITY_TIMELINE_BRONSOORT_LABELS: Record<
+  FertilityTimelineBronverwijzing['soort'],
+  string
+> = {
+  traject: 'Traject',
+  agenda: 'Agenda',
+  dossiermetadata: 'Dossiermetadata',
+  ocr: 'Lokale OCR',
+  embryobron: 'Embryobron',
+  consult: 'Consult',
+  vraag: 'Vraag',
+  medicatie: 'Medicatie',
+  kennis: 'Kennis',
+  aanbeveling: 'Suggestie',
+};
+
 function renderFertilityTimeline(
   state: AppShellState,
   timeline: FertilityTimeline,
@@ -18107,6 +18124,15 @@ function renderFertilityTimelineFilterForm(filter: FertilityTimelineFilter): str
           ${renderOption('vrouw', 'Vrouw', filter.eigenaar)}
           ${renderOption('man', 'Man', filter.eigenaar)}
           ${renderOption('samen', 'Samen', filter.eigenaar)}
+        </select>
+      </label>
+      <label>
+        Brontype
+        <select name="timelineBronSoort" data-timeline-source-kind-filter="ready">
+          <option value="">Alle brontypes</option>
+          ${Object.entries(FERTILITY_TIMELINE_BRONSOORT_LABELS)
+            .map(([value, label]) => renderOption(value, label, filter.bronSoort))
+            .join('')}
         </select>
       </label>
       <label>

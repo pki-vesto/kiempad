@@ -474,6 +474,14 @@ describe('fertility timeline', () => {
       filterFertilityTimeline(timeline, { bron: 'agenda' }).items.map((item) => item.id),
     ).toEqual(['afspraak-afspraak-1']);
     expect(
+      filterFertilityTimeline(timeline, { bronSoort: 'dossiermetadata' }).items.map(
+        (item) => item.id,
+      ),
+    ).toEqual(['onderzoek-doc-1']);
+    expect(
+      filterFertilityTimeline(timeline, { bronSoort: 'aanbeveling' }).items.map((item) => item.id),
+    ).toEqual(['aanbeveling-man-1', 'aanbeveling-vrouw-1']);
+    expect(
       filterFertilityTimeline(timeline, { eigenaar: 'vrouw' }).items.map((item) => item.id),
     ).toEqual(['aanbeveling-vrouw-1']);
   });

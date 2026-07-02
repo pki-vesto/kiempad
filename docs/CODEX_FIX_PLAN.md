@@ -316,6 +316,9 @@
 - **CFX-020 fertility timeline detail drawer — partial in G1413 / issue #866.** Timeline item
   source/review details now open as an inline drawer strip with a source-record action instead of
   a nested panel/card, while keeping metadata-only review context.
+- **CFX-020 fertility timeline source-type filter — partial in G1414 / issue #864.** The timeline
+  filter now has an explicit brontype select for agenda, dossiermetadata, OCR, consult, kennis,
+  medicatie and suggestion sources, backed by source-reference metadata.
 
 ---
 
@@ -743,6 +746,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   date-range, item-count, and concept-review cues while preserving item-level review access.
   Partial G1413/#866: fertility timeline item details use an inline drawer with bron/review facts
   and a source-record action, avoiding card-in-card nesting for item metadata.
+  Partial G1414/#864: fertility timeline filtering supports source-reference type in addition to
+  free source text, so users can isolate agenda, dossiermetadata, OCR, consult, knowledge or
+  recommendation records without exposing payloads.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

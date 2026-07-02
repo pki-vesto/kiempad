@@ -130,6 +130,7 @@ export type FertilityTimelineFilter = {
   datumTot?: string;
   trajectId?: string;
   eigenaar?: DailyRecommendationOwner;
+  bronSoort?: FertilityTimelineBronverwijzing['soort'];
   bron?: string;
 };
 
@@ -678,6 +679,12 @@ export function filterFertilityTimeline(
       if (filter.datumTot && item.datum.slice(0, 10) > filter.datumTot) return false;
       if (filter.trajectId && item.trajectId !== filter.trajectId) return false;
       if (filter.eigenaar && item.eigenaar !== filter.eigenaar) return false;
+      if (
+        filter.bronSoort &&
+        !item.bronverwijzingen.some((bron) => bron.soort === filter.bronSoort)
+      ) {
+        return false;
+      }
       if (bronFilter && !item.bron.toLocaleLowerCase('nl-NL').includes(bronFilter)) return false;
       return true;
     }),
