@@ -2393,6 +2393,7 @@ h2 {
   .phase-button:active,
   .secondary-button:active,
   .danger-button:active,
+  .form-cancel-link:active,
   .rec-action:active,
   .action-card:active {
     transform: scale(0.98);
@@ -2403,6 +2404,32 @@ h2 {
   border: 1px solid var(--danger-border);
   background: var(--surface-danger);
   color: var(--danger);
+}
+
+.form-cancel-link {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink-2);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background var(--motion),
+    border-color var(--motion),
+    color var(--motion);
+}
+
+.form-cancel-link:hover,
+.form-cancel-link:focus-visible {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+  color: var(--ink);
 }
 
 .phase-list {
@@ -17659,6 +17686,7 @@ a.action-card:active {
 
   .danger-button,
   .phase-button,
+  .form-cancel-link,
   .dose-button {
     width: 100%;
   }
