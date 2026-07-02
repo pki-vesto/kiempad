@@ -4793,36 +4793,6 @@ function getDecisionContextMicrostate(route: DecisionRoute): WorkspaceContextMic
   return states[route];
 }
 
-function getFinanceContextMicrostate(route: FinanceRoute): WorkspaceContextMicrostate {
-  const states: Record<FinanceRoute, WorkspaceContextMicrostate> = {
-    overzicht: {
-      id: 'finance-overzicht',
-      label: 'Kostenoverzicht',
-      detail: 'Totalen, eigen bijdrage en onbekende posten blijven vooraan.',
-      action: 'Volgende: onbekend bedrag checken',
-    },
-    toevoegen: {
-      id: 'finance-toevoegen',
-      label: 'Toevoegroute',
-      detail: 'Nieuwe kostenposten krijgen eerst bedrag en vergoedingstatus.',
-      action: 'Volgende: kostenpost invullen',
-    },
-    vergoeding: {
-      id: 'finance-vergoeding',
-      label: 'Vergoedingcontext',
-      detail: 'Vergoed, eigen risico en onbekend blijven administratief gescheiden.',
-      action: 'Volgende: status controleren',
-    },
-    historie: {
-      id: 'finance-historie',
-      label: 'Historieroute',
-      detail: 'Eerdere posten blijven terugleesbaar zonder polisinterpretatie.',
-      action: 'Volgende: historie filteren',
-    },
-  };
-  return states[route];
-}
-
 function getNotificationContextMicrostate(route: NotificationRoute): WorkspaceContextMicrostate {
   const states: Record<NotificationRoute, WorkspaceContextMicrostate> = {
     status: {
@@ -12662,7 +12632,7 @@ function renderKostenScreen(state: AppShellState): string {
   const financeWorkspace = domainSplitWorkspace({
     className: 'finance-split-workspace',
     ariaLabel: 'Kosten split-view werkruimte',
-    data: { 'finance-split-workspace': 'ready' },
+    data: { 'finance-split-workspace': 'ready', 'finance-compact-workspace': 'route-first' },
     rail: renderFinanceTaskRoutes({
       costCount: kosten.length,
       vergoedCount,
@@ -12782,15 +12752,6 @@ function renderKostenScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-    context: renderFinanceWorkspaceContext({
-      costCount: kosten.length,
-      vergoedCount,
-      eigenRisicoCount,
-      onbekendCount,
-      overview: overzicht,
-      latestCost: kosten[0],
-      activeRoute: activeFinanceRoute,
-    }),
   });
 
   return sectionStack(
@@ -12928,70 +12889,6 @@ function renderFinanceTaskRoutes(input: {
   });
 }
 
-function renderFinanceWorkspaceContext(input: {
-  costCount: number;
-  vergoedCount: number;
-  eigenRisicoCount: number;
-  onbekendCount: number;
-  overview: ReturnType<typeof berekenKostenOverzicht>;
-  latestCost: CostItem | undefined;
-  activeRoute: FinanceRoute;
-}): string {
-  const latest = input.latestCost
-    ? `${input.latestCost.omschrijving} · ${formatEuro(input.latestCost.bedrag)}`
-    : 'Nog geen kostenpost.';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Kostenfocus',
-    title: 'Administratie eerst',
-    data: { 'workspace-context-signals': 'finance' },
-    microstate: getFinanceContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Onbekend',
-        value: String(input.onbekendCount),
-        detail:
-          input.onbekendCount > 0
-            ? 'Controleer onbekende posten voordat totalen rustig lezen.'
-            : 'Alle posten hebben een vergoedingstatus.',
-        href: '#kosten?route=historie',
-      },
-      {
-        label: 'Vergoed',
-        value: String(input.vergoedCount),
-        detail: 'Vergoeding blijft eigen administratie, geen polisinterpretatie.',
-        href: '#kosten?route=vergoeding',
-      },
-      {
-        label: 'Toevoegen',
-        value: String(input.costCount),
-        detail: latest,
-        href: '#kosten?route=toevoegen',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Kosten context" data-finance-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Kosten in beeld</h2>
-      ${statRow([
-        { label: 'Totaal', value: formatEuro(input.overview.totaal) },
-        { label: 'Vergoed', value: formatEuro(input.overview.vergoed) },
-        { label: 'Eigen bijdrage', value: formatEuro(input.overview.eigenBijdrage) },
-        { label: 'Onbekend', value: formatEuro(input.overview.onbekend) },
-      ])}
-      <p class="linked-note">${escapeHtml(latest)}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Kosten werkruimtegrens" data-finance-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Geen polisinterpretatie</h2>
-      <p>${input.costCount} post(en) · ${input.vergoedCount} vergoed · ${input.eigenRisicoCount} eigen risico · ${input.onbekendCount} onbekend.</p>
-      <p class="small-print">Deze kolom toont alleen lokale administratie en geen financieel advies.</p>
-    </section>
-  `;
-}
-
 function renderFinanceRouteVisibility(activeRoute: FinanceRoute, route: FinanceRoute): string {
   return route === activeRoute
     ? ' data-finance-route-state="active"'
@@ -13056,7 +12953,7 @@ function renderKostenItem(item: CostItem): string {
       <div>
         <h3>${escapeHtml(item.omschrijving)}</h3>
         <p class="cost-item-meta">
-          <span>${formatEuro(item.bedrag)}</span>
+          <span class="cost-amount" data-cost-amount="row">${formatEuro(item.bedrag)}</span>
           <span>${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])}</span>
           ${renderCostStatusBadge(item.vergoed)}
         </p>
