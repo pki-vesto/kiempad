@@ -1785,8 +1785,11 @@ describe('app shell', () => {
     expect(html).not.toContain('data-workspace-map-card="Dossier"');
     expect(html).toContain('href="#agenda" aria-current="page"');
     expect(html).not.toContain('href="#traject?route=context"');
-    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeGreaterThan(
       html.indexOf('<main class="content"'),
+    );
+    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+      html.indexOf('data-screen-stage-panel="active"'),
     );
   });
 
@@ -1821,8 +1824,11 @@ describe('app shell', () => {
     expect(html).not.toContain('Werk behandelcontext, medicatie en consultvragen apart af.');
     expect(html).not.toContain('Open traject');
     expect(html).toContain('data-question-first-viewport="consult-workbench"');
-    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeGreaterThan(
       html.indexOf('<main class="content"'),
+    );
+    expect(html.indexOf('data-compact-workspace-deck="ready"')).toBeLessThan(
+      html.indexOf('data-screen-stage-panel="active"'),
     );
   });
 
@@ -2916,6 +2922,8 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto auto;');
     expect(css).toContain('.workspace-strip--compact {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
+    expect(css).toContain('.content > .workspace-strip {');
+    expect(css).toContain('position: sticky;');
     expect(css).toContain('.app-sidebar > .workspace-strip {');
     expect(css).toContain('display: none;');
     expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');

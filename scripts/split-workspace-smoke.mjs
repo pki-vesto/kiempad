@@ -199,6 +199,7 @@ async function assertSplitWorkspaces(browser, options) {
         const contextStyle = contextColumn ? getComputedStyle(contextColumn) : null;
         const activeRect = active?.getBoundingClientRect();
         const stripRect = workspaceStrip?.getBoundingClientRect();
+        const workspaceRect = workspace?.getBoundingClientRect();
         const stripDescriptionRect = workspaceStripDescription?.getBoundingClientRect();
         const stripQuickRect = workspaceStripQuick?.getBoundingClientRect();
         const workspaceMapRect = workspaceMap?.getBoundingClientRect();
@@ -214,6 +215,9 @@ async function assertSplitWorkspaces(browser, options) {
             workspaceStrip?.getAttribute('data-compact-workspace-deck') === 'ready',
           workspaceStripGroup: workspaceStrip?.getAttribute('data-workspace-strip-group') ?? null,
           workspaceStripVisible: Boolean(stripRect && stripRect.width > 0 && stripRect.height > 0),
+          workspaceStripBeforeWorkspace: Boolean(
+            stripRect && workspaceRect && stripRect.top <= workspaceRect.top,
+          ),
           workspaceStripDescriptionVisible: Boolean(
             stripDescriptionRect && stripDescriptionRect.width > 0 && stripDescriptionRect.height > 0,
           ),
@@ -303,12 +307,13 @@ async function assertSplitWorkspaces(browser, options) {
       if (
         !result.hasWorkspaceStrip ||
         !result.hasCompactWorkspaceDeck ||
-        result.workspaceStripInContent ||
+        !result.workspaceStripInContent ||
         !result.workspaceStripVisible ||
+        !result.workspaceStripBeforeWorkspace ||
         !result.workspaceStripMatchesGroup
       ) {
         throw new Error(
-          `${options.label}/${route.screen}: compacte workspace-deck mist, staat in hoofdcontent of toont verkeerde groep ${result.workspaceStripGroup}.`,
+          `${options.label}/${route.screen}: compacte workspace-strip mist boven de hoofdcontent of toont verkeerde groep ${result.workspaceStripGroup}.`,
         );
       }
       if (result.workspaceMapVisible || result.pageHeaderVisible) {

@@ -349,6 +349,10 @@
   review now uses a compact review layout with status facts, separate summary/source/action panels,
   existing review form hooks, and mobile single-column stacking while keeping the consult-AI
   non-medical boundary.
+- **Main content workspace strip — done in G1423 / issue #2608.** The active workspace strip now
+  renders inside the main content before the active screen panel for every route, with a sticky
+  compact route switcher, so desktop users get an immediate "where am I / switch here" cue instead
+  of the route context living in the sidebar.
 
 ---
 

@@ -923,7 +923,6 @@ export function renderAppShell(
       <nav class="primary-nav" aria-label="Werkruimtes en schermen">
         ${renderGroupedNavigation(activeId)}
       </nav>
-      ${activeId === 'start' ? '' : renderWorkspaceStrip(activeId)}
       <div class="sidebar-utility" data-sidebar-utility="ready" aria-label="App-acties">
         <button class="settings-button sidebar-utility__button" type="button" data-settings-open="true" aria-haspopup="dialog">
           <span aria-hidden="true">${navSettingsIcon()}</span>
@@ -935,7 +934,7 @@ export function renderAppShell(
       ${state.settingsOpen ? renderSettingsSheet(state) : ''}
 
       <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}">
-        ${activeId === 'start' ? renderWorkspaceStrip(activeId) : ''}
+        ${renderWorkspaceStrip(activeId)}
         ${
           activeId === 'start'
             ? ''
