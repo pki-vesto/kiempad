@@ -58,6 +58,10 @@
   "Imaging-repository", "Dossierindex", "Intake-console", "Consult Prep Wizard", and visible
   "command center" wording with clearer Dutch copy, and updates tests/smokes to protect the new
   wording.
+- **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
+  user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
+  replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
+  AI settings while technical IDs/data attributes remain stable.
 
 ---
 
