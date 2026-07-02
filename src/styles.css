@@ -4535,6 +4535,24 @@ h2 {
   outline: none;
 }
 
+[data-daily-advice-feedback-workflow-reset="ready"],
+[data-daily-recommendation-list-filter-reset="ready"],
+[data-daily-recommendation-feedback-filter-reset="ready"] {
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
+}
+
+[data-daily-advice-feedback-workflow-reset="ready"]:focus-visible,
+[data-daily-recommendation-list-filter-reset="ready"]:focus-visible,
+[data-daily-recommendation-feedback-filter-reset="ready"]:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 52%, var(--border));
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
 .daily-advice-focus-shell__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
