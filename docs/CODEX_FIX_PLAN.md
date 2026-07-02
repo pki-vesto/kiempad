@@ -187,6 +187,9 @@
 - **CFX-040/CFX-012 dossier upload focus — partial in G1375 / issue #2524.** Dossier Upload now
   opens as a focused add-flow: route overview, workflow tabs, triage, and duplicate microcopy stay
   out of the active upload path so the document form appears immediately after the add-route strip.
+- **CFX-039/CFX-012 wellbeing check-in form kit — partial in G1376 / issue #2526.** Welzijn
+  Vastleggen now focuses the mental check-in, hides the duplicated route summary, and renders the
+  check-in fields as wellbeing-specific sections with mobile-safe actions.
 
 ---
 
@@ -619,6 +622,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   generic phase-list rows.
   Partial G1370/#2514: the Vastleggen route now opens on one primary check-in form, with symptom
   and cycle forms in separate continuation panels instead of a single stacked block.
+  Partial G1376/#2526: Vastleggen hides the workbench/route summary in log mode and gives the
+  mental check-in a dedicated sectioned form kit.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.
@@ -656,6 +661,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   and a mobile-safe action wrapper.
   Partial G1375/#2524: Dossier document upload now uses a focused add-flow shell where route
   selector, form sections, and submit path are prioritized over duplicate explanatory panels.
+  Partial G1376/#2526: Welzijn mentale check-in now uses wellbeing-specific form sections,
+  responsive field grouping, and a mobile-safe action wrapper.
 - **CFX-025** — `€` prefix adornment in amount fields (C25). **P3 · S**
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**

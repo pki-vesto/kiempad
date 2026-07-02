@@ -36030,7 +36030,11 @@ describe('app shell', () => {
     expect(html).toContain('Check-ins, symptomen en cyclusmetingen');
     expect(html).toContain('Check-in, symptoom of cyclusmeting toevoegen');
     expect(html).toContain('Mentale check-in');
-    expect(html).toContain('id="mental-check-in-form"');
+    expect(html).toContain('id="mental-check-in-form" class="data-form wellbeing-checkin-form"');
+    expect(html).toContain('data-wellbeing-form-section="check-in-basis"');
+    expect(html).toContain('data-wellbeing-form-section="check-in-note"');
+    expect(html).toContain('class="wellbeing-checkin-form__grid"');
+    expect(html).toContain('class="wellbeing-checkin-form__actions"');
     expect(html).toContain('name="stemming"');
     expect(html).toContain('Welzijn-overzicht');
     expect(html).toContain('geen oordeel of score');
@@ -36131,6 +36135,15 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-log-console__header {');
     expect(css).toContain('.wellbeing-log-console__primary {');
     expect(css).toContain('.wellbeing-log-console__continuations {');
+    expect(css).toContain('.wellbeing-checkin-form {');
+    expect(css).toContain('.wellbeing-checkin-form__section {');
+    expect(css).toContain('.wellbeing-checkin-form__section--primary {');
+    expect(css).toContain('.wellbeing-checkin-form__grid {');
+    expect(css).toContain('.wellbeing-checkin-form__actions {');
+    expect(css).toContain(
+      '.wellbeing-focus-shell:has(#welzijn-route-log[data-wellbeing-route-state="active"])',
+    );
+    expect(css).toContain('#welzijn-route-log\n  > .command-route-summary');
     expect(css).toContain('.wellbeing-history-board {');
     expect(css).toContain('.wellbeing-history-board__header {');
     expect(css).toContain('.wellbeing-history-board__lanes {');
@@ -36167,6 +36180,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.wellbeing-log-console {');
     expect(mobileCss).toContain('.wellbeing-log-console__header {');
     expect(mobileCss).toContain('.wellbeing-log-console__continuations {');
+    expect(mobileCss).toContain('.wellbeing-checkin-form__grid {');
+    expect(mobileCss).toContain('.wellbeing-checkin-form__actions {');
     expect(mobileCss).toContain('.wellbeing-checkin-card__header {');
     expect(mobileCss).toContain('.wellbeing-checkin-card__mood {');
     expect(mobileCss).not.toContain(
