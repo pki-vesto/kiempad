@@ -175,6 +175,9 @@
 - **CFX-037/CFX-012 finance form kit — partial in G1371 / issue #2516.** Kosten Toevoegen now
   groups amount/date/description and reimbursement context into form sections with a euro amount
   adornment and compact actions.
+- **CFX-038 knowledge filter kit — partial in G1372 / issue #2518.** Kennis now renders its
+  search/category filter as a bibliotheekfilter kit with active status, grouped fields, and
+  explicit apply/reset actions.
 
 ---
 
@@ -594,6 +597,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-038** — Kennis: kit search/category, category-eyebrow cards, chevron, badges. **P2 · M**
   Partial G1365/#2504: Kennisbibliotheek items render as category-eyebrow cards with chevrons,
   status badges, and quiet action/edit zones.
+  Partial G1372/#2518: the knowledge search/category controls render as a filter kit with active
+  status copy and grouped actions.
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.
