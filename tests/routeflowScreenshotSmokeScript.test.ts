@@ -29,7 +29,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'Dagadvies console staat niet in begrensde adviesvlakken',
+      'dagadviesroute staat niet in begrensde adviesvlakken',
     );
     expect(routeflowScreenshotSmokeScript).toContain('listMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
