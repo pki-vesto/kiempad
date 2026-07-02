@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1361 — Daily Recommendations: resetknoppen bewaren consistente routefocus
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvies-resetknoppen zijn visueel consistent, maar na resetacties moet route- en focuscontext nog expliciet als consistent contract worden bewaakt.
+- **User Impact:** Gebruikers kunnen na een lokale filterreset minder zeker weten waar zij terugkomen als routefocus later per resetpad uit elkaar drift.
+- **Desired Outcome:** Borg dat reset vanuit workflowstatus, lijstfilterheader en filterformulier een voorspelbare routefocus behoudt zonder extra tracking of medische interpretatie.
+- **User Value:** Gebruikers houden oriëntatie na lokale resetacties, ook wanneer zij via verschillende resetpaden werken.
+- **Acceptance Criteria:** Reset vanuit workflowstatus, lijstfilterheader en filterformulier behoudt een duidelijke routecontext; de knoppen blijven afwezig zonder actieve lokale feedbackfilter; browser back/forward en resetroute blijven werken zoals nu; tests of routeflow-smoke bewaken selectors, focuscontext en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2668
+
 ### G1360 — Daily Recommendations: resetknoppen behouden compacte tekstbreedte
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, responsive UI, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2666
 
 ### G1359 — Daily Recommendations: resetknoppen hebben consistente touch target ruimte
