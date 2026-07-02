@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1140 |
+| ☑ klaar | 1141 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1501,13 +1501,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1336 | Daily Recommendations: feedbackfilter reset en tellerchips | P1 | F5 | ☑ |
 | G1337 | Daily Recommendations: feedbackfilter route deep-link | P1 | F5 | ☑ |
 | G1338 | Daily Recommendations: feedbackfilter browser navigation smoke | P1 | F5 | ☑ |
-| G1339 | Daily Recommendations: feedbackfilter zichtbaar in workflowstatus | P1 | F5 | ☐ |
+| G1339 | Daily Recommendations: feedbackfilter zichtbaar in workflowstatus | P1 | F5 | ☑ |
+| G1340 | Daily Recommendations: feedbackfilter reset vanuit workflowstatus | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1339** (id's G001 t/m G1339, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1340** (id's G001 t/m G1340, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

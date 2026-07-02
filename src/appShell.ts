@@ -14628,9 +14628,15 @@ function renderDailyAdviceConsole(
     (count, owner) => count + filteredOverview[owner].length,
     0,
   );
+  const feedbackFilterStatus = renderDailyAdviceFilterStatus({
+    filter: state.dailyRecommendationFeedbackFilter,
+    total: totalRecommendations,
+    filteredTotal: filteredTotalRecommendations,
+  });
 
   return renderDailyAdviceFocusShell({
     status: state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : '',
+    filterStatus: feedbackFilterStatus,
     workflow: renderHubWorkflowHeader({
       id: 'start-recommendations-workflow-header',
       eyebrow: 'Dagroute',
@@ -14696,6 +14702,23 @@ function filterDailyRecommendationOverview(
   };
 }
 
+function renderDailyAdviceFilterStatus(input: {
+  filter?: FertilityTimelineAanbevelingFeedbackStatus;
+  total: number;
+  filteredTotal: number;
+}): string {
+  if (!input.filter) return '';
+  const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
+
+  return `
+    <div class="daily-advice-filter-status" data-daily-advice-feedback-workflow-status="ready">
+      <span>Actieve feedbackfilter</span>
+      <strong>${escapeHtml(filterLabel)}</strong>
+      <em>${input.filteredTotal} van ${input.total} suggesties</em>
+    </div>
+  `;
+}
+
 function renderDailyRecommendationFeedbackFilter(input: {
   filter?: FertilityTimelineAanbevelingFeedbackStatus;
   total: number;
@@ -14732,6 +14755,7 @@ function renderDailyRecommendationFeedbackFilter(input: {
 
 function renderDailyAdviceFocusShell(input: {
   status: string;
+  filterStatus: string;
   workflow: string;
   workbench: string;
   planner: string;
@@ -14745,6 +14769,7 @@ function renderDailyAdviceFocusShell(input: {
         <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken; mobiel opent Dagadvies als compacte scrollbare adviesconsole.</p>
       </header>
       ${input.status}
+      ${input.filterStatus}
       <div class="daily-advice-focus-shell__body" data-daily-advice-console-region="body">
         <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow" data-daily-advice-console-region="workflow">
           ${input.workflow}

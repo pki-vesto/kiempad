@@ -4360,6 +4360,37 @@ h2 {
   line-height: 1.45;
 }
 
+.daily-advice-filter-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.daily-advice-filter-status strong,
+.daily-advice-filter-status em {
+  color: var(--text);
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.daily-advice-filter-status strong {
+  font-weight: 760;
+}
+
+.daily-advice-filter-status em {
+  color: var(--text-muted);
+}
+
 .daily-advice-focus-shell__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);

@@ -79,6 +79,9 @@
 - **Daily advice feedback filter browser smoke — done in G1431 / issue #2622.** Routeflow smoke
   now opens the filtered dagadvies hash, verifies reset, browser back/forward restoration, and
   desktop/mobile non-overflow evidence without adding tracking payload state.
+- **Daily advice feedback workflow status — done in G1432 / issue #2624.** Active dagadvies
+  feedback filters now show a visible workflow/header status with label and result count, while
+  the unfiltered route stays quiet and routeflow guards desktop/mobile layout.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

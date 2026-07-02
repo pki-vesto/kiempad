@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1340 — Daily Recommendations: feedbackfilter reset vanuit workflowstatus
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De actieve dagadvies-feedbackfilter is nu zichtbaar in de workflowstatus, maar resetten kan nog alleen vanuit de volledige lijst.
+- **User Impact:** Gebruikers moeten de lijst openen om terug te gaan naar alle suggesties, terwijl de filterstatus al bovenin zichtbaar is.
+- **Desired Outcome:** Voeg een directe resetactie toe aan de workflowstatus die terugkeert naar de ongefilterde dagadviesroute.
+- **User Value:** Gebruikers kunnen sneller herstellen naar het volledige dagadvies zonder extra openklappen of zoeken.
+- **Acceptance Criteria:** De workflowstatus voor een actieve feedbackfilter bevat een duidelijke resetactie; reset brengt de route terug naar `#start-recommendations` en verwijdert de workflowstatus; de bestaande reset in de volledige lijst blijft werken; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken rendering, resetgedrag, ongefilterde staat en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, route/hash controls, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2626
+
 ### G1339 — Daily Recommendations: feedbackfilter zichtbaar in workflowstatus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2624
 
 ### G1338 — Daily Recommendations: feedbackfilter browser navigation smoke
