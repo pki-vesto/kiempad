@@ -165,6 +165,7 @@ type RuntimeState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  vraagStatus?: string;
   settingsOpen: boolean;
   webAuthnStatus: WebAuthnViewStatus;
   loadingState?: AppShellLoadingState;
@@ -234,6 +235,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
+    vraagStatus: state.vraagStatus,
     loadingState: state.loadingState,
     webAuthnStatus: state.webAuthnStatus,
     storageMode: state.storageMode,
@@ -1809,7 +1811,7 @@ async function saveKostenFromForm(
 
 function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
   root.querySelector('#export-consult-pdf')?.addEventListener('click', () => {
-    exportConsultPdf(state);
+    exportConsultPdf(root, state);
   });
 
   root.querySelector('#vraag-form')?.addEventListener('submit', (event) => {
@@ -1833,11 +1835,14 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
     const confirmed = window.confirm(DELETE_CONFIRMATIONS.vraag);
     if (!confirmed) return;
 
-    void state.vraagStore.delete(vraagId).then(() => reloadAndRender(root, state));
+    void state.vraagStore.delete(vraagId).then(() => {
+      state.vraagStatus = 'Vraag verwijderd.';
+      return reloadAndRender(root, state);
+    });
   });
 }
 
-function exportConsultPdf(state: RuntimeState): void {
+function exportConsultPdf(root: HTMLElement, state: RuntimeState): void {
   const printWindow = window.open('', '_blank');
   if (!printWindow) return;
 
@@ -1851,6 +1856,8 @@ function exportConsultPdf(state: RuntimeState): void {
   printWindow.document.close();
   printWindow.focus();
   printWindow.print();
+  state.vraagStatus = 'Consult-PDF klaargezet.';
+  render(root, state);
 }
 
 async function moveVraagPriorityFromForm(
@@ -1867,6 +1874,7 @@ async function moveVraagPriorityFromForm(
   if (richting !== 'omhoog' && richting !== 'omlaag') return;
 
   await state.vraagStore.movePriority(vraagId, richting);
+  state.vraagStatus = 'Vraagprioriteit bijgewerkt.';
   await reloadAndRender(root, state);
 }
 
@@ -2480,6 +2488,7 @@ async function saveVraagFromForm(
     antwoord: optionalString(data.get('antwoord')),
   });
 
+  state.vraagStatus = 'Vraag opgeslagen.';
   await reloadAndRender(root, state);
 }
 

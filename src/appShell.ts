@@ -765,6 +765,7 @@ export type AppShellState = {
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
+  vraagStatus?: string;
   centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
   uploadAttachmentFeedback?: Partial<
     Record<UploadAttachmentFeedbackKind, UploadAttachmentFeedbackItem>
@@ -14843,6 +14844,7 @@ function renderVragenScreen(state: AppShellState): string {
           data: { 'question-route-summary': 'open' },
           ariaLabel: 'Open vragen route-samenvatting',
         })}
+        ${renderVraagStatus(state.vraagStatus, 'open')}
         <div class="panel-heading"><h2>Openstaand</h2><button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>${deleteVraagButton}</div>
         ${
           nextWithQuestions
@@ -14907,6 +14909,7 @@ function renderVragenScreen(state: AppShellState): string {
           data: { 'question-route-summary': 'beheer' },
           ariaLabel: 'Vraagbeheer route-samenvatting',
         })}
+        ${renderVraagStatus(state.vraagStatus, 'beheer')}
         ${disclosure({
           summary: selected ? 'Vraag bewerken' : 'Vraag toevoegen',
           open: !selected,
@@ -14964,6 +14967,7 @@ function renderVragenScreen(state: AppShellState): string {
           data: { 'question-route-summary': 'alle' },
           ariaLabel: 'Alle vragen route-samenvatting',
         })}
+        ${renderVraagStatus(state.vraagStatus, 'alle')}
         ${disclosure({
           summary: 'Alle vragen tonen',
           open: state.vragen.length > 0,
@@ -15006,6 +15010,15 @@ function renderVragenScreen(state: AppShellState): string {
     ],
     { className: 'question-command-layout', ariaLabel: 'Vragen voor de arts beheren' },
   );
+}
+
+function renderVraagStatus(
+  status: string | undefined,
+  surface: 'open' | 'beheer' | 'alle',
+): string {
+  if (!status) return '';
+
+  return `<p class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="${surface}">${escapeHtml(status)}</p>`;
 }
 
 function renderQuestionFocusShell(input: { workbench: string; workspace: string }): string {

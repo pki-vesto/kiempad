@@ -88,6 +88,9 @@
 - **CFX-018 medication feedback — done in G1341 / issue #2456.** Medicatie save/delete and dose-log
   actions now set inline `role="status"` feedback in Vandaag, Beheer, and Historie, alongside the
   existing schema-import feedback.
+- **CFX-018 question feedback — done in G1342 / issue #2458.** Vraag save/delete, priority move,
+  and consult-PDF actions now set inline `role="status"` feedback in Open, Beheer, and Alle vragen
+  routes, so question workflows no longer fail silently.
 
 ---
 
