@@ -106,6 +106,9 @@
 - **Daily advice feedback list empty owner dimming — done in G1440 / issue #2640.** Owner chips
   with zero filtered suggestions now render as visually quieter while non-zero owner chips stay
   clear, using only local counts in the active list-filter header.
+- **Daily advice feedback list owner ordering — done in G1441 / issue #2642.** The active
+  list-filter header now places owners with filtered suggestions before zero-count owners while
+  preserving stable owner order within equal states.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
