@@ -2165,13 +2165,20 @@ describe('app shell', () => {
     expect(css).toContain('.medication-focus-shell {');
     expect(css).toContain('.medication-focus-shell__header {');
     expect(css).toContain('.medication-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.medication-focus-shell__workbench > .medication-planning-workbench {');
+    expect(css).not.toContain(
+      '.medication-focus-shell__workbench > .medication-planning-workbench {',
+    );
     expect(css).toContain('.medication-focus-shell__workspace {');
     expect(css).toContain('.medication-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('"rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(168px, 0.26fr) minmax(0, 1fr) minmax(230px, 0.34fr);',
+    );
+    expect(css).toContain('.medication-focus-shell__workspace');
+    expect(css).toContain('> .medication-planning-workbench {');
     expect(css).toContain('.medication-progress {');
     expect(css).toContain('.medication-progress__track {');
     expect(css).toContain('.medication-progress__counts {');
@@ -2184,8 +2191,10 @@ describe('app shell', () => {
     expect(css).toContain('.medication-form-section {');
     expect(css).toContain('.medication-form-section--primary {');
     expect(css).toContain('.medication-form-actions {');
-    expect(css).toContain('.medication-focus-shell__body:has(#medicatie-form)');
-    expect(css).toContain('.domain-split-workspace:has(#medicatie-form)');
+    expect(css).toContain(
+      '#medicatie-route-beheer[data-medication-route-state="active"] #medicatie-form',
+    );
+    expect(css).not.toContain('.domain-split-workspace:has(#medicatie-form)');
     expect(css).toContain('.planning-workbench__header {');
     expect(css).toContain('.planning-workbench__grid {');
     expect(css).toContain('.planning-workbench__actions {');
@@ -4802,11 +4811,13 @@ describe('app shell', () => {
     expect(html).toContain('class="medication-focus-shell"');
     expect(html).toContain('data-medication-focus-shell="ready"');
     expect(html).toContain('data-medication-console="ready"');
-    expect(html).toContain('data-medication-console-region="workbench"');
+    expect(html).not.toContain('data-medication-console-region="workbench"');
     expect(html).toContain('data-medication-console-region="workspace"');
     expect(html).toContain('Eerst vandaag afvinken, daarna planning of beheer openen');
-    expect(html).toContain('data-medication-focus-region="workbench"');
+    expect(html).not.toContain('data-medication-focus-region="workbench"');
     expect(html).toContain('data-medication-focus-region="workspace"');
+    expect(html).toContain('data-medication-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
     expect(html).toContain(
       '<section class="planning-workbench medication-planning-workbench" aria-label="Medicatie innameswerkbank" data-medication-first-viewport="planning-workbench">',
     );
@@ -38620,7 +38631,6 @@ describe('app shell', () => {
         label === 'knowledge' ||
         label === 'wellbeing' ||
         label === 'decision' ||
-        label === 'medication' ||
         label === 'treatment' ||
         label === 'notification' ||
         label === 'eventlog' ||
@@ -38690,9 +38700,11 @@ describe('app shell', () => {
     );
     expect(medicatieHtml).toContain('class="domain-split-workspace medication-split-workspace"');
     expect(medicatieHtml).toContain('data-medication-console="ready"');
-    expect(medicatieHtml).toContain('data-medication-console-region="workbench"');
+    expect(medicatieHtml).not.toContain('data-medication-console-region="workbench"');
     expect(medicatieHtml).toContain('data-medication-console-region="workspace"');
     expect(medicatieHtml).toContain('data-medication-compact-workspace="route-first"');
+    expect(medicatieHtml).toContain('data-medication-single-workspace="ready"');
+    expect(medicatieHtml).toContain('class="domain-split-workspace__context"');
     expect(medicatieHtml).not.toContain('data-medication-workspace-context="metrics"');
     expect(medicatieHtml).not.toContain('data-medication-workspace-context="privacy"');
     expect(medicatieHtml).not.toContain('Medicatie in beeld');

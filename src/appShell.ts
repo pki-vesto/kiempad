@@ -16765,15 +16765,16 @@ function renderMedicatieScreen(state: AppShellState): string {
     data: {
       'medication-split-workspace': 'ready',
       'medication-compact-workspace': 'route-first',
+      'medication-single-workspace': 'ready',
     },
     rail: medicationTaskRoutes,
     main: medicationRouteSections.join(''),
+    context: medicationWorkbench,
   });
 
   return sectionStack(
     [
       renderMedicationFocusShell({
-        workbench: medicationWorkbench,
         workspace: medicationWorkspace,
       }),
     ],
@@ -16795,7 +16796,7 @@ function renderMedicatieStatus(
   });
 }
 
-function renderMedicationFocusShell(input: { workbench: string; workspace: string }): string {
+function renderMedicationFocusShell(input: { workspace: string }): string {
   return `
     <section class="medication-focus-shell" aria-labelledby="medication-focus-shell-title" data-medication-focus-shell="ready">
       <header class="medication-focus-shell__header">
@@ -16804,9 +16805,6 @@ function renderMedicationFocusShell(input: { workbench: string; workspace: strin
         <p>Dagmomenten, schema-import, voorraad en historie blijven in één medicatieruimte zonder doseeradvies of berekening.</p>
       </header>
       <div class="medication-focus-shell__body" data-medication-console="ready">
-        <div class="medication-focus-shell__workbench" data-medication-focus-region="workbench" data-medication-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="medication-focus-shell__workspace" data-medication-focus-region="workspace" data-medication-console-region="workspace">
           ${input.workspace}
         </div>

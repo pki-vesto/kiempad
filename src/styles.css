@@ -6273,17 +6273,8 @@ h2 {
   align-items: start;
 }
 
-.medication-focus-shell__workbench,
 .medication-focus-shell__workspace {
   min-width: 0;
-}
-
-.medication-focus-shell__workbench > .medication-planning-workbench {
-  height: 100%;
-}
-
-.medication-focus-shell__body:has(#medicatie-form) .medication-focus-shell__workbench {
-  display: none;
 }
 
 .medication-focus-shell .command-route-summary h3 {
@@ -9185,19 +9176,16 @@ h2 {
 
 @media (min-width: 961px) {
   .medication-focus-shell__body {
-    grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
   }
 
-  .medication-focus-shell__workbench,
   .medication-focus-shell__workspace {
     max-height: min(820px, calc(100vh - 164px));
-    overflow-y: auto;
+    overflow: hidden;
     contain: layout paint;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
   }
 
   .medication-focus-shell__workspace {
@@ -9205,11 +9193,9 @@ h2 {
   }
 
   .medication-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas:
-      "rail main"
-      "rail context";
-    grid-template-columns: minmax(172px, 0.42fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(168px, 0.26fr) minmax(0, 1fr) minmax(230px, 0.34fr);
+    grid-template-rows: minmax(0, 1fr);
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
@@ -9225,11 +9211,17 @@ h2 {
 
   .medication-focus-shell__workspace .domain-split-workspace__context {
     grid-area: context;
-    width: min(100%, 330px);
-    max-height: 132px;
-    justify-self: start;
+    max-height: min(780px, calc(100vh - 204px));
     overflow-y: auto;
-    padding-top: 8px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .medication-focus-shell__workspace
+    .domain-split-workspace__context
+    > .medication-planning-workbench {
+    min-height: 100%;
+    padding: 12px;
   }
 
   .medication-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
@@ -9239,18 +9231,16 @@ h2 {
     white-space: normal;
   }
 
-  .medication-focus-shell__workbench > .medication-planning-workbench {
-    align-content: start;
-    padding: 12px;
-  }
-
-  .medication-focus-shell__workbench .planning-workbench__header p:last-child,
+  .medication-focus-shell__workspace
+    .domain-split-workspace__context
+    .planning-workbench__header
+    p:last-child,
   .medication-focus-shell__workspace .command-route-summary__eyebrow,
   .medication-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow) {
     display: none;
   }
 
-  .medication-focus-shell__workbench .planning-workbench__grid {
+  .medication-focus-shell__workspace .domain-split-workspace__context .planning-workbench__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -9289,18 +9279,25 @@ h2 {
     justify-self: end;
   }
 
-  .medication-focus-shell__body:has(#medicatie-form) {
+  .medication-focus-shell__body:has(
+    #medicatie-route-beheer[data-medication-route-state="active"] #medicatie-form
+  ) {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .medication-focus-shell__workspace .domain-split-workspace:has(#medicatie-form) {
+  .medication-focus-shell__workspace
+    .domain-split-workspace:has(
+      #medicatie-route-beheer[data-medication-route-state="active"] #medicatie-form
+    ) {
     grid-template-areas: "rail main";
     grid-template-columns: minmax(168px, 0.24fr) minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
   }
 
   .medication-focus-shell__workspace
-    .domain-split-workspace:has(#medicatie-form)
+    .domain-split-workspace:has(
+      #medicatie-route-beheer[data-medication-route-state="active"] #medicatie-form
+    )
     .domain-split-workspace__context {
     display: none;
   }
