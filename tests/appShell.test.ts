@@ -37325,9 +37325,11 @@ describe('app shell', () => {
     expect(html).toContain(
       'class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="eigen_risico"',
     );
+    expect(html).toContain('data-status-badge-tone="warning"');
     expect(html).toContain(
       'class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="ja"',
     );
+    expect(html).toContain('data-status-badge-tone="success"');
     expect(html).toContain('Werk kostenpost bij');
     expect(html).toContain('data-kosten-id="cost-1"');
     expect(html).toContain('aria-label="Verwijder kostenpost: Apotheekfactuur"');

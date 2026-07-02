@@ -12,6 +12,7 @@ import {
   phaseHeroCard,
   sectionStack,
   statRow,
+  statusBadge,
   statusMessage,
   timeline,
 } from '../../src/ui/components';
@@ -96,6 +97,26 @@ describe('statRow', () => {
     expect(html).toContain('stat--success');
     expect(html).toContain('€900');
     expect(html).toContain('Totaal');
+  });
+});
+
+describe('statusBadge', () => {
+  it('renders tone, custom class and data attributes; escapes label', () => {
+    const html = statusBadge({
+      label: '<Vergoed>',
+      tone: 'success',
+      className: 'status-badge--cost',
+      data: {
+        'status-badge': 'cost',
+        'status-badge-state': 'ja',
+      },
+    });
+
+    expect(html).toContain('class="status-badge status-badge--cost"');
+    expect(html).toContain('data-status-badge="cost"');
+    expect(html).toContain('data-status-badge-state="ja"');
+    expect(html).toContain('data-status-badge-tone="success"');
+    expect(html).toContain('&lt;Vergoed&gt;');
   });
 });
 
