@@ -4170,6 +4170,7 @@ describe('app shell', () => {
         datumVanaf: '2026-06-01',
         datumTot: '2026-06-30',
         trajectId: 'traject-1',
+        bronSoort: 'dossiermetadata',
         bron: 'echo',
       },
       settings: DEFAULT_APP_SETTINGS,
@@ -4225,6 +4226,11 @@ describe('app shell', () => {
     expect(html).toContain('name="timelineDatumTot" type="date" value="2026-06-30"');
     expect(html).toContain('name="timelineTrajectId" value="traject-1"');
     expect(html).toContain('name="timelineEigenaar"');
+    expect(html).toContain('name="timelineBronSoort"');
+    expect(html).toContain('data-timeline-source-kind-filter="ready"');
+    expect(html).toContain('value="dossiermetadata" selected');
+    expect(html).toContain('Alle brontypes');
+    expect(html).toContain('Lokale OCR');
     expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
     expect(timelineReader).toContain('data-fertility-timeline-reader="ready"');
