@@ -3899,8 +3899,14 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
     expect(filteredRecommendations).toContain('>Bekijk lijst</button>');
-    expect(filteredRecommendations).toContain('>Wis lokale filter</button>');
+    expect(filteredRecommendations.match(/>Wis lokale filter<\/button>/g)?.length).toBe(2);
     expect(filteredRecommendations).toContain('aria-label="Wis alleen de lokale feedbackfilter"');
+    expect(filteredRecommendations).toContain(
+      'data-daily-advice-feedback-workflow-reset="ready" aria-label="Wis alleen de lokale feedbackfilter"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-reset="ready" aria-label="Wis alleen de lokale feedbackfilter"',
+    );
     expect(filteredRecommendations).toContain('value="gedaan" selected');
     expect(filteredRecommendations).toContain('data-daily-recommendation-feedback-control="ready"');
     expect(filteredRecommendations).toContain(
@@ -4073,6 +4079,9 @@ describe('app shell', () => {
       'data-daily-recommendation-list-filter-legend-item="accent"',
     );
     expect(unfilteredRecommendations).not.toContain('Wis lokale filter');
+    expect(unfilteredRecommendations).not.toContain(
+      'data-daily-advice-feedback-workflow-reset="ready"',
+    );
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

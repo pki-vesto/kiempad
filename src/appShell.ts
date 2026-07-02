@@ -14769,7 +14769,7 @@ function renderDailyAdviceFilterStatus(input: {
       <em>${input.filteredTotal} van ${input.total} suggesties</em>
       <button type="button" data-daily-advice-feedback-list-open="ready">Bekijk lijst</button>
       <form data-daily-recommendation-feedback-control="ready">
-        <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-advice-feedback-workflow-reset="ready">Reset</button>
+        <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-advice-feedback-workflow-reset="ready" aria-label="Wis alleen de lokale feedbackfilter">Wis lokale filter</button>
       </form>
     </div>
   `;
