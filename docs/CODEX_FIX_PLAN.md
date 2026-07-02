@@ -205,6 +205,9 @@
 - **CFX-040 dossier two-column focus — partial in G1381 / issue #2536.** Dossier now keeps the
   route overview visible next to the active workspace on desktop, including upload mode, so the
   first viewport no longer collapses back into one long stacked page.
+- **CFX-016 dossier status badges — partial in G1382 / issue #2538.** Dossier review, import,
+  duplicate, preview, and attachment statuses now render through the shared `statusBadge()` helper
+  with Dossier-specific status metadata and wrap-safe rows.
 
 ---
 
@@ -565,7 +568,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M** Partial G1379/#2532:
   Kosten vergoedingstatus badges now use the shared `statusBadge()` helper with success/warning/
   danger/neutral tone metadata. Partial G1380/#2534: Kennisbibliotheek cards now use the same helper
-  for AI/manual, concept/artscheck, and kostenjaar badges.
+  for AI/manual, concept/artscheck, and kostenjaar badges. Partial G1382/#2538: Dossier import,
+  review, duplicate, preview, and attachment statuses now use the helper with Dossier status
+  metadata.
 - **CFX-018** — Toast/inline success feedback primitive; fire after every store save. Accept: saves
   show a calm confirmation (VERBETERINGEN C31/M). **P1 · M**
 - **CFX-019b** — In-app styled confirm to replace `window.confirm` for deletes. Files:

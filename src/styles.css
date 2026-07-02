@@ -493,6 +493,17 @@ h3 {
   color: var(--ink-3);
 }
 
+.status-badge--dossier {
+  min-height: 26px;
+}
+
+.dossier-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
 .cost-item-meta {
   display: flex;
   flex-wrap: wrap;

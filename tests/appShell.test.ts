@@ -5852,7 +5852,8 @@ describe('app shell', () => {
       'Metadata blijft beperkt tot type, datum, status en veilige bestandslabels.',
     );
     expect(html).toContain('Bronlabel: bloed-lab-uitslag.pdf');
-    expect(html).toContain('Importstatus: Wacht op lokale OCR');
+    expect(html).toContain('data-dossier-status-kind="import"');
+    expect(html).toContain('data-status-badge-state="ocr_wacht"');
     expect(html).toContain('Veilige metadata: Labuitslag · 2 KB');
     expect(html).toContain('class="phase-button secondary delete-dossier-document"');
     expect(html).toContain('data-dossier-document-id="doc-1"');
@@ -6976,6 +6977,8 @@ describe('app shell', () => {
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__main {');
     expect(css).toContain('max-height: min(780px, calc(100vh - 204px));');
+    expect(css).toContain('.status-badge--dossier {');
+    expect(css).toContain('.dossier-status-row {');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
     expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-stage__header {');
     expect(css).toContain(
@@ -7461,8 +7464,10 @@ describe('app shell', () => {
     expect(html).toContain('data-dossier-document-id="doc-ocr-wacht"');
     expect(html).toContain('data-dossier-document-id="doc-beeld-state"');
     expect(html).toContain('data-dossier-document-id="doc-review-klaar"');
-    expect(html).toContain('Importstatus: Wacht op lokale OCR');
-    expect(html).toContain('Importstatus: Klaar voor review');
+    expect(html).toContain('data-status-badge="dossier"');
+    expect(html).toContain('data-dossier-status-kind="import"');
+    expect(html).toContain('data-status-badge-state="ocr_wacht"');
+    expect(html).toContain('data-status-badge-state="klaar_voor_review"');
     expect(overview).not.toContain('GEVOELIGE OCR TEKST');
     expect(overview).not.toContain('MEDISCHE PAYLOAD');
     expect(overview).not.toContain('b2NyLXBheWxvYWQ=');
@@ -8305,9 +8310,14 @@ describe('app shell', () => {
     expect(queue.indexOf('Middel confidence document')).toBeLessThan(
       queue.indexOf('Gereviewd document'),
     );
-    expect(queue).toContain('Confidence: laag (31%) · Review: concept · Prioriteit: hoog');
-    expect(queue).toContain('Confidence: middel (66%) · Review: concept · Prioriteit: middel');
-    expect(queue).toContain('Confidence: hoog (95%) · Review: gereviewd · Prioriteit: laag');
+    expect(queue).toContain('Confidence: laag (31%)');
+    expect(queue).toContain('Confidence: middel (66%)');
+    expect(queue).toContain('Confidence: hoog (95%)');
+    expect(queue).toContain('data-dossier-status-kind="review"');
+    expect(queue).toContain('data-dossier-status-kind="priority"');
+    expect(queue).toContain('data-status-badge-state="concept"');
+    expect(queue).toContain('data-status-badge-state="reviewed"');
+    expect(queue).toContain('data-status-badge-state="hoog"');
     expect(queue).toContain('Beeldbron verborgen tot ontgrendeling');
     expect(queue).not.toContain('secret-review-echo.jpg');
     expect(queue).not.toContain('GEVOELIGE OCR TEKST');
@@ -8600,10 +8610,12 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
     expect(html).toContain('class="phase-item imaging-repository-card"');
     expect(html).toContain('data-dossier-imaging-card="doc-beeld"');
-    expect(html).toContain('class="imaging-preview-status"');
+    expect(html).toContain('imaging-preview-status');
+    expect(html).toContain('data-dossier-status-kind="preview"');
     expect(html).toContain('class="imaging-preview-tile imaging-preview-tile--unlocked"');
     expect(html).toContain('<strong>Encrypted thumbnail</strong>');
-    expect(html).toContain('Previewstatus: Thumbnail en preview beschikbaar');
+    expect(html).toContain('Previewstatus');
+    expect(html).toContain('data-imaging-preview-status="thumbnail"');
     expect(html).toContain('alt="Lokale thumbnail van Echo 6 weken"');
     expect(html).toContain('Thumbnail uit ontgrendelde encrypted dataset.');
     expect(html).toContain(
@@ -8743,7 +8755,9 @@ describe('app shell', () => {
     expect(panel).toContain('2 echo-uploads gekoppeld aan afspraak');
     expect(panel).toContain('2026-05-02, 2026-05-04');
     expect(panel).toContain('2 bronnen verborgen tot ontgrendeling');
-    expect(panel).toContain('Review</dt><dd>concept</dd>');
+    expect(panel).toContain('data-dossier-status-kind="review"');
+    expect(panel).toContain('data-status-badge-state="concept"');
+    expect(panel).toContain('data-status-badge-tone="warning"');
     expect(panel).toContain(
       'Classificatie is beschrijvend: echo per afspraak, geen beeldanalyse of medisch advies.',
     );
@@ -8843,7 +8857,9 @@ describe('app shell', () => {
     expect(panel).toContain('2026-05-05');
     expect(panel).toContain('Bron verborgen tot ontgrendeling');
     expect(panel).toContain('EXIF</dt><dd>geisoleerd</dd>');
-    expect(panel).toContain('Review</dt><dd>concept</dd>');
+    expect(panel).toContain('data-dossier-status-kind="review"');
+    expect(panel).toContain('data-status-badge-state="concept"');
+    expect(panel).toContain('data-status-badge-tone="warning"');
     expect(panel).toContain(
       'EXIF geisoleerd; alleen expliciete embryo- en bronmetadata wordt gebruikt.',
     );
@@ -9105,7 +9121,9 @@ describe('app shell', () => {
       '<dt>Preview</dt><dd>Preview beschikbaar na ontgrendeling</dd>',
     );
     expect(lockedCompare).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
-    expect(lockedHtml).toContain('Previewstatus: Preview beschikbaar na ontgrendeling');
+    expect(lockedHtml).toContain('Previewstatus');
+    expect(lockedHtml).toContain('data-dossier-status-kind="preview"');
+    expect(lockedHtml).toContain('data-status-badge-state="locked"');
     expect(lockedHtml).toContain('Bronbestand verborgen tot ontgrendeling');
     expect(lockedHtml).not.toContain('data:image/jpeg;base64');
     expect(lockedHtml).not.toContain('bG9ja2VkLWxpbmtz');
@@ -9153,7 +9171,9 @@ describe('app shell', () => {
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
-    expect(html).toContain('Previewstatus: Preview beschikbaar na ontgrendeling');
+    expect(html).toContain('Previewstatus');
+    expect(html).toContain('data-dossier-status-kind="preview"');
+    expect(html).toContain('data-status-badge-state="locked"');
     expect(html).toContain('Beeldpreview vergrendeld.');
     expect(html).toContain('Bronbestand verborgen tot ontgrendeling');
     expect(html).toContain('Beeldbron verborgen tot ontgrendeling');
@@ -9365,10 +9385,12 @@ describe('app shell', () => {
     expect(reviewMetadata).toContain('data-attachment-review-state="concept-wacht_op_lokale_ocr"');
     expect(reviewMetadata).toContain('data-attachment-review-state="concept-geisoleerd"');
     expect(reviewMetadata).toContain('data-attachment-review-state="concept"');
-    expect(reviewMetadata).toContain('Importstatus: Wacht op lokale OCR');
+    expect(reviewMetadata).toContain('data-dossier-status-kind="import"');
+    expect(reviewMetadata).toContain('data-status-badge-state="ocr_wacht"');
     expect(reviewMetadata).toContain('OCR-review: Klaargezet voor lokale OCR');
     expect(reviewMetadata).toContain('EXIF-isolatie: geisoleerd');
-    expect(reviewMetadata).toContain('Embryo bronlabelreview: Concept');
+    expect(reviewMetadata).toContain('Embryo bronlabelreview');
+    expect(reviewMetadata).toContain('data-dossier-status-kind="review"');
 
     expect(reviewMetadata).not.toContain('review-secret-source.jpg');
     expect(reviewMetadata).not.toContain('cmV2aWV3LXNlY3JldC1wYXlsb2Fk');
@@ -35680,11 +35702,11 @@ describe('app shell', () => {
     const inboxSection = html.slice(inboxStart, inboxEnd);
 
     expect(inboxSection).toContain('data-dossier-duplicate-review-state="duplicaat_review"');
-    expect(inboxSection).toContain(
-      'Duplicaatreview: Mogelijk duplicaat: 2 bestanden met dezelfde checksum',
-    );
+    expect(inboxSection).toContain('data-dossier-status-kind="duplicate"');
+    expect(inboxSection).toContain('Mogelijk duplicaat: 2 bestanden met dezelfde checksum');
     expect(inboxSection).toContain('Checksum dddddddddddd');
-    expect(inboxSection).toContain('Review concept');
+    expect(inboxSection).toContain('data-dossier-status-kind="review"');
+    expect(inboxSection).toContain('data-status-badge-state="concept"');
     expect(inboxSection).not.toContain('U0VDUkVULUxBQi1B');
     expect(inboxSection).not.toContain('U0VDUkVULUxBQi1C');
     expect(inboxSection).not.toMatch(/diagnose|dosering|behandelkeuze|kansberekening/i);
