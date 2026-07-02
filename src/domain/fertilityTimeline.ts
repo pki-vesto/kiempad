@@ -86,6 +86,7 @@ export type FertilityTimeline = {
   maandGroepen: FertilityTimelineMaandGroep[];
   mijlpalen: FertilityTimelineMijlpaal[];
   contextSignalen: FertilityTimelineContextSignaal[];
+  artsvragen: FertilityTimelineArtsvraag[];
   waarschuwing: string;
 };
 
@@ -115,6 +116,16 @@ export type FertilityTimelineContextSignaal = {
   itemId: string;
   titel: string;
   detail: string;
+};
+
+export type FertilityTimelineArtsvraag = {
+  id: string;
+  contextSignaalId: string;
+  itemId: string;
+  vraag: string;
+  bron: string;
+  datum: string;
+  reviewStatus: FertilityTimelineBronverwijzing['reviewStatus'];
 };
 
 export type FertilityTimelineTrajectExport = {
@@ -710,6 +721,9 @@ export function maakFertilityTimelineTrajectExport(
     '## Ontbrekende context',
     ...formatContextSignalenVoorExport(timeline),
     '',
+    '## Vragen voor arts',
+    ...formatArtsvragenVoorExport(timeline),
+    '',
     '## Bronlijst',
     ...formatBronlijstVoorExport(bronlijst),
     '',
@@ -720,6 +734,7 @@ export function maakFertilityTimelineTrajectExport(
     `Timeline-items: ${timeline.items.length}`,
     `Mijlpalen: ${timeline.mijlpalen.length}`,
     `Contextsignalen: ${timeline.contextSignalen.length}`,
+    `Artsvragen: ${timeline.artsvragen.length}`,
     `Bronnen: ${bronlijst.length}`,
     '',
     'Gebruik dit als gespreksoverzicht. Het is geen diagnose, kansberekening, dosering of behandeladvies.',
@@ -762,6 +777,15 @@ function formatContextSignalenVoorExport(timeline: FertilityTimeline): string[] 
   if (timeline.contextSignalen.length === 0) return ['- Geen ontbrekende context zichtbaar.'];
 
   return timeline.contextSignalen.map((item) => `- ${item.titel}: ${item.detail}`);
+}
+
+function formatArtsvragenVoorExport(timeline: FertilityTimeline): string[] {
+  if (timeline.artsvragen.length === 0) return ['- Geen conceptvragen voor de arts.'];
+
+  return timeline.artsvragen.map(
+    (item) =>
+      `- ${item.vraag}\n  Bron: ${item.bron} · Datum: ${item.datum} · Review: ${item.reviewStatus}`,
+  );
 }
 
 function formatBronlijstVoorExport(bronnen: readonly FertilityTimelineExportBron[]): string[] {
@@ -838,11 +862,13 @@ function maakFertilityTimelineResultaat(
   items: FertilityTimelineItem[],
   waarschuwing = FERTILITY_TIMELINE_WAARSCHUWING,
 ): FertilityTimeline {
+  const contextSignalen = bouwContextSignalen(items);
   return {
     items,
     maandGroepen: bouwMaandGroepen(items),
     mijlpalen: bouwMijlpalen(items),
-    contextSignalen: bouwContextSignalen(items),
+    contextSignalen,
+    artsvragen: bouwArtsvragen(items, contextSignalen),
     waarschuwing,
   };
 }
@@ -963,6 +989,55 @@ function bouwContextSignalen(items: FertilityTimelineItem[]): FertilityTimelineC
     }
     return signalen;
   });
+}
+
+function bouwArtsvragen(
+  items: readonly FertilityTimelineItem[],
+  contextSignalen: readonly FertilityTimelineContextSignaal[],
+): FertilityTimelineArtsvraag[] {
+  const itemMap = new Map(items.map((item) => [item.id, item]));
+
+  return contextSignalen.flatMap((signaal) => {
+    const item = itemMap.get(signaal.itemId);
+    if (!item) return [];
+    const bron = item.bronverwijzingen[0];
+    return [
+      {
+        id: `artsvraag-${signaal.id}`,
+        contextSignaalId: signaal.id,
+        itemId: item.id,
+        vraag: maakArtsvraagVoorContextSignaal(item, signaal),
+        bron: bron ? `${bron.label}: ${bron.bron}` : item.bron || 'Timelinecontext',
+        datum: bron?.datum ?? item.datum,
+        reviewStatus: bron?.reviewStatus ?? bepaalTimelineItemReviewStatus(item),
+      },
+    ];
+  });
+}
+
+function maakArtsvraagVoorContextSignaal(
+  item: FertilityTimelineItem,
+  signaal: FertilityTimelineContextSignaal,
+): string {
+  if (signaal.id.startsWith('context-datum-')) {
+    return `Welke datum hoort bij ${item.titel} in ons trajectoverzicht?`;
+  }
+  if (signaal.id.startsWith('context-bron-')) {
+    return `Welke bron of welk document hoort bij ${item.titel}?`;
+  }
+  if (signaal.id.startsWith('context-traject-')) {
+    return `Bij welke poging of behandeling hoort ${item.titel}?`;
+  }
+  return `Welke aanvullende context hoort bij ${item.titel}?`;
+}
+
+function bepaalTimelineItemReviewStatus(
+  item: FertilityTimelineItem,
+): FertilityTimelineBronverwijzing['reviewStatus'] {
+  if (item.historischConcept) {
+    return item.historischConcept.reviewStatus === 'bevestigd' ? 'gereviewd' : 'concept';
+  }
+  return itemHeeftConceptReview(item) ? 'concept' : 'gereviewd';
 }
 
 function itemHeeftTrajectContextNodig(item: FertilityTimelineItem): boolean {

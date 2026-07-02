@@ -277,6 +277,31 @@ describe('fertility timeline', () => {
     expect(timeline.contextSignalen.map((item) => item.detail).join(' ')).not.toMatch(
       /slecht|risico|advies/i,
     );
+    expect(timeline.artsvragen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'artsvraag-context-traject-onderzoek-doc-los',
+          contextSignaalId: 'context-traject-onderzoek-doc-los',
+          itemId: 'onderzoek-doc-los',
+          vraag: 'Bij welke poging of behandeling hoort Los labrapport?',
+          bron: 'Dossiermetadata · metadata: lab.pdf',
+          datum: '2026-06-22',
+          reviewStatus: 'concept',
+        }),
+        expect.objectContaining({
+          id: 'artsvraag-context-datum-vraag-vraag-los',
+          contextSignaalId: 'context-datum-vraag-vraag-los',
+          itemId: 'vraag-vraag-los',
+          vraag: 'Welke datum hoort bij Wat moet ik nog vragen? in ons trajectoverzicht?',
+          bron: 'Vraagrecord: Vragenlijst',
+          datum: '9999-12-31',
+          reviewStatus: 'concept',
+        }),
+      ]),
+    );
+    expect(timeline.artsvragen.map((item) => item.vraag).join(' ')).not.toMatch(
+      /diagnose|dosering|kansberekening|behandelkeuzeadvies|moet kiezen|advies:/i,
+    );
   });
 
   it('reconstrueert historische dossierrecords als conceptitems met bron, confidence en datumconflict', () => {
@@ -549,6 +574,8 @@ describe('fertility timeline', () => {
     expect(exportBestand.inhoud).toContain('## Belangrijke mijlpalen');
     expect(exportBestand.inhoud).toContain('Punctie');
     expect(exportBestand.inhoud).toContain('## Bronlijst');
+    expect(exportBestand.inhoud).toContain('## Vragen voor arts');
+    expect(exportBestand.inhoud).toContain('- Geen conceptvragen voor de arts.');
     expect(exportBestand.inhoud).toContain(
       '- Afspraakrecord · agenda · Agenda · Datum: 2026-06-24T09:30 · Review: gereviewd · Record: afspraak-1 · Timeline-item: Punctie',
     );
@@ -559,6 +586,7 @@ describe('fertility timeline', () => {
     expect(exportBestand.inhoud).toContain('Labuitslag');
     expect(exportBestand.inhoud).toContain('Gekoppelde records: Dossierrecord: Labuitslag');
     expect(exportBestand.inhoud).toContain('Timeline-items: 3');
+    expect(exportBestand.inhoud).toContain('Artsvragen: 0');
     expect(exportBestand.inhoud).toContain('Bronnen: 3');
     expect(exportBestand.inhoud).toContain('geen diagnose, kansberekening');
     expect(exportBestand.inhoud).not.toMatch(

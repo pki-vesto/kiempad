@@ -4274,6 +4274,13 @@ describe('app shell', () => {
     expect(html).toContain('id="fertility-timeline-context"');
     expect(html).toContain('Geen ontbrekende context zichtbaar in de huidige timelinefilter.');
     expect(html).toContain('Deze signalen corrigeren niets automatisch');
+    expect(html).toContain('id="fertility-timeline-artsvragen"');
+    expect(html).toContain('data-fertility-timeline-artsvragen="ready"');
+    expect(html).toContain('Vragen voor arts');
+    expect(html).toContain('Geen conceptvragen uit contextsignalen in de huidige timelinefilter.');
+    expect(html).toContain(
+      'Deze vragen helpen het gesprek voorbereiden en geven geen diagnose, dosering, kansberekening of behandelkeuzeadvies.',
+    );
     expect(html).toContain('Echo verslag');
     expect(html).toContain(
       'id="fertility-timeline-items" class="kp-timeline timeline-list fertility-timeline-list"',
@@ -4871,6 +4878,67 @@ describe('app shell', () => {
     expect(css).toContain('.timeline-detail-drawer {');
     expect(css).toContain('.timeline-detail-drawer__facts {');
     expect(css).not.toContain('.timeline-detail-panel {');
+  });
+
+  it('toont contextsignalen als controleerbare artsvragen zonder medisch advies', () => {
+    const html = renderAppShell(
+      'traject',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-artsvragen',
+              naam: 'Poging artsvragen',
+              type: 'icsi',
+              startDatum: '2026-06-20',
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [],
+          },
+        ],
+        dossierDocuments: [
+          {
+            id: 'doc-los',
+            datum: '2026-06-22',
+            titel: 'Los labrapport',
+            categorie: 'onderzoek',
+            bestandsNaam: 'lab.pdf',
+            grootteBytes: 1024,
+            inhoudBase64: 'BASE64_MEDISCHE_PAYLOAD',
+            analyse: { samenvatting: 'Labrapport vastgelegd.', signalen: [] },
+            metadata: {
+              bronbestand: 'lab.pdf',
+              documenttype: 'Labrapport',
+              extractieBronnen: [],
+            },
+            uploadedAt: '2026-06-22T10:00:00.000Z',
+          } as DossierDocument,
+        ],
+      }),
+    );
+    const timeline = extractFertilityTimelineSection(html);
+    const artsvragenStart = timeline.indexOf('id="fertility-timeline-artsvragen"');
+    const artsvragenEnd = timeline.indexOf('</section>', artsvragenStart);
+    const artsvragenSection = timeline.slice(artsvragenStart, artsvragenEnd);
+    const artsvragenListStart = artsvragenSection.indexOf('<ol');
+    const artsvragenListEnd = artsvragenSection.indexOf('</ol>', artsvragenListStart);
+    const artsvragenList = artsvragenSection.slice(artsvragenListStart, artsvragenListEnd);
+
+    expect(timeline).toContain('Trajectkoppeling ontbreekt');
+    expect(timeline).toContain('Los labrapport is nog niet gekoppeld aan een poging of traject.');
+    expect(timeline).toContain('id="fertility-timeline-artsvragen"');
+    expect(timeline).toContain('data-fertility-timeline-artsvragen="ready"');
+    expect(timeline).toContain('Bij welke poging of behandeling hoort Los labrapport?');
+    expect(timeline).toContain(
+      'Bron: Dossiermetadata · formulier: lab.pdf · Datum: 2026-06-22 · Review: concept',
+    );
+    expect(timeline).toContain('href="#vragen?route=beheer"');
+    expect(timeline).toContain('Controleer of corrigeer conceptvragen');
+    expect(timeline).not.toContain('BASE64_MEDISCHE_PAYLOAD');
+    expect(artsvragenList).not.toMatch(
+      /diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies|moet kiezen/i,
+    );
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {

@@ -322,6 +322,10 @@
 - **CFX-020 fertility timeline export source list — partial in G1415 / issue #867.** The Markdown
   timeline export now includes a dedicated bronlijst with source type, date, reviewstatus, record
   id, and source item, plus a visible export preview source count.
+- **CFX-020 fertility timeline artsvragen — partial in G1416 / issue #869.** Contextsignalen now
+  generate neutral concept questions for the doctor with source, date, and reviewstatus metadata,
+  visible in the timeline and consult export without diagnosis, dosage, probability, or treatment
+  choice advice.
 
 ---
 
@@ -754,6 +758,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   recommendation records without exposing payloads.
   Partial G1415/#867: fertility timeline export adds a deduplicated bronlijst section and preview
   count with source, date and reviewstatus metadata only.
+  Partial G1416/#869: fertility timeline context gaps are also shown as reviewable doctor
+  questions with source, date and reviewstatus, while preserving the non-medical boundary.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

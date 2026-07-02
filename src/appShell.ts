@@ -18091,6 +18091,32 @@ function renderFertilityTimelineContextSignalen(timeline: FertilityTimeline): st
       }
       <p class="small-print">Deze signalen corrigeren niets automatisch en geven geen oordeel over kwaliteit of uitkomst.</p>
     </section>
+    <section id="fertility-timeline-artsvragen" class="timeline-insight-panel" aria-label="Vragen voor arts" data-fertility-timeline-artsvragen="ready">
+      <h3>Vragen voor arts</h3>
+      ${
+        timeline.artsvragen.length > 0
+          ? `<ol class="compact-list timeline-insight-list">
+              ${timeline.artsvragen
+                .map(
+                  (item) => `
+                    <li>
+                      <strong>${escapeHtml(item.vraag)}</strong>
+                      <span>Bron: ${escapeHtml(item.bron)} · Datum: ${escapeHtml(item.datum)} · Review: ${escapeHtml(item.reviewStatus)}</span>
+                    </li>
+                  `,
+                )
+                .join('')}
+            </ol>
+            <a class="inline-action" href="#vragen?route=beheer">Controleer of corrigeer conceptvragen</a>`
+          : renderEmptyState(
+              'Geen conceptvragen uit contextsignalen in de huidige timelinefilter.',
+              {
+                title: 'Geen artsvragen',
+              },
+            )
+      }
+      <p class="small-print">Deze vragen helpen het gesprek voorbereiden en geven geen diagnose, dosering, kansberekening of behandelkeuzeadvies.</p>
+    </section>
   `;
 }
 
