@@ -70,6 +70,9 @@
 - **Daily advice feedback filter — done in G1428 / issue #2616.** The full dagadvies list now has
   a local feedbackstatus filter with a calm empty state, preserving the unfiltered list by default
   and using only local eventlog metadata.
+- **Daily advice feedback filter chips — done in G1429 / issue #2618.** Active dagadvies feedback
+  filters now show a scan-friendly chip, result count, and reset action while the default unfiltered
+  list stays quiet.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
