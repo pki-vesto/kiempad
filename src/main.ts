@@ -1,4 +1,5 @@
 import {
+  type AppShellLoadingState,
   normalizeBackupRoute,
   normalizeDecisionRoute,
   normalizeDossierRoute,
@@ -159,6 +160,7 @@ type RuntimeState = {
   dailyRecommendationStatus?: string;
   settingsOpen: boolean;
   webAuthnStatus: WebAuthnViewStatus;
+  loadingState?: AppShellLoadingState;
   error?: string;
 };
 
@@ -220,6 +222,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
+    loadingState: state.loadingState,
     webAuthnStatus: state.webAuthnStatus,
     storageMode: state.storageMode,
     storageLabel: state.storageLabel,
@@ -1150,11 +1153,19 @@ function bindVaultForm(root: HTMLElement, state: RuntimeState): void {
     void state.session
       .initializeOrUnlock(passphrase)
       .then(async () => {
+        state.loadingState = {
+          scope: 'unlock',
+          message:
+            'We laden dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten versleuteld in.',
+        };
+        render(root, state);
         await loadUnlockedState(state, 'Kluis ontgrendeld');
+        state.loadingState = undefined;
         state.error = undefined;
         render(root, state);
       })
       .catch((error: unknown) => {
+        state.loadingState = undefined;
         state.error = error instanceof Error ? error.message : 'Ontgrendelen is mislukt.';
         render(root, state);
       });
@@ -1186,10 +1197,18 @@ async function unlockWithWebAuthn(root: HTMLElement, state: RuntimeState): Promi
 
     const prfSecret = await vraagWebAuthnPrfSecret(metadata);
     await state.session.unlockWithWebAuthnPrf(prfSecret);
+    state.loadingState = {
+      scope: 'unlock',
+      message:
+        'We laden dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten versleuteld in.',
+    };
+    render(root, state);
     await loadUnlockedState(state, 'Dataset ontgrendeld met WebAuthn');
+    state.loadingState = undefined;
     state.error = undefined;
     render(root, state);
   } catch (error: unknown) {
+    state.loadingState = undefined;
     state.error = error instanceof Error ? error.message : 'WebAuthn-ontgrendeling is mislukt.';
     await refreshWebAuthnStatus(state);
     render(root, state);
@@ -2411,6 +2430,12 @@ async function saveMentalCheckInFromForm(
 }
 
 async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<void> {
+  state.loadingState = {
+    scope: 'reload',
+    message:
+      'We werken dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten opnieuw bij.',
+  };
+  render(root, state);
   if (state.trajectStore) {
     state.trajecten = await state.trajectStore.list();
   }
@@ -2457,6 +2482,7 @@ async function reloadAndRender(root: HTMLElement, state: RuntimeState): Promise<
     state.settings = await state.settingsStore.get();
   }
   state.notificaties = await getNotificationRuntimeStatus();
+  state.loadingState = undefined;
   render(root, state);
 }
 

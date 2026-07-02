@@ -185,6 +185,7 @@ import {
   disclosure,
   domainSplitWorkspace,
   firstViewportWorkbench,
+  loadingSkeleton,
   pageHeader,
   phaseHeroCard,
   recommendationCard,
@@ -749,6 +750,12 @@ export type AppShellState = {
   inAppFallbackNotifications?: InAppFallbackNotification[];
   storageMode?: 'central-api' | 'legacy-indexeddb';
   storageLabel?: string;
+  loadingState?: AppShellLoadingState;
+};
+
+export type AppShellLoadingState = {
+  scope: 'unlock' | 'reload';
+  message: string;
 };
 
 type CentralSyncFeedbackKind = 'replay-conflict' | 'stale-session' | 'record-package';
@@ -807,7 +814,9 @@ export function renderAppShell(
   },
 ): string {
   const activeScreen = SCREENS.find((screen) => screen.id === activeId) ?? DEFAULT_SCREEN;
-  const screenContent = renderScreenContent(activeId, activeScreen, state);
+  const screenContent = state.loadingState
+    ? renderAppLoadingState(state.loadingState)
+    : renderScreenContent(activeId, activeScreen, state);
   const screenTitle = storageAwareScreenTitle(activeScreen, state);
   const screenIntro = storageAwareScreenIntro(activeScreen, state);
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
@@ -859,11 +868,29 @@ export function renderAppShell(
               })
         }
 
-        <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active">
+        <section class="screen-stage__panel" aria-label="${escapeAttribute(activeScreen.label)} actief scherm" data-screen-stage-panel="active"${state.loadingState ? ' aria-busy="true" data-screen-loading="true"' : ''}>
           ${screenContent}
         </section>
       </main>
     </div>
+  `;
+}
+
+function renderAppLoadingState(loading: AppShellLoadingState): string {
+  const title = loading.scope === 'unlock' ? 'Versleutelde dataset laden' : 'Werkruimte bijwerken';
+  return `
+    <section class="loading-state-panel" aria-label="${escapeAttribute(title)}" data-loading-state="${escapeAttribute(loading.scope)}">
+      <header class="loading-state-panel__header">
+        <p class="kp-card__eyebrow">Even laden</p>
+        <h2>${escapeHtml(title)}</h2>
+        <p>${escapeHtml(loading.message)}</p>
+      </header>
+      <div class="loading-state-panel__grid">
+        ${loadingSkeleton({ lines: 4, variant: 'card' })}
+        ${loadingSkeleton({ lines: 5, variant: 'list' })}
+        ${loadingSkeleton({ lines: 3, variant: 'text' })}
+      </div>
+    </section>
   `;
 }
 

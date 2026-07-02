@@ -56,6 +56,9 @@
 - **G1328 rijke lege staten:** lege routes tonen ontworpen empty-state blokken met
   icoontegel, titel, tekst en waar passend een CTA naar de invoerroute in plaats van
   kale `Nog geen...` regels.
+- **G1329 skeleton-laadlaag:** unlock en reload tonen een route-level skeleton met
+  `aria-busy` voor dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten,
+  zodat de werkruimte niet abrupt van leeg naar gevuld springt.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

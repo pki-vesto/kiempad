@@ -42,6 +42,10 @@
   `<p class="empty-state">` fallbacks now use the shared rich `emptyState()` component with
   icon tile, title, message, and route CTA where useful; research source/summary list helpers
   use the same component.
+- **CFX-004c route loading skeletons — done in G1329 / issue #2432.** Unlock and data reloads
+  now set an app-shell loading state that renders the shared `loadingSkeleton()` component
+  inside the active screen-stage with `aria-busy`, covering dossier, timeline, AI summary,
+  OCR review, and local list refreshes.
 
 ---
 
@@ -61,8 +65,9 @@ The product is **not yet premium**. Three structural problems dominate:
    markup live in one file. This makes every change high-risk and every review shallow.
 2. **The component layer is still only partly adopted.** `src/ui/components.ts` defines
    `emptyState`, `loadingSkeleton`, `card`, `actionCard`, `timeline`, `accordion`, `statRow`,
-   etc. `emptyState()` is now adopted for app-shell empty routes (G1328), but
-   `loadingSkeleton` is still **unused** and several patterns remain inconsistently applied.
+   etc. `emptyState()` is now adopted for app-shell empty routes (G1328) and
+   `loadingSkeleton()` is used for app-shell unlock/reload states (G1329), while several
+   patterns remain inconsistently applied.
 3. **`styles.css` is 14,343 lines** and carries a compatibility **alias layer** (old sage token
    names aliased to new teal tokens). This works but hides the real system and invites drift
    (CFX-030 has since moved PWA chrome from old sage to Claude Design teal; remaining token alias
@@ -85,7 +90,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 | 1 | Split `appShell.ts` (18.5k LOC) into per-screen modules under `src/screens/` | Every change is currently high-risk; blocks all other work |
 | 2 | Break up `renderDossierScreen` (1,045 LOC) into upload/imaging/embryo/history sub-renderers | Largest single fragility hotspot |
 | 3 | ✅ CFX-003c: Adopt `emptyState()` everywhere raw app-shell empty states were used | Done in G1328; empty installs now show rich empty blocks |
-| 4 | Add `loadingSkeleton()` states for async lists (dossier, timeline, AI, OCR) — currently none | App "pops" abruptly; feels like a prototype |
+| 4 | ✅ CFX-004c: Add `loadingSkeleton()` states for async dossier/timeline/AI/OCR refreshes | Done in G1329; unlock/reload now shows `aria-busy` skeletons |
 | 5 | ✅ CFX-030: Fix `theme-color` in `index.html` (`#7a9471` sage → teal `#2c6e63`) | Done in G1320; PWA/browser chrome now uses teal |
 | 6 | ✅ CFX-006/CFX-046: Build the Settings sheet (`eigenNaam`/`partnerNaam`/`gedeeldeModus` + thema, no "Bewaar thema") | Done in G1324; names/shared mode persist encrypted and theme switches live |
 | 7 | ✅ CFX-007 start greeting: Wire real names into the greeting | Done in G1324; Start greeting uses saved names |
@@ -115,8 +120,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   **no diffing** — full teardown/rebuild on every state change loses focus/scroll and forbids
   animation. This is the deepest fragility in the app.
 - **Half-adopted component layer**: `src/ui/components.ts` is good but still under-used.
-  `emptyState()` now covers app-shell empty routes (G1328), but `loadingSkeleton` = 0 calls and
-  `timeline()`/`accordion()`/`statRow()` remain inconsistently applied.
+  `emptyState()` now covers app-shell empty routes (G1328) and `loadingSkeleton()` covers
+  unlock/reload states (G1329), while `timeline()`/`accordion()`/`statRow()` remain
+  inconsistently applied.
 - **CSS size & aliasing**: `styles.css` = 14,343 lines with an old→new token alias layer. Works, but
   the alias layer means "the real design system" isn't legible; dead/duplicated rules likely. No CSS
   layering (`@layer`), no obvious componentized structure.
@@ -377,8 +383,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `<p class="empty-state">` app-shell sites with serif title + CTA where useful (E38/E40).
   Files: `src/appShell.ts`, `src/ui/components.ts`. Accept: 0 raw `empty-state` `<p>`;
   empty routes use the rich block. **P1 · L**
-- **CFX-004c** — Add `loadingSkeleton()` states for dossier list, timeline, AI summaries, OCR, and
-  central fetch. Files: screens + `src/main.ts`. Accept: async regions show skeleton + `aria-busy`. **P1 · M**
+- **CFX-004c** — ✅ Done in G1329 / issue #2432. Add `loadingSkeleton()` states for
+  dossier list, timeline, AI summaries, OCR, and central fetch. Files: screens + `src/main.ts`.
+  Accept: async regions show skeleton + `aria-busy`. **P1 · M**
 - **CFX-006** — ✅ Done in G1324 / issue #2423. Settings sheet component (`renderSettingsSheet`) + open/close state (`settingsOpen`)
   as a centered modal (desktop) / bottom-sheet (mobile); contains Namen, Gedeelde modus, Thema
   (applies immediately, no "Bewaar thema"). Files: `src/appShell.ts`, `src/main.ts`, `src/styles.css`.

@@ -460,10 +460,12 @@ async function assertRouteflows(browser, options) {
         }, target.openSelectors);
       }
 
-      const root = page.locator(target.rootSelector);
-      await root.waitFor({ timeout: 10_000 });
-      await root.scrollIntoViewIfNeeded();
+      await waitForStableRouteflowRoot(page, target.rootSelector);
+      await page.evaluate((selector) => {
+        document.querySelector(selector)?.scrollIntoView({ block: 'center', inline: 'nearest' });
+      }, target.rootSelector);
 
+      const root = page.locator(target.rootSelector);
       const screenshot = await root.screenshot({ animations: 'disabled' });
       const evidence = await page.evaluate(({ routeflow, viewportLabel }) => {
         const rootElement = document.querySelector(routeflow.rootSelector);
@@ -1310,6 +1312,18 @@ async function unlockIfNeeded(page, hash) {
     window.location.hash = nextHash;
     window.dispatchEvent(new HashChangeEvent('hashchange'));
   }, hash);
+}
+
+async function waitForStableRouteflowRoot(page, selector) {
+  await page.waitForFunction(
+    (rootSelector) => {
+      const root = document.querySelector(rootSelector);
+      const loadingPanel = document.querySelector('[data-screen-loading="true"]');
+      return Boolean(root?.isConnected && !loadingPanel);
+    },
+    selector,
+    { timeout: 10_000 },
+  );
 }
 
 async function waitForPreview() {
