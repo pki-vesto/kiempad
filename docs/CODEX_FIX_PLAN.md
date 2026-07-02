@@ -100,6 +100,9 @@
 - **Daily advice feedback list filter reset — done in G1438 / issue #2636.** The list-panel
   active-filter header now includes its own reset action using the shared feedback filter reset
   handler, so the filtered route and related filter UI clear from inside the list context.
+- **Daily advice feedback list owner distribution — done in G1439 / issue #2638.** The active
+  list-filter header now shows local owner counts for vrouw, man, and samen so the filtered
+  suggestion context is scannable without adding medical conclusions.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

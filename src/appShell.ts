@@ -14675,6 +14675,7 @@ function renderDailyAdviceConsole(
               filter: state.dailyRecommendationFeedbackFilter,
               total: totalRecommendations,
               filteredTotal: filteredTotalRecommendations,
+              overview: filteredOverview,
             })}
             ${renderDailyRecommendationFeedbackFilter({
               filter: state.dailyRecommendationFeedbackFilter,
@@ -14711,15 +14712,23 @@ function renderDailyRecommendationListFilterHeader(input: {
   filter?: FertilityTimelineAanbevelingFeedbackStatus;
   total: number;
   filteredTotal: number;
+  overview: DailyRecommendationOverview;
 }): string {
   if (!input.filter) return '';
   const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
+  const ownerDistribution = (['vrouw', 'man', 'samen'] as const)
+    .map(
+      (owner) =>
+        `<span data-daily-recommendation-list-filter-owner="${owner}">${escapeHtml(DAILY_RECOMMENDATION_OWNER_LABELS[owner])}: ${input.overview[owner].length}</span>`,
+    )
+    .join('');
 
   return `
     <div class="daily-recommendation-list-filter-header" data-daily-recommendation-list-filter-header="ready">
       <span>Actieve lijstfilter</span>
       <strong>${escapeHtml(filterLabel)}</strong>
       <em>${input.filteredTotal} van ${input.total} suggesties</em>
+      <span class="daily-recommendation-list-filter-header__owners" data-daily-recommendation-list-filter-owners="ready">${ownerDistribution}</span>
       <form data-daily-recommendation-feedback-control="ready">
         <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-list-filter-reset="ready">Reset</button>
       </form>

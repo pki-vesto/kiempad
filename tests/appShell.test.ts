@@ -3856,6 +3856,16 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-reset="ready"',
     );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owners="ready"',
+    );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner="vrouw"',
+    );
+    expect(filteredRecommendations).toContain('data-daily-recommendation-list-filter-owner="man"');
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owner="samen"',
+    );
     expect(filteredRecommendations).toContain('Actieve feedbackfilter');
     expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
@@ -3868,6 +3878,9 @@ describe('app shell', () => {
     );
     expect(filteredRecommendations).toContain('Actieve filter: Gedaan');
     expect(filteredRecommendations).toContain('1 van ');
+    expect(filteredRecommendations).toContain('Vrouw: 1');
+    expect(filteredRecommendations).toContain('Man: 0');
+    expect(filteredRecommendations).toContain('Samen: 0');
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-feedback-filter-reset="ready"',
     );
@@ -3918,11 +3931,17 @@ describe('app shell', () => {
     expect(emptyFilteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-reset="ready"',
     );
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-owners="ready"',
+    );
     expect(emptyFilteredRecommendations).toContain('Actieve feedbackfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve lijstfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve filter: Artscheck');
     expect(emptyFilteredRecommendations).toContain('<strong>Artscheck</strong>');
     expect(emptyFilteredRecommendations).toContain('0 van ');
+    expect(emptyFilteredRecommendations).toContain('Vrouw: 0');
+    expect(emptyFilteredRecommendations).toContain('Man: 0');
+    expect(emptyFilteredRecommendations).toContain('Samen: 0');
     expect(emptyFilteredRecommendations).toContain('Geen feedbackmatch');
     expect(emptyFilteredRecommendations).toContain('Geen suggesties met deze feedbackstatus.');
     expect(emptyFilteredRecommendations).not.toContain('data-recommendation-id="vrouw-basisdag"');

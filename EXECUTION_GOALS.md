@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1347 — Daily Recommendations: lijstfilterheader dempt nul-eigenaren
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lijstfilterheader toont straks eigenaarcounts, maar nulwaarden kunnen even zwaar ogen als relevante resultaten.
+- **User Impact:** Gebruikers moeten extra scannen om te zien bij welke eigenaar daadwerkelijk gefilterde suggesties staan.
+- **Desired Outcome:** Geef eigenaren met 0 gefilterde suggesties een rustigere visuele stijl terwijl niet-nulwaarden duidelijk blijven.
+- **User Value:** Gebruikers zien sneller bij wie de gefilterde suggesties horen.
+- **Acceptance Criteria:** Eigenaren met 0 gefilterde suggesties krijgen een visueel gedempte stijl; eigenaren met resultaten blijven duidelijk leesbaar; de verdeling blijft gebaseerd op lokale suggestiecounts en bevat geen medische conclusies; zonder actieve filter blijft de header afwezig; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken nulstanden, niet-nulstanden en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2640
+
 ### G1346 — Daily Recommendations: lijstfilterheader toont eigenaarverdeling
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2638
 
 ### G1345 — Daily Recommendations: lijstfilterheader heeft resetactie
