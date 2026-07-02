@@ -4799,36 +4799,6 @@ function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicro
   return states[route];
 }
 
-function getNotificationContextMicrostate(route: NotificationRoute): WorkspaceContextMicrostate {
-  const states: Record<NotificationRoute, WorkspaceContextMicrostate> = {
-    status: {
-      id: 'notification-status',
-      label: 'Statusroute',
-      detail: 'Toestemming, service worker en fallback blijven eerst zichtbaar.',
-      action: 'Volgende: runtime status lezen',
-    },
-    privacy: {
-      id: 'notification-privacy',
-      label: 'Privacyroute',
-      detail: 'Lockscreenkeuze blijft expliciet voordat details worden getoond.',
-      action: 'Volgende: lockscreenkeuze checken',
-    },
-    plannen: {
-      id: 'notification-plannen',
-      label: 'Planroute',
-      detail: 'Nieuwe herinneringen blijven gescheiden van komende meldingen.',
-      action: 'Volgende: herinnering instellen',
-    },
-    komend: {
-      id: 'notification-komend',
-      label: 'Komende route',
-      detail: 'Actieve en fallbackmeldingen blijven scanbaar zonder inhoudslek.',
-      action: 'Volgende: komende melding scannen',
-    },
-  };
-  return states[route];
-}
-
 function getEventLogContextMicrostate(route: EventLogRoute): WorkspaceContextMicrostate {
   const states: Record<EventLogRoute, WorkspaceContextMicrostate> = {
     overzicht: {
@@ -15296,7 +15266,10 @@ function renderHerinneringenScreen(state: AppShellState): string {
   const notificationWorkspace = domainSplitWorkspace({
     className: 'notification-split-workspace',
     ariaLabel: 'Herinneringen split-view werkruimte',
-    data: { 'notification-split-workspace': 'ready' },
+    data: {
+      'notification-split-workspace': 'ready',
+      'notification-compact-workspace': 'route-first',
+    },
     rail: renderNotificationTaskRoutes({
       reminderCount: komende.length,
       fallbackCount: fallback.length,
@@ -15466,16 +15439,6 @@ function renderHerinneringenScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-    context: renderNotificationWorkspaceContext({
-      reminderCount: komende.length,
-      fallbackCount: fallback.length,
-      permission: state.notificaties.permission,
-      serviceWorker: state.notificaties.serviceWorker,
-      lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
-      nextReminder: komende[0],
-      defaultWarningMinutes: state.settings.afspraakWaarschuwingMinuten,
-      activeRoute: activeNotificationRoute,
-    }),
   });
 
   return sectionStack(
@@ -15614,70 +15577,6 @@ function renderNotificationTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderNotificationWorkspaceContext(input: {
-  reminderCount: number;
-  fallbackCount: number;
-  permission: NotificationRuntimeStatus['permission'];
-  serviceWorker: NotificationRuntimeStatus['serviceWorker'];
-  lockscreenDetails: boolean;
-  nextReminder: ReturnType<typeof komendeHerinneringen>[number] | undefined;
-  defaultWarningMinutes: number;
-  activeRoute: NotificationRoute;
-}): string {
-  const next = input.nextReminder
-    ? formatDateTime(input.nextReminder.volgendMoment)
-    : 'Geen komende herinnering.';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Meldingsfocus',
-    title: 'Herinneringstatus',
-    data: { 'workspace-context-signals': 'notification' },
-    microstate: getNotificationContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Volgende',
-        value: input.nextReminder ? 'Gepland' : 'Leeg',
-        detail: next,
-        href: '#herinneringen?route=komend',
-      },
-      {
-        label: 'Privacy',
-        value: input.lockscreenDetails ? 'Details' : 'Generiek',
-        detail: input.lockscreenDetails
-          ? 'Lockscreen-details staan bewust aan.'
-          : 'Lockscreen toont generieke tekst.',
-        href: '#herinneringen?route=privacy',
-      },
-      {
-        label: 'Fallback',
-        value: String(input.fallbackCount),
-        detail: `${renderPermissionLabel(input.permission)} · ${renderServiceWorkerLabel(input.serviceWorker)}`,
-        href: '#herinneringen?route=status',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Herinneringen context" data-notification-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Meldingen in beeld</h2>
-      ${statRow([
-        { label: 'Toestemming', value: renderPermissionLabel(input.permission) },
-        { label: 'Worker', value: renderServiceWorkerLabel(input.serviceWorker) },
-        { label: 'Actief', value: String(input.reminderCount) },
-        { label: 'Fallback', value: String(input.fallbackCount) },
-      ])}
-      <p class="linked-note">Volgende: ${escapeHtml(next)} · standaard ${input.defaultWarningMinutes} min</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Herinneringen werkruimtegrens" data-notification-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Privacy voorop</h2>
-      <p>Status, lockscreenprivacy, planning en komende meldingen blijven gescheiden zodat herinneringen niet als meldingenlijst openen.</p>
-      <p class="small-print">${input.lockscreenDetails ? 'Details op lockscreen staan expliciet aan.' : 'Lockscreen gebruikt standaard generieke tekst.'}</p>
-    </section>
-  `;
 }
 
 function renderNotificationRouteVisibility(
