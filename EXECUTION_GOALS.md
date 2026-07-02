@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1338 — Daily Recommendations: feedbackfilter browser navigation smoke
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvies-feedbackfilter is routeherstelbaar, maar browser back/forward en resetgedrag worden nog niet expliciet door een browser-smoke bewaakt.
+- **User Impact:** Toekomstige routewijzigingen kunnen de herstelbare filterstate breken zonder dat unit-rendering dit volledig vangt.
+- **Desired Outcome:** Voeg een smoke toe die bewijst dat de dagadvies-feedbackfilter via hash, reset en browsernavigatie consistent blijft zonder tracking of medische payloads.
+- **User Value:** Gebruikers kunnen vertrouwen op filterherstel bij refresh en browsernavigatie.
+- **Acceptance Criteria:** Smoke opent een gefilterde dagadviesroute via hash; smoke controleert reset naar de ongefilterde route; smoke controleert browser back/forward voor de filterstate; desktop en mobiel houden geen overlap of horizontale overflow; geen diagnose, dosering, kansberekening, trackingpayload of behandelkeuzeadvies wordt toegevoegd.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** routeflow smoke, app shell, daily recommendations, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2622
+
 ### G1337 — Daily Recommendations: feedbackfilter route deep-link
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, route parsing, daily recommendations, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2620
 
 ### G1336 — Daily Recommendations: feedbackfilter reset en tellerchips

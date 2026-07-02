@@ -502,6 +502,24 @@ export function normalizeStartRoute(value: string | null | undefined): StartRout
   return 'overview';
 }
 
+export function normalizeDailyRecommendationFeedbackFilter(
+  value: string | null | undefined,
+): FertilityTimelineAanbevelingFeedbackStatus | undefined {
+  const query = value?.split('?')[1] ?? '';
+  const feedback = new URLSearchParams(query).get('feedback');
+  if (
+    feedback === 'bewaard' ||
+    feedback === 'gedaan' ||
+    feedback === 'niet_passend' ||
+    feedback === 'herinnering' ||
+    feedback === 'bespreken' ||
+    feedback === 'artscheck'
+  ) {
+    return feedback;
+  }
+  return undefined;
+}
+
 type TreatmentRoute = 'overzicht' | 'fasen' | 'vergoeding' | 'context' | 'beheer';
 
 const TREATMENT_ROUTES: readonly TreatmentRoute[] = [

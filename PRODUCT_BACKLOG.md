@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1138 |
+| ☑ klaar | 1139 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1337** |
+| **Totaal** | **1338** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1499,13 +1499,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1334 | Daily Recommendations: feedbacksamenvatting in advieswerkbank | P1 | F5 | ☑ |
 | G1335 | Daily Recommendations: feedbackfilter in dagadvieslijst | P1 | F5 | ☑ |
 | G1336 | Daily Recommendations: feedbackfilter reset en tellerchips | P1 | F5 | ☑ |
-| G1337 | Daily Recommendations: feedbackfilter route deep-link | P1 | F5 | ☐ |
+| G1337 | Daily Recommendations: feedbackfilter route deep-link | P1 | F5 | ☑ |
+| G1338 | Daily Recommendations: feedbackfilter browser navigation smoke | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1337** (id's G001 t/m G1337, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1338** (id's G001 t/m G1338, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
