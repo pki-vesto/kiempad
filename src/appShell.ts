@@ -13406,36 +13406,57 @@ function renderResearchDossierRelaties(relaties: readonly ResearchDossierRelatie
 }
 
 function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): string {
+  const itemCount = groepen.reduce((total, groep) => total + groep.items.length, 0);
   return `
-    <section class="research-trend-dashboard" aria-label="Research trenddashboard">
-      <h2>Researchtrends</h2>
-      <p class="small-print">Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.</p>
+    <section class="research-trend-dashboard" aria-label="Research trenddashboard" data-research-trend-dashboard="ready" data-research-trend-state="${groepen.length > 0 ? 'filled' : 'empty'}">
+      <header class="research-trend-dashboard__header">
+        <div>
+          <p class="kp-card__eyebrow">Trenddashboard</p>
+          <h2>Researchtrends</h2>
+          <p>Lokale trefwoordgroepering van opgeslagen researchitems. Dit is geen bewijsweging of behandeladvies.</p>
+        </div>
+        <dl class="research-trend-dashboard__stats" aria-label="Researchtrend status">
+          <div><dt>Groepen</dt><dd>${groepen.length}</dd></div>
+          <div><dt>Items</dt><dd>${itemCount}</dd></div>
+        </dl>
+      </header>
       ${
         groepen.length > 0
-          ? `<ol class="compact-list">${groepen
-              .map(
-                (groep) => `
-                  <li>
-                    <strong>${escapeHtml(groep.label)}</strong>
-                    <span>${groep.items.length} item(s)</span>
-                    <small>${escapeHtml(groep.waarschuwing)}</small>
-                    <ol>
-                      ${groep.items
-                        .map(
-                          (item) =>
-                            `<li>${escapeHtml(item.titel)}${item.publicatieDatum ? ` · ${escapeHtml(item.publicatieDatum)}` : ''}${item.bron ? ` · ${escapeHtml(item.bron)}` : ''}</li>`,
-                        )
-                        .join('')}
-                    </ol>
-                  </li>
-                `,
-              )
-              .join('')}</ol>`
+          ? `<div class="research-trend-dashboard__grid" data-research-trend-grid="ready">${groepen
+              .map(renderResearchTrendCard)
+              .join('')}</div>`
           : renderEmptyState('Nog geen researchtrends gevonden in opgeslagen researchitems.', {
               title: 'Geen researchtrends',
             })
       }
     </section>
+  `;
+}
+
+function renderResearchTrendCard(groep: ResearchTrendGroep): string {
+  return `
+    <article class="research-trend-card" data-research-trend-card="${escapeAttribute(groep.onderwerp)}">
+      <header class="research-trend-card__header">
+        <span class="research-trend-card__topic">${escapeHtml(groep.label)}</span>
+        <strong>${groep.items.length} item${groep.items.length === 1 ? '' : 's'}</strong>
+      </header>
+      <p class="research-trend-card__warning">${escapeHtml(groep.waarschuwing)}</p>
+      <ol class="research-trend-card__items">
+        ${groep.items.map(renderResearchTrendCardItem).join('')}
+      </ol>
+    </article>
+  `;
+}
+
+function renderResearchTrendCardItem(item: ResearchTrendGroep['items'][number]): string {
+  const metadata = [item.publicatieDatum, item.bron].filter((value): value is string =>
+    Boolean(value),
+  );
+  return `
+    <li class="research-trend-card__item" data-research-trend-item="${escapeAttribute(item.id)}">
+      <span>${escapeHtml(item.titel)}</span>
+      <small>${metadata.map((value) => escapeHtml(value)).join(' · ') || 'Bronmetadata ontbreekt'}</small>
+    </li>
   `;
 }
 

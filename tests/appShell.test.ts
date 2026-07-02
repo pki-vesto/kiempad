@@ -1409,11 +1409,10 @@ function extractDailyRecommendationsSection(html: string): string {
 }
 
 function extractResearchTrendDashboard(html: string): string {
-  const match = html.match(
-    /<section class="research-trend-dashboard" aria-label="Research trenddashboard">([\s\S]*?)<\/section>/,
-  );
-  if (!match?.[1]) throw new Error('Research trenddashboard ontbreekt.');
-  return match[1].replace(/\s+/g, ' ').trim();
+  const start = html.indexOf('data-research-trend-dashboard="ready"');
+  const end = html.indexOf('</section>', start);
+  if (start < 0 || end < 0) throw new Error('Research trenddashboard ontbreekt.');
+  return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
 function extractFertilityTimelineSection(html: string): string {
@@ -36814,7 +36813,9 @@ describe('app shell', () => {
     expect(html).toContain('Nog geen relevantie per publicatie aan dossiercontext gekoppeld.');
     expect(html).toContain('Researchtrends');
     expect(html).toContain('Embryo');
-    expect(html).toContain('Eigen artikel embryo-cultuur · https://voorbeeld.test/embryo-cultuur');
+    expect(html).toContain('data-research-trend-item="research-eigen"');
+    expect(html).toContain('Eigen artikel embryo-cultuur');
+    expect(html).toContain('https://voorbeeld.test/embryo-cultuur');
     expect(html).toContain('Researchaggregatie');
     expect(html).toContain('id="research-network-form"');
     expect(html).toContain('name="researchNetwerkIngeschakeld"');
@@ -37404,7 +37405,11 @@ describe('app shell', () => {
     expect(html).toContain('Embryo');
     expect(html).toContain('Leefstijl');
     expect(html).toContain('Mannelijke factor');
-    expect(html).toContain('IVF embryo-cultuur · 2026-05-10 · https://voorbeeld.test/ivf-embryo');
+    expect(html).toContain('data-research-trend-card="ivf"');
+    expect(html).toContain('data-research-trend-card="embryo"');
+    expect(html).toContain('data-research-trend-item="research-ivf-embryo"');
+    expect(html).toContain('IVF embryo-cultuur');
+    expect(html).toContain('2026-05-10 · https://voorbeeld.test/ivf-embryo');
     expect(html).toContain('Dit is geen bewijsweging of behandeladvies');
   });
 
@@ -37414,9 +37419,15 @@ describe('app shell', () => {
 
     expect(emptyHtml).toContain('class="research-trend-dashboard"');
     expect(emptyHtml).toContain('aria-label="Research trenddashboard"');
+    expect(emptyHtml).toContain('data-research-trend-dashboard="ready"');
+    expect(emptyHtml).toContain('data-research-trend-state="empty"');
     expect(emptyHtml).toContain('id="research-item-form"');
     expect(emptyHtml).toContain('id="research-network-form"');
     expect(emptyDashboard).toContain('Researchtrends');
+    expect(emptyDashboard).toContain('Trenddashboard');
+    expect(emptyDashboard).toContain('Researchtrend status');
+    expect(emptyDashboard).toContain('<dt>Groepen</dt><dd>0</dd>');
+    expect(emptyDashboard).toContain('<dt>Items</dt><dd>0</dd>');
     expect(emptyDashboard).toContain(
       'Nog geen researchtrends gevonden in opgeslagen researchitems.',
     );
@@ -37472,17 +37483,27 @@ describe('app shell', () => {
     );
     const contextualDashboard = extractResearchTrendDashboard(contextualHtml);
 
+    expect(contextualHtml).toContain('data-research-trend-state="filled"');
+    expect(contextualDashboard).toContain('data-research-trend-grid="ready"');
+    expect(contextualDashboard).toContain('class="research-trend-card"');
+    expect(contextualDashboard).toContain('data-research-trend-card="ivf"');
+    expect(contextualDashboard).toContain('data-research-trend-card="icsi"');
+    expect(contextualDashboard).toContain('data-research-trend-card="embryo"');
+    expect(contextualDashboard).toContain('data-research-trend-card="leefstijl"');
+    expect(contextualDashboard).toContain('data-research-trend-card="mannelijke_factor"');
+    expect(contextualDashboard).toContain('data-research-trend-item="research-ivf-icsi-embryo"');
+    expect(contextualDashboard).toContain('data-research-trend-item="research-man-leefstijl-bron"');
     expect(contextualDashboard).toContain('IVF');
     expect(contextualDashboard).toContain('ICSI');
     expect(contextualDashboard).toContain('Embryo');
     expect(contextualDashboard).toContain('Leefstijl');
     expect(contextualDashboard).toContain('Mannelijke factor');
-    expect(contextualDashboard).toContain(
-      'IVF ICSI embryo trendreview · 2026-05-10 · https://pubmed.ncbi.nlm.nih.gov/123456/',
-    );
-    expect(contextualDashboard).toContain(
-      'Mannelijke factor leefstijl overzicht · 2026-04-01 · https://doi.org/10.1000/fertility-context',
-    );
+    expect(contextualDashboard).toContain('IVF ICSI embryo trendreview');
+    expect(contextualDashboard).toContain('2026-05-10 · https://pubmed.ncbi.nlm.nih.gov/123456/');
+    expect(contextualDashboard).toContain('Mannelijke factor leefstijl overzicht');
+    expect(contextualDashboard).toContain('2026-04-01 · https://doi.org/10.1000/fertility-context');
+    expect(contextualDashboard).toContain('<dt>Groepen</dt><dd>5</dd>');
+    expect(contextualDashboard).toContain('<dt>Items</dt><dd>5</dd>');
     expect(contextualDashboard).toContain(
       'Trendgroepering is een lokale trefwoordindeling voor overzicht',
     );
@@ -37490,6 +37511,15 @@ describe('app shell', () => {
     expect(contextualDashboard).not.toContain('providerpayload');
     expect(contextualDashboard).not.toContain('diagnose');
     expect(contextualDashboard).not.toContain('behandelkeuzeadvies');
+
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.research-trend-dashboard__grid {');
+    expect(css).toContain('.research-trend-card {');
+    expect(css).toContain('.research-trend-card__item {');
+    expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(mobileCss).toContain('.research-trend-dashboard__grid {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {

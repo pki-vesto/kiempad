@@ -337,6 +337,10 @@
   full suggestion list now opens as a dual-owner lane for vrouw/man with a separate shared row,
   preserving all review/reminder/question/action hooks while reducing the one-long-list feel on
   desktop and stacking safely on mobile.
+- **Premium research trend dashboard visual system — done in G1420 / issue #890.** Research trends
+  now render as scan-friendly dashboard cards with group/item stats, topic hooks, source metadata
+  rows, and mobile single-column stacking while preserving the existing research forms and
+  non-medical boundary.
 
 ---
 
