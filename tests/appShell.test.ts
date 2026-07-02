@@ -8776,6 +8776,14 @@ describe('app shell', () => {
     expect(section).toContain('Conceptsamenvatting');
     expect(section).toContain('Reviewstatus: Aangepast door gebruiker');
     expect(section).toContain('data-consult-summary-review-state="aangepast"');
+    expect(section).toContain('data-consult-review-layout="ready"');
+    expect(section).toContain('class="consult-review-layout__header"');
+    expect(section).toContain('aria-label="Consult review status"');
+    expect(section).toContain('<dt>Review</dt><dd>Aangepast door gebruiker</dd>');
+    expect(section).toContain('<dt>Bronnen</dt><dd>1</dd>');
+    expect(section).toContain('data-consult-review-panel="summary"');
+    expect(section).toContain('data-consult-review-panel="source"');
+    expect(section).toContain('data-consult-review-panel="actions"');
     expect(section).toContain('Consultsamenvatting bronparagraaf review');
     expect(section).toContain('data-consult-summary-source-review-state="gereviewd"');
     expect(section).toContain('Bronparagraaf review');
@@ -8803,6 +8811,15 @@ describe('app shell', () => {
     expect(section).not.toContain('kansberekening');
     expect(section).not.toContain('behandelkeuzeadvies');
     expect(section).not.toContain('kies behandeling');
+
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.consult-review-layout__body {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(240px, 0.76fr);');
+    expect(css).toContain('.consult-review-layout__panel[data-consult-review-panel="summary"]');
+    expect(mobileCss).toContain('.consult-review-layout__header,');
+    expect(mobileCss).toContain('.consult-review-layout__body {');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
   });
 
   it('rendert beeldmateriaal als lokale dossierpreview', () => {
