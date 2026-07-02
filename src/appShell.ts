@@ -11478,20 +11478,16 @@ function renderWelzijnScreen(state: AppShellState): string {
         </header>
         ${commandRouteSummary({
           eyebrow: 'Welzijnsroute',
-          title: 'Nieuwe registratie toevoegen zonder historie erboven',
+          title: 'Eerst check-in, daarna eventueel verdiepen',
           detail:
-            'De drie formulieren blijven samen beschikbaar, maar de geschiedenis blijft in de terugleesroute.',
+            'De check-in staat vooraan; symptoomlog en cyclusmeting blijven als aparte vervolgpanelen beschikbaar.',
           primary: { href: '#mental-check-in-form', label: 'Check-in' },
-          secondary: { href: '#symptom-log-form', label: 'Symptoom' },
+          secondary: { href: '#welzijn-log-symptom-panel', label: 'Symptoom' },
           status: `${cycleData.length} metingen`,
           ariaLabel: 'Welzijn vastleggen route-samenvatting',
           data: { 'wellbeing-route-summary': 'log' },
         })}
-        ${disclosure({
-          summary: 'Vastleggen: check-in, symptoom of cyclusmeting',
-          open: checkIns.length === 0 && logs.length === 0 && cycleData.length === 0,
-          body: `<h2>Mentale check-in</h2>${renderMentalCheckInForm(state.settings)}<h2 class="section-subheading">Symptoomlog toevoegen</h2>${renderSymptomLogForm(state.settings)}<h2 class="section-subheading">Cyclusmeting toevoegen</h2>${renderCycleDataForm()}`,
-        })}
+        ${renderWellbeingLogConsole(state)}
       </section>
         `,
   });
@@ -11625,6 +11621,44 @@ function renderWelzijnTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
+}
+
+function renderWellbeingLogConsole(state: AppShellState): string {
+  const checkInCount = state.mentalCheckIns?.length ?? 0;
+
+  return `
+    <section class="wellbeing-log-console" aria-label="Welzijn vastleggen" data-wellbeing-log-console="ready">
+      <header class="wellbeing-log-console__header">
+        <div>
+          <p class="kp-card__eyebrow">Hoofdinvoer</p>
+          <h3>Mentale check-in</h3>
+          <p>Leg eerst de korte check-in vast. Extra observaties open je pas wanneer je ze nodig hebt.</p>
+        </div>
+        <span>${checkInCount} check-in${checkInCount === 1 ? '' : 's'}</span>
+      </header>
+      <div class="wellbeing-log-console__primary" data-wellbeing-log-primary="check-in">
+        ${renderMentalCheckInForm(state.settings)}
+      </div>
+      <div class="wellbeing-log-console__continuations" aria-label="Extra welzijnsregistraties">
+        ${disclosure({
+          id: 'welzijn-log-symptom-panel',
+          summary: 'Symptoomlog toevoegen',
+          body: `<div class="wellbeing-log-panel" data-wellbeing-log-panel="symptom">
+            <p class="small-print">Gebruik dit alleen voor een concrete observatie op een datum.</p>
+            ${renderSymptomLogForm(state.settings)}
+          </div>`,
+        })}
+        ${disclosure({
+          id: 'welzijn-log-cycle-panel',
+          summary: 'Cyclusmeting toevoegen',
+          body: `<div class="wellbeing-log-panel" data-wellbeing-log-panel="cycle">
+            <p class="small-print">Registreer een feitelijke meting zonder interpretatie of advies.</p>
+            ${renderCycleDataForm()}
+          </div>`,
+        })}
+      </div>
+    </section>
+  `;
 }
 
 function renderWellbeingRouteVisibility(

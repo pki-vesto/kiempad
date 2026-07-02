@@ -169,6 +169,9 @@
 - **CFX-036 question toolbar/input polish — partial in G1369 / issue #2512.** Vragen Open now
   docks Print/PDF and delete actions in a scan-friendly section toolbar, and Beheer gives the
   primary question textarea its own compact input card.
+- **CFX-039 wellbeing log route unstack — partial in G1370 / issue #2514.** Welzijn Vastleggen now
+  shows mental check-in as the primary visible form and moves symptom/cycle entry into separate
+  continuation panels instead of one long stacked form block.
 
 ---
 
@@ -591,6 +594,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.
   Partial G1367/#2508: mental check-ins render as scan-friendly owner/mood cards instead of
   generic phase-list rows.
+  Partial G1370/#2514: the Vastleggen route now opens on one primary check-in form, with symptom
+  and cycle forms in separate continuation panels instead of a single stacked block.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.
