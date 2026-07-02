@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1332 — Daily Recommendations: feedbackstatus van tijdlijnsuggesties tonen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dagadvies staat nu als suggestiecontext op de fertility timeline, maar persoonlijke feedbackstatus zoals nuttig, niet passend, gedaan of bespreken met arts is daar nog niet scanbaar.
+- **User Impact:** Gebruikers kunnen later minder goed terugzien welke suggesties daadwerkelijk hielpen of nog besproken moeten worden.
+- **Desired Outcome:** Toon per tijdlijnsuggestie een compacte feedbackstatus en bronreden zonder trackingdata, diagnosecopy of behandelkeuzeadvies.
+- **User Value:** Gebruikers kunnen dagadvies in de tijdlijn beoordelen en vervolgacties herkennen zonder medische conclusies te trekken.
+- **Acceptance Criteria:** Timeline-suggesties tonen feedbackstatus wanneer beschikbaar; lege status blijft rustig en niet verplicht; filters kunnen feedbackstatus meenemen; tests dekken opslag/weergave, filtering en geen dosering, diagnose, kansberekening, trackingpayload of behandelkeuzeadvies.
+- **Affected Screens:** Traject timeline, Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, fertility timeline, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+
 ### G1331 — Premium Claude Design UI: Dossier zoekroute als compacte zoekconsole
 
 - **Epic:** Onboarding & Daily Use
@@ -5879,7 +5895,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** Recommendations, timeline, filters, tests
 - **ADR Needed:** no
 - **Score:** 99
-- **Status:** ☐ open
+- **Status:** ☑ done
 
 ### G491 — central session renewal zonder plaintext fallback
 

@@ -2360,6 +2360,7 @@ function applyTimelineFilterFromForm(
     eigenaar: parseTimelineEigenaar(data.get('timelineEigenaar')),
     bronSoort: parseTimelineBronSoort(data.get('timelineBronSoort')),
     bron: optionalString(data.get('timelineBron')),
+    aanbevelingenZichtbaar: data.get('timelineAanbevelingenZichtbaar') !== 'nee',
   };
   render(root, state);
 }

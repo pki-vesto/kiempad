@@ -186,6 +186,21 @@ describe('fertility timeline', () => {
         expect.objectContaining({ titel: 'Consultvraag voorbereiden', soort: 'aanbeveling' }),
       ]),
     );
+    expect(timeline.items.find((item) => item.id === 'aanbeveling-vrouw-1')).toMatchObject({
+      datum: '2026-06-24',
+      eigenaar: 'vrouw',
+      label: 'Suggestie',
+      context:
+        'Dagelijkse suggestie voor vrouw · status concept · gebaseerd op lokale contextregels.',
+      bronverwijzingen: [
+        expect.objectContaining({
+          soort: 'aanbeveling',
+          reviewStatus: 'concept',
+          recordId: 'vrouw-1',
+          label: 'Suggestiebron',
+        }),
+      ],
+    });
     expect(timeline.items.find((item) => item.id === 'onderzoek-doc-embryo')).toMatchObject({
       context:
         'Categorie Embryokwaliteit · documenttype Embryorapport · tijdlijn concept · confidence middel (60%)',
@@ -509,6 +524,17 @@ describe('fertility timeline', () => {
     expect(
       filterFertilityTimeline(timeline, { eigenaar: 'vrouw' }).items.map((item) => item.id),
     ).toEqual(['aanbeveling-vrouw-1']);
+    expect(
+      filterFertilityTimeline(timeline, { aanbevelingenZichtbaar: false }).items.map(
+        (item) => item.id,
+      ),
+    ).not.toContain('aanbeveling-vrouw-1');
+    expect(
+      filterFertilityTimeline(timeline, {
+        soort: 'aanbeveling',
+        aanbevelingenZichtbaar: false,
+      }).items,
+    ).toEqual([]);
   });
 
   it('maakt een complete Markdown-trajectexport voor consultvoorbereiding', () => {

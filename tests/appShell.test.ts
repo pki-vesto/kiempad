@@ -4253,12 +4253,15 @@ describe('app shell', () => {
     expect(html).toContain('Alle brontypes');
     expect(html).toContain('Lokale OCR');
     expect(html).toContain('name="timelineBron" value="echo"');
+    expect(html).toContain('name="timelineAanbevelingenZichtbaar"');
+    expect(html).toContain('data-timeline-recommendation-visibility="ready"');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
     expect(timelineReader).toContain('data-fertility-timeline-reader="ready"');
     expect(timelineReader).toContain('Kies eerst je tijdlijnlaag');
     expect(timelineReader).toContain('data-fertility-timeline-lane="events"');
     expect(timelineReader).toContain('data-fertility-timeline-lane="milestones"');
     expect(timelineReader).toContain('data-fertility-timeline-lane="context"');
+    expect(timelineReader).toContain('data-fertility-timeline-lane="suggestions"');
     expect(timelineReader).toContain('data-fertility-timeline-lane="export"');
     expect(timelineReader).toContain('href="#fertility-timeline-items"');
     expect(timelineReader).toContain('href="#fertility-timeline-mijlpalen"');
@@ -4267,6 +4270,8 @@ describe('app shell', () => {
     expect(timelineReader).toContain('Gebeurtenissen');
     expect(timelineReader).toContain('Mijlpalen');
     expect(timelineReader).toContain('Context');
+    expect(timelineReader).toContain('Suggesties');
+    expect(timelineReader).toContain('Dagadvies als filterbare tijdlijncontext');
     expect(timelineReader).toContain('Consult');
     expect(timelineReader).toContain('1 item');
     expect(timelineReader).toContain('Export klaar');
@@ -4874,6 +4879,8 @@ describe('app shell', () => {
     expect(timelineItems).toContain('data-timeline-item-kind="embryo"');
     expect(timelineItems).toContain('data-timeline-item-kind="consult"');
     expect(timelineItems).toContain('data-timeline-item-kind="research"');
+    expect(timelineItems).toContain('data-timeline-item-kind="aanbeveling"');
+    expect(timelineItems).toContain('Status: conceptreview');
     expect(timelineItems).toContain('Labuitslag hormonen');
     expect(timelineItems).toContain('Labrapport');
     expect(timelineItems).toContain('Embryo A');
@@ -4883,6 +4890,9 @@ describe('app shell', () => {
     expect(timelineItems).toContain('IVF ICSI embryo trendreview');
     expect(timelineItems).toContain('https://pubmed.ncbi.nlm.nih.gov/123456/');
     expect(timelineItems).toContain('Behandelvoorbereiding');
+    expect(timelineItems).toContain('Dagelijkse suggestie voor samen · status concept');
+    expect(timelineItems).toContain('Suggestiebron:');
+    expect(timelineItems).toContain('Review: concept');
     expect(timelineItems).toContain('Dossierrecord: Labuitslag hormonen');
     expect(timelineItems).toContain('Consultverslag: Intake consult');
     expect(timelineItems).toContain('Kennisitem: IVF ICSI embryo trendreview');

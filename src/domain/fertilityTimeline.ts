@@ -144,6 +144,7 @@ export type FertilityTimelineFilter = {
   eigenaar?: DailyRecommendationOwner;
   bronSoort?: FertilityTimelineBronverwijzing['soort'];
   bron?: string;
+  aanbevelingenZichtbaar?: boolean;
 };
 
 const FERTILITY_TIMELINE_WAARSCHUWING =
@@ -458,7 +459,7 @@ export function bouwFertilityTimeline(input: {
         titel: item.titel,
         label: 'Suggestie',
         detail: item.detail,
-        context: `Dagelijkse suggestie voor ${item.owner}; gebaseerd op lokale contextregels.`,
+        context: `Dagelijkse suggestie voor ${item.owner} · status concept · gebaseerd op lokale contextregels.`,
         bron: item.bron,
         bronverwijzingen: [
           maakBronverwijzing(
@@ -686,6 +687,7 @@ export function filterFertilityTimeline(
   const bronFilter = filter.bron?.trim().toLocaleLowerCase('nl-NL');
   return maakFertilityTimelineResultaat(
     timeline.items.filter((item) => {
+      if (filter.aanbevelingenZichtbaar === false && item.soort === 'aanbeveling') return false;
       if (filter.soort && item.soort !== filter.soort) return false;
       if (filter.datumVanaf && item.datum.slice(0, 10) < filter.datumVanaf) return false;
       if (filter.datumTot && item.datum.slice(0, 10) > filter.datumTot) return false;
