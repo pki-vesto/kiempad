@@ -13733,10 +13733,18 @@ a.action-card:active {
 }
 
 .dossier-upload-group .check-row,
+.dossier-upload-group .field-hint,
 .dossier-upload-group .linked-note,
 .dossier-upload-group label:has(textarea),
 .dossier-subform-group label:has(textarea) {
   grid-column: 1 / -1;
+}
+
+.dossier-upload-group .field-hint {
+  margin: -2px 0 2px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
 }
 
 #dossier-concept-preview {

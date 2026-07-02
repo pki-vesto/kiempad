@@ -162,7 +162,10 @@ import type {
   SymptomLog,
   Traject,
 } from './domain/types';
-import { DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE } from './domain/uploadValidation';
+import {
+  DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE,
+  describeDossierUploadLimits,
+} from './domain/uploadValidation';
 import {
   beantwoordeVragenPerAfspraak,
   type GegenereerdeVragenlijst,
@@ -3349,6 +3352,9 @@ function renderDossierScreen(state: AppShellState): string {
             Bestanden
             <input name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required />
           </label>
+          <p class="field-hint" data-dossier-upload-size-guidance="ready">
+            ${describeDossierUploadLimits()} Bij een te groot pakket kun je bestanden verwijderen en opnieuw uploaden; Kiempad toont alleen type en grootte in foutmeldingen.
+          </p>
           <label class="check-row">
             <input name="lokaleOcr" type="checkbox" value="ja" />
             Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
