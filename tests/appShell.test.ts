@@ -36825,6 +36825,13 @@ describe('app shell', () => {
     expect(html).toContain('€');
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eigen risico');
+    expect(html).toContain('class="cost-item-meta"');
+    expect(html).toContain(
+      'class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="eigen_risico"',
+    );
+    expect(html).toContain(
+      'class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="ja"',
+    );
     expect(html).toContain('Werk kostenpost bij');
     expect(html).toContain('data-kosten-id="cost-1"');
     expect(html).toContain('aria-label="Verwijder kostenpost: Apotheekfactuur"');
