@@ -11969,6 +11969,64 @@ a.action-card:active {
   grid-column: 1 / -1;
 }
 
+#dossier-concept-preview {
+  display: grid;
+  gap: 8px;
+}
+
+#dossier-concept-preview p {
+  margin: 0;
+}
+
+#dossier-concept-preview [data-dossier-upload-validation-summary="ready"] {
+  color: var(--accent-strong);
+  font-weight: 750;
+}
+
+#dossier-concept-preview [data-dossier-upload-validation-summary="blocked"] {
+  color: var(--danger);
+  font-weight: 750;
+}
+
+#dossier-concept-preview [data-dossier-upload-validation] {
+  display: flex;
+  gap: 8px;
+  align-items: start;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow-wrap: anywhere;
+}
+
+#dossier-concept-preview [data-dossier-upload-validation="accepted"] {
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--border));
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+}
+
+#dossier-concept-preview [data-dossier-upload-validation="accepted"]::before {
+  content: "Toegestaan";
+  flex: 0 0 auto;
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+#dossier-concept-preview [data-dossier-upload-validation="rejected"] {
+  border-color: color-mix(in srgb, var(--danger) 34%, var(--border));
+  background: color-mix(in srgb, var(--danger) 7%, var(--surface));
+}
+
+#dossier-concept-preview [data-dossier-upload-validation="rejected"]::before {
+  content: "Geweigerd";
+  flex: 0 0 auto;
+  color: var(--danger);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
 .dossier-upload-group[data-dossier-upload-group="document-basis"] label:nth-of-type(5),
 .dossier-upload-group[data-dossier-upload-group="embryo-labcontext"],
 .dossier-subform-group[data-consult-upload-group="consult-context"],

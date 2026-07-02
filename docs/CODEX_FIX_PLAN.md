@@ -123,6 +123,9 @@
 - **CFX-034 agenda date blocks — partial in G1353 / issue #2480.** Agenda upcoming and past
   appointments now render as date blocks with appointment cards, type-colored rails, expected/past
   status chips, and question/reminder context.
+- **CFX-047 dossier upload validation — partial in G1354 / issue #2482.** Dossier document upload
+  now uses a shared file allowlist, per-file and batch size caps, inline preview rejection, and
+  submit blocking before file contents are read.
 
 ---
 
@@ -562,6 +565,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `src/domain/settingsStore.ts`. Accept: persisted, encrypted, defaulted. **P0 · M**
 - **CFX-047** — Upload validation: file type/size allowlist + inline rejection + memory cap. Files:
   `src/main.ts` dossier-upload handler. Accept: unsupported/oversized files rejected calmly. **P1 · M**
+  Partial G1354/#2482: dossier document upload validates type/extension, per-file size, and batch
+  memory cap before local file reading.
 - **CFX-048** — Central-fetch retry/queued state with clear UI (beyond the error alert). **P2 · L**
 - **CFX-049** — Backup reminder as a first-class card (from `backupReminder.ts`). **P3 · S**
 
