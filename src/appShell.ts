@@ -15473,6 +15473,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
     data: {
       'notification-split-workspace': 'ready',
       'notification-compact-workspace': 'route-first',
+      'notification-single-workspace': 'ready',
     },
     rail: renderNotificationTaskRoutes({
       reminderCount: komende.length,
@@ -15482,6 +15483,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
       lockscreenDetails: state.settings.toonNotificatieDetailsOpVergrendelscherm,
       activeRoute: activeNotificationRoute,
     }),
+    context: notificationWorkbench,
     main: `
       <section id="herinneringen-route-status" class="notification-route-section" aria-labelledby="herinneringen-route-status-title" data-notification-route="status"${renderNotificationRouteVisibility(activeNotificationRoute, 'status')}>
         <header class="notification-route-section__header">
@@ -15648,7 +15650,6 @@ function renderHerinneringenScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderNotificationFocusShell({
-        workbench: notificationWorkbench,
         workspace: notificationWorkspace,
       }),
     ],
@@ -15656,7 +15657,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
   );
 }
 
-function renderNotificationFocusShell(input: { workbench: string; workspace: string }): string {
+function renderNotificationFocusShell(input: { workspace: string }): string {
   return `
     <section class="notification-focus-shell" aria-labelledby="notification-focus-shell-title" data-notification-focus-shell="ready">
       <header class="notification-focus-shell__header">
@@ -15665,9 +15666,6 @@ function renderNotificationFocusShell(input: { workbench: string; workspace: str
         <p>Runtime-status, lockscreenprivacy, planning en komende meldingen blijven in één meldingsruimte zonder details op het vergrendelscherm te lekken.</p>
       </header>
       <div class="notification-focus-shell__body" data-notification-console="ready">
-        <div class="notification-focus-shell__workbench" data-notification-focus-region="workbench" data-notification-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="notification-focus-shell__workspace" data-notification-focus-region="workspace" data-notification-console-region="workspace">
           ${input.workspace}
         </div>

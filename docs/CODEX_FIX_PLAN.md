@@ -244,6 +244,10 @@
   the finance management workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact finance context while
   mobile remains stacked.
+- **CFX-017 notification single workspace — partial in G1392 / issue #2558.** Herinneringen no
+  longer renders the system workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active route, and compact notification context
+  while mobile remains stacked.
 
 ---
 
@@ -601,7 +605,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   adopt in Herinneringen + Gedeelde modus. Accept: single implementation, keyboard-operable.
   **P1 · M** Partial G1360/#2494: Herinneringen uses a route-first workspace without a fixed third
   context column. Partial G1378/#2530: Gedeelde modus and Herinneringen lockscreenprivacy now use
-  the shared switch presentation with `role="switch"` and `aria-checked`.
+  the shared switch presentation with `role="switch"` and `aria-checked`. Partial G1392/#2558:
+  Herinneringen folds the system workbench into the same split-view as route context, so desktop
+  opens as one rail/main/context workspace instead of a separate focus-region plus nested route
+  workspace.
 - **CFX-016** — Status-badge component (`badge({label,tone})`) with the J68 color map; adopt in
   Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M** Partial G1379/#2532:
   Kosten vergoedingstatus badges now use the shared `statusBadge()` helper with success/warning/
