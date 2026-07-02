@@ -1798,6 +1798,27 @@ describe('app shell', () => {
     );
   });
 
+  it('plaatst secundaire mobiele routes achter Meer zodat de bottom-nav geen 13 tabs tegelijk toont', () => {
+    const html = renderAppShell('kosten');
+
+    const primaryTabCount = (html.match(/data-mobile-nav-tier="primary"/g) ?? []).length;
+    const moreSheetRouteCount = (html.match(/data-mobile-nav-tier="mobile-more-sheet"/g) ?? [])
+      .length;
+
+    expect(primaryTabCount).toBe(8);
+    expect(moreSheetRouteCount).toBe(10);
+    expect(html).toContain('data-mobile-more-nav="ready"');
+    expect(html).toContain('data-mobile-more-active="true" open');
+    expect(html).toContain('<span class="nav-item__label">Meer</span>');
+    expect(html).toContain('<p class="primary-nav__more-title">Inzicht</p>');
+    expect(html).toContain('<p class="primary-nav__more-title">Beheer</p>');
+    expect(html).toContain('<p class="primary-nav__more-title">Privacy</p>');
+    expect(html).toContain('data-mobile-settings-entry="ready"');
+    expect(html).toContain(
+      'href="#kosten" data-mobile-nav-tier="mobile-more-sheet" aria-current="page"',
+    );
+  });
+
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
     const dossierHtml = renderAppShell('dossier');
     const kennisHtml = renderAppShell('kennis');
@@ -37781,6 +37802,7 @@ describe('app shell', () => {
 
   it('bewaakt mobiele commandroute spacing tegen bottom-nav overlap', () => {
     const css = readFileSync('src/styles.css', 'utf8');
+    const tabletCss = extractCssMediaBlock(css, 'min-width: 761px) and (max-width: 899px');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
 
     expect(css).toContain(
@@ -37793,6 +37815,25 @@ describe('app shell', () => {
     expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);');
     expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-margin-top: 96px;');
+    expect(mobileCss).toContain('.primary-nav a[data-mobile-nav-tier="mobile-more-sheet"] {');
+    expect(mobileCss).toContain('.primary-nav__more {');
+    expect(mobileCss).toContain('.primary-nav__more-sheet {');
+    expect(mobileCss).toContain('bottom: calc(68px + env(safe-area-inset-bottom, 0px));');
+    expect(mobileCss).toContain(
+      '.primary-nav .primary-nav__more-sheet a[data-mobile-nav-tier="mobile-more-sheet"]',
+    );
+    expect(mobileCss).toContain(
+      '.primary-nav__more[data-mobile-more-active="true"] .primary-nav__more-summary',
+    );
+    expect(mobileCss).toContain('.primary-nav__more-sheet a[aria-current="page"]');
+    expect(tabletCss).toContain('.primary-nav a[data-mobile-nav-tier="mobile-more-sheet"] {');
+    expect(tabletCss).toContain('.primary-nav__more {');
+    expect(tabletCss).toContain('.primary-nav__more-sheet {');
+    expect(tabletCss).toContain('top: 92px;');
+    expect(tabletCss).toContain(
+      '.primary-nav .primary-nav__more-sheet a[data-mobile-nav-tier="mobile-more-sheet"]',
+    );
+    expect(tabletCss).toContain('.primary-nav__more-sheet a[aria-current="page"]');
     expect(mobileCss).toContain('.command-route-section__header,');
     expect(mobileCss).toContain('.dossier-route-section__header,');
     expect(mobileCss).toContain('.knowledge-route-section__header,');

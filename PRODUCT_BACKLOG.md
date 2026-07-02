@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1121 |
+| ☑ klaar | 1122 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1320** |
+| **Totaal** | **1321** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1483,12 +1483,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1318 | Premium Claude Design UI: Start mobiel als compacte route-ingang | P1 | F5 | ☑ |
 | G1319 | Premium Claude Design UI: Dagadvies mobiel als compacte adviesconsole | P1 | F5 | ☑ |
 | G1320 | CFX-030: PWA theme-color naar Claude Design teal | P0 | F5 | ☑ |
+| G1321 | CFX-010/CFX-081: Mobiele bottom-nav met Meer-sheet | P1 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1320** (id's G001 t/m G1320, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1321** (id's G001 t/m G1321, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

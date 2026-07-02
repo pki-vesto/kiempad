@@ -27,6 +27,10 @@
 - **G1320 PWA theme-color teal:** browser- en installatiechrome gebruiken nu het
   Claude Design teal (`#2c6e63`) met een donkere variant voor dark mode en een
   manifestachtergrond die bij de Kiempad page background past.
+- **G1321 mobiele/tablet Meer-navigatie:** de compacte navigatie toont niet langer
+  alle 13 hoofdschermen tegelijk, maar 8 primaire routes plus een Meer-sheet met
+  Inzicht, Beheer, Privacy en Instellingen; secundaire actieve routes blijven
+  zichtbaar gemarkeerd.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

@@ -14,6 +14,10 @@
 - **CFX-030 — done in G1320 / issue #2415.** `index.html` now defines Claude Design teal
   `theme-color` for light mode, a dark-mode variant, and no longer contains the old sage
   `#7a9471`; `manifest.webmanifest` now uses teal `theme_color` and the Kiempad page background.
+- **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
+  primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
+  reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
+  `Meer` trigger active.
 
 ---
 
@@ -381,7 +385,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
 
 ### Navigation & mobile (D/L)
-- **CFX-010** — Mobile "Meer" sheet: bottom-nav shows 8 primary + "Meer" (opens sheet with Beheer +
+- **CFX-010** — ✅ Done in G1321 / issue #2417. Mobile "Meer" sheet: bottom-nav shows 8 primary + "Meer" (opens sheet with Beheer +
   Privacy groups + Instellingen). Files: `src/appShell.ts`, `src/styles.css`, `src/main.ts`.
   Accept: all 13 routes reachable on mobile; active state reflected. **P1 · L**
 - **CFX-034b** — Nav grouping (D34): Primair(8)/Beheer(3)/Privacy(2) with eyebrow labels + hairline
