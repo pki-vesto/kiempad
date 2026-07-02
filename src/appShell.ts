@@ -10323,55 +10323,104 @@ function renderImagingFilterForm(filter: ImagingRepositoryFilter, state: AppShel
       ),
     )
     .join('');
+  const activeFilters = getImagingFilterChips(filter, state);
+  const activeFilterCount = activeFilters.length;
 
   return `
-    <form id="imaging-filter-form" class="data-form compact-form">
-      <label>
-        Type beeld
-        <select name="imagingSoort">
-          <option value="">Alle typen</option>
-          ${(
-            [
-              ['echo', 'Echo'],
-              ['foto', 'Foto'],
-              ['scan', 'Scan'],
-              ['embryo_afbeelding', 'Embryo-afbeelding'],
-              ['overig_beeld', 'Overig beeld'],
-            ] satisfies Array<[NonNullable<ImagingRepositoryFilter['soort']>, string]>
-          )
-            .map(([value, label]) => renderOption(value, label, filter.soort))
-            .join('')}
-        </select>
-      </label>
-      <label>
-        Vanaf datum
-        <input name="imagingDatumVanaf" type="date" value="${escapeAttribute(filter.datumVanaf ?? '')}" />
-      </label>
-      <label>
-        Tot datum
-        <input name="imagingDatumTot" type="date" value="${escapeAttribute(filter.datumTot ?? '')}" />
-      </label>
-      <label>
-        Traject
-        <select name="imagingTrajectId">
-          <option value="">Alle trajecten</option>
-          ${trajectOpties}
-        </select>
-      </label>
-      <label>
-        Afspraak
-        <select name="imagingAfspraakId">
-          <option value="">Alle afspraken</option>
-          ${afspraakOpties}
-        </select>
-      </label>
-      <label>
-        Embryo
-        <input name="imagingEmbryoLabel" autocomplete="off" value="${escapeAttribute(filter.embryoLabel ?? '')}" />
-      </label>
-      <button type="submit">Filter beelden</button>
+    <form id="imaging-filter-form" class="data-form compact-form imaging-filter-kit" data-imaging-filter-kit="ready" data-imaging-filter-state="${activeFilterCount > 0 ? 'active' : 'idle'}">
+      <header class="imaging-filter-kit__header">
+        <div>
+          <p class="kp-card__eyebrow">Beeldfilter</p>
+          <h3>Filter zonder beeldlijst te openen</h3>
+          <p>Kies type, datum, traject, afspraak of embryo. Kiempad filtert alleen metadata en toont geen beeldpayload.</p>
+        </div>
+        <span>${activeFilterCount > 0 ? `${activeFilterCount} actief` : 'Alles zichtbaar'}</span>
+      </header>
+      <div class="imaging-filter-kit__chips" aria-label="Actieve beeldfilters">
+        ${
+          activeFilters.length > 0
+            ? activeFilters
+                .map(
+                  (chip) =>
+                    `<span class="imaging-filter-chip" data-imaging-filter-chip="${escapeAttribute(chip.kind)}">${escapeHtml(chip.label)}</span>`,
+                )
+                .join('')
+            : '<span class="imaging-filter-chip imaging-filter-chip--empty" data-imaging-filter-chip="none">Geen filter actief</span>'
+        }
+      </div>
+      <div class="imaging-filter-kit__grid">
+        <label>
+          Type beeld
+          <select name="imagingSoort">
+            <option value="">Alle typen</option>
+            ${(
+              [
+                ['echo', 'Echo'],
+                ['foto', 'Foto'],
+                ['scan', 'Scan'],
+                ['embryo_afbeelding', 'Embryo-afbeelding'],
+                ['overig_beeld', 'Overig beeld'],
+              ] satisfies Array<[NonNullable<ImagingRepositoryFilter['soort']>, string]>
+            )
+              .map(([value, label]) => renderOption(value, label, filter.soort))
+              .join('')}
+          </select>
+        </label>
+        <label>
+          Vanaf datum
+          <input name="imagingDatumVanaf" type="date" value="${escapeAttribute(filter.datumVanaf ?? '')}" />
+        </label>
+        <label>
+          Tot datum
+          <input name="imagingDatumTot" type="date" value="${escapeAttribute(filter.datumTot ?? '')}" />
+        </label>
+        <label>
+          Traject
+          <select name="imagingTrajectId">
+            <option value="">Alle trajecten</option>
+            ${trajectOpties}
+          </select>
+        </label>
+        <label>
+          Afspraak
+          <select name="imagingAfspraakId">
+            <option value="">Alle afspraken</option>
+            ${afspraakOpties}
+          </select>
+        </label>
+        <label>
+          Embryo
+          <input name="imagingEmbryoLabel" autocomplete="off" value="${escapeAttribute(filter.embryoLabel ?? '')}" />
+        </label>
+      </div>
+      <div class="imaging-filter-kit__actions">
+        <button type="submit">Filter beelden</button>
+        <a class="secondary-button" href="#dossier?route=imaging">Wis filters</a>
+      </div>
     </form>
   `;
+}
+
+function getImagingFilterChips(
+  filter: ImagingRepositoryFilter,
+  state: AppShellState,
+): Array<{ kind: string; label: string }> {
+  const chips: Array<{ kind: string; label: string }> = [];
+  if (filter.soort) chips.push({ kind: 'type', label: `Type: ${imagingSoortLabel(filter.soort)}` });
+  if (filter.datumVanaf) chips.push({ kind: 'from', label: `Vanaf: ${filter.datumVanaf}` });
+  if (filter.datumTot) chips.push({ kind: 'to', label: `Tot: ${filter.datumTot}` });
+  if (filter.trajectId) {
+    const traject = state.trajecten.find(({ traject }) => traject.id === filter.trajectId)?.traject;
+    chips.push({ kind: 'traject', label: `Traject: ${traject?.naam ?? filter.trajectId}` });
+  }
+  if (filter.afspraakId) {
+    const afspraak = state.afspraken.find(
+      ({ afspraak }) => afspraak.id === filter.afspraakId,
+    )?.afspraak;
+    chips.push({ kind: 'afspraak', label: `Afspraak: ${afspraak?.titel ?? filter.afspraakId}` });
+  }
+  if (filter.embryoLabel) chips.push({ kind: 'embryo', label: `Embryo: ${filter.embryoLabel}` });
+  return chips;
 }
 
 function renderEchoAfspraakClassificaties(

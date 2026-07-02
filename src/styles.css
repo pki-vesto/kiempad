@@ -10464,6 +10464,98 @@ a.action-card:active {
   min-width: 0;
 }
 
+.imaging-filter-kit {
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 52%),
+    var(--surface);
+}
+
+.imaging-filter-kit__header {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.imaging-filter-kit__header h3,
+.imaging-filter-kit__header p {
+  margin: 0;
+}
+
+.imaging-filter-kit__header h3 {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.imaging-filter-kit__header p:last-child {
+  max-width: 62ch;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+.imaging-filter-kit__header > span {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--accent-strong);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.imaging-filter-kit__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+}
+
+.imaging-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 750;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.imaging-filter-chip--empty {
+  border-style: dashed;
+  background: var(--surface-subtle);
+  color: var(--text-muted);
+}
+
+.imaging-filter-kit__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.imaging-filter-kit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.imaging-filter-kit__actions > button,
+.imaging-filter-kit__actions > a {
+  min-height: 40px;
+}
+
 .section-stack[aria-label="Dossier beheren"] > * {
   box-sizing: border-box;
   width: min(100%, calc(100vw - 48px));
@@ -10692,6 +10784,22 @@ a.action-card:active {
 
   .dossier-section-index__links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .imaging-filter-kit__header {
+    display: grid;
+  }
+
+  .imaging-filter-kit__header > span {
+    width: fit-content;
+  }
+
+  .imaging-filter-kit__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .imaging-filter-kit__actions {
+    display: grid;
   }
 
   .imaging-repository-card {
