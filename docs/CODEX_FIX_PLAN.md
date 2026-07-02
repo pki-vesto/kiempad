@@ -62,6 +62,10 @@
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
   AI settings while technical IDs/data attributes remain stable.
+- **Compact Start route — done in G1334 / issue #2442.** The default Start screen now renders as a
+  compact route-first launchpad with personal header, cockpit, workspace cards, and optional setup
+  panel only. The full Today console and Daily Advice console remain available as direct subroutes,
+  while the old stacked focus-shell/dashboard/flowrail layer is removed from the default Start view.
 
 ---
 

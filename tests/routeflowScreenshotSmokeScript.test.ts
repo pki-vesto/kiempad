@@ -9,22 +9,15 @@ describe('routeflow screenshot smoke script', () => {
     expect(ciWorkflow).toContain('Routeflow screenshot smoke');
     expect(ciWorkflow).toContain('npm run smoke:routeflows');
     expect(routeflowScreenshotSmokeScript).toContain("rootSelector: '.content'");
-    expect(routeflowScreenshotSmokeScript).toContain('startCommandCenter: true');
-    expect(routeflowScreenshotSmokeScript).toContain('startConsole: true');
-    expect(routeflowScreenshotSmokeScript).toContain(
-      'Start console valt terug naar een hoge eerste laag',
-    );
+    expect(routeflowScreenshotSmokeScript).toContain("expectedText: 'Niet alles op één pagina'");
+    expect(routeflowScreenshotSmokeScript).not.toContain('startCommandCenter: true');
+    expect(routeflowScreenshotSmokeScript).not.toContain('startConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain('[data-compact-workspace-deck="ready"]');
     expect(routeflowScreenshotSmokeScript).toContain('appFrame');
     expect(routeflowScreenshotSmokeScript).toContain('desktop app-workspace is niet begrensd');
     expect(routeflowScreenshotSmokeScript).toContain('bodyScrolls');
-    expect(routeflowScreenshotSmokeScript).toContain('startLaunchpad: true');
-    expect(routeflowScreenshotSmokeScript).toContain(
-      'start-launchpad staat niet in compacte dashboardlayout',
-    );
-    expect(routeflowScreenshotSmokeScript).toContain(
-      'Start command-center staat niet in drie begrensde werkvlakken',
-    );
+    expect(routeflowScreenshotSmokeScript).toContain('[data-start-launchpad="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'daily-advice-console'");
     expect(routeflowScreenshotSmokeScript).toContain('workflowsOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dailyMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('dailyAdviceConsole: true');
@@ -88,28 +81,15 @@ describe('routeflow screenshot smoke script', () => {
       '[data-start-cockpit-route="imaging"]',
       '[data-start-cockpit-route="advice"]',
       '[data-start-launchpad="ready"]',
-      '[data-start-launchpad-region="header"]',
-      '[data-start-launchpad-region="cockpit"]',
-      '[data-start-launchpad-region="deck"]',
       '[data-workspace-strip="ready"]',
       '[data-start-workspace-deck="ready"]',
       '[data-start-workspace-card="today"]',
       '[data-start-workspace-card="record"]',
       '[data-start-workspace-card="insight"]',
       '[data-start-workspace-card="control"]',
-      '[data-start-focus-shell="ready"]',
       '[data-knowledge-console="ready"]',
       '[data-knowledge-console-region="workbench"]',
       '[data-knowledge-console-region="workspace"]',
-      '[data-start-focus-region="workflows"]',
-      '[data-start-focus-region="scan"]',
-      '[data-start-focus-region="daily"]',
-      '[data-start-workbench-flow="uploads"]',
-      '[data-start-workbench-flow="timeline"]',
-      '[data-start-workbench-flow="embryo"]',
-      '[data-start-workbench-flow="recommendations"]',
-      '[data-start-workbench-flow="research"]',
-      '[data-start-workbench-flow="secure-sync"]',
       '[data-daily-advice-action-planner="ready"]',
       '[data-daily-advice-action-lane="lifestyle"]',
       '[data-daily-advice-action-lane="nutrition"]',
@@ -204,7 +184,6 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('\'[data-workspace-map="ready"]\'');
     expect(routeflowScreenshotSmokeScript).toContain("'.workspace-strip__description'");
     expect(routeflowScreenshotSmokeScript).toContain("'.workspace-strip__quick'");
-    expect(routeflowScreenshotSmokeScript).toContain("'.start-focus-shell__header p:last-child'");
     expect(routeflowScreenshotSmokeScript).toContain(
       "'.knowledge-focus-shell__header p:last-child'",
     );
@@ -239,10 +218,6 @@ describe('routeflow screenshot smoke script', () => {
       '\'[data-hub-detail-panel="research-summaries"] .hub-detail-disclosure__summary small\'',
     );
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
-    expect(routeflowScreenshotSmokeScript).toContain(
-      "maxOpenDetails: { selector: '.start-flow-panel[open]', max: 1 }",
-    );
-    expect(routeflowScreenshotSmokeScript).toContain('te veel open routeflow-panelen');
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
     expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
