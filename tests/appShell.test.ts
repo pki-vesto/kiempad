@@ -2067,6 +2067,8 @@ describe('app shell', () => {
     expect(css).toContain('.backup-export-preview {');
     expect(css).toContain('[data-backup-reminder-state="missing"]');
     expect(css).toContain('.backup-export-preview__grid {');
+    expect(css).toContain('.backup-export-preview__actions {');
+    expect(css).toContain('.backup-export-preview__actions button {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.management-workbench :where(.stat-row) {');
     expect(css).toContain('scroll-snap-type: x proximity;');
@@ -37523,6 +37525,14 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-export-preview-card="sync"');
     expect(html).toContain('Bekijk wat je downloadt voordat je start');
     expect(html).toContain('Preview toont geen herstelzin, sleuteldata, recordinhoud');
+    expect(html).toContain('data-backup-export-actions="backup"');
+    expect(html).toContain('data-backup-export-actions="sync"');
+    expect(html).toContain('id="copy-backup-summary"');
+    expect(html).toContain('data-backup-copy-kind="backup"');
+    expect(html).toContain('id="copy-sync-summary"');
+    expect(html).toContain('data-backup-copy-kind="sync"');
+    expect(html).toContain('Kopieer samenvatting');
+    expect(html).toContain('Toelichting openen');
     expect(html).toContain('Versleutelde back-up export openen');
     expect(html).toContain('aria-label="Back-up import route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="import"');
@@ -37595,6 +37605,10 @@ describe('app shell', () => {
     expect(legacyZone).toContain('data-backup-export-state="legacy-encrypted-vault"');
     expect(legacyZone).toContain('id="export-sync"');
     expect(legacyZone).toContain('data-sync-export-state="legacy-sync-package"');
+    expect(legacyZone).toContain('id="copy-backup-summary"');
+    expect(legacyZone).toContain('data-backup-copy-kind="backup"');
+    expect(legacyZone).toContain('id="copy-sync-summary"');
+    expect(legacyZone).toContain('data-backup-copy-kind="sync"');
     expect(legacyZone).toContain('id="import-backup-form"');
     expect(legacyZone).toContain('data-import-privacy-state="legacy-encrypted-backup"');
     expect(legacyZone).toContain('id="import-sync-form"');
@@ -37620,6 +37634,8 @@ describe('app shell', () => {
 
     expect(centralZone).toContain('data-backup-export-state="central-encrypted-metadata"');
     expect(centralZone).toContain('data-sync-export-state="central-record-package"');
+    expect(centralZone).toContain('data-backup-copy-kind="backup"');
+    expect(centralZone).toContain('data-backup-copy-kind="sync"');
     expect(centralZone).toContain('data-import-privacy-state="central-encrypted-backup"');
     expect(centralZone).toContain('data-import-privacy-state="central-record-package"');
     expect(centralZone).toContain('encrypted records en centrale datasetmetadata');

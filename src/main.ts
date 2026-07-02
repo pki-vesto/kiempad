@@ -542,6 +542,12 @@ function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
     void exportSync(root, state);
   });
 
+  root.querySelectorAll<HTMLButtonElement>('[data-backup-copy-kind]').forEach((button) => {
+    button.addEventListener('click', () => {
+      void copyBackupSummary(button, root, state);
+    });
+  });
+
   root.querySelector('#import-backup-form')?.addEventListener('submit', (event) => {
     event.preventDefault();
     void importBackupFromForm(event.currentTarget, root, state);
@@ -1219,6 +1225,42 @@ async function exportSync(root: HTMLElement, state: RuntimeState): Promise<void>
     });
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Syncpakket maken is mislukt.';
+  }
+  render(root, state);
+}
+
+async function copyBackupSummary(
+  button: HTMLButtonElement,
+  root: HTMLElement,
+  state: RuntimeState,
+): Promise<void> {
+  const copy = button.dataset.backupCopyText ?? '';
+  const kind = button.dataset.backupCopyKind === 'sync' ? 'recordpakket' : 'back-up';
+  if (!copy.trim()) {
+    state.backupError = 'Exportsamenvatting kopiëren is mislukt.';
+    render(root, state);
+    return;
+  }
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(copy);
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = copy;
+      textarea.setAttribute('readonly', 'true');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.append(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+    state.backupStatus = `Veilige samenvatting voor ${kind} gekopieerd.`;
+    state.backupError = undefined;
+  } catch (error: unknown) {
+    state.backupError =
+      error instanceof Error ? error.message : 'Exportsamenvatting kopiëren is mislukt.';
   }
   render(root, state);
 }
