@@ -1572,7 +1572,7 @@ function renderLogboekScreen(state: AppShellState): string {
           <div class="kp-disclosure__body">
             ${
               logs.length > 0
-                ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
+                ? renderEventLogTimeline(logs, 'recent')
                 : renderEmptyState('Nog geen gebeurtenissen vastgelegd.', {
                     title: 'Logboek is nog leeg',
                   })
@@ -1624,7 +1624,7 @@ function renderLogboekScreen(state: AppShellState): string {
           <div class="kp-disclosure__body">
             ${
               highRiskLogs.length > 0
-                ? `<ol class="phase-list">${highRiskLogs.map(renderEventLogItem).join('')}</ol>`
+                ? renderEventLogTimeline(highRiskLogs, 'privacy')
                 : renderEmptyState('Geen privacygevoelige gebeurtenissen in dit logboek.', {
                     title: 'Geen privacyregels',
                   })
@@ -1801,7 +1801,22 @@ function renderEventLogCategorySummary(
   `;
 }
 
-function renderEventLogItem(item: EventLog): string {
+function renderEventLogTimeline(items: readonly EventLog[], scope: 'recent' | 'privacy'): string {
+  return timelineList({
+    className: 'eventlog-timeline',
+    ariaLabel:
+      scope === 'privacy'
+        ? 'Privacygevoelige auditregels als tijdlijn'
+        : 'Recente auditregels als tijdlijn',
+    data: {
+      'eventlog-timeline': scope,
+      'eventlog-timeline-state': items.length > 0 ? 'gevuld' : 'leeg',
+    },
+    items: items.map((item, index) => renderEventLogItem(item, scope, index)),
+  });
+}
+
+function renderEventLogItem(item: EventLog, scope: 'recent' | 'privacy', index: number): string {
   const detail = item.detail;
   const safeDetail =
     detail &&
@@ -1809,15 +1824,41 @@ function renderEventLogItem(item: EventLog): string {
     !EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS.some((pattern) => pattern.test(detail))
       ? detail
       : undefined;
-  return `
-    <li class="phase-item">
+  const highRisk = isHighRiskEventLogForUi(item);
+  const state = (highRisk ? 'missed' : index === 0 ? 'current' : 'done') as StepState;
+  const privacyLabel = highRisk ? 'Privacygevoelig' : 'Minimale details';
+  const storageLabel = item.categorie === 'backup' ? 'Versleuteld beheer' : 'Auditmetadata';
+  const body = `
+    <dl class="eventlog-timeline__facts">
       <div>
-        <h3>${escapeHtml(item.gebeurtenis)}</h3>
-        <p>${escapeHtml(formatDateTime(item.datum))} · ${escapeHtml(EVENT_CATEGORIE_LABELS[item.categorie])}</p>
-        ${safeDetail ? `<p class="linked-note">${escapeHtml(safeDetail)}</p>` : ''}
+        <dt>Privacy</dt>
+        <dd>${privacyLabel}</dd>
       </div>
-    </li>
+      <div>
+        <dt>Opslag</dt>
+        <dd>${storageLabel}</dd>
+      </div>
+    </dl>
+    ${
+      safeDetail
+        ? `<p class="eventlog-timeline__safe-detail">${escapeHtml(safeDetail)}</p>`
+        : `<p class="eventlog-timeline__safe-detail">Detail blijft verborgen: deze auditregel toont alleen veilige metadata.</p>`
+    }
   `;
+
+  return timelineItem({
+    title: item.gebeurtenis,
+    meta: `${formatDateTime(item.datum)} · ${EVENT_CATEGORIE_LABELS[item.categorie]}`,
+    detail: scope === 'privacy' ? 'Extra terughoudend weergegeven.' : undefined,
+    state,
+    className: 'eventlog-timeline__item',
+    data: {
+      'eventlog-item-category': item.categorie,
+      'eventlog-item-privacy': highRisk ? 'high' : 'normal',
+      'eventlog-item-scope': scope,
+    },
+    body,
+  });
 }
 
 const EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS = [

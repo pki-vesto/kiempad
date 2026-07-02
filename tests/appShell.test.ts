@@ -2080,6 +2080,10 @@ describe('app shell', () => {
     expect(css).toContain('.eventlog-focus-shell__workbench > .eventlog-system-workbench {');
     expect(css).toContain('.eventlog-focus-shell__workspace {');
     expect(css).toContain('.eventlog-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('.eventlog-timeline {');
+    expect(css).toContain('.eventlog-timeline__item[data-state="missed"] .kp-timeline__body {');
+    expect(css).toContain('.eventlog-timeline__facts {');
+    expect(css).toContain('.eventlog-timeline__safe-detail {');
     expect(css).toContain('"rail context";');
     expect(css).toContain('.notification-focus-shell {');
     expect(css).toContain('.notification-focus-shell__header {');
@@ -37928,6 +37932,17 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Logboek recent route-samenvatting"');
     expect(html).toContain('data-eventlog-route-summary="recent"');
     expect(html).toContain('Recente auditregels openen');
+    expect(html).toContain('class="kp-timeline eventlog-timeline"');
+    expect(html).toContain('data-eventlog-timeline="recent"');
+    expect(html).toContain('data-eventlog-timeline="privacy"');
+    expect(html).toContain('data-eventlog-timeline-state="gevuld"');
+    expect(html).toContain('class="kp-timeline__item eventlog-timeline__item"');
+    expect(html).toContain('data-eventlog-item-category="backup"');
+    expect(html).toContain('data-eventlog-item-privacy="high"');
+    expect(html).toContain('data-eventlog-item-scope="recent"');
+    expect(html).toContain('data-eventlog-item-scope="privacy"');
+    expect(html).toContain('Privacygevoelig');
+    expect(html).toContain('Versleuteld beheer');
     expect(html).toContain('aria-label="Logboek categorieën route-samenvatting"');
     expect(html).toContain('data-eventlog-route-summary="categorieen"');
     expect(html).toContain('Categorieaantallen openen');

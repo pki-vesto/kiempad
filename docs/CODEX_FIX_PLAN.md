@@ -144,6 +144,9 @@
 - **CFX-043 event log route-first workspace — partial in G1361 / issue #2496.** Logboek now removes
   the fixed third context column and keeps overview, recent, categories, and privacy checks inside
   the active audit route workspace.
+- **CFX-020/CFX-043 event log timeline rows — partial in G1363 / issue #2500.** Logboek recent and
+  privacy routes now render audit rules as dot/line timeline rows with privacy and safe-metadata
+  cues instead of plain phase-list rows.
 - **CFX-044 backup route-first workspace — partial in G1362 / issue #2498.** Back-up now removes
   the fixed third context column and keeps controleren, export, import, and herstel inside the
   active safety route workspace.
@@ -569,6 +572,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
   Partial G1361/#2496: Logboek uses a route-first workspace without a fixed third context column.
+  Partial G1363/#2500: Recent and privacy auditregels use structured dot/line timeline rows with
+  privacy and safe-metadata cues.
 - **CFX-044** — Back-up: export preview + Download/Kopieer, "Laatste back-up" reminder card,
   de-jargon. **P2 · M** Partial G1356/#2486: latest-backup reminder card and encrypted export
   preview are visible before disclosure details.
