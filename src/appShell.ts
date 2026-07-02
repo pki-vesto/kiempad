@@ -14553,7 +14553,10 @@ function renderVragenScreen(state: AppShellState): string {
           ariaLabel: 'Open vragen route-samenvatting',
         })}
         ${renderVraagStatus(state.vraagStatus, 'open')}
-        <div class="panel-heading"><h2>Openstaand</h2><button class="phase-button" id="export-consult-pdf" type="button">Print/PDF</button>${deleteVraagButton}</div>
+        ${renderQuestionOpenToolbar({
+          openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
+          deleteVraagButton,
+        })}
         ${
           nextWithQuestions
             ? renderOpenVragenVoorAfspraak(nextWithQuestions)
@@ -14719,6 +14722,25 @@ function renderVraagStatus(
   if (!status) return '';
 
   return `<p class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="${surface}">${escapeHtml(status)}</p>`;
+}
+
+function renderQuestionOpenToolbar(input: {
+  openCount: number;
+  deleteVraagButton: string;
+}): string {
+  return `
+    <header class="question-open-toolbar" aria-label="Openstaande vragen acties" data-question-open-toolbar="ready">
+      <div>
+        <p class="kp-card__eyebrow">Openstaand</p>
+        <h2>Openstaand</h2>
+        <span>${input.openCount} open vraag${input.openCount === 1 ? '' : 'en'}</span>
+      </div>
+      <div class="question-open-toolbar__actions">
+        <button class="phase-button question-open-toolbar__print" id="export-consult-pdf" type="button">Print/PDF</button>
+        ${input.deleteVraagButton}
+      </div>
+    </header>
+  `;
 }
 
 function renderQuestionFocusShell(input: { workbench: string; workspace: string }): string {
@@ -15044,13 +15066,13 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
   const vraag = bundle?.vraag;
 
   return `
-    <form id="vraag-form" class="data-form">
+    <form id="vraag-form" class="data-form question-form">
       <input type="hidden" name="id" value="${escapeAttribute(vraag?.id ?? '')}" />
-      <section class="command-form-section" data-command-form-section="vraag-basis">
+      <section class="command-form-section question-form__prompt" data-command-form-section="vraag-basis">
         <p class="command-form-section__eyebrow">Vraag</p>
-        <label>
+        <label class="question-prompt-field">
           Vraag
-          <textarea name="vraag" rows="4" required>${escapeHtml(vraag?.vraag ?? '')}</textarea>
+          <textarea class="question-prompt-input" name="vraag" rows="4" required>${escapeHtml(vraag?.vraag ?? '')}</textarea>
         </label>
       </section>
       <section class="command-form-section" data-command-form-section="vraag-context">

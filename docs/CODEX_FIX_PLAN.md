@@ -166,6 +166,9 @@
 - **CFX-044 backup export actions — partial in G1368 / issue #2510.** Back-up exportpreview now
   exposes Download and Kopieer samenvatting actions directly on encrypted export cards, while
   disclosure panels keep only explanatory safety copy.
+- **CFX-036 question toolbar/input polish — partial in G1369 / issue #2512.** Vragen Open now
+  docks Print/PDF and delete actions in a scan-friendly section toolbar, and Beheer gives the
+  primary question textarea its own compact input card.
 
 ---
 
@@ -574,6 +577,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Done in G1347/#2468. Partial G1358/#2490: Medicatie uses a route-first workspace without a fixed
   third context column.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
+  Partial G1369/#2512: Open questions have a dedicated toolbar with Print/PDF next to the section
+  heading, and the primary question textarea renders as a compact input card.
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
   Partial G1364/#2502: Kostenhistorie renders as scan-friendly cost cards with status rails and

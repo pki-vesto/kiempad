@@ -2165,6 +2165,10 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
     expect(css).toContain('.question-task-routes {');
+    expect(css).toContain('.question-open-toolbar {');
+    expect(css).toContain('.question-open-toolbar__actions {');
+    expect(css).toContain('.question-form__prompt {');
+    expect(css).toContain('.question-prompt-input {');
     expect(css).toContain('.consult-prep-board {');
     expect(css).toContain('.consult-prep-board__header {');
     expect(css).toContain('.consult-prep-board__lanes {');
@@ -2227,6 +2231,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.question-focus-shell {');
     expect(mobileCss).toContain('.question-focus-shell__body {');
     expect(mobileCss).toContain('.question-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.question-open-toolbar {');
+    expect(mobileCss).toContain('.question-open-toolbar__actions {');
+    expect(mobileCss).toContain('.question-prompt-input {');
     expect(mobileCss).toContain(
       '.content:has([data-finance-focus-shell="ready"]) > .workspace-map,',
     );
@@ -5414,6 +5421,12 @@ describe('app shell', () => {
     expect(html).toContain('Beantwoorde vragen per afspraak');
     expect(html).toContain('Vraaglijst beheren');
     expect(html).toContain('Consult');
+    expect(html).toContain(
+      'class="question-open-toolbar" aria-label="Openstaande vragen acties" data-question-open-toolbar="ready"',
+    );
+    expect(html).toContain('class="question-open-toolbar__actions"');
+    expect(html).toContain('class="phase-button question-open-toolbar__print"');
+    expect(html).toContain('id="export-consult-pdf" type="button">Print/PDF</button>');
     expect(html).toContain('Openstaand');
     expect(html).toContain('Prioriteit 1');
     expect(html).toContain('name="prioriteit" type="number"');
@@ -5424,6 +5437,12 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verwijder vraag: Wat is de volgende stap?"');
     expect(html).toContain('aria-label="Verplaats vraag omhoog: Wat is de volgende stap?"');
     expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
+    expect(html).toContain('id="vraag-form" class="data-form question-form"');
+    expect(html).toContain(
+      'class="command-form-section question-form__prompt" data-command-form-section="vraag-basis"',
+    );
+    expect(html).toContain('class="question-prompt-field"');
+    expect(html).toContain('class="question-prompt-input" name="vraag" rows="4" required');
     expect(html).toContain('Verslag per afspraak');
     expect(html).toContain('aria-label="Consult voorbereiden"');
     expect(html).toContain('data-consult-prep-board="ready"');
