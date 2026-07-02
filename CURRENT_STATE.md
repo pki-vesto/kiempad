@@ -53,6 +53,9 @@
 - **G1327 rustige sidebar-acties:** instellingen en vergrendelen staan niet meer
   bovenin de desktop-sidebar; de header toont merk en opslagstatus, terwijl de
   acties onderaan in een stille utility-zone bereikbaar blijven.
+- **G1328 rijke lege staten:** lege routes tonen ontworpen empty-state blokken met
+  icoontegel, titel, tekst en waar passend een CTA naar de invoerroute in plaats van
+  kale `Nog geen...` regels.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

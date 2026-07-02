@@ -4604,9 +4604,9 @@ describe('app shell', () => {
     expect(emptyTimeline).toContain('data-timeline-state="leeg"');
     expect(emptyTimeline).toContain('id="timeline-filter-form"');
     expect(emptyTimeline).toContain('href="#fertility-timeline-items"');
-    expect(emptyTimeline).toContain(
-      '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>',
-    );
+    expect(emptyTimeline).toContain('id="fertility-timeline-items" class="empty-state kp-empty"');
+    expect(emptyTimeline).toContain('Timeline is leeg');
+    expect(emptyTimeline).toContain('Nog geen centrale fertility timeline beschikbaar.');
     expect(emptyTimeline).toContain(
       'Geen ontbrekende context zichtbaar in de huidige timelinefilter.',
     );
@@ -37892,7 +37892,9 @@ describe('app shell', () => {
     expect(html.slice(fasenStart, vergoedingStart)).toContain(
       'data-treatment-route-state="active"',
     );
-    expect(html.slice(fasenStart, vergoedingStart)).not.toContain('hidden');
+    expect(html.slice(fasenStart, vergoedingStart)).not.toContain(
+      'data-treatment-route-state="inactive" hidden',
+    );
   });
 
   it('bewaakt mobiele commandroute spacing tegen bottom-nav overlap', () => {
