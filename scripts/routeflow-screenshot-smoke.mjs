@@ -450,6 +450,30 @@ const targets = [
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
     ],
   },
+  {
+    screen: 'notifications-planning',
+    hash: '#herinneringen?route=plannen',
+    rootSelector: '#herinneringen-route-plannen',
+    expectedText: 'De standaardtijd is de primaire taak',
+    activeRouteSelector:
+      '[data-notification-route="plannen"][data-notification-route-state="active"]',
+    inactiveRouteSelector: '[data-notification-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-notification-planning-console="ready"]',
+      '[data-notification-planning-region="default-warning"]',
+      '#warning-default-form',
+      '#herinneringen-custom-reminder',
+      '[data-notification-planning-support="collapsed"] > .notification-planning-support__summary',
+      '[data-notification-planning-region="custom-reminder"]',
+      '#eigen-herinnering-form',
+    ],
+    closedDetailsSelectors: ['[data-notification-planning-support="collapsed"]'],
+    desktopHiddenSelectors: [
+      '.notification-focus-shell__header p:last-child',
+      '.notification-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
 ];
 
 const viewports = [

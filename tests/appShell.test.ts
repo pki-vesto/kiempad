@@ -2154,6 +2154,10 @@ describe('app shell', () => {
     expect(css).toContain('.system-workbench__grid {');
     expect(css).toContain('.system-workbench__actions {');
     expect(css).toContain('.notification-task-routes {');
+    expect(css).toContain('.notification-privacy-console {');
+    expect(css).toContain('.notification-planning-console {');
+    expect(css).toContain('.notification-planning-support__summary {');
+    expect(css).toContain('.notification-planning-support__body {');
     expect(css).toContain('.eventlog-task-routes {');
     expect(css).toContain('.system-workbench :where(.stat-row) {');
     expect(css).toContain('.system-workbench :where(.stat) {');
@@ -5072,10 +5076,23 @@ describe('app shell', () => {
     expect(html).toContain('Notificatiestatus en actie openen');
     expect(html).toContain('aria-label="Herinneringen privacy route-samenvatting"');
     expect(html).toContain('data-notification-route-summary="privacy"');
-    expect(html).toContain('Lockscreenprivacy formulier openen');
+    expect(html).toContain('Generieke tekst blijft standaard');
+    expect(html).toContain('data-notification-privacy-console="ready"');
+    expect(html).toContain('id="notification-privacy-form"');
+    expect(html).not.toContain('data-notification-disclosure="privacy" open');
     expect(html).toContain('aria-label="Herinneringen plannen route-samenvatting"');
     expect(html).toContain('data-notification-route-summary="plannen"');
-    expect(html).toContain('Planningsformulieren openen');
+    expect(html).toContain('De standaardtijd is de primaire taak');
+    expect(html).toContain('data-notification-planning-console="ready"');
+    expect(html).toContain('data-notification-planning-region="default-warning"');
+    expect(html).toContain('id="herinneringen-custom-reminder"');
+    expect(html).toContain('data-notification-planning-support="collapsed"');
+    expect(html).toContain('Eigen herinnering toevoegen');
+    expect(html).toContain('data-notification-planning-region="custom-reminder"');
+    expect(html).not.toContain('data-notification-disclosure="planning" open');
+    expect(html.indexOf('id="warning-default-form"')).toBeLessThan(
+      html.indexOf('id="herinneringen-custom-reminder"'),
+    );
     expect(html).toContain('aria-label="Herinneringen komend route-samenvatting"');
     expect(html).toContain('data-notification-route-summary="komend"');
     expect(html).toContain('In-app fallbackmeldingen openen');

@@ -288,6 +288,9 @@
 - **CFX-038/CFX-012 Kennis AI support collapse — partial in G1404 / issue #2582.** Kennis AI now
   opens with the payload preview only; summary save, AI settings, on-device status, and research
   aggregation sit behind one closed support disclosure.
+- **CFX-017/CFX-012 Herinneringen privacy/planning collapse — partial in G1405 / issue #2584.**
+  Herinneringen privacy now shows the lockscreen choice as the only primary task, while planning
+  shows the default warning time first and keeps custom reminders behind one closed continuation.
 
 ---
 
