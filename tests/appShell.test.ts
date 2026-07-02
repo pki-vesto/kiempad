@@ -3853,6 +3853,9 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-header="ready"',
     );
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-reset="ready"',
+    );
     expect(filteredRecommendations).toContain('Actieve feedbackfilter');
     expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
@@ -3911,6 +3914,9 @@ describe('app shell', () => {
     expect(emptyFilteredRecommendations).toContain('data-daily-advice-feedback-list-open="ready"');
     expect(emptyFilteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-header="ready"',
+    );
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-reset="ready"',
     );
     expect(emptyFilteredRecommendations).toContain('Actieve feedbackfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve lijstfilter');

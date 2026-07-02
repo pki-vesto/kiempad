@@ -4471,6 +4471,28 @@ h2 {
   color: var(--text-muted);
 }
 
+.daily-recommendation-list-filter-header form {
+  display: contents;
+}
+
+.daily-recommendation-list-filter-header button {
+  min-height: 28px;
+  padding: 4px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--surface) 86%, white);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 720;
+}
+
+.daily-recommendation-list-filter-header button:hover,
+.daily-recommendation-list-filter-header button:focus-visible {
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  outline: none;
+}
+
 .daily-advice-focus-shell__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);

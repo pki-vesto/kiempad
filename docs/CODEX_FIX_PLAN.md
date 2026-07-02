@@ -97,6 +97,9 @@
 - **Daily advice feedback list filter header — done in G1437 / issue #2634.** The dagadvies list
   panel now shows a compact active-filter header with label and count whenever a feedback filter
   is active, while the unfiltered list stays unchanged.
+- **Daily advice feedback list filter reset — done in G1438 / issue #2636.** The list-panel
+  active-filter header now includes its own reset action using the shared feedback filter reset
+  handler, so the filtered route and related filter UI clear from inside the list context.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
