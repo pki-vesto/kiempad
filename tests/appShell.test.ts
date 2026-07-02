@@ -3182,6 +3182,7 @@ describe('app shell', () => {
     expect(css).toContain('.hub-workflow-header__copy p {');
     expect(css).toContain('.hub-detail-disclosure {');
     expect(css).toContain('.hub-detail-disclosure__summary {');
+    expect(css).toContain('.hub-detail-disclosure__summary:focus-visible,');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(css).toContain('.hub-detail-disclosure__summary small {');
     expect(css).toContain('.hub-detail-disclosure__summary em {');
@@ -6573,6 +6574,9 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
     expect(addSection).toContain('data-dossier-upload-optional="embryo-labcontext"');
     expect(addSection).toContain('class="dossier-upload-optional__summary"');
+    expect(readFileSync('src/styles.css', 'utf8')).toContain(
+      '.dossier-upload-optional__summary:focus-visible {',
+    );
     expect(addSection).toContain('Afspraak, traject of notitie toevoegen');
     expect(addSection).toContain('Echo, foto of scan beschrijven');
     expect(addSection).toContain('Embryo-id, dag of lablabel toevoegen');
@@ -36757,6 +36761,7 @@ describe('app shell', () => {
     expect(css).toContain('.domain-split-workspace__context');
     expect(css).toContain('.knowledge-workbench-disclosure {');
     expect(css).toContain('.knowledge-workbench-disclosure__summary {');
+    expect(css).toContain('.knowledge-workbench-disclosure__summary:focus-visible,');
     expect(css).toContain('.domain-split-workspace__context .knowledge-research-workbench {');
     expect(css).toContain('.knowledge-research-snapshot {');
     expect(css).toContain('.knowledge-research-workbench__header');

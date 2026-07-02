@@ -12814,6 +12814,20 @@ a.action-card:active {
   display: none;
 }
 
+.kp-disclosure__summary:focus-visible,
+.hub-detail-disclosure__summary:focus-visible,
+.knowledge-workbench-disclosure__summary:focus-visible,
+.dossier-upload-optional__summary:focus-visible {
+  border-radius: calc(var(--radius-card) - 4px);
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: var(--ring);
+}
+
+.dossier-upload-optional__summary:focus-visible {
+  border-radius: 12px;
+}
+
 .kp-disclosure__plus {
   display: grid;
   place-items: center;

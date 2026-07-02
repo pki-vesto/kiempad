@@ -303,6 +303,9 @@
 - **CFX-028 Vragen/Traject cancel actions — partial in G1409 / issue #2592.** Vragen and Traject
   edit forms now use the same command action row with a ghost Annuleer link as the other edit
   forms.
+- **CFX-075 disclosure focus rings — partial in G1410 / issue #2594.** Details summaries for
+  route disclosures, hub detail panels, Kennis workbench support, and Dossier optional upload
+  panels now show explicit teal focus rings.
 
 ---
 
