@@ -6486,6 +6486,17 @@ describe('app shell', () => {
     expect(addSection).toContain('data-dossier-add-route-panel="consult-upload"');
     expect(addSection).toContain('data-dossier-add-route-panel="embryo-quality"');
     expect(addSection).toContain('data-dossier-add-route-panel="embryo-status"');
+    expect(addSection).toContain('data-dossier-add-route-disclosure="review"');
+    expect(addSection).toContain('data-dossier-add-route-disclosure="consult"');
+    expect(addSection).toContain('data-dossier-add-route-disclosure="embryo-quality"');
+    expect(addSection).toContain('data-dossier-add-route-disclosure="embryo-status"');
+    expect(addSection).toContain('class="dossier-add-route-disclosure__summary"');
+    expect(addSection).toContain('<span>Consult vastleggen</span>');
+    expect(addSection).toContain('<span>Embryokwaliteit</span>');
+    expect(addSection).toContain('<span>Embryostatus</span>');
+    expect(addSection).not.toContain('data-dossier-add-route-disclosure="consult" open');
+    expect(addSection).not.toContain('data-dossier-add-route-disclosure="embryo-quality" open');
+    expect(addSection).not.toContain('data-dossier-add-route-disclosure="embryo-status" open');
     expect(dossierPanel).toContain('id="dossier-upload-form"');
     expect(dossierPanel).toContain('data-upload-privacy-kind="dossier"');
     expect(dossierPanel).toContain('data-dossier-feedback-focus-target="dossier-upload"');
@@ -6888,6 +6899,16 @@ describe('app shell', () => {
     expect(css).toContain('[data-dossier-upload-focus-mode="single-flow"]');
     expect(css).toContain('.dossier-upload-console__header {');
     expect(css).toContain('.dossier-upload-console__body {');
+    expect(css).toContain('.dossier-add-route-disclosure {');
+    expect(css).toContain('.dossier-add-route-disclosure[open] {');
+    expect(css).toContain('.dossier-add-route-disclosure__summary {');
+    expect(css).toContain('.dossier-add-route-disclosure__summary::after {');
+    expect(css).toContain(
+      '.dossier-add-route-disclosure > .dossier-add-route-panel,\n.dossier-add-route-disclosure > #dossier-route-review',
+    );
+    expect(css).toContain(
+      '.dossier-add-route-disclosure:not([open]) > .dossier-add-route-panel,\n.dossier-add-route-disclosure:not([open]) > #dossier-route-review',
+    );
     expect(css).toContain('.dossier-search-console {');
     expect(css).toContain('grid-template-areas:');
     expect(css).toContain('"search privacy"');
@@ -6912,6 +6933,13 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-upload-console #dossier-route-review {');
     expect(css).toContain('max-height: none;');
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n  .dossier-add-route-disclosure[open]\n  > [data-dossier-add-route-panel],',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n  .dossier-add-route-disclosure[open]\n  > #dossier-route-review',
+    );
+    expect(css).toContain('.dossier-add-route-disclosure[open]');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',

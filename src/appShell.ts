@@ -3349,12 +3349,17 @@ function renderDossierScreen(state: AppShellState): string {
         `,
         })}
         </section>
-        <section id="dossier-route-review" class="dossier-route-section embedded" aria-labelledby="dossier-route-review-title" data-dossier-route="review" data-dossier-upload-console-region="review">
-        <header class="dossier-route-section__header">
-          <p class="kp-card__eyebrow">Review</p>
-          <h2 id="dossier-route-review-title">Import-inbox en documentreview</h2>
-          <p>Controleer OCR-status, duplicaten en reviewwachtrij zonder broninhoud te tonen.</p>
-        </header>
+        <details class="dossier-add-route-disclosure" data-dossier-add-route-disclosure="review"${activeDossierAddFlow === 'review' ? ' open' : ''}>
+          <summary class="dossier-add-route-disclosure__summary">
+            <span>Review inbox</span>
+            <small>${reviewWachtrij.length} review · ${importInboxItems.length} inbox</small>
+          </summary>
+          <section id="dossier-route-review" class="dossier-route-section embedded" aria-labelledby="dossier-route-review-title" data-dossier-route="review" data-dossier-upload-console-region="review">
+          <header class="dossier-route-section__header">
+            <p class="kp-card__eyebrow">Review</p>
+            <h2 id="dossier-route-review-title">Import-inbox en documentreview</h2>
+            <p>Controleer OCR-status, duplicaten en reviewwachtrij zonder broninhoud te tonen.</p>
+          </header>
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
           title: 'Review alleen openen bij importcontrole',
@@ -3407,8 +3412,14 @@ function renderDossierScreen(state: AppShellState): string {
             }
           </div>
         </details>
-        </section>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload" data-dossier-upload-console-region="consult">
+          </section>
+        </details>
+        <details class="dossier-add-route-disclosure" data-dossier-add-route-disclosure="consult"${activeDossierAddFlow === 'consult' ? ' open' : ''}>
+          <summary class="dossier-add-route-disclosure__summary">
+            <span>Consult vastleggen</span>
+            <small>Gesprek, notitie of artsupdate</small>
+          </summary>
+          <section class="dossier-add-route-panel" data-dossier-add-route-panel="consult-upload" data-dossier-upload-console-region="consult">
         ${renderHubWorkflowHeader({
           id: 'consult-upload-workflow-header',
           eyebrow: 'Consultflow',
@@ -3524,8 +3535,14 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         `,
         })}
-        </section>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality" data-dossier-upload-console-region="embryo-quality">
+          </section>
+        </details>
+        <details class="dossier-add-route-disclosure" data-dossier-add-route-disclosure="embryo-quality"${activeDossierAddFlow === 'embryo-quality' ? ' open' : ''}>
+          <summary class="dossier-add-route-disclosure__summary">
+            <span>Embryokwaliteit</span>
+            <small>Labscore met bronlabel</small>
+          </summary>
+          <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-quality" data-dossier-upload-console-region="embryo-quality">
         ${workflowPanel({
           title: 'Embryokwaliteit vastleggen',
           eyebrow: 'Embryodossier',
@@ -3622,8 +3639,14 @@ function renderDossierScreen(state: AppShellState): string {
         </form>
         `,
         })}
-        </section>
-        <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status" data-dossier-upload-console-region="embryo-status">
+          </section>
+        </details>
+        <details class="dossier-add-route-disclosure" data-dossier-add-route-disclosure="embryo-status"${activeDossierAddFlow === 'embryo-status' ? ' open' : ''}>
+          <summary class="dossier-add-route-disclosure__summary">
+            <span>Embryostatus</span>
+            <small>Statusmoment of terugkoppeling</small>
+          </summary>
+          <section class="dossier-add-route-panel" data-dossier-add-route-panel="embryo-status" data-dossier-upload-console-region="embryo-status">
         ${workflowPanel({
           title: 'Embryo-status event vastleggen',
           eyebrow: 'Statusmoment',
@@ -3705,7 +3728,8 @@ function renderDossierScreen(state: AppShellState): string {
         <p class="small-print">${escapeHtml(EMBRYO_KWALITEIT_WAARSCHUWING)}</p>
         `,
         })}
-        </section>
+          </section>
+        </details>
         </div>
       </section>
       </section>

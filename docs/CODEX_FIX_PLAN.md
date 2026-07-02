@@ -153,6 +153,10 @@
 - **CFX-037 finance history cards — partial in G1364 / issue #2502.** Kostenhistorie now uses
   scan-friendly cost history cards with status rails, right-aligned tabular amounts, and quiet
   edit disclosures instead of generic phase-list rows.
+- **CFX-040 dossier compact upload route — partial in G1366 / issue #2506.** Dossier upload now
+  keeps document upload as the primary visible task and moves review, consult, embryo quality, and
+  embryo status into explicit closed continuation panels so the upload route no longer reads as one
+  long form stack.
 - **CFX-038 knowledge library cards — partial in G1365 / issue #2504.** Kennisbibliotheek now uses
   category-eyebrow knowledge cards with chevrons, status badges, and quiet action/edit zones instead
   of generic phase-list rows.
@@ -331,8 +335,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   quality, consult verslagen, behandelgeschiedenis.
 - **Problem**: single 1,045-line function; jargon ("Imaging-repository", "Dossierindex"); OCR/upload
   status is technical; thumbnails placeholder; bare empties (VERBETERINGEN O104). The upload
-  route no longer shows every intake panel at once after G1330, and the search route is grouped
-  into search/privacy/index panels after G1331, but renderer decomposition is still open.
+  route no longer shows every intake panel at once after G1330 and G1366 moved secondary upload
+  flows into closed continuation panels. The search route is grouped into search/privacy/index
+  panels after G1331, but renderer decomposition is still open.
 - **Desired**: split into sub-renderers; de-jargoned NL; kit filters; encrypted thumbnail tile;
   rich empty states.
 - **Fixes**: CFX-002, CFX-008, CFX-040.
@@ -578,6 +583,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.
   Partial G1351/#2476: Beelden filter has a filter-kit surface with active chips and reset.
   Partial G1352/#2478: Zoeken route has a search-kit surface with status chips and reset.
+  Partial G1366/#2506: Upload route has closed continuation panels for review, consult,
+  embryokwaliteit, and embryostatus so only the primary document upload is immediately open.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
