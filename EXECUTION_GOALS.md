@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1333 — Daily Recommendations: feedbackstatus gebruiken in dagadviesoverzicht
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Feedbackstatussen van dagadvies zijn nu zichtbaar in de fertility timeline, maar niet direct op de dagadvieskaarten zelf.
+- **User Impact:** Gebruikers moeten naar de timeline om te zien of een suggestie al gedaan, bewaard, afgewezen of als bespreekpunt gemarkeerd is.
+- **Desired Outcome:** Toon bij dagadvieskaarten een compacte lokale feedbackstatus wanneer een suggestie eerder is gemarkeerd als gedaan, bewaard, niet passend, herinnering, bespreken of artscheck.
+- **User Value:** Gebruikers herkennen sneller welke suggesties al verwerkt zijn zonder extra scrollen of zoeken.
+- **Acceptance Criteria:** Dagadvieskaarten tonen bestaande lokale feedbackstatus wanneer beschikbaar; lege status blijft optioneel en rustig; de status gebruikt alleen lokale eventlogmetadata en geen externe tracking; tests dekken weergave, lege status en privacygrenzen; geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt toegevoegd.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, event log, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2612
+
 ### G1332 — Daily Recommendations: feedbackstatus van tijdlijnsuggesties tonen
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,8 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, fertility timeline, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
+- **Issue:** #2610
 
 ### G1331 — Premium Claude Design UI: Dossier zoekroute als compacte zoekconsole
 

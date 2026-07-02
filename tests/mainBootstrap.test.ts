@@ -42,6 +42,9 @@ describe('main bootstrap', () => {
   });
 
   it('verwerkt dagelijkse aanbevelingen met een aparte artscheck-vraagactie', () => {
+    expect(mainSource).toContain("action === 'gedaan'");
+    expect(mainSource).toContain("gebeurtenis: 'Dagelijkse suggestie gedaan'");
+    expect(mainSource).toContain('Suggestie gemarkeerd als gedaan:');
     expect(mainSource).toContain("action === 'artscheck' && state.vraagStore");
     expect(mainSource).toContain('maakArtscheckVraagVoorAanbeveling({');
     expect(mainSource).toContain("gebeurtenis: 'Suggestie omgezet naar artscheck'");

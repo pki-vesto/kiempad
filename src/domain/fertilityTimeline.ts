@@ -29,10 +29,19 @@ export type FertilityTimelineItem = {
   bronverwijzingen: FertilityTimelineBronverwijzing[];
   gekoppeldeRecords: FertilityTimelineRecordKoppeling[];
   eigenaar?: DailyRecommendationOwner;
+  aanbevelingFeedbackStatus?: FertilityTimelineAanbevelingFeedbackStatus;
   trajectId?: string;
   recordId: string;
   historischConcept?: FertilityTimelineHistorischConcept;
 };
+
+export type FertilityTimelineAanbevelingFeedbackStatus =
+  | 'bewaard'
+  | 'gedaan'
+  | 'niet_passend'
+  | 'herinnering'
+  | 'bespreken'
+  | 'artscheck';
 
 export type FertilityTimelineBronverwijzing = {
   soort:
@@ -145,6 +154,7 @@ export type FertilityTimelineFilter = {
   bronSoort?: FertilityTimelineBronverwijzing['soort'];
   bron?: string;
   aanbevelingenZichtbaar?: boolean;
+  aanbevelingFeedbackStatus?: FertilityTimelineAanbevelingFeedbackStatus;
 };
 
 const FERTILITY_TIMELINE_WAARSCHUWING =
@@ -160,6 +170,7 @@ export function bouwFertilityTimeline(input: {
   kennisItems: readonly KennisItem[];
   aanbevelingen?: DailyRecommendationOverview;
   aanbevelingenDatum?: string;
+  aanbevelingFeedback?: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>;
 }): FertilityTimeline {
   const trajectItems = input.trajecten.map(
     (bundle): FertilityTimelineItem => ({
@@ -473,6 +484,7 @@ export function bouwFertilityTimeline(input: {
         ],
         gekoppeldeRecords: [maakKoppeling('aanbeveling', item.id, `Suggestie: ${item.titel}`)],
         eigenaar: item.owner,
+        aanbevelingFeedbackStatus: input.aanbevelingFeedback?.[item.id],
         recordId: item.id,
       }),
     );
@@ -689,6 +701,12 @@ export function filterFertilityTimeline(
     timeline.items.filter((item) => {
       if (filter.aanbevelingenZichtbaar === false && item.soort === 'aanbeveling') return false;
       if (filter.soort && item.soort !== filter.soort) return false;
+      if (
+        filter.aanbevelingFeedbackStatus &&
+        item.aanbevelingFeedbackStatus !== filter.aanbevelingFeedbackStatus
+      ) {
+        return false;
+      }
       if (filter.datumVanaf && item.datum.slice(0, 10) < filter.datumVanaf) return false;
       if (filter.datumTot && item.datum.slice(0, 10) > filter.datumTot) return false;
       if (filter.trajectId && item.trajectId !== filter.trajectId) return false;

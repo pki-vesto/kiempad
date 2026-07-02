@@ -139,6 +139,9 @@ describe('fertility timeline', () => {
         samen: [],
       },
       aanbevelingenDatum: '2026-06-24',
+      aanbevelingFeedback: {
+        'vrouw-1': 'gedaan',
+      },
     });
 
     expect(timeline.items.map((item) => item.soort)).toEqual([
@@ -192,6 +195,7 @@ describe('fertility timeline', () => {
       label: 'Suggestie',
       context:
         'Dagelijkse suggestie voor vrouw · status concept · gebaseerd op lokale contextregels.',
+      aanbevelingFeedbackStatus: 'gedaan',
       bronverwijzingen: [
         expect.objectContaining({
           soort: 'aanbeveling',
@@ -499,6 +503,9 @@ describe('fertility timeline', () => {
         samen: [],
       },
       aanbevelingenDatum: '2026-06-23',
+      aanbevelingFeedback: {
+        'vrouw-1': 'gedaan',
+      },
     });
 
     expect(
@@ -524,6 +531,14 @@ describe('fertility timeline', () => {
     expect(
       filterFertilityTimeline(timeline, { eigenaar: 'vrouw' }).items.map((item) => item.id),
     ).toEqual(['aanbeveling-vrouw-1']);
+    expect(
+      filterFertilityTimeline(timeline, { aanbevelingFeedbackStatus: 'gedaan' }).items.map(
+        (item) => item.id,
+      ),
+    ).toEqual(['aanbeveling-vrouw-1']);
+    expect(
+      filterFertilityTimeline(timeline, { aanbevelingFeedbackStatus: 'artscheck' }).items,
+    ).toEqual([]);
     expect(
       filterFertilityTimeline(timeline, { aanbevelingenZichtbaar: false }).items.map(
         (item) => item.id,

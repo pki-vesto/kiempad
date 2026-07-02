@@ -50,6 +50,7 @@ import type {
   FertilityGraphTrajectFilter,
 } from './domain/fertilityKnowledgeGraph';
 import type {
+  FertilityTimelineAanbevelingFeedbackStatus,
   FertilityTimelineBronverwijzing,
   FertilityTimelineFilter,
   FertilityTimelineItemSoort,
@@ -2361,6 +2362,9 @@ function applyTimelineFilterFromForm(
     bronSoort: parseTimelineBronSoort(data.get('timelineBronSoort')),
     bron: optionalString(data.get('timelineBron')),
     aanbevelingenZichtbaar: data.get('timelineAanbevelingenZichtbaar') !== 'nee',
+    aanbevelingFeedbackStatus: parseTimelineAanbevelingFeedbackStatus(
+      data.get('timelineAanbevelingFeedbackStatus'),
+    ),
   };
   render(root, state);
 }
@@ -2595,6 +2599,17 @@ async function handleDailyRecommendationAction(
       detail: `${titel} (${recommendationId})`,
     });
     state.dailyRecommendationStatus = `Suggestie afgewezen: ${titel}.`;
+    await reloadAndRender(root, state);
+    return;
+  }
+
+  if (action === 'gedaan') {
+    await state.eventLogStore?.record({
+      categorie: 'systeem',
+      gebeurtenis: 'Dagelijkse suggestie gedaan',
+      detail: `${titel} (${recommendationId})`,
+    });
+    state.dailyRecommendationStatus = `Suggestie gemarkeerd als gedaan: ${titel}.`;
     await reloadAndRender(root, state);
     return;
   }
@@ -3130,6 +3145,22 @@ function parseTimelineBronSoort(
     value === 'medicatie' ||
     value === 'kennis' ||
     value === 'aanbeveling'
+  ) {
+    return value;
+  }
+  return undefined;
+}
+
+function parseTimelineAanbevelingFeedbackStatus(
+  value: FormDataEntryValue | null,
+): FertilityTimelineAanbevelingFeedbackStatus | undefined {
+  if (
+    value === 'bewaard' ||
+    value === 'gedaan' ||
+    value === 'niet_passend' ||
+    value === 'herinnering' ||
+    value === 'bespreken' ||
+    value === 'artscheck'
   ) {
     return value;
   }
