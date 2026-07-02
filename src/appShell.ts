@@ -15626,7 +15626,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
           eyebrow: 'Herinneringenroute',
           title: 'Lockscreenprivacy bewust beheren',
           detail:
-            'Generieke tekst blijft standaard; details tonen kan alleen via deze expliciete privacyroute.',
+            'Generieke tekst blijft standaard; de lockscreenkeuze staat als enige primaire privacytaak in beeld.',
           primary: { href: '#notification-privacy-form', label: 'Privacyform' },
           secondary: { href: '#herinneringen-route-status', label: 'Status' },
           status: state.settings.toonNotificatieDetailsOpVergrendelscherm
@@ -15635,34 +15635,31 @@ function renderHerinneringenScreen(state: AppShellState): string {
           ariaLabel: 'Herinneringen privacy route-samenvatting',
           data: { 'notification-route-summary': 'privacy' },
         })}
-        <details class="kp-disclosure" data-notification-disclosure="privacy" open>
-          <summary class="kp-disclosure__summary">Lockscreenprivacy formulier openen</summary>
-          <div class="kp-disclosure__body">
-            <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
-            <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
-              ${renderBinaryToggle({
-                legend: 'Inhoud op vergrendeld scherm',
-                name: 'toonNotificatieDetailsOpVergrendelscherm',
-                value: String(state.settings.toonNotificatieDetailsOpVergrendelscherm),
-                options: [
-                  {
-                    value: 'false',
-                    label: 'Generiek',
-                    description: 'Geen inhoud op lockscreen',
-                  },
-                  {
-                    value: 'true',
-                    label: 'Details',
-                    description: 'Alleen na expliciete keuze',
-                  },
-                ],
-                dataAttribute: 'lockscreen-privacy',
-              })}
-              <button type="submit">Bewaar notificatieprivacy</button>
-              ${renderSettingsFeedback(state.settingsFeedback, 'notification-privacy')}
-            </form>
-          </div>
-        </details>
+        <div class="summary-panel notification-privacy-console" data-notification-privacy-console="ready">
+          <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
+          <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
+            ${renderBinaryToggle({
+              legend: 'Inhoud op vergrendeld scherm',
+              name: 'toonNotificatieDetailsOpVergrendelscherm',
+              value: String(state.settings.toonNotificatieDetailsOpVergrendelscherm),
+              options: [
+                {
+                  value: 'false',
+                  label: 'Generiek',
+                  description: 'Geen inhoud op lockscreen',
+                },
+                {
+                  value: 'true',
+                  label: 'Details',
+                  description: 'Alleen na expliciete keuze',
+                },
+              ],
+              dataAttribute: 'lockscreen-privacy',
+            })}
+            <button type="submit">Bewaar notificatieprivacy</button>
+            ${renderSettingsFeedback(state.settingsFeedback, 'notification-privacy')}
+          </form>
+        </div>
       </section>
       <section id="herinneringen-route-plannen" class="notification-route-section" aria-labelledby="herinneringen-route-plannen-title" data-notification-route="plannen"${renderNotificationRouteVisibility(activeNotificationRoute, 'plannen')}>
         <header class="notification-route-section__header">
@@ -15674,16 +15671,15 @@ function renderHerinneringenScreen(state: AppShellState): string {
           eyebrow: 'Herinneringenroute',
           title: 'Planning zonder komende lijst erboven',
           detail:
-            'Standaardtijd en eigen herinnering blijven gescheiden van de komende meldingen en fallbacklijst.',
+            'De standaardtijd is de primaire taak; eigen herinneringen open je pas als vervolgactie.',
           primary: { href: '#warning-default-form', label: 'Standaardtijd' },
-          secondary: { href: '#eigen-herinnering-form', label: 'Eigen herinnering' },
+          secondary: { href: '#herinneringen-custom-reminder', label: 'Eigen herinnering' },
           status: `${state.settings.afspraakWaarschuwingMinuten} min`,
           ariaLabel: 'Herinneringen plannen route-samenvatting',
           data: { 'notification-route-summary': 'plannen' },
         })}
-        <details class="kp-disclosure" data-notification-disclosure="planning" open>
-          <summary class="kp-disclosure__summary">Planningsformulieren openen</summary>
-          <div class="kp-disclosure__body">
+        <div class="notification-planning-console" data-notification-planning-console="ready">
+          <div class="summary-panel notification-planning-console__primary" data-notification-planning-region="default-warning">
             <form id="warning-default-form" class="data-form compact-form">
               <label>
                 Standaard afspraakwaarschuwing (minuten vooraf)
@@ -15691,10 +15687,20 @@ function renderHerinneringenScreen(state: AppShellState): string {
               </label>
               <button type="submit">Bewaar standaardtijd</button>
             </form>
-            <h2 class="section-subheading">Eigen herinnering</h2>
-            ${renderEigenHerinneringForm()}
           </div>
-        </details>
+          <details id="herinneringen-custom-reminder" class="kp-disclosure notification-planning-support" data-notification-planning-support="collapsed">
+            <summary class="kp-disclosure__summary notification-planning-support__summary">
+              <span>
+                <strong>Eigen herinnering toevoegen</strong>
+                <small>Open alleen als je naast afspraken of medicatie iets extra wilt plannen</small>
+              </span>
+              <em>${komende.length} actief</em>
+            </summary>
+            <div class="kp-disclosure__body notification-planning-support__body" data-notification-planning-region="custom-reminder">
+              ${renderEigenHerinneringForm()}
+            </div>
+          </details>
+        </div>
       </section>
       <section id="herinneringen-route-komend" class="notification-route-section" aria-labelledby="herinneringen-route-komend-title" data-notification-route="komend"${renderNotificationRouteVisibility(activeNotificationRoute, 'komend')}>
         <header class="notification-route-section__header">

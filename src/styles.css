@@ -6922,6 +6922,60 @@ h2 {
   min-width: 0;
 }
 
+.notification-privacy-console,
+.notification-planning-console {
+  min-width: 0;
+}
+
+.notification-privacy-console {
+  display: grid;
+  gap: 10px;
+}
+
+.notification-privacy-console > p {
+  margin: 0;
+}
+
+.notification-planning-console {
+  display: grid;
+  gap: 12px;
+}
+
+.notification-planning-console__primary {
+  min-width: 0;
+}
+
+.notification-planning-support {
+  min-width: 0;
+}
+
+.notification-planning-support__summary {
+  align-items: center;
+}
+
+.notification-planning-support__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.notification-planning-support__summary small {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.notification-planning-support__summary em {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.notification-planning-support__body {
+  display: grid;
+  gap: 12px;
+}
+
 .notification-focus-shell {
   display: grid;
   gap: 14px;
