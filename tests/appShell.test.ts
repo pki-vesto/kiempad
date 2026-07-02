@@ -2121,15 +2121,22 @@ describe('app shell', () => {
     expect(css).toContain('.notification-focus-shell {');
     expect(css).toContain('.notification-focus-shell__header {');
     expect(css).toContain('.notification-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain(
+    expect(css).not.toContain(
       '.notification-focus-shell__workbench > .notification-system-workbench {',
     );
     expect(css).toContain('.notification-focus-shell__workspace {');
     expect(css).toContain('.notification-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('grid-template-areas: "rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(172px, 0.24fr) minmax(0, 1fr) minmax(280px, 0.42fr);',
+    );
+    expect(css).toContain(
+      '.notification-focus-shell__workspace .domain-split-workspace__context {',
+    );
+    expect(css).toContain('> .notification-system-workbench {');
     expect(css).toContain('.system-workbench__header {');
     expect(css).toContain('.system-workbench__grid {');
     expect(css).toContain('.system-workbench__actions {');
@@ -5011,9 +5018,9 @@ describe('app shell', () => {
     expect(html).toContain('data-notification-focus-shell="ready"');
     expect(html).toContain('data-notification-console="ready"');
     expect(html).toContain('Eerst status en privacy checken, daarna plannen of teruglezen');
-    expect(html).toContain('data-notification-focus-region="workbench"');
+    expect(html).not.toContain('data-notification-focus-region="workbench"');
     expect(html).toContain('data-notification-focus-region="workspace"');
-    expect(html).toContain('data-notification-console-region="workbench"');
+    expect(html).not.toContain('data-notification-console-region="workbench"');
     expect(html).toContain('data-notification-console-region="workspace"');
     expect(html).toContain(
       '<section class="system-workbench notification-system-workbench" aria-label="Herinneringen systeemwerkbank" data-notification-first-viewport="system-workbench">',
@@ -5031,6 +5038,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#herinneringen?route=privacy"');
     expect(html).toContain('href="#herinneringen?route=plannen"');
     expect(html).toContain('href="#herinneringen?route=komend"');
+    expect(html).toContain('data-notification-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain('id="herinneringen-route-status"');
     expect(html).toContain('data-notification-route="status"');
     expect(html).toContain('id="herinneringen-route-privacy"');
@@ -38665,7 +38675,7 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (label === 'notification' || label === 'eventlog' || label === 'backup') {
+      if (label === 'eventlog' || label === 'backup') {
         expect(html).not.toContain('class="domain-split-workspace__context"');
       } else {
         expect(html).toContain('class="domain-split-workspace__context"');
@@ -38846,9 +38856,11 @@ describe('app shell', () => {
       'class="domain-split-workspace notification-split-workspace"',
     );
     expect(herinneringenHtml).toContain('data-notification-console="ready"');
-    expect(herinneringenHtml).toContain('data-notification-console-region="workbench"');
+    expect(herinneringenHtml).not.toContain('data-notification-console-region="workbench"');
     expect(herinneringenHtml).toContain('data-notification-console-region="workspace"');
     expect(herinneringenHtml).toContain('data-notification-compact-workspace="route-first"');
+    expect(herinneringenHtml).toContain('data-notification-single-workspace="ready"');
+    expect(herinneringenHtml).toContain('class="domain-split-workspace__context"');
     expect(herinneringenHtml).not.toContain('data-notification-workspace-context="metrics"');
     expect(herinneringenHtml).not.toContain('data-notification-workspace-context="privacy"');
     expect(herinneringenHtml).not.toContain('data-workspace-context-signals="notification"');
