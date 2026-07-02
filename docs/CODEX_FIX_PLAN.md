@@ -70,6 +70,9 @@
   `Voorbeelddata laden` / `Voorbeelddata wissen` for a fixed synthetic dataset across agenda,
   medicatie, welzijn, and kennis, so empty installs can be reviewed without entering real medical
   data and demo records can be removed without touching user records.
+- **CFX-017 — done in G1336 / issue #2446.** Binary settings now use a shared segmented toggle
+  presentation in Settings and Herinneringen privacy, while reminder rows use the same visual
+  on/off status language instead of loose small text.
 
 ---
 

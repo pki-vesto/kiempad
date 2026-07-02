@@ -1892,7 +1892,10 @@ describe('app shell', () => {
     expect(html).toContain('id="personal-settings-form"');
     expect(html).toContain('name="eigenNaam" type="text" maxlength="60" value="Sam"');
     expect(html).toContain('name="partnerNaam" type="text" maxlength="60" value="Noor"');
+    expect(html).toContain('data-binary-toggle="gedeelde-modus"');
     expect(html).toContain('name="gedeeldeModus"');
+    expect(html).toContain('value="true" checked');
+    expect(html).toContain('Beide namen en gezamenlijke context');
     expect(html).toContain('id="theme-form"');
     expect(html).toContain('data-theme-control="sheet"');
     expect(html).toContain('value="donker" selected');
@@ -4818,6 +4821,7 @@ describe('app shell', () => {
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eenmalig');
     expect(html).toContain('Dagelijks');
+    expect(html).toContain('class="toggle-status" data-toggle-status="on"');
     expect(html).toContain('class="reminder-reschedule-form compact-form"');
     expect(html).toContain('data-herinnering-id="rem-1"');
     expect(html).toContain('Snooze');
@@ -36964,9 +36968,10 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Inhoud op vergrendeld scherm');
-    expect(html).toContain('Altijd generieke tekst');
-    expect(html).toContain('Details tonen na expliciete keuze');
-    expect(html).toContain('value="false" selected');
+    expect(html).toContain('data-binary-toggle="lockscreen-privacy"');
+    expect(html).toContain('Geen inhoud op lockscreen');
+    expect(html).toContain('Alleen na expliciete keuze');
+    expect(html).toContain('name="toonNotificatieDetailsOpVergrendelscherm" value="false" checked');
   });
 
   it('bewaakt notificatieprivacy states met generieke lockscreen-copy en detail opt-in', () => {
@@ -37012,10 +37017,13 @@ describe('app shell', () => {
     expect(genericStatus).toContain('Service worker:</strong> actief');
     expect(genericPrivacy).toContain('id="notification-privacy-form"');
     expect(genericPrivacy).toContain('data-lockscreen-privacy="generiek"');
+    expect(genericPrivacy).toContain('data-binary-toggle="lockscreen-privacy"');
     expect(genericPrivacy).toContain('name="toonNotificatieDetailsOpVergrendelscherm"');
-    expect(genericPrivacy).toContain('Altijd generieke tekst');
-    expect(genericPrivacy).toContain('Details tonen na expliciete keuze');
-    expect(genericPrivacy).toContain('value="false" selected');
+    expect(genericPrivacy).toContain('Geen inhoud op lockscreen');
+    expect(genericPrivacy).toContain('Alleen na expliciete keuze');
+    expect(genericPrivacy).toContain(
+      'name="toonNotificatieDetailsOpVergrendelscherm" value="false" checked',
+    );
     expect(genericHtml).toContain(
       'OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.',
     );
@@ -37048,7 +37056,9 @@ describe('app shell', () => {
     expect(detailStatus).toContain('Toestemming:</strong> niet ondersteund');
     expect(detailStatus).toContain('Service worker:</strong> niet ondersteund');
     expect(detailPrivacy).toContain('data-lockscreen-privacy="details-opt-in"');
-    expect(detailPrivacy).toContain('value="true" selected');
+    expect(detailPrivacy).toContain(
+      'name="toonNotificatieDetailsOpVergrendelscherm" value="true" checked',
+    );
     expect(detailPrivacy).toContain('Bewaar notificatieprivacy');
   });
 

@@ -1277,13 +1277,16 @@ function renderSettingsSheet(state: AppShellState): string {
             Partnernaam
             <input name="partnerNaam" type="text" maxlength="60" value="${escapeAttribute(partnerNaam)}" autocomplete="off" placeholder="Bijvoorbeeld partner" />
           </label>
-          <label>
-            Gedeelde modus
-            <select name="gedeeldeModus">
-              ${renderOption('true', 'Samen gebruiken', String(settings.gedeeldeModus))}
-              ${renderOption('false', 'Alleen gebruiken', String(settings.gedeeldeModus))}
-            </select>
-          </label>
+          ${renderBinaryToggle({
+            legend: 'Gedeelde modus',
+            name: 'gedeeldeModus',
+            value: String(settings.gedeeldeModus),
+            options: [
+              { value: 'true', label: 'Samen', description: 'Beide namen en gezamenlijke context' },
+              { value: 'false', label: 'Alleen', description: 'Persoonlijke weergave' },
+            ],
+            dataAttribute: 'gedeelde-modus',
+          })}
           <button type="submit">Bewaar namen</button>
         </form>
         <form id="theme-form" class="theme-form settings-theme-form" aria-label="Weergavethema" data-theme-control="sheet">
@@ -1313,6 +1316,35 @@ function renderExampleDataPanel(loaded: boolean, surface: 'settings' | 'first-ru
         <button class="${loaded ? 'secondary-button' : 'phase-button'}" type="submit">${loaded ? 'Voorbeelddata wissen' : 'Voorbeelddata laden'}</button>
       </form>
     </section>
+  `;
+}
+
+function renderBinaryToggle(input: {
+  legend: string;
+  name: string;
+  value: string;
+  options: Array<{ value: string; label: string; description?: string }>;
+  dataAttribute: string;
+}): string {
+  return `
+    <fieldset class="binary-toggle" data-binary-toggle="${escapeAttribute(input.dataAttribute)}">
+      <legend>${escapeHtml(input.legend)}</legend>
+      <div class="binary-toggle__options">
+        ${input.options
+          .map(
+            (option) => `
+              <label class="binary-toggle__option">
+                <input type="radio" name="${escapeAttribute(input.name)}" value="${escapeAttribute(option.value)}"${option.value === input.value ? ' checked' : ''} />
+                <span class="binary-toggle__pill">
+                  <span>${escapeHtml(option.label)}</span>
+                  ${option.description ? `<small>${escapeHtml(option.description)}</small>` : ''}
+                </span>
+              </label>
+            `,
+          )
+          .join('')}
+      </div>
+    </fieldset>
   `;
 }
 
@@ -15510,13 +15542,24 @@ function renderHerinneringenScreen(state: AppShellState): string {
           <div class="kp-disclosure__body">
             <p class="small-print">OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.</p>
             <form id="notification-privacy-form" class="data-form compact-form" data-settings-feedback-kind="notification-privacy" data-notification-privacy-feedback-state="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generic'}" data-lockscreen-privacy="${state.settings.toonNotificatieDetailsOpVergrendelscherm ? 'details-opt-in' : 'generiek'}">
-              <label>
-                Inhoud op vergrendeld scherm
-                <select name="toonNotificatieDetailsOpVergrendelscherm">
-                  ${renderOption('false', 'Altijd generieke tekst', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
-                  ${renderOption('true', 'Details tonen na expliciete keuze', String(state.settings.toonNotificatieDetailsOpVergrendelscherm))}
-                </select>
-              </label>
+              ${renderBinaryToggle({
+                legend: 'Inhoud op vergrendeld scherm',
+                name: 'toonNotificatieDetailsOpVergrendelscherm',
+                value: String(state.settings.toonNotificatieDetailsOpVergrendelscherm),
+                options: [
+                  {
+                    value: 'false',
+                    label: 'Generiek',
+                    description: 'Geen inhoud op lockscreen',
+                  },
+                  {
+                    value: 'true',
+                    label: 'Details',
+                    description: 'Alleen na expliciete keuze',
+                  },
+                ],
+                dataAttribute: 'lockscreen-privacy',
+              })}
               <button type="submit">Bewaar notificatieprivacy</button>
             </form>
           </div>
@@ -15915,7 +15958,7 @@ function renderHerinneringenList(items: ReturnType<typeof komendeHerinneringen>)
               <div>
                 <h3>${escapeHtml(titel)}</h3>
                 <p>${formatDateTime(volgendMoment)} · ${HERHALING_LABELS[herinnering.herhaling ?? 'eenmalig']}</p>
-                <small>${herinnering.actief ? 'Actief' : 'Inactief'}</small>
+                <span class="toggle-status" data-toggle-status="${herinnering.actief ? 'on' : 'off'}">${herinnering.actief ? 'Actief' : 'Inactief'}</span>
               </div>
               <form class="reminder-reschedule-form compact-form" data-herinnering-id="${escapeAttribute(herinnering.id)}">
                 <label>
