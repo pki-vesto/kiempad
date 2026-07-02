@@ -141,6 +141,9 @@
 - **CFX-017 notification route-first workspace — partial in G1360 / issue #2494.** Herinneringen
   now removes the fixed third context column and keeps status, privacy, planning, and upcoming
   reminders inside the active route workspace.
+- **CFX-043 event log route-first workspace — partial in G1361 / issue #2496.** Logboek now removes
+  the fixed third context column and keeps overview, recent, categories, and privacy checks inside
+  the active audit route workspace.
 
 ---
 
@@ -562,6 +565,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
+  Partial G1361/#2496: Logboek uses a route-first workspace without a fixed third context column.
 - **CFX-044** — Back-up: export preview + Download/Kopieer, "Laatste back-up" reminder card,
   de-jargon. **P2 · M** Partial G1356/#2486: latest-backup reminder card and encrypted export
   preview are visible before disclosure details.

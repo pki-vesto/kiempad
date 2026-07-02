@@ -11,19 +11,15 @@ describe('context signals visual smoke script', () => {
     expect(ciWorkflow).toContain('Context signals visual smoke');
     expect(ciWorkflow).toContain('npm run smoke:context-signals');
 
-    for (const route of [
-      '#dossier?route=imaging',
-      '#logboek?route=privacy',
-      '#backup?route=import',
-    ]) {
+    for (const route of ['#dossier?route=imaging', '#backup?route=import']) {
       expect(contextSignalsVisualSmokeScript).toContain(route);
     }
 
-    for (const signal of ['dossier', 'eventlog', 'backup']) {
+    for (const signal of ['dossier', 'backup']) {
       expect(contextSignalsVisualSmokeScript).toContain(`signal: '${signal}'`);
     }
 
-    for (const microstate of ['dossier-imaging', 'eventlog-privacy', 'backup-import']) {
+    for (const microstate of ['dossier-imaging', 'backup-import']) {
       expect(contextSignalsVisualSmokeScript).toContain(`microstate: '${microstate}'`);
     }
 
@@ -61,6 +57,9 @@ describe('context signals visual smoke script', () => {
     expect(contextSignalsVisualSmokeScript).not.toContain('#herinneringen?route=plannen');
     expect(contextSignalsVisualSmokeScript).not.toContain("signal: 'notification'");
     expect(contextSignalsVisualSmokeScript).not.toContain("microstate: 'notification-plannen'");
+    expect(contextSignalsVisualSmokeScript).not.toContain('#logboek?route=privacy');
+    expect(contextSignalsVisualSmokeScript).not.toContain("signal: 'eventlog'");
+    expect(contextSignalsVisualSmokeScript).not.toContain("microstate: 'eventlog-privacy'");
     expect(contextSignalsVisualSmokeScript).not.toContain('OCR TEKST');
     expect(contextSignalsVisualSmokeScript).not.toContain('beeldpayload');
     expect(contextSignalsVisualSmokeScript).not.toContain('gezondheidsdata');

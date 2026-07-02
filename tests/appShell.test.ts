@@ -38290,6 +38290,7 @@ describe('app shell', () => {
         label === 'medication' ||
         label === 'treatment' ||
         label === 'notification' ||
+        label === 'eventlog' ||
         label === 'finance'
       ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
@@ -38425,13 +38426,15 @@ describe('app shell', () => {
     expect(logboekHtml).toContain('data-eventlog-console="ready"');
     expect(logboekHtml).toContain('data-eventlog-console-region="workbench"');
     expect(logboekHtml).toContain('data-eventlog-console-region="workspace"');
-    expect(logboekHtml).toContain('data-eventlog-workspace-context="metrics"');
-    expect(logboekHtml).toContain('data-workspace-context-signals="eventlog"');
-    expect(logboekHtml).toContain('data-workspace-context-microstate="eventlog-privacy"');
-    expect(logboekHtml).toContain(
+    expect(logboekHtml).toContain('data-eventlog-compact-workspace="route-first"');
+    expect(logboekHtml).not.toContain('data-eventlog-workspace-context="metrics"');
+    expect(logboekHtml).not.toContain('data-eventlog-workspace-context="privacy"');
+    expect(logboekHtml).not.toContain('data-workspace-context-signals="eventlog"');
+    expect(logboekHtml).not.toContain('data-workspace-context-microstate="eventlog-privacy"');
+    expect(logboekHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: privacyregels openen"',
     );
-    expect(logboekHtml).toContain('Privacycontrole');
+    expect(logboekHtml).not.toContain('Privacycontrole');
     expect(logboekHtml).toContain('Auditfocus');
     expect(logboekHtml).toContain(
       'data-eventlog-route="privacy" data-eventlog-route-state="active"',
@@ -38500,7 +38503,9 @@ describe('app shell', () => {
     expect(css).not.toContain(
       '.workspace-context-signals[data-workspace-context-signals="decision"]',
     );
-    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="eventlog"]');
+    expect(css).not.toContain(
+      '.workspace-context-signals[data-workspace-context-signals="eventlog"]',
+    );
     expect(css).toContain('.workspace-context-signals__microstate {');
     expect(css).toContain('.workspace-context-signals__microstate b {');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-flow="linked"]');

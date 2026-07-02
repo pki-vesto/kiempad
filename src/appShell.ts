@@ -1519,7 +1519,7 @@ function renderLogboekScreen(state: AppShellState): string {
   const eventLogWorkspace = domainSplitWorkspace({
     className: 'eventlog-split-workspace',
     ariaLabel: 'Logboek split-view werkruimte',
-    data: { 'eventlog-split-workspace': 'ready' },
+    data: { 'eventlog-split-workspace': 'ready', 'eventlog-compact-workspace': 'route-first' },
     rail: renderEventLogTaskRoutes({
       eventCount: logs.length,
       highRiskCount: highRiskLogs.length,
@@ -1633,14 +1633,6 @@ function renderLogboekScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-    context: renderEventLogWorkspaceContext({
-      eventCount: logs.length,
-      highRiskCount: highRiskLogs.length,
-      categoryCount: Object.keys(categoryCounts).length,
-      central: isCentralStorage(state),
-      latestLog: logs[0],
-      activeRoute: activeEventLogRoute,
-    }),
   });
 
   return sectionStack(
@@ -1778,69 +1770,6 @@ function renderEventLogTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderEventLogWorkspaceContext(input: {
-  eventCount: number;
-  highRiskCount: number;
-  categoryCount: number;
-  central: boolean;
-  latestLog: EventLog | undefined;
-  activeRoute: EventLogRoute;
-}): string {
-  const latest = input.latestLog
-    ? `${input.latestLog.categorie}: ${formatDateTime(input.latestLog.datum)}`
-    : 'Nog geen gebeurtenis.';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Auditfocus',
-    title: 'Logboek aandacht',
-    data: { 'workspace-context-signals': 'eventlog' },
-    microstate: getEventLogContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Privacy',
-        value: String(input.highRiskCount),
-        detail:
-          input.highRiskCount > 0
-            ? 'Open privacyregels apart; details blijven terughoudend.'
-            : 'Geen privacygevoelige auditregels gevonden.',
-        href: '#logboek?route=privacy',
-      },
-      {
-        label: 'Recent',
-        value: String(input.eventCount),
-        detail: latest,
-        href: '#logboek?route=recent',
-      },
-      {
-        label: 'Categorieën',
-        value: String(input.categoryCount),
-        detail: input.central ? 'Centrale encrypted dataset.' : 'Legacy lokale kluis.',
-        href: '#logboek?route=categorieen',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Logboek context" data-eventlog-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Audit in beeld</h2>
-      ${statRow([
-        { label: 'Events', value: String(input.eventCount) },
-        { label: 'Categorieën', value: String(input.categoryCount) },
-        { label: 'Privacy', value: String(input.highRiskCount) },
-        { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
-      ])}
-      <p class="linked-note">${escapeHtml(latest)}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Logboek werkruimtegrens" data-eventlog-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Audit zonder details vooraf</h2>
-      <p>Status, recente regels, categorieën en privacycontrole blijven apart zodat het logboek niet als volledige auditlijst opent.</p>
-      <p class="small-print">Deze kolom toont alleen tellingen en opslagcontext; geen extra gebeurtenisdetails.</p>
-    </section>
-  `;
 }
 
 function renderEventLogRouteVisibility(activeRoute: EventLogRoute, route: EventLogRoute): string {
@@ -4794,36 +4723,6 @@ function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicro
       label: 'Tijdlijnroute',
       detail: 'Historie, consulten en imports worden chronologisch gebundeld.',
       action: 'Volgende: ontbrekende datum checken',
-    },
-  };
-  return states[route];
-}
-
-function getEventLogContextMicrostate(route: EventLogRoute): WorkspaceContextMicrostate {
-  const states: Record<EventLogRoute, WorkspaceContextMicrostate> = {
-    overzicht: {
-      id: 'eventlog-overzicht',
-      label: 'Auditoverzicht',
-      detail: 'Opslagstatus en totalen blijven zichtbaar zonder details vooraf.',
-      action: 'Volgende: opslagstatus checken',
-    },
-    recent: {
-      id: 'eventlog-recent',
-      label: 'Recente route',
-      detail: 'Laatste gebeurtenissen staan centraal met minimale detailweergave.',
-      action: 'Volgende: laatste regel scannen',
-    },
-    categorieen: {
-      id: 'eventlog-categorieen',
-      label: 'Categorieroute',
-      detail: 'Gebeurtenissen worden gegroepeerd zonder gevoelige payload.',
-      action: 'Volgende: categorie kiezen',
-    },
-    privacy: {
-      id: 'eventlog-privacy',
-      label: 'Privacycontrole',
-      detail: 'Privacysignalen krijgen prioriteit zonder auditdetails open te klappen.',
-      action: 'Volgende: privacyregels openen',
     },
   };
   return states[route];
