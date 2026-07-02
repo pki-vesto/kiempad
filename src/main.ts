@@ -1724,8 +1724,26 @@ function openDailyRecommendationListPanel(root: HTMLElement): void {
   if (!panel.hasAttribute('tabindex')) {
     panel.setAttribute('tabindex', '-1');
   }
+  panel.dataset.dailyAdviceListFocus = 'active';
+  ensureDailyRecommendationListFocusStatus(panel);
   panel.scrollIntoView({ block: 'center', inline: 'nearest' });
   panel.focus({ preventScroll: true });
+}
+
+function ensureDailyRecommendationListFocusStatus(panel: HTMLElement): void {
+  const body = panel.querySelector<HTMLElement>('.kp-disclosure__body');
+  if (!body) return;
+
+  const existingStatus = body.querySelector<HTMLElement>(
+    '[data-daily-advice-list-focus-status="ready"]',
+  );
+  if (existingStatus) return;
+
+  const status = document.createElement('p');
+  status.className = 'small-print daily-advice-list-focus-status';
+  status.dataset.dailyAdviceListFocusStatus = 'ready';
+  status.textContent = 'Lijst geopend vanuit de actieve feedbackfilter.';
+  body.prepend(status);
 }
 
 function applyDailyRecommendationFeedbackFilter(

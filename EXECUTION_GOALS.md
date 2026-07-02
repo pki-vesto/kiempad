@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1343 — Daily Recommendations: lijstfocusstatus kan rustig sluiten
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lijstfocusstatus helpt context houden, maar kan nog niet los van de feedbackfilter worden gesloten.
+- **User Impact:** Gebruikers die de contextregel niet meer nodig hebben, moeten resetten of wachten op her-render om hem kwijt te raken.
+- **Desired Outcome:** Voeg een rustige sluitactie toe aan de lijstfocusstatus die alleen die status verwijdert en de actieve filterroute intact laat.
+- **User Value:** Gebruikers kunnen de lijstcontext opruimen zonder de gefilterde suggestieweergave te verliezen.
+- **Acceptance Criteria:** De lijstfocusstatus bevat een rustige sluitactie; sluiten verwijdert alleen de focusstatus en laat actieve feedbackfilter en route intact; reset blijft de filterroute en workflowstatus verwijderen; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken sluiten, routebehoud en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell runtime controls, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2632
+
 ### G1342 — Daily Recommendations: filterstatus toont actieve lijstfocus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2630
 
 ### G1341 — Daily Recommendations: filterstatus laat lijstpaneel openen

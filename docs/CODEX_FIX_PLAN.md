@@ -88,6 +88,9 @@
 - **Daily advice feedback list jump — done in G1434 / issue #2628.** The active feedback workflow
   status now includes a direct `Bekijk lijst` action that opens and focuses the full suggestion
   list while preserving the filtered route.
+- **Daily advice feedback list focus status — done in G1435 / issue #2630.** Opening the
+  dagadvies list from the active feedback workflow status now adds a visible list-context status
+  inside the panel while preserving the filtered route.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
