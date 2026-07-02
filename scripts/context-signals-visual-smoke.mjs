@@ -18,12 +18,6 @@ const targets = [
     allowHidden: true,
   },
   {
-    screen: 'agenda',
-    hash: '#agenda?route=plannen',
-    signal: 'schedule',
-    microstate: 'schedule-plannen',
-  },
-  {
     screen: 'traject',
     hash: '#traject?route=fasen',
     signal: 'treatment',

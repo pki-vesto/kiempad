@@ -130,6 +130,8 @@
   now opens an inline confirmation panel with cancel/confirm actions instead of a browser confirm.
 - **CFX-044 backup export preview — partial in G1356 / issue #2486.** Back-up now shows a
   first-class latest-backup reminder card and encrypted export preview before opening details.
+- **CFX-034 agenda route-first workspace — partial in G1357 / issue #2488.** Agenda now removes
+  the fixed third context column and keeps the active planning route as the central workspace.
 
 ---
 
@@ -528,7 +530,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1348/#2470: Traject Fasen uses the shared timeline component.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
-  type-colored appointment cards.
+  type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
+  a fixed third context column.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
   Done in G1347/#2468.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**

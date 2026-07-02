@@ -6924,7 +6924,6 @@ h2 {
   --workspace-context-accent: var(--teal);
 }
 
-.workspace-context-signals[data-workspace-context-signals="schedule"],
 .workspace-context-signals[data-workspace-context-signals="notification"] {
   --workspace-context-accent: var(--slate);
 }

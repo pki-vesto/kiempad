@@ -38282,6 +38282,7 @@ describe('app shell', () => {
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
       if (
+        label === 'schedule' ||
         label === 'question' ||
         label === 'knowledge' ||
         label === 'wellbeing' ||
@@ -38309,14 +38310,16 @@ describe('app shell', () => {
     expect(agendaHtml).toContain('data-schedule-console="ready"');
     expect(agendaHtml).toContain('data-schedule-console-region="workbench"');
     expect(agendaHtml).toContain('data-schedule-console-region="workspace"');
-    expect(agendaHtml).toContain('data-schedule-workspace-context="metrics"');
-    expect(agendaHtml).toContain('data-workspace-context-signals="schedule"');
-    expect(agendaHtml).toContain('data-workspace-context-microstate="schedule-plannen"');
-    expect(agendaHtml).toContain(
+    expect(agendaHtml).toContain('data-schedule-compact-workspace="route-first"');
+    expect(agendaHtml).not.toContain('data-schedule-workspace-context="metrics"');
+    expect(agendaHtml).not.toContain('data-workspace-context-signals="schedule"');
+    expect(agendaHtml).not.toContain('data-workspace-context-microstate="schedule-plannen"');
+    expect(agendaHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: afspraakgegevens invullen"',
     );
-    expect(agendaHtml).toContain('Planroute');
-    expect(agendaHtml).toContain('Planningfocus');
+    expect(agendaHtml).not.toContain('Planroute');
+    expect(agendaHtml).not.toContain('Planningfocus');
+    expect(agendaHtml).toContain('Agendafocus');
     expect(agendaHtml).toContain(
       'data-schedule-route="plannen" data-schedule-route-state="active"',
     );
@@ -38475,7 +38478,9 @@ describe('app shell', () => {
     expect(css).toContain('.workspace-context-signals {');
     expect(css).toContain('--workspace-context-accent: var(--accent);');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="dossier"]');
-    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="schedule"]');
+    expect(css).not.toContain(
+      '.workspace-context-signals[data-workspace-context-signals="schedule"]',
+    );
     expect(css).not.toContain(
       '.workspace-context-signals[data-workspace-context-signals="knowledge"]',
     );

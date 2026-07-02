@@ -4799,42 +4799,6 @@ function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicro
   return states[route];
 }
 
-function getScheduleContextMicrostate(route: ScheduleRoute): WorkspaceContextMicrostate {
-  const states: Record<ScheduleRoute, WorkspaceContextMicrostate> = {
-    overzicht: {
-      id: 'schedule-overzicht',
-      label: 'Planningoverzicht',
-      detail: 'Totaal, komende afspraken en importstatus blijven eerst zichtbaar.',
-      action: 'Volgende: komende afspraak scannen',
-    },
-    komend: {
-      id: 'schedule-komend',
-      label: 'Komende route',
-      detail: 'De eerstvolgende afspraak en herinnering blijven de planningsfocus.',
-      action: 'Volgende: voorbereiding nalopen',
-    },
-    plannen: {
-      id: 'schedule-plannen',
-      label: 'Planroute',
-      detail: 'Nieuwe afspraak, voorbereiding en herinnering blijven taakgericht.',
-      action: 'Volgende: afspraakgegevens invullen',
-    },
-    import: {
-      id: 'schedule-import',
-      label: 'Importroute',
-      detail: 'ICS-feedback en importcontrole blijven los van afsprakeninhoud.',
-      action: 'Volgende: ICS-feedback controleren',
-    },
-    historie: {
-      id: 'schedule-historie',
-      label: 'Historieroute',
-      detail: 'Terugblik en eerdere afspraken blijven gescheiden van plannen.',
-      action: 'Volgende: terugblik openen',
-    },
-  };
-  return states[route];
-}
-
 function getNotificationContextMicrostate(route: NotificationRoute): WorkspaceContextMicrostate {
   const states: Record<NotificationRoute, WorkspaceContextMicrostate> = {
     status: {
@@ -16110,19 +16074,9 @@ function renderAgendaScreen(state: AppShellState): string {
   const scheduleWorkspace = domainSplitWorkspace({
     className: 'schedule-split-workspace',
     ariaLabel: 'Agenda split-view werkruimte',
-    data: { 'schedule-split-workspace': 'ready' },
+    data: { 'schedule-split-workspace': 'ready', 'schedule-compact-workspace': 'route-first' },
     rail: scheduleTaskRoutes,
     main: scheduleRouteSections.join(''),
-    context: renderScheduleWorkspaceContext({
-      totalCount: state.afspraken.length,
-      upcomingCount: upcoming.length,
-      pastCount: past.length,
-      nextAppointment: upcoming[0],
-      hasImportFeedback: Boolean(state.agendaImportStatus || state.agendaImportError),
-      importStatus: state.agendaImportStatus,
-      importError: state.agendaImportError,
-      activeRoute: activeScheduleRoute,
-    }),
   });
 
   return sectionStack(
@@ -16271,75 +16225,6 @@ function renderScheduleTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderScheduleWorkspaceContext(input: {
-  totalCount: number;
-  upcomingCount: number;
-  pastCount: number;
-  nextAppointment: AfspraakBundle | undefined;
-  hasImportFeedback: boolean;
-  importStatus?: string;
-  importError?: string;
-  activeRoute: ScheduleRoute;
-}): string {
-  const nextLabel = input.nextAppointment
-    ? `${input.nextAppointment.afspraak.titel} · ${formatDateTime(input.nextAppointment.afspraak.datumTijd)}`
-    : 'Nog geen komende afspraak.';
-  const importLabel = input.importError
-    ? 'Import vraagt controle'
-    : input.importStatus
-      ? 'Importfeedback beschikbaar'
-      : input.hasImportFeedback
-        ? 'Importstatus beschikbaar'
-        : 'Geen importfeedback';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Planningfocus',
-    title: 'Volgende planningsactie',
-    data: { 'workspace-context-signals': 'schedule' },
-    microstate: getScheduleContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Volgende',
-        value: input.nextAppointment ? 'Gepland' : 'Leeg',
-        detail: nextLabel,
-        href: input.nextAppointment ? '#agenda?route=komend' : '#agenda?route=plannen',
-      },
-      {
-        label: 'Import',
-        value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS',
-        detail: importLabel,
-        href: '#agenda?route=import',
-      },
-      {
-        label: 'Historie',
-        value: String(input.pastCount),
-        detail: 'Terugbliknotities blijven gescheiden van plannen.',
-        href: '#agenda?route=historie',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Agenda context" data-schedule-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Planning in beeld</h2>
-      ${statRow([
-        { label: 'Totaal', value: String(input.totalCount) },
-        { label: 'Komend', value: String(input.upcomingCount) },
-        { label: 'Historie', value: String(input.pastCount) },
-        { label: 'Import', value: input.importError ? 'Check' : input.importStatus ? 'OK' : 'ICS' },
-      ])}
-      <p class="linked-note">${escapeHtml(nextLabel)}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Agenda werkruimtegrens" data-schedule-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Context los van taak</h2>
-      <p>${escapeHtml(importLabel)}. De actieve route blijft het enige hoofdvlak voor plannen, importeren of teruglezen.</p>
-      <p class="small-print">Deze kolom toont alleen planningmetadata en geen medische inhoud.</p>
-    </section>
-  `;
 }
 
 function renderScheduleRouteVisibility(activeRoute: ScheduleRoute, route: ScheduleRoute): string {
