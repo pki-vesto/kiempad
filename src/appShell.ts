@@ -566,7 +566,13 @@ export function normalizeQuestionRoute(value: string | null | undefined): Questi
 }
 
 type DossierRoute = 'upload' | 'search' | 'imaging' | 'timeline';
-type DossierAddFlow = 'document' | 'consult' | 'embryo-quality' | 'embryo-status' | 'review';
+type DossierAddFlow =
+  | 'keuze'
+  | 'document'
+  | 'consult'
+  | 'embryo-quality'
+  | 'embryo-status'
+  | 'review';
 
 const DOSSIER_ROUTES: readonly DossierRoute[] = ['upload', 'search', 'imaging', 'timeline'];
 
@@ -610,6 +616,7 @@ export function normalizeDossierRoute(value: string | null | undefined): Dossier
 
 export function normalizeDossierAddFlow(value: string | null | undefined): DossierAddFlow {
   const target = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
+  if (target === 'dossier-upload-form') return 'document';
   if (target === 'consult-verslag-form' || target === 'consult-context-fields') return 'consult';
   if (target === 'embryo-quality-form') return 'embryo-quality';
   if (target === 'embryo-status-event-form') return 'embryo-status';
@@ -622,7 +629,7 @@ export function normalizeDossierAddFlow(value: string | null | undefined): Dossi
   ) {
     return 'review';
   }
-  return 'document';
+  return 'keuze';
 }
 
 type KnowledgeRoute = 'read' | 'add' | 'ai' | 'library';
@@ -3127,7 +3134,7 @@ function renderDossierScreen(state: AppShellState): string {
     dossierDocumenten: zichtbareDocumenten,
   });
   const activeDossierRoute = state.activeDossierRoute ?? 'upload';
-  const activeDossierAddFlow = state.activeDossierAddFlow ?? 'document';
+  const activeDossierAddFlow = state.activeDossierAddFlow ?? 'keuze';
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
       renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
@@ -3281,6 +3288,11 @@ function renderDossierScreen(state: AppShellState): string {
             Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.
           </p>
         </div>
+        <section class="dossier-add-route-choice" data-dossier-add-route-choice="ready" aria-label="Kies eerst wat je wilt toevoegen">
+          <p class="kp-card__eyebrow">Eerst kiezen</p>
+          <h4>Kies één toevoeging om het bijbehorende formulier te openen.</h4>
+          <p>Document, consult, embryokwaliteit en embryostatus blijven gescheiden zodat deze route niet als één lange invoerpagina start.</p>
+        </section>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload" data-dossier-upload-console-region="document">
         ${workflowPanel({
           title: 'Dossierdocument uploaden',

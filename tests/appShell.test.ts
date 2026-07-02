@@ -1692,7 +1692,8 @@ describe('app shell', () => {
     expect(normalizeDossierAddFlow('#embryo-quality-form')).toBe('embryo-quality');
     expect(normalizeDossierAddFlow('#embryo-status-event-form')).toBe('embryo-status');
     expect(normalizeDossierAddFlow('#dossier-route-review')).toBe('review');
-    expect(normalizeDossierAddFlow('#dossier')).toBe('document');
+    expect(normalizeDossierAddFlow('#dossier-upload-form')).toBe('document');
+    expect(normalizeDossierAddFlow('#dossier')).toBe('keuze');
     expect(normalizeScreenId('#imaging-filter-form')).toBe('dossier');
     expect(normalizeDossierRoute('#imaging-filter-form')).toBe('imaging');
     expect(normalizeScreenId('#dossier-documenttijdlijn')).toBe('dossier');
@@ -6979,6 +6980,8 @@ describe('app shell', () => {
     expect(selector).toContain('href="#consult-verslag-form"');
     expect(selector).toContain('href="#embryo-quality-form"');
     expect(selector).toContain('href="#embryo-status-event-form"');
+    expect(css).toContain('.dossier-add-route-choice');
+    expect(css).toContain('.dossier-upload-console:not([data-dossier-add-flow="keuze"])');
     expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="document"]');
     expect(css).toContain('.dossier-add-route[href="#dossier-upload-form"]');
     expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="consult"]');
@@ -7115,6 +7118,10 @@ describe('app shell', () => {
     );
     expect(css).toContain(
       '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="document"]',
+    );
+    expect(css).toContain('[data-dossier-add-route-panel="dossier-upload"],');
+    expect(css).toContain(
+      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]:has(\n    #dossier-upload-form:target',
     );
     expect(css).toContain('.dossier-add-route-disclosure:not([open]):not(:has(:target))');
     expect(css).toContain('@media (min-width: 721px) and (max-width: 960px)');
@@ -7610,7 +7617,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-upload-console-region="consult"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="review"');
     expect(emptyHtml).toContain('data-dossier-upload-focus-mode="single-flow"');
-    expect(emptyHtml).toContain('data-dossier-add-flow="document"');
+    expect(emptyHtml).toContain('data-dossier-add-flow="keuze"');
+    expect(emptyHtml).toContain('data-dossier-add-route-choice="ready"');
+    expect(emptyHtml).toContain('Kies één toevoeging om het bijbehorende formulier te openen.');
     expect(emptyHtml).toContain('class="dossier-upload-console"');
     expect(emptyHtml).not.toContain(
       'class="kp-disclosure hub-detail-disclosure dossier-upload-console"',

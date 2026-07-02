@@ -279,6 +279,9 @@
 - **CFX-018 traject feedback — partial in G1401 / issue #2576.** Traject save, phase, archive,
   restore, and delete actions now set inline `role="status"` feedback on the active treatment
   route, matching the existing Agenda/Medicatie/Vragen/Kosten feedback pattern.
+- **CFX-040/CFX-012 dossier upload choice hub — partial in G1402 / issue #2578.** Dossier Upload
+  now opens in a compact choice state instead of immediately rendering the document form, and
+  document/consult/embryo forms only open after an explicit route choice or anchor target.
 
 ---
 
