@@ -624,10 +624,7 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       const documentId = button.dataset.dossierDocumentId;
       if (!documentId || !state.dossierStore) return;
 
-      const confirmed = window.confirm(DELETE_CONFIRMATIONS.dossierDocument);
-      if (!confirmed) return;
-
-      void deleteDossierDocument(documentId, root, state);
+      showDossierDeleteConfirmation(button, root, state);
     });
   });
 
@@ -645,6 +642,73 @@ function bindDossierControls(root: HTMLElement, state: RuntimeState): void {
       embryoLabel: optionalString(data.get('imagingEmbryoLabel')),
     };
     render(root, state);
+  });
+}
+
+function showDossierDeleteConfirmation(
+  trigger: HTMLButtonElement,
+  root: HTMLElement,
+  state: RuntimeState,
+): void {
+  const documentId = trigger.dataset.dossierDocumentId;
+  if (!documentId || !state.dossierStore) return;
+
+  root.querySelectorAll<HTMLElement>('[data-dossier-delete-confirm="ready"]').forEach((panel) => {
+    panel.remove();
+  });
+  root
+    .querySelectorAll<HTMLButtonElement>('.delete-dossier-document[aria-expanded="true"]')
+    .forEach((button) => {
+      button.setAttribute('aria-expanded', 'false');
+    });
+
+  const panelId = `dossier-delete-confirm-${documentId}`;
+  const panel = document.createElement('section');
+  panel.id = panelId;
+  panel.className = 'dossier-delete-confirm';
+  panel.dataset.dossierDeleteConfirm = 'ready';
+  panel.dataset.dossierDeleteConfirmState = 'pending';
+  panel.setAttribute('role', 'alertdialog');
+  panel.setAttribute('aria-label', 'Dossierdocument verwijderen bevestigen');
+
+  const copy = document.createElement('div');
+  const title = document.createElement('strong');
+  title.textContent = 'Dossierdocument verwijderen?';
+  const detail = document.createElement('p');
+  detail.textContent = `${trigger.dataset.dossierDocumentTitle ?? 'Dit importrecord'} wordt uit de import-inbox verwijderd. Broninhoud blijft buiten deze bevestiging.`;
+  copy.append(title, detail);
+
+  const actions = document.createElement('div');
+  actions.className = 'dossier-delete-confirm__actions';
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'secondary-button';
+  cancel.textContent = 'Annuleren';
+  cancel.dataset.dossierDeleteConfirmAction = 'cancel';
+  const confirm = document.createElement('button');
+  confirm.type = 'button';
+  confirm.className = 'danger-button';
+  confirm.textContent = 'Definitief verwijderen';
+  confirm.dataset.dossierDeleteConfirmAction = 'confirm';
+  actions.append(cancel, confirm);
+  panel.append(copy, actions);
+
+  trigger.setAttribute('aria-expanded', 'true');
+  trigger.setAttribute('aria-controls', panelId);
+  trigger.closest('li')?.append(panel);
+  panel.scrollIntoView({ block: 'nearest' });
+  cancel.focus({ preventScroll: true });
+
+  cancel.addEventListener('click', () => {
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.removeAttribute('aria-controls');
+    panel.remove();
+    trigger.focus({ preventScroll: true });
+  });
+
+  confirm.addEventListener('click', () => {
+    panel.dataset.dossierDeleteConfirmState = 'confirmed';
+    void deleteDossierDocument(documentId, root, state);
   });
 }
 

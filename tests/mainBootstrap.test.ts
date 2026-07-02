@@ -51,7 +51,10 @@ describe('main bootstrap', () => {
 
   it('verwerkt dossierimport verwijderen zonder documentinhoud te loggen', () => {
     expect(mainSource).toContain("'.delete-dossier-document'");
-    expect(mainSource).toContain('DELETE_CONFIRMATIONS.dossierDocument');
+    expect(mainSource).toContain('showDossierDeleteConfirmation(button, root, state)');
+    expect(mainSource).toContain('[data-dossier-delete-confirm="ready"]');
+    expect(mainSource).toContain("confirm.dataset.dossierDeleteConfirmAction = 'confirm'");
+    expect(mainSource).not.toContain('window.confirm(DELETE_CONFIRMATIONS.dossierDocument)');
     expect(mainSource).toContain("gebeurtenis: 'Dossierimport verwijderd'");
     expect(mainSource).toContain('Dossierdocument verwijderd uit de import-inbox.');
   });

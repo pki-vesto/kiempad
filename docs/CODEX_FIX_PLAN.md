@@ -126,6 +126,8 @@
 - **CFX-047 dossier upload validation — partial in G1354 / issue #2482.** Dossier document upload
   now uses a shared file allowlist, per-file and batch size caps, inline preview rejection, and
   submit blocking before file contents are read.
+- **CFX-019b dossier delete confirm — partial in G1355 / issue #2484.** Dossier import-inbox delete
+  now opens an inline confirmation panel with cancel/confirm actions instead of a browser confirm.
 
 ---
 
@@ -484,6 +486,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   show a calm confirmation (VERBETERINGEN C31/M). **P1 · M**
 - **CFX-019b** — In-app styled confirm to replace `window.confirm` for deletes. Files:
   `src/deleteConfirmations.ts`, `src/main.ts`. Accept: no native `confirm()`; still blocks. **P2 · M**
+  Partial G1355/#2484: Dossier import-inbox delete uses an inline confirmation panel; remaining
+  delete flows still need adoption.
 - **CFX-066** — Amount cell (`tabular-nums`, right-aligned, `€` adornment) for Kosten. **P2 · S**
 
 ### Copy / language (H)
