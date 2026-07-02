@@ -1419,7 +1419,12 @@ function renderSettingsFeedback(
 ): string {
   if (!feedback || feedback.kind !== kind) return '';
 
-  return `<p class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="${escapeAttribute(kind)}">${escapeHtml(feedback.message)}</p>`;
+  return statusMessage(feedback.message, {
+    className: 'settings-save-feedback save-feedback',
+    data: { 'settings-feedback': kind },
+    live: 'polite',
+    saveFeedback: `settings-${kind}`,
+  });
 }
 
 function hasExampleData(state: AppShellState): boolean {
@@ -12940,7 +12945,12 @@ function renderFinanceRouteVisibility(activeRoute: FinanceRoute, route: FinanceR
 function renderKostenStatus(status: string | undefined, surface: 'toevoegen' | 'historie'): string {
   if (!status) return '';
 
-  return `<p class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="${surface}">${escapeHtml(status)}</p>`;
+  return statusMessage(status, {
+    className: 'finance-save-feedback save-feedback',
+    data: { 'finance-save-feedback': surface },
+    live: 'polite',
+    saveFeedback: `finance-${surface}`,
+  });
 }
 
 function renderKostenForm(selected?: CostItem): string {
@@ -14967,7 +14977,12 @@ function renderVraagStatus(
 ): string {
   if (!status) return '';
 
-  return `<p class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="${surface}">${escapeHtml(status)}</p>`;
+  return statusMessage(status, {
+    className: 'question-save-feedback save-feedback',
+    data: { 'question-save-feedback': surface },
+    live: 'polite',
+    saveFeedback: `question-${surface}`,
+  });
 }
 
 function renderQuestionOpenToolbar(input: {
@@ -16288,7 +16303,12 @@ function renderScheduleRouteVisibility(activeRoute: ScheduleRoute, route: Schedu
 function renderAgendaStatus(status: string | undefined, surface: 'komend' | 'plannen'): string {
   if (!status) return '';
 
-  return `<p class="status-message schedule-save-feedback" role="status" aria-live="polite" data-schedule-save-feedback="${surface}">${escapeHtml(status)}</p>`;
+  return statusMessage(status, {
+    className: 'schedule-save-feedback save-feedback',
+    data: { 'schedule-save-feedback': surface },
+    live: 'polite',
+    saveFeedback: `schedule-${surface}`,
+  });
 }
 
 function renderAgendaImportForm(state: AppShellState): string {
@@ -16766,7 +16786,12 @@ function renderMedicatieStatus(
 ): string {
   if (!status) return '';
 
-  return `<p class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="${surface}">${escapeHtml(status)}</p>`;
+  return statusMessage(status, {
+    className: 'medication-save-feedback save-feedback',
+    data: { 'medication-save-feedback': surface },
+    live: 'polite',
+    saveFeedback: `medication-${surface}`,
+  });
 }
 
 function renderMedicationFocusShell(input: { workbench: string; workspace: string }): string {
