@@ -542,16 +542,27 @@ describe('fertility timeline', () => {
     expect(exportBestand).toMatchObject({
       bestandsNaam: 'kiempad-trajectexport-2026-06-24.md',
       mimeType: 'text/markdown',
+      bronAantal: 3,
     });
     expect(exportBestand.inhoud).toContain('# Kiempad trajectexport voor consultvoorbereiding');
     expect(exportBestand.inhoud).toContain('Gegenereerd: 2026-06-24T12:00:00.000Z');
     expect(exportBestand.inhoud).toContain('## Belangrijke mijlpalen');
     expect(exportBestand.inhoud).toContain('Punctie');
+    expect(exportBestand.inhoud).toContain('## Bronlijst');
+    expect(exportBestand.inhoud).toContain(
+      '- Afspraakrecord · agenda · Agenda · Datum: 2026-06-24T09:30 · Review: gereviewd · Record: afspraak-1 · Timeline-item: Punctie',
+    );
+    expect(exportBestand.inhoud).toContain(
+      '- Dossiermetadata · metadata · dossiermetadata · lab.pdf · Datum: 2026-06-23 · Review: concept · Record: doc-1 · Timeline-item: Labuitslag',
+    );
     expect(exportBestand.inhoud).toContain('## Volledige fertility timeline');
     expect(exportBestand.inhoud).toContain('Labuitslag');
     expect(exportBestand.inhoud).toContain('Gekoppelde records: Dossierrecord: Labuitslag');
     expect(exportBestand.inhoud).toContain('Timeline-items: 3');
+    expect(exportBestand.inhoud).toContain('Bronnen: 3');
     expect(exportBestand.inhoud).toContain('geen diagnose, kansberekening');
-    expect(exportBestand.inhoud).not.toMatch(/\badvies:|moet kiezen|dosering aanpassen\b/i);
+    expect(exportBestand.inhoud).not.toMatch(
+      /base64|\badvies:|moet kiezen|dosering aanpassen|behandelkeuzeadvies/i,
+    );
   });
 });

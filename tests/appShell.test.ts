@@ -4264,6 +4264,10 @@ describe('app shell', () => {
     expect(html).toContain('kiempad-trajectexport-');
     expect(html).toContain('# Kiempad trajectexport voor consultvoorbereiding');
     expect(html).toContain('Volledige ongefilterde Markdown-export');
+    expect(html).toContain('data-fertility-timeline-export-source-list="ready"');
+    expect(html).toContain('Bronlijst: ');
+    expect(html).toContain('met datum en reviewstatus.');
+    expect(html).toContain('## Bronlijst');
     expect(html).toContain('Belangrijke mijlpalen');
     expect(html).toContain('id="fertility-timeline-mijlpalen"');
     expect(html).toContain('Ontbrekende context');

@@ -122,6 +122,7 @@ export type FertilityTimelineTrajectExport = {
   mimeType: 'text/markdown';
   inhoud: string;
   waarschuwing: string;
+  bronAantal: number;
 };
 
 export type FertilityTimelineFilter = {
@@ -696,6 +697,7 @@ export function maakFertilityTimelineTrajectExport(
   timeline: FertilityTimeline,
   gegenereerdOp = new Date().toISOString(),
 ): FertilityTimelineTrajectExport {
+  const bronlijst = bouwTimelineExportBronlijst(timeline);
   const regels = [
     '# Kiempad trajectexport voor consultvoorbereiding',
     '',
@@ -708,6 +710,9 @@ export function maakFertilityTimelineTrajectExport(
     '## Ontbrekende context',
     ...formatContextSignalenVoorExport(timeline),
     '',
+    '## Bronlijst',
+    ...formatBronlijstVoorExport(bronlijst),
+    '',
     '## Volledige fertility timeline',
     ...formatTimelineItemsVoorExport(timeline),
     '',
@@ -715,6 +720,7 @@ export function maakFertilityTimelineTrajectExport(
     `Timeline-items: ${timeline.items.length}`,
     `Mijlpalen: ${timeline.mijlpalen.length}`,
     `Contextsignalen: ${timeline.contextSignalen.length}`,
+    `Bronnen: ${bronlijst.length}`,
     '',
     'Gebruik dit als gespreksoverzicht. Het is geen diagnose, kansberekening, dosering of behandeladvies.',
   ];
@@ -724,8 +730,14 @@ export function maakFertilityTimelineTrajectExport(
     mimeType: 'text/markdown',
     inhoud: regels.join('\n'),
     waarschuwing: timeline.waarschuwing,
+    bronAantal: bronlijst.length,
   };
 }
+
+type FertilityTimelineExportBron = FertilityTimelineBronverwijzing & {
+  itemId: string;
+  itemTitel: string;
+};
 
 function soortVolgorde(soort: FertilityTimelineItemSoort): number {
   return [
@@ -750,6 +762,38 @@ function formatContextSignalenVoorExport(timeline: FertilityTimeline): string[] 
   if (timeline.contextSignalen.length === 0) return ['- Geen ontbrekende context zichtbaar.'];
 
   return timeline.contextSignalen.map((item) => `- ${item.titel}: ${item.detail}`);
+}
+
+function formatBronlijstVoorExport(bronnen: readonly FertilityTimelineExportBron[]): string[] {
+  if (bronnen.length === 0) return ['- Geen bronverwijzingen opgenomen.'];
+
+  return bronnen.map(
+    (bron) =>
+      `- ${bron.label} · ${bron.soort} · ${bron.bron} · Datum: ${bron.datum} · Review: ${bron.reviewStatus} · Record: ${bron.recordId} · Timeline-item: ${bron.itemTitel}`,
+  );
+}
+
+function bouwTimelineExportBronlijst(timeline: FertilityTimeline): FertilityTimelineExportBron[] {
+  const bronnen = new Map<string, FertilityTimelineExportBron>();
+  for (const item of timeline.items) {
+    for (const bron of item.bronverwijzingen) {
+      const key = `${bron.soort}:${bron.recordId}:${bron.label}:${bron.datum}`;
+      if (!bronnen.has(key)) {
+        bronnen.set(key, {
+          ...bron,
+          itemId: item.id,
+          itemTitel: item.titel,
+        });
+      }
+    }
+  }
+
+  return Array.from(bronnen.values()).sort(
+    (a, b) =>
+      a.datum.localeCompare(b.datum) ||
+      a.soort.localeCompare(b.soort, 'nl-NL') ||
+      a.label.localeCompare(b.label, 'nl-NL'),
+  );
 }
 
 function formatTimelineItemsVoorExport(timeline: FertilityTimeline): string[] {

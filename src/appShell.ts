@@ -18026,7 +18026,8 @@ function renderFertilityTimelineTrajectExport(
   return `
     <section id="fertility-timeline-export" class="policy-panel embedded-summary timeline-export-panel" aria-label="Timeline-export consultvoorbereiding">
       <h3>Timeline-export consultvoorbereiding</h3>
-      <p class="small-print">Volledige ongefilterde Markdown-export voor eigen consultvoorbereiding.</p>
+      <p class="small-print">Volledige ongefilterde Markdown-export met bronlijst voor eigen consultvoorbereiding.</p>
+      <p class="linked-note" data-fertility-timeline-export-source-list="ready">Bronlijst: ${trajectExport.bronAantal} bron${trajectExport.bronAantal === 1 ? '' : 'nen'} met datum en reviewstatus.</p>
       <label>
         Bestandsnaam
         <input readonly value="${escapeAttribute(trajectExport.bestandsNaam)}" />
