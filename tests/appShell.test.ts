@@ -3328,6 +3328,8 @@ describe('app shell', () => {
       'data-recommendation-component-state="structured"',
     );
     expect(emptyContextRecommendations).toContain('data-daily-advice-list-mode="dual-owner-cards"');
+    expect(emptyContextRecommendations).not.toContain('data-daily-recommendation-feedback-status=');
+    expect(emptyContextRecommendations).not.toContain('Feedbackstatus:');
     expect(emptyContextRecommendations).toContain('class="daily-recommendation-dual-owner-lane"');
     expect(emptyContextRecommendations).toContain(
       'data-daily-recommendation-dual-owner-lane="primary"',
@@ -3762,11 +3764,27 @@ describe('app shell', () => {
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       dailyRecommendationStatus: 'Suggestie bewaard: Dagcheck zonder extra medicatiemoment.',
+      eventLogs: [
+        {
+          id: 'event-feedback-1',
+          datum: '2026-06-24T12:00:00.000Z',
+          categorie: 'systeem',
+          gebeurtenis: 'Dagelijkse suggestie gedaan',
+          detail: 'Dagcheck zonder extra medicatiemoment (vrouw-basisdag)',
+        },
+      ],
       activeStartRoute: 'recommendations',
     });
 
     expect(html).toContain('Suggestie bewaard: Dagcheck zonder extra medicatiemoment.');
+    expect(html).toContain('data-daily-recommendation-feedback-status="gedaan"');
+    expect(html).toContain('Feedbackstatus: Gedaan');
     expect(html).toContain('name="recommendationAction" value="gedaan"');
+    const feedbackStart = html.indexOf('data-daily-recommendation-feedback-status="gedaan"');
+    const feedbackSnippet = html.slice(feedbackStart, feedbackStart + 160);
+
+    expect(feedbackSnippet).not.toContain('tracking-payload');
+    expect(feedbackSnippet).not.toMatch(/diagnose|dosering|kansberekening|behandelkeuzeadvies/i);
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

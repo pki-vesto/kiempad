@@ -61,6 +61,9 @@
 - **Daily suggestion feedback on fertility timeline — done in G1425 / issue #2610.** Timeline
   suggestions now show local feedback status when available, expose an optional feedback filter,
   and include a `Gedaan` action while keeping empty states quiet and privacy/medical-safety guards.
+- **Daily suggestion feedback on advice cards — done in G1426 / issue #2612.** Dagadvieskaarten
+  now show existing local feedbackstatus directly on the card when available, while cards without
+  feedback stay quiet and tests guard against tracking or medical-claim leakage in the status line.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1334 — Daily Recommendations: feedbacksamenvatting in advieswerkbank
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Lokale feedbackstatussen zijn zichtbaar op timeline en dagadvieskaarten, maar de dagadvieswerkbank vat nog niet samen hoeveel suggesties al lokaal gemarkeerd zijn.
+- **User Impact:** Gebruikers moeten individuele kaarten openen om te zien hoeveel suggesties al verwerkt, bewaard of als bespreekpunt gemarkeerd zijn.
+- **Desired Outcome:** Toon in de dagadvieswerkbank hoeveel suggesties lokaal gemarkeerd zijn als gedaan, bewaard, niet passend, herinnering, bespreken of artscheck, zonder medische conclusies of tracking.
+- **User Value:** Gebruikers krijgen sneller overzicht over wat vandaag al verwerkt is zonder de volledige lijst te scannen.
+- **Acceptance Criteria:** De dagadvieswerkbank toont een compacte feedbacksamenvatting wanneer lokale feedback bestaat; zonder feedback blijft de werkbank rustig en ongewijzigd; de samenvatting gebruikt alleen lokale eventlogmetadata; tests dekken weergave, lege status en privacygrenzen; geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt toegevoegd.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, event log, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2614
+
 ### G1333 — Daily Recommendations: feedbackstatus gebruiken in dagadviesoverzicht
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, event log, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2612
 
 ### G1332 — Daily Recommendations: feedbackstatus van tijdlijnsuggesties tonen
