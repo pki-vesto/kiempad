@@ -88,6 +88,9 @@
 - **CFX-018 medication feedback — done in G1341 / issue #2456.** Medicatie save/delete and dose-log
   actions now set inline `role="status"` feedback in Vandaag, Beheer, and Historie, alongside the
   existing schema-import feedback.
+- **CFX-035 medication progress cards — done in G1347 / issue #2468.** Medicatie Vandaag now shows
+  a daily progress bar plus status-aware dose cards for gepland, genomen, overgeslagen, and gemist,
+  with injecties marked by the clay accent.
 - **CFX-018 question feedback — done in G1342 / issue #2458.** Vraag save/delete, priority move,
   and consult-PDF actions now set inline `role="status"` feedback in Open, Beheer, and Alle vragen
   routes, so question workflows no longer fail silently.
@@ -498,6 +501,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M**
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
+  Done in G1347/#2468.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
