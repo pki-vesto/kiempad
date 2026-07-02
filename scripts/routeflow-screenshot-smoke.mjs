@@ -1706,6 +1706,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
     .filter({ hasText: 'Actieve filter: Artscheck' })
     .waitFor({ timeout: 10_000 });
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-reset="ready"]')
+    .filter({ hasText: 'Wis lokale filter' })
+    .waitFor({ timeout: 10_000 });
 
   await page.locator('[data-daily-recommendation-feedback-filter-reset="ready"]').click();
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');

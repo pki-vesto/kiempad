@@ -14802,7 +14802,7 @@ function renderDailyRecommendationFeedbackFilter(input: {
       <button type="submit">Filter suggesties</button>
       ${
         input.filter
-          ? '<button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-feedback-filter-reset="ready">Reset filter</button>'
+          ? '<button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-feedback-filter-reset="ready" aria-label="Wis alleen de lokale feedbackfilter">Wis lokale filter</button>'
           : ''
       }
     </form>
