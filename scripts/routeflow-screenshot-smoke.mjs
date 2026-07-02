@@ -46,16 +46,12 @@ const targets = [
     expectedText: 'Lees research in lagen',
     activeRouteSelector: '[data-knowledge-route="read"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
-    focusLayout: {
-      supportSelector: '[data-knowledge-focus-region="workbench"]',
-      workspaceSelector: '[data-knowledge-focus-region="workspace"]',
-    },
     requiredSelectors: [
-      '[data-knowledge-focus-region="workbench"]',
       '[data-knowledge-focus-region="workspace"]',
       '[data-knowledge-console="ready"]',
-      '[data-knowledge-console-region="workbench"]',
       '[data-knowledge-console-region="workspace"]',
+      '[data-knowledge-single-workspace="ready"]',
+      '.knowledge-split-workspace .domain-split-workspace__context',
       '#knowledge-route-read',
       '[data-hub-workflow="knowledge-research"]',
       '[data-hub-workflow-tab="research"][aria-current="page"]',
@@ -781,8 +777,12 @@ async function assertRouteflows(browser, options) {
         const knowledgeConsole = routeflow.knowledgeConsole
           ? (() => {
               const body = document.querySelector('[data-knowledge-console="ready"]');
-              const workbench = document.querySelector('[data-knowledge-console-region="workbench"]');
-              const workspace = document.querySelector('[data-knowledge-console-region="workspace"]');
+              const workbench = document.querySelector(
+                '.knowledge-split-workspace .domain-split-workspace__context',
+              );
+              const workspace = document.querySelector(
+                '.knowledge-split-workspace .domain-split-workspace__main',
+              );
               const bodyRect = body?.getBoundingClientRect();
               const workbenchRect = workbench?.getBoundingClientRect();
               const workspaceRect = workspace?.getBoundingClientRect();
@@ -1194,8 +1194,8 @@ async function assertRouteflows(browser, options) {
         (!evidence.knowledgeConsole.bodyVisible ||
           !evidence.knowledgeConsole.workbenchVisible ||
           !evidence.knowledgeConsole.workspaceVisible ||
-          evidence.knowledgeConsole.workspaceTop < evidence.knowledgeConsole.workbenchTop - 1 ||
-          evidence.knowledgeConsole.workspaceLeft < evidence.knowledgeConsole.workbenchRight - 1 ||
+          evidence.knowledgeConsole.workbenchTop < evidence.knowledgeConsole.workspaceTop - 1 ||
+          evidence.knowledgeConsole.workbenchLeft < evidence.knowledgeConsole.workspaceRight - 1 ||
           evidence.knowledgeConsole.bodyOverflow !== 'hidden' ||
           evidence.knowledgeConsole.bodyMaxHeight === 'none' ||
           evidence.knowledgeConsole.workbenchOverflowY !== 'auto' ||

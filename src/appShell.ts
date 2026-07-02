@@ -12117,22 +12117,13 @@ function renderKennisScreen(state: AppShellState): string {
   return `
     <section class="section-stack knowledge-command-layout" aria-label="Kennisbank">
       ${renderKnowledgeFocusShell({
-        workbench: renderKnowledgeResearchWorkbench({
-          researchBronnen: researchBronnen.length,
-          researchSamenvattingen:
-            researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
-          researchTrends: researchTrendGroepen.length,
-          kennisItems: filteredItems.length,
-          totalKennisItems: state.kennisItems.length,
-          netwerkAan: state.settings.researchNetwerk.ingeschakeld,
-          filter,
-        }),
         workspace: domainSplitWorkspace({
           className: 'knowledge-split-workspace',
           ariaLabel: 'Kennis split-view werkruimte',
           data: {
             'knowledge-split-workspace': 'ready',
             'knowledge-compact-workspace': 'route-first',
+            'knowledge-single-workspace': 'ready',
           },
           rail: renderKennisTaskRoutes({
             researchBronnen: researchBronnen.length,
@@ -12141,6 +12132,16 @@ function renderKennisScreen(state: AppShellState): string {
             researchTrends: researchTrendGroepen.length,
             kennisItems: filteredItems.length,
             activeRoute: activeKnowledgeRoute,
+          }),
+          context: renderKnowledgeResearchWorkbench({
+            researchBronnen: researchBronnen.length,
+            researchSamenvattingen:
+              researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+            researchTrends: researchTrendGroepen.length,
+            kennisItems: filteredItems.length,
+            totalKennisItems: state.kennisItems.length,
+            netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+            filter,
           }),
           main: `
       <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'read')}>
@@ -12338,7 +12339,7 @@ function renderKennisScreen(state: AppShellState): string {
   `;
 }
 
-function renderKnowledgeFocusShell(input: { workbench: string; workspace: string }): string {
+function renderKnowledgeFocusShell(input: { workspace: string }): string {
   return `
     <section class="knowledge-focus-shell" aria-labelledby="knowledge-focus-shell-title" data-knowledge-focus-shell="ready">
       <header class="knowledge-focus-shell__header">
@@ -12347,9 +12348,6 @@ function renderKnowledgeFocusShell(input: { workbench: string; workspace: string
         <p>Werkbank, routekeuze en leesflow horen bij elkaar: bronnen, samenvattingen, relevantie en trends blijven één gefocuste kennisruimte.</p>
       </header>
       <div class="knowledge-focus-shell__body" data-knowledge-console="ready">
-        <div class="knowledge-focus-shell__workbench" data-knowledge-focus-region="workbench" data-knowledge-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="knowledge-focus-shell__workspace" data-knowledge-focus-region="workspace" data-knowledge-console-region="workspace">
           ${input.workspace}
         </div>
