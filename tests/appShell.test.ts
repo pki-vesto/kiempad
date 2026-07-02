@@ -3128,6 +3128,17 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-action-planner__lane:hover,');
     expect(css).toContain('.daily-advice-action-planner__lane:focus-visible {');
     expect(css).toContain('.daily-advice-action-planner__lane em {');
+    expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"],');
+    expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"],');
+    expect(css).toContain('[data-daily-recommendation-feedback-filter-reset="ready"] {');
+    expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"]:focus-visible,');
+    expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"]:focus-visible,');
+    expect(css).toContain(
+      '[data-daily-recommendation-feedback-filter-reset="ready"]:focus-visible {',
+    );
+    expect(css).toContain(
+      'box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);',
+    );
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(
