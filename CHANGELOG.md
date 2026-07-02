@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1328 CFX-003c: lege routes gebruiken nu de rijke `emptyState()` component met icoontegel, titel, tekst en waar zinvol een CTA. Kale `<p class="empty-state">` fallbacks zijn uit de app-shell en research-lijsten gehaald.
 - G1327 CFX-033b: instellingen en vergrendelen staan niet meer als dominante acties bovenin de desktop-sidebar. De sidebar opent met merk, opslagstatus en navigatie; de acties staan in een rustige utility-zone onderaan.
 - G1326 CFX-015: de mobiele `Meer`-sheet blijft niet meer automatisch open staan boven secundaire routes. De knop blijft actief gemarkeerd, routeformulieren houden extra ruimte boven de bottom navigation en mobiele controls blijven aanklikbaar.
 - G1325 CFX-007 Welzijn ownerlabels: het welzijnsscherm gebruikt opgeslagen namen uit Instellingen voor recente signalen, `Van wie`-selects en check-in/symptoombadges. De onderliggende recordwaarden blijven `peter`/`partner`/`samen` voor compatibiliteit.

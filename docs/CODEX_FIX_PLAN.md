@@ -38,6 +38,10 @@
 - **CFX-033b sidebar utility actions — done in G1327 / issue #2428.** Settings and lock
   actions moved out of the desktop sidebar header into a quiet utility zone below the
   navigation/workspace strip, so the sidebar opens with brand, storage status, and navigation.
+- **CFX-003c rich empty states — done in G1328 / issue #2430.** Raw app-shell
+  `<p class="empty-state">` fallbacks now use the shared rich `emptyState()` component with
+  icon tile, title, message, and route CTA where useful; research source/summary list helpers
+  use the same component.
 
 ---
 
@@ -55,11 +59,10 @@ The product is **not yet premium**. Three structural problems dominate:
 1. **`src/appShell.ts` is an 18,540-line monolith** with **354 `render*` functions**; the single
    worst is `renderDossierScreen` at **1,045 lines**. All screens, all forms, all copy, and all
    markup live in one file. This makes every change high-risk and every review shallow.
-2. **The component layer is half-adopted.** `src/ui/components.ts` defines `emptyState`,
-   `loadingSkeleton`, `card`, `actionCard`, `timeline`, `accordion`, `statRow`, etc., but
-   `emptyState()` has **0 call sites** and `loadingSkeleton` is **unused** — screens still emit 47
-   raw `<p class="empty-state">` strings and there are **no loading/skeleton states anywhere**.
-   The abstractions exist but the screens don't use them.
+2. **The component layer is still only partly adopted.** `src/ui/components.ts` defines
+   `emptyState`, `loadingSkeleton`, `card`, `actionCard`, `timeline`, `accordion`, `statRow`,
+   etc. `emptyState()` is now adopted for app-shell empty routes (G1328), but
+   `loadingSkeleton` is still **unused** and several patterns remain inconsistently applied.
 3. **`styles.css` is 14,343 lines** and carries a compatibility **alias layer** (old sage token
    names aliased to new teal tokens). This works but hides the real system and invites drift
    (CFX-030 has since moved PWA chrome from old sage to Claude Design teal; remaining token alias
@@ -81,7 +84,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 |---|-----|-----|
 | 1 | Split `appShell.ts` (18.5k LOC) into per-screen modules under `src/screens/` | Every change is currently high-risk; blocks all other work |
 | 2 | Break up `renderDossierScreen` (1,045 LOC) into upload/imaging/embryo/history sub-renderers | Largest single fragility hotspot |
-| 3 | Adopt `emptyState()` everywhere (47 raw `<p class="empty-state">`, 0 component calls) | Empty installs feel hollow; component already exists |
+| 3 | ✅ CFX-003c: Adopt `emptyState()` everywhere raw app-shell empty states were used | Done in G1328; empty installs now show rich empty blocks |
 | 4 | Add `loadingSkeleton()` states for async lists (dossier, timeline, AI, OCR) — currently none | App "pops" abruptly; feels like a prototype |
 | 5 | ✅ CFX-030: Fix `theme-color` in `index.html` (`#7a9471` sage → teal `#2c6e63`) | Done in G1320; PWA/browser chrome now uses teal |
 | 6 | ✅ CFX-006/CFX-046: Build the Settings sheet (`eigenNaam`/`partnerNaam`/`gedeeldeModus` + thema, no "Bewaar thema") | Done in G1324; names/shared mode persist encrypted and theme switches live |
@@ -111,9 +114,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   bindings unless every id/name/data/aria/class is preserved. There is **no event delegation** and
   **no diffing** — full teardown/rebuild on every state change loses focus/scroll and forbids
   animation. This is the deepest fragility in the app.
-- **Half-adopted component layer**: `src/ui/components.ts` is good but under-used. `emptyState()` = 0
-  calls, `loadingSkeleton` = 0 calls, `timeline()`/`accordion()`/`statRow()` used inconsistently;
-  screens still hand-roll equivalent markup. Two sources of truth per pattern.
+- **Half-adopted component layer**: `src/ui/components.ts` is good but still under-used.
+  `emptyState()` now covers app-shell empty routes (G1328), but `loadingSkeleton` = 0 calls and
+  `timeline()`/`accordion()`/`statRow()` remain inconsistently applied.
 - **CSS size & aliasing**: `styles.css` = 14,343 lines with an old→new token alias layer. Works, but
   the alias layer means "the real design system" isn't legible; dead/duplicated rules likely. No CSS
   layering (`@layer`), no obvious componentized structure.
@@ -370,9 +373,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   gap ~24, card gap 10–11; content max-width 720 centered. Accept: consistent across screens. **P2 · M**
 
 ### Components
-- **CFX-003c** — Adopt `emptyState()` on all 47 `<p class="empty-state">` sites with per-screen
-  icon + serif title + one CTA (E38/E40). Files: `src/appShell.ts`, `src/ui/components.ts`.
-  Accept: 0 raw `empty-state` `<p>`; each screen's primary empty uses the rich block. **P1 · L**
+- **CFX-003c** — ✅ Done in G1328 / issue #2430. Adopt `emptyState()` on all raw
+  `<p class="empty-state">` app-shell sites with serif title + CTA where useful (E38/E40).
+  Files: `src/appShell.ts`, `src/ui/components.ts`. Accept: 0 raw `empty-state` `<p>`;
+  empty routes use the rich block. **P1 · L**
 - **CFX-004c** — Add `loadingSkeleton()` states for dossier list, timeline, AI summaries, OCR, and
   central fetch. Files: screens + `src/main.ts`. Accept: async regions show skeleton + `aria-busy`. **P1 · M**
 - **CFX-006** — ✅ Done in G1324 / issue #2423. Settings sheet component (`renderSettingsSheet`) + open/close state (`settingsOpen`)

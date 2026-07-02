@@ -139,8 +139,13 @@ describe('disclosure', () => {
 
 describe('states', () => {
   it('emptyState renders message and optional cta', () => {
-    const html = emptyState({ message: 'Nog niets', cta: { href: '#a', label: 'Voeg toe' } });
+    const html = emptyState({
+      id: 'lege-staat',
+      message: 'Nog niets',
+      cta: { href: '#a', label: 'Voeg toe' },
+    });
     expect(html).toContain('empty-state');
+    expect(html).toContain('id="lege-staat"');
     expect(html).toContain('Nog niets');
     expect(html).toContain('href="#a"');
   });

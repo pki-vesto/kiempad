@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1328 — CFX-003c: Rijke lege staten in app-shell
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Lege routes vielen terug op kale `Nog geen...` tekstregels, waardoor eerste gebruik en lege datasets prototype-achtig aanvoelden.
+- **User Impact:** Gebruikers kregen weinig richting wanneer een onderdeel nog leeg was en moesten zelf raden welke actie logisch was.
+- **Desired Outcome:** Gebruik de gedeelde `emptyState()` component voor app-shell en research-lijst fallbacks, inclusief titel, rustige icoontegel en waar passend een CTA naar de invoerroute.
+- **User Value:** Lege schermen voelen ontworpen en geven direct richting zonder de pagina te verlengen met extra uitleg.
+- **Acceptance Criteria:** Geen raw `<p class=\"empty-state\">` fallbacks meer in `src/appShell.ts` of de research list helpers; rich empty states behouden bestaande anchors zoals `fertility-timeline-items`; primaire lege routes tonen titel en relevante CTA waar zinvol; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; tests dekken component-id en timeline lege staat; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Alle routes met lege lijsten, Dossier, Welzijn, Agenda, Medicatie, Traject, Timeline, Research, Vragen, Logboek, Herinneringen
+- **Priority:** P1
+- **Complexity:** L
+- **Related Components:** App shell, UI components, empty states, tests
+- **ADR Needed:** no
+- **Score:** 90
+- **Status:** ☑ klaar
+
 ### G1327 — CFX-033b: Sidebar-acties naar rustige utility-zone
 
 - **Epic:** Onboarding & Daily Use

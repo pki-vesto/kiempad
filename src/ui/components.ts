@@ -325,7 +325,10 @@ export function researchSourceList(opts: {
     ${
       opts.items.length > 0
         ? `<ol class="kp-research-source-list__items">${opts.items.join('')}</ol>`
-        : `<p class="empty-state">${escapeHtml(opts.emptyState ?? 'Nog geen researchbronnen vastgelegd.')}</p>`
+        : emptyState({
+            title: 'Nog geen bronnen',
+            message: opts.emptyState ?? 'Nog geen researchbronnen vastgelegd.',
+          })
     }
   </section>`;
 }
@@ -384,7 +387,7 @@ export function researchSummaryList(opts: {
     ${
       opts.items.length > 0
         ? `<ol class="kp-research-summary-list__items">${opts.items.join('')}</ol>`
-        : `<p class="empty-state">${escapeHtml(opts.emptyState)}</p>`
+        : emptyState({ title: 'Nog geen samenvatting', message: opts.emptyState })
     }
   </section>`;
 }
@@ -696,12 +699,14 @@ export function emptyState(opts: {
   title?: string;
   iconName?: IconName;
   cta?: { href: string; label: string };
+  id?: string;
 }): string {
   const cta = opts.cta
     ? `<a class="inline-action" href="${escapeAttribute(opts.cta.href)}">${escapeHtml(opts.cta.label)}</a>`
     : '';
   const heading = opts.title ? `<h3 class="kp-empty__title">${escapeHtml(opts.title)}</h3>` : '';
-  return `<div class="empty-state kp-empty"><span class="kp-empty__tile" aria-hidden="true">${icon(opts.iconName ?? 'sprout')}</span>${heading}<p>${escapeHtml(opts.message)}</p>${cta}</div>`;
+  const id = opts.id ? ` id="${escapeAttribute(opts.id)}"` : '';
+  return `<div${id} class="empty-state kp-empty"><span class="kp-empty__tile" aria-hidden="true">${icon(opts.iconName ?? 'sprout')}</span>${heading}<p>${escapeHtml(opts.message)}</p>${cta}</div>`;
 }
 
 /** Loading skeleton (shimmer disabled under prefers-reduced-motion via CSS). */

@@ -194,6 +194,7 @@ import {
   researchSourceList,
   researchSummaryCard,
   researchSummaryList,
+  emptyState as richEmptyState,
   type StepState,
   sectionStack,
   statRow,
@@ -207,6 +208,16 @@ import { escapeAttribute, escapeHtml } from './ui/escape';
 export const DISCLAIMER =
   'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
   'en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
+
+type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
+
+function renderEmptyState(message: string, opts: AppEmptyStateOptions = {}): string {
+  return richEmptyState({
+    title: 'Nog niets vastgelegd',
+    ...opts,
+    message,
+  });
+}
 
 type ScreenId =
   | 'start'
@@ -1424,7 +1435,9 @@ function renderLogboekScreen(state: AppShellState): string {
             ${
               logs.length > 0
                 ? `<ol class="phase-list">${logs.map(renderEventLogItem).join('')}</ol>`
-                : '<p class="empty-state">Nog geen gebeurtenissen vastgelegd.</p>'
+                : renderEmptyState('Nog geen gebeurtenissen vastgelegd.', {
+                    title: 'Logboek is nog leeg',
+                  })
             }
           </div>
         </details>
@@ -1474,7 +1487,9 @@ function renderLogboekScreen(state: AppShellState): string {
             ${
               highRiskLogs.length > 0
                 ? `<ol class="phase-list">${highRiskLogs.map(renderEventLogItem).join('')}</ol>`
-                : '<p class="empty-state">Geen privacygevoelige gebeurtenissen in dit logboek.</p>'
+                : renderEmptyState('Geen privacygevoelige gebeurtenissen in dit logboek.', {
+                    title: 'Geen privacyregels',
+                  })
             }
           </div>
         </details>
@@ -1700,7 +1715,8 @@ function renderEventLogCategorySummary(
   counts: Partial<Record<EventLog['categorie'], number>>,
 ): string {
   const entries = Object.entries(counts) as [EventLog['categorie'], number][];
-  if (entries.length === 0) return '<p class="empty-state">Nog geen categorieën vastgelegd.</p>';
+  if (entries.length === 0)
+    return renderEmptyState('Nog geen categorieën vastgelegd.', { title: 'Geen categorieën' });
 
   return `
     <dl class="summary-list">
@@ -1840,7 +1856,10 @@ function renderAfwegingenScreen(state: AppShellState): string {
             ${
               decisions.length > 0
                 ? `<ol class="phase-list">${decisions.map((decision) => renderDecisionCompareItem(decision, state)).join('')}</ol>`
-                : '<p class="empty-state">Nog geen opties om te vergelijken.</p>'
+                : renderEmptyState('Nog geen opties om te vergelijken.', {
+                    title: 'Geen opties',
+                    cta: { href: '#decision-option-form', label: 'Optie toevoegen' },
+                  })
             }
           </div>
         </details>
@@ -1868,7 +1887,9 @@ function renderAfwegingenScreen(state: AppShellState): string {
             ${
               decisions.length > 0
                 ? `<ol class="phase-list">${decisions.map(renderDecisionChoiceItem).join('')}</ol>`
-                : '<p class="empty-state">Nog geen beslisnotitie om een keuze bij vast te leggen.</p>'
+                : renderEmptyState('Nog geen beslisnotitie om een keuze bij vast te leggen.', {
+                    title: 'Nog geen keuzecontext',
+                  })
             }
           </div>
         </details>
@@ -1895,7 +1916,9 @@ function renderAfwegingenScreen(state: AppShellState): string {
             ${
               decisions.length > 0
                 ? `<ol class="phase-list">${decisions.map(renderDecisionHistoryItem).join('')}</ol>`
-                : '<p class="empty-state">Nog geen beslisverslagen vastgelegd.</p>'
+                : renderEmptyState('Nog geen beslisverslagen vastgelegd.', {
+                    title: 'Geen verslagen',
+                  })
             }
           </div>
         </details>
@@ -3283,7 +3306,10 @@ function renderDossierScreen(state: AppShellState): string {
                   `,
                     )
                     .join('')}</ol>`
-                : '<p class="empty-state">Nog geen dossierimport in de inbox.</p>'
+                : renderEmptyState('Nog geen dossierimport in de inbox.', {
+                    title: 'Inbox is leeg',
+                    cta: { href: '#dossier-upload-form', label: 'Document uploaden' },
+                  })
             }
           </div>
         </details>
@@ -3796,7 +3822,10 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               consultVerslagen.length > 0
                 ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
-                : '<p class="empty-state">Nog geen consultverslagen als apart recordtype vastgelegd.</p>'
+                : renderEmptyState('Nog geen consultverslagen als apart recordtype vastgelegd.', {
+                    title: 'Geen consultverslagen',
+                    cta: { href: '#consult-verslag-form', label: 'Verslag toevoegen' },
+                  })
             }
           </div>
         </details>
@@ -3817,7 +3846,13 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               imagingItems.length > 0
                 ? `<ol class="phase-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
-                : '<p class="empty-state">Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.</p>'
+                : renderEmptyState(
+                    'Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.',
+                    {
+                      title: 'Geen beelden',
+                      cta: { href: '#dossier-upload-form', label: 'Beeld uploaden' },
+                    },
+                  )
             }
           </div>
         </details>
@@ -3828,7 +3863,9 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               indexItems.length > 0
                 ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
-                : '<p class="empty-state">Nog geen dossierindex beschikbaar.</p>'
+                : renderEmptyState('Nog geen dossierindex beschikbaar.', {
+                    title: 'Index wordt opgebouwd',
+                  })
             }
           </div>
         </details>
@@ -3846,7 +3883,10 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               embryoDossiers.length > 0
                 ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
-                : '<p class="empty-state">Nog geen embryo-dossier beschikbaar.</p>'
+                : renderEmptyState('Nog geen embryo-dossier beschikbaar.', {
+                    title: 'Geen embryodossier',
+                    cta: { href: '#dossier-upload-form', label: 'Embryogegevens uploaden' },
+                  })
             }
           </div>
         </details>
@@ -3916,7 +3956,10 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               tijdlijn.length > 0
                 ? `<ol class="phase-list">${tijdlijn.map((item) => renderDossierTijdlijnItem(item, state, matchMap.get(item.id))).join('')}</ol>`
-                : '<p class="empty-state">Nog geen historische onderzoeken geüpload.</p>'
+                : renderEmptyState('Nog geen historische onderzoeken geüpload.', {
+                    title: 'Geen historische onderzoeken',
+                    cta: { href: '#dossier-upload-form', label: 'Onderzoek uploaden' },
+                  })
             }
           </div>
         </details>
@@ -3927,7 +3970,10 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               behandelGeschiedenis.length > 0
                 ? `<ol class="phase-list">${behandelGeschiedenis.map((item) => renderBehandelGeschiedenisItem(item, state, documentMap.get(item.id.replace(/^dossier-/, '')))).join('')}</ol>`
-                : '<p class="empty-state">Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.</p>'
+                : renderEmptyState(
+                    'Nog geen behandelgeschiedenis uit afspraken, consulten en dossierdocumenten opgebouwd.',
+                    { title: 'Geen behandelgeschiedenis' },
+                  )
             }
           </div>
         </details>
@@ -10181,7 +10227,9 @@ function renderDossierReviewWachtrij(
   state: AppShellState,
 ): string {
   if (items.length === 0) {
-    return '<p class="empty-state">Geen OCR-documenten in de documentreview wachtrij.</p>';
+    return renderEmptyState('Geen OCR-documenten in de documentreview wachtrij.', {
+      title: 'Reviewwachtrij is leeg',
+    });
   }
 
   return `
@@ -11386,7 +11434,10 @@ function renderWelzijnScreen(state: AppShellState): string {
             ${
               checkIns.length > 0
                 ? `<ol class="phase-list">${checkIns.map((item) => renderMentalCheckInItem(item, state.settings)).join('')}</ol>`
-                : '<p class="empty-state">Nog geen mentale check-ins vastgelegd.</p>'
+                : renderEmptyState('Nog geen mentale check-ins vastgelegd.', {
+                    title: 'Geen check-ins',
+                    cta: { href: '#welzijn?route=log', label: 'Check-in vastleggen' },
+                  })
             }
           </div>
         </details>
@@ -11397,7 +11448,10 @@ function renderWelzijnScreen(state: AppShellState): string {
             ${
               perDag.length > 0
                 ? `<ol class="phase-list">${perDag.map((group) => renderSymptomDagGroep(group, state.settings)).join('')}</ol>`
-                : '<p class="empty-state">Nog geen symptoomlogs vastgelegd.</p>'
+                : renderEmptyState('Nog geen symptoomlogs vastgelegd.', {
+                    title: 'Geen symptoomlogs',
+                    cta: { href: '#welzijn?route=log', label: 'Symptoom vastleggen' },
+                  })
             }
           </div>
         </details>
@@ -11408,7 +11462,10 @@ function renderWelzijnScreen(state: AppShellState): string {
             ${
               cycleData.length > 0
                 ? `<ol class="phase-list">${cycleData.map(renderCycleDataItem).join('')}</ol>`
-                : '<p class="empty-state">Nog geen cyclusmetingen vastgelegd.</p>'
+                : renderEmptyState('Nog geen cyclusmetingen vastgelegd.', {
+                    title: 'Geen cyclusmetingen',
+                    cta: { href: '#welzijn?route=log', label: 'Meting toevoegen' },
+                  })
             }
           </div>
         </details>
@@ -11734,7 +11791,7 @@ function renderWelzijnTrends(trends: WelzijnTrendPeriode[]): string {
                 )
                 .join('')}
             </ol>`
-          : '<p class="empty-state">Nog geen trendgegevens.</p>'
+          : renderEmptyState('Nog geen trendgegevens.', { title: 'Geen trends' })
       }
     </section>
   `;
@@ -12627,7 +12684,10 @@ function renderKostenScreen(state: AppShellState): string {
             ${
               kosten.length > 0
                 ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
-                : '<p class="empty-state">Nog geen kostenposten vastgelegd.</p>'
+                : renderEmptyState('Nog geen kostenposten vastgelegd.', {
+                    title: 'Geen kostenposten',
+                    cta: { href: '#kosten?route=toevoegen', label: 'Kostenpost toevoegen' },
+                  })
             }
           </div>
         </details>
@@ -13122,7 +13182,9 @@ function renderResearchRelevantieVoorGebruiker(
               `,
             )
             .join('')}</ol>`
-        : '<p class="empty-state">Nog geen relevantie per publicatie aan dossiercontext gekoppeld.</p>'
+        : renderEmptyState('Nog geen relevantie per publicatie aan dossiercontext gekoppeld.', {
+            title: 'Geen relevantiekoppeling',
+          })
     }
   `;
 }
@@ -13147,7 +13209,9 @@ function renderResearchDossierRelaties(relaties: readonly ResearchDossierRelatie
               `,
             )
             .join('')}</ol>`
-        : '<p class="empty-state">Nog geen research-dossierrelaties beschikbaar.</p>'
+        : renderEmptyState('Nog geen research-dossierrelaties beschikbaar.', {
+            title: 'Geen researchrelaties',
+          })
     }
   `;
 }
@@ -13178,7 +13242,9 @@ function renderResearchTrendGroepen(groepen: readonly ResearchTrendGroep[]): str
                 `,
               )
               .join('')}</ol>`
-          : '<p class="empty-state">Nog geen researchtrends gevonden in opgeslagen researchitems.</p>'
+          : renderEmptyState('Nog geen researchtrends gevonden in opgeslagen researchitems.', {
+              title: 'Geen researchtrends',
+            })
       }
     </section>
   `;
@@ -13414,7 +13480,7 @@ function renderKennisCategorie(label: string, items: KennisItem[]): string {
       ${
         items.length > 0
           ? `<ol class="phase-list">${items.map(renderKennisItem).join('')}</ol>`
-          : '<p class="empty-state">Nog geen items in deze categorie.</p>'
+          : renderEmptyState('Nog geen items in deze categorie.', { title: 'Categorie is leeg' })
       }
     </section>
   `;
@@ -13562,7 +13628,9 @@ function renderStartScreen(state: AppShellState): string {
       : dashboardSection({
           title: 'Vandaag te zetten',
           eyebrow: 'Rustig',
-          body: '<p class="empty-state">Geen medicatiemomenten voor vandaag.</p>',
+          body: renderEmptyState('Geen medicatiemomenten voor vandaag.', {
+            title: 'Vandaag niets gepland',
+          }),
           route: 'medicatie',
           ariaLabel: 'Vandaag te zetten',
         });
@@ -14353,7 +14421,7 @@ function renderDailyCommandActions(items: readonly string[]): string {
                 });
               })
               .join('')}</div>`
-          : '<p class="empty-state">Geen urgente taken voor vandaag.</p>'
+          : renderEmptyState('Geen urgente taken voor vandaag.', { title: 'Rustige dag' })
       }
     </section>
   `;
@@ -14370,7 +14438,7 @@ function renderDailyCommandGroup(
       ${
         items.length > 0
           ? `<ul class="compact-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
-          : `<p class="empty-state">${escapeHtml(emptyState)}</p>`
+          : renderEmptyState(emptyState, { title: 'Geen dagitems' })
       }
     </section>
   `;
@@ -14990,7 +15058,10 @@ function renderVragenScreen(state: AppShellState): string {
         ${
           nextWithQuestions
             ? renderOpenVragenVoorAfspraak(nextWithQuestions)
-            : '<p class="empty-state">Geen openstaande vragen voor de eerstvolgende afspraak.</p>'
+            : renderEmptyState('Geen openstaande vragen voor de eerstvolgende afspraak.', {
+                title: 'Geen open vragen',
+                cta: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
+              })
         }
       </section>`,
     `<section id="vragen-route-voorbereiden" class="question-route-section command-route-section" aria-labelledby="vragen-route-voorbereiden-title" data-question-route="voorbereiden"${renderQuestionRouteVisibility(activeQuestionRoute, 'voorbereiden')}>
@@ -15025,7 +15096,9 @@ function renderVragenScreen(state: AppShellState): string {
           open: Boolean(gegenereerdeVragenlijst),
           body: gegenereerdeVragenlijst
             ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
-            : '<p class="empty-state">Nog geen open punten om een lokale vragenlijst te maken.</p>',
+            : renderEmptyState('Nog geen open punten om een lokale vragenlijst te maken.', {
+                title: 'Geen vragenlijstpunten',
+              }),
         })}
       </section>`,
     `<section id="vragen-route-beheer" class="question-route-section command-route-section" aria-labelledby="vragen-route-beheer-title" data-question-route="beheer"${renderQuestionRouteVisibility(activeQuestionRoute, 'beheer')}>
@@ -15077,7 +15150,9 @@ function renderVragenScreen(state: AppShellState): string {
           body:
             vraagVerslagen.length > 0
               ? renderVraagVerslagen(vraagVerslagen)
-              : '<p class="empty-state">Nog geen beantwoorde vragen met afspraak om terug te lezen.</p>',
+              : renderEmptyState('Nog geen beantwoorde vragen met afspraak om terug te lezen.', {
+                  title: 'Geen antwoorden',
+                }),
         })}
       </section>`,
     `<section id="vragen-route-alle" class="question-route-section command-route-section" aria-labelledby="vragen-route-alle-title" data-question-route="alle"${renderQuestionRouteVisibility(activeQuestionRoute, 'alle')}>
@@ -15106,7 +15181,13 @@ function renderVragenScreen(state: AppShellState): string {
           body:
             state.vragen.length > 0
               ? renderVragenList(state.vragen)
-              : '<p class="empty-state">Nog geen vragen. Voeg via Beheer een vraag toe voor het volgende contactmoment.</p>',
+              : renderEmptyState(
+                  'Nog geen vragen. Voeg via Beheer een vraag toe voor het volgende contactmoment.',
+                  {
+                    title: 'Geen vragen',
+                    cta: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
+                  },
+                ),
         })}
       </section>`,
   ];
@@ -15406,7 +15487,13 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
           </span>
           <em>Wacht</em>
         </header>
-        <p class="empty-state">Voeg een komende afspraak en open vragen toe om een lokaal prep-packet te maken.</p>
+        ${renderEmptyState(
+          'Voeg een komende afspraak en open vragen toe om een lokaal prep-packet te maken.',
+          {
+            title: 'Consult nog niet voorbereid',
+            cta: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
+          },
+        )}
         <p class="small-print">Kiempad geeft geen diagnose, behandeladvies of behandelkeuze.</p>
       </section>
     `;
@@ -15784,7 +15871,10 @@ function renderHerinneringenScreen(state: AppShellState): string {
             ${
               komende.length > 0
                 ? renderHerinneringenList(komende)
-                : '<p class="empty-state">Nog geen actieve herinneringen voor medicatie of afspraken.</p>'
+                : renderEmptyState('Nog geen actieve herinneringen voor medicatie of afspraken.', {
+                    title: 'Geen herinneringen',
+                    cta: { href: '#herinneringen?route=plannen', label: 'Herinnering plannen' },
+                  })
             }
           </div>
         </details>
@@ -16036,7 +16126,9 @@ function renderInAppFallbackNotifications(items: InAppFallbackNotification[]): s
           })
           .join('')}
       </ol>`
-          : '<p class="empty-state">Geen in-app fallbackmeldingen actief.</p>'
+          : renderEmptyState('Geen in-app fallbackmeldingen actief.', {
+              title: 'Geen fallbackmeldingen',
+            })
       }
     </section>
   `;
@@ -16231,7 +16323,11 @@ function renderAgendaScreen(state: AppShellState): string {
           summary: 'Week- en maandcontext',
           open: state.afspraken.length > 0,
           body:
-            agendaOverview || '<p class="empty-state">Nog geen agenda-overzicht beschikbaar.</p>',
+            agendaOverview ||
+            renderEmptyState('Nog geen agenda-overzicht beschikbaar.', {
+              title: 'Agenda is leeg',
+              cta: { href: '#agenda?route=plannen', label: 'Afspraak plannen' },
+            }),
         })}
       </section>`,
     `<section id="agenda-route-komend" class="schedule-route-section command-route-section" aria-labelledby="agenda-route-komend-title" data-schedule-route="komend"${renderScheduleRouteVisibility(activeScheduleRoute, 'komend')}>
@@ -16260,7 +16356,13 @@ function renderAgendaScreen(state: AppShellState): string {
             ${
               upcoming.length > 0
                 ? renderAgendaList(upcoming, state.trajecten)
-                : '<p class="empty-state">Geen komende afspraken. Maak via Plannen een nieuwe afspraak aan.</p>'
+                : renderEmptyState(
+                    'Geen komende afspraken. Maak via Plannen een nieuwe afspraak aan.',
+                    {
+                      title: 'Geen komende afspraken',
+                      cta: { href: '#agenda?route=plannen', label: 'Afspraak plannen' },
+                    },
+                  )
             }
           `,
         })}
@@ -16340,7 +16442,7 @@ function renderAgendaScreen(state: AppShellState): string {
           body:
             past.length > 0
               ? renderAfgelopenAgendaList(past, state.trajecten)
-              : '<p class="empty-state">Nog geen afgelopen afspraken.</p>',
+              : renderEmptyState('Nog geen afgelopen afspraken.', { title: 'Geen historie' }),
         })}
       </section>`,
   ];
@@ -16838,7 +16940,10 @@ function renderMedicatieScreen(state: AppShellState): string {
         ${
           todayLogs.length > 0
             ? renderDoseLogList(todayLogs, state.medicatie)
-            : '<p class="empty-state">Nog geen geplande innames of injecties voor vandaag.</p>'
+            : renderEmptyState('Nog geen geplande innames of injecties voor vandaag.', {
+                title: 'Vandaag niets gepland',
+                cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
+              })
         }
       </section>`,
     `<section id="medicatie-route-planning" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-planning-title" data-medication-route="planning"${renderMedicationRouteVisibility(activeMedicationRoute, 'planning')}>
@@ -16864,7 +16969,9 @@ function renderMedicatieScreen(state: AppShellState): string {
         ${
           plannedLogs.length > 0
             ? renderDoseLogList(plannedLogs, state.medicatie)
-            : '<p class="empty-state">Nog geen toekomstige medicatiemomenten buiten vandaag.</p>'
+            : renderEmptyState('Nog geen toekomstige medicatiemomenten buiten vandaag.', {
+                title: 'Geen komende momenten',
+              })
         }
       </section>`,
     `<section id="medicatie-route-beheer" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
@@ -16943,8 +17050,13 @@ function renderMedicatieScreen(state: AppShellState): string {
           body:
             (state.medicatie.length > 0
               ? renderMedicatieList(state.medicatie)
-              : '<p class="empty-state">Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.</p>') +
-            renderPolicyPanel(),
+              : renderEmptyState(
+                  'Nog geen medicatie. Voeg via Beheer een middel toe zoals de kliniek het voorschrijft.',
+                  {
+                    title: 'Geen medicatie',
+                    cta: { href: '#medicatie?route=beheer', label: 'Medicatie toevoegen' },
+                  },
+                )) + renderPolicyPanel(),
         })}
       </section>`,
   ];
@@ -17449,10 +17561,16 @@ function renderTrajectScreen(state: AppShellState): string {
         ${disclosure({
           summary: 'Statusverdeling en actieve pogingen',
           open: actieveTrajecten.length > 0,
-          body: `${renderTrajectOverzicht(overzicht) || '<p class="empty-state">Nog geen poging vastgelegd.</p>'}${
+          body: `${
+            renderTrajectOverzicht(overzicht) ||
+            renderEmptyState('Nog geen poging vastgelegd.', {
+              title: 'Geen poging',
+              cta: { href: '#traject?route=beheer', label: 'Poging aanmaken' },
+            })
+          }${
             actieveTrajecten.length > 0
               ? renderTrajectList(actieveTrajecten, 'Alle actieve pogingen')
-              : '<p class="empty-state">Nog geen actieve pogingen.</p>'
+              : renderEmptyState('Nog geen actieve pogingen.', { title: 'Geen actieve poging' })
           }`,
         })}
       </section>`,
@@ -17480,7 +17598,13 @@ function renderTrajectScreen(state: AppShellState): string {
         ${
           selected
             ? renderTimeline(selected)
-            : '<p class="empty-state">Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.</p>'
+            : renderEmptyState(
+                'Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.',
+                {
+                  title: 'Geen traject',
+                  cta: { href: '#traject?route=beheer', label: 'Poging aanmaken' },
+                },
+              )
         }
       </section>`,
     `<section id="traject-route-vergoeding" class="treatment-route-section command-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
@@ -18016,7 +18140,10 @@ function renderFertilityTimeline(
                   },
                   items: timeline.items.map(renderFertilityTimelineItem),
                 })
-              : '<p id="fertility-timeline-items" class="empty-state">Nog geen centrale fertility timeline beschikbaar.</p>'
+              : renderEmptyState('Nog geen centrale fertility timeline beschikbaar.', {
+                  id: 'fertility-timeline-items',
+                  title: 'Timeline is leeg',
+                })
           }
           <p class="small-print">${escapeHtml(timeline.waarschuwing)}</p>
         </div>
@@ -18156,7 +18283,9 @@ function renderFertilityTimelineMijlpalen(timeline: FertilityTimeline): string {
                 )
                 .join('')}
             </ol>`
-          : '<p class="empty-state">Nog geen mijlpalen in de huidige timelinefilter.</p>'
+          : renderEmptyState('Nog geen mijlpalen in de huidige timelinefilter.', {
+              title: 'Geen mijlpalen',
+            })
       }
     </section>
   `;
@@ -18180,7 +18309,9 @@ function renderFertilityTimelineContextSignalen(timeline: FertilityTimeline): st
                 )
                 .join('')}
             </ol>`
-          : '<p class="empty-state">Geen ontbrekende context zichtbaar in de huidige timelinefilter.</p>'
+          : renderEmptyState('Geen ontbrekende context zichtbaar in de huidige timelinefilter.', {
+              title: 'Context compleet',
+            })
       }
       <p class="small-print">Deze signalen corrigeren niets automatisch en geven geen oordeel over kwaliteit of uitkomst.</p>
     </section>
@@ -18279,7 +18410,7 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
                   )
                   .join('')}
               </ul>`
-            : '<p class="empty-state">Geen gekoppelde records.</p>'
+            : renderEmptyState('Geen gekoppelde records.', { title: 'Geen koppelingen' })
         }
       </details>
     `,
@@ -18369,7 +18500,7 @@ function renderTrajectGraphWeergave(
       ${
         weergave.edges.length > 0
           ? `<ol id="fertility-graph-relationships" class="compact-list" aria-label="Graph-relaties">${weergave.edges.map((edge) => renderTrajectGraphEdge(edge, weergave)).join('')}</ol>`
-          : '<p class="empty-state">Geen graph-relaties binnen dit filter.</p>'
+          : renderEmptyState('Geen graph-relaties binnen dit filter.', { title: 'Geen relaties' })
       }
       ${renderGraphConsultSamenvattingExport(consultExport)}
       <p class="small-print">${escapeHtml(weergave.waarschuwing)}</p>
