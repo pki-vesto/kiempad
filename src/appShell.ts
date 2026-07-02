@@ -11123,29 +11123,46 @@ function renderConsultSamenvatting(verslag: ConsultVerslag): string {
   const correctie = verslag.samenvattingCorrectie?.tekst ?? '';
 
   return `
-    <section class="linked-note consult-card__section" data-consult-card-section="samenvatting" data-consult-summary-review-state="${escapeAttribute(reviewStatus)}">
-      <h4>Conceptsamenvatting</h4>
-      ${
-        reviewStatus === 'verworpen'
-          ? '<p>Deze conceptsamenvatting is verworpen en wordt niet als gebruikerstekst gebruikt.</p>'
-          : `<p>${escapeHtml(verslag.samenvatting.tekst)}</p>`
-      }
-      <small>Reviewstatus: ${escapeHtml(reviewLabel)} · Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
-      ${renderConsultSamenvattingBronparagraaf(verslag)}
-      ${review?.reden ? `<p class="small-print">Reviewreden: ${escapeHtml(review.reden)}</p>` : ''}
-      <form class="compact-form consult-samenvatting-review-form" data-consult-summary-review-kind="local-review">
-        <input type="hidden" name="consultVerslagId" value="${escapeAttribute(verslag.id)}" />
-        <label>
-          Gebruikerscorrectie
-          <textarea name="samenvattingCorrectie" rows="3">${escapeHtml(correctie)}</textarea>
-        </label>
-        <label>
-          Reden bij verwerpen
-          <input name="samenvattingVerwerpReden" autocomplete="off" value="${escapeAttribute(review?.reden ?? '')}" />
-        </label>
-        <button type="submit" name="samenvattingReviewActie" value="corrigeren">Bewaar correctie</button>
-        <button type="submit" name="samenvattingReviewActie" value="verwerpen">Verwerp concept</button>
-      </form>
+    <section class="linked-note consult-card__section consult-review-layout" data-consult-card-section="samenvatting" data-consult-summary-review-state="${escapeAttribute(reviewStatus)}" data-consult-review-layout="ready">
+      <header class="consult-review-layout__header">
+        <div>
+          <p class="kp-card__eyebrow">Reviewlaag</p>
+          <h4>Conceptsamenvatting</h4>
+        </div>
+        <dl class="consult-review-layout__facts" aria-label="Consult review status">
+          <div><dt>Review</dt><dd>${escapeHtml(reviewLabel)}</dd></div>
+          <div><dt>Bronnen</dt><dd>${escapeHtml(String(verslag.samenvatting.bronnen.length))}</dd></div>
+        </dl>
+      </header>
+      <div class="consult-review-layout__body">
+        <article class="consult-review-layout__panel" data-consult-review-panel="summary">
+          ${
+            reviewStatus === 'verworpen'
+              ? '<p>Deze conceptsamenvatting is verworpen en wordt niet als gebruikerstekst gebruikt.</p>'
+              : `<p>${escapeHtml(verslag.samenvatting.tekst)}</p>`
+          }
+          <small>Reviewstatus: ${escapeHtml(reviewLabel)} · Bronnen: ${verslag.samenvatting.bronnen.map(escapeHtml).join(', ')} · ${escapeHtml(verslag.samenvatting.waarschuwing)}</small>
+          ${review?.reden ? `<p class="small-print">Reviewreden: ${escapeHtml(review.reden)}</p>` : ''}
+        </article>
+        <div class="consult-review-layout__panel" data-consult-review-panel="source">
+          ${renderConsultSamenvattingBronparagraaf(verslag)}
+        </div>
+        <div class="consult-review-layout__panel" data-consult-review-panel="actions">
+          <form class="compact-form consult-samenvatting-review-form" data-consult-summary-review-kind="local-review">
+            <input type="hidden" name="consultVerslagId" value="${escapeAttribute(verslag.id)}" />
+            <label>
+              Gebruikerscorrectie
+              <textarea name="samenvattingCorrectie" rows="3">${escapeHtml(correctie)}</textarea>
+            </label>
+            <label>
+              Reden bij verwerpen
+              <input name="samenvattingVerwerpReden" autocomplete="off" value="${escapeAttribute(review?.reden ?? '')}" />
+            </label>
+            <button type="submit" name="samenvattingReviewActie" value="corrigeren">Bewaar correctie</button>
+            <button type="submit" name="samenvattingReviewActie" value="verwerpen">Verwerp concept</button>
+          </form>
+        </div>
+      </div>
     </section>
   `;
 }

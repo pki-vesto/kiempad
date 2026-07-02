@@ -345,6 +345,10 @@
   render as compact tracking cards with fact tiles, history and source sections, stable
   `data-embryo-tracking-*` hooks, and mobile single-column stacking while preserving factual
   lab/source wording and non-medical boundaries.
+- **Premium consult intelligence review layout — done in G1422 / issue #888.** Consult summary
+  review now uses a compact review layout with status facts, separate summary/source/action panels,
+  existing review form hooks, and mobile single-column stacking while keeping the consult-AI
+  non-medical boundary.
 
 ---
 
