@@ -12164,16 +12164,18 @@ function renderKennisScreen(state: AppShellState): string {
             kennisItems: filteredItems.length,
             activeRoute: activeKnowledgeRoute,
           }),
-          context: renderKnowledgeResearchWorkbench({
-            researchBronnen: researchBronnen.length,
-            researchSamenvattingen:
-              researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
-            researchTrends: researchTrendGroepen.length,
-            kennisItems: filteredItems.length,
-            totalKennisItems: state.kennisItems.length,
-            netwerkAan: state.settings.researchNetwerk.ingeschakeld,
-            filter,
-          }),
+          context: renderKnowledgeResearchWorkbenchDisclosure(
+            renderKnowledgeResearchWorkbench({
+              researchBronnen: researchBronnen.length,
+              researchSamenvattingen:
+                researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
+              researchTrends: researchTrendGroepen.length,
+              kennisItems: filteredItems.length,
+              totalKennisItems: state.kennisItems.length,
+              netwerkAan: state.settings.researchNetwerk.ingeschakeld,
+              filter,
+            }),
+          ),
           main: `
       <section id="knowledge-route-read" class="knowledge-route-section" aria-labelledby="knowledge-route-read-title" data-knowledge-route="read"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'read')}>
         <header class="knowledge-route-section__header">
@@ -12384,6 +12386,23 @@ function renderKnowledgeFocusShell(input: { workspace: string }): string {
         </div>
       </div>
     </section>
+  `;
+}
+
+function renderKnowledgeResearchWorkbenchDisclosure(workbench: string): string {
+  return `
+    <details class="kp-disclosure knowledge-workbench-disclosure" data-knowledge-workbench-disclosure="collapsed">
+      <summary class="kp-disclosure__summary knowledge-workbench-disclosure__summary">
+        <span>
+          <strong>Zoek en filter openen</strong>
+          <small>Researchscan, bibliotheekfilter en netwerkstatus</small>
+        </span>
+        <em>Werkbank</em>
+      </summary>
+      <div class="kp-disclosure__body">
+        ${workbench}
+      </div>
+    </details>
   `;
 }
 
