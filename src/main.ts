@@ -148,6 +148,7 @@ type RuntimeState = {
   consultVerslagen: ConsultVerslag[];
   kosten: CostItem[];
   kostenStatus?: string;
+  trajectStatus?: string;
   eventLogs: EventLog[];
   settings: AppSettings;
   settingsFeedback?: SettingsFeedbackItem;
@@ -203,6 +204,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     decisions: state.decisions,
     kosten: state.kosten,
     kostenStatus: state.kostenStatus,
+    trajectStatus: state.trajectStatus,
     eventLogs: state.eventLogs,
     settings: state.settings,
     settingsFeedback: state.settingsFeedback,
@@ -2262,9 +2264,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
       const fase = button.dataset.fase as TrajectFase | undefined;
       if (!trajectId || !fase || !state.trajectStore) return;
 
-      void state.trajectStore
-        .setCurrentPhase(trajectId, fase)
-        .then(() => reloadAndRender(root, state));
+      void state.trajectStore.setCurrentPhase(trajectId, fase).then(() => {
+        state.trajectStatus = 'Trajectfase bijgewerkt.';
+        return reloadAndRender(root, state);
+      });
     });
   });
 
@@ -2281,7 +2284,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
       ariaLabel: 'Traject verwijderen bevestigen',
       triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder traject',
       onConfirm: () =>
-        state.trajectStore?.delete(trajectId).then(() => reloadAndRender(root, state)),
+        state.trajectStore?.delete(trajectId).then(() => {
+          state.trajectStatus = 'Traject verwijderd.';
+          return reloadAndRender(root, state);
+        }),
     });
   });
 
@@ -2290,9 +2296,10 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
       const trajectId = button.dataset.trajectId;
       if (!trajectId || !state.trajectStore) return;
       const gearchiveerd = button.dataset.gearchiveerd === 'true';
-      void state.trajectStore
-        .archive(trajectId, gearchiveerd)
-        .then(() => reloadAndRender(root, state));
+      void state.trajectStore.archive(trajectId, gearchiveerd).then(() => {
+        state.trajectStatus = gearchiveerd ? 'Traject gearchiveerd.' : 'Traject hersteld.';
+        return reloadAndRender(root, state);
+      });
     });
   });
 }
@@ -2651,8 +2658,10 @@ async function saveTrajectFromForm(
 
   if (existingId) {
     await state.trajectStore.update(maakTraject(existingId, input));
+    state.trajectStatus = 'Traject opgeslagen.';
   } else {
     await state.trajectStore.create(input);
+    state.trajectStatus = 'Traject aangemaakt.';
   }
 
   await reloadAndRender(root, state);

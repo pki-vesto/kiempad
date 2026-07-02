@@ -761,6 +761,7 @@ export type AppShellState = {
   decisions?: Decision[];
   kosten?: CostItem[];
   kostenStatus?: string;
+  trajectStatus?: string;
   eventLogs?: EventLog[];
   settings: AppSettings;
   settingsFeedback?: SettingsFeedbackItem;
@@ -17298,6 +17299,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-overzicht-title">Trajectoverzicht</h2>
           <p>Bekijk actieve en afgeronde pogingen, statusverdeling en de centrale trajectcontext.</p>
         </header>
+        ${renderTrajectStatus(state.trajectStatus, 'overzicht')}
         ${commandRouteSummary({
           eyebrow: 'Trajectstatus',
           title: selected
@@ -17333,6 +17335,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-fasen-title">Faseplanning</h2>
           <p>Markeer de actuele fase binnen het geselecteerde traject zonder medische conclusie.</p>
         </header>
+        ${renderTrajectStatus(state.trajectStatus, 'fasen')}
         ${commandRouteSummary({
           eyebrow: 'Fasefocus',
           title: selected ? `Fasen voor ${selected.traject.naam}` : 'Maak eerst een traject aan',
@@ -17366,6 +17369,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-vergoeding-title">Vergoeding</h2>
           <p>Controleer meetellende pogingen en resterende ruimte als voorbereiding op eigen administratie.</p>
         </header>
+        ${renderTrajectStatus(state.trajectStatus, 'vergoeding')}
         ${commandRouteSummary({
           eyebrow: 'Administratie',
           title: `${vergoeding.resterend} van ${vergoeding.maximum} vergoede pogingen resterend`,
@@ -17392,6 +17396,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-context-title">Timeline en graphcontext</h2>
           <p>Bekijk de centrale fertility timeline en kennisrelaties los van beheeracties.</p>
         </header>
+        ${renderTrajectStatus(state.trajectStatus, 'context')}
         ${commandRouteSummary({
           eyebrow: 'Contextlaag',
           title: `${fertilityTimeline.items.length} timeline-item${fertilityTimeline.items.length === 1 ? '' : 's'} · ${graphWeergave?.edges.length ?? 0} relaties`,
@@ -17428,6 +17433,7 @@ function renderTrajectScreen(state: AppShellState): string {
           <h2 id="traject-route-beheer-title">Trajectbeheer en archief</h2>
           <p>Bewerk het geselecteerde traject, voeg een nieuwe poging toe of herstel een gearchiveerde poging.</p>
         </header>
+        ${renderTrajectStatus(state.trajectStatus, 'beheer')}
         ${commandRouteSummary({
           eyebrow: 'Beheer',
           title: selected ? `${selected.traject.naam} beheren` : 'Nieuw traject aanmaken',
@@ -17474,6 +17480,17 @@ function renderTrajectScreen(state: AppShellState): string {
     ],
     { className: 'treatment-command-layout', ariaLabel: 'Traject beheren' },
   );
+}
+
+function renderTrajectStatus(status: string | undefined, surface: TreatmentRoute): string {
+  if (!status) return '';
+
+  return statusMessage(status, {
+    className: 'treatment-save-feedback save-feedback',
+    data: { 'treatment-save-feedback': surface },
+    live: 'polite',
+    saveFeedback: `treatment-${surface}`,
+  });
 }
 
 function renderTreatmentFocusShell(input: { workspace: string }): string {
