@@ -650,6 +650,12 @@ h3 {
   display: none;
 }
 
+.primary-nav__title small,
+.primary-nav__title span {
+  display: block;
+  min-width: 0;
+}
+
 .primary-nav a,
 .primary-nav button.nav-item {
   display: inline-flex;
@@ -14173,11 +14179,12 @@ a.action-card:active {
   }
 
   .app-sidebar {
-    display: flex;
+    display: grid;
     position: sticky;
     top: 24px;
-    flex-direction: column;
-    gap: 14px;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    gap: 10px;
+    min-height: 0;
     max-height: calc(100vh - 48px);
   }
 
@@ -14257,59 +14264,80 @@ a.action-card:active {
     flex: 1;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: 14px;
+    gap: 8px;
+    min-height: 0;
     margin: 0;
-    padding: 14px;
+    padding: 10px;
     overflow-y: auto;
     border-radius: var(--radius-card);
   }
 
   .primary-nav__group {
     display: grid;
-    gap: 5px;
+    gap: 3px;
   }
 
   .primary-nav__group + .primary-nav__group {
-    padding-top: 12px;
+    padding-top: 8px;
     border-top: 1px solid var(--border);
   }
 
   .primary-nav__title {
-    display: block;
-    margin: 0 0 2px;
+    display: grid;
+    gap: 1px;
+    margin: 0 0 3px;
+    padding: 0 2px;
     color: var(--text-faint);
-    font-size: 0.7rem;
-    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .primary-nav__title span {
+    font-size: 0.66rem;
+    font-weight: 850;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
-  .primary-nav__group[data-nav-group-active="true"] .primary-nav__title {
+  .primary-nav__title small {
+    color: var(--text-muted);
+    font-size: 0.64rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .primary-nav__group[data-nav-group-active="true"] .primary-nav__title span {
     color: var(--accent);
+  }
+
+  .primary-nav__group[data-nav-group-active="true"] .primary-nav__title small {
+    color: var(--accent-strong);
   }
 
   .primary-nav__items {
     display: grid;
-    gap: 4px;
+    gap: 2px;
   }
 
   .primary-nav a {
     flex: 0 0 auto;
     justify-content: flex-start;
     width: 100%;
-    border-radius: 11px;
+    min-height: 28px;
+    padding: 3px 8px;
+    border-radius: 9px;
+    font-size: 0.84rem;
     text-align: left;
   }
 
   .app-sidebar > .workspace-strip {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    padding: 10px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 8px 10px;
   }
 
   .app-sidebar > .workspace-strip .workspace-strip__switcher {
-    display: grid;
-    justify-content: stretch;
+    display: none;
   }
 
   .app-sidebar > .workspace-strip .workspace-strip__switcher a {

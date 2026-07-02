@@ -1784,15 +1784,25 @@ describe('app shell', () => {
     );
   });
 
-  it('groepeert primaire navigatie in werkruimtes zodat de app niet als een platte pagina voelt', () => {
+  it('groepeert primaire desktopnavigatie in Primair, Beheer en Privacy', () => {
     const html = renderAppShell('vragen');
 
-    expect(html).toContain('class="primary-nav__group" data-nav-group-active="true"');
-    expect(html).toContain('<p class="primary-nav__title">Vandaag</p>');
-    expect(html).toContain('<p class="primary-nav__title">Behandeling</p>');
-    expect(html).toContain('<p class="primary-nav__title">Dossier</p>');
-    expect(html).toContain('<p class="primary-nav__title">Inzicht</p>');
-    expect(html).toContain('<p class="primary-nav__title">Beheer</p>');
+    expect(html).toContain('data-nav-group="primair"');
+    expect(html).toContain('data-nav-group="beheer"');
+    expect(html).toContain('data-nav-group="privacy"');
+    expect(html).toContain('data-nav-group-count="8"');
+    expect(html).toContain('data-nav-group-count="3"');
+    expect(html).toContain('data-nav-group-count="2"');
+    expect(html).toContain(
+      '<p class="primary-nav__title"><span>Primair</span><small>Dagelijks werk</small></p>',
+    );
+    expect(html).toContain(
+      '<p class="primary-nav__title"><span>Beheer</span><small>Inzicht en kosten</small></p>',
+    );
+    expect(html).toContain(
+      '<p class="primary-nav__title"><span>Privacy</span><small>Audit en herstel</small></p>',
+    );
+    expect(html).toContain('data-nav-group="primair" data-nav-group-active="true"');
     expect(html).toContain('data-screen-stage="ready"');
     expect(html).toContain('data-screen-stage-screen="vragen"');
     expect(html).toContain('data-screen-stage-group="Behandeling"');
@@ -2808,6 +2818,7 @@ describe('app shell', () => {
     expect(css).toContain('.workspace-strip--compact {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(css).toContain('.app-sidebar > .workspace-strip {');
+    expect(css).toContain('display: none;');
     expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');
     expect(css).toContain('.content[data-screen-stage="ready"] {');
     expect(css).toContain('.screen-stage__panel {');
@@ -2863,6 +2874,11 @@ describe('app shell', () => {
     expect(mobileCss).toContain('overflow-x: auto;');
     expect(mobileCss).toContain('.workspace-map__card {');
     expect(mobileCss).toContain('flex: 0 0 min(238px, 76vw);');
+    expect(css).toContain('.primary-nav__title span {');
+    expect(css).toContain('.primary-nav__title small {');
+    expect(css).toContain(
+      '.primary-nav__group[data-nav-group-active="true"] .primary-nav__title span {',
+    );
     expect(css).toContain('.start-cockpit {');
     expect(css).toContain('.start-launchpad {');
     expect(css).toContain('.start-command-layout[data-start-console="ready"] {');

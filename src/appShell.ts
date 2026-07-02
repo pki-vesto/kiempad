@@ -420,6 +420,37 @@ const MOBILE_MORE_GROUPS: readonly { label: string; screenIds: readonly ScreenId
   { label: 'Privacy', screenIds: ['logboek', 'backup'] },
 ];
 
+const DESKTOP_NAV_GROUPS: readonly {
+  label: string;
+  description: string;
+  screenIds: readonly ScreenId[];
+}[] = [
+  {
+    label: 'Primair',
+    description: 'Dagelijks werk',
+    screenIds: [
+      'start',
+      'traject',
+      'agenda',
+      'medicatie',
+      'herinneringen',
+      'vragen',
+      'dossier',
+      'kennis',
+    ],
+  },
+  {
+    label: 'Beheer',
+    description: 'Inzicht en kosten',
+    screenIds: ['welzijn', 'afwegingen', 'kosten'],
+  },
+  {
+    label: 'Privacy',
+    description: 'Audit en herstel',
+    screenIds: ['logboek', 'backup'],
+  },
+];
+
 const DEFAULT_SCREEN = SCREENS[0] as Screen;
 
 export function normalizeScreenId(value: string | null | undefined): ScreenId {
@@ -1203,7 +1234,7 @@ function renderVaultWebAuthnUnlock(status?: WebAuthnViewStatus): string {
 function renderGroupedNavigation(activeId: ScreenId): string {
   const screenMap = new Map(SCREENS.map((screen) => [screen.id, screen]));
 
-  const groupedNavigation = SCREEN_GROUPS.map((group) => {
+  const groupedNavigation = DESKTOP_NAV_GROUPS.map((group) => {
     const activeInGroup = group.screenIds.includes(activeId);
     const items = group.screenIds
       .map((screenId) => {
@@ -1213,8 +1244,8 @@ function renderGroupedNavigation(activeId: ScreenId): string {
       .join('');
 
     return `
-      <div class="primary-nav__group" data-nav-group-active="${activeInGroup ? 'true' : 'false'}">
-        <p class="primary-nav__title">${escapeHtml(group.label)}</p>
+      <div class="primary-nav__group" data-nav-group="${escapeAttribute(group.label.toLowerCase())}" data-nav-group-active="${activeInGroup ? 'true' : 'false'}" data-nav-group-count="${group.screenIds.length}">
+        <p class="primary-nav__title"><span>${escapeHtml(group.label)}</span><small>${escapeHtml(group.description)}</small></p>
         <div class="primary-nav__items">${items}</div>
       </div>
     `;
