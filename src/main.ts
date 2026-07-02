@@ -158,6 +158,7 @@ type RuntimeState = {
   imagingFilter?: ImagingRepositoryFilter;
   graphFilter?: Partial<FertilityGraphTrajectFilter>;
   timelineFilter?: FertilityTimelineFilter;
+  agendaStatus?: string;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -225,6 +226,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     activeNotificationRoute: normalizeNotificationRoute(window.location.hash),
     activeStartRoute: normalizeStartRoute(window.location.hash),
     settingsOpen: state.settingsOpen,
+    agendaStatus: state.agendaStatus,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
     medicatieImportStatus: state.medicatieImportStatus,
@@ -2093,7 +2095,10 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
     const confirmed = window.confirm(DELETE_CONFIRMATIONS.afspraak);
     if (!confirmed) return;
 
-    void state.agendaStore.delete(afspraakId).then(() => reloadAndRender(root, state));
+    void state.agendaStore.delete(afspraakId).then(() => {
+      state.agendaStatus = 'Afspraak verwijderd.';
+      return reloadAndRender(root, state);
+    });
   });
 }
 
@@ -2444,6 +2449,7 @@ async function saveAfspraakFromForm(
     herinneringTijdstip: optionalString(data.get('herinneringTijdstip')),
   });
 
+  state.agendaStatus = 'Afspraak opgeslagen.';
   await reloadAndRender(root, state);
 }
 

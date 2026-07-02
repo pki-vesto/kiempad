@@ -82,6 +82,9 @@
 - **CFX-018 finance feedback — done in G1339 / issue #2452.** Kostenpost save/delete actions now
   set inline `role="status"` feedback in the toevoegen and historie routes, so finance forms no
   longer feel silent after mutation.
+- **CFX-018 agenda feedback — done in G1340 / issue #2454.** Afspraak save/delete actions now set
+  inline `role="status"` feedback in the komend and plannen routes, complementing the existing
+  ICS import feedback.
 
 ---
 
