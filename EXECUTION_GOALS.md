@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1351 — Daily Recommendations: lijstfilterheader maakt resetcontext duidelijker
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De resetactie in de actieve lijstfilterheader is functioneel, maar de lokale filtercontext is nog niet direct duidelijk.
+- **User Impact:** Gebruikers kunnen twijfelen of reset meer doet dan alleen de lokale feedbackfilter wissen.
+- **Desired Outcome:** Maak de resetactie compact duidelijker zonder extra uitlegblok of medische duiding.
+- **User Value:** Gebruikers kunnen de lijstfilter veilig terugzetten zonder contextverwarring.
+- **Acceptance Criteria:** De resetactie blijft compact maar maakt de lokale filtercontext duidelijker; reset verwijdert alleen de feedbackfilterroute en gerelateerde filterstatussen; de header blijft afwezig zonder actieve filter; de tekst bevat geen trackingpayload, medische conclusie of behandeladvies; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken resetcopy, resetgedrag, afwezigheid zonder filter en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2648
+
 ### G1350 — Daily Recommendations: lijstfilterheader toont statuslegenda compact
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2646
 
 ### G1349 — Daily Recommendations: lijstfilterheader toont dominante eigenaar subtiel

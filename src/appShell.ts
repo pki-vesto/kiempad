@@ -14743,6 +14743,10 @@ function renderDailyRecommendationListFilterHeader(input: {
       <strong>${escapeHtml(filterLabel)}</strong>
       <em>${input.filteredTotal} van ${input.total} suggesties</em>
       <span class="daily-recommendation-list-filter-header__owners" data-daily-recommendation-list-filter-owners="ready">${ownerDistribution}</span>
+      <span class="daily-recommendation-list-filter-header__legend" data-daily-recommendation-list-filter-legend="ready">
+        <span data-daily-recommendation-list-filter-legend-item="accent">Accent = meeste</span>
+        <span data-daily-recommendation-list-filter-legend-item="empty">Licht = geen match</span>
+      </span>
       <form data-daily-recommendation-feedback-control="ready">
         <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-list-filter-reset="ready">Reset</button>
       </form>

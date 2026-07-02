@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1151 |
+| ☑ klaar | 1152 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1350** |
+| **Totaal** | **1351** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1512,13 +1512,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1347 | Daily Recommendations: lijstfilterheader dempt nul-eigenaren | P1 | F5 | ☑ |
 | G1348 | Daily Recommendations: lijstfilterheader zet relevante eigenaars eerst | P1 | F5 | ☑ |
 | G1349 | Daily Recommendations: lijstfilterheader toont dominante eigenaar subtiel | P1 | F5 | ☑ |
-| G1350 | Daily Recommendations: lijstfilterheader toont statuslegenda compact | P1 | F5 | ☐ |
+| G1350 | Daily Recommendations: lijstfilterheader toont statuslegenda compact | P1 | F5 | ☑ |
+| G1351 | Daily Recommendations: lijstfilterheader maakt resetcontext duidelijker | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1350** (id's G001 t/m G1350, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1351** (id's G001 t/m G1351, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

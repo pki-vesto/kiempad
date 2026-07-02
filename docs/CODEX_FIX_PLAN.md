@@ -112,6 +112,9 @@
 - **Daily advice feedback list dominant owner cue — done in G1442 / issue #2644.** The active
   list-filter header now gives a subtle cue only to a single highest-count owner, while tied or
   zero-count states stay neutral and avoid medical interpretation.
+- **Daily advice feedback list owner legend — done in G1443 / issue #2646.** The active
+  list-filter header now includes a compact legend for owner accent and empty states, visible only
+  with an active filter and without adding medical or tracking language.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

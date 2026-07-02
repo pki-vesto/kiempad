@@ -4499,6 +4499,20 @@ h2 {
   color: color-mix(in srgb, var(--text-muted) 70%, transparent);
 }
 
+.daily-recommendation-list-filter-header__legend {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.daily-recommendation-list-filter-header__legend span {
+  padding: 1px 5px;
+  border: 1px dashed color-mix(in srgb, var(--border) 76%, transparent);
+  border-radius: 999px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 .daily-recommendation-list-filter-header form {
   display: contents;
 }
