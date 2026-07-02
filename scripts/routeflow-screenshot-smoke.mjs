@@ -271,14 +271,17 @@ const targets = [
     requiredSelectors: [
       '[data-dossier-search-console="ready"]',
       '[data-dossier-search-console-region="search"]',
-      '[data-dossier-search-console-region="privacy"]',
-      '[data-dossier-search-console-region="index"]',
+      '[data-dossier-search-support="collapsed"] > .dossier-search-support__summary',
       '#dossier-search-form',
       '[data-dossier-search-kit="ready"]',
+    ],
+    presentSelectors: [
       '[data-dossier-secondary-privacy="collapsed"]',
       '#dossier-route-index-disclosure',
+      '[data-dossier-search-console-region="privacy"]',
+      '[data-dossier-search-console-region="index"]',
     ],
-    presentSelectors: ['[data-dossier-section-index="ready"]'],
+    closedDetailsSelectors: ['[data-dossier-search-support="collapsed"]'],
     dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',
