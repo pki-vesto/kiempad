@@ -31,6 +31,9 @@
   alle 13 hoofdschermen tegelijk, maar 8 primaire routes plus een Meer-sheet met
   Inzicht, Beheer, Privacy en Instellingen; secundaire actieve routes blijven
   zichtbaar gemarkeerd.
+- **G1322 content zonder grote frame:** de actieve `screen-stage` heeft geen eigen
+  grijze container, radius, border of schaduw meer; scherminhoud rust op de
+  pagina-achtergrond en alleen echte kaarten/panels geven diepte.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

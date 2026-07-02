@@ -2847,10 +2847,21 @@ describe('app shell', () => {
     expect(css).toContain('.app-sidebar > .workspace-strip .workspace-strip__switcher {');
     expect(css).toContain('.content[data-screen-stage="ready"] {');
     expect(css).toContain('.screen-stage__panel {');
-    expect(css).toContain('border-radius: calc(var(--radius-card) + 4px);');
+    const screenStageCss = extractCssRule(css, '.content[data-screen-stage="ready"]').declarations;
+    expect(screenStageCss).toContain('padding: 0;');
+    expect(screenStageCss).toContain('background: transparent;');
+    expect(screenStageCss).not.toContain('border:');
+    expect(screenStageCss).not.toContain('border-radius:');
+    expect(screenStageCss).not.toContain('box-shadow:');
     expect(css).toContain('.screen-stage__panel {');
     expect(mobileCss).toContain('.content[data-screen-stage="ready"] {');
-    expect(mobileCss).toContain('border-radius: 18px;');
+    const mobileScreenStageCss = extractCssRule(
+      mobileCss,
+      '.content[data-screen-stage="ready"]',
+    ).declarations;
+    expect(mobileScreenStageCss).toContain('padding: 0;');
+    expect(mobileScreenStageCss).not.toContain('border-radius:');
+    expect(mobileScreenStageCss).not.toContain('box-shadow:');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-strip,');

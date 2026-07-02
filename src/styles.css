@@ -592,17 +592,8 @@ h3 {
 
 .content[data-screen-stage="ready"] {
   min-width: 0;
-  padding: 10px;
-  border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
-  border-radius: calc(var(--radius-card) + 4px);
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--surface-raised) 70%, transparent),
-      transparent 220px
-    ),
-    color-mix(in srgb, var(--surface) 86%, var(--surface-2));
-  box-shadow: 0 18px 50px color-mix(in srgb, var(--shadow-color) 14%, transparent);
+  padding: 0;
+  background: transparent;
 }
 
 .screen-stage__panel {
@@ -11796,10 +11787,8 @@ a.action-card:active {
   }
 
   .content[data-screen-stage="ready"] {
-    margin-inline: -4px;
-    padding: 8px;
-    border-radius: 18px;
-    box-shadow: none;
+    margin-inline: 0;
+    padding: 0;
   }
 
   .screen-stage__panel {

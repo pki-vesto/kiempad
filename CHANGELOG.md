@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1322 CFX-013: de grote afgeronde grijze frame rond de actieve contentkolom is verwijderd. De `screen-stage` rust nu transparant op de pagina-achtergrond; diepte en borders zitten alleen nog op echte kaarten, panels en sheets.
 - G1321 CFX-010/CFX-081: de mobiele en tablet-navigatie tonen nu 8 primaire routes plus `Meer` in plaats van alle 13 schermen tegelijk. De Meer-sheet groepeert Welzijn/Afwegingen, Kosten, Logboek, Back-up en Instellingen, en laat een secundair actief scherm zichtbaar als actieve Meer-context.
 - G1320 CFX-030: PWA browser- en installatiechrome gebruikt nu het Claude Design teal. `index.html` heeft light/dark `theme-color` meta's, het manifest gebruikt teal `theme_color` en de oude sagekleur `#7a9471` verdwijnt uit de PWA-chrome contracten.
 - G1319 Premium Claude Design UI: Dagadvies opent op mobiel nu als compacte scrollbare adviesconsole. Workflow, eigenaarwerkbank, actieplanner en lijst blijven aanwezig, maar verlengen de route niet meer als losse verticale stapel; desktop behoudt de bestaande gescheiden werkvlakken.
