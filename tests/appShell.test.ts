@@ -5,6 +5,7 @@ import {
   DISCLAIMER,
   normalizeBackupRoute,
   normalizeDecisionRoute,
+  normalizeDossierAddFlow,
   normalizeDossierRoute,
   normalizeEventLogRoute,
   normalizeFinanceRoute,
@@ -1684,6 +1685,12 @@ describe('app shell', () => {
     expect(normalizeDossierRoute('#dossier?route=bestaat-niet')).toBe('upload');
     expect(normalizeScreenId('#consult-verslag-form')).toBe('dossier');
     expect(normalizeDossierRoute('#consult-verslag-form')).toBe('upload');
+    expect(normalizeDossierAddFlow('#consult-verslag-form')).toBe('consult');
+    expect(normalizeDossierAddFlow('#consult-context-fields')).toBe('consult');
+    expect(normalizeDossierAddFlow('#embryo-quality-form')).toBe('embryo-quality');
+    expect(normalizeDossierAddFlow('#embryo-status-event-form')).toBe('embryo-status');
+    expect(normalizeDossierAddFlow('#dossier-route-review')).toBe('review');
+    expect(normalizeDossierAddFlow('#dossier')).toBe('document');
     expect(normalizeScreenId('#imaging-filter-form')).toBe('dossier');
     expect(normalizeDossierRoute('#imaging-filter-form')).toBe('imaging');
     expect(normalizeScreenId('#dossier-documenttijdlijn')).toBe('dossier');
@@ -6890,13 +6897,13 @@ describe('app shell', () => {
     expect(selector).toContain('href="#consult-verslag-form"');
     expect(selector).toContain('href="#embryo-quality-form"');
     expect(selector).toContain('href="#embryo-status-event-form"');
-    expect(css).toContain('.kp-disclosure__body:has(#dossier-upload-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="document"]');
     expect(css).toContain('.dossier-add-route[href="#dossier-upload-form"]');
-    expect(css).toContain('.kp-disclosure__body:has(#consult-verslag-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="consult"]');
     expect(css).toContain('.dossier-add-route[href="#consult-verslag-form"]');
-    expect(css).toContain('.kp-disclosure__body:has(#embryo-quality-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="embryo-quality"]');
     expect(css).toContain('.dossier-add-route[href="#embryo-quality-form"]');
-    expect(css).toContain('.kp-disclosure__body:has(#embryo-status-event-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="embryo-status"]');
     expect(css).toContain('.dossier-add-route[href="#embryo-status-event-form"]');
     expect(css).toContain(
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
@@ -6933,19 +6940,19 @@ describe('app shell', () => {
     expect(css).toContain('outline: none;');
     expect(css).toContain('.dossier-add-route-active-context');
     expect(css).toContain('display: none;');
-    expect(css).toContain('.kp-disclosure__body:has(#dossier-upload-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="document"]');
     expect(css).toContain(
       '.dossier-add-route-active-context[data-dossier-add-route-active-context="dossier-upload"]',
     );
-    expect(css).toContain('.kp-disclosure__body:has(#consult-verslag-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="consult"]');
     expect(css).toContain(
       '.dossier-add-route-active-context[data-dossier-add-route-active-context="consult-upload"]',
     );
-    expect(css).toContain('.kp-disclosure__body:has(#embryo-quality-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="embryo-quality"]');
     expect(css).toContain(
       '.dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-quality"]',
     );
-    expect(css).toContain('.kp-disclosure__body:has(#embryo-status-event-form:target)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="embryo-status"]');
     expect(css).toContain(
       '.dossier-add-route-active-context[data-dossier-add-route-active-context="embryo-status"]',
     );
@@ -6966,9 +6973,12 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-snapshot {');
     expect(css).toContain('.dossier-upload-console {');
+    expect(css).toContain('[data-dossier-upload-focus-mode="single-flow"]');
     expect(css).toContain('.dossier-upload-console__header {');
     expect(css).toContain('.dossier-upload-console__body {');
-    expect(css).toContain('"document consult"');
+    expect(css).toContain('"document"');
+    expect(css).toContain('"embryo-quality"');
+    expect(css).toContain('"embryo-status"');
     expect(css).toContain('max-height: min(760px, calc(100vh - 238px));');
     expect(css).toContain(
       '.dossier-upload-console [data-dossier-add-route-panel="dossier-upload"],',
@@ -6976,8 +6986,14 @@ describe('app shell', () => {
     expect(css).toContain(
       '.dossier-upload-console [data-dossier-add-route-panel="consult-upload"],',
     );
+    expect(css).toContain(
+      '.dossier-upload-console [data-dossier-add-route-panel="embryo-quality"],',
+    );
+    expect(css).toContain(
+      '.dossier-upload-console [data-dossier-add-route-panel="embryo-status"],',
+    );
     expect(css).toContain('.dossier-upload-console #dossier-route-review {');
-    expect(css).toContain('max-height: min(560px, calc(100vh - 386px));');
+    expect(css).toContain('max-height: none;');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
       'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
@@ -7465,6 +7481,8 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-upload-console-region="document"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="consult"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="review"');
+    expect(emptyHtml).toContain('data-dossier-upload-focus-mode="single-flow"');
+    expect(emptyHtml).toContain('data-dossier-add-flow="document"');
     expect(emptyHtml).toContain('class="dossier-upload-console"');
     expect(emptyHtml).not.toContain(
       'class="kp-disclosure hub-detail-disclosure dossier-upload-console"',
@@ -7494,7 +7512,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Verslag vastleggen');
     expect(emptyHtml).toContain('data-hub-detail-panel="upload-intake"');
     expect(emptyHtml).toContain('Intake-console');
-    expect(emptyHtml).toContain('Document, consult, labkwaliteit en embryostatus');
+    expect(emptyHtml).toContain(
+      'Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.',
+    );
     expect(emptyHtml).toContain('<span>0 records</span>');
     expect(emptyHtml).toContain('aria-label="Dossier upload route-samenvatting"');
     expect(emptyHtml).toContain('data-dossier-route-summary="upload"');

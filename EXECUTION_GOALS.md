@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1330 — Premium Claude Design UI: Dossier uploadconsole als single-flow intake
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Dossier-uploadroute toonde documentupload, consultupload, embryokwaliteit, embryostatus en review als één grote intakeomgeving, waardoor de nieuwe theme-UI nog steeds als één lange pagina voelde.
+- **User Impact:** Gebruikers zagen te veel medische invoer tegelijk en moesten visueel zoeken welke toevoegstroom actief was.
+- **Desired Outcome:** Maak de uploadconsole een single-flow intake: documentupload is standaard zichtbaar; consult, embryokwaliteit, embryostatus en review openen alleen via hun route/anker terwijl de routekaarten zichtbaar blijven.
+- **User Value:** De gebruiker kiest bewust één taak en ziet daarna alleen het relevante formulier, zonder door alle dossierblokken tegelijk te scrollen.
+- **Acceptance Criteria:** De uploadconsole heeft `data-dossier-upload-focus-mode="single-flow"`; standaard is documentupload de zichtbare toevoegstroom; consult, embryokwaliteit, embryostatus en review zijn verborgen tot hun anker actief is; routeflow-smoke valideert dat precies de gekozen werkstroom zichtbaar is; desktop en mobiel houden geen horizontale overflow; bestaande form ids/data-bindings blijven intact; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Dossier uploadroute, consultupload, embryokwaliteit, embryostatus, documentreview
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, Dossier CSS, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+
 ### G1329 — CFX-004c: Skeleton-laadlaag voor unlock en reload
 
 - **Epic:** Onboarding & Daily Use

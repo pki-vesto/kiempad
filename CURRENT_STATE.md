@@ -59,6 +59,10 @@
 - **G1329 skeleton-laadlaag:** unlock en reload tonen een route-level skeleton met
   `aria-busy` voor dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten,
   zodat de werkruimte niet abrupt van leeg naar gevuld springt.
+- **G1330 Dossier single-flow uploadconsole:** de Dossier-uploadroute toont standaard
+  alleen documentupload. Consultverslagen, embryokwaliteit, embryostatus en review
+  blijven als routekaarten bereikbaar en openen pas via hun anker, zodat de intake
+  niet meer als één lange pagina met alle formulieren tegelijk leest.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

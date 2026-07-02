@@ -533,6 +533,7 @@ export function normalizeQuestionRoute(value: string | null | undefined): Questi
 }
 
 type DossierRoute = 'upload' | 'search' | 'imaging' | 'timeline';
+type DossierAddFlow = 'document' | 'consult' | 'embryo-quality' | 'embryo-status' | 'review';
 
 const DOSSIER_ROUTES: readonly DossierRoute[] = ['upload', 'search', 'imaging', 'timeline'];
 
@@ -572,6 +573,23 @@ export function normalizeDossierRoute(value: string | null | undefined): Dossier
   const query = value?.replace(/^#\/?[^?]*(\?)?/, '') ?? '';
   const route = new URLSearchParams(query).get('route');
   return DOSSIER_ROUTES.includes(route as DossierRoute) ? (route as DossierRoute) : 'upload';
+}
+
+export function normalizeDossierAddFlow(value: string | null | undefined): DossierAddFlow {
+  const target = (value?.replace(/^#\/?/, '') ?? '').split('?')[0] ?? '';
+  if (target === 'consult-verslag-form' || target === 'consult-context-fields') return 'consult';
+  if (target === 'embryo-quality-form') return 'embryo-quality';
+  if (target === 'embryo-status-event-form') return 'embryo-status';
+  if (
+    [
+      'dossier-route-review',
+      'dossier-review-queue-disclosure',
+      'dossier-inbox-disclosure',
+    ].includes(target)
+  ) {
+    return 'review';
+  }
+  return 'document';
 }
 
 type KnowledgeRoute = 'read' | 'add' | 'ai' | 'library';
@@ -728,6 +746,7 @@ export type AppShellState = {
   activeMedicationRoute?: MedicationRoute;
   activeQuestionRoute?: QuestionRoute;
   activeDossierRoute?: DossierRoute;
+  activeDossierAddFlow?: DossierAddFlow;
   activeKnowledgeRoute?: KnowledgeRoute;
   activeWellbeingRoute?: WellbeingRoute;
   activeDecisionRoute?: DecisionRoute;
@@ -2994,6 +3013,7 @@ function renderDossierScreen(state: AppShellState): string {
     dossierDocumenten: zichtbareDocumenten,
   });
   const activeDossierRoute = state.activeDossierRoute ?? 'upload';
+  const activeDossierAddFlow = state.activeDossierAddFlow ?? 'document';
   const afspraakOpties = state.afspraken
     .map(({ afspraak }) =>
       renderOption(afspraak.id, `${afspraak.titel} · ${formatDateTime(afspraak.datumTijd)}`),
@@ -3101,12 +3121,12 @@ function renderDossierScreen(state: AppShellState): string {
         reviewCount: reviewWachtrij.length,
         ocrWaitCount: importInboxItems.filter((item) => item.importstatus === 'ocr_wacht').length,
       })}
-      <section class="dossier-upload-console" aria-labelledby="dossier-upload-console-title" data-hub-detail-panel="upload-intake" data-dossier-upload-console="ready">
+      <section class="dossier-upload-console" aria-labelledby="dossier-upload-console-title" data-hub-detail-panel="upload-intake" data-dossier-upload-console="ready" data-dossier-upload-focus-mode="single-flow" data-dossier-add-flow="${escapeAttribute(activeDossierAddFlow)}">
         <header class="dossier-upload-console__header" data-dossier-upload-console-region="header">
           <div>
             <p class="kp-card__eyebrow">Intake-console</p>
             <h3 id="dossier-upload-console-title">Toevoegen aan dossier</h3>
-            <p>Document, consult, labkwaliteit en embryostatus starten direct als aparte werkvlakken.</p>
+            <p>Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.</p>
           </div>
           <span>${zichtbareDocumenten.length} records</span>
         </header>

@@ -46,6 +46,10 @@
   now set an app-shell loading state that renders the shared `loadingSkeleton()` component
   inside the active screen-stage with `aria-busy`, covering dossier, timeline, AI summary,
   OCR review, and local list refreshes.
+- **Dossier upload single-flow IA — done in G1330 / issue #2434.** The Dossier upload console
+  now defaults to one visible intake flow instead of showing document upload, consult upload,
+  embryo quality, embryo status, and review together. Route cards stay visible, while consult,
+  embryo, status, and review panels open only through their anchors.
 
 ---
 
@@ -217,7 +221,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **Current**: routes upload/search/imaging/timeline; document rows, imaging thumbnails, embryo
   quality, consult verslagen, behandelgeschiedenis.
 - **Problem**: single 1,045-line function; jargon ("Imaging-repository", "Dossierindex"); OCR/upload
-  status is technical; thumbnails placeholder; bare empties (VERBETERINGEN O104).
+  status is technical; thumbnails placeholder; bare empties (VERBETERINGEN O104). The upload
+  route no longer shows every intake panel at once after G1330, but renderer decomposition is
+  still open.
 - **Desired**: split into sub-renderers; de-jargoned NL; kit filters; encrypted thumbnail tile;
   rich empty states.
 - **Fixes**: CFX-002, CFX-008, CFX-040.
@@ -348,7 +354,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Accept: appShell becomes a thin dispatcher; all tests pass; no file >1500 LOC. **P0 · XL**
 - **CFX-002** — Decompose `renderDossierScreen` (1,045 LOC) into `renderDossierUpload`,
   `renderDossierImaging`, `renderDossierEmbryo`, `renderDossierHistory`. Outcome: each <200 LOC.
-  Files: `src/appShell.ts`. Accept: identical DOM output (snapshot), all bindings preserved. **P0 · L**
+  Files: `src/appShell.ts`. Accept: identical DOM output (snapshot), all bindings preserved. Progress:
+  G1330 made the upload console a single-flow intake, but the renderer split remains open. **P0 · L**
 - **CFX-020b** — Introduce `screenShell({title,eyebrow,intro,children,disclaimerScope})` wrapper to
   remove per-screen header + policy-panel duplication. Files: `src/ui/components.ts`, all screens.
   Accept: disclaimer rendered once per screen. **P1 · L**
