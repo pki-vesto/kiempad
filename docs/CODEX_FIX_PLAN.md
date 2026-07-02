@@ -193,6 +193,9 @@
 - **CFX-034b desktop nav grouping — done in G1377 / issue #2528.** Desktop sidebar navigation now
   uses the requested Primair, Beheer, and Privacy sections with visible eyebrow labels, subtitles,
   counts, and separators while the mobile Meer sheet remains unchanged.
+- **CFX-017/CFX-055 switch controls — partial in G1378 / issue #2530.** Gedeelde modus and
+  Herinneringen lockscreenprivacy now render as visible switch controls with `role="switch"`,
+  `aria-checked`, immediate visual state updates, and hidden false fallbacks for form submission.
 
 ---
 
@@ -547,7 +550,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-017** — Toggle-switch component (`toggle({name,checked,label})`) with `role="switch"`;
   adopt in Herinneringen + Gedeelde modus. Accept: single implementation, keyboard-operable.
   **P1 · M** Partial G1360/#2494: Herinneringen uses a route-first workspace without a fixed third
-  context column.
+  context column. Partial G1378/#2530: Gedeelde modus and Herinneringen lockscreenprivacy now use
+  the shared switch presentation with `role="switch"` and `aria-checked`.
 - **CFX-016** — Status-badge component (`badge({label,tone})`) with the J68 color map; adopt in
   Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M**
 - **CFX-018** — Toast/inline success feedback primitive; fire after every store save. Accept: saves
@@ -697,6 +701,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-053** — Audit every icon-only button for `aria-label` (eye, `⋯`, delete, toggles). **P1 · S**
 - **CFX-054** — Hit-target ≥44px audit on mobile nav/toggles/menus. **P2 · S**
 - **CFX-055** — `role="switch"`/`aria-checked` on all toggles (with CFX-017). **P1 · S**
+  Partial G1378/#2530: the Settings gedeelde-modus and Herinneringen lockscreenprivacy controls
+  expose `role="switch"`/`aria-checked` and update their visible state on change.
 - **CFX-056** — Contrast audit (`--ink-3` body text, dark mode) + fixes (K74). **P1 · M**
 - **CFX-075** — Verify visible focus ring (teal) on all interactive elements incl. `<details>`
   summaries (K75). **P2 · S**

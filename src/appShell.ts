@@ -1376,24 +1376,38 @@ function renderBinaryToggle(input: {
   options: Array<{ value: string; label: string; description?: string }>;
   dataAttribute: string;
 }): string {
+  const fallbackOption: { value: string; label: string; description?: string } = {
+    value: input.value,
+    label: input.value === 'true' ? 'Aan' : 'Uit',
+  };
+  const activeOption =
+    input.options.find((option) => option.value === input.value) ??
+    input.options[0] ??
+    fallbackOption;
+  const inactiveOption =
+    input.options.find((option) => option.value !== input.value) ??
+    input.options[1] ??
+    activeOption;
+  const checked = input.value === 'true';
+  const trueOption = input.options.find((option) => option.value === 'true') ?? activeOption;
+  const falseOption = input.options.find((option) => option.value === 'false') ?? inactiveOption;
+
   return `
     <fieldset class="binary-toggle" data-binary-toggle="${escapeAttribute(input.dataAttribute)}">
       <legend>${escapeHtml(input.legend)}</legend>
-      <div class="binary-toggle__options">
-        ${input.options
-          .map(
-            (option) => `
-              <label class="binary-toggle__option">
-                <input type="radio" name="${escapeAttribute(input.name)}" value="${escapeAttribute(option.value)}"${option.value === input.value ? ' checked' : ''} />
-                <span class="binary-toggle__pill">
-                  <span>${escapeHtml(option.label)}</span>
-                  ${option.description ? `<small>${escapeHtml(option.description)}</small>` : ''}
-                </span>
-              </label>
-            `,
-          )
-          .join('')}
-      </div>
+      <label class="binary-switch" data-switch-control="${escapeAttribute(input.dataAttribute)}" data-switch-state="${checked ? 'on' : 'off'}" data-switch-value="${escapeAttribute(input.value)}" data-switch-on-label="${escapeAttribute(trueOption.label)}" data-switch-off-label="${escapeAttribute(falseOption.label)}" data-switch-on-description="${escapeAttribute(trueOption.description ?? '')}" data-switch-off-description="${escapeAttribute(falseOption.description ?? '')}">
+        <input class="binary-switch__input" type="checkbox" role="switch" name="${escapeAttribute(input.name)}" value="true"${checked ? ' checked' : ''} aria-checked="${checked ? 'true' : 'false'}" />
+        <span class="binary-switch__track" aria-hidden="true"><span class="binary-switch__thumb"></span></span>
+        <span class="binary-switch__copy">
+          <span class="binary-switch__label">${escapeHtml(activeOption.label)}</span>
+          <small>${escapeHtml(activeOption.description ?? (checked ? trueOption.label : falseOption.label))}</small>
+        </span>
+      </label>
+      <input type="hidden" name="${escapeAttribute(input.name)}" value="false" />
+      <p class="binary-toggle__hint">
+        <span>${escapeHtml(falseOption.label)}${falseOption.description ? `<small>${escapeHtml(falseOption.description)}</small>` : ''}</span>
+        <span>${escapeHtml(trueOption.label)}${trueOption.description ? `<small>${escapeHtml(trueOption.description)}</small>` : ''}</span>
+      </p>
     </fieldset>
   `;
 }
