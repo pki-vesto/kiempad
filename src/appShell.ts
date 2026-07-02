@@ -1570,7 +1570,11 @@ function renderLogboekScreen(state: AppShellState): string {
   const eventLogWorkspace = domainSplitWorkspace({
     className: 'eventlog-split-workspace',
     ariaLabel: 'Logboek split-view werkruimte',
-    data: { 'eventlog-split-workspace': 'ready', 'eventlog-compact-workspace': 'route-first' },
+    data: {
+      'eventlog-split-workspace': 'ready',
+      'eventlog-compact-workspace': 'route-first',
+      'eventlog-single-workspace': 'ready',
+    },
     rail: renderEventLogTaskRoutes({
       eventCount: logs.length,
       highRiskCount: highRiskLogs.length,
@@ -1578,6 +1582,7 @@ function renderLogboekScreen(state: AppShellState): string {
       central: isCentralStorage(state),
       activeRoute: activeEventLogRoute,
     }),
+    context: eventLogWorkbench,
     main: `
       <section id="logboek-route-overzicht" class="eventlog-route-section" aria-labelledby="logboek-route-overzicht-title" data-eventlog-route="overzicht"${renderEventLogRouteVisibility(activeEventLogRoute, 'overzicht')}>
         <header class="eventlog-route-section__header">
@@ -1689,7 +1694,6 @@ function renderLogboekScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderEventLogFocusShell({
-        workbench: eventLogWorkbench,
         workspace: eventLogWorkspace,
       }),
     ],
@@ -1700,7 +1704,7 @@ function renderLogboekScreen(state: AppShellState): string {
   );
 }
 
-function renderEventLogFocusShell(input: { workbench: string; workspace: string }): string {
+function renderEventLogFocusShell(input: { workspace: string }): string {
   return `
     <section class="eventlog-focus-shell" aria-labelledby="eventlog-focus-shell-title" data-eventlog-focus-shell="ready">
       <header class="eventlog-focus-shell__header">
@@ -1709,9 +1713,6 @@ function renderEventLogFocusShell(input: { workbench: string; workspace: string 
         <p>Opslagmodus, recente gebeurtenissen, categorieën en privacyregels blijven in één auditruimte zonder gevoelige details direct uit te klappen.</p>
       </header>
       <div class="eventlog-focus-shell__body" data-eventlog-console="ready">
-        <div class="eventlog-focus-shell__workbench" data-eventlog-focus-region="workbench" data-eventlog-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="eventlog-focus-shell__workspace" data-eventlog-focus-region="workspace" data-eventlog-console-region="workspace">
           ${input.workspace}
         </div>
