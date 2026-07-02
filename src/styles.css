@@ -12918,6 +12918,46 @@ a.action-card:active {
   font-weight: 800;
 }
 
+.dossier-add-route-choice {
+  display: grid;
+  gap: 5px;
+  max-width: 68ch;
+  margin: 0 0 12px;
+  padding: 12px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-subtle));
+}
+
+.dossier-add-route-choice h4,
+.dossier-add-route-choice p {
+  margin: 0;
+}
+
+.dossier-add-route-choice h4 {
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.dossier-add-route-choice p:last-child {
+  color: var(--muted);
+  font-size: 0.83rem;
+  line-height: 1.4;
+}
+
+.dossier-upload-console:not([data-dossier-add-flow="keuze"]) .dossier-add-route-choice,
+.dossier-upload-console:has(
+    #dossier-upload-form:target,
+    #consult-verslag-form:target,
+    #embryo-quality-form:target,
+    #embryo-status-event-form:target,
+    #dossier-route-review:target
+  )
+  .dossier-add-route-choice {
+  display: none;
+}
+
 .dossier-add-route-panel {
   min-width: 0;
   padding: 0 0 10px;
@@ -13722,6 +13762,8 @@ a.action-card:active {
 }
 
 .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
+  [data-dossier-add-route-panel="dossier-upload"],
+.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
   [data-dossier-add-route-panel="consult-upload"],
 .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
   [data-dossier-add-route-panel="embryo-quality"],
@@ -13737,6 +13779,7 @@ a.action-card:active {
 .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="review"]
   [data-dossier-add-route-panel="dossier-upload"],
 .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]:has(
+    #dossier-upload-form:target,
     #consult-verslag-form:target,
     #embryo-quality-form:target,
     #embryo-status-event-form:target,
@@ -13746,6 +13789,12 @@ a.action-card:active {
   display: none;
 }
 
+.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]:has(
+    #dossier-upload-form:target
+  )
+  [data-dossier-add-route-panel="dossier-upload"],
+.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="document"]
+  [data-dossier-add-route-panel="dossier-upload"],
 .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]:has(
     #consult-verslag-form:target
   )
