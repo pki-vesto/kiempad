@@ -36169,6 +36169,18 @@ describe('app shell', () => {
       'Kliniekbeoordeling als bronregistratie: 4AA · Bron: Labrapport · Datum: 2026-05-04',
     );
     expect(html).toContain('Embryo-dossiers');
+    expect(html).toContain('data-embryo-tracking-grid="compact"');
+    expect(html).toContain('class="embryo-tracking-card"');
+    expect(html).toContain('data-embryo-tracking-card="ready"');
+    expect(html).toContain('data-embryo-tracking-id="embryo:traject-1:embryo-1"');
+    expect(html).toContain('data-embryo-tracking-id="embryo:traject-1:embryo-2"');
+    expect(html).toContain('aria-label="Embryo tracking feiten"');
+    expect(html).toContain('<dt>Laatste datum</dt><dd>2026-05-04</dd>');
+    expect(html).toContain('<dt>Kwaliteit</dt><dd>4AA</dd>');
+    expect(html).toContain('<dt>Status</dt><dd>teruggeplaatst</dd>');
+    expect(html).toContain('<dt>Bronnen</dt><dd>Labrapport</dd>');
+    expect(html).toContain('aria-label="Embryo-historie compact"');
+    expect(html).toContain('aria-label="Embryobronnen"');
     expect(html).toContain('Embryovergelijking per poging');
     expect(html).toContain('Poging: traject-1 · Sortering: embryo-label alfabetisch');
     expect(html).toContain('Kiempad-id: embryo:traject-1:embryo-1');
@@ -36252,6 +36264,14 @@ describe('app shell', () => {
     expect(statusEventSection).not.toContain('kansberekening');
     expect(statusEventSection).not.toContain('diagnose');
     expect(statusEventSection).not.toContain('dosering');
+
+    const css = readFileSync('src/styles.css', 'utf8');
+    const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    expect(css).toContain('.embryo-tracking-grid {');
+    expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
+    expect(css).toContain('.embryo-tracking-card__facts {');
+    expect(mobileCss).toContain('.embryo-tracking-grid {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
   });
 
   it('rendert het welzijnscherm met symptoomlogformulier en logs', () => {

@@ -4165,7 +4165,7 @@ function renderDossierScreen(state: AppShellState): string {
             ${renderEmbryoVergelijkingen(embryoVergelijkingen)}
             ${
               embryoDossiers.length > 0
-                ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
+                ? `<ol class="embryo-tracking-grid" data-embryo-tracking-grid="compact">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
                 : renderEmptyState(
                     'Nog geen embryo-dossier beschikbaar. Upload embryokwaliteit, labfoto’s of statusmomenten om historie en vergelijking op te bouwen.',
                     {
@@ -10931,22 +10931,36 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
   ].filter((detail): detail is string => Boolean(detail));
 
   return `
-    <li class="phase-item">
-      <div>
-        <h3>${escapeHtml(item.embryoLabel)}</h3>
-        <p class="linked-note">${details.map(escapeHtml).join(' · ')}</p>
-        <p class="small-print">Embryo-historie</p>
-        <ol class="compact-list">
+    <li class="embryo-tracking-card" data-embryo-tracking-card="ready" data-embryo-tracking-id="${escapeAttribute(item.canonicalEmbryoId)}">
+      <article>
+        <header class="embryo-tracking-card__header">
+          <div>
+            <p class="kp-card__eyebrow">Embryodossier</p>
+            <h3>${escapeHtml(item.embryoLabel)}</h3>
+          </div>
+          <span>${item.historie.length} moment${item.historie.length === 1 ? '' : 'en'}</span>
+        </header>
+        <dl class="embryo-tracking-card__facts" aria-label="Embryo tracking feiten">
+          <div><dt>Laatste datum</dt><dd>${escapeHtml(item.laatsteDatum || 'Onbekend')}</dd></div>
+          <div><dt>Kwaliteit</dt><dd>${escapeHtml(item.kwaliteiten.join(', ') || 'Niet vastgelegd')}</dd></div>
+          <div><dt>Status</dt><dd>${escapeHtml(item.statussen.join(', ') || 'Niet vastgelegd')}</dd></div>
+          <div><dt>Bronnen</dt><dd>${escapeHtml(item.bronnen.join(', ') || 'Geen bronlabel')}</dd></div>
+        </dl>
+        <p class="linked-note embryo-tracking-card__metadata">${details.map(escapeHtml).join(' · ')}</p>
+        <section class="embryo-tracking-card__history" aria-label="Embryo-historie compact">
+          <p class="small-print">Embryo-historie</p>
+          <ol class="compact-list">
           ${item.historie
             .map(
               (moment) =>
                 `<li>${escapeHtml(moment.datum)} · ${escapeHtml(moment.gebeurtenis)} · ${escapeHtml(moment.detail)} · Bron: ${escapeHtml(moment.bron)}</li>`,
             )
             .join('')}
-        </ol>
+          </ol>
+        </section>
         ${renderEmbryoBehandelContext(item)}
         ${renderEmbryoStatusEvents(item)}
-        <ul class="compact-list">
+        <ul class="compact-list embryo-tracking-card__documents" aria-label="Embryobronnen">
           ${item.documenten
             .map(
               (document) =>
@@ -10955,7 +10969,7 @@ function renderEmbryoDossier(item: EmbryoDossierItem): string {
             .join('')}
         </ul>
         <p class="small-print">${escapeHtml(item.waarschuwing)}</p>
-      </div>
+      </article>
     </li>
   `;
 }
