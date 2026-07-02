@@ -560,7 +560,7 @@ async function mount(): Promise<void> {
 
 function formatStorageBootstrapError(error: unknown): string {
   const detail = error instanceof Error ? error.message : 'Onbekende opslagfout.';
-  return `Centrale encrypted opslag kon niet worden geopend. ${detail}`;
+  return `Centrale versleutelde opslag kon niet worden geopend. ${detail}`;
 }
 
 function bindBackupControls(root: HTMLElement, state: RuntimeState): void {
@@ -1196,8 +1196,8 @@ async function saveEmbryoStatusEventFromForm(
 
 function beschrijfRecordOpslag(state: RuntimeState): string {
   return state.storageMode === 'central-api'
-    ? 'centraal encrypted opgeslagen'
-    : 'in de legacy lokale encrypted dataset opgeslagen';
+    ? 'centraal versleuteld opgeslagen'
+    : 'in de lokale kluis opgeslagen';
 }
 
 async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<void> {
@@ -1221,8 +1221,8 @@ async function exportBackup(root: HTMLElement, state: RuntimeState): Promise<voi
       gebeurtenis: 'Versleutelde back-up klaargezet',
       detail:
         state.storageMode === 'central-api'
-          ? 'Centrale encrypted noodexport lokaal als download aangeboden.'
-          : 'Legacy lokale encrypted back-up als download aangeboden.',
+          ? 'Centrale versleutelde noodexport lokaal als download aangeboden.'
+          : 'Lokale versleutelde back-up als download aangeboden.',
     });
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Back-up maken is mislukt.';
@@ -1242,7 +1242,7 @@ async function exportSync(root: HTMLElement, state: RuntimeState): Promise<void>
     URL.revokeObjectURL(url);
     state.backupStatus =
       state.storageMode === 'central-api'
-        ? 'Encrypted recordpakket voor dezelfde centrale dataset klaargezet voor download.'
+        ? 'Versleuteld overdrachtspakket voor dezelfde centrale opslag klaargezet voor download.'
         : 'Syncpakket met versleutelde records klaargezet voor download.';
     state.backupError = undefined;
     await state.eventLogStore?.record({
@@ -1250,8 +1250,8 @@ async function exportSync(root: HTMLElement, state: RuntimeState): Promise<void>
       gebeurtenis: 'Versleuteld syncpakket klaargezet',
       detail:
         state.storageMode === 'central-api'
-          ? 'Recordpakket bevat alleen encrypted records; centrale apparaten openen normaal dezelfde API-dataset.'
-          : 'Syncpakket bevat alleen encrypted records voor een gekoppeld apparaat.',
+          ? 'Overdrachtspakket bevat alleen versleutelde records; gekoppelde apparaten openen normaal dezelfde centrale opslag.'
+          : 'Syncpakket bevat alleen versleutelde records voor een gekoppeld apparaat.',
     });
   } catch (error: unknown) {
     state.backupError = error instanceof Error ? error.message : 'Syncpakket maken is mislukt.';
@@ -1438,7 +1438,7 @@ async function unlockWithWebAuthn(root: HTMLElement, state: RuntimeState): Promi
   try {
     const metadata = await state.session.getWebAuthnUnlockMetadata();
     if (!metadata) {
-      throw new Error('WebAuthn-ontgrendeling is niet ingesteld voor deze Kiempad-dataset.');
+      throw new Error('Biometrisch ontgrendelen is niet ingesteld voor deze Kiempad-kluis.');
     }
 
     const prfSecret = await vraagWebAuthnPrfSecret(metadata);
@@ -1449,13 +1449,13 @@ async function unlockWithWebAuthn(root: HTMLElement, state: RuntimeState): Promi
         'We laden dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten versleuteld in.',
     };
     render(root, state);
-    await loadUnlockedState(state, 'Dataset ontgrendeld met WebAuthn');
+    await loadUnlockedState(state, 'Kluis ontgrendeld met biometrie');
     state.loadingState = undefined;
     state.error = undefined;
     render(root, state);
   } catch (error: unknown) {
     state.loadingState = undefined;
-    state.error = error instanceof Error ? error.message : 'WebAuthn-ontgrendeling is mislukt.';
+    state.error = error instanceof Error ? error.message : 'Biometrisch ontgrendelen is mislukt.';
     await refreshWebAuthnStatus(state);
     render(root, state);
   }
@@ -1465,8 +1465,8 @@ async function enrollWebAuthnUnlock(root: HTMLElement, state: RuntimeState): Pro
   try {
     const label =
       state.storageMode === 'central-api'
-        ? 'Kiempad centrale encrypted dataset'
-        : 'Kiempad legacy lokale kluis';
+        ? 'Kiempad centrale versleutelde opslag'
+        : 'Kiempad lokale kluis';
     const enrollment = await koppelWebAuthnPrf(label);
     const metadata = await state.session.enableWebAuthnUnlock({
       credentialId: enrollment.credentialId,
@@ -1481,23 +1481,23 @@ async function enrollWebAuthnUnlock(root: HTMLElement, state: RuntimeState): Pro
       label: metadata.label,
       status:
         state.storageMode === 'central-api'
-          ? 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.'
-          : 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je legacy lokale kluis.',
+          ? 'Biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale versleutelde opslag.'
+          : 'Biometrie is lokaal gekoppeld als ontgrendelgemak voor je lokale kluis.',
       error: undefined,
     };
     await state.eventLogStore?.record({
       categorie: 'kluis',
-      gebeurtenis: 'WebAuthn ontgrendelgemak gekoppeld',
+      gebeurtenis: 'Biometrisch ontgrendelgemak gekoppeld',
       detail:
         state.storageMode === 'central-api'
-          ? 'Lokale PRF-keywrap toegevoegd voor centrale encrypted dataset; passphrase blijft fallback.'
-          : 'Lokale PRF-keywrap toegevoegd voor legacy lokale kluis; passphrase blijft fallback.',
+          ? 'Lokale biometrische sleutel gekoppeld voor centrale versleutelde opslag; wachtwoordzin blijft fallback.'
+          : 'Lokale biometrische sleutel gekoppeld voor lokale kluis; wachtwoordzin blijft fallback.',
     });
     state.eventLogs = (await state.eventLogStore?.list()) ?? state.eventLogs;
   } catch (error: unknown) {
     state.webAuthnStatus = {
       ...(await buildWebAuthnStatus(state.session)),
-      error: error instanceof Error ? error.message : 'WebAuthn koppelen is mislukt.',
+      error: error instanceof Error ? error.message : 'Biometrie koppelen is mislukt.',
     };
   }
 

@@ -1535,17 +1535,17 @@ function extractBackupImportPrivacyZone(html: string): string {
 
 function extractCentralSyncFeedback(html: string): string {
   const match = html.match(
-    /<section class="policy-panel embedded-summary" aria-label="Centrale syncstatus"[\s\S]*?<\/section>/,
+    /<section class="policy-panel embedded-summary" aria-label="Centrale overdrachtstatus"[\s\S]*?<\/section>/,
   );
-  if (!match?.[0]) throw new Error('Centrale syncstatus ontbreekt.');
+  if (!match?.[0]) throw new Error('Centrale overdrachtstatus ontbreekt.');
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
 function extractWebAuthnPanel(html: string): string {
   const match = html.match(
-    /<section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn"[\s\S]*?<\/section>/,
+    /<section class="policy-panel embedded-summary" aria-label="Lokale biometrie"[\s\S]*?<\/section>/,
   );
-  if (!match?.[0]) throw new Error('WebAuthn-paneel ontbreekt.');
+  if (!match?.[0]) throw new Error('Biometriepaneel ontbreekt.');
   return match[0].replace(/\s+/g, ' ').trim();
 }
 
@@ -2382,7 +2382,7 @@ describe('app shell', () => {
     expect(html).toContain('docs/WEBAUTHN_UNLOCK.md');
   });
 
-  it('toont legacy fallback expliciet als lokale encrypted dataset', () => {
+  it('toont lokale fallback expliciet als lokale kluis', () => {
     const html = renderVaultGate(false, undefined, undefined, {
       storageMode: 'legacy-indexeddb',
       storageLabel: 'Legacy lokale IndexedDB-kluis <script>',
@@ -2392,8 +2392,8 @@ describe('app shell', () => {
     expect(html).toContain('Versleuteld · alleen op dit toestel');
     expect(html).toContain('bewaart alleen versleutelde gegevens op dit toestel');
     expect(html).toContain('Legacy lokale IndexedDB-kluis &lt;script&gt;');
-    expect(html).toContain('Geen legacy lokale encrypted dataset voor deze sessie gevonden.');
-    expect(html).not.toContain('Start je centrale encrypted dataset');
+    expect(html).toContain('Geen lokale kluis voor deze sessie gevonden.');
+    expect(html).not.toContain('Start je centrale versleutelde opslag');
     expect(html).not.toContain('Legacy lokale IndexedDB-kluis <script>');
   });
 
@@ -2406,7 +2406,7 @@ describe('app shell', () => {
     expect(html).toContain('Hulp bij ontgrendelen');
     expect(html).toContain('Klaar om te ontgrendelen');
     expect(html).toContain('data-vault-present="true"');
-    expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
+    expect(html).toContain('Centrale versleutelde opslag gevonden.');
     expect(html).toContain('Centrale encrypted API');
     expect(html).toContain('Back-upherinnering');
     expect(html).toContain('Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.');
@@ -2416,9 +2416,9 @@ describe('app shell', () => {
     expect(html).not.toContain('Ontgrendelen is mislukt <script>');
     expect(html).toContain('Controleer rustig de wachtwoordzin');
     expect(html).toContain('toetsenbordindeling en hoofdletters');
-    expect(html).toContain('centrale backend en gebruikersscope dezelfde dataset openen');
+    expect(html).toContain('je account dezelfde centrale opslag opent');
     expect(html).toContain('jullie wachtwoordzin blijft de herstelroute');
-    expect(html).not.toContain('Als de legacy lokale opslag leeg of beschadigd is');
+    expect(html).not.toContain('Als de lokale kluis leeg of beschadigd is');
     expect(html).toContain('niet te herstellen via een achterdeur');
     expect(html).not.toContain('reset je passphrase');
   });
@@ -2430,7 +2430,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('data-vault-present="false"');
-    expect(html).toContain('Geen centrale encrypted dataset voor deze sessie gevonden.');
+    expect(html).toContain('Geen centrale versleutelde opslag voor deze sessie gevonden.');
     expect(html).not.toContain('Centrale dataset vraagt herstelcontrole.');
     expect(html).not.toContain('sleutelmetadata ontbreekt');
     expect(html).not.toContain('versleutelde records bestaan');
@@ -2452,7 +2452,7 @@ describe('app shell', () => {
     expect(html).toContain('Herlaad eerst de app');
     expect(html).toContain('contact op met support');
     expect(html).toContain('gecontroleerde versleutelde back-up');
-    expect(html).toContain('backend, gebruikersscope en dataset bij elkaar horen');
+    expect(html).toContain('je account en centrale opslag bij elkaar horen');
     expect(html).toContain('data-support-handoff="missing-key-metadata"');
     expect(html).toContain('<dt>Supportcategorie</dt><dd>missing-key-metadata</dd>');
     expect(html).toContain('<dt>Opslagmodus</dt><dd>central-api</dd>');
@@ -2534,7 +2534,7 @@ describe('app shell', () => {
     );
 
     expect(html).toContain('data-vault-present="true"');
-    expect(html).toContain('Centrale encrypted datasetmetadata gevonden.');
+    expect(html).toContain('Centrale versleutelde opslag gevonden.');
     expect(html).toContain(UNLOCK_ERROR_GENERIC_COPY);
     expect(html).not.toContain('Passphrase klopt niet voor deze Kiempad-dataset.');
     expect(html).toContain('Controleer rustig de wachtwoordzin');
@@ -2638,8 +2638,8 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Ontgrendel Kiempad');
-    expect(html).toContain('Legacy lokale encrypted datasetmetadata gevonden.');
-    expect(html).toContain('Als de legacy lokale opslag leeg of beschadigd is');
+    expect(html).toContain('Lokale kluis gevonden.');
+    expect(html).toContain('Als de lokale kluis leeg of beschadigd is');
     expect(html).toContain('importeer daarna je versleutelde back-up');
     expect(html).not.toContain('centrale backend en gebruikersscope');
   });
@@ -2647,13 +2647,13 @@ describe('app shell', () => {
   it('toont een veilige centrale bootstrapfout zonder lokale fallback', () => {
     const html = renderStorageBootstrapError('API offline <script>alert(1)</script>');
 
-    expect(html).toContain('Kiempad kan centrale opslag niet starten');
+    expect(html).toContain('Kiempad kan je centrale opslag niet starten');
     expect(html).toContain('role="alert"');
     expect(html).toContain('API offline &lt;script&gt;alert(1)&lt;/script&gt;');
     expect(html).toContain('VITE_KIEMPAD_CENTRAL_API_URL');
     expect(html).toContain('KIEMPAD_CENTRAL_ALLOWED_USER_IDS');
     expect(html).toContain('KIEMPAD_CENTRAL_ALLOWED_ORIGINS');
-    expect(html).toContain('niet stilletjes terug naar legacy lokale opslag');
+    expect(html).toContain('niet ongemerkt terug naar lokale opslag');
     expect(html).not.toContain('<script>alert(1)</script>');
     expect(html).not.toContain('id="vault-form"');
   });
@@ -2665,7 +2665,7 @@ describe('app shell', () => {
       gekoppeld: false,
     });
 
-    expect(html).toContain('Niet beschikbaar: WebAuthn PRF niet beschikbaar in deze browser');
+    expect(html).toContain('Niet beschikbaar in deze browser');
     expect(html).toContain('Niet gekoppeld op dit toestel.');
     expect(html).toContain('Back-upherinnering');
     expect(html).not.toMatch(/\b\d+\s+(records?|afspraken|vragen|dossier|embryo)/i);
@@ -2688,11 +2688,11 @@ describe('app shell', () => {
     });
 
     expect(noVaultHtml).toContain('data-vault-present="false"');
-    expect(noVaultHtml).toContain('Geen centrale encrypted dataset voor deze sessie gevonden.');
+    expect(noVaultHtml).toContain('Geen centrale versleutelde opslag voor deze sessie gevonden.');
     expect(noVaultHtml).toContain('Beschikbaar in deze browser.');
     expect(noVaultHtml).toContain('Niet gekoppeld op dit toestel.');
     expect(noVaultHtml).toContain(
-      'Nog niet ingesteld; start eerst je centrale encrypted dataset en maak daarna een versleutelde back-up.',
+      'Nog niet ingesteld; start eerst je centrale versleutelde opslag en maak daarna een versleutelde back-up.',
     );
     expect(linkedHtml).toContain('data-vault-present="true"');
     expect(linkedHtml).toContain('Gekoppeld: Laptop biometrie.');
@@ -3430,7 +3430,7 @@ describe('app shell', () => {
     expect(contextualRecommendations).not.toContain('MEDISCHE PAYLOAD');
   });
 
-  it('beschrijft centrale encrypted opslag als primaire eerste setup wanneer actief', () => {
+  it('beschrijft centrale versleutelde opslag als primaire eerste setup wanneer actief', () => {
     const html = renderAppShell(
       'start',
       makeStartState({
@@ -3444,7 +3444,7 @@ describe('app shell', () => {
     expect(html).not.toContain('Configureer de centrale API');
   });
 
-  it('beschrijft dossierrecords als centraal encrypted wanneer centrale storage actief is', () => {
+  it('beschrijft dossierrecords als centraal versleuteld wanneer centrale storage actief is', () => {
     const html = renderAppShell(
       'dossier',
       makeStartState({
@@ -3453,21 +3453,21 @@ describe('app shell', () => {
       }),
     );
 
-    expect(html).toContain('bewaar bestandsanalyse in je centrale encrypted dataset');
+    expect(html).toContain('bewaar bestandsanalyse in je centrale versleutelde opslag');
     expect(html).toContain(
-      'Bestanden, gespreksverslagen, OCR-status en analyse worden centraal encrypted bewaard voor gekoppelde apparaten.',
+      'Bestanden, gespreksverslagen, OCR-status en analyse worden centraal versleuteld bewaard voor gekoppelde apparaten.',
     );
     expect(html).toContain(
-      'Consultverslagen worden als eigen recordtype centraal encrypted bewaard voor gekoppelde apparaten.',
+      'Consultverslagen worden als eigen recordtype centraal versleuteld bewaard voor gekoppelde apparaten.',
     );
     expect(html).toContain('Zoek in dataset');
-    expect(html).toContain('Zoeken gebruikt alleen de ontgrendelde centrale encrypted dataset');
+    expect(html).toContain('Zoeken gebruikt alleen de ontgrendelde centrale versleutelde opslag');
     expect(html).toContain('Lokale OCR-pipeline starten voor tekstherkenning op dit toestel');
     expect(html).not.toContain('blijven versleuteld lokaal');
     expect(html).not.toContain('versleuteld lokaal bewaard');
   });
 
-  it('beschrijft logboek en timeline vanuit centrale encrypted dataset wanneer actief', () => {
+  it('beschrijft logboek en timeline vanuit centrale versleutelde opslag wanneer actief', () => {
     const logboekHtml = renderAppShell(
       'logboek',
       makeStartState({
@@ -3483,9 +3483,9 @@ describe('app shell', () => {
     );
 
     expect(logboekHtml).toContain('Gebeurtenissenlog');
-    expect(logboekHtml).toContain('Dit logboek staat in je centrale encrypted dataset');
+    expect(logboekHtml).toContain('Dit logboek staat in je centrale versleutelde opslag');
     expect(logboekHtml).not.toContain('Lokaal logboek');
-    expect(trajectHtml).toContain('vanuit je ontgrendelde centrale encrypted dataset');
+    expect(trajectHtml).toContain('vanuit je ontgrendelde centrale versleutelde opslag');
     expect(trajectHtml).not.toContain('vanuit lokale records');
   });
 
@@ -4261,7 +4261,7 @@ describe('app shell', () => {
     expect(html).toContain('Reviewstatus: Concept · Schema: v1');
     expect(html).toContain('Graph-nodes zijn bronmetadata voor context');
     expect(html).toContain('Graph-index rebuild');
-    expect(html).toContain('Opnieuw opgebouwd uit ontgrendelde encrypted datasetrecords');
+    expect(html).toContain('Opnieuw opgebouwd uit ontgrendelde versleutelde records');
     expect(html).toContain('Bronrecords');
     expect(html).toContain('Controlehash');
     expect(html).toContain('originele versleutelde records worden niet overschreven');
@@ -5867,7 +5867,7 @@ describe('app shell', () => {
           uploadedAt: '2026-06-23T15:00:00.000Z',
         },
       ],
-      dossierStatus: '1 dossierbestand in de legacy lokale encrypted dataset opgeslagen.',
+      dossierStatus: '1 dossierbestand in de lokale kluis opgeslagen.',
       dossierZoekterm: 'erasmus',
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -5945,7 +5945,7 @@ describe('app shell', () => {
     expect(html).toContain('PDF');
     expect(html).toContain('Afbeelding');
     expect(html).toContain(
-      'Bestanden, gespreksverslagen, OCR-status en analyse worden in de legacy lokale encrypted dataset op dit toestel bewaard',
+      'Bestanden, gespreksverslagen, OCR-status en analyse worden in de lokale kluis op dit toestel bewaard',
     );
     expect(html).toContain('Koppel aan afspraak');
     expect(html).toContain('Intakegesprek · 2026-05-01 09:30');
@@ -6020,7 +6020,7 @@ describe('app shell', () => {
     expect(html).toContain('2026-05-01T09:30 · Consult · Bron: Agenda');
     expect(html).toContain('2026-05-01 · Consultverslag · Bron: Consulttekst');
     expect(html).toContain('2026-05-01 · Labuitslag · Bron: bloed-lab-uitslag.pdf');
-    expect(html).toContain('1 dossierbestand in de legacy lokale encrypted dataset opgeslagen.');
+    expect(html).toContain('1 dossierbestand in de lokale kluis opgeslagen.');
     expect(html).not.toContain('cGRm');
   });
 
@@ -8670,11 +8670,11 @@ describe('app shell', () => {
     expect(html).toContain('imaging-preview-status');
     expect(html).toContain('data-dossier-status-kind="preview"');
     expect(html).toContain('class="imaging-preview-tile imaging-preview-tile--unlocked"');
-    expect(html).toContain('<strong>Encrypted thumbnail</strong>');
+    expect(html).toContain('<strong>Versleutelde thumbnail</strong>');
     expect(html).toContain('Previewstatus');
     expect(html).toContain('data-imaging-preview-status="thumbnail"');
     expect(html).toContain('alt="Lokale thumbnail van Echo 6 weken"');
-    expect(html).toContain('Thumbnail uit ontgrendelde encrypted dataset.');
+    expect(html).toContain('Thumbnail uit ontgrendelde versleutelde opslag.');
     expect(html).toContain(
       'Beeldmetadata: Schema: Echo · Context: Follikelmeting links · Afspraak: afspraak-beeld · Traject: traject-beeld · EXIF: geisoleerd · Review: concept',
     );
@@ -8688,7 +8688,7 @@ describe('app shell', () => {
     expect(html).toContain('alt="Lokale imaging-preview van Echo 6 weken"');
     expect(html).toContain('data:image/jpeg;base64,anBn');
     expect(html).toContain('alt="Lokale preview van Echo 6 weken"');
-    expect(html).toContain('Lokale preview uit de legacy lokale encrypted dataset op dit toestel.');
+    expect(html).toContain('Lokale preview uit de lokale kluis op dit toestel.');
     expect(html).toContain('Bestandstype is beeldmateriaal.');
   });
 
@@ -9555,7 +9555,7 @@ describe('app shell', () => {
     expect(consentExport).toContain('data-attachment-share-kind="medical-boundary"');
     expect(consentExport).toContain('data-attachment-share-state="metadata-only-boundary"');
     expect(consentExport).toContain('Expliciete keuze vereist');
-    expect(consentExport).toContain('Encrypted centrale export beschikbaar voor 2 bijlagen');
+    expect(consentExport).toContain('Versleutelde centrale export beschikbaar voor 2 bijlagen');
     expect(consentExport).toContain('waaronder 1 beeld en 1 embryobron');
     expect(consentExport).toContain('Downloads en previews blijven vergrendeld');
     expect(consentExport).toContain('geen medisch oordeel, hoeveelheidadvies of behandelrichting');
@@ -9671,10 +9671,10 @@ describe('app shell', () => {
     expect(retentionCleanup).toContain(
       'data-attachment-delete-confirm-state="confirmation-required"',
     );
-    expect(retentionCleanup).toContain('2 bijlagen blijven encrypted bewaard');
+    expect(retentionCleanup).toContain('2 bijlagen blijven versleuteld bewaard');
     expect(retentionCleanup).toContain('1 bijlage vraagt om traject- of afspraakreview');
     expect(retentionCleanup).toContain('Cleanup kan metadatareview starten');
-    expect(retentionCleanup).toContain('Verwijderen vraagt bevestiging per encrypted bijlage');
+    expect(retentionCleanup).toContain('Verwijderen vraagt bevestiging per versleutelde bijlage');
 
     expect(retentionCleanup).not.toContain('retention-secret-source.jpg');
     expect(retentionCleanup).not.toContain('retention-embryo-secret.json');
@@ -10649,7 +10649,9 @@ describe('app shell', () => {
     expect(shareHandoff).toContain('2 bijlagen klaar als metadata-only deelstatus');
     expect(shareHandoff).toContain('Support-handoff bevat alleen workflowstatus');
     expect(shareHandoff).toContain('2 gereviewde bijlagen beschikbaar als veilige reviewstatus');
-    expect(shareHandoff).toContain('centrale encrypted metadata en vraagt expliciete toestemming');
+    expect(shareHandoff).toContain(
+      'centrale versleutelde metadata en vraagt expliciete toestemming',
+    );
     expect(shareHandoff).toContain(
       '1 vergrendelde beeldpreview blijft buiten share- en handoffstates',
     );
@@ -35569,7 +35571,7 @@ describe('app shell', () => {
     ).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
   });
 
-  it('rendert beeldpreview vanuit centrale encrypted dataset wanneer centrale storage actief is', () => {
+  it('rendert beeldpreview vanuit centrale versleutelde opslag wanneer centrale storage actief is', () => {
     const html = renderAppShell('dossier', {
       trajecten: [],
       afspraken: [],
@@ -35608,7 +35610,7 @@ describe('app shell', () => {
 
     expect(html).toContain('alt="Lokale imaging-preview van Centrale echo"');
     expect(html).toContain('alt="Lokale preview van Centrale echo"');
-    expect(html).toContain('Lokale preview uit de ontgrendelde centrale encrypted dataset.');
+    expect(html).toContain('Lokale preview uit de ontgrendelde centrale versleutelde opslag.');
     expect(html).not.toContain('dit beeld blijft op dit toestel');
   });
 
@@ -35656,7 +35658,7 @@ describe('app shell', () => {
     expect(lockedTimeline).toContain('Beeldmoment vergrendeld');
     expect(lockedTimeline).toContain('Beeldbron verborgen tot ontgrendeling');
     expect(lockedTimeline).toContain('preview: Preview beschikbaar na ontgrendeling');
-    expect(lockedTimeline).toContain('encrypted dataset');
+    expect(lockedTimeline).toContain('versleutelde opslag');
     expect(lockedTimeline).not.toContain('Secret G474 medische bestandsnaam echo');
     expect(lockedTimeline).not.toContain('secret-g474-follikel-echo.jpg');
     expect(lockedHtml).not.toContain('U0VDUkVULUc0NzQtSU1BR0U=');
@@ -35678,10 +35680,10 @@ describe('app shell', () => {
     expect(unlockedTimeline).toContain('Secret G474 medische bestandsnaam echo');
     expect(unlockedTimeline).toContain('secret-g474-follikel-echo.jpg');
     expect(unlockedTimeline).toContain('preview: Thumbnail en preview beschikbaar');
-    expect(unlockedTimeline).toContain('encrypted dataset');
+    expect(unlockedTimeline).toContain('versleutelde opslag');
     expect(unlockedHtml).toContain('src="data:image/jpeg;base64,U0VDUkVULUc0NzQtSU1BR0U="');
     expect(unlockedHtml).toContain(
-      'Lokale preview uit de ontgrendelde centrale encrypted dataset.',
+      'Lokale preview uit de ontgrendelde centrale versleutelde opslag.',
     );
   });
 
@@ -37763,7 +37765,7 @@ describe('app shell', () => {
     );
     expect(html).toContain('Back-up, import en herstel eerst controleren');
     expect(html).toContain('Maak een versleutelde back-up');
-    expect(html).toContain('Legacy lokale kluis');
+    expect(html).toContain('Lokale kluis');
     expect(html).toContain('aria-label="Veiligheidswerkbank acties"');
     expect(html).toContain('href="#backup-route-controleren"');
     expect(html).toContain('href="#backup-route-export"');
@@ -37789,13 +37791,13 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Back-up controleren route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="controleren"');
     expect(html).toContain('data-backup-sync-board="ready"');
-    expect(html).toContain('aria-label="Encrypted sync startlaag"');
+    expect(html).toContain('aria-label="Veilige overdracht startlaag"');
     expect(html).toContain('Kies eerst je veilige overdracht');
     expect(html).toContain('data-backup-sync-lane="status"');
     expect(html).toContain('data-backup-sync-lane="export"');
     expect(html).toContain('data-backup-sync-lane="import"');
     expect(html).toContain('data-backup-sync-lane="recovery"');
-    expect(html).toContain('Encrypted pakket maken');
+    expect(html).toContain('Versleuteld pakket maken');
     expect(html).toContain('Bewust herstellen');
     expect(html).toContain('Wachtwoordzin leidend');
     expect(html).toContain('data-backup-reminder-card="ready"');
@@ -37833,29 +37835,29 @@ describe('app shell', () => {
     expect(html).toContain('Import- en exportmeldingen openen');
     expect(html).toContain('aria-label="Back-up herstel route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="herstel"');
-    expect(html).toContain('Biometrie en herstelcontext openen');
+    expect(html).toContain('Biometrie en herstelinstellingen openen');
     expect(html).toContain('Back-upstatus controleren');
-    expect(html).toContain('Encrypted export maken');
+    expect(html).toContain('Versleutelde export maken');
     expect(html).toContain('Versleutelde data importeren');
     expect(html).toContain('Toegang en herstel voorbereiden');
     expect(html).toContain('id="export-backup"');
     expect(html).toContain('Download back-up');
     expect(html).toContain('id="export-sync"');
     expect(html).toContain('Download syncpakket');
-    expect(html).toContain('Het pakket bevat alleen encrypted records');
-    expect(html).toContain('dezelfde legacy lokale kluis');
+    expect(html).toContain('Het pakket bevat alleen versleutelde records');
+    expect(html).toContain('dezelfde lokale kluis');
     expect(html).toContain('Back-up herinnering');
     expect(html).toContain('Maak regelmatig een back-up');
     expect(html).toContain('Er is nog geen succesvolle back-updatum bekend');
     expect(html).toContain('data-backup-reminder="missing"');
     expect(html).toContain('id="import-backup-form"');
     expect(html).toContain('id="import-sync-form"');
-    expect(html).toContain('Biometrie/WebAuthn');
+    expect(html).toContain('Lokale biometrie');
     expect(html).toContain('id="webauthn-enroll"');
     expect(html).toContain('Niet gekoppeld');
-    expect(html).toContain('Optioneel ontgrendelgemak op dit toestel voor je legacy lokale kluis');
-    expect(html).toContain('kluissleutel versleuteld te bewaren');
-    expect(html).toContain('geen PRF-output of herstelzin naar een server');
+    expect(html).toContain('Optioneel ontgrendelgemak op dit toestel voor je lokale kluis');
+    expect(html).toContain('lokale versleutelde toegangssleutel op dit toestel');
+    expect(html).toContain('herstelzin en sleuteldata gaan niet naar een server');
     expect(html).toContain('type="file"');
     expect(html).toContain('.kiempad-export');
     expect(html).toContain('.kiempad-sync');
@@ -37875,14 +37877,14 @@ describe('app shell', () => {
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
-    expect(html).toContain('encrypted records en centrale datasetmetadata');
-    expect(html).toContain('noodexport naast de centrale encrypted backend');
+    expect(html).toContain('versleutelde records en centrale opslaginformatie');
+    expect(html).toContain('noodexport naast de centrale opslag');
     expect(html).toContain('Optioneel recordpakket');
     expect(html).toContain('Download recordpakket');
     expect(html).toContain(
-      'Gekoppelde apparaten openen normaal dezelfde centrale encrypted dataset via de centrale API.',
+      'Gekoppelde apparaten openen normaal dezelfde centrale versleutelde opslag.',
     );
-    expect(html).toContain('handmatige encrypted recordoverdracht binnen dezelfde dataset');
+    expect(html).toContain('handmatige versleutelde overdracht binnen dezelfde opslag');
     expect(html).toContain('Recordpakket importeren');
     expect(html).toContain('Kiempad-recordpakket');
     expect(html).toContain('Importeer recordpakket');
@@ -37906,8 +37908,10 @@ describe('app shell', () => {
     expect(legacyZone).toContain('data-import-privacy-state="legacy-encrypted-backup"');
     expect(legacyZone).toContain('id="import-sync-form"');
     expect(legacyZone).toContain('data-import-privacy-state="legacy-sync-package"');
-    expect(legacyZone).toContain('Het bestand bevat versleutelde records en legacy kluismetadata');
-    expect(legacyZone).toContain('Het pakket bevat alleen encrypted records');
+    expect(legacyZone).toContain(
+      'Het bestand bevat versleutelde records en lokale kluisinformatie',
+    );
+    expect(legacyZone).toContain('Het pakket bevat alleen versleutelde records');
     expect(legacyZone).toContain('.kiempad-export');
     expect(legacyZone).toContain('.kiempad-sync');
 
@@ -37931,7 +37935,7 @@ describe('app shell', () => {
     expect(centralZone).toContain('data-backup-copy-kind="sync"');
     expect(centralZone).toContain('data-import-privacy-state="central-encrypted-backup"');
     expect(centralZone).toContain('data-import-privacy-state="central-record-package"');
-    expect(centralZone).toContain('encrypted records en centrale datasetmetadata');
+    expect(centralZone).toContain('versleutelde records en centrale opslaginformatie');
     expect(centralZone).toContain('Download recordpakket');
     expect(centralZone).toContain('Recordpakket importeren');
     expect(centralZone).toContain('Kiempad-recordpakket');
@@ -38011,7 +38015,7 @@ describe('app shell', () => {
     }
   });
 
-  it('rendert WebAuthn-copy voor de centrale encrypted dataset', () => {
+  it('rendert biometrie-copy voor de centrale versleutelde opslag', () => {
     const html = renderAppShell('backup', {
       trajecten: [],
       afspraken: [],
@@ -38024,22 +38028,22 @@ describe('app shell', () => {
         runtimeBeschikbaar: true,
         reden: 'Browser meldt WebAuthn',
         gekoppeld: true,
-        label: 'Kiempad centrale encrypted dataset',
+        label: 'Kiempad centrale versleutelde opslag',
         status:
-          'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
+          'Biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale versleutelde opslag.',
       },
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     });
 
-    expect(html).toContain('Gekoppeld: Kiempad centrale encrypted dataset');
+    expect(html).toContain('Gekoppeld: Kiempad centrale versleutelde opslag');
     expect(html).toContain(
-      'Optioneel ontgrendelgemak op dit toestel voor je centrale encrypted dataset',
+      'Optioneel ontgrendelgemak op dit toestel voor je centrale versleutelde opslag',
     );
-    expect(html).toContain('datasetsleutel versleuteld te bewaren');
-    expect(html).toContain('geen PRF-output of herstelzin naar een server');
+    expect(html).toContain('lokale versleutelde toegangssleutel op dit toestel');
+    expect(html).toContain('herstelzin en sleuteldata gaan niet naar een server');
     expect(html).toContain(
-      'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
+      'Biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale versleutelde opslag.',
     );
     expect(html).not.toContain('Gekoppeld: Kiempad lokale kluis');
   });
@@ -38068,7 +38072,7 @@ describe('app shell', () => {
     expect(unavailablePanel).toContain('id="webauthn-enroll"');
     expect(unavailablePanel).toContain('disabled');
     expect(unavailablePanel).toContain('Niet gekoppeld');
-    expect(unavailablePanel).toContain('legacy lokale kluis');
+    expect(unavailablePanel).toContain('lokale kluis');
 
     const linkedLegacyHtml = renderAppShell('backup', {
       trajecten: [],
@@ -38082,7 +38086,7 @@ describe('app shell', () => {
         reden: 'Browser meldt WebAuthn',
         gekoppeld: true,
         label: 'Lokale biometrie',
-        status: 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak.',
+        status: 'Biometrie is lokaal gekoppeld als ontgrendelgemak.',
       },
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -38093,7 +38097,7 @@ describe('app shell', () => {
     expect(linkedLegacyPanel).toContain('data-webauthn-runtime="available"');
     expect(linkedLegacyPanel).toContain('data-webauthn-link-state="linked"');
     expect(linkedLegacyPanel).toContain('Gekoppeld: Lokale biometrie');
-    expect(linkedLegacyPanel).toContain('WebAuthn opnieuw koppelen');
+    expect(linkedLegacyPanel).toContain('Biometrie opnieuw koppelen');
 
     const linkedCentralHtml = renderAppShell('backup', {
       trajecten: [],
@@ -38108,7 +38112,7 @@ describe('app shell', () => {
         reden: 'Browser meldt WebAuthn',
         gekoppeld: true,
         label: 'Centrale dataset',
-        status: 'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak.',
+        status: 'Biometrie is lokaal gekoppeld als ontgrendelgemak.',
       },
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
@@ -38118,8 +38122,8 @@ describe('app shell', () => {
     expect(linkedCentralPanel).toContain('data-webauthn-storage="central-encrypted-dataset"');
     expect(linkedCentralPanel).toContain('data-webauthn-runtime="available"');
     expect(linkedCentralPanel).toContain('data-webauthn-link-state="linked"');
-    expect(linkedCentralPanel).toContain('centrale encrypted dataset');
-    expect(linkedCentralPanel).toContain('datasetsleutel versleuteld te bewaren');
+    expect(linkedCentralPanel).toContain('centrale versleutelde opslag');
+    expect(linkedCentralPanel).toContain('lokale versleutelde toegangssleutel op dit toestel');
 
     for (const panel of [unavailablePanel, linkedLegacyPanel, linkedCentralPanel]) {
       expect(panel).not.toContain('credentialId');
@@ -38200,10 +38204,10 @@ describe('app shell', () => {
     expect(webAuthnPanel).toContain('data-settings-feedback-kind="webauthn"');
     expect(webAuthnPanel).toContain('data-webauthn-feedback-state="mixed"');
     expect(webAuthnPanel).toContain('data-webauthn-storage="central-encrypted-dataset"');
-    expect(webAuthnPanel).toContain('Gekoppeld: WebAuthn/biometrie');
+    expect(webAuthnPanel).toContain('Gekoppeld: Lokale biometrie');
     expect(webAuthnPanel).toContain('Browserstatus bijgewerkt zonder technische details.');
-    expect(webAuthnPanel).toContain('WebAuthn-status bijgewerkt zonder technische details.');
-    expect(webAuthnPanel).toContain('geen PRF-output of herstelzin naar een server');
+    expect(webAuthnPanel).toContain('Biometriestatus bijgewerkt zonder technische details.');
+    expect(webAuthnPanel).toContain('herstelzin en sleuteldata gaan niet naar een server');
 
     const centralStorageCopy = extractStorageModeCopy(
       renderAppShell('start', makeStartState({ storageMode: 'central-api' })),
@@ -38213,9 +38217,9 @@ describe('app shell', () => {
     );
 
     expect(centralStorageCopy).toContain('data-storage-mode-copy="central-encrypted"');
-    expect(centralStorageCopy).toContain('Centrale encrypted opslag');
+    expect(centralStorageCopy).toContain('Centrale versleutelde opslag');
     expect(legacyStorageCopy).toContain('data-storage-mode-copy="legacy-local-encrypted"');
-    expect(legacyStorageCopy).toContain('Legacy lokaal');
+    expect(legacyStorageCopy).toContain('Lokaal');
 
     const surfaces = [
       aiSettings,
@@ -38347,9 +38351,7 @@ describe('app shell', () => {
     expect(html).toContain('Recente gebeurtenissen');
     expect(html).toContain('Categorieën scannen');
     expect(html).toContain('Privacygevoelige gebeurtenissen');
-    expect(html).toContain(
-      'Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel',
-    );
+    expect(html).toContain('Dit logboek blijft in de lokale kluis op dit toestel');
     expect(html).toContain('1 gebeurtenis vastgelegd');
     expect(html).toContain('data-eventlog-category="backup"');
     expect(html).toContain('Versleutelde back-up klaargezet');

@@ -256,6 +256,10 @@
   the safety management workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active safety route, and compact backup context
   while mobile remains stacked.
+- **CFX-008/CFX-044 biometric backup de-jargon — partial in G1395 / issue #2564.** Back-up,
+  biometrie, dossierpreviews, timeline, and attachment status copy now use plain Dutch terms such
+  as `centrale versleutelde opslag`, `lokale kluis`, and `versleutelde overdracht` while technical
+  WebAuthn/data hooks remain unchanged.
 
 ---
 
@@ -639,7 +643,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-008** — De-jargon sweep: "command center"→"dagoverzicht", "Imaging-repository"→"Beelden",
   "Dossierindex"→"Overzicht", "Consult Prep Wizard"→"Consult voorbereiden", "repository/client-side"
   → plain NL. Files: `src/appShell.ts` (+ copy module CFX-005). Accept: no listed terms remain in
-  user-visible strings. **P1 · L**
+  user-visible strings. Partial G1395/#2564: back-up, biometrie, dossierpreview, timeline, and
+  attachment status copy now avoid visible WebAuthn/PRF/encrypted-dataset jargon where plain Dutch
+  phrasing is possible. **P1 · L**
 - **CFX-009** — ✅ Done in G1323 / issue #2421. Rename "Aanbeveling/Dagelijkse aanbevelingen" → "Suggestie"/"Te doen vandaag".
   Files: `src/appShell.ts`, `src/domain/dailyRecommendations.ts` (labels only, not logic).
   Accept: no user-visible "aanbeveling". **P1 · M**
@@ -749,6 +755,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   directly, with disclosures reduced to explanatory safety copy. Partial G1394/#2562: Back-up folds
   the safety management workbench into the same split-view as route context, so desktop opens as one
   rail/main/context workspace instead of a separate focus-region plus nested route workspace.
+  Partial G1395/#2564: backup export, import, central transfer, and local biometrics use plain Dutch
+  labels while preserving technical form/data attributes.
 - **CFX-045** — `renderStorageBootstrapError` + Dossier: apply the unified privacy phrasing +
   de-jargon (N91). **P2 · S**
 

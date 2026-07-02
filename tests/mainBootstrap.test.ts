@@ -20,22 +20,24 @@ describe('main bootstrap', () => {
   });
 
   it('houdt back-up en sync-statussen storage-mode bewust', () => {
-    expect(mainSource).toContain('Centrale encrypted noodexport lokaal als download aangeboden.');
     expect(mainSource).toContain(
-      'Encrypted recordpakket voor dezelfde centrale dataset klaargezet voor download.',
+      'Centrale versleutelde noodexport lokaal als download aangeboden.',
     );
-    expect(mainSource).toContain('centrale apparaten openen normaal dezelfde API-dataset');
+    expect(mainSource).toContain(
+      'Versleuteld overdrachtspakket voor dezelfde centrale opslag klaargezet voor download.',
+    );
+    expect(mainSource).toContain('gekoppelde apparaten openen normaal dezelfde centrale opslag');
     expect(mainSource).toContain('Recordpakket geïmporteerd in centrale dataset');
   });
 
-  it('houdt WebAuthn enrollment-labels storage-mode bewust', () => {
-    expect(mainSource).toContain('Kiempad centrale encrypted dataset');
-    expect(mainSource).toContain('Kiempad legacy lokale kluis');
+  it('houdt biometrie enrollment-labels storage-mode bewust', () => {
+    expect(mainSource).toContain('Kiempad centrale versleutelde opslag');
+    expect(mainSource).toContain('Kiempad lokale kluis');
     expect(mainSource).toContain(
-      'WebAuthn/biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale encrypted dataset.',
+      'Biometrie is lokaal gekoppeld als ontgrendelgemak voor je centrale versleutelde opslag.',
     );
     expect(mainSource).toContain(
-      'Lokale PRF-keywrap toegevoegd voor centrale encrypted dataset; passphrase blijft fallback.',
+      'Lokale biometrische sleutel gekoppeld voor centrale versleutelde opslag; wachtwoordzin blijft fallback.',
     );
   });
 
