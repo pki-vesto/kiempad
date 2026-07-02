@@ -38291,6 +38291,7 @@ describe('app shell', () => {
         label === 'treatment' ||
         label === 'notification' ||
         label === 'eventlog' ||
+        label === 'backup' ||
         label === 'finance'
       ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
@@ -38443,14 +38444,17 @@ describe('app shell', () => {
     expect(backupHtml).toContain('data-backup-console="ready"');
     expect(backupHtml).toContain('data-backup-console-region="workbench"');
     expect(backupHtml).toContain('data-backup-console-region="workspace"');
-    expect(backupHtml).toContain('data-backup-workspace-context="metrics"');
-    expect(backupHtml).toContain('data-workspace-context-signals="backup"');
-    expect(backupHtml).toContain('data-workspace-context-microstate="backup-import"');
-    expect(backupHtml).toContain(
+    expect(backupHtml).toContain('data-backup-compact-workspace="route-first"');
+    expect(backupHtml).not.toContain('data-backup-workspace-context="metrics"');
+    expect(backupHtml).not.toContain('data-backup-workspace-context="privacy"');
+    expect(backupHtml).not.toContain('data-workspace-context-signals="backup"');
+    expect(backupHtml).not.toContain('data-workspace-context-microstate="backup-import"');
+    expect(backupHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: pakketstatus controleren"',
     );
-    expect(backupHtml).toContain('Importcontrole');
-    expect(backupHtml).toContain('Veiligheidsfocus');
+    expect(backupHtml).not.toContain('Importcontrole');
+    expect(backupHtml).not.toContain('Veiligheidsfocus');
+    expect(backupHtml).toContain('Back-upfocus');
     expect(backupHtml).toContain('data-backup-route="import" data-backup-route-state="active"');
     expect(herinneringenHtml).toContain(
       'class="domain-split-workspace notification-split-workspace"',
