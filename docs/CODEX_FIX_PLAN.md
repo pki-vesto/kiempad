@@ -105,6 +105,9 @@
 - **CFX-039 wellbeing route-first scan — done in G1346 / issue #2466.** Welzijn no longer renders
   a visible third context column; the workbench, route rail, and history board now carry the
   screen while split/context smokes guard the compact route-first layout.
+- **CFX-020 treatment phase timeline — done in G1348 / issue #2470.** Traject Fasen now uses the
+  shared dot/line timeline component with done/current/todo states and an amber-accent current
+  phase card while keeping the existing phase action buttons.
 
 ---
 
@@ -498,6 +501,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 ### Screens (from Screen-by-Screen)
 - **CFX-020** — Timeline component adoption for Traject + Logboek (dot/line rail, amber current
   card). Files: `src/appShell.ts`, `src/domain/fertilityTimeline.ts` (view only). **P1 · L**
+  Partial G1348/#2470: Traject Fasen uses the shared timeline component.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M**
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**

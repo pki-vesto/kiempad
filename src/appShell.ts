@@ -18328,28 +18328,35 @@ function renderTrajectList(
 
 function renderTimeline(item: TrajectMetFasen): string {
   const current = bepaalHuidigeFase(item.fasen);
+  const fases = sorteerFasen(item.fasen);
 
-  return `
-    <ol class="phase-list">
-      ${item.fasen
-        .map((fase) => {
-          const isCurrent = current?.fase === fase.fase;
-          return `
-            <li class="phase-item${isCurrent ? ' current' : ''}">
-              <div>
-                <h3>${TRAJECT_FASE_LABELS[fase.fase]}</h3>
-                <p>${escapeHtml(fase.toelichting ?? '')}</p>
-                <small>${renderPhaseDates(fase.startDatum, fase.eindDatum)}</small>
-              </div>
-              <button class="phase-button" type="button" data-traject-id="${item.traject.id}" data-fase="${fase.fase}" aria-label="${isCurrent ? 'Huidige fase' : 'Markeer fase als huidig'}: ${escapeAttribute(TRAJECT_FASE_LABELS[fase.fase])} voor ${escapeAttribute(item.traject.naam)}">
-                ${isCurrent ? 'Huidig' : 'Markeer'}
-              </button>
-            </li>
-          `;
-        })
-        .join('')}
-    </ol>
-  `;
+  return timelineList({
+    className: 'treatment-phase-timeline',
+    ariaLabel: `Fasetijdlijn voor ${item.traject.naam}`,
+    data: { 'treatment-phase-timeline': 'ready' },
+    items: fases.map((fase) => {
+      const isCurrent = current?.fase === fase.fase;
+      const state = (fase.eindDatum ? 'done' : isCurrent ? 'current' : 'todo') as StepState;
+      const label = TRAJECT_FASE_LABELS[fase.fase];
+
+      return timelineItem({
+        title: label,
+        meta: renderPhaseDates(fase.startDatum, fase.eindDatum),
+        detail: fase.toelichting ?? 'Geen toelichting vastgelegd.',
+        state,
+        className: 'treatment-phase-timeline__item',
+        data: {
+          'treatment-phase': fase.fase,
+          'treatment-phase-state': state,
+        },
+        body: `
+          <button class="phase-button" type="button" data-traject-id="${escapeAttribute(item.traject.id)}" data-fase="${escapeAttribute(fase.fase)}" aria-label="${isCurrent ? 'Huidige fase' : 'Markeer fase als huidig'}: ${escapeAttribute(label)} voor ${escapeAttribute(item.traject.naam)}">
+            ${isCurrent ? 'Huidig' : 'Markeer'}
+          </button>
+        `,
+      });
+    }),
+  });
 }
 
 function renderPhaseDates(startDatum?: string, eindDatum?: string): string {
