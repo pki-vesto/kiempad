@@ -91,6 +91,10 @@
 - **CFX-018 question feedback — done in G1342 / issue #2458.** Vraag save/delete, priority move,
   and consult-PDF actions now set inline `role="status"` feedback in Open, Beheer, and Alle vragen
   routes, so question workflows no longer fail silently.
+- **CFX-036 question route-first workspace — done in G1343 / issue #2460.** Vragen no longer
+  renders a visible third context column; the screen now opens as a compact route-first workspace
+  with one active question task, softer "gespreksblad" copy instead of prep/packet wording, and
+  tests guarding against the old all-in-one context layout.
 
 ---
 
