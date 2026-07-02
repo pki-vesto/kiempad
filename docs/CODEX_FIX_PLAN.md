@@ -190,6 +190,9 @@
 - **CFX-039/CFX-012 wellbeing check-in form kit — partial in G1376 / issue #2526.** Welzijn
   Vastleggen now focuses the mental check-in, hides the duplicated route summary, and renders the
   check-in fields as wellbeing-specific sections with mobile-safe actions.
+- **CFX-034b desktop nav grouping — done in G1377 / issue #2528.** Desktop sidebar navigation now
+  uses the requested Primair, Beheer, and Privacy sections with visible eyebrow labels, subtitles,
+  counts, and separators while the mobile Meer sheet remains unchanged.
 
 ---
 
@@ -575,7 +578,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Privacy groups + Instellingen). Files: `src/appShell.ts`, `src/styles.css`, `src/main.ts`.
   Accept: all 13 routes reachable on mobile; active state reflected. **P1 · L**
 - **CFX-034b** — Nav grouping (D34): Primair(8)/Beheer(3)/Privacy(2) with eyebrow labels + hairline
-  separators in the desktop sidebar. **P2 · M**
+  separators in the desktop sidebar. **P2 · M** Done in G1377/#2528.
 - **CFX-033b** — ✅ Done in G1327 / issue #2428. Move theme + lock controls out of the
   sidebar top into the Settings sheet / a quiet bottom-of-sidebar action (D32/D33).
   Depends on CFX-006. **P1 · M**
