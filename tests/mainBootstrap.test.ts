@@ -49,6 +49,12 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');
     expect(mainSource).toContain(
+      'normalizeDailyRecommendationFeedbackFilter(window.location.hash)',
+    );
+    expect(mainSource).toContain('setDailyRecommendationFeedbackFilterHash');
+    expect(mainSource).toContain('start-recommendations?feedback=');
+    expect(mainSource).toContain("'start-recommendations'");
+    expect(mainSource).toContain(
       "submitter instanceof HTMLButtonElement && submitter.value === 'reset'",
     );
     expect(mainSource).toContain("action === 'artscheck' && state.vraagStore");

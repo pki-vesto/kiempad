@@ -4,6 +4,7 @@ import {
   type AppShellState,
   DISCLAIMER,
   normalizeBackupRoute,
+  normalizeDailyRecommendationFeedbackFilter,
   normalizeDecisionRoute,
   normalizeDossierAddFlow,
   normalizeDossierRoute,
@@ -1681,6 +1682,19 @@ describe('app shell', () => {
     expect(normalizeStartRoute('#start-quick-entry')).toBe('today');
     expect(normalizeScreenId('#start-recommendations')).toBe('start');
     expect(normalizeStartRoute('#start-recommendations')).toBe('recommendations');
+    expect(normalizeStartRoute('#start-recommendations?feedback=gedaan')).toBe('recommendations');
+    expect(
+      normalizeDailyRecommendationFeedbackFilter('#start-recommendations?feedback=gedaan'),
+    ).toBe('gedaan');
+    expect(
+      normalizeDailyRecommendationFeedbackFilter('#start-recommendations?feedback=artscheck'),
+    ).toBe('artscheck');
+    expect(
+      normalizeDailyRecommendationFeedbackFilter(
+        '#start-recommendations?feedback=tracking-payload',
+      ),
+    ).toBeUndefined();
+    expect(normalizeDailyRecommendationFeedbackFilter('#start-recommendations')).toBeUndefined();
     expect(normalizeStartRoute('#start')).toBe('overview');
     expect(normalizeScreenId('#/agenda')).toBe('agenda');
     expect(normalizeScreenId('#welzijn')).toBe('welzijn');

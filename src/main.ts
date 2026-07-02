@@ -1,6 +1,7 @@
 import {
   type AppShellLoadingState,
   normalizeBackupRoute,
+  normalizeDailyRecommendationFeedbackFilter,
   normalizeDecisionRoute,
   normalizeDossierAddFlow,
   normalizeDossierRoute,
@@ -247,7 +248,10 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
-    dailyRecommendationFeedbackFilter: state.dailyRecommendationFeedbackFilter,
+    dailyRecommendationFeedbackFilter:
+      normalizeStartRoute(window.location.hash) === 'recommendations'
+        ? normalizeDailyRecommendationFeedbackFilter(window.location.hash)
+        : state.dailyRecommendationFeedbackFilter,
     vraagStatus: state.vraagStatus,
     loadingState: state.loadingState,
     webAuthnStatus: state.webAuthnStatus,
@@ -1710,6 +1714,7 @@ function applyDailyRecommendationFeedbackFilter(
   if (!(target instanceof HTMLFormElement)) return;
   if (submitter instanceof HTMLButtonElement && submitter.value === 'reset') {
     state.dailyRecommendationFeedbackFilter = undefined;
+    setDailyRecommendationFeedbackFilterHash();
     render(root, state);
     return;
   }
@@ -1717,7 +1722,16 @@ function applyDailyRecommendationFeedbackFilter(
   state.dailyRecommendationFeedbackFilter = parseTimelineAanbevelingFeedbackStatus(
     data.get('dailyRecommendationFeedbackStatus'),
   );
+  setDailyRecommendationFeedbackFilterHash(state.dailyRecommendationFeedbackFilter);
   render(root, state);
+}
+
+function setDailyRecommendationFeedbackFilterHash(
+  filter?: FertilityTimelineAanbevelingFeedbackStatus,
+): void {
+  window.location.hash = filter
+    ? `start-recommendations?feedback=${encodeURIComponent(filter)}`
+    : 'start-recommendations';
 }
 
 function bindKennisControls(root: HTMLElement, state: RuntimeState): void {

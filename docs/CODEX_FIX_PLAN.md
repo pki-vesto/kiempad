@@ -73,6 +73,9 @@
 - **Daily advice feedback filter chips — done in G1429 / issue #2618.** Active dagadvies feedback
   filters now show a scan-friendly chip, result count, and reset action while the default unfiltered
   list stays quiet.
+- **Daily advice feedback filter deep-link — done in G1430 / issue #2620.** Active dagadvies
+  feedback filters can now be restored from `#start-recommendations?feedback=...`, and reset returns
+  to the plain `#start-recommendations` route without storing or transmitting feedback state.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
