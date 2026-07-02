@@ -24,6 +24,9 @@
 - **G1319 mobiele Dagadvies-console:** `#start-recommendations` begrenst op mobiel
   workflow, eigenaarwerkbank, actieplanner en lijst binnen één scrollbare
   adviesconsole, terwijl desktop de gescheiden advieswerkvlakken behoudt.
+- **G1320 PWA theme-color teal:** browser- en installatiechrome gebruiken nu het
+  Claude Design teal (`#2c6e63`) met een donkere variant voor dark mode en een
+  manifestachtergrond die bij de Kiempad page background past.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

@@ -8,7 +8,13 @@ describe('PWA baseline', () => {
   it('koppelt manifest en SVG-icon in index.html', () => {
     expect(indexHtml).toContain('rel="manifest" href="/manifest.webmanifest"');
     expect(indexHtml).toContain('rel="icon" href="/kiempad-icon.svg"');
-    expect(indexHtml).toContain('name="theme-color"');
+    expect(indexHtml).toContain(
+      '<meta name="theme-color" content="#2c6e63" media="(prefers-color-scheme: light)"',
+    );
+    expect(indexHtml).toContain(
+      '<meta name="theme-color" content="#15302c" media="(prefers-color-scheme: dark)"',
+    );
+    expect(indexHtml).not.toContain('#7a9471');
   });
 
   it('heeft een strikte Content Security Policy zonder remote scripts', () => {
@@ -45,6 +51,10 @@ describe('PWA baseline', () => {
     expect(manifest.name).toBe('Kiempad');
     expect(manifest.display).toBe('standalone');
     expect(manifest.start_url).toBe('/');
+    expect(manifest).toMatchObject({
+      background_color: '#e7ece9',
+      theme_color: '#2c6e63',
+    });
     expect(manifest.icons[0]).toMatchObject({
       src: '/kiempad-icon.svg',
       sizes: 'any',
