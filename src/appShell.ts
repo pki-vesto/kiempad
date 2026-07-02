@@ -390,6 +390,23 @@ const SCREEN_GROUPS: readonly ScreenGroup[] = [
   },
 ] as const;
 
+const MOBILE_PRIMARY_SCREEN_IDS = new Set<ScreenId>([
+  'start',
+  'traject',
+  'agenda',
+  'medicatie',
+  'herinneringen',
+  'vragen',
+  'dossier',
+  'kennis',
+]);
+
+const MOBILE_MORE_GROUPS: readonly { label: string; screenIds: readonly ScreenId[] }[] = [
+  { label: 'Inzicht', screenIds: ['welzijn', 'afwegingen'] },
+  { label: 'Beheer', screenIds: ['kosten'] },
+  { label: 'Privacy', screenIds: ['logboek', 'backup'] },
+];
+
 const DEFAULT_SCREEN = SCREENS[0] as Screen;
 
 export function normalizeScreenId(value: string | null | undefined): ScreenId {
@@ -1114,7 +1131,7 @@ function renderVaultWebAuthnUnlock(status?: WebAuthnViewStatus): string {
 function renderGroupedNavigation(activeId: ScreenId): string {
   const screenMap = new Map(SCREENS.map((screen) => [screen.id, screen]));
 
-  return SCREEN_GROUPS.map((group) => {
+  const groupedNavigation = SCREEN_GROUPS.map((group) => {
     const activeInGroup = group.screenIds.includes(activeId);
     const items = group.screenIds
       .map((screenId) => {
@@ -1130,6 +1147,54 @@ function renderGroupedNavigation(activeId: ScreenId): string {
       </div>
     `;
   }).join('');
+
+  return `${groupedNavigation}${renderMobileMoreNavigation(activeId, screenMap)}`;
+}
+
+function renderMobileMoreNavigation(
+  activeId: ScreenId,
+  screenMap: ReadonlyMap<ScreenId, Screen>,
+): string {
+  const moreActive = !MOBILE_PRIMARY_SCREEN_IDS.has(activeId);
+  const moreGroups = MOBILE_MORE_GROUPS.map((group) => {
+    const links = group.screenIds
+      .map((screenId) => {
+        const screen = screenMap.get(screenId);
+        if (!screen) return '';
+        return renderNavItem(screen, activeId, 'mobile-more-sheet');
+      })
+      .join('');
+
+    return `
+      <div class="primary-nav__more-group">
+        <p class="primary-nav__more-title">${escapeHtml(group.label)}</p>
+        <div class="primary-nav__more-items">${links}</div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <details class="primary-nav__more" data-mobile-more-nav="ready" data-mobile-more-active="${moreActive ? 'true' : 'false'}"${moreActive ? ' open' : ''}>
+      <summary class="primary-nav__more-summary" aria-label="Meer schermen">
+        <span class="nav-item__ico" aria-hidden="true">${navMoreIcon()}</span>
+        <span class="nav-item__label">Meer</span>
+      </summary>
+      <div class="primary-nav__more-sheet" role="group" aria-label="Meer schermen">
+        <div class="primary-nav__more-head">
+          <p>Meer</p>
+          <span>${moreActive ? 'Actief scherm' : 'Extra schermen'}</span>
+        </div>
+        ${moreGroups}
+        <div class="primary-nav__more-group primary-nav__more-group--settings">
+          <p class="primary-nav__more-title">Instellingen</p>
+          <a class="nav-item primary-nav__settings-link" href="#backup" data-mobile-settings-entry="ready">
+            <span class="nav-item__ico" aria-hidden="true">${navSettingsIcon()}</span>
+            <span class="nav-item__label">Instellingen</span>
+          </a>
+        </div>
+      </div>
+    </details>
+  `;
 }
 
 function renderWorkspaceStrip(activeId: ScreenId): string {
@@ -1163,10 +1228,16 @@ function renderWorkspaceStrip(activeId: ScreenId): string {
   `;
 }
 
-function renderNavItem(screen: Screen, activeId: ScreenId): string {
+function renderNavItem(
+  screen: Screen,
+  activeId: ScreenId,
+  mobileTier: 'primary' | 'mobile-more-sheet' = MOBILE_PRIMARY_SCREEN_IDS.has(screen.id)
+    ? 'primary'
+    : 'mobile-more-sheet',
+): string {
   const isActive = screen.id === activeId;
   const ariaCurrent = isActive ? ' aria-current="page"' : '';
-  return `<a class="nav-item" href="#${screen.id}"${ariaCurrent}><span class="nav-item__ico" aria-hidden="true">${navIcon(
+  return `<a class="nav-item" href="#${screen.id}" data-mobile-nav-tier="${mobileTier}"${ariaCurrent}><span class="nav-item__ico" aria-hidden="true">${navIcon(
     screen.id,
   )}</span><span class="nav-item__label">${escapeHtml(screen.label)}</span></a>`;
 }
@@ -1194,6 +1265,14 @@ const NAV_ICON_PATHS: Record<ScreenId, string> = {
 
 function navIcon(id: ScreenId): string {
   return `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${NAV_ICON_PATHS[id]}</svg>`;
+}
+
+function navMoreIcon(): string {
+  return '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>';
+}
+
+function navSettingsIcon(): string {
+  return '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.8 1.8 0 0 0-2-.4 1.8 1.8 0 0 0-1 1.6V21a2 2 0 0 1-4 0v-.1a1.8 1.8 0 0 0-1-1.6 1.8 1.8 0 0 0-2 .4l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1a1.8 1.8 0 0 0 .4-2 1.8 1.8 0 0 0-1.6-1H3a2 2 0 0 1 0-4h.1a1.8 1.8 0 0 0 1.6-1 1.8 1.8 0 0 0-.4-2l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1a1.8 1.8 0 0 0 2 .4 1.8 1.8 0 0 0 1-1.6V3a2 2 0 0 1 4 0v.1a1.8 1.8 0 0 0 1 1.6 1.8 1.8 0 0 0 2-.4l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1a1.8 1.8 0 0 0-.4 2 1.8 1.8 0 0 0 1.6 1h.1a2 2 0 0 1 0 4h-.1a1.8 1.8 0 0 0-1.6 1z"/></svg>';
 }
 
 function renderScreenContent(activeId: ScreenId, screen: Screen, state: AppShellState): string {

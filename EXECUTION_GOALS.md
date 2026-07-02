@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1321 — CFX-010/CFX-081: Mobiele bottom-nav met Meer-sheet
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De mobiele/tablet navigatie toonde alle 13 hoofdschermen als losse, horizontaal scrollende tabs, waardoor Kiempad op kleinere schermen alsnog als een overvolle platte pagina voelde.
+- **User Impact:** Gebruikers moesten door te veel navigatie-items scannen voordat ze bij hun taak kwamen en zagen niet duidelijk welke routes primair zijn.
+- **Desired Outcome:** Toon op mobiel alleen de 8 primaire routes direct en plaats secundaire schermen in een Meer-sheet met herkenbare groepen en actieve status.
+- **User Value:** Gebruikers krijgen een rustiger mobiel startpunt, terwijl alle schermen bereikbaar blijven en verborgen actieve routes niet onzichtbaar worden.
+- **Acceptance Criteria:** Mobiele/tablet nav heeft 8 primaire tabs plus Meer; Meer bevat Inzicht, Beheer, Privacy en Instellingen; alle 13 hoofdschermen blijven via hash-links bereikbaar; actieve secundaire route zet Meer actief en markeert het route-item; desktopnavigatie blijft gegroepeerd; tests bewaken markup en CSS; mobile, tablet en desktop tonen geen overlap; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, navigatie, mobiele UI, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+
 ### G1320 — CFX-030: PWA theme-color naar Claude Design teal
 
 - **Epic:** Security & DevEx
