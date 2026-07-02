@@ -144,6 +144,9 @@
 - **CFX-043 event log route-first workspace — partial in G1361 / issue #2496.** Logboek now removes
   the fixed third context column and keeps overview, recent, categories, and privacy checks inside
   the active audit route workspace.
+- **CFX-044 backup route-first workspace — partial in G1362 / issue #2498.** Back-up now removes
+  the fixed third context column and keeps controleren, export, import, and herstel inside the
+  active safety route workspace.
 
 ---
 
@@ -569,6 +572,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-044** — Back-up: export preview + Download/Kopieer, "Laatste back-up" reminder card,
   de-jargon. **P2 · M** Partial G1356/#2486: latest-backup reminder card and encrypted export
   preview are visible before disclosure details.
+  Partial G1362/#2498: Back-up uses a route-first workspace without a fixed third context column.
 - **CFX-045** — `renderStorageBootstrapError` + Dossier: apply the unified privacy phrasing +
   de-jargon (N91). **P2 · S**
 

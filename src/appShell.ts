@@ -2353,7 +2353,7 @@ function renderBackupScreen(state: AppShellState): string {
   const backupWorkspace = domainSplitWorkspace({
     className: 'backup-split-workspace',
     ariaLabel: 'Back-up split-view werkruimte',
-    data: { 'backup-split-workspace': 'ready' },
+    data: { 'backup-split-workspace': 'ready', 'backup-compact-workspace': 'route-first' },
     rail: renderBackupTaskRoutes({
       central,
       reminderStatus: reminder.status,
@@ -2519,14 +2519,6 @@ function renderBackupScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-    context: renderBackupWorkspaceContext({
-      central,
-      reminder,
-      hasWebAuthn: webAuthnGekoppeld,
-      backupStatus: state.backupStatus,
-      backupError: state.backupError,
-      activeRoute: activeBackupRoute,
-    }),
   });
 
   return sectionStack(
@@ -2823,72 +2815,6 @@ function renderBackupTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderBackupWorkspaceContext(input: {
-  central: boolean;
-  reminder: ReturnType<typeof bepaalBackupReminder>;
-  hasWebAuthn: boolean;
-  backupStatus?: string;
-  backupError?: string;
-  activeRoute: BackupRoute;
-}): string {
-  const importState = input.backupError
-    ? 'Check melding'
-    : input.backupStatus
-      ? 'Melding'
-      : 'Klaar';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Veiligheidsfocus',
-    title: 'Back-up aandacht',
-    data: { 'workspace-context-signals': 'backup' },
-    microstate: getBackupContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Export',
-        value: input.reminder.status === 'recent' ? 'OK' : 'Nodig',
-        detail: input.reminder.tekst,
-        href: '#backup?route=export',
-      },
-      {
-        label: 'Import',
-        value: importState,
-        detail: input.backupError
-          ? 'Controleer importmelding zonder back-uppayload te tonen.'
-          : 'Import staat klaar voor versleutelde pakketten.',
-        href: '#backup?route=import',
-      },
-      {
-        label: 'Herstel',
-        value: input.hasWebAuthn ? 'Bio' : 'Fallback',
-        detail: input.hasWebAuthn
-          ? 'Biometrische ontgrendeling is gekoppeld als gemak.'
-          : 'Wachtwoordzin blijft de herstelroute.',
-        href: '#backup?route=herstel',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Back-up context" data-backup-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Veiligheid in beeld</h2>
-      ${statRow([
-        { label: 'Opslag', value: input.central ? 'Centraal' : 'Lokaal' },
-        { label: 'Export', value: input.reminder.status === 'recent' ? 'OK' : 'Nodig' },
-        { label: 'Import', value: importState },
-        { label: 'Herstel', value: input.hasWebAuthn ? 'Bio' : 'Fallback' },
-      ])}
-      <p class="linked-note">${escapeHtml(input.reminder.tekst)}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Back-up werkruimtegrens" data-backup-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Versleuteld beheer</h2>
-      <p>Controleren, exporteren, importeren en herstel blijven losse taken zodat back-upbeheer niet als formulierstapel opent.</p>
-      <p class="small-print">Deze kolom toont alleen statusmetadata; geen dossierinhoud of back-uppayload.</p>
-    </section>
-  `;
 }
 
 function renderBackupRouteVisibility(activeRoute: BackupRoute, route: BackupRoute): string {
@@ -4723,36 +4649,6 @@ function getDossierContextMicrostate(route: DossierRoute): WorkspaceContextMicro
       label: 'Tijdlijnroute',
       detail: 'Historie, consulten en imports worden chronologisch gebundeld.',
       action: 'Volgende: ontbrekende datum checken',
-    },
-  };
-  return states[route];
-}
-
-function getBackupContextMicrostate(route: BackupRoute): WorkspaceContextMicrostate {
-  const states: Record<BackupRoute, WorkspaceContextMicrostate> = {
-    controleren: {
-      id: 'backup-controleren',
-      label: 'Controle-route',
-      detail: 'Vaultstatus, exportleeftijd en herstelopties blijven eerst zichtbaar.',
-      action: 'Volgende: exportleeftijd checken',
-    },
-    export: {
-      id: 'backup-export',
-      label: 'Exportroute',
-      detail: 'Versleutelde export staat centraal zonder dossierinhoud te tonen.',
-      action: 'Volgende: exportpakket maken',
-    },
-    import: {
-      id: 'backup-import',
-      label: 'Importcontrole',
-      detail: 'Importmeldingen en pakketstatus blijven gescheiden van payload.',
-      action: 'Volgende: pakketstatus controleren',
-    },
-    herstel: {
-      id: 'backup-herstel',
-      label: 'Herstelroute',
-      detail: 'Biometrie en wachtwoordzin blijven als herstelcontext zichtbaar.',
-      action: 'Volgende: hersteloptie nalopen',
     },
   };
   return states[route];

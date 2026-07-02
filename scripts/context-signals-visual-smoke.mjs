@@ -17,12 +17,6 @@ const targets = [
     microstate: 'dossier-imaging',
     allowHidden: true,
   },
-  {
-    screen: 'backup',
-    hash: '#backup?route=import',
-    signal: 'backup',
-    microstate: 'backup-import',
-  },
 ];
 
 const viewports = [
@@ -280,7 +274,7 @@ async function assertContextSignals(browser, options) {
     }
 
     const distinctFlowAccents = new Set(checked.map((target) => target.flowAccent).filter(Boolean));
-    if (distinctFlowAccents.size < 2) {
+    if (checked.length > 1 && distinctFlowAccents.size < 2) {
       throw new Error(
         `${options.label}: contextflow mist route-eigen accentbalans (${distinctFlowAccents.size} accentfamilies).`,
       );

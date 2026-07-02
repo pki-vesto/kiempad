@@ -6923,10 +6923,6 @@ h2 {
   --workspace-context-accent: var(--teal);
 }
 
-.workspace-context-signals[data-workspace-context-signals="backup"] {
-  --workspace-context-accent: var(--amber);
-}
-
 .workspace-context-signals__header {
   display: flex;
   gap: 8px;
