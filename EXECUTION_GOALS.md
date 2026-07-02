@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1322 — CFX-013: Grote content-frame verwijderen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De actieve `screen-stage` stond nog in een grote afgeronde, grijsachtige container met border en schaduw, waardoor Kiempad ondanks aparte schermen visueel als één ingepakte pagina bleef voelen.
+- **User Impact:** Gebruikers ervaren minder rust en zien minder duidelijk onderscheid tussen echte inhoudskaarten en de algemene pagina-achtergrond.
+- **Desired Outcome:** Laat de contentkolom transparant op de pagina-achtergrond rusten en behoud diepte alleen op echte kaarten, panels en sheets.
+- **User Value:** De app voelt lichter en minder als één grote pagina, terwijl de schermstructuur en scrollzones behouden blijven.
+- **Acceptance Criteria:** `.content[data-screen-stage="ready"]` heeft geen border, radius of schaduwframe; mobiele screen-stage heeft geen eigen frame/radius; screen-stage hooks en actieve schermrouting blijven bestaan; desktop, tablet en mobiel tonen zichtbare panels zonder overlap; tests bewaken het CSS-contract; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Alle hoofdschermen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, screen-stage CSS, Claude Design, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+
 ### G1321 — CFX-010/CFX-081: Mobiele bottom-nav met Meer-sheet
 
 - **Epic:** Onboarding & Daily Use

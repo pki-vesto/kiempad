@@ -18,6 +18,9 @@
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
   `Meer` trigger active.
+- **CFX-013 — done in G1322 / issue #2419.** The active content column no longer has a
+  large rounded grey frame, border, or shadow. The screen-stage rests on the page background,
+  while cards, panels, and sheets keep their own depth.
 
 ---
 
@@ -344,7 +347,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-032** — Introduce `@layer tokens, base, components, screens, utilities` and reorganize
   `styles.css` (14.3k LOC) accordingly; split into imported partials if the build allows.
   Accept: no specificity regressions; file(s) navigable. **P2 · L**
-- **CFX-013** — Remove the large rounded grey frame around the content column (I61); content rests
+- **CFX-013** — ✅ Done in G1322 / issue #2419. Remove the large rounded grey frame around the content column (I61); content rests
   on page bg. Files: `src/styles.css`. Accept: only cards carry borders. **P1 · S**
 - **CFX-014** — Dark-mode contrast sweep (G50): audit `--ink-2/-3` on `--surface`, card borders,
   no pure-white blocks. Accept: WCAG AA for body text in dark. **P1 · M**
