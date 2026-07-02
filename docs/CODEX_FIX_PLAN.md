@@ -95,6 +95,10 @@
   renders a visible third context column; the screen now opens as a compact route-first workspace
   with one active question task, softer "gespreksblad" copy instead of prep/packet wording, and
   tests guarding against the old all-in-one context layout.
+- **CFX-038/CFX-042 knowledge route-first empty state — done in G1344 / issue #2462.** Kennis no
+  longer renders a visible third context column or technical "0 van 0 item(s)" counters; empty and
+  filtered states now show a clear rich empty block with a route CTA while the active knowledge
+  route stays central.
 
 ---
 

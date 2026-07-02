@@ -35873,9 +35873,10 @@ describe('app shell', () => {
 
     expect(html).toContain('id="knowledge-filter-form"');
     expect(html).toContain('name="kennisZoekterm" value="eigen risico"');
-    expect(html).toContain('1 van 2 item(s) getoond');
+    expect(html).toContain('1 van 2 kennisitems zichtbaar');
     expect(html).toContain('Kosten 2026: eigen risico');
     expect(html).not.toContain('Fasen overzicht');
+    expect(html).not.toContain('item(s) getoond');
   });
 
   it('rendert lokale AI-instellingen standaard uit zonder netwerkactie', () => {
@@ -35930,6 +35931,9 @@ describe('app shell', () => {
     expect(html).toContain('class="knowledge-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Kennis taakroutes"');
     expect(html).toContain('data-knowledge-task-routes="ready"');
+    expect(html).toContain('data-knowledge-compact-workspace="route-first"');
+    expect(html).not.toContain('data-knowledge-workspace-context="metrics"');
+    expect(html).not.toContain('class="domain-split-workspace__context"');
     expect(html).toContain('href="#kennis?route=read"');
     expect(html).toContain('href="#kennis?route=add"');
     expect(html).toContain('href="#kennis?route=ai"');
@@ -36114,10 +36118,10 @@ describe('app shell', () => {
       '.knowledge-focus-shell__workbench .knowledge-research-workbench__header p:last-child {',
     );
     expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain(
-      'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
+    expect(css).toContain('grid-template-columns: minmax(156px, 0.34fr) minmax(0, 1fr);');
+    expect(css).not.toContain(
+      '.knowledge-focus-shell__workspace .domain-split-workspace__context {',
     );
-    expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace__context {');
     expect(css).toContain('gap: 10px;');
     expect(css).toContain(
       '.knowledge-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {',
@@ -36158,8 +36162,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.knowledge-focus-shell {');
     expect(mobileCss).toContain('box-shadow: none;');
     expect(mobileCss).toContain('.knowledge-focus-shell__body {');
-    expect(mobileCss).toContain('.knowledge-focus-shell__workspace .domain-split-workspace,');
-    expect(mobileCss).toContain('grid-column: auto;');
+    expect(mobileCss).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).not.toContain(
+      '.knowledge-focus-shell__workspace .domain-split-workspace__context {',
+    );
     expect(mobileCss).toContain('.knowledge-research-snapshot {');
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.knowledge-research-snapshot__card {');
@@ -38044,7 +38050,7 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (label === 'question') {
+      if (label === 'question' || label === 'knowledge') {
         expect(html).not.toContain('class="domain-split-workspace__context"');
       } else {
         expect(html).toContain('class="domain-split-workspace__context"');
@@ -38109,14 +38115,9 @@ describe('app shell', () => {
       'data-medication-route="beheer" data-medication-route-state="active"',
     );
     expect(kennisHtml).toContain('class="domain-split-workspace knowledge-split-workspace"');
-    expect(kennisHtml).toContain('data-knowledge-workspace-context="metrics"');
-    expect(kennisHtml).toContain('data-workspace-context-signals="knowledge"');
-    expect(kennisHtml).toContain('data-workspace-context-microstate="knowledge-ai"');
-    expect(kennisHtml).toContain(
-      'data-workspace-context-next-action="Volgende: payload-preview checken"',
-    );
-    expect(kennisHtml).toContain('AI-context');
-    expect(kennisHtml).toContain('Researchfocus');
+    expect(kennisHtml).toContain('data-knowledge-compact-workspace="route-first"');
+    expect(kennisHtml).not.toContain('data-knowledge-workspace-context="metrics"');
+    expect(kennisHtml).not.toContain('data-workspace-context-signals="knowledge"');
     expect(kennisHtml).toContain('data-knowledge-route="ai" data-knowledge-route-state="active"');
     expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
     expect(welzijnHtml).toContain('class="wellbeing-focus-shell"');
@@ -38235,7 +38236,9 @@ describe('app shell', () => {
     expect(css).toContain('--workspace-context-accent: var(--accent);');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="dossier"]');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="schedule"]');
-    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="knowledge"]');
+    expect(css).not.toContain(
+      '.workspace-context-signals[data-workspace-context-signals="knowledge"]',
+    );
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="decision"]');
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="eventlog"]');
     expect(css).toContain('.workspace-context-signals__microstate {');

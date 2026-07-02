@@ -4739,36 +4739,6 @@ function getScheduleContextMicrostate(route: ScheduleRoute): WorkspaceContextMic
   return states[route];
 }
 
-function getKnowledgeContextMicrostate(route: KnowledgeRoute): WorkspaceContextMicrostate {
-  const states: Record<KnowledgeRoute, WorkspaceContextMicrostate> = {
-    read: {
-      id: 'knowledge-read',
-      label: 'Leesroute',
-      detail: 'Bronnen, samenvattingen en relevantie blijven in leesvolgorde.',
-      action: 'Volgende: bron en datum lezen',
-    },
-    add: {
-      id: 'knowledge-add',
-      label: 'Toevoegroute',
-      detail: 'Nieuwe research en kennisitems starten met bron en reviewstatus.',
-      action: 'Volgende: bronnotitie toevoegen',
-    },
-    ai: {
-      id: 'knowledge-ai',
-      label: 'AI-context',
-      detail: 'Payload-preview, opt-in en netwerkstatus blijven expliciet zichtbaar.',
-      action: 'Volgende: payload-preview checken',
-    },
-    library: {
-      id: 'knowledge-library',
-      label: 'Bibliotheekroute',
-      detail: 'Categorieen en artsverificatie blijven als naslag gescheiden.',
-      action: 'Volgende: categorie filteren',
-    },
-  };
-  return states[route];
-}
-
 function getWellbeingContextMicrostate(route: WellbeingRoute): WorkspaceContextMicrostate {
   const states: Record<WellbeingRoute, WorkspaceContextMicrostate> = {
     overview: {
@@ -12162,7 +12132,10 @@ function renderKennisScreen(state: AppShellState): string {
         workspace: domainSplitWorkspace({
           className: 'knowledge-split-workspace',
           ariaLabel: 'Kennis split-view werkruimte',
-          data: { 'knowledge-split-workspace': 'ready' },
+          data: {
+            'knowledge-split-workspace': 'ready',
+            'knowledge-compact-workspace': 'route-first',
+          },
           rail: renderKennisTaskRoutes({
             researchBronnen: researchBronnen.length,
             researchSamenvattingen:
@@ -12361,16 +12334,6 @@ function renderKennisScreen(state: AppShellState): string {
         </details>
       </section>
       `,
-          context: renderKnowledgeWorkspaceContext({
-            researchBronnen: researchBronnen.length,
-            researchSamenvattingen:
-              researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length,
-            researchTrends: researchTrendGroepen.length,
-            kennisItems: filteredItems.length,
-            totalKennisItems: state.kennisItems.length,
-            netwerkAan: state.settings.researchNetwerk.ingeschakeld,
-            activeRoute: activeKnowledgeRoute,
-          }),
         }),
       })}
     </section>
@@ -12492,7 +12455,7 @@ function renderKnowledgeResearchWorkbench(input: {
           <div>
             <h2>Kennisbank</h2>
             <p>Alle items zijn concept totdat een behandelaar ze bevestigt.</p>
-            <p>${input.kennisItems} van ${input.totalKennisItems} item(s) getoond.</p>
+            ${renderKnowledgeItemStatus(input)}
           </div>
           ${statRow([
             { label: 'Bronnen', value: String(input.researchBronnen) },
@@ -12535,10 +12498,37 @@ function renderKnowledgeResearchSnapshot(input: {
       <a class="knowledge-research-snapshot__card" href="#kennis?route=ai" data-knowledge-research-snapshot-card="network">
         <span>Netwerk</span>
         <strong>${input.netwerkAan ? 'Opt-in aan' : 'Lokale cache'}</strong>
-        <small>${input.kennisItems}/${input.totalKennisItems} items zichtbaar.</small>
+        <small>${formatKnowledgeVisibleCount(input.kennisItems, input.totalKennisItems)}</small>
       </a>
     </section>
   `;
+}
+
+function renderKnowledgeItemStatus(input: {
+  kennisItems: number;
+  totalKennisItems: number;
+}): string {
+  if (input.totalKennisItems === 0) {
+    return renderEmptyState('Voeg een bron of eigen kennisitem toe om de bibliotheek te vullen.', {
+      title: 'Nog geen kennisitems',
+      cta: { href: '#kennis?route=add', label: 'Kennis toevoegen' },
+    });
+  }
+
+  if (input.kennisItems === 0) {
+    return renderEmptyState('Geen kennisitems passen bij dit filter.', {
+      title: 'Geen filterresultaten',
+      cta: { href: '#knowledge-filter-form', label: 'Filter aanpassen' },
+    });
+  }
+
+  return `<p data-knowledge-visible-count="ready">${formatKnowledgeVisibleCount(input.kennisItems, input.totalKennisItems)}</p>`;
+}
+
+function formatKnowledgeVisibleCount(visible: number, total: number): string {
+  if (total === 0) return 'Nog niets zichtbaar';
+  if (visible === total) return `${total} kennisitem${total === 1 ? '' : 's'} zichtbaar`;
+  return `${visible} van ${total} kennisitem${total === 1 ? '' : 's'} zichtbaar`;
 }
 
 function renderKennisTaskRoutes(input: {
@@ -12591,69 +12581,6 @@ function renderKennisTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderKnowledgeWorkspaceContext(input: {
-  researchBronnen: number;
-  researchSamenvattingen: number;
-  researchTrends: number;
-  kennisItems: number;
-  totalKennisItems: number;
-  netwerkAan: boolean;
-  activeRoute: KnowledgeRoute;
-}): string {
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Researchfocus',
-    title: 'Leesvolgorde',
-    data: { 'workspace-context-signals': 'knowledge' },
-    microstate: getKnowledgeContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Bronnen',
-        value: String(input.researchBronnen),
-        detail:
-          input.researchBronnen > 0
-            ? 'Start met bron en publicatiedatum voordat je samenvattingen leest.'
-            : 'Voeg eerst een researchbron toe voor bronverwijzing.',
-        href: '#kennis?route=read',
-      },
-      {
-        label: 'Samenvattingen',
-        value: String(input.researchSamenvattingen),
-        detail: 'Wetenschappelijke en eenvoudige uitleg blijven naast elkaar controleerbaar.',
-        href: '#kennis?route=read',
-      },
-      {
-        label: 'Netwerk',
-        value: input.netwerkAan ? 'Aan' : 'Uit',
-        detail: input.netwerkAan
-          ? 'Controleer payload-preview voordat je netwerkresearch gebruikt.'
-          : 'Lokale cache blijft leidend zolang netwerkresearch uit staat.',
-        href: '#kennis?route=ai',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Kennis context" data-knowledge-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Research in beeld</h2>
-      ${statRow([
-        { label: 'Bronnen', value: String(input.researchBronnen) },
-        { label: 'Samenvattingen', value: String(input.researchSamenvattingen) },
-        { label: 'Trends', value: String(input.researchTrends) },
-        { label: 'Items', value: `${input.kennisItems}/${input.totalKennisItems}` },
-      ])}
-      <p class="linked-note">${input.netwerkAan ? 'Netwerkresearch staat bewust aan.' : 'Lokale researchcache zonder netwerkopt-in.'}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Kennis werkruimtegrens" data-knowledge-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Bronnen naast de taak</h2>
-      <p>Lezen, toevoegen, AI/netwerk en bibliotheek blijven gescheiden zodat research niet als één lange publicatielijst opent.</p>
-      <p class="small-print">Deze kolom toont alleen tellingen en opt-instatus; geen medisch advies of behandelkeuze.</p>
-    </section>
-  `;
 }
 
 function renderKnowledgeRouteVisibility(

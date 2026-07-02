@@ -6440,11 +6440,7 @@ h2 {
 }
 
 .knowledge-focus-shell__workspace .domain-split-workspace {
-  grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);
-}
-
-.knowledge-focus-shell__workspace .domain-split-workspace__context {
-  gap: 10px;
+  grid-template-columns: minmax(156px, 0.34fr) minmax(0, 1fr);
 }
 
 .knowledge-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
@@ -6475,7 +6471,6 @@ h2 {
   --workspace-context-accent: var(--slate);
 }
 
-.workspace-context-signals[data-workspace-context-signals="knowledge"],
 .workspace-context-signals[data-workspace-context-signals="wellbeing"] {
   --workspace-context-accent: var(--accent-strong);
 }
@@ -7178,11 +7173,8 @@ h2 {
   }
 
   .knowledge-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas:
-      "rail main"
-      "rail context";
-    grid-template-columns: minmax(136px, 0.34fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas: "rail main";
+    grid-template-columns: minmax(156px, 0.3fr) minmax(0, 1fr);
   }
 
   .knowledge-focus-shell__workspace .domain-split-workspace__rail {
@@ -7191,16 +7183,6 @@ h2 {
 
   .knowledge-focus-shell__workspace .domain-split-workspace__main {
     grid-area: main;
-  }
-
-  .knowledge-focus-shell__workspace .domain-split-workspace__context {
-    display: block;
-    grid-area: context;
-    width: min(100%, 320px);
-    max-height: 124px;
-    justify-self: start;
-    overflow-y: auto;
-    padding-top: 8px;
   }
 
   .knowledge-focus-shell__workspace .knowledge-research-reader__header {
@@ -14004,13 +13986,8 @@ a.action-card:active {
     display: flex;
   }
 
-  .knowledge-focus-shell__workspace .domain-split-workspace,
-  .knowledge-focus-shell__workspace .domain-split-workspace__context {
+  .knowledge-focus-shell__workspace .domain-split-workspace {
     grid-template-columns: 1fr;
-  }
-
-  .knowledge-focus-shell__workspace .domain-split-workspace__context {
-    grid-column: auto;
   }
 
   .content:has([data-eventlog-focus-shell="ready"]) > .workspace-map,
