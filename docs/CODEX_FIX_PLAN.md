@@ -109,6 +109,9 @@
 - **Daily advice feedback list owner ordering — done in G1441 / issue #2642.** The active
   list-filter header now places owners with filtered suggestions before zero-count owners while
   preserving stable owner order within equal states.
+- **Daily advice feedback list dominant owner cue — done in G1442 / issue #2644.** The active
+  list-filter header now gives a subtle cue only to a single highest-count owner, while tied or
+  zero-count states stay neutral and avoid medical interpretation.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

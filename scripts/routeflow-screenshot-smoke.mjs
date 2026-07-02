@@ -172,6 +172,7 @@ const targets = [
       '[data-daily-recommendation-list-filter-owner="man"]',
       '[data-daily-recommendation-list-filter-owner="samen"]',
       '[data-daily-recommendation-list-filter-owner-state="empty"]',
+      '[data-daily-recommendation-list-filter-owner-emphasis="regular"]',
       '[data-daily-recommendation-list-filter-owner-count="0"]',
       '[data-daily-recommendation-list-filter-reset="ready"]',
       '[data-daily-recommendation-feedback-filter="ready"]',

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1350 — Daily Recommendations: lijstfilterheader toont statuslegenda compact
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lijstfilterheader gebruikt straks rustige eigenaaraccenten, maar de betekenis daarvan is nog niet compact scanbaar.
+- **User Impact:** Gebruikers kunnen de subtiele visuele nadruk missen of verkeerd lezen als medische duiding.
+- **Desired Outcome:** Toon een korte, scanbare statuslegenda voor eigenaaraccenten zonder extra uitlegtekst of medische conclusie.
+- **User Value:** Gebruikers begrijpen de filtercontext sneller zonder dat de UI zwaarder wordt.
+- **Acceptance Criteria:** De header kan een korte, scanbare statuslegenda tonen voor eigenaaraccenten; de legenda verschijnt alleen bij een actieve filter en blijft compact; de legenda bevat geen medische conclusie, trackingtekst of behandeladvies; nulstanden, gelijkstanden en dominante eigenaar blijven correct weergegeven; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken rendering, afwezigheid zonder filter en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2646
+
 ### G1349 — Daily Recommendations: lijstfilterheader toont dominante eigenaar subtiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2644
 
 ### G1348 — Daily Recommendations: lijstfilterheader zet relevante eigenaars eerst
