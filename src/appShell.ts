@@ -761,6 +761,7 @@ export type AppShellState = {
   agendaStatus?: string;
   agendaImportStatus?: string;
   agendaImportError?: string;
+  medicatieStatus?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
@@ -16744,6 +16745,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           data: { 'medication-route-summary': 'vandaag' },
           ariaLabel: 'Medicatie vandaag route-samenvatting',
         })}
+        ${renderMedicatieStatus(state.medicatieStatus, 'vandaag')}
         <div class="panel-heading"><h2>Vandaag</h2></div>
         ${
           todayLogs.length > 0
@@ -16799,6 +16801,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           data: { 'medication-route-summary': 'beheer' },
           ariaLabel: 'Medicatiebeheer route-samenvatting',
         })}
+        ${renderMedicatieStatus(state.medicatieStatus, 'beheer')}
         <div class="panel-heading"><h2>Middel beheren</h2>${deleteMedicatieButton}</div>
         ${disclosure({
           summary: selected ? 'Medicatie bewerken' : 'Medicatie toevoegen',
@@ -16852,6 +16855,7 @@ function renderMedicatieScreen(state: AppShellState): string {
           data: { 'medication-route-summary': 'historie' },
           ariaLabel: 'Medicatiehistorie route-samenvatting',
         })}
+        ${renderMedicatieStatus(state.medicatieStatus, 'historie')}
         ${disclosure({
           summary: 'Middelen, voorraad en historie tonen',
           open: state.medicatie.length > 0,
@@ -16897,6 +16901,15 @@ function renderMedicatieScreen(state: AppShellState): string {
     ],
     { className: 'medication-command-layout', ariaLabel: 'Medicatie beheren' },
   );
+}
+
+function renderMedicatieStatus(
+  status: string | undefined,
+  surface: 'vandaag' | 'beheer' | 'historie',
+): string {
+  if (!status) return '';
+
+  return `<p class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="${surface}">${escapeHtml(status)}</p>`;
 }
 
 function renderMedicationFocusShell(input: { workbench: string; workspace: string }): string {

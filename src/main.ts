@@ -161,6 +161,7 @@ type RuntimeState = {
   agendaStatus?: string;
   agendaImportStatus?: string;
   agendaImportError?: string;
+  medicatieStatus?: string;
   medicatieImportStatus?: string;
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
@@ -229,6 +230,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     agendaStatus: state.agendaStatus,
     agendaImportStatus: state.agendaImportStatus,
     agendaImportError: state.agendaImportError,
+    medicatieStatus: state.medicatieStatus,
     medicatieImportStatus: state.medicatieImportStatus,
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
@@ -2165,7 +2167,10 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
     const confirmed = window.confirm(DELETE_CONFIRMATIONS.medicatie);
     if (!confirmed) return;
 
-    void state.medicatieStore.delete(medicatieId).then(() => reloadAndRender(root, state));
+    void state.medicatieStore.delete(medicatieId).then(() => {
+      state.medicatieStatus = 'Medicatie verwijderd.';
+      return reloadAndRender(root, state);
+    });
   });
 
   root.querySelectorAll<HTMLFormElement>('.dose-log-form').forEach((form) => {
@@ -2181,7 +2186,11 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
 
       void state.medicatieStore
         .markDoseLog(doseLogId, status, undefined, optionalString(data.get('doseLogNotitie')))
-        .then(() => reloadAndRender(root, state));
+        .then(() => {
+          state.medicatieStatus =
+            status === 'genomen' ? 'Medicatiemoment afgevinkt.' : 'Medicatiemoment overgeslagen.';
+          return reloadAndRender(root, state);
+        });
     });
   });
 }
@@ -2425,6 +2434,7 @@ async function saveMedicatieFromForm(
   });
 
   state.medicatieImportError = undefined;
+  state.medicatieStatus = 'Medicatie opgeslagen.';
   await reloadAndRender(root, state);
 }
 

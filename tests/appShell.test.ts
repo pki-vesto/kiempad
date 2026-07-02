@@ -4626,6 +4626,7 @@ describe('app shell', () => {
       kennisItems: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      medicatieStatus: 'Medicatiemoment afgevinkt.',
       medicatie: [
         {
           medicatie: {
@@ -4705,14 +4706,24 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-medication-route="vandaag"');
     expect(html).toContain('data-medication-route-state="active"');
+    expect(html).toContain(
+      'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="vandaag"',
+    );
     expect(html).toContain('id="medicatie-route-planning"');
     expect(html).toContain('data-medication-route="planning"');
     expect(html).toContain('id="medicatie-route-beheer"');
     expect(html).toContain('data-medication-route="beheer"');
+    expect(html).toContain(
+      'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="beheer"',
+    );
     expect(html).toContain('id="medicatie-route-import"');
     expect(html).toContain('data-medication-route="import"');
     expect(html).toContain('id="medicatie-route-historie"');
     expect(html).toContain('data-medication-route="historie"');
+    expect(html).toContain(
+      'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="historie"',
+    );
+    expect(html).toContain('Medicatiemoment afgevinkt.');
     expect(html).toContain('Medicatie vandaag');
     expect(html).toContain('Komende medicatiemomenten');
     expect(html).toContain('Middel beheren');
