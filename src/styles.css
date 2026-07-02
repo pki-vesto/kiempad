@@ -4977,6 +4977,56 @@ h2 {
   min-width: 0;
 }
 
+.knowledge-ai-console {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.knowledge-ai-console__preview {
+  min-width: 0;
+}
+
+.knowledge-ai-support {
+  min-width: 0;
+}
+
+.knowledge-ai-support__summary {
+  align-items: center;
+}
+
+.knowledge-ai-support__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.knowledge-ai-support__summary small {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.knowledge-ai-support__summary em {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.knowledge-ai-support__body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.knowledge-ai-support__body > .summary-panel {
+  min-width: 0;
+}
+
+.knowledge-ai-support__body > .summary-panel:first-child {
+  grid-column: 1 / -1;
+}
+
 .knowledge-route-section .summary-panel,
 .knowledge-route-section .policy-panel,
 .knowledge-route-section .linked-note,
@@ -17518,6 +17568,10 @@ a.action-card:active {
   }
 
   .knowledge-route-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-ai-support__body {
     grid-template-columns: 1fr;
   }
 

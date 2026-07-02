@@ -12331,33 +12331,44 @@ function renderKennisScreen(state: AppShellState): string {
         </header>
         ${commandRouteSummary({
           eyebrow: 'Kennisroute',
-          title: 'AI alleen als bewuste beheerroute',
+          title: 'Start met een gecontroleerde AI-preview',
           detail:
-            'Opt-in, netwerkpreview en samenvatting opslaan blijven bij elkaar, maar los van gewone researchlezing.',
-          primary: { href: '#research-network-form', label: 'Opt-in' },
-          secondary: { href: '#ai-preview-form', label: 'Preview' },
+            'De route opent met alleen de payloadpreview. Opslaan, opt-in en netwerkbeheer staan achter een ondersteunende stap.',
+          primary: { href: '#ai-preview-form', label: 'Preview' },
+          secondary: { href: '#knowledge-ai-support', label: 'Beheer' },
           status: state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit',
           ariaLabel: 'Kennis AI route-samenvatting',
           data: { 'knowledge-route-summary': 'ai' },
         })}
-        <div class="knowledge-route-grid">
-          <div class="summary-panel">
-            ${renderResearchNetworkSettingsForm(state.settings)}
-            ${renderResearchAggregatiePlan(researchAggregatie)}
-          </div>
-          <div class="summary-panel">
-            <h2>AI-instelling</h2>
-            ${renderAiSettingsForm(state.settings, state.storageMode)}
-            ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
-          </div>
-          <div class="summary-panel">
+        <div class="knowledge-ai-console" data-knowledge-ai-console="ready">
+          <div class="summary-panel knowledge-ai-console__preview" data-knowledge-ai-console-region="preview">
             <h2>AI-preview</h2>
             ${renderAiPreviewForm(state.aiPreview, state.aiError)}
           </div>
-          <div class="summary-panel">
-            <h2>AI-samenvatting bewaren</h2>
-            ${renderAiSummaryForm(state.aiPreview)}
-          </div>
+          <details id="knowledge-ai-support" class="kp-disclosure knowledge-ai-support" data-knowledge-ai-support="collapsed">
+            <summary class="kp-disclosure__summary knowledge-ai-support__summary">
+              <span>
+                <strong>Opslaan, opt-in en netwerkbeheer openen</strong>
+                <small>Samenvatting bewaren, AI-instelling en researchaggregatie</small>
+              </span>
+              <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
+            </summary>
+            <div class="kp-disclosure__body knowledge-ai-support__body">
+              <div class="summary-panel" data-knowledge-ai-console-region="summary-save">
+                <h2>AI-samenvatting bewaren</h2>
+                ${renderAiSummaryForm(state.aiPreview)}
+              </div>
+              <div class="summary-panel" data-knowledge-ai-console-region="settings">
+                <h2>AI-instelling</h2>
+                ${renderAiSettingsForm(state.settings, state.storageMode)}
+                ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+              </div>
+              <div class="summary-panel" data-knowledge-ai-console-region="research-network">
+                ${renderResearchNetworkSettingsForm(state.settings)}
+                ${renderResearchAggregatiePlan(researchAggregatie)}
+              </div>
+            </div>
+          </details>
         </div>
       </section>
       <section id="knowledge-route-library" class="knowledge-route-section" aria-labelledby="knowledge-route-library-title" data-knowledge-route="library"${renderKnowledgeRouteVisibility(activeKnowledgeRoute, 'library')}>
