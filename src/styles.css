@@ -9669,33 +9669,8 @@ h2 {
   align-items: start;
 }
 
-.treatment-focus-shell__workbench,
 .treatment-focus-shell__workspace {
   min-width: 0;
-}
-
-.treatment-focus-shell__workbench > .treatment-workbench {
-  width: 100%;
-  padding: 12px;
-}
-
-.treatment-focus-shell__workbench .treatment-workbench__grid {
-  grid-template-columns: minmax(220px, 0.54fr) minmax(0, 1.46fr);
-}
-
-.treatment-focus-shell__workbench .treatment-snapshot {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.treatment-focus-shell__workbench .treatment-workbench__header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
-  align-items: center;
-}
-
-.treatment-focus-shell__workbench .treatment-workbench__header p:last-child {
-  display: none;
 }
 
 .treatment-focus-shell__workspace .domain-split-workspace {
@@ -9716,19 +9691,16 @@ h2 {
 
 @media (min-width: 961px) {
   .treatment-focus-shell__body {
-    grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
   }
 
-  .treatment-focus-shell__workbench,
   .treatment-focus-shell__workspace {
     max-height: min(820px, calc(100vh - 164px));
-    overflow-y: auto;
+    overflow: hidden;
     contain: layout paint;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
   }
 
   .treatment-focus-shell__workspace {
@@ -9736,11 +9708,9 @@ h2 {
   }
 
   .treatment-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas:
-      "rail main"
-      "rail context";
-    grid-template-columns: minmax(176px, 0.42fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(168px, 0.26fr) minmax(0, 1fr) minmax(240px, 0.36fr);
+    grid-template-rows: minmax(0, 1fr);
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
@@ -9756,11 +9726,15 @@ h2 {
 
   .treatment-focus-shell__workspace .domain-split-workspace__context {
     grid-area: context;
-    width: min(92%, 280px);
-    max-height: 136px;
-    justify-self: start;
+    max-height: min(780px, calc(100vh - 204px));
     overflow-y: auto;
-    padding-top: 8px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
+  .treatment-focus-shell__workspace .domain-split-workspace__context > .treatment-workbench {
+    min-height: 100%;
+    padding: 12px;
   }
 
   .treatment-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
@@ -9770,17 +9744,19 @@ h2 {
     white-space: normal;
   }
 
-  .treatment-focus-shell__workbench > .treatment-workbench {
-    align-content: start;
-    padding: 12px;
-  }
-
-  .treatment-focus-shell__workbench .treatment-workbench__grid {
+  .treatment-focus-shell__workspace .domain-split-workspace__context .treatment-workbench__grid {
     grid-template-columns: 1fr;
   }
 
-  .treatment-focus-shell__workbench .treatment-snapshot {
+  .treatment-focus-shell__workspace .domain-split-workspace__context .treatment-snapshot {
     grid-template-columns: 1fr;
+  }
+
+  .treatment-focus-shell__workspace
+    .domain-split-workspace__context
+    .treatment-workbench__header
+    p:last-child {
+    display: none;
   }
 
   .treatment-focus-shell__workspace .command-route-summary__eyebrow,
@@ -9821,6 +9797,29 @@ h2 {
 
   .treatment-focus-shell__workspace .domain-split-workspace__rail .command-task-route__badge {
     justify-self: end;
+  }
+
+  .treatment-focus-shell__body:has(
+    #traject-route-beheer[data-treatment-route-state="active"] .data-form
+  ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .treatment-focus-shell__workspace
+    .domain-split-workspace:has(
+      #traject-route-beheer[data-treatment-route-state="active"] .data-form
+    ) {
+    grid-template-areas: "rail main";
+    grid-template-columns: minmax(168px, 0.24fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .treatment-focus-shell__workspace
+    .domain-split-workspace:has(
+      #traject-route-beheer[data-treatment-route-state="active"] .data-form
+    )
+    .domain-split-workspace__context {
+    display: none;
   }
 }
 
@@ -16507,7 +16506,7 @@ a.action-card:active {
     grid-column: auto;
   }
 
-  .treatment-focus-shell__workbench .treatment-snapshot {
+  .treatment-focus-shell__workspace .domain-split-workspace__context .treatment-snapshot {
     display: flex;
   }
 
