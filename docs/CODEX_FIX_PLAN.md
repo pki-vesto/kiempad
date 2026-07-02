@@ -118,6 +118,9 @@
 - **Daily advice feedback list reset scope — done in G1444 / issue #2648.** The list-filter
   header reset now uses local-scope copy and an aria label so users can see it only clears the
   local feedback filter.
+- **Daily advice feedback workflow reset scope — done in G1445 / issue #2650.** The active
+  workflow-status reset now uses the same local-scope copy and aria label, keeping reset behavior
+  limited to the local feedback filter route.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

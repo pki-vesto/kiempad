@@ -1681,6 +1681,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
     .filter({ hasText: 'Actieve filter: Artscheck' })
     .waitFor({ timeout: 10_000 });
+  await page
+    .locator('[data-daily-advice-feedback-workflow-reset="ready"]')
+    .filter({ hasText: 'Wis lokale filter' })
+    .waitFor({ timeout: 10_000 });
 
   await page.locator('[data-daily-advice-feedback-workflow-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');
