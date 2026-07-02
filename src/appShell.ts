@@ -14647,7 +14647,11 @@ function renderDailyAdviceConsole(
             <em>${state.dailyRecommendationFeedbackFilter ? `${filteredTotalRecommendations} van ${totalRecommendations}` : `${totalRecommendations} adviezen`}</em>
           </summary>
           <div class="kp-disclosure__body">
-            ${renderDailyRecommendationFeedbackFilter(state.dailyRecommendationFeedbackFilter)}
+            ${renderDailyRecommendationFeedbackFilter({
+              filter: state.dailyRecommendationFeedbackFilter,
+              total: totalRecommendations,
+              filteredTotal: filteredTotalRecommendations,
+            })}
             ${
               filteredTotalRecommendations > 0
                 ? renderDailyRecommendationList(filteredOverview, feedbackStatussen)
@@ -14674,21 +14678,36 @@ function filterDailyRecommendationOverview(
   };
 }
 
-function renderDailyRecommendationFeedbackFilter(
-  filter?: FertilityTimelineAanbevelingFeedbackStatus,
-): string {
+function renderDailyRecommendationFeedbackFilter(input: {
+  filter?: FertilityTimelineAanbevelingFeedbackStatus;
+  total: number;
+  filteredTotal: number;
+}): string {
+  const filterLabel = input.filter
+    ? FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter]
+    : undefined;
   return `
     <form id="daily-recommendation-feedback-filter-form" class="data-form compact-form" data-daily-recommendation-feedback-filter="ready">
+      ${
+        input.filter && filterLabel
+          ? `<p class="small-print" data-daily-recommendation-feedback-filter-chip="ready"><span>Actieve filter: ${escapeHtml(filterLabel)}</span> · <strong>${input.filteredTotal} van ${input.total}</strong> suggesties</p>`
+          : ''
+      }
       <label>
         Feedbackstatus
         <select name="dailyRecommendationFeedbackStatus">
           <option value="">Alle feedbackstatussen</option>
           ${Object.entries(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS)
-            .map(([value, label]) => renderOption(value, label, filter))
+            .map(([value, label]) => renderOption(value, label, input.filter))
             .join('')}
         </select>
       </label>
       <button type="submit">Filter suggesties</button>
+      ${
+        input.filter
+          ? '<button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-feedback-filter-reset="ready">Reset filter</button>'
+          : ''
+      }
     </form>
   `;
 }

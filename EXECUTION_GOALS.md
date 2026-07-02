@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1337 — Daily Recommendations: feedbackfilter route deep-link
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvies-feedbackfilter heeft nu chip, teller en reset, maar de gekozen filterstatus staat nog niet in de route/hash.
+- **User Impact:** Na refresh, directe link of browsernavigatie is minder duidelijk welke filterweergave bedoeld was.
+- **Desired Outcome:** Maak de actieve dagadvies-feedbackfilter zichtbaar in de route/hash zodat refresh, browser back/forward en directe links dezelfde lokale filterweergave herstellen.
+- **User Value:** Gebruikers kunnen een gefilterde dagadviesweergave betrouwbaar hervatten zonder opnieuw te kiezen.
+- **Acceptance Criteria:** Een actieve feedbackfilter kan via de route/hash worden hersteld; reset verwijdert de filter uit de route/hash; zonder filter blijft de bestaande start-recommendations route ongewijzigd; tests dekken parsing, rendering en privacygrenzen; geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt toegevoegd.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, route parsing, daily recommendations, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2620
+
 ### G1336 — Daily Recommendations: feedbackfilter reset en tellerchips
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, event log, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2618
 
 ### G1335 — Daily Recommendations: feedbackfilter in dagadvieslijst

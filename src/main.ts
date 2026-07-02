@@ -1680,7 +1680,12 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
     .querySelector<HTMLFormElement>('#daily-recommendation-feedback-filter-form')
     ?.addEventListener('submit', (event) => {
       event.preventDefault();
-      applyDailyRecommendationFeedbackFilter(event.currentTarget, root, state);
+      applyDailyRecommendationFeedbackFilter(
+        event.currentTarget,
+        (event as SubmitEvent).submitter,
+        root,
+        state,
+      );
     });
 
   root.querySelectorAll<HTMLFormElement>('.daily-recommendation-action-form').forEach((form) => {
@@ -1698,10 +1703,16 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
 
 function applyDailyRecommendationFeedbackFilter(
   target: EventTarget | null,
+  submitter: HTMLElement | null,
   root: HTMLElement,
   state: RuntimeState,
 ): void {
   if (!(target instanceof HTMLFormElement)) return;
+  if (submitter instanceof HTMLButtonElement && submitter.value === 'reset') {
+    state.dailyRecommendationFeedbackFilter = undefined;
+    render(root, state);
+    return;
+  }
   const data = new FormData(target);
   state.dailyRecommendationFeedbackFilter = parseTimelineAanbevelingFeedbackStatus(
     data.get('dailyRecommendationFeedbackStatus'),
