@@ -14592,7 +14592,10 @@ function renderDailyAdviceConsole(
             </span>
             <em>${totalRecommendations} adviezen</em>
           </summary>
-          <div class="kp-disclosure__body">${renderDailyRecommendationList(overview)}</div>
+          <div class="kp-disclosure__body">${renderDailyRecommendationList(
+            overview,
+            bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []),
+          )}</div>
         </details>
       `,
   });
@@ -14720,7 +14723,10 @@ function renderStartQuickEntryRoute(): string {
   });
 }
 
-function renderDailyRecommendationList(overview: DailyRecommendationOverview): string {
+function renderDailyRecommendationList(
+  overview: DailyRecommendationOverview,
+  feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>> = {},
+): string {
   return recommendationList({
     className: 'daily-recommendation-list daily-recommendation-list--dual-owner',
     ariaLabel: 'Te doen vandaag per eigenaar',
@@ -14730,17 +14736,20 @@ function renderDailyRecommendationList(overview: DailyRecommendationOverview): s
       'daily-advice-list-mode': 'dual-owner-cards',
     },
     groups: [
-      renderDailyRecommendationDualOwnerLane(overview),
-      renderDailyRecommendationGroup('samen', overview.samen),
+      renderDailyRecommendationDualOwnerLane(overview, feedbackStatussen),
+      renderDailyRecommendationGroup('samen', overview.samen, feedbackStatussen),
     ],
   });
 }
 
-function renderDailyRecommendationDualOwnerLane(overview: DailyRecommendationOverview): string {
+function renderDailyRecommendationDualOwnerLane(
+  overview: DailyRecommendationOverview,
+  feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>,
+): string {
   return `
     <section class="daily-recommendation-dual-owner-lane" aria-label="Dagadvies vrouw en man" data-daily-recommendation-dual-owner-lane="primary">
-      ${renderDailyRecommendationGroup('vrouw', overview.vrouw)}
-      ${renderDailyRecommendationGroup('man', overview.man)}
+      ${renderDailyRecommendationGroup('vrouw', overview.vrouw, feedbackStatussen)}
+      ${renderDailyRecommendationGroup('man', overview.man, feedbackStatussen)}
     </section>
   `;
 }
@@ -14748,10 +14757,11 @@ function renderDailyRecommendationDualOwnerLane(overview: DailyRecommendationOve
 function renderDailyRecommendationGroup(
   owner: DailyRecommendationOwner,
   items: readonly DailyRecommendation[],
+  feedbackStatussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>>,
 ): string {
   return recommendationGroup({
     title: DAILY_RECOMMENDATION_OWNER_LABELS[owner],
-    items: items.map(renderDailyRecommendationItem),
+    items: items.map((item) => renderDailyRecommendationItem(item, feedbackStatussen[item.id])),
     ariaLabel: `Te doen vandaag ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}`,
     className: `policy-panel embedded-summary daily-recommendation-group daily-recommendation-group--${owner}`,
     data: {
@@ -14762,7 +14772,10 @@ function renderDailyRecommendationGroup(
   });
 }
 
-function renderDailyRecommendationItem(item: DailyRecommendation): string {
+function renderDailyRecommendationItem(
+  item: DailyRecommendation,
+  feedbackStatus?: FertilityTimelineAanbevelingFeedbackStatus,
+): string {
   const meta = `Eigenaar: ${DAILY_RECOMMENDATION_OWNER_LABELS[item.owner]}${item.datum ? ` · Datum: ${item.datum}` : ''}${item.reden ? ` · Reden: ${item.reden}` : ''}`;
   return recommendationCard({
     id: item.id,
@@ -14777,8 +14790,14 @@ function renderDailyRecommendationItem(item: DailyRecommendation): string {
       'recommendation-artscheck': item.checklist?.some((checklistItem) => checklistItem.artscheck)
         ? 'required'
         : 'not-required',
+      ...(feedbackStatus ? { 'daily-recommendation-feedback-status': feedbackStatus } : {}),
     },
     body: `
+      ${
+        feedbackStatus
+          ? `<p class="small-print" data-daily-recommendation-feedback-status="${escapeAttribute(feedbackStatus)}">Feedbackstatus: ${escapeHtml(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[feedbackStatus])}</p>`
+          : ''
+      }
       ${
         item.checklist
           ? `<ol class="compact-list rec-checklist">${item.checklist
