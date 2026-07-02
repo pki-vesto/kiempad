@@ -276,6 +276,9 @@
 - **CFX-019b inline delete confirmations — partial in G1400 / issue #2574.** Kosten, Vragen,
   Traject, Agenda, and Medicatie delete actions now use an in-app alertdialog confirmation instead
   of native browser confirms.
+- **CFX-018 traject feedback — partial in G1401 / issue #2576.** Traject save, phase, archive,
+  restore, and delete actions now set inline `role="status"` feedback on the active treatment
+  route, matching the existing Agenda/Medicatie/Vragen/Kosten feedback pattern.
 
 ---
 

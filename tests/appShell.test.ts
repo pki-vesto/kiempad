@@ -38552,6 +38552,26 @@ describe('app shell', () => {
     );
   });
 
+  it('toont trajectstatusfeedback op de actieve treatmentroute', () => {
+    const html = renderAppShell('traject', {
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      trajecten: [],
+      activeTreatmentRoute: 'beheer',
+      trajectStatus: 'Traject opgeslagen.',
+    });
+
+    expect(html).toContain('Traject opgeslagen.');
+    expect(html).toContain(
+      'class="status-message treatment-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="treatment-beheer" data-treatment-save-feedback="beheer"',
+    );
+  });
+
   it('bewaakt mobiele commandroute spacing tegen bottom-nav overlap', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const tabletCss = extractCssMediaBlock(css, 'min-width: 761px) and (max-width: 899px');
