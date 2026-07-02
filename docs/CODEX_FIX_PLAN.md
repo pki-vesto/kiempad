@@ -291,6 +291,9 @@
 - **CFX-017/CFX-012 Herinneringen privacy/planning collapse — partial in G1405 / issue #2584.**
   Herinneringen privacy now shows the lockscreen choice as the only primary task, while planning
   shows the default warning time first and keeps custom reminders behind one closed continuation.
+- **CFX-027 form textarea kit — partial in G1406 / issue #2586.** Textareas in `.data-form` and
+  standalone `.compact-form` now share the kit border, focus, placeholder, 74px minimum height,
+  and vertical resize behavior.
 
 ---
 

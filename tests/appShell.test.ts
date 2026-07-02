@@ -2847,6 +2847,17 @@ describe('app shell', () => {
     expect(css).toContain('overflow-y: auto;');
   });
 
+  it('bewaakt de tekstveld-kit voor data- en compacte formulieren', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+
+    expect(css).toContain('.data-form textarea,');
+    expect(css).toContain('.compact-form textarea {');
+    expect(css).toContain('min-height: 74px;');
+    expect(css).toContain('resize: vertical;');
+    expect(css).toContain('.compact-form textarea:focus {');
+    expect(css).toContain('.compact-form textarea::placeholder {');
+  });
+
   it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
