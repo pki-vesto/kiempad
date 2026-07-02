@@ -3401,7 +3401,7 @@ function renderDossierScreen(state: AppShellState): string {
                         }
                         <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
                       </div>
-                      <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}">Verwijder</button>
+                      <button class="phase-button secondary delete-dossier-document" type="button" data-attachment-delete-kind="dossier-import" data-attachment-delete-state="available" data-dossier-document-id="${escapeAttribute(item.id)}" data-dossier-document-title="${escapeAttribute(item.titel)}" aria-expanded="false">Verwijder</button>
                     </li>
                   `,
                     )

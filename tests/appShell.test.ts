@@ -5758,6 +5758,8 @@ describe('app shell', () => {
     expect(html).toContain('Veilige metadata: Labuitslag · 2 KB');
     expect(html).toContain('class="phase-button secondary delete-dossier-document"');
     expect(html).toContain('data-dossier-document-id="doc-1"');
+    expect(html).toContain('data-dossier-document-title="Bloeduitslag mei"');
+    expect(html).toContain('aria-expanded="false"');
     expect(html).toContain('Verwijder</button>');
     expect(html).toContain('Documenttijdlijn');
     expect(html).toContain('Behandelgeschiedenis');
@@ -9070,6 +9072,8 @@ describe('app shell', () => {
     expect(unlockedDeletes).toContain('data-attachment-delete-kind="dossier-import"');
     expect(unlockedDeletes).toContain('data-attachment-delete-state="available"');
     expect(unlockedDeletes).toContain('data-dossier-document-id="doc-unlocked-preview"');
+    expect(unlockedDeletes).toContain('data-dossier-document-title="Unlocked preview beeld"');
+    expect(unlockedDeletes).toContain('aria-expanded="false"');
 
     const lockedHtml = renderAppShell(
       'dossier',
