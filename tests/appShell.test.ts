@@ -1801,6 +1801,26 @@ describe('app shell', () => {
     );
   });
 
+  it('toont een skeleton-laadlaag binnen de actieve werkruimte tijdens unlock of reload', () => {
+    const html = renderAppShell('dossier', {
+      ...makeStartState(),
+      loadingState: {
+        scope: 'reload',
+        message:
+          'We werken dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten opnieuw bij.',
+      },
+    });
+
+    expect(html).toContain('data-screen-stage-screen="dossier"');
+    expect(html).toContain('data-screen-stage-panel="active" aria-busy="true"');
+    expect(html).toContain('data-screen-loading="true"');
+    expect(html).toContain('data-loading-state="reload"');
+    expect(html).toContain('Werkruimte bijwerken');
+    expect(html).toContain('OCR-review');
+    expect(html.match(/kp-skeleton__line/g)?.length).toBeGreaterThanOrEqual(12);
+    expect(html).not.toContain('id="dossier-upload-form"');
+  });
+
   it('plaatst secundaire mobiele routes achter Meer zodat de bottom-nav geen 13 tabs tegelijk toont', () => {
     const html = renderAppShell('kosten');
 

@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1329 — CFX-004c: Skeleton-laadlaag voor unlock en reload
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na ontgrendelen en na save/import sprong Kiempad abrupt van lege route naar gevulde route zonder zichtbare laadstatus.
+- **User Impact:** De app voelde prototype-achtig bij versleutelde datarefreshes en gebruikers kregen geen duidelijke feedback dat dossier, timeline of reviewlijsten werden geladen.
+- **Desired Outcome:** Toon een route-level skeleton binnen de actieve screen-stage tijdens unlock en reload, met `aria-busy` en duidelijke laadcopy voor dossier, timeline, AI-samenvattingen, OCR-review en lokale lijsten.
+- **User Value:** Gebruikers zien dat Kiempad bezig is met veilig laden, zonder dat layout of routecontext verdwijnt.
+- **Acceptance Criteria:** Runtime en app-shell ondersteunen `loadingState`; unlock en WebAuthn-unlock tonen loadingState vóór `loadUnlockedState`; reload toont loadingState vóór store refreshes; actieve screen-stage heeft `aria-busy` en `data-screen-loading`; skeleton gebruikt de gedeelde `loadingSkeleton()` component; tests dekken routecontext, skeleton lines en het tijdelijk niet renderen van zware dossierinhoud; desktop en mobiel tonen geen horizontale overflow; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Globale app-shell, unlock, reload, dossier, timeline, AI/OCR-review routes
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, runtime, loadingSkeleton, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+
 ### G1328 — CFX-003c: Rijke lege staten in app-shell
 
 - **Epic:** Onboarding & Daily Use
