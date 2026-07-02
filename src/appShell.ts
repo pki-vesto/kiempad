@@ -11484,26 +11484,30 @@ function renderWelzijnScreen(state: AppShellState): string {
   const trends = berekenWelzijnTrends(logs, checkIns);
   const activeWellbeingRoute = state.activeWellbeingRoute ?? 'overview';
 
-  const wellbeingWorkbench = renderWellbeingInsightWorkbench({
-    checkInCount: checkIns.length,
-    symptomCount: logs.length,
-    cycleCount: cycleData.length,
-    trendCount: trends.length,
-    latestDate: overzicht.laatsteDatum,
-    latestCheckIn: checkIns[0],
-    latestSymptom: logs[0],
-    settings: state.settings,
-  });
   const wellbeingWorkspace = domainSplitWorkspace({
     className: 'wellbeing-split-workspace',
     ariaLabel: 'Welzijn split-view werkruimte',
-    data: { 'wellbeing-split-workspace': 'ready', 'wellbeing-compact-workspace': 'route-first' },
+    data: {
+      'wellbeing-split-workspace': 'ready',
+      'wellbeing-compact-workspace': 'route-first',
+      'wellbeing-single-workspace': 'ready',
+    },
     rail: renderWelzijnTaskRoutes({
       checkInCount: checkIns.length,
       symptomCount: logs.length,
       cycleCount: cycleData.length,
       trendCount: trends.length,
       activeRoute: activeWellbeingRoute,
+    }),
+    context: renderWellbeingInsightWorkbench({
+      checkInCount: checkIns.length,
+      symptomCount: logs.length,
+      cycleCount: cycleData.length,
+      trendCount: trends.length,
+      latestDate: overzicht.laatsteDatum,
+      latestCheckIn: checkIns[0],
+      latestSymptom: logs[0],
+      settings: state.settings,
     }),
     main: `
       <section id="welzijn-route-overview" class="wellbeing-route-section" aria-labelledby="welzijn-route-overview-title" data-wellbeing-route="overview"${renderWellbeingRouteVisibility(activeWellbeingRoute, 'overview')}>
@@ -11624,7 +11628,6 @@ function renderWelzijnScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderWellbeingFocusShell({
-        workbench: wellbeingWorkbench,
         workspace: wellbeingWorkspace,
       }),
     ],
@@ -11632,7 +11635,7 @@ function renderWelzijnScreen(state: AppShellState): string {
   );
 }
 
-function renderWellbeingFocusShell(input: { workbench: string; workspace: string }): string {
+function renderWellbeingFocusShell(input: { workspace: string }): string {
   return `
     <section class="wellbeing-focus-shell" aria-labelledby="wellbeing-focus-shell-title" data-wellbeing-focus-shell="ready">
       <header class="wellbeing-focus-shell__header">
@@ -11641,9 +11644,6 @@ function renderWellbeingFocusShell(input: { workbench: string; workspace: string
         <p>Overzicht, geschiedenis en invoer blijven in één rustige welzijnsruimte zonder score, diagnose of behandeladvies.</p>
       </header>
       <div class="wellbeing-focus-shell__body" data-wellbeing-console="ready">
-        <div class="wellbeing-focus-shell__workbench" data-wellbeing-focus-region="workbench" data-wellbeing-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="wellbeing-focus-shell__workspace" data-wellbeing-focus-region="workspace" data-wellbeing-console-region="workspace">
           ${input.workspace}
         </div>

@@ -36037,10 +36037,12 @@ describe('app shell', () => {
     expect(html).toContain('data-wellbeing-focus-shell="ready"');
     expect(html).toContain('data-wellbeing-console="ready"');
     expect(html).toContain('Eerst welzijn scannen, daarna teruglezen of vastleggen');
-    expect(html).toContain('data-wellbeing-focus-region="workbench"');
+    expect(html).not.toContain('data-wellbeing-focus-region="workbench"');
     expect(html).toContain('data-wellbeing-focus-region="workspace"');
-    expect(html).toContain('data-wellbeing-console-region="workbench"');
+    expect(html).not.toContain('data-wellbeing-console-region="workbench"');
     expect(html).toContain('data-wellbeing-console-region="workspace"');
+    expect(html).toContain('data-wellbeing-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
     expect(html).toContain(
       '<section class="insight-workbench wellbeing-insight-workbench" aria-label="Inzichtwerkbank welzijn" data-wellbeing-first-viewport="insight-workbench">',
     );
@@ -36062,7 +36064,7 @@ describe('app shell', () => {
     expect(html).not.toContain('data-wellbeing-workspace-context="metrics"');
     expect(html).not.toContain('data-workspace-context-signals="wellbeing"');
     expect(html).not.toContain('data-workspace-context-microstate="wellbeing-history"');
-    expect(html).not.toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain('id="welzijn-route-overview"');
     expect(html).toContain('data-wellbeing-route="overview"');
     expect(html).toContain('id="welzijn-route-history"');
@@ -36180,15 +36182,18 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-focus-shell {');
     expect(css).toContain('.wellbeing-focus-shell__header {');
     expect(css).toContain('.wellbeing-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {');
+    expect(css).not.toContain('.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {');
+    expect(css).toContain('.wellbeing-focus-shell__workspace');
+    expect(css).toContain('.domain-split-workspace__context');
+    expect(css).toContain('> .wellbeing-insight-workbench {');
     expect(css).toContain('.wellbeing-focus-shell__workspace {');
     expect(css).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('grid-template-areas: "rail main";');
-    expect(css).not.toContain(
-      '.wellbeing-focus-shell__workspace .domain-split-workspace__context {',
+    expect(css).toContain('grid-template-areas: "rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(136px, 0.22fr) minmax(0, 1fr) minmax(240px, 0.36fr);',
     );
     expect(css).toContain('.decision-focus-shell {');
     expect(css).toContain('.decision-focus-shell__header {');
@@ -36260,7 +36265,10 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.wellbeing-focus-shell {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
-    expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain(
+      '.wellbeing-focus-shell__workspace .domain-split-workspace__context {',
+    );
     expect(mobileCss).toContain('.wellbeing-log-console {');
     expect(mobileCss).toContain('.wellbeing-log-console__header {');
     expect(mobileCss).toContain('.wellbeing-log-console__continuations {');
@@ -36268,9 +36276,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.wellbeing-checkin-form__actions {');
     expect(mobileCss).toContain('.wellbeing-checkin-card__header {');
     expect(mobileCss).toContain('.wellbeing-checkin-card__mood {');
-    expect(mobileCss).not.toContain(
-      '.wellbeing-focus-shell__workspace .domain-split-workspace__context {',
-    );
+    expect(mobileCss).toContain('grid-column: auto;');
     expect(mobileCss).toContain(
       '.content:has([data-decision-focus-shell="ready"]) > .workspace-map,',
     );
@@ -38647,7 +38653,6 @@ describe('app shell', () => {
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
       if (
-        label === 'wellbeing' ||
         label === 'decision' ||
         label === 'notification' ||
         label === 'eventlog' ||
@@ -38741,9 +38746,11 @@ describe('app shell', () => {
     expect(welzijnHtml).toContain('class="domain-split-workspace wellbeing-split-workspace"');
     expect(welzijnHtml).toContain('class="wellbeing-focus-shell"');
     expect(welzijnHtml).toContain('data-wellbeing-focus-shell="ready"');
-    expect(welzijnHtml).toContain('data-wellbeing-focus-region="workbench"');
+    expect(welzijnHtml).not.toContain('data-wellbeing-focus-region="workbench"');
     expect(welzijnHtml).toContain('data-wellbeing-focus-region="workspace"');
     expect(welzijnHtml).toContain('data-wellbeing-compact-workspace="route-first"');
+    expect(welzijnHtml).toContain('data-wellbeing-single-workspace="ready"');
+    expect(welzijnHtml).toContain('class="domain-split-workspace__context"');
     expect(welzijnHtml).not.toContain('data-wellbeing-workspace-context="metrics"');
     expect(welzijnHtml).not.toContain('data-workspace-context-signals="wellbeing"');
     expect(welzijnHtml).not.toContain('data-workspace-context-microstate="wellbeing-history"');
