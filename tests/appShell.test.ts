@@ -36177,6 +36177,13 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('id="knowledge-filter-form"');
+    expect(html).toContain(
+      'id="knowledge-filter-form" class="data-form compact-form knowledge-filter-kit" data-knowledge-filter-kit="ready" data-knowledge-filter-state="active"',
+    );
+    expect(html).toContain('class="knowledge-filter-kit__header"');
+    expect(html).toContain('class="knowledge-filter-kit__fields"');
+    expect(html).toContain('class="knowledge-filter-kit__actions"');
+    expect(html).toContain('2 actief: zoekterm &quot;eigen risico&quot; · categorie Kosten');
     expect(html).toContain('name="kennisZoekterm" value="eigen risico"');
     expect(html).toContain('1 van 2 kennisitems zichtbaar');
     expect(html).toContain('Kosten 2026: eigen risico');
@@ -36232,6 +36239,11 @@ describe('app shell', () => {
     expect(html).toContain('Alleen lokale groepering, geen bewijsweging.');
     expect(html).toContain('id="knowledge-overview"');
     expect(html).toContain('class="knowledge-command-panel__intro"');
+    expect(html).toContain('data-knowledge-filter-kit="ready"');
+    expect(html).toContain('data-knowledge-filter-state="idle"');
+    expect(html).toContain('Bibliotheekfilter');
+    expect(html).toContain('Kennisitems vinden');
+    expect(html).toContain('Geen filter actief');
     expect(html).toContain('<span class="stat__value">');
     expect(html).toContain('class="knowledge-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Kennis taakroutes"');
@@ -36468,6 +36480,10 @@ describe('app shell', () => {
     expect(css).toContain('display: none;');
     expect(css).toContain('.dossier-route-section[hidden] {');
     expect(css).toContain('.knowledge-command-panel__intro {');
+    expect(css).toContain('.knowledge-filter-kit {');
+    expect(css).toContain('.knowledge-filter-kit__header {');
+    expect(css).toContain('.knowledge-filter-kit__fields {');
+    expect(css).toContain('.knowledge-filter-kit__actions {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-task-routes {');
     expect(css).toContain('border-radius: 12px;');
@@ -36496,6 +36512,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-snap-type: x proximity;');
     expect(mobileCss).toContain('.knowledge-research-reader__lane {');
     expect(mobileCss).toContain('flex: 0 0 min(236px, 78vw);');
+    expect(mobileCss).toContain('.knowledge-filter-kit {');
+    expect(mobileCss).toContain('.knowledge-filter-kit__header,');
+    expect(mobileCss).toContain('.knowledge-filter-kit__actions {');
   });
 
   it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {

@@ -12482,23 +12482,42 @@ function renderEigenKennisItemForm(item?: KennisItem): string {
 }
 
 function renderKennisFilterForm(filter: KennisFilter): string {
+  const zoekterm = filter.zoekterm?.trim() ?? '';
+  const categorieLabel = filter.categorie ? KENNIS_CATEGORIE_LABELS[filter.categorie] : '';
+  const activeFilterCount = (zoekterm ? 1 : 0) + (filter.categorie ? 1 : 0);
+  const status =
+    activeFilterCount > 0
+      ? `${activeFilterCount} actief: ${[zoekterm ? `zoekterm "${zoekterm}"` : '', categorieLabel ? `categorie ${categorieLabel}` : ''].filter(Boolean).join(' · ')}`
+      : 'Geen filter actief';
+
   return `
-    <form id="knowledge-filter-form" class="data-form compact-form">
-      <label>
-        Zoek
-        <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
-      </label>
-      <label>
-        Categorie
-        <select name="kennisCategorie">
-          <option value="">Alle categorieën</option>
-          ${Object.entries(KENNIS_CATEGORIE_LABELS)
-            .map(([value, label]) => renderOption(value, label, filter.categorie))
-            .join('')}
-        </select>
-      </label>
-      <button type="submit" name="filterAction" value="apply">Filter kennis</button>
-      <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
+    <form id="knowledge-filter-form" class="data-form compact-form knowledge-filter-kit" data-knowledge-filter-kit="ready" data-knowledge-filter-state="${activeFilterCount > 0 ? 'active' : 'idle'}">
+      <header class="knowledge-filter-kit__header">
+        <div>
+          <p class="kp-card__eyebrow">Bibliotheekfilter</p>
+          <h3>Kennisitems vinden</h3>
+        </div>
+        <span>${escapeHtml(status)}</span>
+      </header>
+      <div class="knowledge-filter-kit__fields">
+        <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
+          Zoek
+          <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
+        </label>
+        <label class="knowledge-filter-kit__field">
+          Categorie
+          <select name="kennisCategorie">
+            <option value="">Alle categorieën</option>
+            ${Object.entries(KENNIS_CATEGORIE_LABELS)
+              .map(([value, label]) => renderOption(value, label, filter.categorie))
+              .join('')}
+          </select>
+        </label>
+      </div>
+      <div class="knowledge-filter-kit__actions">
+        <button type="submit" name="filterAction" value="apply">Filter kennis</button>
+        <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
+      </div>
     </form>
   `;
 }
