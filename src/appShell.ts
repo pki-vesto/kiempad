@@ -2449,6 +2449,13 @@ function renderBackupScreen(state: AppShellState): string {
           ariaLabel: 'Back-up controleren route-samenvatting',
           data: { 'backup-route-summary': 'controleren' },
         })}
+        ${renderBackupReminderCard({
+          reminder,
+          central,
+          hasFeedback: Boolean(state.backupStatus || state.backupError),
+          backupStatus: state.backupStatus,
+          backupError: state.backupError,
+        })}
         ${renderBackupSyncBoard({
           central,
           reminderStatus: reminder.status,
@@ -2485,6 +2492,12 @@ function renderBackupScreen(state: AppShellState): string {
           status: central ? 'Centraal encrypted' : 'Legacy encrypted',
           ariaLabel: 'Back-up export route-samenvatting',
           data: { 'backup-route-summary': 'export' },
+        })}
+        ${renderBackupExportPreview({
+          central,
+          backupCopy,
+          syncTitle,
+          syncCopy,
         })}
         <details id="backup-export-vault-disclosure" class="kp-disclosure" data-backup-disclosure="export-backup">
           <summary class="kp-disclosure__summary">Versleutelde back-up export openen</summary>
@@ -2692,6 +2705,91 @@ function renderBackupSyncBoard(input: {
           .join('')}
       </nav>
       <p class="small-print">Deze laag toont geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata of ontsleutelde gezondheidsdata.</p>
+    </section>
+  `;
+}
+
+function renderBackupReminderCard(input: {
+  reminder: ReturnType<typeof bepaalBackupReminder>;
+  central: boolean;
+  hasFeedback: boolean;
+  backupStatus?: string;
+  backupError?: string;
+}): string {
+  const storageLabel = input.central ? 'Centrale encrypted dataset' : 'Lokale encrypted kluis';
+  const actionLabel =
+    input.reminder.status === 'recent' ? 'Controleer exportritme' : 'Maak back-up';
+  const feedbackLabel = input.backupError
+    ? 'Melding controleren'
+    : input.backupStatus
+      ? 'Laatste actie verwerkt'
+      : input.hasFeedback
+        ? 'Feedback beschikbaar'
+        : 'Geen actie vandaag';
+
+  return `
+    <section class="backup-reminder-card" aria-label="Laatste back-up reminder" data-backup-reminder-card="ready" data-backup-reminder-state="${escapeAttribute(input.reminder.status)}">
+      <header class="backup-reminder-card__header">
+        <div>
+          <p class="kp-card__eyebrow">Laatste back-up</p>
+          <h3>${escapeHtml(input.reminder.titel)}</h3>
+        </div>
+        <span>${escapeHtml(actionLabel)}</span>
+      </header>
+      <p>${escapeHtml(input.reminder.tekst)}</p>
+      <dl class="backup-reminder-card__facts">
+        <div>
+          <dt>Opslag</dt>
+          <dd>${escapeHtml(storageLabel)}</dd>
+        </div>
+        <div>
+          <dt>Laatst bekend</dt>
+          <dd>${escapeHtml(input.reminder.laatsteBackupLabel ?? 'Nog niet vastgelegd')}</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>${escapeHtml(feedbackLabel)}</dd>
+        </div>
+      </dl>
+      <nav class="backup-reminder-card__actions" aria-label="Back-up reminder acties">
+        <a href="#backup?route=export">Export maken</a>
+        <a href="#backup-control-status-disclosure">Statusdetails</a>
+      </nav>
+    </section>
+  `;
+}
+
+function renderBackupExportPreview(input: {
+  central: boolean;
+  backupCopy: string;
+  syncTitle: string;
+  syncCopy: string;
+}): string {
+  const exportLabel = input.central ? 'Centrale noodexport' : 'Lokale kluisexport';
+  const packageLabel = input.central ? 'Recordpakket' : 'Syncpakket';
+
+  return `
+    <section class="backup-export-preview" aria-label="Back-up exportpreview" data-backup-export-preview="ready" data-backup-export-preview-mode="${input.central ? 'central' : 'legacy'}">
+      <header class="backup-export-preview__header">
+        <p class="kp-card__eyebrow">Exportpreview</p>
+        <h3>Bekijk wat je downloadt voordat je start</h3>
+        <p>Beide downloads blijven versleuteld. Kiempad toont hier alleen pakketdoel en veiligheidsgrens.</p>
+      </header>
+      <div class="backup-export-preview__grid">
+        <article data-backup-export-preview-card="backup">
+          <span>${escapeHtml(exportLabel)}</span>
+          <strong>Download back-up</strong>
+          <p>${escapeHtml(input.backupCopy)}</p>
+          <a href="#backup-export-vault-disclosure">Back-up openen</a>
+        </article>
+        <article data-backup-export-preview-card="sync">
+          <span>${escapeHtml(packageLabel)}</span>
+          <strong>${escapeHtml(input.syncTitle)}</strong>
+          <p>${escapeHtml(input.syncCopy)}</p>
+          <a href="#backup-export-sync-disclosure">${escapeHtml(input.syncTitle)} openen</a>
+        </article>
+      </div>
+      <p class="small-print">Preview toont geen herstelzin, sleuteldata, recordinhoud of ontsleutelde gezondheidsdata.</p>
     </section>
   `;
 }

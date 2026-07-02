@@ -6039,6 +6039,143 @@ h2 {
   font-weight: 850;
 }
 
+.backup-reminder-card,
+.backup-export-preview {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.backup-reminder-card[data-backup-reminder-state="missing"],
+.backup-reminder-card[data-backup-reminder-state="due"] {
+  border-color: color-mix(in srgb, var(--warning) 36%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--warning) 9%, transparent), transparent 48%),
+    var(--surface);
+}
+
+.backup-reminder-card__header,
+.backup-export-preview__header {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.backup-reminder-card__header h3,
+.backup-reminder-card__header p,
+.backup-export-preview__header h3,
+.backup-export-preview__header p {
+  margin: 0;
+}
+
+.backup-reminder-card__header h3,
+.backup-export-preview__header h3 {
+  font-size: 1rem;
+  line-height: 1.24;
+}
+
+.backup-reminder-card__header > span {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.backup-reminder-card > p,
+.backup-export-preview__header > p {
+  max-width: 70ch;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.backup-reminder-card__facts,
+.backup-export-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.backup-reminder-card__facts > div,
+.backup-export-preview__grid > article {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-subtle);
+}
+
+.backup-reminder-card__facts dt,
+.backup-export-preview__grid span {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.backup-reminder-card__facts dd,
+.backup-export-preview__grid strong,
+.backup-export-preview__grid p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.backup-reminder-card__facts dd,
+.backup-export-preview__grid strong {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.backup-reminder-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.backup-reminder-card__actions a,
+.backup-export-preview__grid a {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 32px;
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.backup-export-preview__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.backup-export-preview__grid > article {
+  display: grid;
+  gap: 8px;
+}
+
+.backup-export-preview__grid p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 .notification-command-layout {
   gap: 16px;
 }
@@ -14649,6 +14786,26 @@ a.action-card:active {
     flex: 0 0 min(236px, 78vw);
     min-height: 112px;
     scroll-snap-align: start;
+  }
+
+  .backup-reminder-card,
+  .backup-export-preview {
+    padding: 12px;
+  }
+
+  .backup-reminder-card__header,
+  .backup-export-preview__header {
+    display: grid;
+    gap: 6px;
+  }
+
+  .backup-reminder-card__header > span {
+    width: fit-content;
+  }
+
+  .backup-reminder-card__facts,
+  .backup-export-preview__grid {
+    grid-template-columns: 1fr;
   }
 
   .notification-task-routes {

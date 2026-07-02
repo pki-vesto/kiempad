@@ -368,6 +368,7 @@ const targets = [
       '[data-backup-sync-lane="export"]',
       '[data-backup-sync-lane="import"]',
       '[data-backup-sync-lane="recovery"]',
+      '[data-backup-reminder-card="ready"]',
       '[data-backup-disclosure="controleren"]',
     ],
     desktopHiddenSelectors: [

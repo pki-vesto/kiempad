@@ -2058,6 +2058,10 @@ describe('app shell', () => {
     expect(css).toContain('.backup-sync-board__lane:hover,');
     expect(css).toContain('.backup-sync-board__lane:focus-visible {');
     expect(css).toContain('.backup-sync-board__lane em {');
+    expect(css).toContain('.backup-reminder-card,');
+    expect(css).toContain('.backup-export-preview {');
+    expect(css).toContain('[data-backup-reminder-state="missing"]');
+    expect(css).toContain('.backup-export-preview__grid {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.management-workbench :where(.stat-row) {');
     expect(css).toContain('scroll-snap-type: x proximity;');
@@ -37413,6 +37417,11 @@ describe('app shell', () => {
     expect(html).toContain('Encrypted pakket maken');
     expect(html).toContain('Bewust herstellen');
     expect(html).toContain('Wachtwoordzin leidend');
+    expect(html).toContain('data-backup-reminder-card="ready"');
+    expect(html).toContain('data-backup-reminder-state="missing"');
+    expect(html).toContain('Laatste back-up');
+    expect(html).toContain('Nog niet vastgelegd');
+    expect(html).toContain('href="#backup?route=export">Export maken</a>');
     expect(html).toContain(
       'Deze laag toont geen recordinhoud, bestandsinhoud, herstelzin, sleuteldata of ontsleutelde gezondheidsdata.',
     );
@@ -37422,6 +37431,12 @@ describe('app shell', () => {
     expect(html).toContain('Syncstatus en back-upherinnering openen');
     expect(html).toContain('aria-label="Back-up export route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="export"');
+    expect(html).toContain('data-backup-export-preview="ready"');
+    expect(html).toContain('data-backup-export-preview-mode="legacy"');
+    expect(html).toContain('data-backup-export-preview-card="backup"');
+    expect(html).toContain('data-backup-export-preview-card="sync"');
+    expect(html).toContain('Bekijk wat je downloadt voordat je start');
+    expect(html).toContain('Preview toont geen herstelzin, sleuteldata, recordinhoud');
     expect(html).toContain('Versleutelde back-up export openen');
     expect(html).toContain('aria-label="Back-up import route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="import"');
