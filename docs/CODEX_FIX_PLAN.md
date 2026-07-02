@@ -252,6 +252,10 @@
   renders the audit system workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active audit route, and compact audit context
   while mobile remains stacked.
+- **CFX-044 backup single workspace — partial in G1394 / issue #2562.** Back-up no longer renders
+  the safety management workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active safety route, and compact backup context
+  while mobile remains stacked.
 
 ---
 
@@ -742,7 +746,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   preview are visible before disclosure details.
   Partial G1362/#2498: Back-up uses a route-first workspace without a fixed third context column.
   Partial G1368/#2510: export preview cards expose Download and Kopieer samenvatting actions
-  directly, with disclosures reduced to explanatory safety copy.
+  directly, with disclosures reduced to explanatory safety copy. Partial G1394/#2562: Back-up folds
+  the safety management workbench into the same split-view as route context, so desktop opens as one
+  rail/main/context workspace instead of a separate focus-region plus nested route workspace.
 - **CFX-045** — `renderStorageBootstrapError` + Dossier: apply the unified privacy phrasing +
   de-jargon (N91). **P2 · S**
 

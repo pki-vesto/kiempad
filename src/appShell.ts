@@ -2446,13 +2446,18 @@ function renderBackupScreen(state: AppShellState): string {
   const backupWorkspace = domainSplitWorkspace({
     className: 'backup-split-workspace',
     ariaLabel: 'Back-up split-view werkruimte',
-    data: { 'backup-split-workspace': 'ready', 'backup-compact-workspace': 'route-first' },
+    data: {
+      'backup-split-workspace': 'ready',
+      'backup-compact-workspace': 'route-first',
+      'backup-single-workspace': 'ready',
+    },
     rail: renderBackupTaskRoutes({
       central,
       reminderStatus: reminder.status,
       hasWebAuthn: webAuthnGekoppeld,
       activeRoute: activeBackupRoute,
     }),
+    context: backupWorkbench,
     main: `
       <section id="backup-route-controleren" class="backup-route-section" aria-labelledby="backup-route-controleren-title" data-backup-route="controleren"${renderBackupRouteVisibility(activeBackupRoute, 'controleren')}>
         <header class="backup-route-section__header">
@@ -2618,7 +2623,6 @@ function renderBackupScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderBackupFocusShell({
-        workbench: backupWorkbench,
         workspace: backupWorkspace,
       }),
     ],
@@ -2626,7 +2630,7 @@ function renderBackupScreen(state: AppShellState): string {
   );
 }
 
-function renderBackupFocusShell(input: { workbench: string; workspace: string }): string {
+function renderBackupFocusShell(input: { workspace: string }): string {
   return `
     <section class="backup-focus-shell" aria-labelledby="backup-focus-shell-title" data-backup-focus-shell="ready">
       <header class="backup-focus-shell__header">
@@ -2635,9 +2639,6 @@ function renderBackupFocusShell(input: { workbench: string; workspace: string })
         <p>Status, encrypted export, import en herstelopties blijven in één veiligheidsruimte zonder dossierinhoud of plaintext payloads te tonen.</p>
       </header>
       <div class="backup-focus-shell__body" data-backup-console="ready">
-        <div class="backup-focus-shell__workbench" data-backup-focus-region="workbench" data-backup-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="backup-focus-shell__workspace" data-backup-focus-region="workspace" data-backup-console-region="workspace">
           ${input.workspace}
         </div>
