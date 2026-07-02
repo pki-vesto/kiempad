@@ -8948,6 +8948,40 @@ h2 {
   }
 }
 
+@media (min-width: 761px) and (max-width: 960px) {
+  .schedule-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__rail {
+    min-width: 0;
+  }
+
+  .schedule-focus-shell__workspace .domain-split-workspace__context {
+    display: none;
+  }
+
+  .schedule-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .schedule-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .schedule-task-route {
+    flex: 0 0 min(210px, 46vw);
+    scroll-snap-align: start;
+  }
+}
+
 @media (min-width: 961px) {
   .medication-focus-shell__body {
     grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
@@ -9652,6 +9686,50 @@ h2 {
 .schedule-route-section .data-form select,
 .schedule-route-section .data-form textarea {
   min-width: 0;
+}
+
+.schedule-form {
+  gap: 12px;
+}
+
+.schedule-form-section {
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));
+}
+
+.schedule-form-section--primary {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.schedule-form-grid {
+  gap: 10px;
+}
+
+.schedule-form-field {
+  gap: 7px;
+}
+
+.schedule-form-field--wide {
+  grid-column: 1 / -1;
+}
+
+.schedule-form-section textarea {
+  min-height: 78px;
+  resize: vertical;
+}
+
+.schedule-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.schedule-form-actions button {
+  min-height: 40px;
 }
 
 .schedule-date-blocks {
@@ -16417,6 +16495,16 @@ a.action-card:active {
     gap: 10px;
   }
 
+  .schedule-form-section {
+    gap: 9px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .schedule-form-grid {
+    grid-template-columns: 1fr;
+  }
+
   .command-route-section .data-form label {
     gap: 5px;
   }
@@ -16437,6 +16525,20 @@ a.action-card:active {
     position: sticky;
     bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);
     z-index: 30;
+    width: 100%;
+    min-height: 44px;
+    box-shadow: 0 10px 24px rgba(21, 48, 44, 0.18);
+  }
+
+  .schedule-form-actions {
+    position: sticky;
+    bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);
+    z-index: 30;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-form-actions button {
     width: 100%;
     min-height: 44px;
     box-shadow: 0 10px 24px rgba(21, 48, 44, 0.18);

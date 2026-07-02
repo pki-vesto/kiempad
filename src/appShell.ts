@@ -16137,20 +16137,20 @@ function renderAfspraakForm(
   );
 
   return `
-    <form id="afspraak-form" class="data-form">
+    <form id="afspraak-form" class="data-form schedule-form">
       <input type="hidden" name="id" value="${escapeAttribute(afspraak?.id ?? '')}" />
-      <section class="command-form-section" data-command-form-section="afspraak-basis">
+      <section class="command-form-section schedule-form-section schedule-form-section--primary" data-command-form-section="afspraak-basis" data-schedule-form-section="basis">
         <p class="command-form-section__eyebrow">Basis</p>
-        <label>
+        <label class="schedule-form-field schedule-form-field--wide">
           Titel
           <input name="titel" required value="${escapeAttribute(afspraak?.titel ?? 'Afspraak kliniek')}" />
         </label>
-        <div class="form-grid">
-          <label>
+        <div class="form-grid schedule-form-grid">
+          <label class="schedule-form-field">
             Datum en tijd
             <input name="datumTijd" type="datetime-local" required value="${escapeAttribute(afspraakDatumTijd)}" />
           </label>
-          <label>
+          <label class="schedule-form-field">
             Type
             <select name="type">
               ${Object.entries(AFSPRAAK_TYPE_LABELS)
@@ -16160,10 +16160,10 @@ function renderAfspraakForm(
           </label>
         </div>
       </section>
-      <section class="command-form-section" data-command-form-section="afspraak-context">
+      <section class="command-form-section schedule-form-section" data-command-form-section="afspraak-context" data-schedule-form-section="context">
         <p class="command-form-section__eyebrow">Context</p>
-        <div class="form-grid">
-          <label>
+        <div class="form-grid schedule-form-grid">
+          <label class="schedule-form-field">
             Traject
             <select name="trajectId">
               <option value="">Geen koppeling</option>
@@ -16174,35 +16174,37 @@ function renderAfspraakForm(
                 .join('')}
             </select>
           </label>
-          <label>
+          <label class="schedule-form-field">
             Locatie
             <input name="locatie" value="${escapeAttribute(afspraak?.locatie ?? '')}" />
           </label>
         </div>
       </section>
-      <section class="command-form-section" data-command-form-section="afspraak-voorbereiding">
+      <section class="command-form-section schedule-form-section" data-command-form-section="afspraak-voorbereiding" data-schedule-form-section="voorbereiding">
         <p class="command-form-section__eyebrow">Voorbereiding</p>
-        <label>
+        <label class="schedule-form-field">
           Voorbereiding
           <textarea name="voorbereiding" rows="3">${escapeHtml(afspraak?.voorbereiding ?? '')}</textarea>
         </label>
-        <label>
+        <label class="schedule-form-field">
           Vragen voor de arts
           <textarea name="vraagVoorArts" rows="3">${escapeHtml(bundle?.vraag?.vraag ?? '')}</textarea>
         </label>
-        <label>
+        <label class="schedule-form-field">
           Notitie
           <textarea name="notitie" rows="3">${escapeHtml(afspraak?.notitie ?? '')}</textarea>
         </label>
       </section>
-      <section class="command-form-section" data-command-form-section="afspraak-herinnering">
+      <section class="command-form-section schedule-form-section" data-command-form-section="afspraak-herinnering" data-schedule-form-section="herinnering">
         <p class="command-form-section__eyebrow">Herinnering</p>
-        <label>
+        <label class="schedule-form-field">
           Herinnering
           <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? defaultReminder)}" />
         </label>
       </section>
-      <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
+      <div class="schedule-form-actions">
+        <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
+      </div>
     </form>
   `;
 }
