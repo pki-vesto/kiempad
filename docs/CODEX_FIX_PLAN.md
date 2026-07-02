@@ -232,6 +232,10 @@
   the research workbench as a separate focus-region above/next to the route workspace; desktop now
   uses one split-view with route rail, active route, and compact research context while mobile
   remains stacked.
+- **CFX-039 wellbeing single workspace — partial in G1389 / issue #2552.** Welzijn no longer
+  renders the insight workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active route, and compact wellbeing context while
+  mobile remains stacked.
 
 ---
 
@@ -686,7 +690,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1370/#2514: the Vastleggen route now opens on one primary check-in form, with symptom
   and cycle forms in separate continuation panels instead of a single stacked block.
   Partial G1376/#2526: Vastleggen hides the workbench/route summary in log mode and gives the
-  mental check-in a dedicated sectioned form kit.
+  mental check-in a dedicated sectioned form kit. Partial G1389/#2552: Welzijn folds the insight
+  workbench into the same split-view as route context, so desktop opens as one rail/main/context
+  workspace instead of a separate focus-region plus nested route workspace.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.

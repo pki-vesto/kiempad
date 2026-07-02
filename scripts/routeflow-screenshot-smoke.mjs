@@ -324,12 +324,12 @@ const targets = [
     activeRouteSelector: '[data-wellbeing-route="history"][data-wellbeing-route-state="active"]',
     inactiveRouteSelector: '[data-wellbeing-route-state="inactive"]',
     requiredSelectors: [
-      '[data-wellbeing-focus-region="workbench"]',
       '[data-wellbeing-focus-region="workspace"]',
       '[data-wellbeing-console="ready"]',
-      '[data-wellbeing-console-region="workbench"]',
       '[data-wellbeing-console-region="workspace"]',
       '[data-wellbeing-split-workspace="ready"]',
+      '[data-wellbeing-single-workspace="ready"]',
+      '.wellbeing-split-workspace .domain-split-workspace__context',
       '[data-wellbeing-route-summary="history"]',
       '[data-wellbeing-history-board="ready"]',
       '[data-wellbeing-history-lane="checkins"]',
@@ -853,8 +853,12 @@ async function assertRouteflows(browser, options) {
         const wellbeingConsole = routeflow.wellbeingConsole
           ? (() => {
               const body = document.querySelector('[data-wellbeing-console="ready"]');
-              const workbench = document.querySelector('[data-wellbeing-console-region="workbench"]');
-              const workspace = document.querySelector('[data-wellbeing-console-region="workspace"]');
+              const workbench = document.querySelector(
+                '.wellbeing-split-workspace .domain-split-workspace__context',
+              );
+              const workspace = document.querySelector(
+                '.wellbeing-split-workspace .domain-split-workspace__main',
+              );
               const bodyRect = body?.getBoundingClientRect();
               const workbenchRect = workbench?.getBoundingClientRect();
               const workspaceRect = workspace?.getBoundingClientRect();
@@ -1238,8 +1242,8 @@ async function assertRouteflows(browser, options) {
         (!evidence.wellbeingConsole.bodyVisible ||
           !evidence.wellbeingConsole.workbenchVisible ||
           !evidence.wellbeingConsole.workspaceVisible ||
-          evidence.wellbeingConsole.workspaceTop < evidence.wellbeingConsole.workbenchTop - 1 ||
-          evidence.wellbeingConsole.workspaceLeft < evidence.wellbeingConsole.workbenchRight - 1 ||
+          evidence.wellbeingConsole.workbenchTop < evidence.wellbeingConsole.workspaceTop - 1 ||
+          evidence.wellbeingConsole.workbenchLeft < evidence.wellbeingConsole.workspaceRight - 1 ||
           evidence.wellbeingConsole.bodyOverflow !== 'hidden' ||
           evidence.wellbeingConsole.bodyMaxHeight === 'none' ||
           evidence.wellbeingConsole.workbenchOverflowY !== 'auto' ||
