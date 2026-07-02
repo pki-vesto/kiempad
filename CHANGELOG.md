@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1320 CFX-030: PWA browser- en installatiechrome gebruikt nu het Claude Design teal. `index.html` heeft light/dark `theme-color` meta's, het manifest gebruikt teal `theme_color` en de oude sagekleur `#7a9471` verdwijnt uit de PWA-chrome contracten.
 - G1319 Premium Claude Design UI: Dagadvies opent op mobiel nu als compacte scrollbare adviesconsole. Workflow, eigenaarwerkbank, actieplanner en lijst blijven aanwezig, maar verlengen de route niet meer als losse verticale stapel; desktop behoudt de bestaande gescheiden werkvlakken.
 - G1318 Premium Claude Design UI: de mobiele Start-overview toont de verdiepingslaag nu als compacte scrollbare routekaart. De body wordt niet langer verlengd door het volledige command-center en flowdashboard, terwijl desktop de drie begrensde Start-werkvlakken behoudt.
 - G1317 Premium Claude Design UI: de hoofdcontent heeft nu een afgebakende `screen-stage` per actieve werkruimte. Desktop toont sidebar en actief scherm als gescheiden productvlakken met eigen scrollzone; mobiel houdt dezelfde inhoud in een zachtere stage zonder tekstoverlap.

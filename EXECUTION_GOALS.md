@@ -34,6 +34,21 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1320 — CFX-030: PWA theme-color naar Claude Design teal
+
+- **Epic:** Security & DevEx
+- **Problem:** `index.html` en het PWA-manifest gebruikten nog de oude sagekleur `#7a9471`, waardoor browser- en installatiechrome niet aansloten op het gemergde Claude Design teal-systeem.
+- **Desired Outcome:** Zet PWA-chrome om naar teal met een light/dark `theme-color` contract en een manifestkleur die bij het nieuwe Kiempad-palet past.
+- **User Value:** De geïnstalleerde app en browserbalk voelen visueel onderdeel van dezelfde premium Kiempad-identiteit.
+- **Acceptance Criteria:** `index.html` bevat light `theme-color` `#2c6e63` en dark `theme-color` `#15302c`; `index.html` bevat geen `#7a9471`; `manifest.webmanifest` gebruikt `theme_color` `#2c6e63` en `background_color` `#e7ece9`; PWA-tests bewaken deze contracten.
+- **Priority:** P0
+- **Complexity:** S
+- **Related Components:** `index.html`, `public/manifest.webmanifest`, `tests/pwa.test.ts`, `docs/CODEX_FIX_PLAN.md`
+- **ADR Needed:** no
+- **Score:** 124
+- **Status:** ☑ klaar
+- **Issue:** #2415
+
 ### G1319 — Premium Claude Design UI: Dagadvies mobiel als compacte adviesconsole
 
 - **Epic:** Onboarding & Daily Use
