@@ -50,6 +50,10 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('openDailyRecommendationListPanel');
     expect(mainSource).toContain('[data-hub-detail-panel="daily-recommendation-list"]');
     expect(mainSource).toContain("panel.setAttribute('tabindex', '-1')");
+    expect(mainSource).toContain("panel.dataset.dailyAdviceListFocus = 'active'");
+    expect(mainSource).toContain('ensureDailyRecommendationListFocusStatus');
+    expect(mainSource).toContain('[data-daily-advice-list-focus-status="ready"]');
+    expect(mainSource).toContain('Lijst geopend vanuit de actieve feedbackfilter.');
     expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');

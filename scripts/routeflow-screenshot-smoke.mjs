@@ -1604,7 +1604,14 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page.waitForFunction(
     () => {
       const details = document.querySelector('[data-hub-detail-panel="daily-recommendation-list"]');
-      return details instanceof HTMLDetailsElement && details.open && document.activeElement === details;
+      const focusStatus = document.querySelector('[data-daily-advice-list-focus-status="ready"]');
+      return (
+        details instanceof HTMLDetailsElement &&
+        details.open &&
+        details.dataset.dailyAdviceListFocus === 'active' &&
+        document.activeElement === details &&
+        focusStatus?.textContent?.includes('Lijst geopend vanuit de actieve feedbackfilter.')
+      );
     },
     undefined,
     { timeout: 10_000 },
@@ -1617,6 +1624,9 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .waitFor({ state: 'hidden', timeout: 10_000 });
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
+  await page
+    .locator('[data-daily-advice-list-focus-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
 
   await page.goBack({ waitUntil: 'networkidle' });
