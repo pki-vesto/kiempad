@@ -83,9 +83,23 @@ export type FertilityTimelineRecordKoppeling = {
 
 export type FertilityTimeline = {
   items: FertilityTimelineItem[];
+  maandGroepen: FertilityTimelineMaandGroep[];
   mijlpalen: FertilityTimelineMijlpaal[];
   contextSignalen: FertilityTimelineContextSignaal[];
   waarschuwing: string;
+};
+
+export type FertilityTimelineMaandGroep = {
+  id: string;
+  maand: string;
+  label: string;
+  datumVanaf: string;
+  datumTot: string;
+  itemIds: string[];
+  itemCount: number;
+  bronnen: string[];
+  reviewStatussen: FertilityTimelineBronverwijzing['reviewStatus'][];
+  conceptCount: number;
 };
 
 export type FertilityTimelineMijlpaal = {
@@ -775,10 +789,70 @@ function maakFertilityTimelineResultaat(
 ): FertilityTimeline {
   return {
     items,
+    maandGroepen: bouwMaandGroepen(items),
     mijlpalen: bouwMijlpalen(items),
     contextSignalen: bouwContextSignalen(items),
     waarschuwing,
   };
+}
+
+function bouwMaandGroepen(items: FertilityTimelineItem[]): FertilityTimelineMaandGroep[] {
+  const groepen = new Map<string, FertilityTimelineItem[]>();
+  for (const item of items) {
+    const maand = normaliseerTimelineMaand(item.datum);
+    groepen.set(maand, [...(groepen.get(maand) ?? []), item]);
+  }
+
+  return Array.from(groepen.entries()).map(([maand, maandItems]) => {
+    const datums = maandItems.map((item) => item.datum).sort();
+    const reviewStatussen = new Set<FertilityTimelineBronverwijzing['reviewStatus']>();
+    const bronnen = new Set<string>();
+    for (const item of maandItems) {
+      bronnen.add(item.bron);
+      for (const bron of item.bronverwijzingen) {
+        bronnen.add(bron.label);
+        reviewStatussen.add(bron.reviewStatus);
+      }
+      if (item.historischConcept) {
+        reviewStatussen.add(
+          item.historischConcept.reviewStatus === 'bevestigd' ? 'gereviewd' : 'concept',
+        );
+      }
+    }
+
+    return {
+      id: `maand-${maand}`,
+      maand,
+      label: formatTimelineMaandLabel(maand),
+      datumVanaf: datums[0] ?? maand,
+      datumTot: datums.at(-1) ?? maand,
+      itemIds: maandItems.map((item) => item.id),
+      itemCount: maandItems.length,
+      bronnen: Array.from(bronnen)
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b, 'nl-NL')),
+      reviewStatussen: Array.from(reviewStatussen).sort(),
+      conceptCount: maandItems.filter((item) => itemHeeftConceptReview(item)).length,
+    };
+  });
+}
+
+function normaliseerTimelineMaand(datum: string): string {
+  return /^\d{4}-\d{2}/.test(datum) ? datum.slice(0, 7) : '9999-12';
+}
+
+function formatTimelineMaandLabel(maand: string): string {
+  if (maand === '9999-12') return 'Zonder concrete datum';
+  const [jaar, maandNummer] = maand.split('-').map(Number);
+  if (!jaar || !maandNummer) return maand;
+  return new Intl.DateTimeFormat('nl-NL', { month: 'long', year: 'numeric' }).format(
+    new Date(Date.UTC(jaar, maandNummer - 1, 1)),
+  );
+}
+
+function itemHeeftConceptReview(item: FertilityTimelineItem): boolean {
+  if (item.historischConcept && item.historischConcept.reviewStatus !== 'bevestigd') return true;
+  return item.bronverwijzingen.some((bron) => bron.reviewStatus === 'concept');
 }
 
 function bouwMijlpalen(items: FertilityTimelineItem[]): FertilityTimelineMijlpaal[] {

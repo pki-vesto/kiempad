@@ -153,6 +153,22 @@ describe('fertility timeline', () => {
       'consult',
       'aanbeveling',
     ]);
+    expect(timeline.maandGroepen).toEqual([
+      expect.objectContaining({
+        id: 'maand-2026-06',
+        maand: '2026-06',
+        label: 'juni 2026',
+        datumVanaf: '2026-06-01',
+        datumTot: '2026-06-24',
+        itemCount: 10,
+        itemIds: timeline.items.map((item) => item.id),
+        reviewStatussen: ['concept', 'gereviewd'],
+        conceptCount: 7,
+      }),
+    ]);
+    expect(JSON.stringify(timeline.maandGroepen)).not.toMatch(
+      /base64|diagnose|dosering|behandelkeuzeadvies/i,
+    );
     expect(timeline.items).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ titel: 'Poging 1', soort: 'behandeling' }),

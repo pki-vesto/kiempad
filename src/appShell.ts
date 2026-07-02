@@ -17896,7 +17896,7 @@ function renderFertilityTimeline(
                     'timeline-component': 'fertility-items',
                     'timeline-component-state': 'structured',
                   },
-                  items: timeline.items.map(renderFertilityTimelineItem),
+                  items: renderFertilityTimelineGroupedItems(timeline),
                 })
               : renderEmptyState('Nog geen centrale fertility timeline beschikbaar.', {
                   id: 'fertility-timeline-items',
@@ -18173,6 +18173,36 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
       </details>
     `,
   });
+}
+
+function renderFertilityTimelineGroupedItems(timeline: FertilityTimeline): string[] {
+  const itemsById = new Map(timeline.items.map((item) => [item.id, item]));
+  return timeline.maandGroepen.flatMap((groep) => [
+    renderFertilityTimelineMonthGroup(groep),
+    ...groep.itemIds
+      .map((itemId) => itemsById.get(itemId))
+      .filter((item): item is FertilityTimeline['items'][number] => Boolean(item))
+      .map(renderFertilityTimelineItem),
+  ]);
+}
+
+function renderFertilityTimelineMonthGroup(
+  groep: FertilityTimeline['maandGroepen'][number],
+): string {
+  const bronLabel = groep.bronnen.length === 1 ? '1 bron' : `${groep.bronnen.length} bronnen`;
+  const reviewLabel =
+    groep.conceptCount > 0
+      ? `${groep.conceptCount} conceptreview${groep.conceptCount === 1 ? '' : 's'} via Details`
+      : 'review klaar';
+  return `
+    <li class="fertility-timeline-month-group" data-fertility-timeline-month="${escapeAttribute(groep.maand)}" data-fertility-timeline-month-review="${escapeAttribute(groep.reviewStatussen.join(' '))}">
+      <div>
+        <span>${escapeHtml(groep.label)}</span>
+        <strong>${groep.itemCount} moment${groep.itemCount === 1 ? '' : 'en'}</strong>
+      </div>
+      <p>${escapeHtml(groep.datumVanaf)} t/m ${escapeHtml(groep.datumTot)} · ${escapeHtml(bronLabel)} · ${escapeHtml(reviewLabel)}</p>
+    </li>
+  `;
 }
 
 function renderFertilityTimelineBronverwijzingen(item: FertilityTimeline['items'][number]): string {
