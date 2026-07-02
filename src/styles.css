@@ -863,6 +863,13 @@ h3 {
   border-radius: 14px;
 }
 
+.content > .workspace-strip {
+  position: sticky;
+  z-index: 8;
+  top: 0;
+  box-shadow: 0 10px 18px color-mix(in srgb, var(--page-bg) 70%, transparent);
+}
+
 .workspace-strip__eyebrow,
 .workspace-strip h2,
 .workspace-strip__description {
@@ -15363,6 +15370,10 @@ a.action-card:active {
   .content[data-screen-stage="ready"] {
     align-content: start;
     gap: 14px;
+  }
+
+  .content > .workspace-strip {
+    top: 14px;
   }
 
   .screen-stage__panel {

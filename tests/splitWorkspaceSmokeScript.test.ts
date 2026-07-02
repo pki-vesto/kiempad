@@ -31,11 +31,12 @@ describe('split workspace smoke script', () => {
     expect(splitWorkspaceSmokeScript).toContain('[data-workspace-strip="ready"]');
     expect(splitWorkspaceSmokeScript).toContain('data-compact-workspace-deck');
     expect(splitWorkspaceSmokeScript).toContain('workspaceStripInContent');
+    expect(splitWorkspaceSmokeScript).toContain('workspaceStripBeforeWorkspace');
     expect(splitWorkspaceSmokeScript).toContain('.workspace-strip__description');
     expect(splitWorkspaceSmokeScript).toContain('.workspace-strip__quick');
     expect(splitWorkspaceSmokeScript).toContain('workspaceStripMatchesGroup');
     expect(splitWorkspaceSmokeScript).toContain(
-      'compacte workspace-deck mist, staat in hoofdcontent of toont verkeerde groep',
+      'compacte workspace-strip mist boven de hoofdcontent of toont verkeerde groep',
     );
     expect(splitWorkspaceSmokeScript).toContain('workspace-strip is niet compact op focusroute');
     expect(splitWorkspaceSmokeScript).toContain('railWidth');
