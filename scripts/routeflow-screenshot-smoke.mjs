@@ -272,7 +272,7 @@ const targets = [
   },
   {
     screen: 'consult-upload',
-    hash: '#dossier?route=upload',
+    hash: '#consult-verslag-form',
     rootSelector: '#dossier-route-upload',
     expectedText: 'Nieuwe medische records toevoegen',
     activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
@@ -282,9 +282,7 @@ const targets = [
       '[data-dossier-upload-console-region="header"]',
       '[data-dossier-upload-console-region="body"]',
       '[data-dossier-upload-console-region="selector"]',
-      '[data-dossier-upload-console-region="document"]',
       '[data-dossier-upload-console-region="consult"]',
-      '[data-dossier-upload-console-region="review"]',
       '[data-hub-workflow="consult-upload"]',
       '[data-hub-workflow-tab="consult"][aria-current="page"]',
       '[data-hub-workflow-tab="context"]',
@@ -294,7 +292,11 @@ const targets = [
       '[data-consult-upload-group="consult-basis"]',
       '[data-consult-upload-group="consult-context"]',
     ],
-    presentSelectors: ['[data-dossier-upload-console="ready"]'],
+    presentSelectors: [
+      '[data-dossier-upload-console="ready"]',
+      '[data-dossier-upload-console="ready"][data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="consult"]',
+    ],
+    expectedUploadFlow: 'consult',
     desktopHiddenSelectors: [
       '[data-dossier-focus-region="orientation"]',
       '.dossier-split-workspace .domain-split-workspace__rail',
@@ -483,6 +485,9 @@ async function assertRouteflows(browser, options) {
           const rect = element?.getBoundingClientRect();
           const textNodes = [...(element?.querySelectorAll('span, strong, small, p, h2, h3, em') ?? [])]
             .filter((node) => {
+              if (node.closest('.sr-only, [aria-hidden="true"]')) return false;
+              const nodeRect = node.getBoundingClientRect();
+              if (nodeRect.width <= 0 || nodeRect.height <= 0) return false;
               if (
                 (!routeflow.startCommandCenter && !routeflow.dailyAdviceConsole) ||
                 viewportLabel !== 'desktop'
@@ -493,7 +498,6 @@ async function assertRouteflows(browser, options) {
                 '[data-start-focus-region], [data-daily-advice-focus-region]',
               );
               const regionRect = region?.getBoundingClientRect();
-              const nodeRect = node.getBoundingClientRect();
               return !regionRect || (nodeRect.top >= regionRect.top && nodeRect.bottom <= regionRect.bottom);
             })
             .map((node) => ({
@@ -716,11 +720,19 @@ async function assertRouteflows(browser, options) {
                 '[data-dossier-add-route-panel="consult-upload"]',
               );
               const reviewPanel = consoleElement?.querySelector('#dossier-route-review');
+              const embryoQualityPanel = consoleElement?.querySelector(
+                '[data-dossier-add-route-panel="embryo-quality"]',
+              );
+              const embryoStatusPanel = consoleElement?.querySelector(
+                '[data-dossier-add-route-panel="embryo-status"]',
+              );
               const bodyRect = body?.getBoundingClientRect();
               const selectorRect = selector?.getBoundingClientRect();
               const documentRect = documentPanel?.getBoundingClientRect();
               const consultRect = consultPanel?.getBoundingClientRect();
               const reviewRect = reviewPanel?.getBoundingClientRect();
+              const embryoQualityRect = embryoQualityPanel?.getBoundingClientRect();
+              const embryoStatusRect = embryoStatusPanel?.getBoundingClientRect();
               const bodyStyle = body ? getComputedStyle(body) : null;
               const documentStyle = documentPanel ? getComputedStyle(documentPanel) : null;
               const consultStyle = consultPanel ? getComputedStyle(consultPanel) : null;
@@ -735,6 +747,12 @@ async function assertRouteflows(browser, options) {
                 ),
                 consultVisible: Boolean(
                   consultRect && consultRect.width > 0 && consultRect.height > 0,
+                ),
+                embryoQualityVisible: Boolean(
+                  embryoQualityRect && embryoQualityRect.width > 0 && embryoQualityRect.height > 0,
+                ),
+                embryoStatusVisible: Boolean(
+                  embryoStatusRect && embryoStatusRect.width > 0 && embryoStatusRect.height > 0,
                 ),
                 reviewVisible: Boolean(reviewRect && reviewRect.width > 0 && reviewRect.height > 0),
                 documentTop: documentRect?.top ?? 0,
@@ -1138,20 +1156,22 @@ async function assertRouteflows(browser, options) {
         evidence.uploadConsole &&
         (!evidence.uploadConsole.bodyVisible ||
           !evidence.uploadConsole.selectorVisible ||
-          !evidence.uploadConsole.documentVisible ||
-          !evidence.uploadConsole.consultVisible ||
-          !evidence.uploadConsole.reviewVisible ||
-          Math.abs(evidence.uploadConsole.consultTop - evidence.uploadConsole.documentTop) > 2 ||
-          evidence.uploadConsole.consultLeft < evidence.uploadConsole.documentRight - 1 ||
-          evidence.uploadConsole.reviewTop < evidence.uploadConsole.documentTop - 1 ||
-          evidence.uploadConsole.bodyOverflowY !== 'auto' ||
-          evidence.uploadConsole.documentOverflowY !== 'auto' ||
-          evidence.uploadConsole.consultOverflowY !== 'auto' ||
-          evidence.uploadConsole.reviewOverflowY !== 'auto' ||
-          evidence.uploadConsole.documentMaxHeight === 'none')
+          !evidence.uploadConsole[`${target.expectedUploadFlow ?? 'document'}Visible`] ||
+          [
+            'document',
+            'consult',
+            'embryoQuality',
+            'embryoStatus',
+            'review',
+          ].some(
+            (flow) =>
+              flow !== (target.expectedUploadFlow ?? 'document') &&
+              evidence.uploadConsole[`${flow}Visible`],
+          ) ||
+          evidence.uploadConsole.bodyOverflowY !== 'auto')
       ) {
         throw new Error(
-          `${options.label}/${target.screen}: upload-console staat niet in begrensde werkvlakken (${JSON.stringify(evidence.uploadConsole)}).`,
+          `${options.label}/${target.screen}: upload-console toont niet precies de gekozen werkstroom (${JSON.stringify(evidence.uploadConsole)}).`,
         );
       }
       if (

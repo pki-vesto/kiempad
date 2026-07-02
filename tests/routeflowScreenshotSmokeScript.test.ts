@@ -34,7 +34,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('listMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain(
-      'upload-console staat niet in begrensde werkvlakken',
+      'upload-console toont niet precies de gekozen werkstroom',
     );
     expect(routeflowScreenshotSmokeScript).toContain('documentOverflowY');
     expect(routeflowScreenshotSmokeScript).toContain('dossierConsole: true');
@@ -69,7 +69,7 @@ describe('routeflow screenshot smoke script', () => {
       '#start-recommendations',
       '#dossier?route=imaging',
       '#traject?route=context',
-      '#dossier?route=upload',
+      '#consult-verslag-form',
       '#vragen?route=voorbereiden',
       '#welzijn?route=history',
       '#backup?route=controleren',
@@ -154,10 +154,9 @@ describe('routeflow screenshot smoke script', () => {
       '[data-fertility-timeline-lane="export"]',
       '#timeline-filter-form',
       '[data-dossier-upload-console="ready"]',
+      '[data-dossier-upload-console="ready"][data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="consult"]',
       '[data-dossier-upload-console-region="selector"]',
-      '[data-dossier-upload-console-region="document"]',
       '[data-dossier-upload-console-region="consult"]',
-      '[data-dossier-upload-console-region="review"]',
       '[data-hub-workflow="consult-upload"]',
       '[data-hub-workflow-tab="consult"][aria-current="page"]',
       '[data-hub-workflow-tab="context"]',
