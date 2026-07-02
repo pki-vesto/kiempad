@@ -2138,13 +2138,19 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-focus-shell {');
     expect(css).toContain('.schedule-focus-shell__header {');
     expect(css).toContain('.schedule-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.schedule-focus-shell__workbench > .schedule-planning-workbench {');
+    expect(css).not.toContain('.schedule-focus-shell__workbench > .schedule-planning-workbench {');
     expect(css).toContain('.schedule-focus-shell__workspace {');
     expect(css).toContain('.schedule-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('"rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(168px, 0.26fr) minmax(0, 1fr) minmax(230px, 0.34fr);',
+    );
+    expect(css).toContain(
+      '.schedule-focus-shell__workspace .domain-split-workspace__context > .schedule-planning-workbench {',
+    );
     expect(css).toContain('.schedule-form {');
     expect(css).toContain('.schedule-form-section {');
     expect(css).toContain('.schedule-form-section--primary {');
@@ -3879,10 +3885,12 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-focus-shell="ready"');
     expect(html).toContain('data-schedule-console="ready"');
     expect(html).toContain('Eerst de volgende afspraak, daarna plannen of importeren');
-    expect(html).toContain('data-schedule-focus-region="workbench"');
+    expect(html).not.toContain('data-schedule-focus-region="workbench"');
     expect(html).toContain('data-schedule-focus-region="workspace"');
-    expect(html).toContain('data-schedule-console-region="workbench"');
+    expect(html).not.toContain('data-schedule-console-region="workbench"');
     expect(html).toContain('data-schedule-console-region="workspace"');
+    expect(html).toContain('data-schedule-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
     expect(html).toContain(
       '<section class="planning-workbench schedule-planning-workbench" aria-label="Agenda dagplanningwerkbank" data-schedule-first-viewport="planning-workbench">',
     );
@@ -38608,7 +38616,6 @@ describe('app shell', () => {
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
       if (
-        label === 'schedule' ||
         label === 'question' ||
         label === 'knowledge' ||
         label === 'wellbeing' ||
@@ -38639,9 +38646,11 @@ describe('app shell', () => {
     expect(dossierHtml).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
     expect(agendaHtml).toContain('class="domain-split-workspace schedule-split-workspace"');
     expect(agendaHtml).toContain('data-schedule-console="ready"');
-    expect(agendaHtml).toContain('data-schedule-console-region="workbench"');
+    expect(agendaHtml).not.toContain('data-schedule-console-region="workbench"');
     expect(agendaHtml).toContain('data-schedule-console-region="workspace"');
     expect(agendaHtml).toContain('data-schedule-compact-workspace="route-first"');
+    expect(agendaHtml).toContain('data-schedule-single-workspace="ready"');
+    expect(agendaHtml).toContain('class="domain-split-workspace__context"');
     expect(agendaHtml).not.toContain('data-schedule-workspace-context="metrics"');
     expect(agendaHtml).not.toContain('data-workspace-context-signals="schedule"');
     expect(agendaHtml).not.toContain('data-workspace-context-microstate="schedule-plannen"');

@@ -212,6 +212,10 @@
   Vragen, Agenda, and Medicatie now render existing save feedback through the shared
   `statusMessage()` helper with common `data-save-feedback` hooks and a visible wrap-safe
   save-feedback marker.
+- **CFX-034 agenda single workspace — partial in G1384 / issue #2542.** Agenda no longer renders
+  the planning workbench as a separate focus-region above/next to the route workspace; desktop now
+  uses one split-view with route rail, active route, and compact planning context while mobile
+  remains stacked.
 
 ---
 
@@ -626,7 +630,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
   a fixed third context column.
   Partial G1373/#2520: Agenda Plannen uses a sectioned form kit with primary planning section and
-  compact action row.
+  compact action row. Partial G1384/#2542: Agenda folds the planning workbench into the same
+  split-view as route context, so desktop opens as one rail/main/context workspace instead of a
+  separate focus-region plus nested route workspace.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
   Done in G1347/#2468. Partial G1358/#2490: Medicatie uses a route-first workspace without a fixed
   third context column.
