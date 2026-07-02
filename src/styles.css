@@ -4553,6 +4553,13 @@ h2 {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
+[data-daily-advice-feedback-workflow-reset="ready"]:hover,
+[data-daily-recommendation-list-filter-reset="ready"]:hover,
+[data-daily-recommendation-feedback-filter-reset="ready"]:hover {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+}
+
 .daily-advice-focus-shell__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);

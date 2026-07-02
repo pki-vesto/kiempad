@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1356 — Daily Recommendations: resetknoppen tonen rustige actieve drukstijl
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De drie dagadvies-resetknoppen binnen actieve feedbackfilters delen hover/focusstijl, maar de actieve drukstaat is nog niet expliciet uniform bewaakt.
+- **User Impact:** Pointer- en touchgebruikers krijgen minder duidelijke feedback tijdens het indrukken van resetacties.
+- **Desired Outcome:** Geef workflowstatus, lijstfilterheader en filterformulier resetknoppen een consistente active/pressed stijl zonder gedragswijziging.
+- **User Value:** Gebruikers herkennen tijdens interactie dat resetacties dezelfde lokale filteractie uitvoeren.
+- **Acceptance Criteria:** Workflowstatus, lijstfilterheader en filterformulier resetknoppen hebben een consistente active/pressed stijl; active stijl verandert geen resetgedrag of routegedrag; resetknoppen blijven afwezig zonder actieve filter; de UI blijft compact en zonder horizontale overflow op desktop en mobiel; tests of smoke-dekking bewaken de drie resetpaden en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2658
+
 ### G1355 — Daily Recommendations: resetknoppen tonen consistente hoverstijl
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2656
 
 ### G1354 — Daily Recommendations: resetknoppen tonen uniforme focusstijl

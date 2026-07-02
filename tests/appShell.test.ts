@@ -3139,6 +3139,10 @@ describe('app shell', () => {
     expect(css).toContain(
       'box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);',
     );
+    expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"]:hover,');
+    expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"]:hover,');
+    expect(css).toContain('[data-daily-recommendation-feedback-filter-reset="ready"]:hover {');
+    expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 44%, var(--border));');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(
