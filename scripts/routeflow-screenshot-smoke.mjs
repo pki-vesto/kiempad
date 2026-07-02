@@ -294,13 +294,13 @@ const targets = [
     activeRouteSelector: '[data-question-route="voorbereiden"][data-question-route-state="active"]',
     inactiveRouteSelector: '[data-question-route-state="inactive"]',
     requiredSelectors: [
-      '[data-question-focus-region="workbench"]',
       '[data-question-focus-region="workspace"]',
       '[data-consult-console="ready"]',
-      '[data-consult-console-region="workbench"]',
       '[data-consult-console-region="workspace"]',
       '[data-question-split-workspace="ready"]',
       '[data-question-compact-workspace="route-first"]',
+      '[data-question-single-workspace="ready"]',
+      '.question-split-workspace .domain-split-workspace__context',
       '[data-question-route-summary="voorbereiden"]',
       '[data-consult-prep-board="ready"]',
       '[data-consult-prep-lane="questions"]',
@@ -316,7 +316,6 @@ const targets = [
       '.consult-prep-board__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="consult-prep-wizard"] .hub-detail-disclosure__summary small',
-      '.question-split-workspace .domain-split-workspace__context',
     ],
     consultConsole: true,
     consultConsoleMode: 'route-first',
@@ -814,8 +813,16 @@ async function assertRouteflows(browser, options) {
         const consultConsole = routeflow.consultConsole
           ? (() => {
               const body = document.querySelector('[data-consult-console="ready"]');
-              const workbench = document.querySelector('[data-consult-console-region="workbench"]');
-              const workspace = document.querySelector('[data-consult-console-region="workspace"]');
+              const workbench =
+                routeflow.consultConsoleMode === 'route-first'
+                  ? document.querySelector(
+                      '.question-split-workspace .domain-split-workspace__context',
+                    )
+                  : document.querySelector('[data-consult-console-region="workbench"]');
+              const workspace =
+                routeflow.consultConsoleMode === 'route-first'
+                  ? document.querySelector('.question-split-workspace .domain-split-workspace__main')
+                  : document.querySelector('[data-consult-console-region="workspace"]');
               const bodyRect = body?.getBoundingClientRect();
               const workbenchRect = workbench?.getBoundingClientRect();
               const workspaceRect = workspace?.getBoundingClientRect();
@@ -1205,7 +1212,12 @@ async function assertRouteflows(browser, options) {
           ? !evidence.consultConsole.bodyVisible ||
             !evidence.consultConsole.workbenchVisible ||
             !evidence.consultConsole.workspaceVisible ||
-            evidence.consultConsole.workspaceTop < evidence.consultConsole.workbenchTop - 1
+            evidence.consultConsole.workbenchTop < evidence.consultConsole.workspaceTop - 1 ||
+            evidence.consultConsole.workbenchLeft < evidence.consultConsole.workspaceRight - 1 ||
+            evidence.consultConsole.bodyOverflow !== 'hidden' ||
+            evidence.consultConsole.bodyMaxHeight === 'none' ||
+            evidence.consultConsole.workbenchOverflowY !== 'auto' ||
+            evidence.consultConsole.workspaceOverflowY !== 'auto'
           : !evidence.consultConsole.bodyVisible ||
             !evidence.consultConsole.workbenchVisible ||
             !evidence.consultConsole.workspaceVisible ||

@@ -10385,21 +10385,23 @@ h2 {
 @media (min-width: 961px) {
   .question-focus-shell__body {
     grid-template-columns: minmax(0, 1fr);
-    align-items: start;
+    align-items: stretch;
+    max-height: min(860px, calc(100vh - 126px));
+    overflow: hidden;
   }
 
-  .question-focus-shell__workbench,
   .question-focus-shell__workspace {
+    max-height: min(820px, calc(100vh - 164px));
+    overflow: hidden;
     contain: layout paint;
   }
 
-  .question-focus-shell__workspace {
-    overflow-x: hidden;
-  }
-
   .question-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas: "rail main";
-    grid-template-columns: minmax(168px, 0.28fr) minmax(0, 1fr);
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(168px, 0.24fr) minmax(0, 1fr) minmax(236px, 0.34fr);
+    grid-template-rows: minmax(0, 1fr);
+    max-height: min(820px, calc(100vh - 164px));
+    overflow: hidden;
     contain: layout paint;
   }
 
@@ -10411,6 +10413,14 @@ h2 {
     grid-area: main;
   }
 
+  .question-focus-shell__workspace .domain-split-workspace__context {
+    grid-area: context;
+    max-height: min(780px, calc(100vh - 204px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
   .question-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
     overflow: visible;
     overflow-wrap: anywhere;
@@ -10419,34 +10429,40 @@ h2 {
   }
 }
 
-.question-focus-shell__workbench,
 .question-focus-shell__workspace {
   min-width: 0;
 }
 
-.question-focus-shell__workbench > .question-preparation-workbench {
+.question-focus-shell__workspace
+  .domain-split-workspace__context
+  > .question-preparation-workbench {
   height: 100%;
 }
 
 @media (min-width: 961px) {
-  .question-focus-shell__workbench > .question-preparation-workbench {
+  .question-focus-shell__workspace
+    .domain-split-workspace__context
+    > .question-preparation-workbench {
     align-content: start;
     padding: 12px;
   }
 
-  .question-focus-shell__workbench .planning-workbench__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .question-focus-shell__workspace .domain-split-workspace__context .planning-workbench__grid {
+    grid-template-columns: 1fr;
   }
 
-  .question-focus-shell__workbench .planning-workbench__header p:last-child,
+  .question-focus-shell__workspace
+    .domain-split-workspace__context
+    .planning-workbench__header
+    p:last-child,
   .question-focus-shell__workspace .hub-workflow-header__copy p,
   .question-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow),
   .question-focus-shell__workspace .consult-prep-board__header > p {
     display: none;
   }
 
-  .question-focus-shell__workbench .planning-workbench__actions {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .question-focus-shell__workspace .domain-split-workspace__context .planning-workbench__actions {
+    grid-template-columns: 1fr;
   }
 
   .question-focus-shell__workspace .hub-workflow-header,
@@ -10490,8 +10506,8 @@ h2 {
 
 @media (min-width: 961px) {
   .question-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas: "rail main";
-    grid-template-columns: minmax(168px, 0.28fr) minmax(0, 1fr);
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(168px, 0.24fr) minmax(0, 1fr) minmax(236px, 0.34fr);
   }
 }
 
@@ -17193,7 +17209,7 @@ a.action-card:active {
   }
 
   .question-focus-shell__workspace .domain-split-workspace__context {
-    display: none;
+    grid-column: auto;
   }
 
   .question-task-routes {

@@ -2202,11 +2202,18 @@ describe('app shell', () => {
     expect(css).toContain('.question-focus-shell__header {');
     expect(css).toContain('.question-focus-shell__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
-    expect(css).toContain('.question-focus-shell__workbench > .question-preparation-workbench {');
+    expect(css).not.toContain(
+      '.question-focus-shell__workbench > .question-preparation-workbench {',
+    );
+    expect(css).toContain('.question-focus-shell__workspace');
+    expect(css).toContain('.domain-split-workspace__context');
+    expect(css).toContain('> .question-preparation-workbench {');
     expect(css).toContain('.question-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('grid-template-areas:');
-    expect(css).toContain('"rail main";');
-    expect(css).toContain('grid-template-columns: minmax(168px, 0.28fr) minmax(0, 1fr);');
+    expect(css).toContain('"rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(168px, 0.24fr) minmax(0, 1fr) minmax(236px, 0.34fr);',
+    );
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
     expect(css).toContain('.question-task-routes {');
@@ -5438,10 +5445,12 @@ describe('app shell', () => {
     expect(html).toContain('data-question-focus-shell="ready"');
     expect(html).toContain('data-consult-console="ready"');
     expect(html).toContain('Een gesprekstaak tegelijk');
-    expect(html).toContain('data-question-focus-region="workbench"');
+    expect(html).not.toContain('data-question-focus-region="workbench"');
     expect(html).toContain('data-question-focus-region="workspace"');
-    expect(html).toContain('data-consult-console-region="workbench"');
+    expect(html).not.toContain('data-consult-console-region="workbench"');
     expect(html).toContain('data-consult-console-region="workspace"');
+    expect(html).toContain('data-question-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
     expect(html).toContain(
       '<section class="planning-workbench question-preparation-workbench" aria-label="Consultvoorbereidingswerkbank" data-question-first-viewport="consult-workbench">',
     );
@@ -5459,7 +5468,7 @@ describe('app shell', () => {
     expect(html).toContain('data-command-task-routes="ready"');
     expect(html).toContain('data-question-compact-workspace="route-first"');
     expect(html).not.toContain('data-question-workspace-context="metrics"');
-    expect(html).not.toContain('aria-label="Contextkolom"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain(
       'href="#vragen?route=open" aria-current="page" data-command-route-density="filled"',
     );
@@ -38631,7 +38640,6 @@ describe('app shell', () => {
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
       if (
-        label === 'question' ||
         label === 'knowledge' ||
         label === 'wellbeing' ||
         label === 'decision' ||
@@ -38679,9 +38687,11 @@ describe('app shell', () => {
     expect(vragenHtml).toContain('class="domain-split-workspace question-split-workspace"');
     expect(vragenHtml).toContain('class="question-focus-shell"');
     expect(vragenHtml).toContain('data-question-focus-shell="ready"');
-    expect(vragenHtml).toContain('data-question-focus-region="workbench"');
+    expect(vragenHtml).not.toContain('data-question-focus-region="workbench"');
     expect(vragenHtml).toContain('data-question-focus-region="workspace"');
     expect(vragenHtml).toContain('data-question-compact-workspace="route-first"');
+    expect(vragenHtml).toContain('data-question-single-workspace="ready"');
+    expect(vragenHtml).toContain('class="domain-split-workspace__context"');
     expect(vragenHtml).not.toContain('data-question-workspace-context="metrics"');
     expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
     expect(trajectHtml).toContain('class="domain-split-workspace treatment-split-workspace"');
