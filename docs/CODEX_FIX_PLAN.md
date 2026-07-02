@@ -273,6 +273,9 @@
 - **CFX-038/CFX-081 Kennis workbench collapse — partial in G1399 / issue #2572.** The Kennis
   research workbench, library filter, and network status now sit behind one closed disclosure so
   the read route no longer continues into a second full filter page on mobile.
+- **CFX-019b inline delete confirmations — partial in G1400 / issue #2574.** Kosten, Vragen,
+  Traject, Agenda, and Medicatie delete actions now use an in-app alertdialog confirmation instead
+  of native browser confirms.
 
 ---
 
@@ -650,6 +653,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `src/deleteConfirmations.ts`, `src/main.ts`. Accept: no native `confirm()`; still blocks. **P2 · M**
   Partial G1355/#2484: Dossier import-inbox delete uses an inline confirmation panel; remaining
   delete flows still need adoption.
+  Partial G1400/#2574: Kosten, Vragen, Traject, Agenda, and Medicatie delete flows share the inline
+  alertdialog confirmation helper; native `window.confirm()` is no longer used for delete actions.
 - **CFX-066** — Amount cell (`tabular-nums`, right-aligned, `€` adornment) for Kosten. **P2 · S**
 
 ### Copy / language (H)

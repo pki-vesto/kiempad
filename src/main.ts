@@ -748,6 +748,83 @@ function showDossierDeleteConfirmation(
   });
 }
 
+type InlineDeleteConfirmationOptions = {
+  kind: string;
+  title: string;
+  detail: string;
+  ariaLabel: string;
+  triggerLabel: string;
+  onConfirm: () => void | Promise<void>;
+};
+
+function showInlineDeleteConfirmation(
+  trigger: HTMLButtonElement,
+  root: HTMLElement,
+  options: InlineDeleteConfirmationOptions,
+): void {
+  root.querySelectorAll<HTMLElement>('[data-inline-delete-confirm="ready"]').forEach((panel) => {
+    panel.remove();
+  });
+  root
+    .querySelectorAll<HTMLButtonElement>('[data-inline-delete-trigger][aria-expanded="true"]')
+    .forEach((button) => {
+      button.setAttribute('aria-expanded', 'false');
+      button.removeAttribute('aria-controls');
+    });
+
+  const panelId = `inline-delete-confirm-${options.kind}-${Date.now()}`;
+  const panel = document.createElement('section');
+  panel.id = panelId;
+  panel.className = 'inline-delete-confirm';
+  panel.dataset.inlineDeleteConfirm = 'ready';
+  panel.dataset.inlineDeleteConfirmKind = options.kind;
+  panel.dataset.inlineDeleteConfirmState = 'pending';
+  panel.setAttribute('role', 'alertdialog');
+  panel.setAttribute('aria-label', options.ariaLabel);
+
+  const copy = document.createElement('div');
+  const title = document.createElement('strong');
+  title.textContent = options.title;
+  const detail = document.createElement('p');
+  detail.textContent = options.detail;
+  copy.append(title, detail);
+
+  const actions = document.createElement('div');
+  actions.className = 'inline-delete-confirm__actions';
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'secondary-button';
+  cancel.textContent = 'Annuleren';
+  cancel.dataset.inlineDeleteConfirmAction = 'cancel';
+  const confirm = document.createElement('button');
+  confirm.type = 'button';
+  confirm.className = 'danger-button';
+  confirm.textContent = 'Definitief verwijderen';
+  confirm.dataset.inlineDeleteConfirmAction = 'confirm';
+  actions.append(cancel, confirm);
+  panel.append(copy, actions);
+
+  trigger.dataset.inlineDeleteTrigger = options.kind;
+  trigger.setAttribute('aria-expanded', 'true');
+  trigger.setAttribute('aria-controls', panelId);
+  trigger.setAttribute('aria-label', options.triggerLabel);
+  (trigger.closest('form') ?? trigger.closest('li') ?? trigger.parentElement)?.append(panel);
+  panel.scrollIntoView({ block: 'nearest' });
+  cancel.focus({ preventScroll: true });
+
+  cancel.addEventListener('click', () => {
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.removeAttribute('aria-controls');
+    panel.remove();
+    trigger.focus({ preventScroll: true });
+  });
+
+  confirm.addEventListener('click', () => {
+    panel.dataset.inlineDeleteConfirmState = 'confirmed';
+    void options.onConfirm();
+  });
+}
+
 async function saveConsultVerslagFromForm(
   target: EventTarget | null,
   root: HTMLElement,
@@ -1826,12 +1903,18 @@ function bindKostenControls(root: HTMLElement, state: RuntimeState): void {
       const kostenId = button.dataset.kostenId;
       if (!kostenId || !state.kostenStore) return;
 
-      const confirmed = window.confirm(DELETE_CONFIRMATIONS.kosten);
-      if (!confirmed) return;
-
-      void state.kostenStore.delete(kostenId).then(() => {
-        state.kostenStatus = 'Kostenpost verwijderd.';
-        return reloadAndRender(root, state);
+      showInlineDeleteConfirmation(button, root, {
+        kind: 'kosten',
+        title: 'Kostenpost verwijderen?',
+        detail: DELETE_CONFIRMATIONS.kosten,
+        ariaLabel: 'Kostenpost verwijderen bevestigen',
+        triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder kostenpost',
+        onConfirm: () => {
+          return state.kostenStore?.delete(kostenId).then(() => {
+            state.kostenStatus = 'Kostenpost verwijderd.';
+            return reloadAndRender(root, state);
+          });
+        },
       });
     });
   });
@@ -1988,12 +2071,18 @@ function bindVraagControls(root: HTMLElement, state: RuntimeState): void {
     const vraagId = button.dataset.vraagId;
     if (!vraagId || !state.vraagStore) return;
 
-    const confirmed = window.confirm(DELETE_CONFIRMATIONS.vraag);
-    if (!confirmed) return;
-
-    void state.vraagStore.delete(vraagId).then(() => {
-      state.vraagStatus = 'Vraag verwijderd.';
-      return reloadAndRender(root, state);
+    showInlineDeleteConfirmation(button, root, {
+      kind: 'vraag',
+      title: 'Vraag verwijderen?',
+      detail: DELETE_CONFIRMATIONS.vraag,
+      ariaLabel: 'Vraag verwijderen bevestigen',
+      triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder vraag',
+      onConfirm: () => {
+        return state.vraagStore?.delete(vraagId).then(() => {
+          state.vraagStatus = 'Vraag verwijderd.';
+          return reloadAndRender(root, state);
+        });
+      },
     });
   });
 }
@@ -2185,10 +2274,15 @@ function bindTrajectControls(root: HTMLElement, state: RuntimeState): void {
     const trajectId = button.dataset.trajectId;
     if (!trajectId || !state.trajectStore) return;
 
-    const confirmed = window.confirm(DELETE_CONFIRMATIONS.traject);
-    if (!confirmed) return;
-
-    void state.trajectStore.delete(trajectId).then(() => reloadAndRender(root, state));
+    showInlineDeleteConfirmation(button, root, {
+      kind: 'traject',
+      title: 'Traject verwijderen?',
+      detail: DELETE_CONFIRMATIONS.traject,
+      ariaLabel: 'Traject verwijderen bevestigen',
+      triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder traject',
+      onConfirm: () =>
+        state.trajectStore?.delete(trajectId).then(() => reloadAndRender(root, state)),
+    });
   });
 
   root.querySelectorAll<HTMLButtonElement>('.archive-traject').forEach((button) => {
@@ -2258,12 +2352,18 @@ function bindAgendaControls(root: HTMLElement, state: RuntimeState): void {
     const afspraakId = button.dataset.afspraakId;
     if (!afspraakId || !state.agendaStore) return;
 
-    const confirmed = window.confirm(DELETE_CONFIRMATIONS.afspraak);
-    if (!confirmed) return;
-
-    void state.agendaStore.delete(afspraakId).then(() => {
-      state.agendaStatus = 'Afspraak verwijderd.';
-      return reloadAndRender(root, state);
+    showInlineDeleteConfirmation(button, root, {
+      kind: 'afspraak',
+      title: 'Afspraak verwijderen?',
+      detail: DELETE_CONFIRMATIONS.afspraak,
+      ariaLabel: 'Afspraak verwijderen bevestigen',
+      triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder afspraak',
+      onConfirm: () => {
+        return state.agendaStore?.delete(afspraakId).then(() => {
+          state.agendaStatus = 'Afspraak verwijderd.';
+          return reloadAndRender(root, state);
+        });
+      },
     });
   });
 }
@@ -2328,12 +2428,18 @@ function bindMedicatieControls(root: HTMLElement, state: RuntimeState): void {
     const medicatieId = button.dataset.medicatieId;
     if (!medicatieId || !state.medicatieStore) return;
 
-    const confirmed = window.confirm(DELETE_CONFIRMATIONS.medicatie);
-    if (!confirmed) return;
-
-    void state.medicatieStore.delete(medicatieId).then(() => {
-      state.medicatieStatus = 'Medicatie verwijderd.';
-      return reloadAndRender(root, state);
+    showInlineDeleteConfirmation(button, root, {
+      kind: 'medicatie',
+      title: 'Medicatie verwijderen?',
+      detail: DELETE_CONFIRMATIONS.medicatie,
+      ariaLabel: 'Medicatie verwijderen bevestigen',
+      triggerLabel: button.getAttribute('aria-label') ?? 'Verwijder medicatie',
+      onConfirm: () => {
+        return state.medicatieStore?.delete(medicatieId).then(() => {
+          state.medicatieStatus = 'Medicatie verwijderd.';
+          return reloadAndRender(root, state);
+        });
+      },
     });
   });
 

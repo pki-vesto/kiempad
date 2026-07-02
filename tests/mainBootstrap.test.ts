@@ -61,6 +61,19 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('Dossierdocument verwijderd uit de import-inbox.');
   });
 
+  it('vervangt native delete-confirms door inline bevestigingen', () => {
+    expect(mainSource).toContain('function showInlineDeleteConfirmation(');
+    expect(mainSource).toContain('[data-inline-delete-confirm="ready"]');
+    expect(mainSource).toContain("confirm.dataset.inlineDeleteConfirmAction = 'confirm'");
+    expect(mainSource).toContain("cancel.dataset.inlineDeleteConfirmAction = 'cancel'");
+    expect(mainSource).toContain("kind: 'kosten'");
+    expect(mainSource).toContain("kind: 'vraag'");
+    expect(mainSource).toContain("kind: 'traject'");
+    expect(mainSource).toContain("kind: 'afspraak'");
+    expect(mainSource).toContain("kind: 'medicatie'");
+    expect(mainSource).not.toContain('window.confirm(DELETE_CONFIRMATIONS.');
+  });
+
   it('houdt feedback-teruglinks op hun formulieranker zonder vaste UI-overlap', () => {
     expect(mainSource).toContain("'.dossier-submit-focus-return'");
     expect(mainSource).toContain('const targetId = link.hash.slice(1)');

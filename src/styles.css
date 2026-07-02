@@ -13279,7 +13279,8 @@ a.action-card:active {
   background: color-mix(in srgb, var(--danger) 8%, var(--surface) 92%);
 }
 
-.dossier-delete-confirm {
+.dossier-delete-confirm,
+.inline-delete-confirm {
   display: grid;
   grid-column: 1 / -1;
   gap: 10px;
@@ -13293,11 +13294,14 @@ a.action-card:active {
 }
 
 .dossier-delete-confirm strong,
-.dossier-delete-confirm p {
+.dossier-delete-confirm p,
+.inline-delete-confirm strong,
+.inline-delete-confirm p {
   margin: 0;
 }
 
-.dossier-delete-confirm p {
+.dossier-delete-confirm p,
+.inline-delete-confirm p {
   max-width: 62ch;
   color: var(--text-muted);
   font-size: 0.84rem;
@@ -13305,13 +13309,15 @@ a.action-card:active {
   overflow-wrap: anywhere;
 }
 
-.dossier-delete-confirm__actions {
+.dossier-delete-confirm__actions,
+.inline-delete-confirm__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.dossier-delete-confirm__actions > button {
+.dossier-delete-confirm__actions > button,
+.inline-delete-confirm__actions > button {
   min-height: 38px;
 }
 
