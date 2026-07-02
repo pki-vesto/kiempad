@@ -3450,10 +3450,10 @@ function renderDossierScreen(state: AppShellState): string {
                       <div>
                         <h3>${escapeHtml(item.titel)}</h3>
                         <p>${escapeHtml(item.datum)} · ${escapeHtml(item.type)} · ${escapeHtml(item.grootte)}</p>
-                        <p class="linked-note">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} · Importstatus: ${escapeHtml(item.importstatusLabel)}</p>
+                        <p class="linked-note dossier-status-row">Bronlabel: ${escapeHtml(state.imagingPreviewLocked && item.document.categorie === 'beeld' ? item.veiligBestandslabel : item.bronlabel)} ${renderDossierImportStatusBadge(item.importstatus, item.importstatusLabel)}</p>
                         ${
                           item.duplicaatReview
-                            ? `<p class="linked-note" data-dossier-duplicate-review-state="${escapeAttribute(item.duplicaatReview.status)}">Duplicaatreview: ${escapeHtml(item.duplicaatReview.statusLabel)} · Checksum ${escapeHtml(item.duplicaatReview.checksumPrefix)} · Review ${escapeHtml(item.duplicaatReview.reviewStatus)}</p>`
+                            ? `<p class="linked-note dossier-status-row" data-dossier-duplicate-review-state="${escapeAttribute(item.duplicaatReview.status)}">Duplicaatreview: ${renderDossierStatusBadge({ label: item.duplicaatReview.statusLabel, state: item.duplicaatReview.status, tone: item.duplicaatReview.status === 'duplicaat_review' ? 'warning' : 'success', data: { 'dossier-status-kind': 'duplicate' } })} Checksum ${escapeHtml(item.duplicaatReview.checksumPrefix)} ${renderDossierReviewStatusBadge(item.duplicaatReview.reviewStatus)}</p>`
                             : '<p class="linked-note" data-dossier-duplicate-review-state="geen-checksum">Duplicaatreview: checksum ontbreekt voor deze legacy-import.</p>'
                         }
                         <small>Veilige metadata: ${escapeHtml(item.veiligBestandslabel)}</small>
@@ -10204,7 +10204,7 @@ function renderDossierReviewWachtrij(
                 <div>
                   <h3>${escapeHtml(item.titel)}</h3>
                   <p>${escapeHtml(item.datum)} · ${escapeHtml(item.documenttype)} · Bron: ${escapeHtml(bron)}</p>
-                  <p class="linked-note">Confidence: ${escapeHtml(item.confidenceLabel)} (${Math.round(item.confidenceScore * 100)}%) · Review: ${escapeHtml(item.reviewStatus)} · Prioriteit: ${escapeHtml(item.prioriteit)}</p>
+                  <p class="linked-note dossier-status-row">Confidence: ${escapeHtml(item.confidenceLabel)} (${Math.round(item.confidenceScore * 100)}%) ${renderDossierReviewStatusBadge(item.reviewStatus)} ${renderDossierPriorityStatusBadge(item.prioriteit)}</p>
                   <p class="linked-note">Actie: ${escapeHtml(item.actieLabel)}</p>
                 </div>
               </li>
@@ -10215,6 +10215,84 @@ function renderDossierReviewWachtrij(
       <p class="small-print">Deze wachtrij sorteert op OCR-confidence en reviewstatus. De lijst toont geen OCR-tekst, broninhoud of medisch advies.</p>
     </section>
   `;
+}
+
+function renderDossierStatusBadge(input: {
+  label: string;
+  state: string;
+  tone?: 'success' | 'warning' | 'danger' | 'neutral' | 'info';
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  return statusBadge({
+    label: input.label,
+    tone: input.tone,
+    className: ['status-badge--dossier', input.className].filter(Boolean).join(' '),
+    data: {
+      'status-badge': 'dossier',
+      'status-badge-state': input.state,
+      ...(input.data ?? {}),
+    },
+  });
+}
+
+function renderDossierReviewStatusBadge(reviewStatus: string): string {
+  const reviewed = reviewStatus === 'gereviewd';
+  return renderDossierStatusBadge({
+    label: reviewed ? 'Gereviewd' : 'Concept',
+    state: reviewed ? 'reviewed' : 'concept',
+    tone: reviewed ? 'success' : 'warning',
+    data: { 'dossier-status-kind': 'review' },
+  });
+}
+
+function renderDossierPriorityStatusBadge(prioriteit: string): string {
+  return renderDossierStatusBadge({
+    label: `Prioriteit: ${prioriteit}`,
+    state: prioriteit,
+    tone: prioriteit === 'hoog' ? 'warning' : 'neutral',
+    data: { 'dossier-status-kind': 'priority' },
+  });
+}
+
+function renderDossierImportStatusBadge(status: string, label: string): string {
+  const tone =
+    status === 'ocr_wacht'
+      ? 'warning'
+      : status === 'klaar_voor_review'
+        ? 'info'
+        : status === 'ocr_uitgelezen'
+          ? 'success'
+          : status === 'ocr_niet_ondersteund'
+            ? 'neutral'
+            : 'info';
+  return renderDossierStatusBadge({
+    label,
+    state: status,
+    tone,
+    data: { 'dossier-status-kind': 'import' },
+  });
+}
+
+function renderDossierPreviewStatusBadge(status: string, label: string): string {
+  const tone =
+    status === 'locked'
+      ? 'warning'
+      : status === 'thumbnail'
+        ? 'success'
+        : status === 'unlocked'
+          ? 'success'
+          : 'info';
+  return renderDossierStatusBadge({
+    label,
+    state: status,
+    tone,
+    className: 'imaging-preview-status',
+    data: {
+      'dossier-status-kind': 'preview',
+      'imaging-preview-status': status,
+    },
+  });
 }
 
 function renderDossierInboxOverview(items: DossierImportInboxItem[]): string {
@@ -10396,7 +10474,7 @@ function renderEchoAfspraakClassificaties(
                 <dl class="summary-list">
                   <div><dt>Datums</dt><dd>${escapeHtml(item.datums.join(', '))}</dd></div>
                   <div><dt>Bronnen</dt><dd>${escapeHtml(bronnen)}</dd></div>
-                  <div><dt>Review</dt><dd>${escapeHtml(item.reviewStatus)}</dd></div>
+                  <div><dt>Review</dt><dd>${renderDossierReviewStatusBadge(item.reviewStatus)}</dd></div>
                 </dl>
               </li>
             `;
@@ -10447,7 +10525,7 @@ function renderEmbryoExifIsolaties(
                   <div><dt>Datum</dt><dd>${escapeHtml(item.datum)}</dd></div>
                   <div><dt>Bron</dt><dd>${escapeHtml(bron)}</dd></div>
                   <div><dt>EXIF</dt><dd>${escapeHtml(item.exifStatus)}</dd></div>
-                  <div><dt>Review</dt><dd>${escapeHtml(item.reviewStatus)}</dd></div>
+                  <div><dt>Review</dt><dd>${renderDossierReviewStatusBadge(item.reviewStatus)}</dd></div>
                 </dl>
                 <p class="small-print">${escapeHtml(item.isolatieLabel)}.</p>
               </li>
@@ -10564,9 +10642,9 @@ function renderImagingRepositoryItem(
             <h3>${escapeHtml(item.titel)}</h3>
             <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(bronLabel)}</p>
           </div>
-          <span class="imaging-preview-status" data-imaging-preview-status="${escapeAttribute(item.previewState.status)}">${escapeHtml(item.previewState.label)}</span>
+          ${renderDossierPreviewStatusBadge(item.previewState.status, item.previewState.label)}
         </header>
-        <p class="linked-note">Previewstatus: ${escapeHtml(item.previewState.label)}</p>
+        <p class="linked-note dossier-status-row">Previewstatus ${renderDossierPreviewStatusBadge(item.previewState.status, item.previewState.label)}</p>
         ${
           item.context || item.afspraakId || item.trajectId || item.document.beeldMetadata
             ? `<p class="linked-note">Beeldmetadata: ${[
@@ -11201,7 +11279,7 @@ function renderAttachmentImportStatusReviewItem(document: DossierDocument): stri
           ? 'OCR niet ondersteund'
           : 'Klaar voor review';
 
-  return `<li data-attachment-review-kind="import-status" data-attachment-review-state="${escapeAttribute(status)}">Importstatus: ${escapeHtml(label)}</li>`;
+  return `<li data-attachment-review-kind="import-status" data-attachment-review-state="${escapeAttribute(status)}">Importstatus ${renderDossierImportStatusBadge(status, label)}</li>`;
 }
 
 function renderAttachmentOcrReviewItem(document: DossierDocument): string {
@@ -11214,21 +11292,21 @@ function renderAttachmentOcrReviewItem(document: DossierDocument): string {
         : 'OCR-route niet ondersteund';
   const review = document.ocr.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
 
-  return `<li data-attachment-review-kind="ocr-review" data-attachment-review-state="${escapeAttribute(`${review}-${document.ocr.status}`)}">OCR-review: ${escapeHtml(status)} · Confidence ${escapeHtml(document.ocr.confidenceLabel)} · Review ${escapeHtml(review)}</li>`;
+  return `<li data-attachment-review-kind="ocr-review" data-attachment-review-state="${escapeAttribute(`${review}-${document.ocr.status}`)}">OCR-review: ${escapeHtml(status)} · Confidence ${escapeHtml(document.ocr.confidenceLabel)} ${renderDossierReviewStatusBadge(review)}</li>`;
 }
 
 function renderAttachmentExifReviewItem(document: DossierDocument): string {
   if (!document.beeldMetadata) return '';
   const review = document.beeldMetadata.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
 
-  return `<li data-attachment-review-kind="exif-isolation" data-attachment-review-state="${escapeAttribute(`${review}-${document.beeldMetadata.exifStatus}`)}">EXIF-isolatie: ${escapeHtml(document.beeldMetadata.exifStatus)} · Review ${escapeHtml(review)}</li>`;
+  return `<li data-attachment-review-kind="exif-isolation" data-attachment-review-state="${escapeAttribute(`${review}-${document.beeldMetadata.exifStatus}`)}">EXIF-isolatie: ${escapeHtml(document.beeldMetadata.exifStatus)} ${renderDossierReviewStatusBadge(review)}</li>`;
 }
 
 function renderAttachmentEmbryoSourceReviewItem(document: DossierDocument): string {
   if (!document.embryo) return '';
   const review = document.embryo.reviewStatus === 'gereviewd' ? 'gereviewd' : 'concept';
 
-  return `<li data-attachment-review-kind="embryo-source-label-review" data-attachment-review-state="${escapeAttribute(review)}">Embryo bronlabelreview: ${escapeHtml(review === 'gereviewd' ? 'Gereviewd' : 'Concept')} · Label geregistreerd</li>`;
+  return `<li data-attachment-review-kind="embryo-source-label-review" data-attachment-review-state="${escapeAttribute(review)}">Embryo bronlabelreview ${renderDossierReviewStatusBadge(review)} · Label geregistreerd</li>`;
 }
 
 function renderDossierMetadata(document: DossierDocument, state: AppShellState): string {
