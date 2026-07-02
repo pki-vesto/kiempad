@@ -13623,7 +13623,7 @@ function renderStartScreen(state: AppShellState): string {
               },
               {
                 summary: 'Dagadvies',
-                eyebrow: 'Aanbevelingen',
+                eyebrow: 'Suggesties',
                 key: 'aanbevelingen',
                 body: renderStartRecommendationRoute(dailyAdviceConsole),
               },
@@ -13910,7 +13910,7 @@ function renderStartSnapshot(input: {
       </a>
       <a class="start-snapshot__card" href="#start-recommendations" data-start-snapshot-card="advice">
         <span>Dagadvies</span>
-        <strong>${input.recommendationCount} aanbeveling${input.recommendationCount === 1 ? '' : 'en'}</strong>
+        <strong>${input.recommendationCount} suggestie${input.recommendationCount === 1 ? '' : 's'}</strong>
         <small>${escapeHtml(adviceMeta)}</small>
       </a>
       <a class="start-snapshot__card" href="#backup" data-start-snapshot-card="vault">
@@ -14046,9 +14046,9 @@ function renderStartIntelligenceWorkbench(
       eyebrow: 'Vandaag',
       meta:
         recommendationCount > 0
-          ? `${recommendationCount} aanbeveling${recommendationCount === 1 ? '' : 'en'} vandaag`
+          ? `${recommendationCount} suggestie${recommendationCount === 1 ? '' : 's'} vandaag`
           : 'Leefstijl, voorbereiding en vragen',
-      detail: 'Aanbevelingen blijven gekoppeld aan dossier, planning en artscheck.',
+      detail: 'Suggesties blijven gekoppeld aan dossier, planning en artscheck.',
       flow: 'recommendations',
       tier: 'supporting',
     },
@@ -14081,7 +14081,7 @@ function renderStartIntelligenceWorkbench(
         <div>
           <p class="start-workbench__eyebrow">Fertility hub</p>
           <h2 id="start-workbench-title">Kies eerst je werkstroom</h2>
-          <p>Uploads, tijdlijn, embryo’s, research en aanbevelingen starten als eigen werkbanen, zodat de startpagina niet als één lange lijst voelt.</p>
+          <p>Uploads, tijdlijn, embryo’s, research en suggesties starten als eigen werkbanen, zodat de startpagina niet als één lange lijst voelt.</p>
         </div>
         <span class="start-workbench__status">6 werkbanen</span>
       </div>
@@ -14109,7 +14109,7 @@ function renderStartTaskRouteNav(): string {
     { href: '#start-current-phase', label: 'Fase', meta: 'Traject' },
     { href: '#start-today', label: 'Vandaag', meta: 'Taken' },
     { href: '#start-next-step', label: 'Volgende stap', meta: 'Planning' },
-    { href: '#start-recommendations', label: 'Aanbevelingen', meta: 'Dagadvies' },
+    { href: '#start-recommendations', label: 'Suggesties', meta: 'Te doen vandaag' },
     { href: '#start-quick-entry', label: 'Snelle invoer', meta: 'Vastleggen' },
   ];
 
@@ -14495,11 +14495,11 @@ function renderDailyAdviceOwnerCard(
 
 function renderStartRecommendationRoute(dailyAdviceConsole: string): string {
   return dashboardSection({
-    title: 'Dagelijkse aanbevelingen',
+    title: 'Te doen vandaag',
     id: 'start-recommendations',
     eyebrow: 'Dagadvies',
     route: 'recommendations',
-    ariaLabel: 'Dagelijkse aanbevelingen taakroute',
+    ariaLabel: 'Te doen vandaag taakroute',
     body: dailyAdviceConsole,
   });
 }
@@ -14538,10 +14538,10 @@ function renderDailyAdviceConsole(
     workbench: renderDailyAdviceWorkbench(overview),
     planner: renderDailyAdviceActionPlanner(overview),
     list: `
-        <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
+      <details class="kp-disclosure start-task-disclosure hub-detail-disclosure" data-hub-detail-panel="daily-recommendation-list">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
-              <strong>Bekijk aanbevelingen</strong>
+              <strong>Bekijk suggesties</strong>
               <small>Volledige lijst pas openen na eigenaarselectie</small>
             </span>
             <em>${totalRecommendations} adviezen</em>
@@ -14563,7 +14563,7 @@ function renderDailyAdviceFocusShell(input: {
     <section class="daily-advice-focus-shell" aria-labelledby="daily-advice-focus-shell-title" data-daily-advice-focus-shell="ready" data-daily-advice-console="ready">
       <header class="daily-advice-focus-shell__header">
         <p class="kp-card__eyebrow">Dagadvies focus</p>
-        <h2 id="daily-advice-focus-shell-title">Dagadvies console</h2>
+        <h2 id="daily-advice-focus-shell-title">Te doen vandaag</h2>
         <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken; mobiel opent Dagadvies als compacte scrollbare adviesconsole.</p>
       </header>
       ${input.status}
@@ -14677,7 +14677,7 @@ function renderStartQuickEntryRoute(): string {
 function renderDailyRecommendationList(overview: DailyRecommendationOverview): string {
   return recommendationList({
     className: 'daily-recommendation-list',
-    ariaLabel: 'Dagelijkse aanbevelingen per eigenaar',
+    ariaLabel: 'Te doen vandaag per eigenaar',
     data: {
       'recommendation-component': 'daily-owner-list',
       'recommendation-component-state': 'structured',
@@ -14695,7 +14695,7 @@ function renderDailyRecommendationGroup(
   return recommendationGroup({
     title: DAILY_RECOMMENDATION_OWNER_LABELS[owner],
     items: items.map(renderDailyRecommendationItem),
-    ariaLabel: `Dagelijkse aanbevelingen ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}`,
+    ariaLabel: `Te doen vandaag ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}`,
     className: 'policy-panel embedded-summary daily-recommendation-group',
     data: {
       'recommendation-owner-group': owner,
@@ -17903,7 +17903,7 @@ const FERTILITY_TIMELINE_SOORT_LABELS: Record<FertilityTimelineItemSoort, string
   embryo: 'Embryo',
   vraag: 'Vraag',
   medicatie: 'Medicatie',
-  aanbeveling: 'Aanbeveling',
+  aanbeveling: 'Suggestie',
   research: 'Research',
 };
 
@@ -17920,7 +17920,7 @@ function renderFertilityTimeline(
   return `
     <section class="summary-panel embedded-summary fertility-timeline-console" aria-label="Centrale fertility timeline" data-fertility-timeline-console="ready" data-timeline-state="${timeline.items.length > 0 ? 'gevuld' : 'leeg'}">
       <h2>Fertility timeline</h2>
-      <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en research ${bronBeschrijving}.</p>
+      <p class="small-print">Onderzoeken, consulten, behandelingen, embryo's, suggesties en research ${bronBeschrijving}.</p>
       <div class="fertility-timeline-console__body">
         <div class="fertility-timeline-console__reader" data-fertility-timeline-console-region="reader">
           ${renderFertilityTimelineReaderModes(timeline, Boolean(trajectExport))}
@@ -18239,7 +18239,7 @@ const FERTILITY_TIMELINE_RECORD_LABELS: Record<FertilityTimelineRecordKoppeling[
     medicatie: 'Medicatie',
     doseLog: 'Medicatiemoment',
     kennis: 'Kennisitem',
-    aanbeveling: 'Aanbeveling',
+    aanbeveling: 'Suggestie',
   };
 
 function bouwTrajectGraphWeergave(

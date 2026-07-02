@@ -793,7 +793,7 @@ export function maakArtscheckVraagVoorAanbeveling(input: {
   const detail = input.detail?.trim();
   const bron = input.bron?.trim();
   const onderdelen = [
-    `Artscheck dagelijkse aanbeveling: ${titel}`,
+    `Artscheck dagelijkse suggestie: ${titel}`,
     detail ? `Context om te bespreken: ${detail}` : undefined,
     bron ? `Bron: ${bron}` : undefined,
     'Vraag aan kliniek, arts of apotheek: klopt deze notitie voor onze situatie?',

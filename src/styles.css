@@ -11385,7 +11385,7 @@ a.action-card:active {
   padding: 7px 12px;
 }
 
-/* FIX 1: knoppen-hiërarchie per aanbevelingskaart (1 primair + 2 ghost + ⋯) */
+/* FIX 1: knoppen-hiërarchie per suggestiekaart (1 primair + 2 ghost + ⋯) */
 .rec-actions {
   display: flex;
   flex: 1 1 100%;

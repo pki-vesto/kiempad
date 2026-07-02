@@ -42,7 +42,7 @@ describe('main bootstrap', () => {
   it('verwerkt dagelijkse aanbevelingen met een aparte artscheck-vraagactie', () => {
     expect(mainSource).toContain("action === 'artscheck' && state.vraagStore");
     expect(mainSource).toContain('maakArtscheckVraagVoorAanbeveling({');
-    expect(mainSource).toContain("gebeurtenis: 'Aanbeveling omgezet naar artscheck'");
+    expect(mainSource).toContain("gebeurtenis: 'Suggestie omgezet naar artscheck'");
     expect(mainSource).toContain('Artscheckvraag gemaakt:');
     expect(mainSource).toContain('dailyRecommendationCorrection');
     expect(mainSource).toContain('bevatDagadviesMedischeClaim');

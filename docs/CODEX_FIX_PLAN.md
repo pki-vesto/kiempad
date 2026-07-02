@@ -21,6 +21,10 @@
 - **CFX-013 — done in G1322 / issue #2419.** The active content column no longer has a
   large rounded grey frame, border, or shadow. The screen-stage rests on the page background,
   while cards, panels, and sheets keep their own depth.
+- **CFX-009 — done in G1323 / issue #2421.** Dagadvies now uses `Te doen vandaag` and
+  `suggesties` instead of visible recommendation wording. Action feedback, timeline,
+  knowledge graph, and artscheck copy follow the same softer framing while routes/hooks remain
+  compatible.
 
 ---
 
@@ -379,7 +383,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   "Dossierindex"→"Overzicht", "Consult Prep Wizard"→"Consult voorbereiden", "repository/client-side"
   → plain NL. Files: `src/appShell.ts` (+ copy module CFX-005). Accept: no listed terms remain in
   user-visible strings. **P1 · L**
-- **CFX-009** — Rename "Aanbeveling/Dagelijkse aanbevelingen" → "Suggestie"/"Te doen vandaag".
+- **CFX-009** — ✅ Done in G1323 / issue #2421. Rename "Aanbeveling/Dagelijkse aanbevelingen" → "Suggestie"/"Te doen vandaag".
   Files: `src/appShell.ts`, `src/domain/dailyRecommendations.ts` (labels only, not logic).
   Accept: no user-visible "aanbeveling". **P1 · M**
 - **CFX-007** — Replace "Eigenaar: man/vrouw" with names + "Samen" everywhere (greeting, Welzijn

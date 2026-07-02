@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1323 — CFX-009: Dagadvies hernoemen naar suggesties
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadviesroute gebruikte zichtbare "aanbeveling"-taal, waardoor de app ondanks disclaimers te voorschrijvend en medisch adviserend kon aanvoelen.
+- **User Impact:** Gebruikers kunnen rustige dagnotities verwarren met medisch advies of behandeladvies.
+- **Desired Outcome:** Hernoem zichtbare dagadvieslabels naar "Te doen vandaag" en "suggesties", met dezelfde framing in actiefeedback, timeline, knowledge graph en artscheckvragen.
+- **User Value:** Gebruikers krijgen een zachtere, niet-voorschrijvende UI terwijl alle bestaande dagadviesfunctionaliteit bereikbaar blijft.
+- **Acceptance Criteria:** Dagadvies UI toont "Te doen vandaag" en "Bekijk suggesties"; oude zichtbare labels "Dagelijkse aanbevelingen" en "Bekijk aanbevelingen" komen niet meer voor in de dagadviesconsole; action feedback en eventlog gebruiken suggestiecopy; timeline/graph/artscheck labels volgen suggestieframing; technische routes/data-hooks blijven compatibel; desktop, tablet en mobiel tonen geen overlap; tests bewaken de copy; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Start, Dagadvies, Fertility Timeline, Knowledge Graph
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, daily recommendations, timeline, graph, event log, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+
 ### G1322 — CFX-013: Grote content-frame verwijderen
 
 - **Epic:** Onboarding & Daily Use

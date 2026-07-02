@@ -215,7 +215,7 @@ describe('fertility knowledge graph privacy', () => {
           {
             id: 'aanbeveling-privacy',
             owner: 'vrouw',
-            titel: 'Aanbeveling metadata',
+            titel: 'Suggestie metadata',
             detail: 'RAW_RECOMMENDATION_DETAIL_SECRET_SENTINEL',
             bron: 'Lokale dagstart',
             waarschuwing: 'Geen medisch advies.',
@@ -263,7 +263,7 @@ describe('fertility knowledge graph privacy', () => {
     expect(output).toContain('Labrapport metadata');
     expect(output).toContain('Consult metadata');
     expect(output).toContain('Research metadata');
-    expect(output).toContain('Aanbeveling metadata');
+    expect(output).toContain('Suggestie metadata');
     expect(output).toContain('labrapport.pdf');
     expect(output).toContain('geen causaliteit');
     expect(output).not.toContain('RAW_');

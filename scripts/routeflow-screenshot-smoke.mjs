@@ -162,7 +162,7 @@ const targets = [
     screen: 'daily-advice-console',
     hash: '#start-recommendations',
     rootSelector: '[data-daily-advice-focus-shell="ready"]',
-    expectedText: 'Dagadvies console',
+    expectedText: 'Te doen vandaag',
     openSelectors: ['#start-flow-panel-aanbevelingen'],
     requiredSelectors: [
       '[data-daily-advice-focus-shell="ready"]',
@@ -1128,7 +1128,7 @@ async function assertRouteflows(browser, options) {
           evidence.dailyAdviceConsole.listMaxHeight === 'none')
       ) {
         throw new Error(
-          `${options.label}/${target.screen}: Dagadvies console staat niet in begrensde adviesvlakken (${JSON.stringify(evidence.dailyAdviceConsole)}).`,
+          `${options.label}/${target.screen}: dagadviesroute staat niet in begrensde adviesvlakken (${JSON.stringify(evidence.dailyAdviceConsole)}).`,
         );
       }
       if (

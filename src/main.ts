@@ -2100,12 +2100,12 @@ async function handleDailyRecommendationAction(
   if (action === 'bewaar') {
     await state.eventLogStore?.record({
       categorie: 'systeem',
-      gebeurtenis: 'Dagelijkse aanbeveling bewaard',
+      gebeurtenis: 'Dagelijkse suggestie bewaard',
       detail: `${titel} (${recommendationId}); reviewstatus ${reviewStatus}; correctie ${correctie ? reviewedDetail : 'geen'}`,
     });
     state.dailyRecommendationStatus = correctie
-      ? `Aanbeveling bewaard met correctie: ${titel}.`
-      : `Aanbeveling bewaard: ${titel}.`;
+      ? `Suggestie bewaard met correctie: ${titel}.`
+      : `Suggestie bewaard: ${titel}.`;
     await reloadAndRender(root, state);
     return;
   }
@@ -2113,10 +2113,10 @@ async function handleDailyRecommendationAction(
   if (action === 'afwijzen') {
     await state.eventLogStore?.record({
       categorie: 'systeem',
-      gebeurtenis: 'Dagelijkse aanbeveling afgewezen',
+      gebeurtenis: 'Dagelijkse suggestie afgewezen',
       detail: `${titel} (${recommendationId})`,
     });
-    state.dailyRecommendationStatus = `Aanbeveling afgewezen: ${titel}.`;
+    state.dailyRecommendationStatus = `Suggestie afgewezen: ${titel}.`;
     await reloadAndRender(root, state);
     return;
   }
@@ -2124,32 +2124,32 @@ async function handleDailyRecommendationAction(
   if (action === 'herinnering' && state.herinneringStore) {
     await state.herinneringStore.save({
       bron: { soort: 'eigen', refId: recommendationId },
-      titel: `Aanbeveling: ${titel}`,
+      titel: `Suggestie: ${titel}`,
       tijdstip: String(data.get('reminderTijdstip') ?? ''),
       herhaling: 'eenmalig',
       actief: true,
     });
     await state.eventLogStore?.record({
       categorie: 'systeem',
-      gebeurtenis: 'Aanbeveling omgezet naar herinnering',
+      gebeurtenis: 'Suggestie omgezet naar herinnering',
       detail: `${titel} (${recommendationId})`,
     });
-    state.dailyRecommendationStatus = `Aanbeveling omgezet naar herinnering: ${titel}.`;
+    state.dailyRecommendationStatus = `Suggestie omgezet naar herinnering: ${titel}.`;
     await reloadAndRender(root, state);
     return;
   }
 
   if (action === 'vraag' && state.vraagStore) {
     await state.vraagStore.save({
-      vraag: `Aanbeveling bespreken: ${titel}${reviewedDetail ? `. ${reviewedDetail}` : ''}`,
+      vraag: `Suggestie bespreken: ${titel}${reviewedDetail ? `. ${reviewedDetail}` : ''}`,
       beantwoord: false,
     });
     await state.eventLogStore?.record({
       categorie: 'systeem',
-      gebeurtenis: 'Aanbeveling omgezet naar vraag',
+      gebeurtenis: 'Suggestie omgezet naar vraag',
       detail: `${titel} (${recommendationId})`,
     });
-    state.dailyRecommendationStatus = `Aanbeveling omgezet naar vraag: ${titel}.`;
+    state.dailyRecommendationStatus = `Suggestie omgezet naar vraag: ${titel}.`;
     await reloadAndRender(root, state);
     return;
   }
@@ -2165,7 +2165,7 @@ async function handleDailyRecommendationAction(
     });
     await state.eventLogStore?.record({
       categorie: 'systeem',
-      gebeurtenis: 'Aanbeveling omgezet naar artscheck',
+      gebeurtenis: 'Suggestie omgezet naar artscheck',
       detail: `${titel} (${recommendationId})`,
     });
     state.dailyRecommendationStatus = `Artscheckvraag gemaakt: ${titel}.`;

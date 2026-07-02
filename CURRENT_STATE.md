@@ -34,6 +34,10 @@
 - **G1322 content zonder grote frame:** de actieve `screen-stage` heeft geen eigen
   grijze container, radius, border of schaduw meer; scherminhoud rust op de
   pagina-achtergrond en alleen echte kaarten/panels geven diepte.
+- **G1323 dagadvies als suggesties:** de dagadviesroute toont nu `Te doen vandaag`
+  en `Bekijk suggesties` in plaats van aanbevelingstaal; statusfeedback,
+  timeline/graph-labels en artscheckvragen gebruiken dezelfde niet-voorschrijvende
+  framing.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

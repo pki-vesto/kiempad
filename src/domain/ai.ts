@@ -276,7 +276,7 @@ export function listAiPromptRegressionFixtures(
       id: 'daily-recommendations-local-context-only',
       flow: 'daily-recommendations',
       scenario:
-        'Dagelijkse aanbevelingen gebruiken lokale dossier- en trajectcontext zonder behandeladvies.',
+        'Dagelijkse suggesties gebruiken lokale dossier- en trajectcontext zonder behandeladvies.',
       promptTekst:
         'Maak alleen rustige, feitelijke dagnotities en consultvoorbereiding op basis van lokale context. ' +
         'Buiten scope: diagnose, supplement- of medicatiedosering en behandelkeuze.',
