@@ -14748,7 +14748,7 @@ function renderDailyRecommendationListFilterHeader(input: {
         <span data-daily-recommendation-list-filter-legend-item="empty">Licht = geen match</span>
       </span>
       <form data-daily-recommendation-feedback-control="ready">
-        <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-list-filter-reset="ready">Reset</button>
+        <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-recommendation-list-filter-reset="ready" aria-label="Wis alleen de lokale feedbackfilter">Wis lokale filter</button>
       </form>
     </div>
   `;
