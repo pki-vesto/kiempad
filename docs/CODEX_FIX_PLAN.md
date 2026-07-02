@@ -254,6 +254,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **Problem**: amounts not right-aligned `tabular-nums`; badges ad-hoc; form not via kit; bare
   empty state (VERBETERINGEN O101/J68/I66).
 - **Fixes**: CFX-016, CFX-037.
+- **Progress**: CFX-037 route-first scan done in G1345 / issue #2464: the visible finance context
+  column is removed, cost rows use tabular right-aligned amount markers, and split/context smokes
+  guard the compact Kosten workspace.
 
 ### Kennis (`renderKennisScreen`, 253 LOC)
 - **Current**: search + categories + accordion cards.
@@ -494,7 +497,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
-  rich empty. **P1 · M**
+  rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
 - **CFX-038** — Kennis: kit search/category, category-eyebrow cards, chevron, badges. **P2 · M**
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list. **P1 · M**

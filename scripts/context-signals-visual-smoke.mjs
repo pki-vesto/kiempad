@@ -42,12 +42,6 @@ const targets = [
     microstate: 'decision-choice',
   },
   {
-    screen: 'kosten',
-    hash: '#kosten?route=vergoeding',
-    signal: 'finance',
-    microstate: 'finance-vergoeding',
-  },
-  {
     screen: 'logboek',
     hash: '#logboek?route=privacy',
     signal: 'eventlog',

@@ -252,7 +252,8 @@ async function assertSplitWorkspaces(browser, options) {
           `${options.label}/${route.screen}: paginafout tijdens split-workspace smoke: ${pageErrors.join('; ')}`,
         );
       }
-      const contextOptional = route.prefix === 'question' || route.prefix === 'knowledge';
+      const contextOptional =
+        route.prefix === 'question' || route.prefix === 'knowledge' || route.prefix === 'finance';
       if (
         !result.hasWorkspace ||
         !result.hasRail ||

@@ -2204,7 +2204,10 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.finance-focus-shell {');
     expect(mobileCss).toContain('.finance-focus-shell__body {');
-    expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).not.toContain(
+      '.finance-focus-shell__workspace .domain-split-workspace__context {',
+    );
     expect(mobileCss).toContain(
       '.content:has([data-backup-focus-shell="ready"]) > .workspace-map,',
     );
@@ -36825,6 +36828,11 @@ describe('app shell', () => {
     expect(html).toContain('href="#kosten?route=toevoegen"');
     expect(html).toContain('href="#kosten?route=vergoeding"');
     expect(html).toContain('href="#kosten?route=historie"');
+    expect(html).toContain('data-finance-compact-workspace="route-first"');
+    expect(html).not.toContain('data-finance-workspace-context="metrics"');
+    expect(html).not.toContain('data-workspace-context-signals="finance"');
+    expect(html).not.toContain('data-workspace-context-microstate="finance-vergoeding"');
+    expect(html).not.toContain('class="domain-split-workspace__context"');
     expect(html).toContain('id="kosten-route-overzicht"');
     expect(html).toContain('data-finance-route="overzicht"');
     expect(html).toContain('id="kosten-route-toevoegen"');
@@ -36871,6 +36879,7 @@ describe('app shell', () => {
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eigen risico');
     expect(html).toContain('class="cost-item-meta"');
+    expect(html).toContain('class="cost-amount" data-cost-amount="row"');
     expect(html).toContain(
       'class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="eigen_risico"',
     );
@@ -38050,7 +38059,7 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (label === 'question' || label === 'knowledge') {
+      if (label === 'question' || label === 'knowledge' || label === 'finance') {
         expect(html).not.toContain('class="domain-split-workspace__context"');
       } else {
         expect(html).toContain('class="domain-split-workspace__context"');
@@ -38158,13 +38167,14 @@ describe('app shell', () => {
     expect(kostenHtml).toContain('data-finance-console="ready"');
     expect(kostenHtml).toContain('data-finance-console-region="workbench"');
     expect(kostenHtml).toContain('data-finance-console-region="workspace"');
-    expect(kostenHtml).toContain('data-finance-workspace-context="metrics"');
-    expect(kostenHtml).toContain('data-workspace-context-signals="finance"');
-    expect(kostenHtml).toContain('data-workspace-context-microstate="finance-vergoeding"');
-    expect(kostenHtml).toContain(
+    expect(kostenHtml).toContain('data-finance-compact-workspace="route-first"');
+    expect(kostenHtml).not.toContain('data-finance-workspace-context="metrics"');
+    expect(kostenHtml).not.toContain('data-workspace-context-signals="finance"');
+    expect(kostenHtml).not.toContain('data-workspace-context-microstate="finance-vergoeding"');
+    expect(kostenHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: status controleren"',
     );
-    expect(kostenHtml).toContain('Vergoedingcontext');
+    expect(kostenHtml).not.toContain('Vergoedingcontext');
     expect(kostenHtml).toContain('Kostenfocus');
     expect(kostenHtml).toContain(
       'data-finance-route="vergoeding" data-finance-route-state="active"',
