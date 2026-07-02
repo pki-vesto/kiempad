@@ -319,6 +319,9 @@
 - **CFX-020 fertility timeline source-type filter — partial in G1414 / issue #864.** The timeline
   filter now has an explicit brontype select for agenda, dossiermetadata, OCR, consult, kennis,
   medicatie and suggestion sources, backed by source-reference metadata.
+- **CFX-020 fertility timeline export source list — partial in G1415 / issue #867.** The Markdown
+  timeline export now includes a dedicated bronlijst with source type, date, reviewstatus, record
+  id, and source item, plus a visible export preview source count.
 
 ---
 
@@ -749,6 +752,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1414/#864: fertility timeline filtering supports source-reference type in addition to
   free source text, so users can isolate agenda, dossiermetadata, OCR, consult, knowledge or
   recommendation records without exposing payloads.
+  Partial G1415/#867: fertility timeline export adds a deduplicated bronlijst section and preview
+  count with source, date and reviewstatus metadata only.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
