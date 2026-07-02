@@ -1931,7 +1931,7 @@ describe('app shell', () => {
     );
 
     expect(personalHtml).toContain(
-      'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="personal"',
+      'class="status-message settings-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="settings-personal" data-settings-feedback="personal"',
     );
     expect(personalHtml).toContain('Persoonlijke instellingen opgeslagen.');
     expect(personalHtml).not.toContain('data-settings-feedback="theme"');
@@ -1948,7 +1948,7 @@ describe('app shell', () => {
     );
 
     expect(themeHtml).toContain(
-      'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="theme"',
+      'class="status-message settings-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="settings-theme" data-settings-feedback="theme"',
     );
     expect(themeHtml).toContain('Thema opgeslagen.');
   });
@@ -3929,12 +3929,12 @@ describe('app shell', () => {
     expect(html).toContain('id="agenda-route-komend"');
     expect(html).toContain('data-schedule-route="komend"');
     expect(html).toContain(
-      'class="status-message schedule-save-feedback" role="status" aria-live="polite" data-schedule-save-feedback="komend"',
+      'class="status-message schedule-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="schedule-komend" data-schedule-save-feedback="komend"',
     );
     expect(html).toContain('id="agenda-route-plannen"');
     expect(html).toContain('data-schedule-route="plannen"');
     expect(html).toContain(
-      'class="status-message schedule-save-feedback" role="status" aria-live="polite" data-schedule-save-feedback="plannen"',
+      'class="status-message schedule-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="schedule-plannen" data-schedule-save-feedback="plannen"',
     );
     expect(html).toContain('Afspraak opgeslagen.');
     expect(html).toContain('id="agenda-route-import"');
@@ -4857,21 +4857,21 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-kind="injectie"');
     expect(html).toContain('class="medication-dose-card__meta"');
     expect(html).toContain(
-      'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="vandaag"',
+      'class="status-message medication-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="medication-vandaag" data-medication-save-feedback="vandaag"',
     );
     expect(html).toContain('id="medicatie-route-planning"');
     expect(html).toContain('data-medication-route="planning"');
     expect(html).toContain('id="medicatie-route-beheer"');
     expect(html).toContain('data-medication-route="beheer"');
     expect(html).toContain(
-      'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="beheer"',
+      'class="status-message medication-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="medication-beheer" data-medication-save-feedback="beheer"',
     );
     expect(html).toContain('id="medicatie-route-import"');
     expect(html).toContain('data-medication-route="import"');
     expect(html).toContain('id="medicatie-route-historie"');
     expect(html).toContain('data-medication-route="historie"');
     expect(html).toContain(
-      'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="historie"',
+      'class="status-message medication-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="medication-historie" data-medication-save-feedback="historie"',
     );
     expect(html).toContain('Medicatiemoment afgevinkt.');
     expect(html).toContain('Medicatie vandaag');
@@ -5459,21 +5459,21 @@ describe('app shell', () => {
     expect(html).toContain('data-question-route="open"');
     expect(html).toContain('data-question-route-state="active"');
     expect(html).toContain(
-      'class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="open"',
+      'class="status-message question-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="question-open" data-question-save-feedback="open"',
     );
     expect(html).toContain('id="vragen-route-voorbereiden"');
     expect(html).toContain('data-question-route="voorbereiden"');
     expect(html).toContain('id="vragen-route-beheer"');
     expect(html).toContain('data-question-route="beheer"');
     expect(html).toContain(
-      'class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="beheer"',
+      'class="status-message question-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="question-beheer" data-question-save-feedback="beheer"',
     );
     expect(html).toContain('id="vragen-route-verslagen"');
     expect(html).toContain('data-question-route="verslagen"');
     expect(html).toContain('id="vragen-route-alle"');
     expect(html).toContain('data-question-route="alle"');
     expect(html).toContain(
-      'class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="alle"',
+      'class="status-message question-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="question-alle" data-question-save-feedback="alle"',
     );
     expect(html).toContain('Vraag opgeslagen.');
     expect(html).toContain('Openstaande vragen');
@@ -37328,10 +37328,10 @@ describe('app shell', () => {
     expect(html).toContain('<span aria-hidden="true">€</span>');
     expect(html).toContain('class="finance-form-actions"');
     expect(html).toContain(
-      'class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="toevoegen"',
+      'class="status-message finance-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="finance-toevoegen" data-finance-save-feedback="toevoegen"',
     );
     expect(html).toContain(
-      'class="status-message finance-save-feedback" role="status" aria-live="polite" data-finance-save-feedback="historie"',
+      'class="status-message finance-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="finance-historie" data-finance-save-feedback="historie"',
     );
     expect(html).toContain('Kostenpost opgeslagen.');
     expect(html).toContain('Totaal');
@@ -37570,7 +37570,7 @@ describe('app shell', () => {
       'type="hidden" name="toonNotificatieDetailsOpVergrendelscherm" value="false"',
     );
     expect(html).toContain(
-      'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="notification-privacy"',
+      'class="status-message settings-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="settings-notification-privacy" data-settings-feedback="notification-privacy"',
     );
     expect(html).toContain('Notificatieprivacy opgeslagen.');
   });

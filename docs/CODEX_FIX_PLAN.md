@@ -208,6 +208,10 @@
 - **CFX-016 dossier status badges — partial in G1382 / issue #2538.** Dossier review, import,
   duplicate, preview, and attachment statuses now render through the shared `statusBadge()` helper
   with Dossier-specific status metadata and wrap-safe rows.
+- **CFX-018 save feedback primitive — partial in G1383 / issue #2540.** Instellingen, Kosten,
+  Vragen, Agenda, and Medicatie now render existing save feedback through the shared
+  `statusMessage()` helper with common `data-save-feedback` hooks and a visible wrap-safe
+  save-feedback marker.
 
 ---
 
@@ -572,7 +576,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   review, duplicate, preview, and attachment statuses now use the helper with Dossier status
   metadata.
 - **CFX-018** — Toast/inline success feedback primitive; fire after every store save. Accept: saves
-  show a calm confirmation (VERBETERINGEN C31/M). **P1 · M**
+  show a calm confirmation (VERBETERINGEN C31/M). **P1 · M** Partial G1383/#2540:
+  Settings, Kosten, Vragen, Agenda, and Medicatie save confirmations now share the
+  `statusMessage()` primitive, a common `data-save-feedback` hook, and visible save-feedback
+  marker styling; remaining store mutations still need a full audit.
 - **CFX-019b** — In-app styled confirm to replace `window.confirm` for deletes. Files:
   `src/deleteConfirmations.ts`, `src/main.ts`. Accept: no native `confirm()`; still blocks. **P2 · M**
   Partial G1355/#2484: Dossier import-inbox delete uses an inline confirmation panel; remaining

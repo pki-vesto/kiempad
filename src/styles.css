@@ -13779,6 +13779,25 @@ a.action-card:active {
   color: var(--success-text);
 }
 
+.save-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 1.35;
+}
+
+.save-feedback::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 14%, transparent);
+}
+
 .settings-save-feedback {
   margin: 0;
   padding: 9px 12px;

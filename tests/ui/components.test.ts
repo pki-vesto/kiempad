@@ -180,6 +180,18 @@ describe('states', () => {
   it('statusMessage has role=status', () => {
     expect(statusMessage('Opgeslagen')).toContain('role="status"');
   });
+  it('statusMessage supports shared save feedback metadata', () => {
+    expect(
+      statusMessage('Opgeslagen', {
+        className: 'save-feedback',
+        data: { 'settings-feedback': 'personal' },
+        live: 'polite',
+        saveFeedback: 'settings-personal',
+      }),
+    ).toContain(
+      'class="status-message save-feedback" role="status" aria-live="polite" data-save-feedback="settings-personal" data-settings-feedback="personal"',
+    );
+  });
 });
 
 describe('icon / sectionStack', () => {

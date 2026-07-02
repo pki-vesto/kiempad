@@ -753,6 +753,24 @@ export function errorBanner(message: string): string {
 }
 
 /** Neutral status / success message. */
-export function statusMessage(message: string): string {
-  return `<p class="status-message" role="status">${escapeHtml(message)}</p>`;
+export function statusMessage(
+  message: string,
+  opts: {
+    className?: string;
+    data?: Record<string, string>;
+    live?: 'polite' | 'assertive' | 'off';
+    saveFeedback?: string;
+  } = {},
+): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const live = opts.live ? ` aria-live="${escapeAttribute(opts.live)}"` : '';
+  const saveFeedback = opts.saveFeedback
+    ? ` data-save-feedback="${escapeAttribute(opts.saveFeedback)}"`
+    : '';
+  const dataAttrs = opts.data
+    ? Object.entries(opts.data)
+        .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+        .join('')
+    : '';
+  return `<p class="status-message${cls}" role="status"${live}${saveFeedback}${dataAttrs}>${escapeHtml(message)}</p>`;
 }
