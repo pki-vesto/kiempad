@@ -876,7 +876,7 @@ export function renderAppShell(
     notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
     webAuthnStatus: {
       runtimeBeschikbaar: false,
-      reden: 'WebAuthn-status nog niet bepaald.',
+      reden: 'Biometriestatus nog niet bepaald.',
       gekoppeld: false,
     },
   },
@@ -889,9 +889,7 @@ export function renderAppShell(
   const screenIntro = storageAwareScreenIntro(activeScreen, state);
   const activeGroup = SCREEN_GROUPS.find((group) => group.screenIds.includes(activeId));
   const storageStatus =
-    state.storageMode === 'central-api'
-      ? 'Centrale encrypted opslag'
-      : 'Legacy lokaal · geen tracking';
+    state.storageMode === 'central-api' ? 'Centrale versleutelde opslag' : 'Lokaal · geen tracking';
   const storageStatusState =
     state.storageMode === 'central-api' ? 'central-encrypted' : 'legacy-local-encrypted';
 
@@ -974,12 +972,12 @@ function storageAwareScreenTitle(screen: Screen, state: AppShellState): string {
 function storageAwareScreenIntro(screen: Screen, state: AppShellState): string {
   if (screen.id === 'dossier') {
     return isCentralStorage(state)
-      ? 'Upload historische onderzoeken en bewaar bestandsanalyse in je centrale encrypted dataset.'
-      : 'Upload historische onderzoeken en bewaar bestandsanalyse in de legacy lokale encrypted dataset.';
+      ? 'Upload historische onderzoeken en bewaar bestandsanalyse in je centrale versleutelde opslag.'
+      : 'Upload historische onderzoeken en bewaar bestandsanalyse in je lokale kluis.';
   }
   if (screen.id === 'logboek') {
     return isCentralStorage(state)
-      ? 'Bekijk privacyrelevante gebeurtenissen uit je centrale encrypted dataset.'
+      ? 'Bekijk privacyrelevante gebeurtenissen uit je centrale versleutelde opslag.'
       : screen.intro;
   }
   return screen.intro;
@@ -987,14 +985,14 @@ function storageAwareScreenIntro(screen: Screen, state: AppShellState): string {
 
 function beschrijfEncryptedRecordLocatie(state: AppShellState): string {
   return isCentralStorage(state)
-    ? 'centraal encrypted bewaard voor gekoppelde apparaten'
-    : 'in de legacy lokale encrypted dataset op dit toestel bewaard';
+    ? 'centraal versleuteld bewaard voor gekoppelde apparaten'
+    : 'in de lokale kluis op dit toestel bewaard';
 }
 
 function beschrijfOntgrendeldeDataset(state: AppShellState): string {
   return isCentralStorage(state)
-    ? 'ontgrendelde centrale encrypted dataset'
-    : 'ontgrendelde legacy lokale encrypted dataset';
+    ? 'ontgrendelde centrale versleutelde opslag'
+    : 'ontgrendelde lokale kluis';
 }
 
 export function renderVaultGate(
@@ -1005,7 +1003,7 @@ export function renderVaultGate(
 ): string {
   const recoveryStatus = classifyVaultRecoveryStatus(error);
   const central = options.storageMode !== 'legacy-indexeddb';
-  const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale encrypted dataset';
+  const datasetLabel = central ? 'centrale versleutelde opslag' : 'lokale kluis';
   const title = hasVault ? 'Welkom terug' : 'Welkom bij Kiempad';
   const button = hasVault ? 'Ontgrendel Kiempad' : 'Dataset starten';
   const help = hasVault
@@ -1119,8 +1117,8 @@ export function renderStorageBootstrapError(error: string): string {
   return `
     <main class="vault-gate" aria-labelledby="bootstrap-error-title">
       <section class="vault-card">
-        <p class="eyebrow">Centrale encrypted opslag</p>
-        <h1 id="bootstrap-error-title">Kiempad kan centrale opslag niet starten</h1>
+        <p class="eyebrow">Centrale versleutelde opslag</p>
+        <h1 id="bootstrap-error-title">Kiempad kan je centrale opslag niet starten</h1>
         <p class="form-error" role="alert">${escapeHtml(error)}</p>
         <section class="policy-panel embedded-summary" aria-label="Controlepunten">
           <h2>Controleer eerst</h2>
@@ -1130,7 +1128,7 @@ export function renderStorageBootstrapError(error: string): string {
             <li>Of <code>KIEMPAD_CENTRAL_ALLOWED_USER_IDS</code> en <code>KIEMPAD_CENTRAL_ALLOWED_ORIGINS</code> deze client toestaan.</li>
           </ol>
         </section>
-        <p class="small-print">Kiempad valt bij een geconfigureerde centrale API niet stilletjes terug naar legacy lokale opslag.</p>
+        <p class="small-print">Kiempad schakelt bij centrale opslag niet ongemerkt terug naar lokale opslag.</p>
         <p class="small-print">${DISCLAIMER}</p>
       </section>
     </main>
@@ -1144,17 +1142,17 @@ function renderVaultDiagnostics(
 ): string {
   const central = options.storageMode !== 'legacy-indexeddb';
   const datasetStatus = hasVault
-    ? `${central ? 'Centrale encrypted' : 'Legacy lokale encrypted'} datasetmetadata gevonden.`
-    : `Geen ${central ? 'centrale encrypted' : 'legacy lokale encrypted'} dataset voor deze sessie gevonden.`;
+    ? `${central ? 'Centrale versleutelde opslag' : 'Lokale kluis'} gevonden.`
+    : `Geen ${central ? 'centrale versleutelde opslag' : 'lokale kluis'} voor deze sessie gevonden.`;
   const webAuthnRuntime = webAuthnStatus?.runtimeBeschikbaar
     ? 'Beschikbaar in deze browser.'
-    : `Niet beschikbaar: ${webAuthnStatus?.reden ?? 'browserstatus nog niet bepaald.'}`;
+    : 'Niet beschikbaar in deze browser.';
   const webAuthnEnrollment = webAuthnStatus?.gekoppeld
     ? `Gekoppeld${webAuthnStatus.label ? `: ${webAuthnStatus.label}` : ''}.`
     : 'Niet gekoppeld op dit toestel.';
   const backupStatus = hasVault
     ? 'Wordt pas na ontgrendelen uit versleutelde instellingen gelezen.'
-    : `Nog niet ingesteld; start eerst je ${central ? 'centrale encrypted' : 'legacy lokale encrypted'} dataset en maak daarna een versleutelde back-up.`;
+    : `Nog niet ingesteld; start eerst je ${central ? 'centrale versleutelde opslag' : 'lokale kluis'} en maak daarna een versleutelde back-up.`;
 
   return `
     <details class="vault-details" data-vault-present="${hasVault ? 'true' : 'false'}">
@@ -1163,7 +1161,7 @@ function renderVaultDiagnostics(
         <span class="vault-status__more">Details</span>
       </summary>
       <dl class="definition-list vault-checks">
-        <div><dt>Opslagmodus</dt><dd>${escapeHtml(options.storageLabel ?? (central ? 'Centrale encrypted opslag' : 'Legacy lokale IndexedDB-kluis'))}</dd></div>
+        <div><dt>Opslag</dt><dd>${escapeHtml(options.storageLabel ?? (central ? 'Centrale versleutelde opslag' : 'Lokale kluis'))}</dd></div>
         <div><dt>Dataset</dt><dd>${datasetStatus}</dd></div>
         <div><dt>Biometrie</dt><dd>${escapeHtml(webAuthnRuntime)}</dd></div>
         <div><dt>Biometrie-koppeling</dt><dd>${escapeHtml(webAuthnEnrollment)}</dd></div>
@@ -1184,18 +1182,18 @@ function renderVaultRecoveryHelp(
     ? recoveryStatus === 'missing-key-metadata'
       ? `<ol class="compact-list">
               <li>Herlaad Kiempad en probeer dezelfde centrale omgeving opnieuw.</li>
-              <li>Controleer met support of backend, gebruikersscope en dataset bij elkaar horen.</li>
-              <li>Gebruik alleen een gecontroleerde versleutelde back-up als de centrale dataset niet veilig kan worden hersteld.</li>
+              <li>Controleer met support of je account en centrale opslag bij elkaar horen.</li>
+              <li>Gebruik alleen een gecontroleerde versleutelde back-up als de centrale opslag niet veilig kan worden hersteld.</li>
             </ol>`
       : `<ol class="compact-list">
               <li>Controleer rustig de wachtwoordzin, toetsenbordindeling en hoofdletters.</li>
-              <li>Controleer of de centrale backend en gebruikersscope dezelfde dataset openen als op je andere apparaat.</li>
+              <li>Controleer of je account dezelfde centrale opslag opent als op je andere apparaat.</li>
               <li>Gebruik biometrie alleen als dit eerder op dit toestel is gekoppeld; jullie wachtwoordzin blijft de herstelroute.</li>
             </ol>`
     : `<ol class="compact-list">
               <li>Controleer rustig de wachtwoordzin, toetsenbordindeling en hoofdletters.</li>
               <li>Gebruik biometrie alleen als dit eerder op dit toestel is gekoppeld.</li>
-              <li>Als de legacy lokale opslag leeg of beschadigd is: start een nieuwe encrypted dataset en importeer daarna je versleutelde back-up.</li>
+              <li>Als de lokale kluis leeg of beschadigd is: start een nieuwe kluis en importeer daarna je versleutelde back-up.</li>
             </ol>`;
 
   return `
@@ -1556,8 +1554,8 @@ function renderLogboekScreen(state: AppShellState): string {
     {} as Record<EventLog['categorie'], number>,
   );
   const body = isCentralStorage(state)
-    ? `Dit logboek staat in je centrale encrypted dataset en toont alleen privacyrelevante gebeurtenisdetails. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`
-    : `Dit logboek blijft in de legacy lokale encrypted dataset op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
+    ? `Dit logboek staat in je centrale versleutelde opslag en toont alleen privacyrelevante gebeurtenisdetails. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`
+    : `Dit logboek blijft in de lokale kluis op dit toestel. ${logs.length} gebeurtenis${logs.length === 1 ? '' : 'sen'} vastgelegd.`;
   const activeEventLogRoute = state.activeEventLogRoute ?? 'overzicht';
 
   const eventLogWorkbench = renderEventLogSystemWorkbench({
@@ -1699,7 +1697,7 @@ function renderLogboekScreen(state: AppShellState): string {
     ],
     {
       className: 'eventlog-command-layout',
-      ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Legacy lokaal gebeurtenissenlog',
+      ariaLabel: isCentralStorage(state) ? 'Gebeurtenissenlog' : 'Lokaal gebeurtenissenlog',
     },
   );
 }
@@ -1752,7 +1750,7 @@ function renderEventLogSystemWorkbench(input: {
         <section class="system-workbench__focus" aria-label="Laatste logboekactiviteit">
           <p class="kp-card__eyebrow">Laatste activiteit</p>
           <h3>${escapeHtml(focus)}</h3>
-          <p>${input.central ? 'Centrale encrypted dataset' : 'Legacy lokale kluis'} · ${input.eventCount} gebeurtenis${input.eventCount === 1 ? '' : 'sen'}</p>
+          <p>${input.central ? 'Centrale versleutelde opslag' : 'Lokale kluis'} · ${input.eventCount} gebeurtenis${input.eventCount === 1 ? '' : 'sen'}</p>
         </section>
         <div class="system-workbench__panel">
           ${statRow([
@@ -1920,6 +1918,10 @@ const EVENT_LOG_UI_SENSITIVE_DETAIL_PATTERNS = [
   /\bapi[-_\s]?key\b/i,
   /\bproviderpayload\b/i,
   /\bprovider[-_\s]?payload\b/i,
+  /\bwebauthn\b/i,
+  /\bprf\b/i,
+  /\bencrypted\s+dataset\b/i,
+  /\blegacy\s+lokale\s+kluis\b/i,
   /\bbestandsinhoud\b/i,
   /\bfile[-_\s]?contents\b/i,
   /\bbase64\b/i,
@@ -2423,13 +2425,13 @@ function renderBackupScreen(state: AppShellState): string {
   const reminder = bepaalBackupReminder(state.settings.laatsteBackupOp);
   const central = isCentralStorage(state);
   const backupCopy = central
-    ? 'Het bestand bevat encrypted records en centrale datasetmetadata; geen ontsleutelde gezondheidsdata. Gebruik dit als noodexport naast de centrale encrypted backend.'
-    : 'Het bestand bevat versleutelde records en legacy kluismetadata; geen ontsleutelde gezondheidsdata.';
+    ? 'Het bestand bevat versleutelde records en centrale opslaginformatie; geen leesbare gezondheidsdata. Gebruik dit als noodexport naast de centrale opslag.'
+    : 'Het bestand bevat versleutelde records en lokale kluisinformatie; geen leesbare gezondheidsdata.';
   const syncTitle = central ? 'Optioneel recordpakket' : 'Syncpakket';
   const syncButton = central ? 'Download recordpakket' : 'Download syncpakket';
   const syncCopy = central
-    ? 'Gekoppelde apparaten openen normaal dezelfde centrale encrypted dataset via de centrale API. Dit pakket is alleen voor handmatige encrypted recordoverdracht binnen dezelfde dataset.'
-    : 'Voor apparaten die al via een versleutelde back-up aan dezelfde legacy lokale kluis zijn gekoppeld. Het pakket bevat alleen encrypted records.';
+    ? 'Gekoppelde apparaten openen normaal dezelfde centrale versleutelde opslag. Dit pakket is alleen voor handmatige versleutelde overdracht binnen dezelfde opslag.'
+    : 'Voor apparaten die al via een versleutelde back-up aan dezelfde lokale kluis zijn gekoppeld. Het pakket bevat alleen versleutelde records.';
   const syncImportTitle = central ? 'Recordpakket importeren' : 'Sync importeren';
   const syncImportLabel = central ? 'Kiempad-recordpakket' : 'Kiempad-syncpakket';
   const syncImportButton = central ? 'Importeer recordpakket' : 'Importeer syncpakket';
@@ -2506,17 +2508,17 @@ function renderBackupScreen(state: AppShellState): string {
       <section id="backup-route-export" class="backup-route-section" aria-labelledby="backup-route-export-title" data-backup-route="export"${renderBackupRouteVisibility(activeBackupRoute, 'export')}>
         <header class="backup-route-section__header">
           <p class="kp-card__eyebrow">Export</p>
-          <h2 id="backup-route-export-title">Encrypted export maken</h2>
+          <h2 id="backup-route-export-title">Versleutelde export maken</h2>
           <p>Download alleen versleutelde back-up- of recordpakketten voor eigen beheer.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Back-uproute',
           title: 'Export bewust starten',
           detail:
-            'Back-up en recordpakket staan elk achter een eigen exportpaneel, met copy over encrypted inhoud zichtbaar bij openen.',
+            'Back-up en recordpakket staan elk achter een eigen exportpaneel, met uitleg over versleutelde inhoud zichtbaar bij openen.',
           primary: { href: '#backup-export-vault-disclosure', label: 'Back-up export' },
           secondary: { href: '#backup-export-sync-disclosure', label: syncTitle },
-          status: central ? 'Centraal encrypted' : 'Legacy encrypted',
+          status: central ? 'Centraal versleuteld' : 'Lokaal versleuteld',
           ariaLabel: 'Back-up export route-samenvatting',
           data: { 'backup-route-summary': 'export' },
         })}
@@ -2548,7 +2550,7 @@ function renderBackupScreen(state: AppShellState): string {
         <header class="backup-route-section__header">
           <p class="kp-card__eyebrow">Import</p>
           <h2 id="backup-route-import-title">Versleutelde data importeren</h2>
-          <p>Importeer alleen Kiempad-exporten of encrypted recordpakketten die je vertrouwt.</p>
+          <p>Importeer alleen Kiempad-exporten of versleutelde overdrachtspakketten die je vertrouwt.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Back-uproute',
@@ -2604,14 +2606,14 @@ function renderBackupScreen(state: AppShellState): string {
           eyebrow: 'Back-uproute',
           title: 'Herstelopties rustig beheren',
           detail:
-            'Biometrie blijft optioneel en lokaal; de volledige WebAuthn-context opent alleen wanneer je herstelinstellingen beheert.',
+            'Biometrie blijft optioneel en lokaal; de herstelinstellingen openen alleen wanneer je ze beheert.',
           primary: { href: '#backup-recovery-webauthn-disclosure', label: 'Herstel openen' },
           status: webAuthnGekoppeld ? 'Biometrie gekoppeld' : 'Fallback actief',
           ariaLabel: 'Back-up herstel route-samenvatting',
           data: { 'backup-route-summary': 'herstel' },
         })}
         <details id="backup-recovery-webauthn-disclosure" class="kp-disclosure" data-backup-disclosure="herstel">
-          <summary class="kp-disclosure__summary">Biometrie en herstelcontext openen</summary>
+          <summary class="kp-disclosure__summary">Biometrie en herstelinstellingen openen</summary>
           <div class="kp-disclosure__body">
             ${renderWebAuthnSettings(state)}
           </div>
@@ -2636,7 +2638,7 @@ function renderBackupFocusShell(input: { workspace: string }): string {
       <header class="backup-focus-shell__header">
         <p class="kp-card__eyebrow">Back-upfocus</p>
         <h2 id="backup-focus-shell-title">Eerst veiligheid controleren, daarna export of herstel openen</h2>
-        <p>Status, encrypted export, import en herstelopties blijven in één veiligheidsruimte zonder dossierinhoud of plaintext payloads te tonen.</p>
+        <p>Status, versleutelde export, import en herstelopties blijven in één veiligheidsruimte zonder dossierinhoud of leesbare data te tonen.</p>
       </header>
       <div class="backup-focus-shell__body" data-backup-console="ready">
         <div class="backup-focus-shell__workspace" data-backup-focus-region="workspace" data-backup-console-region="workspace">
@@ -2655,7 +2657,7 @@ function renderBackupSyncBoard(input: {
   hasFeedback: boolean;
   hasError: boolean;
 }): string {
-  const storageLabel = input.central ? 'Centrale encrypted dataset' : 'Legacy lokale kluis';
+  const storageLabel = input.central ? 'Centrale versleutelde opslag' : 'Lokale kluis';
   const feedbackCue = input.hasError
     ? 'Melding checken'
     : input.hasFeedback
@@ -2669,15 +2671,15 @@ function renderBackupSyncBoard(input: {
       href: '#backup-control-status-disclosure',
       label: 'Status',
       title: feedbackCue,
-      detail: `${input.reminderTitle}; controleer alleen technische syncmetadata.`,
+      detail: `${input.reminderTitle}; controleer alleen veilige statusinformatie.`,
       cue: storageLabel,
     },
     {
       id: 'export',
       href: '#backup?route=export',
       label: 'Export',
-      title: 'Encrypted pakket maken',
-      detail: 'Download back-up of recordpakket zonder ontsleutelde gezondheidsdata.',
+      title: 'Versleuteld pakket maken',
+      detail: 'Download back-up of overdrachtspakket zonder leesbare gezondheidsdata.',
       cue: input.central ? 'Centraal' : 'Lokaal',
     },
     {
@@ -2685,7 +2687,7 @@ function renderBackupSyncBoard(input: {
       href: '#backup?route=import',
       label: 'Import',
       title: 'Bewust herstellen',
-      detail: 'Importeer alleen vertrouwde Kiempad-exporten of encrypted recordpakketten.',
+      detail: 'Importeer alleen vertrouwde Kiempad-exporten of versleutelde overdrachtspakketten.',
       cue: input.hasError ? 'Controle nodig' : 'Klaar',
     },
     {
@@ -2699,15 +2701,15 @@ function renderBackupSyncBoard(input: {
   ];
 
   return `
-    <section class="backup-sync-board" aria-label="Encrypted sync startlaag" data-backup-sync-board="ready">
+    <section class="backup-sync-board" aria-label="Veilige overdracht startlaag" data-backup-sync-board="ready">
       <header class="backup-sync-board__header">
         <div>
-          <p class="kp-card__eyebrow">Encrypted sync</p>
+          <p class="kp-card__eyebrow">Veilige overdracht</p>
           <h3>Kies eerst je veilige overdracht</h3>
         </div>
         <p>Start met status, export, import of herstel zonder door technische back-updetails te scrollen.</p>
       </header>
-      <nav class="backup-sync-board__lanes" aria-label="Encrypted sync taak kiezen">
+      <nav class="backup-sync-board__lanes" aria-label="Veilige overdracht taak kiezen">
         ${lanes
           .map(
             (lane) => `
@@ -2732,7 +2734,7 @@ function renderBackupReminderCard(input: {
   backupStatus?: string;
   backupError?: string;
 }): string {
-  const storageLabel = input.central ? 'Centrale encrypted dataset' : 'Lokale encrypted kluis';
+  const storageLabel = input.central ? 'Centrale versleutelde opslag' : 'Lokale kluis';
   const actionLabel =
     input.reminder.status === 'recent' ? 'Controleer exportritme' : 'Maak back-up';
   const feedbackLabel = input.backupError
@@ -2828,7 +2830,7 @@ function renderBackupManagementWorkbench(input: {
   backupStatus?: string;
   backupError?: string;
 }): string {
-  const storageMode = input.central ? 'Centrale encrypted dataset' : 'Legacy lokale kluis';
+  const storageMode = input.central ? 'Centrale versleutelde opslag' : 'Lokale kluis';
   const lastKnown = input.reminder.laatsteBackupLabel ?? 'Nog geen back-updatum';
   const actionCopy = input.backupError
     ? 'Controleer import- of exportmelding'
@@ -2946,7 +2948,7 @@ const CENTRAL_SYNC_FEEDBACK_DEFAULTS: Record<
   'record-package': {
     label: 'Recordpakket',
     defaultState: 'idle',
-    defaultCopy: 'Recordpakketstatus klaar voor handmatige encrypted overdracht.',
+    defaultCopy: 'Recordpakketstatus klaar voor handmatige versleutelde overdracht.',
   },
 };
 
@@ -2954,14 +2956,14 @@ function renderCentralSyncFeedback(state: AppShellState): string {
   if (!isCentralStorage(state)) return '';
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Centrale syncstatus" data-central-sync-feedback="central-encrypted">
-      <h2>Centrale syncstatus</h2>
+    <section class="policy-panel embedded-summary" aria-label="Centrale overdrachtstatus" data-central-sync-feedback="central-encrypted">
+      <h2>Centrale overdrachtstatus</h2>
       <dl class="summary-list">
         ${(['replay-conflict', 'stale-session', 'record-package'] as const)
           .map((kind) => renderCentralSyncFeedbackRow(kind, state.centralSyncFeedback?.[kind]))
           .join('')}
       </dl>
-      <p class="small-print">Deze status toont alleen technische syncrichting en geen recordinhoud.</p>
+      <p class="small-print">Deze status toont alleen overdrachtrichting en geen recordinhoud.</p>
     </section>
   `;
 }
@@ -2985,8 +2987,7 @@ function renderWebAuthnSettings(state: AppShellState): string {
   const status = state.webAuthnStatus;
   if (!status) return '';
   const central = isCentralStorage(state);
-  const datasetLabel = central ? 'centrale encrypted dataset' : 'legacy lokale kluis';
-  const keyLabel = central ? 'datasetsleutel' : 'kluissleutel';
+  const datasetLabel = central ? 'centrale versleutelde opslag' : 'lokale kluis';
   const statusState =
     status.status && status.error
       ? 'mixed'
@@ -2996,8 +2997,8 @@ function renderWebAuthnSettings(state: AppShellState): string {
           ? 'error'
           : 'idle';
   const statusLabel = sanitizeSettingsPrivacyFeedback(
-    status.label ?? 'WebAuthn/biometrie',
-    'WebAuthn/biometrie',
+    status.label ?? 'Lokale biometrie',
+    'Lokale biometrie',
   );
   const reason = sanitizeSettingsPrivacyFeedback(
     status.reden,
@@ -3005,17 +3006,17 @@ function renderWebAuthnSettings(state: AppShellState): string {
   );
 
   return `
-    <section class="policy-panel embedded-summary" aria-label="Biometrie en WebAuthn" data-settings-feedback-kind="webauthn" data-webauthn-feedback-state="${statusState}" data-webauthn-storage="${central ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-webauthn-runtime="${status.runtimeBeschikbaar ? 'available' : 'unavailable'}" data-webauthn-link-state="${status.gekoppeld ? 'linked' : 'unlinked'}">
-      <h2>Biometrie/WebAuthn</h2>
+    <section class="policy-panel embedded-summary" aria-label="Lokale biometrie" data-settings-feedback-kind="webauthn" data-webauthn-feedback-state="${statusState}" data-webauthn-storage="${central ? 'central-encrypted-dataset' : 'legacy-local-vault'}" data-webauthn-runtime="${status.runtimeBeschikbaar ? 'available' : 'unavailable'}" data-webauthn-link-state="${status.gekoppeld ? 'linked' : 'unlinked'}">
+      <h2>Lokale biometrie</h2>
       <p>Optioneel ontgrendelgemak op dit toestel voor je ${datasetLabel}. Je herstelzin blijft nodig als fallback en voor herstel via back-up.</p>
       <dl class="summary-list">
         <div><dt>Status</dt><dd>${status.gekoppeld ? `Gekoppeld: ${escapeHtml(statusLabel)}` : 'Niet gekoppeld'}</dd></div>
         <div><dt>Browser</dt><dd>${escapeHtml(reason)}</dd></div>
       </dl>
-      <button id="webauthn-enroll" class="phase-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>${status.gekoppeld ? 'WebAuthn opnieuw koppelen' : 'Koppel WebAuthn'}</button>
-      <p class="small-print">Kiempad gebruikt alleen lokale WebAuthn PRF-output om de ${keyLabel} versleuteld te bewaren; er gaat geen PRF-output of herstelzin naar een server.</p>
-      ${status.status ? `<p class="linked-note">${escapeHtml(sanitizeSettingsPrivacyFeedback(status.status, 'WebAuthn-status bijgewerkt zonder technische details.'))}</p>` : ''}
-      ${status.error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeSettingsPrivacyFeedback(status.error, 'WebAuthn-status bijgewerkt zonder technische details.'))}</p>` : ''}
+      <button id="webauthn-enroll" class="phase-button" type="button" ${status.runtimeBeschikbaar ? '' : 'disabled'}>${status.gekoppeld ? 'Biometrie opnieuw koppelen' : 'Koppel biometrie'}</button>
+      <p class="small-print">Kiempad bewaart alleen een lokale versleutelde toegangssleutel op dit toestel; herstelzin en sleuteldata gaan niet naar een server.</p>
+      ${status.status ? `<p class="linked-note">${escapeHtml(sanitizeSettingsPrivacyFeedback(status.status, 'Biometriestatus bijgewerkt zonder technische details.'))}</p>` : ''}
+      ${status.error ? `<p class="form-error" role="alert">${escapeHtml(sanitizeSettingsPrivacyFeedback(status.error, 'Biometriestatus bijgewerkt zonder technische details.'))}</p>` : ''}
     </section>
   `;
 }
@@ -3405,7 +3406,7 @@ function renderDossierScreen(state: AppShellState): string {
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
           ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
         </form>
-        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als encrypted dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
+        <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als versleutelde dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${renderUploadAttachmentFeedback(state)}
         ${renderAttachmentConsentExportPrivacy(state)}
         ${renderAttachmentRetentionCleanupPrivacy(state)}
@@ -3851,7 +3852,7 @@ function renderDossierScreen(state: AppShellState): string {
         </form>
         ${
           zoekterm
-            ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde encrypted dataset.</p>`
+            ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde versleutelde opslag.</p>`
             : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
           </section>
@@ -4599,8 +4600,7 @@ function renderDossierTaskRoutes(input: {
       id: 'search',
       href: '#dossier?route=search',
       label: 'Zoeken',
-      meta:
-        input.searchCount === undefined ? 'Encrypted dataset' : `${input.searchCount} resultaten`,
+      meta: input.searchCount === undefined ? 'Versleuteld' : `${input.searchCount} resultaten`,
       badge: input.searchCount === undefined ? 'zoek' : String(input.searchCount),
       density: input.searchCount === undefined ? 'empty' : 'filled',
     },
@@ -4662,7 +4662,7 @@ function renderDossierCommandCenter(input: {
   const previewStatus = input.state.imagingPreviewLocked
     ? 'Beeldpreviews vergrendeld tot ontgrendeling.'
     : input.imagingItems.length > 0
-      ? 'Beeldpreviews alleen zichtbaar binnen de ontgrendelde encrypted sessie.'
+      ? 'Beeldpreviews alleen zichtbaar binnen de ontgrendelde versleutelde sessie.'
       : 'Nog geen beeldpreviews in dit dossier.';
   const contextSignals = renderWorkspaceContextSignals({
     label: 'Dossierfocus',
@@ -5057,11 +5057,11 @@ function renderAttachmentConsentExportPrivacy(state: AppShellState): string {
         </div>
         <div data-attachment-export-kind="encrypted-attachments" data-attachment-export-state="${exportState}">
           <dt>Exportbeschikbaarheid</dt>
-          <dd>${hasAttachments ? `Encrypted ${central ? 'centrale' : 'lokale'} export beschikbaar voor ${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'}, waaronder ${imageCount} beeld${imageCount === 1 ? '' : 'en'} en ${embryoCount} embryobron${embryoCount === 1 ? '' : 'nen'}.` : 'Upload eerst een bijlage om encrypted export beschikbaar te maken.'}</dd>
+          <dd>${hasAttachments ? `Versleutelde ${central ? 'centrale' : 'lokale'} export beschikbaar voor ${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'}, waaronder ${imageCount} beeld${imageCount === 1 ? '' : 'en'} en ${embryoCount} embryobron${embryoCount === 1 ? '' : 'nen'}.` : 'Upload eerst een bijlage om versleutelde export beschikbaar te maken.'}</dd>
         </div>
         <div data-attachment-download-kind="local-attachment" data-attachment-download-state="${downloadState}">
           <dt>Downloadstatus</dt>
-          <dd>${state.imagingPreviewLocked ? 'Downloads en previews blijven vergrendeld tot de encrypted dataset is ontgrendeld.' : hasAttachments ? 'Lokale downloadactie is alleen beschikbaar binnen de ontgrendelde encrypted sessie.' : 'Geen downloadbare bijlagen in dit dossier.'}</dd>
+          <dd>${state.imagingPreviewLocked ? 'Downloads en previews blijven vergrendeld tot de versleutelde opslag is ontgrendeld.' : hasAttachments ? 'Lokale downloadactie is alleen beschikbaar binnen de ontgrendelde versleutelde sessie.' : 'Geen downloadbare bijlagen in dit dossier.'}</dd>
         </div>
         <div data-attachment-share-kind="medical-boundary" data-attachment-share-state="${shareState}">
           <dt>Deelgrens</dt>
@@ -5093,7 +5093,7 @@ function renderAttachmentRetentionCleanupPrivacy(state: AppShellState): string {
       <dl class="summary-list">
         <div data-attachment-retention-kind="encrypted-retention" data-attachment-retention-state="${retentionState}">
           <dt>Bewaarstatus</dt>
-          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} blijven encrypted bewaard met workflowmetadata.` : 'Geen bijlagen om te bewaren.'}</dd>
+          <dd>${hasAttachments ? `${attachmentCount} bijlage${attachmentCount === 1 ? '' : 'n'} blijven versleuteld bewaard met workflowmetadata.` : 'Geen bijlagen om te bewaren.'}</dd>
         </div>
         <div data-attachment-orphan-kind="link-review" data-attachment-orphan-state="${orphanState}">
           <dt>Koppeling</dt>
@@ -5105,7 +5105,7 @@ function renderAttachmentRetentionCleanupPrivacy(state: AppShellState): string {
         </div>
         <div data-attachment-delete-confirm-kind="boundary" data-attachment-delete-confirm-state="${deleteConfirmState}">
           <dt>Verwijderbevestiging</dt>
-          <dd>${hasAttachments ? `Verwijderen vraagt bevestiging per encrypted bijlage; ${imageCount} beeld${imageCount === 1 ? '' : 'en'} blijven vergrendeld tot ontgrendeling.` : 'Geen verwijderbevestiging nodig.'}</dd>
+          <dd>${hasAttachments ? `Verwijderen vraagt bevestiging per versleutelde bijlage; ${imageCount} beeld${imageCount === 1 ? '' : 'en'} blijven vergrendeld tot ontgrendeling.` : 'Geen verwijderbevestiging nodig.'}</dd>
         </div>
       </dl>
       <p class="small-print">Deze beheerstatus toont alleen workflowmetadata en geen broninhoud.</p>
@@ -5207,7 +5207,7 @@ function renderAttachmentSearchFilterPrivacy(
         </div>
         <div data-attachment-filter-kind="locked-result-boundary" data-attachment-filter-state="${lockedResultState}">
           <dt>Vergrendelde resultaten</dt>
-          <dd>${state.imagingPreviewLocked ? 'Bijlagepreviews blijven vergrendeld; deze status toont alleen aantallen en workflowmetadata.' : alleImagingItems.length > 0 ? 'Bijlagepreviews zijn alleen zichtbaar binnen de ontgrendelde encrypted sessie.' : 'Geen vergrendelde imagingresultaten beschikbaar.'}</dd>
+          <dd>${state.imagingPreviewLocked ? 'Bijlagepreviews blijven vergrendeld; deze status toont alleen aantallen en workflowmetadata.' : alleImagingItems.length > 0 ? 'Bijlagepreviews zijn alleen zichtbaar binnen de ontgrendelde versleutelde sessie.' : 'Geen vergrendelde imagingresultaten beschikbaar.'}</dd>
         </div>
       </dl>
       <p class="small-print">Deze zoek- en filterstatus toont geen zoekterm, bronbestand, OCR-tekst of attachmentinhoud.</p>
@@ -5511,7 +5511,7 @@ function renderAttachmentShareHandoffPrivacy(
         </div>
         <div data-attachment-share-kind="external-export-preparation" data-attachment-share-state="${exportState}">
           <dt>Externe exportvoorbereiding</dt>
-          <dd>${hasAttachments ? `Externe exportvoorbereiding gebruikt ${isCentralStorage(state) ? 'centrale' : 'lokale'} encrypted metadata en vraagt expliciete toestemming.` : 'Externe exportvoorbereiding wacht op bijlagen.'}</dd>
+          <dd>${hasAttachments ? `Externe exportvoorbereiding gebruikt ${isCentralStorage(state) ? 'centrale' : 'lokale'} versleutelde metadata en vraagt expliciete toestemming.` : 'Externe exportvoorbereiding wacht op bijlagen.'}</dd>
         </div>
         <div data-attachment-share-kind="locked-preview-handoff-boundary" data-attachment-share-state="${lockedState}">
           <dt>Locked-preview handoffgrens</dt>
@@ -10540,7 +10540,7 @@ function renderEmbryoExifIsolaties(
           })
           .join('')}
       </ol>
-      <p class="small-print">Deze status gebruikt alleen expliciete metadata uit de encrypted dataset; Kiempad leest geen EXIF-inhoud uit in deze weergave en beoordeelt het beeld niet medisch.</p>
+      <p class="small-print">Deze status gebruikt alleen expliciete metadata uit de versleutelde opslag; Kiempad leest geen EXIF-inhoud uit in deze weergave en beoordeelt het beeld niet medisch.</p>
     </section>
   `;
 }
@@ -10632,7 +10632,7 @@ function renderImagingRepositoryItem(
     item.previewState.status === 'locked'
       ? `<div class="linked-note imaging-locked-placeholder" aria-label="Beeldpreview vergrendeld" data-attachment-preview-kind="imaging-preview" data-attachment-preview-state="locked">
           <p>Beeldpreview vergrendeld.</p>
-          <p class="small-print">Ontgrendel de encrypted dataset om lokale preview of thumbnail te tonen.</p>
+          <p class="small-print">Ontgrendel de versleutelde opslag om lokale preview of thumbnail te tonen.</p>
         </div>`
       : '';
   const bronLabel =
@@ -10699,8 +10699,8 @@ function renderImagingThumbnailTile(
       <figure class="imaging-preview-tile imaging-preview-tile--unlocked" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="unlocked">
         <img src="data:${escapeAttribute(item.mimeType ?? '')};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale thumbnail van ${escapeAttribute(item.titel)}" loading="lazy" />
         <figcaption>
-          <strong>Encrypted thumbnail</strong>
-          <span>Thumbnail uit ontgrendelde encrypted dataset.</span>
+          <strong>Versleutelde thumbnail</strong>
+          <span>Thumbnail uit ontgrendelde versleutelde opslag.</span>
         </figcaption>
       </figure>
     `;
@@ -10710,7 +10710,7 @@ function renderImagingThumbnailTile(
     return `
       <div class="imaging-preview-tile imaging-preview-tile--locked" aria-label="Beeldthumbnail vergrendeld" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="locked">
         <strong>Preview vergrendeld</strong>
-        <span>Ontgrendel de encrypted dataset om een lokale thumbnail te tonen.</span>
+        <span>Ontgrendel de versleutelde opslag om een lokale thumbnail te tonen.</span>
       </div>
     `;
   }
@@ -11222,7 +11222,7 @@ function renderDossierDocument(
         <h3>${escapeHtml(titleLabel)}</h3>
         ${
           tijdlijn
-            ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}${tijdlijn.previewState ? ` · preview: ${escapeHtml(tijdlijn.previewState.label)} · ${escapeHtml(tijdlijn.previewBron === 'encrypted_dataset' ? 'encrypted dataset' : 'geen previewbron')}` : ''}</p>`
+            ? `<p class="linked-note">Tijdlijn: ${escapeHtml(tijdlijn.datum)} · ${escapeHtml(tijdlijn.documenttype)} · bron: ${escapeHtml(tijdlijn.bron)}${tijdlijn.previewState ? ` · preview: ${escapeHtml(tijdlijn.previewState.label)} · ${escapeHtml(tijdlijn.previewBron === 'encrypted_dataset' ? 'versleutelde opslag' : 'geen previewbron')}` : ''}</p>`
             : ''
         }
         ${
@@ -11458,7 +11458,7 @@ function renderDossierImagePreview(document: DossierDocument, state: AppShellSta
     return `
       <div class="linked-note imaging-locked-placeholder" aria-label="Dossierpreview vergrendeld" data-attachment-preview-kind="dossier-preview" data-attachment-preview-state="locked">
         <p>Beeldpreview vergrendeld.</p>
-        <p class="small-print">Ontgrendel de encrypted dataset om deze lokale dossierpreview te tonen.</p>
+        <p class="small-print">Ontgrendel de versleutelde opslag om deze lokale dossierpreview te tonen.</p>
       </div>
     `;
   }
@@ -11473,8 +11473,8 @@ function renderDossierImagePreview(document: DossierDocument, state: AppShellSta
 
 function beschrijfPreviewLocatie(state: AppShellState): string {
   return isCentralStorage(state)
-    ? 'Lokale preview uit de ontgrendelde centrale encrypted dataset.'
-    : 'Lokale preview uit de legacy lokale encrypted dataset op dit toestel.';
+    ? 'Lokale preview uit de ontgrendelde centrale versleutelde opslag.'
+    : 'Lokale preview uit de lokale kluis op dit toestel.';
 }
 
 function renderWelzijnScreen(state: AppShellState): string {
@@ -13786,7 +13786,7 @@ function renderStartScreen(state: AppShellState): string {
       0,
     ),
     costCount: state.kosten?.length ?? 0,
-    secureMode: isCentralStorage(state) ? 'Centrale encrypted dataset' : 'Lokale kluis',
+    secureMode: isCentralStorage(state) ? 'Centrale versleutelde opslag' : 'Lokale kluis',
   });
   const dailyAdviceConsole = renderDailyAdviceConsole(state, dailyRecommendations);
   const startTodayConsole = renderStartTodayConsole({
@@ -17725,8 +17725,8 @@ function renderFertilityTimeline(
   trajectExport?: FertilityTimelineTrajectExport,
 ): string {
   const bronBeschrijving = isCentralStorage(state)
-    ? 'vanuit je ontgrendelde centrale encrypted dataset'
-    : 'vanuit de legacy lokale encrypted dataset';
+    ? 'vanuit je ontgrendelde centrale versleutelde opslag'
+    : 'vanuit de lokale kluis';
 
   return `
     <section class="summary-panel embedded-summary fertility-timeline-console" aria-label="Centrale fertility timeline" data-fertility-timeline-console="ready" data-timeline-state="${timeline.items.length > 0 ? 'gevuld' : 'leeg'}">
@@ -18178,7 +18178,7 @@ function renderGraphIndexRebuildRapport(rapport: FertilityGraphIndexRebuildRappo
     <section class="policy-panel embedded-summary" aria-label="Graph-index rebuild">
       <h3>Graph-index rebuild</h3>
       <dl class="summary-list">
-        <div><dt>Status</dt><dd>Opnieuw opgebouwd uit ontgrendelde encrypted datasetrecords</dd></div>
+        <div><dt>Status</dt><dd>Opnieuw opgebouwd uit ontgrendelde versleutelde records</dd></div>
         <div><dt>Bronrecords</dt><dd>${rapport.bronRecordIds.length}</dd></div>
         <div><dt>Controlehash</dt><dd>${escapeHtml(rapport.controleHash)}</dd></div>
         <div><dt>Voorstellen</dt><dd>${rapport.voorstelAantal}</dd></div>
