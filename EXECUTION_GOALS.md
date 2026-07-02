@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1358 — Daily Recommendations: resetknoppen blijven duidelijk in forced-colors
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvies-resetknoppen delen focus-, hover-, active- en guarded-styling, maar forced-colors/high-contrast weergave is nog niet expliciet als gedeeld contract bewaakt.
+- **User Impact:** Gebruikers met high-contrast instellingen kunnen resetstatussen minder duidelijk herkennen als browserkleuren later anders uitpakken.
+- **Desired Outcome:** Geef workflowstatus, lijstfilterheader en filterformulier resetknoppen een gedeelde forced-colors stijl voor focus, active en guarded/disabled context.
+- **User Value:** Gebruikers houden herkenbare lokale resetacties, ook met toegankelijkheidsinstellingen.
+- **Acceptance Criteria:** Workflowstatus, lijstfilterheader en filterformulier resetknoppen hebben een gedeelde forced-colors stijl; focus, active en disabled/guarded staten blijven herkenbaar zonder layoutshift; resetknoppen blijven afwezig zonder actieve lokale feedbackfilter; tests of smoke-dekking bewaken selectors en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, accessibility, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2662
+
 ### G1357 — Daily Recommendations: resetknoppen hebben compacte disabled-guard stijl
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2660
 
 ### G1356 — Daily Recommendations: resetknoppen tonen rustige actieve drukstijl
