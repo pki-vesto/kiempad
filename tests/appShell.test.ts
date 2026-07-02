@@ -2033,6 +2033,11 @@ describe('app shell', () => {
     expect(css).toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
     expect(css).toContain('.finance-focus-shell__workspace {');
     expect(css).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('.cost-history-list {');
+    expect(css).toContain('.cost-history-card > article {');
+    expect(css).toContain('.cost-history-card__header {');
+    expect(css).toContain('.cost-history-card__amount {');
+    expect(css).toContain('.cost-history-card__edit summary {');
     expect(css).toContain('"rail context";');
     expect(css).toContain('.backup-focus-shell {');
     expect(css).toContain('.backup-focus-shell__header {');
@@ -37073,8 +37078,16 @@ describe('app shell', () => {
     expect(html).toContain('€');
     expect(html).toContain('Medicatie');
     expect(html).toContain('Eigen risico');
-    expect(html).toContain('class="cost-item-meta"');
-    expect(html).toContain('class="cost-amount" data-cost-amount="row"');
+    expect(html).toContain('class="cost-history-list" aria-label="Kostenhistorie"');
+    expect(html).toContain('data-cost-history-list="ready"');
+    expect(html).toContain('class="cost-history-card" data-cost-history-card="ready"');
+    expect(html).toContain('data-cost-status="eigen_risico"');
+    expect(html).toContain('class="cost-history-card__header"');
+    expect(html).toContain('class="cost-amount cost-history-card__amount" data-cost-amount="row"');
+    expect(html).toContain('class="cost-history-card__meta"');
+    expect(html).toContain('Bewerk kostenpost');
+    expect(html).toContain('Geen traject gekoppeld');
+    expect(html).not.toContain('class="phase-item"');
     expect(html).toContain(
       'class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="eigen_risico"',
     );

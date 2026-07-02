@@ -12541,7 +12541,7 @@ function renderKostenScreen(state: AppShellState): string {
           <div class="kp-disclosure__body">
             ${
               kosten.length > 0
-                ? `<ol class="phase-list">${kosten.map(renderKostenItem).join('')}</ol>`
+                ? renderKostenHistoryList(kosten)
                 : renderEmptyState('Nog geen kostenposten vastgelegd.', {
                     title: 'Geen kostenposten',
                     cta: { href: '#kosten?route=toevoegen', label: 'Kostenpost toevoegen' },
@@ -12746,22 +12746,35 @@ function renderKostenForm(selected?: CostItem): string {
   `;
 }
 
+function renderKostenHistoryList(items: readonly CostItem[]): string {
+  return `
+    <ol class="cost-history-list" aria-label="Kostenhistorie" data-cost-history-list="ready">
+      ${items.map(renderKostenItem).join('')}
+    </ol>
+  `;
+}
+
 function renderKostenItem(item: CostItem): string {
   return `
-    <li class="phase-item">
-      <div>
-        <h3>${escapeHtml(item.omschrijving)}</h3>
-        <p class="cost-item-meta">
-          <span class="cost-amount" data-cost-amount="row">${formatEuro(item.bedrag)}</span>
-          <span>${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])}</span>
+    <li class="cost-history-card" data-cost-history-card="ready" data-cost-status="${escapeAttribute(item.vergoed)}">
+      <article>
+        <header class="cost-history-card__header">
+          <div class="cost-history-card__title">
+            <p class="kp-card__eyebrow">${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])}</p>
+            <h3>${escapeHtml(item.omschrijving)}</h3>
+          </div>
+          <span class="cost-amount cost-history-card__amount" data-cost-amount="row">${formatEuro(item.bedrag)}</span>
+        </header>
+        <div class="cost-history-card__meta">
           ${renderCostStatusBadge(item.vergoed)}
-        </p>
-        <small>${escapeHtml(item.datum)}${item.trajectId ? ` · Traject: ${escapeHtml(item.trajectId)}` : ''}</small>
-      </div>
-      <details>
-        <summary>Bewerk</summary>
+          <span>${escapeHtml(item.datum)}</span>
+          ${item.trajectId ? `<span>Traject: ${escapeHtml(item.trajectId)}</span>` : '<span>Geen traject gekoppeld</span>'}
+        </div>
+        <details class="cost-history-card__edit">
+          <summary>Bewerk kostenpost</summary>
         ${renderKostenForm(item)}
       </details>
+      </article>
     </li>
   `;
 }

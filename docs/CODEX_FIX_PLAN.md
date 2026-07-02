@@ -150,6 +150,9 @@
 - **CFX-044 backup route-first workspace — partial in G1362 / issue #2498.** Back-up now removes
   the fixed third context column and keeps controleren, export, import, and herstel inside the
   active safety route workspace.
+- **CFX-037 finance history cards — partial in G1364 / issue #2502.** Kostenhistorie now uses
+  scan-friendly cost history cards with status rails, right-aligned tabular amounts, and quiet
+  edit disclosures instead of generic phase-list rows.
 
 ---
 
@@ -559,6 +562,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
+  Partial G1364/#2502: Kostenhistorie renders as scan-friendly cost cards with status rails and
+  quiet edit disclosures.
 - **CFX-038** — Kennis: kit search/category, category-eyebrow cards, chevron, badges. **P2 · M**
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
