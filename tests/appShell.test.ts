@@ -3162,6 +3162,19 @@ describe('app shell', () => {
     );
     expect(css).toContain('cursor: not-allowed;');
     expect(css).toContain('opacity: 0.72;');
+    expect(css).toContain('@media (forced-colors: active)');
+    expect(css).toContain('border-color: ButtonText;');
+    expect(css).toContain('background: ButtonFace;');
+    expect(css).toContain('forced-color-adjust: auto;');
+    expect(css).toContain(
+      '[data-daily-recommendation-feedback-filter-reset="ready"]:focus-visible,',
+    );
+    expect(css).toContain('[data-daily-recommendation-feedback-filter-reset="ready"]:active {');
+    expect(css).toContain('border-color: Highlight;');
+    expect(css).toContain('background: Highlight;');
+    expect(css).toContain('color: HighlightText;');
+    expect(css).toContain('border-color: GrayText;');
+    expect(css).toContain('color: GrayText;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(

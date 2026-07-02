@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1359 — Daily Recommendations: resetknoppen hebben consistente touch target ruimte
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvies-resetknoppen delen inmiddels hun belangrijkste interactiestaten, maar touch-target ruimte en stabiele afmetingen zijn nog niet als gedeeld contract bewaakt.
+- **User Impact:** Mobiele gebruikers kunnen resetacties minder comfortabel raken als de knoppen per context te compact of ongelijk worden.
+- **Desired Outcome:** Borg consistente min-height/touch-target ruimte voor workflowstatus, lijstfilterheader en filterformulier resetknoppen zonder de lokale filterlogica te wijzigen.
+- **User Value:** Gebruikers kunnen lokale resetacties voorspelbaar en comfortabel bedienen op mobiel en desktop.
+- **Acceptance Criteria:** Workflowstatus, lijstfilterheader en filterformulier resetknoppen delen een consistent touch-target/min-height contract; de knoppen blijven afwezig zonder actieve lokale feedbackfilter; er ontstaat geen horizontale overflow op mobiel of desktop; tests of routeflow-smoke bewaken selectors en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, mobile UI, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2664
+
 ### G1358 — Daily Recommendations: resetknoppen blijven duidelijk in forced-colors
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, accessibility, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2662
 
 ### G1357 — Daily Recommendations: resetknoppen hebben compacte disabled-guard stijl
