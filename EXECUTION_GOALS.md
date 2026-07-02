@@ -34,6 +34,22 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1327 — CFX-033b: Sidebar-acties naar rustige utility-zone
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De desktop-sidebar begon met dominante instellingen- en vergrendelknoppen boven de navigatie, waardoor de app-shell als een control panel bleef voelen.
+- **User Impact:** De primaire navigatie startte lager en het eerste visuele signaal bleef druk, terwijl gebruikers juist snel naar taakroutes willen.
+- **Desired Outcome:** Toon bovenin de sidebar alleen merk en opslagstatus; verplaats instellingen en vergrendelen naar een stille utility-zone onderaan de sidebar.
+- **User Value:** De navigatie wordt sneller scanbaar en de app voelt minder als één druk bedieningspaneel boven de inhoud.
+- **Acceptance Criteria:** Topbar/header bevat geen settings/lock actierij meer; `data-sidebar-utility=\"ready\"` bevat instellingen en vergrendelen; settings-sheet en lock-binding blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; tests dekken de nieuwe locatie; geen medische payload, OCR-tekst, bestandsinhoud, secrets of trackingdata wordt toegevoegd.
+- **Affected Screens:** Globale app-shell, desktop-sidebar, mobiele shell
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, CSS, settings, lock, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+
 ### G1326 — CFX-015: Mobiele Meer-sheet en routeformulieren overlappen niet
 
 - **Epic:** Onboarding & Daily Use

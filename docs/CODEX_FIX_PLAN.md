@@ -35,6 +35,9 @@
 - **CFX-015 mobile non-overlap — done in G1326 / issue #2426.** The mobile `Meer` trigger
   can stay visibly active for secondary routes without auto-opening its sheet over the
   content, and mobile route forms now reserve scroll room above the bottom navigation.
+- **CFX-033b sidebar utility actions — done in G1327 / issue #2428.** Settings and lock
+  actions moved out of the desktop sidebar header into a quiet utility zone below the
+  navigation/workspace strip, so the sidebar opens with brand, storage status, and navigation.
 
 ---
 
@@ -407,8 +410,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Accept: all 13 routes reachable on mobile; active state reflected. **P1 · L**
 - **CFX-034b** — Nav grouping (D34): Primair(8)/Beheer(3)/Privacy(2) with eyebrow labels + hairline
   separators in the desktop sidebar. **P2 · M**
-- **CFX-033b** — Move theme + lock controls out of the sidebar top into the Settings sheet / a quiet
-  bottom-of-sidebar action (D32/D33). Depends on CFX-006. **P1 · M**
+- **CFX-033b** — ✅ Done in G1327 / issue #2428. Move theme + lock controls out of the
+  sidebar top into the Settings sheet / a quiet bottom-of-sidebar action (D32/D33).
+  Depends on CFX-006. **P1 · M**
 - **CFX-015** — ✅ Done in G1326 / issue #2426. `env(safe-area-inset-bottom)` +
   non-overlap + scrollable bottom-nav (L83). **P1 · S**
 - **CFX-082** — Mobile: forms stack single-column; buttons full-width only where needed (L82). **P2 · S**

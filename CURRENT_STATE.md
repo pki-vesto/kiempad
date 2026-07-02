@@ -50,6 +50,9 @@
   Meer-knop actief gemarkeerd zonder de sheet automatisch over de content te openen;
   routeformulieren reserveren extra ruimte boven de bottom navigation zodat controls
   aanklikbaar blijven.
+- **G1327 rustige sidebar-acties:** instellingen en vergrendelen staan niet meer
+  bovenin de desktop-sidebar; de header toont merk en opslagstatus, terwijl de
+  acties onderaan in een stille utility-zone bereikbaar blijven.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-
