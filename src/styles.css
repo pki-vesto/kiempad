@@ -4471,6 +4471,21 @@ h2 {
   color: var(--text-muted);
 }
 
+.daily-recommendation-list-filter-header__owners {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.daily-recommendation-list-filter-header__owners span {
+  padding: 2px 6px;
+  border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 82%, white);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 .daily-recommendation-list-filter-header form {
   display: contents;
 }
