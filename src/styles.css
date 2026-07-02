@@ -9937,6 +9937,72 @@ h2 {
   min-width: 0;
 }
 
+.question-open-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
+}
+
+.question-open-toolbar h2,
+.question-open-toolbar p {
+  margin: 0;
+}
+
+.question-open-toolbar h2 {
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.question-open-toolbar span {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 5px;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.74rem;
+  font-weight: 850;
+}
+
+.question-open-toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: end;
+  min-width: 0;
+}
+
+.question-open-toolbar__actions button {
+  min-height: 36px;
+}
+
+.question-form__prompt {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 54%),
+    var(--surface-subtle);
+}
+
+.question-prompt-field {
+  gap: 7px;
+}
+
+.question-prompt-input {
+  min-height: 78px;
+  border-radius: 18px;
+  background: var(--surface);
+  line-height: 1.45;
+  resize: vertical;
+}
+
 .consult-prep-board {
   display: grid;
   gap: 12px;
@@ -16233,6 +16299,24 @@ a.action-card:active {
   .question-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .question-open-toolbar {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .question-open-toolbar__actions {
+    justify-content: stretch;
+  }
+
+  .question-open-toolbar__actions button {
+    flex: 1 1 150px;
+  }
+
+  .question-prompt-input {
+    min-height: 88px;
+    border-radius: 14px;
   }
 
   .consult-prep-board {
