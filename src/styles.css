@@ -4538,6 +4538,14 @@ h2 {
 [data-daily-advice-feedback-workflow-reset="ready"],
 [data-daily-recommendation-list-filter-reset="ready"],
 [data-daily-recommendation-feedback-filter-reset="ready"] {
+  display: inline-flex;
+  min-height: 34px;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  line-height: 1.2;
+  white-space: nowrap;
   transition:
     border-color 140ms ease,
     background 140ms ease,

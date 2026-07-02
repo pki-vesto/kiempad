@@ -3131,6 +3131,13 @@ describe('app shell', () => {
     expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"],');
     expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"],');
     expect(css).toContain('[data-daily-recommendation-feedback-filter-reset="ready"] {');
+    expect(css).toContain('display: inline-flex;');
+    expect(css).toContain('min-height: 34px;');
+    expect(css).toContain('max-width: 100%;');
+    expect(css).toContain('align-items: center;');
+    expect(css).toContain('justify-content: center;');
+    expect(css).toContain('padding: 6px 10px;');
+    expect(css).toContain('white-space: nowrap;');
     expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"]:focus-visible,');
     expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"]:focus-visible,');
     expect(css).toContain(

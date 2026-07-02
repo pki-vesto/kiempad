@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1360 — Daily Recommendations: resetknoppen behouden compacte tekstbreedte
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvies-resetknoppen hebben nu consistente touch-target ruimte, maar langere labels of toekomstige lokalisatie kunnen nog breedte- of overlapdrift veroorzaken.
+- **User Impact:** Gebruikers kunnen chips, statusregels of formulieracties minder goed scannen als resetknoppen tekstbreedte niet begrenzen.
+- **Desired Outcome:** Borg een compact tekstbreedte-/overflowcontract voor workflowstatus, lijstfilterheader en filterformulier resetknoppen.
+- **User Value:** Gebruikers houden rustige, scanbare resetacties zonder tekstoverlap op mobiel en desktop.
+- **Acceptance Criteria:** De drie lokale resetknoppen delen een consistent tekstbreedte-/overflowcontract; lange labels veroorzaken geen overlap met chips, statusregels of formulieracties; resetknoppen blijven afwezig zonder actieve lokale feedbackfilter; tests of routeflow-smoke bewaken selectors en mobiele/desktop overflowgrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, responsive UI, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2666
+
 ### G1359 — Daily Recommendations: resetknoppen hebben consistente touch target ruimte
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, mobile UI, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2664
 
 ### G1358 — Daily Recommendations: resetknoppen blijven duidelijk in forced-colors
