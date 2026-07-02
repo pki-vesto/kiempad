@@ -13983,7 +13983,7 @@ a.action-card:active {
   .notification-route-section {
     gap: 9px;
     scroll-margin-top: 96px;
-    padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);
+    padding-bottom: var(--mobile-bottom-nav-clearance);
   }
 
   .command-route-section__header,
@@ -14032,7 +14032,39 @@ a.action-card:active {
   .command-route-section button,
   .command-route-section input,
   .command-route-section select,
-  .command-route-section textarea {
+  .command-route-section textarea,
+  .dossier-route-section button,
+  .dossier-route-section input,
+  .dossier-route-section select,
+  .dossier-route-section textarea,
+  .knowledge-route-section button,
+  .knowledge-route-section input,
+  .knowledge-route-section select,
+  .knowledge-route-section textarea,
+  .wellbeing-route-section button,
+  .wellbeing-route-section input,
+  .wellbeing-route-section select,
+  .wellbeing-route-section textarea,
+  .decision-route-section button,
+  .decision-route-section input,
+  .decision-route-section select,
+  .decision-route-section textarea,
+  .finance-route-section button,
+  .finance-route-section input,
+  .finance-route-section select,
+  .finance-route-section textarea,
+  .backup-route-section button,
+  .backup-route-section input,
+  .backup-route-section select,
+  .backup-route-section textarea,
+  .eventlog-route-section button,
+  .eventlog-route-section input,
+  .eventlog-route-section select,
+  .eventlog-route-section textarea,
+  .notification-route-section button,
+  .notification-route-section input,
+  .notification-route-section select,
+  .notification-route-section textarea {
     scroll-margin-bottom: var(--mobile-bottom-nav-clearance);
   }
 

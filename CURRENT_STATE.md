@@ -42,6 +42,14 @@
   sheet met namen, gedeelde modus en thema. Namen en gedeelde modus worden encrypted
   bewaard en de Start-groet gebruikt opgeslagen namen in plaats van een hardcoded
   placeholder.
+- **G1325 Welzijn met persoonlijke ownerlabels:** recente welzijnssignalen,
+  `Van wie`-selects en check-in/symptoombadges tonen ingestelde namen waar
+  beschikbaar, met `Samen` als gedeelde context en behoud van de bestaande
+  `peter`/`partner`/`samen` recordwaarden.
+- **G1326 mobiele Meer-sheet zonder blokkade:** secundaire mobiele routes houden de
+  Meer-knop actief gemarkeerd zonder de sheet automatisch over de content te openen;
+  routeformulieren reserveren extra ruimte boven de bottom navigation zodat controls
+  aanklikbaar blijven.
 - **M1.2 versleutelde opslagfundering:** passphrase-kluis met PBKDF2 + salt,
   niet-exporteerbare AES-256-GCM sleutel alleen in geheugen, verifier-based unlock,
   auto-lock, IndexedDB repository-interface voor versleutelde records, UUID/ISO-

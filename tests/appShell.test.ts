@@ -1808,7 +1808,8 @@ describe('app shell', () => {
     expect(primaryTabCount).toBe(8);
     expect(moreSheetRouteCount).toBe(10);
     expect(html).toContain('data-mobile-more-nav="ready"');
-    expect(html).toContain('data-mobile-more-active="true" open');
+    expect(html).toContain('data-mobile-more-active="true"');
+    expect(html).not.toContain('data-mobile-more-active="true" open');
     expect(html).toContain('<span class="nav-item__label">Meer</span>');
     expect(html).toContain('<p class="primary-nav__more-title">Inzicht</p>');
     expect(html).toContain('<p class="primary-nav__more-title">Beheer</p>');
@@ -35728,7 +35729,11 @@ describe('app shell', () => {
       herinneringen: [],
       vragen: [],
       kennisItems: [],
-      settings: DEFAULT_APP_SETTINGS,
+      settings: {
+        ...DEFAULT_APP_SETTINGS,
+        profielen: { peter: 'Sam', partner: 'Noor' },
+        gedeeldeModus: true,
+      },
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       mentalCheckIns: [
         {
@@ -35786,7 +35791,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('Welzijn eerst rustig scannen');
     expect(html).toContain('Recent signaal');
-    expect(html).toContain('Partner check-in: Zwaar');
+    expect(html).toContain('Noor check-in: Zwaar');
+    expect(html).toContain('Noor · Samen');
     expect(html).toContain('aria-label="Welzijn werkbank acties"');
     expect(html).toContain('href="#welzijn-route-overview"');
     expect(html).toContain('href="#welzijn-route-history"');
@@ -35844,11 +35850,15 @@ describe('app shell', () => {
     expect(html).toContain('Dagen met symptomen');
     expect(html).toContain('Stemming zwaar');
     expect(html).toContain('data-owner="partner"');
-    expect(html).toContain('Eigenaar: Partner');
+    expect(html).toContain('Van: Noor');
     expect(html).toContain('data-owner="samen"');
-    expect(html).toContain('Eigenaar: Samen');
+    expect(html).toContain('Van: Samen');
     expect(html).toContain('data-owner="peter"');
-    expect(html).toContain('Eigenaar: Peter');
+    expect(html).toContain('Van: Sam');
+    expect(html).not.toContain('Eigenaar: Partner');
+    expect(html).not.toContain('Eigenaar: Peter');
+    expect(html).toContain('<option value="peter">Sam</option>');
+    expect(html).toContain('<option value="partner">Noor</option>');
     expect(html).toContain('Zwaar');
     expect(html).toContain('Privé notitie: Veel spanning vandaag.');
     expect(html).toContain('Symptoomlog toevoegen');
@@ -37894,7 +37904,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('scroll-padding-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-padding-inline: 7px;');
     expect(mobileCss).toContain('scroll-margin-inline: 7px;');
-    expect(mobileCss).toContain('padding-bottom: calc(var(--mobile-bottom-nav-clearance) - 56px);');
+    expect(mobileCss).toContain('padding-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-margin-bottom: var(--mobile-bottom-nav-clearance);');
     expect(mobileCss).toContain('scroll-margin-top: 96px;');
     expect(mobileCss).toContain('.primary-nav a[data-mobile-nav-tier="mobile-more-sheet"] {');
