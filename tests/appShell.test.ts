@@ -2129,6 +2129,10 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-focus-shell__workspace {');
     expect(css).toContain('.schedule-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('"rail context";');
+    expect(css).toContain('.schedule-form {');
+    expect(css).toContain('.schedule-form-section {');
+    expect(css).toContain('.schedule-form-section--primary {');
+    expect(css).toContain('.schedule-form-actions {');
     expect(css).toContain('.schedule-date-blocks {');
     expect(css).toContain('.schedule-date-block {');
     expect(css).toContain('.schedule-appointment-card {');
@@ -2268,6 +2272,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.schedule-focus-shell {');
     expect(mobileCss).toContain('.schedule-focus-shell__body {');
     expect(mobileCss).toContain('.schedule-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.schedule-form-section {');
+    expect(mobileCss).toContain('.schedule-form-actions {');
     expect(mobileCss).toContain('.schedule-date-block,');
     expect(mobileCss).toContain('.schedule-appointment-card,');
     expect(mobileCss).toContain(
@@ -3874,9 +3880,17 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-route-summary="overzicht"');
     expect(html).toContain('Agendaoverzicht route-samenvatting');
     expect(html).toContain('Week- en maandcontext');
+    expect(html).toContain('id="afspraak-form" class="data-form schedule-form"');
     expect(html).toContain('data-command-form-section="afspraak-basis"');
+    expect(html).toContain('data-schedule-form-section="basis"');
     expect(html).toContain('data-command-form-section="afspraak-context"');
+    expect(html).toContain('data-schedule-form-section="context"');
     expect(html).toContain('data-command-form-section="afspraak-voorbereiding"');
+    expect(html).toContain('data-schedule-form-section="voorbereiding"');
+    expect(html).toContain('data-schedule-form-section="herinnering"');
+    expect(html).toContain('class="schedule-form-field schedule-form-field--wide"');
+    expect(html).toContain('class="form-grid schedule-form-grid"');
+    expect(html).toContain('class="schedule-form-actions"');
     expect(html).toContain('data-schedule-route="overzicht"');
     expect(html).toContain('data-schedule-route-state="active"');
     expect(html).toContain('id="agenda-route-komend"');

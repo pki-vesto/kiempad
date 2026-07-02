@@ -178,6 +178,9 @@
 - **CFX-038 knowledge filter kit — partial in G1372 / issue #2518.** Kennis now renders its
   search/category filter as a bibliotheekfilter kit with active status, grouped fields, and
   explicit apply/reset actions.
+- **CFX-034/CFX-012 agenda form kit — partial in G1373 / issue #2520.** Agenda Plannen now uses
+  agenda-specific form sections, field styling, and a compact action row instead of a generic flat
+  appointment form.
 
 ---
 
@@ -582,6 +585,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
   a fixed third context column.
+  Partial G1373/#2520: Agenda Plannen uses a sectioned form kit with primary planning section and
+  compact action row.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
   Done in G1347/#2468. Partial G1358/#2490: Medicatie uses a route-first workspace without a fixed
   third context column.
@@ -634,6 +639,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   date/number/select styling anywhere. **P1 · L**
   Partial G1371/#2516: Kostenpost toevoegen/bewerken now uses explicit form sections and a styled
   euro amount field while preserving the existing form hooks.
+  Partial G1373/#2520: Agenda afspraak plannen/bewerken now uses schedule-specific form sections
+  and a mobile-safe action wrapper.
 - **CFX-025** — `€` prefix adornment in amount fields (C25). **P3 · S**
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**
