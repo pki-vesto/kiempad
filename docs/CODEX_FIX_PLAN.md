@@ -282,6 +282,9 @@
 - **CFX-040/CFX-012 dossier upload choice hub — partial in G1402 / issue #2578.** Dossier Upload
   now opens in a compact choice state instead of immediately rendering the document form, and
   document/consult/embryo forms only open after an explicit route choice or anchor target.
+- **CFX-040 dossier search support collapse — partial in G1403 / issue #2580.** Dossier Zoeken now
+  starts with the primary search panel only; privacy controls and the content index sit behind one
+  closed support disclosure while remaining present for routeflow validation.
 
 ---
 

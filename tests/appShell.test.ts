@@ -7079,7 +7079,9 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-search-console {');
     expect(css).toContain('grid-template-areas:');
-    expect(css).toContain('"search privacy"');
+    expect(css).toContain('"search support"');
+    expect(css).toContain('.dossier-search-support {');
+    expect(css).toContain('.dossier-search-support__body {');
     expect(css).toContain('.dossier-search-console__panel {');
     expect(css).toContain('[data-dossier-search-console-region="privacy"]');
     expect(css).toContain('[data-dossier-search-console-region="index"]');
@@ -7943,6 +7945,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-search-console-region="search"');
     expect(emptyHtml).toContain('data-dossier-search-console-region="privacy"');
     expect(emptyHtml).toContain('data-dossier-search-console-region="index"');
+    expect(emptyHtml).toContain('data-dossier-search-support="collapsed"');
+    expect(emptyHtml).toContain('Ondersteunende panelen openen');
+    expect(emptyHtml).toContain('Privacycontrole en inhoudsindex');
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
     expect(emptyHtml).toContain('Zoek gericht in je dossier');
     expect(emptyHtml).toContain('data-dossier-search-kit="ready"');
@@ -7959,6 +7964,9 @@ describe('app shell', () => {
     expect(emptyDisclosure).toContain('data-attachment-responsive-motion-surface="privacy"');
     expect(emptyDisclosure).toContain('data-attachment-assistive-summary-surface="privacy"');
     expect(emptyHtml.indexOf('id="dossier-search-form"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-search-support="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-search-support="collapsed"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-secondary-privacy="collapsed"')).toBeLessThan(

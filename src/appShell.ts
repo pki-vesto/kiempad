@@ -3884,6 +3884,15 @@ function renderDossierScreen(state: AppShellState): string {
             : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
         }
           </section>
+          <details class="kp-disclosure dossier-search-support" data-dossier-search-support="collapsed">
+            <summary class="kp-disclosure__summary dossier-search-support__summary">
+              <span>
+                <strong>Ondersteunende panelen openen</strong>
+                <small>Privacycontrole en inhoudsindex</small>
+              </span>
+              <em>${indexItems.length} indexitems</em>
+            </summary>
+            <div class="kp-disclosure__body dossier-search-support__body">
           <section class="dossier-search-console__panel" aria-labelledby="dossier-search-privacy-title" data-dossier-search-console-region="privacy">
             <header class="dossier-search-console__panel-header">
               <p class="kp-card__eyebrow">Controle</p>
@@ -4000,6 +4009,8 @@ function renderDossierScreen(state: AppShellState): string {
           </div>
         </details>
           </section>
+            </div>
+          </details>
         </section>
         </section>
         <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging"${renderDossierRouteVisibility(activeDossierRoute, 'imaging')}>
