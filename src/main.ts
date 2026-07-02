@@ -1681,15 +1681,17 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 
 function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
   root
-    .querySelector<HTMLFormElement>('#daily-recommendation-feedback-filter-form')
-    ?.addEventListener('submit', (event) => {
-      event.preventDefault();
-      applyDailyRecommendationFeedbackFilter(
-        event.currentTarget,
-        (event as SubmitEvent).submitter,
-        root,
-        state,
-      );
+    .querySelectorAll<HTMLFormElement>('[data-daily-recommendation-feedback-control="ready"]')
+    .forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        applyDailyRecommendationFeedbackFilter(
+          event.currentTarget,
+          (event as SubmitEvent).submitter,
+          root,
+          state,
+        );
+      });
     });
 
   root.querySelectorAll<HTMLFormElement>('.daily-recommendation-action-form').forEach((form) => {

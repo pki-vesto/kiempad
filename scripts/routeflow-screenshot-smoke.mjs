@@ -161,6 +161,7 @@ const targets = [
       '[data-daily-advice-focus-region="list"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
       '[data-daily-advice-feedback-workflow-status="ready"]',
+      '[data-daily-advice-feedback-workflow-reset="ready"]',
       '[data-daily-recommendation-feedback-filter="ready"]',
       '[data-daily-recommendation-feedback-filter-chip="ready"]',
       '[data-daily-recommendation-feedback-filter-reset="ready"]',
@@ -1593,8 +1594,30 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .waitFor({ timeout: 10_000 });
   await expectHash(page, '#start-recommendations?feedback=artscheck');
 
-  await page.locator('[data-daily-recommendation-feedback-filter-reset="ready"]').click();
+  await page.locator('[data-daily-advice-feedback-workflow-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-advice-feedback-workflow-status="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
+
+  await page.goBack({ waitUntil: 'networkidle' });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await openDetails(page, '[data-hub-detail-panel="daily-recommendation-list"]');
+  await expectHash(page, '#start-recommendations?feedback=artscheck');
+  await page
+    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .filter({ hasText: 'Actieve filter: Artscheck' })
+    .waitFor({ timeout: 10_000 });
+
+  await page.locator('[data-daily-recommendation-feedback-filter-reset="ready"]').click();
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-advice-feedback-workflow-status="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
   await page
     .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
@@ -1612,7 +1635,7 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
   await expectHash(page, '#start-recommendations');
   await page
-    .locator('[data-daily-recommendation-feedback-filter-chip="ready"]')
+    .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
 
   await page.goBack({ waitUntil: 'networkidle' });
