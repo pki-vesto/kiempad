@@ -519,7 +519,7 @@ export function bouwFertilityKnowledgeGraph(
         from: aanbevelingId,
         to: bronNodeId(bron),
         type: 'gebruikt_bron',
-        label: 'Aanbeveling gebruikt lokale bron',
+        label: 'Suggestie gebruikt lokale bron',
         bron,
         provenance: maakFertilityGraphEdgeProvenance({
           bron,
@@ -533,7 +533,7 @@ export function bouwFertilityKnowledgeGraph(
           id: bronNodeId(bron),
           type: 'document',
           titel: bron,
-          bron: 'Aanbevelingsbron',
+          bron: 'Suggestiebron',
           bronRecordId: aanbeveling.id,
           bronType: 'afgeleide_bron',
           reviewStatus: 'gereviewd',

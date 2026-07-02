@@ -1398,7 +1398,7 @@ function extractConsultVerslagenSection(html: string): string {
 function extractDailyRecommendationsSection(html: string): string {
   const start = html.indexOf('data-dashboard-route="recommendations"');
   const end = html.indexOf('data-dashboard-route="quick-entry"', start);
-  if (start < 0 || end < 0) throw new Error('Dagelijkse aanbevelingen-sectie ontbreekt.');
+  if (start < 0 || end < 0) throw new Error('Te doen vandaag-sectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
 
@@ -2526,7 +2526,7 @@ describe('app shell', () => {
     expect(html).toContain('Fertility hub');
     expect(html).toContain('Kies eerst je werkstroom');
     expect(html).toContain(
-      'Uploads, tijdlijn, embryo’s, research en aanbevelingen starten als eigen werkbanen',
+      'Uploads, tijdlijn, embryo’s, research en suggesties starten als eigen werkbanen',
     );
     expect(html).toContain('6 werkbanen');
     expect(html).toContain('data-start-workbench-flow="uploads"');
@@ -2600,7 +2600,7 @@ describe('app shell', () => {
     expect(html).toContain('class="daily-advice-focus-shell"');
     expect(html).toContain('data-daily-advice-focus-shell="ready"');
     expect(html).toContain('data-daily-advice-console="ready"');
-    expect(html).toContain('Dagadvies console');
+    expect(html).toContain('Te doen vandaag');
     expect(html).toContain('data-daily-advice-focus-region="workflow"');
     expect(html).toContain('data-daily-advice-focus-region="workbench"');
     expect(html).toContain('data-daily-advice-focus-region="planner"');
@@ -2664,15 +2664,15 @@ describe('app shell', () => {
     expect(html).toContain('Nog geen traject- of dossiercontext voor vandaag.');
     expect(html).toContain('Volgende stap');
     expect(html).toContain('data-dashboard-route="recommendations"');
-    expect(html).toContain('aria-label="Dagelijkse aanbevelingen taakroute"');
+    expect(html).toContain('aria-label="Te doen vandaag taakroute"');
     expect(html).toContain('class="kp-disclosure start-task-disclosure hub-detail-disclosure"');
-    expect(html).toContain('Bekijk aanbevelingen');
+    expect(html).toContain('Bekijk suggesties');
     expect(html).toContain('data-dashboard-route="quick-entry"');
     expect(html).toContain('aria-label="Snelle invoer taakroute"');
     expect(html).toContain('Snelle invoer');
     expect(html).toContain('id="quick-entry-form"');
     expect(html).toContain('name="quickText" required');
-    expect(html).toContain('Dagelijkse aanbevelingen');
+    expect(html).toContain('Te doen vandaag');
     expect(html).toContain('class="kp-recommendation-list daily-recommendation-list"');
     expect(html).toContain('data-recommendation-component="daily-owner-list"');
     expect(html).toContain('data-recommendation-component-state="structured"');
@@ -2686,9 +2686,9 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-recommendation-owner="vrouw"');
     expect(html).toContain('data-recommendation-artscheck="required"');
-    expect(html).toContain('Dagelijkse aanbevelingen Vrouw');
-    expect(html).toContain('Dagelijkse aanbevelingen Man');
-    expect(html).toContain('Dagelijkse aanbevelingen Samen');
+    expect(html).toContain('Te doen vandaag Vrouw');
+    expect(html).toContain('Te doen vandaag Man');
+    expect(html).toContain('Te doen vandaag Samen');
     expect(html).toContain('Dagcheck zonder extra medicatiemoment');
     expect(html).toContain('class="daily-recommendation-action-form compact-form"');
     expect(html).toContain('name="recommendationAction" value="bewaar"');
@@ -3228,7 +3228,11 @@ describe('app shell', () => {
     });
     const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
 
-    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen');
+    expect(emptyContextRecommendations).toContain('Te doen vandaag');
+    expect(emptyContextRecommendations).toContain('Bekijk suggesties');
+    expect(emptyContextRecommendations).not.toContain('Dagelijkse aanbevelingen');
+    expect(emptyContextRecommendations).not.toContain('Bekijk aanbevelingen');
+    expect(emptyContextRecommendations).not.toContain('Aanbeveling');
     expect(emptyContextRecommendations).toContain('data-daily-advice-workbench="owner-routes"');
     expect(emptyContextRecommendations).toContain('aria-label="Dagadvies werkbank"');
     expect(emptyContextRecommendations).toContain('Dagadvies per persoon kiezen');
@@ -3270,9 +3274,9 @@ describe('app shell', () => {
       'data-recommendation-review-status="concept_te_controleren"',
     );
     expect(emptyContextRecommendations).toContain('data-recommendation-artscheck="required"');
-    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Vrouw');
-    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Man');
-    expect(emptyContextRecommendations).toContain('Dagelijkse aanbevelingen Samen');
+    expect(emptyContextRecommendations).toContain('Te doen vandaag Vrouw');
+    expect(emptyContextRecommendations).toContain('Te doen vandaag Man');
+    expect(emptyContextRecommendations).toContain('Te doen vandaag Samen');
     expect(emptyContextRecommendations).toContain(
       'data-recommendation-id="vrouw-dagkaart-bronherleiding"',
     );
@@ -3684,10 +3688,10 @@ describe('app shell', () => {
       ],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
-      dailyRecommendationStatus: 'Aanbeveling bewaard: Dagcheck zonder extra medicatiemoment.',
+      dailyRecommendationStatus: 'Suggestie bewaard: Dagcheck zonder extra medicatiemoment.',
     });
 
-    expect(html).toContain('Aanbeveling bewaard: Dagcheck zonder extra medicatiemoment.');
+    expect(html).toContain('Suggestie bewaard: Dagcheck zonder extra medicatiemoment.');
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

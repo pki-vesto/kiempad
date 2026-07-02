@@ -503,7 +503,7 @@ describe('dagelijkse aanbevelingen', () => {
       bron: 'Lokale leefstijl- en medicatiecontext',
     });
 
-    expect(vraag).toContain('Artscheck dagelijkse aanbeveling: Voeding en supplementen checklijst');
+    expect(vraag).toContain('Artscheck dagelijkse suggestie: Voeding en supplementen checklijst');
     expect(vraag).toContain('Vraag aan kliniek, arts of apotheek');
     expect(vraag).toContain('Bron: Lokale leefstijl- en medicatiecontext');
     expect(vraag).toContain('Geen dosering, interactieclaim of behandelkeuzeadvies door Kiempad.');
