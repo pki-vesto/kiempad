@@ -2106,7 +2106,8 @@ h2 {
 
 .data-form input,
 .data-form select,
-.data-form textarea {
+.data-form textarea,
+.compact-form textarea {
   width: 100%;
   min-height: 44px;
   border: 1px solid var(--line);
@@ -2122,14 +2123,16 @@ h2 {
 
 .data-form input:focus,
 .data-form select:focus,
-.data-form textarea:focus {
+.data-form textarea:focus,
+.compact-form textarea:focus {
   border-color: var(--teal);
   outline: none;
   box-shadow: 0 0 0 3px var(--teal-soft);
 }
 
 .data-form input::placeholder,
-.data-form textarea::placeholder {
+.data-form textarea::placeholder,
+.compact-form textarea::placeholder {
   color: var(--ink-3);
 }
 
@@ -2328,7 +2331,9 @@ h2 {
   padding-right: 40px;
 }
 
-.data-form textarea {
+.data-form textarea,
+.compact-form textarea {
+  min-height: 74px;
   resize: vertical;
 }
 
