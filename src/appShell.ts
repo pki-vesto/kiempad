@@ -3740,12 +3740,30 @@ function renderDossierScreen(state: AppShellState): string {
               <h3 id="dossier-search-panel-title">Zoek gericht in je dossier</h3>
               <span>${zoekterm ? `${zoekResultaten.length} resultaten` : `${zichtbareDocumenten.length} records`}</span>
             </header>
-        <form id="dossier-search-form" class="data-form">
+        <form id="dossier-search-form" class="data-form dossier-search-kit" data-dossier-search-kit="ready" data-dossier-search-kit-state="${zoekterm ? (zoekResultaten.length > 0 ? 'active-matches' : 'active-empty') : 'idle'}">
+          <header class="dossier-search-kit__header">
+            <div>
+              <p class="kp-card__eyebrow">Zoekopdracht</p>
+              <h4>Zoeken zonder broninhoud te openen</h4>
+              <p>Zoek gericht in metadata, notities en lokale OCR. Resultaten tonen eerst labels en context, niet de volledige inhoud.</p>
+            </div>
+            <span>${zoekterm ? `${zoekResultaten.length} gevonden` : 'Niet actief'}</span>
+          </header>
+          <div class="dossier-search-kit__status" aria-label="Zoekstatus">
+            ${
+              zoekterm
+                ? `<span class="dossier-search-chip" data-dossier-search-chip="query">Zoekterm: ${escapeHtml(zoekterm)}</span><span class="dossier-search-chip" data-dossier-search-chip="results">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'}</span>`
+                : '<span class="dossier-search-chip dossier-search-chip--empty" data-dossier-search-chip="idle">Geen zoekterm actief</span>'
+            }
+          </div>
           <label>
             Zoek in notities en OCR-tekst
             <input name="dossierZoekterm" autocomplete="off" value="${escapeAttribute(zoekterm)}" placeholder="Bijvoorbeeld: AMH, Erasmus MC of consult" />
           </label>
-          <button type="submit">Zoek in dataset</button>
+          <div class="dossier-search-kit__actions">
+            <button type="submit">Zoek in dataset</button>
+            <a class="secondary-button" href="#dossier?route=search">Wis zoekterm</a>
+          </div>
         </form>
         ${
           zoekterm

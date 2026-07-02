@@ -117,6 +117,9 @@
 - **CFX-040 dossier imaging filter kit — partial in G1351 / issue #2476.** The Dossier Beelden
   filter now renders as a structured filter kit with active chips, reset action, and privacy copy
   instead of a loose stack of native fields.
+- **CFX-040 dossier search kit — partial in G1352 / issue #2478.** Dossier Zoeken now renders as a
+  structured search kit with idle/active result chips, reset action, and privacy copy before
+  metadata/OCR search.
 
 ---
 
@@ -526,6 +529,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   CFX-002). **P1 · L**
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.
   Partial G1351/#2476: Beelden filter has a filter-kit surface with active chips and reset.
+  Partial G1352/#2478: Zoeken route has a search-kit surface with status chips and reset.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**

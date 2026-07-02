@@ -10685,6 +10685,91 @@ a.action-card:active {
   margin: 0;
 }
 
+.dossier-search-kit {
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 54%),
+    var(--surface-subtle);
+}
+
+.dossier-search-kit__header {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.dossier-search-kit__header h4,
+.dossier-search-kit__header p {
+  margin: 0;
+}
+
+.dossier-search-kit__header h4 {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.dossier-search-kit__header p:last-child {
+  max-width: 58ch;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+.dossier-search-kit__header > span {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--accent-strong);
+  font-size: 0.74rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.dossier-search-kit__status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dossier-search-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 750;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.dossier-search-chip--empty {
+  border-style: dashed;
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.dossier-search-kit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dossier-search-kit__actions > button,
+.dossier-search-kit__actions > a {
+  min-height: 40px;
+}
+
 .dossier-section-index {
   display: grid;
   gap: 12px;
@@ -10763,6 +10848,18 @@ a.action-card:active {
 
   .dossier-search-console__panel-header span {
     width: fit-content;
+  }
+
+  .dossier-search-kit__header {
+    display: grid;
+  }
+
+  .dossier-search-kit__header > span {
+    width: fit-content;
+  }
+
+  .dossier-search-kit__actions {
+    display: grid;
   }
 
   .dossier-command-center__header {

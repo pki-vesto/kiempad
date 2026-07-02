@@ -200,6 +200,7 @@ const targets = [
       '[data-dossier-search-console-region="privacy"]',
       '[data-dossier-search-console-region="index"]',
       '#dossier-search-form',
+      '[data-dossier-search-kit="ready"]',
       '[data-dossier-secondary-privacy="collapsed"]',
       '#dossier-route-index-disclosure',
     ],
