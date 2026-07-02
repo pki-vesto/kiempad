@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1336 — Daily Recommendations: feedbackfilter reset en tellerchips
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadvieslijst kan nu op lokale feedbackstatus filteren, maar actieve filterstatus en reset zijn nog niet scanbaar genoeg.
+- **User Impact:** Gebruikers kunnen minder snel zien dat de lijst gefilterd is of hoe zij teruggaan naar alle suggesties.
+- **Desired Outcome:** Toon bij een actieve dagadvies-feedbackfilter een compacte actieve-filterchip, resultaatcount en resetactie zonder medische conclusies of tracking.
+- **User Value:** Gebruikers begrijpen sneller waarom de lijst korter is en kunnen direct terug naar het volledige dagadvies.
+- **Acceptance Criteria:** Actieve feedbackfilter toont een duidelijke chip en resultaatcount; reset brengt de lijst terug naar alle suggesties; zonder actieve filter blijft de huidige lijst rustig; tests dekken chip, reset, counts en privacygrenzen; geen diagnose, dosering, kansberekening of behandelkeuzeadvies wordt toegevoegd.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, event log, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2618
+
 ### G1335 — Daily Recommendations: feedbackfilter in dagadvieslijst
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, event log, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2616
 
 ### G1334 — Daily Recommendations: feedbacksamenvatting in advieswerkbank

@@ -67,6 +67,9 @@
 - **Daily advice feedback summary — done in G1427 / issue #2614.** The dagadvies workbench now
   summarizes local feedback counts when they exist, stays unchanged without feedback, and derives
   counts only from local eventlog metadata for the current suggestion ids.
+- **Daily advice feedback filter — done in G1428 / issue #2616.** The full dagadvies list now has
+  a local feedbackstatus filter with a calm empty state, preserving the unfiltered list by default
+  and using only local eventlog metadata.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
