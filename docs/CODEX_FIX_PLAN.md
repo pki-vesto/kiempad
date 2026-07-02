@@ -353,6 +353,9 @@
   renders inside the main content before the active screen panel for every route, with a sticky
   compact route switcher, so desktop users get an immediate "where am I / switch here" cue instead
   of the route context living in the sidebar.
+- **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
+  have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
+  concept review state derived from source review metadata while preserving the no-advice boundary.
 
 ---
 

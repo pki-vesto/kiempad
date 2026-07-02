@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1132 |
+| ☑ klaar | 1133 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1329** |
+| **Totaal** | **1332** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -645,7 +645,7 @@ Bron: [`docs/FERTILITY_INTELLIGENCE_STRATEGY.md`](docs/FERTILITY_INTELLIGENCE_ST
 | G487 | Daily Recommendations: man-dagkaart met bronherleiding | P0 | F5 | ☑ |
 | G488 | Daily Recommendations: personalisatiefeedback over tijd | P1 | F5 | ☐ |
 | G489 | Daily Recommendations: supplement boundary en artscheck | P0 | F5 | ☑ |
-| G490 | Daily Recommendations: aanbevelingen op fertility timeline | P1 | F5 | ☐ |
+| G490 | Daily Recommendations: aanbevelingen op fertility timeline | P1 | F5 | ☑ |
 
 ## 23. Autonomous Evolution Active Goal Floor
 
@@ -1494,12 +1494,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1329 | CFX-004c: Skeleton-laadlaag voor unlock en reload | P1 | F5 | ☑ |
 | G1330 | Premium Claude Design UI: Dossier uploadconsole als single-flow intake | P1 | F5 | ☑ |
 | G1331 | Premium Claude Design UI: Dossier zoekroute als compacte zoekconsole | P1 | F5 | ☑ |
+| G1332 | Daily Recommendations: feedbackstatus van tijdlijnsuggesties tonen | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1331** (id's G001 t/m G1331, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1332** (id's G001 t/m G1332, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

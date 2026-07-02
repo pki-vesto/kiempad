@@ -17995,8 +17995,9 @@ function renderFertilityTimelineReaderModes(
   hasExport: boolean,
 ): string {
   const reviewCount = timeline.items.filter(
-    (item) => item.historischConcept?.reviewStatus === 'concept',
+    (item) => bepaalFertilityTimelineItemReviewState(item) === 'concept',
   ).length;
+  const aanbevelingCount = timeline.items.filter((item) => item.soort === 'aanbeveling').length;
   const lanes = [
     {
       id: 'events',
@@ -18021,6 +18022,14 @@ function renderFertilityTimelineReaderModes(
       title: `${timeline.contextSignalen.length} signaal${timeline.contextSignalen.length === 1 ? '' : 'en'}`,
       detail: 'Ontbrekende koppelingen of reviewpunten apart bekijken.',
       cue: timeline.contextSignalen.length > 0 ? 'Aanvullen' : 'Geen gaten',
+    },
+    {
+      id: 'suggestions',
+      href: '#fertility-timeline-items',
+      label: 'Suggesties',
+      title: `${aanbevelingCount} suggestie${aanbevelingCount === 1 ? '' : 's'}`,
+      detail: 'Dagadvies als filterbare tijdlijncontext bij het traject.',
+      cue: aanbevelingCount > 0 ? 'Filterbaar' : 'Geen suggesties',
     },
     {
       id: 'export',
@@ -18074,6 +18083,10 @@ function renderFertilityTimelineMobielOverzicht(timeline: FertilityTimeline): st
       <a href="#fertility-timeline-context">
         <strong>${timeline.contextSignalen.length}</strong>
         <span>Context</span>
+      </a>
+      <a href="#fertility-timeline-items">
+        <strong>${timeline.items.filter((item) => item.soort === 'aanbeveling').length}</strong>
+        <span>Suggesties</span>
       </a>
       <a href="#fertility-timeline-export">
         <strong>MD</strong>
@@ -18229,13 +18242,21 @@ function renderFertilityTimelineFilterForm(filter: FertilityTimelineFilter): str
         Bron
         <input name="timelineBron" value="${escapeAttribute(filter.bron ?? '')}" autocomplete="off" />
       </label>
+      <label>
+        Suggesties
+        <select name="timelineAanbevelingenZichtbaar" data-timeline-recommendation-visibility="ready">
+          ${renderOption('ja', 'Tonen', filter.aanbevelingenZichtbaar === false ? 'nee' : 'ja')}
+          ${renderOption('nee', 'Verbergen', filter.aanbevelingenZichtbaar === false ? 'nee' : 'ja')}
+        </select>
+      </label>
       <button type="submit">Filter timeline</button>
     </form>
   `;
 }
 
 function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): string {
-  const status: StepState = item.historischConcept ? 'current' : 'done';
+  const reviewState = bepaalFertilityTimelineItemReviewState(item);
+  const status: StepState = reviewState === 'concept' ? 'current' : 'done';
   const detailHref = getFertilityTimelineDetailHref(item);
   return timelineItem({
     title: item.titel,
@@ -18245,12 +18266,13 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
     className: 'fertility-timeline-item',
     data: {
       'timeline-item-kind': item.soort,
-      'timeline-item-state': item.historischConcept ? 'concept' : 'reviewed',
+      'timeline-item-state': reviewState === 'concept' ? 'concept' : 'reviewed',
     },
     body: `
       ${item.eigenaar ? `<small>Eigenaar: ${escapeHtml(item.eigenaar)}</small>` : ''}
+      <small>Status: ${escapeHtml(reviewState === 'concept' ? 'conceptreview' : 'gereviewd')}</small>
       ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
-      <details class="timeline-detail-drawer" data-fertility-timeline-detail-drawer="ready" data-fertility-timeline-detail-review="${escapeAttribute(item.historischConcept ? item.historischConcept.reviewStatus : 'gereviewd')}">
+      <details class="timeline-detail-drawer" data-fertility-timeline-detail-drawer="ready" data-fertility-timeline-detail-review="${escapeAttribute(reviewState)}">
         <summary>
           <span>Bron en review</span>
           <small>${escapeHtml(item.historischConcept ? 'concept controleren' : 'broncontext')}</small>
@@ -18295,6 +18317,17 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
       </details>
     `,
   });
+}
+
+function bepaalFertilityTimelineItemReviewState(
+  item: FertilityTimeline['items'][number],
+): 'concept' | 'gereviewd' {
+  if (item.historischConcept && item.historischConcept.reviewStatus !== 'bevestigd') {
+    return 'concept';
+  }
+  return item.bronverwijzingen.some((bron) => bron.reviewStatus === 'concept')
+    ? 'concept'
+    : 'gereviewd';
 }
 
 function getFertilityTimelineDetailHref(item: FertilityTimeline['items'][number]): string {
