@@ -297,6 +297,9 @@
 - **CFX-028 form cancel actions — partial in G1407 / issue #2588.** Kosten, Agenda, and Medicatie
   edit forms now pair the primary save button with a ghost Annuleer link instead of leaving edit
   rows with only save/delete actions.
+- **CFX-026 date/time field kit — partial in G1408 / issue #2590.** Date, datetime, and time fields
+  now share tabular, kit-styled rendering with muted invalid/empty text and a clearer picker
+  affordance.
 
 ---
 
