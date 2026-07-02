@@ -820,19 +820,19 @@ export function renderAppShell(
           </span>
         </a>
         <p class="status-pill" data-storage-mode-copy="${storageStatusState}">${storageStatus}</p>
-        <div class="topbar-actions">
-          <button class="settings-button" type="button" data-settings-open="true" aria-haspopup="dialog">
-            <span aria-hidden="true">${navSettingsIcon()}</span>
-            <span>Instellingen</span>
-          </button>
-          <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
-        </div>
       </header>
 
       <nav class="primary-nav" aria-label="Werkruimtes en schermen">
         ${renderGroupedNavigation(activeId)}
       </nav>
       ${activeId === 'start' ? '' : renderWorkspaceStrip(activeId)}
+      <div class="sidebar-utility" data-sidebar-utility="ready" aria-label="App-acties">
+        <button class="settings-button sidebar-utility__button" type="button" data-settings-open="true" aria-haspopup="dialog">
+          <span aria-hidden="true">${navSettingsIcon()}</span>
+          <span>Instellingen</span>
+        </button>
+        <button class="lock-button sidebar-utility__button" id="lock-button" type="button">Vergrendel</button>
+      </div>
       </div>
       ${state.settingsOpen ? renderSettingsSheet(state.settings) : ''}
 

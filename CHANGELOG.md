@@ -17,6 +17,7 @@ Alle noemenswaardige wijzigingen aan Kiempad. Vorm volgt
   Kiempad". Alle foutsanitisatie en support-handoff (privacy) blijven ongewijzigd.
 
 ### Added
+- G1327 CFX-033b: instellingen en vergrendelen staan niet meer als dominante acties bovenin de desktop-sidebar. De sidebar opent met merk, opslagstatus en navigatie; de acties staan in een rustige utility-zone onderaan.
 - G1326 CFX-015: de mobiele `Meer`-sheet blijft niet meer automatisch open staan boven secundaire routes. De knop blijft actief gemarkeerd, routeformulieren houden extra ruimte boven de bottom navigation en mobiele controls blijven aanklikbaar.
 - G1325 CFX-007 Welzijn ownerlabels: het welzijnsscherm gebruikt opgeslagen namen uit Instellingen voor recente signalen, `Van wie`-selects en check-in/symptoombadges. De onderliggende recordwaarden blijven `peter`/`partner`/`samen` voor compatibiliteit.
 - G1324 CFX-006/CFX-046 + CFX-007 startgroet: instellingen openen nu als eigen sheet met versleuteld bewaarde namen, gedeelde modus en live themawissel. De Start-groet gebruikt opgeslagen namen in plaats van de oude hardcoded placeholder.

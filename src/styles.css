@@ -427,6 +427,17 @@ h3 {
   gap: 8px;
 }
 
+.sidebar-utility {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
 .theme-form,
 .theme-form[data-theme-control="compact"] {
   display: flex;
@@ -536,6 +547,11 @@ h3 {
 .lock-button {
   flex: 0 0 auto;
   padding: 8px 16px;
+}
+
+.sidebar-utility__button {
+  flex: 1 1 0;
+  justify-content: center;
 }
 
 .lock-button:focus-visible,
@@ -11667,6 +11683,15 @@ a.action-card:active {
     justify-content: stretch;
   }
 
+  .sidebar-utility {
+    margin-top: auto;
+    margin-bottom: 0;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+  }
+
   .settings-button,
   .lock-button {
     flex: 1 1 0;
@@ -11689,6 +11714,24 @@ a.action-card:active {
 
   .lock-button {
     width: 100%;
+  }
+
+  .sidebar-utility .settings-button,
+  .sidebar-utility .lock-button {
+    min-height: 38px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+
+  .sidebar-utility .lock-button {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-soft);
+  }
+
+  .sidebar-utility .lock-button:hover {
+    background: var(--surface-subtle);
+    color: var(--text-strong);
   }
 
   .primary-nav {

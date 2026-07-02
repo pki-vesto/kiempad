@@ -1759,8 +1759,11 @@ describe('app shell', () => {
     expect(html).not.toContain('aria-label="Snelle kernroutes"');
     expect(html).not.toContain('class="workspace-map"');
     expect(html).not.toContain('data-workspace-map="ready"');
-    expect(html).toContain('class="topbar-actions"');
+    expect(html).toContain('class="sidebar-utility" data-sidebar-utility="ready"');
     expect(html).toContain('data-settings-open="true"');
+    expect(html.indexOf('class="sidebar-utility" data-sidebar-utility="ready"')).toBeGreaterThan(
+      html.indexOf('<nav class="primary-nav"'),
+    );
     expect(html).not.toContain('data-theme-control="compact"');
     expect(html).not.toContain('aria-label="Bewaar thema"');
     expect(html).not.toContain('Kiempad is verdeeld in duidelijke werkbanen');
