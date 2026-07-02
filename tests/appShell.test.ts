@@ -4098,11 +4098,13 @@ describe('app shell', () => {
     expect(html).toContain('class="treatment-focus-shell"');
     expect(html).toContain('data-treatment-focus-shell="ready"');
     expect(html).toContain('data-treatment-console="ready"');
-    expect(html).toContain('data-treatment-console-region="workbench"');
+    expect(html).not.toContain('data-treatment-console-region="workbench"');
     expect(html).toContain('data-treatment-console-region="workspace"');
     expect(html).toContain('Eerst fase en tijdlijn lezen, daarna beheren');
-    expect(html).toContain('data-treatment-focus-region="workbench"');
+    expect(html).not.toContain('data-treatment-focus-region="workbench"');
     expect(html).toContain('data-treatment-focus-region="workspace"');
+    expect(html).toContain('data-treatment-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
     expect(html).toContain(
       '<section class="treatment-workbench" aria-label="Behandelwerkbank" data-treatment-first-viewport="workbench">',
     );
@@ -4125,7 +4127,8 @@ describe('app shell', () => {
     const workbenchIndex = html.indexOf('data-treatment-first-viewport="workbench"');
     const routeNavIndex = html.indexOf('data-treatment-task-routes="ready"');
     expect(workbenchIndex).toBeGreaterThan(-1);
-    expect(routeNavIndex).toBeGreaterThan(workbenchIndex);
+    expect(routeNavIndex).toBeGreaterThan(-1);
+    expect(workbenchIndex).toBeGreaterThan(routeNavIndex);
     expect(html).toContain('Fertility timeline');
     expect(html).toContain('data-fertility-timeline-console="ready"');
     expect(html).toContain('data-fertility-timeline-console-region="reader"');
@@ -4268,21 +4271,22 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-focus-shell__header {');
     expect(css).toContain('.treatment-focus-shell__body {');
     expect(css).toContain('grid-template-columns: 1fr;');
-    expect(css).toContain('grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.treatment-focus-shell__workbench > .treatment-workbench {');
-    expect(css).toContain('.treatment-focus-shell__workbench .treatment-workbench__grid {');
-    expect(css).toContain('grid-template-columns: minmax(220px, 0.54fr) minmax(0, 1.46fr);');
-    expect(css).toContain('.treatment-focus-shell__workbench .treatment-snapshot {');
+    expect(css).not.toContain('.treatment-focus-shell__workbench > .treatment-workbench {');
     expect(css).toContain(
-      '.treatment-focus-shell__workbench .treatment-workbench__header p:last-child {',
+      '.treatment-focus-shell__workspace .domain-split-workspace__context > .treatment-workbench {',
     );
+    expect(css).toContain('.treatment-workbench__grid {');
+    expect(css).toContain('.treatment-snapshot {');
+    expect(css).toContain('.treatment-workbench__header');
+    expect(css).toContain('p:last-child {');
     expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain(
-      'grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);',
+      'grid-template-columns: minmax(168px, 0.26fr) minmax(0, 1fr) minmax(240px, 0.36fr);',
     );
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('"rail main context";');
     expect(css).toContain('.treatment-focus-shell__workspace .domain-split-workspace__context {');
     expect(css).toContain('gap: 10px;');
     expect(css).toContain('.treatment-workbench {');
@@ -38631,7 +38635,6 @@ describe('app shell', () => {
         label === 'knowledge' ||
         label === 'wellbeing' ||
         label === 'decision' ||
-        label === 'treatment' ||
         label === 'notification' ||
         label === 'eventlog' ||
         label === 'backup' ||
@@ -38683,9 +38686,11 @@ describe('app shell', () => {
     expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
     expect(trajectHtml).toContain('class="domain-split-workspace treatment-split-workspace"');
     expect(trajectHtml).toContain('data-treatment-console="ready"');
-    expect(trajectHtml).toContain('data-treatment-console-region="workbench"');
+    expect(trajectHtml).not.toContain('data-treatment-console-region="workbench"');
     expect(trajectHtml).toContain('data-treatment-console-region="workspace"');
     expect(trajectHtml).toContain('data-treatment-compact-workspace="route-first"');
+    expect(trajectHtml).toContain('data-treatment-single-workspace="ready"');
+    expect(trajectHtml).toContain('class="domain-split-workspace__context"');
     expect(trajectHtml).not.toContain('data-treatment-workspace-context="metrics"');
     expect(trajectHtml).not.toContain('data-treatment-workspace-context="privacy"');
     expect(trajectHtml).not.toContain('data-workspace-context-signals="treatment"');

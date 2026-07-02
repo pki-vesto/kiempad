@@ -220,6 +220,10 @@
   renders the innames workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact innames context while
   mobile remains stacked.
+- **CFX-020 treatment single workspace — partial in G1386 / issue #2546.** Traject no longer
+  renders the treatment workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active route, and compact treatment context while
+  mobile remains stacked.
 
 ---
 
@@ -628,7 +632,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-020** — Timeline component adoption for Traject + Logboek (dot/line rail, amber current
   card). Files: `src/appShell.ts`, `src/domain/fertilityTimeline.ts` (view only). **P1 · L**
   Partial G1348/#2470: Traject Fasen uses the shared timeline component. Partial G1359/#2492:
-  Traject uses a route-first workspace without a fixed third context column.
+  Traject uses a route-first workspace without a fixed third context column. Partial G1386/#2546:
+  Traject folds the treatment workbench into the same split-view as route context, so desktop opens
+  as one rail/main/context workspace instead of a separate focus-region plus nested route
+  workspace.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

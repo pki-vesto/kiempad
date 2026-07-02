@@ -219,15 +219,11 @@ const targets = [
     expectedText: 'Timeline en graphcontext',
     activeRouteSelector: '[data-treatment-route="context"][data-treatment-route-state="active"]',
     inactiveRouteSelector: '[data-treatment-route-state="inactive"]',
-    focusLayout: {
-      supportSelector: '[data-treatment-focus-region="workbench"]',
-      workspaceSelector: '[data-treatment-focus-region="workspace"]',
-    },
     treatmentConsole: true,
     openSelectors: ['#traject-route-context details'],
     requiredSelectors: [
-      '[data-treatment-focus-region="workbench"]',
       '[data-treatment-focus-region="workspace"]',
+      '[data-treatment-single-workspace="ready"]',
       '#traject-route-context',
       '[data-fertility-timeline-reader="ready"]',
       '[data-fertility-timeline-console="ready"]',
@@ -803,7 +799,9 @@ async function assertRouteflows(browser, options) {
                   workspaceRect && workspaceRect.width > 0 && workspaceRect.height > 0,
                 ),
                 workbenchTop: workbenchRect?.top ?? 0,
+                workbenchLeft: workbenchRect?.left ?? 0,
                 workspaceTop: workspaceRect?.top ?? 0,
+                workspaceRight: workspaceRect?.right ?? 0,
                 workbenchRight: workbenchRect?.right ?? 0,
                 workspaceLeft: workspaceRect?.left ?? 0,
                 bodyOverflow: bodyStyle?.overflow ?? '',
@@ -833,7 +831,9 @@ async function assertRouteflows(browser, options) {
                   workspaceRect && workspaceRect.width > 0 && workspaceRect.height > 0,
                 ),
                 workbenchTop: workbenchRect?.top ?? 0,
+                workbenchLeft: workbenchRect?.left ?? 0,
                 workspaceTop: workspaceRect?.top ?? 0,
+                workspaceRight: workspaceRect?.right ?? 0,
                 workbenchRight: workbenchRect?.right ?? 0,
                 workspaceLeft: workspaceRect?.left ?? 0,
                 bodyOverflow: bodyStyle?.overflow ?? '',
@@ -864,8 +864,10 @@ async function assertRouteflows(browser, options) {
                 ),
                 workbenchTop: workbenchRect?.top ?? 0,
                 workspaceTop: workspaceRect?.top ?? 0,
+                workbenchLeft: workbenchRect?.left ?? 0,
                 workbenchRight: workbenchRect?.right ?? 0,
                 workspaceLeft: workspaceRect?.left ?? 0,
+                workspaceRight: workspaceRect?.right ?? 0,
                 bodyOverflow: bodyStyle?.overflow ?? '',
                 bodyMaxHeight: bodyStyle?.maxHeight ?? '',
                 workbenchOverflowY: workbenchStyle?.overflowY ?? '',
@@ -876,7 +878,9 @@ async function assertRouteflows(browser, options) {
         const treatmentConsole = routeflow.treatmentConsole
           ? (() => {
               const body = document.querySelector('[data-treatment-console="ready"]');
-              const workbench = document.querySelector('[data-treatment-console-region="workbench"]');
+              const workbench = document.querySelector(
+                '.treatment-split-workspace .domain-split-workspace__context',
+              );
               const workspace = document.querySelector('[data-treatment-console-region="workspace"]');
               const bodyRect = body?.getBoundingClientRect();
               const workbenchRect = workbench?.getBoundingClientRect();
@@ -1239,12 +1243,12 @@ async function assertRouteflows(browser, options) {
         (!evidence.treatmentConsole.bodyVisible ||
           !evidence.treatmentConsole.workbenchVisible ||
           !evidence.treatmentConsole.workspaceVisible ||
-          evidence.treatmentConsole.workspaceTop < evidence.treatmentConsole.workbenchTop - 1 ||
-          evidence.treatmentConsole.workspaceLeft < evidence.treatmentConsole.workbenchRight - 1 ||
+          evidence.treatmentConsole.workbenchTop < evidence.treatmentConsole.workspaceTop - 1 ||
+          evidence.treatmentConsole.workbenchLeft < evidence.treatmentConsole.workspaceRight - 1 ||
           evidence.treatmentConsole.bodyOverflow !== 'hidden' ||
           evidence.treatmentConsole.bodyMaxHeight === 'none' ||
           evidence.treatmentConsole.workbenchOverflowY !== 'auto' ||
-          evidence.treatmentConsole.workspaceOverflowY !== 'auto')
+          evidence.treatmentConsole.workspaceOverflowY !== 'hidden')
       ) {
         throw new Error(
           `${options.label}/${target.screen}: treatment-console staat niet in compacte werkvlakken (${JSON.stringify(evidence.treatmentConsole)}).`,
