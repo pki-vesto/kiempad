@@ -240,6 +240,10 @@
   renders the decision workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact decision context while
   mobile remains stacked.
+- **CFX-037 finance single workspace — partial in G1391 / issue #2556.** Kosten no longer renders
+  the finance management workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active route, and compact finance context while
+  mobile remains stacked.
 
 ---
 
@@ -397,7 +401,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **Fixes**: CFX-016, CFX-037.
 - **Progress**: CFX-037 route-first scan done in G1345 / issue #2464: the visible finance context
   column is removed, cost rows use tabular right-aligned amount markers, and split/context smokes
-  guard the compact Kosten workspace.
+  guard the compact Kosten workspace. Partial G1391/#2556: Kosten folds the finance management
+  workbench into the same split-view as route context, so desktop opens as one rail/main/context
+  workspace instead of a separate focus-region plus nested route workspace.
 
 ### Kennis (`renderKennisScreen`, 253 LOC)
 - **Current**: search + categories + accordion cards.

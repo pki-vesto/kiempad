@@ -5919,13 +5919,8 @@ h2 {
   align-items: start;
 }
 
-.finance-focus-shell__workbench,
 .finance-focus-shell__workspace {
   min-width: 0;
-}
-
-.finance-focus-shell__workbench > .finance-management-workbench {
-  height: 100%;
 }
 
 .finance-focus-shell .command-route-summary h3 {
@@ -8633,28 +8628,21 @@ h2 {
 
 @media (min-width: 961px) {
   .finance-focus-shell__body {
-    grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
   }
 
-  .finance-focus-shell__workbench,
   .finance-focus-shell__workspace {
     max-height: min(820px, calc(100vh - 164px));
-    overflow-y: auto;
+    overflow: hidden;
     contain: layout paint;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-  }
-
-  .finance-focus-shell__workspace {
-    overflow-x: hidden;
   }
 
   .finance-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas: "rail main";
-    grid-template-columns: minmax(172px, 0.34fr) minmax(0, 1fr);
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(172px, 0.24fr) minmax(0, 1fr) minmax(280px, 0.42fr);
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
@@ -8668,6 +8656,14 @@ h2 {
     grid-area: main;
   }
 
+  .finance-focus-shell__workspace .domain-split-workspace__context {
+    grid-area: context;
+    max-height: min(780px, calc(100vh - 204px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
   .finance-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
     overflow: visible;
     overflow-wrap: break-word;
@@ -8675,18 +8671,21 @@ h2 {
     white-space: normal;
   }
 
-  .finance-focus-shell__workbench > .finance-management-workbench {
+  .finance-focus-shell__workspace .domain-split-workspace__context > .finance-management-workbench {
     align-content: start;
     padding: 12px;
   }
 
-  .finance-focus-shell__workbench .management-workbench__header p:last-child,
+  .finance-focus-shell__workspace
+    .domain-split-workspace__context
+    .management-workbench__header
+    p:last-child,
   .finance-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow) {
     display: none;
   }
 
-  .finance-focus-shell__workbench .management-workbench__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .finance-focus-shell__workspace .domain-split-workspace__context .management-workbench__grid {
+    grid-template-columns: 1fr;
   }
 
   .finance-focus-shell__workspace .command-route-summary {
@@ -8719,6 +8718,10 @@ h2 {
 
   .finance-focus-shell__workspace .domain-split-workspace {
     grid-template-columns: 1fr;
+  }
+
+  .finance-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
   }
 
   .finance-focus-shell__workspace .domain-split-workspace__rail {

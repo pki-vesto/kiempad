@@ -2043,12 +2043,18 @@ describe('app shell', () => {
     expect(css).toContain('.finance-focus-shell {');
     expect(css).toContain('.finance-focus-shell__header {');
     expect(css).toContain('.finance-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
+    expect(css).not.toContain('.finance-focus-shell__workbench > .finance-management-workbench {');
     expect(css).toContain('.finance-focus-shell__workspace {');
     expect(css).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('grid-template-areas: "rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(172px, 0.24fr) minmax(0, 1fr) minmax(280px, 0.42fr);',
+    );
+    expect(css).toContain('.finance-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('> .finance-management-workbench {');
     expect(css).toContain('.finance-form-section {');
     expect(css).toContain('.finance-form-section--primary {');
     expect(css).toContain('.finance-amount-input {');
@@ -37313,9 +37319,9 @@ describe('app shell', () => {
     expect(html).toContain('data-finance-focus-shell="ready"');
     expect(html).toContain('data-finance-console="ready"');
     expect(html).toContain('Eerst totalen scannen, daarna vergoeding of historie openen');
-    expect(html).toContain('data-finance-focus-region="workbench"');
+    expect(html).not.toContain('data-finance-focus-region="workbench"');
     expect(html).toContain('data-finance-focus-region="workspace"');
-    expect(html).toContain('data-finance-console-region="workbench"');
+    expect(html).not.toContain('data-finance-console-region="workbench"');
     expect(html).toContain('data-finance-console-region="workspace"');
     expect(html).toContain(
       '<section class="management-workbench finance-management-workbench" aria-label="Financiële beheerwerkbank" data-finance-first-viewport="management-workbench">',
@@ -37334,10 +37340,12 @@ describe('app shell', () => {
     expect(html).toContain('href="#kosten?route=vergoeding"');
     expect(html).toContain('href="#kosten?route=historie"');
     expect(html).toContain('data-finance-compact-workspace="route-first"');
+    expect(html).toContain('data-finance-single-workspace="ready"');
     expect(html).not.toContain('data-finance-workspace-context="metrics"');
     expect(html).not.toContain('data-workspace-context-signals="finance"');
     expect(html).not.toContain('data-workspace-context-microstate="finance-vergoeding"');
-    expect(html).not.toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain('id="kosten-route-overzicht"');
     expect(html).toContain('data-finance-route="overzicht"');
     expect(html).toContain('id="kosten-route-toevoegen"');
@@ -38657,12 +38665,7 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (
-        label === 'notification' ||
-        label === 'eventlog' ||
-        label === 'backup' ||
-        label === 'finance'
-      ) {
+      if (label === 'notification' || label === 'eventlog' || label === 'backup') {
         expect(html).not.toContain('class="domain-split-workspace__context"');
       } else {
         expect(html).toContain('class="domain-split-workspace__context"');
@@ -38790,9 +38793,11 @@ describe('app shell', () => {
     );
     expect(kostenHtml).toContain('class="domain-split-workspace finance-split-workspace"');
     expect(kostenHtml).toContain('data-finance-console="ready"');
-    expect(kostenHtml).toContain('data-finance-console-region="workbench"');
+    expect(kostenHtml).not.toContain('data-finance-console-region="workbench"');
     expect(kostenHtml).toContain('data-finance-console-region="workspace"');
     expect(kostenHtml).toContain('data-finance-compact-workspace="route-first"');
+    expect(kostenHtml).toContain('data-finance-single-workspace="ready"');
+    expect(kostenHtml).toContain('class="domain-split-workspace__context"');
     expect(kostenHtml).not.toContain('data-finance-workspace-context="metrics"');
     expect(kostenHtml).not.toContain('data-workspace-context-signals="finance"');
     expect(kostenHtml).not.toContain('data-workspace-context-microstate="finance-vergoeding"');
