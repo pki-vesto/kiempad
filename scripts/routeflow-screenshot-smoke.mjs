@@ -143,7 +143,10 @@ const targets = [
       '.hub-workflow-header__copy p',
       '[data-hub-detail-panel="daily-recommendation-list"] .hub-detail-disclosure__summary small',
     ],
-    hiddenSelectors: ['[data-daily-advice-feedback-workflow-status="ready"]'],
+    hiddenSelectors: [
+      '[data-daily-advice-feedback-workflow-status="ready"]',
+      '[data-daily-recommendation-list-filter-header="ready"]',
+    ],
     dailyAdviceConsole: true,
   },
   {
@@ -163,6 +166,7 @@ const targets = [
       '[data-daily-advice-feedback-workflow-status="ready"]',
       '[data-daily-advice-feedback-list-open="ready"]',
       '[data-daily-advice-feedback-workflow-reset="ready"]',
+      '[data-daily-recommendation-list-filter-header="ready"]',
       '[data-daily-recommendation-feedback-filter="ready"]',
       '[data-daily-recommendation-feedback-filter-chip="ready"]',
       '[data-daily-recommendation-feedback-filter-reset="ready"]',

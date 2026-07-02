@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1345 — Daily Recommendations: lijstfilterheader heeft resetactie
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lijstfilterheader maakt de actieve filter zichtbaar, maar resetten vanuit die header kan nog niet.
+- **User Impact:** Gebruikers moeten nog naar de workflowstatus of filterform kijken om vanuit de lijst terug te gaan naar alle suggesties.
+- **Desired Outcome:** Voeg een rustige resetactie toe aan de actieve-filterheader in het lijstpaneel.
+- **User Value:** Gebruikers kunnen in de lijstcontext direct terug naar alle suggesties.
+- **Acceptance Criteria:** De actieve-filterheader in het lijstpaneel bevat een rustige resetactie; reset verwijdert de feedbackfilterroute, workflowstatus, lijstfilterheader en focusstatus; de bestaande resetacties blijven werken; zonder actieve filter blijft de header afwezig; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken resetgedrag, ongefilterde staat en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2636
+
 ### G1344 — Daily Recommendations: lijstpaneel toont actieve filterheader
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2634
 
 ### G1343 — Daily Recommendations: lijstfocusstatus kan rustig sluiten
