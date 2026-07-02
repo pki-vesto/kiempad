@@ -103,6 +103,9 @@
 - **Daily advice feedback list owner distribution — done in G1439 / issue #2638.** The active
   list-filter header now shows local owner counts for vrouw, man, and samen so the filtered
   suggestion context is scannable without adding medical conclusions.
+- **Daily advice feedback list empty owner dimming — done in G1440 / issue #2640.** Owner chips
+  with zero filtered suggestions now render as visually quieter while non-zero owner chips stay
+  clear, using only local counts in the active list-filter header.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

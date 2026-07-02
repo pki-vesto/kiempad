@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1348 — Daily Recommendations: lijstfilterheader zet relevante eigenaars eerst
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De lijstfilterheader toont straks alle eigenaarcounts, maar relevante en lege eigenaars staan nog in vaste volgorde.
+- **User Impact:** Gebruikers scannen mogelijk eerst langs nulwaarden voordat zij de eigenaar met gefilterde suggesties zien.
+- **Desired Outcome:** Zet eigenaars met gefilterde suggesties vooraan en houd nulwaarden zichtbaar maar rustig.
+- **User Value:** Gebruikers zien sneller waar de gefilterde suggesties concreet betrekking op hebben.
+- **Acceptance Criteria:** Eigenaars met resultaten staan vóór eigenaars met 0 suggesties; eigenaars met 0 suggesties blijven zichtbaar en gedempt; de volgorde gebruikt alleen lokale gefilterde counts en bevat geen medische conclusies; zonder actieve filter blijft de header afwezig; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken gesorteerde resultaten, nulstanden en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2642
+
 ### G1347 — Daily Recommendations: lijstfilterheader dempt nul-eigenaren
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2640
 
 ### G1346 — Daily Recommendations: lijstfilterheader toont eigenaarverdeling
