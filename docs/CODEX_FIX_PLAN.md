@@ -267,6 +267,9 @@
 - **CFX-040/CFX-095 dossier upload privacy collapse — partial in G1397 / issue #2568.** Dossier
   upload privacy, attachment export, retention/cleanup, and audit details now sit behind one closed
   disclosure so the upload route no longer continues with a visible privacy/status wall.
+- **CFX-081 Start mobile non-overflow — partial in G1398 / issue #2570.** The Start launchpad no
+  longer uses clipped horizontal mobile carousels for the workspace strip, cockpit, or workbanen
+  deck, and the first-run checklist now starts closed behind one disclosure.
 
 ---
 
@@ -677,6 +680,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-082** — Mobile: forms stack single-column; buttons full-width only where needed (L82). **P2 · S**
 - **CFX-081** — Verify desktop = sidebar + 720px content; mobile = topbar + bottom-nav + sheets;
   fix any full-bleed screens (L81/I63). **P1 · M**
+  Partial G1398/#2570: Start mobile removes clipped horizontal cockpit/workbanen carousels and
+  keeps the first-run checklist closed by default.
 
 ### Screens (from Screen-by-Screen)
 - **CFX-020** — Timeline component adoption for Traject + Logboek (dot/line rail, amber current

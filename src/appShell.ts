@@ -14243,28 +14243,35 @@ function renderFirstRunSetup(state: AppShellState): string {
   const central = state.storageMode === 'central-api';
 
   return `
-    <section class="summary-panel setup-panel" aria-labelledby="first-run-setup-title">
-      <p class="eyebrow">Eerste keer</p>
-      <h2 id="first-run-setup-title">Richt Kiempad rustig in</h2>
-      <p>${central ? 'Deze stappen worden op je toestel versleuteld en centraal bewaard voor gekoppelde apparaten.' : 'Deze stappen blijven in de lokale kluis op dit toestel. Configureer de centrale API voor multi-device continuiteit.'} Kiempad maakt geen medische keuzes.</p>
-      <ol class="compact-list setup-steps">
-        <li><strong>Dataset:</strong> je ${central ? 'centrale versleutelde dataset' : 'lokale kluis'} is ontgrendeld.</li>
-        <li><strong>Privacygrens:</strong> medische inhoud blijft versleuteld; AI en researchnetwerk blijven opt-in.</li>
-        <li><strong>Traject:</strong> <a href="#traject">maak de eerste poging of cyclus aan</a>.</li>
-        <li><strong>Afspraak:</strong> <a href="#agenda">leg de eerste afspraak vast</a>.</li>
-        <li><strong>Back-up:</strong> <a href="#backup">zet een versleutelde back-up op je checklist</a>.</li>
-      </ol>
-      <div class="button-row">
-        <form id="first-run-complete-form">
-          <button class="phase-button" type="submit">Setup afgerond</button>
-        </form>
-        <form id="first-run-skip-form">
-          <button class="secondary-button" type="submit">Later doen</button>
-        </form>
+    <details class="summary-panel setup-panel setup-panel--collapsed" aria-labelledby="first-run-setup-title" data-first-run-setup="collapsed">
+      <summary class="setup-panel__summary">
+        <span>
+          <p class="eyebrow">Eerste keer</p>
+          <h2 id="first-run-setup-title">Richt Kiempad rustig in</h2>
+        </span>
+        <em>Open checklist</em>
+      </summary>
+      <div class="setup-panel__body">
+        <p>${central ? 'Deze stappen worden op je toestel versleuteld en centraal bewaard voor gekoppelde apparaten.' : 'Deze stappen blijven in de lokale kluis op dit toestel. Configureer de centrale API voor multi-device continuiteit.'} Kiempad maakt geen medische keuzes.</p>
+        <ol class="compact-list setup-steps">
+          <li><strong>Dataset:</strong> je ${central ? 'centrale versleutelde dataset' : 'lokale kluis'} is ontgrendeld.</li>
+          <li><strong>Privacygrens:</strong> medische inhoud blijft versleuteld; AI en researchnetwerk blijven opt-in.</li>
+          <li><strong>Traject:</strong> <a href="#traject">maak de eerste poging of cyclus aan</a>.</li>
+          <li><strong>Afspraak:</strong> <a href="#agenda">leg de eerste afspraak vast</a>.</li>
+          <li><strong>Back-up:</strong> <a href="#backup">zet een versleutelde back-up op je checklist</a>.</li>
+        </ol>
+        <div class="button-row">
+          <form id="first-run-complete-form">
+            <button class="phase-button" type="submit">Setup afgerond</button>
+          </form>
+          <form id="first-run-skip-form">
+            <button class="secondary-button" type="submit">Later doen</button>
+          </form>
+        </div>
+        ${renderExampleDataPanel(hasExampleData(state), 'first-run')}
+        <p class="small-print">Je kunt alle stappen ook handmatig via de navigatie doen.</p>
       </div>
-      ${renderExampleDataPanel(hasExampleData(state), 'first-run')}
-      <p class="small-print">Je kunt alle stappen ook handmatig via de navigatie doen.</p>
-    </section>
+    </details>
   `;
 }
 

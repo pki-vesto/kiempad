@@ -99,6 +99,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-daily-advice-action-lane="clinician"]',
       '[data-hub-workflow="daily-recommendations"]',
       '[data-daily-advice-workbench="owner-routes"]',
+      '[data-first-run-setup="collapsed"]',
       '[data-dossier-upload-console="ready"]',
       '[data-hub-workflow="knowledge-research"]',
       '[data-knowledge-focus-region="workspace"]',
