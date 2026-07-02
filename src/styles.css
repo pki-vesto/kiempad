@@ -4445,6 +4445,32 @@ h2 {
   outline: none;
 }
 
+.daily-recommendation-list-filter-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.daily-recommendation-list-filter-header strong,
+.daily-recommendation-list-filter-header em {
+  color: var(--text);
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.daily-recommendation-list-filter-header em {
+  color: var(--text-muted);
+}
+
 .daily-advice-focus-shell__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);

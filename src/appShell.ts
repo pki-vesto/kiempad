@@ -14671,6 +14671,11 @@ function renderDailyAdviceConsole(
             <em>${state.dailyRecommendationFeedbackFilter ? `${filteredTotalRecommendations} van ${totalRecommendations}` : `${totalRecommendations} adviezen`}</em>
           </summary>
           <div class="kp-disclosure__body">
+            ${renderDailyRecommendationListFilterHeader({
+              filter: state.dailyRecommendationFeedbackFilter,
+              total: totalRecommendations,
+              filteredTotal: filteredTotalRecommendations,
+            })}
             ${renderDailyRecommendationFeedbackFilter({
               filter: state.dailyRecommendationFeedbackFilter,
               total: totalRecommendations,
@@ -14700,6 +14705,23 @@ function filterDailyRecommendationOverview(
     man: overview.man.filter((item) => feedbackStatussen[item.id] === filter),
     samen: overview.samen.filter((item) => feedbackStatussen[item.id] === filter),
   };
+}
+
+function renderDailyRecommendationListFilterHeader(input: {
+  filter?: FertilityTimelineAanbevelingFeedbackStatus;
+  total: number;
+  filteredTotal: number;
+}): string {
+  if (!input.filter) return '';
+  const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
+
+  return `
+    <div class="daily-recommendation-list-filter-header" data-daily-recommendation-list-filter-header="ready">
+      <span>Actieve lijstfilter</span>
+      <strong>${escapeHtml(filterLabel)}</strong>
+      <em>${input.filteredTotal} van ${input.total} suggesties</em>
+    </div>
+  `;
 }
 
 function renderDailyAdviceFilterStatus(input: {

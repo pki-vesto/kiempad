@@ -3351,6 +3351,9 @@ describe('app shell', () => {
       'data-daily-advice-feedback-workflow-status="ready"',
     );
     expect(emptyContextRecommendations).not.toContain(
+      'data-daily-recommendation-list-filter-header="ready"',
+    );
+    expect(emptyContextRecommendations).not.toContain(
       'data-daily-recommendation-feedback-filter-chip="ready"',
     );
     expect(emptyContextRecommendations).not.toContain(
@@ -3847,7 +3850,11 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-workflow-status="ready"');
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-list-open="ready"');
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-workflow-reset="ready"');
+    expect(filteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-header="ready"',
+    );
     expect(filteredRecommendations).toContain('Actieve feedbackfilter');
+    expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
     expect(filteredRecommendations).toContain('>Bekijk lijst</button>');
     expect(filteredRecommendations).toContain('>Reset</button>');
@@ -3902,7 +3909,11 @@ describe('app shell', () => {
       'data-daily-advice-feedback-workflow-reset="ready"',
     );
     expect(emptyFilteredRecommendations).toContain('data-daily-advice-feedback-list-open="ready"');
+    expect(emptyFilteredRecommendations).toContain(
+      'data-daily-recommendation-list-filter-header="ready"',
+    );
     expect(emptyFilteredRecommendations).toContain('Actieve feedbackfilter');
+    expect(emptyFilteredRecommendations).toContain('Actieve lijstfilter');
     expect(emptyFilteredRecommendations).toContain('Actieve filter: Artscheck');
     expect(emptyFilteredRecommendations).toContain('<strong>Artscheck</strong>');
     expect(emptyFilteredRecommendations).toContain('0 van ');

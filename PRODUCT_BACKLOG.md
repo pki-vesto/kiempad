@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1145 |
+| ☑ klaar | 1146 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1344** |
+| **Totaal** | **1345** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1506,13 +1506,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1341 | Daily Recommendations: filterstatus laat lijstpaneel openen | P1 | F5 | ☑ |
 | G1342 | Daily Recommendations: filterstatus toont actieve lijstfocus | P1 | F5 | ☑ |
 | G1343 | Daily Recommendations: lijstfocusstatus kan rustig sluiten | P1 | F5 | ☑ |
-| G1344 | Daily Recommendations: lijstpaneel toont actieve filterheader | P1 | F5 | ☐ |
+| G1344 | Daily Recommendations: lijstpaneel toont actieve filterheader | P1 | F5 | ☑ |
+| G1345 | Daily Recommendations: lijstfilterheader heeft resetactie | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1344** (id's G001 t/m G1344, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1345** (id's G001 t/m G1345, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
