@@ -306,6 +306,10 @@
 - **CFX-075 disclosure focus rings — partial in G1410 / issue #2594.** Details summaries for
   route disclosures, hub detail panels, Kennis workbench support, and Dossier optional upload
   panels now show explicit teal focus rings.
+- **CFX-047 dossier upload size feedback — partial in G1411 / issue #900.** Dossier upload now
+  shows per-file and batch limits beside the file field, oversized/rejected files use recoverable
+  feedback without medical filenames, and central `request-body-too-large` is translated to plain
+  dossier-flow copy.
 
 ---
 
@@ -851,6 +855,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `src/main.ts` dossier-upload handler. Accept: unsupported/oversized files rejected calmly. **P1 · M**
   Partial G1354/#2482: dossier document upload validates type/extension, per-file size, and batch
   memory cap before local file reading.
+  Partial G1411/#900: the file field shows 25 MB/50 MB limits, rejected file feedback uses only
+  safe file index/type/size context, and central oversized request errors are translated to
+  recoverable dossier copy without logging medical content.
 - **CFX-048** — Central-fetch retry/queued state with clear UI (beyond the error alert). **P2 · L**
 - **CFX-049** — Backup reminder as a first-class card (from `backupReminder.ts`). **P3 · S**
 

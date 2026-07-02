@@ -87,6 +87,8 @@ import type {
   Vraag,
 } from './domain/types';
 import {
+  describeDossierUploadFailure,
+  describeDossierUploadRejection,
   summarizeDossierUploadValidation,
   validateDossierUploadFiles,
 } from './domain/uploadValidation';
@@ -1030,8 +1032,7 @@ async function saveDossierDocumentsFromForm(
     target.reset();
     await reloadAndRender(root, state);
   } catch (error: unknown) {
-    state.dossierError =
-      error instanceof Error ? error.message : 'Dossierdocumenten uploaden is mislukt.';
+    state.dossierError = describeDossierUploadFailure(error);
     render(root, state);
   }
 }
@@ -1088,9 +1089,10 @@ function updateDossierConceptPreview(form: HTMLFormElement): void {
     });
     const item = document.createElement('li');
     const rejected = validation.rejected.find((candidate) => candidate.file === file);
+    const fileIndex = files.indexOf(file) + 1;
     item.dataset.dossierUploadValidation = rejected ? 'rejected' : 'accepted';
     item.textContent = rejected
-      ? `${file.name} · geweigerd · ${rejected.reason ?? 'controleer bestandstype of grootte'}`
+      ? `${describeDossierUploadRejection(rejected, fileIndex)} · geweigerd · ${rejected.reason ?? 'controleer bestandstype of grootte'}`
       : `${file.name} · ${
           profiel ? DOSSIER_UPLOAD_PROFIEL_LABELS[profiel] : 'Onbekend profiel'
         } · ${file.type || 'onbekend bestandstype'} · ${formatBytes(file.size)}`;

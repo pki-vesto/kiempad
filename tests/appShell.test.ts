@@ -26,7 +26,10 @@ import {
 import { EXAMPLE_DATA_IDS } from '../src/domain/exampleData';
 import { DEFAULT_APP_SETTINGS } from '../src/domain/settings';
 import type { DossierDocument } from '../src/domain/types';
-import { DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE } from '../src/domain/uploadValidation';
+import {
+  DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE,
+  describeDossierUploadLimits,
+} from '../src/domain/uploadValidation';
 
 function makeStartState(overrides: Partial<AppShellState> = {}): AppShellState {
   return {
@@ -6227,6 +6230,9 @@ describe('app shell', () => {
     expect(emptyForm).toContain(
       `name="dossierBestanden" type="file" accept="${DOSSIER_UPLOAD_ACCEPT_ATTRIBUTE}" multiple required`,
     );
+    expect(emptyForm).toContain('data-dossier-upload-size-guidance="ready"');
+    expect(emptyForm).toContain(describeDossierUploadLimits());
+    expect(emptyForm).toContain('Kiempad toont alleen type en grootte in foutmeldingen.');
     expect(emptyForm).toContain('name="lokaleOcr" type="checkbox" value="ja"');
     expect(emptyForm).toContain('id="dossier-concept-preview"');
     expect(emptyForm).toContain('name="conceptBevestigd" type="checkbox" value="ja" required');

@@ -102,11 +102,43 @@ export function validateDossierUploadFiles(files: readonly File[]): DossierUploa
 
 export function summarizeDossierUploadValidation(result: DossierUploadValidationResult): string {
   if (result.rejected.length === 0) {
-    return `${result.accepted.length} bestand${result.accepted.length === 1 ? '' : 'en'} klaar voor lokale controle. Maximaal ${formatUploadBytes(result.maxFileBytes)} per bestand.`;
+    return `${result.accepted.length} bestand${result.accepted.length === 1 ? '' : 'en'} klaar voor lokale controle. ${describeDossierUploadLimits(result)}`;
   }
 
   const firstRejected = result.rejected[0];
-  return `${result.rejected.length} bestand${result.rejected.length === 1 ? '' : 'en'} geweigerd: ${firstRejected?.file.name ?? 'bestand'} - ${firstRejected?.reason ?? 'controleer bestandstype of grootte'}`;
+  return `${result.rejected.length} bestand${result.rejected.length === 1 ? '' : 'en'} geweigerd: ${describeDossierUploadRejection(firstRejected, 1)} - ${firstRejected?.reason ?? 'controleer bestandstype of grootte'} ${describeDossierUploadLimits(result)}`;
+}
+
+export function describeDossierUploadLimits(
+  result?: Pick<DossierUploadValidationResult, 'maxFileBytes' | 'maxTotalBytes'>,
+): string {
+  return `Maximaal ${formatUploadBytes(result?.maxFileBytes ?? DOSSIER_UPLOAD_MAX_FILE_BYTES)} per bestand en ${formatUploadBytes(result?.maxTotalBytes ?? DOSSIER_UPLOAD_MAX_TOTAL_BYTES)} per uploadselectie.`;
+}
+
+export function describeDossierUploadRejection(
+  item: DossierUploadValidationItem | undefined,
+  index: number,
+): string {
+  const safeIndex = Number.isFinite(index) && index > 0 ? Math.floor(index) : 1;
+  const file = item?.file;
+  const rawTypeLabel = item?.rule?.label ?? file?.type.trim();
+  const typeLabel = rawTypeLabel || 'onbekend bestandstype';
+  const sizeLabel = file ? formatUploadBytes(file.size) : 'onbekende grootte';
+  return `bestand ${safeIndex} (${typeLabel}, ${sizeLabel})`;
+}
+
+export function describeDossierUploadFailure(error: unknown): string {
+  const message = error instanceof Error ? error.message : '';
+  if (message === 'request-body-too-large') {
+    return 'Uploadpakket is te groot voor centrale opslag. Kies minder of kleinere bestanden en probeer opnieuw; broninhoud is niet gelogd.';
+  }
+  return message || 'Dossierdocumenten uploaden is mislukt.';
+}
+
+export function formatUploadBytes(bytes: number): string {
+  if (bytes >= 1024 * 1024) return `${Math.round(bytes / (1024 * 1024))} MB`;
+  if (bytes >= 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${bytes} bytes`;
 }
 
 function findDossierUploadAllowRule(file: File): DossierUploadAllowRule | undefined {
@@ -118,10 +150,4 @@ function findDossierUploadAllowRule(file: File): DossierUploadAllowRule | undefi
       rule.mimeTypes.includes(mimeType) ||
       rule.extensions.some((extension) => fileName.endsWith(extension)),
   );
-}
-
-function formatUploadBytes(bytes: number): string {
-  if (bytes >= 1024 * 1024) return `${Math.round(bytes / (1024 * 1024))} MB`;
-  if (bytes >= 1024) return `${Math.round(bytes / 1024)} KB`;
-  return `${bytes} bytes`;
 }
