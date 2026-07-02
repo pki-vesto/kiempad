@@ -19,7 +19,7 @@ const validHealthContract = {
   medicalPlaintext: false,
   dataRoutes: 'bearer-session-required',
   emptyState: 'no-user-dataset-opened',
-  errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+  errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
 } as const;
 
 describe('G1082 central health monitor compatibility fixture', () => {

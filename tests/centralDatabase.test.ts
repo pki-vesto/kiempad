@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   type CentralAuthSession,
   CentralDataValidationError,
+  CentralReplayConflictError,
   CentralSessionError,
   CentralUserStorageDriver,
   MemoryCentralEncryptedDatabase,
@@ -232,12 +233,12 @@ describe('central encrypted database architecture', () => {
     };
 
     await database.putRecord(userA, originalRecord);
-    await expect(database.putRecord(userA, originalRecord)).rejects.toThrow(
-      'Centrale recordwrite is ouder dan de laatste versie.',
+    await expect(database.putRecord(userA, originalRecord)).rejects.toBeInstanceOf(
+      CentralReplayConflictError,
     );
     await database.putRecord(userA, newerRecord);
     await expect(database.putRecord(userA, originalRecord)).rejects.toBeInstanceOf(
-      CentralDataValidationError,
+      CentralReplayConflictError,
     );
 
     const stored = database.unsafeDumpRecordsForTest()[0];

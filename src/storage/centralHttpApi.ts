@@ -8,6 +8,7 @@ import {
   CentralDataValidationError,
   type CentralRecordListPage,
   type CentralRecordListPageOptions,
+  CentralReplayConflictError,
   CentralSessionError,
 } from './centralDatabase';
 import type {
@@ -42,7 +43,12 @@ export type CentralHealthResponse = {
   medicalPlaintext: false;
   dataRoutes: 'bearer-session-required';
   emptyState: 'no-user-dataset-opened';
-  errorStates: readonly ['unauthorized', 'forbidden', 'central-api-error'];
+  errorStates: readonly [
+    'unauthorized',
+    'forbidden',
+    'central-api-error',
+    'central-replay-conflict',
+  ];
 };
 
 type ErrorResponseBody = {
@@ -80,7 +86,7 @@ const CENTRAL_HEALTH_RESPONSE: CentralHealthResponse = {
   medicalPlaintext: false,
   dataRoutes: 'bearer-session-required',
   emptyState: 'no-user-dataset-opened',
-  errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+  errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
 };
 
 export class CentralHttpBadRequestError extends Error {
@@ -102,6 +108,12 @@ export class CentralEncryptedHttpApi {
       }
       if (error instanceof CentralAccessDeniedError) {
         return { status: 403, body: { error: 'forbidden' } satisfies ErrorResponseBody };
+      }
+      if (error instanceof CentralReplayConflictError) {
+        return {
+          status: 409,
+          body: { error: 'central-replay-conflict' } satisfies ErrorResponseBody,
+        };
       }
       if (error instanceof CentralHttpBadRequestError) {
         return { status: 400, body: { error: error.message } satisfies ErrorResponseBody };

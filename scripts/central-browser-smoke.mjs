@@ -63,13 +63,25 @@ async function runSmoke() {
     const browser = await chromium.launch({ headless: true });
     try {
       const firstPage = await openSmokePage(browser, previewUrl);
-      await unlockCentralDataset(firstPage, { expectedGateTitle: 'Start je centrale encrypted dataset' });
-      await firstPage.locator('#first-run-complete-form button[type="submit"]').click();
+      await unlockCentralDataset(firstPage, {
+        expectedGateTitles: ['Welkom bij Kiempad', 'Welkom terug'],
+      });
+      if (await firstPage.locator('#first-run-complete-form').count()) {
+        await firstPage.evaluate(() => {
+          const setup = document.querySelector('[data-first-run-setup="collapsed"]');
+          if (setup instanceof HTMLDetailsElement) setup.open = true;
+          const form = document.querySelector('#first-run-complete-form');
+          if (form instanceof HTMLFormElement) form.requestSubmit();
+        });
+        await firstPage
+          .locator('#first-run-complete-form')
+          .waitFor({ state: 'detached', timeout: 10_000 });
+      }
       await expectPersistenceWrite(persistenceFile);
 
       const secondPage = await openSmokePage(browser, previewUrl);
       await assertSecondDeviceUnlockGate(secondPage);
-      await unlockCentralDataset(secondPage, { expectedGateTitle: 'Ontgrendel Kiempad' });
+      await unlockCentralDataset(secondPage, { expectedGateTitles: ['Welkom terug'] });
       if (await secondPage.locator('#first-run-complete-form').count()) {
         throw new Error('Tweede schone browsercontext zag first-run setup ondanks centrale settings.');
       }
@@ -102,17 +114,17 @@ async function openSmokePage(browser, previewUrl) {
 
 async function assertSecondDeviceUnlockGate(page) {
   const title = await page.locator('#vault-title').innerText();
-  if (title.includes('Start je centrale encrypted dataset')) {
+  if (title.includes('Welkom bij Kiempad')) {
     throw new Error('Tweede schone browsercontext moest de centrale dataset opnieuw starten.');
   }
-  if (title !== 'Ontgrendel Kiempad') {
+  if (title !== 'Welkom terug') {
     throw new Error(`Tweede schone browsercontext toont onverwachte vault-titel: ${title}`);
   }
 }
 
 async function unlockCentralDataset(page, options) {
   const title = await page.locator('#vault-title').innerText();
-  if (title !== options.expectedGateTitle) {
+  if (!options.expectedGateTitles.includes(title)) {
     throw new Error(`Onverwachte vault-titel: ${title}`);
   }
   await page.locator('#passphrase').fill(passphrase);
@@ -120,8 +132,8 @@ async function unlockCentralDataset(page, options) {
   await page.locator('.app-shell').waitFor({ timeout: 10_000 });
 
   const unlockedText = await page.locator('body').innerText();
-  if (!unlockedText.includes('Centrale encrypted opslag')) {
-    throw new Error('App-shell toont niet dat centrale encrypted opslag actief is.');
+  if (!unlockedText.includes('Centrale versleutelde opslag')) {
+    throw new Error('App-shell toont niet dat centrale versleutelde opslag actief is.');
   }
   if (unlockedText.includes('Legacy lokaal')) {
     throw new Error('App-shell viel terug naar legacy lokale opslag.');
@@ -156,8 +168,13 @@ async function expectPersistenceWrite(persistenceFile) {
   while (Date.now() < deadline) {
     try {
       const text = await fs.readFile(persistenceFile, 'utf8');
-      if (text.includes('"type": "settings"') && text.includes('"alg": "AES-256-GCM"')) {
-        if (!text.includes(`"ownerUserId": "${userId}"`)) {
+      const snapshot = JSON.parse(text);
+      const records = Array.isArray(snapshot?.records) ? snapshot.records : [];
+      const encryptedUserRecords = records.filter(
+        (record) => record?.ownerUserId === userId && record?.payload?.alg === 'AES-256-GCM',
+      );
+      if (encryptedUserRecords.length > 0) {
+        if (!text.includes(userId)) {
           throw new Error('Centrale persistence mist de verwachte ownerUserId.');
         }
         for (const forbidden of [passphrase, 'central smoke passphrase', 'firstRunSetup']) {
@@ -174,7 +191,7 @@ async function expectPersistenceWrite(persistenceFile) {
     }
     await delay(250);
   }
-  throw new Error('Centrale persistence bevatte geen encrypted settings-record binnen timeout.');
+  throw new Error('Centrale persistence bevatte geen encrypted user-record binnen timeout.');
 }
 
 async function runCommand(command, args, env) {

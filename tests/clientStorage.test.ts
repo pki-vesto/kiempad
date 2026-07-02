@@ -1,11 +1,15 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { CentralEncryptedApiServer, MemoryCentralSessionStore } from '../src/storage/centralApi';
-import { MemoryCentralEncryptedDatabase } from '../src/storage/centralDatabase';
+import {
+  CentralReplayConflictError,
+  MemoryCentralEncryptedDatabase,
+} from '../src/storage/centralDatabase';
 import { CentralEncryptedHttpApi, type CentralHttpMethod } from '../src/storage/centralHttpApi';
 import { openClientStorage } from '../src/storage/clientStorage';
 import { EncryptedRecordRepository } from '../src/storage/encryptedRepository';
 import { MemoryEncryptedStorageDriver } from '../src/storage/memoryDriver';
+import type { EncryptedRecord } from '../src/storage/records';
 import { VaultSession } from '../src/storage/vaultSession';
 
 type ClientFlowRecord = {
@@ -216,7 +220,50 @@ describe('client storage bootstrap', () => {
     expect(serializedFetchBodies.join('\n')).not.toContain('plaintext');
     expect(openLegacyDriver).not.toHaveBeenCalled();
   });
+
+  it('mapt centrale replayconflicten naar herstelbare clientfout zonder payloadlek', async () => {
+    const api = createInMemoryCentralHttpApi();
+    const storage = await openClientStorage({
+      env: {
+        VITE_KIEMPAD_CENTRAL_API_URL: 'https://kiempad-central.test',
+        VITE_KIEMPAD_CENTRAL_USER_ID: 'peter-en-partner',
+      },
+      openLegacyDriver: failUnexpectedLegacyOpen,
+      fetcher: createHttpApiFetcher(api),
+    });
+    const staleRecord = createEncryptedRecord('client-replay-record');
+
+    await storage.driver.putRecord(staleRecord);
+    await expect(storage.driver.putRecord(staleRecord)).rejects.toBeInstanceOf(
+      CentralReplayConflictError,
+    );
+
+    const serialized = JSON.stringify(staleRecord);
+    expect(serialized).not.toContain('passphrase');
+    expect(serialized).not.toContain('OCR');
+    expect(serialized).not.toContain('base64');
+    expect(serialized).not.toContain('medische payload');
+  });
 });
+
+function createEncryptedRecord(
+  id: string,
+  updatedAt = '2026-06-25T08:00:01.000Z',
+): EncryptedRecord {
+  return {
+    id,
+    type: 'traject',
+    createdAt: '2026-06-25T08:00:00.000Z',
+    updatedAt,
+    schemaVersion: 1,
+    payload: {
+      v: 1,
+      alg: 'AES-256-GCM',
+      iv: `encrypted-iv-${id}`,
+      ciphertext: `encrypted-ciphertext-${id}`,
+    },
+  };
+}
 
 function createInMemoryCentralHttpApi(): CentralEncryptedHttpApi {
   return new CentralEncryptedHttpApi(

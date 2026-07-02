@@ -81,4 +81,18 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("window.history.replaceState(null, '', `#");
     expect(mainSource).toContain('target.focus({ preventScroll: true })');
   });
+
+  it('mapt centrale replayconflicten naar generieke herstelcopy zonder plaintext fallback', () => {
+    expect(mainSource).toContain('CentralReplayConflictError');
+    expect(mainSource).toContain('formatCentralReplayRecoveryStatus(error)');
+    expect(mainSource).toContain(
+      'Centrale opslag heeft een oudere of dubbele wijziging geweigerd.',
+    );
+    expect(mainSource).toContain('Herlaad Kiempad en probeer opnieuw');
+    expect(mainSource).toContain('niets automatisch naar lokale plaintext teruggezet');
+    expect(mainSource).toContain('formatRecoverableStorageError(');
+    expect(mainSource).not.toContain('echo-foto-privenaam.jpg');
+    expect(mainSource).not.toContain('OCR_RAW_PAYLOAD');
+    expect(mainSource).not.toContain('kiempad-session-forged');
+  });
 });

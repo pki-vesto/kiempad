@@ -52,7 +52,7 @@ describe('central encrypted Node backend runtime', () => {
       medicalPlaintext: false,
       dataRoutes: 'bearer-session-required',
       emptyState: 'no-user-dataset-opened',
-      errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+      errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
     });
 
     const serialized = JSON.stringify(body);

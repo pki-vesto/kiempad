@@ -37,7 +37,7 @@ const EXPECTED_HEALTH_CONTRACT: CentralHealthResponse = {
   medicalPlaintext: false,
   dataRoutes: 'bearer-session-required',
   emptyState: 'no-user-dataset-opened',
-  errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+  errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
 };
 
 const EXPECTED_HEALTH_KEYS = Object.keys(EXPECTED_HEALTH_CONTRACT).sort();

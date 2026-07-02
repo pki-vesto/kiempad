@@ -56,7 +56,7 @@ describe('central encrypted HTTP API contract', () => {
         medicalPlaintext: false,
         dataRoutes: 'bearer-session-required',
         emptyState: 'no-user-dataset-opened',
-        errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+        errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
       },
     });
 
@@ -92,7 +92,7 @@ describe('central encrypted HTTP API contract', () => {
       body: {
         contractVersion: 1,
         emptyState: 'no-user-dataset-opened',
-        errorStates: ['unauthorized', 'forbidden', 'central-api-error'],
+        errorStates: ['unauthorized', 'forbidden', 'central-api-error', 'central-replay-conflict'],
       },
     });
     await expect(api.handle({ method: 'POST', path: '/health' })).resolves.toEqual({
@@ -332,8 +332,8 @@ describe('central encrypted HTTP API contract', () => {
     await expect(
       api.handle({ method: 'PUT', path: '/records/http-replay-record', token, body: oldRecord }),
     ).resolves.toEqual({
-      status: 400,
-      body: { error: 'Centrale recordwrite is ouder dan de laatste versie.' },
+      status: 409,
+      body: { error: 'central-replay-conflict' },
     });
 
     const stored = database.unsafeDumpRecordsForTest()[0];
