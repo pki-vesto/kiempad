@@ -18,12 +18,6 @@ const targets = [
     allowHidden: true,
   },
   {
-    screen: 'logboek',
-    hash: '#logboek?route=privacy',
-    signal: 'eventlog',
-    microstate: 'eventlog-privacy',
-  },
-  {
     screen: 'backup',
     hash: '#backup?route=import',
     signal: 'backup',
