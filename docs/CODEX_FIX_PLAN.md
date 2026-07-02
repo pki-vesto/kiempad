@@ -73,6 +73,9 @@
 - **CFX-017 — done in G1336 / issue #2446.** Binary settings now use a shared segmented toggle
   presentation in Settings and Herinneringen privacy, while reminder rows use the same visual
   on/off status language instead of loose small text.
+- **CFX-018 settings feedback — done in G1337 / issue #2448.** Personal settings, theme changes,
+  and Herinneringen lockscreenprivacy now render inline `role="status"` success feedback after save,
+  so these controls no longer fail silently.
 
 ---
 

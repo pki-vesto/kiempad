@@ -11498,6 +11498,18 @@ a.action-card:active {
   color: var(--success-text);
 }
 
+.settings-save-feedback {
+  margin: 0;
+  padding: 9px 12px;
+  border: 1px solid color-mix(in srgb, var(--teal) 26%, var(--line));
+  border-left: 3px solid var(--teal);
+  border-radius: 10px;
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+  font-size: 12.5px;
+  font-weight: 750;
+}
+
 /* B10/B12: secundaire knoppen zijn ghost (transparant + hairline), niet vol */
 .secondary-button {
   min-height: 40px;
