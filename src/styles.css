@@ -4414,12 +4414,35 @@ h2 {
 }
 
 .daily-advice-list-focus-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   margin: 0 0 10px;
   padding: 7px 10px;
   border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
   border-radius: 8px;
   background: color-mix(in srgb, var(--accent) 8%, var(--surface));
   color: var(--text-muted);
+}
+
+.daily-advice-list-focus-status button {
+  min-height: 26px;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--surface) 86%, white);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 720;
+}
+
+.daily-advice-list-focus-status button:hover,
+.daily-advice-list-focus-status button:focus-visible {
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  outline: none;
 }
 
 .daily-advice-focus-shell__body {

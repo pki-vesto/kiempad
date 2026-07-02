@@ -91,6 +91,9 @@
 - **Daily advice feedback list focus status — done in G1435 / issue #2630.** Opening the
   dagadvies list from the active feedback workflow status now adds a visible list-context status
   inside the panel while preserving the filtered route.
+- **Daily advice feedback list focus close — done in G1436 / issue #2632.** The list-context
+  status now has a calm close action that removes only the local focus cue while preserving the
+  active feedbackfilter and route.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

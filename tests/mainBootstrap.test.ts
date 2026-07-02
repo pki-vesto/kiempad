@@ -53,6 +53,9 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("panel.dataset.dailyAdviceListFocus = 'active'");
     expect(mainSource).toContain('ensureDailyRecommendationListFocusStatus');
     expect(mainSource).toContain('[data-daily-advice-list-focus-status="ready"]');
+    expect(mainSource).toContain("closeButton.dataset.dailyAdviceListFocusClose = 'ready'");
+    expect(mainSource).toContain('delete panel.dataset.dailyAdviceListFocus');
+    expect(mainSource).toContain('status.remove()');
     expect(mainSource).toContain('Lijst geopend vanuit de actieve feedbackfilter.');
     expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');

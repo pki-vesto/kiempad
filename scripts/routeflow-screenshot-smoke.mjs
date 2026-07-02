@@ -1616,6 +1616,31 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     undefined,
     { timeout: 10_000 },
   );
+  await page.locator('[data-daily-advice-list-focus-close="ready"]').click();
+  await expectHash(page, '#start-recommendations?feedback=artscheck');
+  await page
+    .locator('[data-daily-advice-list-focus-status="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
+  await page.waitForFunction(
+    () => {
+      const details = document.querySelector('[data-hub-detail-panel="daily-recommendation-list"]');
+      const workflowStatus = document.querySelector(
+        '[data-daily-advice-feedback-workflow-status="ready"]',
+      );
+      return (
+        details instanceof HTMLDetailsElement &&
+        details.open &&
+        !details.dataset.dailyAdviceListFocus &&
+        Boolean(workflowStatus)
+      );
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+  await page.locator('[data-daily-advice-feedback-list-open="ready"]').click();
+  await page
+    .locator('[data-daily-advice-list-focus-status="ready"]')
+    .waitFor({ timeout: 10_000 });
 
   await page.locator('[data-daily-advice-feedback-workflow-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');
