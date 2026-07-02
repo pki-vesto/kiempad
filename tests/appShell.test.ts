@@ -2158,6 +2158,12 @@ describe('app shell', () => {
     expect(css).toContain('.medication-dose-card[data-dose-log-state="genomen"] {');
     expect(css).toContain('.medication-dose-card[data-medication-kind="injectie"] {');
     expect(css).toContain('.medication-dose-card__meta {');
+    expect(css).toContain('.medication-form {');
+    expect(css).toContain('.medication-form-section {');
+    expect(css).toContain('.medication-form-section--primary {');
+    expect(css).toContain('.medication-form-actions {');
+    expect(css).toContain('.medication-focus-shell__body:has(#medicatie-form)');
+    expect(css).toContain('.domain-split-workspace:has(#medicatie-form)');
     expect(css).toContain('.planning-workbench__header {');
     expect(css).toContain('.planning-workbench__grid {');
     expect(css).toContain('.planning-workbench__actions {');
@@ -2285,6 +2291,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.medication-focus-shell {');
     expect(mobileCss).toContain('.medication-focus-shell__body {');
     expect(mobileCss).toContain('.medication-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.medication-form-section {');
+    expect(mobileCss).toContain('.medication-form-actions {');
     expect(css).toContain('.planning-workbench :where(.stat-row) {');
     expect(css).toContain('.planning-workbench :where(.stat) {');
     expect(css).toContain('.treatment-snapshot {');
@@ -4796,9 +4804,17 @@ describe('app shell', () => {
     expect(html).toContain('Medicatie vandaag route-samenvatting');
     expect(html).toContain('data-medication-route-summary="historie"');
     expect(html).toContain('Middelen, voorraad en historie tonen');
+    expect(html).toContain('id="medicatie-form" class="data-form medication-form"');
     expect(html).toContain('data-command-form-section="medicatie-basis"');
     expect(html).toContain('data-command-form-section="medicatie-voorraad"');
     expect(html).toContain('data-command-form-section="medicatie-schema"');
+    expect(html).toContain('data-medication-form-section="basis"');
+    expect(html).toContain('data-medication-form-section="kliniektekst"');
+    expect(html).toContain('data-medication-form-section="media"');
+    expect(html).toContain('data-medication-form-section="planning"');
+    expect(html).toContain('class="medication-form-field medication-form-field--wide"');
+    expect(html).toContain('class="form-grid medication-form-grid"');
+    expect(html).toContain('class="medication-form-actions"');
     expect(html).toContain(
       'class="medication-route-section__header command-route-section__header"',
     );

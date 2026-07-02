@@ -6115,6 +6115,10 @@ h2 {
   height: 100%;
 }
 
+.medication-focus-shell__body:has(#medicatie-form) .medication-focus-shell__workbench {
+  display: none;
+}
+
 .medication-focus-shell .command-route-summary h3 {
   overflow-wrap: anywhere;
 }
@@ -9087,6 +9091,66 @@ h2 {
   .medication-focus-shell__workspace .domain-split-workspace__rail .command-task-route__badge {
     justify-self: end;
   }
+
+  .medication-focus-shell__body:has(#medicatie-form) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .medication-focus-shell__workspace .domain-split-workspace:has(#medicatie-form) {
+    grid-template-areas: "rail main";
+    grid-template-columns: minmax(168px, 0.24fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .medication-focus-shell__workspace
+    .domain-split-workspace:has(#medicatie-form)
+    .domain-split-workspace__context {
+    display: none;
+  }
+
+  .medication-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .medication-form-section--primary,
+  .medication-form-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 960px) {
+  .medication-focus-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-focus-shell__workspace .domain-split-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-focus-shell__workspace .domain-split-workspace__rail {
+    min-width: 0;
+  }
+
+  .medication-focus-shell__workspace .domain-split-workspace__context {
+    display: none;
+  }
+
+  .medication-task-routes {
+    display: flex;
+    overflow-x: auto;
+    padding: 7px;
+    scroll-snap-type: x proximity;
+  }
+
+  .medication-task-routes::-webkit-scrollbar {
+    display: none;
+  }
+
+  .medication-task-route {
+    flex: 0 0 min(210px, 46vw);
+    scroll-snap-align: start;
+  }
 }
 
 .command-form-section {
@@ -10033,6 +10097,50 @@ h2 {
 .medication-route-section .data-form select,
 .medication-route-section .data-form textarea {
   min-width: 0;
+}
+
+.medication-form {
+  gap: 12px;
+}
+
+.medication-form-section {
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));
+}
+
+.medication-form-section--primary {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.medication-form-grid {
+  gap: 10px;
+}
+
+.medication-form-field {
+  gap: 7px;
+}
+
+.medication-form-field--wide {
+  grid-column: 1 / -1;
+}
+
+.medication-form-section textarea {
+  min-height: 78px;
+  resize: vertical;
+}
+
+.medication-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.medication-form-actions button {
+  min-height: 40px;
 }
 
 .question-command-layout {
@@ -16690,6 +16798,26 @@ a.action-card:active {
   .medication-task-route {
     flex: 0 0 min(190px, 76vw);
     scroll-snap-align: start;
+  }
+
+  .medication-form-section {
+    gap: 9px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .medication-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-form-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .medication-form-actions button {
+    width: 100%;
+    min-height: 44px;
   }
 
   .content:has([data-question-focus-shell="ready"]) > .workspace-map,

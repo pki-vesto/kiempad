@@ -16763,16 +16763,16 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
   const today = new Date().toISOString().slice(0, 10);
 
   return `
-    <form id="medicatie-form" class="data-form">
+    <form id="medicatie-form" class="data-form medication-form">
       <input type="hidden" name="id" value="${escapeAttribute(medicatie?.id ?? '')}" />
-      <section class="command-form-section" data-command-form-section="medicatie-basis">
+      <section class="command-form-section medication-form-section medication-form-section--primary" data-command-form-section="medicatie-basis" data-medication-form-section="basis">
         <p class="command-form-section__eyebrow">Basis</p>
-        <label>
+        <label class="medication-form-field medication-form-field--wide">
           Naam
           <input name="naam" required value="${escapeAttribute(medicatie?.naam ?? '')}" />
         </label>
-        <div class="form-grid">
-          <label>
+        <div class="form-grid medication-form-grid">
+          <label class="medication-form-field">
             Vorm
             <select name="vorm">
               ${Object.entries(MEDICATIE_VORM_LABELS)
@@ -16780,7 +16780,7 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
                 .join('')}
             </select>
           </label>
-          <label>
+          <label class="medication-form-field">
             Actief
             <select name="actief">
               ${renderOption('true', 'Actief', medicatie?.actief === false ? 'false' : 'true')}
@@ -16789,24 +16789,24 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
           </label>
         </div>
       </section>
-      <section class="command-form-section" data-command-form-section="medicatie-voorraad">
+      <section class="command-form-section medication-form-section" data-command-form-section="medicatie-voorraad" data-medication-form-section="kliniektekst">
         <p class="command-form-section__eyebrow">Kliniektekst</p>
-        <label>
+        <label class="medication-form-field">
           Voorgeschreven dosis
           <input name="voorgeschrevenDosis" value="${escapeAttribute(medicatie?.voorgeschrevenDosis ?? '')}" placeholder="Neem exact over van de kliniek" />
         </label>
-        <label>
+        <label class="medication-form-field">
           Voorraad
           <input name="voorraadAantal" type="number" min="0" step="1" value="${escapeAttribute(medicatie?.voorraadAantal?.toString() ?? '')}" placeholder="Aantal doses over" />
         </label>
-        <label>
+        <label class="medication-form-field medication-form-field--wide">
           Instructie
           <textarea name="instructie" rows="3">${escapeHtml(medicatie?.instructie ?? '')}</textarea>
         </label>
       </section>
-      <section class="command-form-section" data-command-form-section="medicatie-media">
+      <section class="command-form-section medication-form-section" data-command-form-section="medicatie-media" data-medication-form-section="media">
         <p class="command-form-section__eyebrow">Media</p>
-        <label>
+        <label class="medication-form-field">
           Lokale instructievideo
           <input name="instructieVideo" type="file" accept="video/*" />
         </label>
@@ -16816,25 +16816,27 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
             : ''
         }
       </section>
-      <section class="command-form-section" data-command-form-section="medicatie-schema">
+      <section class="command-form-section medication-form-section" data-command-form-section="medicatie-schema" data-medication-form-section="planning">
         <p class="command-form-section__eyebrow">Planning</p>
-        <div class="form-grid">
-          <label>
+        <div class="form-grid medication-form-grid">
+          <label class="medication-form-field">
             Schema startdatum
             <input name="schemaStartDatum" type="date" value="${today}" />
           </label>
-          <label>
+          <label class="medication-form-field">
             Tijdstip
             <input name="schemaTijdstip" type="time" value="20:00" />
           </label>
         </div>
-        <label>
+        <label class="medication-form-field medication-form-field--wide">
           Aantal dagen voor geplande logs
           <input name="schemaAantalDagen" type="number" min="0" step="1" value="0" />
         </label>
         <p class="small-print">Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.</p>
       </section>
-      <button type="submit">${medicatie ? 'Bewaar medicatie' : 'Voeg medicatie toe'}</button>
+      <div class="medication-form-actions">
+        <button type="submit">${medicatie ? 'Bewaar medicatie' : 'Voeg medicatie toe'}</button>
+      </div>
     </form>
   `;
 }
