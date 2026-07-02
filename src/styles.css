@@ -10105,6 +10105,77 @@ a.action-card:active {
   margin: 0;
 }
 
+.dossier-search-console {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-areas:
+    "search privacy"
+    "search index";
+  gap: 12px;
+  min-width: 0;
+}
+
+.dossier-search-console__panel {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.dossier-search-console__panel--search {
+  grid-area: search;
+}
+
+.dossier-search-console__panel[data-dossier-search-console-region="privacy"] {
+  grid-area: privacy;
+}
+
+.dossier-search-console__panel[data-dossier-search-console-region="index"] {
+  grid-area: index;
+}
+
+.dossier-search-console__panel-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  align-items: center;
+}
+
+.dossier-search-console__panel-header .kp-card__eyebrow {
+  grid-column: 1 / -1;
+}
+
+.dossier-search-console__panel-header h3,
+.dossier-search-console__panel-header p {
+  margin: 0;
+}
+
+.dossier-search-console__panel-header h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.dossier-search-console__panel-header span {
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.dossier-search-console .data-form {
+  margin: 0;
+}
+
 .dossier-section-index {
   display: grid;
   gap: 12px;
@@ -10165,6 +10236,26 @@ a.action-card:active {
 }
 
 @media (max-width: 720px) {
+  .dossier-search-console {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "search"
+      "privacy"
+      "index";
+  }
+
+  .dossier-search-console__panel {
+    padding: 12px;
+  }
+
+  .dossier-search-console__panel-header {
+    grid-template-columns: 1fr;
+  }
+
+  .dossier-search-console__panel-header span {
+    width: fit-content;
+  }
+
   .dossier-command-center__header {
     display: grid;
   }
@@ -10382,6 +10473,14 @@ a.action-card:active {
 
 .kp-disclosure__body {
   padding: 0 16px 16px;
+}
+
+.dossier-search-console .kp-disclosure {
+  min-width: 0;
+}
+
+.dossier-search-console .kp-disclosure:not([open]) > .kp-disclosure__body {
+  display: none;
 }
 
 @media (min-width: 761px) {

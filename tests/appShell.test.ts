@@ -123,7 +123,7 @@ function extractDossierReviewQueue(html: string): string {
 
 function extractDossierAddSection(html: string): string {
   const start = html.indexOf('data-hub-detail-panel="upload-intake"');
-  const end = html.indexOf('<h2>Dossier zoeken</h2>', start);
+  const end = html.indexOf('data-dossier-search-console="ready"', start);
   if (start < 0 || end < 0) throw new Error('Dossier toevoegsectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -6976,6 +6976,12 @@ describe('app shell', () => {
     expect(css).toContain('[data-dossier-upload-focus-mode="single-flow"]');
     expect(css).toContain('.dossier-upload-console__header {');
     expect(css).toContain('.dossier-upload-console__body {');
+    expect(css).toContain('.dossier-search-console {');
+    expect(css).toContain('grid-template-areas:');
+    expect(css).toContain('"search privacy"');
+    expect(css).toContain('.dossier-search-console__panel {');
+    expect(css).toContain('[data-dossier-search-console-region="privacy"]');
+    expect(css).toContain('[data-dossier-search-console-region="index"]');
     expect(css).toContain('"document"');
     expect(css).toContain('"embryo-quality"');
     expect(css).toContain('"embryo-status"');
@@ -7561,7 +7567,7 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Documenttijdlijn openen');
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');
-    expect(emptyHtml).toContain('Dossier zoeken en privacycontrole');
+    expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
     expect(emptyHtml).toContain('Imaging, consulten en embryo-dossiers');
     expect(emptyHtml).toContain('Tijdlijn en behandelgeschiedenis');
     expect(emptyCenter).toContain('data-dossier-command-center="ready"');
@@ -7784,9 +7790,24 @@ describe('app shell', () => {
   });
 
   it('groepeert secundaire dossierprivacy achter progressive disclosure zonder primaire routes te verbergen', () => {
-    const emptyHtml = renderAppShell('dossier', makeStartState());
+    const emptyHtml = renderAppShell(
+      'dossier',
+      makeStartState({
+        activeDossierRoute: 'search',
+      }),
+    );
     const emptyDisclosure = extractDossierSecondaryPrivacyDisclosure(emptyHtml);
 
+    expect(emptyHtml).toContain('data-dossier-route="search" data-dossier-route-state="active"');
+    expect(emptyHtml).toContain('data-dossier-search-console="ready"');
+    expect(emptyHtml).toContain('aria-label="Dossier zoekconsole"');
+    expect(emptyHtml).toContain('data-dossier-search-console-region="search"');
+    expect(emptyHtml).toContain('data-dossier-search-console-region="privacy"');
+    expect(emptyHtml).toContain('data-dossier-search-console-region="index"');
+    expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
+    expect(emptyHtml).toContain('Zoek gericht in je dossier');
+    expect(emptyHtml).toContain('Privacy en toegankelijkheid');
+    expect(emptyHtml).toContain('Inhoudsindex');
     expect(emptyDisclosure).toContain('data-dossier-secondary-privacy="collapsed"');
     expect(emptyDisclosure).toContain('Privacy- en toegankelijkheidscontrole');
     expect(emptyDisclosure).toContain('data-attachment-search-filter-surface="privacy"');
