@@ -120,6 +120,9 @@
 - **CFX-040 dossier search kit — partial in G1352 / issue #2478.** Dossier Zoeken now renders as a
   structured search kit with idle/active result chips, reset action, and privacy copy before
   metadata/OCR search.
+- **CFX-034 agenda date blocks — partial in G1353 / issue #2480.** Agenda upcoming and past
+  appointments now render as date blocks with appointment cards, type-colored rails, expected/past
+  status chips, and question/reminder context.
 
 ---
 
@@ -515,7 +518,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   card). Files: `src/appShell.ts`, `src/domain/fertilityTimeline.ts` (view only). **P1 · L**
   Partial G1348/#2470: Traject Fasen uses the shared timeline component.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
-  pill. **P2 · M**
+  pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
+  type-colored appointment cards.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
   Done in G1347/#2468.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**

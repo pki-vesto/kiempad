@@ -16387,52 +16387,121 @@ function renderAfgelopenAgendaList(
   bundles: AfspraakBundle[],
   trajecten: TrajectMetFasen[],
 ): string {
-  return `
-    <ol class="phase-list">
-      ${bundles
-        .map((bundle) => {
-          const traject = trajecten.find((item) => item.traject.id === bundle.afspraak.trajectId);
-          return `
-            <li class="phase-item">
-              <div>
-                <h3>${escapeHtml(bundle.afspraak.titel)}</h3>
-                <p>Geweest · ${AFSPRAAK_TYPE_LABELS[bundle.afspraak.type]} · ${formatDateTime(bundle.afspraak.datumTijd)}</p>
-                <small>${escapeHtml(renderAfspraakMeta(bundle.afspraak, traject?.traject.naam))}</small>
-                ${
-                  bundle.afspraak.notitie
-                    ? `<p class="linked-note">Terugblik: ${escapeHtml(bundle.afspraak.notitie)}</p>`
-                    : ''
-                }
-              </div>
-            </li>
-          `;
-        })
-        .join('')}
-    </ol>
-  `;
+  return renderAgendaDateBlocks(bundles, trajecten, 'past');
 }
 
 function renderAgendaList(bundles: AfspraakBundle[], trajecten: TrajectMetFasen[]): string {
+  return renderAgendaDateBlocks(bundles, trajecten, 'upcoming');
+}
+
+function renderAgendaDateBlocks(
+  bundles: AfspraakBundle[],
+  trajecten: TrajectMetFasen[],
+  variant: 'upcoming' | 'past',
+): string {
+  const blocks = groupAgendaBundlesByDate(bundles);
+
   return `
-    <ol class="phase-list">
-      ${bundles
-        .map((bundle) => {
-          const traject = trajecten.find((item) => item.traject.id === bundle.afspraak.trajectId);
-          return `
-            <li class="phase-item">
-              <div>
-                <h3>${escapeHtml(bundle.afspraak.titel)}</h3>
-                <p>${AFSPRAAK_TYPE_LABELS[bundle.afspraak.type]} · ${formatDateTime(bundle.afspraak.datumTijd)}</p>
-                <small>${escapeHtml(renderAfspraakMeta(bundle.afspraak, traject?.traject.naam))}</small>
-                ${bundle.vraag ? `<p class="linked-note">Vraag: ${escapeHtml(bundle.vraag.vraag)}</p>` : ''}
-                ${bundle.herinnering ? `<p class="linked-note">Herinnering: ${formatDateTime(bundle.herinnering.tijdstip)}</p>` : ''}
+    <div class="schedule-date-blocks" data-schedule-date-blocks="${variant}">
+      ${blocks
+        .map(
+          (block) => `
+            <section class="schedule-date-block" data-schedule-date-block="${escapeAttribute(block.date)}" aria-label="Afspraken op ${escapeAttribute(formatScheduleDateLabel(block.date))}">
+              <header class="schedule-date-block__header">
+                <span>${escapeHtml(formatScheduleDateDay(block.date))}</span>
+                <strong>${escapeHtml(formatScheduleDateLabel(block.date))}</strong>
+                <small>${block.items.length} afspraak${block.items.length === 1 ? '' : 'en'}</small>
+              </header>
+              <div class="schedule-date-block__cards">
+                ${block.items
+                  .map((bundle) =>
+                    renderAgendaAppointmentCard({
+                      bundle,
+                      trajectNaam: trajecten.find(
+                        (item) => item.traject.id === bundle.afspraak.trajectId,
+                      )?.traject.naam,
+                      variant,
+                    }),
+                  )
+                  .join('')}
               </div>
-            </li>
-          `;
-        })
+            </section>
+          `,
+        )
         .join('')}
-    </ol>
+    </div>
   `;
+}
+
+function renderAgendaAppointmentCard(input: {
+  bundle: AfspraakBundle;
+  trajectNaam?: string;
+  variant: 'upcoming' | 'past';
+}): string {
+  const { afspraak } = input.bundle;
+  const status = input.variant === 'upcoming' ? 'Verwacht' : 'Geweest';
+  const hasReminder = Boolean(input.bundle.herinnering);
+  const hasQuestion = Boolean(input.bundle.vraag);
+  const note =
+    input.variant === 'past' && afspraak.notitie
+      ? `<p class="schedule-appointment-card__note">Terugblik: ${escapeHtml(afspraak.notitie)}</p>`
+      : '';
+
+  return `
+    <article class="schedule-appointment-card" data-schedule-appointment-card="${input.variant}" data-schedule-appointment-type="${escapeAttribute(afspraak.type)}">
+      <div class="schedule-appointment-card__date">
+        <span>${escapeHtml(formatScheduleTime(afspraak.datumTijd))}</span>
+        <small>${escapeHtml(status)}</small>
+      </div>
+      <div class="schedule-appointment-card__body">
+        <header class="schedule-appointment-card__header">
+          <div>
+            <p class="kp-card__eyebrow">${escapeHtml(AFSPRAAK_TYPE_LABELS[afspraak.type])}</p>
+            <h3>${escapeHtml(afspraak.titel)}</h3>
+          </div>
+          <span class="schedule-appointment-card__status" data-schedule-appointment-status="${input.variant}">${escapeHtml(status)}</span>
+        </header>
+        <p class="schedule-appointment-card__meta">${escapeHtml(renderAfspraakMeta(afspraak, input.trajectNaam))}</p>
+        <div class="schedule-appointment-card__chips" aria-label="Afspraakcontext">
+          <span data-schedule-appointment-chip="question">${hasQuestion ? 'Vraag klaar' : 'Geen vraag'}</span>
+          <span data-schedule-appointment-chip="reminder">${hasReminder ? `Herinnering ${formatScheduleTime(input.bundle.herinnering?.tijdstip ?? '')}` : 'Geen herinnering'}</span>
+        </div>
+        ${hasQuestion ? `<p class="schedule-appointment-card__note">Vraag: ${escapeHtml(input.bundle.vraag?.vraag ?? '')}</p>` : ''}
+        ${note}
+        <nav class="schedule-appointment-card__actions" aria-label="Afspraakacties">
+          <a href="#agenda?route=plannen">Bewerken</a>
+          ${hasQuestion ? '<a href="#vragen?route=open">Vraag openen</a>' : '<a href="#vragen?route=voorbereiden">Vraag voorbereiden</a>'}
+        </nav>
+      </div>
+    </article>
+  `;
+}
+
+function groupAgendaBundlesByDate(
+  bundles: AfspraakBundle[],
+): { date: string; items: AfspraakBundle[] }[] {
+  const groups = new Map<string, AfspraakBundle[]>();
+  for (const bundle of bundles) {
+    const date = bundle.afspraak.datumTijd.slice(0, 10) || 'zonder-datum';
+    groups.set(date, [...(groups.get(date) ?? []), bundle]);
+  }
+
+  return [...groups.entries()].map(([date, items]) => ({ date, items }));
+}
+
+function formatScheduleDateLabel(value: string): string {
+  const [year, month, day] = value.split('-');
+  if (!year || !month || !day) return 'Datum onbekend';
+  return `${day}-${month}-${year}`;
+}
+
+function formatScheduleDateDay(value: string): string {
+  const [, , day] = value.split('-');
+  return day ?? '--';
+}
+
+function formatScheduleTime(value: string): string {
+  return value.split('T')[1]?.slice(0, 5) || '--:--';
 }
 
 function renderAfspraakMeta(afspraak: Afspraak, trajectNaam?: string): string {
