@@ -4889,42 +4889,6 @@ function getBackupContextMicrostate(route: BackupRoute): WorkspaceContextMicrost
   return states[route];
 }
 
-function getTreatmentContextMicrostate(route: TreatmentRoute): WorkspaceContextMicrostate {
-  const states: Record<TreatmentRoute, WorkspaceContextMicrostate> = {
-    overzicht: {
-      id: 'treatment-overzicht',
-      label: 'Trajectoverzicht',
-      detail: 'Actieve pogingen en statusverdeling blijven de contextbasis.',
-      action: 'Volgende: actieve poging openen',
-    },
-    fasen: {
-      id: 'treatment-fasen',
-      label: 'Faseplanning',
-      detail: 'Actuele fase, volgende stap en timelinecontext blijven gekoppeld.',
-      action: 'Volgende: fase controleren',
-    },
-    vergoeding: {
-      id: 'treatment-vergoeding',
-      label: 'Vergoedingsroute',
-      detail: 'Meetellende pogingen blijven administratie, geen polisadvies.',
-      action: 'Volgende: meetellend nalopen',
-    },
-    context: {
-      id: 'treatment-context',
-      label: 'Contextlaag',
-      detail: 'Timeline en graphrelaties krijgen prioriteit naast de taak.',
-      action: 'Volgende: timeline openen',
-    },
-    beheer: {
-      id: 'treatment-beheer',
-      label: 'Beheerroute',
-      detail: 'Bewerken en archief blijven gescheiden van fase-inzicht.',
-      action: 'Volgende: beheeractie kiezen',
-    },
-  };
-  return states[route];
-}
-
 function renderWorkspaceContextSignals(input: {
   label: string;
   title: string;
@@ -17327,18 +17291,12 @@ function renderTrajectScreen(state: AppShellState): string {
         workspace: domainSplitWorkspace({
           className: 'treatment-split-workspace',
           ariaLabel: 'Traject split-view werkruimte',
-          data: { 'treatment-split-workspace': 'ready' },
+          data: {
+            'treatment-split-workspace': 'ready',
+            'treatment-compact-workspace': 'route-first',
+          },
           rail: treatmentTaskRoutes,
           main: treatmentRouteSections.join(''),
-          context: renderTreatmentWorkspaceContext({
-            selected,
-            activeCount: actieveTrajecten.length,
-            archivedCount: gearchiveerdeTrajecten.length,
-            vergoeding,
-            timeline: fertilityTimeline,
-            graph: graphWeergave,
-            activeRoute: activeTreatmentRoute,
-          }),
         }),
       }),
     ],
@@ -17590,78 +17548,6 @@ function renderTreatmentTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderTreatmentWorkspaceContext(input: {
-  selected: TrajectMetFasen | undefined;
-  activeCount: number;
-  archivedCount: number;
-  vergoeding: ReturnType<typeof berekenVergoedePogingenTeller>;
-  timeline: FertilityTimeline;
-  graph: FertilityGraphTrajectWeergave | undefined;
-  activeRoute: TreatmentRoute;
-}): string {
-  const huidigeFase = input.selected ? bepaalHuidigeFase(input.selected.fasen) : undefined;
-  const faseLabel = huidigeFase
-    ? TRAJECT_FASE_LABELS[huidigeFase.fase]
-    : input.selected
-      ? 'Geen actuele fase gekozen'
-      : 'Nog geen traject';
-  const nextAction = input.selected
-    ? bepaalVolgendeStap(input.selected)
-    : 'Maak een traject aan om faseplanning en context te bundelen.';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Trajectfocus',
-    title: 'Behandelcontext',
-    data: { 'workspace-context-signals': 'treatment' },
-    microstate: getTreatmentContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Fase',
-        value: faseLabel,
-        detail: nextAction,
-        href: '#traject?route=fasen',
-      },
-      {
-        label: 'Timeline',
-        value: String(input.timeline.items.length),
-        detail:
-          input.timeline.contextSignalen.length > 0
-            ? `${input.timeline.contextSignalen.length} contextsignaal${input.timeline.contextSignalen.length === 1 ? '' : 'en'} vraagt om aanvulling.`
-            : 'Geen ontbrekende timelinecontext zichtbaar.',
-        href: '#traject?route=context',
-      },
-      {
-        label: 'Vergoeding',
-        value: String(input.vergoeding.resterend),
-        detail: 'Gebruik dit alleen als administratievoorbereiding naast je polis.',
-        href: '#traject?route=vergoeding',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Traject context" data-treatment-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Behandeling in beeld</h2>
-      ${statRow([
-        { label: 'Actief', value: String(input.activeCount) },
-        { label: 'Fases', value: String(input.selected?.fasen.length ?? 0) },
-        { label: 'Timeline', value: String(input.timeline.items.length) },
-        { label: 'Graph', value: String(input.graph?.edges.length ?? 0) },
-        { label: 'Resterend', value: String(input.vergoeding.resterend) },
-        { label: 'Archief', value: String(input.archivedCount) },
-      ])}
-      <p class="linked-note">${escapeHtml(faseLabel)} · ${escapeHtml(nextAction)}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Traject werkruimtegrens" data-treatment-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Context naast de taak</h2>
-      <p>Overzicht, fasen, vergoeding, timeline en beheer blijven gescheiden zodat de actieve behandelroute de hoofdtaak blijft.</p>
-      <p class="small-print">Deze kolom toont alleen trajectmetadata en geen diagnose, behandeladvies of behandelkeuze.</p>
-    </section>
-  `;
 }
 
 function renderTreatmentRouteVisibility(

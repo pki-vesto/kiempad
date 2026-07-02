@@ -13,7 +13,6 @@ describe('context signals visual smoke script', () => {
 
     for (const route of [
       '#dossier?route=imaging',
-      '#traject?route=fasen',
       '#logboek?route=privacy',
       '#herinneringen?route=plannen',
       '#backup?route=import',
@@ -21,13 +20,12 @@ describe('context signals visual smoke script', () => {
       expect(contextSignalsVisualSmokeScript).toContain(route);
     }
 
-    for (const signal of ['dossier', 'treatment', 'eventlog', 'notification', 'backup']) {
+    for (const signal of ['dossier', 'eventlog', 'notification', 'backup']) {
       expect(contextSignalsVisualSmokeScript).toContain(`signal: '${signal}'`);
     }
 
     for (const microstate of [
       'dossier-imaging',
-      'treatment-fasen',
       'eventlog-privacy',
       'notification-plannen',
       'backup-import',
@@ -63,6 +61,9 @@ describe('context signals visual smoke script', () => {
     expect(contextSignalsVisualSmokeScript).not.toContain('#afwegingen?route=choice');
     expect(contextSignalsVisualSmokeScript).not.toContain("signal: 'decision'");
     expect(contextSignalsVisualSmokeScript).not.toContain("microstate: 'decision-choice'");
+    expect(contextSignalsVisualSmokeScript).not.toContain('#traject?route=fasen');
+    expect(contextSignalsVisualSmokeScript).not.toContain("signal: 'treatment'");
+    expect(contextSignalsVisualSmokeScript).not.toContain("microstate: 'treatment-fasen'");
     expect(contextSignalsVisualSmokeScript).not.toContain('OCR TEKST');
     expect(contextSignalsVisualSmokeScript).not.toContain('beeldpayload');
     expect(contextSignalsVisualSmokeScript).not.toContain('gezondheidsdata');
