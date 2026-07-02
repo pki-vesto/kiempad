@@ -300,6 +300,9 @@
 - **CFX-026 date/time field kit — partial in G1408 / issue #2590.** Date, datetime, and time fields
   now share tabular, kit-styled rendering with muted invalid/empty text and a clearer picker
   affordance.
+- **CFX-028 Vragen/Traject cancel actions — partial in G1409 / issue #2592.** Vragen and Traject
+  edit forms now use the same command action row with a ghost Annuleer link as the other edit
+  forms.
 
 ---
 

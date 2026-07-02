@@ -2066,6 +2066,8 @@ describe('app shell', () => {
     expect(css).toContain('.form-cancel-link {');
     expect(css).toContain('.form-cancel-link:hover,');
     expect(css).toContain('.form-cancel-link:focus-visible {');
+    expect(css).toContain('.command-form-actions {');
+    expect(css).toContain('.command-form-actions > .form-cancel-link {');
     expect(css).toContain('.cost-history-list {');
     expect(css).toContain('.cost-history-card > article {');
     expect(css).toContain('.cost-history-card__header {');
@@ -2331,6 +2333,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.finance-form-section {');
     expect(mobileCss).toContain('.finance-form-actions {');
     expect(mobileCss).toContain('.form-cancel-link,');
+    expect(mobileCss).toContain('.command-form-actions {');
     expect(mobileCss).not.toContain(
       '.finance-focus-shell__workspace .domain-split-workspace__context {',
     );
@@ -5624,6 +5627,10 @@ describe('app shell', () => {
     );
     expect(html).toContain('class="question-prompt-field"');
     expect(html).toContain('class="question-prompt-input" name="vraag" rows="4" required');
+    expect(html).toContain('class="command-form-actions"');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#vragen?route=open" data-form-cancel-action="question"',
+    );
     expect(html).toContain('Verslag per afspraak');
     expect(html).toContain('aria-label="Consult voorbereiden"');
     expect(html).toContain('data-consult-prep-board="ready"');
@@ -38576,6 +38583,10 @@ describe('app shell', () => {
     expect(html).toContain('data-command-form-section="traject-basis"');
     expect(html).toContain('data-command-form-section="traject-planning"');
     expect(html).toContain('data-command-form-section="traject-context"');
+    expect(html).toContain('class="command-form-actions"');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#traject?route=fasen" data-form-cancel-action="treatment"',
+    );
     expect(html).toContain('data-treatment-route="overzicht"');
     expect(html).toContain('data-treatment-route-state="active"');
     expect(html).toContain('id="traject-route-fasen"');
