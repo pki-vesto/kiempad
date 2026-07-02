@@ -36422,6 +36422,12 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-focus-region="workspace"');
     expect(html).toContain('data-knowledge-single-workspace="ready"');
     expect(html).toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('data-knowledge-workbench-disclosure="collapsed"');
+    expect(html).toContain('Zoek en filter openen');
+    expect(html).toContain('Researchscan, bibliotheekfilter en netwerkstatus');
+    expect(html).not.toContain(
+      '<details class="kp-disclosure knowledge-workbench-disclosure" data-knowledge-workbench-disclosure="collapsed" open',
+    );
     expect(html).toContain(
       '<section class="knowledge-research-workbench" aria-label="Researchwerkbank" data-knowledge-first-viewport="research-workbench">',
     );
@@ -36652,7 +36658,9 @@ describe('app shell', () => {
     );
     expect(css).toContain('.knowledge-focus-shell__workspace');
     expect(css).toContain('.domain-split-workspace__context');
-    expect(css).toContain('> .knowledge-research-workbench {');
+    expect(css).toContain('.knowledge-workbench-disclosure {');
+    expect(css).toContain('.knowledge-workbench-disclosure__summary {');
+    expect(css).toContain('.domain-split-workspace__context .knowledge-research-workbench {');
     expect(css).toContain('.knowledge-research-snapshot {');
     expect(css).toContain('.knowledge-research-workbench__header');
     expect(css).toContain('p:last-child {');

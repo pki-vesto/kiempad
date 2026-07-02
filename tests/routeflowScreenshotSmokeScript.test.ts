@@ -104,6 +104,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-hub-workflow="knowledge-research"]',
       '[data-knowledge-focus-region="workspace"]',
       '.knowledge-split-workspace .domain-split-workspace__context',
+      '[data-knowledge-workbench-disclosure="collapsed"]',
       '[data-hub-detail-panel="research-summaries"]',
       '[data-knowledge-research-reader="ready"]',
       '[data-knowledge-research-lane="scientific"]',

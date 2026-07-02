@@ -270,6 +270,9 @@
 - **CFX-081 Start mobile non-overflow — partial in G1398 / issue #2570.** The Start launchpad no
   longer uses clipped horizontal mobile carousels for the workspace strip, cockpit, or workbanen
   deck, and the first-run checklist now starts closed behind one disclosure.
+- **CFX-038/CFX-081 Kennis workbench collapse — partial in G1399 / issue #2572.** The Kennis
+  research workbench, library filter, and network status now sit behind one closed disclosure so
+  the read route no longer continues into a second full filter page on mobile.
 
 ---
 
@@ -725,6 +728,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status copy and grouped actions. Partial G1388/#2550: Kennis folds the research workbench into
   the same split-view as route context, so desktop opens as one rail/main/context workspace instead
   of a separate focus-region plus nested route workspace.
+  Partial G1399/#2572: the research workbench and filter stay available behind one closed disclosure,
+  so the read route does not expose the full filter page by default on mobile.
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.

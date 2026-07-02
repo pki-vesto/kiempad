@@ -54,6 +54,7 @@ const targets = [
       '[data-knowledge-console-region="workspace"]',
       '[data-knowledge-single-workspace="ready"]',
       '.knowledge-split-workspace .domain-split-workspace__context',
+      '[data-knowledge-workbench-disclosure="collapsed"]',
       '#knowledge-route-read',
       '[data-hub-workflow="knowledge-research"]',
       '[data-hub-workflow-tab="research"][aria-current="page"]',
@@ -68,6 +69,7 @@ const targets = [
       '[data-knowledge-research-disclosure="sources"]',
       '#knowledge-research-trends',
     ],
+    closedDetailsSelectors: ['[data-knowledge-workbench-disclosure="collapsed"]'],
     knowledgeConsole: true,
     desktopHiddenSelectors: [
       '.knowledge-focus-shell__header p:last-child',
