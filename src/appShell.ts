@@ -14670,16 +14670,27 @@ function renderStartQuickEntryRoute(): string {
 
 function renderDailyRecommendationList(overview: DailyRecommendationOverview): string {
   return recommendationList({
-    className: 'daily-recommendation-list',
+    className: 'daily-recommendation-list daily-recommendation-list--dual-owner',
     ariaLabel: 'Te doen vandaag per eigenaar',
     data: {
       'recommendation-component': 'daily-owner-list',
       'recommendation-component-state': 'structured',
+      'daily-advice-list-mode': 'dual-owner-cards',
     },
-    groups: (['vrouw', 'man', 'samen'] as const).map((owner) =>
-      renderDailyRecommendationGroup(owner, overview[owner]),
-    ),
+    groups: [
+      renderDailyRecommendationDualOwnerLane(overview),
+      renderDailyRecommendationGroup('samen', overview.samen),
+    ],
   });
+}
+
+function renderDailyRecommendationDualOwnerLane(overview: DailyRecommendationOverview): string {
+  return `
+    <section class="daily-recommendation-dual-owner-lane" aria-label="Dagadvies vrouw en man" data-daily-recommendation-dual-owner-lane="primary">
+      ${renderDailyRecommendationGroup('vrouw', overview.vrouw)}
+      ${renderDailyRecommendationGroup('man', overview.man)}
+    </section>
+  `;
 }
 
 function renderDailyRecommendationGroup(
@@ -14690,10 +14701,11 @@ function renderDailyRecommendationGroup(
     title: DAILY_RECOMMENDATION_OWNER_LABELS[owner],
     items: items.map(renderDailyRecommendationItem),
     ariaLabel: `Te doen vandaag ${DAILY_RECOMMENDATION_OWNER_LABELS[owner]}`,
-    className: 'policy-panel embedded-summary daily-recommendation-group',
+    className: `policy-panel embedded-summary daily-recommendation-group daily-recommendation-group--${owner}`,
     data: {
       'recommendation-owner-group': owner,
       'recommendation-count': String(items.length),
+      'recommendation-layout': owner === 'samen' ? 'shared-row' : 'dual-owner-card',
     },
   });
 }

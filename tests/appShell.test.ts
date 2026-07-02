@@ -3107,6 +3107,11 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-action-planner__lane:hover,');
     expect(css).toContain('.daily-advice-action-planner__lane:focus-visible {');
     expect(css).toContain('.daily-advice-action-planner__lane em {');
+    expect(css).toContain('.daily-recommendation-list--dual-owner {');
+    expect(css).toContain('.daily-recommendation-dual-owner-lane {');
+    expect(css).toContain(
+      '.daily-recommendation-list--dual-owner .daily-recommendation-group--samen {',
+    );
     expect(css).toContain('.start-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.start-snapshot__card {');
@@ -3148,6 +3153,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.daily-advice-action-planner {');
     expect(mobileCss).toContain('.daily-advice-action-planner__lanes {');
     expect(mobileCss).toContain('flex: 0 0 min(232px, 78vw);');
+    expect(mobileCss).toContain('.daily-recommendation-dual-owner-lane {');
+    expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(mobileCss).toContain('.start-workbench + .start-task-routes {');
     expect(mobileCss).toContain('margin-top: 0;');
     expect(mobileCss).toContain('.start-task-routes {');
@@ -3305,7 +3312,7 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('review ·');
     expect(emptyContextRecommendations).toContain('artscheck');
     expect(emptyContextRecommendations).toContain(
-      'class="kp-recommendation-list daily-recommendation-list"',
+      'class="kp-recommendation-list daily-recommendation-list daily-recommendation-list--dual-owner"',
     );
     expect(emptyContextRecommendations).toContain(
       'data-recommendation-component="daily-owner-list"',
@@ -3313,9 +3320,16 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain(
       'data-recommendation-component-state="structured"',
     );
+    expect(emptyContextRecommendations).toContain('data-daily-advice-list-mode="dual-owner-cards"');
+    expect(emptyContextRecommendations).toContain('class="daily-recommendation-dual-owner-lane"');
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-recommendation-dual-owner-lane="primary"',
+    );
     expect(emptyContextRecommendations).toContain('data-recommendation-owner-group="vrouw"');
     expect(emptyContextRecommendations).toContain('data-recommendation-owner-group="man"');
     expect(emptyContextRecommendations).toContain('data-recommendation-owner-group="samen"');
+    expect(emptyContextRecommendations).toContain('data-recommendation-layout="dual-owner-card"');
+    expect(emptyContextRecommendations).toContain('data-recommendation-layout="shared-row"');
     expect(emptyContextRecommendations).toContain(
       'class="kp-recommendation-card daily-recommendation-item"',
     );
