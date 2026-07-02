@@ -82,6 +82,9 @@
 - **Daily advice feedback workflow status — done in G1432 / issue #2624.** Active dagadvies
   feedback filters now show a visible workflow/header status with label and result count, while
   the unfiltered route stays quiet and routeflow guards desktop/mobile layout.
+- **Daily advice feedback workflow reset — done in G1433 / issue #2626.** The visible dagadvies
+  feedback workflow status now includes a direct reset action sharing the same local route/reset
+  handler as the full list filter, with smoke coverage for both reset paths.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

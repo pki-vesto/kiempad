@@ -45,7 +45,8 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain("action === 'gedaan'");
     expect(mainSource).toContain("gebeurtenis: 'Dagelijkse suggestie gedaan'");
     expect(mainSource).toContain('Suggestie gemarkeerd als gedaan:');
-    expect(mainSource).toContain('#daily-recommendation-feedback-filter-form');
+    expect(mainSource).toContain('[data-daily-recommendation-feedback-control="ready"]');
+    expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');
     expect(mainSource).toContain(

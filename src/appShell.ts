@@ -14711,11 +14711,12 @@ function renderDailyAdviceFilterStatus(input: {
   const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
 
   return `
-    <div class="daily-advice-filter-status" data-daily-advice-feedback-workflow-status="ready">
+    <form class="daily-advice-filter-status" data-daily-advice-feedback-workflow-status="ready" data-daily-recommendation-feedback-control="ready">
       <span>Actieve feedbackfilter</span>
       <strong>${escapeHtml(filterLabel)}</strong>
       <em>${input.filteredTotal} van ${input.total} suggesties</em>
-    </div>
+      <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-advice-feedback-workflow-reset="ready">Reset</button>
+    </form>
   `;
 }
 
@@ -14728,7 +14729,7 @@ function renderDailyRecommendationFeedbackFilter(input: {
     ? FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter]
     : undefined;
   return `
-    <form id="daily-recommendation-feedback-filter-form" class="data-form compact-form" data-daily-recommendation-feedback-filter="ready">
+    <form id="daily-recommendation-feedback-filter-form" class="data-form compact-form" data-daily-recommendation-feedback-filter="ready" data-daily-recommendation-feedback-control="ready">
       ${
         input.filter && filterLabel
           ? `<p class="small-print" data-daily-recommendation-feedback-filter-chip="ready"><span>Actieve filter: ${escapeHtml(filterLabel)}</span> · <strong>${input.filteredTotal} van ${input.total}</strong> suggesties</p>`

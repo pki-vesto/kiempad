@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1341 — Daily Recommendations: filterstatus laat lijstpaneel openen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De actieve dagadvies-feedbackstatus toont label, count en reset, maar helpt nog niet direct naar de gefilterde lijst.
+- **User Impact:** Gebruikers moeten nog zelf zoeken naar het lijstpaneel om de gefilterde suggesties te bekijken.
+- **Desired Outcome:** Voeg een rustige actie toe waarmee de workflowstatus het volledige suggestielijstpaneel opent of focust zonder de actieve filterroute te verliezen.
+- **User Value:** Gebruikers kunnen vanuit de filterstatus meteen naar de bijbehorende suggesties.
+- **Acceptance Criteria:** De workflowstatus voor een actieve feedbackfilter bevat een actie om de volledige lijst te openen of ernaartoe te springen; de actie behoudt de actieve filterroute en opent of focust het lijstpaneel; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken rendering, routebehoud/focusgedrag en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2628
+
 ### G1340 — Daily Recommendations: feedbackfilter reset vanuit workflowstatus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, route/hash controls, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2626
 
 ### G1339 — Daily Recommendations: feedbackfilter zichtbaar in workflowstatus
