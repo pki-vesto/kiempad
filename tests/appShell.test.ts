@@ -5188,6 +5188,7 @@ describe('app shell', () => {
       kennisItems: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      vraagStatus: 'Vraag opgeslagen.',
       afspraken: [
         {
           afspraak: {
@@ -5301,14 +5302,24 @@ describe('app shell', () => {
     expect(html).toContain('data-command-form-section="vraag-antwoord"');
     expect(html).toContain('data-question-route="open"');
     expect(html).toContain('data-question-route-state="active"');
+    expect(html).toContain(
+      'class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="open"',
+    );
     expect(html).toContain('id="vragen-route-voorbereiden"');
     expect(html).toContain('data-question-route="voorbereiden"');
     expect(html).toContain('id="vragen-route-beheer"');
     expect(html).toContain('data-question-route="beheer"');
+    expect(html).toContain(
+      'class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="beheer"',
+    );
     expect(html).toContain('id="vragen-route-verslagen"');
     expect(html).toContain('data-question-route="verslagen"');
     expect(html).toContain('id="vragen-route-alle"');
     expect(html).toContain('data-question-route="alle"');
+    expect(html).toContain(
+      'class="status-message question-save-feedback" role="status" aria-live="polite" data-question-save-feedback="alle"',
+    );
+    expect(html).toContain('Vraag opgeslagen.');
     expect(html).toContain('Openstaande vragen');
     expect(html).toContain('Consult voorbereiden');
     expect(html).toContain('Vraag toevoegen of beantwoorden');
