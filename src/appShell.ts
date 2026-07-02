@@ -200,6 +200,7 @@ import {
   type StepState,
   sectionStack,
   statRow,
+  statusBadge,
   statusMessage,
   timelineItem,
   timelineList,
@@ -12955,7 +12956,24 @@ function renderKostenItem(item: CostItem): string {
 }
 
 function renderCostStatusBadge(status: CostItem['vergoed']): string {
-  return `<span class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="${escapeAttribute(status)}">${escapeHtml(COST_VERGOED_LABELS[status])}</span>`;
+  return statusBadge({
+    label: COST_VERGOED_LABELS[status],
+    tone: costStatusBadgeTone(status),
+    className: 'status-badge--cost',
+    data: {
+      'status-badge': 'cost',
+      'status-badge-state': status,
+    },
+  });
+}
+
+function costStatusBadgeTone(
+  status: CostItem['vergoed'],
+): 'success' | 'warning' | 'danger' | 'neutral' {
+  if (status === 'ja') return 'success';
+  if (status === 'eigen_risico') return 'warning';
+  if (status === 'nee') return 'danger';
+  return 'neutral';
 }
 
 function renderResearchItemForm(): string {

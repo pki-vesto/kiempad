@@ -196,6 +196,9 @@
 - **CFX-017/CFX-055 switch controls — partial in G1378 / issue #2530.** Gedeelde modus and
   Herinneringen lockscreenprivacy now render as visible switch controls with `role="switch"`,
   `aria-checked`, immediate visual state updates, and hidden false fallbacks for form submission.
+- **CFX-016 status badge helper — partial in G1379 / issue #2532.** Kosten vergoedingstatussen now
+  render through a shared `statusBadge()` UI helper with consistent tone metadata while preserving
+  the existing cost-specific visual states.
 
 ---
 
@@ -553,7 +556,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   context column. Partial G1378/#2530: Gedeelde modus and Herinneringen lockscreenprivacy now use
   the shared switch presentation with `role="switch"` and `aria-checked`.
 - **CFX-016** — Status-badge component (`badge({label,tone})`) with the J68 color map; adopt in
-  Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M**
+  Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M** Partial G1379/#2532:
+  Kosten vergoedingstatus badges now use the shared `statusBadge()` helper with success/warning/
+  danger/neutral tone metadata.
 - **CFX-018** — Toast/inline success feedback primitive; fire after every store save. Accept: saves
   show a calm confirmation (VERBETERINGEN C31/M). **P1 · M**
 - **CFX-019b** — In-app styled confirm to replace `window.confirm` for deletes. Files:

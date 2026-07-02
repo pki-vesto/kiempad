@@ -14,6 +14,7 @@ import { escapeAttribute, escapeHtml } from './escape';
 export type Tone = 'sage' | 'amber' | 'category' | 'ai' | 'info';
 export type CardVariant = 'default' | 'raised' | 'subtle' | 'active' | 'warning' | 'danger';
 export type StepState = 'done' | 'current' | 'todo' | 'missed';
+export type StatusBadgeTone = 'success' | 'warning' | 'danger' | 'neutral' | 'info';
 
 export type IconName =
   | 'sprout'
@@ -485,6 +486,26 @@ export function actionCard(opts: {
     return `<a class="action-card${tone}" href="${escapeAttribute(opts.href)}"${label}>${inner}</a>`;
   }
   return `<div class="action-card${tone}"${label}>${inner}</div>`;
+}
+
+/** Consistent compact status badge. */
+export function statusBadge(opts: {
+  label: string;
+  tone?: StatusBadgeTone;
+  className?: string;
+  data?: Record<string, string>;
+}): string {
+  const cls = opts.className ? ` ${opts.className}` : '';
+  const data = {
+    'status-badge': opts.tone ?? 'neutral',
+    ...(opts.data ?? {}),
+    ...(opts.tone ? { 'status-badge-tone': opts.tone } : {}),
+  };
+  const dataAttrs = Object.entries(data)
+    .map(([key, value]) => ` data-${escapeAttribute(key)}="${escapeAttribute(value)}"`)
+    .join('');
+
+  return `<span class="status-badge${cls}"${dataAttrs}>${escapeHtml(opts.label)}</span>`;
 }
 
 /** Signature current-phase hero: dark-sage card, serif label, segmented dots. */
