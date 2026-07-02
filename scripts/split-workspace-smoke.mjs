@@ -258,6 +258,7 @@ async function assertSplitWorkspaces(browser, options) {
         route.prefix === 'knowledge' ||
         route.prefix === 'decision' ||
         route.prefix === 'wellbeing' ||
+        route.prefix === 'medication' ||
         route.prefix === 'finance';
       if (
         !result.hasWorkspace ||

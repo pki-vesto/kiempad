@@ -132,6 +132,9 @@
   first-class latest-backup reminder card and encrypted export preview before opening details.
 - **CFX-034 agenda route-first workspace — partial in G1357 / issue #2488.** Agenda now removes
   the fixed third context column and keeps the active planning route as the central workspace.
+- **CFX-035 medication route-first workspace — partial in G1358 / issue #2490.** Medicatie now
+  removes the fixed third context column and keeps the active medication route as the central
+  workspace.
 
 ---
 
@@ -533,7 +536,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
   a fixed third context column.
 - **CFX-035** — Medicatie: progress bar + 3-status dose cards + injectie `--clay` border. **P1 · M**
-  Done in G1347/#2468.
+  Done in G1347/#2468. Partial G1358/#2490: Medicatie uses a route-first workspace without a fixed
+  third context column.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.

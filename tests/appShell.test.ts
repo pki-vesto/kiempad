@@ -38287,6 +38287,7 @@ describe('app shell', () => {
         label === 'knowledge' ||
         label === 'wellbeing' ||
         label === 'decision' ||
+        label === 'medication' ||
         label === 'finance'
       ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
@@ -38350,7 +38351,11 @@ describe('app shell', () => {
     expect(medicatieHtml).toContain('data-medication-console="ready"');
     expect(medicatieHtml).toContain('data-medication-console-region="workbench"');
     expect(medicatieHtml).toContain('data-medication-console-region="workspace"');
-    expect(medicatieHtml).toContain('data-medication-workspace-context="metrics"');
+    expect(medicatieHtml).toContain('data-medication-compact-workspace="route-first"');
+    expect(medicatieHtml).not.toContain('data-medication-workspace-context="metrics"');
+    expect(medicatieHtml).not.toContain('data-medication-workspace-context="privacy"');
+    expect(medicatieHtml).not.toContain('Medicatie in beeld');
+    expect(medicatieHtml).not.toContain('Geen dosering berekenen');
     expect(medicatieHtml).toContain(
       'data-medication-route="beheer" data-medication-route-state="active"',
     );
