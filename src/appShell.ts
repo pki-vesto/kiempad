@@ -3943,10 +3943,15 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               consultVerslagen.length > 0
                 ? `<ol class="phase-list">${consultVerslagen.map((verslag) => renderConsultVerslag(verslag, state)).join('')}</ol>`
-                : renderEmptyState('Nog geen consultverslagen als apart recordtype vastgelegd.', {
-                    title: 'Geen consultverslagen',
-                    cta: { href: '#consult-verslag-form', label: 'Verslag toevoegen' },
-                  })
+                : renderEmptyState(
+                    'Nog geen consultverslagen als apart recordtype vastgelegd. Voeg een gesprek of behandelnotitie toe om consultcontext naast beelden te kunnen lezen.',
+                    {
+                      title: 'Geen consultcontext',
+                      iconName: 'file',
+                      cta: { href: '#consult-verslag-form', label: 'Verslag toevoegen' },
+                      id: 'dossier-consult-empty-state',
+                    },
+                  )
             }
           </div>
         </details>
@@ -3966,12 +3971,14 @@ function renderDossierScreen(state: AppShellState): string {
             ${renderImagingVergelijking(imagingVergelijking)}
             ${
               imagingItems.length > 0
-                ? `<ol class="phase-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
+                ? `<ol class="phase-list imaging-repository-list">${imagingItems.map((item) => renderImagingRepositoryItem(item, state)).join('')}</ol>`
                 : renderEmptyState(
-                    'Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden.',
+                    'Nog geen echo’s, foto’s, scans of embryo-afbeeldingen gevonden. Upload een beeld of koppel beeldcontext om hier thumbnails, metadata en vergelijkingen te zien.',
                     {
-                      title: 'Geen beelden',
+                      title: 'Geen beelden in deze route',
+                      iconName: 'file',
                       cta: { href: '#dossier-upload-form', label: 'Beeld uploaden' },
+                      id: 'dossier-imaging-empty-state',
                     },
                   )
             }
@@ -3984,9 +3991,15 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               indexItems.length > 0
                 ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
-                : renderEmptyState('Nog geen dossierindex beschikbaar.', {
-                    title: 'Index wordt opgebouwd',
-                  })
+                : renderEmptyState(
+                    'Nog geen dossierindex beschikbaar. Zodra je documenten uploadt, bouwt Kiempad hier een veilig overzicht met alleen type, datum en status.',
+                    {
+                      title: 'Index wordt opgebouwd',
+                      iconName: 'file',
+                      cta: { href: '#dossier-upload-form', label: 'Document toevoegen' },
+                      id: 'dossier-index-empty-state',
+                    },
+                  )
             }
           </div>
         </details>
@@ -4004,10 +4017,15 @@ function renderDossierScreen(state: AppShellState): string {
             ${
               embryoDossiers.length > 0
                 ? `<ol class="phase-list">${embryoDossiers.map(renderEmbryoDossier).join('')}</ol>`
-                : renderEmptyState('Nog geen embryo-dossier beschikbaar.', {
-                    title: 'Geen embryodossier',
-                    cta: { href: '#dossier-upload-form', label: 'Embryogegevens uploaden' },
-                  })
+                : renderEmptyState(
+                    'Nog geen embryo-dossier beschikbaar. Upload embryokwaliteit, labfoto’s of statusmomenten om historie en vergelijking op te bouwen.',
+                    {
+                      title: 'Geen embryodossier',
+                      iconName: 'file',
+                      cta: { href: '#dossier-upload-form', label: 'Embryogegevens uploaden' },
+                      id: 'dossier-embryo-empty-state',
+                    },
+                  )
             }
           </div>
         </details>
@@ -10533,18 +10551,12 @@ function renderImagingRepositoryItem(
   const soortLabel = imagingSoortLabel(item.soort);
   const tijdlijnKoppeling = renderImagingTijdlijnKoppeling(item.tijdlijnKoppeling);
   const contextSamenvatting = maakImagingContextSamenvatting(item);
-  const thumbnail =
-    item.previewState.status === 'thumbnail' && item.mimeType?.startsWith('image/')
-      ? `<figure class="linked-note imaging-thumbnail" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="unlocked">
-          <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale thumbnail van ${escapeAttribute(item.titel)}" loading="lazy" />
-          <figcaption>Thumbnail uit ontgrendelde encrypted dataset.</figcaption>
-        </figure>`
-      : '';
+  const thumbnailTile = renderImagingThumbnailTile(item);
   const preview =
     item.previewState.status !== 'locked' &&
     item.mimeType?.startsWith('image/') &&
     item.document.inhoudBase64
-      ? `<figure class="linked-note" data-attachment-preview-kind="imaging-preview" data-attachment-preview-state="unlocked">
+      ? `<figure class="linked-note imaging-inline-preview" data-attachment-preview-kind="imaging-preview" data-attachment-preview-state="unlocked">
           <img src="data:${escapeAttribute(item.mimeType)};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale imaging-preview van ${escapeAttribute(item.titel)}" loading="lazy" />
           <figcaption>${escapeHtml(beschrijfPreviewLocatie(state))}</figcaption>
         </figure>`
@@ -10562,10 +10574,16 @@ function renderImagingRepositoryItem(
       : item.bronbestand;
 
   return `
-    <li class="phase-item">
-      <div>
-        <h3>${escapeHtml(item.titel)}</h3>
-        <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(bronLabel)}</p>
+    <li class="phase-item imaging-repository-card" data-dossier-imaging-card="${escapeAttribute(item.id)}" data-dossier-imaging-preview-state="${escapeAttribute(item.previewState.status)}">
+      <div class="imaging-repository-card__body">
+        <header class="imaging-repository-card__header">
+          <div>
+            <p class="kp-card__eyebrow">Beeldrecord</p>
+            <h3>${escapeHtml(item.titel)}</h3>
+            <p>${escapeHtml(item.datum)} · ${escapeHtml(soortLabel)} · ${escapeHtml(bronLabel)}</p>
+          </div>
+          <span class="imaging-preview-status" data-imaging-preview-status="${escapeAttribute(item.previewState.status)}">${escapeHtml(item.previewState.label)}</span>
+        </header>
         <p class="linked-note">Previewstatus: ${escapeHtml(item.previewState.label)}</p>
         ${
           item.context || item.afspraakId || item.trajectId || item.document.beeldMetadata
@@ -10591,11 +10609,50 @@ function renderImagingRepositoryItem(
         ${tijdlijnKoppeling}
         <p class="linked-note">${escapeHtml(contextSamenvatting.titel)}: ${escapeHtml(contextSamenvatting.notitie)}</p>
         <p class="small-print">${escapeHtml(contextSamenvatting.waarschuwing)}</p>
-        ${thumbnail}
         ${preview}
         ${lockedPlaceholder}
       </div>
+      <div class="imaging-repository-card__media">
+        ${thumbnailTile}
+      </div>
     </li>
+  `;
+}
+
+function renderImagingThumbnailTile(
+  item: ReturnType<typeof bouwImagingRepository>[number],
+): string {
+  const canShowImage =
+    item.previewState.status === 'thumbnail' &&
+    item.mimeType?.startsWith('image/') &&
+    Boolean(item.document.inhoudBase64);
+
+  if (canShowImage) {
+    return `
+      <figure class="imaging-preview-tile imaging-preview-tile--unlocked" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="unlocked">
+        <img src="data:${escapeAttribute(item.mimeType ?? '')};base64,${escapeAttribute(item.document.inhoudBase64)}" alt="Lokale thumbnail van ${escapeAttribute(item.titel)}" loading="lazy" />
+        <figcaption>
+          <strong>Encrypted thumbnail</strong>
+          <span>Thumbnail uit ontgrendelde encrypted dataset.</span>
+        </figcaption>
+      </figure>
+    `;
+  }
+
+  if (item.previewState.status === 'locked') {
+    return `
+      <div class="imaging-preview-tile imaging-preview-tile--locked" aria-label="Beeldthumbnail vergrendeld" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="locked">
+        <strong>Preview vergrendeld</strong>
+        <span>Ontgrendel de encrypted dataset om een lokale thumbnail te tonen.</span>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="imaging-preview-tile imaging-preview-tile--metadata" data-attachment-preview-kind="imaging-thumbnail" data-attachment-preview-state="metadata-only">
+      <strong>Metadata</strong>
+      <span>Geen lokale thumbnail beschikbaar; metadata blijft zichtbaar.</span>
+    </div>
   `;
 }
 

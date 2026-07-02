@@ -7421,10 +7421,18 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-hub-detail-panel="imaging-repository"');
     expect(emptyHtml).toContain('Filters, kenmerken en vergelijkingen');
     expect(emptyHtml).toContain('<em>0 beelden</em>');
+    expect(emptyHtml).toContain('id="dossier-consult-empty-state"');
+    expect(emptyHtml).toContain('Geen consultcontext');
+    expect(emptyHtml).toContain('id="dossier-imaging-empty-state"');
+    expect(emptyHtml).toContain('Geen beelden in deze route');
+    expect(emptyHtml).toContain('Upload een beeld of koppel beeldcontext');
+    expect(emptyHtml).toContain('id="dossier-index-empty-state"');
     expect(emptyHtml).toContain('data-dossier-imaging-disclosure="embryos"');
     expect(emptyHtml).toContain('data-hub-detail-panel="embryo-dossiers"');
     expect(emptyHtml).toContain('Embryohistorie en vergelijkingen');
     expect(emptyHtml).toContain('<em>0 dossiers</em>');
+    expect(emptyHtml).toContain('id="dossier-embryo-empty-state"');
+    expect(emptyHtml).toContain('Upload embryokwaliteit, labfoto’s of statusmomenten');
     expect(emptyHtml).toContain('data-dossier-route-summary="timeline"');
     expect(emptyHtml).toContain('id="dossier-timeline-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-timeline"');
@@ -8401,6 +8409,11 @@ describe('app shell', () => {
     expect(html).toContain('Vergelijking op datum: 2026-05-04 en 2026-05-02.');
     expect(html).toContain('Kiempad interpreteert beelden niet medisch.');
     expect(html).toContain('2026-05-02 · Echo · Kliniekportaal');
+    expect(html).toContain('class="phase-item imaging-repository-card"');
+    expect(html).toContain('data-dossier-imaging-card="doc-beeld"');
+    expect(html).toContain('class="imaging-preview-status"');
+    expect(html).toContain('class="imaging-preview-tile imaging-preview-tile--unlocked"');
+    expect(html).toContain('<strong>Encrypted thumbnail</strong>');
     expect(html).toContain('Previewstatus: Thumbnail en preview beschikbaar');
     expect(html).toContain('alt="Lokale thumbnail van Echo 6 weken"');
     expect(html).toContain('Thumbnail uit ontgrendelde encrypted dataset.');
@@ -8996,8 +9009,11 @@ describe('app shell', () => {
     const lockedDeletes = extractAttachmentDeleteButtons(extractDossierAddSection(lockedHtml));
 
     expect(lockedPreviews).toContain('data-attachment-preview-kind="dossier-preview"');
+    expect(lockedPreviews).toContain('data-attachment-preview-kind="imaging-thumbnail"');
     expect(lockedPreviews).toContain('data-attachment-preview-kind="imaging-preview"');
     expect(lockedPreviews).toContain('data-attachment-preview-state="locked"');
+    expect(lockedPreviews).toContain('Beeldthumbnail vergrendeld');
+    expect(lockedPreviews).toContain('Preview vergrendeld');
     expect(lockedPreviews).toContain('Dossierpreview vergrendeld');
     expect(lockedPreviews).toContain('Beeldpreview vergrendeld.');
     expect(lockedDeletes).toContain('data-attachment-delete-kind="dossier-import"');

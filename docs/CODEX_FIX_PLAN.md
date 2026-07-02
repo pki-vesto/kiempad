@@ -111,6 +111,9 @@
 - **CFX-041 decision route-first cards — done in G1349 / issue #2472.** Afwegingen no longer
   renders a visible third context column; the active decision route owns the workspace while
   decision cards show a chosen banner plus scan-friendly +/− option tags.
+- **CFX-040 dossier imaging tiles — partial in G1350 / issue #2474.** Dossier Beelden now renders
+  encrypted thumbnail tiles with explicit locked/unlocked preview states and richer action-oriented
+  empty states for consultcontext, imaging, index, and embryo dossiers.
 
 ---
 
@@ -518,6 +521,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
+  Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
