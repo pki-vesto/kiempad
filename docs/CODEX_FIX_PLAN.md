@@ -153,6 +153,9 @@
 - **CFX-037 finance history cards — partial in G1364 / issue #2502.** Kostenhistorie now uses
   scan-friendly cost history cards with status rails, right-aligned tabular amounts, and quiet
   edit disclosures instead of generic phase-list rows.
+- **CFX-038 knowledge library cards — partial in G1365 / issue #2504.** Kennisbibliotheek now uses
+  category-eyebrow knowledge cards with chevrons, status badges, and quiet action/edit zones instead
+  of generic phase-list rows.
 
 ---
 
@@ -565,6 +568,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1364/#2502: Kostenhistorie renders as scan-friendly cost cards with status rails and
   quiet edit disclosures.
 - **CFX-038** — Kennis: kit search/category, category-eyebrow cards, chevron, badges. **P2 · M**
+  Partial G1365/#2504: Kennisbibliotheek items render as category-eyebrow cards with chevrons,
+  status badges, and quiet action/edit zones.
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.

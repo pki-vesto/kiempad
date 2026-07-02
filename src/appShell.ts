@@ -13287,11 +13287,15 @@ function renderOnDeviceAiStatus(capabilities: OnDeviceAiCapability[]): string {
 
 function renderKennisCategorie(label: string, items: KennisItem[]): string {
   return `
-    <section class="knowledge-category" aria-label="${label}">
-      <h2>${label}</h2>
+    <section class="knowledge-category" aria-label="${label}" data-knowledge-category="ready">
+      <header class="knowledge-category__header">
+        <p class="kp-card__eyebrow">Categorie</p>
+        <h2>${label}</h2>
+        <span>${items.length} item${items.length === 1 ? '' : 's'}</span>
+      </header>
       ${
         items.length > 0
-          ? `<ol class="phase-list">${items.map(renderKennisItem).join('')}</ol>`
+          ? `<ol class="knowledge-library-list" aria-label="Kennisitems in ${escapeAttribute(label)}" data-knowledge-library-list="ready">${items.map(renderKennisItem).join('')}</ol>`
           : renderEmptyState('Nog geen items in deze categorie.', { title: 'Categorie is leeg' })
       }
     </section>
@@ -13302,13 +13306,24 @@ function renderKennisItem(item: KennisItem): string {
   const kostenJaar = bepaalKennisKostenJaar(item);
   const researchMetadata = bouwResearchKaartMetadata(item);
   const researchHerverificatie = bouwResearchHerverificatieStatus(item);
+  const badges = [
+    item.ai_gegenereerd ? 'AI-gegenereerd' : 'Niet AI-gegenereerd',
+    item.geverifieerd_met_arts ? 'Geverifieerd met arts' : 'Concept · niet geverifieerd',
+    ...(kostenJaar ? [`Kostenjaar ${kostenJaar}`] : []),
+  ];
 
   return `
-    <li class="phase-item">
-      <div>
-        <h3>${escapeHtml(item.titel)}</h3>
-        <p>${escapeHtml(item.inhoud)}</p>
-        <small>Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</small>
+    <li class="knowledge-library-card" data-knowledge-library-card="ready" data-knowledge-card-category="${escapeAttribute(item.categorie)}" data-knowledge-card-verification="${item.geverifieerd_met_arts ? 'verified' : 'concept'}">
+      <article>
+        <header class="knowledge-library-card__header">
+          <div>
+            <p class="kp-card__eyebrow">${escapeHtml(KENNIS_CATEGORIE_LABELS[item.categorie])}</p>
+            <h3>${escapeHtml(item.titel)}</h3>
+          </div>
+          <span class="knowledge-library-card__chevron" aria-hidden="true">&rsaquo;</span>
+        </header>
+        <p class="knowledge-library-card__body">${escapeHtml(item.inhoud)}</p>
+        <p class="knowledge-library-card__source">Bron: ${escapeHtml(item.bron ?? 'Geen bron vastgelegd')}</p>
         ${researchMetadata ? renderResearchKaartMetadata(researchMetadata) : ''}
         ${researchHerverificatie ? renderResearchHerverificatieStatus(researchHerverificatie) : ''}
         ${
@@ -13316,25 +13331,25 @@ function renderKennisItem(item: KennisItem): string {
             ? `<p class="linked-note">Geverifieerd op ${escapeHtml(item.geverifieerdOp)} · review uiterlijk ${escapeHtml(item.volgendeVerificatieOp ?? 'onbekend')}</p>`
             : '<p class="linked-note">Nog niet met behandelaar geverifieerd.</p>'
         }
-        <div class="label-row">
-          <span class="status-pill">${item.ai_gegenereerd ? 'AI-gegenereerd' : 'Niet AI-gegenereerd'}</span>
-          <span class="status-pill">${item.geverifieerd_met_arts ? 'Geverifieerd met arts' : 'Concept · niet geverifieerd'}</span>
-          ${kostenJaar ? `<span class="status-pill">Kostenjaar ${escapeHtml(kostenJaar)}</span>` : ''}
+        <div class="knowledge-library-card__badges" aria-label="Kennisitem status">
+          ${badges.map((badge) => `<span class="status-pill">${escapeHtml(badge)}</span>`).join('')}
         </div>
-      </div>
-      ${
-        item.geverifieerd_met_arts
-          ? ''
-          : `<button class="phase-button" type="button" data-kennis-id="${item.id}" aria-label="Markeer kennisitem als geverifieerd: ${escapeAttribute(item.titel)}">Markeer geverifieerd</button>`
-      }
-      ${
-        isEigenKennisItem(item)
-          ? `<details>
-              <summary>Bewerk</summary>
-              ${renderEigenKennisItemForm(item)}
-            </details>`
-          : ''
-      }
+        <div class="knowledge-library-card__actions">
+          ${
+            item.geverifieerd_met_arts
+              ? '<span class="knowledge-library-card__verified">Artscheck vastgelegd</span>'
+              : `<button class="phase-button" type="button" data-kennis-id="${item.id}" aria-label="Markeer kennisitem als geverifieerd: ${escapeAttribute(item.titel)}">Markeer geverifieerd</button>`
+          }
+          ${
+            isEigenKennisItem(item)
+              ? `<details class="knowledge-library-card__edit">
+                  <summary>Bewerk kennisitem</summary>
+                  ${renderEigenKennisItemForm(item)}
+                </details>`
+              : ''
+          }
+        </div>
+      </article>
     </li>
   `;
 }
