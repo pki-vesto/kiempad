@@ -3064,8 +3064,8 @@ function renderDossierScreen(state: AppShellState): string {
       </header>
       ${renderHubWorkflowHeader({
         id: 'dossier-upload-workflow-header',
-        eyebrow: 'Hubroute',
-        title: 'Upload als zelfstandige intakeflow',
+        eyebrow: 'Dossierstap',
+        title: 'Eén toevoeging per keer',
         intro:
           'Start hier met medische records; review, beelden en tijdlijn blijven aparte vervolgroutes zodat de uploadflow niet voelt als een dossierdump.',
         activeTab: 'upload',
@@ -3124,7 +3124,7 @@ function renderDossierScreen(state: AppShellState): string {
       <section class="dossier-upload-console" aria-labelledby="dossier-upload-console-title" data-hub-detail-panel="upload-intake" data-dossier-upload-console="ready" data-dossier-upload-focus-mode="single-flow" data-dossier-add-flow="${escapeAttribute(activeDossierAddFlow)}">
         <header class="dossier-upload-console__header" data-dossier-upload-console-region="header">
           <div>
-            <p class="kp-card__eyebrow">Intake-console</p>
+            <p class="kp-card__eyebrow">Toevoegen</p>
             <h3 id="dossier-upload-console-title">Toevoegen aan dossier</h3>
             <p>Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.</p>
           </div>
@@ -3803,7 +3803,7 @@ function renderDossierScreen(state: AppShellState): string {
               <span>${indexItems.length} items</span>
             </header>
         <details id="dossier-route-index-disclosure" class="kp-disclosure" data-dossier-secondary-index="collapsed">
-          <summary class="kp-disclosure__summary">Dossierindex en routetellingen openen</summary>
+          <summary class="kp-disclosure__summary">Inhoudsindex en aantallen openen</summary>
           <div class="kp-disclosure__body">
             ${renderDossierSectionIndex({
               consultCount: consultVerslagen.length,
@@ -3822,13 +3822,13 @@ function renderDossierScreen(state: AppShellState): string {
         <section id="dossier-route-imaging" class="dossier-route-section" aria-labelledby="dossier-route-imaging-title" data-dossier-route="imaging"${renderDossierRouteVisibility(activeDossierRoute, 'imaging')}>
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Beelden en embryo's</p>
-          <h2 id="dossier-route-imaging-title">Imaging, consulten en embryo-dossiers</h2>
-          <p>Bekijk consultverslagen, echo's, foto's, scans en embryodossiers als eigen routecluster.</p>
+          <h2 id="dossier-route-imaging-title">Beelden, consulten en embryo-dossiers</h2>
+          <p>Bekijk consultverslagen, echo's, foto's, scans en embryodossiers zonder uploadvelden ertussen.</p>
         </header>
         ${renderHubWorkflowHeader({
           id: 'dossier-imaging-workflow-header',
-          eyebrow: 'Hubroute',
-          title: 'Embryo en beelden als eigen werkbaan',
+          eyebrow: 'Dossierstap',
+          title: 'Beelden en embryo’s apart bekijken',
           intro:
             'Beelden, vergelijkingen en embryo-dossiers blijven bij elkaar als inspectieroute, los van uploadformulieren en tijdlijnlezing.',
           activeTab: 'imaging',
@@ -3862,7 +3862,7 @@ function renderDossierScreen(state: AppShellState): string {
         })}
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
-          title: 'Beelden en embryo’s als aparte werkruimte',
+          title: 'Beelden en embryo’s apart bekijken',
           detail:
             'Consultverslagen, imagingfilters, vergelijkingen en embryodossiers staan niet meer allemaal direct onder elkaar.',
           primary: { href: '#dossier-imaging-repository', label: 'Beelden openen' },
@@ -3901,13 +3901,13 @@ function renderDossierScreen(state: AppShellState): string {
         <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="repository" data-hub-detail-panel="imaging-repository">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
-              <strong>Imaging-repository openen</strong>
-              <small>Filters, classificaties en vergelijkingen</small>
+              <strong>Beeldenoverzicht openen</strong>
+              <small>Filters, kenmerken en vergelijkingen</small>
             </span>
             <em>${imagingItems.length} beelden</em>
           </summary>
           <div class="kp-disclosure__body">
-            <h2 id="dossier-imaging-repository">Imaging-repository</h2>
+            <h2 id="dossier-imaging-repository">Beeldenoverzicht</h2>
             ${renderImagingFilterForm(state.imagingFilter ?? {}, state)}
             ${renderEchoAfspraakClassificaties(echoAfspraakClassificaties, state)}
             ${renderEmbryoExifIsolaties(embryoExifIsolaties, state)}
@@ -3926,9 +3926,9 @@ function renderDossierScreen(state: AppShellState): string {
           </div>
         </details>
         <details class="kp-disclosure" data-dossier-imaging-disclosure="index">
-          <summary class="kp-disclosure__summary">Dossierindex openen</summary>
+          <summary class="kp-disclosure__summary">Inhoudsindex openen</summary>
           <div class="kp-disclosure__body">
-            <h2 id="dossier-index">Dossierindex</h2>
+            <h2 id="dossier-index">Inhoudsindex</h2>
             ${
               indexItems.length > 0
                 ? `<ol class="compact-list">${indexItems.map((item) => renderDossierIndexItem(item, state, documentMap.get(item.id))).join('')}</ol>`
@@ -3968,7 +3968,7 @@ function renderDossierScreen(state: AppShellState): string {
         </header>
         ${renderHubWorkflowHeader({
           id: 'dossier-timeline-workflow-header',
-          eyebrow: 'Hubroute',
+          eyebrow: 'Dossierstap',
           title: 'Tijdlijn als leesruimte',
           intro:
             'Deze route houdt historische onderzoeken en behandelgeschiedenis bij elkaar, met details achter disclosures zodat de volgorde leidend blijft.',
@@ -4068,9 +4068,9 @@ function renderDossierFocusShell(input: { orientation: string; workspace: string
   return `
     <section class="dossier-focus-shell" aria-labelledby="dossier-focus-shell-title" data-dossier-focus-shell="ready">
       <header class="dossier-focus-shell__header">
-        <p class="kp-card__eyebrow">Dossier focus</p>
-        <h2 id="dossier-focus-shell-title">Eerst route kiezen, dan pas dossierinhoud openen</h2>
-        <p>De routekaart en split-view horen bij elkaar: upload, review, beelden en tijdlijn blijven één gefocuste dossierwerkruimte.</p>
+        <p class="kp-card__eyebrow">Dossier</p>
+        <h2 id="dossier-focus-shell-title">Kies wat je wilt doen</h2>
+        <p>Uploaden, zoeken, beelden en tijdlijn staan apart zodat je niet alles tegelijk hoeft te bekijken.</p>
       </header>
       <div class="dossier-focus-shell__body" data-dossier-console="ready">
         <div class="dossier-focus-shell__orientation" data-dossier-focus-region="orientation" data-dossier-console-region="orientation">
@@ -4096,7 +4096,7 @@ function renderDossierSectionIndex(input: {
   const items = [
     { href: '#dossier-consultverslagen', label: 'Consulten', count: input.consultCount },
     { href: '#dossier-imaging-repository', label: 'Beelden', count: input.imagingCount },
-    { href: '#dossier-index', label: 'Index', count: input.indexCount },
+    { href: '#dossier-index', label: 'Inhoud', count: input.indexCount },
     { href: '#dossier-embryo-dossiers', label: "Embryo's", count: input.embryoCount },
     { href: '#dossier-documenttijdlijn', label: 'Tijdlijn', count: input.timelineCount },
     { href: '#dossier-behandelgeschiedenis', label: 'Geschiedenis', count: input.historyCount },
@@ -4155,12 +4155,12 @@ function renderDossierRouteStage(input: {
   state: AppShellState;
 }): string {
   return `
-    <section class="dossier-route-stage" aria-label="Dossierwerkbank" data-dossier-first-viewport="route-stage">
+    <section class="dossier-route-stage" aria-label="Dossieroverzicht" data-dossier-first-viewport="route-stage">
       <header class="dossier-route-stage__header">
         <div>
-          <p class="kp-card__eyebrow">Dossierwerkbank</p>
-          <h2>Kies eerst je dossierroute</h2>
-          <p>Uploaden, zoeken, beelden en tijdlijn blijven gescheiden zodat je niet door alle medische blokken tegelijk hoeft.</p>
+          <p class="kp-card__eyebrow">Dossieroverzicht</p>
+          <h2>Wat wil je doen?</h2>
+          <p>Open één onderdeel tegelijk: uploaden, zoeken, beelden of tijdlijn.</p>
         </div>
         <p class="dossier-route-stage__status">${escapeHtml(renderDossierActiveRouteCopy(input.activeRoute))}</p>
       </header>
@@ -4182,7 +4182,7 @@ function renderDossierImagingInspectionBoard(input: {
       href: '#dossier-imaging-repository',
       label: 'Beelden',
       title: `${input.imagingCount} beeld${input.imagingCount === 1 ? '' : 'en'}`,
-      detail: 'Echo’s, foto’s en scans eerst als repository inspecteren.',
+      detail: 'Echo’s, foto’s en scans eerst als overzicht openen.',
       cue: input.locked ? 'Preview vergrendeld' : 'Metadata zichtbaar',
     },
     {
@@ -4212,13 +4212,13 @@ function renderDossierImagingInspectionBoard(input: {
   ];
 
   return `
-    <section class="dossier-imaging-inspection-board" aria-label="Imaging inspectiebord" data-dossier-imaging-inspection-board="ready">
+    <section class="dossier-imaging-inspection-board" aria-label="Beelden inspectiebord" data-dossier-imaging-inspection-board="ready">
       <header class="dossier-imaging-inspection-board__header">
         <div>
           <p class="kp-card__eyebrow">Inspectiebord</p>
           <h3>Kies eerst je beeldroute</h3>
         </div>
-        <p>Start met beelden, vergelijken, embryo’s of consultcontext; de volledige repository blijft daarna uitklapbaar.</p>
+        <p>Start met beelden, vergelijken, embryo’s of consultcontext; de volledige beeldlijst blijft daarna uitklapbaar.</p>
       </header>
       <nav class="dossier-imaging-inspection-board__lanes" aria-label="Imaging route kiezen">
         ${lanes
@@ -4352,13 +4352,13 @@ function renderDossierUploadTriage(input: {
 function renderDossierActiveRouteCopy(route: DossierRoute): string {
   switch (route) {
     case 'upload':
-      return 'Actief: upload en review';
+      return 'Nu: upload en review';
     case 'search':
-      return 'Actief: zoeken';
+      return 'Nu: zoeken';
     case 'imaging':
-      return "Actief: beelden en embryo's";
+      return "Nu: beelden en embryo's";
     case 'timeline':
-      return 'Actief: tijdlijn';
+      return 'Nu: tijdlijn';
   }
 }
 
@@ -14337,7 +14337,7 @@ function renderStartCommandHeader(state: AppShellState): string {
     ? `${activeTraject?.traject.naam ?? 'Traject'} · ${TRAJECT_FASE_LABELS[huidigeFase.fase]}`
     : activeTraject
       ? activeTraject.traject.naam
-      : 'Maak rustig de eerste cyclus aan; daarna wordt dit jullie dagelijkse command center.';
+      : 'Maak rustig de eerste cyclus aan; daarna wordt dit jullie dagelijkse overzicht.';
 
   return `
     <header class="start-command-header" aria-labelledby="screen-title">
@@ -14456,7 +14456,7 @@ function renderDailyCommandCenter(state: AppShellState, vandaag: string, nuIso: 
   ].filter((item): item is string => Boolean(item));
 
   return `
-    <section id="start-today" class="summary-panel command-center" aria-label="Vandaag command center">
+    <section id="start-today" class="summary-panel command-center" aria-label="Vandaag overzicht">
       <h2>Vandaag</h2>
       <p class="small-print">Een lokaal takenoverzicht op basis van agenda, medicatie, vragen, herinneringen en context. Kiempad geeft geen medisch advies.</p>
       <div class="daily-command-board">
@@ -15548,10 +15548,10 @@ function renderConsultPrepBoard(input: {
 function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefined): string {
   if (!vragenlijst) {
     return `
-      <section class="policy-panel embedded-summary consult-detail-panel" aria-label="Consult Prep Wizard" data-hub-detail-panel="consult-prep-wizard">
+      <section class="policy-panel embedded-summary consult-detail-panel" aria-label="Consult voorbereiden" data-hub-detail-panel="consult-prep-wizard">
         <header class="hub-detail-disclosure__summary consult-detail-panel__header">
           <span>
-            <strong>Consult Prep Wizard</strong>
+            <strong>Consult voorbereiden</strong>
             <small>Vragenlijst, context en eigen packet</small>
           </span>
           <em>Wacht</em>
@@ -15572,10 +15572,10 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
   const packet = maakConsultPrepPacket(vragenlijst, vragenTekst);
 
   return `
-    <section class="policy-panel embedded-summary consult-detail-panel" aria-label="Consult Prep Wizard" data-hub-detail-panel="consult-prep-wizard">
+    <section class="policy-panel embedded-summary consult-detail-panel" aria-label="Consult voorbereiden" data-hub-detail-panel="consult-prep-wizard">
       <header class="hub-detail-disclosure__summary consult-detail-panel__header">
         <span>
-          <strong>Consult Prep Wizard</strong>
+          <strong>Consult voorbereiden</strong>
           <small>Vragenlijst, context en eigen packet</small>
         </span>
         <em>${vragenlijst.items.length} vragen</em>

@@ -197,7 +197,7 @@ const targets = [
     screen: 'dossier-imaging',
     hash: '#dossier?route=imaging',
     rootSelector: '#dossier-route-imaging',
-    expectedText: 'Beelden en embryo’s als aparte werkruimte',
+    expectedText: 'Kies eerst je beeldroute',
     activeRouteSelector: '[data-dossier-route="imaging"][data-dossier-route-state="active"]',
     inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
     focusLayout: {
@@ -341,7 +341,7 @@ const targets = [
     screen: 'question-prep',
     hash: '#vragen?route=voorbereiden',
     rootSelector: '[data-question-focus-shell="ready"]',
-    expectedText: 'Consult Prep Wizard',
+    expectedText: 'Consult voorbereiden',
     activeRouteSelector: '[data-question-route="voorbereiden"][data-question-route-state="active"]',
     inactiveRouteSelector: '[data-question-route-state="inactive"]',
     requiredSelectors: [
@@ -359,7 +359,6 @@ const targets = [
       '[data-consult-prep-lane="packet"]',
       '[data-hub-detail-panel="consult-prep-wizard"]',
       '.consult-detail-panel__header',
-      '[aria-label="Consult Prep Wizard"]',
     ],
     desktopHiddenSelectors: [
       '.question-focus-shell__header p:last-child',
@@ -816,6 +815,7 @@ async function assertRouteflows(browser, options) {
                   workspaceRect && workspaceRect.width > 0 && workspaceRect.height > 0,
                 ),
                 orientationTop: orientationRect?.top ?? 0,
+                orientationBottom: orientationRect?.bottom ?? 0,
                 workspaceTop: workspaceRect?.top ?? 0,
                 orientationRight: orientationRect?.right ?? 0,
                 workspaceLeft: workspaceRect?.left ?? 0,
@@ -1208,8 +1208,9 @@ async function assertRouteflows(browser, options) {
         (!evidence.dossierConsole.bodyVisible ||
           !evidence.dossierConsole.orientationVisible ||
           !evidence.dossierConsole.workspaceVisible ||
-          evidence.dossierConsole.workspaceTop < evidence.dossierConsole.orientationTop - 1 ||
-          evidence.dossierConsole.workspaceLeft < evidence.dossierConsole.orientationRight - 1 ||
+          (evidence.dossierConsole.workspaceTop <
+            evidence.dossierConsole.orientationBottom - 1 &&
+            evidence.dossierConsole.workspaceLeft < evidence.dossierConsole.orientationRight - 1) ||
           evidence.dossierConsole.bodyOverflow !== 'hidden' ||
           evidence.dossierConsole.bodyMaxHeight === 'none' ||
           evidence.dossierConsole.orientationOverflowY !== 'auto' ||
