@@ -1886,6 +1886,129 @@ h2 {
   color: var(--ink-3);
 }
 
+.binary-toggle {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.binary-toggle legend {
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.binary-toggle__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-muted);
+}
+
+.binary-toggle__option {
+  min-width: 0;
+}
+
+.data-form .binary-toggle__option input {
+  position: absolute;
+  width: 1px;
+  min-width: 1px;
+  min-height: 1px;
+  margin: -1px;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.binary-toggle__pill {
+  display: grid;
+  min-height: 54px;
+  align-content: center;
+  gap: 2px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition:
+    background var(--motion),
+    border-color var(--motion),
+    box-shadow var(--motion),
+    color var(--motion);
+}
+
+.binary-toggle__pill span {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.binary-toggle__pill small {
+  color: var(--ink-3);
+  font-size: 11.5px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.binary-toggle__option input:checked + .binary-toggle__pill {
+  border-color: color-mix(in srgb, var(--teal) 42%, transparent);
+  background: var(--surface);
+  color: var(--teal-deep);
+  box-shadow: 0 6px 18px rgba(32, 82, 74, 0.1);
+}
+
+.binary-toggle__option input:focus-visible + .binary-toggle__pill {
+  outline: 3px solid var(--teal-soft);
+  outline-offset: 2px;
+}
+
+.binary-toggle__option input:checked + .binary-toggle__pill small {
+  color: var(--ink-2);
+}
+
+.toggle-status {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 5px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  color: var(--ink-2);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.toggle-status::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--ink-3);
+  content: "";
+}
+
+.toggle-status[data-toggle-status="on"] {
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+}
+
+.toggle-status[data-toggle-status="on"]::before {
+  background: var(--teal);
+}
+
+.toggle-status[data-toggle-status="off"] {
+  background: var(--surface-2);
+  color: var(--ink-3);
+}
+
 /* FIX 8: eigen chevron op select (verbergt de native lichtblauwe stijl) */
 .data-form select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a9793' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
