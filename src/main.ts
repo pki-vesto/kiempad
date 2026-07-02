@@ -18,6 +18,7 @@ import {
   renderAppShell,
   renderStorageBootstrapError,
   renderVaultGate,
+  type SettingsFeedbackItem,
   type WebAuthnViewStatus,
 } from './appShell';
 import { DELETE_CONFIRMATIONS } from './deleteConfirmations';
@@ -144,6 +145,7 @@ type RuntimeState = {
   kosten: CostItem[];
   eventLogs: EventLog[];
   settings: AppSettings;
+  settingsFeedback?: SettingsFeedbackItem;
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
   aiError?: string;
@@ -194,6 +196,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     kosten: state.kosten,
     eventLogs: state.eventLogs,
     settings: state.settings,
+    settingsFeedback: state.settingsFeedback,
     notificaties: state.notificaties,
     aiPreview: state.aiPreview,
     aiError: state.aiError,
@@ -343,6 +346,10 @@ function bindSettingsControls(root: HTMLElement, state: RuntimeState): void {
       })
       .then((settings) => {
         state.settings = settings;
+        state.settingsFeedback = {
+          kind: 'personal',
+          message: 'Persoonlijke instellingen opgeslagen.',
+        };
         render(root, state);
       });
   });
@@ -357,6 +364,10 @@ function bindThemeControls(root: HTMLElement, state: RuntimeState): void {
     const thema = parseThema(new FormData(form).get('thema'));
     void state.settingsStore.setThema(thema).then((settings) => {
       state.settings = settings;
+      state.settingsFeedback = {
+        kind: 'theme',
+        message: 'Thema opgeslagen.',
+      };
       render(root, state);
     });
   };
@@ -1884,6 +1895,10 @@ function bindHerinneringControls(root: HTMLElement, state: RuntimeState): void {
     const allowed = data.get('toonNotificatieDetailsOpVergrendelscherm') === 'true';
     void state.settingsStore.setNotificationDetailsAllowed(allowed).then((settings) => {
       state.settings = settings;
+      state.settingsFeedback = {
+        kind: 'notification-privacy',
+        message: 'Notificatieprivacy opgeslagen.',
+      };
       scheduleLocalNotifications(
         state.herinneringen,
         state.settings,

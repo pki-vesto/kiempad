@@ -1901,6 +1901,41 @@ describe('app shell', () => {
     expect(html).toContain('value="donker" selected');
   });
 
+  it('toont inline succesfeedback bij opgeslagen instellingen', () => {
+    const personalHtml = renderAppShell(
+      'start',
+      makeStartState({
+        settingsOpen: true,
+        settingsFeedback: {
+          kind: 'personal',
+          message: 'Persoonlijke instellingen opgeslagen.',
+        },
+      }),
+    );
+
+    expect(personalHtml).toContain(
+      'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="personal"',
+    );
+    expect(personalHtml).toContain('Persoonlijke instellingen opgeslagen.');
+    expect(personalHtml).not.toContain('data-settings-feedback="theme"');
+
+    const themeHtml = renderAppShell(
+      'start',
+      makeStartState({
+        settingsOpen: true,
+        settingsFeedback: {
+          kind: 'theme',
+          message: 'Thema opgeslagen.',
+        },
+      }),
+    );
+
+    expect(themeHtml).toContain(
+      'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="theme"',
+    );
+    expect(themeHtml).toContain('Thema opgeslagen.');
+  });
+
   it('laat eigen first-viewport werkbanken voorgaan op de generieke werkruimtekaart', () => {
     const dossierHtml = renderAppShell('dossier');
     const kennisHtml = renderAppShell('kennis');
@@ -2987,6 +3022,7 @@ describe('app shell', () => {
 
   it('houdt startschermmodules taakgericht verdeeld bij gevulde context', () => {
     const vandaag = new Date().toISOString().slice(0, 10);
+    const morgen = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     const html = renderAppShell(
       'start',
       makeStartState({
@@ -3015,7 +3051,7 @@ describe('app shell', () => {
             afspraak: {
               id: 'afspraak-dashboard',
               titel: 'Echo dashboard',
-              datumTijd: `${vandaag}T10:00`,
+              datumTijd: `${morgen}T10:00`,
               type: 'echo',
             },
           },
@@ -36965,6 +37001,10 @@ describe('app shell', () => {
       herinneringen: [],
       notificaties: { permission: 'granted', serviceWorker: 'ready' },
       settings: DEFAULT_APP_SETTINGS,
+      settingsFeedback: {
+        kind: 'notification-privacy',
+        message: 'Notificatieprivacy opgeslagen.',
+      },
     });
 
     expect(html).toContain('Inhoud op vergrendeld scherm');
@@ -36972,6 +37012,10 @@ describe('app shell', () => {
     expect(html).toContain('Geen inhoud op lockscreen');
     expect(html).toContain('Alleen na expliciete keuze');
     expect(html).toContain('name="toonNotificatieDetailsOpVergrendelscherm" value="false" checked');
+    expect(html).toContain(
+      'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="notification-privacy"',
+    );
+    expect(html).toContain('Notificatieprivacy opgeslagen.');
   });
 
   it('bewaakt notificatieprivacy states met generieke lockscreen-copy en detail opt-in', () => {

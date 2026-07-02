@@ -729,6 +729,7 @@ export type AppShellState = {
   kosten?: CostItem[];
   eventLogs?: EventLog[];
   settings: AppSettings;
+  settingsFeedback?: SettingsFeedbackItem;
   notificaties: NotificationRuntimeStatus;
   aiPreview?: AiSamenvattingPayload;
   aiError?: string;
@@ -770,6 +771,17 @@ export type AppShellState = {
   storageMode?: 'central-api' | 'legacy-indexeddb';
   storageLabel?: string;
   loadingState?: AppShellLoadingState;
+};
+
+export type SettingsFeedbackKind =
+  | 'personal'
+  | 'theme'
+  | 'notification-privacy'
+  | 'notification-planning';
+
+export type SettingsFeedbackItem = {
+  kind: SettingsFeedbackKind;
+  message: string;
 };
 
 export type AppShellLoadingState = {
@@ -1288,6 +1300,7 @@ function renderSettingsSheet(state: AppShellState): string {
             dataAttribute: 'gedeelde-modus',
           })}
           <button type="submit">Bewaar namen</button>
+          ${renderSettingsFeedback(state.settingsFeedback, 'personal')}
         </form>
         <form id="theme-form" class="theme-form settings-theme-form" aria-label="Weergavethema" data-theme-control="sheet">
           <label>
@@ -1297,6 +1310,7 @@ function renderSettingsSheet(state: AppShellState): string {
               ${renderOption('donker', 'Donker', settings.thema)}
             </select>
           </label>
+          ${renderSettingsFeedback(state.settingsFeedback, 'theme')}
         </form>
         ${renderExampleDataPanel(exampleLoaded, 'settings')}
       </section>
@@ -1346,6 +1360,15 @@ function renderBinaryToggle(input: {
       </div>
     </fieldset>
   `;
+}
+
+function renderSettingsFeedback(
+  feedback: SettingsFeedbackItem | undefined,
+  kind: SettingsFeedbackKind,
+): string {
+  if (!feedback || feedback.kind !== kind) return '';
+
+  return `<p class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="${escapeAttribute(kind)}">${escapeHtml(feedback.message)}</p>`;
 }
 
 function hasExampleData(state: AppShellState): boolean {
@@ -15561,6 +15584,7 @@ function renderHerinneringenScreen(state: AppShellState): string {
                 dataAttribute: 'lockscreen-privacy',
               })}
               <button type="submit">Bewaar notificatieprivacy</button>
+              ${renderSettingsFeedback(state.settingsFeedback, 'notification-privacy')}
             </form>
           </div>
         </details>
