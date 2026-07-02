@@ -420,6 +420,66 @@ h3 {
   background: var(--owner-samen-dot);
 }
 
+.status-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  color: var(--ink-2);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.status-badge::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+  opacity: 0.72;
+}
+
+.status-badge[data-status-badge-state="ja"] {
+  border-color: color-mix(in srgb, var(--teal) 28%, var(--line));
+  background: var(--teal-soft);
+  color: var(--teal-deep);
+}
+
+.status-badge[data-status-badge-state="eigen_risico"] {
+  border-color: color-mix(in srgb, var(--clay) 34%, var(--line));
+  background: color-mix(in srgb, var(--clay) 14%, var(--surface));
+  color: color-mix(in srgb, var(--clay) 72%, var(--ink));
+}
+
+.status-badge[data-status-badge-state="nee"] {
+  border-color: color-mix(in srgb, var(--danger) 24%, var(--line));
+  background: color-mix(in srgb, var(--danger) 9%, var(--surface));
+  color: var(--danger);
+}
+
+.status-badge[data-status-badge-state="onbekend"] {
+  border-color: var(--line-2);
+  background: var(--surface-2);
+  color: var(--ink-3);
+}
+
+.cost-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.cost-item-meta > span:not(.status-badge) {
+  overflow-wrap: anywhere;
+}
+
 .topbar-actions {
   display: inline-flex;
   flex: 0 0 auto;

@@ -76,6 +76,9 @@
 - **CFX-018 settings feedback — done in G1337 / issue #2448.** Personal settings, theme changes,
   and Herinneringen lockscreenprivacy now render inline `role="status"` success feedback after save,
   so these controls no longer fail silently.
+- **CFX-016 finance badges — done in G1338 / issue #2450.** Kostenhistorie rows now render
+  vergoedingstatus as consistent status badges with explicit states for vergoed, eigen risico,
+  niet vergoed, and onbekend instead of burying the status in plain meta text.
 
 ---
 

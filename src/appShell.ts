@@ -13116,7 +13116,11 @@ function renderKostenItem(item: CostItem): string {
     <li class="phase-item">
       <div>
         <h3>${escapeHtml(item.omschrijving)}</h3>
-        <p>${formatEuro(item.bedrag)} · ${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])} · ${escapeHtml(COST_VERGOED_LABELS[item.vergoed])}</p>
+        <p class="cost-item-meta">
+          <span>${formatEuro(item.bedrag)}</span>
+          <span>${escapeHtml(COST_CATEGORIE_LABELS[item.categorie])}</span>
+          ${renderCostStatusBadge(item.vergoed)}
+        </p>
         <small>${escapeHtml(item.datum)}${item.trajectId ? ` · Traject: ${escapeHtml(item.trajectId)}` : ''}</small>
       </div>
       <details>
@@ -13125,6 +13129,10 @@ function renderKostenItem(item: CostItem): string {
       </details>
     </li>
   `;
+}
+
+function renderCostStatusBadge(status: CostItem['vergoed']): string {
+  return `<span class="status-badge status-badge--cost" data-status-badge="cost" data-status-badge-state="${escapeAttribute(status)}">${escapeHtml(COST_VERGOED_LABELS[status])}</span>`;
 }
 
 function renderResearchItemForm(): string {
