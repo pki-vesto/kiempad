@@ -3766,6 +3766,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Suggestie bewaard: Dagcheck zonder extra medicatiemoment.');
+    expect(html).toContain('name="recommendationAction" value="gedaan"');
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {
@@ -4255,6 +4256,9 @@ describe('app shell', () => {
     expect(html).toContain('name="timelineBron" value="echo"');
     expect(html).toContain('name="timelineAanbevelingenZichtbaar"');
     expect(html).toContain('data-timeline-recommendation-visibility="ready"');
+    expect(html).toContain('name="timelineAanbevelingFeedbackStatus"');
+    expect(html).toContain('data-timeline-recommendation-feedback-filter="ready"');
+    expect(html).toContain('Alle feedbackstatussen');
     expect(html).toContain('Onderzoeken, consulten, behandelingen, embryo');
     expect(timelineReader).toContain('data-fertility-timeline-reader="ready"');
     expect(timelineReader).toContain('Kies eerst je tijdlijnlaag');
@@ -4845,6 +4849,15 @@ describe('app shell', () => {
             geverifieerd_met_arts: false,
           },
         ],
+        eventLogs: [
+          {
+            id: 'event-feedback-1',
+            datum: '2026-06-24T12:00:00.000Z',
+            categorie: 'systeem',
+            gebeurtenis: 'Dagelijkse suggestie gedaan',
+            detail: 'Volgende afspraak voorbereiden (samen-volgende-afspraak)',
+          },
+        ],
       }),
     );
     const timeline = extractFertilityTimelineSection(contextualHtml);
@@ -4891,6 +4904,10 @@ describe('app shell', () => {
     expect(timelineItems).toContain('https://pubmed.ncbi.nlm.nih.gov/123456/');
     expect(timelineItems).toContain('Behandelvoorbereiding');
     expect(timelineItems).toContain('Dagelijkse suggestie voor samen · status concept');
+    expect(timelineItems).toContain('data-timeline-recommendation-feedback-status="gedaan"');
+    expect(timelineItems).toContain('Feedback: Gedaan');
+    expect(timelineItems).toContain('data-timeline-recommendation-feedback-status="geen"');
+    expect(timelineItems).toContain('Feedback: nog niet gemarkeerd');
     expect(timelineItems).toContain('Suggestiebron:');
     expect(timelineItems).toContain('Review: concept');
     expect(timelineItems).toContain('Dossierrecord: Labuitslag hormonen');
@@ -4909,6 +4926,58 @@ describe('app shell', () => {
     expect(css).toContain('.timeline-detail-drawer {');
     expect(css).toContain('.timeline-detail-drawer__facts {');
     expect(css).not.toContain('.timeline-detail-panel {');
+
+    const feedbackFilteredHtml = renderAppShell(
+      'traject',
+      makeStartState({
+        trajecten: [
+          {
+            traject: {
+              id: 'traject-ctx',
+              naam: 'Poging context',
+              type: 'icsi',
+              startDatum: '2026-06-20',
+              status: 'lopend',
+              pogingNummer: 1,
+            },
+            fasen: [],
+          },
+        ],
+        afspraken: [
+          {
+            afspraak: {
+              id: 'afspraak-ctx',
+              titel: 'Echo controle',
+              datumTijd: '2026-06-24T09:30',
+              type: 'echo',
+              trajectId: 'traject-ctx',
+            },
+          },
+        ],
+        eventLogs: [
+          {
+            id: 'event-feedback-1',
+            datum: '2026-06-24T12:00:00.000Z',
+            categorie: 'systeem',
+            gebeurtenis: 'Dagelijkse suggestie gedaan',
+            detail: 'Volgende afspraak voorbereiden (samen-volgende-afspraak)',
+          },
+        ],
+        timelineFilter: {
+          soort: 'aanbeveling',
+          aanbevelingFeedbackStatus: 'gedaan',
+        },
+      }),
+    );
+    const feedbackFilteredTimeline = extractFertilityTimelineSection(feedbackFilteredHtml);
+    const feedbackFilteredTimelineItems = extractFertilityTimelineItems(feedbackFilteredTimeline);
+
+    expect(feedbackFilteredTimeline).toContain('data-timeline-state="gevuld"');
+    expect(feedbackFilteredTimeline).toContain('value="gedaan" selected');
+    expect(feedbackFilteredTimelineItems).toContain('Volgende afspraak voorbereiden');
+    expect(feedbackFilteredTimelineItems).toContain('Feedback: Gedaan');
+    expect(feedbackFilteredTimelineItems).not.toContain('Behandelvoorbereiding');
+    expect(feedbackFilteredTimelineItems).not.toContain('Feedback: nog niet gemarkeerd');
   });
 
   it('toont contextsignalen als controleerbare artsvragen zonder medisch advies', () => {

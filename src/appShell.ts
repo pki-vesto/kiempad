@@ -79,6 +79,7 @@ import {
 import {
   bouwFertilityTimeline,
   type FertilityTimeline,
+  type FertilityTimelineAanbevelingFeedbackStatus,
   type FertilityTimelineBronverwijzing,
   type FertilityTimelineFilter,
   type FertilityTimelineItemSoort,
@@ -14879,6 +14880,7 @@ function renderDailyRecommendationActions(item: DailyRecommendation): string {
         <details class="rec-overflow">
           <summary class="rec-overflow__toggle" aria-label="Meer acties">⋯</summary>
           <div class="rec-overflow__menu" role="menu">
+            <button class="rec-action rec-action--menu" type="submit" name="recommendationAction" value="gedaan">Gedaan</button>
             <button class="rec-action rec-action--menu" type="submit" name="recommendationAction" value="afwijzen">Wijs af</button>
             <button class="rec-action rec-action--menu rec-action--artscheck" type="submit" name="recommendationAction" value="artscheck">Artscheck</button>
           </div>
@@ -17908,7 +17910,35 @@ function bouwFertilityTimelineVoorState(state: AppShellState): FertilityTimeline
     kennisItems: state.kennisItems,
     aanbevelingen,
     aanbevelingenDatum: vandaag,
+    aanbevelingFeedback: bouwAanbevelingFeedbackStatussen(state.eventLogs ?? []),
   });
+}
+
+function bouwAanbevelingFeedbackStatussen(
+  eventLogs: readonly EventLog[],
+): Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>> {
+  const statussen: Partial<Record<string, FertilityTimelineAanbevelingFeedbackStatus>> = {};
+  for (const event of [...eventLogs].sort((a, b) => b.datum.localeCompare(a.datum))) {
+    const recommendationId = event.detail?.match(/\((?<id>[^)]+)\)/)?.groups?.id;
+    const status = bepaalAanbevelingFeedbackStatus(event.gebeurtenis);
+    if (recommendationId && status && !statussen[recommendationId]) {
+      statussen[recommendationId] = status;
+    }
+  }
+  return statussen;
+}
+
+function bepaalAanbevelingFeedbackStatus(
+  gebeurtenis: string,
+): FertilityTimelineAanbevelingFeedbackStatus | undefined {
+  const normalized = gebeurtenis.toLocaleLowerCase('nl-NL');
+  if (normalized.includes('gedaan')) return 'gedaan';
+  if (normalized.includes('afgewezen')) return 'niet_passend';
+  if (normalized.includes('herinnering')) return 'herinnering';
+  if (normalized.includes('artscheck')) return 'artscheck';
+  if (normalized.includes('vraag')) return 'bespreken';
+  if (normalized.includes('bewaard')) return 'bewaard';
+  return undefined;
 }
 
 const FERTILITY_TIMELINE_SOORT_LABELS: Record<FertilityTimelineItemSoort, string> = {
@@ -17936,6 +17966,18 @@ const FERTILITY_TIMELINE_BRONSOORT_LABELS: Record<
   medicatie: 'Medicatie',
   kennis: 'Kennis',
   aanbeveling: 'Suggestie',
+};
+
+const FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS: Record<
+  FertilityTimelineAanbevelingFeedbackStatus,
+  string
+> = {
+  bewaard: 'Bewaard',
+  gedaan: 'Gedaan',
+  niet_passend: 'Niet passend',
+  herinnering: 'Herinnering',
+  bespreken: 'Bespreken',
+  artscheck: 'Artscheck',
 };
 
 function renderFertilityTimeline(
@@ -18249,6 +18291,15 @@ function renderFertilityTimelineFilterForm(filter: FertilityTimelineFilter): str
           ${renderOption('nee', 'Verbergen', filter.aanbevelingenZichtbaar === false ? 'nee' : 'ja')}
         </select>
       </label>
+      <label>
+        Feedbackstatus
+        <select name="timelineAanbevelingFeedbackStatus" data-timeline-recommendation-feedback-filter="ready">
+          <option value="">Alle feedbackstatussen</option>
+          ${Object.entries(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS)
+            .map(([value, label]) => renderOption(value, label, filter.aanbevelingFeedbackStatus))
+            .join('')}
+        </select>
+      </label>
       <button type="submit">Filter timeline</button>
     </form>
   `;
@@ -18271,6 +18322,13 @@ function renderFertilityTimelineItem(item: FertilityTimeline['items'][number]): 
     body: `
       ${item.eigenaar ? `<small>Eigenaar: ${escapeHtml(item.eigenaar)}</small>` : ''}
       <small>Status: ${escapeHtml(reviewState === 'concept' ? 'conceptreview' : 'gereviewd')}</small>
+      ${
+        item.aanbevelingFeedbackStatus
+          ? `<small data-timeline-recommendation-feedback-status="${escapeAttribute(item.aanbevelingFeedbackStatus)}">Feedback: ${escapeHtml(FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[item.aanbevelingFeedbackStatus])}</small>`
+          : item.soort === 'aanbeveling'
+            ? '<small data-timeline-recommendation-feedback-status="geen">Feedback: nog niet gemarkeerd</small>'
+            : ''
+      }
       ${item.trajectId ? `<small>Traject: ${escapeHtml(item.trajectId)}</small>` : ''}
       <details class="timeline-detail-drawer" data-fertility-timeline-detail-drawer="ready" data-fertility-timeline-detail-review="${escapeAttribute(reviewState)}">
         <summary>
