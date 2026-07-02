@@ -3328,6 +3328,8 @@ describe('app shell', () => {
       'data-recommendation-component-state="structured"',
     );
     expect(emptyContextRecommendations).toContain('data-daily-advice-list-mode="dual-owner-cards"');
+    expect(emptyContextRecommendations).not.toContain('data-daily-advice-feedback-summary=');
+    expect(emptyContextRecommendations).not.toContain('Lokale feedback:');
     expect(emptyContextRecommendations).not.toContain('data-daily-recommendation-feedback-status=');
     expect(emptyContextRecommendations).not.toContain('Feedbackstatus:');
     expect(emptyContextRecommendations).toContain('class="daily-recommendation-dual-owner-lane"');
@@ -3777,6 +3779,9 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('Suggestie bewaard: Dagcheck zonder extra medicatiemoment.');
+    expect(html).toContain('data-daily-advice-feedback-summary-count="ready"');
+    expect(html).toContain('data-daily-advice-feedback-summary="ready"');
+    expect(html).toContain('Lokale feedback: Gedaan: 1.');
     expect(html).toContain('data-daily-recommendation-feedback-status="gedaan"');
     expect(html).toContain('Feedbackstatus: Gedaan');
     expect(html).toContain('name="recommendationAction" value="gedaan"');

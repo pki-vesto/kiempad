@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1135 |
+| ☑ klaar | 1136 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1334** |
+| **Totaal** | **1335** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1496,13 +1496,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1331 | Premium Claude Design UI: Dossier zoekroute als compacte zoekconsole | P1 | F5 | ☑ |
 | G1332 | Daily Recommendations: feedbackstatus van tijdlijnsuggesties tonen | P1 | F5 | ☑ |
 | G1333 | Daily Recommendations: feedbackstatus gebruiken in dagadviesoverzicht | P1 | F5 | ☑ |
-| G1334 | Daily Recommendations: feedbacksamenvatting in advieswerkbank | P1 | F5 | ☐ |
+| G1334 | Daily Recommendations: feedbacksamenvatting in advieswerkbank | P1 | F5 | ☑ |
+| G1335 | Daily Recommendations: feedbackfilter in dagadvieslijst | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1334** (id's G001 t/m G1334, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1335** (id's G001 t/m G1335, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
