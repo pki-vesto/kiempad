@@ -2774,6 +2774,11 @@ describe('app shell', () => {
     expect(html).not.toContain('Vandaag op Kiempad');
     expect(html).toContain('Welkom bij Kiempad');
     expect(html).toContain('Richt Kiempad rustig in');
+    expect(html).toContain('data-first-run-setup="collapsed"');
+    expect(html).toContain('Open checklist');
+    expect(html).not.toContain(
+      '<details class="summary-panel setup-panel setup-panel--collapsed" aria-labelledby="first-run-setup-title" data-first-run-setup="collapsed" open',
+    );
     expect(html).toContain('id="first-run-complete-form"');
     expect(html).toContain('id="first-run-skip-form"');
     expect(html).toContain('data-example-data-panel="first-run"');
@@ -2996,9 +3001,9 @@ describe('app shell', () => {
     expect(mobileCss).toContain('"header"');
     expect(mobileCss).toContain('"cockpit"');
     expect(mobileCss).toContain('"deck"');
-    expect(mobileCss).toContain('scroll-snap-type: x proximity;');
+    expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.start-cockpit__panel {');
-    expect(mobileCss).toContain('flex: 0 0 min(292px, 86vw);');
+    expect(mobileCss).toContain('min-width: 0;');
     expect(mobileCss).toContain('.start-cockpit__routes {');
     expect(mobileCss).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(mobileCss).toContain('.start-workspace-deck {');

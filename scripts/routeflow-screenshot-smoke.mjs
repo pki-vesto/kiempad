@@ -32,7 +32,9 @@ const targets = [
       '[data-start-workspace-card="record"]',
       '[data-start-workspace-card="insight"]',
       '[data-start-workspace-card="control"]',
+      '[data-first-run-setup="collapsed"]',
     ],
+    closedDetailsSelectors: ['[data-first-run-setup="collapsed"]'],
     hiddenSelectors: [
       '[data-workspace-map="ready"]',
       '.workspace-strip__description',
