@@ -15469,7 +15469,14 @@ function renderVraagForm(bundle: VraagBundle | undefined, afspraken: AfspraakBun
           <textarea name="antwoord" rows="4">${escapeHtml(vraag?.antwoord ?? '')}</textarea>
         </label>
       </section>
-      <button type="submit">${vraag ? 'Bewaar vraag' : 'Voeg vraag toe'}</button>
+      <div class="command-form-actions">
+        <button type="submit">${vraag ? 'Bewaar vraag' : 'Voeg vraag toe'}</button>
+        ${
+          vraag
+            ? '<a class="form-cancel-link" href="#vragen?route=open" data-form-cancel-action="question">Annuleer</a>'
+            : ''
+        }
+      </div>
     </form>
   `;
 }
@@ -18471,7 +18478,14 @@ function renderTrajectForm(
           </select>
         </label>
       </section>
-      <button type="submit">${submitLabel ?? (traject ? 'Bewaar traject' : 'Maak traject aan')}</button>
+      <div class="command-form-actions">
+        <button type="submit">${submitLabel ?? (traject ? 'Bewaar traject' : 'Maak traject aan')}</button>
+        ${
+          traject && formId === 'traject-form'
+            ? '<a class="form-cancel-link" href="#traject?route=fasen" data-form-cancel-action="treatment">Annuleer</a>'
+            : ''
+        }
+      </div>
     </form>
   `;
 }
