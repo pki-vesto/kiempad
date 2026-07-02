@@ -11786,30 +11786,39 @@ function renderWelzijnOverzicht(overzicht: WelzijnOverzicht): string {
 
 function renderMentalCheckInForm(settings: AppSettings): string {
   return `
-    <form id="mental-check-in-form" class="data-form">
-      <label>
-        Datum
-        <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
-      </label>
-      <label>
-        Van wie
-        <select name="owner">
-          ${renderPersonalOwnerOptions(settings)}
-        </select>
-      </label>
-      <label>
-        Stemming
-        <select name="stemming">
-          ${Object.entries(STEMMING_LABELS)
-            .map(([value, label]) => renderOption(value, label))
-            .join('')}
-        </select>
-      </label>
-      <label>
-        Privé notitie
-        <textarea name="notitie" rows="4"></textarea>
-      </label>
-      <button type="submit">Bewaar check-in</button>
+    <form id="mental-check-in-form" class="data-form wellbeing-checkin-form">
+      <section class="wellbeing-checkin-form__section wellbeing-checkin-form__section--primary" data-wellbeing-form-section="check-in-basis">
+        <p class="kp-card__eyebrow">Check-in</p>
+        <div class="wellbeing-checkin-form__grid">
+          <label class="wellbeing-checkin-form__field">
+            Datum
+            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+          </label>
+          <label class="wellbeing-checkin-form__field">
+            Van wie
+            <select name="owner">
+              ${renderPersonalOwnerOptions(settings)}
+            </select>
+          </label>
+          <label class="wellbeing-checkin-form__field wellbeing-checkin-form__field--wide">
+            Stemming
+            <select name="stemming">
+              ${Object.entries(STEMMING_LABELS)
+                .map(([value, label]) => renderOption(value, label))
+                .join('')}
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="wellbeing-checkin-form__section" data-wellbeing-form-section="check-in-note">
+        <label class="wellbeing-checkin-form__field">
+          Privé notitie
+          <textarea name="notitie" rows="4"></textarea>
+        </label>
+      </section>
+      <div class="wellbeing-checkin-form__actions">
+        <button type="submit">Bewaar check-in</button>
+      </div>
     </form>
   `;
 }

@@ -4945,6 +4945,11 @@ h2 {
   height: 100%;
 }
 
+.wellbeing-focus-shell:has(#welzijn-route-log[data-wellbeing-route-state="active"])
+  .wellbeing-focus-shell__workbench {
+  display: none;
+}
+
 .wellbeing-focus-shell .command-route-summary h3 {
   overflow-wrap: anywhere;
 }
@@ -5215,6 +5220,64 @@ h2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   min-width: 0;
+}
+
+.wellbeing-checkin-form {
+  gap: 12px;
+}
+
+.wellbeing-checkin-form__section {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));
+}
+
+.wellbeing-checkin-form__section--primary {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 58%),
+    var(--surface);
+}
+
+.wellbeing-checkin-form__section > p {
+  margin: 0;
+}
+
+.wellbeing-checkin-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
+.wellbeing-checkin-form__field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.wellbeing-checkin-form__field--wide {
+  grid-column: 1 / -1;
+}
+
+.wellbeing-checkin-form__section textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.wellbeing-checkin-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wellbeing-checkin-form__actions button {
+  min-height: 40px;
 }
 
 .wellbeing-log-panel {
@@ -8298,6 +8361,28 @@ h2 {
     min-height: 98px;
     padding: 9px;
   }
+
+  .wellbeing-focus-shell:has(#welzijn-route-log[data-wellbeing-route-state="active"])
+    .wellbeing-focus-shell__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wellbeing-focus-shell__workspace
+    .domain-split-workspace:has(#welzijn-route-log[data-wellbeing-route-state="active"]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wellbeing-focus-shell__workspace
+    .domain-split-workspace:has(#welzijn-route-log[data-wellbeing-route-state="active"])
+    .domain-split-workspace__rail {
+    display: none;
+  }
+
+  .wellbeing-focus-shell__workspace
+    .domain-split-workspace:has(#welzijn-route-log[data-wellbeing-route-state="active"])
+    .command-route-summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
 }
 
 @media (min-width: 761px) and (max-width: 960px) {
@@ -8327,6 +8412,17 @@ h2 {
   .wellbeing-task-route {
     flex: 0 0 min(210px, 46vw);
     scroll-snap-align: start;
+  }
+
+  .wellbeing-focus-shell__workspace
+    .domain-split-workspace:has(#welzijn-route-log[data-wellbeing-route-state="active"]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .wellbeing-focus-shell__workspace
+    .domain-split-workspace:has(#welzijn-route-log[data-wellbeing-route-state="active"])
+    .domain-split-workspace__rail {
+    display: none;
   }
 }
 
@@ -15567,6 +15663,26 @@ a.action-card:active {
     gap: 8px;
   }
 
+  .wellbeing-checkin-form__section {
+    gap: 9px;
+    padding: 10px;
+  }
+
+  .wellbeing-checkin-form__grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .wellbeing-checkin-form__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .wellbeing-checkin-form__actions button {
+    width: 100%;
+    min-height: 44px;
+  }
+
   .wellbeing-history-board__header {
     display: grid;
     gap: 6px;
@@ -17097,6 +17213,13 @@ a.action-card:active {
   .timeline-export-panel textarea {
     min-height: 220px;
   }
+}
+
+.wellbeing-focus-shell__workspace
+  .domain-split-workspace:has(#welzijn-route-log[data-wellbeing-route-state="active"])
+  #welzijn-route-log
+  > .command-route-summary {
+  display: none;
 }
 
 @media (min-width: 961px) {
