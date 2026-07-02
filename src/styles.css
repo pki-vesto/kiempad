@@ -1727,6 +1727,10 @@ h2 {
   align-items: center;
 }
 
+.status-badge--knowledge {
+  min-height: 26px;
+}
+
 .knowledge-library-card__actions {
   padding-top: 8px;
   border-top: 1px solid var(--border);

@@ -199,6 +199,9 @@
 - **CFX-016 status badge helper — partial in G1379 / issue #2532.** Kosten vergoedingstatussen now
   render through a shared `statusBadge()` UI helper with consistent tone metadata while preserving
   the existing cost-specific visual states.
+- **CFX-016 knowledge status badges — partial in G1380 / issue #2534.** Kennisbibliotheek cards now
+  use the shared `statusBadge()` helper for AI/manual, concept/artscheck, and kostenjaar markers
+  instead of local `status-pill` markup.
 
 ---
 
@@ -558,7 +561,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-016** — Status-badge component (`badge({label,tone})`) with the J68 color map; adopt in
   Kosten/Kennis/Dossier. Accept: badges consistent 10.5px pill. **P1 · M** Partial G1379/#2532:
   Kosten vergoedingstatus badges now use the shared `statusBadge()` helper with success/warning/
-  danger/neutral tone metadata.
+  danger/neutral tone metadata. Partial G1380/#2534: Kennisbibliotheek cards now use the same helper
+  for AI/manual, concept/artscheck, and kostenjaar badges.
 - **CFX-018** — Toast/inline success feedback primitive; fire after every store save. Accept: saves
   show a calm confirmation (VERBETERINGEN C31/M). **P1 · M**
 - **CFX-019b** — In-app styled confirm to replace `window.confirm` for deletes. Files:

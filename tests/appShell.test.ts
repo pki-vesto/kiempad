@@ -5611,8 +5611,11 @@ describe('app shell', () => {
     expect(html).toContain('Kosten 2026: eigen risico');
     expect(html).toContain('Bron: docs/KENNISBANK.md');
     expect(html).toContain('Kostenjaar 2026');
-    expect(html).toContain('Niet AI-gegenereerd');
-    expect(html).toContain('Concept · niet geverifieerd');
+    expect(html).toContain('data-status-badge-state="manual"');
+    expect(html).toContain('data-status-badge-state="concept"');
+    expect(html).toContain('data-status-badge-state="cost-year"');
+    expect(html).toContain('Handmatig');
+    expect(html).toContain('Concept');
     expect(html).toContain('Nog niet met behandelaar geverifieerd');
     expect(html).toContain('Markeer geverifieerd');
     expect(html).toContain(
@@ -36397,6 +36400,13 @@ describe('app shell', () => {
     expect(html).toContain('class="knowledge-library-card__header"');
     expect(html).toContain('class="knowledge-library-card__chevron"');
     expect(html).toContain('class="knowledge-library-card__badges"');
+    expect(html).toContain(
+      'class="status-badge status-badge--knowledge" data-status-badge="knowledge"',
+    );
+    expect(html).toContain('data-status-badge-state="manual"');
+    expect(html).toContain('data-status-badge-state="concept"');
+    expect(html).toContain('data-status-badge-tone="neutral"');
+    expect(html).toContain('data-status-badge-tone="warning"');
     expect(html).toContain('class="knowledge-library-card__actions"');
     expect(html).not.toContain('<li class="phase-item">');
     expect(html).toContain('id="research-item-form"');
@@ -36557,6 +36567,7 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-list {');
     expect(css).toContain('.knowledge-library-card > article {');
     expect(css).toContain('.knowledge-library-card__chevron {');
+    expect(css).toContain('.status-badge--knowledge {');
     expect(css).toContain('.knowledge-library-card__actions {');
     expect(css).toContain('.knowledge-route-section[hidden],');
     expect(css).toContain('.wellbeing-route-section[hidden],');
