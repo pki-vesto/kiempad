@@ -2689,7 +2689,7 @@ describe('app shell', () => {
     expect(html).toContain('data-daily-advice-console-region="list"');
     expect(html).toContain('id="start-recommendations-workflow-header"');
     expect(html).toContain('data-hub-workflow="daily-recommendations"');
-    expect(html).toContain('Dagadvies als eigen controleruimte');
+    expect(html).toContain('Dagadvies rustig bekijken');
     expect(html).toContain('data-hub-workflow-tab="recommendations" aria-current="page"');
     expect(html).toContain('data-hub-workflow-tab="questions"');
     expect(html).toContain('data-hub-workflow-tab="research"');
@@ -2730,7 +2730,7 @@ describe('app shell', () => {
     expect(html).toContain('Richt Kiempad rustig in');
     expect(html).toContain('id="first-run-complete-form"');
     expect(html).toContain('id="first-run-skip-form"');
-    expect(html).toContain('legacy lokale kluis');
+    expect(html).toContain('lokale kluis');
     expect(html).toContain('Configureer de centrale API');
     expect(html).toContain('href="#backup"');
     expect(html).toContain('aria-label="Vandaag overzicht"');
@@ -2855,7 +2855,7 @@ describe('app shell', () => {
     expect(html).toContain('data-daily-advice-console-region="workbench"');
     expect(html).toContain('data-daily-advice-console-region="planner"');
     expect(html).toContain('data-daily-advice-console-region="list"');
-    expect(html).toContain('Dagadvies als eigen controleruimte');
+    expect(html).toContain('Dagadvies rustig bekijken');
     expect(html).not.toContain('data-start-launchpad="ready"');
     expect(html).not.toContain('data-start-console="ready"');
   });
@@ -3522,8 +3522,8 @@ describe('app shell', () => {
       }),
     );
 
-    expect(html).toContain('client-side versleuteld en centraal bewaard');
-    expect(html).toContain('centrale encrypted dataset');
+    expect(html).toContain('op je toestel versleuteld en centraal bewaard');
+    expect(html).toContain('centrale versleutelde dataset');
     expect(html).not.toContain('Configureer de centrale API');
   });
 
@@ -36115,7 +36115,7 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route="read"');
     expect(html).toContain('id="knowledge-research-workflow-header"');
     expect(html).toContain('data-hub-workflow="knowledge-research"');
-    expect(html).toContain('Research als zelfstandige leesflow');
+    expect(html).toContain('Research rustig lezen');
     expect(html).toContain('data-hub-workflow-tab="research" aria-current="page"');
     expect(html).toContain('data-hub-workflow-tab="summaries"');
     expect(html).toContain('data-hub-workflow-tab="trends"');
@@ -36232,7 +36232,7 @@ describe('app shell', () => {
     expect(html).toContain('id="ai-settings-form"');
     expect(html).toContain('value="false" selected');
     expect(html).toContain(
-      'Provider, model en toegangssleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.',
+      'Provider, model en toegangssleutel blijven versleuteld in de lokale kluis op dit toestel.',
     );
     expect(html).toContain('Bewaar AI-instelling');
     expect(html).toContain('On-device AI');
@@ -36244,7 +36244,7 @@ describe('app shell', () => {
     expect(html).toContain('Summarizer');
   });
 
-  it('rendert centrale AI-instellingen als client-side encrypted settings zonder sleutel te tonen', () => {
+  it('rendert centrale AI-instellingen als versleutelde instellingen zonder sleutel te tonen', () => {
     const html = renderAppShell('kennis', {
       trajecten: [],
       afspraken: [],
@@ -36267,7 +36267,7 @@ describe('app shell', () => {
     });
 
     expect(html).toContain(
-      'Provider, model en toegangssleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.',
+      'Provider, model en toegangssleutel worden op je toestel versleuteld voordat ze centraal worden bewaard; de server ziet de sleutel niet leesbaar.',
     );
     expect(html).toContain('Opgeslagen; laat leeg om te bewaren');
     expect(html).not.toContain('sk-test-secret');
@@ -36416,7 +36416,7 @@ describe('app shell', () => {
     expect(configuredSettings).toContain('name="aiModel" value="gpt-5-mini"');
     expect(configuredSettings).toContain('Opgeslagen; laat leeg om te bewaren');
     expect(configuredSettings).toContain(
-      'client-side versleuteld in je centrale encrypted dataset',
+      'op je toestel versleuteld voordat ze centraal worden bewaard',
     );
     expect(previewPanel).toContain('data-ai-preview-state="preview"');
     expect(previewPanel).toContain('Payload-preview');

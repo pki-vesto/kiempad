@@ -10529,7 +10529,7 @@ function renderImagingVergelijking(
     return `
       <section class="policy-panel embedded-summary imaging-compare-panel" aria-label="Beeldmomenten vergelijken" data-imaging-compare-state="empty">
         <div class="imaging-compare-panel__header">
-          <p class="kp-card__eyebrow">Beeldrepository</p>
+          <p class="kp-card__eyebrow">Beeldenoverzicht</p>
           <h2>Beeldmomenten vergelijken</h2>
           <p class="small-print">Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.</p>
         </div>
@@ -10545,7 +10545,7 @@ function renderImagingVergelijking(
   return `
     <section class="policy-panel embedded-summary imaging-compare-panel" aria-label="Beeldmomenten vergelijken" data-imaging-compare-state="ready">
       <div class="imaging-compare-panel__header">
-        <p class="kp-card__eyebrow">Beeldrepository</p>
+        <p class="kp-card__eyebrow">Beeldenoverzicht</p>
         <h2>Beeldmomenten vergelijken</h2>
         <p class="small-print">Twee meest recente beeldmomenten naast elkaar, zonder medische interpretatie.</p>
       </div>
@@ -12089,8 +12089,8 @@ function renderKennisScreen(state: AppShellState): string {
         </header>
         ${renderHubWorkflowHeader({
           id: 'knowledge-research-workflow-header',
-          eyebrow: 'Hubroute',
-          title: 'Research als zelfstandige leesflow',
+          eyebrow: 'Leesroute',
+          title: 'Research rustig lezen',
           intro:
             'Bronnen, wetenschappelijke samenvattingen, eenvoudige uitleg en trends blijven samen als researchwerkbaan met duidelijke lagen.',
           activeTab: 'research',
@@ -13482,8 +13482,8 @@ function renderAiSettingsForm(
 ): string {
   const central = storageMode === 'central-api';
   const storageCopy = central
-    ? 'Provider, model en toegangssleutel worden client-side versleuteld in je centrale encrypted dataset; de backend ziet geen plaintext sleutel.'
-    : 'Provider, model en toegangssleutel blijven versleuteld in de legacy lokale encrypted dataset op dit toestel.';
+    ? 'Provider, model en toegangssleutel worden op je toestel versleuteld voordat ze centraal worden bewaard; de server ziet de sleutel niet leesbaar.'
+    : 'Provider, model en toegangssleutel blijven versleuteld in de lokale kluis op dit toestel.';
   const provider = sanitizeSettingsPrivacyFeedback(settings.ai.provider ?? '', '');
   const model = sanitizeSettingsPrivacyFeedback(settings.ai.model ?? '', '');
 
@@ -14521,9 +14521,9 @@ function renderFirstRunSetup(state: AppShellState): string {
     <section class="summary-panel setup-panel" aria-labelledby="first-run-setup-title">
       <p class="eyebrow">Eerste keer</p>
       <h2 id="first-run-setup-title">Richt Kiempad rustig in</h2>
-      <p>${central ? 'Deze stappen worden client-side versleuteld en centraal bewaard voor gekoppelde apparaten.' : 'Deze stappen blijven in de legacy lokale kluis op dit toestel. Configureer de centrale API voor multi-device continuiteit.'} Kiempad maakt geen medische keuzes.</p>
+      <p>${central ? 'Deze stappen worden op je toestel versleuteld en centraal bewaard voor gekoppelde apparaten.' : 'Deze stappen blijven in de lokale kluis op dit toestel. Configureer de centrale API voor multi-device continuiteit.'} Kiempad maakt geen medische keuzes.</p>
       <ol class="compact-list setup-steps">
-        <li><strong>Dataset:</strong> je ${central ? 'centrale encrypted dataset' : 'legacy lokale encrypted dataset'} is ontgrendeld.</li>
+        <li><strong>Dataset:</strong> je ${central ? 'centrale versleutelde dataset' : 'lokale kluis'} is ontgrendeld.</li>
         <li><strong>Privacygrens:</strong> medische inhoud blijft versleuteld; AI en researchnetwerk blijven opt-in.</li>
         <li><strong>Traject:</strong> <a href="#traject">maak de eerste poging of cyclus aan</a>.</li>
         <li><strong>Afspraak:</strong> <a href="#agenda">leg de eerste afspraak vast</a>.</li>
@@ -14723,8 +14723,8 @@ function renderDailyAdviceConsole(
     status: state.dailyRecommendationStatus ? statusMessage(state.dailyRecommendationStatus) : '',
     workflow: renderHubWorkflowHeader({
       id: 'start-recommendations-workflow-header',
-      eyebrow: 'Hubroute',
-      title: 'Dagadvies als eigen controleruimte',
+      eyebrow: 'Dagroute',
+      title: 'Dagadvies rustig bekijken',
       intro:
         'Kies eerst de eigenaar en open daarna pas de volledige lijst. Adviezen blijven concept, brongeleid en gekoppeld aan artscheck waar nodig.',
       activeTab: 'recommendations',
