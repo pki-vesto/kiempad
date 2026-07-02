@@ -160,6 +160,9 @@
 - **CFX-038 knowledge library cards — partial in G1365 / issue #2504.** Kennisbibliotheek now uses
   category-eyebrow knowledge cards with chevrons, status badges, and quiet action/edit zones instead
   of generic phase-list rows.
+- **CFX-039 wellbeing check-in cards — partial in G1367 / issue #2508.** Welzijn geschiedenis now
+  renders mental check-ins as owner/mood cards with a visible note area instead of generic
+  phase-list rows.
 
 ---
 
@@ -578,6 +581,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-042** — Kennis: hide "0 van 0 item(s)"; show empty block instead (E42). **P2 · S**
 - **CFX-039** — Welzijn: owner segments with names, mood buttons, count cards, check-in list.
   **P1 · M** Partial G1346/#2466: route-first workspace without visible context column done.
+  Partial G1367/#2508: mental check-ins render as scan-friendly owner/mood cards instead of
+  generic phase-list rows.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.

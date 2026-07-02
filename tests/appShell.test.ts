@@ -35961,6 +35961,19 @@ describe('app shell', () => {
     expect(html).toContain('Van: Sam');
     expect(html).not.toContain('Eigenaar: Partner');
     expect(html).not.toContain('Eigenaar: Peter');
+    expect(html).toContain(
+      'class="wellbeing-checkin-list" aria-label="Mentale check-ins" data-wellbeing-checkin-list="ready"',
+    );
+    expect(html).toContain(
+      'class="wellbeing-checkin-card" data-wellbeing-checkin-card="ready" data-wellbeing-checkin-owner="partner" data-wellbeing-checkin-mood="zwaar"',
+    );
+    expect(html).toContain('class="wellbeing-checkin-card__header"');
+    expect(html).toContain('class="wellbeing-checkin-card__mood">Zwaar</span>');
+    expect(html).toContain('class="wellbeing-checkin-card__meta" aria-label="Check-in context"');
+    expect(html).toContain('<span class="status-pill">Stemming: Zwaar</span>');
+    expect(html).toContain(
+      'class="wellbeing-checkin-card__note">Privé notitie: Veel spanning vandaag.</p>',
+    );
     expect(html).toContain('<option value="peter">Sam</option>');
     expect(html).toContain('<option value="partner">Noor</option>');
     expect(html).toContain('Zwaar');
@@ -36034,6 +36047,15 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-history-board__lane:hover,');
     expect(css).toContain('.wellbeing-history-board__lane:focus-visible {');
     expect(css).toContain('.wellbeing-history-board__lane em {');
+    expect(css).toContain('.wellbeing-checkin-list {');
+    expect(css).toContain('.wellbeing-checkin-card > article {');
+    expect(css).toContain(
+      '.wellbeing-checkin-card[data-wellbeing-checkin-mood="zwaar"] > article {',
+    );
+    expect(css).toContain('.wellbeing-checkin-card__header {');
+    expect(css).toContain('.wellbeing-checkin-card__mood {');
+    expect(css).toContain('.wellbeing-checkin-card__meta {');
+    expect(css).toContain('.wellbeing-checkin-card__note {');
     expect(css).toContain('.decision-task-routes {');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.insight-workbench :where(.stat-row) {');
@@ -36050,6 +36072,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.wellbeing-focus-shell {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).toContain('.wellbeing-checkin-card__header {');
+    expect(mobileCss).toContain('.wellbeing-checkin-card__mood {');
     expect(mobileCss).not.toContain(
       '.wellbeing-focus-shell__workspace .domain-split-workspace__context {',
     );

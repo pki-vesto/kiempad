@@ -11421,7 +11421,7 @@ function renderWelzijnScreen(state: AppShellState): string {
             <h2>Mentale check-ins</h2>
             ${
               checkIns.length > 0
-                ? `<ol class="phase-list">${checkIns.map((item) => renderMentalCheckInItem(item, state.settings)).join('')}</ol>`
+                ? renderMentalCheckInList(checkIns, state.settings)
                 : renderEmptyState('Nog geen mentale check-ins vastgelegd.', {
                     title: 'Geen check-ins',
                     cta: { href: '#welzijn?route=log', label: 'Check-in vastleggen' },
@@ -11769,17 +11769,38 @@ function renderMentalCheckInForm(settings: AppSettings): string {
 }
 
 function renderMentalCheckInItem(item: MentalCheckIn, settings: AppSettings): string {
+  const ownerLabel = formatPersonalOwnerLabel(settings, item.owner);
+  const moodLabel = STEMMING_LABELS[item.stemming];
+
   return `
-    <li class="phase-item">
-      <div>
-        <h3>${escapeHtml(item.datum)}</h3>
-        <div class="label-row">
-          ${renderOwnerMarkering(item.owner, settings)}
-          <span class="status-pill">${escapeHtml(STEMMING_LABELS[item.stemming])}</span>
+    <li class="wellbeing-checkin-card" data-wellbeing-checkin-card="ready" data-wellbeing-checkin-owner="${escapeAttribute(item.owner)}" data-wellbeing-checkin-mood="${escapeAttribute(item.stemming)}">
+      <article>
+        <header class="wellbeing-checkin-card__header">
+          <div>
+            <p class="kp-card__eyebrow">Check-in</p>
+            <h3>${escapeHtml(item.datum)}</h3>
+          </div>
+          <span class="wellbeing-checkin-card__mood">${escapeHtml(moodLabel)}</span>
+        </header>
+        <div class="wellbeing-checkin-card__meta" aria-label="Check-in context">
+          <span class="status-pill" data-owner="${escapeAttribute(item.owner)}">Van: ${escapeHtml(ownerLabel)}</span>
+          <span class="status-pill">Stemming: ${escapeHtml(moodLabel)}</span>
         </div>
-        ${item.notitie ? `<p class="linked-note">Privé notitie: ${escapeHtml(item.notitie)}</p>` : ''}
-      </div>
+        ${
+          item.notitie
+            ? `<p class="wellbeing-checkin-card__note">Privé notitie: ${escapeHtml(item.notitie)}</p>`
+            : '<p class="wellbeing-checkin-card__note">Geen privé notitie vastgelegd.</p>'
+        }
+      </article>
     </li>
+  `;
+}
+
+function renderMentalCheckInList(items: readonly MentalCheckIn[], settings: AppSettings): string {
+  return `
+    <ol class="wellbeing-checkin-list" aria-label="Mentale check-ins" data-wellbeing-checkin-list="ready">
+      ${items.map((item) => renderMentalCheckInItem(item, settings)).join('')}
+    </ol>
   `;
 }
 
