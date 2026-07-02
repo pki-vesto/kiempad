@@ -3150,6 +3150,18 @@ describe('app shell', () => {
     expect(css).toContain(
       'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);',
     );
+    expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"]:disabled,');
+    expect(css).toContain(
+      '[data-daily-advice-feedback-workflow-reset="ready"][aria-disabled="true"],',
+    );
+    expect(css).toContain(
+      '[data-daily-recommendation-list-filter-reset="ready"][aria-disabled="true"],',
+    );
+    expect(css).toContain(
+      '[data-daily-recommendation-feedback-filter-reset="ready"][aria-disabled="true"] {',
+    );
+    expect(css).toContain('cursor: not-allowed;');
+    expect(css).toContain('opacity: 0.72;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(
