@@ -25,6 +25,10 @@
   `suggesties` instead of visible recommendation wording. Action feedback, timeline,
   knowledge graph, and artscheck copy follow the same softer framing while routes/hooks remain
   compatible.
+- **CFX-006/CFX-046 + CFX-007 start greeting — done in G1324 / issue #2423.** Settings
+  are now opened from a dedicated sheet with encrypted names, shared-mode, and live theme
+  selection. The Start greeting uses the saved names instead of the old hardcoded placeholder;
+  the wider owner-label sweep remains tracked under CFX-007.
 
 ---
 
@@ -54,9 +58,7 @@ The product is **not yet premium**. Three structural problems dominate:
 
 UX-wise it still reads as **a dense, technical tool in places**: developer jargon in user copy
 ("command center", "Imaging-repository", "Dossierindex", "Hersteldiagnose"-style diagnostics),
-"Eigenaar: man/vrouw" instead of names, "Dagelijkse aanbevelingen" (which collides with the
-"no medical advice" stance), a greeting hardcoded to "Peter & partner" (no names setting), no real
-mobile "Meer" sheet / Settings sheet, and no seed/example data so empty installs feel hollow.
+"Eigenaar: man/vrouw" in some deeper owner controls, no seed/example data so empty installs feel hollow.
 
 This plan gives Codex a prioritized path: **de-risk the architecture first** (split the monolith,
 adopt the component layer), then **finish the design system + screens + copy**, then **fill
@@ -73,8 +75,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 | 3 | Adopt `emptyState()` everywhere (47 raw `<p class="empty-state">`, 0 component calls) | Empty installs feel hollow; component already exists |
 | 4 | Add `loadingSkeleton()` states for async lists (dossier, timeline, AI, OCR) — currently none | App "pops" abruptly; feels like a prototype |
 | 5 | ✅ CFX-030: Fix `theme-color` in `index.html` (`#7a9471` sage → teal `#2c6e63`) | Done in G1320; PWA/browser chrome now uses teal |
-| 6 | Build the Settings sheet (`eigenNaam`/`partnerNaam`/`gedeeldeModus` + thema, no "Bewaar thema") | VERBETERINGEN D32; unblocks greeting/names everywhere |
-| 7 | Wire real names into the greeting (`renderStartCommandHeader` hardcodes "Peter & partner") | Core personalization; currently a placeholder |
+| 6 | ✅ CFX-006/CFX-046: Build the Settings sheet (`eigenNaam`/`partnerNaam`/`gedeeldeModus` + thema, no "Bewaar thema") | Done in G1324; names/shared mode persist encrypted and theme switches live |
+| 7 | ✅ CFX-007 start greeting: Wire real names into the greeting | Done in G1324; Start greeting uses saved names |
 | 8 | De-jargon user copy app-wide ("command center", "repository", "Dossierindex", man/vrouw) | VERBETERINGEN H54–56; reads as a dev tool |
 | 9 | Rename "Aanbeveling/Dagelijkse aanbevelingen" → "Suggestie"/"Te doen vandaag" | Collides with "no medical advice"; medical-safety copy |
 | 10 | Implement the mobile "Meer" nav sheet + Beheer/Privacy grouping | VERBETERINGEN D34/D37, L81/L85; nav is desktop-shaped |
@@ -127,7 +129,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Non-technical users (a couple in IVF) will feel talked-down-to or lost.
 - **"Aanbeveling" framing** conflicts with the app's own "geen medisch advies" stance — emotionally
   and legally the wrong word.
-- **Personalization is fake**: greeting says "Hoi Peter & partner" literally; no names setting.
+- **Personalization is still partial**: Start uses saved names, but some deeper owner controls still use generic owner wording.
 - **Silent saves**: forms submit with no confirmation; users can't tell if it worked.
 - **Mobile is desktop-shaped**: the sidebar/nav was built desktop-first; no real "Meer" sheet, no
   bottom-sheets for Settings, no safe-area handling.
@@ -142,7 +144,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 > Format: current → problem → desired → required fixes. Cross-refs to `docs/VERBETERINGEN-VOLLEDIG.md`.
 
 ### Vandaag / Start (`renderStartScreen`, `renderStartCommandHeader`, `renderDailyCommandCenter`, `renderStartNextStepBoard`)
-- **Current**: greeting header (hardcoded "Peter & partner"), fase-hero, command-center triage,
+- **Current**: personalized greeting header, fase-hero, command-center triage,
   next-step board, "Vandaag te zetten" dose list, daily suggestions card, quick-entry disclosure.
 - **Problem**: hardcoded names; "command center" jargon; suggestions still labelled "Aanbeveling";
   no seed data so it's mostly empty; command-center "Nu eerst/Later/Context" are plain text not
@@ -364,7 +366,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Accept: 0 raw `empty-state` `<p>`; each screen's primary empty uses the rich block. **P1 · L**
 - **CFX-004c** — Add `loadingSkeleton()` states for dossier list, timeline, AI summaries, OCR, and
   central fetch. Files: screens + `src/main.ts`. Accept: async regions show skeleton + `aria-busy`. **P1 · M**
-- **CFX-006** — Settings sheet component (`renderSettingsSheet`) + open/close state (`settingsOpen`)
+- **CFX-006** — ✅ Done in G1324 / issue #2423. Settings sheet component (`renderSettingsSheet`) + open/close state (`settingsOpen`)
   as a centered modal (desktop) / bottom-sheet (mobile); contains Namen, Gedeelde modus, Thema
   (applies immediately, no "Bewaar thema"). Files: `src/appShell.ts`, `src/main.ts`, `src/styles.css`.
   Accept: names persist to encrypted Settings; theme toggles live. **P0 · L**
@@ -386,7 +388,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-009** — ✅ Done in G1323 / issue #2421. Rename "Aanbeveling/Dagelijkse aanbevelingen" → "Suggestie"/"Te doen vandaag".
   Files: `src/appShell.ts`, `src/domain/dailyRecommendations.ts` (labels only, not logic).
   Accept: no user-visible "aanbeveling". **P1 · M**
-- **CFX-007** — Replace "Eigenaar: man/vrouw" with names + "Samen" everywhere (greeting, Welzijn
+- **CFX-007** — ✅ Partly done in G1324 / issue #2423 for the Start greeting; remaining owner labels stay tracked here. Replace "Eigenaar: man/vrouw" with names + "Samen" everywhere (Welzijn
   owner segments, check-in "Van wie"). Depends on CFX-006. Accept: no "man/vrouw" owner labels. **P1 · M**
 - **CFX-059** — Shorten + standardize disclaimers to one sentence per context (N59/N95). **P2 · M**
 - **CFX-057** — Spelling pass on repeated disclaimer/source strings (H57). **P3 · S**
@@ -440,7 +442,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-011** — Seed/example-data mode: generator (3 doses, 2 afspraken, 3 check-ins, some kennis) +
   "Voorbeelddata laden" button, wipeable. Files: new `src/domain/seed.ts`, `src/main.ts`,
   Settings sheet. Accept: reviewer can toggle a populated demo state. **P1 · L**
-- **CFX-046** — Add `eigenNaam`/`partnerNaam`/`gedeeldeModus` to `AppSettings` +
+- **CFX-046** — ✅ Done in G1324 / issue #2423. Add `eigenNaam`/`partnerNaam`/`gedeeldeModus` to `AppSettings` +
   `normaliseerAppSettings` + store setters. Files: `src/domain/settings.ts`,
   `src/domain/settingsStore.ts`. Accept: persisted, encrypted, defaulted. **P0 · M**
 - **CFX-047** — Upload validation: file type/size allowlist + inline rejection + memory cap. Files:

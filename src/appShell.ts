@@ -724,6 +724,7 @@ export type AppShellState = {
   activeBackupRoute?: BackupRoute;
   activeNotificationRoute?: NotificationRoute;
   activeStartRoute?: StartRoute;
+  settingsOpen?: boolean;
   agendaImportStatus?: string;
   agendaImportError?: string;
   medicatieImportStatus?: string;
@@ -819,17 +820,13 @@ export function renderAppShell(
           </span>
         </a>
         <p class="status-pill" data-storage-mode-copy="${storageStatusState}">${storageStatus}</p>
-        <form id="theme-form" class="theme-form" aria-label="Weergavethema" data-theme-control="compact">
-          <label>
-            <span class="theme-form__label">Thema</span>
-            <select name="thema">
-              ${renderOption('licht', 'Licht', state.settings.thema)}
-              ${renderOption('donker', 'Donker', state.settings.thema)}
-            </select>
-          </label>
-          <button type="submit" aria-label="Bewaar thema">Opslaan</button>
-        </form>
-        <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
+        <div class="topbar-actions">
+          <button class="settings-button" type="button" data-settings-open="true" aria-haspopup="dialog">
+            <span aria-hidden="true">${navSettingsIcon()}</span>
+            <span>Instellingen</span>
+          </button>
+          <button class="lock-button" id="lock-button" type="button">Vergrendel</button>
+        </div>
       </header>
 
       <nav class="primary-nav" aria-label="Werkruimtes en schermen">
@@ -837,6 +834,7 @@ export function renderAppShell(
       </nav>
       ${activeId === 'start' ? '' : renderWorkspaceStrip(activeId)}
       </div>
+      ${state.settingsOpen ? renderSettingsSheet(state.settings) : ''}
 
       <main class="content" id="inhoud" tabindex="-1" data-screen-stage="ready" data-screen-stage-screen="${escapeAttribute(activeId)}" data-screen-stage-group="${escapeAttribute(activeGroup?.label ?? 'Onbekend')}">
         ${activeId === 'start' ? renderWorkspaceStrip(activeId) : ''}
@@ -1187,13 +1185,59 @@ function renderMobileMoreNavigation(
         ${moreGroups}
         <div class="primary-nav__more-group primary-nav__more-group--settings">
           <p class="primary-nav__more-title">Instellingen</p>
-          <a class="nav-item primary-nav__settings-link" href="#backup" data-mobile-settings-entry="ready">
+          <button class="nav-item primary-nav__settings-link" type="button" data-settings-open="true" data-mobile-settings-entry="ready">
             <span class="nav-item__ico" aria-hidden="true">${navSettingsIcon()}</span>
             <span class="nav-item__label">Instellingen</span>
-          </a>
+          </button>
         </div>
       </div>
     </details>
+  `;
+}
+
+function renderSettingsSheet(settings: AppSettings): string {
+  const eigenNaam = settings.profielen.peter ?? '';
+  const partnerNaam = settings.profielen.partner ?? '';
+
+  return `
+    <div class="settings-sheet-backdrop" data-settings-sheet="ready" role="presentation">
+      <section class="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settings-sheet-title">
+        <header class="settings-sheet__header">
+          <div>
+            <p class="settings-sheet__eyebrow">Persoonlijk</p>
+            <h2 id="settings-sheet-title">Instellingen</h2>
+          </div>
+          <button class="settings-sheet__close" type="button" data-settings-close="true" aria-label="Sluit instellingen">&times;</button>
+        </header>
+        <form id="personal-settings-form" class="data-form compact-form settings-sheet__form" data-settings-feedback-kind="personal">
+          <label>
+            Jouw naam
+            <input name="eigenNaam" type="text" maxlength="60" value="${escapeAttribute(eigenNaam)}" autocomplete="given-name" placeholder="Bijvoorbeeld Peter" />
+          </label>
+          <label>
+            Partnernaam
+            <input name="partnerNaam" type="text" maxlength="60" value="${escapeAttribute(partnerNaam)}" autocomplete="off" placeholder="Bijvoorbeeld partner" />
+          </label>
+          <label>
+            Gedeelde modus
+            <select name="gedeeldeModus">
+              ${renderOption('true', 'Samen gebruiken', String(settings.gedeeldeModus))}
+              ${renderOption('false', 'Alleen gebruiken', String(settings.gedeeldeModus))}
+            </select>
+          </label>
+          <button type="submit">Bewaar namen</button>
+        </form>
+        <form id="theme-form" class="theme-form settings-theme-form" aria-label="Weergavethema" data-theme-control="sheet">
+          <label>
+            <span class="theme-form__label">Thema</span>
+            <select name="thema">
+              ${renderOption('licht', 'Licht', settings.thema)}
+              ${renderOption('donker', 'Donker', settings.thema)}
+            </select>
+          </label>
+        </form>
+      </section>
+    </div>
   `;
 }
 
@@ -14137,7 +14181,9 @@ function renderStartCommandHeader(state: AppShellState): string {
     day: 'numeric',
     month: 'long',
   }).format(new Date());
-  const title = activeTraject ? 'Hoi Peter & partner' : 'Welkom bij Kiempad';
+  const title = activeTraject
+    ? `Hoi ${formatPersonalGreeting(state.settings)}`
+    : 'Welkom bij Kiempad';
   const subtitle = huidigeFase
     ? `${activeTraject?.traject.naam ?? 'Traject'} · ${TRAJECT_FASE_LABELS[huidigeFase.fase]}`
     : activeTraject
@@ -14157,6 +14203,17 @@ function renderStartCommandHeader(state: AppShellState): string {
       </div>
     </header>
   `;
+}
+
+function formatPersonalGreeting(settings: AppSettings): string {
+  const eigenNaam = settings.profielen.peter?.trim();
+  const partnerNaam = settings.profielen.partner?.trim();
+
+  if (!settings.gedeeldeModus) return eigenNaam || 'jou';
+  if (eigenNaam && partnerNaam) return `${eigenNaam} & ${partnerNaam}`;
+  if (eigenNaam) return `${eigenNaam} & partner`;
+  if (partnerNaam) return `jou & ${partnerNaam}`;
+  return 'jullie';
 }
 
 function renderStartNextStepBoard(
