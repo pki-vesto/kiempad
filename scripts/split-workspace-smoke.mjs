@@ -253,7 +253,10 @@ async function assertSplitWorkspaces(browser, options) {
         );
       }
       const contextOptional =
-        route.prefix === 'question' || route.prefix === 'knowledge' || route.prefix === 'finance';
+        route.prefix === 'question' ||
+        route.prefix === 'knowledge' ||
+        route.prefix === 'wellbeing' ||
+        route.prefix === 'finance';
       if (
         !result.hasWorkspace ||
         !result.hasRail ||

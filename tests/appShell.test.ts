@@ -35695,6 +35695,11 @@ describe('app shell', () => {
     expect(html).toContain('href="#welzijn?route=overview"');
     expect(html).toContain('href="#welzijn?route=history"');
     expect(html).toContain('href="#welzijn?route=log"');
+    expect(html).toContain('data-wellbeing-compact-workspace="route-first"');
+    expect(html).not.toContain('data-wellbeing-workspace-context="metrics"');
+    expect(html).not.toContain('data-workspace-context-signals="wellbeing"');
+    expect(html).not.toContain('data-workspace-context-microstate="wellbeing-history"');
+    expect(html).not.toContain('class="domain-split-workspace__context"');
     expect(html).toContain('id="welzijn-route-overview"');
     expect(html).toContain('data-wellbeing-route="overview"');
     expect(html).toContain('id="welzijn-route-history"');
@@ -35785,7 +35790,10 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-focus-shell__workbench > .wellbeing-insight-workbench {');
     expect(css).toContain('.wellbeing-focus-shell__workspace {');
     expect(css).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('grid-template-areas: "rail main";');
+    expect(css).not.toContain(
+      '.wellbeing-focus-shell__workspace .domain-split-workspace__context {',
+    );
     expect(css).toContain('.decision-focus-shell {');
     expect(css).toContain('.decision-focus-shell__header {');
     expect(css).toContain('.decision-focus-shell__body {');
@@ -35827,7 +35835,10 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.wellbeing-focus-shell {');
     expect(mobileCss).toContain('.wellbeing-focus-shell__body {');
-    expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.wellbeing-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).not.toContain(
+      '.wellbeing-focus-shell__workspace .domain-split-workspace__context {',
+    );
     expect(mobileCss).toContain(
       '.content:has([data-decision-focus-shell="ready"]) > .workspace-map,',
     );
@@ -38059,7 +38070,12 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (label === 'question' || label === 'knowledge' || label === 'finance') {
+      if (
+        label === 'question' ||
+        label === 'knowledge' ||
+        label === 'wellbeing' ||
+        label === 'finance'
+      ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
       } else {
         expect(html).toContain('class="domain-split-workspace__context"');
@@ -38133,13 +38149,14 @@ describe('app shell', () => {
     expect(welzijnHtml).toContain('data-wellbeing-focus-shell="ready"');
     expect(welzijnHtml).toContain('data-wellbeing-focus-region="workbench"');
     expect(welzijnHtml).toContain('data-wellbeing-focus-region="workspace"');
-    expect(welzijnHtml).toContain('data-wellbeing-workspace-context="metrics"');
-    expect(welzijnHtml).toContain('data-workspace-context-signals="wellbeing"');
-    expect(welzijnHtml).toContain('data-workspace-context-microstate="wellbeing-history"');
-    expect(welzijnHtml).toContain(
+    expect(welzijnHtml).toContain('data-wellbeing-compact-workspace="route-first"');
+    expect(welzijnHtml).not.toContain('data-wellbeing-workspace-context="metrics"');
+    expect(welzijnHtml).not.toContain('data-workspace-context-signals="wellbeing"');
+    expect(welzijnHtml).not.toContain('data-workspace-context-microstate="wellbeing-history"');
+    expect(welzijnHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: recente log bekijken"',
     );
-    expect(welzijnHtml).toContain('Geschiedenisroute');
+    expect(welzijnHtml).not.toContain('Geschiedenisroute');
     expect(welzijnHtml).toContain('Welzijnfocus');
     expect(welzijnHtml).toContain(
       'data-wellbeing-route="history" data-wellbeing-route-state="active"',

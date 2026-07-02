@@ -4739,30 +4739,6 @@ function getScheduleContextMicrostate(route: ScheduleRoute): WorkspaceContextMic
   return states[route];
 }
 
-function getWellbeingContextMicrostate(route: WellbeingRoute): WorkspaceContextMicrostate {
-  const states: Record<WellbeingRoute, WorkspaceContextMicrostate> = {
-    overview: {
-      id: 'wellbeing-overview',
-      label: 'Trendroute',
-      detail: 'Context toont rustige trendtellingen zonder score of oordeel.',
-      action: 'Volgende: trendkaart openen',
-    },
-    history: {
-      id: 'wellbeing-history',
-      label: 'Geschiedenisroute',
-      detail: 'Recent vastgelegde signalen blijven terugleesbaar gescheiden.',
-      action: 'Volgende: recente log bekijken',
-    },
-    log: {
-      id: 'wellbeing-log',
-      label: 'Vastlegroute',
-      detail: 'Nieuwe observaties blijven feitelijk en los van interpretatie.',
-      action: 'Volgende: observatie vastleggen',
-    },
-  };
-  return states[route];
-}
-
 function getDecisionContextMicrostate(route: DecisionRoute): WorkspaceContextMicrostate {
   const states: Record<DecisionRoute, WorkspaceContextMicrostate> = {
     prepare: {
@@ -11468,7 +11444,7 @@ function renderWelzijnScreen(state: AppShellState): string {
   const wellbeingWorkspace = domainSplitWorkspace({
     className: 'wellbeing-split-workspace',
     ariaLabel: 'Welzijn split-view werkruimte',
-    data: { 'wellbeing-split-workspace': 'ready' },
+    data: { 'wellbeing-split-workspace': 'ready', 'wellbeing-compact-workspace': 'route-first' },
     rail: renderWelzijnTaskRoutes({
       checkInCount: checkIns.length,
       symptomCount: logs.length,
@@ -11594,14 +11570,6 @@ function renderWelzijnScreen(state: AppShellState): string {
         })}
       </section>
         `,
-    context: renderWellbeingWorkspaceContext({
-      checkInCount: checkIns.length,
-      symptomCount: logs.length,
-      cycleCount: cycleData.length,
-      trendCount: trends.length,
-      latestDate: overzicht.laatsteDatum,
-      activeRoute: activeWellbeingRoute,
-    }),
   });
 
   return sectionStack(
@@ -11733,63 +11701,6 @@ function renderWelzijnTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
-}
-
-function renderWellbeingWorkspaceContext(input: {
-  checkInCount: number;
-  symptomCount: number;
-  cycleCount: number;
-  trendCount: number;
-  latestDate: string | undefined;
-  activeRoute: WellbeingRoute;
-}): string {
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Welzijnfocus',
-    title: 'Wat wil je bekijken?',
-    data: { 'workspace-context-signals': 'wellbeing' },
-    microstate: getWellbeingContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Recent',
-        value: input.latestDate ?? 'Geen',
-        detail: 'Bekijk geschiedenis zonder score of oordeel.',
-        href: '#welzijn?route=history',
-      },
-      {
-        label: 'Trends',
-        value: String(input.trendCount),
-        detail: 'Trendkaarten blijven feitelijke tellingen, geen diagnose.',
-        href: '#welzijn?route=overview',
-      },
-      {
-        label: 'Vastleggen',
-        value: String(input.checkInCount + input.symptomCount + input.cycleCount),
-        detail: 'Leg alleen eigen observaties vast wanneer dat nuttig is.',
-        href: '#welzijn?route=log',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Welzijn context" data-wellbeing-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Welzijn in beeld</h2>
-      ${statRow([
-        { label: 'Check-ins', value: String(input.checkInCount) },
-        { label: 'Logs', value: String(input.symptomCount) },
-        { label: 'Cyclus', value: String(input.cycleCount) },
-        { label: 'Trends', value: String(input.trendCount) },
-      ])}
-      <p class="linked-note">Laatst vastgelegd: ${escapeHtml(input.latestDate ?? 'nog niets')}.</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Welzijn werkruimtegrens" data-wellbeing-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Feiten zonder score</h2>
-      <p>Overzicht, geschiedenis en vastleggen blijven gescheiden zodat self-tracking niet als diagnosepaneel leest.</p>
-      <p class="small-print">Deze kolom toont alleen lokale tellingen en geen medisch oordeel of behandeladvies.</p>
-    </section>
-  `;
 }
 
 function renderWellbeingRouteVisibility(
