@@ -2064,17 +2064,21 @@ describe('app shell', () => {
     expect(css).toContain('.cost-history-card__header {');
     expect(css).toContain('.cost-history-card__amount {');
     expect(css).toContain('.cost-history-card__edit summary {');
-    expect(css).toContain('"rail context";');
     expect(css).toContain('.backup-focus-shell {');
     expect(css).toContain('.backup-focus-shell__header {');
     expect(css).toContain('.backup-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.backup-focus-shell__workbench > .backup-management-workbench {');
+    expect(css).not.toContain('.backup-focus-shell__workbench > .backup-management-workbench {');
     expect(css).toContain('.backup-focus-shell__workspace {');
     expect(css).toContain('.backup-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('grid-template-areas: "rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(172px, 0.24fr) minmax(0, 1fr) minmax(280px, 0.42fr);',
+    );
+    expect(css).toContain('.backup-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('> .backup-management-workbench {');
     expect(css).toContain('.management-workbench__header {');
     expect(css).toContain('.management-workbench__grid {');
     expect(css).toContain('grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);');
@@ -37750,9 +37754,9 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-focus-shell="ready"');
     expect(html).toContain('data-backup-console="ready"');
     expect(html).toContain('Eerst veiligheid controleren, daarna export of herstel openen');
-    expect(html).toContain('data-backup-focus-region="workbench"');
+    expect(html).not.toContain('data-backup-focus-region="workbench"');
     expect(html).toContain('data-backup-focus-region="workspace"');
-    expect(html).toContain('data-backup-console-region="workbench"');
+    expect(html).not.toContain('data-backup-console-region="workbench"');
     expect(html).toContain('data-backup-console-region="workspace"');
     expect(html).toContain(
       '<section class="management-workbench backup-management-workbench" aria-label="Veiligheidswerkbank" data-backup-first-viewport="management-workbench">',
@@ -37771,6 +37775,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#backup?route=export"');
     expect(html).toContain('href="#backup?route=import"');
     expect(html).toContain('href="#backup?route=herstel"');
+    expect(html).toContain('data-backup-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain('id="backup-route-controleren"');
     expect(html).toContain('data-backup-route="controleren"');
     expect(html).toContain('id="backup-route-export"');
@@ -38683,11 +38690,7 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (label === 'backup') {
-        expect(html).not.toContain('class="domain-split-workspace__context"');
-      } else {
-        expect(html).toContain('class="domain-split-workspace__context"');
-      }
+      expect(html).toContain('class="domain-split-workspace__context"');
     }
 
     expect(dossierHtml).toContain('class="domain-split-workspace dossier-split-workspace"');
@@ -38848,9 +38851,11 @@ describe('app shell', () => {
     );
     expect(backupHtml).toContain('class="domain-split-workspace backup-split-workspace"');
     expect(backupHtml).toContain('data-backup-console="ready"');
-    expect(backupHtml).toContain('data-backup-console-region="workbench"');
+    expect(backupHtml).not.toContain('data-backup-console-region="workbench"');
     expect(backupHtml).toContain('data-backup-console-region="workspace"');
     expect(backupHtml).toContain('data-backup-compact-workspace="route-first"');
+    expect(backupHtml).toContain('data-backup-single-workspace="ready"');
+    expect(backupHtml).toContain('class="domain-split-workspace__context"');
     expect(backupHtml).not.toContain('data-backup-workspace-context="metrics"');
     expect(backupHtml).not.toContain('data-backup-workspace-context="privacy"');
     expect(backupHtml).not.toContain('data-workspace-context-signals="backup"');

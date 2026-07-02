@@ -5860,13 +5860,8 @@ h2 {
   align-items: start;
 }
 
-.backup-focus-shell__workbench,
 .backup-focus-shell__workspace {
   min-width: 0;
-}
-
-.backup-focus-shell__workbench > .backup-management-workbench {
-  height: 100%;
 }
 
 .backup-focus-shell .command-route-summary h3 {
@@ -8737,31 +8732,22 @@ h2 {
 
 @media (min-width: 961px) {
   .backup-focus-shell__body {
-    grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
   }
 
-  .backup-focus-shell__workbench,
   .backup-focus-shell__workspace {
     max-height: min(820px, calc(100vh - 164px));
-    overflow-y: auto;
+    overflow: hidden;
     contain: layout paint;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-  }
-
-  .backup-focus-shell__workspace {
-    overflow-x: hidden;
   }
 
   .backup-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas:
-      "rail main"
-      "rail context";
-    grid-template-columns: minmax(172px, 0.42fr) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(172px, 0.24fr) minmax(0, 1fr) minmax(280px, 0.42fr);
+    grid-template-rows: minmax(0, 1fr);
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
@@ -8777,11 +8763,10 @@ h2 {
 
   .backup-focus-shell__workspace .domain-split-workspace__context {
     grid-area: context;
-    width: min(100%, 330px);
-    max-height: 132px;
-    justify-self: start;
+    max-height: min(780px, calc(100vh - 204px));
     overflow-y: auto;
-    padding-top: 8px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
   }
 
   .backup-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
@@ -8791,19 +8776,22 @@ h2 {
     white-space: normal;
   }
 
-  .backup-focus-shell__workbench > .backup-management-workbench {
+  .backup-focus-shell__workspace .domain-split-workspace__context > .backup-management-workbench {
     align-content: start;
     padding: 12px;
   }
 
-  .backup-focus-shell__workbench .management-workbench__header p:last-child,
+  .backup-focus-shell__workspace
+    .domain-split-workspace__context
+    .management-workbench__header
+    p:last-child,
   .backup-focus-shell__workspace .command-route-summary__eyebrow,
   .backup-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow) {
     display: none;
   }
 
-  .backup-focus-shell__workbench .management-workbench__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .backup-focus-shell__workspace .domain-split-workspace__context .management-workbench__grid {
+    grid-template-columns: 1fr;
   }
 
   .backup-focus-shell__workspace .domain-split-workspace__main .command-route-summary {
