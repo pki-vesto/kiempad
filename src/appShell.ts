@@ -16141,15 +16141,19 @@ function renderAgendaScreen(state: AppShellState): string {
   const scheduleWorkspace = domainSplitWorkspace({
     className: 'schedule-split-workspace',
     ariaLabel: 'Agenda split-view werkruimte',
-    data: { 'schedule-split-workspace': 'ready', 'schedule-compact-workspace': 'route-first' },
+    data: {
+      'schedule-split-workspace': 'ready',
+      'schedule-compact-workspace': 'route-first',
+      'schedule-single-workspace': 'ready',
+    },
     rail: scheduleTaskRoutes,
     main: scheduleRouteSections.join(''),
+    context: scheduleWorkbench,
   });
 
   return sectionStack(
     [
       renderScheduleFocusShell({
-        workbench: scheduleWorkbench,
         workspace: scheduleWorkspace,
       }),
     ],
@@ -16157,7 +16161,7 @@ function renderAgendaScreen(state: AppShellState): string {
   );
 }
 
-function renderScheduleFocusShell(input: { workbench: string; workspace: string }): string {
+function renderScheduleFocusShell(input: { workspace: string }): string {
   return `
     <section class="schedule-focus-shell" aria-labelledby="schedule-focus-shell-title" data-schedule-focus-shell="ready">
       <header class="schedule-focus-shell__header">
@@ -16166,9 +16170,6 @@ function renderScheduleFocusShell(input: { workbench: string; workspace: string 
         <p>Overzicht, komende afspraken, plannen, ICS-import en historie blijven in één planningsruimte zonder medische inhoud in contextfeedback.</p>
       </header>
       <div class="schedule-focus-shell__body" data-schedule-console="ready">
-        <div class="schedule-focus-shell__workbench" data-schedule-focus-region="workbench" data-schedule-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="schedule-focus-shell__workspace" data-schedule-focus-region="workspace" data-schedule-console-region="workspace">
           ${input.workspace}
         </div>
