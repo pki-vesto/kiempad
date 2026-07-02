@@ -142,6 +142,9 @@
 - **Daily advice feedback reset touch-target consistency — done in G1452 / issue #2664.** The
   workflow, list-header, and filter-form reset buttons now share compact min-height, padding, and
   alignment rules so local reset actions stay easier to tap without adding overflow.
+- **Daily advice feedback reset text-width consistency — done in G1453 / issue #2666.** The
+  workflow, list-header, and filter-form reset buttons now share compact max-width and ellipsis
+  rules so longer local reset labels cannot overlap nearby status or filter controls.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
