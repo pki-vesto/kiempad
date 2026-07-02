@@ -2126,13 +2126,11 @@ describe('app shell', () => {
     expect(css).toContain('.question-focus-shell__header {');
     expect(css).toContain('.question-focus-shell__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
-    expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
-    expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.question-focus-shell__workbench > .question-preparation-workbench {');
     expect(css).toContain('.question-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('grid-template-areas:');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('"rail main";');
+    expect(css).toContain('grid-template-columns: minmax(168px, 0.28fr) minmax(0, 1fr);');
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
     expect(css).toContain('.question-task-routes {');
@@ -5261,7 +5259,7 @@ describe('app shell', () => {
     expect(html).toContain('class="question-focus-shell"');
     expect(html).toContain('data-question-focus-shell="ready"');
     expect(html).toContain('data-consult-console="ready"');
-    expect(html).toContain('Eerst gesprek voorbereiden, daarna vragen beheren');
+    expect(html).toContain('Een gesprekstaak tegelijk');
     expect(html).toContain('data-question-focus-region="workbench"');
     expect(html).toContain('data-question-focus-region="workspace"');
     expect(html).toContain('data-consult-console-region="workbench"');
@@ -5281,6 +5279,9 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Vragen taakroutes"');
     expect(html).toContain('data-question-task-routes="ready"');
     expect(html).toContain('data-command-task-routes="ready"');
+    expect(html).toContain('data-question-compact-workspace="route-first"');
+    expect(html).not.toContain('data-question-workspace-context="metrics"');
+    expect(html).not.toContain('aria-label="Contextkolom"');
     expect(html).toContain(
       'href="#vragen?route=open" aria-current="page" data-command-route-density="filled"',
     );
@@ -5347,7 +5348,7 @@ describe('app shell', () => {
     expect(html).toContain('data-consult-prep-lane="packet"');
     expect(html).toContain('Open vragen');
     expect(html).toContain('Actiepunten');
-    expect(html).toContain('Packet');
+    expect(html).toContain('Gespreksblad');
     expect(html).toContain(
       'Deze laag toont alleen voorbereidingstaken en tellingen; geen diagnose, behandeladvies, transcriptpayload of behandelkeuze.',
     );
@@ -5356,12 +5357,12 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-hub-detail-panel="consult-prep-wizard"');
     expect(html).toContain('class="hub-detail-disclosure__summary consult-detail-panel__header"');
-    expect(html).toContain('Vragenlijst, context en eigen packet');
+    expect(html).toContain('Vragenlijst, context en eigen gespreksblad');
     expect(html).toContain('<em>2 vragen</em>');
     expect(html).toContain('Bewerkbare vragen');
     expect(html).toContain('name="consultPrepQuestions"');
-    expect(html).toContain('Lokaal prep-packet');
-    expect(html).toContain('# Kiempad consult prep packet');
+    expect(html).toContain('Lokaal gespreksblad');
+    expect(html).toContain('# Kiempad gespreksblad');
     expect(html).toContain('Open timeline en graph exports');
     expect(html).toContain('Vragenlijst voor volgende afspraak');
     expect(html).toContain('Vraag aan arts: wanneer plannen we de controle?');
@@ -38043,7 +38044,11 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      expect(html).toContain('class="domain-split-workspace__context"');
+      if (label === 'question') {
+        expect(html).not.toContain('class="domain-split-workspace__context"');
+      } else {
+        expect(html).toContain('class="domain-split-workspace__context"');
+      }
     }
 
     expect(dossierHtml).toContain('class="domain-split-workspace dossier-split-workspace"');
@@ -38077,7 +38082,8 @@ describe('app shell', () => {
     expect(vragenHtml).toContain('data-question-focus-shell="ready"');
     expect(vragenHtml).toContain('data-question-focus-region="workbench"');
     expect(vragenHtml).toContain('data-question-focus-region="workspace"');
-    expect(vragenHtml).toContain('data-question-workspace-context="metrics"');
+    expect(vragenHtml).toContain('data-question-compact-workspace="route-first"');
+    expect(vragenHtml).not.toContain('data-question-workspace-context="metrics"');
     expect(vragenHtml).toContain('data-question-route="beheer" data-question-route-state="active"');
     expect(trajectHtml).toContain('class="domain-split-workspace treatment-split-workspace"');
     expect(trajectHtml).toContain('data-treatment-console="ready"');

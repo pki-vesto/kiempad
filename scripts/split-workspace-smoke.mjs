@@ -252,12 +252,19 @@ async function assertSplitWorkspaces(browser, options) {
           `${options.label}/${route.screen}: paginafout tijdens split-workspace smoke: ${pageErrors.join('; ')}`,
         );
       }
-      if (!result.hasWorkspace || !result.hasRail || !result.hasMain || !result.hasContext) {
+      const contextOptional = route.prefix === 'question';
+      if (
+        !result.hasWorkspace ||
+        !result.hasRail ||
+        !result.hasMain ||
+        (!contextOptional && !result.hasContext)
+      ) {
         throw new Error(`${options.label}/${route.screen}: split-view structuur is incompleet.`);
       }
       if (
         options.label === 'desktop' &&
-        (result.mainWidth <= result.railWidth || result.mainWidth <= result.contextWidth)
+        (result.mainWidth <= result.railWidth ||
+          (!contextOptional && result.mainWidth <= result.contextWidth))
       ) {
         throw new Error(
           `${options.label}/${route.screen}: hoofdruimte krijgt geen prioriteit in split-view (${JSON.stringify({
@@ -269,6 +276,7 @@ async function assertSplitWorkspaces(browser, options) {
       }
       if (
         options.label === 'desktop' &&
+        !contextOptional &&
         (result.mainOverflowY !== 'auto' ||
           result.contextOverflowY !== 'auto' ||
           result.mainMaxHeight === 'none')

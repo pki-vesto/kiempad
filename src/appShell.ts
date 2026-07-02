@@ -14840,7 +14840,7 @@ function renderVragenScreen(state: AppShellState): string {
             : 'Maak via Beheer een vraag aan of koppel vragen aan een komende afspraak.',
           status: `${state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length} open`,
           primary: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
-          secondary: { href: '#vragen?route=voorbereiden', label: 'Prep maken' },
+          secondary: { href: '#vragen?route=voorbereiden', label: 'Voorbereiden' },
           data: { 'question-route-summary': 'open' },
           ariaLabel: 'Open vragen route-samenvatting',
         })}
@@ -14859,13 +14859,13 @@ function renderVragenScreen(state: AppShellState): string {
         <header class="question-route-section__header command-route-section__header">
           <p class="kp-card__eyebrow">Voorbereiden</p>
           <h2 id="vragen-route-voorbereiden-title">Consult voorbereiden</h2>
-          <p>Maak lokaal een prep-packet met open vragen en consultactiepunten.</p>
+          <p>Maak lokaal een gespreksblad met open vragen en consultactiepunten.</p>
         </header>
         ${commandRouteSummary({
-          eyebrow: 'Prep focus',
+          eyebrow: 'Gespreksfocus',
           title: gegenereerdeVragenlijst
             ? 'Vragenlijst klaar om te bespreken'
-            : 'Nog geen prep-packet beschikbaar',
+            : 'Nog geen gespreksblad beschikbaar',
           detail: gegenereerdeVragenlijst
             ? 'Controleer eerst de samenvatting en open daarna pas de volledige lijst.'
             : 'Voeg een komende afspraak en open vragen toe om de voorbereiding te vullen.',
@@ -14960,7 +14960,7 @@ function renderVragenScreen(state: AppShellState): string {
               ? `${state.vragen.length} vragen in dossier`
               : 'Nog geen vragen in dossier',
           detail:
-            'Gebruik deze route voor beheer; de dagelijkse voorbereiding blijft in Open en Prep.',
+            'Gebruik deze route voor beheer; de dagelijkse voorbereiding blijft in Open en Voorbereiden.',
           status: `${state.vragen.length} totaal`,
           primary: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
           secondary: { href: '#vragen?route=open', label: 'Open bekijken' },
@@ -14988,17 +14988,9 @@ function renderVragenScreen(state: AppShellState): string {
   const questionWorkspace = domainSplitWorkspace({
     className: 'question-split-workspace',
     ariaLabel: 'Vragen split-view werkruimte',
-    data: { 'question-split-workspace': 'ready' },
+    data: { 'question-split-workspace': 'ready', 'question-compact-workspace': 'route-first' },
     rail: questionTaskRoutes,
     main: questionRouteSections.join(''),
-    context: renderQuestionWorkspaceContext({
-      openCount: state.vragen.filter((bundle) => !bundle.vraag.beantwoord).length,
-      totalCount: state.vragen.length,
-      answeredCount: state.vragen.filter((bundle) => bundle.vraag.beantwoord).length,
-      verslagCount: vraagVerslagen.length,
-      hasPrepPacket: Boolean(gegenereerdeVragenlijst),
-      nextWithQuestions,
-    }),
   });
 
   return sectionStack(
@@ -15025,9 +15017,9 @@ function renderQuestionFocusShell(input: { workbench: string; workspace: string 
   return `
     <section class="question-focus-shell" aria-labelledby="question-focus-shell-title" data-question-focus-shell="ready">
       <header class="question-focus-shell__header">
-        <p class="kp-card__eyebrow">Consultfocus</p>
-        <h2 id="question-focus-shell-title">Eerst gesprek voorbereiden, daarna vragen beheren</h2>
-        <p>Open vragen, prep-packet, verslagen en beheer staan in één consultwerkruimte zodat de gebruiker niet door alle vraaglijsten tegelijk werkt.</p>
+        <p class="kp-card__eyebrow">Vragen</p>
+        <h2 id="question-focus-shell-title">Een gesprekstaak tegelijk</h2>
+        <p>Open vragen, voorbereiding, verslagen en beheer staan als aparte routes in plaats van als één lange vragenpagina.</p>
       </header>
       <div class="question-focus-shell__body" data-consult-console="ready">
         <div class="question-focus-shell__workbench" data-question-focus-region="workbench" data-consult-console-region="workbench">
@@ -15059,7 +15051,7 @@ function renderQuestionPreparationWorkbench(input: {
     ? `${input.nextWithQuestions.afspraak.titel}: ${formatDateTime(input.nextWithQuestions.afspraak.datumTijd)}`
     : 'Nog geen afspraak met open vragen.';
   const status = input.hasPrepPacket
-    ? 'Prep-packet klaar'
+    ? 'Gespreksblad klaar'
     : input.openCount > 0
       ? `${input.openCount} open`
       : 'Geen open vragen';
@@ -15087,7 +15079,7 @@ function renderQuestionPreparationWorkbench(input: {
       { label: 'Open', value: String(input.openCount) },
       { label: 'Beantwoord', value: String(input.answeredCount) },
       { label: 'Verslagen', value: String(input.verslagCount) },
-      { label: 'Prep', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
+      { label: 'Blad', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
     ],
     actionsAriaLabel: 'Vragen werkbank acties',
     actions: [
@@ -15117,8 +15109,8 @@ function renderQuestionTaskRoutes(input: {
     {
       id: 'voorbereiden',
       href: '#vragen?route=voorbereiden',
-      label: 'Prep',
-      meta: input.hasPrepPacket ? 'packet' : 'wacht',
+      label: 'Voorbereiden',
+      meta: input.hasPrepPacket ? 'gespreksblad' : 'wacht',
       badge: input.hasPrepPacket ? 'klaar' : 'open',
       density: input.hasPrepPacket ? 'filled' : 'empty',
     },
@@ -15158,43 +15150,6 @@ function renderQuestionTaskRoutes(input: {
   });
 }
 
-function renderQuestionWorkspaceContext(input: {
-  openCount: number;
-  totalCount: number;
-  answeredCount: number;
-  verslagCount: number;
-  hasPrepPacket: boolean;
-  nextWithQuestions: ReturnType<typeof volgendeAfspraakMetOpenVragen>;
-}): string {
-  const nextLabel = input.nextWithQuestions
-    ? `${input.nextWithQuestions.afspraak.titel} · ${input.nextWithQuestions.vragen.length} open`
-    : 'Nog geen afspraak met open vragen.';
-
-  return `
-    <section class="summary-panel" aria-label="Vragen context" data-question-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Consultfocus</h2>
-      ${statRow([
-        {
-          label: 'Open',
-          value: String(input.openCount),
-          tone: input.openCount > 0 ? 'warning' : 'default',
-        },
-        { label: 'Beantwoord', value: String(input.answeredCount) },
-        { label: 'Verslagen', value: String(input.verslagCount) },
-        { label: 'Prep', value: input.hasPrepPacket ? 'Klaar' : 'Wacht' },
-      ])}
-      <p class="linked-note">${escapeHtml(nextLabel)}</p>
-    </section>
-    <section class="policy-panel" aria-label="Vragen werkruimtegrens" data-question-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Een route tegelijk</h2>
-      <p>Open vragen, voorbereiding, beheer en verslagen blijven gescheiden zodat de gebruiker niet door alle vraaglijsten tegelijk werkt.</p>
-      <p class="small-print">${input.totalCount} vraag${input.totalCount === 1 ? '' : 'en'} in metadataoverzicht; geen medische conclusie of behandeladvies.</p>
-    </section>
-  `;
-}
-
 function renderQuestionRouteVisibility(activeRoute: QuestionRoute, route: QuestionRoute): string {
   return route === activeRoute
     ? ' data-question-route-state="active"'
@@ -15222,7 +15177,7 @@ function renderConsultPrepBoard(input: {
       title: `${input.openCount} open`,
       detail: linkedOpenCount
         ? `${linkedOpenCount} vraag${linkedOpenCount === 1 ? '' : 'en'} gekoppeld aan het volgende gesprek.`
-        : 'Orden vragen voordat je een prep-packet maakt.',
+        : 'Orden vragen voordat je een gespreksblad maakt.',
       cue: 'Prioriteren',
     },
     {
@@ -15231,7 +15186,7 @@ function renderConsultPrepBoard(input: {
       label: 'Actiepunten',
       title: `${consultActionCount} consultpunt${consultActionCount === 1 ? '' : 'en'}`,
       detail: 'Vraag-actiepunten uit consultverslagen blijven bij de voorbereiding.',
-      cue: input.vragenlijst ? 'In packet' : 'Wacht',
+      cue: input.vragenlijst ? 'In blad' : 'Wacht',
     },
     {
       id: 'context',
@@ -15244,7 +15199,7 @@ function renderConsultPrepBoard(input: {
     {
       id: 'packet',
       href: '#vragen?route=verslagen',
-      label: 'Packet',
+      label: 'Gespreksblad',
       title: input.vragenlijst ? `${itemCount} item${itemCount === 1 ? '' : 's'}` : 'Nog leeg',
       detail: 'Gebruik Markdown alleen als eigen voorbereiding voor het gesprek.',
       cue: `${input.verslagCount} verslag${input.verslagCount === 1 ? '' : 'en'}`,
@@ -15255,10 +15210,10 @@ function renderConsultPrepBoard(input: {
     <section class="consult-prep-board" aria-label="Consultvoorbereiding startlaag" data-consult-prep-board="ready">
       <header class="consult-prep-board__header">
         <div>
-          <p class="kp-card__eyebrow">Prep bord</p>
+          <p class="kp-card__eyebrow">Voorbereiding</p>
           <h3>Kies eerst je gesprekstaak</h3>
         </div>
-        <p>Begin met vragen ordenen, consultactiepunten checken, context openen of je packet teruglezen.</p>
+        <p>Begin met vragen ordenen, consultactiepunten checken, context openen of je gespreksblad teruglezen.</p>
       </header>
       <nav class="consult-prep-board__lanes" aria-label="Consultvoorbereiding taak kiezen">
         ${lanes
@@ -15285,12 +15240,12 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
         <header class="hub-detail-disclosure__summary consult-detail-panel__header">
           <span>
             <strong>Consult voorbereiden</strong>
-            <small>Vragenlijst, context en eigen packet</small>
+            <small>Vragenlijst, context en eigen gespreksblad</small>
           </span>
           <em>Wacht</em>
         </header>
         ${renderEmptyState(
-          'Voeg een komende afspraak en open vragen toe om een lokaal prep-packet te maken.',
+          'Voeg een komende afspraak en open vragen toe om een lokaal gespreksblad te maken.',
           {
             title: 'Consult nog niet voorbereid',
             cta: { href: '#vragen?route=beheer', label: 'Vraag toevoegen' },
@@ -15309,7 +15264,7 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
       <header class="hub-detail-disclosure__summary consult-detail-panel__header">
         <span>
           <strong>Consult voorbereiden</strong>
-          <small>Vragenlijst, context en eigen packet</small>
+          <small>Vragenlijst, context en eigen gespreksblad</small>
         </span>
         <em>${vragenlijst.items.length} vragen</em>
       </header>
@@ -15317,14 +15272,14 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
         <li><strong>1. Afspraak:</strong> controleer ${escapeHtml(vragenlijst.afspraak.titel)} op ${escapeHtml(formatDateTime(vragenlijst.afspraak.datumTijd))}.</li>
         <li><strong>2. Vragen:</strong> bewerk de conceptvragen voordat je ze meeneemt.</li>
         <li><strong>3. Context:</strong> open de trajectexports voor timeline- en graphcontext.</li>
-        <li><strong>4. Packet:</strong> gebruik de Markdown alleen als eigen voorbereiding.</li>
+        <li><strong>4. Gespreksblad:</strong> gebruik de Markdown alleen als eigen voorbereiding.</li>
       </ol>
       <label>
         Bewerkbare vragen
         <textarea name="consultPrepQuestions" rows="7">${escapeHtml(vragenTekst)}</textarea>
       </label>
       <label>
-        Lokaal prep-packet
+        Lokaal gespreksblad
         <textarea readonly rows="10">${escapeHtml(packet)}</textarea>
       </label>
       <a class="inline-action" href="#traject">Open timeline en graph exports</a>
@@ -15335,7 +15290,7 @@ function renderConsultPrepWizard(vragenlijst: GegenereerdeVragenlijst | undefine
 
 function maakConsultPrepPacket(vragenlijst: GegenereerdeVragenlijst, vragenTekst: string): string {
   return [
-    '# Kiempad consult prep packet',
+    '# Kiempad gespreksblad',
     '',
     `Afspraak: ${vragenlijst.afspraak.titel}`,
     `Tijdstip: ${formatDateTime(vragenlijst.afspraak.datumTijd)}`,

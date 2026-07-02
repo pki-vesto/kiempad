@@ -303,6 +303,7 @@ const targets = [
       '[data-consult-console-region="workbench"]',
       '[data-consult-console-region="workspace"]',
       '[data-question-split-workspace="ready"]',
+      '[data-question-compact-workspace="route-first"]',
       '[data-question-route-summary="voorbereiden"]',
       '[data-consult-prep-board="ready"]',
       '[data-consult-prep-lane="questions"]',
@@ -318,8 +319,10 @@ const targets = [
       '.consult-prep-board__header > p',
       '.command-route-summary p:not(.command-route-summary__eyebrow)',
       '[data-hub-detail-panel="consult-prep-wizard"] .hub-detail-disclosure__summary small',
+      '.question-split-workspace .domain-split-workspace__context',
     ],
     consultConsole: true,
+    consultConsoleMode: 'route-first',
   },
   {
     screen: 'wellbeing-history',
@@ -1192,15 +1195,20 @@ async function assertRouteflows(browser, options) {
       if (
         options.label === 'desktop' &&
         evidence.consultConsole &&
-        (!evidence.consultConsole.bodyVisible ||
-          !evidence.consultConsole.workbenchVisible ||
-          !evidence.consultConsole.workspaceVisible ||
-          evidence.consultConsole.workspaceTop < evidence.consultConsole.workbenchTop - 1 ||
-          evidence.consultConsole.workspaceLeft < evidence.consultConsole.workbenchRight - 1 ||
-          evidence.consultConsole.bodyOverflow !== 'hidden' ||
-          evidence.consultConsole.bodyMaxHeight === 'none' ||
-          evidence.consultConsole.workbenchOverflowY !== 'auto' ||
-          evidence.consultConsole.workspaceOverflowY !== 'auto')
+        (target.consultConsoleMode === 'route-first'
+          ? !evidence.consultConsole.bodyVisible ||
+            !evidence.consultConsole.workbenchVisible ||
+            !evidence.consultConsole.workspaceVisible ||
+            evidence.consultConsole.workspaceTop < evidence.consultConsole.workbenchTop - 1
+          : !evidence.consultConsole.bodyVisible ||
+            !evidence.consultConsole.workbenchVisible ||
+            !evidence.consultConsole.workspaceVisible ||
+            evidence.consultConsole.workspaceTop < evidence.consultConsole.workbenchTop - 1 ||
+            evidence.consultConsole.workspaceLeft < evidence.consultConsole.workbenchRight - 1 ||
+            evidence.consultConsole.bodyOverflow !== 'hidden' ||
+            evidence.consultConsole.bodyMaxHeight === 'none' ||
+            evidence.consultConsole.workbenchOverflowY !== 'auto' ||
+            evidence.consultConsole.workspaceOverflowY !== 'auto')
       ) {
         throw new Error(
           `${options.label}/${target.screen}: consult-console staat niet in compacte werkvlakken (${JSON.stringify(evidence.consultConsole)}).`,

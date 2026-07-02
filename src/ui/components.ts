@@ -101,7 +101,7 @@ export function dashboardShell(opts: {
 export function domainSplitWorkspace(opts: {
   rail: string;
   main: string;
-  context: string;
+  context?: string;
   className?: string;
   ariaLabel: string;
   data?: Record<string, string>;
@@ -120,9 +120,13 @@ export function domainSplitWorkspace(opts: {
     <div class="domain-split-workspace__main">
       ${opts.main}
     </div>
-    <aside class="domain-split-workspace__context" aria-label="Contextkolom">
+    ${
+      opts.context
+        ? `<aside class="domain-split-workspace__context" aria-label="Contextkolom">
       ${opts.context}
-    </aside>
+    </aside>`
+        : ''
+    }
   </section>`;
 }
 
