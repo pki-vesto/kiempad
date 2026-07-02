@@ -3899,7 +3899,8 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain('Actieve lijstfilter');
     expect(filteredRecommendations).toContain('<strong>Gedaan</strong>');
     expect(filteredRecommendations).toContain('>Bekijk lijst</button>');
-    expect(filteredRecommendations).toContain('>Reset</button>');
+    expect(filteredRecommendations).toContain('>Wis lokale filter</button>');
+    expect(filteredRecommendations).toContain('aria-label="Wis alleen de lokale feedbackfilter"');
     expect(filteredRecommendations).toContain('value="gedaan" selected');
     expect(filteredRecommendations).toContain('data-daily-recommendation-feedback-control="ready"');
     expect(filteredRecommendations).toContain(
@@ -3910,6 +3911,13 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain('Man: 1');
     expect(filteredRecommendations).toContain('Vrouw: 0');
     expect(filteredRecommendations).toContain('Samen: 0');
+    const listFilterHeaderStart = filteredRecommendations.indexOf(
+      'data-daily-recommendation-list-filter-header="ready"',
+    );
+    const listFilterHeaderSnippet = filteredRecommendations.slice(
+      listFilterHeaderStart,
+      filteredRecommendations.indexOf('data-daily-recommendation-feedback-filter="ready"'),
+    );
     expect(filteredRecommendations.indexOf('Man: 1')).toBeLessThan(
       filteredRecommendations.indexOf('Vrouw: 0'),
     );
@@ -3931,8 +3939,9 @@ describe('app shell', () => {
     expect(filteredRecommendations).not.toContain(
       'data-recommendation-id="samen-behandelvoorbereiding"',
     );
-    expect(filteredRecommendations).not.toContain('tracking-payload');
-    expect(filteredRecommendations).not.toContain('behandeladvies');
+    expect(listFilterHeaderSnippet).not.toContain('tracking-payload');
+    expect(listFilterHeaderSnippet).not.toContain('behandeladvies');
+    expect(listFilterHeaderSnippet).not.toContain('medische conclusie');
 
     const emptyFilteredHtml = renderAppShell('start', {
       trajecten: [],
@@ -4063,6 +4072,7 @@ describe('app shell', () => {
     expect(unfilteredRecommendations).not.toContain(
       'data-daily-recommendation-list-filter-legend-item="accent"',
     );
+    expect(unfilteredRecommendations).not.toContain('Wis lokale filter');
   });
 
   it('rendert dagelijkse aanbevelingen met lokale afspraak, medicatie en open vraag', () => {

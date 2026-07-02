@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1352 — Daily Recommendations: workflowreset maakt lokale scope duidelijker
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De workflowstatus-reset wist de lokale feedbackfilter, maar de knopcopy maakt die scope nog niet expliciet.
+- **User Impact:** Gebruikers kunnen twijfelen of reset bredere dagadviesdata of feedbackgegevens wijzigt.
+- **Desired Outcome:** Maak de workflowstatus-reset compact duidelijker zonder extra uitlegblok of medische duiding.
+- **User Value:** Gebruikers kunnen de workflowfilter veilig terugzetten zonder contextverwarring.
+- **Acceptance Criteria:** De workflowstatus-reset blijft compact maar benoemt de lokale filtercontext; reset verwijdert alleen de feedbackfilterroute en gerelateerde filterstatussen; de workflowstatus blijft afwezig zonder actieve filter; de tekst bevat geen trackingpayload, medische conclusie of behandeladvies; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken resetcopy, resetgedrag, afwezigheid zonder filter en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2650
+
 ### G1351 — Daily Recommendations: lijstfilterheader maakt resetcontext duidelijker
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2648
 
 ### G1350 — Daily Recommendations: lijstfilterheader toont statuslegenda compact

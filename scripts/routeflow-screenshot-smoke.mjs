@@ -1656,6 +1656,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page
     .locator('[data-daily-advice-list-focus-status="ready"]')
     .waitFor({ timeout: 10_000 });
+  await page
+    .locator('[data-daily-recommendation-list-filter-reset="ready"]')
+    .filter({ hasText: 'Wis lokale filter' })
+    .waitFor({ timeout: 10_000 });
 
   await page.locator('[data-daily-recommendation-list-filter-reset="ready"]').click();
   await expectHash(page, '#start-recommendations');
