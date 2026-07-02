@@ -248,6 +248,10 @@
   longer renders the system workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact notification context
   while mobile remains stacked.
+- **CFX-043 event log single workspace — partial in G1393 / issue #2560.** Logboek no longer
+  renders the audit system workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active audit route, and compact audit context
+  while mobile remains stacked.
 
 ---
 
@@ -730,7 +734,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
   Partial G1361/#2496: Logboek uses a route-first workspace without a fixed third context column.
   Partial G1363/#2500: Recent and privacy auditregels use structured dot/line timeline rows with
-  privacy and safe-metadata cues.
+  privacy and safe-metadata cues. Partial G1393/#2560: Logboek folds the audit system workbench
+  into the same split-view as route context, so desktop opens as one rail/main/context workspace
+  instead of a separate focus-region plus nested route workspace.
 - **CFX-044** — Back-up: export preview + Download/Kopieer, "Laatste back-up" reminder card,
   de-jargon. **P2 · M** Partial G1356/#2486: latest-backup reminder card and encrypted export
   preview are visible before disclosure details.

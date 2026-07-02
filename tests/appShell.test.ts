@@ -2107,17 +2107,22 @@ describe('app shell', () => {
     expect(css).toContain('.eventlog-focus-shell {');
     expect(css).toContain('.eventlog-focus-shell__header {');
     expect(css).toContain('.eventlog-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
-    expect(css).toContain('.eventlog-focus-shell__workbench > .eventlog-system-workbench {');
+    expect(css).not.toContain('.eventlog-focus-shell__workbench > .eventlog-system-workbench {');
     expect(css).toContain('.eventlog-focus-shell__workspace {');
     expect(css).toContain('.eventlog-focus-shell__workspace .domain-split-workspace {');
+    expect(css).toContain('grid-template-areas: "rail main context";');
+    expect(css).toContain(
+      'grid-template-columns: minmax(172px, 0.24fr) minmax(0, 1fr) minmax(280px, 0.42fr);',
+    );
+    expect(css).toContain('.eventlog-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('> .eventlog-system-workbench {');
     expect(css).toContain('.eventlog-timeline {');
     expect(css).toContain('.eventlog-timeline__item[data-state="missed"] .kp-timeline__body {');
     expect(css).toContain('.eventlog-timeline__facts {');
     expect(css).toContain('.eventlog-timeline__safe-detail {');
-    expect(css).toContain('"rail context";');
     expect(css).toContain('.notification-focus-shell {');
     expect(css).toContain('.notification-focus-shell__header {');
     expect(css).toContain('.notification-focus-shell__body {');
@@ -38276,9 +38281,9 @@ describe('app shell', () => {
     expect(html).toContain('data-eventlog-focus-shell="ready"');
     expect(html).toContain('data-eventlog-console="ready"');
     expect(html).toContain('Eerst auditstatus scannen, daarna privacyregels openen');
-    expect(html).toContain('data-eventlog-focus-region="workbench"');
+    expect(html).not.toContain('data-eventlog-focus-region="workbench"');
     expect(html).toContain('data-eventlog-focus-region="workspace"');
-    expect(html).toContain('data-eventlog-console-region="workbench"');
+    expect(html).not.toContain('data-eventlog-console-region="workbench"');
     expect(html).toContain('data-eventlog-console-region="workspace"');
     expect(html).toContain(
       '<section class="system-workbench eventlog-system-workbench" aria-label="Logboek systeemwerkbank" data-eventlog-first-viewport="system-workbench">',
@@ -38297,6 +38302,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#logboek?route=recent"');
     expect(html).toContain('href="#logboek?route=categorieen"');
     expect(html).toContain('href="#logboek?route=privacy"');
+    expect(html).toContain('data-eventlog-single-workspace="ready"');
+    expect(html).toContain('class="domain-split-workspace__context"');
+    expect(html).toContain('aria-label="Contextkolom"');
     expect(html).toContain('id="logboek-route-overzicht"');
     expect(html).toContain('data-eventlog-route="overzicht"');
     expect(html).toContain('id="logboek-route-recent"');
@@ -38675,7 +38683,7 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      if (label === 'eventlog' || label === 'backup') {
+      if (label === 'backup') {
         expect(html).not.toContain('class="domain-split-workspace__context"');
       } else {
         expect(html).toContain('class="domain-split-workspace__context"');
@@ -38821,9 +38829,11 @@ describe('app shell', () => {
     );
     expect(logboekHtml).toContain('class="domain-split-workspace eventlog-split-workspace"');
     expect(logboekHtml).toContain('data-eventlog-console="ready"');
-    expect(logboekHtml).toContain('data-eventlog-console-region="workbench"');
+    expect(logboekHtml).not.toContain('data-eventlog-console-region="workbench"');
     expect(logboekHtml).toContain('data-eventlog-console-region="workspace"');
     expect(logboekHtml).toContain('data-eventlog-compact-workspace="route-first"');
+    expect(logboekHtml).toContain('data-eventlog-single-workspace="ready"');
+    expect(logboekHtml).toContain('class="domain-split-workspace__context"');
     expect(logboekHtml).not.toContain('data-eventlog-workspace-context="metrics"');
     expect(logboekHtml).not.toContain('data-eventlog-workspace-context="privacy"');
     expect(logboekHtml).not.toContain('data-workspace-context-signals="eventlog"');
