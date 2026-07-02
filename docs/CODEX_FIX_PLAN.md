@@ -135,6 +135,9 @@
 - **CFX-035 medication route-first workspace — partial in G1358 / issue #2490.** Medicatie now
   removes the fixed third context column and keeps the active medication route as the central
   workspace.
+- **CFX-020 treatment route-first workspace — partial in G1359 / issue #2492.** Traject now removes
+  the fixed third context column while keeping timeline and graph context inside the active Context
+  route.
 
 ---
 
@@ -530,7 +533,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 ### Screens (from Screen-by-Screen)
 - **CFX-020** — Timeline component adoption for Traject + Logboek (dot/line rail, amber current
   card). Files: `src/appShell.ts`, `src/domain/fertilityTimeline.ts` (view only). **P1 · L**
-  Partial G1348/#2470: Traject Fasen uses the shared timeline component.
+  Partial G1348/#2470: Traject Fasen uses the shared timeline component. Partial G1359/#2492:
+  Traject uses a route-first workspace without a fixed third context column.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without

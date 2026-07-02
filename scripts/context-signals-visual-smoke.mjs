@@ -18,12 +18,6 @@ const targets = [
     allowHidden: true,
   },
   {
-    screen: 'traject',
-    hash: '#traject?route=fasen',
-    signal: 'treatment',
-    microstate: 'treatment-fasen',
-  },
-  {
     screen: 'logboek',
     hash: '#logboek?route=privacy',
     signal: 'eventlog',

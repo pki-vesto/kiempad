@@ -38288,6 +38288,7 @@ describe('app shell', () => {
         label === 'wellbeing' ||
         label === 'decision' ||
         label === 'medication' ||
+        label === 'treatment' ||
         label === 'finance'
       ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
@@ -38336,14 +38337,16 @@ describe('app shell', () => {
     expect(trajectHtml).toContain('data-treatment-console="ready"');
     expect(trajectHtml).toContain('data-treatment-console-region="workbench"');
     expect(trajectHtml).toContain('data-treatment-console-region="workspace"');
-    expect(trajectHtml).toContain('data-treatment-workspace-context="metrics"');
-    expect(trajectHtml).toContain('data-workspace-context-signals="treatment"');
-    expect(trajectHtml).toContain('data-workspace-context-microstate="treatment-fasen"');
-    expect(trajectHtml).toContain(
+    expect(trajectHtml).toContain('data-treatment-compact-workspace="route-first"');
+    expect(trajectHtml).not.toContain('data-treatment-workspace-context="metrics"');
+    expect(trajectHtml).not.toContain('data-treatment-workspace-context="privacy"');
+    expect(trajectHtml).not.toContain('data-workspace-context-signals="treatment"');
+    expect(trajectHtml).not.toContain('data-workspace-context-microstate="treatment-fasen"');
+    expect(trajectHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: fase controleren"',
     );
     expect(trajectHtml).toContain('Faseplanning');
-    expect(trajectHtml).toContain('Trajectfocus');
+    expect(trajectHtml).toContain('Traject focus');
     expect(trajectHtml).toContain(
       'data-treatment-route="fasen" data-treatment-route-state="active"',
     );

@@ -6919,8 +6919,7 @@ h2 {
   border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
 }
 
-.workspace-context-signals[data-workspace-context-signals="dossier"],
-.workspace-context-signals[data-workspace-context-signals="treatment"] {
+.workspace-context-signals[data-workspace-context-signals="dossier"] {
   --workspace-context-accent: var(--teal);
 }
 
