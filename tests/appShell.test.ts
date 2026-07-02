@@ -2119,6 +2119,14 @@ describe('app shell', () => {
     expect(css).toContain('.medication-focus-shell__workspace {');
     expect(css).toContain('.medication-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('"rail context";');
+    expect(css).toContain('.medication-progress {');
+    expect(css).toContain('.medication-progress__track {');
+    expect(css).toContain('.medication-progress__counts {');
+    expect(css).toContain('.medication-dose-list {');
+    expect(css).toContain('.medication-dose-card {');
+    expect(css).toContain('.medication-dose-card[data-dose-log-state="genomen"] {');
+    expect(css).toContain('.medication-dose-card[data-medication-kind="injectie"] {');
+    expect(css).toContain('.medication-dose-card__meta {');
     expect(css).toContain('.planning-workbench__header {');
     expect(css).toContain('.planning-workbench__grid {');
     expect(css).toContain('.planning-workbench__actions {');
@@ -4633,7 +4641,7 @@ describe('app shell', () => {
           medicatie: {
             id: 'med-1',
             naam: 'Progesteron',
-            vorm: 'zetpil',
+            vorm: 'injectie',
             voorgeschrevenDosis: 'zoals kliniek: 2x per dag',
             instructie: 'ochtend en avond',
             actief: true,
@@ -4653,6 +4661,20 @@ describe('app shell', () => {
               status: 'genomen',
               genomenOp: `${vandaag}T08:05`,
               notitie: 'plek links',
+            },
+            {
+              id: 'dose-2',
+              medicatieId: 'med-1',
+              geplandOp: `${vandaag}T12:00`,
+              status: 'overgeslagen',
+              genomenOp: `${vandaag}T12:05`,
+              notitie: 'in overleg niet gezet',
+            },
+            {
+              id: 'dose-3',
+              medicatieId: 'med-1',
+              geplandOp: `${vandaag}T23:59`,
+              status: 'gepland',
             },
           ],
         },
@@ -4687,7 +4709,7 @@ describe('app shell', () => {
     expect(html).toContain(
       'href="#medicatie?route=vandaag" aria-current="page" data-command-route-density="filled"',
     );
-    expect(html).toContain('class="command-task-route__badge">1</strong>');
+    expect(html).toContain('class="command-task-route__badge">3</strong>');
     expect(html).toContain('class="command-task-route__badge">schema</strong>');
     expect(html).toContain('href="#medicatie?route=planning"');
     expect(html).toContain('href="#medicatie?route=beheer"');
@@ -4707,6 +4729,17 @@ describe('app shell', () => {
     );
     expect(html).toContain('data-medication-route="vandaag"');
     expect(html).toContain('data-medication-route-state="active"');
+    expect(html).toContain('data-medication-progress="today"');
+    expect(html).toContain('Medicatievoortgang vandaag');
+    expect(html).toContain('1/3 afgevinkt');
+    expect(html).toContain('aria-valuemin="0" aria-valuemax="3" aria-valuenow="1"');
+    expect(html).toContain('data-medication-dose-list="ready"');
+    expect(html).toContain('class="phase-item medication-dose-card"');
+    expect(html).toContain('data-dose-log-state="genomen"');
+    expect(html).toContain('data-dose-log-state="overgeslagen"');
+    expect(html).toContain('data-dose-log-state="gepland"');
+    expect(html).toContain('data-medication-kind="injectie"');
+    expect(html).toContain('class="medication-dose-card__meta"');
     expect(html).toContain(
       'class="status-message medication-save-feedback" role="status" aria-live="polite" data-medication-save-feedback="vandaag"',
     );
@@ -4742,10 +4775,13 @@ describe('app shell', () => {
     expect(html).toContain('Lokale instructievideo: injectie.mp4');
     expect(html).toContain('name="doseLogNotitie"');
     expect(html).toContain('Genomen');
+    expect(html).toContain('Overgeslagen');
+    expect(html).toContain('Gepland');
     expect(html).toContain('aria-label="Verwijder medicatie: Progesteron"');
     expect(html).toContain(`aria-label="Markeer Progesteron op ${vandaag} 08:00 als genomen"`);
     expect(html).toContain(`aria-label="Markeer Progesteron op ${vandaag} 08:00 als overgeslagen"`);
     expect(html).toContain('Notitie: plek links');
+    expect(html).toContain('Notitie: in overleg niet gezet');
     expect(html).toContain('Historie van innames');
     expect(html).toContain('plek links');
     expect(html).toContain('Doseringen worden nooit door Kiempad berekend');

@@ -16452,7 +16452,7 @@ function renderMedicatieScreen(state: AppShellState): string {
         <div class="panel-heading"><h2>Vandaag</h2></div>
         ${
           todayLogs.length > 0
-            ? renderDoseLogList(todayLogs, state.medicatie)
+            ? `${renderMedicationProgress(todayLogs)}${renderDoseLogList(todayLogs, state.medicatie)}`
             : renderEmptyState('Nog geen geplande innames of injecties voor vandaag.', {
                 title: 'Vandaag niets gepland',
                 cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
@@ -16914,11 +16914,39 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
   `;
 }
 
+function renderMedicationProgress(doseLogs: DoseLog[]): string {
+  const total = doseLogs.length;
+  const completed = doseLogs.filter((doseLog) => doseLog.status === 'genomen').length;
+  const skipped = doseLogs.filter((doseLog) => doseLog.status === 'overgeslagen').length;
+  const pending = Math.max(0, total - completed - skipped);
+  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  return `
+    <section class="medication-progress" aria-label="Medicatievoortgang vandaag" data-medication-progress="today">
+      <div class="medication-progress__header">
+        <div>
+          <p class="kp-card__eyebrow">Dagvoortgang</p>
+          <h3>${completed}/${total} afgevinkt</h3>
+        </div>
+        <strong>${percentage}%</strong>
+      </div>
+      <div class="medication-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${completed}" aria-label="${completed} van ${total} medicatiemomenten afgevinkt">
+        <span style="width: ${percentage}%"></span>
+      </div>
+      <dl class="medication-progress__counts">
+        <div><dt>Gepland</dt><dd>${pending}</dd></div>
+        <div><dt>Genomen</dt><dd>${completed}</dd></div>
+        <div><dt>Overgeslagen</dt><dd>${skipped}</dd></div>
+      </dl>
+    </section>
+  `;
+}
+
 function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): string {
   const now = new Date().toISOString().slice(0, 16);
 
   return `
-    <ol class="phase-list">
+    <ol class="phase-list medication-dose-list" data-medication-dose-list="ready">
       ${doseLogs
         .map((doseLog) => {
           const medicatie = bundles.find(
@@ -16927,11 +16955,17 @@ function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): str
           const naam = medicatie?.naam ?? 'Onbekende medicatie';
           const gepland = formatDateTime(doseLog.geplandOp);
           const missed = doseLogIsGemist(doseLog, now);
+          const state = missed ? 'gemist' : doseLog.status;
+          const vorm = medicatie?.vorm ?? 'overig';
           return `
-            <li class="phase-item${missed ? ' missed' : ''}">
+            <li class="phase-item medication-dose-card${missed ? ' missed' : ''}" data-dose-log-state="${escapeAttribute(state)}" data-medication-kind="${escapeAttribute(vorm)}">
               <div>
+                <p class="kp-card__eyebrow">${escapeHtml(renderDoseLogStatusLabel(state))}</p>
                 <h3>${escapeHtml(naam)}</h3>
-                <p>${gepland} · ${doseLog.status}${missed ? ' · gemist' : ''}</p>
+                <p class="medication-dose-card__meta">
+                  <span>${gepland}</span>
+                  <span>${escapeHtml(medicatie ? MEDICATIE_VORM_LABELS[medicatie.vorm] : 'Onbekend')}</span>
+                </p>
                 <small>${escapeHtml(medicatie ? beschrijfMedicatieDosis(medicatie) : '')}</small>
                 ${
                   doseLog.notitie
@@ -16955,6 +16989,13 @@ function renderDoseLogList(doseLogs: DoseLog[], bundles: MedicatieBundle[]): str
         .join('')}
     </ol>
   `;
+}
+
+function renderDoseLogStatusLabel(state: DoseLog['status'] | 'gemist'): string {
+  if (state === 'genomen') return 'Genomen';
+  if (state === 'overgeslagen') return 'Overgeslagen';
+  if (state === 'gemist') return 'Gemist';
+  return 'Gepland';
 }
 
 function renderMedicatieList(bundles: MedicatieBundle[]): string {

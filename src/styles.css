@@ -2526,6 +2526,132 @@ h2 {
   font-weight: 700;
 }
 
+.medication-progress {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 48%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+}
+
+.medication-progress__header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.medication-progress__header h3,
+.medication-progress__header p {
+  margin: 0;
+}
+
+.medication-progress__header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+}
+
+.medication-progress__header strong {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.1rem;
+}
+
+.medication-progress__track {
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-2) 86%, var(--surface));
+}
+
+.medication-progress__track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--teal));
+}
+
+.medication-progress__counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.medication-progress__counts div {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.medication-progress__counts dt,
+.medication-progress__counts dd {
+  margin: 0;
+}
+
+.medication-progress__counts dt {
+  color: var(--text-faint);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.medication-progress__counts dd {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 850;
+}
+
+.medication-dose-list {
+  gap: 10px;
+}
+
+.medication-dose-card {
+  border-left: 4px solid var(--line);
+}
+
+.medication-dose-card[data-dose-log-state="gepland"] {
+  border-left-color: var(--slate);
+}
+
+.medication-dose-card[data-dose-log-state="genomen"] {
+  border-left-color: var(--teal);
+  background: color-mix(in srgb, var(--teal-soft) 34%, var(--surface));
+}
+
+.medication-dose-card[data-dose-log-state="overgeslagen"],
+.medication-dose-card[data-dose-log-state="gemist"] {
+  border-left-color: var(--clay);
+  background: color-mix(in srgb, var(--clay-soft) 28%, var(--surface));
+}
+
+.medication-dose-card[data-medication-kind="injectie"] {
+  border-color: color-mix(in srgb, var(--clay) 46%, var(--border));
+  border-left-color: var(--clay);
+}
+
+.medication-dose-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.medication-dose-card__meta span:first-child {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
 /* ============================================================
    Canonical UI components (src/ui/components.ts)
    Claude Design language — focused, mobile-first, card-and-hero.
