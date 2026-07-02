@@ -3348,61 +3348,79 @@ function renderDossierScreen(state: AppShellState): string {
             Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
           </label>
           </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
-            <legend>Koppelingen</legend>
-          <label>
-            Koppel aan afspraak
-            <select name="afspraakId">
-              <option value="">Geen afspraak</option>
-              ${afspraakOpties}
-            </select>
-          </label>
-          <label>
-            Koppel aan traject
-            <select name="trajectId">
-              <option value="">Geen traject</option>
-              ${trajectOpties}
-            </select>
-          </label>
-          <label>
-            Notitie
-            <textarea name="notitie" rows="4"></textarea>
-          </label>
-          </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 3 · beeld">
-            <legend>Beeldcontext</legend>
-          <label>
-            Beeldcontext
-            <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
-          </label>
-          <label>
-            Beeldbron
-            <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
-          </label>
-          <label>
-            Beeld cyclusdag
-            <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
-          </label>
-          </fieldset>
-          <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-embryo-labcontext" data-dossier-field-section-label="Stap 4 · lab">
-            <legend>Embryo en labcontext</legend>
-          <label>
-            Beeld embryo
-            <input name="beeldEmbryoLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo 1" />
-          </label>
-          <label>
-            Embryo-id
-            <input name="beeldEmbryoId" autocomplete="off" placeholder="Bijvoorbeeld: lab-id E1" />
-          </label>
-          <label>
-            Embryo dag
-            <input name="beeldEmbryoDag" type="number" min="1" max="7" step="1" />
-          </label>
-          <label>
-            Laboratoriumcontext
-            <input name="beeldLaboratoriumContext" autocomplete="off" placeholder="Bijvoorbeeld: labfoto dag 5 of incubatorbeeld" />
-          </label>
-          </fieldset>
+          <details class="dossier-upload-optional" data-dossier-upload-optional="koppelingen">
+            <summary class="dossier-upload-optional__summary">
+              <span>Koppelingen</span>
+              <small>Afspraak, traject of notitie toevoegen</small>
+            </summary>
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
+              <legend>Koppelingen</legend>
+            <label>
+              Koppel aan afspraak
+              <select name="afspraakId">
+                <option value="">Geen afspraak</option>
+                ${afspraakOpties}
+              </select>
+            </label>
+            <label>
+              Koppel aan traject
+              <select name="trajectId">
+                <option value="">Geen traject</option>
+                ${trajectOpties}
+              </select>
+            </label>
+            <label>
+              Notitie
+              <textarea name="notitie" rows="4"></textarea>
+            </label>
+            </fieldset>
+          </details>
+          <details class="dossier-upload-optional" data-dossier-upload-optional="beeldcontext">
+            <summary class="dossier-upload-optional__summary">
+              <span>Beeldcontext</span>
+              <small>Echo, foto of scan beschrijven</small>
+            </summary>
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 3 · beeld">
+              <legend>Beeldcontext</legend>
+            <label>
+              Beeldcontext
+              <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
+            </label>
+            <label>
+              Beeldbron
+              <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
+            </label>
+            <label>
+              Beeld cyclusdag
+              <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
+            </label>
+            </fieldset>
+          </details>
+          <details class="dossier-upload-optional" data-dossier-upload-optional="embryo-labcontext">
+            <summary class="dossier-upload-optional__summary">
+              <span>Embryo en labcontext</span>
+              <small>Embryo-id, dag of lablabel toevoegen</small>
+            </summary>
+            <fieldset class="dossier-upload-group" data-dossier-upload-group="embryo-labcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-embryo-labcontext" data-dossier-field-section-label="Stap 4 · lab">
+              <legend>Embryo en labcontext</legend>
+            <label>
+              Beeld embryo
+              <input name="beeldEmbryoLabel" autocomplete="off" placeholder="Bijvoorbeeld: embryo 1" />
+            </label>
+            <label>
+              Embryo-id
+              <input name="beeldEmbryoId" autocomplete="off" placeholder="Bijvoorbeeld: lab-id E1" />
+            </label>
+            <label>
+              Embryo dag
+              <input name="beeldEmbryoDag" type="number" min="1" max="7" step="1" />
+            </label>
+            <label>
+              Laboratoriumcontext
+              <input name="beeldLaboratoriumContext" autocomplete="off" placeholder="Bijvoorbeeld: labfoto dag 5 of incubatorbeeld" />
+            </label>
+            </fieldset>
+          </details>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
           ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
         </form>

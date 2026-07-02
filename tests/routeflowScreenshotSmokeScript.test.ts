@@ -26,6 +26,7 @@ describe('routeflow screenshot smoke script', () => {
     );
     expect(routeflowScreenshotSmokeScript).toContain('listMaxHeight');
     expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
+    expect(routeflowScreenshotSmokeScript).toContain('closedDetailsSelectors');
     expect(routeflowScreenshotSmokeScript).toContain(
       'upload-console toont niet precies de gekozen werkstroom',
     );
@@ -61,6 +62,7 @@ describe('routeflow screenshot smoke script', () => {
       '#kennis?route=read',
       '#start-recommendations',
       '#dossier?route=imaging',
+      '#dossier',
       '#dossier?route=search',
       '#traject?route=context',
       '#consult-verslag-form',
@@ -118,6 +120,10 @@ describe('routeflow screenshot smoke script', () => {
       '[data-dossier-imaging-lane="compare"]',
       '[data-dossier-imaging-lane="embryos"]',
       '[data-dossier-imaging-lane="consults"]',
+      '[data-dossier-upload-optional="koppelingen"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-optional="embryo-labcontext"]',
+      '[data-dossier-upload-optional="koppelingen"] > .dossier-upload-optional__summary',
       '[data-dossier-search-console="ready"]',
       '[data-dossier-search-console-region="search"]',
       '[data-dossier-search-console-region="privacy"]',

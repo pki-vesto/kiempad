@@ -260,6 +260,10 @@
   biometrie, dossierpreviews, timeline, and attachment status copy now use plain Dutch terms such
   as `centrale versleutelde opslag`, `lokale kluis`, and `versleutelde overdracht` while technical
   WebAuthn/data hooks remain unchanged.
+- **CFX-040/CFX-012 dossier upload optional context collapse — partial in G1396 / issue #2566.**
+  Dossier document upload now starts with required basis fields only; appointment/trajectory links,
+  image context, and embryo/lab context stay available as closed optional panels on desktop and
+  mobile.
 
 ---
 
@@ -736,6 +740,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the form starts near the top.
   Partial G1381/#2536: Desktop Dossier uses a persistent two-column focus shell with route overview
   and a scrollable active workspace; mobile remains stacked without horizontal overflow.
+  Partial G1396/#2566: Document upload keeps optional appointment/trajectory, image, and embryo/lab
+  context in closed panels so the first viewport starts on the required upload task instead of all
+  context fields at once.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags. Partial
   G1390/#2554: Afwegingen folds the decision workbench into the same split-view as route context,
@@ -774,6 +781,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   selector, form sections, and submit path are prioritized over duplicate explanatory panels.
   Partial G1376/#2526: Welzijn mentale check-in now uses wellbeing-specific form sections,
   responsive field grouping, and a mobile-safe action wrapper.
+  Partial G1396/#2566: Dossier document upload applies the form kit progressively by keeping
+  optional context groups closed until explicitly opened.
 - **CFX-025** — `€` prefix adornment in amount fields (C25). **P3 · S**
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**

@@ -6499,6 +6499,14 @@ describe('app shell', () => {
       addSection.indexOf('id="dossier-upload-form"'),
     );
     expect(addSection).toContain('id="dossier-upload-form"');
+    expect(addSection).toContain('data-dossier-upload-optional="koppelingen"');
+    expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
+    expect(addSection).toContain('data-dossier-upload-optional="embryo-labcontext"');
+    expect(addSection).toContain('class="dossier-upload-optional__summary"');
+    expect(addSection).toContain('Afspraak, traject of notitie toevoegen');
+    expect(addSection).toContain('Echo, foto of scan beschrijven');
+    expect(addSection).toContain('Embryo-id, dag of lablabel toevoegen');
+    expect(addSection).not.toContain('<details class="dossier-upload-optional" open');
     expect(addSection).toContain('id="consult-verslag-form"');
     expect(addSection).toContain('id="embryo-quality-form"');
     expect(addSection).toContain('id="embryo-status-event-form"');

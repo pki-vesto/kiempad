@@ -180,6 +180,42 @@ const targets = [
     ],
   },
   {
+    screen: 'dossier-upload',
+    hash: '#dossier',
+    rootSelector: '#dossier-route-upload',
+    expectedText: 'Nieuwe medische records toevoegen',
+    activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    requiredSelectors: [
+      '[data-dossier-upload-console="ready"]',
+      '[data-dossier-upload-console-region="document"]',
+      '#dossier-upload-form',
+      '[data-dossier-upload-group="document-basis"]',
+      '[data-dossier-upload-optional="koppelingen"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-optional="embryo-labcontext"]',
+      '[data-dossier-upload-optional="koppelingen"] > .dossier-upload-optional__summary',
+      '[data-dossier-upload-optional="beeldcontext"] > .dossier-upload-optional__summary',
+      '[data-dossier-upload-optional="embryo-labcontext"] > .dossier-upload-optional__summary',
+    ],
+    closedDetailsSelectors: [
+      '[data-dossier-upload-optional="koppelingen"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-optional="embryo-labcontext"]',
+    ],
+    desktopHiddenSelectors: [
+      '.dossier-split-workspace .domain-split-workspace__rail',
+      '.dossier-split-workspace .domain-split-workspace__context',
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.dossier-upload-triage__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+    dossierConsole: true,
+    uploadConsole: true,
+  },
+  {
     screen: 'dossier-search',
     hash: '#dossier?route=search',
     rootSelector: '#dossier-route-search',
@@ -528,6 +564,13 @@ async function assertRouteflows(browser, options) {
           return {
             selector,
             visible: Boolean(rect && rect.width > 0 && rect.height > 0),
+          };
+        });
+        const closedDetails = (routeflow.closedDetailsSelectors ?? []).map((selector) => {
+          const element = document.querySelector(selector);
+          return {
+            selector,
+            closed: element instanceof HTMLDetailsElement && !element.open,
           };
         });
         const openDetails = routeflow.maxOpenDetails
@@ -971,6 +1014,7 @@ async function assertRouteflows(browser, options) {
           required,
           present,
           hidden,
+          closedDetails,
           openDetails,
           focusLayout,
           startCommandCenter,
@@ -1063,6 +1107,14 @@ async function assertRouteflows(browser, options) {
       if (visibleHiddenSelectors.length > 0) {
         throw new Error(
           `${options.label}/${target.screen}: verborgen routeflow-chrome is zichtbaar: ${visibleHiddenSelectors
+            .map((item) => item.selector)
+            .join(', ')}.`,
+        );
+      }
+      const openClosedDetails = evidence.closedDetails.filter((item) => !item.closed);
+      if (openClosedDetails.length > 0) {
+        throw new Error(
+          `${options.label}/${target.screen}: optionele routeflow-details starten open of ontbreken: ${openClosedDetails
             .map((item) => item.selector)
             .join(', ')}.`,
         );
