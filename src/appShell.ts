@@ -3425,10 +3425,7 @@ function renderDossierScreen(state: AppShellState): string {
           ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als versleutelde dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
-        ${renderUploadAttachmentFeedback(state)}
-        ${renderAttachmentConsentExportPrivacy(state)}
-        ${renderAttachmentRetentionCleanupPrivacy(state)}
-        ${renderAttachmentAuditTrailPrivacy(state)}
+        ${renderDossierUploadPrivacyDisclosure(state)}
         ${renderStatusFeedback('dossier', state.dossierStatus, state.dossierError)}
         `,
         })}
@@ -4873,6 +4870,20 @@ const UPLOAD_ATTACHMENT_FEEDBACK_DEFAULTS: Record<
     defaultCopy: 'Embryokwaliteit wordt als feitelijke bronregistratie bewaard.',
   },
 };
+
+function renderDossierUploadPrivacyDisclosure(state: AppShellState): string {
+  return `
+    <details class="kp-disclosure dossier-upload-privacy-disclosure" data-dossier-upload-privacy-disclosure="collapsed">
+      <summary class="kp-disclosure__summary">Uploadprivacy en bijlagebeheer openen</summary>
+      <div class="kp-disclosure__body">
+        ${renderUploadAttachmentFeedback(state)}
+        ${renderAttachmentConsentExportPrivacy(state)}
+        ${renderAttachmentRetentionCleanupPrivacy(state)}
+        ${renderAttachmentAuditTrailPrivacy(state)}
+      </div>
+    </details>
+  `;
+}
 
 function renderUploadAttachmentFeedback(state: AppShellState): string {
   return `

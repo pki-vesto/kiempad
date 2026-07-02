@@ -264,6 +264,9 @@
   Dossier document upload now starts with required basis fields only; appointment/trajectory links,
   image context, and embryo/lab context stay available as closed optional panels on desktop and
   mobile.
+- **CFX-040/CFX-095 dossier upload privacy collapse — partial in G1397 / issue #2568.** Dossier
+  upload privacy, attachment export, retention/cleanup, and audit details now sit behind one closed
+  disclosure so the upload route no longer continues with a visible privacy/status wall.
 
 ---
 
@@ -743,6 +746,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1396/#2566: Document upload keeps optional appointment/trajectory, image, and embryo/lab
   context in closed panels so the first viewport starts on the required upload task instead of all
   context fields at once.
+  Partial G1397/#2568: Upload privacy/status details are bundled behind one closed disclosure while
+  preserving the underlying privacy hooks.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags. Partial
   G1390/#2554: Afwegingen folds the decision workbench into the same split-view as route context,
@@ -836,6 +841,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-091** — Unify privacy phrasing app-wide (N91); one string in the copy module. **P1 · S**
 - **CFX-092** — Slot/shield icon usage rationalized; not on every card (N92). **P3 · S**
 - **CFX-095** — One medical disclaimer per screen (footer), remove per-card repetition (N95). **P1 · M**
+  Partial G1397/#2568: Dossier upload no longer leaves multiple privacy/status explanation panels
+  visible directly under the document form; they remain available in one disclosure.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

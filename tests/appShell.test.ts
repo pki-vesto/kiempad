@@ -6507,6 +6507,11 @@ describe('app shell', () => {
     expect(addSection).toContain('Echo, foto of scan beschrijven');
     expect(addSection).toContain('Embryo-id, dag of lablabel toevoegen');
     expect(addSection).not.toContain('<details class="dossier-upload-optional" open');
+    expect(addSection).toContain('data-dossier-upload-privacy-disclosure="collapsed"');
+    expect(addSection).toContain('Uploadprivacy en bijlagebeheer openen');
+    expect(addSection).not.toContain(
+      '<details class="kp-disclosure dossier-upload-privacy-disclosure" data-dossier-upload-privacy-disclosure="collapsed" open',
+    );
     expect(addSection).toContain('id="consult-verslag-form"');
     expect(addSection).toContain('id="embryo-quality-form"');
     expect(addSection).toContain('id="embryo-status-event-form"');

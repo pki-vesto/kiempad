@@ -124,6 +124,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
       '[data-dossier-upload-optional="koppelingen"] > .dossier-upload-optional__summary',
+      '[data-dossier-upload-privacy-disclosure="collapsed"]',
       '[data-dossier-search-console="ready"]',
       '[data-dossier-search-console-region="search"]',
       '[data-dossier-search-console-region="privacy"]',

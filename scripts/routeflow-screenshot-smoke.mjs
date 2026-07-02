@@ -197,11 +197,13 @@ const targets = [
       '[data-dossier-upload-optional="koppelingen"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="beeldcontext"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="embryo-labcontext"] > .dossier-upload-optional__summary',
+      '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     closedDetailsSelectors: [
       '[data-dossier-upload-optional="koppelingen"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
+      '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     desktopHiddenSelectors: [
       '.dossier-split-workspace .domain-split-workspace__rail',
