@@ -202,6 +202,9 @@
 - **CFX-016 knowledge status badges — partial in G1380 / issue #2534.** Kennisbibliotheek cards now
   use the shared `statusBadge()` helper for AI/manual, concept/artscheck, and kostenjaar markers
   instead of local `status-pill` markup.
+- **CFX-040 dossier two-column focus — partial in G1381 / issue #2536.** Dossier now keeps the
+  route overview visible next to the active workspace on desktop, including upload mode, so the
+  first viewport no longer collapses back into one long stacked page.
 
 ---
 
@@ -650,6 +653,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1375/#2524: Upload route hides duplicate overview/triage layers in the active add-flow,
   keeps continuation panels out of the document path, and gives tablet/mobile a compact selector so
   the form starts near the top.
+  Partial G1381/#2536: Desktop Dossier uses a persistent two-column focus shell with route overview
+  and a scrollable active workspace; mobile remains stacked without horizontal overflow.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**

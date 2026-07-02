@@ -6968,12 +6968,14 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-focus-shell {');
     expect(css).toContain('.dossier-focus-shell__header {');
     expect(css).toContain('.dossier-focus-shell__body {');
-    expect(css).toContain('grid-template-columns: 1fr;');
-    expect(css).toContain('grid-template-columns: minmax(156px, 0.42fr) minmax(0, 1.58fr);');
+    expect(css).toContain('grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);');
+    expect(css).toContain('grid-template-columns: minmax(144px, 0.38fr) minmax(0, 1.62fr);');
     expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__context {');
     expect(css).toContain('display: none;');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
+    expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__main {');
+    expect(css).toContain('max-height: min(780px, calc(100vh - 204px));');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
     expect(css).toContain('.dossier-focus-shell__orientation .dossier-route-stage__header {');
     expect(css).toContain(
