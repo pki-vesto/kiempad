@@ -14955,15 +14955,19 @@ function renderVragenScreen(state: AppShellState): string {
   const questionWorkspace = domainSplitWorkspace({
     className: 'question-split-workspace',
     ariaLabel: 'Vragen split-view werkruimte',
-    data: { 'question-split-workspace': 'ready', 'question-compact-workspace': 'route-first' },
+    data: {
+      'question-split-workspace': 'ready',
+      'question-compact-workspace': 'route-first',
+      'question-single-workspace': 'ready',
+    },
     rail: questionTaskRoutes,
     main: questionRouteSections.join(''),
+    context: questionWorkbench,
   });
 
   return sectionStack(
     [
       renderQuestionFocusShell({
-        workbench: questionWorkbench,
         workspace: questionWorkspace,
       }),
     ],
@@ -15004,7 +15008,7 @@ function renderQuestionOpenToolbar(input: {
   `;
 }
 
-function renderQuestionFocusShell(input: { workbench: string; workspace: string }): string {
+function renderQuestionFocusShell(input: { workspace: string }): string {
   return `
     <section class="question-focus-shell" aria-labelledby="question-focus-shell-title" data-question-focus-shell="ready">
       <header class="question-focus-shell__header">
@@ -15013,9 +15017,6 @@ function renderQuestionFocusShell(input: { workbench: string; workspace: string 
         <p>Open vragen, voorbereiding, verslagen en beheer staan als aparte routes in plaats van als één lange vragenpagina.</p>
       </header>
       <div class="question-focus-shell__body" data-consult-console="ready">
-        <div class="question-focus-shell__workbench" data-question-focus-region="workbench" data-consult-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="question-focus-shell__workspace" data-question-focus-region="workspace" data-consult-console-region="workspace">
           ${input.workspace}
         </div>

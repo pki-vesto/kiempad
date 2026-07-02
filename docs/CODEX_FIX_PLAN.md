@@ -224,6 +224,10 @@
   renders the treatment workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact treatment context while
   mobile remains stacked.
+- **CFX-036 question single workspace — partial in G1387 / issue #2548.** Vragen no longer renders
+  the consult preparation workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active route, and compact preparation context
+  while mobile remains stacked.
 
 ---
 
@@ -653,7 +657,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   separate focus-region plus nested route workspace.
 - **CFX-036** — Vragen: rename wizard, pill input, dock Print/PDF next to the section head. **P2 · M**
   Partial G1369/#2512: Open questions have a dedicated toolbar with Print/PDF next to the section
-  heading, and the primary question textarea renders as a compact input card.
+  heading, and the primary question textarea renders as a compact input card. Partial G1387/#2548:
+  Vragen folds the consult preparation workbench into the same split-view as route context, so
+  desktop opens as one rail/main/context workspace instead of a separate focus-region plus nested
+  route workspace.
 - **CFX-037** — Kosten: stat cards + info + list with badges + right-aligned amounts + kit form +
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
   Partial G1364/#2502: Kostenhistorie renders as scan-friendly cost cards with status rails and
