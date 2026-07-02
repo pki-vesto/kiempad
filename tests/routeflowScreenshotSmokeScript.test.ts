@@ -66,6 +66,7 @@ describe('routeflow screenshot smoke script', () => {
       '#dossier?route=search',
       '#traject?route=context',
       '#consult-verslag-form',
+      '#dossier?route=imaging',
       '#vragen?route=voorbereiden',
       '#welzijn?route=history',
       '#backup?route=controleren',
@@ -158,6 +159,13 @@ describe('routeflow screenshot smoke script', () => {
       '[data-hub-workflow-tab="questions"]',
       '[data-dossier-add-route-panel="consult-upload"]',
       '#consult-verslag-form',
+      '[data-consult-card="compact"]',
+      '.consult-card__header',
+      '.consult-card__status',
+      '[data-consult-card-section="tekst"]',
+      '[data-consult-card-section="samenvatting"]',
+      '[data-consult-card-section="actiepunten"]',
+      '.consult-summary-source-review',
       '[data-consult-console="ready"]',
       '[data-consult-console-region="workspace"]',
       '[data-question-single-workspace="ready"]',
@@ -191,6 +199,14 @@ describe('routeflow screenshot smoke script', () => {
 
     expect(routeflowScreenshotSmokeScript).toContain('openSelectors');
     expect(routeflowScreenshotSmokeScript).toContain('presentSelectors');
+    expect(routeflowScreenshotSmokeScript).toContain("screen: 'consult-card-filled'");
+    expect(routeflowScreenshotSmokeScript).toContain("prepare: 'filled-consult-card'");
+    expect(routeflowScreenshotSmokeScript).toContain('filledConsultCard: true');
+    expect(routeflowScreenshotSmokeScript).toContain('prepareFilledConsultCard');
+    expect(routeflowScreenshotSmokeScript).toContain('statusChipCount');
+    expect(routeflowScreenshotSmokeScript).toContain(
+      'gevulde consultkaart mist compacte browser-evidence',
+    );
     expect(routeflowScreenshotSmokeScript).toContain('gesloten routeflow-selectors ontbreken');
     expect(routeflowScreenshotSmokeScript).toContain('hiddenSelectors: [');
     expect(routeflowScreenshotSmokeScript).toContain('desktopHiddenSelectors');
@@ -233,6 +249,7 @@ describe('routeflow screenshot smoke script', () => {
     expect(routeflowScreenshotSmokeScript).toContain('verborgen routeflow-chrome is zichtbaar');
     expect(routeflowScreenshotSmokeScript).toContain('root.screenshot');
     expect(routeflowScreenshotSmokeScript).toContain('screenshotBytes');
+    expect(routeflowScreenshotSmokeScript).toContain('hasPayloadLeak');
     expect(routeflowScreenshotSmokeScript).toContain('focusLayout');
     expect(routeflowScreenshotSmokeScript).toContain(
       'focus-workspace staat niet als volle breedte',

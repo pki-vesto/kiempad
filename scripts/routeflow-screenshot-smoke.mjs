@@ -364,6 +364,33 @@ const targets = [
     uploadConsole: true,
   },
   {
+    screen: 'consult-card-filled',
+    hash: '#dossier?route=imaging',
+    rootSelector: '[data-hub-detail-panel="consult-verslagen"]',
+    expectedText: 'Smoke consultkaart',
+    prepare: 'filled-consult-card',
+    openSelectors: ['[data-hub-detail-panel="consult-verslagen"]'],
+    requiredSelectors: [
+      '.consult-card__status span',
+    ],
+    presentSelectors: [
+      '[data-hub-detail-panel="consult-verslagen"][open]',
+      '[data-consult-card="compact"]',
+      '.consult-card__header',
+      '.consult-card__status',
+      '[data-consult-card-section="tekst"]',
+      '[data-consult-card-section="samenvatting"]',
+      '[data-consult-card-section="actiepunten"]',
+      '.consult-summary-source-review',
+    ],
+    filledConsultCard: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+    ],
+  },
+  {
     screen: 'question-prep',
     hash: '#vragen?route=voorbereiden',
     rootSelector: '[data-question-focus-shell="ready"]',
@@ -533,6 +560,9 @@ async function assertRouteflows(browser, options) {
     for (const target of targets) {
       await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
       await unlockIfNeeded(page, target.hash);
+      if (target.prepare === 'filled-consult-card') {
+        await prepareFilledConsultCard(page, target.hash);
+      }
       if (target.openSelectors) {
         await page.evaluate((selectors) => {
           for (const selector of selectors) {
@@ -960,6 +990,36 @@ async function assertRouteflows(browser, options) {
                 workbenchOverflowY: workbenchStyle?.overflowY ?? '',
                 workspaceOverflowY: workspaceStyle?.overflowY ?? '',
               };
+          })()
+          : null;
+        const filledConsultCard = routeflow.filledConsultCard
+          ? (() => {
+              const card = rootElement?.querySelector('[data-consult-card="compact"]');
+              const header = card?.querySelector('.consult-card__header');
+              const status = [...(card?.querySelectorAll('.consult-card__status span') ?? [])];
+              const sections = [...(card?.querySelectorAll('[data-consult-card-section]') ?? [])].map(
+                (section) => section.getAttribute('data-consult-card-section') ?? '',
+              );
+              const sourceReview = card?.querySelector('.consult-summary-source-review');
+              const cardRect = card?.getBoundingClientRect();
+              const headerRect = header?.getBoundingClientRect();
+              const sourceRect = sourceReview?.getBoundingClientRect();
+              const text = card?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+              return {
+                cardVisible: Boolean(cardRect && cardRect.width > 0 && cardRect.height > 0),
+                headerVisible: Boolean(headerRect && headerRect.width > 0 && headerRect.height > 0),
+                statusChipCount: status.filter((item) => {
+                  const rect = item.getBoundingClientRect();
+                  return rect.width > 0 && rect.height > 0;
+                }).length,
+                sections,
+                sourceReviewVisible: Boolean(
+                  sourceRect && sourceRect.width > 0 && sourceRect.height > 0,
+                ),
+                hasPayloadLeak: /BASE64|OCR_RAW|CONSULT_RAW|data:application|passphrase|token|diagnose stellen|dosering aanpassen|kansberekening|behandelkeuzeadvies/i.test(
+                  text,
+                ),
+              };
             })()
           : null;
         const wellbeingConsole = routeflow.wellbeingConsole
@@ -1094,6 +1154,7 @@ async function assertRouteflows(browser, options) {
           dossierConsole,
           knowledgeConsole,
           consultConsole,
+          filledConsultCard,
           wellbeingConsole,
           treatmentConsole,
           timelineConsole,
@@ -1358,6 +1419,21 @@ async function assertRouteflows(browser, options) {
         );
       }
       if (
+        evidence.filledConsultCard &&
+        (!evidence.filledConsultCard.cardVisible ||
+          !evidence.filledConsultCard.headerVisible ||
+          evidence.filledConsultCard.statusChipCount < 3 ||
+          !evidence.filledConsultCard.sections.includes('tekst') ||
+          !evidence.filledConsultCard.sections.includes('samenvatting') ||
+          !evidence.filledConsultCard.sections.includes('actiepunten') ||
+          !evidence.filledConsultCard.sourceReviewVisible ||
+          evidence.filledConsultCard.hasPayloadLeak)
+      ) {
+        throw new Error(
+          `${options.label}/${target.screen}: gevulde consultkaart mist compacte browser-evidence of lekt gevoelige tekst (${JSON.stringify(evidence.filledConsultCard)}).`,
+        );
+      }
+      if (
         options.label === 'desktop' &&
         evidence.wellbeingConsole &&
         (!evidence.wellbeingConsole.bodyVisible ||
@@ -1444,6 +1520,37 @@ async function assertRouteflows(browser, options) {
   } finally {
     await context.close();
   }
+}
+
+async function prepareFilledConsultCard(page, targetHash) {
+  await page.goto(`${url}#consult-verslag-form`, { waitUntil: 'networkidle' });
+  await unlockIfNeeded(page, '#consult-verslag-form');
+  await waitForStableRouteflowRoot(page, '#dossier-route-upload');
+
+  await page.locator('#consult-verslag-form [name="datum"]').fill('2026-06-25');
+  await page.locator('#consult-verslag-form [name="titel"]').fill('Smoke consultkaart');
+  await page
+    .locator('#consult-verslag-form [name="tekst"]')
+    .fill(
+      'Besproken dat het overzicht klaarstaat. Vraag de kliniek naar het vervolg op 2026-06-30. Noteer wie de uitslag belt.',
+    );
+  await page
+    .locator('#consult-verslag-form [name="samenvattingCorrectie"]')
+    .fill('Vraag de kliniek naar het vervolg op 2026-06-30 en noteer het antwoord.');
+  await page.locator('#consult-verslag-form [name="consultAuteur"]').fill('Voorbeeldarts');
+  await page.locator('#consult-verslag-form [name="consultContext"]').fill('Synthetische smoke');
+  await page.locator('#consult-verslag-form [name="notitie"]').fill('Demo-notitie zonder payload.');
+  await page.locator('#consult-verslag-form button[type="submit"]').click();
+  await page.waitForFunction(
+    () => {
+      const field = document.querySelector('#consult-verslag-form textarea[name="tekst"]');
+      return field instanceof HTMLTextAreaElement && field.value === '';
+    },
+    undefined,
+    { timeout: 10_000 },
+  );
+
+  await page.goto(`${url}${targetHash}`, { waitUntil: 'networkidle' });
 }
 
 async function unlockIfNeeded(page, hash) {

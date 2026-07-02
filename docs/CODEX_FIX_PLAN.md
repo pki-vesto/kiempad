@@ -326,6 +326,10 @@
   generate neutral concept questions for the doctor with source, date, and reviewstatus metadata,
   visible in the timeline and consult export without diagnosis, dosage, probability, or treatment
   choice advice.
+- **Premium Claude Design consultkaart browser evidence — done in G1417 / issue #2269.** Routeflow
+  smoke now seeds a synthetic filled consult record through the real upload form and verifies the
+  compact consult card header, status chips, sections, source review, screenshot bytes, and
+  no-payload boundary on desktop and mobile.
 
 ---
 
