@@ -1397,8 +1397,8 @@ function extractConsultVerslagenSection(html: string): string {
 }
 
 function extractDailyRecommendationsSection(html: string): string {
-  const start = html.indexOf('data-dashboard-route="recommendations"');
-  const end = html.indexOf('data-dashboard-route="quick-entry"', start);
+  const start = html.indexOf('data-daily-advice-console="ready"');
+  const end = html.indexOf('</main>', start);
   if (start < 0 || end < 0) throw new Error('Te doen vandaag-sectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -2563,6 +2563,7 @@ describe('app shell', () => {
     expect(html).toContain('data-start-launchpad-region="header"');
     expect(html).toContain('data-start-launchpad-region="cockpit"');
     expect(html).toContain('data-start-launchpad-region="deck"');
+    expect(html).toContain('data-start-launchpad-region="setup"');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
     expect(html).toContain('class="start-cockpit"');
@@ -2585,145 +2586,30 @@ describe('app shell', () => {
     expect(html).toContain('data-start-workspace-card="record"');
     expect(html).toContain('data-start-workspace-card="insight"');
     expect(html).toContain('data-start-workspace-card="control"');
-    expect(html).toContain('class="start-focus-shell"');
-    expect(html).toContain('data-start-focus-shell="ready"');
-    expect(html).toContain('data-start-console-region="commandcenter"');
+    expect(html).not.toContain('class="start-focus-shell"');
+    expect(html).not.toContain('data-start-focus-shell="ready"');
+    expect(html).not.toContain('data-start-console-region="commandcenter"');
     expect(html).toContain('data-workspace-strip="ready"');
     expect(html).toContain('data-compact-workspace-deck="ready"');
     expect(html).not.toContain('data-workspace-map="ready"');
-    expect(html).toContain('Start command-center');
-    expect(html).toContain('mobiel opent dit als compacte scrollbare routekaart');
-    expect(html).toContain('data-start-focus-region="workflows"');
-    expect(html).toContain('data-start-focus-region="scan"');
-    expect(html).toContain('data-start-focus-region="daily"');
+    expect(html).not.toContain('Start command-center');
+    expect(html).not.toContain('mobiel opent dit als compacte scrollbare routekaart');
+    expect(html).not.toContain('data-start-focus-region="workflows"');
+    expect(html).not.toContain('data-start-focus-region="scan"');
+    expect(html).not.toContain('data-start-focus-region="daily"');
     expect(html).not.toContain('class="workspace-context"');
-    expect(html).toContain('class="start-workbench start-intelligence-hub"');
-    expect(html).toContain('data-start-workbench="multi-flow"');
-    expect(html).toContain('data-start-intelligence-hub="six-workflows"');
-    expect(html).toContain('aria-label="Fertility intelligence werkbanen"');
-    expect(html).toContain('Fertility hub');
-    expect(html).toContain('Kies eerst je werkstroom');
-    expect(html).toContain(
-      'Uploads, tijdlijn, embryo’s, research en suggesties starten als eigen werkbanen',
-    );
-    expect(html).toContain('6 werkbanen');
-    expect(html).toContain('data-start-workbench-flow="uploads"');
-    expect(html).toContain('data-start-workbench-flow="timeline"');
-    expect(html).toContain('data-start-workbench-flow="embryo"');
-    expect(html).toContain('data-start-workbench-flow="recommendations"');
-    expect(html).toContain('data-start-workbench-flow="research"');
-    expect(html).toContain('data-start-workbench-flow="secure-sync"');
-    expect(html).toContain('data-start-workbench-tier="primary"');
-    expect(html).toContain('data-start-workbench-tier="supporting"');
-    expect(html).toContain('class="start-workbench-card start-workbench-card--primary"');
-    expect(html).toContain('class="start-workbench-card start-workbench-card--supporting"');
-    expect(html).toContain('Medische intake');
-    expect(html).toContain('Trajectoverzicht');
-    expect(html).toContain('Embryo &amp; beelden');
-    expect(html).toContain('Encrypted sync');
-    expect(html).toContain('data-daily-advice-workbench="owner-routes"');
-    expect(html).toContain('class="daily-advice-workbench daily-advice-workbench--compact"');
-    expect(html).toContain('Dagadvies per persoon kiezen');
-    expect(html).toContain('data-daily-advice-snapshot="ready"');
-    expect(html).toContain('aria-label="Dagadviezen scan"');
-    expect(html).toContain('data-daily-advice-snapshot-card="today"');
-    expect(html).toContain('data-daily-advice-snapshot-card="review"');
-    expect(html).toContain('data-daily-advice-snapshot-card="artscheck"');
-    expect(html).toContain('data-daily-advice-snapshot-card="owners"');
-    expect(html).toContain('Gesplitst per persoon en samen');
-    expect(html).toContain('Controleer bron en formulering');
-    expect(html).toContain('data-daily-advice-action-planner="ready"');
-    expect(html).toContain('Kies eerst je adviesroute');
-    expect(html).toContain('data-daily-advice-action-lane="lifestyle"');
-    expect(html).toContain('data-daily-advice-action-lane="nutrition"');
-    expect(html).toContain('data-daily-advice-action-lane="supplements"');
-    expect(html).toContain('data-daily-advice-action-lane="clinician"');
-    expect(html).toContain('Leefstijl');
-    expect(html).toContain('Voeding');
-    expect(html).toContain('Supplementen');
-    expect(html).toContain('Artscheck');
-    expect(html).toContain('geen dosering, diagnose, behandelkeuzeadvies of trackingdata');
-    expect(html.indexOf('data-daily-advice-action-planner="ready"')).toBeLessThan(
-      html.indexOf('data-hub-detail-panel="daily-recommendation-list"'),
-    );
-    expect(html).toContain('data-daily-advice-owner="vrouw"');
-    expect(html).toContain('data-daily-advice-owner="man"');
-    expect(html).toContain('data-daily-advice-owner="samen"');
     expect(html).toContain('href="#dossier"');
     expect(html).toContain('href="#traject?route=context"');
     expect(html).toContain('href="#dossier?route=imaging"');
     expect(html).toContain('href="#kennis"');
     expect(html).toContain('href="#backup"');
-    expect(html).toContain('class="start-snapshot"');
-    expect(html).toContain('data-start-snapshot="ready"');
-    expect(html).toContain('aria-label="Startscan"');
-    expect(html).toContain('data-start-snapshot-card="phase"');
-    expect(html).toContain('data-start-snapshot-card="today"');
-    expect(html).toContain('data-start-snapshot-card="advice"');
-    expect(html).toContain('data-start-snapshot-card="vault"');
-    expect(html).toContain('Traject starten');
+    expect(html).not.toContain('class="start-snapshot"');
+    expect(html).not.toContain('data-start-snapshot="ready"');
     expect(html).toContain('Lokale kluis');
-    expect(html).toContain('class="start-task-routes"');
-    expect(html).toContain('aria-label="Start taakroutes"');
-    expect(html).toContain('data-start-task-routes="ready"');
-    expect(html).toContain('href="#start-current-phase"');
-    expect(html).toContain('href="#start-today"');
-    expect(html).toContain('href="#start-next-step"');
-    expect(html).toContain('href="#start-recommendations"');
-    expect(html).toContain('href="#start-quick-entry"');
-    expect(html).toContain('id="start-current-phase"');
-    expect(html).toContain('id="start-today"');
-    expect(html).toContain('id="start-next-step"');
-    expect(html).toContain('id="start-recommendations"');
-    expect(html).toContain('class="daily-advice-focus-shell"');
-    expect(html).toContain('data-daily-advice-focus-shell="ready"');
-    expect(html).toContain('data-daily-advice-console="ready"');
-    expect(html).toContain('Te doen vandaag');
-    expect(html).toContain('data-daily-advice-focus-region="workflow"');
-    expect(html).toContain('data-daily-advice-focus-region="workbench"');
-    expect(html).toContain('data-daily-advice-focus-region="planner"');
-    expect(html).toContain('data-daily-advice-focus-region="list"');
-    expect(html).toContain('data-daily-advice-console-region="workflow"');
-    expect(html).toContain('data-daily-advice-console-region="workbench"');
-    expect(html).toContain('data-daily-advice-console-region="planner"');
-    expect(html).toContain('data-daily-advice-console-region="list"');
-    expect(html).toContain('id="start-recommendations-workflow-header"');
-    expect(html).toContain('data-hub-workflow="daily-recommendations"');
-    expect(html).toContain('Dagadvies rustig bekijken');
-    expect(html).toContain('data-hub-workflow-tab="recommendations" aria-current="page"');
-    expect(html).toContain('data-hub-workflow-tab="questions"');
-    expect(html).toContain('data-hub-workflow-tab="research"');
-    expect(html).toContain('data-hub-detail-panel="daily-recommendation-list"');
-    expect(html).toContain('class="kp-disclosure__summary hub-detail-disclosure__summary"');
-    expect(html).toContain('Volledige lijst pas openen na eigenaarselectie');
-    expect(html).toContain('id="start-quick-entry"');
-    expect(html).toContain(
-      '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
-    );
-    expect(html).toContain('class="kp-dashboard__primary"');
-    expect(html).toContain('class="kp-dashboard__secondary"');
-    expect(html).toContain('class="start-flow-rail"');
-    expect(html).toContain('data-start-flow-rail="progressive"');
-    expect(html).toContain('data-start-flow-rail-mode="contained"');
-    expect(html).toContain('Open alleen wat je nu nodig hebt');
-    expect(html).toContain('class="start-flow-rail__status"');
-    expect(html).toContain('5 routes');
-    expect(html).toContain('class="start-flow-switchboard"');
-    expect(html).toContain('data-start-flow-switchboard="ready"');
-    expect(html).toContain('data-start-flow-switchboard-card="planning"');
-    expect(html).toContain('data-start-flow-switchboard-card="medicatie"');
-    expect(html).toContain('data-start-flow-switchboard-card="aanbevelingen"');
-    expect(html).toContain('data-start-flow-switchboard-card="setup"');
-    expect(html).toContain('data-start-flow-switchboard-card="snelle-invoer"');
-    expect(html).toContain('data-start-flow-panel-stack="contained"');
-    expect(html).toContain('id="start-flow-panel-planning"');
-    expect(html).toContain('href="#start-flow-panel-aanbevelingen"');
-    expect(html).toContain('data-start-flow-panel="planning" open');
-    expect(html).toContain('data-start-flow-panel="aanbevelingen"');
-    expect(html).not.toContain('data-start-flow-panel="aanbevelingen" open');
-    expect(html).toContain('data-start-flow-panel="setup"');
-    expect(html).toContain('data-start-flow-panel="snelle-invoer"');
-    expect(html).toContain('class="daily-command-board"');
+    expect(html).not.toContain('class="start-task-routes"');
+    expect(html).not.toContain('class="daily-advice-focus-shell"');
+    expect(html).not.toContain('data-daily-advice-console="ready"');
+    expect(html).not.toContain('class="daily-command-board"');
     expect(html).not.toContain('class="page-header"');
     expect(html).not.toContain('Vandaag op Kiempad');
     expect(html).toContain('Welkom bij Kiempad');
@@ -2733,116 +2619,7 @@ describe('app shell', () => {
     expect(html).toContain('lokale kluis');
     expect(html).toContain('Configureer de centrale API');
     expect(html).toContain('href="#backup"');
-    expect(html).toContain('aria-label="Vandaag overzicht"');
-    expect(html).toContain('Nu eerst');
-    expect(html).toContain('Later vandaag');
-    expect(html).toContain('Context');
-    expect(html).toContain('Geen urgente taken voor vandaag.');
-    expect(html).toContain('Geen extra taken later vandaag.');
-    expect(html).toContain('Nog geen traject- of dossiercontext voor vandaag.');
-    expect(html).toContain('Volgende stap');
-    expect(html).toContain('data-dashboard-route="recommendations"');
-    expect(html).toContain('aria-label="Te doen vandaag taakroute"');
-    expect(html).toContain('class="kp-disclosure start-task-disclosure hub-detail-disclosure"');
-    expect(html).toContain('Bekijk suggesties');
-    expect(html).toContain('data-dashboard-route="quick-entry"');
-    expect(html).toContain('aria-label="Snelle invoer taakroute"');
-    expect(html).toContain('Snelle invoer');
-    expect(html).toContain('id="quick-entry-form"');
-    expect(html).toContain('name="quickText" required');
-    expect(html).toContain('Te doen vandaag');
-    expect(html).toContain('class="kp-recommendation-list daily-recommendation-list"');
-    expect(html).toContain('data-recommendation-component="daily-owner-list"');
-    expect(html).toContain('data-recommendation-component-state="structured"');
-    expect(html).toContain(
-      'class="kp-recommendation-group policy-panel embedded-summary daily-recommendation-group"',
-    );
-    expect(html).toContain('class="kp-recommendation-group__items"');
-    expect(html).toContain('class="kp-recommendation-card daily-recommendation-item"');
-    expect(html).toContain(
-      'class="kp-recommendation-card__title">Dagcheck zonder extra medicatiemoment</h4>',
-    );
-    expect(html).toContain('data-recommendation-owner="vrouw"');
-    expect(html).toContain('data-recommendation-artscheck="required"');
-    expect(html).toContain('Te doen vandaag Vrouw');
-    expect(html).toContain('Te doen vandaag Man');
-    expect(html).toContain('Te doen vandaag Samen');
-    expect(html).toContain('Dagcheck zonder extra medicatiemoment');
-    expect(html).toContain('class="daily-recommendation-action-form compact-form"');
-    expect(html).toContain('name="recommendationAction" value="bewaar"');
-    expect(html).toContain('name="recommendationAction" value="afwijzen"');
-    expect(html).toContain('name="recommendationAction" value="herinnering"');
-    expect(html).toContain('name="recommendationAction" value="vraag"');
-    expect(html).toContain('name="recommendationAction" value="artscheck"');
-    expect(html).toContain('Artscheck</button>');
-    expect(html).toContain('name="bron" value="Lokale dagstart"');
-    expect(html).toContain('name="reminderTijdstip" type="datetime-local"');
-    expect(html).toContain('data-recommendation-id="vrouw-dagkaart-bronherleiding"');
-    expect(html).toContain('Vrouw dagkaart met bronherleiding');
-    expect(html).toContain('Leefstijl: noteer alleen haalbare observaties');
-    expect(html).toContain('Voeding: verzamel feitelijke vragen');
-    expect(html).toContain('Supplementen: zet alleen vragen klaar');
-    expect(html).toContain('Cycluscontext: nog geen trajectfase of cyclusmeting');
-    expect(html).toContain('Cyclusfasebron</dt><dd>Lokale dagstart');
-    expect(html).toContain('Cyclusfasedatum');
-    expect(html).toContain('Cyclusfasereview</dt><dd>concept_te_controleren');
-    expect(html).toContain('Cyclusfasestatus</dt><dd>geen_cycluscontext');
-    expect(html).toContain('Cyclusfasecorrectievelden');
-    expect(html).toContain('cyclusfase · cyclusmeting · bronselectie · reviewstatus');
-    expect(html).toContain('data-recommendation-id="vrouw-basisdag"');
-    expect(html).toContain('data-recommendation-id="man-dagkaart-bronherleiding"');
-    expect(html).toContain('Man dagkaart met bronherleiding');
-    expect(html).toContain('Eigenaar: Man');
-    expect(html).toContain('Datum:');
-    expect(html).toContain('Reden: Eigenaar man; dagelijkse vruchtbaarheidsoptimalisatie');
-    expect(html).toContain('Leefstijlcontextbron');
-    expect(html).toContain('Leefstijlcontextdatum');
-    expect(html).toContain('Leefstijlcontextreview</dt><dd>concept_te_controleren');
-    expect(html).toContain('Leefstijlcontextstatus</dt><dd>alleen_dagstart');
-    expect(html).toContain('Leefstijlcontextlabels</dt><dd>Lokale dagstart zonder extra context');
-    expect(html).toContain(
-      'Leefstijlcorrectievelden</dt><dd>leefstijlcontext · bronselectie · reviewstatus',
-    );
-    expect(html).toContain('Gebruikte bronnen:');
-    expect(html).toContain('Gebruikte bronnen: Lokale dagstart zonder extra medicatiemoment');
-    expect(html).toContain('Inputminimalisatiebron');
-    expect(html).toContain('Reviewstatus</dt><dd>concept_te_controleren');
-    expect(html).toContain('Gebruikte inputcategorieen');
-    expect(html).toContain('Uitgesloten inputcategorieen');
-    expect(html).toContain('vrije dossier/OCR-tekst');
-    expect(html).toContain('Correctievelden</dt><dd>dagadviesTekst · bronselectie · reviewstatus');
-    expect(html).toContain('Input-minimalisatie: alleen lokale categorie- en planningcontext');
-    expect(html).toContain('name="dailyRecommendationCorrection"');
-    expect(html).toContain('name="dailyRecommendationReviewStatus"');
-    expect(html).toContain('Mannelijke leefstijl- en voorbereidingskaart');
-    expect(html).toContain(
-      'Leefstijl: noteer alleen feitelijke observaties zoals slaap, stress of routines.',
-    );
-    expect(html).toContain('Geen vruchtbaarheidsadvies of leefstijlvoorschrift.');
-    expect(html).toContain(
-      'Voeding en supplementen: verzamel vragen voor kliniek, arts of apotheek.',
-    );
-    expect(html).toContain('Bron: Gedeelde consultvoorbereiding');
-    expect(html).toContain('Kiempad adviseert geen supplement, combinatie of hoeveelheid.');
-    expect(html).toContain('Artscheck verplicht voor supplementvragen');
-    expect(html).toContain('Geen behandelkeuze of medische interpretatie.');
-    expect(html).toContain('Eigen aandachtspunten vastleggen');
-    expect(html).toContain('Voeding en supplementen checklijst');
-    expect(html).toContain('Voeding: noteer feitelijke vragen of observaties voor het consult.');
-    expect(html).toContain('Bron: Lokale leefstijlcontext');
-    expect(html).toContain('Geen voedingsadvies; bespreek persoonlijke keuzes met behandelaars.');
-    expect(html).toContain(
-      'Supplementen: controleer alleen wat al met kliniek, arts of apotheek is afgesproken.',
-    );
-    expect(html).toContain('Bron: Medicatie- en dossiercontext');
-    expect(html).toContain('Kiempad adviseert geen supplement, combinatie of hoeveelheid.');
-    expect(html).toContain('Vragenlijst nalopen');
-    expect(html).toContain('Kiempad geeft geen medisch advies');
-    expect(html).toContain('Volgende afspraak');
-    expect(html).toContain('Herinnering');
-    expect(html).toContain('Vragen voor de arts');
     expect(html).toContain('Nog geen komende afspraken vastgelegd');
-    expect(html).toContain('Nog geen komende herinneringen');
   });
 
   it('rendert dagadvies direct als start-subroute', () => {
@@ -3238,62 +3015,26 @@ describe('app shell', () => {
       }),
     );
 
-    const dashboardStart = html.indexOf(
-      '<section class="kp-dashboard start-dashboard-shell start-flow-dashboard" aria-label="Start flowdashboard">',
-    );
-    const workbenchIndex = html.indexOf('data-start-workbench="multi-flow"');
-    const snapshotIndex = html.indexOf('data-start-snapshot="ready"');
-    const routeNavIndex = html.indexOf('class="start-task-routes"');
-    const primaryStart = html.indexOf('class="kp-dashboard__primary"', dashboardStart);
-    const secondaryStart = html.indexOf('class="kp-dashboard__secondary"', primaryStart);
-    const phaseIndex = html.indexOf('Poging dashboard', primaryStart);
-    const todayIndex = html.indexOf('aria-label="Vandaag overzicht"', primaryStart);
-    const nextStepIndex = html.indexOf('Volgende stap', secondaryStart);
-    const recommendationsIndex = html.indexOf(
-      'data-dashboard-route="recommendations"',
-      secondaryStart,
-    );
-    const quickEntryIndex = html.indexOf('data-dashboard-route="quick-entry"', secondaryStart);
-    const flowRailIndex = html.indexOf('data-start-flow-rail="progressive"', secondaryStart);
-    const planningPanelIndex = html.indexOf('data-start-flow-panel="planning" open', flowRailIndex);
-    const recommendationsPanelIndex = html.indexOf(
-      'data-start-flow-panel="aanbevelingen"',
-      flowRailIndex,
-    );
-    const recommendationsOpenIndex = html.indexOf(
-      'data-start-flow-panel="aanbevelingen" open',
-      flowRailIndex,
-    );
-    const quickEntryPanelIndex = html.indexOf(
-      'data-start-flow-panel="snelle-invoer"',
-      flowRailIndex,
-    );
-    const switchboardIndex = html.indexOf('data-start-flow-switchboard="ready"', flowRailIndex);
-    const panelStackIndex = html.indexOf('data-start-flow-panel-stack="contained"', flowRailIndex);
+    const launchpadIndex = html.indexOf('data-start-launchpad="ready"');
+    const headerIndex = html.indexOf('data-start-launchpad-region="header"', launchpadIndex);
+    const cockpitIndex = html.indexOf('data-start-launchpad-region="cockpit"', headerIndex);
+    const deckIndex = html.indexOf('data-start-launchpad-region="deck"', cockpitIndex);
 
-    expect(dashboardStart).toBeGreaterThan(-1);
-    expect(workbenchIndex).toBeGreaterThan(-1);
-    expect(snapshotIndex).toBeGreaterThan(-1);
-    expect(routeNavIndex).toBeGreaterThan(-1);
-    expect(workbenchIndex).toBeLessThan(snapshotIndex);
-    expect(snapshotIndex).toBeLessThan(routeNavIndex);
-    expect(routeNavIndex).toBeLessThan(dashboardStart);
-    expect(switchboardIndex).toBeGreaterThan(flowRailIndex);
-    expect(panelStackIndex).toBeGreaterThan(switchboardIndex);
-    expect(primaryStart).toBeGreaterThan(dashboardStart);
-    expect(secondaryStart).toBeGreaterThan(primaryStart);
-    expect(phaseIndex).toBeGreaterThan(primaryStart);
-    expect(phaseIndex).toBeLessThan(secondaryStart);
-    expect(todayIndex).toBeGreaterThan(primaryStart);
-    expect(todayIndex).toBeLessThan(secondaryStart);
-    expect(flowRailIndex).toBeGreaterThan(secondaryStart);
-    expect(planningPanelIndex).toBeGreaterThan(flowRailIndex);
-    expect(recommendationsOpenIndex).toBe(-1);
-    expect(recommendationsPanelIndex).toBeGreaterThan(planningPanelIndex);
-    expect(quickEntryPanelIndex).toBeGreaterThan(recommendationsPanelIndex);
-    expect(nextStepIndex).toBeGreaterThan(secondaryStart);
-    expect(recommendationsIndex).toBeGreaterThan(secondaryStart);
-    expect(quickEntryIndex).toBeGreaterThan(recommendationsIndex);
+    expect(launchpadIndex).toBeGreaterThan(-1);
+    expect(headerIndex).toBeGreaterThan(launchpadIndex);
+    expect(cockpitIndex).toBeGreaterThan(headerIndex);
+    expect(deckIndex).toBeGreaterThan(cockpitIndex);
+    expect(html).toContain('Poging dashboard · Stimulatie');
+    expect(html).toContain('Echo dashboard');
+    expect(html).toContain('data-start-workspace-card="today"');
+    expect(html).toContain('data-start-workspace-card="record"');
+    expect(html).toContain('data-start-workspace-card="insight"');
+    expect(html).toContain('data-start-workspace-card="control"');
+    expect(html).not.toContain('data-start-workbench="multi-flow"');
+    expect(html).not.toContain('data-start-snapshot="ready"');
+    expect(html).not.toContain('class="start-task-routes"');
+    expect(html).not.toContain('start-flow-dashboard');
+    expect(html).not.toContain('data-start-flow-rail="progressive"');
   });
 
   it('bewaakt dagelijkse aanbevelingen als dual-owner states zonder dosering of trackingpayload', () => {
@@ -3308,6 +3049,7 @@ describe('app shell', () => {
       dossierDocuments: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeStartRoute: 'recommendations',
     });
     const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
 
@@ -3463,6 +3205,7 @@ describe('app shell', () => {
       dossierDocuments: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeStartRoute: 'recommendations',
     });
     const contextualRecommendations = extractDailyRecommendationsSection(contextualHtml);
 
@@ -3655,6 +3398,7 @@ describe('app shell', () => {
             },
           },
         ],
+        activeStartRoute: 'today',
       }),
     );
 
@@ -3772,6 +3516,7 @@ describe('app shell', () => {
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
       dailyRecommendationStatus: 'Suggestie bewaard: Dagcheck zonder extra medicatiemoment.',
+      activeStartRoute: 'recommendations',
     });
 
     expect(html).toContain('Suggestie bewaard: Dagcheck zonder extra medicatiemoment.');
@@ -3822,6 +3567,7 @@ describe('app shell', () => {
       kennisItems: [],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeStartRoute: 'recommendations',
     });
 
     expect(html).toContain('Medicatieschema controleren');
@@ -3907,6 +3653,7 @@ describe('app shell', () => {
       cycleData: [{ id: 'cyclus-1', datum: '2026-06-24', meting: 'cyclusdag', waarde: 7 }],
       settings: DEFAULT_APP_SETTINGS,
       notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeStartRoute: 'recommendations',
     });
 
     expect(html).toContain('Leefstijlcontext nalopen');

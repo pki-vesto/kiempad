@@ -181,7 +181,6 @@ import {
   card,
   commandRouteSummary,
   dashboardSection,
-  dashboardShell,
   disclosure,
   domainSplitWorkspace,
   firstViewportWorkbench,
@@ -13660,7 +13659,6 @@ function renderStartScreen(state: AppShellState): string {
     state.medicatie.flatMap((bundle) => bundle.doseLogs),
     vandaag,
   );
-  const doseGedaan = todayDoseLogs.filter((doseLog) => doseLog.status === 'genomen').length;
   const phasePanel = phaseHeroCard(
     huidigeFase
       ? {
@@ -13685,47 +13683,7 @@ function renderStartScreen(state: AppShellState): string {
           },
         },
   );
-  const dosePanel =
-    todayDoseLogs.length > 0
-      ? dashboardSection({
-          title: 'Vandaag te zetten',
-          eyebrow: `${doseGedaan}/${todayDoseLogs.length} gedaan`,
-          body: renderDoseLogList(todayDoseLogs, state.medicatie),
-          route: 'medicatie',
-          ariaLabel: 'Vandaag te zetten',
-        })
-      : dashboardSection({
-          title: 'Vandaag te zetten',
-          eyebrow: 'Rustig',
-          body: renderEmptyState('Geen medicatiemomenten voor vandaag.', {
-            title: 'Vandaag niets gepland',
-          }),
-          route: 'medicatie',
-          ariaLabel: 'Vandaag te zetten',
-        });
   const setupPanel = renderFirstRunSetup(state);
-  const startSnapshot = renderStartSnapshot({
-    activeTraject,
-    huidigeFase,
-    nextAppointment,
-    nextReminder,
-    doseCount: todayDoseLogs.length,
-    recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
-      (total, owner) => total + dailyRecommendations[owner].length,
-      0,
-    ),
-    reviewCount: (['vrouw', 'man', 'samen'] as const).reduce(
-      (total, owner) =>
-        total +
-        dailyRecommendations[owner].filter(
-          (item) => item.inputMinimisatie?.reviewStatus === 'concept_te_controleren',
-        ).length,
-      0,
-    ),
-    dossierCount: state.dossierDocuments?.length ?? 0,
-    consultCount: state.consultVerslagen?.length ?? 0,
-    secureMode: isCentralStorage(state) ? 'Centrale dataset' : 'Lokale kluis',
-  });
 
   const startHeader = renderStartCommandHeader(state);
   const startCockpit = renderStartCockpit({
@@ -13787,54 +13745,7 @@ function renderStartScreen(state: AppShellState): string {
         header: startHeader,
         cockpit: startCockpit,
         workspaceDeck: startWorkspaceDeck,
-      }),
-      renderStartFocusShell({
-        intelligence: renderStartIntelligenceWorkbench(state, dailyRecommendations),
-        snapshot: startSnapshot,
-        taskRoutes: renderStartTaskRouteNav(),
-        dashboard: dashboardShell({
-          className: 'start-dashboard-shell start-flow-dashboard',
-          ariaLabel: 'Start flowdashboard',
-          primary: [
-            phasePanel,
-            renderDailyCommandCenter(state, vandaag, localDateTimeIso(new Date())),
-          ],
-          secondary: [
-            renderStartFlowRail([
-              {
-                summary: 'Planning',
-                eyebrow: 'Volgende stap',
-                key: 'planning',
-                open: true,
-                body: renderStartNextStepBoard(nextAppointment, nextReminder, openQuestions),
-              },
-              {
-                summary: 'Medicatie vandaag',
-                eyebrow: 'Schema',
-                key: 'medicatie',
-                body: dosePanel,
-              },
-              {
-                summary: 'Dagadvies',
-                eyebrow: 'Suggesties',
-                key: 'aanbevelingen',
-                body: renderStartRecommendationRoute(dailyAdviceConsole),
-              },
-              {
-                summary: 'Inrichting',
-                eyebrow: 'Setup',
-                key: 'setup',
-                body: setupPanel,
-              },
-              {
-                summary: 'Snelle invoer',
-                eyebrow: 'Vastleggen',
-                key: 'snelle-invoer',
-                body: renderStartQuickEntryRoute(),
-              },
-            ]),
-          ],
-        }),
+        setup: setupPanel,
       }),
     ],
     {
@@ -13878,6 +13789,7 @@ function renderStartLaunchpad(input: {
   header: string;
   cockpit: string;
   workspaceDeck: string;
+  setup: string;
 }): string {
   return `
     <section class="start-launchpad" aria-label="Start launchpad" data-start-launchpad="ready" data-start-console-region="launchpad">
@@ -13890,35 +13802,11 @@ function renderStartLaunchpad(input: {
       <div class="start-launchpad__deck" data-start-launchpad-region="deck">
         ${input.workspaceDeck}
       </div>
-    </section>
-  `;
-}
-
-function renderStartFocusShell(input: {
-  intelligence: string;
-  snapshot: string;
-  taskRoutes: string;
-  dashboard: string;
-}): string {
-  return `
-    <section class="start-focus-shell" aria-labelledby="start-focus-shell-title" data-start-focus-shell="ready" data-start-console-region="commandcenter">
-      <header class="start-focus-shell__header">
-        <p class="start-cockpit__eyebrow">Verdieping</p>
-        <h2 id="start-focus-shell-title">Start command-center</h2>
-        <p>Werkbanen, startscan en dagadvies staan op desktop naast elkaar als vaste werkvlakken; mobiel opent dit als compacte scrollbare routekaart.</p>
-      </header>
-      <div class="start-focus-shell__body">
-        <div class="start-focus-shell__primary" data-start-focus-region="workflows">
-          ${input.intelligence}
-        </div>
-        <aside class="start-focus-shell__side" aria-label="Startscan en routekeuze" data-start-focus-region="scan">
-          ${input.snapshot}
-          ${input.taskRoutes}
-        </aside>
-      </div>
-      <div class="start-focus-shell__dashboard" data-start-focus-region="daily">
-        ${input.dashboard}
-      </div>
+      ${
+        input.setup
+          ? `<div class="start-launchpad__setup" data-start-launchpad-region="setup">${input.setup}</div>`
+          : ''
+      }
     </section>
   `;
 }
@@ -14054,271 +13942,6 @@ function renderStartWorkspaceDeck(input: {
           .join('')}
       </div>
     </section>
-  `;
-}
-
-function renderStartSnapshot(input: {
-  activeTraject: TrajectMetFasen | undefined;
-  huidigeFase: Fase | undefined;
-  nextAppointment: string;
-  nextReminder: string;
-  doseCount: number;
-  recommendationCount: number;
-  reviewCount: number;
-  dossierCount: number;
-  consultCount: number;
-  secureMode: string;
-}): string {
-  const phaseTitle = input.huidigeFase
-    ? TRAJECT_FASE_LABELS[input.huidigeFase.fase]
-    : input.activeTraject
-      ? input.activeTraject.traject.naam
-      : 'Traject starten';
-  const phaseMeta = input.huidigeFase
-    ? 'Actuele fase zichtbaar'
-    : input.activeTraject
-      ? 'Kies de huidige fase'
-      : 'Nog geen poging';
-  const todayMeta =
-    input.doseCount > 0
-      ? `${input.doseCount} medicatiemoment${input.doseCount === 1 ? '' : 'en'}`
-      : input.nextReminder;
-  const adviceMeta =
-    input.reviewCount > 0
-      ? `${input.reviewCount} concept${input.reviewCount === 1 ? '' : 'en'} te controleren`
-      : 'Geen open reviewdruk';
-  const vaultMeta = `${input.dossierCount} document${input.dossierCount === 1 ? '' : 'en'} · ${input.consultCount} consult${input.consultCount === 1 ? '' : 'en'}`;
-
-  return `
-    <section class="start-snapshot" aria-label="Startscan" data-start-snapshot="ready">
-      <a class="start-snapshot__card" href="#start-current-phase" data-start-snapshot-card="phase">
-        <span>Traject</span>
-        <strong>${escapeHtml(phaseTitle)}</strong>
-        <small>${escapeHtml(phaseMeta)}</small>
-      </a>
-      <a class="start-snapshot__card" href="#start-next-step" data-start-snapshot-card="today">
-        <span>Vandaag</span>
-        <strong>${escapeHtml(input.nextAppointment)}</strong>
-        <small>${escapeHtml(todayMeta)}</small>
-      </a>
-      <a class="start-snapshot__card" href="#start-recommendations" data-start-snapshot-card="advice">
-        <span>Dagadvies</span>
-        <strong>${input.recommendationCount} suggestie${input.recommendationCount === 1 ? '' : 's'}</strong>
-        <small>${escapeHtml(adviceMeta)}</small>
-      </a>
-      <a class="start-snapshot__card" href="#backup" data-start-snapshot-card="vault">
-        <span>Kluis</span>
-        <strong>${escapeHtml(input.secureMode)}</strong>
-        <small>${escapeHtml(vaultMeta)}</small>
-      </a>
-    </section>
-  `;
-}
-
-type StartFlowRailPanel = {
-  summary: string;
-  eyebrow: string;
-  key: string;
-  body: string;
-  open?: boolean;
-};
-
-function renderStartFlowRail(panels: readonly StartFlowRailPanel[]): string {
-  const visiblePanels = panels.filter((panel) => Boolean(panel.body));
-  if (visiblePanels.length === 0) return '';
-
-  return `
-    <section class="start-flow-rail" aria-labelledby="start-flow-rail-title" data-start-flow-rail="progressive" data-start-flow-rail-mode="contained">
-      <header class="start-flow-rail__header">
-        <div>
-          <p class="start-flow-rail__eyebrow">Vervolgpanelen</p>
-          <h2 id="start-flow-rail-title">Open alleen wat je nu nodig hebt</h2>
-        </div>
-        <span class="start-flow-rail__status">${visiblePanels.length} routes</span>
-      </header>
-      <nav class="start-flow-switchboard" aria-label="Vervolgpanelen kiezen" data-start-flow-switchboard="ready">
-        ${visiblePanels
-          .map(
-            (panel) => `
-              <a href="#start-flow-panel-${escapeAttribute(panel.key)}" data-start-flow-switchboard-card="${escapeAttribute(panel.key)}">
-                <span>${escapeHtml(panel.eyebrow)}</span>
-                <strong>${escapeHtml(panel.summary)}</strong>
-                <small>Open paneel</small>
-              </a>
-            `,
-          )
-          .join('')}
-      </nav>
-      <div class="start-flow-rail__panels" data-start-flow-panel-stack="contained">
-        ${visiblePanels
-          .map(
-            (panel) => `
-              <details id="start-flow-panel-${escapeAttribute(panel.key)}" class="start-flow-panel" data-start-flow-panel="${escapeAttribute(panel.key)}"${panel.open ? ' open' : ''}>
-                <summary class="start-flow-panel__summary">
-                  <span>${escapeHtml(panel.eyebrow)}</span>
-                  <strong>${escapeHtml(panel.summary)}</strong>
-                </summary>
-                <div class="start-flow-panel__body">${panel.body}</div>
-              </details>
-            `,
-          )
-          .join('')}
-      </div>
-    </section>
-  `;
-}
-
-function renderStartIntelligenceWorkbench(
-  state: AppShellState,
-  dailyRecommendations: DailyRecommendationOverview,
-): string {
-  const dossierCount = state.dossierDocuments?.length ?? 0;
-  const consultCount = state.consultVerslagen?.length ?? 0;
-  const timelineCount =
-    state.trajecten.length +
-    state.afspraken.length +
-    dossierCount +
-    consultCount +
-    state.vragen.length +
-    state.medicatie.length +
-    state.kennisItems.length;
-  const recommendationCount = (['vrouw', 'man', 'samen'] as const).reduce(
-    (total, owner) => total + dailyRecommendations[owner].length,
-    0,
-  );
-  const researchCount = state.kennisItems.length;
-  const embryoCount =
-    state.dossierDocuments?.filter(
-      (document) =>
-        document.embryo ||
-        document.beeldMetadata?.soort === 'embryo_afbeelding' ||
-        document.categorie === 'embryo',
-    ).length ?? 0;
-  const secureMode = isCentralStorage(state) ? 'Centrale dataset actief' : 'Lokale kluis actief';
-
-  const tiles = [
-    {
-      href: '#dossier',
-      label: 'Dossier uploaden',
-      eyebrow: 'Medische intake',
-      meta:
-        dossierCount > 0
-          ? `${dossierCount} document${dossierCount === 1 ? '' : 'en'} · ${consultCount} verslag${consultCount === 1 ? '' : 'en'}`
-          : 'Onderzoeken, echo’s en verslagen',
-      detail: 'Start met upload, OCR-review en indexering voordat je conclusies trekt.',
-      flow: 'uploads',
-      tier: 'primary',
-    },
-    {
-      href: '#traject?route=context',
-      label: 'Tijdlijn begrijpen',
-      eyebrow: 'Trajectoverzicht',
-      meta:
-        timelineCount > 0
-          ? `${timelineCount} gekoppelde tijdlijnpunten`
-          : 'Traject, consulten en embryo’s',
-      detail: 'Bekijk de volgorde van onderzoeken, consulten, afspraken en behandelcontext.',
-      flow: 'timeline',
-      tier: 'primary',
-    },
-    {
-      href: '#dossier?route=imaging',
-      label: 'Embryo & beelden',
-      eyebrow: 'Imaging',
-      meta:
-        embryoCount > 0
-          ? `${embryoCount} embryo-afbeelding${embryoCount === 1 ? '' : 'en'}`
-          : 'Echo’s, scans en embryo’s',
-      detail: 'Houd beeldmateriaal apart van documenten, met vergelijking per moment.',
-      flow: 'embryo',
-      tier: 'supporting',
-    },
-    {
-      href: '#start-recommendations',
-      label: 'Dagadvies openen',
-      eyebrow: 'Vandaag',
-      meta:
-        recommendationCount > 0
-          ? `${recommendationCount} suggestie${recommendationCount === 1 ? '' : 's'} vandaag`
-          : 'Leefstijl, voorbereiding en vragen',
-      detail: 'Suggesties blijven gekoppeld aan dossier, planning en artscheck.',
-      flow: 'recommendations',
-      tier: 'supporting',
-    },
-    {
-      href: '#kennis',
-      label: 'Research volgen',
-      eyebrow: 'Wetenschap',
-      meta:
-        researchCount > 0
-          ? `${researchCount} bron${researchCount === 1 ? '' : 'nen'} in kennisbank`
-          : 'Studies in gewone taal',
-      detail: 'Lees wetenschappelijke en eenvoudige samenvattingen met broncontext.',
-      flow: 'research',
-      tier: 'supporting',
-    },
-    {
-      href: '#backup',
-      label: 'Veilig meenemen',
-      eyebrow: 'Encrypted sync',
-      meta: secureMode,
-      detail: 'Controleer opslag, back-up en import voordat je op een ander apparaat verdergaat.',
-      flow: 'secure-sync',
-      tier: 'supporting',
-    },
-  ];
-
-  return `
-    <section class="start-workbench start-intelligence-hub" aria-labelledby="start-workbench-title" data-start-workbench="multi-flow" data-start-intelligence-hub="six-workflows">
-      <div class="start-workbench__header">
-        <div>
-          <p class="start-workbench__eyebrow">Fertility hub</p>
-          <h2 id="start-workbench-title">Kies eerst je werkstroom</h2>
-          <p>Uploads, tijdlijn, embryo’s, research en suggesties starten als eigen werkbanen, zodat de startpagina niet als één lange lijst voelt.</p>
-        </div>
-        <span class="start-workbench__status">6 werkbanen</span>
-      </div>
-      <nav class="start-workbench__grid" aria-label="Fertility intelligence werkbanen">
-        ${tiles
-          .map(
-            (tile) => `
-              <a class="start-workbench-card start-workbench-card--${tile.tier}" href="${tile.href}" data-start-workbench-flow="${tile.flow}" data-start-workbench-tier="${tile.tier}">
-                <span class="start-workbench-card__eyebrow">${escapeHtml(tile.eyebrow)}</span>
-                <span class="start-workbench-card__label">${escapeHtml(tile.label)}</span>
-                <span class="start-workbench-card__meta">${escapeHtml(tile.meta)}</span>
-                <span class="start-workbench-card__detail">${escapeHtml(tile.detail)}</span>
-              </a>
-            `,
-          )
-          .join('')}
-      </nav>
-      ${renderDailyAdviceWorkbench(dailyRecommendations, { compact: true })}
-    </section>
-  `;
-}
-
-function renderStartTaskRouteNav(): string {
-  const routes = [
-    { href: '#start-current-phase', label: 'Fase', meta: 'Traject' },
-    { href: '#start-today', label: 'Vandaag', meta: 'Taken' },
-    { href: '#start-next-step', label: 'Volgende stap', meta: 'Planning' },
-    { href: '#start-recommendations', label: 'Suggesties', meta: 'Te doen vandaag' },
-    { href: '#start-quick-entry', label: 'Snelle invoer', meta: 'Vastleggen' },
-  ];
-
-  return `
-    <nav class="start-task-routes" aria-label="Start taakroutes" data-start-task-routes="ready">
-      ${routes
-        .map(
-          (route) => `
-            <a class="start-task-route" href="${route.href}">
-              <span>${escapeHtml(route.label)}</span>
-              <small>${escapeHtml(route.meta)}</small>
-            </a>
-          `,
-        )
-        .join('')}
-    </nav>
   `;
 }
 
@@ -14697,17 +14320,6 @@ function renderDailyAdviceOwnerCard(
       <span class="daily-advice-owner-card__meta">${reviewCount} review · ${artscheckCount} artscheck</span>
     </a>
   `;
-}
-
-function renderStartRecommendationRoute(dailyAdviceConsole: string): string {
-  return dashboardSection({
-    title: 'Te doen vandaag',
-    id: 'start-recommendations',
-    eyebrow: 'Dagadvies',
-    route: 'recommendations',
-    ariaLabel: 'Te doen vandaag taakroute',
-    body: dailyAdviceConsole,
-  });
 }
 
 function renderDailyAdviceConsole(
