@@ -85,6 +85,9 @@
 - **CFX-018 agenda feedback — done in G1340 / issue #2454.** Afspraak save/delete actions now set
   inline `role="status"` feedback in the komend and plannen routes, complementing the existing
   ICS import feedback.
+- **CFX-018 medication feedback — done in G1341 / issue #2456.** Medicatie save/delete and dose-log
+  actions now set inline `role="status"` feedback in Vandaag, Beheer, and Historie, alongside the
+  existing schema-import feedback.
 
 ---
 
