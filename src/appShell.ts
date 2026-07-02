@@ -12795,44 +12795,55 @@ function renderKostenForm(selected?: CostItem): string {
   return `
     <form ${selected ? 'class="data-form compact-form kosten-form"' : 'id="kosten-form" class="data-form kosten-form"'}>
       ${selected ? `<input type="hidden" name="id" value="${escapeAttribute(selected.id)}" />` : ''}
-      <label>
-        Omschrijving
-        <input name="omschrijving" value="${escapeAttribute(selected?.omschrijving ?? '')}" autocomplete="off" required />
-      </label>
-      <label>
-        Datum
-        <input name="datum" type="date" value="${escapeAttribute(selected?.datum ?? '')}" required />
-      </label>
-      <label>
-        Bedrag
-        <input name="bedrag" type="number" min="0" step="0.01" value="${selected?.bedrag ?? ''}" required />
-      </label>
-      <label>
-        Categorie
-        <select name="categorie">
-          ${Object.entries(COST_CATEGORIE_LABELS)
-            .map(([value, label]) => renderOption(value, label, selected?.categorie))
-            .join('')}
-        </select>
-      </label>
-      <label>
-        Vergoeding
-        <select name="vergoed">
-          ${Object.entries(COST_VERGOED_LABELS)
-            .map(([value, label]) => renderOption(value, label, selected?.vergoed))
-            .join('')}
-        </select>
-      </label>
-      <label>
-        Traject-id (optioneel)
-        <input name="trajectId" value="${escapeAttribute(selected?.trajectId ?? '')}" autocomplete="off" />
-      </label>
-      <button type="submit">${selected ? 'Werk kostenpost bij' : 'Bewaar kostenpost'}</button>
-      ${
-        selected
-          ? `<button class="danger-button delete-kosten" type="button" data-kosten-id="${escapeAttribute(selected.id)}" aria-label="Verwijder kostenpost: ${escapeAttribute(selected.omschrijving)}">Verwijder kostenpost</button>`
-          : ''
-      }
+      <fieldset class="finance-form-section finance-form-section--primary" data-finance-form-section="kostenpost">
+        <legend>Kostenpost</legend>
+        <label class="finance-form-field finance-form-field--wide">
+          Omschrijving
+          <input name="omschrijving" value="${escapeAttribute(selected?.omschrijving ?? '')}" autocomplete="off" required />
+        </label>
+        <label class="finance-form-field">
+          Datum
+          <input name="datum" type="date" value="${escapeAttribute(selected?.datum ?? '')}" required />
+        </label>
+        <label class="finance-form-field finance-amount-field">
+          Bedrag
+          <span class="finance-amount-input" data-finance-amount-input="ready">
+            <span aria-hidden="true">€</span>
+            <input name="bedrag" type="number" min="0" step="0.01" value="${selected?.bedrag ?? ''}" required />
+          </span>
+        </label>
+      </fieldset>
+      <fieldset class="finance-form-section" data-finance-form-section="vergoeding-context">
+        <legend>Vergoeding en context</legend>
+        <label class="finance-form-field">
+          Categorie
+          <select name="categorie">
+            ${Object.entries(COST_CATEGORIE_LABELS)
+              .map(([value, label]) => renderOption(value, label, selected?.categorie))
+              .join('')}
+          </select>
+        </label>
+        <label class="finance-form-field">
+          Vergoeding
+          <select name="vergoed">
+            ${Object.entries(COST_VERGOED_LABELS)
+              .map(([value, label]) => renderOption(value, label, selected?.vergoed))
+              .join('')}
+          </select>
+        </label>
+        <label class="finance-form-field finance-form-field--wide">
+          Traject-id (optioneel)
+          <input name="trajectId" value="${escapeAttribute(selected?.trajectId ?? '')}" autocomplete="off" />
+        </label>
+      </fieldset>
+      <div class="finance-form-actions">
+        <button type="submit">${selected ? 'Werk kostenpost bij' : 'Bewaar kostenpost'}</button>
+        ${
+          selected
+            ? `<button class="danger-button delete-kosten" type="button" data-kosten-id="${escapeAttribute(selected.id)}" aria-label="Verwijder kostenpost: ${escapeAttribute(selected.omschrijving)}">Verwijder kostenpost</button>`
+            : ''
+        }
+      </div>
     </form>
   `;
 }

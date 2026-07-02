@@ -172,6 +172,9 @@
 - **CFX-039 wellbeing log route unstack — partial in G1370 / issue #2514.** Welzijn Vastleggen now
   shows mental check-in as the primary visible form and moves symptom/cycle entry into separate
   continuation panels instead of one long stacked form block.
+- **CFX-037/CFX-012 finance form kit — partial in G1371 / issue #2516.** Kosten Toevoegen now
+  groups amount/date/description and reimbursement context into form sections with a euro amount
+  adornment and compact actions.
 
 ---
 
@@ -586,6 +589,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   rich empty. **P1 · M** Partial G1345/#2464: route-first workspace and amount scanability done.
   Partial G1364/#2502: Kostenhistorie renders as scan-friendly cost cards with status rails and
   quiet edit disclosures.
+  Partial G1371/#2516: Kosten Toevoegen uses a sectioned form kit with a euro amount field and
+  compact action row.
 - **CFX-038** — Kennis: kit search/category, category-eyebrow cards, chevron, badges. **P2 · M**
   Partial G1365/#2504: Kennisbibliotheek items render as category-eyebrow cards with chevrons,
   status badges, and quiet action/edit zones.
@@ -622,6 +627,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-012** — Apply the form-field kit to every form (not just `.data-form`): Traject filter,
   Dossier filters, Kennis search, Research, Welzijn/Vastleggen, snelle invoer. Accept: no native
   date/number/select styling anywhere. **P1 · L**
+  Partial G1371/#2516: Kostenpost toevoegen/bewerken now uses explicit form sections and a styled
+  euro amount field while preserving the existing form hooks.
 - **CFX-025** — `€` prefix adornment in amount fields (C25). **P3 · S**
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**
