@@ -35845,7 +35845,14 @@ describe('app shell', () => {
     expect(css).toContain('.decision-focus-shell__workbench > .decision-insight-workbench {');
     expect(css).toContain('.decision-focus-shell__workspace {');
     expect(css).toContain('.decision-focus-shell__workspace .domain-split-workspace {');
-    expect(css).toContain('"rail context";');
+    expect(css).toContain('grid-template-areas: "rail main";');
+    expect(css).not.toContain(
+      '.decision-focus-shell__workspace .domain-split-workspace__context {',
+    );
+    expect(css).toContain('.decision-choice-banner {');
+    expect(css).toContain('.decision-option-tags {');
+    expect(css).toContain('.decision-option-tag--plus {');
+    expect(css).toContain('.decision-option-tag--minus {');
     expect(css).toContain('.insight-workbench {');
     expect(css).toContain('[data-wellbeing-first-viewport="insight-workbench"]');
     expect(css).toContain('[data-decision-first-viewport="insight-workbench"]');
@@ -35889,7 +35896,10 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.decision-focus-shell {');
     expect(mobileCss).toContain('.decision-focus-shell__body {');
-    expect(mobileCss).toContain('.decision-focus-shell__workspace .domain-split-workspace,');
+    expect(mobileCss).toContain('.decision-focus-shell__workspace .domain-split-workspace {');
+    expect(mobileCss).not.toContain(
+      '.decision-focus-shell__workspace .domain-split-workspace__context {',
+    );
   });
 
   it('filtert kennisitems op zoekterm en categorie', () => {
@@ -37010,6 +37020,10 @@ describe('app shell', () => {
     expect(html).toContain('class="decision-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Afwegingen taakroutes"');
     expect(html).toContain('data-decision-task-routes="ready"');
+    expect(html).toContain('data-decision-compact-workspace="route-first"');
+    expect(html).not.toContain('data-decision-workspace-context="metrics"');
+    expect(html).not.toContain('data-workspace-context-signals="decision"');
+    expect(html).not.toContain('data-workspace-context-microstate="decision-choice"');
     expect(html).toContain('href="#afwegingen?route=prepare"');
     expect(html).toContain('href="#afwegingen?route=compare"');
     expect(html).toContain('href="#afwegingen?route=choice"');
@@ -37049,10 +37063,15 @@ describe('app shell', () => {
     expect(html).toContain('Vraag voor de arts: Wanneer moeten we bellen?');
     expect(html).toContain('2 opties');
     expect(html).toContain('Vandaag bellen');
-    expect(html).toContain('Voors: Sneller duidelijkheid');
-    expect(html).toContain('Tegens: Misschien onnodig onrustig');
+    expect(html).toContain('class="decision-choice-banner" data-decision-choice-banner="chosen"');
+    expect(html).toContain('<strong>Gekozen</strong>');
+    expect(html).toContain('class="decision-option-tags" data-decision-option-tags="ready"');
+    expect(html).toContain('data-decision-option-tag="plus"');
+    expect(html).toContain('data-decision-option-tag="minus"');
+    expect(html).toContain('Sneller duidelijkheid');
+    expect(html).toContain('Misschien onnodig onrustig');
     expect(html).toContain('Morgen afwachten');
-    expect(html).toContain('Voors: Meer rust vandaag');
+    expect(html).toContain('Meer rust vandaag');
     expect(html).toContain('Keuze: Vandaag bellen');
     expect(html).toContain('Onderbouwing: Geeft eerder duidelijkheid.');
     expect(html).toContain('Beslisverslag');
@@ -38127,6 +38146,7 @@ describe('app shell', () => {
         label === 'question' ||
         label === 'knowledge' ||
         label === 'wellbeing' ||
+        label === 'decision' ||
         label === 'finance'
       ) {
         expect(html).not.toContain('class="domain-split-workspace__context"');
@@ -38222,13 +38242,14 @@ describe('app shell', () => {
     expect(afwegingenHtml).toContain('data-decision-focus-region="workspace"');
     expect(afwegingenHtml).toContain('data-decision-console-region="workbench"');
     expect(afwegingenHtml).toContain('data-decision-console-region="workspace"');
-    expect(afwegingenHtml).toContain('data-decision-workspace-context="metrics"');
-    expect(afwegingenHtml).toContain('data-workspace-context-signals="decision"');
-    expect(afwegingenHtml).toContain('data-workspace-context-microstate="decision-choice"');
-    expect(afwegingenHtml).toContain(
+    expect(afwegingenHtml).toContain('data-decision-compact-workspace="route-first"');
+    expect(afwegingenHtml).not.toContain('data-decision-workspace-context="metrics"');
+    expect(afwegingenHtml).not.toContain('data-workspace-context-signals="decision"');
+    expect(afwegingenHtml).not.toContain('data-workspace-context-microstate="decision-choice"');
+    expect(afwegingenHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: keuzecontext controleren"',
     );
-    expect(afwegingenHtml).toContain('Keuzeregistratie');
+    expect(afwegingenHtml).not.toContain('Keuzeregistratie');
     expect(afwegingenHtml).toContain('Keuzefocus');
     expect(afwegingenHtml).toContain(
       'data-decision-route="choice" data-decision-route-state="active"',
@@ -38319,7 +38340,9 @@ describe('app shell', () => {
     expect(css).not.toContain(
       '.workspace-context-signals[data-workspace-context-signals="knowledge"]',
     );
-    expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="decision"]');
+    expect(css).not.toContain(
+      '.workspace-context-signals[data-workspace-context-signals="decision"]',
+    );
     expect(css).toContain('.workspace-context-signals[data-workspace-context-signals="eventlog"]');
     expect(css).toContain('.workspace-context-signals__microstate {');
     expect(css).toContain('.workspace-context-signals__microstate b {');

@@ -1939,7 +1939,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
   const decisionWorkspace = domainSplitWorkspace({
     className: 'decision-split-workspace',
     ariaLabel: 'Afwegingen split-view werkruimte',
-    data: { 'decision-split-workspace': 'ready' },
+    data: { 'decision-split-workspace': 'ready', 'decision-compact-workspace': 'route-first' },
     rail: renderDecisionTaskRoutes({
       decisionCount: decisions.length,
       chosenCount,
@@ -2061,13 +2061,6 @@ function renderAfwegingenScreen(state: AppShellState): string {
         </details>
       </section>
         `,
-    context: renderDecisionWorkspaceContext({
-      decisionCount: decisions.length,
-      chosenCount,
-      linkedQuestionCount,
-      latestDecision: decisions[0],
-      activeRoute: activeDecisionRoute,
-    }),
   });
 
   return sectionStack(
@@ -2200,69 +2193,6 @@ function renderDecisionTaskRoutes(input: {
   });
 }
 
-function renderDecisionWorkspaceContext(input: {
-  decisionCount: number;
-  chosenCount: number;
-  linkedQuestionCount: number;
-  latestDecision: Decision | undefined;
-  activeRoute: DecisionRoute;
-}): string {
-  const openCount = input.decisionCount - input.chosenCount;
-  const latest = input.latestDecision
-    ? `${input.latestDecision.onderwerp} · ${input.latestDecision.opties.length} optie(s)`
-    : 'Nog geen beslisnotitie.';
-  const contextSignals = renderWorkspaceContextSignals({
-    label: 'Keuzefocus',
-    title: 'Besliscontext',
-    data: { 'workspace-context-signals': 'decision' },
-    microstate: getDecisionContextMicrostate(input.activeRoute),
-    items: [
-      {
-        label: 'Open',
-        value: String(openCount),
-        detail:
-          openCount > 0
-            ? 'Vergelijk opties zonder dat Kiempad een keuze suggereert.'
-            : 'Geen open afwegingen in de huidige selectie.',
-        href: '#afwegingen?route=compare',
-      },
-      {
-        label: 'Keuzes',
-        value: String(input.chosenCount),
-        detail: 'Vastgelegde keuzes blijven terugleesbaar als eigen besluitcontext.',
-        href: '#afwegingen?route=choice',
-      },
-      {
-        label: 'Vragen',
-        value: String(input.linkedQuestionCount),
-        detail: 'Gekoppelde consultvragen helpen de keuze met de kliniek te bespreken.',
-        href: '#vragen?route=prep',
-      },
-    ],
-  });
-
-  return `
-    <section class="summary-panel" aria-label="Afwegingen context" data-decision-workspace-context="metrics">
-      <p class="kp-card__eyebrow">Context</p>
-      <h2>Besluiten in beeld</h2>
-      ${statRow([
-        { label: 'Notities', value: String(input.decisionCount) },
-        { label: 'Keuzes', value: String(input.chosenCount) },
-        { label: 'Open', value: String(openCount) },
-        { label: 'Gekoppeld', value: String(input.linkedQuestionCount) },
-      ])}
-      <p class="linked-note">${escapeHtml(latest)}</p>
-      ${contextSignals}
-    </section>
-    <section class="policy-panel" aria-label="Afwegingen werkruimtegrens" data-decision-workspace-context="privacy">
-      <p class="kp-card__eyebrow">Werkgrens</p>
-      <h2>Structuur zonder stuuradvies</h2>
-      <p>Voorbereiden, vergelijken, kiezen en teruglezen blijven aparte routes zodat Kiempad geen keuze suggereert.</p>
-      <p class="small-print">Deze kolom toont alleen beslismetadata en geen behandeladvies of voorkeur.</p>
-    </section>
-  `;
-}
-
 function renderDecisionRouteVisibility(activeRoute: DecisionRoute, route: DecisionRoute): string {
   return route === activeRoute
     ? ' data-decision-route-state="active"'
@@ -2320,6 +2250,7 @@ function renderDecisionCompareItem(item: Decision, state: AppShellState): string
       <div>
         <h3>${escapeHtml(item.onderwerp)}</h3>
         <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
+        ${renderDecisionChosenBanner(item)}
         ${vraag ? `<p class="linked-note">Vraag voor de arts: ${escapeHtml(vraag.vraag.vraag)}</p>` : ''}
         <ul class="compact-list">
           ${item.opties.map(renderDecisionOption).join('')}
@@ -2335,6 +2266,7 @@ function renderDecisionChoiceItem(item: Decision): string {
       <div>
         <h3>${escapeHtml(item.onderwerp)}</h3>
         <p>${escapeHtml(item.datum)} · ${item.opties.length} opties</p>
+        ${renderDecisionChosenBanner(item)}
         ${renderDecisionChoiceSummary(item)}
         ${renderDecisionChoiceForm(item)}
       </div>
@@ -2360,6 +2292,17 @@ function renderDecisionChoiceSummary(item: Decision): string {
     <p class="linked-note">
       Keuze: ${escapeHtml(item.keuze)}
       ${item.onderbouwing ? ` · Onderbouwing: ${escapeHtml(item.onderbouwing)}` : ''}
+    </p>
+  `;
+}
+
+function renderDecisionChosenBanner(item: Decision): string {
+  if (!item.keuze) return '';
+
+  return `
+    <p class="decision-choice-banner" data-decision-choice-banner="chosen">
+      <strong>Gekozen</strong>
+      <span>${escapeHtml(item.keuze)}</span>
     </p>
   `;
 }
@@ -2421,17 +2364,35 @@ function renderDecisionOption(optie: Decision['opties'][number]): string {
   return `
     <li>
       <strong>${escapeHtml(optie.titel)}</strong>
-      ${renderArgumentList('Voors', optie.voors)}
-      ${renderArgumentList('Tegens', optie.tegens)}
+      ${renderDecisionOptionTags(optie)}
     </li>
   `;
 }
 
-function renderArgumentList(label: string, items: readonly string[]): string {
-  if (items.length === 0) return '';
+function renderDecisionOptionTags(optie: Decision['opties'][number]): string {
+  const tags = [
+    ...optie.voors.map(
+      (item) =>
+        `<span class="decision-option-tag decision-option-tag--plus" data-decision-option-tag="plus"><strong>+</strong>${escapeHtml(item)}</span>`,
+    ),
+    ...optie.tegens.map(
+      (item) =>
+        `<span class="decision-option-tag decision-option-tag--minus" data-decision-option-tag="minus"><strong>-</strong>${escapeHtml(item)}</span>`,
+    ),
+  ];
+
+  if (tags.length === 0) {
+    return `
+      <span class="decision-option-tags" data-decision-option-tags="empty">
+        <span class="decision-option-tag decision-option-tag--empty">Geen voors of tegens vastgelegd</span>
+      </span>
+    `;
+  }
 
   return `
-    <span>${label}: ${items.map(escapeHtml).join('; ')}</span>
+    <span class="decision-option-tags" data-decision-option-tags="ready">
+      ${tags.join('')}
+    </span>
   `;
 }
 
@@ -4734,36 +4695,6 @@ function getScheduleContextMicrostate(route: ScheduleRoute): WorkspaceContextMic
       label: 'Historieroute',
       detail: 'Terugblik en eerdere afspraken blijven gescheiden van plannen.',
       action: 'Volgende: terugblik openen',
-    },
-  };
-  return states[route];
-}
-
-function getDecisionContextMicrostate(route: DecisionRoute): WorkspaceContextMicrostate {
-  const states: Record<DecisionRoute, WorkspaceContextMicrostate> = {
-    prepare: {
-      id: 'decision-prepare',
-      label: 'Voorbereidroute',
-      detail: 'Onderwerp, artsvraag en opties krijgen eerst rustige structuur.',
-      action: 'Volgende: onderwerp scherp maken',
-    },
-    compare: {
-      id: 'decision-compare',
-      label: 'Vergelijkroute',
-      detail: 'Voors en tegens blijven naast elkaar zonder keuzeadvies.',
-      action: 'Volgende: opties naast elkaar zetten',
-    },
-    choice: {
-      id: 'decision-choice',
-      label: 'Keuzeregistratie',
-      detail: 'Vastgelegde keuzes blijven eigen besluitcontext, geen stuuradvies.',
-      action: 'Volgende: keuzecontext controleren',
-    },
-    history: {
-      id: 'decision-history',
-      label: 'Verslagroute',
-      detail: 'Eerdere afwegingen blijven terugleesbaar als feitelijk verslag.',
-      action: 'Volgende: verslag teruglezen',
     },
   };
   return states[route];

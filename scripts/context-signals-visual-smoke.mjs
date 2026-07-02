@@ -30,12 +30,6 @@ const targets = [
     microstate: 'treatment-fasen',
   },
   {
-    screen: 'afwegingen',
-    hash: '#afwegingen?route=choice',
-    signal: 'decision',
-    microstate: 'decision-choice',
-  },
-  {
     screen: 'logboek',
     hash: '#logboek?route=privacy',
     signal: 'eventlog',
@@ -310,7 +304,7 @@ async function assertContextSignals(browser, options) {
     }
 
     const distinctFlowAccents = new Set(checked.map((target) => target.flowAccent).filter(Boolean));
-    if (distinctFlowAccents.size < 4) {
+    if (distinctFlowAccents.size < 3) {
       throw new Error(
         `${options.label}: contextflow mist route-eigen accentbalans (${distinctFlowAccents.size} accentfamilies).`,
       );
