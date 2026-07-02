@@ -3143,6 +3143,13 @@ describe('app shell', () => {
     expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"]:hover,');
     expect(css).toContain('[data-daily-recommendation-feedback-filter-reset="ready"]:hover {');
     expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 44%, var(--border));');
+    expect(css).toContain('[data-daily-advice-feedback-workflow-reset="ready"]:active,');
+    expect(css).toContain('[data-daily-recommendation-list-filter-reset="ready"]:active,');
+    expect(css).toContain('[data-daily-recommendation-feedback-filter-reset="ready"]:active {');
+    expect(css).toContain('border-color: color-mix(in srgb, var(--accent) 56%, var(--border));');
+    expect(css).toContain(
+      'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);',
+    );
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(

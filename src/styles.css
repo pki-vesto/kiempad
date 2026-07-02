@@ -4560,6 +4560,14 @@ h2 {
   background: color-mix(in srgb, var(--accent) 14%, var(--surface));
 }
 
+[data-daily-advice-feedback-workflow-reset="ready"]:active,
+[data-daily-recommendation-list-filter-reset="ready"]:active,
+[data-daily-recommendation-feedback-filter-reset="ready"]:active {
+  border-color: color-mix(in srgb, var(--accent) 56%, var(--border));
+  background: color-mix(in srgb, var(--accent) 20%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
 .daily-advice-focus-shell__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);

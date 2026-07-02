@@ -130,6 +130,9 @@
 - **Daily advice feedback reset hover consistency — done in G1448 / issue #2656.** The workflow,
   list-header, and filter-form reset buttons now share one hover treatment so pointer users get a
   consistent local-filter reset cue.
+- **Daily advice feedback reset active consistency — done in G1449 / issue #2658.** The workflow,
+  list-header, and filter-form reset buttons now share one active/pressed treatment so pointer
+  and touch users get consistent local-filter reset feedback.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
