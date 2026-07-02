@@ -9382,8 +9382,8 @@ a.action-card:active {
 
 .dossier-focus-shell {
   display: grid;
-  gap: 14px;
-  padding: 16px;
+  gap: 10px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   background:
@@ -9393,9 +9393,11 @@ a.action-card:active {
 }
 
 .dossier-focus-shell__header {
-  display: grid;
-  max-width: 760px;
-  gap: 5px;
+  display: flex;
+  max-width: none;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .dossier-focus-shell__header h2,
@@ -9405,13 +9407,13 @@ a.action-card:active {
 
 .dossier-focus-shell__header h2 {
   color: var(--text);
-  font-size: 1.28rem;
+  font-size: 1.08rem;
   line-height: 1.18;
 }
 
 .dossier-focus-shell__header p:last-child {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   line-height: 1.45;
 }
 
@@ -9491,14 +9493,14 @@ a.action-card:active {
 .dossier-focus-shell__body {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 8px;
   align-items: start;
 }
 
 @media (min-width: 961px) {
   .dossier-focus-shell__body {
-    grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1.42fr);
-    align-items: stretch;
+    grid-template-columns: 1fr;
+    align-items: start;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
   }
@@ -9581,11 +9583,11 @@ a.action-card:active {
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace {
-  grid-template-columns: minmax(144px, 0.4fr) minmax(0, 2.6fr) minmax(156px, 0.48fr);
+  grid-template-columns: minmax(156px, 0.42fr) minmax(0, 1.58fr);
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace__context {
-  gap: 10px;
+  display: none;
 }
 
 .dossier-focus-shell__workspace .domain-split-workspace__rail .command-task-routes {
@@ -9639,11 +9641,11 @@ a.action-card:active {
 
 .dossier-route-stage {
   display: grid;
-  gap: 12px;
+  gap: 9px;
   box-sizing: border-box;
   width: min(100%, calc(100vw - 48px));
   min-width: 0;
-  padding: 14px;
+  padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   background:
@@ -9669,7 +9671,7 @@ a.action-card:active {
 
 .dossier-route-stage__header h2 {
   font-family: var(--font-serif);
-  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
+  font-size: clamp(1.12rem, 1.35vw, 1.34rem);
 }
 
 .dossier-route-stage__header p:last-child {
@@ -9698,9 +9700,9 @@ a.action-card:active {
 
 .dossier-route-snapshot__card {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   min-width: 0;
-  padding: 11px 12px;
+  padding: 9px 10px;
   border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
   border-radius: 12px;
   background: color-mix(in srgb, var(--surface) 90%, var(--surface-2));
@@ -9741,7 +9743,7 @@ a.action-card:active {
 
 .dossier-route-snapshot__card small {
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   line-height: 1.35;
 }
 

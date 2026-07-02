@@ -53,6 +53,11 @@
 - **Dossier search console IA — done in G1331 / issue #2436.** The Dossier search route now
   groups search, privacy checks, and the content index into three explicit panels, with less
   technical route copy and routeflow coverage on desktop/mobile.
+- **Dossier compact UI + de-jargon — done in G1332 / issue #2438.** Dossier now uses a compact
+  route-first shell without a visible third context column, replaces technical labels such as
+  "Imaging-repository", "Dossierindex", "Intake-console", "Consult Prep Wizard", and visible
+  "command center" wording with clearer Dutch copy, and updates tests/smokes to protect the new
+  wording.
 
 ---
 

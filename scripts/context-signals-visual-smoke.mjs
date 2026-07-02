@@ -15,6 +15,7 @@ const targets = [
     hash: '#dossier?route=imaging',
     signal: 'dossier',
     microstate: 'dossier-imaging',
+    allowHidden: true,
   },
   {
     screen: 'agenda',
@@ -132,10 +133,12 @@ async function assertContextSignals(browser, options) {
 
       const selector = `[data-workspace-context-signals="${target.signal}"]`;
       const signals = page.locator(selector);
-      await signals.waitFor({ timeout: 10_000 });
-      await signals.scrollIntoViewIfNeeded();
+      await signals.waitFor({ state: target.allowHidden ? 'attached' : 'visible', timeout: 10_000 });
+      if (!target.allowHidden) await signals.scrollIntoViewIfNeeded();
 
-      const screenshot = await signals.screenshot({ animations: 'disabled' });
+      const screenshot = target.allowHidden
+        ? undefined
+        : await signals.screenshot({ animations: 'disabled' });
       const evidence = await page.evaluate(({ signal, microstate }) => {
         const root = document.querySelector(`[data-workspace-context-signals="${signal}"]`);
         const contextColumn = root?.closest('.domain-split-workspace__context');
@@ -265,6 +268,24 @@ async function assertContextSignals(browser, options) {
           `${options.label}/${target.screen}: paginafout tijdens contextsignalen-smoke: ${pageErrors.join('; ')}`,
         );
       }
+      if (target.allowHidden) {
+        if (evidence.cardCount < 3 || !evidence.flowLinked) {
+          throw new Error(
+            `${options.label}/${target.screen}: verborgen contextsignalen zijn niet compleet gekoppeld.`,
+          );
+        }
+        checked.push({
+          screen: target.screen,
+          signal: target.signal,
+          microstate: target.microstate,
+          flowAccent: evidence.flowAccent,
+          cards: evidence.cardCount,
+          hiddenByDesign: true,
+          screenshotBytes: 0,
+        });
+        continue;
+      }
+
       if (!evidence.rootVisible || evidence.cardCount < 3) {
         throw new Error(`${options.label}/${target.screen}: contextsignalen zijn niet volledig zichtbaar.`);
       }
@@ -292,7 +313,7 @@ async function assertContextSignals(browser, options) {
       if (evidence.horizontalOverflow) {
         throw new Error(`${options.label}/${target.screen}: contextsignalen veroorzaken horizontale overflow.`);
       }
-      if (screenshot.byteLength < 2_000) {
+      if (!screenshot || screenshot.byteLength < 2_000) {
         throw new Error(`${options.label}/${target.screen}: screenshot-evidence is te klein.`);
       }
 

@@ -1391,7 +1391,7 @@ function extractEmbryoExifIsolationPanel(html: string): string {
 
 function extractConsultVerslagenSection(html: string): string {
   const start = html.indexOf('<h2 id="dossier-consultverslagen">Consultverslagen</h2>');
-  const end = html.indexOf('<h2 id="dossier-imaging-repository">Imaging-repository</h2>', start);
+  const end = html.indexOf('<h2 id="dossier-imaging-repository">Beeldenoverzicht</h2>', start);
   if (start < 0 || end < 0) throw new Error('Consultverslagen-sectie ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -2733,7 +2733,7 @@ describe('app shell', () => {
     expect(html).toContain('legacy lokale kluis');
     expect(html).toContain('Configureer de centrale API');
     expect(html).toContain('href="#backup"');
-    expect(html).toContain('aria-label="Vandaag command center"');
+    expect(html).toContain('aria-label="Vandaag overzicht"');
     expect(html).toContain('Nu eerst');
     expect(html).toContain('Later vandaag');
     expect(html).toContain('Context');
@@ -3247,7 +3247,7 @@ describe('app shell', () => {
     const primaryStart = html.indexOf('class="kp-dashboard__primary"', dashboardStart);
     const secondaryStart = html.indexOf('class="kp-dashboard__secondary"', primaryStart);
     const phaseIndex = html.indexOf('Poging dashboard', primaryStart);
-    const todayIndex = html.indexOf('aria-label="Vandaag command center"', primaryStart);
+    const todayIndex = html.indexOf('aria-label="Vandaag overzicht"', primaryStart);
     const nextStepIndex = html.indexOf('Volgende stap', secondaryStart);
     const recommendationsIndex = html.indexOf(
       'data-dashboard-route="recommendations"',
@@ -3572,7 +3572,7 @@ describe('app shell', () => {
     expect(trajectHtml).not.toContain('vanuit lokale records');
   });
 
-  it('toont een dagelijks command center met urgentie, later-vandaag en context', () => {
+  it('toont een dagelijks overzicht met urgentie, later-vandaag en context', () => {
     // Vaste klok zodat de "vandaag/komend"-classificatie deterministisch is
     // (anders valt de 18:00-herinnering na 18:00 lokale tijd weg).
     vi.useFakeTimers();
@@ -5515,7 +5515,7 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Verplaats vraag omhoog: Wat is de volgende stap?"');
     expect(html).toContain('aria-label="Verplaats vraag omlaag: Wat is de volgende stap?"');
     expect(html).toContain('Verslag per afspraak');
-    expect(html).toContain('aria-label="Consult Prep Wizard"');
+    expect(html).toContain('aria-label="Consult voorbereiden"');
     expect(html).toContain('data-consult-prep-board="ready"');
     expect(html).toContain('aria-label="Consultvoorbereiding startlaag"');
     expect(html).toContain('Kies eerst je gesprekstaak');
@@ -5837,7 +5837,7 @@ describe('app shell', () => {
     expect(html).toContain('name="dossierZoekterm"');
     expect(html).toContain('value="erasmus"');
     expect(html).toContain('1 resultaat voor "erasmus"');
-    expect(html).toContain('Dossierindex');
+    expect(html).toContain('Inhoudsindex');
     expect(html).toContain('Import-inbox');
     expect(html).toContain(
       '<section class="dossier-inbox-overview" aria-label="Dossier import-inbox overzicht">',
@@ -6963,7 +6963,9 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-focus-shell__header {');
     expect(css).toContain('.dossier-focus-shell__body {');
     expect(css).toContain('grid-template-columns: 1fr;');
-    expect(css).toContain('grid-template-columns: minmax(220px, 0.58fr) minmax(0, 1.42fr);');
+    expect(css).toContain('grid-template-columns: minmax(156px, 0.42fr) minmax(0, 1.58fr);');
+    expect(css).toContain('.dossier-focus-shell__workspace .domain-split-workspace__context {');
+    expect(css).toContain('display: none;');
     expect(css).toContain('max-height: min(860px, calc(100vh - 126px));');
     expect(css).toContain('max-height: min(820px, calc(100vh - 164px));');
     expect(css).toContain('.dossier-focus-shell__orientation > .dossier-route-stage {');
@@ -7446,7 +7448,7 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('class="section-stack dossier-command-layout"');
     expect(emptyHtml).toContain('class="dossier-focus-shell"');
     expect(emptyHtml).toContain('data-dossier-focus-shell="ready"');
-    expect(emptyHtml).toContain('Eerst route kiezen, dan pas dossierinhoud openen');
+    expect(emptyHtml).toContain('Kies wat je wilt doen');
     expect(emptyHtml).toContain('data-dossier-console="ready"');
     expect(emptyHtml).toContain('data-dossier-focus-region="orientation"');
     expect(emptyHtml).toContain('data-dossier-focus-region="workspace"');
@@ -7454,13 +7456,13 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-console-region="workspace"');
     expect(emptyHtml).not.toContain(')}');
     expect(emptyHtml).toContain(
-      '<section class="dossier-route-stage" aria-label="Dossierwerkbank" data-dossier-first-viewport="route-stage">',
+      '<section class="dossier-route-stage" aria-label="Dossieroverzicht" data-dossier-first-viewport="route-stage">',
     );
-    expect(emptyHtml).toContain('Kies eerst je dossierroute');
+    expect(emptyHtml).toContain('Wat wil je doen?');
     expect(emptyHtml).toContain(
-      'Uploaden, zoeken, beelden en tijdlijn blijven gescheiden zodat je niet door alle medische blokken tegelijk hoeft.',
+      'Open één onderdeel tegelijk: uploaden, zoeken, beelden of tijdlijn.',
     );
-    expect(emptyHtml).toContain('class="dossier-route-stage__status">Actief: upload en review');
+    expect(emptyHtml).toContain('class="dossier-route-stage__status">Nu: upload en review');
     expect(emptyHtml).toContain('data-dossier-route-snapshot="ready"');
     expect(emptyHtml).toContain('aria-label="Dossierscan"');
     expect(emptyHtml).toContain('data-dossier-route-snapshot-card="upload"');
@@ -7511,13 +7513,13 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-route="upload" data-dossier-route-state="active"');
     expect(emptyHtml).toContain('id="dossier-upload-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-upload"');
-    expect(emptyHtml).toContain('Upload als zelfstandige intakeflow');
+    expect(emptyHtml).toContain('Eén toevoeging per keer');
     expect(emptyHtml).toContain('data-hub-workflow-tab="upload" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="review"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="consult"');
     expect(emptyHtml).toContain('Verslag vastleggen');
     expect(emptyHtml).toContain('data-hub-detail-panel="upload-intake"');
-    expect(emptyHtml).toContain('Intake-console');
+    expect(emptyHtml).toContain('Toevoegen');
     expect(emptyHtml).toContain(
       'Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.',
     );
@@ -7526,15 +7528,15 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-route-summary="upload"');
     expect(emptyHtml).toContain('Eerst uploaden, daarna pas reviewen');
     expect(emptyHtml).toContain('data-dossier-route-summary="search"');
-    expect(emptyHtml).toContain('Dossierindex en routetellingen openen');
+    expect(emptyHtml).toContain('Inhoudsindex en aantallen openen');
     expect(emptyHtml).toContain('data-dossier-route-summary="imaging"');
     expect(emptyHtml).toContain('id="dossier-imaging-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-imaging"');
-    expect(emptyHtml).toContain('Embryo en beelden als eigen werkbaan');
+    expect(emptyHtml).toContain('Beelden en embryo’s apart bekijken');
     expect(emptyHtml).toContain('data-hub-workflow-tab="imaging" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="embryos"');
     expect(emptyHtml).toContain('data-dossier-imaging-inspection-board="ready"');
-    expect(emptyHtml).toContain('aria-label="Imaging inspectiebord"');
+    expect(emptyHtml).toContain('aria-label="Beelden inspectiebord"');
     expect(emptyHtml).toContain('Kies eerst je beeldroute');
     expect(emptyHtml).toContain('data-dossier-imaging-lane="images"');
     expect(emptyHtml).toContain('data-dossier-imaging-lane="compare"');
@@ -7549,7 +7551,7 @@ describe('app shell', () => {
       emptyHtml.indexOf('data-dossier-imaging-disclosure="consults"'),
     );
     expect(emptyHtml).toContain('data-hub-detail-panel="imaging-repository"');
-    expect(emptyHtml).toContain('Filters, classificaties en vergelijkingen');
+    expect(emptyHtml).toContain('Filters, kenmerken en vergelijkingen');
     expect(emptyHtml).toContain('<em>0 beelden</em>');
     expect(emptyHtml).toContain('data-dossier-imaging-disclosure="embryos"');
     expect(emptyHtml).toContain('data-hub-detail-panel="embryo-dossiers"');
@@ -7568,7 +7570,7 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
-    expect(emptyHtml).toContain('Imaging, consulten en embryo-dossiers');
+    expect(emptyHtml).toContain('Beelden, consulten en embryo-dossiers');
     expect(emptyHtml).toContain('Tijdlijn en behandelgeschiedenis');
     expect(emptyCenter).toContain('data-dossier-command-center="ready"');
     expect(emptyCenter).toContain('data-dossier-command-preview="unlocked"');
@@ -7759,11 +7761,11 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('href="#dossier?route=imaging" aria-current="page"');
-    expect(html).toContain('class="dossier-route-stage__status">Actief: beelden en embryo&#039;s');
+    expect(html).toContain('class="dossier-route-stage__status">Nu: beelden en embryo&#039;s');
     expect(html).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
     expect(html).toContain('aria-label="Dossier imaging route-samenvatting"');
     expect(html).toContain('data-dossier-route-summary="imaging"');
-    expect(html).toContain('Beelden en embryo’s als aparte werkruimte');
+    expect(html).toContain('Beelden en embryo’s apart bekijken');
     expect(html).toContain('data-dossier-imaging-inspection-board="ready"');
     expect(html).toContain('Kies eerst je beeldroute');
     expect(html).toContain('data-dossier-imaging-lane="images"');
@@ -7772,8 +7774,8 @@ describe('app shell', () => {
     expect(html).toContain('data-dossier-imaging-lane="consults"');
     expect(html).toContain('Consultverslagen openen');
     expect(html).toContain('data-hub-detail-panel="imaging-repository"');
-    expect(html).toContain('Imaging-repository openen');
-    expect(html).toContain('Filters, classificaties en vergelijkingen');
+    expect(html).toContain('Beeldenoverzicht openen');
+    expect(html).toContain('Filters, kenmerken en vergelijkingen');
     expect(html).toContain('data-hub-detail-panel="embryo-dossiers"');
     expect(html).toContain('Embryo-dossiers openen');
     expect(html).toContain('Embryohistorie en vergelijkingen');
@@ -7786,7 +7788,7 @@ describe('app shell', () => {
     expect(html).toContain(
       'data-dossier-route="timeline" data-dossier-route-state="inactive" hidden',
     );
-    expect(html).toContain('Imaging, consulten en embryo-dossiers');
+    expect(html).toContain('Beelden, consulten en embryo-dossiers');
   });
 
   it('groepeert secundaire dossierprivacy achter progressive disclosure zonder primaire routes te verbergen', () => {
@@ -7970,8 +7972,8 @@ describe('app shell', () => {
       'geen OCR-tekst, bestandsnamen, broninhoud of medische interpretatie',
     );
     expect(emptyHtml).toContain('<h2 id="dossier-consultverslagen">Consultverslagen</h2>');
-    expect(emptyHtml).toContain('<h2 id="dossier-imaging-repository">Imaging-repository</h2>');
-    expect(emptyHtml).toContain('<h2 id="dossier-index">Dossierindex</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-imaging-repository">Beeldenoverzicht</h2>');
+    expect(emptyHtml).toContain('<h2 id="dossier-index">Inhoudsindex</h2>');
     expect(emptyHtml).toContain('<h2 id="dossier-embryo-dossiers">Embryo-dossiers</h2>');
     expect(emptyHtml).toContain('<h2 id="dossier-documenttijdlijn">Documenttijdlijn</h2>');
     expect(emptyHtml).toContain('<h2 id="dossier-behandelgeschiedenis">Behandelgeschiedenis</h2>');
@@ -8073,7 +8075,7 @@ describe('app shell', () => {
     expect(populatedIndex).toContain('data-dossier-section-index-state="has-content"');
     expect(populatedIndex).toContain('>Consulten</span> <strong>1</strong>');
     expect(populatedIndex).toContain('>Beelden</span> <strong>1</strong>');
-    expect(populatedIndex).toContain('>Index</span> <strong>2</strong>');
+    expect(populatedIndex).toContain('>Inhoud</span> <strong>2</strong>');
     expect(populatedIndex).toContain('>Embryo&#039;s</span> <strong>1</strong>');
     expect(populatedIndex).toContain('>Tijdlijn</span> <strong>2</strong>');
     expect(populatedIndex).toContain('>Geschiedenis</span> <strong>3</strong>');
@@ -8518,7 +8520,7 @@ describe('app shell', () => {
 
     expect(html).toContain('Echo 6 weken');
     expect(html).toContain('Foto/echo');
-    expect(html).toContain('Imaging-repository');
+    expect(html).toContain('Beeldenoverzicht');
     expect(html).toContain('id="imaging-filter-form"');
     expect(html).toContain('name="imagingSoort"');
     expect(html).toContain('name="imagingDatumVanaf"');
