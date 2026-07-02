@@ -4277,7 +4277,15 @@ describe('app shell', () => {
     expect(html).toContain('class="kp-timeline__dot"');
     expect(html).toContain('class="kp-timeline__title">Echo verslag</h3>');
     expect(html).toContain('class="kp-timeline__meta">2026-06-24 · Onderzoek · echo.pdf</p>');
-    expect(html).toContain('class="timeline-detail-panel"');
+    expect(html).toContain('class="timeline-detail-drawer"');
+    expect(html).toContain('data-fertility-timeline-detail-drawer="ready"');
+    expect(html).toContain('data-fertility-timeline-detail-review="concept"');
+    expect(html).toContain('<span>Bron en review</span>');
+    expect(html).toContain('Controleer of corrigeer dit concept in het gekoppelde bronrecord');
+    expect(html).toContain(
+      'class="inline-action timeline-detail-drawer__action" href="#dossier?route=timeline"',
+    );
+    expect(html).not.toContain('timeline-detail-panel');
     expect(html).toContain('<dt>Bron</dt><dd>echo.pdf</dd>');
     expect(html).toContain(
       '<dt>Bronverwijzingen</dt><dd>Dossiermetadata · formulier: echo.pdf · Datum: 2026-06-24 · Review: concept · Record: doc-1</dd>',
@@ -4809,6 +4817,9 @@ describe('app shell', () => {
     expect(timeline).toContain('data-timeline-component="fertility-items"');
     expect(timeline).toContain('data-timeline-component-state="structured"');
     expect(timelineItems).toContain('class="kp-timeline__item fertility-timeline-item"');
+    expect(timelineItems).toContain('class="timeline-detail-drawer"');
+    expect(timelineItems).toContain('Controleer bronrecord');
+    expect(timelineItems).not.toContain('timeline-detail-panel');
     expect(timelineItems).toContain('class="fertility-timeline-month-group"');
     expect(timelineItems).toContain('data-fertility-timeline-month="2026-05"');
     expect(timelineItems).toContain('data-fertility-timeline-month="2026-06"');
@@ -4847,6 +4858,9 @@ describe('app shell', () => {
     expect(timelineItems).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
     expect(css).toContain('.fertility-timeline-month-group {');
     expect(css).toContain('.fertility-timeline-month-group p {');
+    expect(css).toContain('.timeline-detail-drawer {');
+    expect(css).toContain('.timeline-detail-drawer__facts {');
+    expect(css).not.toContain('.timeline-detail-panel {');
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {
