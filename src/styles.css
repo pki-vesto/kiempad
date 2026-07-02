@@ -5635,12 +5635,11 @@ h2 {
   align-items: start;
 }
 
-.decision-focus-shell__workbench,
 .decision-focus-shell__workspace {
   min-width: 0;
 }
 
-.decision-focus-shell__workbench > .decision-insight-workbench {
+.decision-focus-shell__workspace .domain-split-workspace__context > .decision-insight-workbench {
   height: 100%;
 }
 
@@ -8548,28 +8547,22 @@ h2 {
 
 @media (min-width: 961px) {
   .decision-focus-shell__body {
-    grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     max-height: min(860px, calc(100vh - 126px));
     overflow: hidden;
   }
 
-  .decision-focus-shell__workbench,
   .decision-focus-shell__workspace {
     max-height: min(820px, calc(100vh - 164px));
-    overflow-y: auto;
+    overflow: hidden;
     contain: layout paint;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-  }
-
-  .decision-focus-shell__workspace {
-    overflow-x: hidden;
   }
 
   .decision-focus-shell__workspace .domain-split-workspace {
-    grid-template-areas: "rail main";
-    grid-template-columns: minmax(172px, 0.42fr) minmax(0, 1fr);
+    grid-template-areas: "rail main context";
+    grid-template-columns: minmax(172px, 0.28fr) minmax(0, 1fr) minmax(240px, 0.36fr);
+    grid-template-rows: minmax(0, 1fr);
     max-height: min(820px, calc(100vh - 164px));
     overflow: hidden;
     contain: layout paint;
@@ -8583,6 +8576,14 @@ h2 {
     grid-area: main;
   }
 
+  .decision-focus-shell__workspace .domain-split-workspace__context {
+    grid-area: context;
+    max-height: min(780px, calc(100vh - 204px));
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+
   .decision-focus-shell__body :where(h2, h3, p, span, strong, small, em, dd, dt) {
     overflow: visible;
     overflow-wrap: break-word;
@@ -8590,18 +8591,21 @@ h2 {
     white-space: normal;
   }
 
-  .decision-focus-shell__workbench > .decision-insight-workbench {
+  .decision-focus-shell__workspace .domain-split-workspace__context > .decision-insight-workbench {
     align-content: start;
     padding: 12px;
   }
 
-  .decision-focus-shell__workbench .insight-workbench__header p:last-child,
+  .decision-focus-shell__workspace
+    .domain-split-workspace__context
+    .insight-workbench__header
+    p:last-child,
   .decision-focus-shell__workspace .command-route-summary p:not(.command-route-summary__eyebrow) {
     display: none;
   }
 
-  .decision-focus-shell__workbench .insight-workbench__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .decision-focus-shell__workspace .domain-split-workspace__context .insight-workbench__grid {
+    grid-template-columns: 1fr;
   }
 
   .decision-focus-shell__workspace .command-route-summary {
@@ -15944,8 +15948,13 @@ a.action-card:active {
     grid-template-columns: 1fr;
   }
 
-  .decision-focus-shell__workspace .domain-split-workspace {
+  .decision-focus-shell__workspace .domain-split-workspace,
+  .decision-focus-shell__workspace .domain-split-workspace__context {
     grid-template-columns: 1fr;
+  }
+
+  .decision-focus-shell__workspace .domain-split-workspace__context {
+    grid-column: auto;
   }
 
   .decision-task-routes {

@@ -1952,21 +1952,25 @@ function renderAfwegingenScreen(state: AppShellState): string {
   const linkedQuestionCount = decisions.filter((decision) => Boolean(decision.vraagId)).length;
   const activeDecisionRoute = state.activeDecisionRoute ?? 'prepare';
 
-  const decisionWorkbench = renderDecisionInsightWorkbench({
-    decisionCount: decisions.length,
-    chosenCount,
-    linkedQuestionCount,
-    latestDecision: decisions[0],
-  });
   const decisionWorkspace = domainSplitWorkspace({
     className: 'decision-split-workspace',
     ariaLabel: 'Afwegingen split-view werkruimte',
-    data: { 'decision-split-workspace': 'ready', 'decision-compact-workspace': 'route-first' },
+    data: {
+      'decision-split-workspace': 'ready',
+      'decision-compact-workspace': 'route-first',
+      'decision-single-workspace': 'ready',
+    },
     rail: renderDecisionTaskRoutes({
       decisionCount: decisions.length,
       chosenCount,
       linkedQuestionCount,
       activeRoute: activeDecisionRoute,
+    }),
+    context: renderDecisionInsightWorkbench({
+      decisionCount: decisions.length,
+      chosenCount,
+      linkedQuestionCount,
+      latestDecision: decisions[0],
     }),
     main: `
       <section id="afwegingen-route-prepare" class="decision-route-section" aria-labelledby="afwegingen-route-prepare-title" data-decision-route="prepare"${renderDecisionRouteVisibility(activeDecisionRoute, 'prepare')}>
@@ -2088,7 +2092,6 @@ function renderAfwegingenScreen(state: AppShellState): string {
   return sectionStack(
     [
       renderDecisionFocusShell({
-        workbench: decisionWorkbench,
         workspace: decisionWorkspace,
       }),
     ],
@@ -2096,7 +2099,7 @@ function renderAfwegingenScreen(state: AppShellState): string {
   );
 }
 
-function renderDecisionFocusShell(input: { workbench: string; workspace: string }): string {
+function renderDecisionFocusShell(input: { workspace: string }): string {
   return `
     <section class="decision-focus-shell" aria-labelledby="decision-focus-shell-title" data-decision-focus-shell="ready">
       <header class="decision-focus-shell__header">
@@ -2105,9 +2108,6 @@ function renderDecisionFocusShell(input: { workbench: string; workspace: string 
         <p>Voorbereiden, vergelijken, kiezen en teruglezen blijven in één beslisruimte zonder score, voorkeur of behandeladvies.</p>
       </header>
       <div class="decision-focus-shell__body" data-decision-console="ready">
-        <div class="decision-focus-shell__workbench" data-decision-focus-region="workbench" data-decision-console-region="workbench">
-          ${input.workbench}
-        </div>
         <div class="decision-focus-shell__workspace" data-decision-focus-region="workspace" data-decision-console-region="workspace">
           ${input.workspace}
         </div>

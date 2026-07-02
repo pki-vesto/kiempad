@@ -236,6 +236,10 @@
   renders the insight workbench as a separate focus-region above/next to the route workspace;
   desktop now uses one split-view with route rail, active route, and compact wellbeing context while
   mobile remains stacked.
+- **CFX-041 decision single workspace — partial in G1390 / issue #2554.** Afwegingen no longer
+  renders the decision workbench as a separate focus-region above/next to the route workspace;
+  desktop now uses one split-view with route rail, active route, and compact decision context while
+  mobile remains stacked.
 
 ---
 
@@ -706,7 +710,10 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1381/#2536: Desktop Dossier uses a persistent two-column focus shell with route overview
   and a scrollable active workspace; mobile remains stacked without horizontal overflow.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
-  Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
+  Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags. Partial
+  G1390/#2554: Afwegingen folds the decision workbench into the same split-view as route context,
+  so desktop opens as one rail/main/context workspace instead of a separate focus-region plus
+  nested route workspace.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
   Partial G1361/#2496: Logboek uses a route-first workspace without a fixed third context column.
   Partial G1363/#2500: Recent and privacy auditregels use structured dot/line timeline rows with
