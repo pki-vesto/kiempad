@@ -1905,7 +1905,13 @@ describe('app shell', () => {
     expect(html).toContain('name="partnerNaam" type="text" maxlength="60" value="Noor"');
     expect(html).toContain('data-binary-toggle="gedeelde-modus"');
     expect(html).toContain('name="gedeeldeModus"');
-    expect(html).toContain('value="true" checked');
+    expect(html).toContain('data-switch-control="gedeelde-modus" data-switch-state="on"');
+    expect(html).toContain('data-switch-on-label="Samen"');
+    expect(html).toContain('data-switch-off-label="Alleen"');
+    expect(html).toContain(
+      'type="checkbox" role="switch" name="gedeeldeModus" value="true" checked aria-checked="true"',
+    );
+    expect(html).toContain('type="hidden" name="gedeeldeModus" value="false"');
     expect(html).toContain('Beide namen en gezamenlijke context');
     expect(html).toContain('id="theme-form"');
     expect(html).toContain('data-theme-control="sheet"');
@@ -2839,6 +2845,9 @@ describe('app shell', () => {
     expect(mobileScreenStageCss).not.toContain('box-shadow:');
     expect(css).toContain('.workspace-strip__switcher,');
     expect(css).toContain('.workspace-strip__quick {');
+    expect(css).toContain('.binary-switch {');
+    expect(css).toContain('.binary-switch__input:checked + .binary-switch__track');
+    expect(css).toContain('.binary-switch__input:focus-visible + .binary-switch__track');
     expect(css).toContain('.content:has([data-start-focus-shell="ready"]) > .workspace-strip,');
     expect(css).toContain(
       '.content:has([data-notification-focus-shell="ready"]) > .workspace-strip {',
@@ -37512,9 +37521,17 @@ describe('app shell', () => {
 
     expect(html).toContain('Inhoud op vergrendeld scherm');
     expect(html).toContain('data-binary-toggle="lockscreen-privacy"');
+    expect(html).toContain('data-switch-control="lockscreen-privacy" data-switch-state="off"');
+    expect(html).toContain('data-switch-on-label="Details"');
+    expect(html).toContain('data-switch-off-label="Generiek"');
     expect(html).toContain('Geen inhoud op lockscreen');
     expect(html).toContain('Alleen na expliciete keuze');
-    expect(html).toContain('name="toonNotificatieDetailsOpVergrendelscherm" value="false" checked');
+    expect(html).toContain(
+      'type="checkbox" role="switch" name="toonNotificatieDetailsOpVergrendelscherm" value="true" aria-checked="false"',
+    );
+    expect(html).toContain(
+      'type="hidden" name="toonNotificatieDetailsOpVergrendelscherm" value="false"',
+    );
     expect(html).toContain(
       'class="settings-save-feedback" role="status" aria-live="polite" data-settings-feedback="notification-privacy"',
     );
@@ -37566,10 +37583,14 @@ describe('app shell', () => {
     expect(genericPrivacy).toContain('data-lockscreen-privacy="generiek"');
     expect(genericPrivacy).toContain('data-binary-toggle="lockscreen-privacy"');
     expect(genericPrivacy).toContain('name="toonNotificatieDetailsOpVergrendelscherm"');
+    expect(genericPrivacy).toContain('data-switch-state="off"');
     expect(genericPrivacy).toContain('Geen inhoud op lockscreen');
     expect(genericPrivacy).toContain('Alleen na expliciete keuze');
     expect(genericPrivacy).toContain(
-      'name="toonNotificatieDetailsOpVergrendelscherm" value="false" checked',
+      'type="checkbox" role="switch" name="toonNotificatieDetailsOpVergrendelscherm" value="true" aria-checked="false"',
+    );
+    expect(genericPrivacy).toContain(
+      'type="hidden" name="toonNotificatieDetailsOpVergrendelscherm" value="false"',
     );
     expect(genericHtml).toContain(
       'OS-notificaties gebruiken generieke tekst, zodat medicatie- of afspraakdetails niet op een vergrendeld scherm verschijnen.',
@@ -37603,8 +37624,9 @@ describe('app shell', () => {
     expect(detailStatus).toContain('Toestemming:</strong> niet ondersteund');
     expect(detailStatus).toContain('Service worker:</strong> niet ondersteund');
     expect(detailPrivacy).toContain('data-lockscreen-privacy="details-opt-in"');
+    expect(detailPrivacy).toContain('data-switch-state="on"');
     expect(detailPrivacy).toContain(
-      'name="toonNotificatieDetailsOpVergrendelscherm" value="true" checked',
+      'type="checkbox" role="switch" name="toonNotificatieDetailsOpVergrendelscherm" value="true" checked aria-checked="true"',
     );
     expect(detailPrivacy).toContain('Bewaar notificatieprivacy');
   });

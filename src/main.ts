@@ -251,6 +251,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
       createNotificationDetailMap(state),
     ),
   });
+  bindBinarySwitchControls(root);
   bindSettingsControls(root, state);
   bindThemeControls(root, state);
   bindFirstRunSetupControls(root, state);
@@ -325,6 +326,35 @@ function render(root: HTMLElement, state: RuntimeState): void {
     state.error = undefined;
     void refreshWebAuthnStatus(state).then(() => render(root, state));
   });
+}
+
+function bindBinarySwitchControls(root: HTMLElement): void {
+  root
+    .querySelectorAll<HTMLInputElement>('.binary-switch__input[role="switch"]')
+    .forEach((input) => {
+      input.addEventListener('change', () => {
+        const switchRoot = input.closest<HTMLElement>('.binary-switch');
+        if (!switchRoot) return;
+        const checked = input.checked;
+        const label = switchRoot.querySelector<HTMLElement>('.binary-switch__label');
+        const description = switchRoot.querySelector<HTMLElement>('.binary-switch__copy small');
+
+        input.setAttribute('aria-checked', checked ? 'true' : 'false');
+        switchRoot.dataset.switchState = checked ? 'on' : 'off';
+        switchRoot.dataset.switchValue = checked ? 'true' : 'false';
+
+        if (label) {
+          label.textContent = checked
+            ? (switchRoot.dataset.switchOnLabel ?? label.textContent)
+            : (switchRoot.dataset.switchOffLabel ?? label.textContent);
+        }
+        if (description) {
+          description.textContent = checked
+            ? (switchRoot.dataset.switchOnDescription ?? description.textContent)
+            : (switchRoot.dataset.switchOffDescription ?? description.textContent);
+        }
+      });
+    });
 }
 
 function bindSettingsControls(root: HTMLElement, state: RuntimeState): void {
