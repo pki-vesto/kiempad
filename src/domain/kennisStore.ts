@@ -123,4 +123,8 @@ export class KennisStore {
     await this.kennisItems.saveWithId(item);
     return item;
   }
+
+  async delete(itemId: string): Promise<void> {
+    await this.kennisItems.delete(itemId);
+  }
 }
