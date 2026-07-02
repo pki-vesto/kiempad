@@ -285,6 +285,9 @@
 - **CFX-040 dossier search support collapse — partial in G1403 / issue #2580.** Dossier Zoeken now
   starts with the primary search panel only; privacy controls and the content index sit behind one
   closed support disclosure while remaining present for routeflow validation.
+- **CFX-038/CFX-012 Kennis AI support collapse — partial in G1404 / issue #2582.** Kennis AI now
+  opens with the payload preview only; summary save, AI settings, on-device status, and research
+  aggregation sit behind one closed support disclosure.
 
 ---
 

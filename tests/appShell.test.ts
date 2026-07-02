@@ -1474,7 +1474,10 @@ function extractOnDeviceAiPanel(html: string): string {
   const start = html.indexOf(
     '<div class="policy-panel embedded-summary" aria-label="On-device AI verkenning"',
   );
-  const end = html.indexOf('<h2>AI-preview</h2>', start);
+  const end =
+    html.indexOf('data-knowledge-ai-console-region="research-network"', start) >= 0
+      ? html.indexOf('data-knowledge-ai-console-region="research-network"', start)
+      : html.indexOf('<h2>AI-preview</h2>', start);
   if (start < 0 || end < 0) throw new Error('On-device AI panel ontbreekt.');
   return html.slice(start, end).replace(/\s+/g, ' ').trim();
 }
@@ -36517,7 +36520,23 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route-summary="add"');
     expect(html).toContain('href="#knowledge-item-form"');
     expect(html).toContain('data-knowledge-route-summary="ai"');
-    expect(html).toContain('href="#research-network-form"');
+    expect(html).toContain('Start met een gecontroleerde AI-preview');
+    expect(html).toContain('href="#ai-preview-form"');
+    expect(html).toContain('href="#knowledge-ai-support"');
+    expect(html).toContain('data-knowledge-ai-console="ready"');
+    expect(html).toContain('data-knowledge-ai-console-region="preview"');
+    expect(html).toContain('id="knowledge-ai-support"');
+    expect(html).toContain('data-knowledge-ai-support="collapsed"');
+    expect(html).toContain('Opslaan, opt-in en netwerkbeheer openen');
+    expect(html).toContain('data-knowledge-ai-console-region="summary-save"');
+    expect(html).toContain('data-knowledge-ai-console-region="settings"');
+    expect(html).toContain('data-knowledge-ai-console-region="research-network"');
+    expect(html.indexOf('data-knowledge-ai-console-region="preview"')).toBeLessThan(
+      html.indexOf('id="knowledge-ai-support"'),
+    );
+    expect(html.indexOf('id="knowledge-ai-support"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-console-region="summary-save"'),
+    );
     expect(html).toContain('data-knowledge-route-summary="library"');
     expect(html).toContain('Kennisbibliotheek per categorie openen');
     expect(html).toContain('Bronnen, samenvattingen en trends');
@@ -36720,6 +36739,11 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-filter-kit__header {');
     expect(css).toContain('.knowledge-filter-kit__fields {');
     expect(css).toContain('.knowledge-filter-kit__actions {');
+    expect(css).toContain('.knowledge-ai-console {');
+    expect(css).toContain('.knowledge-ai-support__summary {');
+    expect(css).toContain('.knowledge-ai-support__body {');
+    expect(css).toContain('.knowledge-ai-support__body > .summary-panel:first-child {');
+    expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-task-routes {');
     expect(css).toContain('border-radius: 12px;');
@@ -36752,6 +36776,7 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.knowledge-filter-kit {');
     expect(mobileCss).toContain('.knowledge-filter-kit__header,');
     expect(mobileCss).toContain('.knowledge-filter-kit__actions {');
+    expect(mobileCss).toContain('.knowledge-ai-support__body {');
   });
 
   it('bewaakt AI-preview en on-device opt-in states zonder sleutel of providerpayload', () => {
@@ -36780,6 +36805,10 @@ describe('app shell', () => {
     expect(emptyPreview).toContain('name="aiBron"');
     expect(emptyPreview).toContain('name="aiBronTekst"');
     expect(emptyPreview).toContain('Toon payload-preview');
+    expect(aiOffHtml).toContain('data-knowledge-ai-support="collapsed"');
+    expect(aiOffHtml).not.toContain(
+      '<details id="knowledge-ai-support" class="kp-disclosure knowledge-ai-support" data-knowledge-ai-support="collapsed" open>',
+    );
 
     const configuredHtml = renderAppShell(
       'kennis',
@@ -37653,12 +37682,16 @@ describe('app shell', () => {
     });
 
     expect(html).toContain('id="ai-preview-form"');
+    expect(html).toContain('data-knowledge-ai-console-region="preview"');
+    expect(html).toContain('data-knowledge-ai-support="collapsed"');
+    expect(html).toContain('Opslaan, opt-in en netwerkbeheer openen');
     expect(html).toContain('Payload-preview');
     expect(html).toContain('Verwijderde velden');
     expect(html).toContain('Naam/patiëntnaam: 1x vervangen door [naam verwijderd]');
     expect(html).toContain('Naam: [naam verwijderd]');
     expect(html).toContain('24 van 80 tekens');
     expect(html).toContain('id="ai-summary-form"');
+    expect(html).toContain('data-knowledge-ai-console-region="summary-save"');
     expect(html).toContain('Bewaar als kennisitem');
   });
 
