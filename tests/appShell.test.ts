@@ -4798,6 +4798,7 @@ describe('app shell', () => {
     );
     const timeline = extractFertilityTimelineSection(contextualHtml);
     const timelineItems = extractFertilityTimelineItems(timeline);
+    const css = readFileSync('src/styles.css', 'utf8');
 
     expect(timeline).toContain('data-timeline-state="gevuld"');
     expect(timeline).toContain('class="timeline-overview-bar" aria-label="Timeline overzicht"');
@@ -4808,6 +4809,15 @@ describe('app shell', () => {
     expect(timeline).toContain('data-timeline-component="fertility-items"');
     expect(timeline).toContain('data-timeline-component-state="structured"');
     expect(timelineItems).toContain('class="kp-timeline__item fertility-timeline-item"');
+    expect(timelineItems).toContain('class="fertility-timeline-month-group"');
+    expect(timelineItems).toContain('data-fertility-timeline-month="2026-05"');
+    expect(timelineItems).toContain('data-fertility-timeline-month="2026-06"');
+    expect(timelineItems).toContain('mei 2026');
+    expect(timelineItems).toContain('juni 2026');
+    expect(timelineItems).toContain('Zonder concrete datum');
+    expect(timelineItems).toContain('1 moment');
+    expect(timelineItems).toContain('17 momenten');
+    expect(timelineItems).toContain('conceptreview');
     expect(timelineItems).toContain('class="kp-timeline__rail"');
     expect(timelineItems).toContain('class="kp-timeline__dot"');
     expect(timelineItems).toContain('class="kp-timeline__title">Labuitslag hormonen</h3>');
@@ -4835,6 +4845,8 @@ describe('app shell', () => {
     expect(timelineItems).not.toContain('tracking-payload');
     expect(timelineItems).not.toContain('behandelkeuzeadvies');
     expect(timelineItems).not.toMatch(/\b\d+([,.]\d+)?\s?(mg|mcg|µg|iu|ml)\b/i);
+    expect(css).toContain('.fertility-timeline-month-group {');
+    expect(css).toContain('.fertility-timeline-month-group p {');
   });
 
   it('rendert medicatie met DoseLog-acties zonder dosering te berekenen', () => {

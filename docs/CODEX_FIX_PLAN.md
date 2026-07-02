@@ -310,6 +310,9 @@
   shows per-file and batch limits beside the file field, oversized/rejected files use recoverable
   feedback without medical filenames, and central `request-body-too-large` is translated to plain
   dossier-flow copy.
+- **CFX-020 fertility timeline month grouping — partial in G1412 / issue #865.** The fertility
+  timeline now derives safe month groups with source/review metadata and renders scan-friendly
+  month headers inside the timeline without adding medical payloads or advice.
 
 ---
 
@@ -733,6 +736,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Traject folds the treatment workbench into the same split-view as route context, so desktop opens
   as one rail/main/context workspace instead of a separate focus-region plus nested route
   workspace.
+  Partial G1412/#865: fertility timeline items are grouped by month with safe source,
+  date-range, item-count, and concept-review cues while preserving existing detail review panels.
 - **CFX-034** — Agenda: date-block + colored `border-left` card, dashed "Verwacht", "Toevoegen"
   pill. **P2 · M** Partial G1353/#2480: upcoming/past appointment lists now use date blocks and
   type-colored appointment cards. Partial G1357/#2488: Agenda uses a route-first workspace without
