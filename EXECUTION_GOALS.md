@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1342 — Daily Recommendations: filterstatus toont actieve lijstfocus
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De workflowstatus kan straks het lijstpaneel openen, maar er is nog geen rustige visuele bevestiging dat de lijst de actieve context is.
+- **User Impact:** Gebruikers kunnen na de sprong minder snel zien waarom het lijstpaneel openstaat of welke context actief is.
+- **Desired Outcome:** Toon na de sprong vanuit de workflowstatus een rustige focus- of geopend-status bij het lijstpaneel zonder de filterroute te veranderen.
+- **User Value:** Gebruikers houden context wanneer zij vanuit de filterstatus naar de gefilterde suggesties gaan.
+- **Acceptance Criteria:** Na openen/focussen vanuit de workflowstatus toont het lijstpaneel een rustige focus- of geopend-status; de status verdwijnt of blijft rustig bij ongefilterde route/reset; route en feedbackfilter blijven behouden tijdens de focusactie; desktop en mobiel blijven zonder overlap of horizontale overflow; tests dekken rendering, focusstatus en privacygrenzen.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2630
+
 ### G1341 — Daily Recommendations: filterstatus laat lijstpaneel openen
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2628
 
 ### G1340 — Daily Recommendations: feedbackfilter reset vanuit workflowstatus

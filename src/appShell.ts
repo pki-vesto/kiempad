@@ -14711,12 +14711,15 @@ function renderDailyAdviceFilterStatus(input: {
   const filterLabel = FERTILITY_TIMELINE_AANBEVELING_FEEDBACK_LABELS[input.filter];
 
   return `
-    <form class="daily-advice-filter-status" data-daily-advice-feedback-workflow-status="ready" data-daily-recommendation-feedback-control="ready">
+    <div class="daily-advice-filter-status" data-daily-advice-feedback-workflow-status="ready">
       <span>Actieve feedbackfilter</span>
       <strong>${escapeHtml(filterLabel)}</strong>
       <em>${input.filteredTotal} van ${input.total} suggesties</em>
-      <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-advice-feedback-workflow-reset="ready">Reset</button>
-    </form>
+      <button type="button" data-daily-advice-feedback-list-open="ready">Bekijk lijst</button>
+      <form data-daily-recommendation-feedback-control="ready">
+        <button type="submit" name="dailyRecommendationFeedbackFilterAction" value="reset" data-daily-advice-feedback-workflow-reset="ready">Reset</button>
+      </form>
+    </div>
   `;
 }
 

@@ -4391,6 +4391,10 @@ h2 {
   color: var(--text-muted);
 }
 
+.daily-advice-filter-status form {
+  display: contents;
+}
+
 .daily-advice-filter-status button {
   min-height: 28px;
   padding: 4px 9px;

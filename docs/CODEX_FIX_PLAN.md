@@ -85,6 +85,9 @@
 - **Daily advice feedback workflow reset — done in G1433 / issue #2626.** The visible dagadvies
   feedback workflow status now includes a direct reset action sharing the same local route/reset
   handler as the full list filter, with smoke coverage for both reset paths.
+- **Daily advice feedback list jump — done in G1434 / issue #2628.** The active feedback workflow
+  status now includes a direct `Bekijk lijst` action that opens and focuses the full suggestion
+  list while preserving the filtered route.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

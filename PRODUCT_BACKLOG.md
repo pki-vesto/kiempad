@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1142 |
+| ☑ klaar | 1143 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1341** |
+| **Totaal** | **1342** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1503,13 +1503,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1338 | Daily Recommendations: feedbackfilter browser navigation smoke | P1 | F5 | ☑ |
 | G1339 | Daily Recommendations: feedbackfilter zichtbaar in workflowstatus | P1 | F5 | ☑ |
 | G1340 | Daily Recommendations: feedbackfilter reset vanuit workflowstatus | P1 | F5 | ☑ |
-| G1341 | Daily Recommendations: filterstatus laat lijstpaneel openen | P1 | F5 | ☐ |
+| G1341 | Daily Recommendations: filterstatus laat lijstpaneel openen | P1 | F5 | ☑ |
+| G1342 | Daily Recommendations: filterstatus toont actieve lijstfocus | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1341** (id's G001 t/m G1341, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1342** (id's G001 t/m G1342, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
