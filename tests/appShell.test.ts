@@ -8398,6 +8398,13 @@ describe('app shell', () => {
     expect(html).toContain('Foto/echo');
     expect(html).toContain('Beeldenoverzicht');
     expect(html).toContain('id="imaging-filter-form"');
+    expect(html).toContain('data-imaging-filter-kit="ready"');
+    expect(html).toContain('data-imaging-filter-state="idle"');
+    expect(html).toContain('Beeldfilter');
+    expect(html).toContain('Filter zonder beeldlijst te openen');
+    expect(html).toContain('data-imaging-filter-chip="none"');
+    expect(html).toContain('Geen filter actief');
+    expect(html).toContain('href="#dossier?route=imaging">Wis filters</a>');
     expect(html).toContain('name="imagingSoort"');
     expect(html).toContain('name="imagingDatumVanaf"');
     expect(html).toContain('name="imagingDatumTot"');
@@ -8684,6 +8691,10 @@ describe('app shell', () => {
     const emptyCompare = extractImagingComparePanel(emptyHtml);
 
     expect(emptyHtml).toContain('id="imaging-filter-form"');
+    expect(emptyHtml).toContain('data-imaging-filter-kit="ready"');
+    expect(emptyHtml).toContain('data-imaging-filter-state="idle"');
+    expect(emptyHtml).toContain('Alles zichtbaar');
+    expect(emptyHtml).toContain('data-imaging-filter-chip="none"');
     expect(emptyHtml).toContain('name="imagingSoort"');
     expect(emptyHtml).toContain('name="imagingDatumVanaf"');
     expect(emptyHtml).toContain('name="imagingDatumTot"');
@@ -8697,6 +8708,62 @@ describe('app shell', () => {
       'Voeg minimaal twee beeldmomenten toe om metadata naast elkaar te vergelijken.',
     );
     expect(emptyCompare).toContain('Geen beeldinterpretatie, kansberekening of behandeladvies.');
+
+    const filteredHtml = renderAppShell('dossier', {
+      trajecten: [
+        {
+          traject: {
+            id: 'traject-filter',
+            naam: 'ICSI voorjaar',
+            type: 'icsi',
+            pogingNummer: 1,
+            startDatum: '2026-04-01',
+            status: 'lopend',
+          },
+          fasen: [],
+        },
+      ],
+      afspraken: [
+        {
+          afspraak: {
+            id: 'afspraak-filter',
+            titel: 'Echo filterafspraak',
+            datumTijd: '2026-05-02T09:30',
+            type: 'echo',
+          },
+        },
+      ],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      dossierDocuments: [],
+      imagingFilter: {
+        soort: 'echo',
+        datumVanaf: '2026-05-01',
+        datumTot: '2026-05-10',
+        trajectId: 'traject-filter',
+        afspraakId: 'afspraak-filter',
+        embryoLabel: 'Embryo 1',
+      },
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+    });
+
+    expect(filteredHtml).toContain('data-imaging-filter-state="active"');
+    expect(filteredHtml).toContain('6 actief');
+    expect(filteredHtml).toContain('data-imaging-filter-chip="type"');
+    expect(filteredHtml).toContain('Type: Echo');
+    expect(filteredHtml).toContain('data-imaging-filter-chip="from"');
+    expect(filteredHtml).toContain('Vanaf: 2026-05-01');
+    expect(filteredHtml).toContain('data-imaging-filter-chip="to"');
+    expect(filteredHtml).toContain('Tot: 2026-05-10');
+    expect(filteredHtml).toContain('data-imaging-filter-chip="traject"');
+    expect(filteredHtml).toContain('Traject: ICSI voorjaar');
+    expect(filteredHtml).toContain('data-imaging-filter-chip="afspraak"');
+    expect(filteredHtml).toContain('Afspraak: Echo filterafspraak');
+    expect(filteredHtml).toContain('data-imaging-filter-chip="embryo"');
+    expect(filteredHtml).toContain('Embryo: Embryo 1');
 
     const populatedHtml = renderAppShell('dossier', {
       trajecten: [],

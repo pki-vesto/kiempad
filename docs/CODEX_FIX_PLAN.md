@@ -114,6 +114,9 @@
 - **CFX-040 dossier imaging tiles — partial in G1350 / issue #2474.** Dossier Beelden now renders
   encrypted thumbnail tiles with explicit locked/unlocked preview states and richer action-oriented
   empty states for consultcontext, imaging, index, and embryo dossiers.
+- **CFX-040 dossier imaging filter kit — partial in G1351 / issue #2476.** The Dossier Beelden
+  filter now renders as a structured filter kit with active chips, reset action, and privacy copy
+  instead of a loose stack of native fields.
 
 ---
 
@@ -522,6 +525,7 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-040** — Dossier: kit filters, encrypted thumbnail tile, de-jargon, rich empties (after
   CFX-002). **P1 · L**
   Partial G1350/#2474: Beelden route has encrypted thumbnail tiles plus richer empty states.
+  Partial G1351/#2476: Beelden filter has a filter-kit surface with active chips and reset.
 - **CFX-041** — Afwegingen: decision cards with +/− tags + chosen banner + kit form + empty. **P2 · M**
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
