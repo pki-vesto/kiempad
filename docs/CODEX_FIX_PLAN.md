@@ -128,6 +128,8 @@
   submit blocking before file contents are read.
 - **CFX-019b dossier delete confirm — partial in G1355 / issue #2484.** Dossier import-inbox delete
   now opens an inline confirmation panel with cancel/confirm actions instead of a browser confirm.
+- **CFX-044 backup export preview — partial in G1356 / issue #2486.** Back-up now shows a
+  first-class latest-backup reminder card and encrypted export preview before opening details.
 
 ---
 
@@ -545,7 +547,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Done in G1349/#2472 for route-first workspace, chosen banner, and +/− option tags.
 - **CFX-043** — Logboek: read-only "what happened to your data" framing + timeline rows. **P2 · S**
 - **CFX-044** — Back-up: export preview + Download/Kopieer, "Laatste back-up" reminder card,
-  de-jargon. **P2 · M**
+  de-jargon. **P2 · M** Partial G1356/#2486: latest-backup reminder card and encrypted export
+  preview are visible before disclosure details.
 - **CFX-045** — `renderStorageBootstrapError` + Dossier: apply the unified privacy phrasing +
   de-jargon (N91). **P2 · S**
 

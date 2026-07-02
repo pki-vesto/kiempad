@@ -173,6 +173,7 @@ describe('routeflow screenshot smoke script', () => {
       '[data-backup-sync-lane="export"]',
       '[data-backup-sync-lane="import"]',
       '[data-backup-sync-lane="recovery"]',
+      '[data-backup-reminder-card="ready"]',
     ]) {
       expect(routeflowScreenshotSmokeScript).toContain(selector);
     }
