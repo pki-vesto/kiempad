@@ -7620,6 +7620,8 @@ describe('app shell', () => {
     expect(addSection).toContain('Metadata en controle');
     expect(addSection).toContain('Controlelijst openen');
     expect(addSection).toContain('data-dossier-upload-optional="koppelingen"');
+    expect(addSection).toContain('data-dossier-upload-link-fields="collapsed"');
+    expect(addSection).toContain('Koppelvelden openen');
     expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
     expect(addSection).toContain('data-dossier-upload-optional="embryo-labcontext"');
     expect(addSection).toContain('class="dossier-upload-optional__summary"');
@@ -7634,6 +7636,9 @@ describe('app shell', () => {
     );
     expect(addSection).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-metadata-fields" data-dossier-upload-metadata-fields="collapsed" open',
+    );
+    expect(addSection).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-link-fields" data-dossier-upload-link-fields="collapsed" open',
     );
     expect(addSection).not.toContain('<details class="dossier-upload-optional" open');
     expect(addSection).toContain('data-dossier-upload-privacy-disclosure="collapsed"');
@@ -7791,6 +7796,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('data-dossier-upload-file-choice="ready"');
     expect(dossierPanel).toContain('data-dossier-upload-metadata="collapsed"');
     expect(dossierPanel).toContain('data-dossier-upload-metadata-fields="collapsed"');
+    expect(dossierPanel).toContain('data-dossier-upload-link-fields="collapsed"');
     expect(dossierPanel.indexOf('data-dossier-upload-file-choice="ready"')).toBeLessThan(
       dossierPanel.indexOf('data-dossier-upload-metadata="collapsed"'),
     );
@@ -7812,6 +7818,12 @@ describe('app shell', () => {
     );
     expect(dossierPanel.indexOf('data-dossier-upload-metadata-fields="collapsed"')).toBeLessThan(
       dossierPanel.indexOf('name="datum" type="date" required'),
+    );
+    expect(dossierPanel.indexOf('data-dossier-upload-optional="koppelingen"')).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-upload-link-fields="collapsed"'),
+    );
+    expect(dossierPanel.indexOf('data-dossier-upload-link-fields="collapsed"')).toBeLessThan(
+      dossierPanel.indexOf('name="afspraakId"'),
     );
     expect(dossierPanel).toContain(
       'data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional"',
@@ -8131,6 +8143,7 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="embryo-status"]');
     expect(css).toContain('.dossier-add-route[href="#embryo-status-event-form"]');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-metadata-fields');
+    expect(css).toContain('.dossier-upload-optional.dossier-upload-link-fields');
     expect(css).toContain(
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
     );

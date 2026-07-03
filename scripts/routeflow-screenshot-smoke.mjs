@@ -450,6 +450,41 @@ const targets = [
     uploadConsole: true,
   },
   {
+    screen: 'dossier-upload-links',
+    hash: '#dossier-upload-form',
+    rootSelector: '#dossier-route-upload',
+    expectedText: 'Nieuwe medische records toevoegen',
+    activeRouteSelector: '[data-dossier-route="upload"][data-dossier-route-state="active"]',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: ['[data-dossier-upload-optional="koppelingen"]'],
+    requiredSelectors: [
+      '[data-dossier-upload-console="ready"]',
+      '[data-dossier-upload-console="ready"][data-dossier-add-flow="document"]',
+      '#dossier-upload-form',
+      '[data-dossier-upload-optional="koppelingen"]',
+      '[data-dossier-upload-link-fields="collapsed"]',
+      '[data-dossier-upload-link-fields="collapsed"] > .dossier-upload-optional__summary',
+    ],
+    closedDetailsSelectors: [
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-link-fields="collapsed"]',
+      '[data-dossier-upload-optional="beeldcontext"]',
+      '[data-dossier-upload-optional="embryo-labcontext"]',
+      '[data-dossier-upload-privacy-disclosure="collapsed"]',
+    ],
+    desktopHiddenSelectors: [
+      '.dossier-split-workspace .domain-split-workspace__rail',
+      '.dossier-split-workspace .domain-split-workspace__context',
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.hub-workflow-header__copy p',
+      '.dossier-upload-triage__header > p',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+    dossierConsole: true,
+    uploadConsole: true,
+  },
+  {
     screen: 'dossier-review',
     hash: '#dossier-route-review',
     rootSelector: '#dossier-route-upload',
@@ -811,6 +846,14 @@ async function assertRouteflows(browser, options) {
       await unlockIfNeeded(page, target.hash);
       if (target.prepare === 'filled-consult-card') {
         await prepareFilledConsultCard(page, target.hash);
+      }
+      if (target.closedDetailsSelectors) {
+        await page.evaluate((selectors) => {
+          for (const selector of selectors) {
+            const details = document.querySelector(selector);
+            if (details instanceof HTMLDetailsElement) details.open = false;
+          }
+        }, target.closedDetailsSelectors);
       }
       if (target.openSelectors) {
         await page.evaluate((selectors) => {

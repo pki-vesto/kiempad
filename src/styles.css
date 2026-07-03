@@ -16108,7 +16108,8 @@ a.action-card:active {
   border-style: dashed;
 }
 
-.dossier-upload-optional.dossier-upload-metadata-fields {
+.dossier-upload-optional.dossier-upload-metadata-fields,
+.dossier-upload-optional.dossier-upload-link-fields {
   margin: 0 10px 10px;
   background: var(--surface);
 }
