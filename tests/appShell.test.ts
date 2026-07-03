@@ -6737,6 +6737,10 @@ describe('app shell', () => {
     );
     expect(html).toContain('class="question-prompt-field"');
     expect(html).toContain('class="question-prompt-input" name="vraag" rows="4" required');
+    expect(html).toContain(
+      'class="form-required-map" data-form-required-map="question-item" aria-label="Verplicht voor vraag"',
+    );
+    expect(html).toContain('<span role="listitem">Vraag</span>');
     expect(html).toContain('class="command-form-actions"');
     expect(html).toContain(
       'class="form-cancel-link" href="#vragen?route=open" data-form-cancel-action="question"',
@@ -41749,6 +41753,12 @@ describe('app shell', () => {
     expect(html).toContain('data-command-form-section="traject-basis"');
     expect(html).toContain('data-command-form-section="traject-planning"');
     expect(html).toContain('data-command-form-section="traject-context"');
+    expect(html).toContain(
+      'class="form-required-map" data-form-required-map="treatment-item" aria-label="Verplicht voor traject"',
+    );
+    expect(html).toContain('<span role="listitem">Naam</span>');
+    expect(html).toContain('<span role="listitem">Startdatum</span>');
+    expect(html).toContain('<span role="listitem">Pogingnummer</span>');
     expect(html).toContain('class="command-form-actions"');
     expect(html).toContain(
       'class="form-cancel-link" href="#traject?route=fasen" data-form-cancel-action="treatment"',

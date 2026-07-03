@@ -1217,6 +1217,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Omschrijving, Datum and Bedrag before the finance action row.
   Partial G1587/#3118: Agenda appointment and medication forms now show compact required-field
   maps before their existing action rows.
+  Partial G1588/#3120: Question and treatment forms now show compact required-field maps before
+  their existing action rows.
 - **CFX-030f** — Forms in a card with title + `✕` close, padding 20, radius 18 (C30). **P2 · M**
 
 ### Data / backend / seed
