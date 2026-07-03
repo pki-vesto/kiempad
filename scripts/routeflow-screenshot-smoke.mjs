@@ -484,6 +484,7 @@ const targets = [
       '[data-knowledge-ai-console-region="summary-save"]',
       '[data-knowledge-ai-console-region="settings"]',
       '[data-knowledge-ai-console-region="research-network"]',
+      '[data-knowledge-ai-support-panel-choice="collapsed"]',
     ],
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
@@ -492,6 +493,7 @@ const targets = [
       '[data-knowledge-ai-preview-choice="collapsed"]',
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-support-panel-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [
@@ -555,6 +557,23 @@ const targets = [
     closedDetailsSelectors: ['[data-knowledge-ai-preview-content-choice="collapsed"]'],
   },
   {
+    screen: 'knowledge-ai-support-panels',
+    hash: '#kennis?route=ai',
+    rootSelector: '.content',
+    expectedText: 'Supportpanelen kiezen',
+    openSelectors: [
+      '[data-knowledge-ai-support="collapsed"]',
+      '[data-knowledge-ai-support-context-choice="collapsed"]',
+    ],
+    requiredSelectors: ['[data-knowledge-ai-support-panel-choice="collapsed"]'],
+    presentSelectors: [
+      '[data-knowledge-ai-console-region="summary-save"]',
+      '[data-knowledge-ai-console-region="settings"]',
+      '[data-knowledge-ai-console-region="research-network"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-ai-support-panel-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-ai-summary',
     hash: '#kennis?route=ai',
     rootSelector: '.content',
@@ -562,6 +581,7 @@ const targets = [
     openSelectors: [
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-support-panel-choice="collapsed"]',
       '[data-knowledge-ai-summary-detail-choice="collapsed"]',
     ],
     requiredSelectors: [
@@ -586,6 +606,7 @@ const targets = [
     openSelectors: [
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-support-panel-choice="collapsed"]',
       '[data-knowledge-ai-settings-choice="collapsed"]',
     ],
     requiredSelectors: [
@@ -612,6 +633,7 @@ const targets = [
     openSelectors: [
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-support-panel-choice="collapsed"]',
       '[data-knowledge-ai-network-choice="collapsed"]',
     ],
     requiredSelectors: [
