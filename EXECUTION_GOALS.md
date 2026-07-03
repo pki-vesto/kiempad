@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1422 — Dossier upload keuze-uitleg start met één compacte uitlegkaart
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1421 zijn routekeuze en hulphint compacter, maar de keuze-uitleg kan nog een extra tekstkaart tonen voordat een flow is gekozen.
+- **User Impact:** Gebruikers krijgen na de compacte routekeuze alsnog een tweede uitlegkaart te scannen voordat zij aan een concrete uploadtaak beginnen.
+- **Desired Outcome:** Laat de keuze-uitleg onder de dossier-uploadconsole eerst één compacte uitlegkaart of samengevouwen contextlaag tonen, terwijl de routes bereikbaar blijven.
+- **User Value:** Gebruikers houden één duidelijke startlaag en kunnen routecontext openen wanneer die nodig is.
+- **Acceptance Criteria:** Bestaande routehashes, route buttons, active-state hooks en dossier upload hooks blijven aanwezig; de keuze-uitleg toont eerst één compacte uitlegkaart of samengevouwen contextlaag; document, consult, embryokwaliteit en embryostatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken bereikbaarheid, hooks en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload choice copy, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2790
+
 ### G1421 — Dossier upload microcopy start met één compacte hulphint
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload microcopy, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2788
 
 ### G1420 — Dossier upload selector start met één compacte routekeuze
