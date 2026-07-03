@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1483 — Kennis bibliotheek categoriekaarten tonen compacte vervolgankers
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1482 tonen geopende categoriekaarten nog geen compacte vervolgstap naar categorieanker, vervolgcontext of zichtbaarheidsstatus.
+- **User Impact:** Gebruikers die een kaartgroep openen, moeten alsnog zelf bepalen welke vervolgstap bij de gekozen kaart past.
+- **Desired Outcome:** Laat de Kennis Bibliotheek categoriekaarten na openen compacte vervolgankers tonen, zodat gebruikers gericht naar categorie, vervolgcontext of zichtbaarheid kunnen zonder opnieuw de hele route te scannen.
+- **User Value:** Gebruikers krijgen na de kaartkeuze direct een kleine, duidelijke vervolgstap in plaats van een brede bibliotheeklaag.
+- **Acceptance Criteria:** Bestaande categoriekaart-, routeanker-, followup- en zichtbaarheids-hooks blijven aanwezig; de categoriekaartgroep toont compacte vervolgankers of een samengevouwen vervolglayer na de kaartkeuze; categorieankers, bibliotheekvervolg en zichtbaarheid blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte vervolglaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library category cards, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2910
+
 ### G1482 — Kennis bibliotheek categoriekaarten starten met één compacte kaartkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library category choice, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2908
 
 ### G1481 — Kennis bibliotheek vervolgcontext start met één compacte contextkeuze
