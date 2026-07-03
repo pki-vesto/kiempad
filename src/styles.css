@@ -8590,7 +8590,21 @@ h2 {
 
 .knowledge-library-empty-recovery-choice__body
   .knowledge-library-followup-visibility-choice__anchor {
+  gap: 6px;
   background: color-mix(in srgb, var(--category) 6%, var(--surface));
+}
+
+.knowledge-library-empty-recovery-choice__step {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--category) 14%, var(--surface));
+  color: var(--category);
+  font-size: 0.66rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .knowledge-library-context-choice {

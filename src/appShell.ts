@@ -13096,9 +13096,9 @@ function renderKennisScreen(state: AppShellState): string {
                           <em>3 acties</em>
                         </summary>
                         <div class="knowledge-library-empty-recovery-choice__body">
-                          <a class="knowledge-library-followup-visibility-choice__anchor" href="#kennis?route=library" data-knowledge-library-empty-recovery-action="clear-filter">Filter wissen</a>
-                          <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-empty-recovery-action="category">Categorie kiezen</a>
-                          <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#kennis?route=add" data-knowledge-library-empty-recovery-action="add">Kennis toevoegen</a>
+                          <a class="knowledge-library-followup-visibility-choice__anchor" href="#kennis?route=library" data-knowledge-library-empty-recovery-action="clear-filter" data-knowledge-library-empty-recovery-order="1"><span class="knowledge-library-empty-recovery-choice__step">1</span>Filter wissen</a>
+                          <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-empty-recovery-action="category" data-knowledge-library-empty-recovery-order="2"><span class="knowledge-library-empty-recovery-choice__step">2</span>Categorie kiezen</a>
+                          <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#kennis?route=add" data-knowledge-library-empty-recovery-action="add" data-knowledge-library-empty-recovery-order="3"><span class="knowledge-library-empty-recovery-choice__step">3</span>Kennis toevoegen</a>
                         </div>
                       </details>`
                 }
