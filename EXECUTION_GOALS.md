@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1419 — Embryostatus route start met één statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na documentupload, consultupload en embryokwaliteit kan de embryostatusroute nog direct meerdere invoervelden en context tegelijk tonen.
+- **User Impact:** Gebruikers die alleen een statusmoment willen vastleggen, moeten nog steeds status, bron, reviewstatus, koppelingen en notities tegelijk scannen.
+- **Desired Outcome:** Laat de embryostatusroute eerst openen met één rustige status- of bronkeuze, waarna datum, embryo, broncontrole, koppelingen en feedback als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen embryostatusmomenten stap voor stap vastleggen zonder dat de route als één brede invoerpagina start.
+- **Acceptance Criteria:** Bestaande form ids, inputnamen, submitknop, feedback hooks, privacy hooks en dossier hooks blijven aanwezig; de eerste embryostatuslaag toont één duidelijke status- of bronkeuze; datum, embryo, broncontrole, koppelingen en feedback blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Embryostatus
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, embryo status form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2784
+
 ### G1418 — Embryokwaliteit: afronding start met één bewaarkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, embryo quality submit feedback, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2782
 
 ### G1417 — Embryokwaliteit: registratie start met één embryokeuze

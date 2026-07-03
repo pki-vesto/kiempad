@@ -15647,7 +15647,8 @@ a.action-card:active {
 }
 
 .dossier-upload-completion[data-dossier-upload-completion-choice="ready"],
-.dossier-upload-completion[data-consult-upload-completion-choice="ready"] {
+.dossier-upload-completion[data-consult-upload-completion-choice="ready"],
+.dossier-upload-completion[data-embryo-quality-completion-choice="ready"] {
   display: grid;
   gap: 10px;
   min-width: 0;

@@ -3916,8 +3916,16 @@ function renderDossierScreen(state: AppShellState): string {
             </label>
             </fieldset>
           </details>
-          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
-          ${renderDossierSubmitFeedback('embryo-quality', 'embryo-upload', state)}
+          <section class="dossier-upload-completion" data-embryo-quality-completion-choice="ready">
+            <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
+            <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-quality-submit-feedback-details="collapsed">
+              <summary class="dossier-upload-optional__summary">
+                <span>Bewaarstatus openen</span>
+                <small>Feedback en herstelcontext</small>
+              </summary>
+              ${renderDossierSubmitFeedback('embryo-quality', 'embryo-upload', state)}
+            </details>
+          </section>
         </form>
         `,
         })}

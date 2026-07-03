@@ -8028,6 +8028,9 @@ describe('app shell', () => {
     expect(embryoQualityPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="embryo-quality"',
     );
+    expect(embryoQualityPanel).toContain('data-embryo-quality-completion-choice="ready"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-submit-feedback-details="collapsed"');
+    expect(embryoQualityPanel).toContain('Bewaarstatus openen');
     expect(embryoQualityPanel).toContain('Bewaar embryokwaliteit</button>');
     expect(embryoQualityPanel).toContain('data-dossier-submit-feedback="embryo-quality"');
     expect(embryoQualityPanel).toContain('data-dossier-feedback-announcement-order="3"');
@@ -8045,6 +8048,9 @@ describe('app shell', () => {
     expect(embryoQualityPanel).not.toContain(
       '<details class="dossier-upload-optional embryo-quality-link-fields" data-embryo-quality-link-fields="collapsed" open',
     );
+    expect(embryoQualityPanel).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-quality-submit-feedback-details="collapsed" open',
+    );
     expect(embryoQualityPanel.indexOf('data-embryo-quality-choice="ready"')).toBeLessThan(
       embryoQualityPanel.indexOf('data-embryo-quality-identification-fields="collapsed"'),
     );
@@ -8057,6 +8063,12 @@ describe('app shell', () => {
     expect(embryoQualityPanel.indexOf('data-embryo-quality-link-fields="collapsed"')).toBeLessThan(
       embryoQualityPanel.indexOf('name="trajectId"'),
     );
+    expect(embryoQualityPanel.indexOf('data-dossier-submit-action="embryo-quality"')).toBeLessThan(
+      embryoQualityPanel.indexOf('data-embryo-quality-submit-feedback-details="collapsed"'),
+    );
+    expect(
+      embryoQualityPanel.indexOf('data-embryo-quality-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(embryoQualityPanel.indexOf('data-dossier-submit-feedback="embryo-quality"'));
     expect(embryoStatusPanel).toContain('class="kp-workflow-panel embryo-status-workflow"');
     expect(embryoStatusPanel).toContain('aria-label="Begeleide embryo-status registratie"');
     expect(embryoStatusPanel).toContain('data-upload-workflow="embryo-status"');
@@ -8553,6 +8565,7 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-completion');
     expect(css).toContain('data-dossier-upload-completion-choice="ready"');
     expect(css).toContain('data-consult-upload-completion-choice="ready"');
+    expect(css).toContain('data-embryo-quality-completion-choice="ready"');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-submit-feedback-details');
     expect(css).toContain('.dossier-submit-action');
     expect(css).toContain('justify-self: start;');

@@ -756,6 +756,9 @@ const targets = [
       '[data-embryo-quality-assessment-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-embryo-quality-link-fields="collapsed"]',
       '[data-embryo-quality-link-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-embryo-quality-completion-choice="ready"]',
+      '[data-embryo-quality-submit-feedback-details="collapsed"]',
+      '[data-embryo-quality-submit-feedback-details="collapsed"] > .dossier-upload-optional__summary',
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"][data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="embryo-quality"]',
@@ -766,6 +769,7 @@ const targets = [
       '[data-embryo-quality-identification-fields="collapsed"]',
       '[data-embryo-quality-assessment-fields="collapsed"]',
       '[data-embryo-quality-link-fields="collapsed"]',
+      '[data-embryo-quality-submit-feedback-details="collapsed"]',
     ],
     expectedUploadFlow: 'embryoQuality',
     desktopHiddenSelectors: [
