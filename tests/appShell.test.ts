@@ -38183,8 +38183,9 @@ describe('app shell', () => {
     );
     expect(html).toContain('class="knowledge-filter-kit__header"');
     expect(html).toContain('data-knowledge-filter-choice="collapsed"');
-    expect(html).toContain('Filters kiezen');
-    expect(html).toContain('Open daarna zoekterm, categorie, bron of verificatie');
+    expect(html).toContain('data-knowledge-filter-form-choice="collapsed"');
+    expect(html).toContain('Filterformulier openen');
+    expect(html).toContain('Open daarna zoekterm, categorie, bron, verificatie en acties.');
     expect(html).toContain('class="knowledge-filter-kit__fields"');
     expect(html).toContain('class="knowledge-filter-kit__actions"');
     expect(html).toContain(
@@ -38196,10 +38197,13 @@ describe('app shell', () => {
     expect(html).toContain('<option value="concept" selected>Concept</option>');
     expect(html).toContain('data-knowledge-filter-choice="collapsed"');
     expect(html.indexOf('data-knowledge-filter-choice="collapsed"')).toBeLessThan(
+      html.indexOf('class="knowledge-filter-kit__header"'),
+    );
+    expect(html.indexOf('data-knowledge-filter-form-choice="collapsed"')).toBeLessThan(
       html.indexOf('class="knowledge-filter-kit__fields"'),
     );
     expect(html).not.toContain(
-      '<details class="knowledge-filter-choice" data-knowledge-filter-choice="collapsed" open>',
+      '<details class="knowledge-filter-choice" data-knowledge-filter-choice="collapsed" data-knowledge-filter-form-choice="collapsed" open>',
     );
     expect(html).toContain('1 van 2 kennisitems zichtbaar');
     expect(html).toContain('Kosten 2026: eigen risico');
@@ -38691,6 +38695,9 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-filter-kit__fields {');
     expect(css).toContain('.knowledge-filter-kit__actions {');
     expect(css).toContain('.knowledge-filter-choice {');
+    expect(css).toContain(
+      '.knowledge-filter-choice[data-knowledge-filter-form-choice="collapsed"] {',
+    );
     expect(css).toContain('.knowledge-filter-choice__summary {');
     expect(css).toContain('.knowledge-filter-choice__body {');
     expect(css).toContain(

@@ -13336,22 +13336,22 @@ function renderKennisFilterForm(filter: KennisFilter): string {
 
   return `
     <form id="knowledge-filter-form" class="data-form compact-form knowledge-filter-kit" data-knowledge-filter-kit="ready" data-knowledge-filter-state="${activeFilterCount > 0 ? 'active' : 'idle'}">
-      <header class="knowledge-filter-kit__header">
-        <div>
-          <p class="kp-card__eyebrow">Bibliotheekfilter</p>
-          <h3>Kennisitems vinden</h3>
-        </div>
-        <span>${escapeHtml(status)}</span>
-      </header>
-      <details class="knowledge-filter-choice" data-knowledge-filter-choice="collapsed">
+      <details class="knowledge-filter-choice" data-knowledge-filter-choice="collapsed" data-knowledge-filter-form-choice="collapsed">
         <summary class="knowledge-filter-choice__summary">
           <span>
-            <strong>Filters kiezen</strong>
-            <small>Open daarna zoekterm, categorie, bron of verificatie</small>
+            <strong>Filterformulier openen</strong>
+            <small>Open daarna zoekterm, categorie, bron, verificatie en acties.</small>
           </span>
           <em>${escapeHtml(activeFilterCount > 0 ? `${activeFilterCount} actief` : 'Geen filter')}</em>
         </summary>
         <div class="knowledge-filter-choice__body">
+          <header class="knowledge-filter-kit__header">
+            <div>
+              <p class="kp-card__eyebrow">Bibliotheekfilter</p>
+              <h3>Kennisitems vinden</h3>
+            </div>
+            <span>${escapeHtml(status)}</span>
+          </header>
           <div class="knowledge-filter-kit__fields">
             <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
               Zoek
