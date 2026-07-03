@@ -14994,6 +14994,24 @@ a.action-card:active {
   outline-offset: 2px;
 }
 
+@media (max-width: 759px) {
+  [data-daily-recommendation-reset-route-focus="ready"] {
+    width: 100%;
+    max-width: calc(100% - 4px);
+    gap: 6px;
+  }
+
+  [data-daily-recommendation-reset-route-focus="ready"]:focus-visible,
+  .daily-recommendation-reset-route-focus__close:focus-visible {
+    outline-offset: 1px;
+  }
+
+  .daily-recommendation-reset-route-focus__close {
+    min-height: 32px;
+    padding-inline: 7px;
+  }
+}
+
 .save-feedback {
   display: flex;
   align-items: center;
