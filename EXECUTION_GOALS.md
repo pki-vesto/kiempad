@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1573 — Premium Claude Design UI houdt mobiele formulieracties compact en rustig
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Mobiele routeformulieren duwen save/cancel actions op normale mobiele breedtes nog te vaak naar volle teal-knoppenblokken.
+- **User Impact:** Lange formulieren voelen zwaarder en minder premium doordat acties de taakruimte domineren in plaats van als compacte commandoregel te lezen.
+- **Desired Outcome:** Mobiele form-actions blijven op normale mobiele breedtes compact, wrap-safe en rustig; alleen zeer smalle schermen krijgen full-width acties.
+- **User Value:** Gebruikers scannen formulieren sneller en houden een rustiger taakgevoel zonder tapbaarheid op kleine schermen te verliezen.
+- **Acceptance Criteria:** Command-, agenda-, medicatie- en single-submit routeformacties gebruiken wrapbare compacte mobile rows; onder 420px blijven acties full-width; bestaande ghost Annuleer-links blijven zichtbaar; desktop/tablet behavior blijft intact; routeflow-smoke valideert desktop, tablet en mobiel; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kosten, Agenda, Medicatie, Vragen, Traject en gedeelde routeformulieren
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Shared form action CSS, command route forms, route-first workspaces
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3090
+
 ### G1572 — Premium Claude Design UI geeft contextrail een compacte sticky paneelkop
 
 - **Epic:** Onboarding & Daily Use

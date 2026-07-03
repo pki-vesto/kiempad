@@ -618,6 +618,9 @@
   columns now get a compact sticky context header, making supporting context read as an attached
   task panel instead of another loose long-page column while preserving existing workbench content
   and hooks.
+- **Compact mobile form actions — done in G1573 / issue #3090.** Mobile route forms now keep
+  save/cancel actions as compact wrap-safe command rows on normal mobile widths, reserving
+  full-width buttons for very narrow screens so forms feel less like stacked button walls.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
