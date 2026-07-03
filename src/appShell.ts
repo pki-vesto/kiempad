@@ -12878,11 +12878,22 @@ function renderKennisScreen(state: AppShellState): string {
               <h3>Start met een gecontroleerde AI-preview</h3>
               <p>De route opent met alleen de payloadpreview. Opslaan, opt-in en netwerkbeheer staan achter een ondersteunende stap.</p>
             </div>
-            <div class="command-route-summary__meta">
-              <span class="command-route-summary__status">${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</span>
-              <a class="command-route-summary__action" href="#ai-preview-form">Preview</a>
-              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-ai-support">Beheer</a>
-            </div>
+            <details class="knowledge-ai-action-choice" data-knowledge-ai-action-choice="collapsed">
+              <summary class="knowledge-ai-action-choice__summary">
+                <span>
+                  <strong>AI-vervolgactie kiezen</strong>
+                  <small>Open previewanker, beheeranker, netwerkstatus en routecontext.</small>
+                </span>
+                <em>2 acties</em>
+              </summary>
+              <div class="knowledge-ai-action-choice__body">
+                <div class="command-route-summary__meta">
+                  <span class="command-route-summary__status">${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</span>
+                  <a class="command-route-summary__action" href="#ai-preview-form">Preview</a>
+                  <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-ai-support">Beheer</a>
+                </div>
+              </div>
+            </details>
           </div>
         </details>
         <div class="knowledge-ai-console" data-knowledge-ai-console="ready">

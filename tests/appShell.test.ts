@@ -38563,6 +38563,9 @@ describe('app shell', () => {
     expect(html).toContain('AI-routestatus openen');
     expect(html).toContain('Open routecontext, previewanker, beheeranker en netwerkstatus.');
     expect(html).toContain('Start met een gecontroleerde AI-preview');
+    expect(html).toContain('data-knowledge-ai-action-choice="collapsed"');
+    expect(html).toContain('AI-vervolgactie kiezen');
+    expect(html).toContain('Open previewanker, beheeranker, netwerkstatus en routecontext.');
     expect(html).toContain('href="#ai-preview-form"');
     expect(html).toContain('href="#knowledge-ai-support"');
     expect(html).toContain('data-knowledge-ai-console="ready"');
@@ -38601,6 +38604,9 @@ describe('app shell', () => {
     expect(html).toContain('Netwerkvelden openen');
     expect(html).toContain('Research-opt-in, aggregatieplan, PubMed-preview en bronregister.');
     expect(html.indexOf('data-knowledge-ai-route-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-action-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-ai-action-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#ai-preview-form"'),
     );
     expect(html.indexOf('data-knowledge-ai-console-region="preview"')).toBeLessThan(
@@ -38641,6 +38647,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="command-route-summary knowledge-ai-route-status-choice" aria-label="Kennis AI route-samenvatting" data-knowledge-route-summary="ai" data-knowledge-ai-route-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-ai-action-choice" data-knowledge-ai-action-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-console__preview knowledge-ai-preview-choice" data-knowledge-ai-console-region="preview" data-knowledge-ai-preview-choice="collapsed" open>',
@@ -39099,6 +39108,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-ai-route-status-choice__body {');
     expect(css).toContain(
       '.knowledge-ai-route-status-choice:not([open]) > .knowledge-ai-route-status-choice__body {',
+    );
+    expect(css).toContain('.knowledge-ai-action-choice {');
+    expect(css).toContain('.knowledge-ai-action-choice__summary {');
+    expect(css).toContain('.knowledge-ai-action-choice__body {');
+    expect(css).toContain(
+      '.knowledge-ai-action-choice:not([open]) > .knowledge-ai-action-choice__body {',
     );
     expect(css).toContain('.knowledge-ai-preview-choice {');
     expect(css).toContain('.knowledge-ai-preview-choice__summary {');
