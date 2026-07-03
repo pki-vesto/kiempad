@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1510 — Kennis bibliotheek herstelactie badges houden mobiele inhoud gecentreerd
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1509 zijn mobiele badgeboxmaten stabieler, maar de verticale en horizontale inhoudsuitlijning in de badgebox is nog niet apart bewaakt.
+- **User Impact:** Gebruikers kunnen badgecopy alsnog als onrustig ervaren als tekst niet netjes in de stabiele box staat.
+- **Desired Outcome:** Mobiele badgecopy blijft netjes gecentreerd binnen de stabiele badgebox tijdens rust, hover en focus.
+- **User Value:** Gebruikers krijgen compacte routefeedback die rustig binnen de actieknop blijft.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badge-inhoud blijft gecentreerd binnen de mobiele badgebox; badgeboxmaten blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badge-uitlijning en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2964
+
 ### G1509 — Kennis bibliotheek herstelactie badges houden mobiele boxmaat stabiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2962
 
 ### G1508 — Kennis bibliotheek herstelactie badges houden mobiele focusmaat stabiel
