@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1398 — Dossier: zoeken start met één zoekcontrole
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier Zoeken moet rustig blijven als één zoekcontrole en mag niet opnieuw aanvoelen als een wand met index, privacy en resultaten.
+- **User Impact:** Gebruikers kunnen bij dossierzoeken alsnog door meerdere dossierlagen moeten scannen voordat de hoofdcontrole duidelijk is.
+- **Desired Outcome:** Start met één primaire zoekcontrole en houd index, privacy en resultaten als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers zoeken eerst gericht en openen dossiercontext pas wanneer nodig.
+- **Acceptance Criteria:** Dossier Zoeken toont één primaire zoekcontrole in de eerste viewport; index, privacy en resultaten blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Dossier, Zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2742
+
 ### G1397 — Logboek: privacy start met één controlelaag
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, event log route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2740
 
 ### G1396 — Vragen: beheer start met één vraagtaak

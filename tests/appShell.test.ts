@@ -2160,6 +2160,12 @@ describe('app shell', () => {
     );
     expect(css).toContain('.eventlog-focus-shell__workspace .domain-split-workspace__context {');
     expect(css).toContain('> .eventlog-system-workbench {');
+    expect(css).toContain('.eventlog-privacy-console {');
+    expect(css).toContain('.eventlog-privacy-primary {');
+    expect(css).toContain('.eventlog-privacy-followup {');
+    expect(css).toContain('.eventlog-privacy-followup__summary {');
+    expect(css).toContain('.eventlog-privacy-followup__body {');
+    expect(css).toContain('.eventlog-privacy-followup__links {');
     expect(css).toContain('.eventlog-timeline {');
     expect(css).toContain('.eventlog-timeline__item[data-state="missed"] .kp-timeline__body {');
     expect(css).toContain('.eventlog-timeline__facts {');
@@ -39545,6 +39551,24 @@ describe('app shell', () => {
     expect(html).toContain('Categorieaantallen openen');
     expect(html).toContain('aria-label="Logboek privacy route-samenvatting"');
     expect(html).toContain('data-eventlog-route-summary="privacy"');
+    expect(html).toContain(
+      'De privacycontrole staat vooraan. Auditregels en routecontext open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#eventlog-privacy-primary"');
+    expect(html).toContain('href="#logboek-privacy-disclosure"');
+    expect(html).toContain('data-eventlog-privacy-layout="single-check"');
+    expect(html).toContain('id="eventlog-privacy-primary"');
+    expect(html).toContain('data-eventlog-privacy-primary="control"');
+    expect(html).toContain('Privacycontrole');
+    expect(html).toContain('data-eventlog-privacy-followup="collapsed"');
+    expect(html).toContain('aria-label="Logboek privacy vervolgcontext"');
+    expect(html).toContain('href="#logboek?route=recent"');
+    expect(html).toContain('href="#logboek?route=categorieen"');
+    expect(html).toContain('href="#logboek?route=overzicht"');
+    expect(html.indexOf('id="eventlog-privacy-primary"')).toBeLessThan(
+      html.indexOf('id="logboek-privacy-disclosure"'),
+    );
+    expect(html).not.toContain('<details id="logboek-privacy-disclosure" open');
     expect(html).toContain('Privacygevoelige auditregels openen');
     expect(html).toContain('Logboekstatus');
     expect(html).toContain('Recente gebeurtenissen');
@@ -40089,7 +40113,9 @@ describe('app shell', () => {
     expect(logboekHtml).not.toContain(
       'data-workspace-context-next-action="Volgende: privacyregels openen"',
     );
-    expect(logboekHtml).not.toContain('Privacycontrole');
+    expect(logboekHtml).toContain('data-eventlog-privacy-layout="single-check"');
+    expect(logboekHtml).toContain('data-eventlog-privacy-primary="control"');
+    expect(logboekHtml).toContain('Privacycontrole');
     expect(logboekHtml).toContain('Auditfocus');
     expect(logboekHtml).toContain(
       'data-eventlog-route="privacy" data-eventlog-route-state="active"',
