@@ -52,6 +52,9 @@
   suggestion-list panel now starts with one filter-choice surface while the full vrouw/man/samen
   card list sits behind a second closed disclosure, preserving feedback routes, reset actions, and
   list-focus behavior.
+- **Daily advice owner single route choice — done in G1500 / issue #2760.** The Dagadvies owner
+  workbench now starts with one owner-route choice layer while snapshot metrics and full owner
+  cards sit behind a closed owner-overview disclosure, preserving owner hooks and feedback metadata.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

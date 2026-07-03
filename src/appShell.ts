@@ -14780,10 +14780,24 @@ function renderDailyAdviceWorkbench(
         </div>
       </header>
       ${feedbackSummary.total > 0 ? renderDailyAdviceFeedbackSummary(feedbackSummary) : ''}
-      ${renderDailyAdviceSnapshot(overview, { total, reviewCount, artscheckCount })}
-      <div class="daily-advice-owner-grid" aria-label="Dagadvies eigenaars">
-        ${owners.map((owner) => renderDailyAdviceOwnerCard(owner, overview[owner])).join('')}
-      </div>
+      <nav class="daily-advice-owner-choice" aria-label="Kies dagadvies eigenaar" data-daily-advice-owner-choice="ready">
+        ${owners.map((owner) => renderDailyAdviceOwnerChoiceRoute(owner, overview[owner])).join('')}
+      </nav>
+      <details class="kp-disclosure daily-advice-owner-details" data-daily-advice-owner-details="collapsed">
+        <summary class="kp-disclosure__summary daily-advice-owner-details__summary">
+          <span>
+            <strong>Open eigenaaroverzicht</strong>
+            <small>Snapshot en volledige vrouw-, man- en samenkaarten pas erbij pakken wanneer nodig.</small>
+          </span>
+          <em>${total} adviezen</em>
+        </summary>
+        <div class="kp-disclosure__body daily-advice-owner-details__body">
+          ${renderDailyAdviceSnapshot(overview, { total, reviewCount, artscheckCount })}
+          <div class="daily-advice-owner-grid" aria-label="Dagadvies eigenaars">
+            ${owners.map((owner) => renderDailyAdviceOwnerCard(owner, overview[owner])).join('')}
+          </div>
+        </div>
+      </details>
     </section>
   `;
 }
@@ -14858,6 +14872,23 @@ function renderDailyAdviceSnapshot(
         <small>${ownerDistribution}</small>
       </a>
     </div>
+  `;
+}
+
+function renderDailyAdviceOwnerChoiceRoute(
+  owner: DailyRecommendationOwner,
+  items: readonly DailyRecommendation[],
+): string {
+  const label = DAILY_RECOMMENDATION_OWNER_LABELS[owner];
+  const copy = DAILY_RECOMMENDATION_OWNER_COPY[owner];
+  const firstItem = items[0];
+  return `
+    <a class="daily-advice-owner-choice__route" href="#start-recommendations" data-daily-advice-owner-choice-route="${owner}">
+      <span>${escapeHtml(label)}</span>
+      <strong>${items.length} advies${items.length === 1 ? '' : 'zen'}</strong>
+      <small>${escapeHtml(firstItem ? firstItem.titel : copy.empty)}</small>
+      <em>${escapeHtml(copy.route)}</em>
+    </a>
   `;
 }
 

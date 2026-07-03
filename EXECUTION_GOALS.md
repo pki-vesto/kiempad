@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1408 — Dagadvies: workflowkop start met één routekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na de primaire actie, lijstkeuze en eigenaarroute kan de workflowkop binnen de vervolgcontext nog meerdere tabs tegelijk tonen.
+- **User Impact:** Gebruikers die alleen naar de juiste vervolgroute willen, moeten opnieuw Vandaag, Dagadvies, Vragen en Research tegelijk scannen.
+- **Desired Outcome:** Laat de workflowcontext eerst starten met één rustige routekeuze, waarna Vandaag, Dagadvies, Vragen en Research als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers houden de Dagadvies-vervolgcontext scanbaar en kunnen doelgericht naar de volgende route.
+- **Acceptance Criteria:** Bestaande workflowtab hooks, hashes en route-ankers blijven aanwezig; de eerste workflowcontext toont één duidelijke keuze- of samenvattingslaag; volledige workflowtabs starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen trackingpayload, plaintext medische inhoud, diagnose, dosering of behandeladvies; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, hub workflow header, daily advice route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2762
+
 ### G1407 — Dagadvies: eigenaarcontext start met één eigenaarroute
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily advice owner workbench, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2760
 
 ### G1406 — Dagadvies: volledige lijst start met één filterkeuze
