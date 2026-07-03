@@ -631,6 +631,9 @@
 - **Mobile hit-target polish — done in G1576 / issue #3096.** Tablet primary navigation and the
   Meer-schermen summary now meet a 44px tap-target floor, and the daily recommendation overflow
   control is a labelled 44x44 icon control with visible hover/focus styling.
+- **Faint text contrast tokens — done in G1577 / issue #3098.** The shared `--ink-3`
+  faint/meta text token now meets at least 4.5:1 contrast on primary and subtle surfaces in light
+  and dark themes, with app-shell tests calculating the ratios from CSS tokens.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1222,6 +1225,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1378/#2530: the Settings gedeelde-modus and Herinneringen lockscreenprivacy controls
   expose `role="switch"`/`aria-checked` and update their visible state on change.
 - **CFX-056** — Contrast audit (`--ink-3` body text, dark mode) + fixes (K74). **P1 · M**
+  Partial G1577/#3098: `--ink-3` now has AA contrast on `--surface` and `--surface-2` in both
+  light and dark themes, while `--text-faint`, subtle prototype text, disabled prototype text, and
+  eyebrows stay tied to the same token.
 - **CFX-075** — Verify visible focus ring (teal) on all interactive elements incl. `<details>`
   summaries (K75). **P2 · S**
 - **CFX-079** — Reduced-motion coverage for every new transition/skeleton. **P2 · S**

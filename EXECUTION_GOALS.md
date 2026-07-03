@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1577 — Faint text contrast haalt AA in licht en donker thema
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het centrale `--ink-3` token voor faint/meta/eyebrow tekst heeft te weinig contrast op lichte subtiele vlakken en voelt in donker thema gedempt.
+- **User Impact:** Secundaire uitleg, labels en meta-informatie zijn moeilijker te scannen, zeker op tablet/mobiel of bij minder ideale schermhelderheid.
+- **Desired Outcome:** `--ink-3` haalt minimaal 4.5:1 contrast op de primaire en subtiele oppervlakken in licht en donker thema.
+- **User Value:** Gebruikers kunnen ondersteunende tekst sneller en rustiger lezen zonder extra inzoomen of herlezen.
+- **Acceptance Criteria:** Light theme `--ink-3` haalt minimaal 4.5:1 op `--surface` en `--surface-2`; dark theme `--ink-3` haalt minimaal 4.5:1 op `--surface` en `--surface-2`; `--text-faint`, prototype subtle/disabled text en eyebrow blijven via `--ink-3` lopen; app-shell tests rekenen de contrastwaarden uit de CSS; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Alle schermen met meta-, hint-, eyebrow- en faint tekst
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Claude Design tokens, light/dark theme CSS, app-shell visual contract tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3098
+
 ### G1576 — Mobiele navigatie en dagadvies-overflow halen 44px tap-targets
 
 - **Epic:** Onboarding & Daily Use
