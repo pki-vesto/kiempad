@@ -12806,11 +12806,22 @@ function renderKennisScreen(state: AppShellState): string {
               <h3>Nieuwe kennis toevoegen zonder leesruis</h3>
               <p>Start met een publicatie of researchnotitie. Eigen kennis staat klaar als aparte vervolgstap.</p>
             </div>
-            <div class="command-route-summary__meta">
-              <span class="command-route-summary__status">${state.kennisItems.length} items</span>
-              <a class="command-route-summary__action" href="#research-item-form">Research</a>
-              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-own-item-disclosure">Eigen kennis</a>
-            </div>
+            <details class="knowledge-add-action-choice" data-knowledge-add-action-choice="collapsed">
+              <summary class="knowledge-add-action-choice__summary">
+                <span>
+                  <strong>Vervolgactie kiezen</strong>
+                  <small>Open researchanker, eigen-kennisanker, opslagstatus en routecontext.</small>
+                </span>
+                <em>2 acties</em>
+              </summary>
+              <div class="knowledge-add-action-choice__body">
+                <div class="command-route-summary__meta">
+                  <span class="command-route-summary__status">${state.kennisItems.length} items</span>
+                  <a class="command-route-summary__action" href="#research-item-form">Research</a>
+                  <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-own-item-disclosure">Eigen kennis</a>
+                </div>
+              </div>
+            </details>
           </div>
         </details>
         <div class="knowledge-route-grid knowledge-route-grid--add" data-knowledge-add-layout="single-input">
