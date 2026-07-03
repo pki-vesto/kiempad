@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1494 — Kennis bibliotheek herstelactie badges blijven compact op mobiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1493 blijven badges leesbaar in hover en focus, maar de mobiele badge-flow is nog niet apart bewaakt.
+- **User Impact:** Gebruikers op smalle schermen kunnen alsnog te drukke of wrappende actieknoppen zien.
+- **Desired Outcome:** Behoud compacte badgeplaatsing binnen herstelactieknoppen op smalle schermen zonder overlap of horizontale overflow.
+- **User Value:** Mobiele gebruikers houden dezelfde rustige herstelroute als desktopgebruikers.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, hover/focus-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; feedbackbadges blijven op mobiel compact binnen de actieknoppen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badge-flow en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2932
+
 ### G1493 — Kennis bibliotheek herstelactie badges behouden contrast in hover
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2930
 
 ### G1492 — Kennis bibliotheek herstelacties tonen microcopy als rustige badge
