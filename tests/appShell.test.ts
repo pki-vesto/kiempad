@@ -1708,6 +1708,7 @@ describe('app shell', () => {
     expect(normalizeDossierAddFlow('#consult-context-fields')).toBe('consult');
     expect(normalizeDossierAddFlow('#embryo-quality-form')).toBe('embryo-quality');
     expect(normalizeDossierAddFlow('#embryo-status-event-form')).toBe('embryo-status');
+    expect(normalizeScreenId('#dossier-route-review')).toBe('dossier');
     expect(normalizeDossierAddFlow('#dossier-route-review')).toBe('review');
     expect(normalizeDossierAddFlow('#dossier-upload-form')).toBe('document');
     expect(normalizeDossierAddFlow('#dossier')).toBe('keuze');
@@ -8159,6 +8160,11 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-timeline-followup {');
     expect(css).toContain('.dossier-timeline-followup__summary {');
     expect(css).toContain('.dossier-timeline-followup__body {');
+    expect(css).toContain('.dossier-review-primary-task {');
+    expect(css).toContain('.dossier-review-primary-task__header {');
+    expect(css).toContain('.dossier-review-followup {');
+    expect(css).toContain('.dossier-review-followup__summary {');
+    expect(css).toContain('.dossier-review-followup__body {');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -8740,6 +8746,26 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Documenttijdlijn openen');
     expect(emptyHtml).toContain('Nieuwe medische records toevoegen');
     expect(emptyHtml).toContain('Import-inbox en documentreview');
+    expect(emptyHtml).toContain('Eerst één reviewtaak');
+    expect(emptyHtml).toContain(
+      'De reviewtaak staat vooraan; wachtrij, import-inbox en duplicaatcontext staan achter één rustige vervolgstap.',
+    );
+    expect(emptyHtml).toContain('href="#dossier-review-primary-task"');
+    expect(emptyHtml).toContain('href="#dossier-review-followup"');
+    expect(emptyHtml).toContain('id="dossier-review-primary-task"');
+    expect(emptyHtml).toContain('data-dossier-review-primary-task="ready"');
+    expect(emptyHtml).toContain('aria-label="Dossier review primaire taak"');
+    expect(emptyHtml).toContain('Controleer eerst wat aandacht vraagt');
+    expect(emptyHtml).toContain('data-dossier-review-followup="collapsed"');
+    expect(emptyHtml).toContain('Reviewcontext openen');
+    expect(emptyHtml).toContain('Documentreview wachtrij, import-inbox en duplicaatcontext');
+    expect(emptyHtml.indexOf('data-dossier-review-primary-task="ready"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-review-followup="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-review-followup="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('id="dossier-review-queue-disclosure"'),
+    );
+    expect(emptyHtml).not.toContain('<details id="dossier-review-followup" open');
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
     expect(emptyHtml).toContain('Beelden, consulten en embryo-dossiers');
     expect(emptyHtml).toContain('Tijdlijn en behandelgeschiedenis');
