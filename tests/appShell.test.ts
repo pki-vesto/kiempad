@@ -4177,6 +4177,7 @@ describe('app shell', () => {
     expect(resetRouteFocusRecommendations).toContain(
       'data-daily-recommendation-reset-route-focus="ready"',
     );
+    expect(resetRouteFocusRecommendations).toContain('tabindex="-1"');
     expect(resetRouteFocusRecommendations).toContain(
       'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.',
     );

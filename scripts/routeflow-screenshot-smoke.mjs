@@ -1667,6 +1667,7 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .locator('[data-daily-recommendation-reset-route-focus="ready"]')
     .filter({ hasText: 'Lokale feedbackfilter gewist vanuit de lijstfilter.' })
     .waitFor({ timeout: 10_000 });
+  await expectDailyRecommendationResetRouteFocus(page, 'Lokale feedbackfilter gewist vanuit de lijstfilter.');
   await page.locator('[data-daily-recommendation-reset-route-focus-close="ready"]').click();
   await expectHash(page, '#start-recommendations');
   await page
@@ -1709,6 +1710,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .locator('[data-daily-recommendation-reset-route-focus="ready"]')
     .filter({ hasText: 'Lokale feedbackfilter gewist vanuit de workflowstatus.' })
     .waitFor({ timeout: 10_000 });
+  await expectDailyRecommendationResetRouteFocus(
+    page,
+    'Lokale feedbackfilter gewist vanuit de workflowstatus.',
+  );
   await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
@@ -1739,6 +1744,10 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .locator('[data-daily-recommendation-reset-route-focus="ready"]')
     .filter({ hasText: 'Lokale feedbackfilter gewist vanuit het filterformulier.' })
     .waitFor({ timeout: 10_000 });
+  await expectDailyRecommendationResetRouteFocus(
+    page,
+    'Lokale feedbackfilter gewist vanuit het filterformulier.',
+  );
   await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
@@ -1786,6 +1795,24 @@ async function openDetails(page, selector) {
     const details = document.querySelector(detailsSelector);
     if (details instanceof HTMLDetailsElement) details.open = true;
   }, selector);
+}
+
+async function expectDailyRecommendationResetRouteFocus(page, expectedText) {
+  await page.waitForFunction(
+    (tekst) => {
+      const status = document.querySelector(
+        '[data-daily-recommendation-reset-route-focus="ready"]',
+      );
+      return (
+        status instanceof HTMLElement &&
+        status.tabIndex === -1 &&
+        document.activeElement === status &&
+        status.textContent?.includes(tekst)
+      );
+    },
+    expectedText,
+    { timeout: 10_000 },
+  );
 }
 
 async function expectHash(page, expectedHash) {
