@@ -8154,6 +8154,11 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-imaging-followup {');
     expect(css).toContain('.dossier-imaging-followup__summary {');
     expect(css).toContain('.dossier-imaging-followup__body {');
+    expect(css).toContain('.dossier-timeline-focus {');
+    expect(css).toContain('.dossier-timeline-focus__header {');
+    expect(css).toContain('.dossier-timeline-followup {');
+    expect(css).toContain('.dossier-timeline-followup__summary {');
+    expect(css).toContain('.dossier-timeline-followup__body {');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -8707,8 +8712,28 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('id="dossier-timeline-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-timeline"');
     expect(emptyHtml).toContain('Tijdlijn als leesruimte');
+    expect(emptyHtml).toContain('Eerst één leesfocus');
+    expect(emptyHtml).toContain(
+      'De leesfocus staat vooraan; documenttijdlijn en behandelgeschiedenis staan achter één rustige vervolgstap.',
+    );
+    expect(emptyHtml).toContain('href="#dossier-timeline-primary-focus"');
+    expect(emptyHtml).toContain('href="#dossier-timeline-followup"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="timeline" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="history"');
+    expect(emptyHtml).toContain('id="dossier-timeline-primary-focus"');
+    expect(emptyHtml).toContain('data-dossier-timeline-primary-focus="ready"');
+    expect(emptyHtml).toContain('aria-label="Dossier tijdlijn leesfocus"');
+    expect(emptyHtml).toContain('Begrijp eerst de volgorde');
+    expect(emptyHtml).toContain('data-dossier-timeline-followup="collapsed"');
+    expect(emptyHtml).toContain('Tijdlijncontext openen');
+    expect(emptyHtml).toContain('Documenttijdlijn en behandelgeschiedenis');
+    expect(emptyHtml.indexOf('data-dossier-timeline-primary-focus="ready"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-timeline-followup="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-timeline-disclosure="documents"'),
+    );
+    expect(emptyHtml).not.toContain('<details id="dossier-timeline-followup" open');
     expect(emptyHtml).toContain('data-hub-detail-panel="timeline-documents"');
     expect(emptyHtml).toContain('Historische onderzoeken in volgorde');
     expect(emptyHtml).toContain('<em>0 momenten</em>');
