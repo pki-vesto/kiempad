@@ -196,6 +196,9 @@
 - **Daily advice feedback reset route-focus forced-colors focus copy — done in G1470 / issue #2700.**
   When the reset confirmation or local hide action receives focus in forced-colors mode, the helper
   copy now gains a system-color text cue without changing layout, route state, or medical data.
+- **Daily advice feedback reset route-focus reduced-motion focus copy — done in G1471 / issue #2702.**
+  Reduced-motion users now get the same static helper-copy focus cue without transitions, layout
+  shifts, route changes, feedback-filter changes, tracking, or medical-data changes.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

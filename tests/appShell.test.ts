@@ -3230,6 +3230,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.daily-recommendation-reset-route-focus__close {\n    transition: none;',
     );
+    expect(css).toContain('.daily-recommendation-reset-route-focus__help,');
+    expect(css).toContain('font-weight: 700;');
     expect(css).toContain('border-left-color: Highlight;');
     expect(css).toContain('color: CanvasText;');
     expect(css).toContain(

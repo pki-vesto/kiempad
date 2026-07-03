@@ -15141,8 +15141,18 @@ a.action-card:active {
 
 @media (prefers-reduced-motion: reduce) {
   [data-daily-recommendation-reset-route-focus="ready"],
+  .daily-recommendation-reset-route-focus__help,
   .daily-recommendation-reset-route-focus__close {
     transition: none;
+  }
+
+  [data-daily-recommendation-reset-route-focus="ready"]:focus-visible
+    .daily-recommendation-reset-route-focus__help,
+  .daily-recommendation-reset-route-focus__close:focus-visible
+    + .daily-recommendation-reset-route-focus__help {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 }
 
