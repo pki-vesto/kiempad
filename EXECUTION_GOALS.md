@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1378 — Daily Recommendations: resetmelding bewaakt focuscopy bij reduced-motion
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding markeert helpercopy duidelijker in forced-colors wanneer de melding of Verberg-knop focus heeft, maar reduced-motion combinaties hebben nog geen aparte guard.
+- **User Impact:** Gebruikers met bewegingsreductie kunnen minder voorspelbare focuscopy ervaren als toekomstige wijzigingen weer transities toevoegen.
+- **Desired Outcome:** Borg dat focuscopy duidelijk blijft wanneer bewegingsreductie actief is, zonder extra animatie of visuele sprongen.
+- **User Value:** De resetfeedback blijft rustig en duidelijk voor gebruikers die beweging verminderen.
+- **Acceptance Criteria:** Reduced-motion status behoudt duidelijke focuscopy op melding en Verberg-knop; er ontstaat geen extra transitie, layout shift, overlap of horizontale scroll; de reduced-motion guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, reduced-motion CSS, copy tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2702
+
 ### G1377 — Daily Recommendations: resetmelding bewaakt forced-colors focuscopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, forced-colors CSS, copy tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2700
 
 ### G1376 — Daily Recommendations: resetmelding bewaakt helptekst in forced-colors mobiel

@@ -14208,6 +14208,17 @@ a.action-card:active {
     color: CanvasText;
   }
 
+  [data-daily-recommendation-reset-route-focus="ready"]:focus-visible
+    .daily-recommendation-reset-route-focus__help,
+  .daily-recommendation-reset-route-focus__close:focus-visible
+    + .daily-recommendation-reset-route-focus__help {
+    color: Highlight;
+    font-weight: 760;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
   .daily-recommendation-reset-route-focus__close {
     border-color: ButtonText;
     background: ButtonFace;
