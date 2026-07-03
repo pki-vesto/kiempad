@@ -23866,7 +23866,7 @@ a.action-card:active {
     align-items: center;
     box-sizing: border-box;
     flex: 0 0 min(12ch, 38%);
-    justify-content: flex-end;
+    justify-content: center;
     position: relative;
     z-index: 1;
     margin-left: auto;
@@ -23880,7 +23880,7 @@ a.action-card:active {
     letter-spacing: 0.01em;
     line-height: 1.15;
     overflow: hidden;
-    text-align: right;
+    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

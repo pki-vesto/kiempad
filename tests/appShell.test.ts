@@ -39241,7 +39241,7 @@ describe('app shell', () => {
     expect(css).toContain('align-items: center;');
     expect(css).toContain('box-sizing: border-box;');
     expect(css).toContain('flex: 0 0 min(12ch, 38%);');
-    expect(css).toContain('justify-content: flex-end;');
+    expect(css).toContain('justify-content: center;');
     expect(css).toContain('block-size: 22px;');
     expect(css).toContain('inline-size: min(12ch, 38%);');
     expect(css).toContain('min-height: 22px;');
@@ -39252,7 +39252,7 @@ describe('app shell', () => {
     expect(css).toContain('letter-spacing: 0.01em;');
     expect(css).toContain('line-height: 1.15;');
     expect(css).toContain('overflow: hidden;');
-    expect(css).toContain('text-align: right;');
+    expect(css).toContain('text-align: center;');
     expect(css).toContain('white-space: nowrap;');
     expect(css).toContain('gap: 8px;');
     expect(css).toContain('flex: 1 1 minmax(0, 62%);');
