@@ -12428,54 +12428,67 @@ function renderKennisScreen(state: AppShellState): string {
         })}
         ${commandRouteSummary({
           eyebrow: 'Kennisroute',
-          title: 'Lees research in lagen',
+          title: 'Eerst één researchfocus',
           detail:
-            'Bronnen, wetenschappelijke uitleg, eenvoudige uitleg en dossierrelaties zijn gescheiden zodat de route niet als één grote lijst start.',
-          primary: { href: '#knowledge-research-summaries', label: 'Samenvattingen' },
-          secondary: { href: '#knowledge-research-trends', label: 'Trends' },
+            'Kies eerst de laag die je nu wilt lezen. Bronnen, samenvattingen, relevantie en trends blijven daarna beschikbaar als vervolgcontext.',
+          primary: { href: '#knowledge-research-primary-focus', label: 'Researchfocus' },
+          secondary: { href: '#knowledge-research-followup', label: 'Vervolgcontext' },
           status: `${researchBronnen.length} bronnen`,
           ariaLabel: 'Kennis lezen route-samenvatting',
           data: { 'knowledge-route-summary': 'read' },
         })}
-        ${renderKnowledgeResearchReader({
-          sources: researchBronnen.length,
-          scientific: researchSamenvattingen.length,
-          patient: eenvoudigeResearchSamenvattingen.length,
-          relevance: researchRelevantie.length,
-          relations: researchDossierRelaties.length,
-          trends: researchTrendGroepen.length,
-        })}
-        <details class="kp-disclosure" data-knowledge-research-disclosure="sources">
-          <summary class="kp-disclosure__summary">Researchbronnen openen</summary>
-          <div class="kp-disclosure__body">
-            <div class="knowledge-route-grid knowledge-route-grid--research">
-              <div class="summary-panel">${renderResearchBronnenCache(researchBronnen)}</div>
-            </div>
-          </div>
-        </details>
-        <details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries">
-          <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+        <section id="knowledge-research-primary-focus" class="knowledge-research-primary-focus" aria-label="Kennis research primaire focus" data-knowledge-research-primary-focus="ready">
+          ${renderKnowledgeResearchReader({
+            sources: researchBronnen.length,
+            scientific: researchSamenvattingen.length,
+            patient: eenvoudigeResearchSamenvattingen.length,
+            relevance: researchRelevantie.length,
+            relations: researchDossierRelaties.length,
+            trends: researchTrendGroepen.length,
+          })}
+        </section>
+        <details id="knowledge-research-followup" class="kp-disclosure knowledge-research-followup" data-knowledge-research-followup="collapsed">
+          <summary class="kp-disclosure__summary knowledge-research-followup__summary">
             <span>
-              <strong>Researchsamenvattingen openen</strong>
-              <small>Wetenschappelijke en eenvoudige uitleg</small>
+              <strong>Leescontext openen</strong>
+              <small>Bronnen, samenvattingen, relevantie, relaties en trends</small>
             </span>
-            <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items</em>
+            <em>${researchBronnen.length} bronnen</em>
           </summary>
-          <div class="kp-disclosure__body">
-            <div class="knowledge-route-grid knowledge-route-grid--research">
-              <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
-              <div class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
-            </div>
-          </div>
-        </details>
-        <details id="knowledge-research-trends" class="kp-disclosure" data-knowledge-research-disclosure="context">
-          <summary class="kp-disclosure__summary">Relevantie, relaties en trends openen</summary>
-          <div class="kp-disclosure__body">
-            <div class="knowledge-route-grid knowledge-route-grid--research">
-              <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
-              <div class="summary-panel">${renderResearchDossierRelaties(researchDossierRelaties)}</div>
-              <div class="summary-panel">${renderResearchTrendGroepen(researchTrendGroepen)}</div>
-            </div>
+          <div class="kp-disclosure__body knowledge-research-followup__body">
+            <details class="kp-disclosure" data-knowledge-research-disclosure="sources">
+              <summary class="kp-disclosure__summary">Researchbronnen openen</summary>
+              <div class="kp-disclosure__body">
+                <div class="knowledge-route-grid knowledge-route-grid--research">
+                  <div class="summary-panel">${renderResearchBronnenCache(researchBronnen)}</div>
+                </div>
+              </div>
+            </details>
+            <details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries">
+              <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+                <span>
+                  <strong>Researchsamenvattingen openen</strong>
+                  <small>Wetenschappelijke en eenvoudige uitleg</small>
+                </span>
+                <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items</em>
+              </summary>
+              <div class="kp-disclosure__body">
+                <div class="knowledge-route-grid knowledge-route-grid--research">
+                  <div class="summary-panel">${renderWetenschappelijkeResearchSamenvattingen(researchSamenvattingen, state.kennisItems)}</div>
+                  <div class="summary-panel">${renderEenvoudigeResearchSamenvattingen(eenvoudigeResearchSamenvattingen, state.kennisItems)}</div>
+                </div>
+              </div>
+            </details>
+            <details id="knowledge-research-trends" class="kp-disclosure" data-knowledge-research-disclosure="context">
+              <summary class="kp-disclosure__summary">Relevantie, relaties en trends openen</summary>
+              <div class="kp-disclosure__body">
+                <div class="knowledge-route-grid knowledge-route-grid--research">
+                  <div class="summary-panel">${renderResearchRelevantieVoorGebruiker(researchRelevantie)}</div>
+                  <div class="summary-panel">${renderResearchDossierRelaties(researchDossierRelaties)}</div>
+                  <div class="summary-panel">${renderResearchTrendGroepen(researchTrendGroepen)}</div>
+                </div>
+              </div>
+            </details>
           </div>
         </details>
       </section>
