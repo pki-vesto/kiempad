@@ -39275,9 +39275,10 @@ describe('app shell', () => {
       '.knowledge-library-empty-recovery-choice__body\n    .knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {',
     );
     expect(css).toContain(
-      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {\n    align-items: center;\n    block-size: 22px;\n    color: color-mix(in srgb, var(--text) 92%, var(--text-muted));\n    font-weight: 800;\n    inline-size: min(12ch, 38%);\n    justify-content: center;\n    opacity: 1;\n    text-align: center;\n    z-index: 2;\n  }',
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__feedback {\n    align-items: center;\n    background: color-mix(in srgb, var(--surface) 86%, var(--category));\n    block-size: 22px;\n    border-color: color-mix(in srgb, var(--category) 20%, var(--border-strong));\n    color: color-mix(in srgb, var(--text) 88%, var(--text-muted));\n    font-weight: 760;\n    inline-size: min(12ch, 38%);\n    justify-content: center;\n    opacity: 1;\n    text-align: center;\n    z-index: 2;\n  }',
     );
-    expect(css).toContain('color: color-mix(in srgb, var(--text) 92%, var(--text-muted));');
+    expect(css).toContain('color: color-mix(in srgb, var(--text) 88%, var(--text-muted));');
+    expect(css).toContain('font-weight: 760;');
     expect(css).toContain('opacity: 1;');
     expect(css).toContain('z-index: 2;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
