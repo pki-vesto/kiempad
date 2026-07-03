@@ -14350,6 +14350,26 @@ a.action-card:active {
       max-width: 100%;
       outline-offset: 1px;
     }
+
+    .daily-recommendation-reset-route-focus__close:disabled,
+    .daily-recommendation-reset-route-focus__close[aria-disabled="true"] {
+      min-height: 32px;
+      border-color: GrayText;
+      background: Canvas;
+      color: GrayText;
+      outline-offset: 1px;
+    }
+
+    .daily-recommendation-reset-route-focus__close:disabled
+      + .daily-recommendation-reset-route-focus__help,
+    .daily-recommendation-reset-route-focus__close[aria-disabled="true"]
+      + .daily-recommendation-reset-route-focus__help {
+      color: GrayText;
+      font-weight: 760;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
   }
 
   #dossier-upload-form,

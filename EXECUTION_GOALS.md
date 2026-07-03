@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1391 — Afwegingen: voorbereiden start met één beslisnotitie taak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Afwegingen-route Voorbereiden kan bij vervolgstappen weer als volledig beslisdossier in plaats van één voorbereidingstaak voelen.
+- **User Impact:** Gebruikers moeten meer keuzecontext scannen dan nodig voordat de beslisnotitie helder is.
+- **Desired Outcome:** Start met één primaire beslisnotitie-invoer en houd optie-, vergelijk- en keuzecontext als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers leggen eerst het onderwerp en de vraag vast en openen vervolgcontext pas wanneer ze opties willen uitwerken.
+- **Acceptance Criteria:** Afwegingen Voorbereiden toont één primaire beslisnotitie-invoer in de eerste viewport; opties, vergelijking en keuzecontext blijven bereikbaar via bestaande formulier-id's, hashroutes en data-hooks; de route-samenvatting verwijst naar de vervolgstap zonder extra formulierwand te tonen; er komt geen behandeladvies, score, trackingpayload of medische conclusie bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Afwegingen, Voorbereiden
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, decision route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2728
+
 ### G1390 — Welzijn: vastleggen start met één check-in taak
 
 - **Epic:** Onboarding & Daily Use
@@ -150,7 +167,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, responsive CSS, forced-colors CSS, guarded states
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2714
 
 ### G1383 — Daily Recommendations: resetmelding bewaakt guarded helpercopy op smalle schermen

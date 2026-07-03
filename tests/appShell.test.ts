@@ -2907,6 +2907,7 @@ describe('app shell', () => {
   it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
     const css = readFileSync('src/styles.css', 'utf8');
     const mobileCss = extractCssMediaBlock(css, 'max-width: 760px');
+    const forcedColorsCss = extractCssMediaBlock(css, 'forced-colors: active');
 
     expect(mobileCss).toContain('.topbar {');
     expect(mobileCss).toContain('grid-template-columns: minmax(0, 1fr) auto;');
@@ -3262,6 +3263,26 @@ describe('app shell', () => {
     expect(css).toContain('@media (forced-colors: active)');
     expect(css).toContain('outline-offset: 0;');
     expect(css).toContain('outline-offset: 1px;');
+    expect(forcedColorsCss).toContain('@media (max-width: 480px)');
+    const forcedColorsMobileCss = extractCssMediaBlock(forcedColorsCss, 'max-width: 480px');
+    expect(forcedColorsMobileCss).toContain(
+      '.daily-recommendation-reset-route-focus__close:disabled,',
+    );
+    expect(forcedColorsMobileCss).toContain(
+      '.daily-recommendation-reset-route-focus__close[aria-disabled="true"] {',
+    );
+    expect(forcedColorsMobileCss).toContain('min-height: 32px;');
+    expect(forcedColorsMobileCss).toContain('border-color: GrayText;');
+    expect(forcedColorsMobileCss).toContain('background: Canvas;');
+    expect(forcedColorsMobileCss).toContain('color: GrayText;');
+    expect(forcedColorsMobileCss).toContain(
+      '.daily-recommendation-reset-route-focus__close:disabled\n      + .daily-recommendation-reset-route-focus__help,',
+    );
+    expect(forcedColorsMobileCss).toContain(
+      '.daily-recommendation-reset-route-focus__close[aria-disabled="true"]\n      + .daily-recommendation-reset-route-focus__help {',
+    );
+    expect(forcedColorsMobileCss).toContain('font-weight: 760;');
+    expect(forcedColorsMobileCss).toContain('text-decoration-thickness: 1px;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(
