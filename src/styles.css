@@ -10735,6 +10735,118 @@ h2 {
   min-width: 0;
 }
 
+.treatment-phase-console {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.treatment-phase-primary {
+  min-width: 0;
+}
+
+.treatment-phase-primary h3,
+.treatment-phase-primary p {
+  margin-top: 0;
+}
+
+.treatment-phase-primary__card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--amber) 28%, var(--border));
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--amber) 9%, transparent), transparent 62%),
+    var(--surface);
+}
+
+.treatment-phase-primary__card strong {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+}
+
+.treatment-phase-primary__card span,
+.treatment-phase-primary__card small {
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.treatment-phase-primary__card .phase-button {
+  width: fit-content;
+}
+
+.treatment-phase-followup {
+  min-width: 0;
+}
+
+.treatment-phase-followup__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.treatment-phase-followup__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.treatment-phase-followup__summary strong,
+.treatment-phase-followup__summary small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.treatment-phase-followup__summary small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.treatment-phase-followup__summary em {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.treatment-phase-followup__body,
+.treatment-phase-followup__timeline {
+  display: grid;
+  gap: 12px;
+}
+
+.treatment-phase-followup__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.treatment-phase-followup__links a {
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 780;
+  text-decoration: none;
+}
+
+.treatment-phase-followup__links a:hover,
+.treatment-phase-followup__links a:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  outline: none;
+}
+
 .treatment-focus-shell {
   display: grid;
   gap: 14px;

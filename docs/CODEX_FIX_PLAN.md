@@ -257,6 +257,10 @@
   route now opens with one primary next-dose or empty planning task while today, management, import,
   history, and extra later moments sit behind one closed follow-up context, preserving route hooks,
   dose-log hooks, and non-dosage-advice boundaries.
+- **Treatment phase single phase task — done in G1488 / issue #2736.** The Traject faseplanning
+  route now opens with one primary current-phase task while the full phase timeline, context,
+  overview, management, and reimbursement routes sit behind one closed follow-up context,
+  preserving phase hooks, hashes, and non-advice treatment boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

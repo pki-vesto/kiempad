@@ -5047,6 +5047,13 @@ describe('app shell', () => {
     expect(css).toContain('.treatment-workbench :where(.stat) {');
     expect(css).toContain('flex: 0 0 88px;');
     expect(css).toContain('grid-template-columns: 1fr;');
+    expect(css).toContain('.treatment-phase-console {');
+    expect(css).toContain('.treatment-phase-primary {');
+    expect(css).toContain('.treatment-phase-primary__card {');
+    expect(css).toContain('.treatment-phase-followup {');
+    expect(css).toContain('.treatment-phase-followup__summary {');
+    expect(css).toContain('.treatment-phase-followup__body,');
+    expect(css).toContain('.treatment-phase-followup__links {');
     expect(css).toContain('.fertility-timeline-reader {');
     expect(css).toContain('.treatment-phase-timeline {');
     expect(css).toContain(
@@ -39622,6 +39629,26 @@ describe('app shell', () => {
     expect(html).toContain('id="traject-route-fasen"');
     expect(html).toContain('data-treatment-route="fasen"');
     expect(html).toContain('data-treatment-route-state="inactive" hidden');
+    expect(html).toContain(
+      'De actuele fasetaak staat vooraan. Tijdlijn, context en beheer open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#treatment-phase-primary"');
+    expect(html).toContain('href="#treatment-phase-followup"');
+    expect(html).toContain('data-treatment-phase-layout="single-input"');
+    expect(html).toContain('id="treatment-phase-primary"');
+    expect(html).toContain('data-treatment-phase-primary="current-phase"');
+    expect(html).toContain('data-treatment-phase-card="stimulatie"');
+    expect(html).toContain('id="treatment-phase-followup"');
+    expect(html).toContain('data-treatment-phase-followup="collapsed"');
+    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('href="#traject?route=context"');
+    expect(html).toContain('href="#traject?route=overzicht"');
+    expect(html).toContain('href="#traject?route=beheer"');
+    expect(html).toContain('href="#traject?route=vergoeding"');
+    expect(html.indexOf('id="treatment-phase-primary"')).toBeLessThan(
+      html.indexOf('id="treatment-phase-followup"'),
+    );
+    expect(html).not.toContain('<details id="treatment-phase-followup" open');
     expect(html).toContain('id="traject-route-vergoeding"');
     expect(html).toContain('data-treatment-route="vergoeding"');
     expect(html).toContain('id="traject-route-context"');
