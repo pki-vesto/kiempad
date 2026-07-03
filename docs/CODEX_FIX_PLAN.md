@@ -1199,6 +1199,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   `export-textarea-kit` with textarea-kit minimum height, vertical resize, border, radius and
   monospaced preview styling.
 - **CFX-028** — Form actions: primary Bewaar + ghost Annuleer, not both full-width teal (C28). **P2 · S**
+  Partial G1582/#3108: Kennis research and PubMed preview correction forms now use
+  `command-form-actions` with a primary save button plus ghost `Annuleer` route link, matching the
+  established edit-form action pattern.
 - **CFX-029** — Inline validation in `--clay-ink` (no browser popups) (C29). **P2 · M**
   Partial G1575/#3094: dossier upload, consult upload, embryo-quality, and embryo-status routes
   show required-input maps in `--clay-ink` before submit actions, reducing reliance on late browser

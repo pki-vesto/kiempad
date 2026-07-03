@@ -39060,7 +39060,11 @@ describe('app shell', () => {
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
     expect(html).toContain('scientificSummary, patientSummary en sourceCitation');
     expect(html).toContain('name="researchRelevantieVoorGebruiker"');
+    expect(html).toContain('class="command-form-actions" data-knowledge-form-actions="research"');
     expect(html).toContain('Bewaar research');
+    expect(html).toContain(
+      'class="form-cancel-link" href="#kennis?route=bibliotheek" data-form-cancel-action="knowledge-research"',
+    );
     expect(html).toContain('Researchbronnen');
     expect(html).toContain('class="kp-research-source-list"');
     expect(html).toContain('data-research-source-component="source-list"');
@@ -39113,6 +39117,12 @@ describe('app shell', () => {
     expect(html).toContain('name="pubmedPreviewDatum" type="date"');
     expect(html).toContain('class="date-format-hint" data-date-format-hint="knowledge-pubmed"');
     expect(html).toContain('name="pubmedReviewStatus"');
+    expect(html).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="pubmed-preview"',
+    );
+    expect(html).toContain(
+      'class="form-cancel-link" href="#kennis?route=research" data-form-cancel-action="knowledge-pubmed"',
+    );
     expect(html).toContain('Uitgesloten context: geen dossierdocumenttekst');
     expect(html).toContain('geen consulttekst');
     expect(html).toContain('Research bronregister');

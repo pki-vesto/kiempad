@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1582 — Kennis formulieren krijgen primaire actie en ghost Annuleer
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kennis research- en PubMed-correctieformulieren hadden losse submitknoppen zonder dezelfde rustige primaire-actie-plus-annuleerstructuur als andere command forms.
+- **User Impact:** Gebruikers missen een duidelijke terugweg wanneer ze research of PubMed-correcties niet willen opslaan.
+- **Desired Outcome:** Kennis research en PubMed preview-correctie gebruiken `command-form-actions` met een primaire bewaaractie en ghost Annuleer-link.
+- **User Value:** Gebruikers kunnen researchformulieren rustiger verlaten zonder te zoeken of per ongeluk een formulier te bewaren.
+- **Acceptance Criteria:** Researchinvoer toont `Bewaar research` als primaire actie in `.command-form-actions`; Researchinvoer toont een ghost `Annuleer` link terug naar de kennisbibliotheek; PubMed preview-correctie toont `Bewaar PubMed-previewcorrectie` als primaire actie in `.command-form-actions`; PubMed preview-correctie toont een ghost `Annuleer` link terug naar de kennisresearchroute; app-shell tests bewaken markup en bestaande mobiele action-row styling; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kennis toevoegen, Researchaggregatie, PubMed query preview
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Kennis research form, PubMed preview form, command form actions, form cancel links
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3108
+
 ### G1581 — Export tekstvelden gebruiken gedeelde textarea-kit
 
 - **Epic:** Onboarding & Daily Use
