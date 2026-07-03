@@ -1276,6 +1276,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status choice while network status, visible count and research metrics remain reachable.
   Partial G1445/#2834: The knowledge filter form now starts with one closed compact
   form choice while search, category, source, verification and actions remain reachable.
+  Partial G1446/#2836: The knowledge filter status now starts with one closed compact
+  status choice while active filter count, filter details and reset context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
