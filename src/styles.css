@@ -8604,6 +8604,16 @@ h2 {
   color: var(--category);
 }
 
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor:hover,
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor:focus-visible {
+  border-color: color-mix(in srgb, var(--category) 36%, var(--border-strong));
+  background: color-mix(in srgb, var(--category) 7%, var(--surface));
+  color: var(--category);
+  text-decoration: none;
+}
+
 .knowledge-library-empty-recovery-choice__step {
   display: inline-grid;
   place-items: center;

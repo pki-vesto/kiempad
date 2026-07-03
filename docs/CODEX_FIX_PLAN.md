@@ -1389,6 +1389,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   visual space while compact badge labels stay layered inside the action.
   Partial G1498/#2940: The knowledge library empty-state recovery routes now keep explicit
   active-route styling so compact badge actions do not appear disabled.
+  Partial G1499/#2942: The knowledge library empty-state recovery routes now keep consistent
+  active hover and focus treatment across primary and secondary actions.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
