@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1451 — Kennis AI researchnetwerk start met één compacte netwerkkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1450 blijft de kennis AI researchnetwerkcontext gevoelig voor opt-in, aggregatieplan, PubMed-preview en bronregister tegelijk.
+- **User Impact:** Gebruikers die AI-beheer openen, krijgen nog netwerk- en researchdetails voordat ze gericht kiezen of ze die context nodig hebben.
+- **Desired Outcome:** Laat het kennis AI researchnetwerk starten met één compacte netwerkkeuze of samengevouwen sublaag, terwijl research-opt-in, aggregatieplan, PubMed-preview en bronregister bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst bepalen of ze netwerkresearch willen openen zonder dat alle researchdetails de AI-route domineren.
+- **Acceptance Criteria:** Bestaande kennis AI researchnetwerkhooks, opt-in hooks, aggregatieplan, PubMed-preview, bronregister en routehashes blijven aanwezig; het researchnetwerk start met één compacte netwerkkeuze of samengevouwen sublaag; research-opt-in, aggregatieplan, PubMed-preview en bronregister blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI research network, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2846
+
 ### G1450 — Kennis AI instellingen starten met één compacte instellingkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI settings, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2844
 
 ### G1449 — Kennis AI samenvattingdetails starten met één compacte detailkeuze
