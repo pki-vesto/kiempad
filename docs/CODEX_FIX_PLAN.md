@@ -1292,6 +1292,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   input choice while source, preview text, error status and preview action remain reachable.
   Partial G1453/#2850: The knowledge AI route header now starts with one closed compact
   status choice while route context, preview anchor, management anchor and network status remain reachable.
+  Partial G1454/#2852: The knowledge library category cards now start with one closed compact
+  category choice while category cards, counts, route anchors and library follow-up remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
