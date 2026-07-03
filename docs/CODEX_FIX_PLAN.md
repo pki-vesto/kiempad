@@ -211,6 +211,9 @@
 - **Daily advice feedback reset route-focus reduced-motion guarded copy — done in G1475 / issue #2710.**
   Reduced-motion disabled and aria-disabled local hide states now keep a static helper-copy cue
   without transitions, layout shifts, route changes, tracking, or medical-data changes.
+- **Daily advice feedback reset route-focus mobile guarded copy — done in G1476 / issue #2712.**
+  Narrow screens now keep disabled and aria-disabled local hide helper copy visibly paired with
+  the guarded button, without transitions, layout shifts, route changes, tracking, or medical data.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
