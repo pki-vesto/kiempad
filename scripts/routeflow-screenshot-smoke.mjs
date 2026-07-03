@@ -589,13 +589,18 @@ const targets = [
     openSelectors: ['[data-dossier-add-route-disclosure="review"]'],
     requiredSelectors: [
       '[data-dossier-review-primary-task="ready"]',
+      '[data-dossier-review-primary-choice="collapsed"]',
+      '[data-dossier-review-primary-summary="ready"]',
       '[data-dossier-review-followup="collapsed"] > .dossier-review-followup__summary',
       '#dossier-review-queue-disclosure',
       '#dossier-inbox-disclosure',
       '[data-dossier-review-disclosure="queue"]',
       '[data-dossier-review-disclosure="inbox"]',
     ],
-    closedDetailsSelectors: ['[data-dossier-review-followup="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-dossier-review-primary-choice="collapsed"]',
+      '[data-dossier-review-followup="collapsed"]',
+    ],
     dossierConsole: true,
     desktopHiddenSelectors: [
       '.dossier-focus-shell__header p:last-child',

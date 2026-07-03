@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1428 — Dossier review follow-up start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1427 start de primaire reviewtaak compacter, maar de follow-up kan bij openen nog wachtrij, import-inbox en duplicaatcontext tegelijk tonen.
+- **User Impact:** Gebruikers die vervolgcontext nodig hebben, krijgen alsnog meerdere reviewcontexten tegelijk.
+- **Desired Outcome:** Laat de dossier review follow-up starten met één compacte contextkeuze of samengevouwen sublaag, terwijl reviewwachtrij, import-inbox en duplicaatcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen reviewcontext gericht openen zonder meteen alle controleblokken te scannen.
+- **Acceptance Criteria:** Bestaande follow-up hooks, queue hooks, inbox hooks en reviewroutehashes blijven aanwezig; de follow-up start met één compacte contextkeuze of samengevouwen sublaag; reviewwachtrij, import-inbox en duplicaatcontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier review
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier review follow-up, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2800
+
 ### G1427 — Dossier upload reviewroute start met één compacte reviewkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier review route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2798
 
 ### G1426 — Dossier upload workflowtabs starten met één compacte routebalk

@@ -1238,6 +1238,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   row while record count and separated-flow explanation remain reachable.
   Partial G1426/#2796: The dossier upload workflow tabs now render as one compact route bar while
   upload, review, consult and context routes keep their hooks and active state.
+  Partial G1427/#2798: The dossier review route now starts with one closed compact review choice
+  while review queue, inbox and storage context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

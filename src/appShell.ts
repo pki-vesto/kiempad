@@ -3603,21 +3603,23 @@ function renderDossierScreen(state: AppShellState): string {
           ariaLabel: 'Dossier review route-samenvatting',
           data: { 'dossier-route-summary': 'review' },
         })}
-        <section id="dossier-review-primary-task" class="dossier-review-primary-task" aria-label="Dossier review primaire taak" data-dossier-review-primary-task="ready">
-          <header class="dossier-review-primary-task__header">
-            <div>
-              <p class="kp-card__eyebrow">Reviewtaak</p>
-              <h3>Controleer eerst wat aandacht vraagt</h3>
-            </div>
-            <span>${reviewWachtrij.length} review</span>
-          </header>
-          <p>Bekijk alleen reviewstatus, inboxaantal en veilige metadata. Broninhoud, OCR-tekst en duplicaatdetails blijven gesloten tot je ze nodig hebt.</p>
-          <dl class="summary-list">
-            <div><dt>Reviewwachtrij</dt><dd>${reviewWachtrij.length} items</dd></div>
-            <div><dt>Import-inbox</dt><dd>${importInboxItems.length} items</dd></div>
-            <div><dt>Opslag</dt><dd>${beschrijfEncryptedRecordLocatie(state)}</dd></div>
-          </dl>
-        </section>
+        <details id="dossier-review-primary-task" class="dossier-review-primary-task" aria-label="Dossier review primaire taak" data-dossier-review-primary-task="ready" data-dossier-review-primary-choice="collapsed">
+          <summary class="dossier-review-primary-task__summary" data-dossier-review-primary-summary="ready">
+            <span>
+              <small>Reviewtaak</small>
+              <strong>Controleer eerst wat aandacht vraagt</strong>
+            </span>
+            <em>${reviewWachtrij.length} review · ${importInboxItems.length} inbox</em>
+          </summary>
+          <div class="dossier-review-primary-task__body">
+            <p>Bekijk alleen reviewstatus, inboxaantal en veilige metadata. Broninhoud, OCR-tekst en duplicaatdetails blijven gesloten tot je ze nodig hebt.</p>
+            <dl class="summary-list">
+              <div><dt>Reviewwachtrij</dt><dd>${reviewWachtrij.length} items</dd></div>
+              <div><dt>Import-inbox</dt><dd>${importInboxItems.length} items</dd></div>
+              <div><dt>Opslag</dt><dd>${beschrijfEncryptedRecordLocatie(state)}</dd></div>
+            </dl>
+          </div>
+        </details>
         <details id="dossier-review-followup" class="kp-disclosure dossier-review-followup" data-dossier-review-followup="collapsed">
           <summary class="kp-disclosure__summary dossier-review-followup__summary">
             <span>
