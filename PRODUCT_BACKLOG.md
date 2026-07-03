@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1164 |
+| ☑ klaar | 1165 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1363** |
+| **Totaal** | **1364** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1525,13 +1525,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1360 | Daily Recommendations: resetknoppen behouden compacte tekstbreedte | P1 | F5 | ☑ |
 | G1361 | Daily Recommendations: resetknoppen bewaren consistente routefocus | P1 | F5 | ☑ |
 | G1362 | Daily Recommendations: resetmelding heeft compacte scanstijl | P1 | F5 | ☑ |
-| G1363 | Daily Recommendations: resetmelding ondersteunt forced-colors scanstijl | P1 | F5 | ☐ |
+| G1363 | Daily Recommendations: resetmelding ondersteunt forced-colors scanstijl | P1 | F5 | ☑ |
+| G1364 | Daily Recommendations: resetmelding sluit rustig zonder filterwijziging | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1363** (id's G001 t/m G1363, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1364** (id's G001 t/m G1364, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

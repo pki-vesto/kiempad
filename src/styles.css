@@ -14187,6 +14187,17 @@ a.action-card:active {
     opacity: 1;
   }
 
+  [data-daily-recommendation-reset-route-focus="ready"] {
+    border-color: ButtonText;
+    border-left-color: Highlight;
+    background: Canvas;
+    box-shadow: none;
+    color: CanvasText;
+    forced-color-adjust: auto;
+    outline: 1px solid ButtonText;
+    outline-offset: 0;
+  }
+
   #dossier-upload-form,
   #consult-verslag-form,
   #embryo-quality-form,
