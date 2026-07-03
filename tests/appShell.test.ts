@@ -8046,6 +8046,10 @@ describe('app shell', () => {
     expect(consultPanel).toContain('data-consult-upload-completion-choice="ready"');
     expect(consultPanel).toContain('data-consult-upload-submit-feedback-details="collapsed"');
     expect(consultPanel).toContain('Bewaarstatus openen');
+    expect(consultPanel).toContain('data-consult-upload-completion-status-choice="collapsed"');
+    expect(consultPanel).toContain('data-consult-upload-completion-status-summary="ready"');
+    expect(consultPanel).toContain('Kies consultstatus');
+    expect(consultPanel).toContain('Opslagstatus, herstelcontext en vervolgroutes');
     expect(consultPanel).toContain('Bewaar consultverslag</button>');
     expect(consultPanel).toContain('data-dossier-submit-feedback="consult-upload"');
     expect(consultPanel).toContain('data-dossier-feedback-announcement-order="2"');
@@ -8057,11 +8061,19 @@ describe('app shell', () => {
     expect(consultPanel).not.toContain(
       '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-consult-upload-submit-feedback-details="collapsed" open',
     );
+    expect(consultPanel).not.toContain(
+      '<details class="dossier-upload-completion-status-choice" data-consult-upload-completion-status-choice="collapsed" open>',
+    );
     expect(consultPanel.indexOf('data-dossier-submit-action="consult-upload"')).toBeLessThan(
       consultPanel.indexOf('data-consult-upload-submit-feedback-details="collapsed"'),
     );
     expect(
       consultPanel.indexOf('data-consult-upload-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(
+      consultPanel.indexOf('data-consult-upload-completion-status-choice="collapsed"'),
+    );
+    expect(
+      consultPanel.indexOf('data-consult-upload-completion-status-choice="collapsed"'),
     ).toBeLessThan(consultPanel.indexOf('data-dossier-submit-feedback="consult-upload"'));
     expect(embryoQualityPanel).toContain('class="kp-workflow-panel embryo-quality-workflow"');
     expect(embryoQualityPanel).toContain('aria-label="Begeleide embryokwaliteit registratie"');
