@@ -38656,6 +38656,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-list-choice="collapsed"');
     expect(html).toContain('Bibliotheeklijst openen');
     expect(html).toContain('Open kennisitems, detailacties en categoriecontext.');
+    expect(html).toContain('data-knowledge-library-list-items-choice="collapsed"');
+    expect(html).toContain('Lijstitems openen');
+    expect(html).toContain('Itemkaarten, categorie, status en broninformatie.');
     expect(html).toContain('class="knowledge-library-list"');
     expect(html).toContain('data-knowledge-library-list="ready"');
     expect(html).toContain('class="knowledge-library-card" data-knowledge-library-card="ready"');
@@ -38682,10 +38685,16 @@ describe('app shell', () => {
       '<details class="knowledge-library-card-detail-choice" data-knowledge-library-card-detail-choice="collapsed" open>',
     );
     expect(html.indexOf('data-knowledge-library-list-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-list-items-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-library-list-items-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-library-list="ready"'),
     );
     expect(html).not.toContain(
       '<details class="knowledge-library-list-choice" data-knowledge-library-list-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-list-items-choice" data-knowledge-library-list-items-choice="collapsed" open>',
     );
     expect(html).not.toContain('<li class="phase-item">');
     expect(html).toContain('id="research-item-form"');
@@ -38923,6 +38932,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-list-choice:not([open]) > .knowledge-library-list-choice__body {',
     );
+    expect(css).toContain('.knowledge-library-list-items-choice {');
+    expect(css).toContain('.knowledge-library-list-items-choice__summary {');
     expect(css).toContain('.knowledge-library-list {');
     expect(css).toContain('.knowledge-library-card > article {');
     expect(css).toContain('.knowledge-library-card__chevron {');

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1470 — Kennis bibliotheek kaartdetails start met één compacte detailkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1469 blijven kennis bibliotheek kaartdetails gevoelig voor inhoud, bron, badges en acties tegelijk.
+- **User Impact:** Gebruikers die een kaart openen, krijgen nog meerdere detailvelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat kennis bibliotheek kaartdetails starten met één compacte detailkeuze of samengevouwen sublaag, terwijl inhoud, bron, badges en acties bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één kaartdetailcontext kiezen zonder dat alle detailinformatie tegelijk de kaart domineert.
+- **Acceptance Criteria:** Bestaande kaartdetail hooks, badges en acties blijven aanwezig; de kaartdetails starten met één compacte keuze of samengevouwen sublaag; inhoud, bron, badges en acties blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, kennis library cards, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2884
+
 ### G1469 — Kennis bibliotheek lijst start met één compacte lijstkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, kennis library list, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2882
 
 ### G1468 — Kennis bibliotheek filterstatus start met één compacte statusdetailkeuze
