@@ -39352,6 +39352,7 @@ describe('app shell', () => {
     const hoverBadgeFeedbackMaxTextMix = 86;
     const hoverBadgeFeedbackMaxWeight = 750;
     const hoverLabelWeight = 850;
+    const hoverBadgeFeedbackFlexContract = `flex: ${hoverBadgeFeedbackFlexGrow} ${hoverBadgeFeedbackFlexShrink} min(${hoverBadgeFeedbackFlexBasisCh}ch, ${hoverBadgeFeedbackFlexBasisPercent}%);`;
     const hoverBadgeFeedbackTruncationContract = [
       'overflow: hidden;',
       'text-overflow: ellipsis;',
@@ -39364,6 +39365,7 @@ describe('app shell', () => {
     expect(focusBadgeFeedbackWidthPercent).toBe(hoverBadgeFeedbackWidthPercent);
     expect(hoverBadgeFeedbackFlexGrow).toBe(hoverBadgeFeedbackStableFlexGrow);
     expect(hoverBadgeFeedbackFlexShrink).toBe(hoverBadgeFeedbackStableFlexShrink);
+    expect(css).toContain(hoverBadgeFeedbackFlexContract);
     expect(hoverBadgeFeedbackFlexBasisCh).toBe(hoverBadgeFeedbackWidthCh);
     expect(hoverBadgeFeedbackFlexBasisPercent).toBe(hoverBadgeFeedbackWidthPercent);
     expect(hoverBadgeFeedbackMaxWidthCh).toBe(hoverBadgeFeedbackWidthCh);
