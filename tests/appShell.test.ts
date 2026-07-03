@@ -3232,6 +3232,15 @@ describe('app shell', () => {
     );
     expect(css).toContain('border-left-color: Highlight;');
     expect(css).toContain('color: CanvasText;');
+    expect(css).toContain(
+      '[data-daily-recommendation-reset-route-focus="ready"]:focus-visible\n    .daily-recommendation-reset-route-focus__help,',
+    );
+    expect(css).toContain(
+      '.daily-recommendation-reset-route-focus__close:focus-visible\n    + .daily-recommendation-reset-route-focus__help {',
+    );
+    expect(css).toContain('font-weight: 760;');
+    expect(css).toContain('text-decoration: underline;');
+    expect(css).toContain('text-underline-offset: 2px;');
     expect(css).toContain('outline: 1px solid ButtonText;');
     expect(css).toContain('outline: 2px solid Highlight;');
     expect(css).toContain('outline-offset: 2px;');

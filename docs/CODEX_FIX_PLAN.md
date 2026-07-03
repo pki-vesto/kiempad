@@ -193,6 +193,9 @@
 - **Daily advice feedback reset route-focus forced-colors mobile helper layout — done in G1469 / issue #2698.**
   Narrow high-contrast screens now keep the reset helper, focus outline, and local hide action in a
   single-column layout with explicit system-color contrast and compact focus offsets.
+- **Daily advice feedback reset route-focus forced-colors focus copy — done in G1470 / issue #2700.**
+  When the reset confirmation or local hide action receives focus in forced-colors mode, the helper
+  copy now gains a system-color text cue without changing layout, route state, or medical data.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
