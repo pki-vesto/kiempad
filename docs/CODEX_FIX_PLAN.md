@@ -634,6 +634,9 @@
 - **Faint text contrast tokens — done in G1577 / issue #3098.** The shared `--ink-3`
   faint/meta text token now meets at least 4.5:1 contrast on primary and subtle surfaces in light
   and dark themes, with app-shell tests calculating the ratios from CSS tokens.
+- **Shared disclosure focus rings — done in G1578 / issue #3100.** All app summary-class
+  disclosures and the vault status summary now inherit the same visible teal focus ring, extending
+  CFX-075 beyond the earlier named disclosure subset.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1230,6 +1233,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   eyebrows stay tied to the same token.
 - **CFX-075** — Verify visible focus ring (teal) on all interactive elements incl. `<details>`
   summaries (K75). **P2 · S**
+  Partial G1578/#3100: `summary[class*="__summary"]` and `.vault-status` now share the teal
+  focus-ring contract, so disclosure variants outside the original named subset are covered.
 - **CFX-079** — Reduced-motion coverage for every new transition/skeleton. **P2 · S**
 
 ### Testing
