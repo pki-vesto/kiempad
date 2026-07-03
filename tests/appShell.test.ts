@@ -2381,8 +2381,13 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.finance-focus-shell__workspace .domain-split-workspace {');
     expect(mobileCss).toContain('.finance-form-section {');
     expect(mobileCss).toContain('.finance-form-actions {');
+    expect(mobileCss).toContain('.finance-form-actions button {');
     expect(mobileCss).toContain('.form-cancel-link,');
     expect(mobileCss).toContain('.command-form-actions {');
+    expect(mobileCss).toContain('display: flex;');
+    expect(mobileCss).toContain('flex-wrap: wrap;');
+    expect(mobileCss).toContain('width: auto;');
+    expect(mobileCss).toContain('flex: 0 1 auto;');
     expect(mobileCss).not.toContain(
       '.finance-focus-shell__workspace .domain-split-workspace__context {',
     );
@@ -2417,6 +2422,10 @@ describe('app shell', () => {
     expect(mobileCss).toContain('.medication-focus-shell__workspace .domain-split-workspace,');
     expect(mobileCss).toContain('.medication-form-section {');
     expect(mobileCss).toContain('.medication-form-actions {');
+    expect(css).toContain('@media (max-width: 420px)');
+    expect(css).toContain('.command-route-section .data-form > button[type="submit"],');
+    expect(css).toContain('.finance-form-actions button,');
+    expect(css).toContain('flex-basis: 100%;');
     expect(css).toContain('.planning-workbench :where(.stat-row) {');
     expect(css).toContain('.planning-workbench :where(.stat) {');
     expect(css).toContain('.treatment-snapshot {');

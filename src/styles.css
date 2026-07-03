@@ -25229,8 +25229,18 @@ a.action-card:active {
   }
 
   .finance-form-actions {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .finance-form-actions button {
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
+    min-height: 44px;
   }
 
   .command-task-routes {
@@ -25975,8 +25985,11 @@ a.action-card:active {
     position: sticky;
     bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);
     z-index: 30;
-    width: 100%;
+    justify-self: start;
+    width: fit-content;
+    max-width: 100%;
     min-height: 44px;
+    padding-inline: 18px;
     box-shadow: 0 10px 24px rgba(21, 48, 44, 0.18);
   }
 
@@ -25984,13 +25997,18 @@ a.action-card:active {
     position: sticky;
     bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);
     z-index: 30;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .command-form-actions > button,
   .command-form-actions > .form-cancel-link {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
     min-height: 44px;
   }
 
@@ -25998,12 +26016,17 @@ a.action-card:active {
     position: sticky;
     bottom: calc(var(--mobile-bottom-nav-clearance) - 18px);
     z-index: 30;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .schedule-form-actions button {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
     min-height: 44px;
     box-shadow: 0 10px 24px rgba(21, 48, 44, 0.18);
   }
@@ -26167,12 +26190,17 @@ a.action-card:active {
   }
 
   .medication-form-actions {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
   .medication-form-actions button {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
+    flex: 0 1 auto;
     min-height: 44px;
   }
 
@@ -26500,6 +26528,16 @@ a.action-card:active {
   .timeline-overview-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     overflow-x: visible;
+  }
+
+  .command-route-section .data-form > button[type="submit"],
+  .command-form-actions > button,
+  .command-form-actions > .form-cancel-link,
+  .finance-form-actions button,
+  .schedule-form-actions button,
+  .medication-form-actions button {
+    width: 100%;
+    flex-basis: 100%;
   }
 }
 
