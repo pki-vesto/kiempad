@@ -14239,6 +14239,15 @@ a.action-card:active {
     color: HighlightText;
   }
 
+  .daily-recommendation-reset-route-focus__close:active
+    + .daily-recommendation-reset-route-focus__help {
+    color: Highlight;
+    font-weight: 760;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
   .daily-recommendation-reset-route-focus__close:disabled,
   .daily-recommendation-reset-route-focus__close[aria-disabled="true"] {
     border-color: GrayText;

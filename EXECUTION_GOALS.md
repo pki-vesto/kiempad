@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1381 — Daily Recommendations: resetmelding bewaakt forced-colors disabled touchcopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding bewaakt touch active-state en helpercopy in forced-colors, maar disabled/aria-disabled touchcopy in forced-colors heeft nog geen aparte guard.
+- **User Impact:** High-contrast gebruikers kunnen bij guarded Verberg-states minder duidelijke relatie tussen knopstatus en helpercopy ervaren.
+- **Desired Outcome:** Borg dat guarded Verberg-state en helpercopy in forced-colors duidelijk blijven zonder layoutverschuiving.
+- **User Value:** De resetfeedback blijft begrijpelijk wanneer de lokale hide-actie bewaakt of niet beschikbaar is.
+- **Acceptance Criteria:** Forced-colors disabled/aria-disabled Verberg-state behoudt duidelijke helpercopy en knopstatus; er ontstaat geen extra transitie, layout shift, overlap of horizontale scroll; de disabled touchcopy guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, forced-colors CSS, guarded states
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2708
+
 ### G1380 — Daily Recommendations: resetmelding bewaakt touch active in forced-colors
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, forced-colors CSS, touch CSS
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2706
 
 ### G1379 — Daily Recommendations: resetmelding bewaakt focuscopy bij touch active

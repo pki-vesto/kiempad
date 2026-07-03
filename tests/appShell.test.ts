@@ -3228,6 +3228,7 @@ describe('app shell', () => {
     expect(css).toContain('opacity: 1;');
     expect(css).toContain('background: Highlight;');
     expect(css).toContain('color: HighlightText;');
+    expect(css).toContain('text-decoration-thickness: 1px;');
     expect(css).toContain('outline-color 0.16s ease;');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
     expect(css).toContain(
