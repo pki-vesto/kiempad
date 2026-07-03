@@ -1216,6 +1216,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   choice before embryo label, embryo id, day and laboratory-context fields appear.
   Partial G1414/#2774: The document upload completion area now starts with one upload action and a
   closed completion-status disclosure before submit feedback and recovery context appear.
+  Partial G1415/#2776: Consult upload now starts with one closed report-field choice before date,
+  text/file, linking and source-context fields appear.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

@@ -3701,68 +3701,88 @@ function renderDossierScreen(state: AppShellState): string {
           ],
           body: `
         <form id="consult-verslag-form" class="data-form" data-upload-privacy-kind="consult" data-dossier-feedback-focus-target="consult-upload" data-consult-upload-privacy-state="encrypted-text-or-file" tabindex="-1">
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-basis" data-dossier-field-section="consult-basis" data-dossier-field-section-label="Stap 1 · verslag">
-            <legend>Consultbasis</legend>
+          <fieldset class="dossier-subform-group consult-upload-report-choice" data-consult-upload-group="consult-basis" data-consult-upload-report-choice="ready" data-dossier-field-section="consult-basis" data-dossier-field-section-label="Stap 1 · verslag">
+            <legend>Verslag kiezen</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="consult-upload">
-            Verplicht: datum; voeg daarna tekst of bestand toe.
+            Start met één verslagroute. Tekst, bestand en datum blijven achter de verslagkeuze bereikbaar.
           </p>
-          <label>
-            Datum consult
-            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
-          </label>
-          <label>
-            Titel
-            <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: evaluatie na punctie" />
-          </label>
-          <label>
-            Upload verslag
-            <input name="consultBestand" type="file" accept="application/pdf,image/*,text/*" />
-          </label>
-          <label>
-            Tekst of samenvatting
-            <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
-          </label>
+          <details class="dossier-upload-optional consult-upload-report-fields" data-consult-upload-report-fields="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Verslagvelden openen</span>
+              <small>Datum, tekst of bestand</small>
+            </summary>
+            <div class="consult-upload-report-fields__body">
+              <label>
+                Datum consult
+                <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+              </label>
+              <label>
+                Titel
+                <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: evaluatie na punctie" />
+              </label>
+              <label>
+                Upload verslag
+                <input name="consultBestand" type="file" accept="application/pdf,image/*,text/*" />
+              </label>
+              <label>
+                Tekst of samenvatting
+                <textarea name="tekst" rows="5" placeholder="Plak hier consultnotities of een gespreksverslag"></textarea>
+              </label>
+            </div>
+          </details>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="consult-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
-            <legend>Koppelingen</legend>
-          <label>
-            Koppel aan afspraak
-            <select name="afspraakId">
-              <option value="">Geen afspraak</option>
-              ${afspraakOpties}
-            </select>
-          </label>
-          <label>
-            Koppel aan traject
-            <select name="trajectId">
-              <option value="">Geen traject</option>
-              ${trajectOpties}
-            </select>
-          </label>
-          <label>
-            Poging of cycluscontext
-            <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
-          </label>
-          </fieldset>
-          <fieldset id="consult-context-fields" class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional" data-dossier-field-section="consult-context" data-dossier-field-section-label="Stap 3 · context">
-            <legend>Bron en context</legend>
-          <label>
-            Correctie op conceptsamenvatting
-            <textarea name="samenvattingCorrectie" rows="4" placeholder="Optioneel: corrigeer de lokale conceptsamenvatting in eigen woorden"></textarea>
-          </label>
-          <label>
-            Auteur of bronpersoon
-            <input name="consultAuteur" autocomplete="off" placeholder="Bijvoorbeeld: fertiliteitsarts, embryoloog of eigen notitie" />
-          </label>
-          <label>
-            Consultcontext
-            <input name="consultContext" autocomplete="off" placeholder="Bijvoorbeeld: intake, evaluatie, belafspraak of labupdate" />
-          </label>
-          <label>
-            Notitie
-            <textarea name="notitie" rows="3"></textarea>
-          </label>
-          </fieldset>
+          <details class="dossier-upload-optional consult-upload-link-fields" data-consult-upload-link-fields="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Koppelingen openen</span>
+              <small>Afspraak, traject en poging</small>
+            </summary>
+            <fieldset class="dossier-subform-group" data-consult-upload-group="consult-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="consult-koppelingen" data-dossier-field-section-label="Stap 2 · koppelen">
+              <legend>Koppelingen</legend>
+            <label>
+              Koppel aan afspraak
+              <select name="afspraakId">
+                <option value="">Geen afspraak</option>
+                ${afspraakOpties}
+              </select>
+            </label>
+            <label>
+              Koppel aan traject
+              <select name="trajectId">
+                <option value="">Geen traject</option>
+                ${trajectOpties}
+              </select>
+            </label>
+            <label>
+              Poging of cycluscontext
+              <input name="consultPogingId" autocomplete="off" placeholder="Bijvoorbeeld: poging 1 of ICSI-2" />
+            </label>
+            </fieldset>
+          </details>
+          <details class="dossier-upload-optional consult-upload-context-fields" data-consult-upload-context-fields="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Bron en context openen</span>
+              <small>Correctie, bronpersoon en notitie</small>
+            </summary>
+            <fieldset id="consult-context-fields" class="dossier-subform-group" data-consult-upload-group="consult-context" data-dossier-context-priority="optional" data-dossier-field-section="consult-context" data-dossier-field-section-label="Stap 3 · context">
+              <legend>Bron en context</legend>
+            <label>
+              Correctie op conceptsamenvatting
+              <textarea name="samenvattingCorrectie" rows="4" placeholder="Optioneel: corrigeer de lokale conceptsamenvatting in eigen woorden"></textarea>
+            </label>
+            <label>
+              Auteur of bronpersoon
+              <input name="consultAuteur" autocomplete="off" placeholder="Bijvoorbeeld: fertiliteitsarts, embryoloog of eigen notitie" />
+            </label>
+            <label>
+              Consultcontext
+              <input name="consultContext" autocomplete="off" placeholder="Bijvoorbeeld: intake, evaluatie, belafspraak of labupdate" />
+            </label>
+            <label>
+              Notitie
+              <textarea name="notitie" rows="3"></textarea>
+            </label>
+            </fieldset>
+          </details>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="consult-upload">Bewaar consultverslag</button>
           ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
         </form>
