@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1534 — Kennis bibliotheek herstelactie badges houden mobiele labelkleur volgorde voorspelbaar
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1533 blijft de labelgewichtvolgorde voorspelbaar, maar de kleurcascade tussen hover en focus is nog niet apart bewaakt tegen latere regressies.
+- **User Impact:** Gebruikers kunnen op kleine schermen onvoorspelbare labelkleuren zien als hover en focus tegelijk actief zijn.
+- **Desired Outcome:** Mobiele herstelactielabels houden een voorspelbare kleurcascade waarin focus duidelijker blijft dan hover en beide staten rustig blijven.
+- **User Value:** Gebruikers krijgen consistente kleurfeedback zonder dat hover de duidelijkere focusstaat verdringt.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; cascadevolgorde van hover- en focuslabelkleur blijft voorspelbaar op mobiel; cascadevolgorde van hover- en focuslabelgewicht blijft voorspelbaar op mobiel; hovergewicht van primaire labellijn blijft stabiel en rustig op mobiel; focusgewicht van primaire labellijn blijft stabiel en rustig op mobiel; primaire labellijn blijft rustig getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele labelkleurvolgorde en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3012
+
 ### G1533 — Kennis bibliotheek herstelactie badges houden mobiele labelgewicht volgorde voorspelbaar
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3010
 
 ### G1532 — Kennis bibliotheek herstelactie badges houden mobiele hoverlabel gewicht stabiel
