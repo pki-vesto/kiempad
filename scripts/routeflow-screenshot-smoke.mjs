@@ -211,6 +211,8 @@ const targets = [
       '[data-hub-detail-panel="imaging-repository"]',
       '[data-hub-detail-panel="embryo-dossiers"]',
       '[data-dossier-imaging-inspection-board="ready"]',
+      '[data-dossier-imaging-primary-choice="ready"]',
+      '[data-dossier-imaging-followup="collapsed"] > .dossier-imaging-followup__summary',
       '[data-dossier-imaging-lane="images"]',
       '[data-dossier-imaging-lane="compare"]',
       '[data-dossier-imaging-lane="embryos"]',
@@ -421,7 +423,7 @@ const targets = [
     rootSelector: '[data-hub-detail-panel="consult-verslagen"]',
     expectedText: 'Smoke consultkaart',
     prepare: 'filled-consult-card',
-    openSelectors: ['[data-hub-detail-panel="consult-verslagen"]'],
+    openSelectors: ['[data-dossier-imaging-followup="collapsed"]', '[data-hub-detail-panel="consult-verslagen"]'],
     requiredSelectors: [
       '.consult-card__status span',
     ],
