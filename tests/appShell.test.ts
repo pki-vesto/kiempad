@@ -39328,9 +39328,11 @@ describe('app shell', () => {
     const hoverBadgeFeedbackBorderMix = 18;
     const focusBadgeFeedbackTextMix = 88;
     const hoverBadgeFeedbackTextMix = 86;
+    const hoverLabelWeight = 850;
     expect(focusBadgeFeedbackWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
     expect(focusBadgeFeedbackBorderMix).toBeGreaterThan(hoverBadgeFeedbackBorderMix);
     expect(focusBadgeFeedbackTextMix).toBeGreaterThan(hoverBadgeFeedbackTextMix);
+    expect(hoverLabelWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
     expect(css).toContain('color: color-mix(in srgb, var(--text) 88%, var(--text-muted));');
     expect(css).toContain('font-weight: 760;');
     expect(css).toContain('opacity: 1;');

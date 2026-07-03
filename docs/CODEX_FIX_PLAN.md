@@ -1467,6 +1467,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge cascade coverage complete for hover and focus feedback.
   Partial G1537/#3018: The knowledge library empty-state recovery actions now keep mobile
   badge focus hierarchy stronger than hover with relational coverage.
+  Partial G1538/#3020: The knowledge library empty-state recovery actions now keep mobile
+  badge hover secondary to the primary action label.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
