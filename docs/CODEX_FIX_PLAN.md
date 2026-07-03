@@ -202,6 +202,9 @@
 - **Daily advice feedback reset route-focus touch active focus copy — done in G1472 / issue #2704.**
   Mobile touch active feedback on the local hide action now also emphasizes the helper copy, keeping
   the reset message understandable without changing layout, route state, tracking, or medical data.
+- **Daily advice feedback reset route-focus forced-colors touch active copy — done in G1473 / issue #2706.**
+  High-contrast touch active feedback now keeps the local hide action and helper copy aligned with
+  system colors, without transitions, layout shifts, route changes, tracking, or medical data.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
