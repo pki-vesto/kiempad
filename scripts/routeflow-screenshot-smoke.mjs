@@ -107,6 +107,8 @@ const targets = [
       '[data-knowledge-research-lane="trends"]',
       '[data-hub-detail-panel="research-summaries"]',
       '[data-knowledge-research-disclosure="sources"]',
+      '[data-knowledge-research-sources-choice="collapsed"]',
+      '[data-research-source-component="source-list"]',
       '#knowledge-research-trends',
     ],
     closedDetailsSelectors: [
@@ -119,6 +121,7 @@ const targets = [
       '[data-knowledge-research-followup-context-choice="collapsed"]',
       '[data-knowledge-research-context-choice="collapsed"]',
       '[data-knowledge-research-detail-choice="collapsed"]',
+      '[data-knowledge-research-sources-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [

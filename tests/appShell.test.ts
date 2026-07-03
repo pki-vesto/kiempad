@@ -38405,6 +38405,9 @@ describe('app shell', () => {
     expect(html.indexOf('data-knowledge-research-detail-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
     );
+    expect(html.indexOf('data-knowledge-research-sources-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-research-source-component="source-list"'),
+    );
     expect(html.indexOf('data-knowledge-research-route-status-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#knowledge-research-primary-focus"'),
     );
@@ -38415,10 +38418,16 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details class="knowledge-research-context-choice knowledge-research-detail-choice" data-knowledge-research-context-choice="collapsed" data-knowledge-research-detail-choice="collapsed" open>',
     );
+    expect(html).not.toContain(
+      '<details class="kp-disclosure knowledge-research-sources-choice" data-knowledge-research-disclosure="sources" data-knowledge-research-sources-choice="collapsed" open>',
+    );
     expect(html.indexOf('data-knowledge-research-reader="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
     );
-    expect(html).toContain('Researchbronnen openen');
+    expect(html).toContain('data-knowledge-research-sources-choice="collapsed"');
+    expect(html).toContain('Bronnenkeuze openen');
+    expect(html).toContain('Bekijk broncache en allowliststatus.');
+    expect(html).toContain('data-research-source-component="source-list"');
     expect(html).toContain('data-hub-detail-panel="research-summaries"');
     expect(html).toContain('Researchsamenvattingen openen');
     expect(html).toContain('Wetenschappelijke en eenvoudige uitleg');
@@ -38811,6 +38820,8 @@ describe('app shell', () => {
       '.knowledge-research-context-choice:not([open]) > .knowledge-research-context-choice__body {',
     );
     expect(css).toContain('.knowledge-research-detail-choice {');
+    expect(css).toContain('.knowledge-research-sources-choice {');
+    expect(css).toContain('.knowledge-research-sources-choice__summary {');
     expect(css).toContain('.knowledge-research-followup-context-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice__summary {');

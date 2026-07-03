@@ -12735,8 +12735,14 @@ function renderKennisScreen(state: AppShellState): string {
                 <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} samenvattingen</em>
               </summary>
               <div class="knowledge-research-context-choice__body">
-                <details class="kp-disclosure" data-knowledge-research-disclosure="sources">
-                  <summary class="kp-disclosure__summary">Researchbronnen openen</summary>
+                <details class="kp-disclosure knowledge-research-sources-choice" data-knowledge-research-disclosure="sources" data-knowledge-research-sources-choice="collapsed">
+                  <summary class="kp-disclosure__summary knowledge-research-sources-choice__summary">
+                    <span>
+                      <strong>Bronnenkeuze openen</strong>
+                      <small>Bekijk broncache en allowliststatus.</small>
+                    </span>
+                    <em>${researchBronnen.length} bronnen</em>
+                  </summary>
                   <div class="kp-disclosure__body">
                     <div class="knowledge-route-grid knowledge-route-grid--research">
                       <div class="summary-panel">${renderResearchBronnenCache(researchBronnen)}</div>
