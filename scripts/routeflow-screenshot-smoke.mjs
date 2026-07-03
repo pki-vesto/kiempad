@@ -321,6 +321,7 @@ const targets = [
     requiredSelectors: [
       '[data-dossier-search-console="ready"]',
       '[data-dossier-search-console-region="search"]',
+      '[data-dossier-search-primary-control="ready"]',
       '[data-dossier-search-support="collapsed"] > .dossier-search-support__summary',
       '#dossier-search-form',
       '[data-dossier-search-kit="ready"]',
@@ -328,6 +329,7 @@ const targets = [
     presentSelectors: [
       '[data-dossier-secondary-privacy="collapsed"]',
       '#dossier-route-index-disclosure',
+      '[data-dossier-search-console-region="results"]',
       '[data-dossier-search-console-region="privacy"]',
       '[data-dossier-search-console-region="index"]',
     ],

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1399 — Dossier: beelden start met één inspectiekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier Beelden moet rustig blijven als één inspectiekeuze en mag niet opnieuw aanvoelen als een wand met beeldenoverzicht, vergelijking, embryo's en consulten.
+- **User Impact:** Gebruikers kunnen bij beeldinspectie alsnog door meerdere dossierlagen moeten scannen voordat de hoofdkeuze duidelijk is.
+- **Desired Outcome:** Start met één primaire inspectiekeuze en houd beeldenoverzicht, vergelijking, embryo's en consulten als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers kiezen eerst wat ze willen inspecteren en openen extra beeldcontext pas wanneer nodig.
+- **Acceptance Criteria:** Dossier Beelden toont één primaire inspectiekeuze in de eerste viewport; beeldenoverzicht, vergelijking, embryo's en consulten blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Dossier, Beelden
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier imaging route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2744
+
 ### G1398 — Dossier: zoeken start met één zoekcontrole
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2742
 
 ### G1397 — Logboek: privacy start met één controlelaag

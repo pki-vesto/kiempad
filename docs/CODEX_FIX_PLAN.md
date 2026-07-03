@@ -18,6 +18,10 @@
   route now opens with one primary privacy-control summary while high-risk audit rules, recent
   events, categories, and status links sit behind one closed follow-up context, preserving audit
   hooks, hashes, and no-plaintext/no-tracking boundaries.
+- **Dossier search single search control — done in G1491 / issue #2742.** Dossier Zoeken now
+  opens with one primary search-control surface; result context, privacy controls, and the content
+  index remain reachable behind one closed follow-up disclosure while preserving search form,
+  hash, privacy, and index hooks.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

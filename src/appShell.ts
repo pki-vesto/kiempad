@@ -3900,15 +3900,15 @@ function renderDossierScreen(state: AppShellState): string {
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Zoeken</p>
           <h2 id="dossier-route-search-title">Dossier zoeken zonder alles te openen</h2>
-          <p>Zoek, open de inhoudsindex of controleer privacy vanuit drie aparte werkvlakken.</p>
+          <p>Start met één zoekcontrole. Resultaten, privacy en inhoudsindex open je pas als vervolgcontext.</p>
         </header>
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
-          title: 'Zoeken zonder de hele dossierkaart uit te klappen',
+          title: 'Eerst één zoekcontrole',
           detail:
-            'De zoekactie blijft direct beschikbaar; indexen, tellingen en privacycontroles staan compact onder aparte panelen.',
+            'De zoekactie blijft vooraan; resultaten, index en privacycontrole staan achter één rustige vervolgstap.',
           primary: { href: '#dossier-search-form', label: 'Zoeken' },
-          secondary: { href: '#dossier-route-index-disclosure', label: 'Index openen' },
+          secondary: { href: '#dossier-search-followup', label: 'Vervolgcontext' },
           status: zoekterm
             ? `${zoekResultaten.length} resultaten`
             : `${indexItems.length} indexitems`,
@@ -3919,9 +3919,10 @@ function renderDossierScreen(state: AppShellState): string {
           <section class="dossier-search-console__panel dossier-search-console__panel--search" aria-labelledby="dossier-search-panel-title" data-dossier-search-console-region="search">
             <header class="dossier-search-console__panel-header">
               <p class="kp-card__eyebrow">Zoekvlak</p>
-              <h3 id="dossier-search-panel-title">Zoek gericht in je dossier</h3>
+              <h3 id="dossier-search-panel-title">Eén zoekcontrole</h3>
               <span>${zoekterm ? `${zoekResultaten.length} resultaten` : `${zichtbareDocumenten.length} records`}</span>
             </header>
+        <div class="dossier-search-primary-control" data-dossier-search-primary-control="ready">
         <form id="dossier-search-form" class="data-form dossier-search-kit" data-dossier-search-kit="ready" data-dossier-search-kit-state="${zoekterm ? (zoekResultaten.length > 0 ? 'active-matches' : 'active-empty') : 'idle'}">
           <header class="dossier-search-kit__header">
             <div>
@@ -3947,28 +3948,44 @@ function renderDossierScreen(state: AppShellState): string {
             <a class="secondary-button" href="#dossier?route=search">Wis zoekterm</a>
           </div>
         </form>
-        ${
-          zoekterm
-            ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde versleutelde opslag.</p>`
-            : `<p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}, inclusief OCR-tekst en handmatige notities.</p>`
-        }
+        <p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}. Resultaatcontext, privacycontrole en inhoudsindex blijven gesloten tot je ze opent.</p>
+        </div>
           </section>
-          <details class="kp-disclosure dossier-search-support" data-dossier-search-support="collapsed">
+          <details id="dossier-search-followup" class="kp-disclosure dossier-search-support" data-dossier-search-support="collapsed" data-dossier-search-followup="collapsed">
             <summary class="kp-disclosure__summary dossier-search-support__summary">
               <span>
-                <strong>Ondersteunende panelen openen</strong>
-                <small>Privacycontrole en inhoudsindex</small>
+                <strong>Vervolgcontext openen</strong>
+                <small>Resultaten, privacycontrole en inhoudsindex</small>
               </span>
               <em>${indexItems.length} indexitems</em>
             </summary>
             <div class="kp-disclosure__body dossier-search-support__body">
+          <section class="dossier-search-console__panel" aria-labelledby="dossier-search-results-title" data-dossier-search-console-region="results">
+            <header class="dossier-search-console__panel-header">
+              <p class="kp-card__eyebrow">Resultaten</p>
+              <h3 id="dossier-search-results-title">Resultaatcontext</h3>
+              <span>${zoekterm ? `${zoekResultaten.length} resultaten` : 'niet actief'}</span>
+            </header>
+            <div class="dossier-search-result-context" data-dossier-search-results="collapsed">
+              ${
+                zoekterm
+                  ? `<p class="linked-note">${zoekResultaten.length} resultaat${zoekResultaten.length === 1 ? '' : 'en'} voor "${escapeHtml(zoekterm)}". Zoeken gebeurt alleen in de ontgrendelde versleutelde opslag.</p>`
+                  : `<p class="small-print">Geen actieve zoekopdracht. Gebruik eerst de zoekcontrole voordat resultaatcontext nodig is.</p>`
+              }
+              <nav class="dossier-search-result-context__links" aria-label="Dossier zoeken vervolglinks">
+                <a href="#dossier-search-form">Terug naar zoekcontrole</a>
+                <a href="#dossier-route-index-disclosure">Inhoudsindex</a>
+                <a href="#dossier-secondary-privacy-disclosure">Privacycontrole</a>
+              </nav>
+            </div>
+          </section>
           <section class="dossier-search-console__panel" aria-labelledby="dossier-search-privacy-title" data-dossier-search-console-region="privacy">
             <header class="dossier-search-console__panel-header">
               <p class="kp-card__eyebrow">Controle</p>
               <h3 id="dossier-search-privacy-title">Privacy en toegankelijkheid</h3>
               <span>gesloten</span>
             </header>
-        <details class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">
+        <details id="dossier-secondary-privacy-disclosure" class="kp-disclosure dossier-secondary-privacy" data-dossier-secondary-privacy="collapsed">
           <summary class="kp-disclosure__summary">Privacy- en toegankelijkheidscontrole</summary>
           <div class="kp-disclosure__body dossier-secondary-privacy__body">
             <p class="small-print dossier-secondary-privacy__intro">Technische controles voor zoeken, export, audit en assistive states blijven beschikbaar zonder de primaire dossierroute te onderbreken.</p>
