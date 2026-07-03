@@ -614,6 +614,10 @@
 - **Sticky route panel summary — done in G1571 / issue #3086.** Active route summaries inside
   split-workspace panels now stay sticky as compact panel headers, keeping task/status/actions in
   view while users scroll longer route content.
+- **Compact context panel header — done in G1572 / issue #3088.** Shared split-workspace context
+  columns now get a compact sticky context header, making supporting context read as an attached
+  task panel instead of another loose long-page column while preserving existing workbench content
+  and hooks.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.

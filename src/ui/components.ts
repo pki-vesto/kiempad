@@ -123,7 +123,11 @@ export function domainSplitWorkspace(opts: {
     </div>
     ${
       opts.context
-        ? `<aside class="domain-split-workspace__context" aria-label="Contextkolom">
+        ? `<aside class="domain-split-workspace__context" aria-label="Contextkolom" data-domain-context-panel="compact">
+      <div class="domain-split-workspace__context-header" aria-label="Context apart paneel">
+        <span>Context</span>
+        <strong>Bij de taak</strong>
+      </div>
       ${opts.context}
     </aside>`
         : ''
