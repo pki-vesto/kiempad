@@ -4183,7 +4183,8 @@ describe('app shell', () => {
     expect(resetRouteFocusRecommendations).toContain(
       'data-daily-recommendation-reset-route-focus-close="ready"',
     );
-    expect(resetRouteFocusRecommendations).toContain('aria-label="Sluit lokale resetmelding"');
+    expect(resetRouteFocusRecommendations).toContain('aria-label="Verberg lokale resetmelding"');
+    expect(resetRouteFocusRecommendations).toContain('Verberg');
     const resetRouteFocusStart = resetRouteFocusRecommendations.indexOf(
       'data-daily-recommendation-reset-route-focus="ready"',
     );

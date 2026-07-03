@@ -1687,8 +1687,7 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
   root
     .querySelector<HTMLButtonElement>('[data-daily-recommendation-reset-route-focus-close="ready"]')
     ?.addEventListener('click', () => {
-      state.dailyRecommendationRouteFocusDismissed = true;
-      render(root, state);
+      dismissDailyRecommendationRouteFocusStatus(root, state);
     });
 
   root
@@ -1722,6 +1721,11 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
       );
     });
   });
+}
+
+function dismissDailyRecommendationRouteFocusStatus(root: HTMLElement, state: RuntimeState): void {
+  state.dailyRecommendationRouteFocusDismissed = true;
+  render(root, state);
 }
 
 function openDailyRecommendationListPanel(root: HTMLElement): void {
