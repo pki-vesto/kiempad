@@ -220,6 +220,41 @@ function extractCssMediaBlock(css: string, mediaQuery: string): string {
   return css.slice(openBraceIndex + 1, closeBraceIndex);
 }
 
+function extractCssCustomProperty(css: string, blockSelector: string, property: string): string {
+  const { declarations } = extractCssRule(css, blockSelector);
+  const escapedProperty = property.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = declarations.match(new RegExp(`${escapedProperty}:\\s*(#[0-9a-fA-F]{6})`));
+  if (!match?.[1]) {
+    throw new Error(`CSS-property ontbreekt in ${blockSelector}: ${property}.`);
+  }
+  return match[1].toLowerCase();
+}
+
+function relativeLuminance(hex: string): number {
+  const channels = hex.replace('#', '').match(/../g);
+  if (channels?.length !== 3) throw new Error(`Ongeldige hexkleur: ${hex}.`);
+  const [redHex, greenHex, blueHex] = channels;
+  if (!redHex || !greenHex || !blueHex) throw new Error(`Ongeldige hexkleur: ${hex}.`);
+  const toLinearChannel = (channel: string): number => {
+    const value = Number.parseInt(channel, 16) / 255;
+    return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  };
+  const red = toLinearChannel(redHex);
+  const green = toLinearChannel(greenHex);
+  const blue = toLinearChannel(blueHex);
+
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+}
+
+function contrastRatio(foreground: string, background: string): number {
+  const foregroundLuminance = relativeLuminance(foreground);
+  const backgroundLuminance = relativeLuminance(background);
+  return (
+    (Math.max(foregroundLuminance, backgroundLuminance) + 0.05) /
+    (Math.min(foregroundLuminance, backgroundLuminance) + 0.05)
+  );
+}
+
 function createDossierLandingCueSelectors(
   pseudoClass: 'target' | 'focus' | 'focus-visible',
 ): string[] {
@@ -40285,6 +40320,25 @@ describe('app shell', () => {
   });
 
   it('rendert donkere modus als lokale thema-instelling', () => {
+    const css = readFileSync('src/styles.css', 'utf8');
+    const lightInkFaint = extractCssCustomProperty(css, ':root', '--ink-3');
+    const lightSurface = extractCssCustomProperty(css, ':root', '--surface');
+    const lightSurfaceSubtle = extractCssCustomProperty(css, ':root', '--surface-2');
+    const darkInkFaint = extractCssCustomProperty(
+      css,
+      '.app-shell[data-theme="donker"]',
+      '--ink-3',
+    );
+    const darkSurface = extractCssCustomProperty(
+      css,
+      '.app-shell[data-theme="donker"]',
+      '--surface',
+    );
+    const darkSurfaceSubtle = extractCssCustomProperty(
+      css,
+      '.app-shell[data-theme="donker"]',
+      '--surface-2',
+    );
     const html = renderAppShell('start', {
       trajecten: [],
       afspraken: [],
@@ -40298,6 +40352,12 @@ describe('app shell', () => {
 
     expect(html).toContain('data-theme="donker"');
     expect(html).not.toContain('id="theme-form"');
+    expect(lightInkFaint).toBe('#65726e');
+    expect(darkInkFaint).toBe('#b8c5c0');
+    expect(contrastRatio(lightInkFaint, lightSurface)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(lightInkFaint, lightSurfaceSubtle)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(darkInkFaint, darkSurface)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(darkInkFaint, darkSurfaceSubtle)).toBeGreaterThanOrEqual(4.5);
 
     const settingsHtml = renderAppShell('start', {
       trajecten: [],
