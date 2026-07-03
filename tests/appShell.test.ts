@@ -7930,6 +7930,10 @@ describe('app shell', () => {
     expect(css).toContain('flex: 1 1 142px;');
     expect(css).toContain('min-height: 54px;');
     expect(css).toContain('inset 0 -3px 0 color-mix(in srgb, var(--accent) 82%, transparent)');
+    expect(css).toContain('.dossier-upload-console[data-dossier-add-flow="keuze"] {');
+    expect(css).toContain(
+      '#dossier-route-upload:has(.dossier-upload-console[data-dossier-add-flow="keuze"])',
+    );
     expect(css).toContain('.dossier-add-route-disclosure {');
     expect(css).toContain('.dossier-add-route-disclosure[open] {');
     expect(css).toContain('.dossier-add-route-disclosure__summary {');

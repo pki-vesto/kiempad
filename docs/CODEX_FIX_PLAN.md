@@ -218,6 +218,10 @@
   add-flow selector now reads as compact tabs instead of a second route-card wall, keeping
   document, consult, embryo quality, and embryo status routes visible without changing upload
   contracts, hashes, privacy data, or medical interpretation.
+- **Dossier upload single choice viewport — done in G1478 / issue #2718.** The default Dossier
+  upload choice route now shows one triage choice layer instead of immediately repeating the
+  add-flow selector and choice card, while concrete add routes still open the compact tabbed
+  console with the same hashes, upload hooks, privacy data, and non-medical boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

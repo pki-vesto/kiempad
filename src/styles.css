@@ -13859,6 +13859,10 @@ a.action-card:active {
   display: none;
 }
 
+.dossier-upload-console[data-dossier-add-flow="keuze"] {
+  display: none;
+}
+
 .dossier-add-route-panel {
   min-width: 0;
   padding: 0 0 10px;
@@ -14902,12 +14906,22 @@ a.action-card:active {
 .dossier-focus-shell__workspace
   .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
   #dossier-route-upload
-  > .command-route-summary,
+  > .command-route-summary {
+  display: none;
+}
+
 .dossier-focus-shell__workspace
   .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
-  #dossier-route-upload
+  #dossier-route-upload:not(:has(.dossier-upload-console[data-dossier-add-flow="keuze"]))
   > .dossier-upload-triage {
   display: none;
+}
+
+.dossier-focus-shell__workspace
+  .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+  #dossier-route-upload:has(.dossier-upload-console[data-dossier-add-flow="keuze"])
+  > .dossier-upload-triage {
+  display: grid;
 }
 
 .dossier-focus-shell__workspace
