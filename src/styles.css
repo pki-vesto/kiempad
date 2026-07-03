@@ -23922,9 +23922,12 @@ a.action-card:active {
     .knowledge-library-followup-visibility-choice__anchor:hover
     .knowledge-library-empty-recovery-choice__feedback {
     background: color-mix(in srgb, var(--surface) 88%, var(--category));
+    block-size: 22px;
     border-color: color-mix(in srgb, var(--category) 18%, var(--border-strong));
     color: color-mix(in srgb, var(--text) 86%, var(--text-muted));
     font-weight: 750;
+    inline-size: min(12ch, 38%);
+    max-width: min(12ch, 38%);
   }
 
   .knowledge-library-category-choice__grid {
