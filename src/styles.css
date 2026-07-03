@@ -23923,8 +23923,8 @@ a.action-card:active {
     .knowledge-library-empty-recovery-choice__feedback {
     background: color-mix(in srgb, var(--surface) 88%, var(--category));
     border-color: color-mix(in srgb, var(--category) 18%, var(--border-strong));
-    color: color-mix(in srgb, var(--text) 84%, var(--text-muted));
-    font-weight: 740;
+    color: color-mix(in srgb, var(--text) 86%, var(--text-muted));
+    font-weight: 750;
   }
 
   .knowledge-library-category-choice__grid {
