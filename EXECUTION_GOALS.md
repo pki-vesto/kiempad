@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1454 — Kennis bibliotheek categoriekaarten starten met één compacte categoriekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1453 blijven de kennis bibliotheek categoriekaarten gevoelig voor categorieën, tellingen, routeankers en vervolgcontext tegelijk.
+- **User Impact:** Gebruikers die de bibliotheekroute openen, krijgen nog meerdere categoriekaarten voordat ze gericht kiezen welke groep ze willen zien.
+- **Desired Outcome:** Laat de kennis bibliotheek categoriekaarten starten met één compacte categoriekeuze of samengevouwen sublaag, terwijl categoriekaarten, tellingen, routeankers en bibliotheekvervolg bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één categoriekeuze openen zonder dat alle categoriekaarten de route direct vullen.
+- **Acceptance Criteria:** Bestaande kennis bibliotheek categoriehooks, routehashes, categoriekaarten, tellingen en bibliotheekvervolghooks blijven aanwezig; de categoriekaarten starten met één compacte categoriekeuze of samengevouwen sublaag; categoriekaarten, tellingen, routeankers en bibliotheekvervolg blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library category choice, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2852
+
 ### G1453 — Kennis AI routekop start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI route summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2850
 
 ### G1452 — Kennis AI previewformulier start met één compacte invoerkeuze
