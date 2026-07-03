@@ -1753,8 +1753,16 @@ function openDailyRecommendationListPanel(root: HTMLElement): void {
     '[data-hub-detail-panel="daily-recommendation-list"]',
   );
   if (!panel) return;
+  const followup = panel.closest<HTMLElement>('[data-daily-advice-followup="collapsed"]');
+  if (followup instanceof HTMLDetailsElement) {
+    followup.open = true;
+  }
   if (panel instanceof HTMLDetailsElement) {
     panel.open = true;
+  }
+  const fullList = panel.querySelector<HTMLElement>('[data-daily-advice-full-list="collapsed"]');
+  if (fullList instanceof HTMLDetailsElement) {
+    fullList.open = true;
   }
   if (!panel.hasAttribute('tabindex')) {
     panel.setAttribute('tabindex', '-1');

@@ -4931,6 +4931,76 @@ h2 {
   outline: none;
 }
 
+.daily-advice-list-choice {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  margin-bottom: 10px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--category) 6%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+}
+
+.daily-advice-list-choice__header {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.daily-advice-list-choice__header h3,
+.daily-advice-list-choice__header p {
+  margin: 0;
+}
+
+.daily-advice-list-choice__header h3 {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.daily-advice-list-choice__header p:last-child {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.daily-advice-list-choice .compact-form {
+  margin: 0;
+}
+
+.daily-advice-full-list {
+  display: grid;
+  min-width: 0;
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+  background: color-mix(in srgb, var(--surface) 92%, var(--surface-2));
+}
+
+.daily-advice-full-list__summary small {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.daily-advice-full-list__summary em {
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 760;
+}
+
+.daily-advice-full-list__body {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
 [data-daily-advice-feedback-workflow-reset="ready"],
 [data-daily-recommendation-list-filter-reset="ready"],
 [data-daily-recommendation-feedback-filter-reset="ready"] {
@@ -5172,6 +5242,10 @@ h2 {
     overflow-wrap: anywhere;
     text-overflow: initial;
     white-space: normal;
+  }
+
+  .daily-advice-full-list__summary small {
+    display: none;
   }
 }
 
@@ -20507,6 +20581,16 @@ a.action-card:active {
 
 .daily-advice-followup:not([open]) > .daily-advice-followup__body {
   display: none;
+}
+
+.daily-advice-full-list:not([open]) > .daily-advice-full-list__body {
+  display: none;
+}
+
+@media (min-width: 961px) {
+  [data-daily-advice-full-list="collapsed"] .daily-advice-full-list__summary small {
+    display: none;
+  }
 }
 
 @media (min-width: 761px) {
