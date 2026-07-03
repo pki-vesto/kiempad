@@ -23866,6 +23866,7 @@ a.action-card:active {
     .knowledge-library-followup-visibility-choice__anchor:hover {
     background: color-mix(in srgb, var(--category) 4%, var(--surface));
     background-clip: padding-box;
+    border-radius: 12px;
     box-shadow: none;
   }
 

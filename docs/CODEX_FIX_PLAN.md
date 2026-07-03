@@ -1433,6 +1433,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   hover and focus surfaces consistent with the same light category wash.
   Partial G1520/#2984: The knowledge library empty-state recovery actions now keep mobile
   hover surfaces light without adding shadow weight.
+  Partial G1521/#2986: The knowledge library empty-state recovery actions now keep mobile
+  hover boundaries calm with the same stable radius as focus.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
