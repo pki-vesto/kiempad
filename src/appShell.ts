@@ -13204,7 +13204,15 @@ function renderKennisTaskRoutes(input: {
     },
   ];
 
-  return renderCommandTaskRoutes({
+  const activeRoute = routes.find((route) => route.id === input.activeRoute) ?? {
+    id: 'read',
+    href: '#kennis?route=read',
+    label: 'Research lezen',
+    meta: `${input.researchBronnen} bronnen · ${input.researchSamenvattingen} samenvattingen`,
+    badge: String(input.researchBronnen),
+    density: input.researchBronnen > 0 ? 'filled' : 'empty',
+  };
+  const routesMarkup = renderCommandTaskRoutes({
     className: 'knowledge-task-routes',
     routeClassName: 'knowledge-task-route',
     ariaLabel: 'Kennis taakroutes',
@@ -13212,6 +13220,21 @@ function renderKennisTaskRoutes(input: {
     routes,
     activeRoute: input.activeRoute,
   });
+
+  return `
+    <details class="knowledge-task-route-choice" data-knowledge-task-route-choice="collapsed">
+      <summary class="knowledge-task-route-choice__summary">
+        <span>
+          <strong>Kies kennisroute</strong>
+          <small>${escapeHtml(activeRoute.label)} · ${escapeHtml(activeRoute.meta)}</small>
+        </span>
+        <em>${routes.length} routes</em>
+      </summary>
+      <div class="knowledge-task-route-choice__body">
+        ${routesMarkup}
+      </div>
+    </details>
+  `;
 }
 
 function renderKnowledgeRouteVisibility(

@@ -38273,6 +38273,15 @@ describe('app shell', () => {
     expect(html).toContain('class="knowledge-task-routes command-task-routes"');
     expect(html).toContain('aria-label="Kennis taakroutes"');
     expect(html).toContain('data-knowledge-task-routes="ready"');
+    expect(html).toContain('data-knowledge-task-route-choice="collapsed"');
+    expect(html).toContain('Kies kennisroute');
+    expect(html).toContain('Research lezen · 4 bronnen · 0 samenvattingen');
+    expect(html.indexOf('data-knowledge-task-route-choice="collapsed"')).toBeLessThan(
+      html.indexOf('class="knowledge-task-routes command-task-routes"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-task-route-choice" data-knowledge-task-route-choice="collapsed" open>',
+    );
     expect(html).toContain('data-knowledge-compact-workspace="route-first"');
     expect(html).not.toContain('data-knowledge-workspace-context="metrics"');
     expect(html).toContain('aria-label="Contextkolom"');
@@ -38675,6 +38684,12 @@ describe('app shell', () => {
     expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-task-routes {');
+    expect(css).toContain('.knowledge-task-route-choice {');
+    expect(css).toContain('.knowledge-task-route-choice__summary {');
+    expect(css).toContain('.knowledge-task-route-choice__body {');
+    expect(css).toContain(
+      '.knowledge-task-route-choice:not([open]) > .knowledge-task-route-choice__body {',
+    );
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('.knowledge-research-workbench__header h2 {');
     expect(css).toContain('font-size: 1.16rem;');

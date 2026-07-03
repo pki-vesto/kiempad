@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1443 — Kennis researchscan start met één compacte scankeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1442 blijft de kennis researchscan gevoelig voor meerdere bron-, samenvatting-, trend- en netwerkkaarten tegelijk.
+- **User Impact:** Gebruikers die researchcontext willen scannen, krijgen nog meerdere scanroutes als brede kaartlaag aangeboden.
+- **Desired Outcome:** Laat de kennis researchscan starten met één compacte scankeuze of samengevouwen sublaag, terwijl bronnen, samenvattingen, trends en netwerkstatus bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst kiezen welke researchscan ze willen openen zonder dat de contextlaag vol kaartopties staat.
+- **Acceptance Criteria:** Bestaande researchscan hooks, snapshotkaart hooks en routehashes blijven aanwezig; de researchscan start met één compacte scankeuze of samengevouwen sublaag; bronnen, samenvattingen, trends en netwerkstatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Researchscan
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research snapshot, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2830
+
 ### G1442 — Kennis taakroutes starten met één compacte routekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge task routes, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2828
 
 ### G1441 — Kennis filters starten met één compacte filterkeuze
