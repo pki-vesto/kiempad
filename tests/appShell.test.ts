@@ -38701,6 +38701,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-category-card-choice="collapsed"');
     expect(html).toContain('Categoriekaarten openen');
     expect(html).toContain('Open categoriekaarten, tellingen, routeankers en bibliotheekvervolg.');
+    expect(html).toContain('data-knowledge-library-category-card-grid-choice="collapsed"');
+    expect(html).toContain('Kaartgroep openen');
+    expect(html).toContain('Open categoriekaarten, tellingen en ankers naar de bibliotheek.');
     expect(html).toContain('Kies eerst één kennisgroep');
     expect(html).toContain('data-knowledge-library-category-card="fasen"');
     expect(html).toContain('data-knowledge-library-category-card="research"');
@@ -38720,8 +38723,11 @@ describe('app shell', () => {
       html.indexOf('href="#knowledge-library-category-choice"'),
     );
     expect(html.indexOf('data-knowledge-library-category-choice="ready"')).toBeLessThan(
-      html.indexOf('data-knowledge-library-category-card="fasen"'),
+      html.indexOf('data-knowledge-library-category-card-grid-choice="collapsed"'),
     );
+    expect(
+      html.indexOf('data-knowledge-library-category-card-grid-choice="collapsed"'),
+    ).toBeLessThan(html.indexOf('data-knowledge-library-category-card="fasen"'));
     expect(html.indexOf('data-knowledge-library-category-card-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-library-followup="collapsed"'),
     );
@@ -38743,6 +38749,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details id="knowledge-library-category-choice" class="knowledge-library-category-choice" aria-label="Kennisbibliotheek categoriekeuze" data-knowledge-library-category-choice="ready" data-knowledge-library-category-card-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-category-card-grid-choice" data-knowledge-library-category-card-grid-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="knowledge-library-context-choice" data-knowledge-library-context-choice="collapsed" open>',
@@ -39033,6 +39042,10 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-category-choice:not([open]) > .knowledge-library-category-choice__body {',
     );
+    expect(css).toContain('.knowledge-library-category-card-grid-choice {');
+    expect(css).toContain('.knowledge-library-category-card-grid-choice__summary {');
+    expect(css).toContain('.knowledge-library-category-card-grid-choice__body {');
+    expect(css).toContain('.knowledge-library-category-card-grid-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
     expect(css).toContain('.knowledge-library-category-choice__card {');

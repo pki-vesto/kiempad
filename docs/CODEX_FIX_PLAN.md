@@ -1355,6 +1355,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   context remain reachable.
   Partial G1481/#2906: The knowledge library follow-up context now starts with one closed compact
   context-panel choice while categories, cards, edit actions and visibility remain reachable.
+  Partial G1482/#2908: The knowledge library category card layer now starts with one closed compact
+  card-grid choice while category cards, counts, route anchors and library follow-up remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

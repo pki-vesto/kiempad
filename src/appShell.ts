@@ -13112,27 +13112,38 @@ function renderKnowledgeLibraryCategoryChoice(
         <em>${totalItems} zichtbaar</em>
       </summary>
       <div class="knowledge-library-category-choice__body">
-        <header class="knowledge-library-category-choice__header">
-          <div>
-            <p class="kp-card__eyebrow">Categoriekeuze</p>
-            <h3>Kies eerst één kennisgroep</h3>
+        <details class="knowledge-library-category-card-grid-choice" data-knowledge-library-category-card-grid-choice="collapsed">
+          <summary class="knowledge-library-category-card-grid-choice__summary">
+            <span>
+              <strong>Kaartgroep openen</strong>
+              <small>Open categoriekaarten, tellingen en ankers naar de bibliotheek.</small>
+            </span>
+            <em>${Object.keys(KENNIS_CATEGORIE_LABELS).length} kaarten</em>
+          </summary>
+          <div class="knowledge-library-category-card-grid-choice__body">
+            <header class="knowledge-library-category-choice__header">
+              <div>
+                <p class="kp-card__eyebrow">Categoriekeuze</p>
+                <h3>Kies eerst één kennisgroep</h3>
+              </div>
+              <span>${totalItems} zichtbaar</span>
+            </header>
+            <nav class="knowledge-library-category-choice__grid" aria-label="Kennis categorie kiezen">
+              ${Object.entries(KENNIS_CATEGORIE_LABELS)
+                .map(([categorie, label]) => {
+                  const items = grouped[categorie as KennisItem['categorie']] ?? [];
+                  return `
+                    <a class="knowledge-library-category-choice__card" href="#knowledge-category-${escapeAttribute(categorie)}" data-knowledge-library-category-card="${escapeAttribute(categorie)}">
+                      <span>${escapeHtml(label)}</span>
+                      <strong>${items.length} item${items.length === 1 ? '' : 's'}</strong>
+                      <small>${items.length > 0 ? 'Open deze categorie in de bibliotheek.' : 'Nog geen items in deze categorie.'}</small>
+                    </a>
+                  `;
+                })
+                .join('')}
+            </nav>
           </div>
-          <span>${totalItems} zichtbaar</span>
-        </header>
-        <nav class="knowledge-library-category-choice__grid" aria-label="Kennis categorie kiezen">
-          ${Object.entries(KENNIS_CATEGORIE_LABELS)
-            .map(([categorie, label]) => {
-              const items = grouped[categorie as KennisItem['categorie']] ?? [];
-              return `
-                <a class="knowledge-library-category-choice__card" href="#knowledge-category-${escapeAttribute(categorie)}" data-knowledge-library-category-card="${escapeAttribute(categorie)}">
-                  <span>${escapeHtml(label)}</span>
-                  <strong>${items.length} item${items.length === 1 ? '' : 's'}</strong>
-                  <small>${items.length > 0 ? 'Open deze categorie in de bibliotheek.' : 'Nog geen items in deze categorie.'}</small>
-                </a>
-              `;
-            })
-            .join('')}
-        </nav>
+        </details>
       </div>
     </details>
   `;
