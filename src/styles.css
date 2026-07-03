@@ -9905,6 +9905,45 @@ h2 {
   font-size: 0.72rem;
 }
 
+[data-hub-workflow="dossier-upload"] .hub-workflow-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  max-width: 100%;
+  padding: 3px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface-subtle) 74%, var(--surface));
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+[data-hub-workflow="dossier-upload"] .hub-workflow-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+[data-hub-workflow="dossier-upload"] .hub-workflow-tab {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: max-content;
+  min-height: 34px;
+  padding: 7px 11px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  white-space: nowrap;
+}
+
+[data-hub-workflow="dossier-upload"] .hub-workflow-tab[aria-current="page"] {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+[data-hub-workflow="dossier-upload"] .hub-workflow-tab small {
+  display: none;
+}
+
 .hub-detail-disclosure {
   min-width: 0;
   border-color: color-mix(in srgb, var(--border) 82%, transparent);
@@ -16964,11 +17003,25 @@ a.action-card:active {
 .dossier-focus-shell__workspace
   .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
   #dossier-route-upload
-  > .hub-workflow-header,
+  > .command-route-summary {
+  display: none;
+}
+
 .dossier-focus-shell__workspace
   .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
   #dossier-route-upload
-  > .command-route-summary {
+  > .hub-workflow-header[data-hub-workflow="dossier-upload"] {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.dossier-focus-shell__workspace
+  .domain-split-workspace:has(#dossier-route-upload[data-dossier-route-state="active"])
+  #dossier-route-upload
+  > .hub-workflow-header[data-hub-workflow="dossier-upload"]
+  > .hub-workflow-header__copy {
   display: none;
 }
 

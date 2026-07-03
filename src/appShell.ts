@@ -4910,7 +4910,7 @@ function renderHubWorkflowHeader(input: {
         <h3 id="${escapeAttribute(input.id)}-title">${escapeHtml(input.title)}</h3>
         <p>${escapeHtml(input.intro)}</p>
       </div>
-      <nav class="hub-workflow-tabs" aria-label="${escapeAttribute(input.title)} tabs">
+      <nav class="hub-workflow-tabs" aria-label="${escapeAttribute(input.title)} tabs" data-hub-workflow-tabs="${escapeAttribute(input.data['hub-workflow'] ?? input.id)}">
         ${input.tabs
           .map(
             (tab) => `

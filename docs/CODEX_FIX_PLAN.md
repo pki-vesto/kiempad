@@ -1236,6 +1236,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   row while document, consult, imaging and OCR/review lanes remain reachable.
   Partial G1425/#2794: The dossier upload console header now starts with one compact closed status
   row while record count and separated-flow explanation remain reachable.
+  Partial G1426/#2796: The dossier upload workflow tabs now render as one compact route bar while
+  upload, review, consult and context routes keep their hooks and active state.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
