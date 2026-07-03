@@ -14964,18 +14964,36 @@ function renderDailyAdviceConsole(
               filteredTotal: filteredTotalRecommendations,
               overview: filteredOverview,
             })}
-            ${renderDailyRecommendationFeedbackFilter({
-              filter: state.dailyRecommendationFeedbackFilter,
-              total: totalRecommendations,
-              filteredTotal: filteredTotalRecommendations,
-            })}
-            ${
-              filteredTotalRecommendations > 0
-                ? renderDailyRecommendationList(filteredOverview, feedbackStatussen)
-                : renderEmptyState('Geen suggesties met deze feedbackstatus.', {
-                    title: 'Geen feedbackmatch',
-                  })
-            }
+            <section class="daily-advice-list-choice" aria-label="Dagadvies lijstfilter kiezen" data-daily-advice-list-choice="ready">
+              <header class="daily-advice-list-choice__header">
+                <p class="kp-card__eyebrow">Lijstkeuze</p>
+                <h3>Kies eerst je lijstfilter</h3>
+                <p>${state.dailyRecommendationFeedbackFilter ? 'De actieve feedbackfilter staat klaar; open de volledige lijst pas als je de kaarten wilt controleren.' : 'Begin met één feedbackstatus of laat de lijst ongefilterd voordat je alle kaarten opent.'}</p>
+              </header>
+              ${renderDailyRecommendationFeedbackFilter({
+                filter: state.dailyRecommendationFeedbackFilter,
+                total: totalRecommendations,
+                filteredTotal: filteredTotalRecommendations,
+              })}
+            </section>
+            <details class="kp-disclosure daily-advice-full-list" data-daily-advice-full-list="collapsed">
+              <summary class="kp-disclosure__summary daily-advice-full-list__summary">
+                <span>
+                  <strong>Open volledige suggestielijst</strong>
+                  <small>${state.dailyRecommendationFeedbackFilter ? 'Bekijk alleen de kaarten binnen deze lokale feedbackfilter.' : 'Toon alle vrouw-, man- en samenkaarten pas na je lijstkeuze.'}</small>
+                </span>
+                <em>${state.dailyRecommendationFeedbackFilter ? `${filteredTotalRecommendations} zichtbaar` : `${totalRecommendations} kaarten`}</em>
+              </summary>
+              <div class="kp-disclosure__body daily-advice-full-list__body">
+                ${
+                  filteredTotalRecommendations > 0
+                    ? renderDailyRecommendationList(filteredOverview, feedbackStatussen)
+                    : renderEmptyState('Geen suggesties met deze feedbackstatus.', {
+                        title: 'Geen feedbackmatch',
+                      })
+                }
+              </div>
+            </details>
           </div>
         </details>
       `,

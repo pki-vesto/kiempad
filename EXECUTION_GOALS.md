@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1407 — Dagadvies: eigenaarcontext start met één eigenaarroute
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na de primaire actie en lijstkeuze kan de eigenaarwerkbank binnen de vervolgcontext nog meerdere snapshot- en eigenaarpanelen tegelijk tonen.
+- **User Impact:** Gebruikers die alleen vrouw, man of samen willen bekijken, moeten alsnog een compacte maar volle owner- en snapshotlaag scannen.
+- **Desired Outcome:** Laat de eigenaarcontext eerst starten met één rustige keuze voor vrouw, man of samen, waarna snapshotdetails en eigenaarpanelen als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kiezen gericht welke eigenaarcontext ze nodig hebben zonder opnieuw meerdere kaarten tegelijk te verwerken.
+- **Acceptance Criteria:** Bestaande eigenaarhooks, owner cards en feedbackmetadata blijven aanwezig; de eerste eigenaarcontext toont één duidelijke keuze- of routelaag; snapshotdetails en volledige owner cards starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen trackingpayload, plaintext medische inhoud, diagnose, dosering of behandeladvies; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, daily advice owner workbench, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2760
+
 ### G1406 — Dagadvies: volledige lijst start met één filterkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily advice list, feedback filter, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2758
 
 ### G1405 — Dagadvies: adviesroute start met één actiekeuze

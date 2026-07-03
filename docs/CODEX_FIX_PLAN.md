@@ -48,6 +48,10 @@
   primary action-planner choice while workflow, owner workbench, and the full suggestion list sit
   behind one closed follow-up disclosure, preserving feedback filters, owner/list hooks, and
   routeflow coverage.
+- **Daily advice list single filter choice — done in G1499 / issue #2758.** The Dagadvies
+  suggestion-list panel now starts with one filter-choice surface while the full vrouw/man/samen
+  card list sits behind a second closed disclosure, preserving feedback routes, reset actions, and
+  list-focus behavior.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

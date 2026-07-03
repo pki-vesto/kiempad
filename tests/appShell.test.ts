@@ -3154,6 +3154,11 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-primary-action-choice {');
     expect(css).toContain('.daily-advice-followup {');
     expect(css).toContain('.daily-advice-followup:not([open]) > .daily-advice-followup__body {');
+    expect(css).toContain('.daily-advice-list-choice {');
+    expect(css).toContain('.daily-advice-list-choice__header {');
+    expect(css).toContain('.daily-advice-full-list {');
+    expect(css).toContain('.daily-advice-full-list__body {');
+    expect(css).toContain('.daily-advice-full-list:not([open]) > .daily-advice-full-list__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
     expect(css).toContain('.daily-advice-followup__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);');
@@ -3539,6 +3544,23 @@ describe('app shell', () => {
       emptyContextRecommendations.indexOf('data-daily-advice-workbench="owner-routes"'),
     );
     expect(emptyContextRecommendations).toContain('Bekijk suggesties');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-list-choice="ready"');
+    expect(emptyContextRecommendations).toContain('Kies eerst je lijstfilter');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-full-list="collapsed"');
+    expect(emptyContextRecommendations).toContain('Open volledige suggestielijst');
+    expect(emptyContextRecommendations).not.toContain(
+      '<details class="kp-disclosure daily-advice-full-list" data-daily-advice-full-list="collapsed" open',
+    );
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-list-choice="ready"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('data-daily-advice-full-list="collapsed"'));
+    expect(
+      emptyContextRecommendations.indexOf('id="daily-recommendation-feedback-filter-form"'),
+    ).toBeLessThan(
+      emptyContextRecommendations.indexOf(
+        'class="kp-recommendation-list daily-recommendation-list daily-recommendation-list--dual-owner"',
+      ),
+    );
     expect(emptyContextRecommendations).not.toContain('Dagelijkse aanbevelingen');
     expect(emptyContextRecommendations).not.toContain('Bekijk aanbevelingen');
     expect(emptyContextRecommendations).not.toContain('Aanbeveling');
@@ -4081,6 +4103,14 @@ describe('app shell', () => {
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-workflow-status="ready"');
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-list-open="ready"');
     expect(filteredRecommendations).toContain('data-daily-advice-feedback-workflow-reset="ready"');
+    expect(filteredRecommendations).toContain('data-daily-advice-list-choice="ready"');
+    expect(filteredRecommendations).toContain('data-daily-advice-full-list="collapsed"');
+    expect(filteredRecommendations).not.toContain(
+      '<details class="kp-disclosure daily-advice-full-list" data-daily-advice-full-list="collapsed" open',
+    );
+    expect(
+      filteredRecommendations.indexOf('data-daily-recommendation-feedback-filter="ready"'),
+    ).toBeLessThan(filteredRecommendations.indexOf('data-daily-advice-full-list="collapsed"'));
     expect(filteredRecommendations).toContain(
       'data-daily-recommendation-list-filter-header="ready"',
     );

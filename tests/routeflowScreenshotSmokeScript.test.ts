@@ -26,6 +26,8 @@ describe('routeflow screenshot smoke script', () => {
       '[data-daily-advice-primary-action-choice="ready"]',
     );
     expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-followup="collapsed"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-list-choice="ready"]');
+    expect(routeflowScreenshotSmokeScript).toContain('[data-daily-advice-full-list="collapsed"]');
     expect(routeflowScreenshotSmokeScript).toContain('openDailyAdviceListDetails');
     expect(routeflowScreenshotSmokeScript).toContain('uploadConsole: true');
     expect(routeflowScreenshotSmokeScript).toContain('closedDetailsSelectors');

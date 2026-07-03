@@ -202,10 +202,13 @@ const targets = [
       '[data-daily-advice-workbench="owner-routes"]',
       '[data-daily-advice-snapshot="ready"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-list-choice="ready"]',
+      '[data-daily-advice-full-list="collapsed"]',
     ],
     closedDetailsSelectors: [
       '[data-daily-advice-followup="collapsed"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-full-list="collapsed"]',
     ],
     desktopHiddenSelectors: [
       '.daily-advice-focus-shell__header p:last-child',
@@ -237,6 +240,8 @@ const targets = [
       '[data-daily-advice-focus-region="planner"]',
       '[data-daily-advice-focus-region="list"]',
       '[data-hub-detail-panel="daily-recommendation-list"]',
+      '[data-daily-advice-list-choice="ready"]',
+      '[data-daily-advice-full-list="collapsed"]',
       '[data-daily-advice-feedback-workflow-status="ready"]',
       '[data-daily-advice-feedback-list-open="ready"]',
       '[data-daily-advice-feedback-workflow-reset="ready"]',
@@ -1759,10 +1764,13 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page.waitForFunction(
     () => {
       const details = document.querySelector('[data-hub-detail-panel="daily-recommendation-list"]');
+      const fullList = document.querySelector('[data-daily-advice-full-list="collapsed"]');
       const focusStatus = document.querySelector('[data-daily-advice-list-focus-status="ready"]');
       return (
         details instanceof HTMLDetailsElement &&
         details.open &&
+        fullList instanceof HTMLDetailsElement &&
+        fullList.open &&
         details.dataset.dailyAdviceListFocus === 'active' &&
         document.activeElement === details &&
         focusStatus?.textContent?.includes('Lijst geopend vanuit de actieve feedbackfilter.')
@@ -1779,12 +1787,15 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page.waitForFunction(
     () => {
       const details = document.querySelector('[data-hub-detail-panel="daily-recommendation-list"]');
+      const fullList = document.querySelector('[data-daily-advice-full-list="collapsed"]');
       const workflowStatus = document.querySelector(
         '[data-daily-advice-feedback-workflow-status="ready"]',
       );
       return (
         details instanceof HTMLDetailsElement &&
         details.open &&
+        fullList instanceof HTMLDetailsElement &&
+        fullList.open &&
         !details.dataset.dailyAdviceListFocus &&
         Boolean(workflowStatus)
       );
