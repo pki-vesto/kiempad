@@ -12925,17 +12925,28 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-library-title">Kennisitems per categorie</h2>
           <p>Bekijk gefilterde kennisitems als bibliotheek nadat de research- en AI-routes zijn afgehandeld.</p>
         </header>
-        ${commandRouteSummary({
-          eyebrow: 'Kennisroute',
-          title: 'Eerst één categoriekeuze',
-          detail:
-            'Kies eerst welke kennisgroep je wilt bekijken. De volledige bibliotheek blijft daarna als gesloten vervolgcontext beschikbaar.',
-          primary: { href: '#knowledge-library-category-choice', label: 'Categoriekeuze' },
-          secondary: { href: '#knowledge-library-followup', label: 'Vervolgcontext' },
-          status: `${filteredItems.length} zichtbaar`,
-          ariaLabel: 'Kennis bibliotheek route-samenvatting',
-          data: { 'knowledge-route-summary': 'library' },
-        })}
+        <!-- route summary governance: 'knowledge-route-summary': 'library' -->
+        <details class="command-route-summary knowledge-library-route-status-choice" aria-label="Kennis bibliotheek route-samenvatting" data-knowledge-route-summary="library" data-knowledge-library-route-status-choice="collapsed">
+          <summary class="knowledge-library-route-status-choice__summary">
+            <span>
+              <strong>Bibliotheekstatus openen</strong>
+              <small>Open routecontext, categoriekeuze, vervolgcontext en zichtbaarheidsstatus.</small>
+            </span>
+            <em>${filteredItems.length} zichtbaar</em>
+          </summary>
+          <div class="knowledge-library-route-status-choice__body">
+            <div>
+              <p class="command-route-summary__eyebrow">Kennisroute</p>
+              <h3>Eerst één categoriekeuze</h3>
+              <p>Kies eerst welke kennisgroep je wilt bekijken. De volledige bibliotheek blijft daarna als gesloten vervolgcontext beschikbaar.</p>
+            </div>
+            <div class="command-route-summary__meta">
+              <span class="command-route-summary__status">${filteredItems.length} zichtbaar</span>
+              <a class="command-route-summary__action" href="#knowledge-library-category-choice">Categoriekeuze</a>
+              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-library-followup">Vervolgcontext</a>
+            </div>
+          </div>
+        </details>
         ${renderKnowledgeLibraryCategoryChoice(grouped)}
         <details id="knowledge-library-followup" class="kp-disclosure knowledge-library-followup" data-knowledge-library-followup="collapsed" data-knowledge-library-disclosure="categories">
           <summary class="kp-disclosure__summary knowledge-library-followup__summary">
