@@ -12853,10 +12853,19 @@ function renderKennisScreen(state: AppShellState): string {
                   <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
                 </summary>
                 <div class="knowledge-ai-support-context-choice__body">
-                  <div class="summary-panel" data-knowledge-ai-console-region="summary-save">
-                    <h2>AI-samenvatting bewaren</h2>
-                    ${renderAiSummaryForm(state.aiPreview)}
-                  </div>
+                  <details class="summary-panel knowledge-ai-summary-detail-choice" data-knowledge-ai-console-region="summary-save" data-knowledge-ai-summary-detail-choice="collapsed">
+                    <summary class="knowledge-ai-summary-detail-choice__summary">
+                      <span>
+                        <strong>AI-samenvattingdetails openen</strong>
+                        <small>Open samenvatting, broncontext, status en opslagactie.</small>
+                      </span>
+                      <em>${state.aiPreview ? 'Preview klaar' : 'Geen preview'}</em>
+                    </summary>
+                    <div class="knowledge-ai-summary-detail-choice__body">
+                      <h2>AI-samenvatting bewaren</h2>
+                      ${renderAiSummaryForm(state.aiPreview)}
+                    </div>
+                  </details>
                   <div class="summary-panel" data-knowledge-ai-console-region="settings">
                     <h2>AI-instelling</h2>
                     ${renderAiSettingsForm(state.settings, state.storageMode)}

@@ -352,6 +352,28 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-ai-summary',
+    hash: '#kennis?route=ai',
+    rootSelector: '.content',
+    expectedText: 'AI-samenvattingdetails openen',
+    openSelectors: [
+      '[data-knowledge-ai-support="collapsed"]',
+      '[data-knowledge-ai-support-context-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-ai-summary-detail-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-ai-console-region="summary-save"]',
+      '#ai-summary-form',
+      'input[name="aiTitel"]',
+      'input[name="aiSamenvattingBron"]',
+      'textarea[name="aiSamenvatting"]',
+      '#ai-summary-form button[type="submit"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-ai-summary-detail-choice="collapsed"]'],
+  },
+  {
     screen: 'start-today-console',
     hash: '#start-today',
     rootSelector: '[data-start-today-route="ready"]',
