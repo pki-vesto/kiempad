@@ -233,6 +233,10 @@
   route now starts with one visible safe-transfer/status board while the backup reminder,
   syncfeedback, and detail status remain available in a closed details layer, preserving export,
   import, recovery, copy/download hooks, and encrypted-data boundaries.
+- **Wellbeing log single check-in task — done in G1482 / issue #2726.** The Welzijn vastleggen
+  route now starts with one primary mental check-in while symptom logging and cycle measurement
+  forms remain available together in one closed follow-up disclosure, preserving form hooks and
+  non-medical self-tracking boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

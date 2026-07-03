@@ -6099,6 +6099,43 @@ h2 {
   min-width: 0;
 }
 
+.wellbeing-log-extra {
+  min-width: 0;
+}
+
+.wellbeing-log-extra__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.wellbeing-log-extra__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.wellbeing-log-extra__summary strong,
+.wellbeing-log-extra__summary small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wellbeing-log-extra__summary small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.wellbeing-log-extra__summary em {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
 .wellbeing-checkin-form {
   gap: 12px;
 }
