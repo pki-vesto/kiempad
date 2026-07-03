@@ -464,6 +464,7 @@ export function normalizeScreenId(value: string | null | undefined): ScreenId {
   if (
     [
       'dossier-route-upload',
+      'dossier-route-review',
       'dossier-route-search',
       'dossier-route-imaging',
       'dossier-route-timeline',
@@ -3521,19 +3522,43 @@ function renderDossierScreen(state: AppShellState): string {
           <header class="dossier-route-section__header">
             <p class="kp-card__eyebrow">Review</p>
             <h2 id="dossier-route-review-title">Import-inbox en documentreview</h2>
-            <p>Controleer OCR-status, duplicaten en reviewwachtrij zonder broninhoud te tonen.</p>
+            <p>Start met één reviewtaak. Wachtrij, import-inbox en duplicaatcontext open je pas als vervolgcontext.</p>
           </header>
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
-          title: 'Review alleen openen bij importcontrole',
+          title: 'Eerst één reviewtaak',
           detail:
-            'OCR-status, duplicaten en inboxdetails blijven beschikbaar zonder de uploadroute opnieuw als documentlijst te openen.',
-          primary: { href: '#dossier-review-queue-disclosure', label: 'Review openen' },
-          secondary: { href: '#dossier-inbox-disclosure', label: 'Inbox openen' },
+            'De reviewtaak staat vooraan; wachtrij, import-inbox en duplicaatcontext staan achter één rustige vervolgstap.',
+          primary: { href: '#dossier-review-primary-task', label: 'Reviewtaak' },
+          secondary: { href: '#dossier-review-followup', label: 'Vervolgcontext' },
           status: `${reviewWachtrij.length} review · ${importInboxItems.length} inbox`,
           ariaLabel: 'Dossier review route-samenvatting',
           data: { 'dossier-route-summary': 'review' },
         })}
+        <section id="dossier-review-primary-task" class="dossier-review-primary-task" aria-label="Dossier review primaire taak" data-dossier-review-primary-task="ready">
+          <header class="dossier-review-primary-task__header">
+            <div>
+              <p class="kp-card__eyebrow">Reviewtaak</p>
+              <h3>Controleer eerst wat aandacht vraagt</h3>
+            </div>
+            <span>${reviewWachtrij.length} review</span>
+          </header>
+          <p>Bekijk alleen reviewstatus, inboxaantal en veilige metadata. Broninhoud, OCR-tekst en duplicaatdetails blijven gesloten tot je ze nodig hebt.</p>
+          <dl class="summary-list">
+            <div><dt>Reviewwachtrij</dt><dd>${reviewWachtrij.length} items</dd></div>
+            <div><dt>Import-inbox</dt><dd>${importInboxItems.length} items</dd></div>
+            <div><dt>Opslag</dt><dd>${beschrijfEncryptedRecordLocatie(state)}</dd></div>
+          </dl>
+        </section>
+        <details id="dossier-review-followup" class="kp-disclosure dossier-review-followup" data-dossier-review-followup="collapsed">
+          <summary class="kp-disclosure__summary dossier-review-followup__summary">
+            <span>
+              <strong>Reviewcontext openen</strong>
+              <small>Documentreview wachtrij, import-inbox en duplicaatcontext</small>
+            </span>
+            <em>${reviewWachtrij.length} review · ${importInboxItems.length} inbox</em>
+          </summary>
+          <div class="kp-disclosure__body dossier-review-followup__body">
         <details id="dossier-review-queue-disclosure" class="kp-disclosure" data-dossier-review-disclosure="queue">
           <summary class="kp-disclosure__summary">Documentreview wachtrij openen</summary>
           <div class="kp-disclosure__body">
@@ -3573,6 +3598,8 @@ function renderDossierScreen(state: AppShellState): string {
                     cta: { href: '#dossier-upload-form', label: 'Document uploaden' },
                   })
             }
+          </div>
+        </details>
           </div>
         </details>
           </section>

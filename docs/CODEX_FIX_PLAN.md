@@ -30,6 +30,9 @@
   opens with one primary reading-focus surface while document timeline and treatment-history
   context sit behind one closed follow-up disclosure, preserving timeline/history anchors and
   routeflow coverage.
+- **Dossier review single review task — done in G1494 / issue #2748.** Dossier Review now opens
+  with one primary review-task surface while documentreview queue, import inbox, and duplicate
+  review context sit behind one closed follow-up disclosure, preserving queue/inbox ids and hooks.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the

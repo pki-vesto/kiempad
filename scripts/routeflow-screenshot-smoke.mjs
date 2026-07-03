@@ -310,6 +310,29 @@ const targets = [
     uploadConsole: true,
   },
   {
+    screen: 'dossier-review',
+    hash: '#dossier-route-review',
+    rootSelector: '#dossier-route-upload',
+    expectedText: 'Controleer eerst wat aandacht vraagt',
+    inactiveRouteSelector: '[data-dossier-route-state="inactive"]',
+    openSelectors: ['[data-dossier-add-route-disclosure="review"]'],
+    requiredSelectors: [
+      '[data-dossier-review-primary-task="ready"]',
+      '[data-dossier-review-followup="collapsed"] > .dossier-review-followup__summary',
+      '#dossier-review-queue-disclosure',
+      '#dossier-inbox-disclosure',
+      '[data-dossier-review-disclosure="queue"]',
+      '[data-dossier-review-disclosure="inbox"]',
+    ],
+    closedDetailsSelectors: ['[data-dossier-review-followup="collapsed"]'],
+    dossierConsole: true,
+    desktopHiddenSelectors: [
+      '.dossier-focus-shell__header p:last-child',
+      '.dossier-route-section__header > p:last-child',
+      '.command-route-summary p:not(.command-route-summary__eyebrow)',
+    ],
+  },
+  {
     screen: 'dossier-search',
     hash: '#dossier?route=search',
     rootSelector: '#dossier-route-search',
@@ -643,7 +666,8 @@ async function assertRouteflows(browser, options) {
   try {
     const checked = [];
     for (const target of targets) {
-      await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
+      try {
+        await page.goto(`${url}${target.hash}`, { waitUntil: 'networkidle' });
       await unlockIfNeeded(page, target.hash);
       if (target.prepare === 'filled-consult-card') {
         await prepareFilledConsultCard(page, target.hash);
@@ -1602,6 +1626,10 @@ async function assertRouteflows(browser, options) {
         selectors: evidence.required.length,
         screenshotBytes: screenshot.byteLength,
       });
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        throw new Error(`${options.label}/${target.screen}: ${message}`);
+      }
     }
 
     return { viewport: options.label, checked: checked.length, targets: checked };

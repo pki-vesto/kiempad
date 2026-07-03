@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1402 — Kennis: lezen start met één researchfocus
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kennis Lezen moet rustig blijven als één researchfocus en mag niet opnieuw aanvoelen als een wand met bronlijst, filters, samenvattingen en netwerkcontext.
+- **User Impact:** Gebruikers kunnen bij researchlezing alsnog door meerdere kennislagen moeten scannen voordat de hoofdlezing duidelijk is.
+- **Desired Outcome:** Start met één primaire researchfocus en houd bronlijst, filters, samenvattingen en netwerkcontext als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers lezen eerst de researchfocus en openen extra kenniscontext pas wanneer nodig.
+- **Acceptance Criteria:** Kennis Lezen toont één primaire researchfocus in de eerste viewport; bronlijst, filters, samenvattingen en netwerkcontext blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Kennis, Lezen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2750
+
 ### G1401 — Dossier: review start met één reviewtaak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier review route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2748
 
 ### G1400 — Dossier: tijdlijn start met één leesfocus
