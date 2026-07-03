@@ -157,6 +157,7 @@ const targets = [
     openSelectors: ['[data-knowledge-workbench-disclosure="collapsed"]'],
     requiredSelectors: [
       '[data-knowledge-filter-choice="collapsed"]',
+      '[data-knowledge-filter-form-choice="collapsed"]',
     ],
     presentSelectors: [
       '#knowledge-filter-form',
@@ -168,7 +169,7 @@ const targets = [
       'input[name="kennisBronFilter"]',
       'select[name="kennisVerificatie"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-filter-choice="collapsed"]'],
+    closedDetailsSelectors: ['[data-knowledge-filter-form-choice="collapsed"]'],
   },
   {
     screen: 'knowledge-library',

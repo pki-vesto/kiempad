@@ -7588,6 +7588,10 @@ h2 {
     color-mix(in srgb, var(--surface) 94%, var(--surface-2));
 }
 
+.knowledge-filter-choice[data-knowledge-filter-form-choice="collapsed"] {
+  min-width: 0;
+}
+
 .knowledge-filter-choice__summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
