@@ -14364,7 +14364,18 @@ function renderKennisCategorie(label: string, items: KennisItem[]): string {
       </header>
       ${
         items.length > 0
-          ? `<ol class="knowledge-library-list" aria-label="Kennisitems in ${escapeAttribute(label)}" data-knowledge-library-list="ready">${items.map(renderKennisItem).join('')}</ol>`
+          ? `<details class="knowledge-library-list-choice" data-knowledge-library-list-choice="collapsed">
+              <summary class="knowledge-library-list-choice__summary">
+                <span>
+                  <strong>Bibliotheeklijst openen</strong>
+                  <small>Open kennisitems, detailacties en categoriecontext.</small>
+                </span>
+                <em>${items.length} item${items.length === 1 ? '' : 's'}</em>
+              </summary>
+              <div class="knowledge-library-list-choice__body">
+                <ol class="knowledge-library-list" aria-label="Kennisitems in ${escapeAttribute(label)}" data-knowledge-library-list="ready">${items.map(renderKennisItem).join('')}</ol>
+              </div>
+            </details>`
           : renderEmptyState('Nog geen items in deze categorie.', { title: 'Categorie is leeg' })
       }
     </section>

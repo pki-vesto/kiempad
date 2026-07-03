@@ -1757,6 +1757,94 @@ h2 {
   list-style: none;
 }
 
+.knowledge-library-list-choice {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+}
+
+.knowledge-library-list-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 11px 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.knowledge-library-list-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-library-list-choice__summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 999px;
+  color: var(--category);
+  font-weight: 850;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.knowledge-library-list-choice[open] > .knowledge-library-list-choice__summary::after {
+  content: "-";
+}
+
+.knowledge-library-list-choice__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.knowledge-library-list-choice__summary strong,
+.knowledge-library-list-choice__summary small,
+.knowledge-library-list-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-library-list-choice__summary strong {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.22;
+}
+
+.knowledge-library-list-choice__summary small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.knowledge-library-list-choice__summary em {
+  justify-self: end;
+  color: var(--category);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.knowledge-library-list-choice__body {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 10px 10px;
+}
+
+.knowledge-library-list-choice:not([open]) > .knowledge-library-list-choice__body {
+  display: none;
+}
+
 .knowledge-library-card {
   min-width: 0;
 }
@@ -20440,6 +20528,15 @@ a.action-card:active {
     flex: 0 0 min(218px, 74vw);
     min-height: 104px;
     scroll-snap-align: start;
+  }
+
+  .knowledge-library-list-choice__summary {
+    grid-template-columns: minmax(0, 1fr) 24px;
+  }
+
+  .knowledge-library-list-choice__summary em {
+    grid-column: 1;
+    justify-self: start;
   }
 
   .research-trend-dashboard__header {

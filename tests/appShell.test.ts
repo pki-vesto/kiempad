@@ -38474,6 +38474,9 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-category-research"');
     expect(html).toContain('data-knowledge-category="ready"');
     expect(html).toContain('class="knowledge-category__header"');
+    expect(html).toContain('data-knowledge-library-list-choice="collapsed"');
+    expect(html).toContain('Bibliotheeklijst openen');
+    expect(html).toContain('Open kennisitems, detailacties en categoriecontext.');
     expect(html).toContain('class="knowledge-library-list"');
     expect(html).toContain('data-knowledge-library-list="ready"');
     expect(html).toContain('class="knowledge-library-card" data-knowledge-library-card="ready"');
@@ -38490,6 +38493,12 @@ describe('app shell', () => {
     expect(html).toContain('data-status-badge-tone="neutral"');
     expect(html).toContain('data-status-badge-tone="warning"');
     expect(html).toContain('class="knowledge-library-card__actions"');
+    expect(html.indexOf('data-knowledge-library-list-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-list="ready"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-list-choice" data-knowledge-library-list-choice="collapsed" open>',
+    );
     expect(html).not.toContain('<li class="phase-item">');
     expect(html).toContain('id="research-item-form"');
     expect(html).toContain('name="researchTitel"');
@@ -38688,6 +38697,12 @@ describe('app shell', () => {
       '.knowledge-library-context-choice:not([open]) > .knowledge-library-context-choice__body {',
     );
     expect(css).toContain('.knowledge-category__header {');
+    expect(css).toContain('.knowledge-library-list-choice {');
+    expect(css).toContain('.knowledge-library-list-choice__summary {');
+    expect(css).toContain('.knowledge-library-list-choice__body {');
+    expect(css).toContain(
+      '.knowledge-library-list-choice:not([open]) > .knowledge-library-list-choice__body {',
+    );
     expect(css).toContain('.knowledge-library-list {');
     expect(css).toContain('.knowledge-library-card > article {');
     expect(css).toContain('.knowledge-library-card__chevron {');
