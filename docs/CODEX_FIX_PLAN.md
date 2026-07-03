@@ -214,6 +214,10 @@
 - **Daily advice feedback reset route-focus mobile guarded copy — done in G1476 / issue #2712.**
   Narrow screens now keep disabled and aria-disabled local hide helper copy visibly paired with
   the guarded button, without transitions, layout shifts, route changes, tracking, or medical data.
+- **Dossier upload compact add-flow tabs — done in G1477 / issue #2716.** The Dossier upload
+  add-flow selector now reads as compact tabs instead of a second route-card wall, keeping
+  document, consult, embryo quality, and embryo status routes visible without changing upload
+  contracts, hashes, privacy data, or medical interpretation.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1385 — Dossier Upload: compacte toevoegstroom tabs in plaats van kaartlaag
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Dossier-upload route is single-flow, maar de toevoegroute-selector leest nog als een extra kaartlaag boven de formulieren.
+- **User Impact:** Gebruikers ervaren de eerste uploadviewport nog als druk en alsof meerdere workflows tegelijk op één pagina staan.
+- **Desired Outcome:** Maak de toevoegroute-keuze compact en tabachtig zonder uploadcontracten of hashroutes te wijzigen.
+- **User Value:** Uploaden van documenten, consulten en embryocontext voelt sneller, rustiger en meer als één begeleide keuze.
+- **Acceptance Criteria:** De Dossier-upload selector gebruikt compacte tab/segmented-control styling in plaats van grote routekaarten; de actieve toevoegroute blijft duidelijk zichtbaar en toetsenbordfocus blijft expliciet; op mobiel blijft de selector horizontaal scrollbaar zonder overlap of horizontale pagina-scroll; de wijziging verandert geen uploadcontracten, formuliernamen, hashroutes, privacydata of medische interpretatie; tests of routeflow-smoke bewaken selectorcopy, layout hooks en privacygrenzen.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, dossier upload, responsive CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2716
+
 ### G1384 — Daily Recommendations: resetmelding bewaakt guarded helpercopy in forced-colors smal
 
 - **Epic:** Onboarding & Daily Use
