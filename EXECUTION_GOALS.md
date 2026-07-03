@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1529 — Kennis bibliotheek herstelactie badges houden mobiele labellijn focuskleur rustig
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1528 blijft de mobiele labellijn rustig getrunceerd, maar de focuskleur en het gewicht van primaire actielabels zijn nog niet apart bewaakt tegen visuele dominantie.
+- **User Impact:** Gebruikers kunnen op kleine schermen te nadrukkelijke focuslabels zien die de secundaire badgefeedback of omliggende content overheersen.
+- **Desired Outcome:** Mobiele herstelactielabels blijven tijdens focus duidelijk maar rustig, zonder de secundaire badgefeedback of omliggende content te overheersen.
+- **User Value:** Gebruikers krijgen duidelijke focusfeedback terwijl het herstelflow-overzicht rustig scanbaar blijft.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; focuskleur van primaire labellijn blijft rustig op mobiel; primaire labellijn blijft rustig getrunceerd op mobiel; primaire labellijn blijft beschermd op mobiel; hoverbadgebreedte blijft begrensd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele focuskleur en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3002
+
 ### G1528 — Kennis bibliotheek herstelactie badges houden mobiele labellijn truncatie rustig
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3000
 
 ### G1527 — Kennis bibliotheek herstelactie badges beschermen mobiele labellijn
