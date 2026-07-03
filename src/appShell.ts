@@ -4103,7 +4103,7 @@ function renderDossierScreen(state: AppShellState): string {
         <header class="dossier-route-section__header">
           <p class="kp-card__eyebrow">Beelden en embryo's</p>
           <h2 id="dossier-route-imaging-title">Beelden, consulten en embryo-dossiers</h2>
-          <p>Bekijk consultverslagen, echo's, foto's, scans en embryodossiers zonder uploadvelden ertussen.</p>
+          <p>Start met één inspectiekeuze. Beeldenoverzicht, vergelijking, embryo's en consulten open je daarna als vervolgcontext.</p>
         </header>
         ${renderHubWorkflowHeader({
           id: 'dossier-imaging-workflow-header',
@@ -4142,11 +4142,11 @@ function renderDossierScreen(state: AppShellState): string {
         })}
         ${commandRouteSummary({
           eyebrow: 'Dossierroute',
-          title: 'Beelden en embryo’s apart bekijken',
+          title: 'Eerst één inspectiekeuze',
           detail:
-            'Consultverslagen, imagingfilters, vergelijkingen en embryodossiers staan niet meer allemaal direct onder elkaar.',
-          primary: { href: '#dossier-imaging-repository', label: 'Beelden openen' },
-          secondary: { href: '#dossier-embryo-dossiers', label: 'Embryo’s openen' },
+            'Het inspectiebord staat vooraan; beeldenoverzicht, vergelijking, embryo’s en consulten staan achter één rustige vervolgstap.',
+          primary: { href: '#dossier-imaging-primary-choice', label: 'Inspectiekeuze' },
+          secondary: { href: '#dossier-imaging-followup', label: 'Vervolgcontext' },
           status: `${imagingItems.length} beelden · ${embryoDossiers.length} embryo's`,
           ariaLabel: 'Dossier imaging route-samenvatting',
           data: { 'dossier-route-summary': 'imaging' },
@@ -4158,6 +4158,15 @@ function renderDossierScreen(state: AppShellState): string {
           indexCount: indexItems.length,
           locked: Boolean(state.imagingPreviewLocked),
         })}
+        <details id="dossier-imaging-followup" class="kp-disclosure dossier-imaging-followup" data-dossier-imaging-followup="collapsed">
+          <summary class="kp-disclosure__summary dossier-imaging-followup__summary">
+            <span>
+              <strong>Beeldcontext openen</strong>
+              <small>Consulten, beeldenoverzicht, vergelijking, index en embryo-dossiers</small>
+            </span>
+            <em>${imagingItems.length} beelden · ${embryoDossiers.length} embryo's</em>
+          </summary>
+          <div class="kp-disclosure__body dossier-imaging-followup__body">
         <details class="kp-disclosure hub-detail-disclosure" data-dossier-imaging-disclosure="consults" data-hub-detail-panel="consult-verslagen">
           <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
             <span>
@@ -4255,6 +4264,8 @@ function renderDossierScreen(state: AppShellState): string {
                     },
                   )
             }
+          </div>
+        </details>
           </div>
         </details>
         </section>
@@ -4510,7 +4521,7 @@ function renderDossierImagingInspectionBoard(input: {
   ];
 
   return `
-    <section class="dossier-imaging-inspection-board" aria-label="Beelden inspectiebord" data-dossier-imaging-inspection-board="ready">
+    <section id="dossier-imaging-primary-choice" class="dossier-imaging-inspection-board" aria-label="Beelden inspectiebord" data-dossier-imaging-inspection-board="ready" data-dossier-imaging-primary-choice="ready">
       <header class="dossier-imaging-inspection-board__header">
         <div>
           <p class="kp-card__eyebrow">Inspectiebord</p>

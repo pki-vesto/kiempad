@@ -8151,6 +8151,9 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-imaging-inspection-board__lane:hover,');
     expect(css).toContain('.dossier-imaging-inspection-board__lane:focus-visible {');
     expect(css).toContain('.dossier-imaging-inspection-board__lane em {');
+    expect(css).toContain('.dossier-imaging-followup {');
+    expect(css).toContain('.dossier-imaging-followup__summary {');
+    expect(css).toContain('.dossier-imaging-followup__body {');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -8650,10 +8653,17 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-route-summary="imaging"');
     expect(emptyHtml).toContain('id="dossier-imaging-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-imaging"');
-    expect(emptyHtml).toContain('Beelden en embryo’s apart bekijken');
+    expect(emptyHtml).toContain('Eerst één inspectiekeuze');
+    expect(emptyHtml).toContain(
+      'Het inspectiebord staat vooraan; beeldenoverzicht, vergelijking, embryo’s en consulten staan achter één rustige vervolgstap.',
+    );
+    expect(emptyHtml).toContain('href="#dossier-imaging-primary-choice"');
+    expect(emptyHtml).toContain('href="#dossier-imaging-followup"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="imaging" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="embryos"');
+    expect(emptyHtml).toContain('id="dossier-imaging-primary-choice"');
     expect(emptyHtml).toContain('data-dossier-imaging-inspection-board="ready"');
+    expect(emptyHtml).toContain('data-dossier-imaging-primary-choice="ready"');
     expect(emptyHtml).toContain('aria-label="Beelden inspectiebord"');
     expect(emptyHtml).toContain('Kies eerst je beeldroute');
     expect(emptyHtml).toContain('data-dossier-imaging-lane="images"');
@@ -8665,9 +8675,19 @@ describe('app shell', () => {
     expect(emptyHtml).toContain(
       'Deze laag toont alleen tellingen en veilige metadata; geen OCR-tekst, consulttekst, beeldpayload of embryo-selectieadvies.',
     );
+    expect(emptyHtml).toContain('id="dossier-imaging-followup"');
+    expect(emptyHtml).toContain('data-dossier-imaging-followup="collapsed"');
+    expect(emptyHtml).toContain('Beeldcontext openen');
+    expect(emptyHtml).toContain(
+      'Consulten, beeldenoverzicht, vergelijking, index en embryo-dossiers',
+    );
     expect(emptyHtml.indexOf('data-dossier-imaging-inspection-board="ready"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-imaging-followup="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-imaging-followup="collapsed"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-imaging-disclosure="consults"'),
     );
+    expect(emptyHtml).not.toContain('<details id="dossier-imaging-followup" open');
     expect(emptyHtml).toContain('data-hub-detail-panel="imaging-repository"');
     expect(emptyHtml).toContain('Filters, kenmerken en vergelijkingen');
     expect(emptyHtml).toContain('<em>0 beelden</em>');
@@ -8891,8 +8911,10 @@ describe('app shell', () => {
     expect(html).toContain('data-dossier-route="imaging" data-dossier-route-state="active"');
     expect(html).toContain('aria-label="Dossier imaging route-samenvatting"');
     expect(html).toContain('data-dossier-route-summary="imaging"');
-    expect(html).toContain('Beelden en embryo’s apart bekijken');
+    expect(html).toContain('Eerst één inspectiekeuze');
     expect(html).toContain('data-dossier-imaging-inspection-board="ready"');
+    expect(html).toContain('data-dossier-imaging-primary-choice="ready"');
+    expect(html).toContain('data-dossier-imaging-followup="collapsed"');
     expect(html).toContain('Kies eerst je beeldroute');
     expect(html).toContain('data-dossier-imaging-lane="images"');
     expect(html).toContain('data-dossier-imaging-lane="compare"');

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1400 — Dossier: tijdlijn start met één leesfocus
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Dossier Tijdlijn moet rustig blijven als één leesfocus en mag niet opnieuw aanvoelen als een wand met documenttijdlijn, behandelgeschiedenis en exportcontext.
+- **User Impact:** Gebruikers kunnen bij tijdlijnlezing alsnog door meerdere dossierlagen moeten scannen voordat de hoofdlezing duidelijk is.
+- **Desired Outcome:** Start met één primaire leesfocus en houd documenttijdlijn, behandelgeschiedenis en exportcontext als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers begrijpen eerst de tijdlijnfocus en openen extra dossiercontext pas wanneer nodig.
+- **Acceptance Criteria:** Dossier Tijdlijn toont één primaire leesfocus in de eerste viewport; documenttijdlijn, behandelgeschiedenis en exportcontext blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Dossier, Tijdlijn
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier timeline route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2746
+
 ### G1399 — Dossier: beelden start met één inspectiekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier imaging route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2744
 
 ### G1398 — Dossier: zoeken start met één zoekcontrole

@@ -22,6 +22,10 @@
   opens with one primary search-control surface; result context, privacy controls, and the content
   index remain reachable behind one closed follow-up disclosure while preserving search form,
   hash, privacy, and index hooks.
+- **Dossier imaging single inspection choice — done in G1492 / issue #2744.** Dossier Beelden now
+  opens with one primary inspection-choice board while consults, imaging repository, comparison,
+  index, and embryo dossier context sit behind one closed follow-up disclosure, preserving existing
+  anchors, detail panels, and imaging hooks.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
