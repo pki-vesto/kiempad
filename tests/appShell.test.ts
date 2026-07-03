@@ -39324,6 +39324,9 @@ describe('app shell', () => {
     }
     const focusBadgeFeedbackWeight = 760;
     const hoverBadgeFeedbackWeight = 750;
+    const focusBadgeFeedbackCategoryBackgroundMix = 14;
+    const hoverBadgeFeedbackCategoryBackgroundMix = 12;
+    const hoverBadgeFeedbackMaxCategoryBackgroundMix = 12;
     const focusBadgeFeedbackBorderMix = 20;
     const hoverBadgeFeedbackBorderMix = 18;
     const hoverBadgeFeedbackMaxBorderMix = 18;
@@ -39333,6 +39336,12 @@ describe('app shell', () => {
     const hoverBadgeFeedbackMaxWeight = 750;
     const hoverLabelWeight = 850;
     expect(focusBadgeFeedbackWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
+    expect(focusBadgeFeedbackCategoryBackgroundMix).toBeGreaterThan(
+      hoverBadgeFeedbackCategoryBackgroundMix,
+    );
+    expect(hoverBadgeFeedbackCategoryBackgroundMix).toBeLessThanOrEqual(
+      hoverBadgeFeedbackMaxCategoryBackgroundMix,
+    );
     expect(focusBadgeFeedbackBorderMix).toBeGreaterThan(hoverBadgeFeedbackBorderMix);
     expect(hoverBadgeFeedbackBorderMix).toBeLessThanOrEqual(hoverBadgeFeedbackMaxBorderMix);
     expect(focusBadgeFeedbackTextMix).toBeGreaterThan(hoverBadgeFeedbackTextMix);
