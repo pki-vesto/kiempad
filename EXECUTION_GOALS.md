@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1480 — Kennis bibliotheek route vervolgacties starten met één compacte actie-keuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1479 blijven vervolgacties in de Kennis Bibliotheek-route gevoelig voor categorieanker, lijstanker, kaartdetails en routecontext tegelijk.
+- **User Impact:** Gebruikers die de bibliotheekroute openen, moeten nog meerdere vervolgankers en kaartcontexten scannen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de Kennis Bibliotheek-route vervolgacties starten met één compacte actie-keuze of samengevouwen sublaag, terwijl categorieanker, lijstanker, kaartdetails en routecontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één bibliotheekvervolgactie kiezen zonder dat alle categorie-, lijst- en kaartcontext tegelijk aandacht vragen.
+- **Acceptance Criteria:** Bestaande bibliotheekroute-, categorie-, lijst- en kaarthooks blijven aanwezig; de bibliotheekroute vervolgacties starten met één compacte keuze of samengevouwen sublaag; categorieanker, lijstanker, kaartdetails en routecontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library route summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2904
+
 ### G1479 — Kennis AI-route supportcontext start met één compacte supportkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI support context, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2902
 
 ### G1478 — Kennis AI-route vervolgacties starten met één compacte actie-keuze

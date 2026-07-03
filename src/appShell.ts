@@ -12928,64 +12928,75 @@ function renderKennisScreen(state: AppShellState): string {
                   <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
                 </summary>
                 <div class="knowledge-ai-support-context-choice__body">
-                  <details class="summary-panel knowledge-ai-summary-detail-choice" data-knowledge-ai-console-region="summary-save" data-knowledge-ai-summary-detail-choice="collapsed">
-                    <summary class="knowledge-ai-summary-detail-choice__summary">
+                  <details class="knowledge-ai-support-panel-choice" data-knowledge-ai-support-panel-choice="collapsed">
+                    <summary class="knowledge-ai-support-panel-choice__summary">
                       <span>
-                        <strong>AI-samenvattingdetails openen</strong>
-                        <small>Open samenvatting, broncontext, status en opslagactie.</small>
-                      </span>
-                      <em>${state.aiPreview ? 'Preview klaar' : 'Geen preview'}</em>
-                    </summary>
-                    <div class="knowledge-ai-summary-detail-choice__body">
-                      <h2>AI-samenvatting bewaren</h2>
-                      ${renderAiSummaryForm(state.aiPreview)}
-                    </div>
-                  </details>
-                  <details class="summary-panel knowledge-ai-settings-choice" data-knowledge-ai-console-region="settings" data-knowledge-ai-settings-choice="collapsed">
-                    <summary class="knowledge-ai-settings-choice__summary">
-                      <span>
-                        <strong>AI-instellingen openen</strong>
-                        <small>Open opt-in, opslagmodus, on-device status en bewaaractie.</small>
+                        <strong>Supportpanelen kiezen</strong>
+                        <small>Open bewaren, instellingen, researchnetwerk en supportstatus.</small>
                       </span>
                       <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
                     </summary>
-                    <div class="knowledge-ai-settings-choice__body">
-                      <h2>AI-instelling</h2>
-                      <details class="knowledge-ai-settings-fields-choice" data-knowledge-ai-settings-fields-choice="collapsed">
-                        <summary class="knowledge-ai-settings-fields-choice__summary">
+                    <div class="knowledge-ai-support-panel-choice__body">
+                      <details class="summary-panel knowledge-ai-summary-detail-choice" data-knowledge-ai-console-region="summary-save" data-knowledge-ai-summary-detail-choice="collapsed">
+                        <summary class="knowledge-ai-summary-detail-choice__summary">
                           <span>
-                            <strong>Instellingenvelden openen</strong>
-                            <small>Opt-in, opslagmodus, on-device status en bewaaractie.</small>
+                            <strong>AI-samenvattingdetails openen</strong>
+                            <small>Open samenvatting, broncontext, status en opslagactie.</small>
+                          </span>
+                          <em>${state.aiPreview ? 'Preview klaar' : 'Geen preview'}</em>
+                        </summary>
+                        <div class="knowledge-ai-summary-detail-choice__body">
+                          <h2>AI-samenvatting bewaren</h2>
+                          ${renderAiSummaryForm(state.aiPreview)}
+                        </div>
+                      </details>
+                      <details class="summary-panel knowledge-ai-settings-choice" data-knowledge-ai-console-region="settings" data-knowledge-ai-settings-choice="collapsed">
+                        <summary class="knowledge-ai-settings-choice__summary">
+                          <span>
+                            <strong>AI-instellingen openen</strong>
+                            <small>Open opt-in, opslagmodus, on-device status en bewaaractie.</small>
                           </span>
                           <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
                         </summary>
-                        <div class="knowledge-ai-settings-fields-choice__body">
-                          ${renderAiSettingsForm(state.settings, state.storageMode)}
-                          ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+                        <div class="knowledge-ai-settings-choice__body">
+                          <h2>AI-instelling</h2>
+                          <details class="knowledge-ai-settings-fields-choice" data-knowledge-ai-settings-fields-choice="collapsed">
+                            <summary class="knowledge-ai-settings-fields-choice__summary">
+                              <span>
+                                <strong>Instellingenvelden openen</strong>
+                                <small>Opt-in, opslagmodus, on-device status en bewaaractie.</small>
+                              </span>
+                              <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
+                            </summary>
+                            <div class="knowledge-ai-settings-fields-choice__body">
+                              ${renderAiSettingsForm(state.settings, state.storageMode)}
+                              ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+                            </div>
+                          </details>
                         </div>
                       </details>
-                    </div>
-                  </details>
-                  <details class="summary-panel knowledge-ai-network-choice" data-knowledge-ai-console-region="research-network" data-knowledge-ai-network-choice="collapsed">
-                    <summary class="knowledge-ai-network-choice__summary">
-                      <span>
-                        <strong>Researchnetwerk openen</strong>
-                        <small>Open research-opt-in, aggregatieplan, PubMed-preview en bronregister.</small>
-                      </span>
-                      <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
-                    </summary>
-                    <div class="knowledge-ai-network-choice__body">
-                      <details class="knowledge-ai-network-content-choice" data-knowledge-ai-network-content-choice="collapsed">
-                        <summary class="knowledge-ai-network-content-choice__summary">
+                      <details class="summary-panel knowledge-ai-network-choice" data-knowledge-ai-console-region="research-network" data-knowledge-ai-network-choice="collapsed">
+                        <summary class="knowledge-ai-network-choice__summary">
                           <span>
-                            <strong>Netwerkvelden openen</strong>
-                            <small>Research-opt-in, aggregatieplan, PubMed-preview en bronregister.</small>
+                            <strong>Researchnetwerk openen</strong>
+                            <small>Open research-opt-in, aggregatieplan, PubMed-preview en bronregister.</small>
                           </span>
                           <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
                         </summary>
-                        <div class="knowledge-ai-network-content-choice__body">
-                          ${renderResearchNetworkSettingsForm(state.settings)}
-                          ${renderResearchAggregatiePlan(researchAggregatie)}
+                        <div class="knowledge-ai-network-choice__body">
+                          <details class="knowledge-ai-network-content-choice" data-knowledge-ai-network-content-choice="collapsed">
+                            <summary class="knowledge-ai-network-content-choice__summary">
+                              <span>
+                                <strong>Netwerkvelden openen</strong>
+                                <small>Research-opt-in, aggregatieplan, PubMed-preview en bronregister.</small>
+                              </span>
+                              <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
+                            </summary>
+                            <div class="knowledge-ai-network-content-choice__body">
+                              ${renderResearchNetworkSettingsForm(state.settings)}
+                              ${renderResearchAggregatiePlan(researchAggregatie)}
+                            </div>
+                          </details>
                         </div>
                       </details>
                     </div>
