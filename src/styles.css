@@ -8650,8 +8650,10 @@ h2 {
   .knowledge-library-followup-visibility-choice__anchor:focus-visible
   .knowledge-library-empty-recovery-choice__feedback {
   border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));
+  border-style: solid;
   background: color-mix(in srgb, var(--surface) 82%, var(--category));
   color: var(--text);
+  font-weight: 850;
 }
 
 .knowledge-library-context-choice {
