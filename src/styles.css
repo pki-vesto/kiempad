@@ -8623,6 +8623,17 @@ h2 {
   white-space: nowrap;
 }
 
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor:hover
+  .knowledge-library-empty-recovery-choice__feedback,
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor:focus-visible
+  .knowledge-library-empty-recovery-choice__feedback {
+  border-color: color-mix(in srgb, var(--category) 26%, var(--border-strong));
+  background: color-mix(in srgb, var(--surface) 82%, var(--category));
+  color: var(--text);
+}
+
 .knowledge-library-context-choice {
   display: grid;
   gap: 0;

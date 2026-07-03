@@ -39183,6 +39183,13 @@ describe('app shell', () => {
     expect(css).toContain('border-radius: var(--radius-pill);');
     expect(css).toContain('background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));');
     expect(css).toContain('text-overflow: ellipsis;');
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:hover\n  .knowledge-library-empty-recovery-choice__feedback',
+    );
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback',
+    );
+    expect(css).toContain('background: color-mix(in srgb, var(--surface) 82%, var(--category));');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');

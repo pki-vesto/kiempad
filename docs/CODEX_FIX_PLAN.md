@@ -1377,6 +1377,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   destination microcopy with a guarded maximum label length.
   Partial G1492/#2928: The knowledge library empty-state recovery feedback now renders as a
   quiet badge inside each compact action button.
+  Partial G1493/#2930: The knowledge library empty-state recovery feedback badges now keep
+  explicit contrast during hover and keyboard focus states.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
