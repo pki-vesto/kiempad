@@ -18161,6 +18161,7 @@ function renderAfspraakForm(
           <input name="herinneringTijdstip" type="datetime-local" value="${escapeAttribute(bundle?.herinnering?.tijdstip ?? defaultReminder)}" />
         </label>
       </section>
+      ${renderFormRequiredMap('schedule-appointment', 'Verplicht voor afspraak', ['Titel', 'Datum en tijd'])}
       <div class="schedule-form-actions">
         <button type="submit">${afspraak ? 'Bewaar afspraak' : 'Maak afspraak aan'}</button>
         ${
@@ -18833,6 +18834,7 @@ function renderMedicatieForm(medicatie?: Medicatie): string {
         </label>
         <p class="small-print">Doseringen worden nooit door Kiempad berekend. Het schema maakt alleen geplande afvinkmomenten op basis van wat je zelf invoert.</p>
       </section>
+      ${renderFormRequiredMap('medication-item', 'Verplicht voor medicatie', ['Naam'])}
       <div class="medication-form-actions">
         <button type="submit">${medicatie ? 'Bewaar medicatie' : 'Voeg medicatie toe'}</button>
         ${

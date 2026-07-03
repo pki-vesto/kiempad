@@ -4844,6 +4844,11 @@ describe('app shell', () => {
     expect(html).toContain('data-schedule-form-section="herinnering"');
     expect(html).toContain('class="schedule-form-field schedule-form-field--wide"');
     expect(html).toContain('class="form-grid schedule-form-grid"');
+    expect(html).toContain(
+      'class="form-required-map" data-form-required-map="schedule-appointment" aria-label="Verplicht voor afspraak"',
+    );
+    expect(html).toContain('<span role="listitem">Titel</span>');
+    expect(html).toContain('<span role="listitem">Datum en tijd</span>');
     expect(html).toContain('class="schedule-form-actions"');
     expect(html).toContain(
       'class="form-cancel-link" href="#agenda?route=komend" data-form-cancel-action="schedule"',
@@ -6005,6 +6010,10 @@ describe('app shell', () => {
     expect(html).toContain('data-medication-form-section="planning"');
     expect(html).toContain('class="medication-form-field medication-form-field--wide"');
     expect(html).toContain('class="form-grid medication-form-grid"');
+    expect(html).toContain(
+      'class="form-required-map" data-form-required-map="medication-item" aria-label="Verplicht voor medicatie"',
+    );
+    expect(html).toContain('<span role="listitem">Naam</span>');
     expect(html).toContain('class="medication-form-actions"');
     expect(html).toContain(
       'class="form-cancel-link" href="#medicatie?route=vandaag" data-form-cancel-action="medication"',

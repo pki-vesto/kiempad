@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1587 — Agenda en medicatie tonen verplichte velden vooraf
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Afspraak- en medicatieformulieren hadden verplichte velden, maar toonden nog geen compacte required-map vóór bewaren.
+- **User Impact:** Gebruikers zien pas laat welke velden nodig zijn als browservalidatie ingrijpt.
+- **Desired Outcome:** Agenda en medicatie tonen vóór hun action row een required-map met de verplichte velden in `--clay-ink`.
+- **User Value:** Gebruikers kunnen afspraken en medicatie rustiger vastleggen met vooraf zichtbare minimale invoer.
+- **Acceptance Criteria:** Afspraakformulier toont een required-map vóór de agenda action row; afspraak required-map noemt Titel en Datum en tijd; medicatieformulier toont een required-map vóór de medicatie action row; medicatie required-map noemt Naam; de maps gebruiken gedeelde `.form-required-map` styling met clay-ink; app-shell tests bewaken markup en CSS-contract; routeflow smoke blijft desktop/tablet/mobile valideren; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Agenda afspraak plannen/bewerken, Medicatie toevoegen/bewerken
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Schedule form, medication form, required map styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3118
+
 ### G1586 — Kosten formulier toont verplichte velden vooraf
 
 - **Epic:** Onboarding & Daily Use
