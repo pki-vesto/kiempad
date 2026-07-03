@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1374 — Daily Recommendations: resetmelding toont guarded hide uitleg
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding bewaakt focus wanneer de Verberg-knop ooit disabled of aria-disabled wordt, maar gebruikers krijgen in zo'n guarded state nog geen aparte korte uitleg.
+- **User Impact:** Gebruikers kunnen onzeker worden waarom de lokale hide-actie tijdelijk niet bruikbaar is.
+- **Desired Outcome:** Maak guarded hide-copy of statuscontext duidelijk zonder extra medische of trackinginformatie toe te voegen.
+- **User Value:** De resetfeedback blijft begrijpelijk en rustig, ook wanneer een lokale hide-actie tijdelijk bewaakt wordt.
+- **Acceptance Criteria:** Guarded hide-state heeft begrijpelijke, korte context voor waarom Verberg tijdelijk niet bruikbaar is; de uitleg veroorzaakt geen layout shift of mobiele overflow; de copy verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, guarded states, copy tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2694
+
 ### G1373 — Daily Recommendations: resetmelding borgt focus bij guarded hide
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, focus management, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2692
 
 ### G1372 — Daily Recommendations: resetmelding borgt disabled/verberg-state

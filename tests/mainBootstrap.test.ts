@@ -58,6 +58,12 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('status.remove()');
     expect(mainSource).toContain('Lijst geopend vanuit de actieve feedbackfilter.');
     expect(mainSource).toContain('[data-daily-recommendation-reset-route-focus-close="ready"]');
+    expect(mainSource).toContain('[data-daily-recommendation-reset-route-focus="ready"]');
+    expect(mainSource).toContain('isDailyRecommendationRouteFocusCloseGuarded');
+    expect(mainSource).toContain("button.getAttribute('aria-disabled') === 'true'");
+    expect(mainSource).toContain('focusDailyRecommendationRouteFocusContext(resetRouteFocus)');
+    expect(mainSource).toContain('event.preventDefault()');
+    expect(mainSource).toContain('event.stopPropagation()');
     expect(mainSource).toContain('dismissDailyRecommendationRouteFocusStatus(root, state)');
     expect(mainSource).toContain('dailyRecommendationRouteFocusDismissed = true');
     expect(mainSource).toContain('dailyRecommendationRouteFocusDismissed = false');
@@ -65,7 +71,7 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('dailyRecommendationRouteFocusPendingFocus = false');
     expect(mainSource).toContain('focusDailyRecommendationRouteFocusStatus(root)');
     expect(mainSource).toContain('function focusDailyRecommendationRouteFocusStatus');
-    expect(mainSource).toContain('?.focus({ preventScroll: true })');
+    expect(mainSource).toContain('status.focus({ preventScroll: true })');
     expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');

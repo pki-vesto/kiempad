@@ -1688,11 +1688,26 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 }
 
 function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
-  root
-    .querySelector<HTMLButtonElement>('[data-daily-recommendation-reset-route-focus-close="ready"]')
-    ?.addEventListener('click', () => {
-      dismissDailyRecommendationRouteFocusStatus(root, state);
-    });
+  const resetRouteFocus = root.querySelector<HTMLElement>(
+    '[data-daily-recommendation-reset-route-focus="ready"]',
+  );
+  const resetRouteFocusClose = resetRouteFocus?.querySelector<HTMLButtonElement>(
+    '[data-daily-recommendation-reset-route-focus-close="ready"]',
+  );
+  resetRouteFocusClose?.addEventListener('focus', () => {
+    if (isDailyRecommendationRouteFocusCloseGuarded(resetRouteFocusClose)) {
+      focusDailyRecommendationRouteFocusContext(resetRouteFocus);
+    }
+  });
+  resetRouteFocusClose?.addEventListener('click', (event) => {
+    if (isDailyRecommendationRouteFocusCloseGuarded(resetRouteFocusClose)) {
+      event.preventDefault();
+      event.stopPropagation();
+      focusDailyRecommendationRouteFocusContext(resetRouteFocus);
+      return;
+    }
+    dismissDailyRecommendationRouteFocusStatus(root, state);
+  });
 
   root
     .querySelector<HTMLButtonElement>('[data-daily-advice-feedback-list-open="ready"]')
@@ -1814,10 +1829,22 @@ function buildDailyRecommendationResetRouteFocusStatus(submitter: HTMLButtonElem
   return 'Lokale feedbackfilter gewist vanuit het filterformulier. Je blijft op Dagadvies.';
 }
 
+function isDailyRecommendationRouteFocusCloseGuarded(button: HTMLButtonElement): boolean {
+  return button.disabled || button.getAttribute('aria-disabled') === 'true';
+}
+
+function focusDailyRecommendationRouteFocusContext(status: HTMLElement | null | undefined): void {
+  if (!status) return;
+  if (!status.hasAttribute('tabindex')) {
+    status.setAttribute('tabindex', '-1');
+  }
+  status.focus({ preventScroll: true });
+}
+
 function focusDailyRecommendationRouteFocusStatus(root: HTMLElement): void {
-  root
-    .querySelector<HTMLElement>('[data-daily-recommendation-reset-route-focus="ready"]')
-    ?.focus({ preventScroll: true });
+  focusDailyRecommendationRouteFocusContext(
+    root.querySelector<HTMLElement>('[data-daily-recommendation-reset-route-focus="ready"]'),
+  );
 }
 
 function setDailyRecommendationFeedbackFilterHash(
