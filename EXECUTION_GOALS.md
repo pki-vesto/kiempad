@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1393 — Agenda: plannen start met één afspraaktaak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Agenda Plannen moet één afspraaktaak blijven en mag niet opnieuw aanvoelen als een wand met komende afspraken, import en historie.
+- **User Impact:** Gebruikers moeten bij het plannen eerst scannen welke agenda-laag relevant is voordat zij gewoon een afspraak kunnen vastleggen.
+- **Desired Outcome:** Start met één primaire afspraak-invoer en houd komende afspraken, import en historie als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers leggen eerst de afspraak vast en openen planningscontext pas wanneer ze die nodig hebben.
+- **Acceptance Criteria:** Agenda Plannen toont één primaire afspraak-invoer in de eerste viewport; komende afspraken, import en historie blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen medisch advies, trackingpayload of medische conclusie bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Agenda, Plannen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, schedule route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2732
+
 ### G1392 — Kosten: toevoegen start met één kostenpost taak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, finance route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2730
 
 ### G1391 — Afwegingen: voorbereiden start met één beslisnotitie taak

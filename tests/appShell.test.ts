@@ -2081,6 +2081,11 @@ describe('app shell', () => {
     );
     expect(css).toContain('.finance-focus-shell__workspace .domain-split-workspace__context {');
     expect(css).toContain('> .finance-management-workbench {');
+    expect(css).toContain('.finance-add-console {');
+    expect(css).toContain('.finance-add-primary {');
+    expect(css).toContain('.finance-add-followup {');
+    expect(css).toContain('.finance-add-followup__summary {');
+    expect(css).toContain('.finance-add-followup__body {');
     expect(css).toContain('.finance-form-section {');
     expect(css).toContain('.finance-form-section--primary {');
     expect(css).toContain('.finance-amount-input {');
@@ -38447,6 +38452,22 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Kosten toevoegen route-samenvatting"');
     expect(html).toContain('data-finance-route-summary="toevoegen"');
     expect(html).toContain('Nieuwe kostenpost toevoegen zonder historie erboven');
+    expect(html).toContain(
+      'Het invoerformulier staat vooraan. Overzicht, vergoeding en historie open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#finance-add-followup"');
+    expect(html).toContain('data-finance-add-layout="single-input"');
+    expect(html).toContain('data-finance-add-primary="kosten-form"');
+    expect(html).toContain('data-finance-add-followup="collapsed"');
+    expect(html).toContain('id="finance-add-followup"');
+    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('href="#kosten?route=overzicht"');
+    expect(html).toContain('href="#kosten?route=vergoeding"');
+    expect(html).toContain('href="#kosten?route=historie"');
+    expect(html.indexOf('data-finance-add-primary="kosten-form"')).toBeLessThan(
+      html.indexOf('id="finance-add-followup"'),
+    );
+    expect(html).not.toContain('<details id="finance-add-followup" open');
     expect(html).toContain('aria-label="Kosten vergoeding route-samenvatting"');
     expect(html).toContain('data-finance-route-summary="vergoeding"');
     expect(html).toContain('Eigen risico en poliscontext openen');
