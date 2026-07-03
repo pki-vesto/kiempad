@@ -1339,6 +1339,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   registry remain reachable.
   Partial G1475/#2894: The knowledge add research form now starts with one closed compact input
   choice while title, source, date, note, summaries and save action remain reachable.
+  Partial G1476/#2896: The knowledge add own-item form now starts with one closed compact item
+  choice while title, category, source context, content and save action remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
