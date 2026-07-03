@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1572 — Premium Claude Design UI geeft contextrail een compacte sticky paneelkop
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Routewerkruimtes hebben inmiddels begrensde panelen en een sticky routekop, maar de contextkolom mist nog een eigen compacte paneelkop.
+- **User Impact:** Context naast de actieve taak kan alsnog als losse doorlopende content lezen, waardoor het scherm minder duidelijk als app-workspace voelt.
+- **Desired Outcome:** Iedere domain-split contextkolom krijgt een compacte sticky kop die context zichtbaar als apart taakpaneel markeert.
+- **User Value:** Gebruikers zien sneller dat extra context bij de taak hoort, zonder dat die context de hoofdtaak verdringt of als lange pagina voelt.
+- **Acceptance Criteria:** Shared domainSplitWorkspace rendert contextkolommen met een compact contextpanel-contract; de contextkop blijft sticky binnen het scrollbare contextpaneel; bestaande routehooks, contextcontent en direct-child workbench selectors blijven bereikbaar; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Dossier, Kennis, Agenda, Medicatie, Traject, Vragen, Welzijn, Afwegingen, Kosten, Logboek, Back-up, Herinneringen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Shared domain split workspace component, context column CSS, route-first workspaces
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3088
+
 ### G1571 — Premium Claude Design UI houdt routepaneelkop sticky binnen actieve werkruimte
 
 - **Epic:** Onboarding & Daily Use

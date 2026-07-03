@@ -13788,6 +13788,38 @@ h2 {
 .domain-split-workspace__context {
   display: grid;
   gap: 10px;
+  align-content: start;
+}
+
+.domain-split-workspace__context-header {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface-raised) 92%, var(--surface));
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.domain-split-workspace__context-header span,
+.domain-split-workspace__context-header strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.domain-split-workspace__context-header span {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.domain-split-workspace__context-header strong {
+  color: var(--accent-strong);
 }
 
 .domain-split-workspace__context .summary-panel,
@@ -13837,6 +13869,14 @@ h2 {
 
   .domain-split-workspace__context {
     background: color-mix(in srgb, var(--surface-2) 68%, var(--surface));
+  }
+
+  .domain-split-workspace__context-header {
+    position: sticky;
+    top: 0;
+    z-index: 14;
+    box-shadow: 0 8px 18px rgba(21, 48, 44, 0.05);
+    backdrop-filter: blur(12px);
   }
 
   .domain-split-workspace__main .knowledge-ai-summary-detail-choice__summary em {
@@ -26731,6 +26771,42 @@ a.action-card:active {
 
 .knowledge-workbench-disclosure:not([open]) > .kp-disclosure__body {
   display: none;
+}
+
+@media (min-width: 761px) and (max-width: 960px) {
+  .content .domain-split-workspace {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-height: none;
+  }
+
+  .content .domain-split-workspace__rail,
+  .content .domain-split-workspace__main,
+  .content .domain-split-workspace__context {
+    max-height: min(720px, calc(100svh - 188px));
+  }
+
+  .content .domain-split-workspace__rail {
+    position: sticky;
+    top: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .content .domain-split-workspace__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .content .domain-split-workspace__rail .command-task-routes {
+    display: flex;
+    width: max-content;
+    min-width: 100%;
+    max-width: none;
+  }
+
+  .content .domain-split-workspace__rail .command-task-route {
+    flex: 0 0 min(190px, 42vw);
+  }
 }
 
 @media print {

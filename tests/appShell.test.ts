@@ -41831,7 +41831,12 @@ describe('app shell', () => {
       expect(html).toContain(`data-${label}-split-workspace="ready"`);
       expect(html).toContain('class="domain-split-workspace__rail"');
       expect(html).toContain('class="domain-split-workspace__main"');
-      expect(html).toContain('class="domain-split-workspace__context"');
+      expect(html).toContain(
+        'class="domain-split-workspace__context" aria-label="Contextkolom" data-domain-context-panel="compact"',
+      );
+      expect(html).toContain('class="domain-split-workspace__context-header"');
+      expect(html).toContain('Context apart paneel');
+      expect(html).toContain('<strong>Bij de taak</strong>');
     }
 
     expect(dossierHtml).toContain('class="domain-split-workspace dossier-split-workspace"');
@@ -42049,6 +42054,13 @@ describe('app shell', () => {
     expect(css).toContain('.domain-split-workspace__main {');
     expect(css).toContain('box-shadow: 0 12px 28px rgba(21, 48, 44, 0.045);');
     expect(css).toContain('background: color-mix(in srgb, var(--surface-2) 68%, var(--surface));');
+    expect(css).toContain('.domain-split-workspace__context-header {');
+    expect(css).toContain('justify-content: space-between;');
+    expect(css).toContain('position: sticky;');
+    expect(css).toContain('backdrop-filter: blur(12px);');
+    expect(css).toContain('@media (min-width: 761px) and (max-width: 960px)');
+    expect(css).toContain('.content .domain-split-workspace {');
+    expect(css).toContain('flex: 0 0 min(190px, 42vw);');
     expect(css).toContain(
       '.domain-split-workspace__main .knowledge-ai-summary-detail-choice__summary em {',
     );
