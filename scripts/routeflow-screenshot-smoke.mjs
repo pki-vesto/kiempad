@@ -233,6 +233,26 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-library-list',
+    hash: '#kennis?route=library',
+    rootSelector: '.content',
+    expectedText: 'Bibliotheeklijst openen',
+    openSelectors: [
+      '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-context-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-library-list-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-library-list="ready"]',
+      '[data-knowledge-library-card="ready"]',
+      '.knowledge-library-card__actions',
+      '[data-knowledge-library-category-card="research"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-library-list-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-add',
     hash: '#kennis?route=add',
     rootSelector: '[data-knowledge-focus-shell="ready"]',

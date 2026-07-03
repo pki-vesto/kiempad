@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1448 — Kennis bibliotheekkaartdetails starten met één compacte detailkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1447 blijven individuele kennisbibliotheekkaarten gevoelig voor veel detailtekst, bron, badges en acties tegelijk.
+- **User Impact:** Gebruikers die een lijst openen, krijgen per kaart nog inhoud, bron, statuslabels en acties in één keer aangeboden.
+- **Desired Outcome:** Laat kennis bibliotheekkaartdetails starten met één compacte detailkeuze of samengevouwen sublaag, terwijl inhoud, bron, badges, verificatieactie en bewerkactie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen kaartdetails per kennisitem bewust openen zonder dat iedere kaart de lijst visueel verzwaart.
+- **Acceptance Criteria:** Bestaande bibliotheekkaart hooks, itemhooks, badgehooks, detailacties en routehashes blijven aanwezig; bibliotheekkaartdetails starten met één compacte detailkeuze of samengevouwen sublaag; inhoud, bron, badges, verificatieactie en bewerkactie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library cards, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2840
+
 ### G1447 — Kennis bibliotheeklijst start met één compacte lijstkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library list, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2838
 
 ### G1446 — Kennis filterstatus start met één compacte statuskeuze
