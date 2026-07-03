@@ -23795,6 +23795,19 @@ a.action-card:active {
     grid-template-columns: 1fr;
   }
 
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor {
+    justify-content: flex-start;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .knowledge-library-empty-recovery-choice__feedback {
+    margin-left: auto;
+    max-width: min(12ch, 38%);
+    flex-shrink: 0;
+  }
+
   .knowledge-library-category-choice__grid {
     display: flex;
     overflow-x: auto;

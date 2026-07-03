@@ -39190,6 +39190,9 @@ describe('app shell', () => {
       '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__feedback',
     );
     expect(css).toContain('background: color-mix(in srgb, var(--surface) 82%, var(--category));');
+    expect(css).toContain('max-width: min(12ch, 38%);');
+    expect(css).toContain('margin-left: auto;');
+    expect(css).toContain('flex-shrink: 0;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
