@@ -2504,37 +2504,39 @@ function renderBackupScreen(state: AppShellState): string {
           eyebrow: 'Back-uproute',
           title: 'Eerst status controleren, details pas openen',
           detail:
-            'Syncfeedback en back-upherinnering blijven beschikbaar zonder de veiligheidsroute als lange controlelijst te tonen.',
-          primary: { href: '#backup-control-status-disclosure', label: 'Status openen' },
-          secondary: { href: '#backup-route-export', label: 'Export' },
+            'Kies eerst je veilige overdracht. Back-upherinnering en syncdetails blijven gesloten beschikbaar.',
+          primary: { href: '#backup-sync-board', label: 'Overdracht kiezen' },
+          secondary: { href: '#backup-control-status-disclosure', label: 'Statusdetails' },
           status: reminder.titel,
           ariaLabel: 'Back-up controleren route-samenvatting',
           data: { 'backup-route-summary': 'controleren' },
         })}
-        ${renderBackupReminderCard({
-          reminder,
-          central,
-          hasFeedback: Boolean(state.backupStatus || state.backupError),
-          backupStatus: state.backupStatus,
-          backupError: state.backupError,
-        })}
-        ${renderBackupSyncBoard({
-          central,
-          reminderStatus: reminder.status,
-          reminderTitle: reminder.titel,
-          hasWebAuthn: webAuthnGekoppeld,
-          hasFeedback: Boolean(state.backupStatus || state.backupError),
-          hasError: Boolean(state.backupError),
-        })}
+        <div class="backup-control-console" data-backup-control-layout="single-status-layer">
+          ${renderBackupSyncBoard({
+            central,
+            reminderStatus: reminder.status,
+            reminderTitle: reminder.titel,
+            hasWebAuthn: webAuthnGekoppeld,
+            hasFeedback: Boolean(state.backupStatus || state.backupError),
+            hasError: Boolean(state.backupError),
+          })}
+        </div>
         <details id="backup-control-status-disclosure" class="kp-disclosure" data-backup-disclosure="controleren">
           <summary class="kp-disclosure__summary">Syncstatus en back-upherinnering openen</summary>
           <div class="kp-disclosure__body">
-        ${renderCentralSyncFeedback(state)}
-        <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
-          <h2>${escapeHtml(reminder.titel)}</h2>
-          <p>${escapeHtml(reminder.tekst)}</p>
-          ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
-        </section>
+            ${renderBackupReminderCard({
+              reminder,
+              central,
+              hasFeedback: Boolean(state.backupStatus || state.backupError),
+              backupStatus: state.backupStatus,
+              backupError: state.backupError,
+            })}
+            ${renderCentralSyncFeedback(state)}
+            <section class="policy-panel embedded-summary" aria-label="Back-up herinnering" data-backup-reminder="${escapeAttribute(reminder.status)}">
+              <h2>${escapeHtml(reminder.titel)}</h2>
+              <p>${escapeHtml(reminder.tekst)}</p>
+              ${reminder.laatsteBackupLabel ? `<p>Laatst bekend: ${escapeHtml(reminder.laatsteBackupLabel)}</p>` : ''}
+            </section>
           </div>
         </details>
       </section>
@@ -2734,7 +2736,7 @@ function renderBackupSyncBoard(input: {
   ];
 
   return `
-    <section class="backup-sync-board" aria-label="Veilige overdracht startlaag" data-backup-sync-board="ready">
+    <section id="backup-sync-board" class="backup-sync-board" aria-label="Veilige overdracht startlaag" data-backup-sync-board="ready">
       <header class="backup-sync-board__header">
         <div>
           <p class="kp-card__eyebrow">Veilige overdracht</p>

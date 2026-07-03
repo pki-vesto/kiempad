@@ -2117,6 +2117,7 @@ describe('app shell', () => {
     expect(css).toContain('.finance-task-routes {');
     expect(css).toContain('.backup-task-routes {');
     expect(css).toContain('.backup-sync-board {');
+    expect(css).toContain('.backup-control-console {');
     expect(css).toContain('.backup-sync-board__header {');
     expect(css).toContain('.backup-sync-board__lanes {');
     expect(css).toContain('.backup-sync-board__lane {');
@@ -38823,6 +38824,13 @@ describe('app shell', () => {
     expect(html).toContain('data-backup-route="herstel"');
     expect(html).toContain('aria-label="Back-up controleren route-samenvatting"');
     expect(html).toContain('data-backup-route-summary="controleren"');
+    expect(html).toContain(
+      'Kies eerst je veilige overdracht. Back-upherinnering en syncdetails blijven gesloten beschikbaar.',
+    );
+    expect(html).toContain('href="#backup-sync-board"');
+    expect(html).toContain('href="#backup-control-status-disclosure"');
+    expect(html).toContain('data-backup-control-layout="single-status-layer"');
+    expect(html).toContain('id="backup-sync-board"');
     expect(html).toContain('data-backup-sync-board="ready"');
     expect(html).toContain('aria-label="Veilige overdracht startlaag"');
     expect(html).toContain('Kies eerst je veilige overdracht');
@@ -38843,6 +38851,12 @@ describe('app shell', () => {
     );
     expect(html.indexOf('data-backup-sync-board="ready"')).toBeLessThan(
       html.indexOf('data-backup-disclosure="controleren"'),
+    );
+    expect(html.indexOf('data-backup-disclosure="controleren"')).toBeLessThan(
+      html.indexOf('data-backup-reminder-card="ready"'),
+    );
+    expect(html).not.toContain(
+      '<details id="backup-control-status-disclosure" class="kp-disclosure" data-backup-disclosure="controleren" open',
     );
     expect(html).toContain('Syncstatus en back-upherinnering openen');
     expect(html).toContain('aria-label="Back-up export route-samenvatting"');

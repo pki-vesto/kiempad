@@ -7220,6 +7220,12 @@ h2 {
   min-width: 0;
 }
 
+.backup-control-console {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
 .backup-sync-board {
   display: grid;
   gap: 12px;

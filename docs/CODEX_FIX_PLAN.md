@@ -229,6 +229,10 @@
 - **Knowledge add single input — done in G1480 / issue #2722.** The Kennis add route now opens with
   one primary research/publication form while the own-knowledge form remains available in a closed
   follow-up disclosure, preserving form hooks, privacy boundaries, and non-medical context.
+- **Backup control single status layer — done in G1481 / issue #2724.** The Back-up controleren
+  route now starts with one visible safe-transfer/status board while the backup reminder,
+  syncfeedback, and detail status remain available in a closed details layer, preserving export,
+  import, recovery, copy/download hooks, and encrypted-data boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
