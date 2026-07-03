@@ -8642,6 +8642,16 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-imaging-followup {');
     expect(css).toContain('.dossier-imaging-followup__summary {');
     expect(css).toContain('.dossier-imaging-followup__body {');
+    expect(css).toContain('.dossier-imaging-context-choice {');
+    expect(css).toContain('.dossier-imaging-context-choice__summary {');
+    expect(css).toContain('.dossier-imaging-context-choice__summary::after {');
+    expect(css).toContain(
+      '.dossier-imaging-context-choice[open] > .dossier-imaging-context-choice__summary::after',
+    );
+    expect(css).toContain('.dossier-imaging-context-choice__body {');
+    expect(css).toContain(
+      '.dossier-imaging-context-choice:not([open]) > .dossier-imaging-context-choice__body {',
+    );
     expect(css).toContain('.dossier-timeline-focus {');
     expect(css).toContain('.dossier-timeline-focus__header {');
     expect(css).toContain('.dossier-timeline-followup {');
@@ -9232,13 +9242,23 @@ describe('app shell', () => {
     expect(emptyHtml).toContain(
       'Consulten, beeldenoverzicht, vergelijking, index en embryo-dossiers',
     );
+    expect(emptyHtml).toContain('data-dossier-imaging-context-choice="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-imaging-context-summary="ready"');
+    expect(emptyHtml).toContain('Kies beeldcontext');
+    expect(emptyHtml).toContain('Consulten, beeldenoverzicht, index of embryo-dossiers');
     expect(emptyHtml.indexOf('data-dossier-imaging-inspection-board="ready"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-imaging-followup="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-imaging-followup="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-imaging-context-choice="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-imaging-context-choice="collapsed"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-imaging-disclosure="consults"'),
     );
     expect(emptyHtml).not.toContain('<details id="dossier-imaging-followup" open');
+    expect(emptyHtml).not.toContain(
+      '<details class="dossier-imaging-context-choice" data-dossier-imaging-context-choice="collapsed" open>',
+    );
     expect(emptyHtml).toContain('data-hub-detail-panel="imaging-repository"');
     expect(emptyHtml).toContain('Filters, kenmerken en vergelijkingen');
     expect(emptyHtml).toContain('<em>0 beelden</em>');

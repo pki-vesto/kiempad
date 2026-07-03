@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1433 — Dossier upload afrondingscontext start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1432 blijven uploadafronding en vervolgcontext gevoelig voor meerdere status- en actiepanelen tegelijk zodra gebruikers een uploadflow afronden.
+- **User Impact:** Gebruikers die een upload afronden, moeten alsnog meerdere statusblokken en vervolgstappen tegelijk scannen.
+- **Desired Outcome:** Laat de dossier upload afrondingscontext starten met één compacte statuskeuze of samengevouwen sublaag, terwijl opslagstatus, reviewstap, metadata en vervolgroutes bereikbaar blijven.
+- **User Value:** Gebruikers kunnen afronden en vervolgen zonder dat de uploadroute als brede statuspagina voelt.
+- **Acceptance Criteria:** Bestaande upload submitfeedback hooks, routehashes en vervolgacties blijven aanwezig; de upload afrondingscontext start met één compacte statuskeuze of samengevouwen sublaag; opslagstatus, reviewstap, metadata en vervolgroutes blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload submit feedback, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2810
+
 ### G1432 — Dossier imaging follow-up start met één compacte beeldcontextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier imaging follow-up, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2808
 
 ### G1431 — Dossier tijdlijnroute start met één compacte tijdlijnkeuze
