@@ -61,6 +61,11 @@ describe('main bootstrap', () => {
     expect(mainSource).toContain('dismissDailyRecommendationRouteFocusStatus(root, state)');
     expect(mainSource).toContain('dailyRecommendationRouteFocusDismissed = true');
     expect(mainSource).toContain('dailyRecommendationRouteFocusDismissed = false');
+    expect(mainSource).toContain('dailyRecommendationRouteFocusPendingFocus = true');
+    expect(mainSource).toContain('dailyRecommendationRouteFocusPendingFocus = false');
+    expect(mainSource).toContain('focusDailyRecommendationRouteFocusStatus(root)');
+    expect(mainSource).toContain('function focusDailyRecommendationRouteFocusStatus');
+    expect(mainSource).toContain('?.focus({ preventScroll: true })');
     expect(mainSource).toContain('querySelectorAll<HTMLFormElement>');
     expect(mainSource).toContain('applyDailyRecommendationFeedbackFilter');
     expect(mainSource).toContain('dailyRecommendationFeedbackFilter');

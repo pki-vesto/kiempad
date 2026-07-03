@@ -178,6 +178,7 @@ type RuntimeState = {
   dailyRecommendationStatus?: string;
   dailyRecommendationRouteFocusStatus?: string;
   dailyRecommendationRouteFocusDismissed?: boolean;
+  dailyRecommendationRouteFocusPendingFocus?: boolean;
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   settingsOpen: boolean;
@@ -286,6 +287,9 @@ function render(root: HTMLElement, state: RuntimeState): void {
   bindAfwegingControls(root, state);
   bindKostenControls(root, state);
   bindBackupControls(root, state);
+  if (state.dailyRecommendationRouteFocusPendingFocus) {
+    focusDailyRecommendationRouteFocusStatus(root);
+  }
   scheduleLocalNotifications(
     state.herinneringen,
     state.settings,
@@ -1725,6 +1729,7 @@ function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState)
 
 function dismissDailyRecommendationRouteFocusStatus(root: HTMLElement, state: RuntimeState): void {
   state.dailyRecommendationRouteFocusDismissed = true;
+  state.dailyRecommendationRouteFocusPendingFocus = false;
   render(root, state);
 }
 
@@ -1781,6 +1786,7 @@ function applyDailyRecommendationFeedbackFilter(
   if (submitter instanceof HTMLButtonElement && submitter.value === 'reset') {
     state.dailyRecommendationFeedbackFilter = undefined;
     state.dailyRecommendationRouteFocusDismissed = false;
+    state.dailyRecommendationRouteFocusPendingFocus = true;
     state.dailyRecommendationRouteFocusStatus =
       buildDailyRecommendationResetRouteFocusStatus(submitter);
     setDailyRecommendationFeedbackFilterHash();
@@ -1793,6 +1799,7 @@ function applyDailyRecommendationFeedbackFilter(
   );
   state.dailyRecommendationRouteFocusStatus = undefined;
   state.dailyRecommendationRouteFocusDismissed = false;
+  state.dailyRecommendationRouteFocusPendingFocus = false;
   setDailyRecommendationFeedbackFilterHash(state.dailyRecommendationFeedbackFilter);
   render(root, state);
 }
@@ -1805,6 +1812,12 @@ function buildDailyRecommendationResetRouteFocusStatus(submitter: HTMLButtonElem
     return 'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.';
   }
   return 'Lokale feedbackfilter gewist vanuit het filterformulier. Je blijft op Dagadvies.';
+}
+
+function focusDailyRecommendationRouteFocusStatus(root: HTMLElement): void {
+  root
+    .querySelector<HTMLElement>('[data-daily-recommendation-reset-route-focus="ready"]')
+    ?.focus({ preventScroll: true });
 }
 
 function setDailyRecommendationFeedbackFilterHash(

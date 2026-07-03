@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1367 — Daily Recommendations: resetmelding behoudt focusstijl in forced-colors
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding krijgt voorspelbaar focus na een nieuwe reset, maar de gefocuste staat in forced-colors/high-contrast is nog niet apart geborgd.
+- **User Impact:** Gebruikers met high-contrast instellingen kunnen de focuscontext van de resetbevestiging minder duidelijk herkennen.
+- **Desired Outcome:** Borg een duidelijke, rustige forced-colors focusstijl voor de gefocuste resetmelding en de Verberg-knop.
+- **User Value:** Toegankelijkheidsgebruikers houden dezelfde voorspelbare resetfeedback met herkenbare focus.
+- **Acceptance Criteria:** De reset-routefocusmelding heeft een zichtbare focusstijl in forced-colors; de Verberg-knop behoudt een duidelijke focusstijl zonder extra overflow op mobiel/desktop; de focusstijl verandert geen hash, feedbackfilter, tracking of medische data; tests of CSS guards bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, accessibility, CSS tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2680
+
 ### G1366 — Daily Recommendations: resetmelding heeft toetsenbordfocus na nieuwe reset
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, accessibility, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2678
 
 ### G1365 — Daily Recommendations: resetmelding bewaart sluitstatus bij her-render
