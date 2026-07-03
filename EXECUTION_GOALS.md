@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1429 — Dossier zoekroute start met één compacte zoekkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1428 is de reviewroute rustiger, maar de zoekroute kan nog brede zoek-, filter- en indexcontext tegelijk tonen.
+- **User Impact:** Gebruikers die alleen gericht willen zoeken, moeten alsnog meerdere zoekcontexten tegelijk scannen.
+- **Desired Outcome:** Laat de dossier zoekroute starten met één compacte zoekkeuze of samengevouwen contextlaag, terwijl metadata zoeken, OCR/notities zoeken en indexcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen zoeken zonder dat de route als brede filterpagina start.
+- **Acceptance Criteria:** Bestaande zoekroute hooks, filter hooks en routehashes blijven aanwezig; de zoekroute start met één compacte zoekkeuze of samengevouwen contextlaag; metadata zoeken, OCR/notities zoeken en indexcontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier zoeken
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier search route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2802
+
 ### G1428 — Dossier review follow-up start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier review follow-up, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2800
 
 ### G1427 — Dossier upload reviewroute start met één compacte reviewkeuze

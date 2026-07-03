@@ -592,6 +592,10 @@ const targets = [
       '[data-dossier-review-primary-choice="collapsed"]',
       '[data-dossier-review-primary-summary="ready"]',
       '[data-dossier-review-followup="collapsed"] > .dossier-review-followup__summary',
+      '[data-dossier-review-context-choice="collapsed"]',
+      '[data-dossier-review-context-summary="ready"]',
+    ],
+    presentSelectors: [
       '#dossier-review-queue-disclosure',
       '#dossier-inbox-disclosure',
       '[data-dossier-review-disclosure="queue"]',
@@ -600,6 +604,7 @@ const targets = [
     closedDetailsSelectors: [
       '[data-dossier-review-primary-choice="collapsed"]',
       '[data-dossier-review-followup="collapsed"]',
+      '[data-dossier-review-context-choice="collapsed"]',
     ],
     dossierConsole: true,
     desktopHiddenSelectors: [

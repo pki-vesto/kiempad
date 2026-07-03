@@ -1240,6 +1240,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   upload, review, consult and context routes keep their hooks and active state.
   Partial G1427/#2798: The dossier review route now starts with one closed compact review choice
   while review queue, inbox and storage context remain reachable.
+  Partial G1428/#2800: The dossier review follow-up now starts with one closed compact context
+  choice while queue, import inbox and duplicate context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
