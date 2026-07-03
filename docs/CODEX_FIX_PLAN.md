@@ -41,6 +41,9 @@
   now opens with one primary category-choice board while the full category library, card actions,
   edit details, and item hooks sit behind one closed follow-up disclosure with stable category
   anchors.
+- **Start dashboard single day action — done in G1497 / issue #2754.** Start now opens with one
+  primary day-action surface while dashboard context, dossierbasis, core workspaces, and setup sit
+  behind one closed follow-up disclosure, preserving cockpit, workspace, and route hooks.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
