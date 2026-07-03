@@ -3629,6 +3629,15 @@ function renderDossierScreen(state: AppShellState): string {
             <em>${reviewWachtrij.length} review · ${importInboxItems.length} inbox</em>
           </summary>
           <div class="kp-disclosure__body dossier-review-followup__body">
+            <details class="dossier-review-context-choice" data-dossier-review-context-choice="collapsed">
+              <summary class="dossier-review-context-choice__summary" data-dossier-review-context-summary="ready">
+                <span>
+                  <strong>Kies reviewcontext</strong>
+                  <small>Wachtrij, import-inbox of duplicaatcontrole</small>
+                </span>
+                <em>${reviewWachtrij.length} review · ${importInboxItems.length} inbox</em>
+              </summary>
+              <div class="dossier-review-context-choice__body">
         <details id="dossier-review-queue-disclosure" class="kp-disclosure" data-dossier-review-disclosure="queue">
           <summary class="kp-disclosure__summary">Documentreview wachtrij openen</summary>
           <div class="kp-disclosure__body">
@@ -3670,6 +3679,8 @@ function renderDossierScreen(state: AppShellState): string {
             }
           </div>
         </details>
+              </div>
+            </details>
           </div>
         </details>
           </section>

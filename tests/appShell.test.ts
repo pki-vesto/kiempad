@@ -8644,6 +8644,16 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-review-followup {');
     expect(css).toContain('.dossier-review-followup__summary {');
     expect(css).toContain('.dossier-review-followup__body {');
+    expect(css).toContain('.dossier-review-context-choice {');
+    expect(css).toContain('.dossier-review-context-choice__summary {');
+    expect(css).toContain('.dossier-review-context-choice__summary::after {');
+    expect(css).toContain(
+      '.dossier-review-context-choice[open] > .dossier-review-context-choice__summary::after',
+    );
+    expect(css).toContain('.dossier-review-context-choice__body {');
+    expect(css).toContain(
+      '.dossier-review-context-choice:not([open]) > .dossier-review-context-choice__body {',
+    );
     expect(css).toContain('.knowledge-research-primary-focus {');
     expect(css).toContain('.knowledge-research-primary-focus > .knowledge-research-reader {');
     expect(css).toContain('.knowledge-research-followup {');
@@ -9266,6 +9276,10 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-review-followup="collapsed"');
     expect(emptyHtml).toContain('Reviewcontext openen');
     expect(emptyHtml).toContain('Documentreview wachtrij, import-inbox en duplicaatcontext');
+    expect(emptyHtml).toContain('data-dossier-review-context-choice="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-review-context-summary="ready"');
+    expect(emptyHtml).toContain('Kies reviewcontext');
+    expect(emptyHtml).toContain('Wachtrij, import-inbox of duplicaatcontrole');
     expect(emptyHtml.indexOf('data-dossier-review-primary-task="ready"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-review-followup="collapsed"'),
     );
@@ -9273,6 +9287,9 @@ describe('app shell', () => {
       emptyHtml.indexOf('id="dossier-review-queue-disclosure"'),
     );
     expect(emptyHtml).not.toContain('<details id="dossier-review-followup" open');
+    expect(emptyHtml).not.toContain(
+      '<details class="dossier-review-context-choice" data-dossier-review-context-choice="collapsed" open>',
+    );
     expect(emptyHtml).not.toContain(
       '<details id="dossier-review-primary-task" class="dossier-review-primary-task" aria-label="Dossier review primaire taak" data-dossier-review-primary-task="ready" data-dossier-review-primary-choice="collapsed" open>',
     );
