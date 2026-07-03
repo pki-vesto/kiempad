@@ -245,6 +245,10 @@
   route now opens with the decision note form as the primary task while compare, choice, and report
   routes sit behind one closed follow-up context, preserving form hooks, hashes, and non-advice
   boundaries.
+- **Finance add single cost task — done in G1485 / issue #2730.** The Kosten toevoegen route now
+  opens with the cost form as the primary task while overview, reimbursement, and history routes
+  sit behind one closed follow-up context, preserving form hooks, hashes, and non-advice financial
+  boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

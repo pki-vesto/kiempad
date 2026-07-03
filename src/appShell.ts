@@ -12901,19 +12901,35 @@ function renderKostenScreen(state: AppShellState): string {
           eyebrow: 'Kostenroute',
           title: 'Nieuwe kostenpost toevoegen zonder historie erboven',
           detail:
-            'Het invoerformulier blijft de primaire taak; bestaande kostenposten staan in de historieroute.',
+            'Het invoerformulier staat vooraan. Overzicht, vergoeding en historie open je pas als vervolgcontext.',
           primary: { href: '#kosten-form', label: 'Formulier' },
-          secondary: { href: '#kosten-route-overzicht', label: 'Overzicht' },
+          secondary: { href: '#finance-add-followup', label: 'Vervolgcontext' },
           status: `${kosten.length} posten`,
           ariaLabel: 'Kosten toevoegen route-samenvatting',
           data: { 'finance-route-summary': 'toevoegen' },
         })}
         ${renderKostenStatus(state.kostenStatus, 'toevoegen')}
-        ${disclosure({
-          summary: 'Kostenpost toevoegen',
-          open: kosten.length === 0,
-          body: renderKostenForm(),
-        })}
+        <div class="finance-add-console" data-finance-add-layout="single-input">
+          <div class="summary-panel finance-add-primary" data-finance-add-primary="kosten-form">
+            <h3>Kostenpost toevoegen</h3>
+            <p class="small-print">Leg alleen de lokale factuur- of betaalregel vast. Kiempad geeft geen financieel advies of polisinterpretatie.</p>
+            ${renderKostenForm()}
+          </div>
+          <details id="finance-add-followup" class="kp-disclosure finance-add-followup" data-finance-add-followup="collapsed">
+            <summary class="kp-disclosure__summary finance-add-followup__summary">
+              <span>
+                <strong>Vervolgcontext openen</strong>
+                <small>Bekijk totalen, vergoeding of historie pas na de invoer.</small>
+              </span>
+              <em>${kosten.length} posten</em>
+            </summary>
+            <div class="kp-disclosure__body finance-add-followup__body">
+              <a href="#kosten?route=overzicht">Overzicht bekijken</a>
+              <a href="#kosten?route=vergoeding">Vergoeding controleren</a>
+              <a href="#kosten?route=historie">Historie openen</a>
+            </div>
+          </details>
+        </div>
       </section>
       <section id="kosten-route-vergoeding" class="finance-route-section" aria-labelledby="kosten-route-vergoeding-title" data-finance-route="vergoeding"${renderFinanceRouteVisibility(activeFinanceRoute, 'vergoeding')}>
         <header class="finance-route-section__header">
