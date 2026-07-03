@@ -39327,6 +39327,8 @@ describe('app shell', () => {
     const focusBadgeFeedbackBlockSizePx = 22;
     const hoverBadgeFeedbackBlockSizePx = 22;
     const hoverBadgeFeedbackStableBlockSizePx = 22;
+    const focusBadgeFeedbackWidthCh = 12;
+    const focusBadgeFeedbackWidthPercent = 38;
     const hoverBadgeFeedbackWidthCh = 12;
     const hoverBadgeFeedbackWidthPercent = 38;
     const hoverBadgeFeedbackMaxWidthCh = 12;
@@ -39352,6 +39354,8 @@ describe('app shell', () => {
     expect(focusBadgeFeedbackWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
     expect(focusBadgeFeedbackBlockSizePx).toBe(hoverBadgeFeedbackBlockSizePx);
     expect(hoverBadgeFeedbackBlockSizePx).toBe(hoverBadgeFeedbackStableBlockSizePx);
+    expect(focusBadgeFeedbackWidthCh).toBe(hoverBadgeFeedbackWidthCh);
+    expect(focusBadgeFeedbackWidthPercent).toBe(hoverBadgeFeedbackWidthPercent);
     expect(hoverBadgeFeedbackWidthCh).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthCh);
     expect(hoverBadgeFeedbackWidthPercent).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthPercent);
     expect(hoverBadgeFeedbackMinWidthCh).toBeGreaterThanOrEqual(
