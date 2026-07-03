@@ -14708,7 +14708,8 @@ function renderDailyRecommendationRouteFocusStatus(status: string): string {
   return `
     <div class="status-message daily-recommendation-reset-route-focus" data-daily-recommendation-reset-route-focus="ready" tabindex="-1">
       <span role="status">${escapeHtml(status)}</span>
-      <button type="button" class="daily-recommendation-reset-route-focus__close" data-daily-recommendation-reset-route-focus-close="ready" aria-label="Verberg lokale resetmelding">Verberg</button>
+      <button type="button" class="daily-recommendation-reset-route-focus__close" data-daily-recommendation-reset-route-focus-close="ready" aria-label="Verberg lokale resetmelding" aria-describedby="daily-recommendation-reset-route-focus-help">Verberg</button>
+      <small id="daily-recommendation-reset-route-focus-help" class="daily-recommendation-reset-route-focus__help" data-daily-recommendation-reset-route-focus-help="ready">Verberg sluit alleen deze lokale melding. Als verbergen tijdelijk niet kan, blijft focus hier.</small>
     </div>
   `;
 }

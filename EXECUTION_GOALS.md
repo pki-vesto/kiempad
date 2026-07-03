@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1375 — Daily Recommendations: resetmelding bewaakt helptekst op smalle schermen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding toont korte context bij de lokale Verberg-actie, maar smalle schermen en lange Nederlandse labels hebben nog geen aparte guard.
+- **User Impact:** Gebruikers op mobiel kunnen een minder rustige resetmelding ervaren als helptekst, statusregel en Verberg-knop te dicht op elkaar komen.
+- **Desired Outcome:** Borg dat de reset-helptekst op mobiel compact blijft zonder overlap met de Verberg-knop of statusregel.
+- **User Value:** De resetfeedback blijft leesbaar en tapbaar op smalle schermen.
+- **Acceptance Criteria:** Reset-helptekst blijft leesbaar binnen smalle viewports zonder overlap of horizontale scroll; Verberg-knop behoudt tapbare grootte en duidelijke focuscontext; de mobiele guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, responsive CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2696
+
 ### G1374 — Daily Recommendations: resetmelding toont guarded hide uitleg
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, guarded states, copy tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2694
 
 ### G1373 — Daily Recommendations: resetmelding borgt focus bij guarded hide

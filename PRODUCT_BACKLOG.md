@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1175 |
+| ☑ klaar | 1176 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1374** |
+| **Totaal** | **1375** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1536,13 +1536,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1371 | Daily Recommendations: resetmelding borgt active-state op touch | P1 | F5 | ☑ |
 | G1372 | Daily Recommendations: resetmelding borgt disabled/verberg-state | P1 | F5 | ☑ |
 | G1373 | Daily Recommendations: resetmelding borgt focus bij guarded hide | P1 | F5 | ☑ |
-| G1374 | Daily Recommendations: resetmelding toont guarded hide uitleg | P1 | F5 | ☐ |
+| G1374 | Daily Recommendations: resetmelding toont guarded hide uitleg | P1 | F5 | ☑ |
+| G1375 | Daily Recommendations: resetmelding bewaakt helptekst op smalle schermen | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1374** (id's G001 t/m G1374, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1375** (id's G001 t/m G1375, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

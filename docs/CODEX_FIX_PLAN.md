@@ -184,6 +184,9 @@
 - **Daily advice feedback reset route-focus guarded focus — done in G1466 / issue #2692.**
   A guarded local hide action now returns keyboard focus to the reset confirmation and ignores the
   hide click, preserving hash, feedback filter, tracking state, and medical-data boundaries.
+- **Daily advice feedback reset route-focus guarded copy — done in G1467 / issue #2694.**
+  The reset confirmation now includes compact helper copy and an `aria-describedby` link for the
+  local hide action, explaining the guarded focus behavior without adding medical or tracking data.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
