@@ -13491,7 +13491,19 @@ function renderKennisFilterForm(filter: KennisFilter): string {
                 <em>${escapeHtml(activeFilterCount > 0 ? `${activeFilterCount} actief` : 'Geen filter')}</em>
               </summary>
               <div class="knowledge-filter-status-choice__body">
-                <span data-knowledge-filter-status-detail="ready">${escapeHtml(status)}</span>
+                <details class="knowledge-filter-status-detail-choice" data-knowledge-filter-status-detail-choice="collapsed">
+                  <summary class="knowledge-filter-status-detail-choice__summary">
+                    <span>
+                      <strong>Statusdetail openen</strong>
+                      <small>Actieve telling, filterdetails en resetcontext.</small>
+                    </span>
+                    <em>${escapeHtml(activeFilterCount > 0 ? `${activeFilterCount} actief` : 'Geen filter')}</em>
+                  </summary>
+                  <div class="knowledge-filter-status-detail-choice__body">
+                    <span data-knowledge-filter-status-detail="ready">${escapeHtml(status)}</span>
+                    <small>Reset staat bij Filtervelden openen.</small>
+                  </div>
+                </details>
               </div>
             </details>
           </header>

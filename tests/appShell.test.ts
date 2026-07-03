@@ -38194,7 +38194,11 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-filter-status-choice="collapsed"');
     expect(html).toContain('Filterstatus bekijken');
     expect(html).toContain('Open actieve telling, filterdetails en resetcontext.');
+    expect(html).toContain('data-knowledge-filter-status-detail-choice="collapsed"');
+    expect(html).toContain('Statusdetail openen');
+    expect(html).toContain('Actieve telling, filterdetails en resetcontext.');
     expect(html).toContain('data-knowledge-filter-status-detail="ready"');
+    expect(html).toContain('Reset staat bij Filtervelden openen.');
     expect(html).toContain('data-knowledge-filter-fields-choice="collapsed"');
     expect(html).toContain('Filtervelden openen');
     expect(html).toContain('Zoekterm, categorie, bron, verificatie en reset.');
@@ -38218,6 +38222,9 @@ describe('app shell', () => {
       html.indexOf('class="knowledge-filter-kit__fields"'),
     );
     expect(html.indexOf('data-knowledge-filter-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-filter-status-detail-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-filter-status-detail-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-filter-status-detail="ready"'),
     );
     expect(html).not.toContain(
@@ -38225,6 +38232,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="knowledge-filter-status-choice" data-knowledge-filter-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-filter-status-detail-choice" data-knowledge-filter-status-detail-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="knowledge-filter-fields-choice" data-knowledge-filter-fields-choice="collapsed" open>',
@@ -38952,6 +38962,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-filter-status-choice:not([open]) > .knowledge-filter-status-choice__body {',
     );
+    expect(css).toContain('.knowledge-filter-status-detail-choice {');
+    expect(css).toContain('.knowledge-filter-status-detail-choice__summary {');
     expect(css).toContain('.knowledge-add-route-status-choice {');
     expect(css).toContain('.knowledge-add-route-status-choice__summary {');
     expect(css).toContain('.knowledge-add-route-status-choice__body {');

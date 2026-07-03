@@ -1321,6 +1321,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   reachable.
   Partial G1467/#2878: The knowledge library filter panel now starts with one closed compact
   filter fields choice while search, category, source, verification and reset remain reachable.
+  Partial G1468/#2880: The knowledge library filter status now starts with one closed compact
+  status detail choice while active counts, filter details and reset context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

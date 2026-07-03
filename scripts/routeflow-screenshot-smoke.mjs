@@ -224,10 +224,14 @@ const targets = [
       '[data-knowledge-filter-status-choice="collapsed"]',
     ],
     presentSelectors: [
+      '[data-knowledge-filter-status-detail-choice="collapsed"]',
       '[data-knowledge-filter-status-detail="ready"]',
       '.knowledge-filter-kit__actions button[name="filterAction"][value="clear"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-filter-status-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-filter-status-choice="collapsed"]',
+      '[data-knowledge-filter-status-detail-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-library',
