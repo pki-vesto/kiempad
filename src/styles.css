@@ -15646,6 +15646,13 @@ a.action-card:active {
   gap: 12px;
 }
 
+.dossier-upload-completion[data-dossier-upload-completion-choice="ready"] {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  max-width: 58ch;
+}
+
 .dossier-submit-action {
   justify-self: start;
   min-width: min(100%, 220px);
@@ -16111,9 +16118,18 @@ a.action-card:active {
 .dossier-upload-optional.dossier-upload-metadata-fields,
 .dossier-upload-optional.dossier-upload-link-fields,
 .dossier-upload-optional.dossier-upload-image-fields,
-.dossier-upload-optional.dossier-upload-lab-fields {
+.dossier-upload-optional.dossier-upload-lab-fields,
+.dossier-upload-optional.dossier-upload-submit-feedback-details {
   margin: 0 10px 10px;
   background: var(--surface);
+}
+
+.dossier-upload-completion > .dossier-upload-submit-feedback-details {
+  margin: 0;
+}
+
+.dossier-upload-submit-feedback-details > .dossier-submit-feedback {
+  margin: 0 10px 10px;
 }
 
 .dossier-upload-optional {

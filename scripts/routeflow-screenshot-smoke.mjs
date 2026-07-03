@@ -393,6 +393,9 @@ const targets = [
       '[data-dossier-upload-optional="koppelingen"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="beeldcontext"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="embryo-labcontext"] > .dossier-upload-optional__summary',
+      '[data-dossier-upload-completion-choice="ready"]',
+      '[data-dossier-upload-submit-feedback-details="collapsed"]',
+      '[data-dossier-upload-submit-feedback-details="collapsed"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     closedDetailsSelectors: [
@@ -400,6 +403,7 @@ const targets = [
       '[data-dossier-upload-optional="koppelingen"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
+      '[data-dossier-upload-submit-feedback-details="collapsed"]',
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     desktopHiddenSelectors: [
