@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1488 — Kennis bibliotheek herstelkeuze toont compacte statuscontext
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1487 start de lege-staat herstelkeuze compact, maar mist zij nog een statuscontext die uitlegt waarom herstel nodig is voordat acties openen.
+- **User Impact:** Gebruikers kunnen een herstelkeuze zien zonder meteen te begrijpen of het om filter, categorie of ontbrekende kennis gaat.
+- **Desired Outcome:** Laat de herstelkeuze van de Kennis Bibliotheek lege-staat starten met een compacte statuscontext of samengevouwen statusregel voordat acties openen.
+- **User Value:** Gebruikers begrijpen eerst de lege bibliotheekstatus en kiezen daarna pas een herstelactie.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; de herstelkeuze toont compacte statuscontext of een samengevouwen statusregel voordat acties openen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken statuscontext, herstelacties en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery choice, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2920
+
 ### G1487 — Kennis bibliotheek herstelacties starten met compacte keuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery actions, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2918
 
 ### G1486 — Kennis bibliotheek lege-staat biedt compacte herstelactie

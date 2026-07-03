@@ -13086,11 +13086,20 @@ function renderKennisScreen(state: AppShellState): string {
                 ${
                   hasVisibleKennisItems
                     ? ''
-                    : `<span class="knowledge-library-followup-visibility-choice__recovery" data-knowledge-library-empty-recovery="ready">
-                        <a class="knowledge-library-followup-visibility-choice__anchor" href="#kennis?route=library" data-knowledge-library-empty-recovery-action="clear-filter">Filter wissen</a>
-                        <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-empty-recovery-action="category">Categorie kiezen</a>
-                        <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#kennis?route=add" data-knowledge-library-empty-recovery-action="add">Kennis toevoegen</a>
-                      </span>`
+                    : `<details class="knowledge-library-empty-recovery-choice" data-knowledge-library-empty-recovery-choice="collapsed" data-knowledge-library-empty-recovery="ready">
+                        <summary class="knowledge-library-empty-recovery-choice__summary">
+                          <span>
+                            <strong>Herstelactie kiezen</strong>
+                            <small>Filter wissen, categorie kiezen of kennis toevoegen.</small>
+                          </span>
+                          <em>3 acties</em>
+                        </summary>
+                        <div class="knowledge-library-empty-recovery-choice__body">
+                          <a class="knowledge-library-followup-visibility-choice__anchor" href="#kennis?route=library" data-knowledge-library-empty-recovery-action="clear-filter">Filter wissen</a>
+                          <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-empty-recovery-action="category">Categorie kiezen</a>
+                          <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#kennis?route=add" data-knowledge-library-empty-recovery-action="add">Kennis toevoegen</a>
+                        </div>
+                      </details>`
                 }
                 <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-followup-visibility-anchor="category">Categoriekeuze</a>
                 <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="list">Bibliotheeklijst</a>

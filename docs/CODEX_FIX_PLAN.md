@@ -1365,6 +1365,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   row when filters or categories leave no visible knowledge items.
   Partial G1486/#2916: The knowledge library empty-state row now exposes compact recovery actions
   for clearing filters, choosing a category and adding knowledge.
+  Partial G1487/#2918: The knowledge library empty-state recovery actions now start behind one
+  compact closed recovery choice while all recovery actions remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
