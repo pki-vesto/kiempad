@@ -1306,6 +1306,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   lane choice while Scientific, Plain-language, Relevance and Trends lanes remain reachable.
   Partial G1460/#2864: The knowledge research follow-up now starts with one closed compact
   context choice while sources, summaries, relevance and trends remain reachable.
+  Partial G1461/#2866: The nested knowledge research context choice now starts with one closed
+  compact detail choice while sources, summaries and trend context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

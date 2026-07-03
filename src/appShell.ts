@@ -12726,11 +12726,11 @@ function renderKennisScreen(state: AppShellState): string {
             <em>${researchBronnen.length} bronnen</em>
           </summary>
           <div class="kp-disclosure__body knowledge-research-followup__body">
-            <details class="knowledge-research-context-choice" data-knowledge-research-context-choice="collapsed">
+            <details class="knowledge-research-context-choice knowledge-research-detail-choice" data-knowledge-research-context-choice="collapsed" data-knowledge-research-detail-choice="collapsed">
               <summary class="knowledge-research-context-choice__summary">
                 <span>
-                  <strong>Kies researchcontext</strong>
-                  <small>Open daarna bronnen, samenvattingen of trendcontext</small>
+                  <strong>Researchdetail kiezen</strong>
+                  <small>Open bronnen, samenvattingen of trendcontext.</small>
                 </span>
                 <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} samenvattingen</em>
               </summary>

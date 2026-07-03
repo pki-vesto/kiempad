@@ -6753,6 +6753,10 @@ h2 {
     color-mix(in srgb, var(--surface) 94%, var(--surface-2));
 }
 
+.knowledge-research-detail-choice {
+  min-width: 0;
+}
+
 .knowledge-research-context-choice__summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

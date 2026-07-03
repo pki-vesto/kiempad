@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1462 — Kennis research bronnenpaneel start met één compacte bronnenkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1461 blijft het research bronnenpaneel gevoelig voor broncache en detailcontext tegelijk.
+- **User Impact:** Gebruikers die bronnen openen, krijgen nog meerdere bronsignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat het kennis research bronnenpaneel starten met één compacte bronnenkeuze of samengevouwen sublaag, terwijl broncache en researchdetails bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één bronnenkeuze maken zonder dat alle broninformatie tegelijk de detailcontext domineert.
+- **Acceptance Criteria:** Bestaande research bronnen hooks, disclosure ids en routehashes blijven aanwezig; het bronnenpaneel start met één compacte bronnenkeuze of samengevouwen sublaag; broncache en researchdetails blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research sources panel, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2868
+
 ### G1461 — Kennis research nested contextkeuze start met één compacte detailkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research context choice, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2866
 
 ### G1460 — Kennis research vervolgcontext start met één compacte contextkeuze
