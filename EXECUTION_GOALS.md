@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1469 — Kennis bibliotheek lijst start met één compacte lijstkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1468 blijft de kennis bibliotheek lijst gevoelig voor itemkaarten, categorie, status en broninformatie tegelijk.
+- **User Impact:** Gebruikers die de bibliotheeklijst openen, krijgen nog meerdere itemkaarten en metadata voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis bibliotheek lijst starten met één compacte lijstkeuze of samengevouwen sublaag, terwijl itemkaarten, categorie, status en broninformatie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één lijstcontext kiezen zonder dat alle bibliotheekitems tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande bibliotheeklijst hooks, itemkaarten en routehash blijven aanwezig; de lijst start met één compacte keuze of samengevouwen sublaag; itemkaarten, categorie, status en broninformatie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, kennis library list, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2882
+
 ### G1468 — Kennis bibliotheek filterstatus start met één compacte statusdetailkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, kennis filter status, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2880
 
 ### G1467 — Kennis bibliotheek filterpaneel start met één compacte filterkeuze
