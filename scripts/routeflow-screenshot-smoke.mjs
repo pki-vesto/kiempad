@@ -347,6 +347,8 @@ const targets = [
       '[data-dossier-upload-lane="ocr"]',
       '[data-dossier-add-route-group="collapsed"]',
       '[data-dossier-add-route-group-summary="ready"]',
+      '[data-dossier-add-route-microcopy-details="collapsed"]',
+      '[data-dossier-add-route-microcopy-summary="ready"]',
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"]',
@@ -354,7 +356,10 @@ const targets = [
       '[data-dossier-upload-console-region="selector"]',
       '[data-dossier-add-route-choice="ready"]',
     ],
-    closedDetailsSelectors: ['[data-dossier-add-route-group="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-dossier-add-route-group="collapsed"]',
+      '[data-dossier-add-route-microcopy-details="collapsed"]',
+    ],
     hiddenSelectors: [
       '[data-dossier-add-route-panel="dossier-upload"]',
       '[data-dossier-add-route-panel="consult-upload"]',

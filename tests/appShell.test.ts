@@ -7658,6 +7658,13 @@ describe('app shell', () => {
     expect(addSection).toContain(
       'Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.',
     );
+    expect(addSection).toContain('data-dossier-add-route-microcopy-details="collapsed"');
+    expect(addSection).toContain('data-dossier-add-route-microcopy-summary="ready"');
+    expect(addSection).toContain('Hulp bij route wisselen');
+    expect(addSection).toContain('Concepten blijven lokaal tot je zelf bewaart');
+    expect(addSection).not.toContain(
+      '<details class="dossier-add-route-microcopy" data-dossier-add-route-microcopy="compact" data-dossier-add-route-microcopy-details="collapsed" data-dossier-upload-console-region="microcopy" open>',
+    );
     expect(addSection).toContain('data-dossier-add-route-switch-hint="safe-switch"');
     expect(switchHint).toContain(
       'Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.',
@@ -8421,6 +8428,12 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-add-route-switch-hint');
     expect(css).toContain('.dossier-add-route-draft-note');
     expect(css).toContain('.dossier-add-route-microcopy');
+    expect(css).toContain('.dossier-add-route-microcopy__summary {');
+    expect(css).toContain('.dossier-add-route-microcopy__summary::after {');
+    expect(css).toContain(
+      '.dossier-add-route-microcopy[open] > .dossier-add-route-microcopy__summary::after',
+    );
+    expect(css).toContain('.dossier-add-route-microcopy__body {');
     expect(css).toContain('.dossier-focus-shell {');
     expect(css).toContain('.dossier-focus-shell__header {');
     expect(css).toContain('.dossier-focus-shell__body {');
@@ -8511,9 +8524,6 @@ describe('app shell', () => {
     );
     expect(css).toContain(
       '.dossier-focus-shell:has(#dossier-route-upload[data-dossier-route-state="active"])',
-    );
-    expect(css).toContain(
-      '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"] .dossier-add-route-microcopy',
     );
     expect(css).toContain(
       '.dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]\n  .dossier-upload-workflow\n  > .kp-workflow-panel__header',

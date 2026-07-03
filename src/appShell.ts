@@ -3353,14 +3353,20 @@ function renderDossierScreen(state: AppShellState): string {
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-quality">Actieve toevoegroute: labkwaliteit registreren met bronlabel.</p>
           <p class="dossier-add-route-active-context" data-dossier-add-route-active-context="embryo-status">Actieve toevoegroute: embryostatus bijwerken met moment of terugkoppeling.</p>
         </div>
-        <div class="dossier-add-route-microcopy" data-dossier-add-route-microcopy="compact" data-dossier-upload-console-region="microcopy">
-          <p class="dossier-add-route-switch-hint" data-dossier-add-route-switch-hint="safe-switch">
-            Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.
-          </p>
-          <p class="dossier-add-route-draft-note" data-dossier-add-route-draft-note="local-until-save">
-            Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.
-          </p>
-        </div>
+        <details class="dossier-add-route-microcopy" data-dossier-add-route-microcopy="compact" data-dossier-add-route-microcopy-details="collapsed" data-dossier-upload-console-region="microcopy">
+          <summary class="dossier-add-route-microcopy__summary" data-dossier-add-route-microcopy-summary="ready">
+            <span>Hulp bij route wisselen</span>
+            <small>Concepten blijven lokaal tot je zelf bewaart</small>
+          </summary>
+          <div class="dossier-add-route-microcopy__body">
+            <p class="dossier-add-route-switch-hint" data-dossier-add-route-switch-hint="safe-switch">
+              Verkeerde route gekozen? Wissel hierboven; ingevulde velden blijven op dit scherm.
+            </p>
+            <p class="dossier-add-route-draft-note" data-dossier-add-route-draft-note="local-until-save">
+              Conceptinvoer blijft lokaal totdat je zelf uploadt of bewaart; Kiempad deelt niets automatisch.
+            </p>
+          </div>
+        </details>
         <section class="dossier-add-route-choice" data-dossier-add-route-choice="ready" aria-label="Kies eerst wat je wilt toevoegen">
           <p class="kp-card__eyebrow">Eerst kiezen</p>
           <h4>Kies één toevoeging om het bijbehorende formulier te openen.</h4>

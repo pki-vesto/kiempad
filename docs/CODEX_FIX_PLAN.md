@@ -1228,6 +1228,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   embryo, source, linking, submit feedback and recovery context appear.
   Partial G1420/#2786: The dossier upload selector now starts with one closed route-choice group
   while document, consult, embryo quality and embryo status routes remain reachable.
+  Partial G1421/#2788: The dossier upload microcopy now starts with one closed help hint while
+  the route-switch hint and local-concept note remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
