@@ -23865,6 +23865,8 @@ a.action-card:active {
   .knowledge-library-empty-recovery-choice__body
     .knowledge-library-followup-visibility-choice__anchor:hover {
     background: color-mix(in srgb, var(--category) 4%, var(--surface));
+    background-clip: padding-box;
+    box-shadow: none;
   }
 
   .knowledge-library-empty-recovery-choice__label {
