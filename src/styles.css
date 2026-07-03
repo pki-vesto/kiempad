@@ -1675,12 +1675,14 @@ h2 {
   overflow-wrap: anywhere;
 }
 
-/* FIX 11: nette, niet-resizable mono preview i.p.v. minuscuul tekstvak */
+/* FIX 11: nette mono preview met gedeelde textarea-kit maatvoering */
+.export-textarea-kit textarea,
 .timeline-export-panel textarea {
   width: 100%;
   max-width: 100%;
+  min-height: 74px;
   max-height: 280px;
-  resize: none;
+  resize: vertical;
   border: 1px solid var(--line);
   border-radius: 13px;
   padding: 14px 16px;

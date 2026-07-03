@@ -1493,7 +1493,7 @@ function extractFertilityGraphSection(html: string): string {
 function extractFertilityGraphRelationships(html: string): string {
   const start = html.indexOf('<ol id="fertility-graph-relationships"');
   const end = html.indexOf(
-    '<section class="policy-panel embedded-summary" aria-label="Graph-export consultvoorbereiding"',
+    '<section class="policy-panel embedded-summary export-textarea-kit" aria-label="Graph-export consultvoorbereiding"',
     start,
   );
   if (start < 0 || end < 0) throw new Error('Fertility graph-relatielijst ontbreekt.');
@@ -2977,6 +2977,8 @@ describe('app shell', () => {
     expect(css).toContain('resize: vertical;');
     expect(css).toContain('.compact-form textarea:focus {');
     expect(css).toContain('.compact-form textarea::placeholder {');
+    expect(css).toContain('.export-textarea-kit textarea,');
+    expect(css).toContain('.timeline-export-panel textarea {');
   });
 
   it('bewaakt de datum- en tijdveld-kit voor leesbare placeholderstaat', () => {
@@ -5107,6 +5109,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#fertility-timeline-export"');
     expect(html).toContain('Timeline-export consultvoorbereiding');
     expect(html).toContain('id="fertility-timeline-export"');
+    expect(html).toContain(
+      'class="policy-panel embedded-summary timeline-export-panel export-textarea-kit"',
+    );
     expect(html).toContain('kiempad-trajectexport-');
     expect(html).toContain('# Kiempad trajectexport voor consultvoorbereiding');
     expect(html).toContain('Volledige ongefilterde Markdown-export');
@@ -5201,6 +5206,9 @@ describe('app shell', () => {
       'Provenance: Dossiermetadata · 2026-06-24 · Concept · 2 bronrecord(s) · metadata_koppeling',
     );
     expect(html).toContain('Graph-export consultvoorbereiding');
+    expect(html).toContain(
+      'class="policy-panel embedded-summary export-textarea-kit" aria-label="Graph-export consultvoorbereiding"',
+    );
     expect(html).toContain('kiempad-graph-consult-traject-1.md');
     expect(html).toContain('Kiempad graph-samenvatting voor consultvoorbereiding');
     expect(html).toContain('Gebruik dit als gespreksoverzicht');

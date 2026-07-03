@@ -1195,6 +1195,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   same visible `Gebruik dd-mm-jjjj` helper via `.date-format-hint`, reducing browser-dependent
   date-format ambiguity in research workflows.
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**
+  Partial G1581/#3106: Timeline and graph readonly export textareas now share an
+  `export-textarea-kit` with textarea-kit minimum height, vertical resize, border, radius and
+  monospaced preview styling.
 - **CFX-028** — Form actions: primary Bewaar + ghost Annuleer, not both full-width teal (C28). **P2 · S**
 - **CFX-029** — Inline validation in `--clay-ink` (no browser popups) (C29). **P2 · M**
   Partial G1575/#3094: dossier upload, consult upload, embryo-quality, and embryo-status routes
