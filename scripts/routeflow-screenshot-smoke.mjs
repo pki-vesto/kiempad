@@ -198,6 +198,7 @@ const targets = [
       '#knowledge-filter-form',
       '[data-knowledge-filter-kit="ready"]',
       '[data-knowledge-filter-status-detail="ready"]',
+      '[data-knowledge-filter-fields-choice="collapsed"]',
       '.knowledge-filter-kit__fields',
       '.knowledge-filter-kit__actions',
       'input[name="kennisZoekterm"]',
@@ -205,7 +206,10 @@ const targets = [
       'input[name="kennisBronFilter"]',
       'select[name="kennisVerificatie"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-filter-form-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-filter-form-choice="collapsed"]',
+      '[data-knowledge-filter-fields-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-filter-status',

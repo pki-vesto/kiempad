@@ -13495,37 +13495,48 @@ function renderKennisFilterForm(filter: KennisFilter): string {
               </div>
             </details>
           </header>
-          <div class="knowledge-filter-kit__fields">
-            <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
-              Zoek
-              <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
-            </label>
-            <label class="knowledge-filter-kit__field">
-              Categorie
-              <select name="kennisCategorie">
-                <option value="">Alle categorieën</option>
-                ${Object.entries(KENNIS_CATEGORIE_LABELS)
-                  .map(([value, label]) => renderOption(value, label, filter.categorie))
-                  .join('')}
-              </select>
-            </label>
-            <label class="knowledge-filter-kit__field">
-              Bron
-              <input name="kennisBronFilter" value="${escapeAttribute(filter.bron ?? '')}" autocomplete="off" />
-            </label>
-            <label class="knowledge-filter-kit__field">
-              Verificatie
-              <select name="kennisVerificatie">
-                <option value="">Alle statussen</option>
-                ${renderOption('verified', 'Artsreview', filter.verificatie)}
-                ${renderOption('concept', 'Concept', filter.verificatie)}
-              </select>
-            </label>
-          </div>
-          <div class="knowledge-filter-kit__actions">
-            <button type="submit" name="filterAction" value="apply">Filter kennis</button>
-            <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
-          </div>
+          <details class="knowledge-filter-fields-choice" data-knowledge-filter-fields-choice="collapsed">
+            <summary class="knowledge-filter-fields-choice__summary">
+              <span>
+                <strong>Filtervelden openen</strong>
+                <small>Zoekterm, categorie, bron, verificatie en reset.</small>
+              </span>
+              <em>${escapeHtml(activeFilterCount > 0 ? `${activeFilterCount} actief` : '4 velden')}</em>
+            </summary>
+            <div class="knowledge-filter-fields-choice__body">
+              <div class="knowledge-filter-kit__fields">
+                <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
+                  Zoek
+                  <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
+                </label>
+                <label class="knowledge-filter-kit__field">
+                  Categorie
+                  <select name="kennisCategorie">
+                    <option value="">Alle categorieën</option>
+                    ${Object.entries(KENNIS_CATEGORIE_LABELS)
+                      .map(([value, label]) => renderOption(value, label, filter.categorie))
+                      .join('')}
+                  </select>
+                </label>
+                <label class="knowledge-filter-kit__field">
+                  Bron
+                  <input name="kennisBronFilter" value="${escapeAttribute(filter.bron ?? '')}" autocomplete="off" />
+                </label>
+                <label class="knowledge-filter-kit__field">
+                  Verificatie
+                  <select name="kennisVerificatie">
+                    <option value="">Alle statussen</option>
+                    ${renderOption('verified', 'Artsreview', filter.verificatie)}
+                    ${renderOption('concept', 'Concept', filter.verificatie)}
+                  </select>
+                </label>
+              </div>
+              <div class="knowledge-filter-kit__actions">
+                <button type="submit" name="filterAction" value="apply">Filter kennis</button>
+                <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
+              </div>
+            </div>
+          </details>
         </div>
       </details>
     </form>

@@ -9073,6 +9073,98 @@ h2 {
   display: none;
 }
 
+.knowledge-filter-fields-choice {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--category) 16%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 91%, var(--surface-2));
+}
+
+.knowledge-filter-fields-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 11px;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.knowledge-filter-fields-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-filter-fields-choice__summary::after {
+  content: "+";
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid color-mix(in srgb, var(--category) 22%, var(--border));
+  border-radius: 999px;
+  color: var(--category-strong);
+  font-weight: 850;
+}
+
+.knowledge-filter-fields-choice[open] > .knowledge-filter-fields-choice__summary::after {
+  content: "-";
+}
+
+.knowledge-filter-fields-choice__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.knowledge-filter-fields-choice__summary strong,
+.knowledge-filter-fields-choice__summary small,
+.knowledge-filter-fields-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-filter-fields-choice__summary strong {
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.knowledge-filter-fields-choice__summary small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.knowledge-filter-fields-choice__summary em {
+  max-width: 120px;
+  overflow: hidden;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--category) 22%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--category-strong);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.knowledge-filter-fields-choice__body {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 9px 9px;
+}
+
+.knowledge-filter-fields-choice:not([open]) > .knowledge-filter-fields-choice__body {
+  display: none;
+}
+
 .knowledge-command-panel .knowledge-filter-choice__summary {
   grid-template-columns: minmax(0, 1fr);
 }

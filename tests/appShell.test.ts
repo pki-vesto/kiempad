@@ -38195,6 +38195,9 @@ describe('app shell', () => {
     expect(html).toContain('Filterstatus bekijken');
     expect(html).toContain('Open actieve telling, filterdetails en resetcontext.');
     expect(html).toContain('data-knowledge-filter-status-detail="ready"');
+    expect(html).toContain('data-knowledge-filter-fields-choice="collapsed"');
+    expect(html).toContain('Filtervelden openen');
+    expect(html).toContain('Zoekterm, categorie, bron, verificatie en reset.');
     expect(html).toContain('class="knowledge-filter-kit__fields"');
     expect(html).toContain('class="knowledge-filter-kit__actions"');
     expect(html).toContain(
@@ -38209,6 +38212,9 @@ describe('app shell', () => {
       html.indexOf('class="knowledge-filter-kit__header"'),
     );
     expect(html.indexOf('data-knowledge-filter-form-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-filter-fields-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-filter-fields-choice="collapsed"')).toBeLessThan(
       html.indexOf('class="knowledge-filter-kit__fields"'),
     );
     expect(html.indexOf('data-knowledge-filter-status-choice="collapsed"')).toBeLessThan(
@@ -38219,6 +38225,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="knowledge-filter-status-choice" data-knowledge-filter-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-filter-fields-choice" data-knowledge-filter-fields-choice="collapsed" open>',
     );
     expect(html).toContain('1 van 2 kennisitems zichtbaar');
     expect(html).toContain('Kosten 2026: eigen risico');
@@ -38935,6 +38944,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-filter-choice:not([open]) > .knowledge-filter-choice__body {',
     );
+    expect(css).toContain('.knowledge-filter-fields-choice {');
+    expect(css).toContain('.knowledge-filter-fields-choice__summary {');
     expect(css).toContain('.knowledge-filter-status-choice {');
     expect(css).toContain('.knowledge-filter-status-choice__summary {');
     expect(css).toContain('.knowledge-filter-status-choice__body {');
