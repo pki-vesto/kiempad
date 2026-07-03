@@ -1423,6 +1423,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   focus copy secondary beside primary action labels.
   Partial G1515/#2974: The knowledge library empty-state recovery actions now keep mobile
   focus contrast calm across the ring, halo, and badge.
+  Partial G1516/#2976: The knowledge library empty-state recovery actions now keep the mobile
+  focus halo stable with explicit clipping and radius.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
