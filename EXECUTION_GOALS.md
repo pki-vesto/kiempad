@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1396 — Vragen: beheer start met één vraagtaak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Vragen Beheer moet rustig blijven als één vraagtaak en mag niet opnieuw aanvoelen als een wand met open vragen, alle vragen en verslagen.
+- **User Impact:** Gebruikers kunnen bij vraagbeheer alsnog door meerdere vraaglagen moeten scannen voordat de hoofdtaak duidelijk is.
+- **Desired Outcome:** Start met één primaire vraagtaak of vraaginvoer en houd open vragen, alle vragen en verslagen als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers kunnen eerst de vraag vastleggen of beheren en openen extra vraagcontext pas wanneer nodig.
+- **Acceptance Criteria:** Vragen Beheer toont één primaire vraagtaak of vraaginvoer in de eerste viewport; open vragen, alle vragen en verslagen blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen behandeladvies, diagnose, trackingpayload of medische conclusie bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Vragen, Beheer
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, question route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2738
+
 ### G1395 — Traject: faseplanning start met één fasetaak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, treatment route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2736
 
 ### G1394 — Medicatie: planning start met één innametaak

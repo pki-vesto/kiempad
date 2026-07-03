@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1196 |
+| ☑ klaar | 1197 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1395** |
+| **Totaal** | **1396** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1557,13 +1557,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1392 | Kosten: toevoegen start met één kostenpost taak | P1 | F5 | ☑ |
 | G1393 | Agenda: plannen start met één afspraaktaak | P1 | F5 | ☑ |
 | G1394 | Medicatie: planning start met één innametaak | P1 | F5 | ☑ |
-| G1395 | Traject: faseplanning start met één fasetaak | P1 | F5 | ☐ |
+| G1395 | Traject: faseplanning start met één fasetaak | P1 | F5 | ☑ |
+| G1396 | Vragen: beheer start met één vraagtaak | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1395** (id's G001 t/m G1395, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1396** (id's G001 t/m G1396, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

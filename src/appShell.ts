@@ -17741,6 +17741,12 @@ function renderTrajectScreen(state: AppShellState): string {
   const fertilityTimelineExport = maakFertilityTimelineTrajectExport(volledigeFertilityTimeline);
   const graphWeergave = bouwTrajectGraphWeergave(state, selected?.traject.id);
   const activeTreatmentRoute = state.activeTreatmentRoute ?? 'overzicht';
+  const selectedCurrentPhase = selected ? bepaalHuidigeFase(selected.fasen) : undefined;
+  const selectedCurrentPhaseLabel = selectedCurrentPhase
+    ? TRAJECT_FASE_LABELS[selectedCurrentPhase.fase]
+    : selected
+      ? 'Fase kiezen'
+      : 'Geen traject';
 
   const trajectFormsBody = `${renderTrajectForm(selected?.traject)}${
     selected
@@ -17817,30 +17823,79 @@ function renderTrajectScreen(state: AppShellState): string {
         ${renderTrajectStatus(state.trajectStatus, 'fasen')}
         ${commandRouteSummary({
           eyebrow: 'Fasefocus',
-          title: selected ? `Fasen voor ${selected.traject.naam}` : 'Maak eerst een traject aan',
+          title: selected
+            ? `${selectedCurrentPhaseLabel} voor ${selected.traject.naam}`
+            : 'Maak eerst een traject aan',
           detail:
-            'Gebruik faseplanning alleen als feitelijke trajectadministratie; Kiempad trekt geen medische conclusie.',
+            'De actuele fasetaak staat vooraan. Tijdlijn, context en beheer open je pas als vervolgcontext.',
           status: `${selected?.fasen.length ?? 0} fases`,
           primary: {
-            href: '#traject?route=beheer',
-            label: selected ? 'Traject bewerken' : 'Traject aanmaken',
+            href: '#treatment-phase-primary',
+            label: selected ? 'Fasetaak' : 'Traject aanmaken',
           },
-          secondary: { href: '#traject?route=context', label: 'Timeline' },
+          secondary: { href: '#treatment-phase-followup', label: 'Vervolgcontext' },
           data: { 'treatment-route-summary': 'fasen' },
           ariaLabel: 'Faseplanning route-samenvatting',
         })}
-        <div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>
-        ${
-          selected
-            ? renderTimeline(selected)
-            : renderEmptyState(
-                'Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.',
-                {
-                  title: 'Geen traject',
-                  cta: { href: '#traject?route=beheer', label: 'Poging aanmaken' },
-                },
-              )
-        }
+        <div class="treatment-phase-console" data-treatment-phase-layout="single-input">
+          <div id="treatment-phase-primary" class="summary-panel treatment-phase-primary" data-treatment-phase-primary="current-phase">
+            <h3>${escapeHtml(selectedCurrentPhaseLabel)}</h3>
+            <p class="small-print">Markeer alleen de feitelijke trajectfase. Kiempad geeft geen behandeladvies, kansberekening of medische conclusie.</p>
+            ${
+              selected && selectedCurrentPhase
+                ? `<article class="treatment-phase-primary__card" data-treatment-phase-card="${escapeAttribute(selectedCurrentPhase.fase)}" data-treatment-phase-state="current">
+                    <p class="kp-card__eyebrow">Actuele fase</p>
+                    <strong>${escapeHtml(TRAJECT_FASE_LABELS[selectedCurrentPhase.fase])}</strong>
+                    <span>${escapeHtml(renderPhaseDates(selectedCurrentPhase.startDatum, selectedCurrentPhase.eindDatum))}</span>
+                    <small>${escapeHtml(selectedCurrentPhase.toelichting ?? 'Geen toelichting vastgelegd.')}</small>
+                    <button class="phase-button" type="button" data-traject-id="${escapeAttribute(selected.traject.id)}" data-fase="${escapeAttribute(selectedCurrentPhase.fase)}" aria-label="Huidige fase: ${escapeAttribute(TRAJECT_FASE_LABELS[selectedCurrentPhase.fase])} voor ${escapeAttribute(selected.traject.naam)}">Huidig</button>
+                  </article>`
+                : selected
+                  ? renderEmptyState('Kies een fase in de vervolgtijdlijn.', {
+                      title: 'Geen huidige fase',
+                      cta: { href: '#treatment-phase-followup', label: 'Fasetijdlijn openen' },
+                    })
+                  : renderEmptyState(
+                      'Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.',
+                      {
+                        title: 'Geen traject',
+                        cta: { href: '#traject?route=beheer', label: 'Poging aanmaken' },
+                      },
+                    )
+            }
+          </div>
+          <details id="treatment-phase-followup" class="kp-disclosure treatment-phase-followup" data-treatment-phase-followup="collapsed">
+            <summary class="kp-disclosure__summary treatment-phase-followup__summary">
+              <span>
+                <strong>Vervolgcontext openen</strong>
+                <small>Bekijk de volledige fasetijdlijn, context, overzicht of beheer pas na de fasetaak.</small>
+              </span>
+              <em>${selected?.fasen.length ?? 0} fases</em>
+            </summary>
+            <div class="kp-disclosure__body treatment-phase-followup__body">
+              <nav class="treatment-phase-followup__links" aria-label="Traject vervolgcontext">
+                <a href="#traject?route=context">Timeline en graph</a>
+                <a href="#traject?route=overzicht">Overzicht openen</a>
+                <a href="#traject?route=beheer">Traject beheren</a>
+                <a href="#traject?route=vergoeding">Vergoeding bekijken</a>
+              </nav>
+              <section class="treatment-phase-followup__timeline" aria-label="Volledige fasetijdlijn">
+                <div class="panel-heading"><h2>Fasen</h2>${fasenButtons}</div>
+                ${
+                  selected
+                    ? renderTimeline(selected)
+                    : renderEmptyState(
+                        'Nog geen traject. Maak via Beheer een poging aan om de vaste fasen te tonen.',
+                        {
+                          title: 'Geen traject',
+                          cta: { href: '#traject?route=beheer', label: 'Poging aanmaken' },
+                        },
+                      )
+                }
+              </section>
+            </div>
+          </details>
+        </div>
       </section>`,
     `<section id="traject-route-vergoeding" class="treatment-route-section command-route-section" aria-labelledby="traject-route-vergoeding-title" data-treatment-route="vergoeding"${renderTreatmentRouteVisibility(activeTreatmentRoute, 'vergoeding')}>
         <header class="treatment-route-section__header command-route-section__header">
