@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1585 — Kennis formulieren tonen verplichte velden vooraf
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kennis formulieren met meerdere verplichte velden vertrouwden nog vooral op browservalidatie nadat de gebruiker op bewaren klikt.
+- **User Impact:** Gebruikers zien pas laat welke velden nodig zijn, vooral in langere research- en AI-formulieren.
+- **Desired Outcome:** Kennis formulieren tonen een compacte required-map vóór de actie-rij met de verplichte velden in `--clay-ink`.
+- **User Value:** Gebruikers kunnen vóór bewaren scannen wat nodig is en hoeven minder te vertrouwen op browserpopups.
+- **Acceptance Criteria:** Eigen kennisitem formulier toont een required-map met Titel en Inhoud vóór de actie-rij; Researchinvoer toont een required-map met Titel en Notitie vóór de actie-rij; AI payload-preview toont een required-map met Bron en Tekst voor preview vóór de actie-rij; AI samenvatting opslaan toont een required-map met Titel, Bron en Samenvatting vóór de actie-rij; required-map styling gebruikt clay-ink en sluit aan op de bestaande dossier required-map; app-shell tests bewaken markup en CSS-contract; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kennis toevoegen, Kennis bibliotheek, Kennis AI
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Knowledge item form, research item form, AI preview form, AI summary form, required map styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3114
+
 ### G1584 — Kennis basisformulieren krijgen ghost Annuleer acties
 
 - **Epic:** Onboarding & Daily Use

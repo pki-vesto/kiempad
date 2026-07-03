@@ -1211,6 +1211,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1575/#3094: dossier upload, consult upload, embryo-quality, and embryo-status routes
   show required-input maps in `--clay-ink` before submit actions, reducing reliance on late browser
   validation popups for collapsed required steps.
+  Partial G1585/#3114: Kennis item, research, AI preview and AI summary forms now show compact
+  required-field maps in `--clay-ink` before their action rows.
 - **CFX-030f** — Forms in a card with title + `✕` close, padding 20, radius 18 (C30). **P2 · M**
 
 ### Data / backend / seed

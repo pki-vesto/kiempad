@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1384 |
+| ☑ klaar | 1385 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1746,12 +1746,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1582 | Kennis formulieren krijgen primaire actie en ghost Annuleer | P2 | F5 | ☑ |
 | G1583 | Kennis AI formulieren krijgen ghost Annuleer acties | P2 | F5 | ☑ |
 | G1584 | Kennis basisformulieren krijgen ghost Annuleer acties | P2 | F5 | ☑ |
+| G1585 | Kennis formulieren tonen verplichte velden vooraf | P2 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1583** (id's G001 t/m G1584; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1584** (id's G001 t/m G1585; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

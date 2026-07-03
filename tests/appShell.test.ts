@@ -6856,6 +6856,11 @@ describe('app shell', () => {
     expect(html).toContain('Eigen kennis');
     expect(html).toContain('name="kennisId" value="eigen-1"');
     expect(html).toContain(
+      'class="form-required-map" data-form-required-map="knowledge-item" aria-label="Verplicht voor kennisitem"',
+    );
+    expect(html).toContain('<span role="listitem">Titel</span>');
+    expect(html).toContain('<span role="listitem">Inhoud</span>');
+    expect(html).toContain(
       'class="command-form-actions" data-knowledge-form-actions="knowledge-item"',
     );
     expect(html).toContain('Werk kennisitem bij');
@@ -8895,11 +8900,12 @@ describe('app shell', () => {
     expect(css).toContain('grid-column: 1 / -1;');
     expect(css).toContain('font-size: 0.78rem;');
     expect(css).toContain('font-weight: 650;');
-    expect(css).toContain('.dossier-required-map {');
-    expect(css).toContain('.dossier-required-map div[role="list"]');
-    expect(css).toContain('.dossier-required-map span[role="listitem"]');
+    expect(css).toContain('.dossier-required-map,');
+    expect(css).toContain('.form-required-map {');
+    expect(css).toContain('.form-required-map div[role="list"]');
+    expect(css).toContain('.form-required-map span[role="listitem"]');
     expect(css).toContain('color: var(--clay-ink);');
-    expect(css).toContain('.dossier-required-map span[role="listitem"]::before');
+    expect(css).toContain('.form-required-map span[role="listitem"]::before');
     expect(css).toContain('.dossier-upload-group[data-dossier-field-section]');
     expect(css).toContain('.dossier-subform-group[data-dossier-field-section]');
     expect(css).toContain('content: attr(data-dossier-field-section-label);');
@@ -39066,6 +39072,10 @@ describe('app shell', () => {
     expect(html).toContain('name="researchEenvoudigeSamenvatting"');
     expect(html).toContain('scientificSummary, patientSummary en sourceCitation');
     expect(html).toContain('name="researchRelevantieVoorGebruiker"');
+    expect(html).toContain(
+      'class="form-required-map" data-form-required-map="knowledge-research" aria-label="Verplicht voor research"',
+    );
+    expect(html).toContain('<span role="listitem">Notitie</span>');
     expect(html).toContain('class="command-form-actions" data-knowledge-form-actions="research"');
     expect(html).toContain('Bewaar research');
     expect(html).toContain(
@@ -39855,6 +39865,10 @@ describe('app shell', () => {
     expect(emptyPreview).toContain('name="aiBron"');
     expect(emptyPreview).toContain('name="aiBronTekst"');
     expect(emptyPreview).toContain(
+      'class="form-required-map" data-form-required-map="knowledge-ai-preview" aria-label="Verplicht voor payload-preview"',
+    );
+    expect(emptyPreview).toContain('<span role="listitem">Tekst voor preview</span>');
+    expect(emptyPreview).toContain(
       'class="command-form-actions" data-knowledge-form-actions="ai-preview"',
     );
     expect(emptyPreview).toContain('Toon payload-preview');
@@ -39923,6 +39937,10 @@ describe('app shell', () => {
     expect(previewPanel).toContain('Naam/patiëntnaam: 1x vervangen door [naam verwijderd]');
     expect(previewPanel).toContain('Research: [naam verwijderd] bespreekt lokale context.');
     expect(configuredHtml).toContain('id="ai-summary-form"');
+    expect(configuredHtml).toContain(
+      'class="form-required-map" data-form-required-map="knowledge-ai-summary" aria-label="Verplicht voor AI-samenvatting"',
+    );
+    expect(configuredHtml).toContain('<span role="listitem">Samenvatting</span>');
     expect(configuredHtml).toContain(
       'class="command-form-actions" data-knowledge-form-actions="ai-summary"',
     );
