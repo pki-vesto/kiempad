@@ -8653,7 +8653,7 @@ h2 {
   border-style: solid;
   background: color-mix(in srgb, var(--surface) 82%, var(--category));
   color: var(--text);
-  font-weight: 850;
+  font-weight: 800;
 }
 
 .knowledge-library-context-choice {
