@@ -3495,7 +3495,10 @@ describe('app shell', () => {
     expect(css).toContain('> .knowledge-research-workflow-choice__body {');
     expect(css).toContain('.hub-detail-disclosure {');
     expect(css).toContain('.hub-detail-disclosure__summary {');
+    expect(css).toContain('.vault-status:focus-visible,');
+    expect(css).toContain('summary[class*="__summary"]:focus-visible,');
     expect(css).toContain('.hub-detail-disclosure__summary:focus-visible,');
+    expect(css).toContain('box-shadow: var(--ring);');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(css).toContain('.hub-detail-disclosure__summary small {');
     expect(css).toContain('.hub-detail-disclosure__summary em {');

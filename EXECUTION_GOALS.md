@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1578 — Disclosure summaries krijgen gedeelde teal focusring
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Veel disclosure-summaryvarianten hebben eigen styling, waardoor toetsenbordfocus niet overal even duidelijk zichtbaar is.
+- **User Impact:** Gebruikers die met toetsenbord of switch-control navigeren kunnen bij dichtgeklapte panelen minder goed zien welke disclosure actief is.
+- **Desired Outcome:** Alle summary-elementen met app-summaryklassen en de vault-status summary delen een duidelijke teal focusring.
+- **User Value:** Navigeren door disclosurekaarten voelt consistenter, rustiger en veiliger.
+- **Acceptance Criteria:** `summary[class*="__summary"]` krijgt een zichtbare teal focusring; `.vault-status` krijgt dezelfde focusring; bestaande specifieke focusregels blijven compatibel; app-shell tests bewaken het CSS-contract; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Vault gate, dossier, kennis, start, route summaries en alle disclosurepanelen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Shared disclosure CSS, summary focus states, accessibility contracts
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3100
+
 ### G1577 — Faint text contrast haalt AA in licht en donker thema
 
 - **Epic:** Onboarding & Daily Use

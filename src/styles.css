@@ -19817,6 +19817,8 @@ a.action-card:active {
   display: none;
 }
 
+.vault-status:focus-visible,
+summary[class*="__summary"]:focus-visible,
 .kp-disclosure__summary:focus-visible,
 .hub-detail-disclosure__summary:focus-visible,
 .knowledge-workbench-disclosure__summary:focus-visible,
