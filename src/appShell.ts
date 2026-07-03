@@ -3838,7 +3838,18 @@ function renderDossierScreen(state: AppShellState): string {
                 <span>Bewaarstatus openen</span>
                 <small>Feedback en herstelcontext</small>
               </summary>
-              ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
+              <details class="dossier-upload-completion-status-choice" data-consult-upload-completion-status-choice="collapsed">
+                <summary class="dossier-upload-completion-status-choice__summary" data-consult-upload-completion-status-summary="ready">
+                  <span>
+                    <strong>Kies consultstatus</strong>
+                    <small>Opslagstatus, herstelcontext en vervolgroutes</small>
+                  </span>
+                  <em>status klaar</em>
+                </summary>
+                <div class="dossier-upload-completion-status-choice__body">
+                  ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
+                </div>
+              </details>
             </details>
           </section>
         </form>

@@ -779,6 +779,9 @@ const targets = [
     presentSelectors: [
       '[data-dossier-upload-console="ready"]',
       '[data-dossier-upload-console="ready"][data-dossier-upload-focus-mode="single-flow"][data-dossier-add-flow="consult"]',
+      '[data-consult-upload-completion-status-choice="collapsed"]',
+      '[data-consult-upload-completion-status-summary="ready"]',
+      '[data-dossier-submit-feedback="consult-upload"]',
       '[data-consult-upload-group="consult-koppelingen"]',
       '[data-consult-upload-group="consult-context"]',
     ],
@@ -787,6 +790,7 @@ const targets = [
       '[data-consult-upload-link-fields="collapsed"]',
       '[data-consult-upload-context-fields="collapsed"]',
       '[data-consult-upload-submit-feedback-details="collapsed"]',
+      '[data-consult-upload-completion-status-choice="collapsed"]',
     ],
     expectedUploadFlow: 'consult',
     desktopHiddenSelectors: [
