@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1581 — Export tekstvelden gebruiken gedeelde textarea-kit
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Readonly export-tekstvelden hadden eigen textarea-styling, waardoor timeline- en graph-exports minder consistent aanvoelden dan de rest van de formulierkit.
+- **User Impact:** Exportvelden voelen als losse technische previews in plaats van geïntegreerde, leesbare Kiempad-velden.
+- **Desired Outcome:** Timeline- en graph-export tekstvelden gebruiken een gedeelde export textarea-kit met dezelfde minimumhoogte en verticale resize als formuliertextareas.
+- **User Value:** Gebruikers kunnen lange consultvoorbereidings-exports rustiger lezen en het veld zelf groter maken zonder visuele stijlbreuk.
+- **Acceptance Criteria:** Timeline-export textarea houdt de monospaced preview maar gebruikt textarea-kit minimumhoogte en verticale resize; Graph-export consultvoorbereiding krijgt dezelfde export textarea styling via een gedeelde klasse; app-shell tests bewaken de export textarea class en CSS-contracten; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Fertility Timeline export, Graph-export consultvoorbereiding
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Timeline export panel, Graph consult export, textarea kit, form helper styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3106
+
 ### G1580 — Kennis datumvelden tonen zichtbaar dd-mm-jjjj hulpje
 
 - **Epic:** Onboarding & Daily Use

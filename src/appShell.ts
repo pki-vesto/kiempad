@@ -19765,7 +19765,7 @@ function renderFertilityTimelineTrajectExport(
   trajectExport: FertilityTimelineTrajectExport,
 ): string {
   return `
-    <section id="fertility-timeline-export" class="policy-panel embedded-summary timeline-export-panel" aria-label="Timeline-export consultvoorbereiding">
+    <section id="fertility-timeline-export" class="policy-panel embedded-summary timeline-export-panel export-textarea-kit" aria-label="Timeline-export consultvoorbereiding">
       <h3>Timeline-export consultvoorbereiding</h3>
       <p class="small-print">Volledige ongefilterde Markdown-export met bronlijst voor eigen consultvoorbereiding.</p>
       <p class="linked-note" data-fertility-timeline-export-source-list="ready">Bronlijst: ${trajectExport.bronAantal} bron${trajectExport.bronAantal === 1 ? '' : 'nen'} met datum en reviewstatus.</p>
@@ -20175,7 +20175,7 @@ function renderGraphConsultSamenvattingExport(
   consultExport: FertilityGraphConsultSamenvattingExport,
 ): string {
   return `
-    <section class="policy-panel embedded-summary" aria-label="Graph-export consultvoorbereiding">
+    <section class="policy-panel embedded-summary export-textarea-kit" aria-label="Graph-export consultvoorbereiding">
       <h3>Graph-export consultvoorbereiding</h3>
       <label>
         Bestandsnaam
