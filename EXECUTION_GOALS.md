@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1518 — Kennis bibliotheek herstelactie badges houden mobiele focusvlak licht
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1517 blijft de mobiele focusbegrenzing rustig, maar het focusvlak zelf is nog niet apart bewaakt op een lichte, niet-dominante presentatie.
+- **User Impact:** Gebruikers kunnen de herstelactie alsnog als zwaar ervaren als het focusvlak te nadrukkelijk wordt op kleine schermen.
+- **Desired Outcome:** Mobiele herstelacties behouden een licht focusvlak dat focus zichtbaar maakt zonder badgecopy of actielabels te overheersen.
+- **User Value:** Gebruikers zien waar de focus staat zonder dat de herstelroute de inhoud visueel overneemt.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; focusvlak blijft licht en niet-dominant op mobiel; focusbegrenzing blijft rustig op mobiel; focushalo blijft stabiel en zichtbaar; badgecopy blijft leesbaar en secundair tijdens focus; focuscontrast blijft rustig naast het primaire actielabel; badgecopy blijft zichtbaar gecentreerd tijdens focus; badge-inhoud blijft consistent gecentreerd in rust, hover en focus; badgeboxmaten blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiel focusvlak en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action focus states, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2980
+
 ### G1517 — Kennis bibliotheek herstelactie badges houden mobiele focusbegrenzing rustig
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action focus states, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2978
 
 ### G1516 — Kennis bibliotheek herstelactie badges houden mobiele focushalo stabiel
