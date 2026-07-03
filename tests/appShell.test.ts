@@ -39322,6 +39322,15 @@ describe('app shell', () => {
     for (const rule of mobileBadgeCascadeContract) {
       expect(css).toContain(rule);
     }
+    const focusBadgeFeedbackWeight = 760;
+    const hoverBadgeFeedbackWeight = 750;
+    const focusBadgeFeedbackBorderMix = 20;
+    const hoverBadgeFeedbackBorderMix = 18;
+    const focusBadgeFeedbackTextMix = 88;
+    const hoverBadgeFeedbackTextMix = 86;
+    expect(focusBadgeFeedbackWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
+    expect(focusBadgeFeedbackBorderMix).toBeGreaterThan(hoverBadgeFeedbackBorderMix);
+    expect(focusBadgeFeedbackTextMix).toBeGreaterThan(hoverBadgeFeedbackTextMix);
     expect(css).toContain('color: color-mix(in srgb, var(--text) 88%, var(--text-muted));');
     expect(css).toContain('font-weight: 760;');
     expect(css).toContain('opacity: 1;');
