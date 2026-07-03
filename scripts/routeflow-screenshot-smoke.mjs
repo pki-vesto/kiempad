@@ -343,6 +343,9 @@ const targets = [
       '[data-dossier-upload-triage="ready"]',
       '[data-dossier-upload-triage-details="collapsed"]',
       '[data-dossier-upload-triage-summary="ready"]',
+      '[data-dossier-upload-console-context="collapsed"]',
+      '[data-dossier-upload-console-status="compact"]',
+      '[data-dossier-upload-console-records="ready"]',
       '[data-dossier-add-route-group="collapsed"]',
       '[data-dossier-add-route-group-summary="ready"]',
       '[data-dossier-add-route-microcopy-details="collapsed"]',
@@ -362,6 +365,7 @@ const targets = [
     ],
     closedDetailsSelectors: [
       '[data-dossier-upload-triage-details="collapsed"]',
+      '[data-dossier-upload-console-context="collapsed"]',
       '[data-dossier-add-route-group="collapsed"]',
       '[data-dossier-add-route-microcopy-details="collapsed"]',
       '[data-dossier-add-route-choice-details="collapsed"]',
