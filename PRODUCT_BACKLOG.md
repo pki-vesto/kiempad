@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1285 |
+| ☑ klaar | 1286 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1484** |
+| **Totaal** | **1485** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1646,13 +1646,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1482 | Kennis bibliotheek categoriekaarten starten met één compacte kaartkeuze | P1 | F5 | ☑ |
 | G1483 | Kennis bibliotheek categoriekaarten tonen compacte vervolgankers | P1 | F5 | ☑ |
 | G1484 | Kennis bibliotheek categorievervolg start met compacte zichtbaarheidssamenvatting | P1 | F5 | ☑ |
-| G1485 | Kennis bibliotheek zichtbaarheidssamenvatting toont compacte lege-staat | P1 | F5 | ☐ |
+| G1485 | Kennis bibliotheek zichtbaarheidssamenvatting toont compacte lege-staat | P1 | F5 | ☑ |
+| G1486 | Kennis bibliotheek lege-staat biedt compacte herstelactie | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1484** (id's G001 t/m G1485; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1485** (id's G001 t/m G1486; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
