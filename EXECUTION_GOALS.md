@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1505 — Kennis bibliotheek herstelactie badges houden mobiele badgekolom compact
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1504 is mobiele labelruimte stabieler, maar de badgekolom zelf is nog niet apart bewaakt op compactheid bij smalle schermen.
+- **User Impact:** Gebruikers kunnen op mobiel alsnog te veel badgebreedte zien als de badgekolom niet apart begrensd blijft.
+- **Desired Outcome:** Mobiele herstelacties houden een compacte, secundaire badgekolom die labels niet verdringt.
+- **User Value:** Gebruikers blijven de primaire herstelactie eerst lezen, ook wanneer badgefeedback aanwezig is.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgekolom blijft compact op mobiel; primaire actielabels blijven scanbaar op mobiel; badgecopy blijft secundair; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgekolom en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2954
+
 ### G1504 — Kennis bibliotheek herstelactie badges houden mobiele labelruimte stabiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2952
 
 ### G1503 — Kennis bibliotheek herstelactie badges houden labelcopy primair
