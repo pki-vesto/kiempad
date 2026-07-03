@@ -1475,6 +1475,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover border calm with an explicit border emphasis ceiling.
   Partial G1541/#3026: The knowledge library empty-state recovery actions now keep mobile
   badge hover background calm with category-accent ceilings below focus.
+  Partial G1542/#3028: The knowledge library empty-state recovery actions now keep mobile
+  badge hover width compact with explicit ch and percentage ceilings.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
