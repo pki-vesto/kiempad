@@ -12794,10 +12794,21 @@ function renderKennisScreen(state: AppShellState): string {
               <em>Optioneel</em>
             </summary>
             <div class="kp-disclosure__body">
-              <div class="summary-panel" data-knowledge-add-secondary="own-item">
-                <h3>Eigen kennisitem</h3>
-                ${renderEigenKennisItemForm()}
-              </div>
+              <details class="knowledge-add-context-choice" data-knowledge-add-context-choice="collapsed">
+                <summary class="knowledge-add-context-choice__summary">
+                  <span>
+                    <strong>Kies toevoegcontext</strong>
+                    <small>Open daarna eigen kennisitem of notitiecontext</small>
+                  </span>
+                  <em>Optioneel</em>
+                </summary>
+                <div class="knowledge-add-context-choice__body">
+                  <div class="summary-panel" data-knowledge-add-secondary="own-item">
+                    <h3>Eigen kennisitem</h3>
+                    ${renderEigenKennisItemForm()}
+                  </div>
+                </div>
+              </details>
             </div>
           </details>
         </div>

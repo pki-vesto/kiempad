@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1441 — Kennis filters starten met één compacte filterkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1440 blijft de kennisfiltercontext gevoelig voor meerdere filtervelden tegelijk zodra gebruikers kennisitems willen verfijnen.
+- **User Impact:** Gebruikers die kennis willen filteren, krijgen categorie-, bron- en verificatiekeuzes nog als brede controlelaag.
+- **Desired Outcome:** Laat de kennis filtercontext starten met één compacte filterkeuze of samengevouwen sublaag, terwijl categorie-, bron- en verificatiefilters bereikbaar blijven.
+- **User Value:** Gebruikers kunnen kennis stap voor stap verfijnen zonder dat filters de route visueel domineren.
+- **Acceptance Criteria:** Bestaande kennisfilter hooks, form hooks en routehashes blijven aanwezig; de filtercontext start met één compacte filterkeuze of samengevouwen sublaag; categorie-, bron- en verificatiefilters blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Filters
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge filters, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2826
+
 ### G1440 — Kennis toevoegen follow-up start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge add route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2824
 
 ### G1439 — Kennis AI-route supportcontext start met één compacte contextkeuze
