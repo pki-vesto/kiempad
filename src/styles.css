@@ -8608,10 +8608,15 @@ h2 {
 }
 
 .knowledge-library-empty-recovery-choice__feedback {
+  display: inline-block;
+  max-width: 14ch;
   color: var(--text-muted);
   font-size: 0.68rem;
   font-weight: 750;
   line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .knowledge-library-context-choice {

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1492 — Kennis bibliotheek herstelacties tonen microcopy als rustige badge
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1491 is de herstelactiefeedback kort, maar de visuele badgebehandeling kan nog explicieter worden bewaakt.
+- **User Impact:** Gebruikers zien korte feedback, maar de labels kunnen nog te veel als doorlopende tekst voelen.
+- **Desired Outcome:** Toon feedbacklabels als rustige badges binnen de bestaande actieknoppen, zonder extra panelen of brede tekst.
+- **User Value:** Gebruikers herkennen feedback sneller als secundaire route-informatie.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; feedbacklabels blijven korte badges binnen de actieknoppen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken badge-styling en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery actions, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2928
+
 ### G1491 — Kennis bibliotheek herstelacties beperken feedback tot microcopy
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery actions, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2926
 
 ### G1490 — Kennis bibliotheek herstelacties tonen compacte actiefeedback
