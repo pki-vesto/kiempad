@@ -1483,6 +1483,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover minimum width stable with a readable 7ch floor.
   Partial G1545/#3034: The knowledge library empty-state recovery actions now keep mobile
   badge hover row height stable with a fixed 22px block-size contract.
+  Partial G1546/#3036: The knowledge library empty-state recovery actions now keep mobile
+  badge hover and focus heights equal with matching 22px block-size coverage.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
