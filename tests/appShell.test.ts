@@ -3223,6 +3223,12 @@ describe('app shell', () => {
     );
     expect(css).toContain('.daily-recommendation-reset-route-focus__close:disabled,');
     expect(css).toContain('.daily-recommendation-reset-route-focus__close[aria-disabled="true"] {');
+    expect(css).toContain(
+      '.daily-recommendation-reset-route-focus__close:disabled\n    + .daily-recommendation-reset-route-focus__help,',
+    );
+    expect(css).toContain(
+      '.daily-recommendation-reset-route-focus__close[aria-disabled="true"]\n    + .daily-recommendation-reset-route-focus__help {',
+    );
     expect(css).toContain('cursor: not-allowed;');
     expect(css).toContain('opacity: 0.72;');
     expect(css).toContain('opacity: 1;');

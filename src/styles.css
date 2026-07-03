@@ -14257,6 +14257,17 @@ a.action-card:active {
     opacity: 1;
   }
 
+  .daily-recommendation-reset-route-focus__close:disabled
+    + .daily-recommendation-reset-route-focus__help,
+  .daily-recommendation-reset-route-focus__close[aria-disabled="true"]
+    + .daily-recommendation-reset-route-focus__help {
+    color: GrayText;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
   @media (max-width: 480px) {
     [data-daily-recommendation-reset-route-focus="ready"] {
       grid-template-columns: minmax(0, 1fr);
