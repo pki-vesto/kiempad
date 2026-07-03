@@ -23894,8 +23894,10 @@ a.action-card:active {
     align-items: center;
     block-size: 22px;
     color: color-mix(in srgb, var(--text) 92%, var(--text-muted));
+    font-weight: 800;
     inline-size: min(12ch, 38%);
     justify-content: center;
+    opacity: 1;
     text-align: center;
     z-index: 2;
   }
