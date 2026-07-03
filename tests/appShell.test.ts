@@ -39339,6 +39339,11 @@ describe('app shell', () => {
     const hoverBadgeFeedbackMaxTextMix = 86;
     const hoverBadgeFeedbackMaxWeight = 750;
     const hoverLabelWeight = 850;
+    const hoverBadgeFeedbackTruncationContract = [
+      'overflow: hidden;',
+      'text-overflow: ellipsis;',
+      'white-space: nowrap;',
+    ];
     expect(focusBadgeFeedbackWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
     expect(hoverBadgeFeedbackWidthCh).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthCh);
     expect(hoverBadgeFeedbackWidthPercent).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWidthPercent);
@@ -39354,6 +39359,9 @@ describe('app shell', () => {
     expect(hoverBadgeFeedbackTextMix).toBeLessThanOrEqual(hoverBadgeFeedbackMaxTextMix);
     expect(hoverBadgeFeedbackWeight).toBeLessThanOrEqual(hoverBadgeFeedbackMaxWeight);
     expect(hoverLabelWeight).toBeGreaterThan(hoverBadgeFeedbackWeight);
+    for (const truncationRule of hoverBadgeFeedbackTruncationContract) {
+      expect(css).toContain(truncationRule);
+    }
     expect(css).toContain('color: color-mix(in srgb, var(--text) 88%, var(--text-muted));');
     expect(css).toContain('font-weight: 760;');
     expect(css).toContain('opacity: 1;');
