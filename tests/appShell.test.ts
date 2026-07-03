@@ -2247,6 +2247,12 @@ describe('app shell', () => {
     );
     expect(css).toContain('.medication-focus-shell__workspace');
     expect(css).toContain('> .medication-planning-workbench {');
+    expect(css).toContain('.medication-planning-console {');
+    expect(css).toContain('.medication-planning-primary {');
+    expect(css).toContain('.medication-planning-followup {');
+    expect(css).toContain('.medication-planning-followup__summary {');
+    expect(css).toContain('.medication-planning-followup__body {');
+    expect(css).toContain('.medication-planning-followup__links {');
     expect(css).toContain('.medication-progress {');
     expect(css).toContain('.medication-progress__track {');
     expect(css).toContain('.medication-progress__counts {');
@@ -5798,6 +5804,26 @@ describe('app shell', () => {
     );
     expect(html).toContain('id="medicatie-route-planning"');
     expect(html).toContain('data-medication-route="planning"');
+    expect(html).toContain(
+      'Het eerstvolgende planningsmoment staat vooraan. Vandaag, beheer, import en historie open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#medication-planning-primary"');
+    expect(html).toContain('href="#medication-planning-followup"');
+    expect(html).toContain('data-medication-planning-layout="single-input"');
+    expect(html).toContain('id="medication-planning-primary"');
+    expect(html).toContain('data-medication-planning-primary="next-dose"');
+    expect(html).toContain('id="medication-planning-followup"');
+    expect(html).toContain('data-medication-planning-followup="collapsed"');
+    expect(html).toContain('Planning nog leeg');
+    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('href="#medicatie?route=vandaag"');
+    expect(html).toContain('href="#medicatie?route=beheer"');
+    expect(html).toContain('href="#medicatie?route=import"');
+    expect(html).toContain('href="#medicatie?route=historie"');
+    expect(html.indexOf('id="medication-planning-primary"')).toBeLessThan(
+      html.indexOf('id="medication-planning-followup"'),
+    );
+    expect(html).not.toContain('<details id="medication-planning-followup" open');
     expect(html).toContain('id="medicatie-route-beheer"');
     expect(html).toContain('data-medication-route="beheer"');
     expect(html).toContain(

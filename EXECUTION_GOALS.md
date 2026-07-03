@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1395 — Traject: faseplanning start met één fasetaak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Traject Faseplanning moet rustig blijven als één fasetaak en mag niet opnieuw aanvoelen als een wand met tijdlijn, context en historie.
+- **User Impact:** Gebruikers kunnen bij faseplanning alsnog door meerdere trajectlagen moeten scannen voordat de hoofdtaak duidelijk is.
+- **Desired Outcome:** Start met één primaire fasetaak of fase-invoer en houd tijdlijn, context en historie als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers kunnen eerst de faseplanning vastleggen of controleren en openen extra trajectcontext pas wanneer nodig.
+- **Acceptance Criteria:** Traject Faseplanning toont één primaire fasetaak of fase-invoer in de eerste viewport; tijdlijn, context en historie blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen behandeladvies, kansberekening, trackingpayload of medische conclusie bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Traject, Faseplanning
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, treatment route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2736
+
 ### G1394 — Medicatie: planning start met één innametaak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, medication route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2734
 
 ### G1393 — Agenda: plannen start met één afspraaktaak

@@ -17153,20 +17153,52 @@ function renderMedicatieScreen(state: AppShellState): string {
               ? `${plannedLogs.length} toekomstig moment${plannedLogs.length === 1 ? '' : 'en'}`
               : 'Geen toekomstige momenten buiten vandaag',
           detail:
-            'Gebruik planning als vooruitblik; beheer of importeer alleen schema’s die door de kliniek zijn opgegeven.',
+            'Het eerstvolgende planningsmoment staat vooraan. Vandaag, beheer, import en historie open je pas als vervolgcontext.',
           status: `${plannedLogs.length} later`,
-          primary: { href: '#medicatie?route=vandaag', label: 'Vandaag' },
-          secondary: { href: '#medicatie?route=import', label: 'Schema importeren' },
+          primary: { href: '#medication-planning-primary', label: 'Volgend moment' },
+          secondary: { href: '#medication-planning-followup', label: 'Vervolgcontext' },
           data: { 'medication-route-summary': 'planning' },
           ariaLabel: 'Medicatieplanning route-samenvatting',
         })}
-        ${
-          plannedLogs.length > 0
-            ? renderDoseLogList(plannedLogs, state.medicatie)
-            : renderEmptyState('Nog geen toekomstige medicatiemomenten buiten vandaag.', {
-                title: 'Geen komende momenten',
-              })
-        }
+        <div class="medication-planning-console" data-medication-planning-layout="single-input">
+          <div id="medication-planning-primary" class="summary-panel medication-planning-primary" data-medication-planning-primary="next-dose">
+            <h3>${plannedLogs.length > 0 ? 'Eerstvolgend medicatiemoment' : 'Planning nog leeg'}</h3>
+            <p class="small-print">Controleer alleen het feitelijke geplande moment. Kiempad geeft geen doseringsadvies of behandeladvies.</p>
+            ${
+              plannedLogs.length > 0
+                ? renderDoseLogList(plannedLogs.slice(0, 1), state.medicatie)
+                : renderEmptyState('Nog geen toekomstige medicatiemomenten buiten vandaag.', {
+                    title: 'Geen komende momenten',
+                    cta: { href: '#medicatie?route=beheer', label: 'Medicatie beheren' },
+                  })
+            }
+          </div>
+          <details id="medication-planning-followup" class="kp-disclosure medication-planning-followup" data-medication-planning-followup="collapsed">
+            <summary class="kp-disclosure__summary medication-planning-followup__summary">
+              <span>
+                <strong>Vervolgcontext openen</strong>
+                <small>Bekijk vandaag, beheer, import, historie of extra latere momenten pas na de hoofdtaak.</small>
+              </span>
+              <em>${plannedLogs.length} later</em>
+            </summary>
+            <div class="kp-disclosure__body medication-planning-followup__body">
+              <nav class="medication-planning-followup__links" aria-label="Medicatie vervolgcontext">
+                <a href="#medicatie?route=vandaag">Vandaag afvinken</a>
+                <a href="#medicatie?route=beheer">Middel beheren</a>
+                <a href="#medicatie?route=import">Schema importeren</a>
+                <a href="#medicatie?route=historie">Historie openen</a>
+              </nav>
+              ${
+                plannedLogs.length > 1
+                  ? `<section class="medication-planning-followup__list" aria-label="Extra latere medicatiemomenten">
+                      <h3>Extra latere momenten</h3>
+                      ${renderDoseLogList(plannedLogs.slice(1), state.medicatie)}
+                    </section>`
+                  : ''
+              }
+            </div>
+          </details>
+        </div>
       </section>`,
     `<section id="medicatie-route-beheer" class="medication-route-section command-route-section" aria-labelledby="medicatie-route-beheer-title" data-medication-route="beheer"${renderMedicationRouteVisibility(activeMedicationRoute, 'beheer')}>
         <header class="medication-route-section__header command-route-section__header">
