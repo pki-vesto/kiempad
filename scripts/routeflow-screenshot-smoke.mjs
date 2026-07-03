@@ -349,6 +349,8 @@ const targets = [
       '[data-dossier-add-route-group-summary="ready"]',
       '[data-dossier-add-route-microcopy-details="collapsed"]',
       '[data-dossier-add-route-microcopy-summary="ready"]',
+      '[data-dossier-add-route-choice-details="collapsed"]',
+      '[data-dossier-add-route-choice-summary="ready"]',
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"]',
@@ -359,6 +361,7 @@ const targets = [
     closedDetailsSelectors: [
       '[data-dossier-add-route-group="collapsed"]',
       '[data-dossier-add-route-microcopy-details="collapsed"]',
+      '[data-dossier-add-route-choice-details="collapsed"]',
     ],
     hiddenSelectors: [
       '[data-dossier-add-route-panel="dossier-upload"]',

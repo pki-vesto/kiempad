@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1424 — Dossier upload triage start met één compacte invoerkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1422 zijn de routekeuze, hulphint en keuze-uitleg compacter, maar de triage boven de uploadconsole toont nog meerdere lanes tegelijk.
+- **User Impact:** Gebruikers zien bij dossierupload nog steeds meerdere invoerroutes voordat zij één concrete taak kiezen.
+- **Desired Outcome:** Laat de dossier-upload triage eerst één compacte invoerkeuze of samengevouwen contextlaag tonen, terwijl document, consult, imaging en review/OCR bereikbaar blijven.
+- **User Value:** Gebruikers starten dossierupload met één duidelijke keuze in plaats van een brede set lanes.
+- **Acceptance Criteria:** Bestaande routehashes, triage-lane hooks en uploadroutes blijven aanwezig; de triage toont eerst één compacte invoerkeuze of samengevouwen contextlaag; document, consult, imaging en review/OCR blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken bereikbaarheid, hooks en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload triage, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2792
+
 ### G1422 — Dossier upload keuze-uitleg start met één compacte uitlegkaart
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload choice copy, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2790
 
 ### G1421 — Dossier upload microcopy start met één compacte hulphint

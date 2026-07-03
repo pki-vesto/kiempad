@@ -3367,11 +3367,17 @@ function renderDossierScreen(state: AppShellState): string {
             </p>
           </div>
         </details>
-        <section class="dossier-add-route-choice" data-dossier-add-route-choice="ready" aria-label="Kies eerst wat je wilt toevoegen">
-          <p class="kp-card__eyebrow">Eerst kiezen</p>
-          <h4>Kies één toevoeging om het bijbehorende formulier te openen.</h4>
-          <p>Document, consult, embryokwaliteit en embryostatus blijven gescheiden zodat deze route niet als één lange invoerpagina start.</p>
-        </section>
+        <details class="dossier-add-route-choice" data-dossier-add-route-choice="ready" data-dossier-add-route-choice-details="collapsed" aria-label="Kies eerst wat je wilt toevoegen">
+          <summary class="dossier-add-route-choice__summary" data-dossier-add-route-choice-summary="ready">
+            <span>Kies één toevoeging</span>
+            <small>Formulieren blijven gescheiden</small>
+          </summary>
+          <div class="dossier-add-route-choice__body">
+            <p class="kp-card__eyebrow">Eerst kiezen</p>
+            <h4>Kies één toevoeging om het bijbehorende formulier te openen.</h4>
+            <p>Document, consult, embryokwaliteit en embryostatus blijven gescheiden zodat deze route niet als één lange invoerpagina start.</p>
+          </div>
+        </details>
         <section class="dossier-add-route-panel" data-dossier-add-route-panel="dossier-upload" data-dossier-upload-console-region="document">
         ${workflowPanel({
           title: 'Dossierdocument uploaden',
