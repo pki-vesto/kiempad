@@ -39259,6 +39259,7 @@ describe('app shell', () => {
     expect(css).toContain('max-width: calc(100% - 76px);');
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
+    expect(css).toContain('background: color-mix(in srgb, var(--category) 4%, var(--surface));');
     expect(css).toContain('background-clip: padding-box;');
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain(

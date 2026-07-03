@@ -1427,6 +1427,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   focus halo stable with explicit clipping and radius.
   Partial G1517/#2978: The knowledge library empty-state recovery actions now keep mobile
   focus boundaries calm with an inset surface divider.
+  Partial G1518/#2980: The knowledge library empty-state recovery actions now keep the mobile
+  focus surface light with a softer category wash.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
