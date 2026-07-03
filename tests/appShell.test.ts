@@ -38278,6 +38278,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-research-scan-choice="collapsed"');
     expect(html).toContain('Kies researchscan');
     expect(html).toContain('Open daarna bronnen, samenvattingen, trends of netwerkstatus.');
+    expect(html).toContain('data-knowledge-research-snapshot-choice="collapsed"');
+    expect(html).toContain('Snapshotroutes openen');
+    expect(html).toContain('Bronnen, samenvattingen, trends en netwerkstatus.');
     expect(html).toContain('data-knowledge-research-snapshot="ready"');
     expect(html).toContain('aria-label="Researchscan"');
     expect(html).toContain('data-knowledge-research-snapshot-card="sources"');
@@ -38288,10 +38291,16 @@ describe('app shell', () => {
     expect(html).toContain('Wetenschappelijk en eenvoudig naast elkaar.');
     expect(html).toContain('Alleen lokale groepering, geen bewijsweging.');
     expect(html.indexOf('data-knowledge-research-scan-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-snapshot-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-research-snapshot-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-snapshot="ready"'),
     );
     expect(html).not.toContain(
       '<details class="knowledge-research-scan-choice" data-knowledge-research-scan-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-research-snapshot-choice" data-knowledge-research-snapshot-choice="collapsed" open>',
     );
     expect(html.indexOf('data-knowledge-workbench-status-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-workbench-status-metrics="ready"'),
@@ -38845,6 +38854,8 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-summaries-choice__summary {');
     expect(css).toContain('.knowledge-research-trends-choice {');
     expect(css).toContain('.knowledge-research-trends-choice__summary {');
+    expect(css).toContain('.knowledge-research-snapshot-choice {');
+    expect(css).toContain('.knowledge-research-snapshot-choice__summary {');
     expect(css).toContain('.knowledge-research-followup-context-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice__summary {');

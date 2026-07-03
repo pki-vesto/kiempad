@@ -151,13 +151,17 @@ const targets = [
       '[data-knowledge-research-scan-choice="collapsed"]',
     ],
     presentSelectors: [
+      '[data-knowledge-research-snapshot-choice="collapsed"]',
       '[data-knowledge-research-snapshot="ready"]',
       '[data-knowledge-research-snapshot-card="sources"]',
       '[data-knowledge-research-snapshot-card="summaries"]',
       '[data-knowledge-research-snapshot-card="trends"]',
       '[data-knowledge-research-snapshot-card="network"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-research-scan-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-research-scan-choice="collapsed"]',
+      '[data-knowledge-research-snapshot-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-status',
