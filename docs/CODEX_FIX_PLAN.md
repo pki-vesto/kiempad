@@ -1218,6 +1218,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   closed completion-status disclosure before submit feedback and recovery context appear.
   Partial G1415/#2776: Consult upload now starts with one closed report-field choice before date,
   text/file, linking and source-context fields appear.
+  Partial G1416/#2778: The consult upload completion area now starts with one save action and a
+  closed save-status disclosure before submit feedback and recovery context appear.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

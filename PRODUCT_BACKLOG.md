@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1217 |
+| ☑ klaar | 1218 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1416** |
+| **Totaal** | **1417** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1578,13 +1578,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1413 | Dossier upload: embryo-labcontextpaneel start met één labkeuze | P1 | F5 | ☑ |
 | G1414 | Dossier upload: submitfeedback start met één afrondingskeuze | P1 | F5 | ☑ |
 | G1415 | Consult upload: consultroute start met één verslagkeuze | P1 | F5 | ☑ |
-| G1416 | Consult upload: afronding start met één bewaarkeuze | P1 | F5 | ☐ |
+| G1416 | Consult upload: afronding start met één bewaarkeuze | P1 | F5 | ☑ |
+| G1417 | Embryokwaliteit: registratie start met één embryokeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1416** (id's G001 t/m G1416, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1417** (id's G001 t/m G1417, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

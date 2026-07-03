@@ -707,6 +707,9 @@ const targets = [
       '[data-consult-upload-link-fields="collapsed"] > .dossier-upload-optional__summary',
       '[data-consult-upload-context-fields="collapsed"]',
       '[data-consult-upload-context-fields="collapsed"] > .dossier-upload-optional__summary',
+      '[data-consult-upload-completion-choice="ready"]',
+      '[data-consult-upload-submit-feedback-details="collapsed"]',
+      '[data-consult-upload-submit-feedback-details="collapsed"] > .dossier-upload-optional__summary',
     ],
     presentSelectors: [
       '[data-dossier-upload-console="ready"]',
@@ -718,6 +721,7 @@ const targets = [
       '[data-consult-upload-report-fields="collapsed"]',
       '[data-consult-upload-link-fields="collapsed"]',
       '[data-consult-upload-context-fields="collapsed"]',
+      '[data-consult-upload-submit-feedback-details="collapsed"]',
     ],
     expectedUploadFlow: 'consult',
     desktopHiddenSelectors: [
