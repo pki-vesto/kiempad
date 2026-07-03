@@ -23918,6 +23918,15 @@ a.action-card:active {
     z-index: 2;
   }
 
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:hover
+    .knowledge-library-empty-recovery-choice__feedback {
+    background: color-mix(in srgb, var(--surface) 88%, var(--category));
+    border-color: color-mix(in srgb, var(--category) 18%, var(--border-strong));
+    color: color-mix(in srgb, var(--text) 84%, var(--text-muted));
+    font-weight: 740;
+  }
+
   .knowledge-library-category-choice__grid {
     display: flex;
     overflow-x: auto;

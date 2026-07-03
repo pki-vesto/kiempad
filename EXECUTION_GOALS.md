@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1523 — Kennis bibliotheek herstelactie badges houden mobiele hoverbadge leesbaar
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1522 blijft de mobiele hoverbadge rustig en secundair, maar de leesbaarheid van die badgecopy tijdens hover is nog niet apart bewaakt.
+- **User Impact:** Gebruikers kunnen routefeedback missen als de rustigere hoverbadge te subtiel wordt.
+- **Desired Outcome:** Mobiele herstelbadges blijven tijdens hover goed leesbaar binnen dezelfde compacte, secundaire badgebox.
+- **User Value:** Gebruikers krijgen subtiele maar begrijpelijke routefeedback bij pointer- en touchinteractie.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; hoverbadgecopy blijft leesbaar op mobiel; hoverbadge blijft rustig en secundair op mobiel; hoverbegrenzing blijft rustig op mobiel; hovervlak blijft licht en niet-dominant op mobiel; focusvlak blijft licht en consistent op mobiel; badgeboxmaten blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele hoverbadgecopy en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2990
+
 ### G1522 — Kennis bibliotheek herstelactie badges houden mobiele hoverbadge rustig
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action hover/focus states, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2988
 
 ### G1521 — Kennis bibliotheek herstelactie badges houden mobiele hoverbegrenzing rustig
