@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1209 |
+| ☑ klaar | 1210 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1408** |
+| **Totaal** | **1409** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1570,13 +1570,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1405 | Dagadvies: adviesroute start met één actiekeuze | P1 | F5 | ☑ |
 | G1406 | Dagadvies: volledige lijst start met één filterkeuze | P1 | F5 | ☑ |
 | G1407 | Dagadvies: eigenaarcontext start met één eigenaarroute | P1 | F5 | ☑ |
-| G1408 | Dagadvies: workflowkop start met één routekeuze | P1 | F5 | ☐ |
+| G1408 | Dagadvies: workflowkop start met één routekeuze | P1 | F5 | ☑ |
+| G1409 | Dossier upload: uploadroute start met één bestandskeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1408** (id's G001 t/m G1408, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1409** (id's G001 t/m G1409, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

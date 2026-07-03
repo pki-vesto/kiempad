@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1409 — Dossier upload: uploadroute start met één bestandskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na de eerdere upload-IA verbeteringen kan de concrete uploadroute nog veel velden en context tegelijk tonen zodra de documentroute open staat.
+- **User Impact:** Gebruikers die alleen een onderzoek of bestand willen toevoegen, moeten nog steeds door metadata, koppelingen, privacycontext en vervolgpanelen heen scannen.
+- **Desired Outcome:** Laat de uploadroute eerst openen met één bestandskeuze of intakekeuze, waarna metadata, koppelingen, privacydetails en reviewcontext als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen sneller en rustiger starten met uploaden zonder de medische context meteen volledig te hoeven verwerken.
+- **Acceptance Criteria:** Bestaande uploadformulieren, form ids, privacy hooks en dossier hooks blijven aanwezig; de eerste uploadviewport toont één duidelijke bestands- of intakekeuze; metadata, koppelingen, privacydetails en reviewcontext starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2764
+
 ### G1408 — Dagadvies: workflowkop start met één routekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, hub workflow header, daily advice route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2762
 
 ### G1407 — Dagadvies: eigenaarcontext start met één eigenaarroute
