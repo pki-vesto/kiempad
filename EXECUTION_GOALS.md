@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1425 — Dossier upload consoleheader start met één compacte statusregel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1424 starten triage, routekeuze, hulphint en keuze-uitleg compacter, maar de uploadconsoleheader toont nog uitlegtekst voordat een concrete route is gekozen.
+- **User Impact:** Gebruikers zien bij dossierupload nog steeds extra uitleg bovenop de compacte startlagen.
+- **Desired Outcome:** Laat de dossier-uploadconsoleheader eerst één compacte statusregel of samengevouwen contextlaag tonen, terwijl recordtelling en uitleg bereikbaar blijven.
+- **User Value:** Gebruikers houden de uploadstart scanbaar en zien minder tekst voordat zij een taak kiezen.
+- **Acceptance Criteria:** Bestaande console hooks, recordtelling en uploadroutes blijven aanwezig; de consoleheader toont eerst één compacte statusregel of samengevouwen contextlaag; de uitleg over gescheiden toevoegstromen blijft bereikbaar zonder standaard meerdere zinnen te tonen; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload console header, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2794
+
 ### G1424 — Dossier upload triage start met één compacte invoerkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload triage, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2792
 
 ### G1422 — Dossier upload keuze-uitleg start met één compacte uitlegkaart

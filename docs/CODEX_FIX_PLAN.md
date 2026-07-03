@@ -1232,6 +1232,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   the route-switch hint and local-concept note remain reachable.
   Partial G1422/#2790: The dossier upload choice explanation now starts with one closed compact
   explanation card while the full route context remains reachable.
+  Partial G1424/#2792: The dossier upload triage now starts with one closed compact upload-choice
+  row while document, consult, imaging and OCR/review lanes remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

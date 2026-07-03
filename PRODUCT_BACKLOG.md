@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1224 |
+| ☑ klaar | 1225 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1423** |
+| **Totaal** | **1424** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1585,13 +1585,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1420 | Dossier upload selector start met één compacte routekeuze | P1 | F5 | ☑ |
 | G1421 | Dossier upload microcopy start met één compacte hulphint | P1 | F5 | ☑ |
 | G1422 | Dossier upload keuze-uitleg start met één compacte uitlegkaart | P1 | F5 | ☑ |
-| G1424 | Dossier upload triage start met één compacte invoerkeuze | P1 | F5 | ☐ |
+| G1424 | Dossier upload triage start met één compacte invoerkeuze | P1 | F5 | ☑ |
+| G1425 | Dossier upload consoleheader start met één compacte statusregel | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1423** (id's G001 t/m G1424; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1424** (id's G001 t/m G1425; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

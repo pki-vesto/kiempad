@@ -4830,30 +4830,37 @@ function renderDossierUploadTriage(input: {
   ];
 
   return `
-    <section class="dossier-upload-triage" aria-label="Uploadkeuze voor dossier" data-dossier-upload-triage="ready">
-      <header class="dossier-upload-triage__header">
-        <div>
-          <p class="kp-card__eyebrow">Uploadkeuze</p>
-          <h3>Kies eerst wat je toevoegt</h3>
-        </div>
-        <p>Elke route opent alleen de relevante velden of vervolgstap.</p>
-      </header>
-      <nav class="dossier-upload-triage__lanes" aria-label="Uploadtype kiezen">
-        ${lanes
-          .map(
-            (lane) => `
-              <a class="dossier-upload-triage__lane" href="${lane.href}" data-dossier-upload-lane="${lane.id}">
-                <span>${escapeHtml(lane.label)}</span>
-                <strong>${escapeHtml(lane.title)}</strong>
-                <small>${escapeHtml(lane.detail)}</small>
-                <em>${escapeHtml(lane.cue)}</em>
-              </a>
-            `,
-          )
-          .join('')}
-      </nav>
-      <p class="small-print">Deze keuze toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
-    </section>
+    <details class="dossier-upload-triage" aria-label="Uploadkeuze voor dossier" data-dossier-upload-triage="ready" data-dossier-upload-triage-details="collapsed">
+      <summary class="dossier-upload-triage__summary" data-dossier-upload-triage-summary="ready">
+        <span>Uploadkeuze</span>
+        <strong>Kies wat je toevoegt</strong>
+        <small>Document, consult, beeld of OCR-review</small>
+      </summary>
+      <div class="dossier-upload-triage__body">
+        <header class="dossier-upload-triage__header">
+          <div>
+            <p class="kp-card__eyebrow">Uploadkeuze</p>
+            <h3>Kies eerst wat je toevoegt</h3>
+          </div>
+          <p>Elke route opent alleen de relevante velden of vervolgstap.</p>
+        </header>
+        <nav class="dossier-upload-triage__lanes" aria-label="Uploadtype kiezen">
+          ${lanes
+            .map(
+              (lane) => `
+                <a class="dossier-upload-triage__lane" href="${lane.href}" data-dossier-upload-lane="${lane.id}">
+                  <span>${escapeHtml(lane.label)}</span>
+                  <strong>${escapeHtml(lane.title)}</strong>
+                  <small>${escapeHtml(lane.detail)}</small>
+                  <em>${escapeHtml(lane.cue)}</em>
+                </a>
+              `,
+            )
+            .join('')}
+        </nav>
+        <p class="small-print">Deze keuze toont alleen aantallen en routes; geen OCR-tekst, bestandsinhoud, beeldpayloads of medisch advies.</p>
+      </div>
+    </details>
   `;
 }
 
