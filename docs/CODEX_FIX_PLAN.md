@@ -1191,6 +1191,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
 - **CFX-026** — Real date placeholder ("dd-mm-jjjj") vs grey filled-looking default (C26). **P2 · S**
   Partial G1579/#3102: Kosten add/edit date fields now show a visible `Gebruik dd-mm-jjjj`
   helper via `.date-format-hint`, instead of relying on native date placeholder behavior.
+  Partial G1580/#3104: Kennis research publicatiedatum and PubMed preview datum now show the
+  same visible `Gebruik dd-mm-jjjj` helper via `.date-format-hint`, reducing browser-dependent
+  date-format ambiguity in research workflows.
 - **CFX-027** — Textarea kit: `min-height:74px`, `resize:vertical`, kit border everywhere (C27). **P2 · S**
 - **CFX-028** — Form actions: primary Bewaar + ghost Annuleer, not both full-width teal (C28). **P2 · S**
 - **CFX-029** — Inline validation in `--clay-ink` (no browser popups) (C29). **P2 · M**

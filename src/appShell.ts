@@ -14210,6 +14210,7 @@ function renderResearchItemForm(): string {
           <label>
             Publicatiedatum
             <input name="researchPublicatieDatum" type="date" />
+            <span class="date-format-hint" data-date-format-hint="knowledge-research">Gebruik dd-mm-jjjj</span>
           </label>
           <label>
             Notitie
@@ -14575,6 +14576,7 @@ function renderPubMedQueryPreview(preview: PubMedQueryPreview): string {
         <label>
           Datum
           <input name="pubmedPreviewDatum" type="date" value="${escapeAttribute(preview.datum)}" />
+          <span class="date-format-hint" data-date-format-hint="knowledge-pubmed">Gebruik dd-mm-jjjj</span>
         </label>
         <label>
           Reviewstatus

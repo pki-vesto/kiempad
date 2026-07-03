@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1580 — Kennis datumvelden tonen zichtbaar dd-mm-jjjj hulpje
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kennis research- en PubMed-datumvelden vertrouwen nog op native date-input gedrag, waardoor het gewenste datumformaat per browser onduidelijk kan blijven.
+- **User Impact:** Gebruikers kunnen bij research- of PubMed-correcties moeten gokken welk datumformaat Kiempad verwacht.
+- **Desired Outcome:** Kennis research en PubMed preview tonen een zichtbare `dd-mm-jjjj` hint onder hun datumvelden.
+- **User Value:** Gebruikers zien direct welk datumformaat bedoeld is bij researchcontext zonder extra foutmelding of browserafhankelijk gedrag.
+- **Acceptance Criteria:** Research publicatiedatum toont `Gebruik dd-mm-jjjj` onder het date veld; PubMed preview datum toont `Gebruik dd-mm-jjjj` onder het date veld; beide hints gebruiken gedeelde `.date-format-hint` styling; app-shell tests bewaken de markup; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kennis toevoegen, Researchaggregatie, PubMed query preview
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Kennis research form, PubMed preview form, date/time field kit, form helper styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3104
+
 ### G1579 — Kosten datumveld toont zichtbaar dd-mm-jjjj hulpje
 
 - **Epic:** Onboarding & Daily Use
