@@ -38291,6 +38291,8 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-empty-recovery-action="clear-filter"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="category"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="add"');
+    expect(visibilitySummary).not.toContain('aria-disabled="true"');
+    expect(visibilitySummary).not.toContain('disabled');
     expect(html).toContain('data-knowledge-library-empty-recovery-order="1"');
     expect(html).toContain('data-knowledge-library-empty-recovery-order="2"');
     expect(html).toContain('data-knowledge-library-empty-recovery-order="3"');
@@ -39177,6 +39179,11 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-empty-recovery-choice__status {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__body {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__step {');
+    expect(css).toContain('cursor: pointer;');
+    expect(css).toContain('opacity: 1;');
+    expect(css).toContain('pointer-events: auto;');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice__anchor--secondary {');
+    expect(css).toContain('border-style: solid;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__feedback {');
     expect(css).toContain('max-width: 14ch;');
     expect(css).toContain('padding: 2px 6px;');

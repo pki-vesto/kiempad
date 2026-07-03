@@ -1387,6 +1387,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   mobile focus ring around compact badge actions.
   Partial G1497/#2938: The knowledge library empty-state recovery focus ring now keeps extra
   visual space while compact badge labels stay layered inside the action.
+  Partial G1498/#2940: The knowledge library empty-state recovery routes now keep explicit
+  active-route styling so compact badge actions do not appear disabled.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
