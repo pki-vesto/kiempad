@@ -199,6 +199,9 @@
 - **Daily advice feedback reset route-focus reduced-motion focus copy — done in G1471 / issue #2702.**
   Reduced-motion users now get the same static helper-copy focus cue without transitions, layout
   shifts, route changes, feedback-filter changes, tracking, or medical-data changes.
+- **Daily advice feedback reset route-focus touch active focus copy — done in G1472 / issue #2704.**
+  Mobile touch active feedback on the local hide action now also emphasizes the helper copy, keeping
+  the reset message understandable without changing layout, route state, tracking, or medical data.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
