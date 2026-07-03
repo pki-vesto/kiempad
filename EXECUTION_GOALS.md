@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1450 — Kennis AI instellingen starten met één compacte instellingkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1449 blijven kennis AI-instellingen gevoelig voor opt-in status, opslagmodus, on-device status en instellingenactie tegelijk.
+- **User Impact:** Gebruikers die AI-beheer openen, krijgen nog meerdere instellingssignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis AI-instellingen starten met één compacte instellingkeuze of samengevouwen sublaag, terwijl opt-in status, opslagmodus, on-device status en instellingenactie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst bepalen of ze instellingen willen openen zonder dat status- en opt-in details de AI-route domineren.
+- **Acceptance Criteria:** Bestaande kennis AI instellinghooks, opt-in hooks, statusregels, opslagmodus en routehashes blijven aanwezig; AI-instellingen starten met één compacte instellingkeuze of samengevouwen sublaag; opt-in status, opslagmodus, on-device status en instellingenactie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI settings, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2844
+
 ### G1449 — Kennis AI samenvattingdetails starten met één compacte detailkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2842
 
 ### G1448 — Kennis bibliotheekkaartdetails starten met één compacte detailkeuze
