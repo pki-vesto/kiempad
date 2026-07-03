@@ -39265,9 +39265,8 @@ describe('app shell', () => {
       'outline: 2px solid color-mix(in srgb, var(--category) 46%, var(--accent));',
     );
     expect(css).toContain('outline-offset: 3px;');
-    expect(css).toContain(
-      'box-shadow: 0 0 0 4px color-mix(in srgb, var(--surface) 88%, transparent);',
-    );
+    expect(css).toContain('inset 0 0 0 1px color-mix(in srgb, var(--surface) 72%, transparent),');
+    expect(css).toContain('0 0 0 4px color-mix(in srgb, var(--surface) 88%, transparent);');
     expect(css).toContain('position: relative;');
     expect(css).toContain('z-index: 1;');
     expect(css).toContain(
