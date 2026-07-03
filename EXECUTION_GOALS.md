@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1481 — Kennis bibliotheek vervolgcontext start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1480 blijft de Kennis Bibliotheek vervolgcontext gevoelig voor categorieën, kaarten, bewerkacties en zichtbaarheid tegelijk.
+- **User Impact:** Gebruikers die de bibliotheekvervolgcontext openen, moeten nog meerdere lijst- en kaartcontexten scannen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de Kennis Bibliotheek vervolgcontext starten met één compacte contextkeuze of samengevouwen sublaag, terwijl categorieën, kaarten, bewerkacties en zichtbaarheid bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één bibliotheekcontext kiezen zonder dat alle categorie-, kaart- en bewerkcontext tegelijk aandacht vragen.
+- **Acceptance Criteria:** Bestaande bibliotheekfollowup-, context-, lijst- en kaarthooks blijven aanwezig; de vervolgcontext start met één compacte keuze of samengevouwen sublaag; categorieën, kaarten, bewerkacties en zichtbaarheid blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library follow-up context, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2906
+
 ### G1480 — Kennis bibliotheek route vervolgacties starten met één compacte actie-keuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library route summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2904
 
 ### G1479 — Kennis AI-route supportcontext start met één compacte supportkeuze

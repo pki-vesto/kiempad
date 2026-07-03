@@ -13028,11 +13028,22 @@ function renderKennisScreen(state: AppShellState): string {
               <h3>Eerst één categoriekeuze</h3>
               <p>Kies eerst welke kennisgroep je wilt bekijken. De volledige bibliotheek blijft daarna als gesloten vervolgcontext beschikbaar.</p>
             </div>
-            <div class="command-route-summary__meta">
-              <span class="command-route-summary__status">${filteredItems.length} zichtbaar</span>
-              <a class="command-route-summary__action" href="#knowledge-library-category-choice">Categoriekeuze</a>
-              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-library-followup">Vervolgcontext</a>
-            </div>
+            <details class="knowledge-library-action-choice" data-knowledge-library-action-choice="collapsed">
+              <summary class="knowledge-library-action-choice__summary">
+                <span>
+                  <strong>Bibliotheekactie kiezen</strong>
+                  <small>Open categorieanker, vervolgcontext, kaartdetails en routecontext.</small>
+                </span>
+                <em>2 acties</em>
+              </summary>
+              <div class="knowledge-library-action-choice__body">
+                <div class="command-route-summary__meta">
+                  <span class="command-route-summary__status">${filteredItems.length} zichtbaar</span>
+                  <a class="command-route-summary__action" href="#knowledge-library-category-choice">Categoriekeuze</a>
+                  <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-library-followup">Vervolgcontext</a>
+                </div>
+              </div>
+            </details>
           </div>
         </details>
         ${renderKnowledgeLibraryCategoryChoice(grouped)}
