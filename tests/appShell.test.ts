@@ -39239,6 +39239,9 @@ describe('app shell', () => {
     expect(css).toContain('max-width: min(12ch, 38%);');
     expect(css).toContain('margin-left: auto;');
     expect(css).toContain('flex-shrink: 0;');
+    expect(css).toContain('gap: 8px;');
+    expect(css).toContain('flex: 1 1 minmax(0, 62%);');
+    expect(css).toContain('max-width: calc(100% - 76px);');
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
     expect(css).toContain(

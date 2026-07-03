@@ -23842,6 +23842,7 @@ a.action-card:active {
   .knowledge-library-empty-recovery-choice__body
     .knowledge-library-followup-visibility-choice__anchor {
     justify-content: flex-start;
+    gap: 8px;
     min-height: 44px;
     min-width: 0;
     touch-action: manipulation;
@@ -23853,6 +23854,11 @@ a.action-card:active {
     outline: 2px solid color-mix(in srgb, var(--category) 52%, var(--accent));
     outline-offset: 3px;
     box-shadow: 0 0 0 5px color-mix(in srgb, var(--surface) 82%, transparent);
+  }
+
+  .knowledge-library-empty-recovery-choice__label {
+    flex: 1 1 minmax(0, 62%);
+    max-width: calc(100% - 76px);
   }
 
   .knowledge-library-empty-recovery-choice__feedback {
