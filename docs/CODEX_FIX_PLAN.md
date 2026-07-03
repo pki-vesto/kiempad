@@ -1258,6 +1258,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status choice while storage status, recovery context and follow-up routes remain reachable.
   Partial G1436/#2816: The embryo status completion context now starts with one closed compact
   status choice while storage status, recovery context and follow-up routes remain reachable.
+  Partial G1437/#2818: The knowledge research follow-up now starts with one closed compact
+  research-context choice while sources, summaries, relevance and trends remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

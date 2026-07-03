@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1438 — Kennis bibliotheekroute follow-up start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1437 blijft de kennisbibliotheekroute gevoelig voor brede vervolgcontext zodra gebruikers de bibliotheekcategorieën en itemdetails openen.
+- **User Impact:** Gebruikers die kennisitems willen scannen, krijgen categorieën, bibliotheeklijst en details nog te snel als brede contextlaag aangeboden.
+- **Desired Outcome:** Laat de kennis bibliotheekroute follow-up starten met één compacte contextkeuze of samengevouwen sublaag, terwijl categorieën, bibliotheekitems, kaartacties en detailcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen de bibliotheek stap voor stap openen zonder dat de route als brede informatiepagina start.
+- **Acceptance Criteria:** Bestaande kennisbibliotheekhooks, categoriehooks, itemhooks en routehashes blijven aanwezig; de bibliotheek follow-up start met één compacte contextkeuze of samengevouwen sublaag; categorieën, volledige bibliotheeklijst, kaartacties en itemdetails blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2820
+
 ### G1437 — Kennis researchroute follow-up start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2818
 
 ### G1436 — Embryostatus afrondingscontext start met één compacte statuskeuze
