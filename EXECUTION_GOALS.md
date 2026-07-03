@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1571 — Premium Claude Design UI houdt routepaneelkop sticky binnen actieve werkruimte
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1569/G1570 zijn routewerkruimtes begrensd, maar de route-samenvatting kan binnen het actieve paneel nog uit beeld scrollen.
+- **User Impact:** Gebruikers verliezen bij langere formulieren of vervolgpanelen sneller taakstatus en primaire acties uit beeld.
+- **Desired Outcome:** De route-samenvatting blijft als compacte sticky paneelkop zichtbaar binnen het actieve werkpaneel.
+- **User Value:** Gebruikers houden context, status en routeactie zichtbaar terwijl ze door langere taakinhoud werken.
+- **Acceptance Criteria:** Actieve domain-split route summaries blijven sticky binnen het scrollbare main-paneel; sticky paneelkop houdt rustige surface, border en geen horizontale overflow; routehooks en route summary acties blijven bereikbaar; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Dossier, Kennis, Agenda, Medicatie, Traject, Vragen, Welzijn, Afwegingen, Kosten, Logboek, Back-up, Herinneringen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** Shared domain split workspace CSS, command route summary, route-first workspaces
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #3086
+
 ### G1570 — Premium Claude Design UI houdt desktop routewerkruimte als begrensde app-panelen
 
 - **Epic:** Onboarding & Daily Use

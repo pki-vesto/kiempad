@@ -14820,6 +14820,13 @@ h2 {
 .domain-split-workspace__main .command-route-summary {
   grid-template-columns: 1fr;
   gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 18;
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  background: color-mix(in srgb, var(--surface-raised) 94%, var(--surface));
+  box-shadow: 0 10px 24px rgba(21, 48, 44, 0.06);
+  backdrop-filter: blur(14px);
 }
 
 .domain-split-workspace__main .command-route-summary__meta {

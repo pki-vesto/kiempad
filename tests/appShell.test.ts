@@ -42056,6 +42056,9 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: 1fr;');
     expect(css).toContain('.domain-split-workspace__rail .command-task-route span,');
     expect(css).toContain('.domain-split-workspace__main .command-route-summary {');
+    expect(css).toContain('position: sticky;');
+    expect(css).toContain('top: 0;');
+    expect(css).toContain('backdrop-filter: blur(14px);');
     expect(css).toContain('.domain-split-workspace__main .hub-detail-disclosure__summary strong,');
     expect(css).toContain('.domain-split-workspace__main .kp-workflow-panel__header {');
     expect(css).toContain(
