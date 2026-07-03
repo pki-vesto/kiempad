@@ -316,18 +316,22 @@ const targets = [
       '[data-knowledge-library-context-choice="collapsed"]',
       '[data-knowledge-library-list-choice="collapsed"]',
       '[data-knowledge-library-list-items-choice="collapsed"]',
+      '[data-knowledge-library-card-detail-choice="collapsed"]',
     ],
     requiredSelectors: [
       '[data-knowledge-library-card-detail-choice="collapsed"]',
     ],
     presentSelectors: [
+      '[data-knowledge-library-card-content-choice="collapsed"]',
       '.knowledge-library-card__body',
       '.knowledge-library-card__source',
       '.knowledge-library-card__badges',
       '.knowledge-library-card__actions',
       '[data-status-badge="knowledge"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-library-card-detail-choice="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-library-card-content-choice="collapsed"]',
+    ],
   },
   {
     screen: 'knowledge-add',

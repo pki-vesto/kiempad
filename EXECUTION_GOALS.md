@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1471 — Kennis AI-preview start met één compacte previewkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1470 blijft de kennis AI-preview gevoelig voor bron, previewtekst, foutstatus en previewactie tegelijk.
+- **User Impact:** Gebruikers die AI-preview openen, krijgen nog meerdere previewvelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis AI-preview starten met één compacte previewkeuze of samengevouwen sublaag, terwijl bron, previewtekst, foutstatus en previewactie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één previewcontext kiezen zonder dat alle AI-previewvelden tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande AI-preview hooks, formulier en foutstatus blijven aanwezig; de AI-preview start met één compacte keuze of samengevouwen sublaag; bron, previewtekst, foutstatus en previewactie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, AI preview form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2886
+
 ### G1470 — Kennis bibliotheek kaartdetails start met één compacte detailkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, kennis library cards, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2884
 
 ### G1469 — Kennis bibliotheek lijst start met één compacte lijstkeuze
