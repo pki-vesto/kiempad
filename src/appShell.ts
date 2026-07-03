@@ -3487,21 +3487,27 @@ function renderDossierScreen(state: AppShellState): string {
               <span>Beeldcontext</span>
               <small>Echo, foto of scan beschrijven</small>
             </summary>
-            <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld">
-              <legend>Beeldcontext</legend>
-            <label>
-              Beeldcontext
-              <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
-            </label>
-            <label>
-              Beeldbron
-              <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
-            </label>
-            <label>
-              Beeld cyclusdag
-              <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
-            </label>
-            </fieldset>
+            <details class="dossier-upload-optional dossier-upload-image-fields" data-dossier-upload-image-fields="collapsed">
+              <summary class="dossier-upload-optional__summary">
+                <span>Beeldvelden openen</span>
+                <small>Context, bron en cyclusdag</small>
+              </summary>
+              <fieldset class="dossier-upload-group" data-dossier-upload-group="beeldcontext" data-dossier-context-priority="optional" data-dossier-field-section="document-beeldcontext" data-dossier-field-section-label="Stap 4 · beeld">
+                <legend>Beeldcontext</legend>
+              <label>
+                Beeldcontext
+                <input name="beeldContext" autocomplete="off" placeholder="Bijvoorbeeld: follikelmeting links, embryo 1 of baarmoeder" />
+              </label>
+              <label>
+                Beeldbron
+                <input name="beeldBron" autocomplete="off" placeholder="Bijvoorbeeld: kliniekportaal of labfoto" />
+              </label>
+              <label>
+                Beeld cyclusdag
+                <input name="beeldCyclusDag" type="number" min="1" max="60" step="1" />
+              </label>
+              </fieldset>
+            </details>
           </details>
           <details class="dossier-upload-optional" data-dossier-upload-optional="embryo-labcontext">
             <summary class="dossier-upload-optional__summary">

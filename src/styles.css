@@ -16109,7 +16109,8 @@ a.action-card:active {
 }
 
 .dossier-upload-optional.dossier-upload-metadata-fields,
-.dossier-upload-optional.dossier-upload-link-fields {
+.dossier-upload-optional.dossier-upload-link-fields,
+.dossier-upload-optional.dossier-upload-image-fields {
   margin: 0 10px 10px;
   background: var(--surface);
 }

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1213 |
+| ☑ klaar | 1214 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1412** |
+| **Totaal** | **1413** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1574,13 +1574,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1409 | Dossier upload: uploadroute start met één bestandskeuze | P1 | F5 | ☑ |
 | G1410 | Dossier upload: metadatapaneel start met één controlekeuze | P1 | F5 | ☑ |
 | G1411 | Dossier upload: koppelingenpaneel start met één koppelkeuze | P1 | F5 | ☑ |
-| G1412 | Dossier upload: beeldcontextpaneel start met één beeldkeuze | P1 | F5 | ☐ |
+| G1412 | Dossier upload: beeldcontextpaneel start met één beeldkeuze | P1 | F5 | ☑ |
+| G1413 | Dossier upload: embryo-labcontextpaneel start met één labkeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1412** (id's G001 t/m G1412, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1413** (id's G001 t/m G1413, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
