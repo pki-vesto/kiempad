@@ -163,6 +163,9 @@
 - **Daily advice feedback reset route-focus keyboard focus — done in G1459 / issue #2678.** New
   reset confirmations now receive predictable keyboard focus after workflow, list-header, and
   filter-form resets without changing route, filter, tracking, or medical state.
+- **Daily advice feedback reset route-focus forced-colors focus — done in G1460 / issue #2680.**
+  The focused reset confirmation and its local hide action now use explicit high-contrast focus
+  outlines so keyboard focus stays visible in forced-colors mode.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
