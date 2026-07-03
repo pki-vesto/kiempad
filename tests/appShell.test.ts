@@ -7243,14 +7243,17 @@ describe('app shell', () => {
     expect(emptyForm).toContain('data-dossier-upload-group="beeldcontext"');
     expect(emptyForm).toContain('data-dossier-upload-group="embryo-labcontext"');
     expect(emptyForm).toContain('data-dossier-field-section="document-basis"');
-    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 1 · basis"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 1 · bestand"');
+    expect(emptyForm).toContain('data-dossier-field-section="document-metadata"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 2 · metadata"');
     expect(emptyForm).toContain('data-dossier-field-section="document-koppelingen"');
-    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 2 · koppelen"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 3 · koppelen"');
     expect(emptyForm).toContain('data-dossier-field-section="document-beeldcontext"');
-    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 3 · beeld"');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 4 · beeld"');
     expect(emptyForm).toContain('data-dossier-field-section="document-embryo-labcontext"');
-    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 4 · lab"');
-    expect(emptyForm).toContain('<legend>Documentbasis</legend>');
+    expect(emptyForm).toContain('data-dossier-field-section-label="Stap 5 · lab"');
+    expect(emptyForm).toContain('<legend>Bestanden kiezen</legend>');
+    expect(emptyForm).toContain('<legend>Metadata en controle</legend>');
     expect(emptyForm).toContain('<legend>Koppelingen</legend>');
     expect(emptyForm).toContain('<legend>Beeldcontext</legend>');
     expect(emptyForm).toContain('<legend>Embryo en labcontext</legend>');
@@ -7611,6 +7614,9 @@ describe('app shell', () => {
       addSection.indexOf('id="dossier-upload-form"'),
     );
     expect(addSection).toContain('id="dossier-upload-form"');
+    expect(addSection).toContain('data-dossier-upload-file-choice="ready"');
+    expect(addSection).toContain('data-dossier-upload-metadata="collapsed"');
+    expect(addSection).toContain('Metadata en controle');
     expect(addSection).toContain('data-dossier-upload-optional="koppelingen"');
     expect(addSection).toContain('data-dossier-upload-optional="beeldcontext"');
     expect(addSection).toContain('data-dossier-upload-optional="embryo-labcontext"');
@@ -7621,6 +7627,9 @@ describe('app shell', () => {
     expect(addSection).toContain('Afspraak, traject of notitie toevoegen');
     expect(addSection).toContain('Echo, foto of scan beschrijven');
     expect(addSection).toContain('Embryo-id, dag of lablabel toevoegen');
+    expect(addSection).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-metadata" data-dossier-upload-metadata="collapsed" open',
+    );
     expect(addSection).not.toContain('<details class="dossier-upload-optional" open');
     expect(addSection).toContain('data-dossier-upload-privacy-disclosure="collapsed"');
     expect(addSection).toContain('Uploadprivacy en bijlagebeheer openen');
@@ -7749,7 +7758,7 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('data-state="todo"><span>3</span>Controle');
     expect(addSection).toContain('data-dossier-add-form-start="document-first-step"');
     expect(formStart).toContain(
-      'Begin met datum, titel en bestand; koppelingen en beeldcontext kun je daarna rustig aanvullen.',
+      'Begin met je bestand of bestanden. Metadata, koppelingen en controle kun je daarna rustig aanvullen.',
     );
     expect(dossierPanel.indexOf('data-dossier-add-form-start="document-first-step"')).toBeLessThan(
       dossierPanel.indexOf('id="dossier-upload-form"'),
@@ -7774,12 +7783,22 @@ describe('app shell', () => {
     expect(dossierPanel).toContain('tabindex="-1"');
     expect(dossierPanel).not.toMatch(/diagnose|150 mg|behandelkeuzeadvies|OCR-payload|base64/i);
     expect(dossierPanel).toContain('data-dossier-upload-group="document-basis"');
+    expect(dossierPanel).toContain('data-dossier-upload-file-choice="ready"');
+    expect(dossierPanel).toContain('data-dossier-upload-metadata="collapsed"');
+    expect(dossierPanel.indexOf('data-dossier-upload-file-choice="ready"')).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-upload-metadata="collapsed"'),
+    );
     expect(dossierPanel).not.toContain(
       'data-dossier-upload-group="document-basis" data-dossier-context-priority="optional"',
     );
     expect(dossierPanel).toContain('data-dossier-required-cue="dossier-upload"');
-    expect(dossierRequiredCue).toContain('Verplicht: datum, bestand en controlebevestiging.');
+    expect(dossierRequiredCue).toContain(
+      'Kies eerst één of meer onderzoeken, echo’s, foto’s, scans of rapporten.',
+    );
     expect(dossierPanel.indexOf('data-dossier-required-cue="dossier-upload"')).toBeLessThan(
+      dossierPanel.indexOf('name="dossierBestanden" type="file"'),
+    );
+    expect(dossierPanel.indexOf('data-dossier-upload-metadata="collapsed"')).toBeLessThan(
       dossierPanel.indexOf('name="datum" type="date" required'),
     );
     expect(dossierPanel).toContain(

@@ -384,6 +384,9 @@ const targets = [
       '[data-dossier-upload-console-region="document"]',
       '#dossier-upload-form',
       '[data-dossier-upload-group="document-basis"]',
+      '[data-dossier-upload-file-choice="ready"]',
+      '[data-dossier-upload-metadata="collapsed"]',
+      '[data-dossier-upload-metadata="collapsed"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-optional="koppelingen"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
@@ -393,6 +396,7 @@ const targets = [
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     closedDetailsSelectors: [
+      '[data-dossier-upload-metadata="collapsed"]',
       '[data-dossier-upload-optional="koppelingen"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',

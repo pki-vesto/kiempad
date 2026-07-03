@@ -16090,6 +16090,24 @@ a.action-card:active {
   text-transform: uppercase;
 }
 
+.dossier-upload-file-choice {
+  grid-template-columns: minmax(0, 1fr);
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-subtle));
+}
+
+.dossier-upload-file-choice label {
+  grid-column: 1 / -1;
+}
+
+.dossier-upload-file-choice input[type="file"] {
+  min-height: 48px;
+}
+
+.dossier-upload-metadata {
+  border-style: dashed;
+}
+
 .dossier-upload-optional {
   grid-column: 1 / -1;
   min-width: 0;
@@ -16100,8 +16118,8 @@ a.action-card:active {
 
 .dossier-upload-optional__summary {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr) 24px;
+  gap: 4px 10px;
   align-items: center;
   min-height: 44px;
   padding: 9px 12px;
@@ -16117,6 +16135,9 @@ a.action-card:active {
 .dossier-upload-optional__summary::after {
   content: "+";
   display: inline-grid;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
   place-items: center;
   width: 24px;
   height: 24px;
@@ -16138,10 +16159,12 @@ a.action-card:active {
 }
 
 .dossier-upload-optional__summary span {
+  grid-column: 1;
   font-weight: 820;
 }
 
 .dossier-upload-optional__summary small {
+  grid-column: 1;
   color: var(--muted);
   font-size: 0.76rem;
   line-height: 1.25;
@@ -16224,7 +16247,7 @@ a.action-card:active {
   font-weight: 850;
 }
 
-.dossier-upload-group[data-dossier-upload-group="document-basis"] label:nth-of-type(5),
+.dossier-upload-group[data-dossier-upload-group="document-basis"] label,
 .dossier-upload-group[data-dossier-upload-group="embryo-labcontext"],
 .dossier-subform-group[data-consult-upload-group="consult-context"],
 .dossier-subform-group[data-embryo-quality-group="embryo-beoordeling"],
