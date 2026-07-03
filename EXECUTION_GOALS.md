@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1456 — Kennis toevoegroute routekop start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1455 blijft de kennis toevoegroute routekop gevoelig voor routecontext, researchanker, eigen-itemanker en opslagstatus tegelijk.
+- **User Impact:** Gebruikers die kennis toevoegen, krijgen nog meerdere route- en statussignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis toevoegroute routekop starten met één compacte statuskeuze of samengevouwen sublaag, terwijl routecontext, researchanker, eigen-itemanker en opslagstatus bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één toevoegstatus lezen zonder dat routekop, ankers en statuscopy de invoerroute domineren.
+- **Acceptance Criteria:** Bestaande kennis toevoegroutehooks, routehashes, researchanker, eigen-itemanker en opslagstatus blijven aanwezig; de toevoegroutekop start met één compacte statuskeuze of samengevouwen sublaag; routecontext, researchanker, eigen-itemanker en opslagstatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Toevoegen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge add route summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2856
+
 ### G1455 — Kennis bibliotheek routekop start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library route summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2854
 
 ### G1454 — Kennis bibliotheek categoriekaarten starten met één compacte categoriekeuze

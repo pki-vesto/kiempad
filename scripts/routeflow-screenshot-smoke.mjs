@@ -194,7 +194,7 @@ const targets = [
     screen: 'knowledge-library',
     hash: '#kennis?route=library',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
-    expectedText: 'Eerst één categoriekeuze',
+    expectedText: 'Bibliotheekstatus openen',
     activeRouteSelector: '[data-knowledge-route="library"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
     requiredSelectors: [
@@ -205,6 +205,7 @@ const targets = [
       '[data-knowledge-workbench-disclosure="collapsed"]',
       '#knowledge-route-library',
       '[data-knowledge-route-summary="library"]',
+      '[data-knowledge-library-route-status-choice="collapsed"]',
       '#knowledge-library-category-choice',
       '[data-knowledge-library-category-choice="ready"]',
       '[data-knowledge-library-category-card-choice="collapsed"]',
@@ -213,6 +214,9 @@ const targets = [
       '[data-knowledge-library-context-choice="collapsed"]',
     ],
     presentSelectors: [
+      'a[href="#knowledge-library-category-choice"]',
+      'a[href="#knowledge-library-followup"]',
+      '.command-route-summary__status',
       '[data-knowledge-library-category-card="fasen"]',
       '[data-knowledge-library-category-card="research"]',
       '#knowledge-library-panel',
@@ -223,6 +227,7 @@ const targets = [
     ],
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-library-route-status-choice="collapsed"]',
       '[data-knowledge-library-category-card-choice="collapsed"]',
       '[data-knowledge-library-followup="collapsed"]',
       '[data-knowledge-library-context-choice="collapsed"]',
