@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1180 |
+| ☑ klaar | 1181 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1379** |
+| **Totaal** | **1380** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1541,13 +1541,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1376 | Daily Recommendations: resetmelding bewaakt helptekst in forced-colors mobiel | P1 | F5 | ☑ |
 | G1377 | Daily Recommendations: resetmelding bewaakt forced-colors focuscopy | P1 | F5 | ☑ |
 | G1378 | Daily Recommendations: resetmelding bewaakt focuscopy bij reduced-motion | P1 | F5 | ☑ |
-| G1379 | Daily Recommendations: resetmelding bewaakt focuscopy bij touch active | P1 | F5 | ☐ |
+| G1379 | Daily Recommendations: resetmelding bewaakt focuscopy bij touch active | P1 | F5 | ☑ |
+| G1380 | Daily Recommendations: resetmelding bewaakt touch active in forced-colors | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1379** (id's G001 t/m G1379, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1380** (id's G001 t/m G1380, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

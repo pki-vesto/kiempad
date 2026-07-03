@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1380 — Daily Recommendations: resetmelding bewaakt touch active in forced-colors
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding koppelt mobiele touch active-state aan de helpercopy, maar forced-colors/high-contrast combinaties hebben nog geen aparte guard.
+- **User Impact:** High-contrast gebruikers op touchscreens kunnen minder duidelijke tikfeedback ervaren als helpercopy en knopstatus niet samen worden bewaakt.
+- **Desired Outcome:** Borg dat touch active-state en helpercopy in forced-colors duidelijk blijven zonder layoutverschuiving.
+- **User Value:** De resetfeedback blijft helder voor high-contrast gebruikers tijdens tikinteractie.
+- **Acceptance Criteria:** Forced-colors touch active-state behoudt duidelijke helpercopy en knopstatus; er ontstaat geen extra transitie, layout shift, overlap of horizontale scroll; de forced-colors touch guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, forced-colors CSS, touch CSS
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2706
+
 ### G1379 — Daily Recommendations: resetmelding bewaakt focuscopy bij touch active
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, touch CSS, copy tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2704
 
 ### G1378 — Daily Recommendations: resetmelding bewaakt focuscopy bij reduced-motion

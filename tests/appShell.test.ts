@@ -3216,6 +3216,9 @@ describe('app shell', () => {
     expect(css).toContain('background: var(--surface);');
     expect(css).toContain('.daily-recommendation-reset-route-focus__close:active {');
     expect(css).toContain(
+      '.daily-recommendation-reset-route-focus__close:active\n    + .daily-recommendation-reset-route-focus__help {',
+    );
+    expect(css).toContain(
       'box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);',
     );
     expect(css).toContain('.daily-recommendation-reset-route-focus__close:disabled,');

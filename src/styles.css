@@ -15120,6 +15120,14 @@ a.action-card:active {
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
+  .daily-recommendation-reset-route-focus__close:active
+    + .daily-recommendation-reset-route-focus__help {
+    color: var(--text);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
   .daily-recommendation-reset-route-focus__close:disabled,
   .daily-recommendation-reset-route-focus__close[aria-disabled="true"] {
     min-height: 32px;
