@@ -162,6 +162,7 @@ const targets = [
     presentSelectors: [
       '#knowledge-filter-form',
       '[data-knowledge-filter-kit="ready"]',
+      '[data-knowledge-filter-status-detail="ready"]',
       '.knowledge-filter-kit__fields',
       '.knowledge-filter-kit__actions',
       'input[name="kennisZoekterm"]',
@@ -170,6 +171,24 @@ const targets = [
       'select[name="kennisVerificatie"]',
     ],
     closedDetailsSelectors: ['[data-knowledge-filter-form-choice="collapsed"]'],
+  },
+  {
+    screen: 'knowledge-filter-status',
+    hash: '#kennis?route=read',
+    rootSelector: '.content',
+    expectedText: 'Filterstatus bekijken',
+    openSelectors: [
+      '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-filter-form-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-filter-status-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-filter-status-detail="ready"]',
+      '.knowledge-filter-kit__actions button[name="filterAction"][value="clear"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-filter-status-choice="collapsed"]'],
   },
   {
     screen: 'knowledge-library',

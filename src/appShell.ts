@@ -13350,7 +13350,18 @@ function renderKennisFilterForm(filter: KennisFilter): string {
               <p class="kp-card__eyebrow">Bibliotheekfilter</p>
               <h3>Kennisitems vinden</h3>
             </div>
-            <span>${escapeHtml(status)}</span>
+            <details class="knowledge-filter-status-choice" data-knowledge-filter-status-choice="collapsed">
+              <summary class="knowledge-filter-status-choice__summary">
+                <span>
+                  <strong>Filterstatus bekijken</strong>
+                  <small>Open actieve telling, filterdetails en resetcontext.</small>
+                </span>
+                <em>${escapeHtml(activeFilterCount > 0 ? `${activeFilterCount} actief` : 'Geen filter')}</em>
+              </summary>
+              <div class="knowledge-filter-status-choice__body">
+                <span data-knowledge-filter-status-detail="ready">${escapeHtml(status)}</span>
+              </div>
+            </details>
           </header>
           <div class="knowledge-filter-kit__fields">
             <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
