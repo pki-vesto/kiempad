@@ -39268,7 +39268,7 @@ describe('app shell', () => {
       '.knowledge-library-empty-recovery-choice__body\n    .knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__label {',
     );
     expect(css).toContain(
-      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__label {\n    flex: 1 1 calc(100% - min(12ch, 38%) - 36px);\n    min-width: min(17ch, calc(62vw - 76px));\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }',
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__label {\n    flex: 1 1 calc(100% - min(12ch, 38%) - 36px);\n    color: color-mix(in srgb, var(--category) 76%, var(--text));\n    font-weight: 860;\n    min-width: min(17ch, calc(62vw - 76px));\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n  }',
     );
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
