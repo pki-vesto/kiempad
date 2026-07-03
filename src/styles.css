@@ -8628,12 +8628,24 @@ h2 {
 }
 
 .knowledge-library-empty-recovery-choice__label {
+  flex: 1 1 auto;
   min-width: 0;
   color: inherit;
   font-weight: 850;
+  line-height: 1.15;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor:hover
+  .knowledge-library-empty-recovery-choice__label,
+.knowledge-library-empty-recovery-choice__body
+  .knowledge-library-followup-visibility-choice__anchor:focus-visible
+  .knowledge-library-empty-recovery-choice__label {
+  color: var(--category);
+  font-weight: 900;
 }
 
 .knowledge-library-empty-recovery-choice__feedback {
