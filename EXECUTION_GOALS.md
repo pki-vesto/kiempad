@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1384 — Daily Recommendations: resetmelding bewaakt guarded helpercopy in forced-colors smal
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding bewaakt guarded helpercopy op smalle schermen, maar de combinatie smal scherm en forced-colors heeft nog geen aparte guard.
+- **User Impact:** Gebruikers op smalle high-contrast schermen kunnen minder duidelijke relatie tussen guarded Verberg-state en helpercopy ervaren.
+- **Desired Outcome:** Borg dat guarded Verberg-state en helpercopy op smalle forced-colors schermen leesbaar blijven zonder overlap.
+- **User Value:** De resetfeedback blijft begrijpelijk, contrastrijk en tapbaar op mobiele schermen, ook wanneer de lokale hide-actie bewaakt is.
+- **Acceptance Criteria:** Smalle forced-colors schermen tonen disabled/aria-disabled Verberg-state met duidelijke helpercopy en knopstatus; er ontstaat geen extra transitie, layout shift, overlap of horizontale scroll; de smalle forced-colors guarded helpercopy guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, responsive CSS, forced-colors CSS, guarded states
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2714
+
 ### G1383 — Daily Recommendations: resetmelding bewaakt guarded helpercopy op smalle schermen
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, responsive CSS, guarded states
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2712
 
 ### G1382 — Daily Recommendations: resetmelding bewaakt guarded helpercopy in reduced-motion
