@@ -8632,7 +8632,15 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-timeline-followup__summary {');
     expect(css).toContain('.dossier-timeline-followup__body {');
     expect(css).toContain('.dossier-review-primary-task {');
-    expect(css).toContain('.dossier-review-primary-task__header {');
+    expect(css).toContain('.dossier-review-primary-task__summary {');
+    expect(css).toContain('.dossier-review-primary-task__summary::after {');
+    expect(css).toContain(
+      '.dossier-review-primary-task[open] > .dossier-review-primary-task__summary::after',
+    );
+    expect(css).toContain('.dossier-review-primary-task__body {');
+    expect(css).toContain(
+      '.dossier-review-primary-task:not([open]) > .dossier-review-primary-task__body {',
+    );
     expect(css).toContain('.dossier-review-followup {');
     expect(css).toContain('.dossier-review-followup__summary {');
     expect(css).toContain('.dossier-review-followup__body {');
@@ -9250,8 +9258,11 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('href="#dossier-review-followup"');
     expect(emptyHtml).toContain('id="dossier-review-primary-task"');
     expect(emptyHtml).toContain('data-dossier-review-primary-task="ready"');
+    expect(emptyHtml).toContain('data-dossier-review-primary-choice="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-review-primary-summary="ready"');
     expect(emptyHtml).toContain('aria-label="Dossier review primaire taak"');
     expect(emptyHtml).toContain('Controleer eerst wat aandacht vraagt');
+    expect(emptyHtml).toContain('0 review · 0 inbox');
     expect(emptyHtml).toContain('data-dossier-review-followup="collapsed"');
     expect(emptyHtml).toContain('Reviewcontext openen');
     expect(emptyHtml).toContain('Documentreview wachtrij, import-inbox en duplicaatcontext');
@@ -9262,6 +9273,9 @@ describe('app shell', () => {
       emptyHtml.indexOf('id="dossier-review-queue-disclosure"'),
     );
     expect(emptyHtml).not.toContain('<details id="dossier-review-followup" open');
+    expect(emptyHtml).not.toContain(
+      '<details id="dossier-review-primary-task" class="dossier-review-primary-task" aria-label="Dossier review primaire taak" data-dossier-review-primary-task="ready" data-dossier-review-primary-choice="collapsed" open>',
+    );
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
     expect(emptyHtml).toContain('Beelden, consulten en embryo-dossiers');
     expect(emptyHtml).toContain('Tijdlijn en behandelgeschiedenis');
