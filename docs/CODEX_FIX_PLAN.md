@@ -1381,6 +1381,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   explicit contrast during hover and keyboard focus states.
   Partial G1494/#2932: The knowledge library empty-state recovery feedback badges now keep a
   compact mobile flow with full-width actions and bounded badge labels.
+  Partial G1495/#2934: The knowledge library empty-state recovery actions now keep comfortable
+  mobile tap space while preserving compact badge labels.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

@@ -23798,7 +23798,9 @@ a.action-card:active {
   .knowledge-library-empty-recovery-choice__body
     .knowledge-library-followup-visibility-choice__anchor {
     justify-content: flex-start;
+    min-height: 44px;
     min-width: 0;
+    touch-action: manipulation;
     width: 100%;
   }
 
