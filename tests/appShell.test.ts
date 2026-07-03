@@ -38669,6 +38669,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-card-detail-choice="collapsed"');
     expect(html).toContain('Kaartdetails openen');
     expect(html).toContain('Open inhoud, bron, badges en acties.');
+    expect(html).toContain('data-knowledge-library-card-content-choice="collapsed"');
+    expect(html).toContain('Kaartinhoud openen');
+    expect(html).toContain('Inhoud, bron, badges en acties.');
     expect(html).toContain('class="knowledge-library-card__badges"');
     expect(html).toContain(
       'class="status-badge status-badge--knowledge" data-status-badge="knowledge"',
@@ -38679,10 +38682,16 @@ describe('app shell', () => {
     expect(html).toContain('data-status-badge-tone="warning"');
     expect(html).toContain('class="knowledge-library-card__actions"');
     expect(html.indexOf('data-knowledge-library-card-detail-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-card-content-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-library-card-content-choice="collapsed"')).toBeLessThan(
       html.indexOf('class="knowledge-library-card__body"'),
     );
     expect(html).not.toContain(
       '<details class="knowledge-library-card-detail-choice" data-knowledge-library-card-detail-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-library-card-content-choice" data-knowledge-library-card-content-choice="collapsed" open>',
     );
     expect(html.indexOf('data-knowledge-library-list-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-library-list-items-choice="collapsed"'),
@@ -38943,6 +38952,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-card-detail-choice:not([open]) > .knowledge-library-card-detail-choice__body {',
     );
+    expect(css).toContain('.knowledge-library-card-content-choice {');
+    expect(css).toContain('.knowledge-library-card-content-choice__summary {');
     expect(css).toContain('.status-badge--knowledge {');
     expect(css).toContain('.knowledge-library-card__actions {');
     expect(css).toContain('.knowledge-route-section[hidden],');
