@@ -3195,6 +3195,10 @@ describe('app shell', () => {
     expect(css).toContain('.daily-recommendation-reset-route-focus__close {');
     expect(css).toContain('min-height: 28px;');
     expect(css).toContain('[data-daily-recommendation-reset-route-focus="ready"]:focus-visible {');
+    expect(css).toContain('@media (max-width: 759px)');
+    expect(css).toContain('max-width: calc(100% - 4px);');
+    expect(css).toContain('outline-offset: 1px;');
+    expect(css).toContain('min-height: 32px;');
     expect(css).toContain('border-left-color: Highlight;');
     expect(css).toContain('color: CanvasText;');
     expect(css).toContain('outline: 1px solid ButtonText;');

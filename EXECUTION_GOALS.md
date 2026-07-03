@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1369 — Daily Recommendations: resetmelding gebruikt rustige focusanimatie
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft desktop, mobiele en forced-colors focusborging, maar focusovergangen kunnen nog abrupt aanvoelen.
+- **User Impact:** Gebruikers kunnen een visueel hardere focuswissel ervaren dan nodig bij tijdelijke resetfeedback.
+- **Desired Outcome:** Voeg een subtiele focusovergang toe voor de resetmelding en Verberg-knop, met respect voor prefers-reduced-motion.
+- **User Value:** De resetfeedback blijft duidelijk zonder visuele sprongen.
+- **Acceptance Criteria:** Focusovergang is subtiel en veroorzaakt geen layout shift; prefers-reduced-motion schakelt animatie uit of houdt die praktisch stil; de focusovergang verandert geen hash, feedbackfilter, tracking of medische data; tests of CSS guards bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, motion CSS, accessibility
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2684
+
 ### G1368 — Daily Recommendations: resetmelding gebruikt compacte focusafstand op mobiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, mobile CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2682
 
 ### G1367 — Daily Recommendations: resetmelding behoudt focusstijl in forced-colors

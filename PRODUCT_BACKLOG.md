@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1169 |
+| ☑ klaar | 1170 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1368** |
+| **Totaal** | **1369** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1530,13 +1530,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1365 | Daily Recommendations: resetmelding bewaart sluitstatus bij her-render | P1 | F5 | ☑ |
 | G1366 | Daily Recommendations: resetmelding heeft toetsenbordfocus na nieuwe reset | P1 | F5 | ☑ |
 | G1367 | Daily Recommendations: resetmelding behoudt focusstijl in forced-colors | P1 | F5 | ☑ |
-| G1368 | Daily Recommendations: resetmelding gebruikt compacte focusafstand op mobiel | P1 | F5 | ☐ |
+| G1368 | Daily Recommendations: resetmelding gebruikt compacte focusafstand op mobiel | P1 | F5 | ☑ |
+| G1369 | Daily Recommendations: resetmelding gebruikt rustige focusanimatie | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1368** (id's G001 t/m G1368, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1369** (id's G001 t/m G1369, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

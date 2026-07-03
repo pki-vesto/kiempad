@@ -1803,11 +1803,20 @@ async function expectDailyRecommendationResetRouteFocus(page, expectedText) {
       const status = document.querySelector(
         '[data-daily-recommendation-reset-route-focus="ready"]',
       );
+      const pastHorizontaalInViewport = (element) => {
+        if (!(element instanceof HTMLElement)) return false;
+        const box = element.getBoundingClientRect();
+        return box.left >= 0 && box.right <= window.innerWidth;
+      };
       return (
         status instanceof HTMLElement &&
         status.tabIndex === -1 &&
         document.activeElement === status &&
-        status.textContent?.includes(tekst)
+        status.textContent?.includes(tekst) &&
+        pastHorizontaalInViewport(status) &&
+        pastHorizontaalInViewport(
+          status.querySelector('[data-daily-recommendation-reset-route-focus-close="ready"]'),
+        )
       );
     },
     expectedText,
