@@ -8165,6 +8165,11 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-review-followup {');
     expect(css).toContain('.dossier-review-followup__summary {');
     expect(css).toContain('.dossier-review-followup__body {');
+    expect(css).toContain('.knowledge-research-primary-focus {');
+    expect(css).toContain('.knowledge-research-primary-focus > .knowledge-research-reader {');
+    expect(css).toContain('.knowledge-research-followup {');
+    expect(css).toContain('.knowledge-research-followup__summary {');
+    expect(css).toContain('.knowledge-research-followup__body {');
     expect(mobileCss).toContain('.dossier-focus-shell {');
     expect(mobileCss).toContain(
       '.content:has([data-dossier-focus-shell="ready"]) > .workspace-map,',
@@ -37622,7 +37627,11 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route="library"');
     expect(html).toContain('aria-label="Kennis lezen route-samenvatting"');
     expect(html).toContain('data-knowledge-route-summary="read"');
-    expect(html).toContain('Lees research in lagen');
+    expect(html).toContain('Eerst één researchfocus');
+    expect(html).toContain('href="#knowledge-research-primary-focus"');
+    expect(html).toContain('href="#knowledge-research-followup"');
+    expect(html).toContain('id="knowledge-research-primary-focus"');
+    expect(html).toContain('data-knowledge-research-primary-focus="ready"');
     expect(html).toContain('data-knowledge-research-reader="ready"');
     expect(html).toContain('aria-label="Research leeslaag"');
     expect(html).toContain('Kies eerst je researchlaag');
@@ -37635,6 +37644,17 @@ describe('app shell', () => {
     expect(html).toContain('Relevantie');
     expect(html).toContain('Trends');
     expect(html).toContain('Kiempad toont hier geen dossierplaintext of OCR-tekst');
+    expect(html).toContain('id="knowledge-research-followup"');
+    expect(html).toContain('data-knowledge-research-followup="collapsed"');
+    expect(html).toContain('Leescontext openen');
+    expect(html).toContain('Bronnen, samenvattingen, relevantie, relaties en trends');
+    expect(html.indexOf('data-knowledge-research-primary-focus="ready"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-followup="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-research-followup="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-disclosure="sources"'),
+    );
+    expect(html).not.toContain('<details id="knowledge-research-followup" open');
     expect(html.indexOf('data-knowledge-research-reader="ready"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
     );

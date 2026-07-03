@@ -45,7 +45,7 @@ const targets = [
     screen: 'knowledge-research',
     hash: '#kennis?route=read',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
-    expectedText: 'Lees research in lagen',
+    expectedText: 'Eerst één researchfocus',
     activeRouteSelector: '[data-knowledge-route="read"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
     requiredSelectors: [
@@ -60,6 +60,10 @@ const targets = [
       '[data-hub-workflow-tab="research"][aria-current="page"]',
       '[data-hub-workflow-tab="summaries"]',
       '[data-hub-workflow-tab="trends"]',
+      '#knowledge-research-primary-focus',
+      '[data-knowledge-research-primary-focus="ready"]',
+      '#knowledge-research-followup',
+      '[data-knowledge-research-followup="collapsed"]',
       '[data-hub-detail-panel="research-summaries"]',
       '[data-knowledge-research-reader="ready"]',
       '[data-knowledge-research-lane="scientific"]',
@@ -69,7 +73,10 @@ const targets = [
       '[data-knowledge-research-disclosure="sources"]',
       '#knowledge-research-trends',
     ],
-    closedDetailsSelectors: ['[data-knowledge-workbench-disclosure="collapsed"]'],
+    closedDetailsSelectors: [
+      '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-research-followup="collapsed"]',
+    ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [
       '.knowledge-focus-shell__header p:last-child',

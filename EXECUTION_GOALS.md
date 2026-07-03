@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1403 — Kennis: bibliotheek start met één categoriekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kennis Bibliotheek kan nog aanvoelen als een lange categoriepagina zodra veel kennisitems, filters en bewerkacties beschikbaar zijn.
+- **User Impact:** Gebruikers moeten alsnog meerdere categorieblokken scannen voordat duidelijk is welke kennisgroep zij willen openen.
+- **Desired Outcome:** Start de bibliotheekroute met één primaire categoriekeuze en houd de volledige categoriekaarten als vervolgcontext bereikbaar.
+- **User Value:** Gebruikers kiezen eerst het relevante kennisgebied en openen pas daarna de langere bibliotheeklijst.
+- **Acceptance Criteria:** Kennis Bibliotheek toont één primaire categoriekeuze in de eerste viewport; volledige categoriepanelen, bestaande kaart-hooks, filtercontext, edit-details en hashroutes blijven bereikbaar; vervolgcontext start gesloten; mobile, tablet en desktop tonen geen overlap; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext en hooks.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2752
+
 ### G1402 — Kennis: lezen start met één researchfocus
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2750
 
 ### G1401 — Dossier: review start met één reviewtaak
