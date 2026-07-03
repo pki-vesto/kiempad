@@ -115,6 +115,24 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-scan',
+    hash: '#kennis?route=read',
+    rootSelector: '.content',
+    expectedText: 'Kies researchscan',
+    openSelectors: ['[data-knowledge-workbench-disclosure="collapsed"]'],
+    requiredSelectors: [
+      '[data-knowledge-research-scan-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-research-snapshot="ready"]',
+      '[data-knowledge-research-snapshot-card="sources"]',
+      '[data-knowledge-research-snapshot-card="summaries"]',
+      '[data-knowledge-research-snapshot-card="trends"]',
+      '[data-knowledge-research-snapshot-card="network"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-research-scan-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-filter',
     hash: '#kennis?route=read',
     rootSelector: '.content',

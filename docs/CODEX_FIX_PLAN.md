@@ -1270,6 +1270,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   filter choice while category, source and verification filters remain reachable.
   Partial G1442/#2828: The knowledge task routes now start with one closed compact
   route choice while read, add, AI and library routes remain reachable.
+  Partial G1443/#2830: The knowledge researchscan now starts with one closed compact
+  scan choice while sources, summaries, trends and network status remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

@@ -38252,6 +38252,9 @@ describe('app shell', () => {
     );
     expect(html).toContain('Research begrijpen zonder alles tegelijk te lezen');
     expect(html).toContain('Netwerkresearch: lokale cache');
+    expect(html).toContain('data-knowledge-research-scan-choice="collapsed"');
+    expect(html).toContain('Kies researchscan');
+    expect(html).toContain('Open daarna bronnen, samenvattingen, trends of netwerkstatus.');
     expect(html).toContain('data-knowledge-research-snapshot="ready"');
     expect(html).toContain('aria-label="Researchscan"');
     expect(html).toContain('data-knowledge-research-snapshot-card="sources"');
@@ -38261,6 +38264,12 @@ describe('app shell', () => {
     expect(html).toContain('Start met bron en publicatiedatum.');
     expect(html).toContain('Wetenschappelijk en eenvoudig naast elkaar.');
     expect(html).toContain('Alleen lokale groepering, geen bewijsweging.');
+    expect(html.indexOf('data-knowledge-research-scan-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-snapshot="ready"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-research-scan-choice" data-knowledge-research-scan-choice="collapsed" open>',
+    );
     expect(html).toContain('id="knowledge-overview"');
     expect(html).toContain('class="knowledge-command-panel__intro"');
     expect(html).toContain('data-knowledge-filter-kit="ready"');
@@ -38611,6 +38620,12 @@ describe('app shell', () => {
     expect(css).toContain('[data-knowledge-first-viewport="research-workbench"]');
     expect(css).toContain('.knowledge-research-workbench__header {');
     expect(css).toContain('.knowledge-research-workbench__status {');
+    expect(css).toContain('.knowledge-research-scan-choice {');
+    expect(css).toContain('.knowledge-research-scan-choice__summary {');
+    expect(css).toContain('.knowledge-research-scan-choice__body {');
+    expect(css).toContain(
+      '.knowledge-research-scan-choice:not([open]) > .knowledge-research-scan-choice__body {',
+    );
     expect(css).toContain('.knowledge-research-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.knowledge-research-snapshot__card {');
@@ -38627,6 +38642,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-research-context-choice:not([open]) > .knowledge-research-context-choice__body {',
     );
+    expect(css).toContain('@media (max-width: 960px) {');
+    expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('.knowledge-library-category-choice {');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
