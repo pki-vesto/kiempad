@@ -1341,6 +1341,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   choice while title, source, date, note, summaries and save action remain reachable.
   Partial G1476/#2896: The knowledge add own-item form now starts with one closed compact item
   choice while title, category, source context, content and save action remain reachable.
+  Partial G1477/#2898: The knowledge add route follow-up actions now start with one closed
+  compact action choice while the research anchor, own-item anchor, storage status and route
+  context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

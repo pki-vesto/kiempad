@@ -38493,6 +38493,9 @@ describe('app shell', () => {
     expect(html).toContain('Toevoegstatus openen');
     expect(html).toContain('Open routecontext, researchinvoer, eigen kennis en opslagstatus.');
     expect(html).toContain('Start met een publicatie of researchnotitie');
+    expect(html).toContain('data-knowledge-add-action-choice="collapsed"');
+    expect(html).toContain('Vervolgactie kiezen');
+    expect(html).toContain('Open researchanker, eigen-kennisanker, opslagstatus en routecontext.');
     expect(html).toContain('href="#research-item-form"');
     expect(html).toContain('href="#knowledge-own-item-disclosure"');
     expect(html).toContain('data-knowledge-add-layout="single-input"');
@@ -38534,10 +38537,16 @@ describe('app shell', () => {
       html.indexOf('id="knowledge-item-form"'),
     );
     expect(html.indexOf('data-knowledge-add-route-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-add-action-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-add-action-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#research-item-form"'),
     );
     expect(html).not.toContain(
       '<details class="command-route-summary knowledge-add-route-status-choice" aria-label="Kennis toevoegen route-samenvatting" data-knowledge-route-summary="add" data-knowledge-add-route-status-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-add-action-choice" data-knowledge-add-action-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="knowledge-add-research-input-choice" data-knowledge-add-research-input-choice="collapsed" open>',
@@ -39051,6 +39060,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-add-route-status-choice__body {');
     expect(css).toContain(
       '.knowledge-add-route-status-choice:not([open]) > .knowledge-add-route-status-choice__body {',
+    );
+    expect(css).toContain('.knowledge-add-action-choice {');
+    expect(css).toContain('.knowledge-add-action-choice__summary {');
+    expect(css).toContain('.knowledge-add-action-choice__body {');
+    expect(css).toContain(
+      '.knowledge-add-action-choice:not([open]) > .knowledge-add-action-choice__body {',
     );
     expect(css).toContain('.knowledge-add-research-input-choice {');
     expect(css).toContain('.knowledge-add-research-input-choice__summary {');

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1478 — Kennis AI-route vervolgacties starten met één compacte actie-keuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1477 blijven vervolgacties in de Kennis AI-route gevoelig voor previewanker, beheeranker, netwerkstatus en routecontext tegelijk.
+- **User Impact:** Gebruikers die de AI-route openen, moeten nog meerdere vervolgankers en statuscontexten scannen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de Kennis AI-route vervolgacties starten met één compacte actie-keuze of samengevouwen sublaag, terwijl previewanker, beheeranker, netwerkstatus en routecontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één AI-vervolgactie kiezen zonder dat alle routeankers en netwerkstatus tegelijk aandacht vragen.
+- **Acceptance Criteria:** Bestaande AI-route- en ankerhooks blijven aanwezig; de AI-route vervolgacties starten met één compacte keuze of samengevouwen sublaag; previewanker, beheeranker, netwerkstatus en routecontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI route summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2900
+
 ### G1477 — Kennis toevoegroute vervolgacties starten met één compacte actie-keuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge add route summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2898
 
 ### G1476 — Kennis toevoegroute eigen kennisitem start met één compacte itemkeuze
