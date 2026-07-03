@@ -3186,17 +3186,24 @@ describe('app shell', () => {
     expect(css).toContain('border-color: GrayText;');
     expect(css).toContain('color: GrayText;');
     expect(css).toContain('[data-daily-recommendation-reset-route-focus="ready"] {');
+    expect(css).toContain('display: inline-grid;');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr) auto;');
     expect(css).toContain('width: fit-content;');
     expect(css).toContain('padding: 7px 10px;');
     expect(css).toContain('border-left-width: 2px;');
     expect(css).toContain('background: color-mix(in srgb, var(--accent) 10%, var(--surface));');
     expect(css).toContain('font-size: 0.82rem;');
     expect(css).toContain('overflow-wrap: anywhere;');
+    expect(css).toContain('.daily-recommendation-reset-route-focus__help {');
+    expect(css).toContain('grid-column: 1 / -1;');
+    expect(css).toContain('max-width: 58ch;');
+    expect(css).toContain('font-size: 0.72rem;');
     expect(css).toContain('.daily-recommendation-reset-route-focus__close {');
     expect(css).toContain('min-height: 28px;');
     expect(css).toContain('[data-daily-recommendation-reset-route-focus="ready"]:focus-visible {');
     expect(css).toContain('@media (max-width: 759px)');
     expect(css).toContain('max-width: calc(100% - 4px);');
+    expect(css).toContain('font-size: 0.7rem;');
     expect(css).toContain('outline-offset: 1px;');
     expect(css).toContain('min-height: 32px;');
     expect(css).toContain('@media (hover: hover) and (pointer: fine)');
@@ -4211,13 +4218,25 @@ describe('app shell', () => {
       'data-daily-recommendation-reset-route-focus-close="ready"',
     );
     expect(resetRouteFocusRecommendations).toContain('aria-label="Verberg lokale resetmelding"');
+    expect(resetRouteFocusRecommendations).toContain(
+      'aria-describedby="daily-recommendation-reset-route-focus-help"',
+    );
+    expect(resetRouteFocusRecommendations).toContain(
+      'id="daily-recommendation-reset-route-focus-help"',
+    );
+    expect(resetRouteFocusRecommendations).toContain(
+      'data-daily-recommendation-reset-route-focus-help="ready"',
+    );
+    expect(resetRouteFocusRecommendations).toContain(
+      'Verberg sluit alleen deze lokale melding. Als verbergen tijdelijk niet kan, blijft focus hier.',
+    );
     expect(resetRouteFocusRecommendations).toContain('Verberg');
     const resetRouteFocusStart = resetRouteFocusRecommendations.indexOf(
       'data-daily-recommendation-reset-route-focus="ready"',
     );
     const resetRouteFocusSnippet = resetRouteFocusRecommendations.slice(
       resetRouteFocusStart,
-      resetRouteFocusStart + 320,
+      resetRouteFocusStart + 560,
     );
     expect(resetRouteFocusSnippet).not.toContain('tracking-payload');
     expect(resetRouteFocusSnippet).not.toContain('behandeladvies');

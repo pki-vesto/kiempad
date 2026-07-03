@@ -14204,6 +14204,10 @@ a.action-card:active {
     outline-offset: 2px;
   }
 
+  .daily-recommendation-reset-route-focus__help {
+    color: CanvasText;
+  }
+
   .daily-recommendation-reset-route-focus__close {
     border-color: ButtonText;
     background: ButtonFace;
@@ -14959,7 +14963,8 @@ a.action-card:active {
 }
 
 [data-daily-recommendation-reset-route-focus="ready"] {
-  display: inline-flex;
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 8px;
   width: fit-content;
@@ -14988,6 +14993,16 @@ a.action-card:active {
 
 .daily-recommendation-reset-route-focus > span {
   min-width: 0;
+}
+
+.daily-recommendation-reset-route-focus__help {
+  grid-column: 1 / -1;
+  max-width: 58ch;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 640;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .daily-recommendation-reset-route-focus__close {
@@ -15044,6 +15059,11 @@ a.action-card:active {
     width: 100%;
     max-width: calc(100% - 4px);
     gap: 6px;
+  }
+
+  .daily-recommendation-reset-route-focus__help {
+    max-width: none;
+    font-size: 0.7rem;
   }
 
   [data-daily-recommendation-reset-route-focus="ready"]:focus-visible,
