@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1473 — Kennis AI-instellingen start met één compacte instellingenkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1472 blijven kennis AI-instellingen gevoelig voor opt-in, opslagmodus, on-device status en bewaaractie tegelijk.
+- **User Impact:** Gebruikers die AI-instellingen openen, krijgen nog meerdere instellingenvelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat kennis AI-instellingen starten met één compacte instellingenkeuze of samengevouwen sublaag, terwijl opt-in, opslagmodus, on-device status en bewaaractie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één instellingencontext kiezen zonder dat alle AI-instellingen tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande AI-instellingen hooks, formulier en bewaaractie blijven aanwezig; de instellingensectie start met één compacte keuze of samengevouwen sublaag; opt-in, opslagmodus, on-device status en bewaaractie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, AI settings form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2890
+
 ### G1472 — Kennis AI-samenvatting bewaren start met één compacte opslagkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, AI summary form, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2888
 
 ### G1471 — Kennis AI-preview start met één compacte previewkeuze
