@@ -1280,6 +1280,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status choice while active filter count, filter details and reset context remain reachable.
   Partial G1447/#2838: The knowledge library list now starts with one closed compact
   list choice while items, detail actions and category context remain reachable.
+  Partial G1448/#2840: Knowledge library card details now start with one closed compact
+  detail choice while content, source, badges and actions remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

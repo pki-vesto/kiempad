@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1449 — Kennis AI samenvattingdetails starten met één compacte detailkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1448 blijven kennis AI-samenvattingdetails gevoelig voor samenvatting, status, broncontext en opslagactie tegelijk.
+- **User Impact:** Gebruikers die de AI-route openen, krijgen nog meerdere samenvattings- en opslagdetails voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis AI-samenvattingdetails starten met één compacte detailkeuze of samengevouwen sublaag, terwijl samenvatting, status, broncontext en opslagactie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst bepalen of ze AI-details willen openen zonder dat concepttekst en opslagacties de route direct domineren.
+- **Acceptance Criteria:** Bestaande kennis AI hooks, samenvattinghooks, statusregels, opslagacties en routehashes blijven aanwezig; AI-samenvattingdetails starten met één compacte detailkeuze of samengevouwen sublaag; samenvatting, status, broncontext en opslagactie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2842
+
 ### G1448 — Kennis bibliotheekkaartdetails starten met één compacte detailkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library cards, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2840
 
 ### G1447 — Kennis bibliotheeklijst start met één compacte lijstkeuze
