@@ -3823,79 +3823,99 @@ function renderDossierScreen(state: AppShellState): string {
           ],
           body: `
         <form id="embryo-quality-form" class="data-form" data-upload-privacy-kind="embryo" data-dossier-feedback-focus-target="embryo-quality" data-embryo-upload-privacy-state="encrypted-quality-registration" tabindex="-1">
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-identificatie" data-dossier-field-section="embryo-identificatie" data-dossier-field-section-label="Stap 1 · embryo">
-            <legend>Embryo-identificatie</legend>
+          <fieldset class="dossier-subform-group embryo-quality-choice" data-embryo-quality-group="embryo-identificatie" data-embryo-quality-choice="ready" data-dossier-field-section="embryo-identificatie" data-dossier-field-section-label="Stap 1 · embryo">
+            <legend>Embryo kiezen</legend>
           <p class="dossier-required-cue" data-dossier-required-cue="embryo-quality">
-            Verplicht: datum, embryo en kwaliteit.
+            Start met één embryo- of bronlabelkeuze. Identificatie en beoordeling blijven achter vervolgkeuzes bereikbaar.
           </p>
-          <label>
-            Datum labterugkoppeling
-            <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
-          </label>
-          <label>
-            Embryo
-            <input name="embryoLabel" autocomplete="off" required placeholder="Bijvoorbeeld: embryo 1" />
-          </label>
-          <label>
-            Dag
-            <input name="embryoDag" type="number" min="1" max="7" step="1" />
-          </label>
-          <label>
-            Meetmoment
-            <input name="embryoMeetmoment" autocomplete="off" placeholder="Bijvoorbeeld: dag 3 cleavage of dag 5 blastocyst" />
-          </label>
+          <details class="dossier-upload-optional embryo-quality-identification-fields" data-embryo-quality-identification-fields="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Identificatie openen</span>
+              <small>Datum, embryo, dag en meetmoment</small>
+            </summary>
+            <div class="embryo-quality-identification-fields__body">
+              <label>
+                Datum labterugkoppeling
+                <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+              </label>
+              <label>
+                Embryo
+                <input name="embryoLabel" autocomplete="off" required placeholder="Bijvoorbeeld: embryo 1" />
+              </label>
+              <label>
+                Dag
+                <input name="embryoDag" type="number" min="1" max="7" step="1" />
+              </label>
+              <label>
+                Meetmoment
+                <input name="embryoMeetmoment" autocomplete="off" placeholder="Bijvoorbeeld: dag 3 cleavage of dag 5 blastocyst" />
+              </label>
+            </div>
+          </details>
           </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-beoordeling" data-dossier-field-section="embryo-beoordeling" data-dossier-field-section-label="Stap 2 · beoordeling">
-            <legend>Beoordeling</legend>
-          <label>
-            Kwaliteit volgens kliniek
-            <input name="embryoKwaliteit" autocomplete="off" required placeholder="Bijvoorbeeld: 4AA of kliniektekst" />
-          </label>
-          <label>
-            Kliniekterminologie
-            <input name="embryoKliniekTerminologie" autocomplete="off" placeholder="Bijvoorbeeld: Gardner-score, morfologie of kliniektekst" />
-          </label>
-          <label>
-            Bron labterugkoppeling
-            <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
-          </label>
-          <label>
-            Reviewstatus bronlabel
-            <select name="embryoReviewStatus">
-              <option value="concept">Concept - nog controleren</option>
-              <option value="gereviewd">Gereviewd</option>
-            </select>
-          </label>
-          <label>
-            Status
-            <select name="embryoStatus">
-              ${Object.entries(EMBRYO_STATUS_LABELS)
-                .map(([value, label]) => renderOption(value, label, 'onbekend'))
-                .join('')}
-            </select>
-          </label>
-          </fieldset>
-          <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="embryo-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
-            <legend>Koppelingen</legend>
-          <label>
-            Koppel aan traject
-            <select name="trajectId">
-              <option value="">Geen traject</option>
-              ${trajectOpties}
-            </select>
-          </label>
-          <label>
-            Koppel aan afspraak/terugplaatsing
-            <select name="afspraakId">
-              <option value="">Geen afspraak</option>
-              ${afspraakOpties}
-            </select>
-          </label>
-          <label>
-            Notitie
-            <textarea name="notitie" rows="3"></textarea>
-          </label>
-          </fieldset>
+          <details class="dossier-upload-optional embryo-quality-assessment-fields" data-embryo-quality-assessment-fields="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Beoordeling openen</span>
+              <small>Kwaliteit, bron en status</small>
+            </summary>
+            <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-beoordeling" data-dossier-field-section="embryo-beoordeling" data-dossier-field-section-label="Stap 2 · beoordeling">
+              <legend>Beoordeling</legend>
+            <label>
+              Kwaliteit volgens kliniek
+              <input name="embryoKwaliteit" autocomplete="off" required placeholder="Bijvoorbeeld: 4AA of kliniektekst" />
+            </label>
+            <label>
+              Kliniekterminologie
+              <input name="embryoKliniekTerminologie" autocomplete="off" placeholder="Bijvoorbeeld: Gardner-score, morfologie of kliniektekst" />
+            </label>
+            <label>
+              Bron labterugkoppeling
+              <input name="embryoBron" autocomplete="off" placeholder="Bijvoorbeeld: labrapport, portaal of embryoloog" />
+            </label>
+            <label>
+              Reviewstatus bronlabel
+              <select name="embryoReviewStatus">
+                <option value="concept">Concept - nog controleren</option>
+                <option value="gereviewd">Gereviewd</option>
+              </select>
+            </label>
+            <label>
+              Status
+              <select name="embryoStatus">
+                ${Object.entries(EMBRYO_STATUS_LABELS)
+                  .map(([value, label]) => renderOption(value, label, 'onbekend'))
+                  .join('')}
+              </select>
+            </label>
+            </fieldset>
+          </details>
+          <details class="dossier-upload-optional embryo-quality-link-fields" data-embryo-quality-link-fields="collapsed">
+            <summary class="dossier-upload-optional__summary">
+              <span>Koppelingen openen</span>
+              <small>Traject, afspraak en notitie</small>
+            </summary>
+            <fieldset class="dossier-subform-group" data-embryo-quality-group="embryo-koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="embryo-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
+              <legend>Koppelingen</legend>
+            <label>
+              Koppel aan traject
+              <select name="trajectId">
+                <option value="">Geen traject</option>
+                ${trajectOpties}
+              </select>
+            </label>
+            <label>
+              Koppel aan afspraak/terugplaatsing
+              <select name="afspraakId">
+                <option value="">Geen afspraak</option>
+                ${afspraakOpties}
+              </select>
+            </label>
+            <label>
+              Notitie
+              <textarea name="notitie" rows="3"></textarea>
+            </label>
+            </fieldset>
+          </details>
           <button type="submit" class="dossier-submit-action" data-dossier-submit-action="embryo-quality">Bewaar embryokwaliteit</button>
           ${renderDossierSubmitFeedback('embryo-quality', 'embryo-upload', state)}
         </form>

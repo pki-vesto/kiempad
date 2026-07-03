@@ -7408,6 +7408,10 @@ describe('app shell', () => {
       'data-embryo-upload-privacy-state="encrypted-quality-registration"',
     );
     expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-identificatie"');
+    expect(embryoQualityForm).toContain('data-embryo-quality-choice="ready"');
+    expect(embryoQualityForm).toContain('data-embryo-quality-identification-fields="collapsed"');
+    expect(embryoQualityForm).toContain('data-embryo-quality-assessment-fields="collapsed"');
+    expect(embryoQualityForm).toContain('data-embryo-quality-link-fields="collapsed"');
     expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-beoordeling"');
     expect(embryoQualityForm).toContain('data-embryo-quality-group="embryo-koppelingen"');
     expect(embryoQualityForm).toContain('data-dossier-field-section="embryo-identificatie"');
@@ -7416,8 +7420,20 @@ describe('app shell', () => {
     expect(embryoQualityForm).toContain('data-dossier-field-section-label="Stap 2 · beoordeling"');
     expect(embryoQualityForm).toContain('data-dossier-field-section="embryo-koppelingen"');
     expect(embryoQualityForm).toContain('data-dossier-field-section-label="Stap 3 · koppelen"');
-    expect(embryoQualityForm).toContain('<legend>Embryo-identificatie</legend>');
+    expect(embryoQualityForm).toContain('<legend>Embryo kiezen</legend>');
+    expect(embryoQualityForm).toContain('Identificatie openen');
+    expect(embryoQualityForm).toContain('Beoordeling openen');
+    expect(embryoQualityForm).toContain('Koppelingen openen');
     expect(embryoQualityForm).toContain('<legend>Beoordeling</legend>');
+    expect(embryoQualityForm).not.toContain(
+      '<details class="dossier-upload-optional embryo-quality-identification-fields" data-embryo-quality-identification-fields="collapsed" open',
+    );
+    expect(embryoQualityForm).not.toContain(
+      '<details class="dossier-upload-optional embryo-quality-assessment-fields" data-embryo-quality-assessment-fields="collapsed" open',
+    );
+    expect(embryoQualityForm).not.toContain(
+      '<details class="dossier-upload-optional embryo-quality-link-fields" data-embryo-quality-link-fields="collapsed" open',
+    );
     expect(embryoQualityForm).toContain('name="embryoLabel"');
     expect(embryoQualityForm).toContain('name="embryoDag"');
     expect(embryoQualityForm).toContain('name="embryoMeetmoment"');
@@ -7990,8 +8006,18 @@ describe('app shell', () => {
     expect(embryoQualityPanel).toContain('data-dossier-feedback-focus-target="embryo-quality"');
     expect(embryoQualityPanel).toContain('tabindex="-1"');
     expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-identificatie"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-choice="ready"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-identification-fields="collapsed"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-assessment-fields="collapsed"');
+    expect(embryoQualityPanel).toContain('data-embryo-quality-link-fields="collapsed"');
+    expect(embryoQualityPanel).toContain('Embryo kiezen');
+    expect(embryoQualityPanel).toContain('Identificatie openen');
+    expect(embryoQualityPanel).toContain('Beoordeling openen');
+    expect(embryoQualityPanel).toContain('Koppelingen openen');
     expect(embryoQualityPanel).toContain('data-dossier-required-cue="embryo-quality"');
-    expect(embryoQualityRequiredCue).toContain('Verplicht: datum, embryo en kwaliteit.');
+    expect(embryoQualityRequiredCue).toContain(
+      'Start met één embryo- of bronlabelkeuze. Identificatie en beoordeling blijven achter vervolgkeuzes bereikbaar.',
+    );
     expect(embryoQualityPanel).toContain('data-embryo-quality-group="embryo-beoordeling"');
     expect(embryoQualityPanel).not.toContain(
       'data-embryo-quality-group="embryo-beoordeling" data-dossier-context-priority="optional"',
@@ -8010,6 +8036,27 @@ describe('app shell', () => {
     );
     expect(embryoQualityPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(embryoQualityPanel).toContain('Klaar voor lokale opslag.');
+    expect(embryoQualityPanel).not.toContain(
+      '<details class="dossier-upload-optional embryo-quality-identification-fields" data-embryo-quality-identification-fields="collapsed" open',
+    );
+    expect(embryoQualityPanel).not.toContain(
+      '<details class="dossier-upload-optional embryo-quality-assessment-fields" data-embryo-quality-assessment-fields="collapsed" open',
+    );
+    expect(embryoQualityPanel).not.toContain(
+      '<details class="dossier-upload-optional embryo-quality-link-fields" data-embryo-quality-link-fields="collapsed" open',
+    );
+    expect(embryoQualityPanel.indexOf('data-embryo-quality-choice="ready"')).toBeLessThan(
+      embryoQualityPanel.indexOf('data-embryo-quality-identification-fields="collapsed"'),
+    );
+    expect(
+      embryoQualityPanel.indexOf('data-embryo-quality-identification-fields="collapsed"'),
+    ).toBeLessThan(embryoQualityPanel.indexOf('name="datum" type="date" required'));
+    expect(
+      embryoQualityPanel.indexOf('data-embryo-quality-assessment-fields="collapsed"'),
+    ).toBeLessThan(embryoQualityPanel.indexOf('name="embryoKwaliteit"'));
+    expect(embryoQualityPanel.indexOf('data-embryo-quality-link-fields="collapsed"')).toBeLessThan(
+      embryoQualityPanel.indexOf('name="trajectId"'),
+    );
     expect(embryoStatusPanel).toContain('class="kp-workflow-panel embryo-status-workflow"');
     expect(embryoStatusPanel).toContain('aria-label="Begeleide embryo-status registratie"');
     expect(embryoStatusPanel).toContain('data-upload-workflow="embryo-status"');
@@ -8227,6 +8274,8 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-optional.dossier-upload-lab-fields');
     expect(css).toContain('.consult-upload-report-choice');
     expect(css).toContain('.consult-upload-report-fields__body');
+    expect(css).toContain('.embryo-quality-choice');
+    expect(css).toContain('.embryo-quality-identification-fields__body');
     expect(css).toContain(
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
     );
