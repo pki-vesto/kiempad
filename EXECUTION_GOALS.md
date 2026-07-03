@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1453 — Kennis AI routekop start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1452 blijft de kennis AI-routekop gevoelig voor routecontext, previewanker, beheeranker en netwerkstatus tegelijk.
+- **User Impact:** Gebruikers die de AI-route openen, krijgen nog meerdere status- en navigatiesignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis AI routekop starten met één compacte statuskeuze of samengevouwen sublaag, terwijl routecontext, previewanker, beheeranker en netwerkstatus bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één AI-routestatus lezen zonder dat routekop, ankers en statuscopy de werkruimte domineren.
+- **Acceptance Criteria:** Bestaande kennis AI routehooks, routehashes, previewanker, beheeranker en netwerkstatus blijven aanwezig; de AI-routekop start met één compacte statuskeuze of samengevouwen sublaag; routecontext, previewanker, beheeranker en netwerkstatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI route summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2850
+
 ### G1452 — Kennis AI previewformulier start met één compacte invoerkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI preview, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2848
 
 ### G1451 — Kennis AI researchnetwerk start met één compacte netwerkkeuze

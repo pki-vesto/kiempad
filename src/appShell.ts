@@ -12831,10 +12831,19 @@ function renderKennisScreen(state: AppShellState): string {
           data: { 'knowledge-route-summary': 'ai' },
         })}
         <div class="knowledge-ai-console" data-knowledge-ai-console="ready">
-          <div class="summary-panel knowledge-ai-console__preview" data-knowledge-ai-console-region="preview">
-            <h2>AI-preview</h2>
-            ${renderAiPreviewForm(state.aiPreview, state.aiError)}
-          </div>
+          <details class="summary-panel knowledge-ai-console__preview knowledge-ai-preview-choice" data-knowledge-ai-console-region="preview" data-knowledge-ai-preview-choice="collapsed">
+            <summary class="knowledge-ai-preview-choice__summary">
+              <span>
+                <strong>AI-previewinvoer openen</strong>
+                <small>Open bron, previewtekst, foutstatus en previewactie.</small>
+              </span>
+              <em>${state.aiError ? 'Controle nodig' : state.aiPreview ? 'Preview klaar' : 'Geen preview'}</em>
+            </summary>
+            <div class="knowledge-ai-preview-choice__body">
+              <h2>AI-preview</h2>
+              ${renderAiPreviewForm(state.aiPreview, state.aiError)}
+            </div>
+          </details>
           <details id="knowledge-ai-support" class="kp-disclosure knowledge-ai-support" data-knowledge-ai-support="collapsed">
             <summary class="kp-disclosure__summary knowledge-ai-support__summary">
               <span>
