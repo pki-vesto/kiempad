@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1389 — Back-up: controleren start met één statuslaag
+
+- **Epic:** Reliability & Operations
+- **Problem:** De Back-up route Controleren opent met route-samenvatting, herinneringskaart, veilige-overdracht board en detailstatus tegelijk.
+- **User Impact:** De route voelt als een controlewand en minder als één duidelijke veiligheidstaak.
+- **Desired Outcome:** Start met één primaire veilige-overdracht/statuslaag en houd herinnering, syncfeedback en detailstatus gesloten beschikbaar.
+- **User Value:** Gebruikers kiezen eerst wat ze willen controleren of doen, zonder direct meerdere back-upstatuspanelen te moeten scannen.
+- **Acceptance Criteria:** Back-up Controleren toont in de eerste viewport één primaire veilige-overdracht/statuslaag; de back-upherinneringskaart blijft aanwezig met dezelfde data-hooks maar staat in de gesloten statusdetails; export, import, herstel, download- en kopieerhooks blijven ongewijzigd; er komt geen recordinhoud, herstelzin, sleuteldata, tracking of ontsleutelde gezondheidsdata bij; tests en routeflow-smoke bewaken volgorde, gesloten details, hooks en non-overlap.
+- **Affected Screens:** Back-up, Controleren
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, backup route, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 104
+- **Status:** ☑ klaar
+- **Issue:** #2724
+
 ### G1388 — Kennis: toevoegen start met één kennisinvoer tegelijk
 
 - **Epic:** Onboarding & Daily Use
