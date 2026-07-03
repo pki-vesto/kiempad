@@ -4109,7 +4109,18 @@ function renderDossierScreen(state: AppShellState): string {
                 <span>Bewaarstatus openen</span>
                 <small>Feedback en herstelcontext</small>
               </summary>
-              ${renderDossierSubmitFeedback('embryo-status', 'embryo-upload', state)}
+              <details class="dossier-upload-completion-status-choice" data-embryo-status-completion-status-choice="collapsed">
+                <summary class="dossier-upload-completion-status-choice__summary" data-embryo-status-completion-status-summary="ready">
+                  <span>
+                    <strong>Kies statusafronding</strong>
+                    <small>Opslagstatus, herstelcontext en vervolgroutes</small>
+                  </span>
+                  <em>status klaar</em>
+                </summary>
+                <div class="dossier-upload-completion-status-choice__body">
+                  ${renderDossierSubmitFeedback('embryo-status', 'embryo-upload', state)}
+                </div>
+              </details>
             </details>
           </section>
         </form>

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1437 — Kennis researchroute follow-up start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1436 blijven research- en kennisroutes gevoelig voor brede vervolgcontext zodra gebruikers extra bron- of trendinformatie openen.
+- **User Impact:** Gebruikers die research willen lezen, krijgen vervolgcontext nog als brede bron- en trendlaag aangeboden.
+- **Desired Outcome:** Laat de kennis researchroute follow-up starten met één compacte contextkeuze of samengevouwen sublaag, terwijl bronnen, trendanalyse, eenvoudige samenvatting en relevantiecontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen wetenschappelijke context stap voor stap openen zonder dat de researchroute als brede informatiepagina start.
+- **Acceptance Criteria:** Bestaande researchroute hooks, bronhooks, trendhooks en routehashes blijven aanwezig; de research follow-up start met één compacte contextkeuze of samengevouwen sublaag; bronnen, trendanalyse, eenvoudige samenvatting en relevantiecontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research intelligence
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2818
+
 ### G1436 — Embryostatus afrondingscontext start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, embryo status submit feedback, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2816
 
 ### G1435 — Embryokwaliteit afrondingscontext start met één compacte statuskeuze
