@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1383 — Daily Recommendations: resetmelding bewaakt guarded helpercopy op smalle schermen
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding bewaakt guarded helpercopy bij reduced-motion, maar disabled/aria-disabled helpercopy op smalle schermen heeft nog geen aparte guard.
+- **User Impact:** Gebruikers op smalle schermen kunnen minder duidelijke relatie tussen guarded Verberg-state en helpercopy ervaren.
+- **Desired Outcome:** Borg dat guarded Verberg-state en helpercopy op smalle schermen leesbaar blijven zonder overlap.
+- **User Value:** De resetfeedback blijft begrijpelijk en tapbaar op mobiele schermen, ook wanneer de lokale hide-actie bewaakt is.
+- **Acceptance Criteria:** Smalle schermen tonen disabled/aria-disabled Verberg-state met duidelijke helpercopy en knopstatus; er ontstaat geen extra transitie, layout shift, overlap of horizontale scroll; de smalle guarded helpercopy guard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, responsive CSS, guarded states
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2712
+
 ### G1382 — Daily Recommendations: resetmelding bewaakt guarded helpercopy in reduced-motion
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, reduced-motion CSS, guarded states
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2710
 
 ### G1381 — Daily Recommendations: resetmelding bewaakt forced-colors disabled touchcopy
