@@ -38440,7 +38440,17 @@ describe('app shell', () => {
     expect(html).not.toContain(
       '<details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure knowledge-research-summaries-choice" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries" data-knowledge-research-summaries-choice="collapsed" open>',
     );
-    expect(html).toContain('Relevantie, relaties en trends openen');
+    expect(html).toContain('data-knowledge-research-trends-choice="collapsed"');
+    expect(html).toContain('Trendkeuze openen');
+    expect(html).toContain('Relevantie, relaties en trendgroepen.');
+    expect(html).toContain('data-research-trend-dashboard="ready"');
+    expect(html).toContain('data-research-relevance-panel="ready"');
+    expect(html.indexOf('data-knowledge-research-trends-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-research-trend-dashboard="ready"'),
+    );
+    expect(html).not.toContain(
+      '<details id="knowledge-research-trends" class="kp-disclosure knowledge-research-trends-choice" data-knowledge-research-disclosure="context" data-knowledge-research-trends-choice="collapsed" open>',
+    );
     expect(html).toContain('data-knowledge-route-summary="add"');
     expect(html).toContain('data-knowledge-add-route-status-choice="collapsed"');
     expect(html).toContain('Toevoegstatus openen');
@@ -38833,6 +38843,8 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-sources-choice__summary {');
     expect(css).toContain('.knowledge-research-summaries-choice {');
     expect(css).toContain('.knowledge-research-summaries-choice__summary {');
+    expect(css).toContain('.knowledge-research-trends-choice {');
+    expect(css).toContain('.knowledge-research-trends-choice__summary {');
     expect(css).toContain('.knowledge-research-followup-context-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice__summary {');
