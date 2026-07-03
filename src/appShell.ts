@@ -3783,8 +3783,16 @@ function renderDossierScreen(state: AppShellState): string {
             </label>
             </fieldset>
           </details>
-          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="consult-upload">Bewaar consultverslag</button>
-          ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
+          <section class="dossier-upload-completion" data-consult-upload-completion-choice="ready">
+            <button type="submit" class="dossier-submit-action" data-dossier-submit-action="consult-upload">Bewaar consultverslag</button>
+            <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-consult-upload-submit-feedback-details="collapsed">
+              <summary class="dossier-upload-optional__summary">
+                <span>Bewaarstatus openen</span>
+                <small>Feedback en herstelcontext</small>
+              </summary>
+              ${renderDossierSubmitFeedback('consult-upload', 'consult-upload', state)}
+            </details>
+          </section>
         </form>
         <p class="small-print">Consultverslagen worden als eigen recordtype ${beschrijfEncryptedRecordLocatie(state)}. Consult-AI geeft geen diagnose, doseringsadvies of behandelkeuze.</p>
         `,

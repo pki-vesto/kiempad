@@ -7956,6 +7956,9 @@ describe('app shell', () => {
     expect(consultPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="consult-upload"',
     );
+    expect(consultPanel).toContain('data-consult-upload-completion-choice="ready"');
+    expect(consultPanel).toContain('data-consult-upload-submit-feedback-details="collapsed"');
+    expect(consultPanel).toContain('Bewaarstatus openen');
     expect(consultPanel).toContain('Bewaar consultverslag</button>');
     expect(consultPanel).toContain('data-dossier-submit-feedback="consult-upload"');
     expect(consultPanel).toContain('data-dossier-feedback-announcement-order="2"');
@@ -7964,6 +7967,15 @@ describe('app shell', () => {
     );
     expect(consultPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(consultPanel).toContain('Klaar voor lokale opslag.');
+    expect(consultPanel).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-consult-upload-submit-feedback-details="collapsed" open',
+    );
+    expect(consultPanel.indexOf('data-dossier-submit-action="consult-upload"')).toBeLessThan(
+      consultPanel.indexOf('data-consult-upload-submit-feedback-details="collapsed"'),
+    );
+    expect(
+      consultPanel.indexOf('data-consult-upload-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(consultPanel.indexOf('data-dossier-submit-feedback="consult-upload"'));
     expect(embryoQualityPanel).toContain('class="kp-workflow-panel embryo-quality-workflow"');
     expect(embryoQualityPanel).toContain('aria-label="Begeleide embryokwaliteit registratie"');
     expect(embryoQualityPanel).toContain('data-upload-workflow="embryo-quality"');
@@ -8491,6 +8503,7 @@ describe('app shell', () => {
     expect(css).toContain('margin-top: 8px;');
     expect(css).toContain('.dossier-upload-completion');
     expect(css).toContain('data-dossier-upload-completion-choice="ready"');
+    expect(css).toContain('data-consult-upload-completion-choice="ready"');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-submit-feedback-details');
     expect(css).toContain('.dossier-submit-action');
     expect(css).toContain('justify-self: start;');

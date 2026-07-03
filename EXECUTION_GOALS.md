@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1417 — Embryokwaliteit: registratie start met één embryokeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Document- en consultupload zijn nu stapsgewijs, maar embryokwaliteit kan nog direct meerdere invoervelden en context tegelijk tonen.
+- **User Impact:** Gebruikers die alleen embryokwaliteit willen registreren, moeten nog steeds identificatie, score, broncontext, koppelingen en status tegelijk scannen.
+- **Desired Outcome:** Laat de embryokwaliteitroute eerst openen met één rustige keuze voor embryo of bronlabel, waarna score, broncontext, koppelingen en feedback als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen embryokwaliteit stap voor stap vastleggen zonder dat de route als één brede invoerpagina start.
+- **Acceptance Criteria:** Bestaande form ids, inputnamen, submitknop, feedback hooks, privacy hooks en dossier hooks blijven aanwezig; de eerste embryokwaliteitlaag toont één duidelijke embryokeuze of compacte intake; identificatie, kwaliteitsscore, broncontext, koppelingen en feedback blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Embryokwaliteit
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, embryo quality form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2780
+
 ### G1416 — Consult upload: afronding start met één bewaarkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, consult upload submit feedback, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2778
 
 ### G1415 — Consult upload: consultroute start met één verslagkeuze
