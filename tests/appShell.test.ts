@@ -40638,6 +40638,12 @@ describe('app shell', () => {
     expect(html).toContain('Gebruik dd-mm-jjjj');
     expect(html).toContain('class="finance-amount-input" data-finance-amount-input="ready"');
     expect(html).toContain('<span aria-hidden="true">€</span>');
+    expect(html).toContain(
+      'class="form-required-map" data-form-required-map="finance-cost" aria-label="Verplicht voor kostenpost"',
+    );
+    expect(html).toContain('<span role="listitem">Omschrijving</span>');
+    expect(html).toContain('<span role="listitem">Datum</span>');
+    expect(html).toContain('<span role="listitem">Bedrag</span>');
     expect(html).toContain('class="finance-form-actions"');
     expect(html).toContain(
       'class="form-cancel-link" href="#kosten?route=historie" data-form-cancel-action="finance"',

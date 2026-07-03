@@ -14131,6 +14131,7 @@ function renderKostenForm(selected?: CostItem): string {
           <input name="trajectId" value="${escapeAttribute(selected?.trajectId ?? '')}" autocomplete="off" />
         </label>
       </fieldset>
+      ${renderFormRequiredMap('finance-cost', 'Verplicht voor kostenpost', ['Omschrijving', 'Datum', 'Bedrag'])}
       <div class="finance-form-actions">
         <button type="submit">${selected ? 'Werk kostenpost bij' : 'Bewaar kostenpost'}</button>
         ${
