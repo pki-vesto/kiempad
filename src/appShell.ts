@@ -12929,8 +12929,19 @@ function renderKennisScreen(state: AppShellState): string {
                     </summary>
                     <div class="knowledge-ai-settings-choice__body">
                       <h2>AI-instelling</h2>
-                      ${renderAiSettingsForm(state.settings, state.storageMode)}
-                      ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+                      <details class="knowledge-ai-settings-fields-choice" data-knowledge-ai-settings-fields-choice="collapsed">
+                        <summary class="knowledge-ai-settings-fields-choice__summary">
+                          <span>
+                            <strong>Instellingenvelden openen</strong>
+                            <small>Opt-in, opslagmodus, on-device status en bewaaractie.</small>
+                          </span>
+                          <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
+                        </summary>
+                        <div class="knowledge-ai-settings-fields-choice__body">
+                          ${renderAiSettingsForm(state.settings, state.storageMode)}
+                          ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+                        </div>
+                      </details>
                     </div>
                   </details>
                   <details class="summary-panel knowledge-ai-network-choice" data-knowledge-ai-console-region="research-network" data-knowledge-ai-network-choice="collapsed">

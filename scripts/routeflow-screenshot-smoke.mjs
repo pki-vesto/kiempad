@@ -473,12 +473,14 @@ const targets = [
     openSelectors: [
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-settings-choice="collapsed"]',
     ],
     requiredSelectors: [
       '[data-knowledge-ai-settings-choice="collapsed"]',
     ],
     presentSelectors: [
       '[data-knowledge-ai-console-region="settings"]',
+      '[data-knowledge-ai-settings-fields-choice="collapsed"]',
       '#ai-settings-form',
       'select[name="aiIngeschakeld"]',
       'input[name="aiProvider"]',
@@ -487,7 +489,7 @@ const targets = [
       '#ai-settings-form button[type="submit"]',
       '[data-on-device-ai-state]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-ai-settings-choice="collapsed"]'],
+    closedDetailsSelectors: ['[data-knowledge-ai-settings-fields-choice="collapsed"]'],
   },
   {
     screen: 'knowledge-ai-network',
