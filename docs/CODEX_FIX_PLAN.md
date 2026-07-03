@@ -1421,6 +1421,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   mobile badge copy readable without changing badge size.
   Partial G1514/#2972: The knowledge library empty-state recovery badges now keep mobile
   focus copy secondary beside primary action labels.
+  Partial G1515/#2974: The knowledge library empty-state recovery actions now keep mobile
+  focus contrast calm across the ring, halo, and badge.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

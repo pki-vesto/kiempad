@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1315 |
+| ☑ klaar | 1316 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1514** |
+| **Totaal** | **1515** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1676,13 +1676,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1512 | Kennis bibliotheek herstelactie badges houden mobiele focuscentrering zichtbaar | P1 | F5 | ☑ |
 | G1513 | Kennis bibliotheek herstelactie badges houden mobiele focuscopy leesbaar | P1 | F5 | ☑ |
 | G1514 | Kennis bibliotheek herstelactie badges houden mobiele focuscopy secundair | P1 | F5 | ☑ |
-| G1515 | Kennis bibliotheek herstelactie badges houden mobiele focuscontrast rustig | P1 | F5 | ☐ |
+| G1515 | Kennis bibliotheek herstelactie badges houden mobiele focuscontrast rustig | P1 | F5 | ☑ |
+| G1516 | Kennis bibliotheek herstelactie badges houden mobiele focushalo stabiel | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1514** (id's G001 t/m G1515; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1515** (id's G001 t/m G1516; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
