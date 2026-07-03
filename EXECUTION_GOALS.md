@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1489 — Kennis bibliotheek herstelkeuze opent acties in compacte actievolgorde
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1488 heeft de herstelkeuze statuscontext, maar de geopende acties hebben nog geen expliciet bewaakte volgorde.
+- **User Impact:** Gebruikers kunnen acties zien, maar niet altijd de meest logische herstelroute volgen.
+- **Desired Outcome:** Laat de herstelkeuze van de Kennis Bibliotheek acties tonen in compacte volgorde die begint met filter wissen, daarna categorie kiezen en daarna kennis toevoegen.
+- **User Value:** Gebruikers herstellen lege resultaten via de snelste en meest logische stap eerst.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; de geopende herstelkeuze toont acties in compacte volgorde: filter wissen, categorie kiezen, kennis toevoegen; acties blijven bereikbaar zonder brede extra panelen; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken actievolgorde en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery choice, tests
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2922
+
 ### G1488 — Kennis bibliotheek herstelkeuze toont compacte statuscontext
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery choice, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2920
 
 ### G1487 — Kennis bibliotheek herstelacties starten met compacte keuze

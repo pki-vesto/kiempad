@@ -38286,6 +38286,8 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-empty-recovery-choice="collapsed"');
     expect(html).toContain('Herstelactie kiezen');
     expect(html).toContain('Filter wissen, categorie kiezen of kennis toevoegen.');
+    expect(html).toContain('data-knowledge-library-empty-recovery-status="empty-results"');
+    expect(html).toContain('Geen zichtbare items door filter of categorie.');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="clear-filter"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="category"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="add"');
@@ -39151,6 +39153,7 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-followup-visibility-choice__empty');
     expect(css).toContain('.knowledge-library-empty-recovery-choice {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__summary {');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice__status {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__body {');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');

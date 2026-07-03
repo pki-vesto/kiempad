@@ -8551,6 +8551,15 @@ h2 {
   line-height: 1.35;
 }
 
+.knowledge-library-empty-recovery-choice__status {
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px dashed color-mix(in srgb, var(--category) 20%, var(--border));
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 92%, var(--surface-2));
+}
+
 .knowledge-library-empty-recovery-choice__summary strong {
   color: var(--text);
   font-size: 0.86rem;
