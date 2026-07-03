@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1509 — Kennis bibliotheek herstelactie badges houden mobiele boxmaat stabiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1508 is mobiele focusmaat stabieler, maar de badgebox zelf is nog niet apart bewaakt op width/height consistentie bij focusstates.
+- **User Impact:** Gebruikers kunnen nog kleine visuele verschuivingen zien als badgeboxen niet expliciet begrensd zijn.
+- **Desired Outcome:** Mobiele badgeboxen houden stabiele boxmaten tijdens rust, hover en focus.
+- **User Value:** Gebruikers ervaren herstelacties als rustig en voorspelbaar op mobiel.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgeboxmaten blijven stabiel op mobiel; badgehoogte en focusmaat blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele boxmaat en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2962
+
 ### G1508 — Kennis bibliotheek herstelactie badges houden mobiele focusmaat stabiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2960
 
 ### G1507 — Kennis bibliotheek herstelactie badges houden mobiele truncatie rustig
