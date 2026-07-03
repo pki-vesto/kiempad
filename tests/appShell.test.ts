@@ -38550,6 +38550,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-ai-summary-detail-choice="collapsed"');
     expect(html).toContain('AI-samenvattingdetails openen');
     expect(html).toContain('Open samenvatting, broncontext, status en opslagactie.');
+    expect(html).toContain('data-knowledge-ai-summary-save-choice="collapsed"');
+    expect(html).toContain('Opslagvelden openen');
+    expect(html).toContain('Samenvatting, broncontext, status en opslagactie.');
     expect(html).toContain('data-knowledge-ai-console-region="settings"');
     expect(html).toContain('data-knowledge-ai-settings-choice="collapsed"');
     expect(html).toContain('AI-instellingen openen');
@@ -38577,6 +38580,9 @@ describe('app shell', () => {
       html.indexOf('data-knowledge-ai-console-region="summary-save"'),
     );
     expect(html.indexOf('data-knowledge-ai-summary-detail-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-summary-save-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-ai-summary-save-choice="collapsed"')).toBeLessThan(
       html.indexOf('id="ai-summary-form"'),
     );
     expect(html.indexOf('data-knowledge-ai-settings-choice="collapsed"')).toBeLessThan(
@@ -38599,6 +38605,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-summary-detail-choice" data-knowledge-ai-console-region="summary-save" data-knowledge-ai-summary-detail-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-ai-summary-save-choice" data-knowledge-ai-summary-save-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-settings-choice" data-knowledge-ai-console-region="settings" data-knowledge-ai-settings-choice="collapsed" open>',
@@ -39036,6 +39045,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-ai-summary-detail-choice:not([open]) > .knowledge-ai-summary-detail-choice__body {',
     );
+    expect(css).toContain('.knowledge-ai-summary-save-choice {');
+    expect(css).toContain('.knowledge-ai-summary-save-choice__summary {');
     expect(css).toContain('.knowledge-ai-settings-choice {');
     expect(css).toContain('align-self: start;');
     expect(css).toContain('.knowledge-ai-settings-choice__summary {');

@@ -14433,21 +14433,32 @@ function renderAiRedactionPreview(preview: AiSamenvattingPayload): string {
 
 function renderAiSummaryForm(preview?: AiSamenvattingPayload): string {
   return `
-    <form id="ai-summary-form" class="data-form compact-form">
-      <label>
-        Titel
-        <input name="aiTitel" value="${escapeAttribute(preview ? 'AI-samenvatting research' : '')}" required />
-      </label>
-      <label>
-        Bron
-        <input name="aiSamenvattingBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
-      </label>
-      <label>
-        Samenvatting
-        <textarea name="aiSamenvatting" rows="5" required></textarea>
-      </label>
-      <button type="submit">Bewaar als kennisitem</button>
-    </form>
+    <details class="knowledge-ai-summary-save-choice" data-knowledge-ai-summary-save-choice="collapsed">
+      <summary class="knowledge-ai-summary-save-choice__summary">
+        <span>
+          <strong>Opslagvelden openen</strong>
+          <small>Samenvatting, broncontext, status en opslagactie.</small>
+        </span>
+        <em>${preview ? 'Preview klaar' : 'Geen preview'}</em>
+      </summary>
+      <div class="knowledge-ai-summary-save-choice__body">
+        <form id="ai-summary-form" class="data-form compact-form">
+          <label>
+            Titel
+            <input name="aiTitel" value="${escapeAttribute(preview ? 'AI-samenvatting research' : '')}" required />
+          </label>
+          <label>
+            Bron
+            <input name="aiSamenvattingBron" value="${escapeAttribute(preview?.bron ?? '')}" autocomplete="off" required />
+          </label>
+          <label>
+            Samenvatting
+            <textarea name="aiSamenvatting" rows="5" required></textarea>
+          </label>
+          <button type="submit">Bewaar als kennisitem</button>
+        </form>
+      </div>
+    </details>
   `;
 }
 

@@ -449,19 +449,21 @@ const targets = [
     openSelectors: [
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-summary-detail-choice="collapsed"]',
     ],
     requiredSelectors: [
       '[data-knowledge-ai-summary-detail-choice="collapsed"]',
     ],
     presentSelectors: [
       '[data-knowledge-ai-console-region="summary-save"]',
+      '[data-knowledge-ai-summary-save-choice="collapsed"]',
       '#ai-summary-form',
       'input[name="aiTitel"]',
       'input[name="aiSamenvattingBron"]',
       'textarea[name="aiSamenvatting"]',
       '#ai-summary-form button[type="submit"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-ai-summary-detail-choice="collapsed"]'],
+    closedDetailsSelectors: ['[data-knowledge-ai-summary-save-choice="collapsed"]'],
   },
   {
     screen: 'knowledge-ai-settings',
