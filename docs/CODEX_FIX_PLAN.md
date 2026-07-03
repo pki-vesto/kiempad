@@ -148,6 +148,9 @@
 - **Daily advice feedback reset route-focus consistency — done in G1454 / issue #2668.** The
   workflow, list-header, and filter-form reset paths now show a local routefocus confirmation on
   the plain Dagadvies route while hiding it again when browser history restores an active filter.
+- **Daily advice feedback reset route-focus scan style — done in G1455 / issue #2670.** The
+  routefocus confirmation now has a compact, quiet status style so reset feedback stays scannable
+  without looking like an error or dominating the Dagadvies header.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

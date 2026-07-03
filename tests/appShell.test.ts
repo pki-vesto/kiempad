@@ -3185,6 +3185,13 @@ describe('app shell', () => {
     expect(css).toContain('color: HighlightText;');
     expect(css).toContain('border-color: GrayText;');
     expect(css).toContain('color: GrayText;');
+    expect(css).toContain('[data-daily-recommendation-reset-route-focus="ready"] {');
+    expect(css).toContain('width: fit-content;');
+    expect(css).toContain('padding: 7px 10px;');
+    expect(css).toContain('border-left-width: 2px;');
+    expect(css).toContain('background: color-mix(in srgb, var(--accent) 10%, var(--surface));');
+    expect(css).toContain('font-size: 0.82rem;');
+    expect(css).toContain('overflow-wrap: anywhere;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1363 — Daily Recommendations: resetmelding ondersteunt forced-colors scanstijl
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft een compacte scanstijl, maar high-contrast/forced-colors gedrag is nog niet expliciet geborgd.
+- **User Impact:** Gebruikers met high-contrast instellingen kunnen de resetbevestiging minder goed herkennen als rustige statusmelding.
+- **Desired Outcome:** Geef de reset-routefocusmelding een specifieke forced-colors stijl zonder extra routegedrag of medische interpretatie.
+- **User Value:** Gebruikers houden herkenbare resetbevestiging, ook met toegankelijkheidsinstellingen.
+- **Acceptance Criteria:** De reset-routefocusmelding heeft een specifieke forced-colors stijl; de melding blijft compact, scanbaar en niet-foutachtig in high-contrast context; de melding blijft afwezig wanneer een actieve feedbackfilter hersteld is via browser back/forward; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, accessibility, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2672
+
 ### G1362 — Daily Recommendations: resetmelding heeft compacte scanstijl
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2670
 
 ### G1361 — Daily Recommendations: resetknoppen bewaren consistente routefocus
