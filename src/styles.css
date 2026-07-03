@@ -15439,11 +15439,78 @@ a.action-card:active {
   line-height: 1.18;
 }
 
-.dossier-upload-console__header p:last-child {
+.dossier-upload-console__context {
+  width: min(100%, 46ch);
+  margin-top: 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--surface) 90%, var(--surface-subtle));
+  overflow: hidden;
+}
+
+.dossier-upload-console__status {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto) 22px;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 7px 9px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.dossier-upload-console__status::-webkit-details-marker {
+  display: none;
+}
+
+.dossier-upload-console__status::after {
+  content: "+";
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-weight: 850;
+  line-height: 1;
+}
+
+.dossier-upload-console__context[open] > .dossier-upload-console__status::after {
+  content: "-";
+}
+
+.dossier-upload-console__status span,
+.dossier-upload-console__status small {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dossier-upload-console__status span {
+  color: var(--text);
+  font-size: 0.83rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.dossier-upload-console__status small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 750;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.dossier-upload-console__context p {
   max-width: 62ch;
+  padding: 0 9px 9px;
   color: var(--muted);
   font-size: 0.84rem;
   line-height: 1.4;
+}
+
+.dossier-upload-console__context:not([open]) > p {
+  display: none;
 }
 
 .dossier-upload-console__header > span {
@@ -16752,10 +16819,6 @@ a.action-card:active {
     scrollbar-width: thin;
   }
 
-  .dossier-upload-console__header p:last-child {
-    display: none;
-  }
-
   .dossier-upload-console .dossier-add-route-selector {
     grid-area: selector;
     position: sticky;
@@ -16934,7 +16997,6 @@ a.action-card:active {
   #dossier-route-upload
   > .dossier-route-section__header
   > p:last-child,
-.dossier-upload-console__header p:last-child,
 .dossier-upload-console[data-dossier-upload-focus-mode="single-flow"]
   .dossier-upload-workflow
   > .kp-workflow-panel__header,

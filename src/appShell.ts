@@ -3314,9 +3314,15 @@ function renderDossierScreen(state: AppShellState): string {
           <div>
             <p class="kp-card__eyebrow">Toevoegen</p>
             <h3 id="dossier-upload-console-title">Toevoegen aan dossier</h3>
-            <p>Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.</p>
+            <details class="dossier-upload-console__context" data-dossier-upload-console-context="collapsed">
+              <summary class="dossier-upload-console__status" data-dossier-upload-console-status="compact">
+                <span>Eén toevoeging per keer</span>
+                <small>Formulieren blijven dicht</small>
+              </summary>
+              <p>Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.</p>
+            </details>
           </div>
-          <span>${zichtbareDocumenten.length} records</span>
+          <span data-dossier-upload-console-records="ready">${zichtbareDocumenten.length} records</span>
         </header>
         <div class="dossier-upload-console__body" data-dossier-upload-console-region="body">
         <details class="dossier-add-route-group" data-dossier-add-route-group="collapsed"${activeDossierAddFlow === 'keuze' ? '' : ' open'}>

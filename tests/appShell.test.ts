@@ -8480,6 +8480,13 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-upload-console {');
     expect(css).toContain('[data-dossier-upload-focus-mode="single-flow"]');
     expect(css).toContain('.dossier-upload-console__header {');
+    expect(css).toContain('.dossier-upload-console__context {');
+    expect(css).toContain('.dossier-upload-console__status {');
+    expect(css).toContain('.dossier-upload-console__status::after {');
+    expect(css).toContain(
+      '.dossier-upload-console__context[open] > .dossier-upload-console__status::after',
+    );
+    expect(css).toContain('.dossier-upload-console__context:not([open]) > p {');
     expect(css).toContain('.dossier-upload-console__body {');
     expect(css).toContain('.dossier-add-route-group {');
     expect(css).toContain('.dossier-add-route-group__summary {');
@@ -9077,6 +9084,9 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('id="dossier-route-upload"');
     expect(emptyHtml).toContain('data-dossier-upload-console="ready"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="header"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-context="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-status="compact"');
+    expect(emptyHtml).toContain('data-dossier-upload-console-records="ready"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="body"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="selector"');
     expect(emptyHtml).toContain('data-dossier-upload-console-region="document"');
@@ -9118,10 +9128,17 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('Verslag vastleggen');
     expect(emptyHtml).toContain('data-hub-detail-panel="upload-intake"');
     expect(emptyHtml).toContain('Toevoegen');
+    expect(emptyHtml).toContain('Eén toevoeging per keer');
+    expect(emptyHtml).toContain('Formulieren blijven dicht');
     expect(emptyHtml).toContain(
       'Kies één toevoegstroom; de andere formulieren blijven dicht zodat je niet door alle dossierblokken tegelijk hoeft.',
     );
-    expect(emptyHtml).toContain('<span>0 records</span>');
+    expect(emptyHtml).not.toContain(
+      '<details class="dossier-upload-console__context" data-dossier-upload-console-context="collapsed" open>',
+    );
+    expect(emptyHtml).toContain(
+      '<span data-dossier-upload-console-records="ready">0 records</span>',
+    );
     expect(emptyHtml).toContain('aria-label="Dossier upload route-samenvatting"');
     expect(emptyHtml).toContain('data-dossier-route-summary="upload"');
     expect(emptyHtml).toContain('Eerst uploaden, daarna pas reviewen');

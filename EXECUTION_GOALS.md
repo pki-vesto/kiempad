@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1426 — Dossier upload workflowtabs starten met één compacte routebalk
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1425 zijn triage en consoleheader compacter, maar de workflowtabs kunnen nog veel labels tegelijk tonen voordat de gebruiker één uploadroute kiest.
+- **User Impact:** Gebruikers zien bij dossierupload nog een drukke tablaag bovenop de compacte startlagen.
+- **Desired Outcome:** Laat de workflowtabs binnen dossier-upload starten als één compacte routebalk of samengevouwen contextlaag, terwijl upload, review, consult en context bereikbaar blijven.
+- **User Value:** Gebruikers houden de uploadstart rustig en kunnen routes blijven wisselen zonder extra visuele druk.
+- **Acceptance Criteria:** Bestaande workflowtab hooks, aria-current states en routehashes blijven aanwezig; upload, review, consult en context blijven bereikbaar; de tabs tonen eerst één compacte routebalk of samengevouwen contextlaag zonder lange tekstblokken; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload workflow tabs, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2796
+
 ### G1425 — Dossier upload consoleheader start met één compacte statusregel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload console header, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2794
 
 ### G1424 — Dossier upload triage start met één compacte invoerkeuze

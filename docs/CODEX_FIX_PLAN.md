@@ -1234,6 +1234,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   explanation card while the full route context remains reachable.
   Partial G1424/#2792: The dossier upload triage now starts with one closed compact upload-choice
   row while document, consult, imaging and OCR/review lanes remain reachable.
+  Partial G1425/#2794: The dossier upload console header now starts with one compact closed status
+  row while record count and separated-flow explanation remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
