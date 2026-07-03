@@ -1302,6 +1302,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status choice while route context, primary research anchor, follow-up anchor and source status remain reachable.
   Partial G1458/#2860: The knowledge research workflow header now starts with one closed compact
   route choice while Research, Summaries, Trends and Add tabs remain reachable.
+  Partial G1459/#2862: The knowledge research reader now starts with one closed compact
+  lane choice while Scientific, Plain-language, Relevance and Trends lanes remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

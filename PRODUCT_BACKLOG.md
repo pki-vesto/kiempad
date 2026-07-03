@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1259 |
+| ☑ klaar | 1260 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1458** |
+| **Totaal** | **1459** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1620,13 +1620,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1456 | Kennis toevoegroute routekop start met één compacte statuskeuze | P1 | F5 | ☑ |
 | G1457 | Kennis researchroute routekop start met één compacte statuskeuze | P1 | F5 | ☑ |
 | G1458 | Kennis research workflowkop start met één compacte routekeuze | P1 | F5 | ☑ |
-| G1459 | Kennis research leeslaag start met één compacte laankeuze | P1 | F5 | ☐ |
+| G1459 | Kennis research leeslaag start met één compacte laankeuze | P1 | F5 | ☑ |
+| G1460 | Kennis research vervolgcontext start met één compacte contextkeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1458** (id's G001 t/m G1459; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1459** (id's G001 t/m G1460; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
