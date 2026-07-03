@@ -1667,6 +1667,11 @@ async function assertDailyAdviceFeedbackNavigation(page) {
     .locator('[data-daily-recommendation-reset-route-focus="ready"]')
     .filter({ hasText: 'Lokale feedbackfilter gewist vanuit de lijstfilter.' })
     .waitFor({ timeout: 10_000 });
+  await page.locator('[data-daily-recommendation-reset-route-focus-close="ready"]').click();
+  await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-recommendation-reset-route-focus="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
   await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });

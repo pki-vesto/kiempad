@@ -177,6 +177,7 @@ type RuntimeState = {
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
   dailyRecommendationRouteFocusStatus?: string;
+  dailyRecommendationRouteFocusDismissed?: boolean;
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   settingsOpen: boolean;
@@ -250,6 +251,7 @@ function render(root: HTMLElement, state: RuntimeState): void {
     medicatieImportError: state.medicatieImportError,
     dailyRecommendationStatus: state.dailyRecommendationStatus,
     dailyRecommendationRouteFocusStatus: state.dailyRecommendationRouteFocusStatus,
+    dailyRecommendationRouteFocusDismissed: state.dailyRecommendationRouteFocusDismissed,
     dailyRecommendationFeedbackFilter:
       normalizeStartRoute(window.location.hash) === 'recommendations'
         ? normalizeDailyRecommendationFeedbackFilter(window.location.hash)
@@ -1683,6 +1685,13 @@ function bindQuickEntryControls(root: HTMLElement, state: RuntimeState): void {
 
 function bindDailyRecommendationControls(root: HTMLElement, state: RuntimeState): void {
   root
+    .querySelector<HTMLButtonElement>('[data-daily-recommendation-reset-route-focus-close="ready"]')
+    ?.addEventListener('click', () => {
+      state.dailyRecommendationRouteFocusDismissed = true;
+      render(root, state);
+    });
+
+  root
     .querySelector<HTMLButtonElement>('[data-daily-advice-feedback-list-open="ready"]')
     ?.addEventListener('click', () => {
       openDailyRecommendationListPanel(root);
@@ -1767,6 +1776,7 @@ function applyDailyRecommendationFeedbackFilter(
   if (!(target instanceof HTMLFormElement)) return;
   if (submitter instanceof HTMLButtonElement && submitter.value === 'reset') {
     state.dailyRecommendationFeedbackFilter = undefined;
+    state.dailyRecommendationRouteFocusDismissed = false;
     state.dailyRecommendationRouteFocusStatus =
       buildDailyRecommendationResetRouteFocusStatus(submitter);
     setDailyRecommendationFeedbackFilterHash();
@@ -1778,6 +1788,7 @@ function applyDailyRecommendationFeedbackFilter(
     data.get('dailyRecommendationFeedbackStatus'),
   );
   state.dailyRecommendationRouteFocusStatus = undefined;
+  state.dailyRecommendationRouteFocusDismissed = false;
   setDailyRecommendationFeedbackFilterHash(state.dailyRecommendationFeedbackFilter);
   render(root, state);
 }

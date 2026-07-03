@@ -3192,6 +3192,8 @@ describe('app shell', () => {
     expect(css).toContain('background: color-mix(in srgb, var(--accent) 10%, var(--surface));');
     expect(css).toContain('font-size: 0.82rem;');
     expect(css).toContain('overflow-wrap: anywhere;');
+    expect(css).toContain('.daily-recommendation-reset-route-focus__close {');
+    expect(css).toContain('min-height: 28px;');
     expect(css).toContain('border-left-color: Highlight;');
     expect(css).toContain('color: CanvasText;');
     expect(css).toContain('outline: 1px solid ButtonText;');
@@ -4178,16 +4180,43 @@ describe('app shell', () => {
     expect(resetRouteFocusRecommendations).toContain(
       'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.',
     );
+    expect(resetRouteFocusRecommendations).toContain(
+      'data-daily-recommendation-reset-route-focus-close="ready"',
+    );
+    expect(resetRouteFocusRecommendations).toContain('aria-label="Sluit lokale resetmelding"');
     const resetRouteFocusStart = resetRouteFocusRecommendations.indexOf(
       'data-daily-recommendation-reset-route-focus="ready"',
     );
     const resetRouteFocusSnippet = resetRouteFocusRecommendations.slice(
       resetRouteFocusStart,
-      resetRouteFocusStart + 180,
+      resetRouteFocusStart + 320,
     );
     expect(resetRouteFocusSnippet).not.toContain('tracking-payload');
     expect(resetRouteFocusSnippet).not.toContain('behandeladvies');
     expect(resetRouteFocusSnippet).not.toContain('medische conclusie');
+
+    const dismissedResetRouteFocusHtml = renderAppShell('start', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      kennisItems: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      eventLogs: [],
+      dailyRecommendationRouteFocusStatus:
+        'Lokale feedbackfilter gewist vanuit de lijstfilter. Je blijft op Dagadvies.',
+      dailyRecommendationRouteFocusDismissed: true,
+      activeStartRoute: 'recommendations',
+    });
+    const dismissedResetRouteFocusRecommendations = extractDailyRecommendationsSection(
+      dismissedResetRouteFocusHtml,
+    );
+
+    expect(dismissedResetRouteFocusRecommendations).not.toContain(
+      'data-daily-recommendation-reset-route-focus="ready"',
+    );
 
     const filteredResetRouteFocusHtml = renderAppShell('start', {
       trajecten: [],
