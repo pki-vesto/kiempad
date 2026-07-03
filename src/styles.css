@@ -15182,6 +15182,16 @@ a.action-card:active {
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+
+  .daily-recommendation-reset-route-focus__close:disabled
+    + .daily-recommendation-reset-route-focus__help,
+  .daily-recommendation-reset-route-focus__close[aria-disabled="true"]
+    + .daily-recommendation-reset-route-focus__help {
+    color: var(--text-muted);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
 }
 
 .save-feedback {
