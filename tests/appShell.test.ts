@@ -7449,6 +7449,12 @@ describe('app shell', () => {
     expect(embryoStatusForm).toContain('data-upload-privacy-kind="embryo-status"');
     expect(embryoStatusForm).toContain('data-embryo-status-event-state="concept-editor"');
     expect(embryoStatusForm).toContain('data-embryo-status-group="status-basis"');
+    expect(embryoStatusForm).toContain('data-embryo-status-choice="ready"');
+    expect(embryoStatusForm).toContain('data-embryo-status-basis-fields="collapsed"');
+    expect(embryoStatusForm).toContain('data-embryo-status-source-fields="collapsed"');
+    expect(embryoStatusForm).toContain('data-embryo-status-link-fields="collapsed"');
+    expect(embryoStatusForm).toContain('data-embryo-status-completion-choice="ready"');
+    expect(embryoStatusForm).toContain('data-embryo-status-submit-feedback-details="collapsed"');
     expect(embryoStatusForm).toContain('data-embryo-status-group="status-bron"');
     expect(embryoStatusForm).toContain('data-embryo-status-group="status-koppelingen"');
     expect(embryoStatusForm).toContain('data-dossier-field-section="status-basis"');
@@ -7457,8 +7463,24 @@ describe('app shell', () => {
     expect(embryoStatusForm).toContain('data-dossier-field-section-label="Stap 2 · bron"');
     expect(embryoStatusForm).toContain('data-dossier-field-section="status-koppelingen"');
     expect(embryoStatusForm).toContain('data-dossier-field-section-label="Stap 3 · koppelen"');
-    expect(embryoStatusForm).toContain('<legend>Statusbasis</legend>');
+    expect(embryoStatusForm).toContain('<legend>Status kiezen</legend>');
+    expect(embryoStatusForm).toContain('Statusmoment openen');
+    expect(embryoStatusForm).toContain('Broncontrole openen');
+    expect(embryoStatusForm).toContain('Koppelingen openen');
+    expect(embryoStatusForm).toContain('Bewaarstatus openen');
     expect(embryoStatusForm).toContain('<legend>Broncontrole</legend>');
+    expect(embryoStatusForm).not.toContain(
+      '<details class="dossier-upload-optional embryo-status-basis-fields" data-embryo-status-basis-fields="collapsed" open',
+    );
+    expect(embryoStatusForm).not.toContain(
+      '<details class="dossier-upload-optional embryo-status-source-fields" data-embryo-status-source-fields="collapsed" open',
+    );
+    expect(embryoStatusForm).not.toContain(
+      '<details class="dossier-upload-optional embryo-status-link-fields" data-embryo-status-link-fields="collapsed" open',
+    );
+    expect(embryoStatusForm).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-status-submit-feedback-details="collapsed" open',
+    );
     expect(embryoStatusForm).toContain('name="embryoLabel"');
     expect(embryoStatusForm).toContain('name="embryoStatus"');
     expect(embryoStatusForm).toContain('name="embryoBron"');
@@ -8083,8 +8105,18 @@ describe('app shell', () => {
     expect(embryoStatusPanel).toContain('data-dossier-feedback-focus-target="embryo-status"');
     expect(embryoStatusPanel).toContain('tabindex="-1"');
     expect(embryoStatusPanel).toContain('data-embryo-status-group="status-basis"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-choice="ready"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-basis-fields="collapsed"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-source-fields="collapsed"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-link-fields="collapsed"');
+    expect(embryoStatusPanel).toContain('Status kiezen');
+    expect(embryoStatusPanel).toContain('Statusmoment openen');
+    expect(embryoStatusPanel).toContain('Broncontrole openen');
+    expect(embryoStatusPanel).toContain('Koppelingen openen');
     expect(embryoStatusPanel).toContain('data-dossier-required-cue="embryo-status"');
-    expect(embryoStatusRequiredCue).toContain('Verplicht: datum en embryo.');
+    expect(embryoStatusRequiredCue).toContain(
+      'Start met één statusmoment. Datum, embryo en broncontrole blijven achter vervolgkeuzes bereikbaar.',
+    );
     expect(embryoStatusPanel).toContain(
       'data-embryo-status-group="status-bron" data-dossier-context-priority="optional"',
     );
@@ -8095,6 +8127,9 @@ describe('app shell', () => {
     expect(embryoStatusPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="embryo-status"',
     );
+    expect(embryoStatusPanel).toContain('data-embryo-status-completion-choice="ready"');
+    expect(embryoStatusPanel).toContain('data-embryo-status-submit-feedback-details="collapsed"');
+    expect(embryoStatusPanel).toContain('Bewaarstatus openen');
     expect(embryoStatusPanel).toContain('Bewaar embryo-status</button>');
     expect(embryoStatusPanel).toContain('data-dossier-submit-feedback="embryo-status"');
     expect(embryoStatusPanel).toContain('data-dossier-feedback-announcement-order="4"');
@@ -8103,6 +8138,36 @@ describe('app shell', () => {
     );
     expect(embryoStatusPanel).toContain('aria-live="polite" aria-atomic="true"');
     expect(embryoStatusPanel).toContain('Klaar voor lokale opslag.');
+    expect(embryoStatusPanel).not.toContain(
+      '<details class="dossier-upload-optional embryo-status-basis-fields" data-embryo-status-basis-fields="collapsed" open',
+    );
+    expect(embryoStatusPanel).not.toContain(
+      '<details class="dossier-upload-optional embryo-status-source-fields" data-embryo-status-source-fields="collapsed" open',
+    );
+    expect(embryoStatusPanel).not.toContain(
+      '<details class="dossier-upload-optional embryo-status-link-fields" data-embryo-status-link-fields="collapsed" open',
+    );
+    expect(embryoStatusPanel).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-embryo-status-submit-feedback-details="collapsed" open',
+    );
+    expect(embryoStatusPanel.indexOf('data-embryo-status-choice="ready"')).toBeLessThan(
+      embryoStatusPanel.indexOf('data-embryo-status-basis-fields="collapsed"'),
+    );
+    expect(embryoStatusPanel.indexOf('data-embryo-status-basis-fields="collapsed"')).toBeLessThan(
+      embryoStatusPanel.indexOf('name="datum" type="date" required'),
+    );
+    expect(embryoStatusPanel.indexOf('data-embryo-status-source-fields="collapsed"')).toBeLessThan(
+      embryoStatusPanel.indexOf('name="embryoBron"'),
+    );
+    expect(embryoStatusPanel.indexOf('data-embryo-status-link-fields="collapsed"')).toBeLessThan(
+      embryoStatusPanel.indexOf('name="trajectId"'),
+    );
+    expect(embryoStatusPanel.indexOf('data-dossier-submit-action="embryo-status"')).toBeLessThan(
+      embryoStatusPanel.indexOf('data-embryo-status-submit-feedback-details="collapsed"'),
+    );
+    expect(
+      embryoStatusPanel.indexOf('data-embryo-status-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(embryoStatusPanel.indexOf('data-dossier-submit-feedback="embryo-status"'));
 
     const routeOrder = [
       'data-dossier-add-route-selector="compact-tabs"',
@@ -8288,6 +8353,8 @@ describe('app shell', () => {
     expect(css).toContain('.consult-upload-report-fields__body');
     expect(css).toContain('.embryo-quality-choice');
     expect(css).toContain('.embryo-quality-identification-fields__body');
+    expect(css).toContain('.embryo-status-choice');
+    expect(css).toContain('.embryo-status-basis-fields__body');
     expect(css).toContain(
       '#dossier-upload-form,\n#consult-verslag-form,\n#embryo-quality-form,\n#embryo-status-event-form',
     );
@@ -8566,6 +8633,7 @@ describe('app shell', () => {
     expect(css).toContain('data-dossier-upload-completion-choice="ready"');
     expect(css).toContain('data-consult-upload-completion-choice="ready"');
     expect(css).toContain('data-embryo-quality-completion-choice="ready"');
+    expect(css).toContain('data-embryo-status-completion-choice="ready"');
     expect(css).toContain('.dossier-upload-optional.dossier-upload-submit-feedback-details');
     expect(css).toContain('.dossier-submit-action');
     expect(css).toContain('justify-self: start;');

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1420 — Dossier upload selector start met één compacte routekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De onderliggende uploadformulieren zijn rustiger gemaakt, maar de selector kan nog als een druk routeblok voelen wanneer document, consult, embryokwaliteit, embryostatus en review tegelijk zichtbaar zijn.
+- **User Impact:** Gebruikers moeten bij het openen van dossierupload alsnog meerdere routekaarten tegelijk scannen voordat zij aan één taak beginnen.
+- **Desired Outcome:** Laat de dossier-uploadselector eerst openen met één compacte primaire routekeuze of samengevouwen routegroep, terwijl alle subroutes direct bereikbaar blijven.
+- **User Value:** Gebruikers kiezen sneller één uploadtaak zonder dat de routekeuze zelf opnieuw als een brede pagina voelt.
+- **Acceptance Criteria:** Bestaande routehashes, route buttons, active-state hooks en dossier upload hooks blijven aanwezig; de eerste uploadselectorlaag toont één compacte primaire routekeuze of samengevouwen routegroep; document, consult, embryokwaliteit, embryostatus en review blijven direct bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken routebereik, active state en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier upload selector, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2786
+
 ### G1419 — Embryostatus route start met één statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, embryo status form, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2784
 
 ### G1418 — Embryokwaliteit: afronding start met één bewaarkeuze

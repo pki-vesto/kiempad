@@ -1224,6 +1224,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   assessment and linking choice before date, score, source and context fields appear.
   Partial G1418/#2782: The embryo quality completion area now starts with one save action and a
   closed save-status disclosure before submit feedback and recovery context appear.
+  Partial G1419/#2784: Embryo status now starts with one closed statusmoment choice before date,
+  embryo, source, linking, submit feedback and recovery context appear.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
