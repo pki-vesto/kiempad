@@ -1471,6 +1471,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover secondary to the primary action label.
   Partial G1539/#3022: The knowledge library empty-state recovery actions now keep mobile
   badge hover text calm with explicit contrast and weight ceilings.
+  Partial G1540/#3024: The knowledge library empty-state recovery actions now keep mobile
+  badge hover border calm with an explicit border emphasis ceiling.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

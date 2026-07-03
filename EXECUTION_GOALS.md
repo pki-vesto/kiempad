@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1541 — Kennis bibliotheek herstelactie badges houden mobiele badgehover achtergrond rustig
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1540 blijft badgehoverrand rustig, maar de badgehoverachtergrond is nog niet apart bewaakt tegen te veel visuele nadruk op kleine schermen.
+- **User Impact:** Gebruikers kunnen op kleine schermen alsnog een te nadrukkelijke hoverachtergrond zien die afleidt van primaire actielabels of focusfeedback.
+- **Desired Outcome:** Mobiele herstelbadges tonen een subtiele hoverachtergrond die statusfeedback geeft zonder het primaire actielabel of focusstate te domineren.
+- **User Value:** Gebruikers krijgen rustige pointerfeedback met duidelijke hiërarchie tussen label, hoverachtergrond en focusbadge.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgehoverachtergrond blijft rustig op mobiel; badgehoverrand blijft rustig op mobiel; badgehovertekst blijft rustig op mobiel; badgehover blijft secundair op mobiel; badgefocus blijft visueel sterker dan badgehover op mobiel; mobiele badgecascade-dekking blijft compleet; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact en getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgehoverachtergrond en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3026
+
 ### G1540 — Kennis bibliotheek herstelactie badges houden mobiele badgehover rand rustig
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3024
 
 ### G1539 — Kennis bibliotheek herstelactie badges houden mobiele badgehover tekst rustig
