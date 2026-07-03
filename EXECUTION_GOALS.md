@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1455 — Kennis bibliotheek routekop start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1454 blijft de kennis bibliotheek routekop gevoelig voor routecontext, categoriekeuzeanker, vervolgcontextanker en zichtbaarheidsstatus tegelijk.
+- **User Impact:** Gebruikers die de bibliotheekroute openen, krijgen nog meerdere route- en statussignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis bibliotheek routekop starten met één compacte statuskeuze of samengevouwen sublaag, terwijl routecontext, categoriekeuzeanker, vervolgcontextanker en zichtbaarheidsstatus bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één bibliotheekstatus lezen zonder dat routekop, ankers en statuscopy de werkruimte domineren.
+- **Acceptance Criteria:** Bestaande kennis bibliotheek routehooks, routehashes, categoriekeuzeanker, vervolgcontextanker en zichtbaarheidsstatus blijven aanwezig; de bibliotheekroutekop start met één compacte statuskeuze of samengevouwen sublaag; routecontext, categoriekeuzeanker, vervolgcontextanker en zichtbaarheidsstatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library route summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2854
+
 ### G1454 — Kennis bibliotheek categoriekaarten starten met één compacte categoriekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library category choice, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2852
 
 ### G1453 — Kennis AI routekop start met één compacte statuskeuze

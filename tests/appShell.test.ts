@@ -38489,6 +38489,9 @@ describe('app shell', () => {
     expect(html).toContain('href="#knowledge-library-followup"');
     expect(html).toContain('id="knowledge-library-category-choice"');
     expect(html).toContain('data-knowledge-library-category-choice="ready"');
+    expect(html).toContain('data-knowledge-library-category-card-choice="collapsed"');
+    expect(html).toContain('Categoriekaarten openen');
+    expect(html).toContain('Open categoriekaarten, tellingen, routeankers en bibliotheekvervolg.');
     expect(html).toContain('Kies eerst één kennisgroep');
     expect(html).toContain('data-knowledge-library-category-card="fasen"');
     expect(html).toContain('data-knowledge-library-category-card="research"');
@@ -38499,6 +38502,9 @@ describe('app shell', () => {
     expect(html).toContain('Kies bibliotheekcontext');
     expect(html).toContain('Open daarna categorieën, kaarten en bewerkacties');
     expect(html.indexOf('data-knowledge-library-category-choice="ready"')).toBeLessThan(
+      html.indexOf('data-knowledge-library-category-card="fasen"'),
+    );
+    expect(html.indexOf('data-knowledge-library-category-card-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-library-followup="collapsed"'),
     );
     expect(html.indexOf('data-knowledge-library-followup="collapsed"')).toBeLessThan(
@@ -38508,6 +38514,9 @@ describe('app shell', () => {
       html.indexOf('id="knowledge-library-panel"'),
     );
     expect(html).not.toContain('<details id="knowledge-library-followup" open');
+    expect(html).not.toContain(
+      '<details id="knowledge-library-category-choice" class="knowledge-library-category-choice" aria-label="Kennisbibliotheek categoriekeuze" data-knowledge-library-category-choice="ready" data-knowledge-library-category-card-choice="collapsed" open>',
+    );
     expect(html).not.toContain(
       '<details class="knowledge-library-context-choice" data-knowledge-library-context-choice="collapsed" open>',
     );
@@ -38738,6 +38747,11 @@ describe('app shell', () => {
     expect(css).toContain('@media (max-width: 960px) {');
     expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('.knowledge-library-category-choice {');
+    expect(css).toContain('.knowledge-library-category-choice__summary {');
+    expect(css).toContain('.knowledge-library-category-choice__body {');
+    expect(css).toContain(
+      '.knowledge-library-category-choice:not([open]) > .knowledge-library-category-choice__body {',
+    );
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
     expect(css).toContain('.knowledge-library-category-choice__card {');
