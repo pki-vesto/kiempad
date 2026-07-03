@@ -39276,6 +39276,9 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__label {\n    color: color-mix(in srgb, var(--category) 76%, var(--text));\n    font-weight: 860;\n  }',
     );
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:hover\n    .knowledge-library-empty-recovery-choice__label {\n    font-weight: 850;\n  }',
+    );
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
     expect(css).toContain('background: color-mix(in srgb, var(--category) 4%, var(--surface));');

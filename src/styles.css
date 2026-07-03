@@ -23905,6 +23905,12 @@ a.action-card:active {
     font-weight: 860;
   }
 
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:hover
+    .knowledge-library-empty-recovery-choice__label {
+    font-weight: 850;
+  }
+
   .knowledge-library-empty-recovery-choice__feedback {
     display: inline-flex;
     align-items: center;
