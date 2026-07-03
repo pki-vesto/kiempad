@@ -39370,6 +39370,12 @@ describe('app shell', () => {
       hoverBadgeFeedbackMinimumBelowResponsiveInlineSize,
       hoverBadgeFeedbackMinimumBelowResponsiveFlexBasis,
     ];
+    const hoverBadgeFeedbackResponsiveCompactContract = [
+      hoverBadgeFeedbackResponsiveFlexBasis,
+      hoverBadgeFeedbackResponsiveInlineSize,
+      hoverBadgeFeedbackResponsiveMaxWidth,
+      hoverBadgeFeedbackReadableMinWidth,
+    ];
     const hoverBadgeFeedbackFlexContractOrder = [
       hoverBadgeFeedbackFlexGrow,
       hoverBadgeFeedbackFlexShrink,
@@ -39410,6 +39416,12 @@ describe('app shell', () => {
     expect(hoverBadgeFeedbackMinimumBelowResponsiveInlineSize).toBe(true);
     expect(hoverBadgeFeedbackMinimumBelowResponsiveFlexBasis).toBe(true);
     expect(hoverBadgeFeedbackMinimumRelationsComplete).toEqual([true, true, true, true]);
+    expect(hoverBadgeFeedbackResponsiveCompactContract).toEqual([
+      'min(12ch, 38%)',
+      'min(12ch, 38%)',
+      'min(12ch, 38%)',
+      '7ch',
+    ]);
     expect(css).toContain(`min-width: ${hoverBadgeFeedbackReadableMinWidth};`);
     expect(css).toContain(hoverBadgeFeedbackFlexContract);
     expect(hoverBadgeFeedbackFlexBasisCh).toBe(hoverBadgeFeedbackWidthCh);
