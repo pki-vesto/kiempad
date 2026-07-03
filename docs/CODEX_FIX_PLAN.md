@@ -1373,6 +1373,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   compact action order: clear filter, choose category, then add knowledge.
   Partial G1490/#2924: The knowledge library empty-state recovery actions now include compact
   route feedback for library, category and add-knowledge actions.
+  Partial G1491/#2926: The knowledge library empty-state recovery feedback now uses short
+  destination microcopy with a guarded maximum label length.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
