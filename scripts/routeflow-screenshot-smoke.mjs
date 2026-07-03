@@ -635,6 +635,8 @@ const targets = [
     presentSelectors: [
       '#dossier-search-form',
       '[data-dossier-search-kit="ready"]',
+      '[data-dossier-search-result-choice="collapsed"]',
+      '[data-dossier-search-result-summary="ready"]',
       '[data-dossier-secondary-privacy="collapsed"]',
       '#dossier-route-index-disclosure',
       '[data-dossier-search-console-region="results"]',
@@ -644,6 +646,7 @@ const targets = [
     closedDetailsSelectors: [
       '[data-dossier-search-choice="collapsed"]',
       '[data-dossier-search-support="collapsed"]',
+      '[data-dossier-search-result-choice="collapsed"]',
     ],
     dossierConsole: true,
     desktopHiddenSelectors: [

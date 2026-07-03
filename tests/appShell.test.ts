@@ -8538,6 +8538,16 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-search-choice:not([open]) > .dossier-search-choice__body {');
     expect(css).toContain('.dossier-search-support {');
     expect(css).toContain('.dossier-search-support__body {');
+    expect(css).toContain('.dossier-search-result-choice {');
+    expect(css).toContain('.dossier-search-result-choice__summary {');
+    expect(css).toContain('.dossier-search-result-choice__summary::after {');
+    expect(css).toContain(
+      '.dossier-search-result-choice[open] > .dossier-search-result-choice__summary::after',
+    );
+    expect(css).toContain('.dossier-search-result-choice__body {');
+    expect(css).toContain(
+      '.dossier-search-result-choice:not([open]) > .dossier-search-result-choice__body {',
+    );
     expect(css).toContain('"results results"');
     expect(css).toContain('.dossier-search-console__panel {');
     expect(css).toContain('[data-dossier-search-console-region="results"]');
@@ -9548,6 +9558,10 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-search-followup="collapsed"');
     expect(emptyHtml).toContain('Vervolgcontext openen');
     expect(emptyHtml).toContain('Resultaten, privacycontrole en inhoudsindex');
+    expect(emptyHtml).toContain('data-dossier-search-result-choice="collapsed"');
+    expect(emptyHtml).toContain('data-dossier-search-result-summary="ready"');
+    expect(emptyHtml).toContain('Kies zoekcontext');
+    expect(emptyHtml).toContain('Resultaten, privacycontrole of inhoudsindex');
     expect(emptyHtml).toContain('Dossier zoeken zonder alles te openen');
     expect(emptyHtml).toContain('Eén zoekcontrole');
     expect(emptyHtml).toContain('data-dossier-search-console-region="results"');
@@ -9564,6 +9578,9 @@ describe('app shell', () => {
     expect(emptyHtml).not.toContain(
       '<details class="dossier-search-choice" data-dossier-search-choice="collapsed" open>',
     );
+    expect(emptyHtml).not.toContain(
+      '<details class="dossier-search-result-choice" data-dossier-search-result-choice="collapsed" open>',
+    );
     expect(emptyHtml).toContain('href="#dossier?route=search">Wis zoekterm</a>');
     expect(emptyHtml).toContain('Privacy en toegankelijkheid');
     expect(emptyHtml).toContain('Inhoudsindex');
@@ -9576,6 +9593,9 @@ describe('app shell', () => {
       emptyHtml.indexOf('data-dossier-search-support="collapsed"'),
     );
     expect(emptyHtml.indexOf('data-dossier-search-support="collapsed"')).toBeLessThan(
+      emptyHtml.indexOf('data-dossier-search-result-choice="collapsed"'),
+    );
+    expect(emptyHtml.indexOf('data-dossier-search-result-choice="collapsed"')).toBeLessThan(
       emptyHtml.indexOf('data-dossier-search-console-region="results"'),
     );
     expect(emptyHtml.indexOf('data-dossier-search-console-region="results"')).toBeLessThan(

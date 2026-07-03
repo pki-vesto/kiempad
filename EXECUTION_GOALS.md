@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1431 — Dossier tijdlijnroute start met één compacte tijdlijnkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1430 is de zoekroute rustiger, maar de tijdlijnroute kan nog gebeurtenissen, behandelcontext, aanbevelingen en onderzoeksinzichten tegelijk tonen.
+- **User Impact:** Gebruikers die hun fertiliteitstraject willen begrijpen, moeten alsnog meerdere tijdlijncontexten tegelijk scannen.
+- **Desired Outcome:** Laat de dossier tijdlijnroute starten met één compacte tijdlijnkeuze of samengevouwen startlaag, terwijl onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en onderzoeksinzichten bereikbaar blijven.
+- **User Value:** Gebruikers kunnen hun traject stap voor stap openen zonder dat de tijdlijn als brede informatiepagina start.
+- **Acceptance Criteria:** Bestaande tijdlijnroute hooks, routehashes en tijdlijnitems blijven aanwezig; de tijdlijnroute start met één compacte tijdlijnkeuze of samengevouwen startlaag; onderzoeken, consulten, behandelingen, embryo's, aanbevelingen en onderzoeksinzichten blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Fertility Timeline
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier timeline route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2806
+
 ### G1430 — Dossier zoekroute vervolgcontext start met één compacte resultaatkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier search follow-up, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2804
 
 ### G1429 — Dossier zoekroute start met één compacte zoekkeuze
