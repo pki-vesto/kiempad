@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1364 — Daily Recommendations: resetmelding sluit rustig zonder filterwijziging
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding is compact en high-contrast bestendig, maar gebruikers kunnen de melding nog niet lokaal sluiten zonder route- of filterstatus te veranderen.
+- **User Impact:** Gebruikers kunnen een afgehandelde resetbevestiging langer in beeld houden dan nodig, wat scanrust op Dagadvies vermindert.
+- **Desired Outcome:** Voeg een compacte sluitactie toe voor de reset-routefocusmelding zonder hash, feedbackfilter, tracking of medische interpretatie te wijzigen.
+- **User Value:** Gebruikers houden controle over tijdelijke feedback zonder hun Dagadviesroute kwijt te raken.
+- **Acceptance Criteria:** De reset-routefocusmelding kan lokaal gesloten worden zonder hash/route te wijzigen; sluiten verandert geen feedbackfilter en herstelt geen medische of trackingdata; de sluitactie is compact, toegankelijk gelabeld en veroorzaakt geen overflow op mobiel/desktop; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2674
+
 ### G1363 — Daily Recommendations: resetmelding ondersteunt forced-colors scanstijl
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, accessibility, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2672
 
 ### G1362 — Daily Recommendations: resetmelding heeft compacte scanstijl

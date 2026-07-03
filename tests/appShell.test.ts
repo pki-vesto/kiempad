@@ -3192,6 +3192,9 @@ describe('app shell', () => {
     expect(css).toContain('background: color-mix(in srgb, var(--accent) 10%, var(--surface));');
     expect(css).toContain('font-size: 0.82rem;');
     expect(css).toContain('overflow-wrap: anywhere;');
+    expect(css).toContain('border-left-color: Highlight;');
+    expect(css).toContain('color: CanvasText;');
+    expect(css).toContain('outline: 1px solid ButtonText;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(
