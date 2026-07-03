@@ -4115,6 +4115,15 @@ function renderDossierScreen(state: AppShellState): string {
               <span>${zoekterm ? `${zoekResultaten.length} resultaten` : `${zichtbareDocumenten.length} records`}</span>
             </header>
         <div class="dossier-search-primary-control" data-dossier-search-primary-control="ready">
+        <details class="dossier-search-choice" data-dossier-search-choice="collapsed">
+          <summary class="dossier-search-choice__summary" data-dossier-search-choice-summary="ready">
+            <span>
+              <small>Zoekopdracht</small>
+              <strong>Zoeken zonder broninhoud te openen</strong>
+            </span>
+            <em>${zoekterm ? `${zoekResultaten.length} gevonden` : 'Niet actief'}</em>
+          </summary>
+          <div class="dossier-search-choice__body">
         <form id="dossier-search-form" class="data-form dossier-search-kit" data-dossier-search-kit="ready" data-dossier-search-kit-state="${zoekterm ? (zoekResultaten.length > 0 ? 'active-matches' : 'active-empty') : 'idle'}">
           <header class="dossier-search-kit__header">
             <div>
@@ -4141,6 +4150,8 @@ function renderDossierScreen(state: AppShellState): string {
           </div>
         </form>
         <p class="small-print">Zoeken gebruikt alleen de ${beschrijfOntgrendeldeDataset(state)}. Resultaatcontext, privacycontrole en inhoudsindex blijven gesloten tot je ze opent.</p>
+          </div>
+        </details>
         </div>
           </section>
           <details id="dossier-search-followup" class="kp-disclosure dossier-search-support" data-dossier-search-support="collapsed" data-dossier-search-followup="collapsed">

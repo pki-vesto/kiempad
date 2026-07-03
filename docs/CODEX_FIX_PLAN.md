@@ -1242,6 +1242,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   while review queue, inbox and storage context remain reachable.
   Partial G1428/#2800: The dossier review follow-up now starts with one closed compact context
   choice while queue, import inbox and duplicate context remain reachable.
+  Partial G1429/#2802: The dossier search route now starts with one closed compact search choice
+  while the search form, OCR/notes query and follow-up context remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
