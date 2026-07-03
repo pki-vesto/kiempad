@@ -3454,27 +3454,33 @@ function renderDossierScreen(state: AppShellState): string {
               <span>Koppelingen</span>
               <small>Afspraak, traject of notitie toevoegen</small>
             </summary>
-            <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
-              <legend>Koppelingen</legend>
-            <label>
-              Koppel aan afspraak
-              <select name="afspraakId">
-                <option value="">Geen afspraak</option>
-                ${afspraakOpties}
-              </select>
-            </label>
-            <label>
-              Koppel aan traject
-              <select name="trajectId">
-                <option value="">Geen traject</option>
-                ${trajectOpties}
-              </select>
-            </label>
-            <label>
-              Notitie
-              <textarea name="notitie" rows="4"></textarea>
-            </label>
-            </fieldset>
+            <details class="dossier-upload-optional dossier-upload-link-fields" data-dossier-upload-link-fields="collapsed">
+              <summary class="dossier-upload-optional__summary">
+                <span>Koppelvelden openen</span>
+                <small>Afspraak, traject en notitie</small>
+              </summary>
+              <fieldset class="dossier-upload-group" data-dossier-upload-group="koppelingen" data-dossier-context-priority="optional" data-dossier-field-section="document-koppelingen" data-dossier-field-section-label="Stap 3 · koppelen">
+                <legend>Koppelingen</legend>
+              <label>
+                Koppel aan afspraak
+                <select name="afspraakId">
+                  <option value="">Geen afspraak</option>
+                  ${afspraakOpties}
+                </select>
+              </label>
+              <label>
+                Koppel aan traject
+                <select name="trajectId">
+                  <option value="">Geen traject</option>
+                  ${trajectOpties}
+                </select>
+              </label>
+              <label>
+                Notitie
+                <textarea name="notitie" rows="4"></textarea>
+              </label>
+              </fieldset>
+            </details>
           </details>
           <details class="dossier-upload-optional" data-dossier-upload-optional="beeldcontext">
             <summary class="dossier-upload-optional__summary">
