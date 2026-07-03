@@ -8354,6 +8354,131 @@ h2 {
   gap: 12px;
 }
 
+.knowledge-library-followup-visibility-choice {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--category) 10%, transparent), transparent 48%),
+    color-mix(in srgb, var(--surface) 94%, var(--surface-2));
+}
+
+.knowledge-library-followup-visibility-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 58px;
+  padding: 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.knowledge-library-followup-visibility-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-library-followup-visibility-choice__summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 999px;
+  color: var(--category);
+  font-size: 1rem;
+  font-weight: 850;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.knowledge-library-followup-visibility-choice[open]
+  > .knowledge-library-followup-visibility-choice__summary::after {
+  content: "-";
+}
+
+.knowledge-library-followup-visibility-choice__summary span,
+.knowledge-library-followup-visibility-choice__summary small,
+.knowledge-library-followup-visibility-choice__summary strong,
+.knowledge-library-followup-visibility-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-library-followup-visibility-choice__summary span {
+  display: grid;
+  gap: 2px;
+}
+
+.knowledge-library-followup-visibility-choice__summary small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.knowledge-library-followup-visibility-choice__summary strong {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.knowledge-library-followup-visibility-choice__summary em {
+  justify-self: end;
+  color: var(--category);
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.knowledge-library-followup-visibility-choice__body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 14px 14px;
+}
+
+.knowledge-library-followup-visibility-choice:not([open])
+  > .knowledge-library-followup-visibility-choice__body {
+  display: none;
+}
+
+.knowledge-library-followup-visibility-choice__anchor,
+.knowledge-library-followup-visibility-choice__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  max-width: 100%;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--category);
+  font-size: 0.76rem;
+  font-weight: 850;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-decoration: none;
+}
+
+.knowledge-library-followup-visibility-choice__anchor:hover,
+.knowledge-library-followup-visibility-choice__anchor:focus-visible {
+  border-color: color-mix(in srgb, var(--category) 36%, var(--border-strong));
+  background: color-mix(in srgb, var(--category) 7%, var(--surface));
+}
+
+.knowledge-library-followup-visibility-choice__anchor--secondary,
+.knowledge-library-followup-visibility-choice__status {
+  color: var(--text-muted);
+}
+
 .knowledge-library-context-choice {
   display: grid;
   gap: 0;
@@ -23485,6 +23610,20 @@ a.action-card:active {
   .knowledge-library-category-choice__header span,
   .knowledge-library-followup__summary em {
     justify-self: start;
+  }
+
+  .knowledge-library-followup-visibility-choice__summary {
+    grid-template-columns: minmax(0, 1fr) 28px;
+  }
+
+  .knowledge-library-followup-visibility-choice__summary em {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .knowledge-library-followup-visibility-choice__body {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .knowledge-library-category-choice__grid {
