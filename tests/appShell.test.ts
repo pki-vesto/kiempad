@@ -38283,6 +38283,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-followup-visibility-empty-state="ready"');
     expect(html).toContain('Pas filter of categorie aan; context en ankers blijven beschikbaar.');
     expect(html).toContain('data-knowledge-library-empty-recovery="ready"');
+    expect(html).toContain('data-knowledge-library-empty-recovery-choice="collapsed"');
+    expect(html).toContain('Herstelactie kiezen');
+    expect(html).toContain('Filter wissen, categorie kiezen of kennis toevoegen.');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="clear-filter"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="category"');
     expect(html).toContain('data-knowledge-library-empty-recovery-action="add"');
@@ -38295,6 +38298,9 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-library-panel"');
     expect(html).toContain('data-knowledge-category="ready"');
     expect(html).not.toContain('data-knowledge-library-followup-visibility-status="visible"');
+    expect(html).not.toContain(
+      '<details class="knowledge-library-empty-recovery-choice" data-knowledge-library-empty-recovery-choice="collapsed" data-knowledge-library-empty-recovery="ready" open>',
+    );
     expect(visibilitySummary).not.toContain('tracking-payload');
     expect(visibilitySummary).not.toContain('providerpayload');
     expect(visibilitySummary).not.toContain('behandeladvies');
@@ -38780,6 +38786,7 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-library-followup-visibility-status="visible"');
     expect(html).not.toContain('data-knowledge-library-followup-visibility-empty-state="ready"');
     expect(html).not.toContain('data-knowledge-library-empty-recovery="ready"');
+    expect(html).not.toContain('data-knowledge-library-empty-recovery-choice="collapsed"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="list"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="cards"');
@@ -39142,7 +39149,10 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-followup-visibility-choice__body {');
     expect(css).toContain('.knowledge-library-followup-visibility-choice:not([open])');
     expect(css).toContain('.knowledge-library-followup-visibility-choice__empty');
-    expect(css).toContain('.knowledge-library-followup-visibility-choice__recovery');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice {');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice__summary {');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice__body {');
+    expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
     expect(css).toContain('.knowledge-library-category-choice__card {');
