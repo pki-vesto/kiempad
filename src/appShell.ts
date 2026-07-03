@@ -12866,11 +12866,20 @@ function renderKennisScreen(state: AppShellState): string {
                       ${renderAiSummaryForm(state.aiPreview)}
                     </div>
                   </details>
-                  <div class="summary-panel" data-knowledge-ai-console-region="settings">
-                    <h2>AI-instelling</h2>
-                    ${renderAiSettingsForm(state.settings, state.storageMode)}
-                    ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
-                  </div>
+                  <details class="summary-panel knowledge-ai-settings-choice" data-knowledge-ai-console-region="settings" data-knowledge-ai-settings-choice="collapsed">
+                    <summary class="knowledge-ai-settings-choice__summary">
+                      <span>
+                        <strong>AI-instellingen openen</strong>
+                        <small>Open opt-in, opslagmodus, on-device status en bewaaractie.</small>
+                      </span>
+                      <em>${state.settings.ai.ingeschakeld ? 'AI aan' : 'AI uit'}</em>
+                    </summary>
+                    <div class="knowledge-ai-settings-choice__body">
+                      <h2>AI-instelling</h2>
+                      ${renderAiSettingsForm(state.settings, state.storageMode)}
+                      ${renderOnDeviceAiStatus(detecteerOnDeviceAiCapabilities())}
+                    </div>
+                  </details>
                   <div class="summary-panel" data-knowledge-ai-console-region="research-network">
                     ${renderResearchNetworkSettingsForm(state.settings)}
                     ${renderResearchAggregatiePlan(researchAggregatie)}

@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1250 |
+| ☑ klaar | 1251 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1449** |
+| **Totaal** | **1450** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1611,13 +1611,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1447 | Kennis bibliotheeklijst start met één compacte lijstkeuze | P1 | F5 | ☑ |
 | G1448 | Kennis bibliotheekkaartdetails starten met één compacte detailkeuze | P1 | F5 | ☑ |
 | G1449 | Kennis AI samenvattingdetails starten met één compacte detailkeuze | P1 | F5 | ☑ |
-| G1450 | Kennis AI instellingen starten met één compacte instellingkeuze | P1 | F5 | ☐ |
+| G1450 | Kennis AI instellingen starten met één compacte instellingkeuze | P1 | F5 | ☑ |
+| G1451 | Kennis AI researchnetwerk start met één compacte netwerkkeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1449** (id's G001 t/m G1450; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1450** (id's G001 t/m G1451; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

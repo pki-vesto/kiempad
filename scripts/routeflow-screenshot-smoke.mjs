@@ -374,6 +374,30 @@ const targets = [
     closedDetailsSelectors: ['[data-knowledge-ai-summary-detail-choice="collapsed"]'],
   },
   {
+    screen: 'knowledge-ai-settings',
+    hash: '#kennis?route=ai',
+    rootSelector: '.content',
+    expectedText: 'AI-instellingen openen',
+    openSelectors: [
+      '[data-knowledge-ai-support="collapsed"]',
+      '[data-knowledge-ai-support-context-choice="collapsed"]',
+    ],
+    requiredSelectors: [
+      '[data-knowledge-ai-settings-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '[data-knowledge-ai-console-region="settings"]',
+      '#ai-settings-form',
+      'select[name="aiIngeschakeld"]',
+      'input[name="aiProvider"]',
+      'input[name="aiModel"]',
+      'input[name="aiApiKey"]',
+      '#ai-settings-form button[type="submit"]',
+      '[data-on-device-ai-state]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-ai-settings-choice="collapsed"]'],
+  },
+  {
     screen: 'start-today-console',
     hash: '#start-today',
     rootSelector: '[data-start-today-route="ready"]',

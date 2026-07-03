@@ -1284,6 +1284,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   detail choice while content, source, badges and actions remain reachable.
   Partial G1449/#2842: The knowledge AI summary details now start with one closed compact
   detail choice while summary, source context, status and save action remain reachable.
+  Partial G1450/#2844: The knowledge AI settings now start with one closed compact
+  settings choice while opt-in status, storage mode, on-device status and save action remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
