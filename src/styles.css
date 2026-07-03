@@ -14237,6 +14237,28 @@ a.action-card:active {
     opacity: 1;
   }
 
+  @media (max-width: 480px) {
+    [data-daily-recommendation-reset-route-focus="ready"] {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+      outline-offset: 0;
+    }
+
+    [data-daily-recommendation-reset-route-focus="ready"]:focus-visible {
+      outline-offset: 1px;
+    }
+
+    .daily-recommendation-reset-route-focus__help {
+      max-width: none;
+    }
+
+    .daily-recommendation-reset-route-focus__close {
+      justify-self: start;
+      max-width: 100%;
+      outline-offset: 1px;
+    }
+  }
+
   #dossier-upload-form,
   #consult-verslag-form,
   #embryo-quality-form,

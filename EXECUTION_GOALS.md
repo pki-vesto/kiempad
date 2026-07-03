@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1377 — Daily Recommendations: resetmelding bewaakt forced-colors focuscopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft een smalle high-contrast layoutguard voor helptekst en Verberg-knop, maar focuscopy en focusstatus bij opnieuw focussen hebben nog geen aparte guard.
+- **User Impact:** High-contrast gebruikers kunnen minder duidelijk zien waar focus staat wanneer zij terugkeren naar de resetmelding.
+- **Desired Outcome:** Borg dat de resetmelding in forced-colors duidelijk blijft communiceren waar focus staat zonder extra medische of trackinginformatie.
+- **User Value:** De resetfeedback blijft begrijpelijk en toegankelijk wanneer focus opnieuw op de melding of lokale Verberg-actie komt.
+- **Acceptance Criteria:** Forced-colors focuscopy en focusstatus blijven duidelijk op desktop en mobiel; de focuscopy veroorzaakt geen layout shift, overlap of horizontale scroll; de focusguard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, forced-colors CSS, copy tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2700
+
 ### G1376 — Daily Recommendations: resetmelding bewaakt helptekst in forced-colors mobiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, forced-colors CSS, responsive CSS
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2698
 
 ### G1375 — Daily Recommendations: resetmelding bewaakt helptekst op smalle schermen

@@ -190,6 +190,9 @@
 - **Daily advice feedback reset route-focus mobile helper layout — done in G1468 / issue #2696.**
   On narrow screens the reset status, helper copy, and local hide action now stack cleanly so the
   Verberg control stays tap-friendly without horizontal overflow.
+- **Daily advice feedback reset route-focus forced-colors mobile helper layout — done in G1469 / issue #2698.**
+  Narrow high-contrast screens now keep the reset helper, focus outline, and local hide action in a
+  single-column layout with explicit system-color contrast and compact focus offsets.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
