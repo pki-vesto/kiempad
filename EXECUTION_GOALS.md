@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1370 — Daily Recommendations: resetmelding toont rustige hover op mobiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft rustige focusovergangen, maar hover/pointerfeedback op touch- en smalle schermen is nog niet apart geborgd.
+- **User Impact:** Mobiele gebruikers kunnen onnodig drukke interactiestates ervaren bij een tijdelijke resetbevestiging.
+- **Desired Outcome:** Borg een rustige mobiele hover/pointerstijl voor de resetmelding en Verberg-knop zonder layout shift of overflow.
+- **User Value:** De tijdelijke resetfeedback blijft duidelijk, compact en aanraakbaar.
+- **Acceptance Criteria:** Hover/pointerstijl blijft compact op smalle schermen; touchdoelen blijven bruikbaar zonder horizontale overflow; de interactiestijl verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, mobile CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2686
+
 ### G1369 — Daily Recommendations: resetmelding gebruikt rustige focusanimatie
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, motion CSS, accessibility
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2684
 
 ### G1368 — Daily Recommendations: resetmelding gebruikt compacte focusafstand op mobiel

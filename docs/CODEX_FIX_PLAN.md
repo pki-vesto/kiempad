@@ -169,6 +169,9 @@
 - **Daily advice feedback reset route-focus mobile focus spacing — done in G1461 / issue #2682.**
   The reset confirmation now uses compact mobile focus offsets and routeflow viewport checks so the
   focused cue and local hide action stay inside narrow screens.
+- **Daily advice feedback reset route-focus calm focus motion — done in G1462 / issue #2684.**
+  The reset confirmation and local hide action now use subtle focus transitions and disable that
+  motion under prefers-reduced-motion to avoid visual jumps.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
