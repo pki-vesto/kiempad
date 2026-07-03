@@ -3154,6 +3154,13 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-primary-action-choice {');
     expect(css).toContain('.daily-advice-followup {');
     expect(css).toContain('.daily-advice-followup:not([open]) > .daily-advice-followup__body {');
+    expect(css).toContain('.daily-advice-workflow-choice {');
+    expect(css).toContain('.daily-advice-workflow-choice__route {');
+    expect(css).toContain('.daily-advice-workflow-details {');
+    expect(css).toContain('.daily-advice-workflow-details__body {');
+    expect(css).toContain(
+      '.daily-advice-workflow-details:not([open]) > .daily-advice-workflow-details__body {',
+    );
     expect(css).toContain('.daily-advice-list-choice {');
     expect(css).toContain('.daily-advice-list-choice__header {');
     expect(css).toContain('.daily-advice-full-list {');
@@ -3549,6 +3556,34 @@ describe('app shell', () => {
       emptyContextRecommendations.indexOf('data-daily-advice-action-planner="ready"'),
     ).toBeLessThan(
       emptyContextRecommendations.indexOf('data-daily-advice-workbench="owner-routes"'),
+    );
+    expect(emptyContextRecommendations).toContain('data-daily-advice-workflow-choice="ready"');
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-advice-workflow-choice-route="today"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-advice-workflow-choice-route="advice"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-advice-workflow-choice-route="questions"',
+    );
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-advice-workflow-choice-route="research"',
+    );
+    expect(emptyContextRecommendations).toContain('data-daily-advice-workflow-details="collapsed"');
+    expect(emptyContextRecommendations).toContain('Open volledige routekop');
+    expect(emptyContextRecommendations).not.toContain(
+      '<details class="kp-disclosure daily-advice-workflow-details" data-daily-advice-workflow-details="collapsed" open',
+    );
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-workflow-choice="ready"'),
+    ).toBeLessThan(
+      emptyContextRecommendations.indexOf('data-daily-advice-workflow-details="collapsed"'),
+    );
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-workflow-choice-route="today"'),
+    ).toBeLessThan(
+      emptyContextRecommendations.indexOf('data-hub-workflow="daily-recommendations"'),
     );
     expect(emptyContextRecommendations).toContain('Bekijk suggesties');
     expect(emptyContextRecommendations).toContain('data-daily-advice-list-choice="ready"');

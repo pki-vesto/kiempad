@@ -15188,7 +15188,19 @@ function renderDailyAdviceFocusShell(input: {
           </summary>
           <div class="kp-disclosure__body daily-advice-followup__body">
             <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow" data-daily-advice-console-region="workflow">
-              ${input.workflow}
+              ${renderDailyAdviceWorkflowChoice()}
+              <details class="kp-disclosure daily-advice-workflow-details" data-daily-advice-workflow-details="collapsed">
+                <summary class="kp-disclosure__summary daily-advice-workflow-details__summary">
+                  <span>
+                    <strong>Open volledige routekop</strong>
+                    <small>Vandaag, Dagadvies, Vragen en Research blijven als tabs beschikbaar wanneer je de volledige workflow nodig hebt.</small>
+                  </span>
+                  <em>Routes</em>
+                </summary>
+                <div class="kp-disclosure__body daily-advice-workflow-details__body">
+                  ${input.workflow}
+                </div>
+              </details>
             </div>
             <div class="daily-advice-focus-shell__workbench" data-daily-advice-focus-region="workbench" data-daily-advice-console-region="workbench">
               ${input.workbench}
@@ -15201,6 +15213,55 @@ function renderDailyAdviceFocusShell(input: {
         </details>
       </div>
     </section>
+  `;
+}
+
+function renderDailyAdviceWorkflowChoice(): string {
+  const routes = [
+    {
+      id: 'today',
+      href: '#start-today',
+      label: 'Vandaag',
+      title: 'Taken scannen',
+      detail: 'Ga naar de dagplanning zonder de volledige adviescontext te openen.',
+    },
+    {
+      id: 'advice',
+      href: '#start-recommendations',
+      label: 'Dagadvies',
+      title: 'Adviesroute',
+      detail: 'Blijf bij de huidige actie-, eigenaar- en lijstkeuzes.',
+    },
+    {
+      id: 'questions',
+      href: '#vragen',
+      label: 'Vragen',
+      title: 'Artscheck',
+      detail: 'Zet bespreekpunten klaar voor consultvoorbereiding.',
+    },
+    {
+      id: 'research',
+      href: '#kennis',
+      label: 'Research',
+      title: 'Broncontext',
+      detail: 'Open researchcontext zonder medische conclusie of advies.',
+    },
+  ] as const;
+
+  return `
+    <nav class="daily-advice-workflow-choice" aria-label="Dagadvies route kiezen" data-daily-advice-workflow-choice="ready">
+      ${routes
+        .map(
+          (route) => `
+            <a class="daily-advice-workflow-choice__route" href="${route.href}" data-daily-advice-workflow-choice-route="${route.id}">
+              <span>${escapeHtml(route.label)}</span>
+              <strong>${escapeHtml(route.title)}</strong>
+              <small>${escapeHtml(route.detail)}</small>
+            </a>
+          `,
+        )
+        .join('')}
+    </nav>
   `;
 }
 
