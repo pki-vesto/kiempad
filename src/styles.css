@@ -10026,7 +10026,8 @@ h2 {
   font-size: 0.76rem;
   font-style: normal;
   font-weight: 850;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .knowledge-ai-summary-detail-choice__body {
@@ -10109,7 +10110,8 @@ h2 {
 
 .knowledge-ai-summary-save-choice__summary em {
   max-width: 132px;
-  overflow: hidden;
+  overflow: visible;
+  overflow-wrap: anywhere;
   padding: 5px 8px;
   border: 1px solid color-mix(in srgb, var(--category) 22%, var(--border));
   border-radius: var(--radius-pill);
@@ -10117,8 +10119,8 @@ h2 {
   font-size: 0.72rem;
   font-style: normal;
   font-weight: 850;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-overflow: initial;
+  white-space: normal;
 }
 
 .knowledge-ai-summary-save-choice__body {
@@ -13816,13 +13818,31 @@ h2 {
   .domain-split-workspace__context {
     max-height: min(860px, calc(100vh - 148px));
     overflow-y: auto;
+    border: 1px solid color-mix(in srgb, var(--border) 88%, var(--surface-2));
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--surface) 92%, var(--surface-raised));
     scrollbar-width: thin;
   }
 
   .domain-split-workspace__main,
   .domain-split-workspace__context {
-    padding-right: 4px;
+    padding: 10px;
     scrollbar-gutter: stable;
+  }
+
+  .domain-split-workspace__main {
+    border-color: color-mix(in srgb, var(--border) 84%, var(--accent));
+    box-shadow: 0 12px 28px rgba(21, 48, 44, 0.045);
+  }
+
+  .domain-split-workspace__context {
+    background: color-mix(in srgb, var(--surface-2) 68%, var(--surface));
+  }
+
+  .domain-split-workspace__main .knowledge-ai-summary-detail-choice__summary em {
+    justify-self: start;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -26269,6 +26289,8 @@ a.action-card:active {
   .knowledge-ai-summary-detail-choice__summary em {
     grid-column: 1;
     justify-self: start;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .knowledge-ai-settings-choice__summary {

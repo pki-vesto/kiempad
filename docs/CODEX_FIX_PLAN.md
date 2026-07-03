@@ -608,6 +608,9 @@
 - **Mobile route workspace panels — done in G1569 / issue #3082.** Mobile task workspaces now
   bound the active route and context areas as scrollable app panels below the route dock, reducing
   the long-page feel while keeping desktop/tablet split views and route hooks intact.
+- **Desktop route workspace panels — done in G1570 / issue #3084.** Desktop and tablet task
+  workspaces now bound the active route and context columns as calm scrollable app panels, so
+  route-first screens read less like one continuous page canvas.
 - **Daily suggestions on fertility timeline — done in G1424 / issue #819.** Daily suggestions now
   have a visible timeline lane, owner/status/source metadata, a dedicated show/hide filter, and
   concept review state derived from source review metadata while preserving the no-advice boundary.
@@ -1027,6 +1030,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   keeps the first-run checklist closed by default.
   Partial G1569/#3082: Shared mobile domain split workspaces now keep the route dock, active route,
   and context as bounded app panels with internal scrolling instead of one continuous long page.
+  Partial G1570/#3084: Shared desktop and tablet domain split workspaces now also bound the active
+  route and context columns as calm scrollable app panels.
 
 ### Screens (from Screen-by-Screen)
 - **CFX-020** — Timeline component adoption for Traject + Logboek (dot/line rail, amber current
