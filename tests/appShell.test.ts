@@ -38383,8 +38383,9 @@ describe('app shell', () => {
     );
     expect(html).toContain('id="knowledge-research-followup"');
     expect(html).toContain('data-knowledge-research-followup="collapsed"');
-    expect(html).toContain('Leescontext openen');
-    expect(html).toContain('Bronnen, samenvattingen, relevantie, relaties en trends');
+    expect(html).toContain('data-knowledge-research-followup-context-choice="collapsed"');
+    expect(html).toContain('Vervolgcontext kiezen');
+    expect(html).toContain('Open bronnen, samenvattingen, relevantie en trends.');
     expect(html).toContain('data-knowledge-research-context-choice="collapsed"');
     expect(html).toContain('Kies researchcontext');
     expect(html).toContain('Open daarna bronnen, samenvattingen of trendcontext');
@@ -38394,6 +38395,9 @@ describe('app shell', () => {
     expect(html.indexOf('data-knowledge-research-followup="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-context-choice="collapsed"'),
     );
+    expect(
+      html.indexOf('data-knowledge-research-followup-context-choice="collapsed"'),
+    ).toBeLessThan(html.indexOf('data-knowledge-research-disclosure="sources"'));
     expect(html.indexOf('data-knowledge-research-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
     );
@@ -38802,6 +38806,7 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-research-context-choice:not([open]) > .knowledge-research-context-choice__body {',
     );
+    expect(css).toContain('.knowledge-research-followup-context-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice__summary {');
     expect(css).toContain('.knowledge-research-route-status-choice__body {');

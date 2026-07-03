@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1461 — Kennis research nested contextkeuze start met één compacte detailkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1460 blijft de geneste research contextkeuze gevoelig voor bronnen, samenvattingen en trendcontext tegelijk.
+- **User Impact:** Gebruikers die researchdetails openen, krijgen nog meerdere detailroutes voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de geneste kennis research contextkeuze starten met één compacte detailkeuze of samengevouwen sublaag, terwijl bronnen, samenvattingen en trendcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één detailkeuze maken zonder dat alle researchdetailroutes tegelijk de contextlaag domineren.
+- **Acceptance Criteria:** Bestaande knowledge research context hooks, disclosure ids en routehashes blijven aanwezig; de geneste contextkeuze start met één compacte detailkeuze of samengevouwen sublaag; bronnen, samenvattingen en trendcontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research context choice, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2866
+
 ### G1460 — Kennis research vervolgcontext start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research followup, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2864
 
 ### G1459 — Kennis research leeslaag start met één compacte laankeuze
