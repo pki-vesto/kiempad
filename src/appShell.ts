@@ -14229,7 +14229,10 @@ function renderResearchItemForm(): string {
             Relevantie voor jullie dossiercontext
             <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
           </label>
-          <button type="submit">Bewaar research</button>
+          <div class="command-form-actions" data-knowledge-form-actions="research">
+            <button type="submit">Bewaar research</button>
+            <a class="form-cancel-link" href="#kennis?route=bibliotheek" data-form-cancel-action="knowledge-research">Annuleer</a>
+          </div>
         </form>
       </div>
     </details>
@@ -14584,7 +14587,10 @@ function renderPubMedQueryPreview(preview: PubMedQueryPreview): string {
             ${renderOption('concept_te_controleren', 'Concept te controleren', preview.reviewStatus)}
           </select>
         </label>
-        <button type="submit">Bewaar PubMed-previewcorrectie</button>
+        <div class="command-form-actions" data-knowledge-form-actions="pubmed-preview">
+          <button type="submit">Bewaar PubMed-previewcorrectie</button>
+          <a class="form-cancel-link" href="#kennis?route=research" data-form-cancel-action="knowledge-pubmed">Annuleer</a>
+        </div>
       </form>
       <p class="small-print">Uitgesloten context: ${preview.uitgeslotenContext.map(escapeHtml).join(' · ')}</p>
       <p class="small-print">Correctievelden: ${preview.correctieVelden.map(escapeHtml).join(' · ')}</p>
