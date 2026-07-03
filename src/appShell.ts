@@ -14708,7 +14708,7 @@ function renderDailyRecommendationRouteFocusStatus(status: string): string {
   return `
     <div class="status-message daily-recommendation-reset-route-focus" data-daily-recommendation-reset-route-focus="ready">
       <span role="status">${escapeHtml(status)}</span>
-      <button type="button" class="daily-recommendation-reset-route-focus__close" data-daily-recommendation-reset-route-focus-close="ready" aria-label="Sluit lokale resetmelding">Sluit</button>
+      <button type="button" class="daily-recommendation-reset-route-focus__close" data-daily-recommendation-reset-route-focus-close="ready" aria-label="Verberg lokale resetmelding">Verberg</button>
     </div>
   `;
 }

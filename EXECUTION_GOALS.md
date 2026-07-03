@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1366 — Daily Recommendations: resetmelding heeft toetsenbordfocus na nieuwe reset
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding kan gesloten en verborgen blijven bij her-renders, maar toetsenbordgebruikers krijgen na een reset nog geen expliciet voorspelbare focuscontext.
+- **User Impact:** Gebruikers die met toetsenbord of assistive tech werken kunnen na het wissen van een lokale feedbackfilter minder duidelijk zien waar de resetfeedback staat.
+- **Desired Outcome:** Geef resetacties een voorspelbare focuscontext zonder hash, filterstatus, tracking of medische data te wijzigen.
+- **User Value:** Toetsenbordgebruikers houden dezelfde rustige Dagadviesroute met duidelijkere navigatiefeedback.
+- **Acceptance Criteria:** Na een reset via workflow, lijstheader of filterformulier krijgt de gebruiker een voorspelbare focuscontext; de focuswijziging verandert geen hash, feedbackfilter, tracking of medische data; de resetmelding blijft compact en veroorzaakt geen mobiel/desktop overflow; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, accessibility, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2678
+
 ### G1365 — Daily Recommendations: resetmelding bewaart sluitstatus bij her-render
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2676
 
 ### G1364 — Daily Recommendations: resetmelding sluit rustig zonder filterwijziging

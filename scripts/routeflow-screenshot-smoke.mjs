@@ -1672,6 +1672,14 @@ async function assertDailyAdviceFeedbackNavigation(page) {
   await page
     .locator('[data-daily-recommendation-reset-route-focus="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });
+  await page.evaluate(() => {
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+  });
+  await waitForStableRouteflowRoot(page, '[data-daily-advice-focus-shell="ready"]');
+  await expectHash(page, '#start-recommendations');
+  await page
+    .locator('[data-daily-recommendation-reset-route-focus="ready"]')
+    .waitFor({ state: 'hidden', timeout: 10_000 });
   await page
     .locator('[data-daily-advice-feedback-workflow-status="ready"]')
     .waitFor({ state: 'hidden', timeout: 10_000 });

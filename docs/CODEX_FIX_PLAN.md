@@ -157,6 +157,9 @@
 - **Daily advice feedback reset route-focus close action — done in G1457 / issue #2674.** The
   routefocus confirmation now has a compact local close action that hides only the temporary reset
   cue without changing the hash, feedback filter, tracking state, or medical interpretation.
+- **Daily advice feedback reset route-focus close persistence — done in G1458 / issue #2676.**
+  The close action now keeps the reset cue hidden through harmless same-route re-renders while new
+  reset actions can show a fresh confirmation again.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
