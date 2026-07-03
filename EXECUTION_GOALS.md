@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1574 — Premium Claude Design UI houdt de algemene medische disclaimer korter
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De algemene disclaimer is langer dan nodig en komt op meerdere schermen terug.
+- **User Impact:** Herhaalde disclaimertekst draagt bij aan tekstmoeheid en maakt schermen minder rustig.
+- **Desired Outcome:** De globale disclaimer is één korte zin die de medische grens duidelijk houdt.
+- **User Value:** Gebruikers lezen sneller waar de grens ligt zonder telkens een lange waarschuwingsregel te scannen.
+- **Acceptance Criteria:** De gedeelde `DISCLAIMER` is korter en blijft expliciet niet-medisch; bestaande doseringswaarschuwing blijft zichtbaar; app-shell tests bewaken de nieuwe copy; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Start, Settings, Footer/disclaimer panel en alle schermen die `DISCLAIMER` tonen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** App-shell disclaimer copy, footer policy panel
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3092
+
 ### G1573 — Premium Claude Design UI houdt mobiele formulieracties compact en rustig
 
 - **Epic:** Onboarding & Daily Use
