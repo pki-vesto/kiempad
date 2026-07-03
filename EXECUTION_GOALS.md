@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1520 — Kennis bibliotheek herstelactie badges houden mobiele hovervlak licht
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1519 blijft het mobiele focusvlak consistent, maar het hovervlak zelf is nog niet apart bewaakt op een lichte, niet-dominante presentatie.
+- **User Impact:** Gebruikers kunnen de herstelactie alsnog als zwaar ervaren als hoverfeedback sterker wordt dan nodig.
+- **Desired Outcome:** Mobiele herstelacties behouden een licht hovervlak dat routefeedback geeft zonder badgecopy of actielabels te overheersen.
+- **User Value:** Gebruikers krijgen rustige feedback bij touch- en pointerinteractie zonder visuele sprongen.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; hovervlak blijft licht en niet-dominant op mobiel; focusvlak blijft licht en consistent op mobiel; focusbegrenzing blijft rustig op mobiel; focushalo blijft stabiel en zichtbaar; badgecopy blijft leesbaar en secundair tijdens focus; focuscontrast blijft rustig naast het primaire actielabel; badgecopy blijft zichtbaar gecentreerd tijdens focus; badge-inhoud blijft consistent gecentreerd in rust, hover en focus; badgeboxmaten blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiel hovervlak en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action hover/focus states, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2984
+
 ### G1519 — Kennis bibliotheek herstelactie badges houden mobiele focusvlak consistent
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action hover/focus states, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2982
 
 ### G1518 — Kennis bibliotheek herstelactie badges houden mobiele focusvlak licht

@@ -39255,6 +39255,9 @@ describe('app shell', () => {
     expect(css).toContain('text-align: center;');
     expect(css).toContain('white-space: nowrap;');
     expect(css).toContain('gap: 8px;');
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:hover {\n    background: color-mix(in srgb, var(--category) 4%, var(--surface));\n  }',
+    );
     expect(css).toContain('flex: 1 1 minmax(0, 62%);');
     expect(css).toContain('max-width: calc(100% - 76px);');
     expect(css).toContain('min-height: 44px;');
