@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1586 — Kosten formulier toont verplichte velden vooraf
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Het Kostenformulier had verplichte velden voor omschrijving, datum en bedrag, maar toonde nog geen compacte required-map vóór bewaren.
+- **User Impact:** Gebruikers zien pas laat welke kostenvelden nodig zijn als de browservalidatie ingrijpt.
+- **Desired Outcome:** Kosten toevoegen/bewerken toont vóór de actie-rij een required-map met de verplichte kostenvelden in `--clay-ink`.
+- **User Value:** Gebruikers kunnen de kostenpost sneller en rustiger invullen zonder te wachten op browserpopups.
+- **Acceptance Criteria:** Kostenformulier toont een required-map vóór de actie-rij; de map noemt Omschrijving, Datum en Bedrag; de map gebruikt gedeelde `.form-required-map` styling met clay-ink; app-shell tests bewaken markup en CSS-contract; routeflow smoke blijft desktop/tablet/mobile valideren; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kosten toevoegen, Kostenhistorie bewerken
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Kosten form, required map styling, finance form actions
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3116
+
 ### G1585 — Kennis formulieren tonen verplichte velden vooraf
 
 - **Epic:** Onboarding & Daily Use

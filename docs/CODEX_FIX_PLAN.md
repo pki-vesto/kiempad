@@ -1213,6 +1213,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   validation popups for collapsed required steps.
   Partial G1585/#3114: Kennis item, research, AI preview and AI summary forms now show compact
   required-field maps in `--clay-ink` before their action rows.
+  Partial G1586/#3116: Kosten add/edit forms now show a compact required-field map for
+  Omschrijving, Datum and Bedrag before the finance action row.
 - **CFX-030f** — Forms in a card with title + `✕` close, padding 20, radius 18 (C30). **P2 · M**
 
 ### Data / backend / seed
