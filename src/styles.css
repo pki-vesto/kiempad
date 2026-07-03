@@ -23928,6 +23928,9 @@ a.action-card:active {
     font-weight: 750;
     inline-size: min(12ch, 38%);
     max-width: min(12ch, 38%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .knowledge-library-category-choice__grid {

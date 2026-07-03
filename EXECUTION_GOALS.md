@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1526 — Kennis bibliotheek herstelactie badges houden mobiele hoverbadge breedte begrensd
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1525 blijft de mobiele hoverbadge rustig getrunceerd, maar de maximale badgebreedte tijdens hover is nog niet apart bewaakt tegen latere regressies.
+- **User Impact:** Gebruikers kunnen op kleine schermen alsnog labelruimte verliezen als de hoverbadge later breder wordt.
+- **Desired Outcome:** Mobiele herstelbadges houden tijdens hover een begrensde badgebreedte die labelruimte beschermt en horizontale overflow voorkomt.
+- **User Value:** Gebruikers houden scanbare herstelacties met voorspelbare secundaire feedback op kleine schermen.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; hoverbadgebreedte blijft begrensd op mobiel; hoverbadge truncatie blijft rustig op mobiel; hoverbadge blijft compact op mobiel; hoverbadgecopy blijft leesbaar op mobiel; badgeboxmaten blijven stabiel op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele hoverbadgebreedte en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2996
+
 ### G1525 — Kennis bibliotheek herstelactie badges houden mobiele hoverbadge truncatie rustig
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2994
 
 ### G1524 — Kennis bibliotheek herstelactie badges houden mobiele hoverbadge compact

@@ -1441,6 +1441,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   hover badge feedback readable while remaining below focus weight.
   Partial G1524/#2992: The knowledge library empty-state recovery badges now keep mobile
   hover badge feedback compact with explicit fixed badge sizing.
+  Partial G1525/#2994: The knowledge library empty-state recovery badges now keep mobile
+  hover badge truncation explicit and calm during hover.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
