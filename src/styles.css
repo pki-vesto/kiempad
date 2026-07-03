@@ -23883,6 +23883,8 @@ a.action-card:active {
     .knowledge-library-followup-visibility-choice__anchor:focus-visible
     .knowledge-library-empty-recovery-choice__label {
     flex: 1 1 calc(100% - min(12ch, 38%) - 36px);
+    color: color-mix(in srgb, var(--category) 76%, var(--text));
+    font-weight: 860;
     min-width: min(17ch, calc(62vw - 76px));
     overflow: hidden;
     text-overflow: ellipsis;
