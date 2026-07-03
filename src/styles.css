@@ -6700,11 +6700,16 @@ h2 {
   background: color-mix(in srgb, var(--surface) 86%, var(--surface-subtle));
 }
 
+.knowledge-research-followup-context-choice {
+  min-width: 0;
+}
+
 .knowledge-research-followup__summary {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
   align-items: center;
+  min-height: 52px;
 }
 
 .knowledge-research-followup__summary span,
