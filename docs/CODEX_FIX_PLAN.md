@@ -1363,6 +1363,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   visibility summary before context, list and card detail layers open.
   Partial G1485/#2914: The knowledge library visibility summary now exposes a compact empty-state
   row when filters or categories leave no visible knowledge items.
+  Partial G1486/#2916: The knowledge library empty-state row now exposes compact recovery actions
+  for clearing filters, choosing a category and adding knowledge.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

@@ -13083,6 +13083,15 @@ function renderKennisScreen(state: AppShellState): string {
                     ? ''
                     : `<span class="knowledge-library-followup-visibility-choice__empty" data-knowledge-library-followup-visibility-empty-state="ready">${knowledgeVisibilityEmptyCopy}</span>`
                 }
+                ${
+                  hasVisibleKennisItems
+                    ? ''
+                    : `<span class="knowledge-library-followup-visibility-choice__recovery" data-knowledge-library-empty-recovery="ready">
+                        <a class="knowledge-library-followup-visibility-choice__anchor" href="#kennis?route=library" data-knowledge-library-empty-recovery-action="clear-filter">Filter wissen</a>
+                        <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-empty-recovery-action="category">Categorie kiezen</a>
+                        <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#kennis?route=add" data-knowledge-library-empty-recovery-action="add">Kennis toevoegen</a>
+                      </span>`
+                }
                 <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-followup-visibility-anchor="category">Categoriekeuze</a>
                 <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="list">Bibliotheeklijst</a>
                 <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="cards">Kaartdetails</a>
