@@ -23873,6 +23873,17 @@ a.action-card:active {
   .knowledge-library-empty-recovery-choice__label {
     flex: 1 1 minmax(0, 62%);
     max-width: calc(100% - 76px);
+    min-width: min(17ch, calc(62vw - 76px));
+  }
+
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:hover
+    .knowledge-library-empty-recovery-choice__label,
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:focus-visible
+    .knowledge-library-empty-recovery-choice__label {
+    flex: 1 1 calc(100% - min(12ch, 38%) - 36px);
+    min-width: min(17ch, calc(62vw - 76px));
   }
 
   .knowledge-library-empty-recovery-choice__feedback {
