@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1583 — Kennis AI formulieren krijgen ghost Annuleer acties
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Kennis AI preview-, samenvatting- en instellingenformulieren hadden losse submitknoppen zonder consistente ghost Annuleer-route.
+- **User Impact:** Gebruikers kunnen AI-preview of instellingen minder rustig verlaten wanneer ze toch niet willen bewaren of previewen.
+- **Desired Outcome:** Kennis AI preview, AI samenvatting opslaan en AI instellingen gebruiken `command-form-actions` met primaire actie en ghost Annuleer-link.
+- **User Value:** Gebruikers houden bij AI-acties dezelfde duidelijke terugweg als bij andere Kiempad command forms.
+- **Acceptance Criteria:** AI payload-preview toont `Toon payload-preview` als primaire actie in `.command-form-actions`; AI samenvatting opslaan toont `Bewaar als kennisitem` als primaire actie in `.command-form-actions`; AI instellingen toont `Bewaar AI-instelling` als primaire actie in `.command-form-actions`; elk AI-formulier toont een ghost `Annuleer` link terug naar de Kennis AI-route; app-shell tests bewaken markup en bestaande mobiele action-row styling; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Kennis AI preview, Kennis AI samenvatting, Kennis AI instellingen
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** AI preview form, AI summary form, AI settings form, command form actions, form cancel links
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3110
+
 ### G1582 — Kennis formulieren krijgen primaire actie en ghost Annuleer
 
 - **Epic:** Onboarding & Daily Use
