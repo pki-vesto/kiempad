@@ -13091,6 +13091,7 @@ function renderKennisScreen(state: AppShellState): string {
                           <span>
                             <strong>Herstelactie kiezen</strong>
                             <small>Filter wissen, categorie kiezen of kennis toevoegen.</small>
+                            <small class="knowledge-library-empty-recovery-choice__status" data-knowledge-library-empty-recovery-status="empty-results">Geen zichtbare items door filter of categorie.</small>
                           </span>
                           <em>3 acties</em>
                         </summary>
