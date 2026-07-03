@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1439 — Kennis AI-route supportcontext start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1438 blijft de kennis AI-route gevoelig voor brede supportcontext zodra gebruikers opslaan, instellingen en researchnetwerkcontext openen.
+- **User Impact:** Gebruikers die AI-ondersteuning willen beoordelen, krijgen meerdere ondersteuningspanelen tegelijk aangeboden.
+- **Desired Outcome:** Laat de kennis AI-route supportcontext starten met één compacte contextkeuze of samengevouwen sublaag, terwijl opslaan, AI-instellingen en researchnetwerkcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen AI-context stap voor stap openen zonder dat de route als brede beheerpagina voelt.
+- **Acceptance Criteria:** Bestaande kennis-AI hooks, supporthooks, settinghooks en routehashes blijven aanwezig; de AI supportcontext start met één compacte contextkeuze of samengevouwen sublaag; samenvatting opslaan, AI-instelling en researchnetwerkcontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI-assistent
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2822
+
 ### G1438 — Kennis bibliotheekroute follow-up start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2820
 
 ### G1437 — Kennis researchroute follow-up start met één compacte contextkeuze
