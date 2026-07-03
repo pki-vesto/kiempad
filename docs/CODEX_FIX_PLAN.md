@@ -1505,6 +1505,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   badge hover inline-size responsive with both 12ch and 38% constraints.
   Partial G1556/#3056: The knowledge library empty-state recovery actions now keep mobile
   badge hover max-width responsive with both 12ch and 38% constraints.
+  Partial G1557/#3058: The knowledge library empty-state recovery actions now keep mobile
+  badge hover minimum width readable at 7ch under the responsive compact width.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
