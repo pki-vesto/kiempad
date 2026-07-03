@@ -22669,8 +22669,10 @@ a.action-card:active {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--line-2);
   border-radius: var(--radius-pill);
   background: var(--surface-2);
   color: var(--ink-2);
@@ -22678,6 +22680,14 @@ a.action-card:active {
   line-height: 1;
   cursor: pointer;
   list-style: none;
+}
+
+.rec-overflow__toggle:hover,
+.rec-overflow__toggle:focus-visible {
+  border-color: color-mix(in srgb, var(--teal) 38%, var(--line-2));
+  background: var(--surface-active);
+  color: var(--teal-deep);
+  outline: none;
 }
 
 .rec-overflow__toggle::-webkit-details-marker {
@@ -22958,6 +22968,10 @@ a.action-card:active {
     display: none;
   }
 
+  .primary-nav a {
+    min-height: 44px;
+  }
+
   .primary-nav__more {
     display: block;
     flex: 0 0 auto;
@@ -22965,7 +22979,7 @@ a.action-card:active {
 
   .primary-nav__more-summary {
     display: inline-flex;
-    min-height: 40px;
+    min-height: 44px;
     align-items: center;
     justify-content: center;
     gap: 7px;

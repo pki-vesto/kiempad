@@ -3369,6 +3369,11 @@ describe('app shell', () => {
     expect(css).toContain(
       '.daily-recommendation-list--dual-owner .daily-recommendation-group--samen {',
     );
+    expect(css).toContain('.rec-overflow__toggle {');
+    expect(css).toContain('min-width: 44px;');
+    expect(css).toContain('min-height: 44px;');
+    expect(css).toContain('.rec-overflow__toggle:hover,');
+    expect(css).toContain('.rec-overflow__toggle:focus-visible {');
     expect(css).toContain('.start-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.start-snapshot__card {');
@@ -3739,6 +3744,9 @@ describe('app shell', () => {
       'name="recommendationAction" value="herinnering"',
     );
     expect(emptyContextRecommendations).toContain('name="recommendationAction" value="vraag"');
+    expect(emptyContextRecommendations).toContain(
+      'class="rec-overflow__toggle" data-rec-overflow-toggle="hit-target" aria-label="Meer acties" title="Meer acties"',
+    );
     expect(emptyContextRecommendations).toContain('name="recommendationAction" value="afwijzen"');
     expect(emptyContextRecommendations).toContain('name="recommendationAction" value="artscheck"');
     expect(emptyContextRecommendations).toContain('name="reminderTijdstip" type="datetime-local"');
@@ -41738,7 +41746,10 @@ describe('app shell', () => {
     );
     expect(mobileCss).toContain('.primary-nav__more-sheet a[aria-current="page"]');
     expect(tabletCss).toContain('.primary-nav a[data-mobile-nav-tier="mobile-more-sheet"] {');
+    expect(tabletCss).toContain('.primary-nav a {');
+    expect(tabletCss).toContain('min-height: 44px;');
     expect(tabletCss).toContain('.primary-nav__more {');
+    expect(tabletCss).toContain('.primary-nav__more-summary {');
     expect(tabletCss).toContain('.primary-nav__more-sheet {');
     expect(tabletCss).toContain('top: 92px;');
     expect(tabletCss).toContain(
