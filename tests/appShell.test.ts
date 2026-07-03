@@ -3439,6 +3439,11 @@ describe('app shell', () => {
     expect(css).toContain('.hub-workflow-tab[aria-current="page"]');
     expect(css).toContain('min-height: 42px;');
     expect(css).toContain('.hub-workflow-header__copy p {');
+    expect(css).toContain('.knowledge-research-workflow-choice {');
+    expect(css).toContain('.knowledge-research-workflow-choice__summary {');
+    expect(css).toContain('.knowledge-research-workflow-choice__body {');
+    expect(css).toContain('.knowledge-research-workflow-choice:not([open])');
+    expect(css).toContain('> .knowledge-research-workflow-choice__body {');
     expect(css).toContain('.hub-detail-disclosure {');
     expect(css).toContain('.hub-detail-disclosure__summary {');
     expect(css).toContain('.hub-detail-disclosure__summary:focus-visible,');
@@ -38326,10 +38331,20 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route="read"');
     expect(html).toContain('id="knowledge-research-workflow-header"');
     expect(html).toContain('data-hub-workflow="knowledge-research"');
+    expect(html).toContain('data-knowledge-research-workflow-choice="collapsed"');
+    expect(html).toContain('data-hub-workflow-tabs="knowledge-research"');
+    expect(html).toContain('Researchroute openen');
     expect(html).toContain('Research rustig lezen');
     expect(html).toContain('data-hub-workflow-tab="research" aria-current="page"');
     expect(html).toContain('data-hub-workflow-tab="summaries"');
     expect(html).toContain('data-hub-workflow-tab="trends"');
+    expect(html).toContain('data-hub-workflow-tab="add"');
+    expect(html.indexOf('data-knowledge-research-workflow-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-hub-workflow-tabs="knowledge-research"'),
+    );
+    expect(html).not.toContain(
+      '<details id="knowledge-research-workflow-header" class="hub-workflow-header knowledge-research-workflow-choice" aria-labelledby="knowledge-research-workflow-header-title" data-hub-workflow="knowledge-research" data-knowledge-research-workflow-choice="collapsed" open>',
+    );
     expect(html).toContain('id="knowledge-route-add"');
     expect(html).toContain('data-knowledge-route="add"');
     expect(html).toContain('id="knowledge-route-ai"');

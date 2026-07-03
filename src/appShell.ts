@@ -12651,41 +12651,40 @@ function renderKennisScreen(state: AppShellState): string {
           <h2 id="knowledge-route-read-title">Bronnen, samenvattingen en trends</h2>
           <p>Lees brongekoppelde publicaties, eenvoudige uitleg en contextrelaties zonder naar beheerinstellingen te hoeven zoeken.</p>
         </header>
-        ${renderHubWorkflowHeader({
-          id: 'knowledge-research-workflow-header',
-          eyebrow: 'Leesroute',
-          title: 'Research rustig lezen',
-          intro:
-            'Bronnen, wetenschappelijke samenvattingen, eenvoudige uitleg en trends blijven samen als researchwerkbaan met duidelijke lagen.',
-          activeTab: 'research',
-          data: { 'hub-workflow': 'knowledge-research' },
-          tabs: [
-            {
-              id: 'research',
-              href: '#kennis?route=read',
-              label: 'Research',
-              meta: `${researchBronnen.length} bronnen`,
-            },
-            {
-              id: 'summaries',
-              href: '#knowledge-research-summaries',
-              label: 'Samenvattingen',
-              meta: `${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items`,
-            },
-            {
-              id: 'trends',
-              href: '#knowledge-research-trends',
-              label: 'Trends',
-              meta: `${researchTrendGroepen.length} groepen`,
-            },
-            {
-              id: 'add',
-              href: '#kennis?route=add',
-              label: 'Toevoegen',
-              meta: 'Bron vastleggen',
-            },
-          ],
-        })}
+        <details id="knowledge-research-workflow-header" class="hub-workflow-header knowledge-research-workflow-choice" aria-labelledby="knowledge-research-workflow-header-title" data-hub-workflow="knowledge-research" data-knowledge-research-workflow-choice="collapsed">
+          <summary class="knowledge-research-workflow-choice__summary">
+            <span>
+              <small>Leesroute</small>
+              <strong id="knowledge-research-workflow-header-title">Researchroute openen</strong>
+            </span>
+            <em>${researchBronnen.length} bronnen</em>
+          </summary>
+          <div class="knowledge-research-workflow-choice__body">
+            <div class="hub-workflow-header__copy">
+              <p class="hub-workflow-header__eyebrow">Leesroute</p>
+              <h3>Research rustig lezen</h3>
+              <p>Bronnen, wetenschappelijke samenvattingen, eenvoudige uitleg en trends blijven samen als researchwerkbaan met duidelijke lagen.</p>
+            </div>
+            <nav class="hub-workflow-tabs" aria-label="Research rustig lezen tabs" data-hub-workflow-tabs="knowledge-research">
+              <a class="hub-workflow-tab" href="#kennis?route=read" data-hub-workflow-tab="research" aria-current="page">
+                <span>Research</span>
+                <small>${researchBronnen.length} bronnen</small>
+              </a>
+              <a class="hub-workflow-tab" href="#knowledge-research-summaries" data-hub-workflow-tab="summaries" aria-current="false">
+                <span>Samenvattingen</span>
+                <small>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items</small>
+              </a>
+              <a class="hub-workflow-tab" href="#knowledge-research-trends" data-hub-workflow-tab="trends" aria-current="false">
+                <span>Trends</span>
+                <small>${researchTrendGroepen.length} groepen</small>
+              </a>
+              <a class="hub-workflow-tab" href="#kennis?route=add" data-hub-workflow-tab="add" aria-current="false">
+                <span>Toevoegen</span>
+                <small>Bron vastleggen</small>
+              </a>
+            </nav>
+          </div>
+        </details>
         <!-- route summary governance: 'knowledge-route-summary': 'read' -->
         <details class="command-route-summary knowledge-research-route-status-choice" aria-label="Kennis lezen route-samenvatting" data-knowledge-route-summary="read" data-knowledge-research-route-status-choice="collapsed">
           <summary class="knowledge-research-route-status-choice__summary">
