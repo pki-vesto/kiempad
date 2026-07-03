@@ -15119,24 +15119,37 @@ function renderDailyAdviceFocusShell(input: {
       <header class="daily-advice-focus-shell__header">
         <p class="kp-card__eyebrow">Dagadvies focus</p>
         <h2 id="daily-advice-focus-shell-title">Te doen vandaag</h2>
-        <p>Eigenaar, actieplanner en volledige lijst blijven aparte werkvlakken; mobiel opent Dagadvies als compacte scrollbare adviesconsole.</p>
+        <p>Kies eerst één adviesactie. Eigenaar, plannercontext en volledige lijst blijven bereikbaar als vervolgcontext.</p>
       </header>
       ${input.status}
       ${input.filterStatus}
       <div class="daily-advice-focus-shell__body" data-daily-advice-console-region="body">
-        <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow" data-daily-advice-console-region="workflow">
-          ${input.workflow}
+        <div id="daily-advice-primary-action-choice" class="daily-advice-primary-action-choice" data-daily-advice-primary-action-choice="ready">
+          <div class="daily-advice-focus-shell__planner" data-daily-advice-focus-region="planner" data-daily-advice-console-region="planner">
+            ${input.planner}
+          </div>
         </div>
-        <div class="daily-advice-focus-shell__workbench" data-daily-advice-focus-region="workbench" data-daily-advice-console-region="workbench">
-          ${input.workbench}
-        </div>
-        <div class="daily-advice-focus-shell__planner" data-daily-advice-focus-region="planner" data-daily-advice-console-region="planner">
-          ${input.planner}
-        </div>
-        <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list" data-daily-advice-console-region="list">
-          <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
-          ${input.list}
-        </div>
+        <details id="daily-advice-followup" class="kp-disclosure daily-advice-followup" data-daily-advice-followup="collapsed">
+          <summary class="kp-disclosure__summary daily-advice-followup__summary">
+            <span>
+              <strong>Open adviescontext</strong>
+              <small>Eigenaar, routekop en volledige lijst pas erbij pakken wanneer je die nodig hebt.</small>
+            </span>
+            <em>Vervolg</em>
+          </summary>
+          <div class="kp-disclosure__body daily-advice-followup__body">
+            <div class="daily-advice-focus-shell__workflow" data-daily-advice-focus-region="workflow" data-daily-advice-console-region="workflow">
+              ${input.workflow}
+            </div>
+            <div class="daily-advice-focus-shell__workbench" data-daily-advice-focus-region="workbench" data-daily-advice-console-region="workbench">
+              ${input.workbench}
+            </div>
+            <div class="daily-advice-focus-shell__list" data-daily-advice-focus-region="list" data-daily-advice-console-region="list">
+              <p class="small-print">Lokaal dagoverzicht op basis van agenda, medicatieplanning en vragen. Kiempad geeft geen medisch advies.</p>
+              ${input.list}
+            </div>
+          </div>
+        </details>
       </div>
     </section>
   `;

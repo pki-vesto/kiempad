@@ -2879,7 +2879,9 @@ describe('app shell', () => {
 
     expect(html).toContain('data-start-daily-advice-route="ready"');
     expect(html).toContain('data-daily-advice-console="ready"');
-    expect(html).toContain('mobiel opent Dagadvies als compacte scrollbare adviesconsole');
+    expect(html).toContain('Kies eerst één adviesactie.');
+    expect(html).toContain('data-daily-advice-primary-action-choice="ready"');
+    expect(html).toContain('data-daily-advice-followup="collapsed"');
     expect(html).toContain('data-daily-advice-console-region="workflow"');
     expect(html).toContain('data-daily-advice-console-region="workbench"');
     expect(html).toContain('data-daily-advice-console-region="planner"');
@@ -3149,14 +3151,14 @@ describe('app shell', () => {
     expect(css).toContain('.daily-advice-focus-shell {');
     expect(css).toContain('.daily-advice-focus-shell__header {');
     expect(css).toContain('.daily-advice-focus-shell__body {');
+    expect(css).toContain('.daily-advice-primary-action-choice {');
+    expect(css).toContain('.daily-advice-followup {');
+    expect(css).toContain('.daily-advice-followup:not([open]) > .daily-advice-followup__body {');
+    expect(css).toContain('grid-template-columns: minmax(0, 1fr);');
+    expect(css).toContain('.daily-advice-followup__body {');
     expect(css).toContain('grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);');
-    expect(css).toContain('"workbench planner"');
     expect(css).toContain('max-height: min(760px, calc(100vh - 248px));');
     expect(css).toContain('max-height: min(390px, calc(100vh - 366px));');
-    expect(css).toContain('grid-area: workflow;');
-    expect(css).toContain('grid-area: workbench;');
-    expect(css).toContain('grid-area: planner;');
-    expect(css).toContain('grid-area: list;');
     expect(css).toContain('.daily-advice-focus-shell .daily-advice-workbench__header {');
     expect(css).toContain('.daily-advice-focus-shell .daily-advice-workbench__summary {');
     expect(css).toContain('.daily-advice-focus-shell .daily-advice-snapshot {');
@@ -3365,7 +3367,8 @@ describe('app shell', () => {
     expect(mobileCss).toContain('max-height: min(680px, calc(100vh - 164px));');
     expect(mobileCss).toContain('overflow-y: auto;');
     expect(mobileCss).toContain('.daily-advice-focus-shell__body {');
-    expect(mobileCss).toContain('.daily-advice-focus-shell__workflow,');
+    expect(mobileCss).toContain('.daily-advice-followup__summary {');
+    expect(mobileCss).toContain('.daily-advice-followup__body {');
     expect(mobileCss).toContain('.daily-advice-workbench__header {');
     expect(mobileCss).toContain('grid-template-columns: 1fr;');
     expect(mobileCss).toContain('.daily-advice-snapshot {');
@@ -3517,6 +3520,24 @@ describe('app shell', () => {
     const emptyContextRecommendations = extractDailyRecommendationsSection(emptyContextHtml);
 
     expect(emptyContextRecommendations).toContain('Te doen vandaag');
+    expect(emptyContextRecommendations).toContain('id="daily-advice-primary-action-choice"');
+    expect(emptyContextRecommendations).toContain(
+      'data-daily-advice-primary-action-choice="ready"',
+    );
+    expect(emptyContextRecommendations).toContain('id="daily-advice-followup"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-followup="collapsed"');
+    expect(emptyContextRecommendations).toContain('Open adviescontext');
+    expect(emptyContextRecommendations).not.toContain(
+      '<details id="daily-advice-followup" class="kp-disclosure daily-advice-followup" data-daily-advice-followup="collapsed" open',
+    );
+    expect(
+      emptyContextRecommendations.indexOf('id="daily-advice-primary-action-choice"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('id="daily-advice-followup"'));
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-action-planner="ready"'),
+    ).toBeLessThan(
+      emptyContextRecommendations.indexOf('data-daily-advice-workbench="owner-routes"'),
+    );
     expect(emptyContextRecommendations).toContain('Bekijk suggesties');
     expect(emptyContextRecommendations).not.toContain('Dagelijkse aanbevelingen');
     expect(emptyContextRecommendations).not.toContain('Bekijk aanbevelingen');

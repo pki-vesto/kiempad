@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1406 — Dagadvies: volledige lijst start met één filterkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na de primaire actiekeuze blijft de volledige dagadvieslijst in de vervolgcontext nog een breed werkvlak met filterformulier, lijstheader en alle suggesties zodra het paneel open staat.
+- **User Impact:** Gebruikers die alleen een rustige vervolgroute willen, krijgen alsnog direct een grote kaartwand te scannen.
+- **Desired Outcome:** Laat de lijstcontext eerst starten met één duidelijke filterkeuze of kijkroute, waarna de volledige vrouw/man/samen-lijst pas als tweede stap zichtbaar wordt.
+- **User Value:** Gebruikers kunnen de volledige suggestielijst doelgericht openen zonder opnieuw in een lange lijst te landen.
+- **Acceptance Criteria:** De Dagadvies-vervolgcontext behoudt bestaande anchors, feedbackfilterroutes en form hooks; de volledige suggestielijst start niet als grote kaartwand binnen de eerste geopende vervolglaag; feedbackstatusfilter, resetacties en lijstfocus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen trackingpayload, plaintext medische inhoud, diagnose, dosering of behandeladvies; tests of routeflow-smoke bewaken volgorde, gesloten/zichtbare context en hooks.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, daily advice list, feedback filter, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2758
+
 ### G1405 — Dagadvies: adviesroute start met één actiekeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily advice route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2756
 
 ### G1404 — Start: dashboard start met één primaire dagactie
