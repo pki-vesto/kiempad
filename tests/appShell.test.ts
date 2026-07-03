@@ -8488,6 +8488,18 @@ describe('app shell', () => {
     );
     expect(css).toContain('.dossier-upload-console__context:not([open]) > p {');
     expect(css).toContain('.dossier-upload-console__body {');
+    expect(css).toContain('[data-hub-workflow="dossier-upload"] .hub-workflow-tabs {');
+    expect(css).toContain(
+      '[data-hub-workflow="dossier-upload"] .hub-workflow-tabs::-webkit-scrollbar',
+    );
+    expect(css).toContain('[data-hub-workflow="dossier-upload"] .hub-workflow-tab {');
+    expect(css).toContain(
+      '[data-hub-workflow="dossier-upload"] .hub-workflow-tab[aria-current="page"]',
+    );
+    expect(css).toContain('[data-hub-workflow="dossier-upload"] .hub-workflow-tab small {');
+    expect(css).toContain('> .hub-workflow-header[data-hub-workflow="dossier-upload"] {');
+    expect(css).toContain('> .hub-workflow-header[data-hub-workflow="dossier-upload"]');
+    expect(css).toContain('> .hub-workflow-header__copy {');
     expect(css).toContain('.dossier-add-route-group {');
     expect(css).toContain('.dossier-add-route-group__summary {');
     expect(css).toContain('.dossier-add-route-group__summary::after {');
@@ -9121,6 +9133,7 @@ describe('app shell', () => {
     expect(emptyHtml).toContain('data-dossier-route="upload" data-dossier-route-state="active"');
     expect(emptyHtml).toContain('id="dossier-upload-workflow-header"');
     expect(emptyHtml).toContain('data-hub-workflow="dossier-upload"');
+    expect(emptyHtml).toContain('data-hub-workflow-tabs="dossier-upload"');
     expect(emptyHtml).toContain('Eén toevoeging per keer');
     expect(emptyHtml).toContain('data-hub-workflow-tab="upload" aria-current="page"');
     expect(emptyHtml).toContain('data-hub-workflow-tab="review"');

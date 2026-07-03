@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1427 — Dossier upload reviewroute start met één compacte reviewkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1426 zijn de startlagen en workflowtabs compacter, maar de reviewroute kan nog meerdere contextblokken tegelijk tonen zodra review wordt geopend.
+- **User Impact:** Gebruikers die alleen OCR/review willen controleren, krijgen alsnog meerdere review- en privacycontexten tegelijk.
+- **Desired Outcome:** Laat de reviewroute binnen dossier-upload starten met één compacte reviewkeuze of samengevouwen contextlaag, terwijl reviewwachtrij, OCR-status en privacycontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen reviewen zonder direct door alle controlecontext tegelijk te moeten scannen.
+- **Acceptance Criteria:** Bestaande review hooks, routehashes en OCR/review-tellingen blijven aanwezig; de reviewroute start met één compacte reviewkeuze of samengevouwen contextlaag; reviewwachtrij, OCR-status en privacycontext blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Dossier review
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, dossier review route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2798
+
 ### G1426 — Dossier upload workflowtabs starten met één compacte routebalk
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload workflow tabs, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2796
 
 ### G1425 — Dossier upload consoleheader start met één compacte statusregel
