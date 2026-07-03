@@ -14618,7 +14618,10 @@ function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): s
             Tekst voor preview
             <textarea name="aiBronTekst" rows="5" required>${escapeHtml(preview?.tekst ?? '')}</textarea>
           </label>
-          <button type="submit">Toon payload-preview</button>
+          <div class="command-form-actions" data-knowledge-form-actions="ai-preview">
+            <button type="submit">Toon payload-preview</button>
+            <a class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-preview">Annuleer</a>
+          </div>
         </form>
         ${
           preview
@@ -14680,7 +14683,10 @@ function renderAiSummaryForm(preview?: AiSamenvattingPayload): string {
             Samenvatting
             <textarea name="aiSamenvatting" rows="5" required></textarea>
           </label>
-          <button type="submit">Bewaar als kennisitem</button>
+          <div class="command-form-actions" data-knowledge-form-actions="ai-summary">
+            <button type="submit">Bewaar als kennisitem</button>
+            <a class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-summary">Annuleer</a>
+          </div>
         </form>
       </div>
     </details>
@@ -14720,7 +14726,10 @@ function renderAiSettingsForm(
         <input name="aiApiKey" type="password" value="" placeholder="${settings.ai.apiKey ? 'Opgeslagen; laat leeg om te bewaren' : ''}" autocomplete="off" />
       </label>
       <p class="small-print">${storageCopy}</p>
-      <button type="submit">Bewaar AI-instelling</button>
+      <div class="command-form-actions" data-knowledge-form-actions="ai-settings">
+        <button type="submit">Bewaar AI-instelling</button>
+        <a class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-settings">Annuleer</a>
+      </div>
     </form>
   `;
 }

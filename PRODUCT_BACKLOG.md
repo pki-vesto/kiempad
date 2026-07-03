@@ -30,7 +30,7 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1382 |
+| ☑ klaar | 1383 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
@@ -1744,12 +1744,13 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1580 | Kennis datumvelden tonen zichtbaar dd-mm-jjjj hulpje | P2 | F5 | ☑ |
 | G1581 | Export tekstvelden gebruiken gedeelde textarea-kit | P2 | F5 | ☑ |
 | G1582 | Kennis formulieren krijgen primaire actie en ghost Annuleer | P2 | F5 | ☑ |
+| G1583 | Kennis AI formulieren krijgen ghost Annuleer acties | P2 | F5 | ☑ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1581** (id's G001 t/m G1582; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1582** (id's G001 t/m G1583; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de

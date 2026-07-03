@@ -39842,7 +39842,13 @@ describe('app shell', () => {
     expect(emptyPreview).toContain('id="ai-preview-form"');
     expect(emptyPreview).toContain('name="aiBron"');
     expect(emptyPreview).toContain('name="aiBronTekst"');
+    expect(emptyPreview).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="ai-preview"',
+    );
     expect(emptyPreview).toContain('Toon payload-preview');
+    expect(emptyPreview).toContain(
+      'class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-preview"',
+    );
     expect(aiOffHtml).toContain('data-knowledge-ai-support="collapsed"');
     expect(aiOffHtml).not.toContain(
       '<details id="knowledge-ai-support" class="kp-disclosure knowledge-ai-support" data-knowledge-ai-support="collapsed" open>',
@@ -39890,6 +39896,12 @@ describe('app shell', () => {
     expect(configuredSettings).toContain('name="aiModel" value="gpt-5-mini"');
     expect(configuredSettings).toContain('Opgeslagen; laat leeg om te bewaren');
     expect(configuredSettings).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="ai-settings"',
+    );
+    expect(configuredSettings).toContain(
+      'class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-settings"',
+    );
+    expect(configuredSettings).toContain(
       'op je toestel versleuteld voordat ze centraal worden bewaard',
     );
     expect(previewPanel).toContain('data-ai-preview-state="preview"');
@@ -39899,7 +39911,13 @@ describe('app shell', () => {
     expect(previewPanel).toContain('Naam/patiëntnaam: 1x vervangen door [naam verwijderd]');
     expect(previewPanel).toContain('Research: [naam verwijderd] bespreekt lokale context.');
     expect(configuredHtml).toContain('id="ai-summary-form"');
+    expect(configuredHtml).toContain(
+      'class="command-form-actions" data-knowledge-form-actions="ai-summary"',
+    );
     expect(configuredHtml).toContain('Bewaar als kennisitem');
+    expect(configuredHtml).toContain(
+      'class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-summary"',
+    );
     expect(configuredHtml).not.toContain('test-api-key-providerpayload');
     expect(aiZone).not.toContain('providerpayload');
     expect(aiZone).not.toContain('diagnose');
@@ -40821,6 +40839,7 @@ describe('app shell', () => {
     expect(html).toContain('24 van 80 tekens');
     expect(html).toContain('id="ai-summary-form"');
     expect(html).toContain('data-knowledge-ai-console-region="summary-save"');
+    expect(html).toContain('class="command-form-actions" data-knowledge-form-actions="ai-summary"');
     expect(html).toContain('Bewaar als kennisitem');
   });
 
