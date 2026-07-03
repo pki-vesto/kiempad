@@ -261,6 +261,10 @@
   route now opens with one primary current-phase task while the full phase timeline, context,
   overview, management, and reimbursement routes sit behind one closed follow-up context,
   preserving phase hooks, hashes, and non-advice treatment boundaries.
+- **Question management single question task — done in G1489 / issue #2738.** The Vragen beheer
+  route now opens with the question form as the primary task while open questions, preparation,
+  reports, and the full question list sit behind one closed follow-up context, preserving form
+  hooks, hashes, and non-advice question boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
