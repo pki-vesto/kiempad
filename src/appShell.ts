@@ -12749,11 +12749,11 @@ function renderKennisScreen(state: AppShellState): string {
                     </div>
                   </div>
                 </details>
-                <details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries">
-                  <summary class="kp-disclosure__summary hub-detail-disclosure__summary">
+                <details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure knowledge-research-summaries-choice" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries" data-knowledge-research-summaries-choice="collapsed">
+                  <summary class="kp-disclosure__summary hub-detail-disclosure__summary knowledge-research-summaries-choice__summary">
                     <span>
-                      <strong>Researchsamenvattingen openen</strong>
-                      <small>Wetenschappelijke en eenvoudige uitleg</small>
+                      <strong>Samenvattingkeuze openen</strong>
+                      <small>Wetenschappelijke en eenvoudige uitleg.</small>
                     </span>
                     <em>${researchSamenvattingen.length + eenvoudigeResearchSamenvattingen.length} items</em>
                   </summary>

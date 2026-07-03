@@ -38429,8 +38429,17 @@ describe('app shell', () => {
     expect(html).toContain('Bekijk broncache en allowliststatus.');
     expect(html).toContain('data-research-source-component="source-list"');
     expect(html).toContain('data-hub-detail-panel="research-summaries"');
-    expect(html).toContain('Researchsamenvattingen openen');
-    expect(html).toContain('Wetenschappelijke en eenvoudige uitleg');
+    expect(html).toContain('data-knowledge-research-summaries-choice="collapsed"');
+    expect(html).toContain('Samenvattingkeuze openen');
+    expect(html).toContain('Wetenschappelijke en eenvoudige uitleg.');
+    expect(html).toContain('data-research-summary-component="scientific-list"');
+    expect(html).toContain('data-research-summary-component="patient-list"');
+    expect(html.indexOf('data-knowledge-research-summaries-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-research-summary-component="scientific-list"'),
+    );
+    expect(html).not.toContain(
+      '<details id="knowledge-research-summaries" class="kp-disclosure hub-detail-disclosure knowledge-research-summaries-choice" data-knowledge-research-disclosure="summaries" data-hub-detail-panel="research-summaries" data-knowledge-research-summaries-choice="collapsed" open>',
+    );
     expect(html).toContain('Relevantie, relaties en trends openen');
     expect(html).toContain('data-knowledge-route-summary="add"');
     expect(html).toContain('data-knowledge-add-route-status-choice="collapsed"');
@@ -38822,6 +38831,8 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-detail-choice {');
     expect(css).toContain('.knowledge-research-sources-choice {');
     expect(css).toContain('.knowledge-research-sources-choice__summary {');
+    expect(css).toContain('.knowledge-research-summaries-choice {');
+    expect(css).toContain('.knowledge-research-summaries-choice__summary {');
     expect(css).toContain('.knowledge-research-followup-context-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice {');
     expect(css).toContain('.knowledge-research-route-status-choice__summary {');
