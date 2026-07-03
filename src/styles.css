@@ -23884,6 +23884,9 @@ a.action-card:active {
     .knowledge-library-empty-recovery-choice__label {
     flex: 1 1 calc(100% - min(12ch, 38%) - 36px);
     min-width: min(17ch, calc(62vw - 76px));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .knowledge-library-empty-recovery-choice__feedback {
