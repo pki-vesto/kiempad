@@ -431,12 +431,18 @@ const targets = [
       '[data-dossier-upload-submit-feedback-details="collapsed"] > .dossier-upload-optional__summary',
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
+    presentSelectors: [
+      '[data-dossier-upload-completion-status-choice="collapsed"]',
+      '[data-dossier-upload-completion-status-summary="ready"]',
+      '[data-dossier-submit-feedback="dossier-upload"]',
+    ],
     closedDetailsSelectors: [
       '[data-dossier-upload-metadata="collapsed"]',
       '[data-dossier-upload-optional="koppelingen"]',
       '[data-dossier-upload-optional="beeldcontext"]',
       '[data-dossier-upload-optional="embryo-labcontext"]',
       '[data-dossier-upload-submit-feedback-details="collapsed"]',
+      '[data-dossier-upload-completion-status-choice="collapsed"]',
       '[data-dossier-upload-privacy-disclosure="collapsed"]',
     ],
     desktopHiddenSelectors: [

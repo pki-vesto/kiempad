@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1434 — Consult upload afrondingscontext start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1433 blijft de consultupload afrondingscontext gevoelig voor meerdere status- en actiepanelen tegelijk zodra gebruikers een verslag opslaan.
+- **User Impact:** Gebruikers die een consultverslag uploaden, moeten alsnog meerdere statusblokken en vervolgstappen tegelijk scannen.
+- **Desired Outcome:** Laat de consult upload afrondingscontext starten met één compacte statuskeuze of samengevouwen sublaag, terwijl opslagstatus, herstelcontext, reviewstap en vervolgroutes bereikbaar blijven.
+- **User Value:** Gebruikers kunnen een gesprek afronden zonder dat de consultupload als brede statuspagina voelt.
+- **Acceptance Criteria:** Bestaande consult upload submitfeedback hooks, routehashes en vervolgacties blijven aanwezig; de consult upload afrondingscontext start met één compacte statuskeuze of samengevouwen sublaag; opslagstatus, herstelcontext, reviewstap en vervolgroutes blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Dossier, Consult upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, consult upload submit feedback, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2812
+
 ### G1433 — Dossier upload afrondingscontext start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload submit feedback, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2810
 
 ### G1432 — Dossier imaging follow-up start met één compacte beeldcontextkeuze
