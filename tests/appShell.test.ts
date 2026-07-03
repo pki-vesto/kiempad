@@ -39282,6 +39282,14 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-library-followup-visibility-choice__anchor:hover:focus-visible\n    .knowledge-library-empty-recovery-choice__label {\n    color: color-mix(in srgb, var(--category) 76%, var(--text));\n    font-weight: 860;\n  }',
     );
+    const mobileLabelCascadeContract = [
+      '.knowledge-library-followup-visibility-choice__anchor:hover\n    .knowledge-library-empty-recovery-choice__label {\n    color: color-mix(in srgb, var(--category) 68%, var(--text));\n    font-weight: 850;\n  }',
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n    .knowledge-library-empty-recovery-choice__label {\n    color: color-mix(in srgb, var(--category) 76%, var(--text));\n    font-weight: 860;\n  }',
+      '.knowledge-library-followup-visibility-choice__anchor:hover:focus-visible\n    .knowledge-library-empty-recovery-choice__label {\n    color: color-mix(in srgb, var(--category) 76%, var(--text));\n    font-weight: 860;\n  }',
+    ];
+    for (const rule of mobileLabelCascadeContract) {
+      expect(css).toContain(rule);
+    }
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
     expect(css).toContain('background: color-mix(in srgb, var(--category) 4%, var(--surface));');

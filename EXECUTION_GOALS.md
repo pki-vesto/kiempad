@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1536 — Kennis bibliotheek herstelactie badges houden mobiele badgecascade dekking compleet
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1535 is de mobiele labelcascade compleet bewaakt, maar de badgefeedback-cascade voor hover, focus en gecombineerde states is nog niet apart als compleet contract bewaakt.
+- **User Impact:** Gebruikers kunnen alsnog regressies krijgen als badgefeedback-states later los van de labelcascade veranderen.
+- **Desired Outcome:** Mobiele herstelbadges hebben complete testdekking voor hover, focus en badgefeedback-cascade zonder overlap of visuele dominantie.
+- **User Value:** Gebruikers houden rustige label- en badgefeedback in alle mobiele herstelactie-states.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; mobiele badgecascade-dekking bewaakt hover, focus en gecombineerde interactiestates; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact, getrunceerd en secundair op mobiel; primaire labellijn blijft rustig getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken complete mobiele badgecascade en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3016
+
 ### G1535 — Kennis bibliotheek herstelactie badges houden mobiele labelcascade dekking compleet
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3014
 
 ### G1534 — Kennis bibliotheek herstelactie badges houden mobiele labelkleur volgorde voorspelbaar
