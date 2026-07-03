@@ -23925,9 +23925,11 @@ a.action-card:active {
     block-size: 22px;
     border-color: color-mix(in srgb, var(--category) 18%, var(--border-strong));
     color: color-mix(in srgb, var(--text) 86%, var(--text-muted));
+    flex: 0 0 min(12ch, 38%);
     font-weight: 750;
     inline-size: min(12ch, 38%);
     max-width: min(12ch, 38%);
+    min-width: 7ch;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
