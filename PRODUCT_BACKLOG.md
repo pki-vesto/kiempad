@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1192 |
+| ☑ klaar | 1193 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1391** |
+| **Totaal** | **1392** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1553,13 +1553,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1388 | Kennis: toevoegen start met één kennisinvoer tegelijk | P1 | F5 | ☑ |
 | G1389 | Back-up: controleren start met één statuslaag | P1 | F5 | ☑ |
 | G1390 | Welzijn: vastleggen start met één check-in taak | P1 | F5 | ☑ |
-| G1391 | Afwegingen: voorbereiden start met één beslisnotitie taak | P1 | F5 | ☐ |
+| G1391 | Afwegingen: voorbereiden start met één beslisnotitie taak | P1 | F5 | ☑ |
+| G1392 | Kosten: toevoegen start met één kostenpost taak | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1391** (id's G001 t/m G1391, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1392** (id's G001 t/m G1392, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

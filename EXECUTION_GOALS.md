@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1392 — Kosten: toevoegen start met één kostenpost taak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Kosten-route Toevoegen moet rustig blijven als één invoertaak en mag niet opnieuw aanvoelen als een facturen- of contextwand.
+- **User Impact:** Gebruikers kunnen bij kosteninvoer sneller afgeleid raken door overzicht, vergoeding en historiecontext.
+- **Desired Outcome:** Start met één primaire kostenpost-invoer en houd overzicht, vergoeding en historie als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers leggen eerst de kostenpost vast en openen financiële context pas wanneer ze die nodig hebben.
+- **Acceptance Criteria:** Kosten Toevoegen toont één primaire kostenpost-invoer in de eerste viewport; overzicht, vergoeding en historie blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen financieel advies, polisinterpretatie, trackingpayload of medische conclusie bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Kosten, Toevoegen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, finance route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2730
+
 ### G1391 — Afwegingen: voorbereiden start met één beslisnotitie taak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, decision route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2728
 
 ### G1390 — Welzijn: vastleggen start met één check-in taak

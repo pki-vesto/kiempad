@@ -241,6 +241,10 @@
   route now starts with one primary mental check-in while symptom logging and cycle measurement
   forms remain available together in one closed follow-up disclosure, preserving form hooks and
   non-medical self-tracking boundaries.
+- **Decision prepare single note task — done in G1484 / issue #2728.** The Afwegingen voorbereiden
+  route now opens with the decision note form as the primary task while compare, choice, and report
+  routes sit behind one closed follow-up context, preserving form hooks, hashes, and non-advice
+  boundaries.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

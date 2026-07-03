@@ -37216,6 +37216,11 @@ describe('app shell', () => {
       'grid-template-columns: minmax(172px, 0.28fr) minmax(0, 1fr) minmax(240px, 0.36fr);',
     );
     expect(css).toContain('.decision-choice-banner {');
+    expect(css).toContain('.decision-prepare-console {');
+    expect(css).toContain('.decision-prepare-primary {');
+    expect(css).toContain('.decision-prepare-followup {');
+    expect(css).toContain('.decision-prepare-followup__summary {');
+    expect(css).toContain('.decision-prepare-followup__body {');
     expect(css).toContain('.decision-option-tags {');
     expect(css).toContain('.decision-option-tag--plus {');
     expect(css).toContain('.decision-option-tag--minus {');
@@ -38598,6 +38603,22 @@ describe('app shell', () => {
     expect(html).toContain('aria-label="Afwegingen voorbereiden route-samenvatting"');
     expect(html).toContain('data-decision-route-summary="prepare"');
     expect(html).toContain('Eerst de beslisnotitie scherp krijgen');
+    expect(html).toContain(
+      'De invoer staat vooraan. Vergelijken, kiezen en verslag lezen open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#decision-prepare-followup"');
+    expect(html).toContain('data-decision-prepare-layout="single-input"');
+    expect(html).toContain('data-decision-prepare-primary="decision-form"');
+    expect(html).toContain('data-decision-prepare-followup="collapsed"');
+    expect(html).toContain('id="decision-prepare-followup"');
+    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('href="#afwegingen?route=compare"');
+    expect(html).toContain('href="#afwegingen?route=choice"');
+    expect(html).toContain('href="#afwegingen?route=history"');
+    expect(html.indexOf('data-decision-prepare-primary="decision-form"')).toBeLessThan(
+      html.indexOf('id="decision-prepare-followup"'),
+    );
+    expect(html).not.toContain('<details id="decision-prepare-followup" open');
     expect(html).toContain('aria-label="Afwegingen vergelijken route-samenvatting"');
     expect(html).toContain('data-decision-route-summary="compare"');
     expect(html).toContain('Opties, voors en tegens openen');
