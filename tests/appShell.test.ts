@@ -38362,7 +38362,9 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-research-primary-focus"');
     expect(html).toContain('data-knowledge-research-primary-focus="ready"');
     expect(html).toContain('data-knowledge-research-reader="ready"');
+    expect(html).toContain('data-knowledge-research-lane-choice="collapsed"');
     expect(html).toContain('aria-label="Research leeslaag"');
+    expect(html).toContain('Researchlaag openen');
     expect(html).toContain('Kies eerst je researchlaag');
     expect(html).toContain('data-knowledge-research-lane="scientific"');
     expect(html).toContain('data-knowledge-research-lane="patient"');
@@ -38373,6 +38375,12 @@ describe('app shell', () => {
     expect(html).toContain('Relevantie');
     expect(html).toContain('Trends');
     expect(html).toContain('Kiempad toont hier geen dossierplaintext of OCR-tekst');
+    expect(html.indexOf('data-knowledge-research-lane-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-research-lane="scientific"'),
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-research-reader knowledge-research-lane-choice" aria-label="Research leeslaag" data-knowledge-research-reader="ready" data-knowledge-research-lane-choice="collapsed" open>',
+    );
     expect(html).toContain('id="knowledge-research-followup"');
     expect(html).toContain('data-knowledge-research-followup="collapsed"');
     expect(html).toContain('Leescontext openen');
@@ -38779,6 +38787,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-research-reader {');
     expect(css).toContain('.knowledge-research-reader__header {');
     expect(css).toContain('.knowledge-research-reader__header > p {');
+    expect(css).toContain('.knowledge-research-lane-choice {');
+    expect(css).toContain('.knowledge-research-lane-choice__summary {');
+    expect(css).toContain('.knowledge-research-lane-choice__body {');
+    expect(css).toContain(
+      '.knowledge-research-lane-choice:not([open]) > .knowledge-research-lane-choice__body {',
+    );
     expect(css).toContain('.knowledge-research-reader__lanes {');
     expect(css).toContain('.knowledge-research-reader__lane {');
     expect(css).toContain('grid-template-rows: auto auto 1fr auto;');

@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1460 — Kennis research vervolgcontext start met één compacte contextkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1459 blijft de research vervolgcontext gevoelig voor bronnen, samenvattingen, relevantie en trends als meerdere signalen tegelijk.
+- **User Impact:** Gebruikers die de vervolgcontext openen, krijgen nog meerdere contextlagen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis research vervolgcontext starten met één compacte contextkeuze of samengevouwen sublaag, terwijl bronnen, samenvattingen, relevantie en trends bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één contextkeuze maken zonder dat alle researchdetails tegelijk de werkruimte domineren.
+- **Acceptance Criteria:** Bestaande knowledge research followup hooks, context hooks, disclosure ids en routehashes blijven aanwezig; de research vervolgcontext start met één compacte contextkeuze of samengevouwen sublaag; bronnen, samenvattingen, relevantie en trends blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research followup, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2864
+
 ### G1459 — Kennis research leeslaag start met één compacte laankeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research reader, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2862
 
 ### G1458 — Kennis research workflowkop start met één compacte routekeuze

@@ -13124,15 +13124,23 @@ function renderKnowledgeResearchReader(input: {
   ];
 
   return `
-    <section class="knowledge-research-reader" aria-label="Research leeslaag" data-knowledge-research-reader="ready">
-      <header class="knowledge-research-reader__header">
-        <div>
-          <p class="kp-card__eyebrow">Leeslaag</p>
-          <h3>Kies eerst je researchlaag</h3>
-        </div>
-        <p>Start met de laag die past bij je vraag; bronnen, samenvattingen en trends blijven daarna uitklapbaar.</p>
-      </header>
-      <nav class="knowledge-research-reader__lanes" aria-label="Researchlaag kiezen">
+    <details class="knowledge-research-reader knowledge-research-lane-choice" aria-label="Research leeslaag" data-knowledge-research-reader="ready" data-knowledge-research-lane-choice="collapsed">
+      <summary class="knowledge-research-lane-choice__summary">
+        <span>
+          <small>Leeslaag</small>
+          <strong>Researchlaag openen</strong>
+        </span>
+        <em>${input.sources} bronnen</em>
+      </summary>
+      <div class="knowledge-research-lane-choice__body">
+        <header class="knowledge-research-reader__header">
+          <div>
+            <p class="kp-card__eyebrow">Leeslaag</p>
+            <h3>Kies eerst je researchlaag</h3>
+          </div>
+          <p>Start met de laag die past bij je vraag; bronnen, samenvattingen en trends blijven daarna uitklapbaar.</p>
+        </header>
+        <nav class="knowledge-research-reader__lanes" aria-label="Researchlaag kiezen">
         ${lanes
           .map(
             (lane) => `
@@ -13144,9 +13152,10 @@ function renderKnowledgeResearchReader(input: {
         </a>`,
           )
           .join('')}
-      </nav>
-      <p class="small-print">Kiempad toont hier geen dossierplaintext of OCR-tekst en geeft geen behandeladvies; gebruik de lagen als voorbereiding op gesprek met je kliniek.</p>
-    </section>
+        </nav>
+        <p class="small-print">Kiempad toont hier geen dossierplaintext of OCR-tekst en geeft geen behandeladvies; gebruik de lagen als voorbereiding op gesprek met je kliniek.</p>
+      </div>
+    </details>
   `;
 }
 
