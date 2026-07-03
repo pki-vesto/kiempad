@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1548 — Kennis bibliotheek herstelactie badges houden mobiele badgehover maxbreedte gelijk
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1547 blijven hover- en focusbadge even breed, maar de maxbreedte van hoverbadgefeedback is nog niet apart bewaakt tegen regressies waardoor hover alsnog breder kan worden dan bedoeld.
+- **User Impact:** Gebruikers kunnen op kleine schermen alsnog te brede hoverfeedback zien als maxbreedte losloopt van de compacte breedte.
+- **Desired Outcome:** Mobiele herstelbadges houden hoverfeedback binnen dezelfde compacte maxbreedte als de primaire inline size.
+- **User Value:** Gebruikers houden consistente badgefeedback zonder horizontale layoutdruk.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgehover maxbreedte blijft gelijk aan de compacte hoverbreedte op mobiel; badgehover en badgefocus houden gelijke breedte op mobiel; badgehover en badgefocus houden gelijke hoogte op mobiel; badgehover rijhoogte blijft stabiel op mobiel; badgehover minimale breedte blijft stabiel en leesbaar op mobiel; badgehovertruncatie blijft stabiel op mobiel; badgehoverbreedte blijft compact op mobiel; badgehoverachtergrond blijft rustig op mobiel; badgehoverrand blijft rustig op mobiel; badgehovertekst blijft rustig op mobiel; badgehover blijft secundair op mobiel; badgefocus blijft visueel sterker dan badgehover op mobiel; mobiele badgecascade-dekking blijft compleet; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact en getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgehover maxbreedte en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3040
+
 ### G1547 — Kennis bibliotheek herstelactie badges houden mobiele badgehover focusbreedte gelijk
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3038
 
 ### G1546 — Kennis bibliotheek herstelactie badges houden mobiele badgehover focushoogte gelijk
