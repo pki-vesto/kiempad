@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1472 — Kennis AI-samenvatting bewaren start met één compacte opslagkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1471 blijft kennis AI-samenvatting bewaren gevoelig voor samenvatting, broncontext, status en opslagactie tegelijk.
+- **User Impact:** Gebruikers die AI-samenvatting bewaren openen, krijgen nog meerdere opslagvelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat kennis AI-samenvatting bewaren starten met één compacte opslagkeuze of samengevouwen sublaag, terwijl samenvatting, broncontext, status en opslagactie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één opslagcontext kiezen zonder dat alle AI-opslagvelden tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande AI-samenvatting hooks, formulier en opslagactie blijven aanwezig; de opslagsectie start met één compacte keuze of samengevouwen sublaag; samenvatting, broncontext, status en opslagactie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, AI summary form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2888
+
 ### G1471 — Kennis AI-preview start met één compacte previewkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, AI preview form, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2886
 
 ### G1470 — Kennis bibliotheek kaartdetails start met één compacte detailkeuze

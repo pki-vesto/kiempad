@@ -427,17 +427,19 @@ const targets = [
     hash: '#kennis?route=ai',
     rootSelector: '.content',
     expectedText: 'AI-previewinvoer openen',
+    openSelectors: ['[data-knowledge-ai-preview-choice="collapsed"]'],
     requiredSelectors: [
       '[data-knowledge-ai-preview-choice="collapsed"]',
     ],
     presentSelectors: [
       '[data-knowledge-ai-console-region="preview"]',
+      '[data-knowledge-ai-preview-content-choice="collapsed"]',
       '#ai-preview-form',
       'input[name="aiBron"]',
       'textarea[name="aiBronTekst"]',
       '#ai-preview-form button[type="submit"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-ai-preview-choice="collapsed"]'],
+    closedDetailsSelectors: ['[data-knowledge-ai-preview-content-choice="collapsed"]'],
   },
   {
     screen: 'knowledge-ai-summary',

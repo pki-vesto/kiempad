@@ -38537,6 +38537,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-ai-preview-choice="collapsed"');
     expect(html).toContain('AI-previewinvoer openen');
     expect(html).toContain('Open bron, previewtekst, foutstatus en previewactie.');
+    expect(html).toContain('data-knowledge-ai-preview-content-choice="collapsed"');
+    expect(html).toContain('Previewinhoud openen');
+    expect(html).toContain('Bron, previewtekst, foutstatus en previewactie.');
     expect(html).toContain('id="knowledge-ai-support"');
     expect(html).toContain('data-knowledge-ai-support="collapsed"');
     expect(html).toContain('Opslaan, opt-in en netwerkbeheer openen');
@@ -38562,6 +38565,9 @@ describe('app shell', () => {
       html.indexOf('id="knowledge-ai-support"'),
     );
     expect(html.indexOf('data-knowledge-ai-preview-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-preview-content-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-ai-preview-content-choice="collapsed"')).toBeLessThan(
       html.indexOf('id="ai-preview-form"'),
     );
     expect(html.indexOf('id="knowledge-ai-support"')).toBeLessThan(
@@ -38587,6 +38593,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-console__preview knowledge-ai-preview-choice" data-knowledge-ai-console-region="preview" data-knowledge-ai-preview-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-ai-preview-content-choice" data-knowledge-ai-preview-content-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-summary-detail-choice" data-knowledge-ai-console-region="summary-save" data-knowledge-ai-summary-detail-choice="collapsed" open>',
@@ -39019,6 +39028,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-ai-preview-choice:not([open]) > .knowledge-ai-preview-choice__body {',
     );
+    expect(css).toContain('.knowledge-ai-preview-content-choice {');
+    expect(css).toContain('.knowledge-ai-preview-content-choice__summary {');
     expect(css).toContain('.knowledge-ai-summary-detail-choice {');
     expect(css).toContain('.knowledge-ai-summary-detail-choice__summary {');
     expect(css).toContain('.knowledge-ai-summary-detail-choice__body {');
