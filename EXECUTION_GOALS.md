@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1365 — Daily Recommendations: resetmelding bewaart sluitstatus bij her-render
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding kan lokaal gesloten worden, maar her-renders op dezelfde Dagadviesroute kunnen de tijdelijke rust later weer verstoren als de sluitstatus niet robuust genoeg wordt bewaakt.
+- **User Impact:** Gebruikers kunnen een gesloten bevestiging opnieuw zien zonder een nieuwe resetactie, wat scanrust vermindert.
+- **Desired Outcome:** Bewaar de lokale sluitstatus binnen dezelfde sessie totdat een nieuwe resetactie bewust een nieuwe melding toont.
+- **User Value:** Gebruikers houden controle over tijdelijke feedback terwijl nieuwe resetacties wel zichtbaar blijven.
+- **Acceptance Criteria:** Een gesloten reset-routefocusmelding blijft verborgen bij lokale her-render acties die geen nieuwe reset zijn; een nieuwe reset toont de melding opnieuw; browser back/forward naar een actieve feedbackfilter blijft de melding verbergen; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, routeflow smoke, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2676
+
 ### G1364 — Daily Recommendations: resetmelding sluit rustig zonder filterwijziging
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, routeflow smoke, tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2674
 
 ### G1363 — Daily Recommendations: resetmelding ondersteunt forced-colors scanstijl

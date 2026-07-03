@@ -154,6 +154,9 @@
 - **Daily advice feedback reset route-focus forced-colors style — done in G1456 / issue #2672.**
   The routefocus confirmation now uses explicit forced-colors system colors so high-contrast users
   keep a clear, non-error reset cue.
+- **Daily advice feedback reset route-focus close action — done in G1457 / issue #2674.** The
+  routefocus confirmation now has a compact local close action that hides only the temporary reset
+  cue without changing the hash, feedback filter, tracking state, or medical interpretation.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and

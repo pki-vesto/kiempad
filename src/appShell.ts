@@ -830,6 +830,7 @@ export type AppShellState = {
   medicatieImportError?: string;
   dailyRecommendationStatus?: string;
   dailyRecommendationRouteFocusStatus?: string;
+  dailyRecommendationRouteFocusDismissed?: boolean;
   dailyRecommendationFeedbackFilter?: FertilityTimelineAanbevelingFeedbackStatus;
   vraagStatus?: string;
   centralSyncFeedback?: Partial<Record<CentralSyncFeedbackKind, CentralSyncFeedbackItem>>;
@@ -14636,10 +14637,10 @@ function renderDailyAdviceConsole(
   });
 
   const routeFocusStatus =
-    state.dailyRecommendationRouteFocusStatus && !state.dailyRecommendationFeedbackFilter
-      ? statusMessage(state.dailyRecommendationRouteFocusStatus, {
-          data: { 'daily-recommendation-reset-route-focus': 'ready' },
-        })
+    state.dailyRecommendationRouteFocusStatus &&
+    !state.dailyRecommendationRouteFocusDismissed &&
+    !state.dailyRecommendationFeedbackFilter
+      ? renderDailyRecommendationRouteFocusStatus(state.dailyRecommendationRouteFocusStatus)
       : '';
 
   return renderDailyAdviceFocusShell({
@@ -14701,6 +14702,15 @@ function renderDailyAdviceConsole(
         </details>
       `,
   });
+}
+
+function renderDailyRecommendationRouteFocusStatus(status: string): string {
+  return `
+    <div class="status-message daily-recommendation-reset-route-focus" data-daily-recommendation-reset-route-focus="ready">
+      <span role="status">${escapeHtml(status)}</span>
+      <button type="button" class="daily-recommendation-reset-route-focus__close" data-daily-recommendation-reset-route-focus-close="ready" aria-label="Sluit lokale resetmelding">Sluit</button>
+    </div>
+  `;
 }
 
 function filterDailyRecommendationOverview(
