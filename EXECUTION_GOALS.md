@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1373 — Daily Recommendations: resetmelding borgt focus bij guarded hide
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft een expliciete disabled/guarded stijl voor de Verberg-knop, maar focusgedrag bij zo'n guarded state is nog niet apart geborgd.
+- **User Impact:** Gebruikers kunnen in een toekomstige guarded hide-state minder duidelijke focuscontext ervaren.
+- **Desired Outcome:** Borg dat focus niet vastloopt op een guarded Verberg-knop en de resetmelding zelf de voorspelbare focuscontext blijft.
+- **User Value:** De resetfeedback blijft toegankelijk en voorspelbaar, ook als een hide-actie tijdelijk bewaakt wordt.
+- **Acceptance Criteria:** Guarded hide-state behoudt focuscontext op de resetmelding of een bruikbare knop; er ontstaat geen focusval of layout shift; de focusguard verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, focus management, tests
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2692
+
 ### G1372 — Daily Recommendations: resetmelding borgt disabled/verberg-state
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, button states, CSS tests
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2690
 
 ### G1371 — Daily Recommendations: resetmelding borgt active-state op touch

@@ -14224,6 +14224,15 @@ a.action-card:active {
     color: HighlightText;
   }
 
+  .daily-recommendation-reset-route-focus__close:disabled,
+  .daily-recommendation-reset-route-focus__close[aria-disabled="true"] {
+    border-color: GrayText;
+    background: Canvas;
+    box-shadow: none;
+    color: GrayText;
+    opacity: 1;
+  }
+
   #dossier-upload-form,
   #consult-verslag-form,
   #embryo-quality-form,
@@ -15020,6 +15029,16 @@ a.action-card:active {
   color: var(--text);
 }
 
+.daily-recommendation-reset-route-focus__close:disabled,
+.daily-recommendation-reset-route-focus__close[aria-disabled="true"] {
+  border-color: var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 84%, var(--border-soft));
+  box-shadow: none;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
 @media (max-width: 759px) {
   [data-daily-recommendation-reset-route-focus="ready"] {
     width: 100%;
@@ -15046,6 +15065,12 @@ a.action-card:active {
     border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
     background: color-mix(in srgb, var(--accent) 8%, var(--surface));
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+
+  .daily-recommendation-reset-route-focus__close:disabled,
+  .daily-recommendation-reset-route-focus__close[aria-disabled="true"] {
+    min-height: 32px;
+    opacity: 0.78;
   }
 }
 
