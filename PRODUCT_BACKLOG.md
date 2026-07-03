@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1361 |
+| ☑ klaar | 1362 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1560** |
+| **Totaal** | **1561** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1722,13 +1722,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1558 | Kennis bibliotheek herstelactie badges houden mobiele badgehover minimum onder breedteplafond | P1 | F5 | ☑ |
 | G1559 | Kennis bibliotheek herstelactie badges houden mobiele badgehover minimum onder maxbreedte | P1 | F5 | ☑ |
 | G1560 | Kennis bibliotheek herstelactie badges houden mobiele badgehover minimum onder inlinebreedte | P1 | F5 | ☑ |
-| G1561 | Kennis bibliotheek herstelactie badges houden mobiele badgehover minimum onder flexbasis | P1 | F5 | ☐ |
+| G1561 | Kennis bibliotheek herstelactie badges houden mobiele badgehover minimum onder flexbasis | P1 | F5 | ☑ |
+| G1562 | Kennis bibliotheek herstelactie badges houden mobiele badgehover minimumrelaties compleet | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1560** (id's G001 t/m G1561; G1423 is een eerder gesloten GitHub-issue en
+- **Totaal doelen: 1561** (id's G001 t/m G1562; G1423 is een eerder gesloten GitHub-issue en
   wordt niet hergebruikt) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
