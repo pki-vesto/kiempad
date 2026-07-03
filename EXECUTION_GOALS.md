@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1543 — Kennis bibliotheek herstelactie badges houden mobiele badgehover truncatie stabiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1542 blijft badgehoverbreedte compact, maar de truncatie-instellingen zijn nog niet apart bewaakt tegen regressies waardoor lange feedbacktekst kan overlopen.
+- **User Impact:** Gebruikers kunnen op kleine schermen alsnog lange hoverfeedback zien die rijhoogte, actielabels of bereikbaarheid verstoort.
+- **Desired Outcome:** Mobiele herstelbadges blijven lange hoverfeedback stabiel afkappen zonder rijhoogte, actielabels of bereikbaarheid te verstoren.
+- **User Value:** Gebruikers houden compacte herstelacties met voorspelbare feedback, ook bij langere labels.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgehovertruncatie blijft stabiel op mobiel; badgehoverbreedte blijft compact op mobiel; badgehoverachtergrond blijft rustig op mobiel; badgehoverrand blijft rustig op mobiel; badgehovertekst blijft rustig op mobiel; badgehover blijft secundair op mobiel; badgefocus blijft visueel sterker dan badgehover op mobiel; mobiele badgecascade-dekking blijft compleet; mobiele labelcascade-dekking blijft compleet; badgefeedback blijft compact en getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele badgehovertruncatie en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3030
+
 ### G1542 — Kennis bibliotheek herstelactie badges houden mobiele badgehover breedte compact
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3028
 
 ### G1541 — Kennis bibliotheek herstelactie badges houden mobiele badgehover achtergrond rustig
