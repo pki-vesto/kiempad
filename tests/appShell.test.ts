@@ -3235,6 +3235,9 @@ describe('app shell', () => {
     expect(css).toContain('outline: 1px solid ButtonText;');
     expect(css).toContain('outline: 2px solid Highlight;');
     expect(css).toContain('outline-offset: 2px;');
+    expect(css).toContain('@media (forced-colors: active)');
+    expect(css).toContain('outline-offset: 0;');
+    expect(css).toContain('outline-offset: 1px;');
     expect(css).toContain('.daily-recommendation-list--dual-owner {');
     expect(css).toContain('.daily-recommendation-dual-owner-lane {');
     expect(css).toContain(
