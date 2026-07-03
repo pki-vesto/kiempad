@@ -11,6 +11,8 @@ export const KENNIS_CATEGORIE_LABELS: Record<KennisItem['categorie'], string> = 
 export type KennisFilter = {
   zoekterm?: string;
   categorie?: KennisItem['categorie'];
+  bron?: string;
+  verificatie?: 'verified' | 'concept';
 };
 
 export type ResearchBron = {
@@ -873,10 +875,14 @@ export function filterKennisItems(
   filter: KennisFilter = {},
 ): KennisItem[] {
   const zoekterm = filter.zoekterm?.trim().toLowerCase();
+  const bron = filter.bron?.trim().toLowerCase();
 
   return sorteerKennisItems(
     items.filter((item) => {
       if (filter.categorie && item.categorie !== filter.categorie) return false;
+      if (filter.verificatie === 'verified' && !item.geverifieerd_met_arts) return false;
+      if (filter.verificatie === 'concept' && item.geverifieerd_met_arts) return false;
+      if (bron && !(item.bron ?? '').toLowerCase().includes(bron)) return false;
       if (!zoekterm) return true;
 
       return [item.titel, item.inhoud, item.bron ?? '', KENNIS_CATEGORIE_LABELS[item.categorie]]

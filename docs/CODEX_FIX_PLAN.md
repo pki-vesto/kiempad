@@ -1266,6 +1266,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   AI-context choice while summary save, AI settings and research network context remain reachable.
   Partial G1440/#2824: The knowledge add follow-up now starts with one closed compact
   add-context choice while own knowledge input and note context remain reachable.
+  Partial G1441/#2826: The knowledge filter context now starts with one closed compact
+  filter choice while category, source and verification filters remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

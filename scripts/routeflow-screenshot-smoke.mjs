@@ -107,6 +107,27 @@ const targets = [
     ],
   },
   {
+    screen: 'knowledge-filter',
+    hash: '#kennis?route=read',
+    rootSelector: '.content',
+    expectedText: 'Kennisbank',
+    openSelectors: ['[data-knowledge-workbench-disclosure="collapsed"]'],
+    requiredSelectors: [
+      '[data-knowledge-filter-choice="collapsed"]',
+    ],
+    presentSelectors: [
+      '#knowledge-filter-form',
+      '[data-knowledge-filter-kit="ready"]',
+      '.knowledge-filter-kit__fields',
+      '.knowledge-filter-kit__actions',
+      'input[name="kennisZoekterm"]',
+      'select[name="kennisCategorie"]',
+      'input[name="kennisBronFilter"]',
+      'select[name="kennisVerificatie"]',
+    ],
+    closedDetailsSelectors: ['[data-knowledge-filter-choice="collapsed"]'],
+  },
+  {
     screen: 'knowledge-library',
     hash: '#kennis?route=library',
     rootSelector: '[data-knowledge-focus-shell="ready"]',

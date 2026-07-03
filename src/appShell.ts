@@ -13254,11 +13254,26 @@ function renderEigenKennisItemForm(item?: KennisItem): string {
 
 function renderKennisFilterForm(filter: KennisFilter): string {
   const zoekterm = filter.zoekterm?.trim() ?? '';
+  const bron = filter.bron?.trim() ?? '';
   const categorieLabel = filter.categorie ? KENNIS_CATEGORIE_LABELS[filter.categorie] : '';
-  const activeFilterCount = (zoekterm ? 1 : 0) + (filter.categorie ? 1 : 0);
+  const verificatieLabel =
+    filter.verificatie === 'verified'
+      ? 'artsreview'
+      : filter.verificatie === 'concept'
+        ? 'concept'
+        : '';
+  const activeFilterCount =
+    (zoekterm ? 1 : 0) + (filter.categorie ? 1 : 0) + (bron ? 1 : 0) + (filter.verificatie ? 1 : 0);
   const status =
     activeFilterCount > 0
-      ? `${activeFilterCount} actief: ${[zoekterm ? `zoekterm "${zoekterm}"` : '', categorieLabel ? `categorie ${categorieLabel}` : ''].filter(Boolean).join(' · ')}`
+      ? `${activeFilterCount} actief: ${[
+          zoekterm ? `zoekterm "${zoekterm}"` : '',
+          categorieLabel ? `categorie ${categorieLabel}` : '',
+          bron ? `bron "${bron}"` : '',
+          verificatieLabel ? `status ${verificatieLabel}` : '',
+        ]
+          .filter(Boolean)
+          .join(' · ')}`
       : 'Geen filter actief';
 
   return `
@@ -13270,25 +13285,48 @@ function renderKennisFilterForm(filter: KennisFilter): string {
         </div>
         <span>${escapeHtml(status)}</span>
       </header>
-      <div class="knowledge-filter-kit__fields">
-        <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
-          Zoek
-          <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
-        </label>
-        <label class="knowledge-filter-kit__field">
-          Categorie
-          <select name="kennisCategorie">
-            <option value="">Alle categorieën</option>
-            ${Object.entries(KENNIS_CATEGORIE_LABELS)
-              .map(([value, label]) => renderOption(value, label, filter.categorie))
-              .join('')}
-          </select>
-        </label>
-      </div>
-      <div class="knowledge-filter-kit__actions">
-        <button type="submit" name="filterAction" value="apply">Filter kennis</button>
-        <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
-      </div>
+      <details class="knowledge-filter-choice" data-knowledge-filter-choice="collapsed">
+        <summary class="knowledge-filter-choice__summary">
+          <span>
+            <strong>Filters kiezen</strong>
+            <small>Open daarna zoekterm, categorie, bron of verificatie</small>
+          </span>
+          <em>${escapeHtml(activeFilterCount > 0 ? `${activeFilterCount} actief` : 'Geen filter')}</em>
+        </summary>
+        <div class="knowledge-filter-choice__body">
+          <div class="knowledge-filter-kit__fields">
+            <label class="knowledge-filter-kit__field knowledge-filter-kit__field--search">
+              Zoek
+              <input name="kennisZoekterm" value="${escapeAttribute(filter.zoekterm ?? '')}" autocomplete="off" />
+            </label>
+            <label class="knowledge-filter-kit__field">
+              Categorie
+              <select name="kennisCategorie">
+                <option value="">Alle categorieën</option>
+                ${Object.entries(KENNIS_CATEGORIE_LABELS)
+                  .map(([value, label]) => renderOption(value, label, filter.categorie))
+                  .join('')}
+              </select>
+            </label>
+            <label class="knowledge-filter-kit__field">
+              Bron
+              <input name="kennisBronFilter" value="${escapeAttribute(filter.bron ?? '')}" autocomplete="off" />
+            </label>
+            <label class="knowledge-filter-kit__field">
+              Verificatie
+              <select name="kennisVerificatie">
+                <option value="">Alle statussen</option>
+                ${renderOption('verified', 'Artsreview', filter.verificatie)}
+                ${renderOption('concept', 'Concept', filter.verificatie)}
+              </select>
+            </label>
+          </div>
+          <div class="knowledge-filter-kit__actions">
+            <button type="submit" name="filterAction" value="apply">Filter kennis</button>
+            <button class="phase-button secondary" type="submit" name="filterAction" value="clear">Wis filter</button>
+          </div>
+        </div>
+      </details>
     </form>
   `;
 }
