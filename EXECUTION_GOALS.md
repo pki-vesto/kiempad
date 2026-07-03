@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1491 — Kennis bibliotheek herstelacties beperken feedback tot microcopy
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1490 tonen herstelacties compacte actiefeedback, maar de microcopy is nog niet apart bewaakt op korte lengte en scanbaarheid.
+- **User Impact:** Gebruikers krijgen feedback, maar langere labels kunnen opnieuw onrust of overflow veroorzaken.
+- **Desired Outcome:** Bewaar korte feedbacklabels per herstelactie en voorkom dat routecopy op desktop, tablet of mobiel uitgroeit tot brede tekstblokken.
+- **User Value:** Gebruikers kunnen de herstelroute snel scannen zonder extra leeslast.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; herstelactiefeedback blijft korte microcopy per actie; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken microcopylengte en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery actions, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2926
+
 ### G1490 — Kennis bibliotheek herstelacties tonen compacte actiefeedback
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery actions, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2924
 
 ### G1489 — Kennis bibliotheek herstelkeuze opent acties in compacte actievolgorde
