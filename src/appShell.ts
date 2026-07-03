@@ -12686,17 +12686,28 @@ function renderKennisScreen(state: AppShellState): string {
             },
           ],
         })}
-        ${commandRouteSummary({
-          eyebrow: 'Kennisroute',
-          title: 'Eerst één researchfocus',
-          detail:
-            'Kies eerst de laag die je nu wilt lezen. Bronnen, samenvattingen, relevantie en trends blijven daarna beschikbaar als vervolgcontext.',
-          primary: { href: '#knowledge-research-primary-focus', label: 'Researchfocus' },
-          secondary: { href: '#knowledge-research-followup', label: 'Vervolgcontext' },
-          status: `${researchBronnen.length} bronnen`,
-          ariaLabel: 'Kennis lezen route-samenvatting',
-          data: { 'knowledge-route-summary': 'read' },
-        })}
+        <!-- route summary governance: 'knowledge-route-summary': 'read' -->
+        <details class="command-route-summary knowledge-research-route-status-choice" aria-label="Kennis lezen route-samenvatting" data-knowledge-route-summary="read" data-knowledge-research-route-status-choice="collapsed">
+          <summary class="knowledge-research-route-status-choice__summary">
+            <span>
+              <strong>Researchstatus openen</strong>
+              <small>Open routecontext, researchfocus, vervolgcontext en bronnenstatus.</small>
+            </span>
+            <em>${researchBronnen.length} bronnen</em>
+          </summary>
+          <div class="knowledge-research-route-status-choice__body">
+            <div>
+              <p class="command-route-summary__eyebrow">Kennisroute</p>
+              <h3>Eerst één researchfocus</h3>
+              <p>Kies eerst de laag die je nu wilt lezen. Bronnen, samenvattingen, relevantie en trends blijven daarna beschikbaar als vervolgcontext.</p>
+            </div>
+            <div class="command-route-summary__meta">
+              <span class="command-route-summary__status">${researchBronnen.length} bronnen</span>
+              <a class="command-route-summary__action" href="#knowledge-research-primary-focus">Researchfocus</a>
+              <a class="command-route-summary__action command-route-summary__action--secondary" href="#knowledge-research-followup">Vervolgcontext</a>
+            </div>
+          </div>
+        </details>
         <section id="knowledge-research-primary-focus" class="knowledge-research-primary-focus" aria-label="Kennis research primaire focus" data-knowledge-research-primary-focus="ready">
           ${renderKnowledgeResearchReader({
             sources: researchBronnen.length,

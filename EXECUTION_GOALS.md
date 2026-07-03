@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1458 — Kennis research workflowkop start met één compacte routekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1457 blijft de kennis research workflowkop gevoelig voor meerdere route-tabs, tellingen en vervolgankers tegelijk.
+- **User Impact:** Gebruikers die research lezen, krijgen nog tab- en routestatussen voordat ze rustig één route kunnen kiezen.
+- **Desired Outcome:** Laat de kennis research workflowkop starten met één compacte routekeuze of samengevouwen sublaag, terwijl Research, Samenvattingen, Trends en Toevoegen bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één routekeuze scannen zonder dat alle researchtabs tegelijk de bovenkant van de werkruimte domineren.
+- **Acceptance Criteria:** Bestaande knowledge research workflowhooks, routehashes en workflowtabs blijven aanwezig; de research workflowkop start met één compacte routekeuze of samengevouwen sublaag; Research, Samenvattingen, Trends en Toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research workflow header, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2860
+
 ### G1457 — Kennis researchroute routekop start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge research route summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2858
 
 ### G1456 — Kennis toevoegroute routekop start met één compacte statuskeuze

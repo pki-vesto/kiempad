@@ -38338,6 +38338,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-route="library"');
     expect(html).toContain('aria-label="Kennis lezen route-samenvatting"');
     expect(html).toContain('data-knowledge-route-summary="read"');
+    expect(html).toContain('data-knowledge-research-route-status-choice="collapsed"');
+    expect(html).toContain('Researchstatus openen');
+    expect(html).toContain('Open routecontext, researchfocus, vervolgcontext en bronnenstatus.');
     expect(html).toContain('Eerst één researchfocus');
     expect(html).toContain('href="#knowledge-research-primary-focus"');
     expect(html).toContain('href="#knowledge-research-followup"');
@@ -38370,6 +38373,12 @@ describe('app shell', () => {
     );
     expect(html.indexOf('data-knowledge-research-context-choice="collapsed"')).toBeLessThan(
       html.indexOf('data-knowledge-research-disclosure="sources"'),
+    );
+    expect(html.indexOf('data-knowledge-research-route-status-choice="collapsed"')).toBeLessThan(
+      html.indexOf('href="#knowledge-research-primary-focus"'),
+    );
+    expect(html).not.toContain(
+      '<details class="command-route-summary knowledge-research-route-status-choice" aria-label="Kennis lezen route-samenvatting" data-knowledge-route-summary="read" data-knowledge-research-route-status-choice="collapsed" open>',
     );
     expect(html).not.toContain('<details id="knowledge-research-followup" open');
     expect(html).not.toContain(
@@ -38764,6 +38773,11 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-research-context-choice:not([open]) > .knowledge-research-context-choice__body {',
     );
+    expect(css).toContain('.knowledge-research-route-status-choice {');
+    expect(css).toContain('.knowledge-research-route-status-choice__summary {');
+    expect(css).toContain('.knowledge-research-route-status-choice__body {');
+    expect(css).toContain('.knowledge-research-route-status-choice:not([open])');
+    expect(css).toContain('> .knowledge-research-route-status-choice__body {');
     expect(css).toContain('@media (max-width: 960px) {');
     expect(css).toContain('.knowledge-focus-shell__workspace .domain-split-workspace {');
     expect(css).toContain('.knowledge-library-route-status-choice {');

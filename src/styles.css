@@ -7598,6 +7598,97 @@ h2 {
   margin: 0;
 }
 
+.knowledge-research-route-status-choice {
+  display: grid;
+  align-self: start;
+  gap: 0;
+  min-width: 0;
+}
+
+.knowledge-research-route-status-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.knowledge-research-route-status-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-research-route-status-choice__summary::after {
+  content: "+";
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid color-mix(in srgb, var(--category) 18%, var(--border));
+  border-radius: 999px;
+  color: var(--category);
+  font-size: 1rem;
+  font-weight: 850;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.knowledge-research-route-status-choice[open]
+  > .knowledge-research-route-status-choice__summary::after {
+  content: "-";
+}
+
+.knowledge-research-route-status-choice__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.knowledge-research-route-status-choice__summary strong,
+.knowledge-research-route-status-choice__summary small,
+.knowledge-research-route-status-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-research-route-status-choice__summary strong {
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+
+.knowledge-research-route-status-choice__summary small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.knowledge-research-route-status-choice__summary em {
+  justify-self: end;
+  color: var(--category);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.knowledge-research-route-status-choice__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+  padding-top: 12px;
+}
+
+.knowledge-research-route-status-choice:not([open])
+  > .knowledge-research-route-status-choice__body {
+  display: none;
+}
+
 .knowledge-add-route-status-choice {
   display: grid;
   align-self: start;
@@ -21328,6 +21419,19 @@ a.action-card:active {
     flex: 0 0 min(218px, 74vw);
     min-height: 104px;
     scroll-snap-align: start;
+  }
+
+  .knowledge-research-route-status-choice__summary {
+    grid-template-columns: minmax(0, 1fr) 28px;
+  }
+
+  .knowledge-research-route-status-choice__summary em {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .knowledge-research-route-status-choice__body {
+    grid-template-columns: 1fr;
   }
 
   .knowledge-add-route-status-choice__summary {
