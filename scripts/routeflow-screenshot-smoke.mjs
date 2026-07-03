@@ -285,7 +285,7 @@ const targets = [
     screen: 'knowledge-add',
     hash: '#kennis?route=add',
     rootSelector: '[data-knowledge-focus-shell="ready"]',
-    expectedText: 'Nieuwe kennis toevoegen zonder leesruis',
+    expectedText: 'Toevoegstatus openen',
     activeRouteSelector: '[data-knowledge-route="add"][data-knowledge-route-state="active"]',
     inactiveRouteSelector: '[data-knowledge-route-state="inactive"]',
     requiredSelectors: [
@@ -296,6 +296,7 @@ const targets = [
       '[data-knowledge-workbench-disclosure="collapsed"]',
       '#knowledge-route-add',
       '[data-knowledge-route-summary="add"]',
+      '[data-knowledge-add-route-status-choice="collapsed"]',
       '[data-knowledge-add-layout="single-input"]',
       '[data-knowledge-add-primary="research"]',
       '#research-item-form',
@@ -304,11 +305,15 @@ const targets = [
       '[data-knowledge-add-context-choice="collapsed"]',
     ],
     presentSelectors: [
+      'a[href="#research-item-form"]',
+      'a[href="#knowledge-own-item-disclosure"]',
+      '.command-route-summary__status',
       '[data-knowledge-add-secondary="own-item"]',
       '#knowledge-item-form',
     ],
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
+      '[data-knowledge-add-route-status-choice="collapsed"]',
       '[data-knowledge-add-followup="own-item"]',
       '[data-knowledge-add-context-choice="collapsed"]',
     ],

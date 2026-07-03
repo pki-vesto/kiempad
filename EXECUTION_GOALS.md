@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1457 — Kennis researchroute routekop start met één compacte statuskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1456 blijft de kennis researchroute routekop gevoelig voor routecontext, primaire researchanker, vervolgcontextanker en bronnenstatus tegelijk.
+- **User Impact:** Gebruikers die research lezen, krijgen nog meerdere route- en statussignalen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis researchroute routekop starten met één compacte statuskeuze of samengevouwen sublaag, terwijl routecontext, primaire researchanker, vervolgcontextanker en bronnenstatus bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één researchstatus lezen zonder dat routekop, ankers en bronnenstatus de leesroute domineren.
+- **Acceptance Criteria:** Bestaande kennis researchroutehooks, routehashes, primaire researchanker, vervolgcontextanker en bronnenstatus blijven aanwezig; de researchroutekop start met één compacte statuskeuze of samengevouwen sublaag; routecontext, primaire researchanker, vervolgcontextanker en bronnenstatus blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge research route summary, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2858
+
 ### G1456 — Kennis toevoegroute routekop start met één compacte statuskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge add route summary, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2856
 
 ### G1455 — Kennis bibliotheek routekop start met één compacte statuskeuze
