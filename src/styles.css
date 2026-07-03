@@ -23892,9 +23892,11 @@ a.action-card:active {
     .knowledge-library-followup-visibility-choice__anchor:focus-visible
     .knowledge-library-empty-recovery-choice__feedback {
     align-items: center;
+    background: color-mix(in srgb, var(--surface) 86%, var(--category));
     block-size: 22px;
-    color: color-mix(in srgb, var(--text) 92%, var(--text-muted));
-    font-weight: 800;
+    border-color: color-mix(in srgb, var(--category) 20%, var(--border-strong));
+    color: color-mix(in srgb, var(--text) 88%, var(--text-muted));
+    font-weight: 760;
     inline-size: min(12ch, 38%);
     justify-content: center;
     opacity: 1;
