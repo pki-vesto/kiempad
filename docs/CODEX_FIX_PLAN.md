@@ -1353,6 +1353,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1480/#2904: The knowledge library route follow-up actions now start with one closed
   compact action choice while the category anchor, follow-up anchor, card details and route
   context remain reachable.
+  Partial G1481/#2906: The knowledge library follow-up context now starts with one closed compact
+  context-panel choice while categories, cards, edit actions and visibility remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

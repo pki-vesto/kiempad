@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1482 — Kennis bibliotheek categoriekaarten starten met één compacte kaartkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1481 blijft de Kennis Bibliotheek categoriekaartlaag gevoelig voor categoriekaarten, tellingen, routeankers en bibliotheekvervolg tegelijk.
+- **User Impact:** Gebruikers die categoriekaarten openen, moeten nog meerdere kaart- en routekeuzes scannen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de Kennis Bibliotheek categoriekaarten starten met één compacte kaartkeuze of samengevouwen sublaag, terwijl categoriekaarten, tellingen, routeankers en bibliotheekvervolg bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één kaartcontext kiezen zonder dat alle categoriekaarten tegelijk aandacht vragen.
+- **Acceptance Criteria:** Bestaande categoriekaart-, routeanker- en followup-hooks blijven aanwezig; de categoriekaartlaag start met één compacte keuze of samengevouwen sublaag; categoriekaarten, tellingen, routeankers en bibliotheekvervolg blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library category choice, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2908
+
 ### G1481 — Kennis bibliotheek vervolgcontext start met één compacte contextkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library follow-up context, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2906
 
 ### G1480 — Kennis bibliotheek route vervolgacties starten met één compacte actie-keuze
