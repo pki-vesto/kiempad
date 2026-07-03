@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1512 — Kennis bibliotheek herstelactie badges houden mobiele focuscentrering zichtbaar
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1511 is mobiele centrering consistent bewaakt, maar de zichtbaarheid van die centrering binnen de focusstate is nog niet apart bewaakt.
+- **User Impact:** Gebruikers kunnen tijdens focus subtiele onrust ervaren als focusfeedback de badgecopy visueel uit het midden drukt.
+- **Desired Outcome:** Mobiele badgecopy blijft tijdens focus zichtbaar gecentreerd binnen de badgebox zonder dat focusfeedback de inhoud verdringt.
+- **User Value:** Gebruikers houden duidelijke, rustige routefeedback bij toetsenbord- en touchfocus.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgecopy blijft zichtbaar gecentreerd tijdens focus; badge-inhoud blijft consistent gecentreerd in rust, hover en focus; badgeboxmaten blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiele focuscentrering en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2968
+
 ### G1511 — Kennis bibliotheek herstelactie badges houden mobiele centrering consistent
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2966
 
 ### G1510 — Kennis bibliotheek herstelactie badges houden mobiele inhoud gecentreerd
