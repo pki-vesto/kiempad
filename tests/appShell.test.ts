@@ -38564,6 +38564,9 @@ describe('app shell', () => {
     expect(html).toContain('data-knowledge-ai-network-choice="collapsed"');
     expect(html).toContain('Researchnetwerk openen');
     expect(html).toContain('Open research-opt-in, aggregatieplan, PubMed-preview en bronregister.');
+    expect(html).toContain('data-knowledge-ai-network-content-choice="collapsed"');
+    expect(html).toContain('Netwerkvelden openen');
+    expect(html).toContain('Research-opt-in, aggregatieplan, PubMed-preview en bronregister.');
     expect(html.indexOf('data-knowledge-ai-route-status-choice="collapsed"')).toBeLessThan(
       html.indexOf('href="#ai-preview-form"'),
     );
@@ -38595,6 +38598,9 @@ describe('app shell', () => {
       html.indexOf('id="ai-settings-form"'),
     );
     expect(html.indexOf('data-knowledge-ai-network-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-ai-network-content-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-ai-network-content-choice="collapsed"')).toBeLessThan(
       html.indexOf('id="research-network-form"'),
     );
     expect(html).not.toContain(
@@ -38617,6 +38623,9 @@ describe('app shell', () => {
     );
     expect(html).not.toContain(
       '<details class="summary-panel knowledge-ai-settings-choice" data-knowledge-ai-console-region="settings" data-knowledge-ai-settings-choice="collapsed" open>',
+    );
+    expect(html).not.toContain(
+      '<details class="knowledge-ai-network-content-choice" data-knowledge-ai-network-content-choice="collapsed" open>',
     );
     expect(html).not.toContain(
       '<details class="knowledge-ai-settings-fields-choice" data-knowledge-ai-settings-fields-choice="collapsed" open>',
@@ -39071,6 +39080,8 @@ describe('app shell', () => {
     expect(css).toContain(
       '.knowledge-ai-network-choice:not([open]) > .knowledge-ai-network-choice__body {',
     );
+    expect(css).toContain('.knowledge-ai-network-content-choice {');
+    expect(css).toContain('.knowledge-ai-network-content-choice__summary {');
     expect(css).toContain(
       '.knowledge-ai-support-context-choice__body > .summary-panel:first-child {',
     );

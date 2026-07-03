@@ -9243,6 +9243,98 @@ h2 {
   display: none;
 }
 
+.knowledge-ai-network-content-choice {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--category) 16%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 91%, var(--surface-2));
+}
+
+.knowledge-ai-network-content-choice__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 11px;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.knowledge-ai-network-content-choice__summary::-webkit-details-marker {
+  display: none;
+}
+
+.knowledge-ai-network-content-choice__summary::after {
+  content: "+";
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid color-mix(in srgb, var(--category) 22%, var(--border));
+  border-radius: 999px;
+  color: var(--category-strong);
+  font-weight: 850;
+}
+
+.knowledge-ai-network-content-choice[open] > .knowledge-ai-network-content-choice__summary::after {
+  content: "-";
+}
+
+.knowledge-ai-network-content-choice__summary span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.knowledge-ai-network-content-choice__summary strong,
+.knowledge-ai-network-content-choice__summary small,
+.knowledge-ai-network-content-choice__summary em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.knowledge-ai-network-content-choice__summary strong {
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.knowledge-ai-network-content-choice__summary small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.knowledge-ai-network-content-choice__summary em {
+  max-width: 132px;
+  overflow: hidden;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--category) 22%, var(--border));
+  border-radius: var(--radius-pill);
+  color: var(--category-strong);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.knowledge-ai-network-content-choice__body {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 9px 9px;
+}
+
+.knowledge-ai-network-content-choice:not([open]) > .knowledge-ai-network-content-choice__body {
+  display: none;
+}
+
 .knowledge-ai-support-context-choice__body > .summary-panel {
   min-width: 0;
 }
