@@ -39195,6 +39195,10 @@ describe('app shell', () => {
     expect(css).toContain('flex-shrink: 0;');
     expect(css).toContain('min-height: 44px;');
     expect(css).toContain('touch-action: manipulation;');
+    expect(css).toContain(
+      'outline: 2px solid color-mix(in srgb, var(--category) 52%, var(--accent));',
+    );
+    expect(css).toContain('outline-offset: 2px;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice:not([open])');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
