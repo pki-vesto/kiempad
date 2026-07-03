@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1514 — Kennis bibliotheek herstelactie badges houden mobiele focuscopy secundair
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1513 blijft mobiele focuscopy leesbaar, maar de secundaire visuele rol van die copy binnen de compacte badge is nog niet apart bewaakt.
+- **User Impact:** Gebruikers kunnen de badgefeedback als te nadrukkelijk ervaren als focuscopy even zwaar voelt als het primaire actielabel.
+- **Desired Outcome:** Mobiele focuscopy blijft duidelijk leesbaar en tegelijk secundair naast het primaire actielabel.
+- **User Value:** Gebruikers krijgen duidelijke routefeedback zonder dat de compacte badge de keuze-inhoud overheerst.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; badgecopy blijft leesbaar tijdens focus zonder visueel dominant te worden; badgecopy blijft zichtbaar gecentreerd tijdens focus; badge-inhoud blijft consistent gecentreerd in rust, hover en focus; badgeboxmaten blijven stabiel op mobiel; badgecopy blijft rustig getrunceerd op mobiel; badgekolom blijft compact en secundair; primaire actielabels blijven scanbaar op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken secundaire mobiele focuscopy en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2972
+
 ### G1513 — Kennis bibliotheek herstelactie badges houden mobiele focuscopy leesbaar
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2970
 
 ### G1512 — Kennis bibliotheek herstelactie badges houden mobiele focuscentrering zichtbaar
