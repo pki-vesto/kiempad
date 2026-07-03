@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1386 — Dossier Upload: keuzevariant toont niet twee routekeuzes tegelijk
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Dossier-upload keuzevariant toont zowel de uploadtriage als de toevoegselector met keuzekaart.
+- **User Impact:** De eerste viewport voelt dubbel en druk, alsof gebruikers twee routekeuzes achter elkaar moeten verwerken.
+- **Desired Outcome:** Toon in de keuzevariant één duidelijke triagekeuze en maak de formulierconsole pas prominent bij een concrete toevoegroute.
+- **User Value:** Uploaden start rustiger: eerst kiezen wat je wilt toevoegen, daarna pas het bijbehorende formulier openen.
+- **Acceptance Criteria:** De keuzevariant toont niet tegelijk een volledige triagekaartlaag en een tweede zichtbare toevoegselector/keuzekaart; concrete routes voor document, consult, embryokwaliteit, embryostatus en review blijven bereikbaar via dezelfde hashankers; de actieve toevoegroute behoudt de compacte tabselector en het juiste formulierpaneel; mobiel ontstaat geen extra horizontale pagina-scroll, overlap of verborgen formuliercontract; tests of routeflow-smoke bewaken keuzevariant, actieve routes, privacygrenzen en bestaande uploadhooks.
+- **Affected Screens:** Dossier upload
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, dossier upload, responsive CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☑ klaar
+- **Issue:** #2718
+
 ### G1385 — Dossier Upload: compacte toevoegstroom tabs in plaats van kaartlaag
 
 - **Epic:** Onboarding & Daily Use
