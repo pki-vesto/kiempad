@@ -38333,12 +38333,24 @@ describe('app shell', () => {
     expect(html).toContain('id="knowledge-own-item-disclosure"');
     expect(html).toContain('data-knowledge-add-followup="own-item"');
     expect(html).toContain('Eigen kennisitem openen');
+    expect(html).toContain('data-knowledge-add-context-choice="collapsed"');
+    expect(html).toContain('Kies toevoegcontext');
+    expect(html).toContain('Open daarna eigen kennisitem of notitiecontext');
     expect(html).toContain('data-knowledge-add-secondary="own-item"');
     expect(html).toContain('id="knowledge-item-form"');
     expect(html.indexOf('data-knowledge-add-primary="research"')).toBeLessThan(
       html.indexOf('id="knowledge-own-item-disclosure"'),
     );
+    expect(html.indexOf('id="knowledge-own-item-disclosure"')).toBeLessThan(
+      html.indexOf('data-knowledge-add-context-choice="collapsed"'),
+    );
+    expect(html.indexOf('data-knowledge-add-context-choice="collapsed"')).toBeLessThan(
+      html.indexOf('data-knowledge-add-secondary="own-item"'),
+    );
     expect(html).not.toContain('<details id="knowledge-own-item-disclosure" open');
+    expect(html).not.toContain(
+      '<details class="knowledge-add-context-choice" data-knowledge-add-context-choice="collapsed" open>',
+    );
     expect(html).toContain('data-knowledge-route-summary="ai"');
     expect(html).toContain('Start met een gecontroleerde AI-preview');
     expect(html).toContain('href="#ai-preview-form"');
@@ -38618,6 +38630,12 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-filter-kit__header {');
     expect(css).toContain('.knowledge-filter-kit__fields {');
     expect(css).toContain('.knowledge-filter-kit__actions {');
+    expect(css).toContain('.knowledge-add-context-choice {');
+    expect(css).toContain('.knowledge-add-context-choice__summary {');
+    expect(css).toContain('.knowledge-add-context-choice__body {');
+    expect(css).toContain(
+      '.knowledge-add-context-choice:not([open]) > .knowledge-add-context-choice__body {',
+    );
     expect(css).toContain('.knowledge-ai-console {');
     expect(css).toContain('.knowledge-ai-support__summary {');
     expect(css).toContain('.knowledge-ai-support__body {');
