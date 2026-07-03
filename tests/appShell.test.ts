@@ -2291,6 +2291,11 @@ describe('app shell', () => {
     expect(css).toContain('.schedule-task-routes {');
     expect(css).toContain('.medication-task-routes {');
     expect(css).toContain('.question-task-routes {');
+    expect(css).toContain('.question-management-console {');
+    expect(css).toContain('.question-management-primary {');
+    expect(css).toContain('.question-management-followup {');
+    expect(css).toContain('.question-management-followup__summary {');
+    expect(css).toContain('.question-management-followup__body {');
     expect(css).toContain('.question-open-toolbar {');
     expect(css).toContain('.question-open-toolbar__actions {');
     expect(css).toContain('.question-form__prompt {');
@@ -6456,6 +6461,23 @@ describe('app shell', () => {
     expect(html).toContain(
       'class="status-message question-save-feedback save-feedback" role="status" aria-live="polite" data-save-feedback="question-beheer" data-question-save-feedback="beheer"',
     );
+    expect(html).toContain(
+      'De vraaginvoer staat vooraan. Open vragen, voorbereiding, verslagen en alle vragen open je pas als vervolgcontext.',
+    );
+    expect(html).toContain('href="#question-management-followup"');
+    expect(html).toContain('data-question-management-layout="single-input"');
+    expect(html).toContain('data-question-management-primary="vraag-form"');
+    expect(html).toContain('id="question-management-followup"');
+    expect(html).toContain('data-question-management-followup="collapsed"');
+    expect(html).toContain('Vervolgcontext openen');
+    expect(html).toContain('href="#vragen?route=open"');
+    expect(html).toContain('href="#vragen?route=voorbereiden"');
+    expect(html).toContain('href="#vragen?route=verslagen"');
+    expect(html).toContain('href="#vragen?route=alle"');
+    expect(html.indexOf('data-question-management-primary="vraag-form"')).toBeLessThan(
+      html.indexOf('id="question-management-followup"'),
+    );
+    expect(html).not.toContain('<details id="question-management-followup" open');
     expect(html).toContain('id="vragen-route-verslagen"');
     expect(html).toContain('data-question-route="verslagen"');
     expect(html).toContain('id="vragen-route-alle"');

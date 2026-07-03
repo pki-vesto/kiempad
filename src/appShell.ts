@@ -15334,19 +15334,36 @@ function renderVragenScreen(state: AppShellState): string {
           eyebrow: 'Beheer',
           title: selected ? 'Geselecteerde vraag bewerken' : 'Nieuwe vraag vastleggen',
           detail:
-            'Vraag, afspraakkoppeling, prioriteit en antwoord blijven in één beheerroute, los van open vragen en verslagen.',
+            'De vraaginvoer staat vooraan. Open vragen, voorbereiding, verslagen en alle vragen open je pas als vervolgcontext.',
           status: `${state.vragen.length} totaal`,
           primary: { href: '#vraag-form', label: selected ? 'Vraag bewerken' : 'Vraag toevoegen' },
-          secondary: { href: '#vragen?route=open', label: 'Open vragen' },
+          secondary: { href: '#question-management-followup', label: 'Vervolgcontext' },
           data: { 'question-route-summary': 'beheer' },
           ariaLabel: 'Vraagbeheer route-samenvatting',
         })}
         ${renderVraagStatus(state.vraagStatus, 'beheer')}
-        ${disclosure({
-          summary: selected ? 'Vraag bewerken' : 'Vraag toevoegen',
-          open: !selected,
-          body: renderVraagForm(selected, state.afspraken),
-        })}
+        <div class="question-management-console" data-question-management-layout="single-input">
+          <div class="summary-panel question-management-primary" data-question-management-primary="vraag-form">
+            <h3>${selected ? 'Vraag bewerken' : 'Vraag toevoegen'}</h3>
+            <p class="small-print">Leg alleen de vraag, afspraakcontext, prioriteit en eventueel antwoord vast. Kiempad geeft geen diagnose of behandeladvies.</p>
+            ${renderVraagForm(selected, state.afspraken)}
+          </div>
+          <details id="question-management-followup" class="kp-disclosure question-management-followup" data-question-management-followup="collapsed">
+            <summary class="kp-disclosure__summary question-management-followup__summary">
+              <span>
+                <strong>Vervolgcontext openen</strong>
+                <small>Bekijk open vragen, voorbereiding, verslagen of de volledige lijst pas na de vraagtaak.</small>
+              </span>
+              <em>${state.vragen.length} totaal</em>
+            </summary>
+            <div class="kp-disclosure__body question-management-followup__body">
+              <a href="#vragen?route=open">Open vragen</a>
+              <a href="#vragen?route=voorbereiden">Voorbereiden</a>
+              <a href="#vragen?route=verslagen">Verslagen</a>
+              <a href="#vragen?route=alle">Alle vragen</a>
+            </div>
+          </details>
+        </div>
       </section>`,
     `<section id="vragen-route-verslagen" class="question-route-section command-route-section" aria-labelledby="vragen-route-verslagen-title" data-question-route="verslagen"${renderQuestionRouteVisibility(activeQuestionRoute, 'verslagen')}>
         <header class="question-route-section__header command-route-section__header">

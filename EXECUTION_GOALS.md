@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1397 — Logboek: privacy start met één controlelaag
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Logboek Privacy moet rustig blijven als één controlelaag en mag niet opnieuw aanvoelen als een wand met auditregels, export en herstelcontext.
+- **User Impact:** Gebruikers kunnen bij privacycontrole alsnog door meerdere technische logboeklagen moeten scannen voordat de hoofdcontrole duidelijk is.
+- **Desired Outcome:** Start met één primaire privacycontrole en houd auditregels, export en herstelcontext als rustige vervolgstap bereikbaar.
+- **User Value:** Gebruikers controleren eerst de privacylaag en openen auditcontext pas wanneer nodig.
+- **Acceptance Criteria:** Logboek Privacy toont één primaire privacycontrole in de eerste viewport; auditregels, export en herstelcontext blijven bereikbaar via bestaande hashroutes, formulier-id's en data-hooks; de route-samenvatting verwijst naar vervolgcontext zonder extra lijstwand te tonen; er komt geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies bij; tests of routeflow-smoke bewaken volgorde, gesloten vervolgcontext, hooks en mobiele non-overlap.
+- **Affected Screens:** Logboek, Privacy
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, event log route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2740
+
 ### G1396 — Vragen: beheer start met één vraagtaak
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, question route, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2738
 
 ### G1395 — Traject: faseplanning start met één fasetaak
