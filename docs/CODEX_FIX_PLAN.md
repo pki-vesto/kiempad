@@ -1453,6 +1453,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   primary label focus color calmer and below the global desktop weight.
   Partial G1530/#3004: The knowledge library empty-state recovery actions now keep mobile
   primary label hover color calmer than focus.
+  Partial G1531/#3006: The knowledge library empty-state recovery actions now keep mobile
+  primary label focus weight stable even when hover is also active.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

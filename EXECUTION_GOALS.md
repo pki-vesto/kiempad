@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1532 — Kennis bibliotheek herstelactie badges houden mobiele hoverlabel gewicht stabiel
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1531 blijft het mobiele focusgewicht stabiel, maar het hovergewicht van primaire actielabels is nog niet apart bewaakt tegen latere regressies.
+- **User Impact:** Gebruikers kunnen op kleine schermen te zware of te subtiele hoverlabels zien als het gewicht later verschuift.
+- **Desired Outcome:** Mobiele herstelactielabels behouden tijdens hover een stabiel en rustig gewicht naast secundaire badgefeedback.
+- **User Value:** Gebruikers houden rustige pointerfeedback terwijl de actielabels goed scanbaar blijven.
+- **Acceptance Criteria:** Bestaande lege-staat-, herstelkeuze-, herstelactie-, actiefeedback-, microcopy-, badge-, badge-hover-, mobiele flow-, tapruimte-, focusring-, focusruimte-, actieve-route-, hovercursor-, statuscontext-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; hovergewicht van primaire labellijn blijft stabiel en rustig op mobiel; focusgewicht van primaire labellijn blijft stabiel en rustig op mobiel; hoverkleur van primaire labellijn blijft rustig op mobiel; primaire labellijn blijft rustig getrunceerd op mobiel; herstelacties blijven actief en klikbaar; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken mobiel hovergewicht en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #3008
+
 ### G1531 — Kennis bibliotheek herstelactie badges houden mobiele focuslabel gewicht stabiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library empty recovery action labels and hover/focus badges, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #3006
 
 ### G1530 — Kennis bibliotheek herstelactie badges houden mobiele hoverlabel kleur rustig

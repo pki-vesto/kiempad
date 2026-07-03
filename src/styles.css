@@ -23898,6 +23898,13 @@ a.action-card:active {
     font-weight: 850;
   }
 
+  .knowledge-library-empty-recovery-choice__body
+    .knowledge-library-followup-visibility-choice__anchor:focus-visible
+    .knowledge-library-empty-recovery-choice__label {
+    color: color-mix(in srgb, var(--category) 76%, var(--text));
+    font-weight: 860;
+  }
+
   .knowledge-library-empty-recovery-choice__feedback {
     display: inline-flex;
     align-items: center;
