@@ -2993,6 +2993,8 @@ describe('app shell', () => {
     expect(css).toContain(':invalid');
     expect(css).toContain('::-webkit-datetime-edit');
     expect(css).toContain('::-webkit-calendar-picker-indicator');
+    expect(css).toContain('.date-format-hint {');
+    expect(css).toContain('font-size: 0.76rem;');
   });
 
   it('bewaakt de startwerkbank als zichtbare multi-flow laag', () => {
@@ -40558,6 +40560,8 @@ describe('app shell', () => {
     );
     expect(html).toContain('class="finance-form-field finance-form-field--wide"');
     expect(html).toContain('class="finance-form-field finance-amount-field"');
+    expect(html).toContain('class="date-format-hint" data-date-format-hint="finance"');
+    expect(html).toContain('Gebruik dd-mm-jjjj');
     expect(html).toContain('class="finance-amount-input" data-finance-amount-input="ready"');
     expect(html).toContain('<span aria-hidden="true">€</span>');
     expect(html).toContain('class="finance-form-actions"');

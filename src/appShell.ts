@@ -14083,6 +14083,7 @@ function renderKostenForm(selected?: CostItem): string {
         <label class="finance-form-field">
           Datum
           <input name="datum" type="date" value="${escapeAttribute(selected?.datum ?? '')}" required />
+          <span class="date-format-hint" data-date-format-hint="finance">Gebruik dd-mm-jjjj</span>
         </label>
         <label class="finance-form-field finance-amount-field">
           Bedrag
