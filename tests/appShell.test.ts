@@ -3174,6 +3174,13 @@ describe('app shell', () => {
     expect(css).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
     expect(css).toContain('.daily-advice-focus-shell__workflow,');
     expect(css).toContain('.daily-advice-focus-shell__workbench > .daily-advice-workbench,');
+    expect(css).toContain('.daily-advice-owner-choice {');
+    expect(css).toContain('.daily-advice-owner-choice__route {');
+    expect(css).toContain('.daily-advice-owner-details {');
+    expect(css).toContain('.daily-advice-owner-details__body {');
+    expect(css).toContain(
+      '.daily-advice-owner-details:not([open]) > .daily-advice-owner-details__body {',
+    );
     expect(css).toContain('.daily-advice-snapshot {');
     expect(css).toContain('grid-template-columns: repeat(4, minmax(0, 1fr));');
     expect(css).toContain('.daily-advice-snapshot__card {');
@@ -3567,6 +3574,23 @@ describe('app shell', () => {
     expect(emptyContextRecommendations).toContain('data-daily-advice-workbench="owner-routes"');
     expect(emptyContextRecommendations).toContain('aria-label="Dagadvies werkbank"');
     expect(emptyContextRecommendations).toContain('Dagadvies per persoon kiezen');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-choice="ready"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-choice-route="vrouw"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-choice-route="man"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-choice-route="samen"');
+    expect(emptyContextRecommendations).toContain('data-daily-advice-owner-details="collapsed"');
+    expect(emptyContextRecommendations).toContain('Open eigenaaroverzicht');
+    expect(emptyContextRecommendations).not.toContain(
+      '<details class="kp-disclosure daily-advice-owner-details" data-daily-advice-owner-details="collapsed" open',
+    );
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-owner-choice="ready"'),
+    ).toBeLessThan(
+      emptyContextRecommendations.indexOf('data-daily-advice-owner-details="collapsed"'),
+    );
+    expect(
+      emptyContextRecommendations.indexOf('data-daily-advice-owner-choice-route="vrouw"'),
+    ).toBeLessThan(emptyContextRecommendations.indexOf('data-daily-advice-snapshot="ready"'));
     expect(emptyContextRecommendations).toContain('data-daily-advice-snapshot="ready"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-snapshot-card="today"');
     expect(emptyContextRecommendations).toContain('data-daily-advice-snapshot-card="review"');
