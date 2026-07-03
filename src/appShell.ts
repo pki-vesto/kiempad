@@ -214,8 +214,7 @@ import {
 import { escapeAttribute, escapeHtml } from './ui/escape';
 
 export const DISCLAIMER =
-  'Kiempad is een persoonlijke informatie- en organisatietool, geen medisch hulpmiddel ' +
-  'en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
+  'Kiempad is geen medisch hulpmiddel en geen vervanging van medisch advies. Schema’s en doseringen volgen altijd de kliniek.';
 
 type AppEmptyStateOptions = Omit<Parameters<typeof richEmptyState>[0], 'message'>;
 
