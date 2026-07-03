@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1466 — Kennis research werkbankstatus start met één compacte metricskeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1465 blijft de research werkbankstatus gevoelig voor netwerkstatus, zichtbaar aantal en researchmetrics tegelijk.
+- **User Impact:** Gebruikers die de werkbankstatus openen, krijgen nog meerdere metricregels voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis research werkbankstatus starten met één compacte metricskeuze of samengevouwen sublaag, terwijl netwerkstatus, zichtbaar aantal en researchmetrics bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één statuscontext kiezen zonder dat alle werkbankmetrics tegelijk de contextlaag domineren.
+- **Acceptance Criteria:** Bestaande werkbankstatus hooks en metrics blijven aanwezig; de statuscontext start met één compacte keuze of samengevouwen sublaag; netwerkstatus, zichtbaar aantal, bronnen, samenvattingen, trends en items blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research workbench status, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2876
+
 ### G1465 — Kennis research snapshot start met één compacte scankeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, research snapshot, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2874
 
 ### G1464 — Kennis research trendpaneel start met één compacte trendkeuze

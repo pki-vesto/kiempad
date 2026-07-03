@@ -1314,6 +1314,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   summary choice while scientific and plain-language summaries remain reachable.
   Partial G1464/#2872: The knowledge research trends panel now starts with one closed compact
   trend choice while relevance, dossier relations and trend groups remain reachable.
+  Partial G1465/#2874: The knowledge research snapshot now starts with one closed compact
+  snapshot route choice while source, summary, trend and network cards remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

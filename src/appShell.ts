@@ -13253,28 +13253,39 @@ function renderKnowledgeResearchSnapshot(input: {
         <em>${input.researchBronnen} bron${input.researchBronnen === 1 ? '' : 'nen'}</em>
       </summary>
       <div class="knowledge-research-scan-choice__body">
-        <section class="knowledge-research-snapshot" aria-label="Researchscan" data-knowledge-research-snapshot="ready">
-          <a class="knowledge-research-snapshot__card" href="#kennis?route=read" data-knowledge-research-snapshot-card="sources">
-            <span>Bronnen</span>
-            <strong>${input.researchBronnen} bron${input.researchBronnen === 1 ? '' : 'nen'}</strong>
-            <small>Start met bron en publicatiedatum.</small>
-          </a>
-          <a class="knowledge-research-snapshot__card" href="#knowledge-research-summaries" data-knowledge-research-snapshot-card="summaries">
-            <span>Samenvattingen</span>
-            <strong>${input.researchSamenvattingen} item${input.researchSamenvattingen === 1 ? '' : 's'}</strong>
-            <small>Wetenschappelijk en eenvoudig naast elkaar.</small>
-          </a>
-          <a class="knowledge-research-snapshot__card" href="#knowledge-research-trends" data-knowledge-research-snapshot-card="trends">
-            <span>Trends</span>
-            <strong>${input.researchTrends} groep${input.researchTrends === 1 ? '' : 'en'}</strong>
-            <small>Alleen lokale groepering, geen bewijsweging.</small>
-          </a>
-          <a class="knowledge-research-snapshot__card" href="#kennis?route=ai" data-knowledge-research-snapshot-card="network">
-            <span>Netwerk</span>
-            <strong>${input.netwerkAan ? 'Opt-in aan' : 'Lokale cache'}</strong>
-            <small>${formatKnowledgeVisibleCount(input.kennisItems, input.totalKennisItems)}</small>
-          </a>
-        </section>
+        <details class="knowledge-research-snapshot-choice" data-knowledge-research-snapshot-choice="collapsed">
+          <summary class="knowledge-research-snapshot-choice__summary">
+            <span>
+              <strong>Snapshotroutes openen</strong>
+              <small>Bronnen, samenvattingen, trends en netwerkstatus.</small>
+            </span>
+            <em>${input.researchSamenvattingen} samenvattingen</em>
+          </summary>
+          <div class="knowledge-research-snapshot-choice__body">
+            <section class="knowledge-research-snapshot" aria-label="Researchscan" data-knowledge-research-snapshot="ready">
+              <a class="knowledge-research-snapshot__card" href="#kennis?route=read" data-knowledge-research-snapshot-card="sources">
+                <span>Bronnen</span>
+                <strong>${input.researchBronnen} bron${input.researchBronnen === 1 ? '' : 'nen'}</strong>
+                <small>Start met bron en publicatiedatum.</small>
+              </a>
+              <a class="knowledge-research-snapshot__card" href="#knowledge-research-summaries" data-knowledge-research-snapshot-card="summaries">
+                <span>Samenvattingen</span>
+                <strong>${input.researchSamenvattingen} item${input.researchSamenvattingen === 1 ? '' : 's'}</strong>
+                <small>Wetenschappelijk en eenvoudig naast elkaar.</small>
+              </a>
+              <a class="knowledge-research-snapshot__card" href="#knowledge-research-trends" data-knowledge-research-snapshot-card="trends">
+                <span>Trends</span>
+                <strong>${input.researchTrends} groep${input.researchTrends === 1 ? '' : 'en'}</strong>
+                <small>Alleen lokale groepering, geen bewijsweging.</small>
+              </a>
+              <a class="knowledge-research-snapshot__card" href="#kennis?route=ai" data-knowledge-research-snapshot-card="network">
+                <span>Netwerk</span>
+                <strong>${input.netwerkAan ? 'Opt-in aan' : 'Lokale cache'}</strong>
+                <small>${formatKnowledgeVisibleCount(input.kennisItems, input.totalKennisItems)}</small>
+              </a>
+            </section>
+          </div>
+        </details>
       </div>
     </details>
   `;
