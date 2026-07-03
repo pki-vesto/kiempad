@@ -21178,7 +21178,8 @@ summary[class*="__summary"]:focus-visible,
   line-height: 1.35;
 }
 
-.dossier-required-map {
+.dossier-required-map,
+.form-required-map {
   display: grid;
   grid-column: 1 / -1;
   gap: 8px;
@@ -21189,20 +21190,23 @@ summary[class*="__summary"]:focus-visible,
   background: color-mix(in srgb, var(--accent) 6%, var(--surface));
 }
 
-.dossier-required-map strong {
+.dossier-required-map strong,
+.form-required-map strong {
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 850;
 }
 
-.dossier-required-map div[role="list"] {
+.dossier-required-map div[role="list"],
+.form-required-map div[role="list"] {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
   min-width: 0;
 }
 
-.dossier-required-map span[role="listitem"] {
+.dossier-required-map span[role="listitem"],
+.form-required-map span[role="listitem"] {
   display: inline-flex;
   align-items: center;
   min-height: 30px;
@@ -21217,7 +21221,8 @@ summary[class*="__summary"]:focus-visible,
   overflow-wrap: anywhere;
 }
 
-.dossier-required-map span[role="listitem"]::before {
+.dossier-required-map span[role="listitem"]::before,
+.form-required-map span[role="listitem"]::before {
   content: "!";
   display: inline-grid;
   flex: 0 0 auto;

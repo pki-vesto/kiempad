@@ -13625,6 +13625,7 @@ function renderEigenKennisItemForm(item?: KennisItem): string {
         Inhoud
         <textarea name="kennisInhoud" rows="4" required>${escapeHtml(item?.inhoud ?? '')}</textarea>
       </label>
+      ${renderFormRequiredMap('knowledge-item', 'Verplicht voor kennisitem', ['Titel', 'Inhoud'])}
       <div class="command-form-actions" data-knowledge-form-actions="knowledge-item">
         <button type="submit">${item ? 'Werk kennisitem bij' : 'Bewaar kennisitem'}</button>
         <a class="form-cancel-link" href="#kennis?route=bibliotheek" data-form-cancel-action="knowledge-item">Annuleer</a>
@@ -13647,6 +13648,17 @@ function renderEigenKennisItemForm(item?: KennisItem): string {
         ${form}
       </div>
     </details>
+  `;
+}
+
+function renderFormRequiredMap(kind: string, title: string, fields: readonly string[]): string {
+  return `
+    <section class="form-required-map" data-form-required-map="${escapeAttribute(kind)}" aria-label="${escapeAttribute(title)}">
+      <strong>${escapeHtml(title)}</strong>
+      <div role="list">
+        ${fields.map((field) => `<span role="listitem">${escapeHtml(field)}</span>`).join('')}
+      </div>
+    </section>
   `;
 }
 
@@ -14232,6 +14244,7 @@ function renderResearchItemForm(): string {
             Relevantie voor jullie dossiercontext
             <textarea name="researchRelevantieVoorGebruiker" rows="4" placeholder="Waarom is dit achtergrondinformatie om met de kliniek te bespreken? Geen behandeladvies of keuze."></textarea>
           </label>
+          ${renderFormRequiredMap('knowledge-research', 'Verplicht voor research', ['Titel', 'Notitie'])}
           <div class="command-form-actions" data-knowledge-form-actions="research">
             <button type="submit">Bewaar research</button>
             <a class="form-cancel-link" href="#kennis?route=bibliotheek" data-form-cancel-action="knowledge-research">Annuleer</a>
@@ -14627,6 +14640,7 @@ function renderAiPreviewForm(preview?: AiSamenvattingPayload, error?: string): s
             Tekst voor preview
             <textarea name="aiBronTekst" rows="5" required>${escapeHtml(preview?.tekst ?? '')}</textarea>
           </label>
+          ${renderFormRequiredMap('knowledge-ai-preview', 'Verplicht voor payload-preview', ['Bron', 'Tekst voor preview'])}
           <div class="command-form-actions" data-knowledge-form-actions="ai-preview">
             <button type="submit">Toon payload-preview</button>
             <a class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-preview">Annuleer</a>
@@ -14692,6 +14706,7 @@ function renderAiSummaryForm(preview?: AiSamenvattingPayload): string {
             Samenvatting
             <textarea name="aiSamenvatting" rows="5" required></textarea>
           </label>
+          ${renderFormRequiredMap('knowledge-ai-summary', 'Verplicht voor AI-samenvatting', ['Titel', 'Bron', 'Samenvatting'])}
           <div class="command-form-actions" data-knowledge-form-actions="ai-summary">
             <button type="submit">Bewaar als kennisitem</button>
             <a class="form-cancel-link" href="#kennis?route=ai" data-form-cancel-action="knowledge-ai-summary">Annuleer</a>
