@@ -37072,20 +37072,31 @@ describe('app shell', () => {
     expect(html).toContain('data-wellbeing-route-summary="log"');
     expect(html).toContain('Eerst check-in, daarna eventueel verdiepen');
     expect(html).toContain(
+      'De check-in staat vooraan; symptoomlog en cyclusmeting blijven samen beschikbaar als gesloten vervolgstap.',
+    );
+    expect(html).toContain('href="#welzijn-log-extra-panel"');
+    expect(html).toContain(
       'class="wellbeing-log-console" aria-label="Welzijn vastleggen" data-wellbeing-log-console="ready"',
     );
     expect(html).toContain(
       'class="wellbeing-log-console__primary" data-wellbeing-log-primary="check-in"',
     );
-    expect(html).toContain('class="wellbeing-log-console__continuations"');
+    expect(html).toContain('id="welzijn-log-extra-panel"');
+    expect(html).toContain('data-wellbeing-log-extra="collapsed"');
+    expect(html).toContain('Symptoom of cyclusmeting toevoegen');
+    expect(html).toContain('class="kp-disclosure__body wellbeing-log-console__continuations"');
     expect(html).toContain('id="welzijn-log-symptom-panel"');
     expect(html).toContain('id="welzijn-log-cycle-panel"');
     expect(html.indexOf('data-wellbeing-log-primary="check-in"')).toBeLessThan(
+      html.indexOf('id="welzijn-log-extra-panel"'),
+    );
+    expect(html.indexOf('id="welzijn-log-extra-panel"')).toBeLessThan(
       html.indexOf('id="welzijn-log-symptom-panel"'),
     );
     expect(html.indexOf('id="welzijn-log-symptom-panel"')).toBeLessThan(
       html.indexOf('id="welzijn-log-cycle-panel"'),
     );
+    expect(html).not.toContain('<details id="welzijn-log-extra-panel" open');
     expect(html).toContain('Welzijn en trends');
     expect(html).toContain('Check-ins, symptomen en cyclusmetingen');
     expect(html).toContain('Check-in, symptoom of cyclusmeting toevoegen');
@@ -37199,6 +37210,8 @@ describe('app shell', () => {
     expect(css).toContain('.wellbeing-log-console__header {');
     expect(css).toContain('.wellbeing-log-console__primary {');
     expect(css).toContain('.wellbeing-log-console__continuations {');
+    expect(css).toContain('.wellbeing-log-extra {');
+    expect(css).toContain('.wellbeing-log-extra__summary {');
     expect(css).toContain('.wellbeing-checkin-form {');
     expect(css).toContain('.wellbeing-checkin-form__section {');
     expect(css).toContain('.wellbeing-checkin-form__section--primary {');

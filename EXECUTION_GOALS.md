@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1390 — Welzijn: vastleggen start met één check-in taak
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Welzijn-route Vastleggen start met een primaire check-in, maar toont daaronder direct twee losse vervolgpanelen voor symptoomlog en cyclusmeting.
+- **User Impact:** De route voelt nog steeds als meerdere invoertaken op één pagina.
+- **Desired Outcome:** Start met één primaire mentale check-in en groepeer extra registraties in één gesloten vervolgstap.
+- **User Value:** Gebruikers kunnen eerst hun check-in vastleggen en openen extra feitelijke registraties pas wanneer nodig.
+- **Acceptance Criteria:** Welzijn Vastleggen toont één primaire check-in invoer in de eerste viewport; symptoomlog en cyclusmeting blijven aanwezig met dezelfde formulier-id's en data-hooks maar starten samen in één gesloten disclosure; de route-samenvatting verwijst naar de vervolgstap in plaats van losse panelen; er komt geen diagnose, score, medisch advies, tracking of extra dossierdata bij; tests bewaken volgorde, gesloten vervolgstap, formulierhooks en mobiele non-overlap.
+- **Affected Screens:** Welzijn, Vastleggen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, wellbeing route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☑ klaar
+- **Issue:** #2726
+
 ### G1389 — Back-up: controleren start met één statuslaag
 
 - **Epic:** Reliability & Operations

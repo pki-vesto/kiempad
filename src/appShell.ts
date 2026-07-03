@@ -11729,9 +11729,9 @@ function renderWelzijnScreen(state: AppShellState): string {
           eyebrow: 'Welzijnsroute',
           title: 'Eerst check-in, daarna eventueel verdiepen',
           detail:
-            'De check-in staat vooraan; symptoomlog en cyclusmeting blijven als aparte vervolgpanelen beschikbaar.',
+            'De check-in staat vooraan; symptoomlog en cyclusmeting blijven samen beschikbaar als gesloten vervolgstap.',
           primary: { href: '#mental-check-in-form', label: 'Check-in' },
-          secondary: { href: '#welzijn-log-symptom-panel', label: 'Symptoom' },
+          secondary: { href: '#welzijn-log-extra-panel', label: 'Extra registratie' },
           status: `${cycleData.length} metingen`,
           ariaLabel: 'Welzijn vastleggen route-samenvatting',
           data: { 'wellbeing-route-summary': 'log' },
@@ -11884,24 +11884,27 @@ function renderWellbeingLogConsole(state: AppShellState): string {
       <div class="wellbeing-log-console__primary" data-wellbeing-log-primary="check-in">
         ${renderMentalCheckInForm(state.settings)}
       </div>
-      <div class="wellbeing-log-console__continuations" aria-label="Extra welzijnsregistraties">
-        ${disclosure({
-          id: 'welzijn-log-symptom-panel',
-          summary: 'Symptoomlog toevoegen',
-          body: `<div class="wellbeing-log-panel" data-wellbeing-log-panel="symptom">
+      <details id="welzijn-log-extra-panel" class="kp-disclosure wellbeing-log-extra" data-wellbeing-log-extra="collapsed">
+        <summary class="kp-disclosure__summary wellbeing-log-extra__summary">
+          <span>
+            <strong>Symptoom of cyclusmeting toevoegen</strong>
+            <small>Open alleen voor extra feitelijke registratie naast de check-in.</small>
+          </span>
+          <em>Optioneel</em>
+        </summary>
+        <div class="kp-disclosure__body wellbeing-log-console__continuations" aria-label="Extra welzijnsregistraties">
+          <div id="welzijn-log-symptom-panel" class="wellbeing-log-panel" data-wellbeing-log-panel="symptom">
+            <h3>Symptoomlog toevoegen</h3>
             <p class="small-print">Gebruik dit alleen voor een concrete observatie op een datum.</p>
             ${renderSymptomLogForm(state.settings)}
-          </div>`,
-        })}
-        ${disclosure({
-          id: 'welzijn-log-cycle-panel',
-          summary: 'Cyclusmeting toevoegen',
-          body: `<div class="wellbeing-log-panel" data-wellbeing-log-panel="cycle">
+          </div>
+          <div id="welzijn-log-cycle-panel" class="wellbeing-log-panel" data-wellbeing-log-panel="cycle">
+            <h3>Cyclusmeting toevoegen</h3>
             <p class="small-print">Registreer een feitelijke meting zonder interpretatie of advies.</p>
             ${renderCycleDataForm()}
-          </div>`,
-        })}
-      </div>
+          </div>
+        </div>
+      </details>
     </section>
   `;
 }
