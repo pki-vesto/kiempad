@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1463 — Kennis research samenvattingenpaneel start met één compacte samenvattingkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1462 blijft het research samenvattingenpaneel gevoelig voor wetenschappelijke en eenvoudige samenvattingen tegelijk.
+- **User Impact:** Gebruikers die samenvattingen openen, krijgen nog meerdere samenvattingslagen voordat ze gericht kiezen.
+- **Desired Outcome:** Laat het kennis research samenvattingenpaneel starten met één compacte samenvattingkeuze of samengevouwen sublaag, terwijl wetenschappelijke en eenvoudige samenvattingen bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één samenvattingkeuze maken zonder dat alle samenvattingsinhoud tegelijk de detailcontext domineert.
+- **Acceptance Criteria:** Bestaande research summary hooks, disclosure ids en routehashes blijven aanwezig; het samenvattingenpaneel start met één compacte samenvattingkeuze of samengevouwen sublaag; wetenschappelijke en eenvoudige samenvattingen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Research
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research summaries panel, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2870
+
 ### G1462 — Kennis research bronnenpaneel start met één compacte bronnenkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, research sources panel, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2868
 
 ### G1461 — Kennis research nested contextkeuze start met één compacte detailkeuze
