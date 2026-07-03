@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1452 — Kennis AI previewformulier start met één compacte invoerkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1451 blijft het kennis AI-previewformulier direct gevoelig voor bron, previewtekst, foutstatus en previewactie tegelijk.
+- **User Impact:** Gebruikers die de AI-route openen, krijgen nog invoervelden voordat ze bewust kiezen of ze een preview willen maken.
+- **Desired Outcome:** Laat het kennis AI-previewformulier starten met één compacte invoerkeuze of samengevouwen sublaag, terwijl bron, previewtekst, foutstatus en previewactie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst bepalen of ze preview-invoer willen openen zonder dat de AI-route meteen formulierwerk toont.
+- **Acceptance Criteria:** Bestaande kennis AI previewhooks, veldnamen, foutstatus, routehashes en submitactie blijven aanwezig; het AI-previewformulier start met één compacte invoerkeuze of samengevouwen sublaag; bron, previewtekst, foutstatus en previewactie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, AI
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge AI preview, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2848
+
 ### G1451 — Kennis AI researchnetwerk start met één compacte netwerkkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge AI research network, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2846
 
 ### G1450 — Kennis AI instellingen starten met één compacte instellingkeuze
