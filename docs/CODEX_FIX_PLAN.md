@@ -1206,6 +1206,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   visible directly under the document form; they remain available in one disclosure.
   Partial G1409/#2764: Dossier document upload now starts with one visible file choice; metadata,
   links, image/lab context and upload privacy remain available as closed follow-up context.
+  Partial G1410/#2766: Opening the upload metadata panel now shows one closed control-list choice
+  before date, recognition, OCR preview and concept confirmation fields appear.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

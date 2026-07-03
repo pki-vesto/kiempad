@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1211 |
+| ☑ klaar | 1212 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1410** |
+| **Totaal** | **1411** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1572,13 +1572,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1407 | Dagadvies: eigenaarcontext start met één eigenaarroute | P1 | F5 | ☑ |
 | G1408 | Dagadvies: workflowkop start met één routekeuze | P1 | F5 | ☑ |
 | G1409 | Dossier upload: uploadroute start met één bestandskeuze | P1 | F5 | ☑ |
-| G1410 | Dossier upload: metadatapaneel start met één controlekeuze | P1 | F5 | ☐ |
+| G1410 | Dossier upload: metadatapaneel start met één controlekeuze | P1 | F5 | ☑ |
+| G1411 | Dossier upload: koppelingenpaneel start met één koppelkeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1410** (id's G001 t/m G1410, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1411** (id's G001 t/m G1411, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).

@@ -3400,48 +3400,54 @@ function renderDossierScreen(state: AppShellState): string {
               <span>Metadata en controle</span>
               <small>Datum, titel, herkenning en conceptcontrole</small>
             </summary>
-            <fieldset class="dossier-upload-group" data-dossier-upload-group="document-metadata" data-dossier-context-priority="optional" data-dossier-field-section="document-metadata" data-dossier-field-section-label="Stap 2 · metadata">
-              <legend>Metadata en controle</legend>
-            <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload-review">
-              Controleer datum en conceptrecords voordat je opslaat.
-            </p>
-            <label>
-              Datum document
-              <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
-            </label>
-            <label>
-              Titel of reeksnaam
-              <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: bloeduitslagen voorjaar" />
-            </label>
-            <label>
-              Categorie
-              <select name="categorie">
-                ${Object.entries(DOSSIER_CATEGORIE_LABELS)
-                  .map(([value, label]) => renderOption(value, label, 'onderzoek'))
-                  .join('')}
-              </select>
-            </label>
-            <label>
-              Uploadprofiel
-              <select name="uploadProfiel">
-                <option value="">Automatisch herkennen</option>
-                ${Object.entries(DOSSIER_UPLOAD_PROFIEL_LABELS)
-                  .map(([value, label]) => renderOption(value, label))
-                  .join('')}
-              </select>
-            </label>
-            <label class="check-row">
-              <input name="lokaleOcr" type="checkbox" value="ja" />
-              Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
-            </label>
-            <div id="dossier-concept-preview" class="linked-note" aria-live="polite">
-              Kies bestanden om conceptrecords lokaal te controleren vóór opslag.
-            </div>
-            <label class="check-row">
-              <input name="conceptBevestigd" type="checkbox" value="ja" required />
-              Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
-            </label>
-            </fieldset>
+            <details class="dossier-upload-optional dossier-upload-metadata-fields" data-dossier-upload-metadata-fields="collapsed">
+              <summary class="dossier-upload-optional__summary">
+                <span>Controlelijst openen</span>
+                <small>Datum, herkenning, OCR en conceptreview</small>
+              </summary>
+              <fieldset class="dossier-upload-group" data-dossier-upload-group="document-metadata" data-dossier-context-priority="optional" data-dossier-field-section="document-metadata" data-dossier-field-section-label="Stap 2 · metadata">
+                <legend>Metadata en controle</legend>
+              <p class="dossier-required-cue" data-dossier-required-cue="dossier-upload-review">
+                Controleer datum en conceptrecords voordat je opslaat.
+              </p>
+              <label>
+                Datum document
+                <input name="datum" type="date" required value="${new Date().toISOString().slice(0, 10)}" />
+              </label>
+              <label>
+                Titel of reeksnaam
+                <input name="titel" autocomplete="off" placeholder="Bijvoorbeeld: bloeduitslagen voorjaar" />
+              </label>
+              <label>
+                Categorie
+                <select name="categorie">
+                  ${Object.entries(DOSSIER_CATEGORIE_LABELS)
+                    .map(([value, label]) => renderOption(value, label, 'onderzoek'))
+                    .join('')}
+                </select>
+              </label>
+              <label>
+                Uploadprofiel
+                <select name="uploadProfiel">
+                  <option value="">Automatisch herkennen</option>
+                  ${Object.entries(DOSSIER_UPLOAD_PROFIEL_LABELS)
+                    .map(([value, label]) => renderOption(value, label))
+                    .join('')}
+                </select>
+              </label>
+              <label class="check-row">
+                <input name="lokaleOcr" type="checkbox" value="ja" />
+                Lokale OCR-pipeline starten voor tekstherkenning op dit toestel
+              </label>
+              <div id="dossier-concept-preview" class="linked-note" aria-live="polite">
+                Kies bestanden om conceptrecords lokaal te controleren vóór opslag.
+              </div>
+              <label class="check-row">
+                <input name="conceptBevestigd" type="checkbox" value="ja" required />
+                Conceptrecords gecontroleerd en waar nodig datum, categorie, uploadprofiel of koppelingen aangepast
+              </label>
+              </fieldset>
+            </details>
           </details>
           <details class="dossier-upload-optional" data-dossier-upload-optional="koppelingen">
             <summary class="dossier-upload-optional__summary">
