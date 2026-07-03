@@ -1700,24 +1700,47 @@ function renderLogboekScreen(state: AppShellState): string {
           eyebrow: 'Logboekroute',
           title: 'Privacyregels apart controleren',
           detail:
-            'Hoog-risico auditregels openen alleen in deze route, zodat gevoelige context niet ongevraagd in beeld staat.',
-          primary: { href: '#logboek-privacy-disclosure', label: 'Privacy openen' },
+            'De privacycontrole staat vooraan. Auditregels en routecontext open je pas als vervolgcontext.',
+          primary: { href: '#eventlog-privacy-primary', label: 'Privacycontrole' },
+          secondary: { href: '#logboek-privacy-disclosure', label: 'Vervolgcontext' },
           status: `${highRiskLogs.length} signalen`,
           ariaLabel: 'Logboek privacy route-samenvatting',
           data: { 'eventlog-route-summary': 'privacy' },
         })}
-        <details id="logboek-privacy-disclosure" class="kp-disclosure" data-eventlog-disclosure="privacy">
-          <summary class="kp-disclosure__summary">Privacygevoelige auditregels openen</summary>
-          <div class="kp-disclosure__body">
-            ${
-              highRiskLogs.length > 0
-                ? renderEventLogTimeline(highRiskLogs, 'privacy')
-                : renderEmptyState('Geen privacygevoelige gebeurtenissen in dit logboek.', {
-                    title: 'Geen privacyregels',
-                  })
-            }
+        <div class="eventlog-privacy-console" data-eventlog-privacy-layout="single-check">
+          <div id="eventlog-privacy-primary" class="summary-panel eventlog-privacy-primary" data-eventlog-privacy-primary="control">
+            <h3>Privacycontrole</h3>
+            <p class="small-print">Controleer alleen opslagmodus en risicosignalen. Kiempad toont geen trackingpayload, plaintext medische inhoud of besluitvormende medische inhoud.</p>
+            <dl class="summary-list">
+              <div><dt>Opslag</dt><dd>${isCentralStorage(state) ? 'Centraal versleuteld' : 'Lokale kluis'}</dd></div>
+              <div><dt>Privacysignalen</dt><dd>${highRiskLogs.length}</dd></div>
+              <div><dt>Auditregels</dt><dd>${logs.length}</dd></div>
+            </dl>
           </div>
-        </details>
+          <details id="logboek-privacy-disclosure" class="kp-disclosure eventlog-privacy-followup" data-eventlog-disclosure="privacy" data-eventlog-privacy-followup="collapsed">
+            <summary class="kp-disclosure__summary eventlog-privacy-followup__summary">
+              <span>
+                <strong>Privacygevoelige auditregels openen</strong>
+                <small>Bekijk auditregels, recent overzicht of categorieën pas na de privacycontrole.</small>
+              </span>
+              <em>${highRiskLogs.length} signalen</em>
+            </summary>
+            <div class="kp-disclosure__body eventlog-privacy-followup__body">
+              <nav class="eventlog-privacy-followup__links" aria-label="Logboek privacy vervolgcontext">
+                <a href="#logboek?route=recent">Recente auditregels</a>
+                <a href="#logboek?route=categorieen">Categorieën</a>
+                <a href="#logboek?route=overzicht">Logboekstatus</a>
+              </nav>
+              ${
+                highRiskLogs.length > 0
+                  ? renderEventLogTimeline(highRiskLogs, 'privacy')
+                  : renderEmptyState('Geen privacygevoelige gebeurtenissen in dit logboek.', {
+                      title: 'Geen privacyregels',
+                    })
+              }
+            </div>
+          </details>
+        </div>
       </section>
         `,
   });

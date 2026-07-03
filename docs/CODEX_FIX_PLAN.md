@@ -14,6 +14,10 @@
 - **CFX-030 — done in G1320 / issue #2415.** `index.html` now defines Claude Design teal
   `theme-color` for light mode, a dark-mode variant, and no longer contains the old sage
   `#7a9471`; `manifest.webmanifest` now uses teal `theme_color` and the Kiempad page background.
+- **Event log privacy single control layer — done in G1490 / issue #2740.** The Logboek privacy
+  route now opens with one primary privacy-control summary while high-risk audit rules, recent
+  events, categories, and status links sit behind one closed follow-up context, preserving audit
+  hooks, hashes, and no-plaintext/no-tracking boundaries.
 - **CFX-010/CFX-081 — done in G1321 / issue #2417.** Mobile/tablet navigation now shows 8
   primary tabs plus a `Meer` sheet instead of all 13 routes at once. Secondary routes stay
   reachable in grouped Inzicht/Beheer/Privacy sections, and hidden active routes keep the
