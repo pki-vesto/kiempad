@@ -142,7 +142,7 @@ function extractDossierAddRouteSelector(html: string): string {
 
 function extractDossierUploadTriage(html: string): string {
   const match = html.match(
-    /<section class="dossier-upload-triage" aria-label="Uploadkeuze voor dossier"[\s\S]*?<\/section>/,
+    /<details class="dossier-upload-triage" aria-label="Uploadkeuze voor dossier"[\s\S]*?<\/details>/,
   );
   if (!match?.[0]) throw new Error('Dossier upload-triage ontbreekt.');
   return match[0].replace(/\s+/g, ' ').trim();
@@ -7587,6 +7587,14 @@ describe('app shell', () => {
     const draftNote = extractDossierAddRouteDraftNote(emptyHtml);
 
     expect(triage).toContain('data-dossier-upload-triage="ready"');
+    expect(triage).toContain('data-dossier-upload-triage-details="collapsed"');
+    expect(triage).toContain('data-dossier-upload-triage-summary="ready"');
+    expect(triage).toContain('<span>Uploadkeuze</span>');
+    expect(triage).toContain('<strong>Kies wat je toevoegt</strong>');
+    expect(triage).toContain('Document, consult, beeld of OCR-review');
+    expect(triage).not.toContain(
+      '<details class="dossier-upload-triage" aria-label="Uploadkeuze voor dossier" data-dossier-upload-triage="ready" data-dossier-upload-triage-details="collapsed" open>',
+    );
     expect(triage).toContain('Kies eerst wat je toevoegt');
     expect(triage).toContain('data-dossier-upload-lane="document"');
     expect(triage).toContain('data-dossier-upload-lane="consult"');
@@ -8573,6 +8581,11 @@ describe('app shell', () => {
     expect(css).toContain('.dossier-route-snapshot__card {');
     expect(css).toContain('.dossier-route-snapshot__card strong {');
     expect(css).toContain('.dossier-upload-triage {');
+    expect(css).toContain('.dossier-upload-triage__summary {');
+    expect(css).toContain('.dossier-upload-triage__summary::after {');
+    expect(css).toContain('.dossier-upload-triage[open] > .dossier-upload-triage__summary::after');
+    expect(css).toContain('.dossier-upload-triage__body {');
+    expect(css).toContain('.dossier-upload-triage:not([open]) > .dossier-upload-triage__body {');
     expect(css).toContain('.dossier-upload-triage__header {');
     expect(css).toContain('.dossier-upload-triage__lanes {');
     expect(css).toContain('.dossier-upload-triage__lane {');
