@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1575 — Dossier uploadroutes tonen verplichte invoerkaart
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Verplichte velden zitten in de dossier-uploadroutes verspreid over dichtgeklapte stappen, waardoor gebruikers pas laat zien waarom opslaan nog kan blokkeren.
+- **User Impact:** Document-, consult- en embryoflows voelen minder rustig doordat de gebruiker vlak voor opslaan alsnog moet zoeken welke basisinformatie minimaal nodig is.
+- **Desired Outcome:** Elke dossier-uploadroute toont vlak boven de actieknop een compacte verplichte-invoerkaart met de minimale velden voor die route.
+- **User Value:** Gebruikers kunnen sneller controleren wat nodig is zonder alle details open te klappen.
+- **Acceptance Criteria:** Documentupload toont bestand, datumcontrole en conceptreview; consultupload toont datum en verslagbron; embryokwaliteit en embryostatus tonen hun verplichte datum-, embryo- en kwaliteits/statusvelden; de kaart staat vóór de submitknop en gebruikt `--clay-ink`; app-shell tests dekken markup, volgorde en CSS-contract; desktop, tablet en mobiel blijven via routeflow-smoke gevalideerd; geen diagnose, dosering, behandeladvies, secrets of trackingpayload.
+- **Affected Screens:** Dossier upload, consultupload, embryokwaliteit, embryostatus
+- **Priority:** P2
+- **Complexity:** S
+- **Related Components:** Dossier add routes, upload workflow forms, form validation styling
+- **ADR Needed:** no
+- **Score:** 85
+- **Status:** ☑ klaar
+- **Issue:** #3094
+
 ### G1574 — Premium Claude Design UI houdt de algemene medische disclaimer korter
 
 - **Epic:** Onboarding & Daily Use
