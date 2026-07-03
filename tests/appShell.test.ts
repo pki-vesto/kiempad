@@ -39194,8 +39194,19 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-followup-visibility-choice__anchor--secondary {');
     expect(css).toContain('border-style: solid;');
     expect(css).toContain('.knowledge-library-empty-recovery-choice__label {');
+    expect(css).toContain('flex: 1 1 auto;');
     expect(css).toContain('font-weight: 850;');
+    expect(css).toContain('line-height: 1.15;');
     expect(css).toContain('white-space: nowrap;');
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:hover\n  .knowledge-library-empty-recovery-choice__label',
+    );
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__label',
+    );
+    expect(css).toContain(
+      '.knowledge-library-followup-visibility-choice__anchor:focus-visible\n  .knowledge-library-empty-recovery-choice__label {\n  color: var(--category);\n  font-weight: 900;\n}',
+    );
     expect(css).toContain(
       '.knowledge-library-empty-recovery-choice__body\n  .knowledge-library-followup-visibility-choice__anchor:hover,',
     );
