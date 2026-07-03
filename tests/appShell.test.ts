@@ -7862,6 +7862,9 @@ describe('app shell', () => {
     expect(dossierPanel).toContain(
       'class="dossier-submit-action" data-dossier-submit-action="dossier-upload"',
     );
+    expect(dossierPanel).toContain('data-dossier-upload-completion-choice="ready"');
+    expect(dossierPanel).toContain('data-dossier-upload-submit-feedback-details="collapsed"');
+    expect(dossierPanel).toContain('Afrondingsstatus openen');
     expect(dossierPanel).toContain('Upload document naar dossier</button>');
     expect(dossierPanel).toContain('data-dossier-submit-feedback="dossier-upload"');
     expect(dossierPanel).toContain('data-dossier-feedback-announcement-order="1"');
@@ -7874,9 +7877,15 @@ describe('app shell', () => {
     expect(dossierPanel).not.toContain('data-dossier-submit-next-action="dossier-upload"');
     expect(dossierPanel).not.toContain('data-dossier-submit-target="dossier-upload"');
     expect(dossierPanel).not.toContain('data-dossier-submit-focus-return="dossier-upload"');
-    expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
-      dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'),
+    expect(dossierPanel).not.toContain(
+      '<details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-dossier-upload-submit-feedback-details="collapsed" open',
     );
+    expect(dossierPanel.indexOf('data-dossier-submit-action="dossier-upload"')).toBeLessThan(
+      dossierPanel.indexOf('data-dossier-upload-submit-feedback-details="collapsed"'),
+    );
+    expect(
+      dossierPanel.indexOf('data-dossier-upload-submit-feedback-details="collapsed"'),
+    ).toBeLessThan(dossierPanel.indexOf('data-dossier-submit-feedback="dossier-upload"'));
     expect(consultPanel).toContain('id="consult-upload-workflow-header"');
     expect(consultPanel).toContain('data-hub-workflow="consult-upload"');
     expect(consultPanel).toContain('Consultupload als eigen werkbaan');
@@ -8444,6 +8453,9 @@ describe('app shell', () => {
     expect(css).toContain('border-radius: 12px;');
     expect(css).toContain('padding-bottom: 8px;');
     expect(css).toContain('margin-top: 8px;');
+    expect(css).toContain('.dossier-upload-completion');
+    expect(css).toContain('data-dossier-upload-completion-choice="ready"');
+    expect(css).toContain('.dossier-upload-optional.dossier-upload-submit-feedback-details');
     expect(css).toContain('.dossier-submit-action');
     expect(css).toContain('justify-self: start;');
     expect(css).toContain('min-width: min(100%, 220px);');

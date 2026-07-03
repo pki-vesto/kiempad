@@ -3540,8 +3540,16 @@ function renderDossierScreen(state: AppShellState): string {
               </fieldset>
             </details>
           </details>
-          <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
-          ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
+          <section class="dossier-upload-completion" data-dossier-upload-completion-choice="ready">
+            <button type="submit" class="dossier-submit-action" data-dossier-submit-action="dossier-upload">Upload document naar dossier</button>
+            <details class="dossier-upload-optional dossier-upload-submit-feedback-details" data-dossier-upload-submit-feedback-details="collapsed">
+              <summary class="dossier-upload-optional__summary">
+                <span>Afrondingsstatus openen</span>
+                <small>Feedback en herstelcontext</small>
+              </summary>
+              ${renderDossierSubmitFeedback('dossier-upload', 'dossier-upload', state)}
+            </details>
+          </section>
         </form>
         <p class="small-print">Bestanden, gespreksverslagen, OCR-status en analyse worden ${beschrijfEncryptedRecordLocatie(state)}. Foto’s, echo’s en andere beelden worden als versleutelde dossierbijlage bewaard; lokale analyse kijkt alleen naar bestandsnaam, type en grootte en geeft geen medisch advies.</p>
         ${renderDossierUploadPrivacyDisclosure(state)}

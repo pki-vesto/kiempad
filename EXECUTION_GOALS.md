@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1415 — Consult upload: consultroute start met één verslagkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De Dossier documentupload is nu stapsgewijs, maar de consultuploadroute kan nog direct meerdere invoervelden en context tegelijk tonen.
+- **User Impact:** Gebruikers die alleen een consultverslag willen toevoegen, moeten nog steeds datum, tekst, bestand, context en status tegelijk scannen.
+- **Desired Outcome:** Laat de consultuploadroute eerst openen met één rustige keuze voor tekst of bestand, waarna datum, context en extra velden als vervolgcontext bereikbaar blijven.
+- **User Value:** Gebruikers kunnen consultverslagen sneller en rustiger toevoegen zonder dat het formulier als één lange invoerpagina start.
+- **Acceptance Criteria:** Bestaande form ids, inputnamen, submitknop, feedback hooks, privacy hooks en dossier hooks blijven aanwezig; de eerste consultuploadlaag toont één duidelijke verslagkeuze of compacte intake; datum, tekst, bestand, context en feedback blijven bereikbaar maar starten gegroepeerd of gesloten waar passend; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken volgorde, hooks en gesloten vervolgcontext.
+- **Affected Screens:** Dossier, Consult upload
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, consult upload form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2776
+
 ### G1414 — Dossier upload: submitfeedback start met één afrondingskeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, dossier upload submit feedback, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2774
 
 ### G1413 — Dossier upload: embryo-labcontextpaneel start met één labkeuze
