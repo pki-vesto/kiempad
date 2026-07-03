@@ -127,6 +127,9 @@ const targets = [
       '[data-knowledge-library-category-card="research"]',
       '#knowledge-library-followup',
       '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-context-choice="collapsed"]',
+    ],
+    presentSelectors: [
       '#knowledge-library-panel',
       '#knowledge-category-fasen',
       '#knowledge-category-research',
@@ -136,6 +139,7 @@ const targets = [
     closedDetailsSelectors: [
       '[data-knowledge-workbench-disclosure="collapsed"]',
       '[data-knowledge-library-followup="collapsed"]',
+      '[data-knowledge-library-context-choice="collapsed"]',
     ],
     knowledgeConsole: true,
     desktopHiddenSelectors: [

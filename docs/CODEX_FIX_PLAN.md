@@ -1260,6 +1260,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   status choice while storage status, recovery context and follow-up routes remain reachable.
   Partial G1437/#2818: The knowledge research follow-up now starts with one closed compact
   research-context choice while sources, summaries, relevance and trends remain reachable.
+  Partial G1438/#2820: The knowledge library follow-up now starts with one closed compact
+  library-context choice while categories, card actions and item details remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 
