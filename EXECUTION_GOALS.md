@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1486 — Kennis bibliotheek lege-staat biedt compacte herstelactie
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1485 toont de Kennis Bibliotheek lege-staat wel context, maar nog geen compacte herstelactie om direct verder te gaan.
+- **User Impact:** Gebruikers begrijpen dat er geen resultaten zijn, maar moeten nog zoeken waar zij filter, categorie of toevoegroute aanpassen.
+- **Desired Outcome:** Laat de lege-staat van de Kennis Bibliotheek een compacte herstelactie tonen, zodat gebruikers direct filter wissen, categorie wijzigen of kennis toevoegen kunnen kiezen.
+- **User Value:** Gebruikers kunnen lege resultaten direct herstellen zonder de hele kennisroute opnieuw te scannen.
+- **Acceptance Criteria:** Bestaande lege-staat-, zichtbaarheid-, categorie-, lijst- en kaarthooks blijven aanwezig; de lege-staat toont compacte herstelacties zonder brede extra panelen; filter wissen, categoriekeuze en kennis toevoegen blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken de herstelacties en bestaande bereikbaarheid.
+- **Affected Screens:** Kennis, Bibliotheek
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, knowledge library visibility empty state, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2916
+
 ### G1485 — Kennis bibliotheek zichtbaarheidssamenvatting toont compacte lege-staat
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, knowledge library visibility summary, tests
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2914
 
 ### G1484 — Kennis bibliotheek categorievervolg start met compacte zichtbaarheidssamenvatting

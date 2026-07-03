@@ -38245,6 +38245,55 @@ describe('app shell', () => {
     expect(html).not.toContain('item(s) getoond');
   });
 
+  it('toont een compacte lege-staat in de kennisbibliotheek zichtbaarheidssamenvatting', () => {
+    const html = renderAppShell('kennis', {
+      trajecten: [],
+      afspraken: [],
+      medicatie: [],
+      herinneringen: [],
+      vragen: [],
+      settings: DEFAULT_APP_SETTINGS,
+      notificaties: { permission: 'unsupported', serviceWorker: 'unsupported' },
+      activeKnowledgeRoute: 'library',
+      kennisFilter: {
+        zoekterm: 'niet bestaand item',
+        categorie: 'research',
+      },
+      kennisItems: [
+        {
+          id: 'kosten-1',
+          titel: 'Kosten 2026: eigen risico',
+          inhoud: 'Conceptinhoud over eigen risico.',
+          bron: 'Bron kosten',
+          categorie: 'kosten',
+          ai_gegenereerd: false,
+          geverifieerd_met_arts: false,
+        },
+      ],
+    });
+    const visibilitySummary = html.slice(
+      html.indexOf('data-knowledge-library-followup-visibility-choice="collapsed"'),
+      html.indexOf('data-knowledge-library-context-choice="collapsed"'),
+    );
+
+    expect(html).toContain('data-knowledge-library-followup-visibility-choice="collapsed"');
+    expect(html).toContain('<em>Geen zichtbaar</em>');
+    expect(html).toContain('data-knowledge-library-followup-visibility-status="empty"');
+    expect(html).toContain('Geen zichtbare kennisitems');
+    expect(html).toContain('data-knowledge-library-followup-visibility-empty-state="ready"');
+    expect(html).toContain('Pas filter of categorie aan; context en ankers blijven beschikbaar.');
+    expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
+    expect(html).toContain('data-knowledge-library-followup-visibility-anchor="list"');
+    expect(html).toContain('data-knowledge-library-followup-visibility-anchor="cards"');
+    expect(html).toContain('id="knowledge-library-category-choice"');
+    expect(html).toContain('id="knowledge-library-panel"');
+    expect(html).toContain('data-knowledge-category="ready"');
+    expect(html).not.toContain('data-knowledge-library-followup-visibility-status="visible"');
+    expect(visibilitySummary).not.toContain('tracking-payload');
+    expect(visibilitySummary).not.toContain('providerpayload');
+    expect(visibilitySummary).not.toContain('behandeladvies');
+  });
+
   it('rendert lokale AI-instellingen standaard uit zonder netwerkactie', () => {
     const html = renderAppShell('kennis', {
       trajecten: [],
@@ -38723,6 +38772,7 @@ describe('app shell', () => {
     expect(html).toContain('Zichtbaarheid samenvatten');
     expect(html).toContain('Bekijk eerst telling, categoriekeuze, lijstcontext en kaartdetails.');
     expect(html).toContain('data-knowledge-library-followup-visibility-status="visible"');
+    expect(html).not.toContain('data-knowledge-library-followup-visibility-empty-state="ready"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="category"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="list"');
     expect(html).toContain('data-knowledge-library-followup-visibility-anchor="cards"');
@@ -39084,6 +39134,7 @@ describe('app shell', () => {
     expect(css).toContain('.knowledge-library-followup-visibility-choice__summary {');
     expect(css).toContain('.knowledge-library-followup-visibility-choice__body {');
     expect(css).toContain('.knowledge-library-followup-visibility-choice:not([open])');
+    expect(css).toContain('.knowledge-library-followup-visibility-choice__empty');
     expect(css).toContain('.knowledge-library-category-choice__header {');
     expect(css).toContain('.knowledge-library-category-choice__grid {');
     expect(css).toContain('.knowledge-library-category-choice__card {');

@@ -12592,6 +12592,18 @@ function formatPersonalOwnerLabel(settings: AppSettings, owner: SymptomLog['owne
 function renderKennisScreen(state: AppShellState): string {
   const filter = state.kennisFilter ?? {};
   const filteredItems = filterKennisItems(state.kennisItems, filter);
+  const hasVisibleKennisItems = filteredItems.length > 0;
+  const knowledgeVisibilityState = hasVisibleKennisItems ? 'visible' : 'empty';
+  const knowledgeVisibilityLabel = hasVisibleKennisItems
+    ? `${filteredItems.length} zichtbaar`
+    : 'Geen zichtbaar';
+  const knowledgeVisibilityStatusCopy = hasVisibleKennisItems
+    ? `${filteredItems.length} zichtbaar`
+    : 'Geen zichtbare kennisitems';
+  const knowledgeVisibilityEmptyCopy =
+    state.kennisItems.length > 0
+      ? 'Pas filter of categorie aan; context en ankers blijven beschikbaar.'
+      : 'Voeg eerst kennisitems toe; context en ankers staan al klaar.';
   const grouped = kennisItemsPerCategorie(filteredItems);
   const researchBronnen = bouwResearchBronnenCache(state.kennisItems);
   const researchSamenvattingen = bouwWetenschappelijkeResearchSamenvattingen(state.kennisItems);
@@ -13062,10 +13074,15 @@ function renderKennisScreen(state: AppShellState): string {
                   <strong>Zichtbaarheid samenvatten</strong>
                   <small>Bekijk eerst telling, categoriekeuze, lijstcontext en kaartdetails.</small>
                 </span>
-                <em>${filteredItems.length} zichtbaar</em>
+                <em>${knowledgeVisibilityLabel}</em>
               </summary>
               <div class="knowledge-library-followup-visibility-choice__body">
-                <span class="knowledge-library-followup-visibility-choice__status" data-knowledge-library-followup-visibility-status="visible">${filteredItems.length} zichtbaar</span>
+                <span class="knowledge-library-followup-visibility-choice__status" data-knowledge-library-followup-visibility-status="${knowledgeVisibilityState}">${knowledgeVisibilityStatusCopy}</span>
+                ${
+                  hasVisibleKennisItems
+                    ? ''
+                    : `<span class="knowledge-library-followup-visibility-choice__empty" data-knowledge-library-followup-visibility-empty-state="ready">${knowledgeVisibilityEmptyCopy}</span>`
+                }
                 <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-category-choice" data-knowledge-library-followup-visibility-anchor="category">Categoriekeuze</a>
                 <a class="knowledge-library-followup-visibility-choice__anchor" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="list">Bibliotheeklijst</a>
                 <a class="knowledge-library-followup-visibility-choice__anchor knowledge-library-followup-visibility-choice__anchor--secondary" href="#knowledge-library-panel" data-knowledge-library-followup-visibility-anchor="cards">Kaartdetails</a>

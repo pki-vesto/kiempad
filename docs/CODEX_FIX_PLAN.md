@@ -1361,6 +1361,8 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   follow-up anchor layer for category anchors, library follow-up and visibility status.
   Partial G1484/#2912: The knowledge library category follow-up now starts with a compact closed
   visibility summary before context, list and card detail layers open.
+  Partial G1485/#2914: The knowledge library visibility summary now exposes a compact empty-state
+  row when filters or categories leave no visible knowledge items.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

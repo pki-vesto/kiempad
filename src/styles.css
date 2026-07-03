@@ -8449,6 +8449,7 @@ h2 {
 }
 
 .knowledge-library-followup-visibility-choice__anchor,
+.knowledge-library-followup-visibility-choice__empty,
 .knowledge-library-followup-visibility-choice__status {
   display: inline-flex;
   align-items: center;
@@ -8475,8 +8476,14 @@ h2 {
 }
 
 .knowledge-library-followup-visibility-choice__anchor--secondary,
+.knowledge-library-followup-visibility-choice__empty,
 .knowledge-library-followup-visibility-choice__status {
   color: var(--text-muted);
+}
+
+.knowledge-library-followup-visibility-choice__empty {
+  border-style: dashed;
+  background: color-mix(in srgb, var(--surface) 92%, var(--surface-2));
 }
 
 .knowledge-library-context-choice {
