@@ -12953,8 +12953,19 @@ function renderKennisScreen(state: AppShellState): string {
                       <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
                     </summary>
                     <div class="knowledge-ai-network-choice__body">
-                      ${renderResearchNetworkSettingsForm(state.settings)}
-                      ${renderResearchAggregatiePlan(researchAggregatie)}
+                      <details class="knowledge-ai-network-content-choice" data-knowledge-ai-network-content-choice="collapsed">
+                        <summary class="knowledge-ai-network-content-choice__summary">
+                          <span>
+                            <strong>Netwerkvelden openen</strong>
+                            <small>Research-opt-in, aggregatieplan, PubMed-preview en bronregister.</small>
+                          </span>
+                          <em>${state.settings.researchNetwerk.ingeschakeld ? 'Netwerk aan' : 'Netwerk uit'}</em>
+                        </summary>
+                        <div class="knowledge-ai-network-content-choice__body">
+                          ${renderResearchNetworkSettingsForm(state.settings)}
+                          ${renderResearchAggregatiePlan(researchAggregatie)}
+                        </div>
+                      </details>
                     </div>
                   </details>
                 </div>

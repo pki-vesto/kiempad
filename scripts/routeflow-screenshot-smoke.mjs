@@ -499,12 +499,14 @@ const targets = [
     openSelectors: [
       '[data-knowledge-ai-support="collapsed"]',
       '[data-knowledge-ai-support-context-choice="collapsed"]',
+      '[data-knowledge-ai-network-choice="collapsed"]',
     ],
     requiredSelectors: [
       '[data-knowledge-ai-network-choice="collapsed"]',
     ],
     presentSelectors: [
       '[data-knowledge-ai-console-region="research-network"]',
+      '[data-knowledge-ai-network-content-choice="collapsed"]',
       '#research-network-form',
       'select[name="researchNetwerkIngeschakeld"]',
       '#research-network-form button[type="submit"]',
@@ -516,7 +518,7 @@ const targets = [
       'select[name="pubmedReviewStatus"]',
       '[aria-label="Research bronregister"]',
     ],
-    closedDetailsSelectors: ['[data-knowledge-ai-network-choice="collapsed"]'],
+    closedDetailsSelectors: ['[data-knowledge-ai-network-content-choice="collapsed"]'],
   },
   {
     screen: 'start-today-console',

@@ -1334,6 +1334,9 @@ mobile/a11y/loading/seed gaps**, then **harden tests**.
   Partial G1473/#2890: The knowledge AI settings panel now starts with one closed compact
   settings fields choice while opt-in, storage mode, on-device status and save action remain
   reachable.
+  Partial G1474/#2892: The knowledge research network panel now starts with one closed compact
+  network fields choice while research opt-in, aggregation plan, PubMed preview and source
+  registry remain reachable.
 - **CFX-094** — AI/Artscheck labels calm-but-clear that summaries are unverified until a clinician
   confirms (N94). **P2 · S**
 

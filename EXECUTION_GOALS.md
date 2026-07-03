@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1475 — Kennis toevoegroute researchformulier start met één compacte invoerkeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** Na G1474 blijft de kennis toevoegroute researchformulier gevoelig voor titel, bron, datum, notitie, samenvattingen en bewaaractie tegelijk.
+- **User Impact:** Gebruikers die research toevoegen, krijgen nog meerdere invoervelden voordat ze gericht kiezen.
+- **Desired Outcome:** Laat de kennis toevoegroute researchformulier starten met één compacte invoerkeuze of samengevouwen sublaag, terwijl titel, bron, datum, notitie, samenvattingen en bewaaractie bereikbaar blijven.
+- **User Value:** Gebruikers kunnen eerst één invoercontext kiezen zonder dat alle researchvelden tegelijk de route domineren.
+- **Acceptance Criteria:** Bestaande researchformulier hooks, velden en bewaaractie blijven aanwezig; het researchformulier start met één compacte keuze of samengevouwen sublaag; titel, bron, datum, notitie, samenvattingen en bewaaractie blijven bereikbaar; desktop, tablet en mobiel tonen geen overlap of horizontale overflow; geen plaintext medische inhoud, diagnose, dosering, behandeladvies, secrets of trackingpayload; tests of routeflow-smoke bewaken hooks, bereikbaarheid en compacte startlaag.
+- **Affected Screens:** Kennis, Toevoegen
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, research item form, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2894
+
 ### G1474 — Kennis researchnetwerk start met één compacte netwerkkeuze
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, research network settings, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2892
 
 ### G1473 — Kennis AI-instellingen start met één compacte instellingenkeuze
