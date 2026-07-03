@@ -39354,6 +39354,7 @@ describe('app shell', () => {
     const hoverLabelWeight = 850;
     const hoverBadgeFeedbackResponsiveFlexBasis = `min(${hoverBadgeFeedbackFlexBasisCh}ch, ${hoverBadgeFeedbackFlexBasisPercent}%)`;
     const hoverBadgeFeedbackResponsiveInlineSize = `min(${hoverBadgeFeedbackWidthCh}ch, ${hoverBadgeFeedbackWidthPercent}%)`;
+    const hoverBadgeFeedbackResponsiveMaxWidth = `min(${hoverBadgeFeedbackMaxWidthCh}ch, ${hoverBadgeFeedbackMaxWidthPercent}%)`;
     const hoverBadgeFeedbackFlexContractOrder = [
       hoverBadgeFeedbackFlexGrow,
       hoverBadgeFeedbackFlexShrink,
@@ -39384,6 +39385,9 @@ describe('app shell', () => {
     expect(hoverBadgeFeedbackResponsiveInlineSize).toContain(`${hoverBadgeFeedbackWidthCh}ch`);
     expect(hoverBadgeFeedbackResponsiveInlineSize).toContain(`${hoverBadgeFeedbackWidthPercent}%`);
     expect(hoverBadgeFeedbackResponsiveInlineSize).toBe(hoverBadgeFeedbackResponsiveFlexBasis);
+    expect(hoverBadgeFeedbackResponsiveMaxWidth).toContain(`${hoverBadgeFeedbackMaxWidthCh}ch`);
+    expect(hoverBadgeFeedbackResponsiveMaxWidth).toContain(`${hoverBadgeFeedbackMaxWidthPercent}%`);
+    expect(hoverBadgeFeedbackResponsiveMaxWidth).toBe(hoverBadgeFeedbackResponsiveInlineSize);
     expect(css).toContain(hoverBadgeFeedbackFlexContract);
     expect(hoverBadgeFeedbackFlexBasisCh).toBe(hoverBadgeFeedbackWidthCh);
     expect(hoverBadgeFeedbackFlexBasisPercent).toBe(hoverBadgeFeedbackWidthPercent);
