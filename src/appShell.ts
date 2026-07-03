@@ -14164,6 +14164,18 @@ function renderStartScreen(state: AppShellState): string {
     costCount: state.kosten?.length ?? 0,
     secureMode: isCentralStorage(state) ? 'Centrale versleutelde opslag' : 'Lokale kluis',
   });
+  const primaryDayAction = renderStartPrimaryDayAction({
+    activeTraject,
+    huidigeFase,
+    nextAppointment,
+    nextReminder,
+    openQuestions,
+    doseCount: todayDoseLogs.length,
+    recommendationCount: (['vrouw', 'man', 'samen'] as const).reduce(
+      (total, owner) => total + dailyRecommendations[owner].length,
+      0,
+    ),
+  });
   const dailyAdviceConsole = renderDailyAdviceConsole(state, dailyRecommendations);
   const startTodayConsole = renderStartTodayConsole({
     phase: phasePanel,
@@ -14192,6 +14204,7 @@ function renderStartScreen(state: AppShellState): string {
     [
       renderStartLaunchpad({
         header: startHeader,
+        primaryDayAction,
         cockpit: startCockpit,
         workspaceDeck: startWorkspaceDeck,
         setup: setupPanel,
@@ -14236,6 +14249,7 @@ function renderStartTodayConsole(input: {
 
 function renderStartLaunchpad(input: {
   header: string;
+  primaryDayAction: string;
   cockpit: string;
   workspaceDeck: string;
   setup: string;
@@ -14245,17 +14259,73 @@ function renderStartLaunchpad(input: {
       <div class="start-launchpad__header" data-start-launchpad-region="header">
         ${input.header}
       </div>
-      <div class="start-launchpad__cockpit" data-start-launchpad-region="cockpit">
-        ${input.cockpit}
+      <div class="start-launchpad__primary" data-start-launchpad-region="primary">
+        ${input.primaryDayAction}
       </div>
-      <div class="start-launchpad__deck" data-start-launchpad-region="deck">
-        ${input.workspaceDeck}
+      <details id="start-dashboard-followup" class="kp-disclosure start-dashboard-followup" data-start-dashboard-followup="collapsed">
+        <summary class="kp-disclosure__summary start-dashboard-followup__summary">
+          <span>
+            <strong>Dashboardcontext openen</strong>
+            <small>Dossierbasis, kernwerkbanen en eerste setup blijven beschikbaar.</small>
+          </span>
+          <em>Vervolg</em>
+        </summary>
+        <div class="kp-disclosure__body start-dashboard-followup__body">
+          <div class="start-launchpad__cockpit" data-start-launchpad-region="cockpit">
+            ${input.cockpit}
+          </div>
+          <div class="start-launchpad__deck" data-start-launchpad-region="deck">
+            ${input.workspaceDeck}
+          </div>
+          ${
+            input.setup
+              ? `<div class="start-launchpad__setup" data-start-launchpad-region="setup">${input.setup}</div>`
+              : ''
+          }
+        </div>
+      </details>
+    </section>
+  `;
+}
+
+function renderStartPrimaryDayAction(input: {
+  activeTraject: TrajectMetFasen | undefined;
+  huidigeFase: Fase | undefined;
+  nextAppointment: string;
+  nextReminder: string;
+  openQuestions: string;
+  doseCount: number;
+  recommendationCount: number;
+}): string {
+  const phaseLabel = input.huidigeFase
+    ? TRAJECT_FASE_LABELS[input.huidigeFase.fase]
+    : input.activeTraject
+      ? input.activeTraject.traject.naam
+      : 'Traject nog leeg';
+  const doseLabel =
+    input.doseCount > 0
+      ? `${input.doseCount} medicatiemoment${input.doseCount === 1 ? '' : 'en'} vandaag`
+      : 'Geen medicatiemomenten vandaag';
+
+  return `
+    <section id="start-primary-day-action" class="start-primary-day-action" aria-label="Start primaire dagactie" data-start-primary-day-action="ready">
+      <header class="start-primary-day-action__header">
+        <div>
+          <p class="start-cockpit__eyebrow">Vandaag eerst</p>
+          <h2>Eerst één dagactie</h2>
+        </div>
+        <span>${input.recommendationCount} suggestie${input.recommendationCount === 1 ? '' : 's'}</span>
+      </header>
+      <div class="start-primary-day-action__focus">
+        <p class="start-primary-day-action__label">Nu belangrijk</p>
+        <strong>${escapeHtml(input.nextAppointment)}</strong>
+        <small>${escapeHtml(phaseLabel)} · ${escapeHtml(doseLabel)} · ${escapeHtml(input.openQuestions)}</small>
       </div>
-      ${
-        input.setup
-          ? `<div class="start-launchpad__setup" data-start-launchpad-region="setup">${input.setup}</div>`
-          : ''
-      }
+      <nav class="start-primary-day-action__actions" aria-label="Start primaire dagactie routes">
+        <a href="#start-today" data-start-primary-day-action-route="today">Vandaag openen</a>
+        <a href="#start-recommendations" data-start-primary-day-action-route="advice">Suggesties bekijken</a>
+        <a href="#agenda" data-start-primary-day-action-route="agenda">${escapeHtml(input.nextReminder)}</a>
+      </nav>
     </section>
   `;
 }

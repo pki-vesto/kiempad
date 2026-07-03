@@ -2785,9 +2785,28 @@ describe('app shell', () => {
     expect(html).toContain('data-start-launchpad="ready"');
     expect(html).toContain('data-start-console-region="launchpad"');
     expect(html).toContain('data-start-launchpad-region="header"');
+    expect(html).toContain('data-start-launchpad-region="primary"');
+    expect(html).toContain('id="start-primary-day-action"');
+    expect(html).toContain('data-start-primary-day-action="ready"');
+    expect(html).toContain('Eerst één dagactie');
+    expect(html).toContain('data-start-primary-day-action-route="today"');
+    expect(html).toContain('data-start-primary-day-action-route="advice"');
+    expect(html).toContain('data-start-primary-day-action-route="agenda"');
+    expect(html).toContain('href="#start-today"');
+    expect(html).toContain('href="#start-recommendations"');
+    expect(html).toContain('id="start-dashboard-followup"');
+    expect(html).toContain('data-start-dashboard-followup="collapsed"');
+    expect(html).toContain('Dashboardcontext openen');
     expect(html).toContain('data-start-launchpad-region="cockpit"');
     expect(html).toContain('data-start-launchpad-region="deck"');
     expect(html).toContain('data-start-launchpad-region="setup"');
+    expect(html.indexOf('data-start-primary-day-action="ready"')).toBeLessThan(
+      html.indexOf('data-start-dashboard-followup="collapsed"'),
+    );
+    expect(html.indexOf('data-start-dashboard-followup="collapsed"')).toBeLessThan(
+      html.indexOf('data-start-cockpit="ready"'),
+    );
+    expect(html).not.toContain('<details id="start-dashboard-followup" open');
     expect(html).toContain('class="start-command-header"');
     expect(html).toContain('aria-label="Gedeelde modus"');
     expect(html).toContain('class="start-cockpit"');
@@ -3033,11 +3052,17 @@ describe('app shell', () => {
     );
     expect(css).toContain('.start-cockpit {');
     expect(css).toContain('.start-launchpad {');
+    expect(css).toContain('.start-primary-day-action {');
+    expect(css).toContain('.start-primary-day-action__header {');
+    expect(css).toContain('.start-primary-day-action__actions {');
+    expect(css).toContain('.start-dashboard-followup {');
+    expect(css).toContain('.start-dashboard-followup__summary {');
+    expect(css).toContain('.start-dashboard-followup__body {');
     expect(css).toContain('.start-command-layout[data-start-console="ready"] {');
     expect(css).toContain('.start-command-layout[data-start-console="ready"] .start-launchpad {');
     expect(css).toContain('max-height: min(430px, calc(56vh - 42px));');
     expect(css).toContain(
-      '.start-command-layout[data-start-console="ready"] .start-launchpad .start-cockpit {',
+      '.start-command-layout[data-start-console="ready"] .start-launchpad .start-primary-day-action {',
     );
     expect(css).toContain(
       'grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(176px, 0.72fr);',
@@ -3045,11 +3070,11 @@ describe('app shell', () => {
     expect(css).toContain(
       '.start-command-layout[data-start-console="ready"] .start-launchpad .start-workspace-deck__grid {',
     );
-    expect(css).toContain('"header cockpit"');
-    expect(css).toContain('"deck cockpit"');
+    expect(css).toContain('"header primary"');
+    expect(css).toContain('"followup primary"');
     expect(css).toContain('grid-area: header;');
-    expect(css).toContain('grid-area: cockpit;');
-    expect(css).toContain('grid-area: deck;');
+    expect(css).toContain('grid-area: primary;');
+    expect(css).toContain('grid-area: followup;');
     expect(css).toContain(
       'grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr) minmax(210px, 0.7fr);',
     );
@@ -3451,12 +3476,16 @@ describe('app shell', () => {
 
     const launchpadIndex = html.indexOf('data-start-launchpad="ready"');
     const headerIndex = html.indexOf('data-start-launchpad-region="header"', launchpadIndex);
-    const cockpitIndex = html.indexOf('data-start-launchpad-region="cockpit"', headerIndex);
+    const primaryIndex = html.indexOf('data-start-primary-day-action="ready"', headerIndex);
+    const followupIndex = html.indexOf('data-start-dashboard-followup="collapsed"', primaryIndex);
+    const cockpitIndex = html.indexOf('data-start-launchpad-region="cockpit"', followupIndex);
     const deckIndex = html.indexOf('data-start-launchpad-region="deck"', cockpitIndex);
 
     expect(launchpadIndex).toBeGreaterThan(-1);
     expect(headerIndex).toBeGreaterThan(launchpadIndex);
-    expect(cockpitIndex).toBeGreaterThan(headerIndex);
+    expect(primaryIndex).toBeGreaterThan(headerIndex);
+    expect(followupIndex).toBeGreaterThan(primaryIndex);
+    expect(cockpitIndex).toBeGreaterThan(followupIndex);
     expect(deckIndex).toBeGreaterThan(cockpitIndex);
     expect(html).toContain('Poging dashboard · Stimulatie');
     expect(html).toContain('Echo dashboard');

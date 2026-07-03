@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1405 — Dagadvies: adviesroute start met één actiekeuze
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De dagadviesroute kan nog te veel ownerkaarten, plannerlagen en volledige suggestielijst tegelijk tonen.
+- **User Impact:** Gebruikers kunnen bij advies alsnog meerdere routes moeten scannen voordat duidelijk is welke actie vandaag eerst telt.
+- **Desired Outcome:** Start met één primaire actiekeuze en houd owner-workbench, planner en volledige suggestielijst als rustige vervolgcontext bereikbaar.
+- **User Value:** Gebruikers kiezen eerst de adviesactie van vandaag en openen extra adviescontext pas wanneer nodig.
+- **Acceptance Criteria:** Dagadvies toont één primaire actiekeuze in de eerste viewport; vrouw-, man-, samen-, planner- en volledige-lijstcontext blijven bereikbaar via bestaande anchors en hooks; secundaire adviescontext start gegroepeerd of gesloten waar passend; mobile, tablet en desktop tonen geen overlap; geen trackingpayload, plaintext medische inhoud, diagnose of behandeladvies; tests of routeflow-smoke bewaken volgorde, vervolgcontext en hooks.
+- **Affected Screens:** Start, Dagadvies
+- **Priority:** P1
+- **Complexity:** S
+- **Related Components:** App shell, daily advice route, responsive CSS
+- **ADR Needed:** no
+- **Score:** 105
+- **Status:** ☐ open
+- **Issue:** #2756
+
 ### G1404 — Start: dashboard start met één primaire dagactie
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, start dashboard, responsive CSS
 - **ADR Needed:** no
 - **Score:** 105
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2754
 
 ### G1403 — Kennis: bibliotheek start met één categoriekeuze

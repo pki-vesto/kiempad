@@ -30,11 +30,11 @@
 
 | Status | Aantal |
 |---|---|
-| ☑ klaar | 1205 |
+| ☑ klaar | 1206 |
 | ◐ bezig | 0 |
 | ☐ open | 100 |
 | ☒ archived | 99 |
-| **Totaal** | **1404** |
+| **Totaal** | **1405** |
 
 > Werk deze telling bij wanneer je statussen wijzigt (zie permanente onderhoudsregel
 > onderaan).
@@ -1566,13 +1566,14 @@ Bron: [`docs/AUTONOMOUS_EVOLUTION_GOVERNANCE.md`](docs/AUTONOMOUS_EVOLUTION_GOVE
 | G1401 | Dossier: review start met één reviewtaak | P1 | F5 | ☑ |
 | G1402 | Kennis: lezen start met één researchfocus | P1 | F5 | ☑ |
 | G1403 | Kennis: bibliotheek start met één categoriekeuze | P1 | F5 | ☑ |
-| G1404 | Start: dashboard start met één primaire dagactie | P1 | F5 | ☐ |
+| G1404 | Start: dashboard start met één primaire dagactie | P1 | F5 | ☑ |
+| G1405 | Dagadvies: adviesroute start met één actiekeuze | P1 | F5 | ☐ |
 
 ---
 
 ## Telling
 
-- **Totaal doelen: 1404** (id's G001 t/m G1404, doorlopend genummerd) — ruim boven het
+- **Totaal doelen: 1405** (id's G001 t/m G1405, doorlopend genummerd) — ruim boven het
   minimum van 100 concrete doelen.
 - Verdeling per fase en prioriteit kan met de tabellen hierboven worden afgeleid; de
   statussamenvatting bovenaan geeft het totaalbeeld (☑/◐/☐).
