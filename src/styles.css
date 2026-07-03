@@ -14994,9 +14994,11 @@ a.action-card:active {
     outline-color 0.16s ease;
 }
 
-.daily-recommendation-reset-route-focus__close:hover {
-  border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+@media (hover: hover) and (pointer: fine) {
+  .daily-recommendation-reset-route-focus__close:hover {
+    border-color: color-mix(in srgb, var(--accent) 44%, var(--border));
+    background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  }
 }
 
 .daily-recommendation-reset-route-focus__close:focus-visible {
@@ -15019,6 +15021,11 @@ a.action-card:active {
   .daily-recommendation-reset-route-focus__close {
     min-height: 32px;
     padding-inline: 7px;
+  }
+
+  .daily-recommendation-reset-route-focus__close:hover {
+    border-color: color-mix(in srgb, var(--accent) 26%, var(--border));
+    background: var(--surface);
   }
 }
 

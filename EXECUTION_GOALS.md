@@ -34,6 +34,23 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 
 ## Goals
 
+### G1371 — Daily Recommendations: resetmelding borgt active-state op touch
+
+- **Epic:** Onboarding & Daily Use
+- **Problem:** De reset-routefocusmelding heeft rustige hover op mobiel, maar de active/pressed state van de Verberg-knop is nog niet apart geborgd.
+- **User Impact:** Touchgebruikers kunnen bij indrukken een te zware of verschuivende feedback ervaren.
+- **Desired Outcome:** Borg een compacte active-state voor de Verberg-knop op touch en desktop zonder layout shift.
+- **User Value:** De tijdelijke resetfeedback blijft rustig en betrouwbaar tijdens aanraken of klikken.
+- **Acceptance Criteria:** Active/pressed state blijft compact en veroorzaakt geen layout shift; touchdoel blijft bruikbaar en binnen de viewport; de active-state verandert geen hash, feedbackfilter, tracking of medische data; tests of routeflow-smoke bewaken selector, copy en privacygrenzen; er komt geen trackingpayload, behandeladvies of medische conclusie bij.
+- **Affected Screens:** Start dagadvies, Daily Recommendations
+- **Priority:** P1
+- **Complexity:** M
+- **Related Components:** App shell, daily recommendations, touch CSS, routeflow smoke
+- **ADR Needed:** no
+- **Score:** 98
+- **Status:** ☐ open
+- **Issue:** #2688
+
 ### G1370 — Daily Recommendations: resetmelding toont rustige hover op mobiel
 
 - **Epic:** Onboarding & Daily Use
@@ -48,7 +65,7 @@ Score = prioriteit + complexiteit + epic-modifier. Prioriteit: P0=100, P1=80, P2
 - **Related Components:** App shell, daily recommendations, mobile CSS, routeflow smoke
 - **ADR Needed:** no
 - **Score:** 98
-- **Status:** ☐ open
+- **Status:** ☑ klaar
 - **Issue:** #2686
 
 ### G1369 — Daily Recommendations: resetmelding gebruikt rustige focusanimatie

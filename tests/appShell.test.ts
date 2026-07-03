@@ -3199,6 +3199,9 @@ describe('app shell', () => {
     expect(css).toContain('max-width: calc(100% - 4px);');
     expect(css).toContain('outline-offset: 1px;');
     expect(css).toContain('min-height: 32px;');
+    expect(css).toContain('@media (hover: hover) and (pointer: fine)');
+    expect(css).toContain('.daily-recommendation-reset-route-focus__close:hover {');
+    expect(css).toContain('background: var(--surface);');
     expect(css).toContain('outline-color 0.16s ease;');
     expect(css).toContain('@media (prefers-reduced-motion: reduce)');
     expect(css).toContain(

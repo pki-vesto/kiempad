@@ -172,6 +172,9 @@
 - **Daily advice feedback reset route-focus calm focus motion — done in G1462 / issue #2684.**
   The reset confirmation and local hide action now use subtle focus transitions and disable that
   motion under prefers-reduced-motion to avoid visual jumps.
+- **Daily advice feedback reset route-focus mobile hover calm — done in G1463 / issue #2686.**
+  The local hide action now scopes hover feedback to fine pointers and keeps touch/mobile hover
+  calm so the reset confirmation stays compact without overflow.
 - **Remaining visible de-jargon sweep — done in G1333 / issue #2440.** Remaining app-shell
   user-facing labels such as "Hubroute", "Beeldrepository", and "client-side" storage wording are
   replaced with calmer Dutch copy in research, daily advice, imaging compare, first-run setup, and
