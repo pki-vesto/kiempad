@@ -15267,7 +15267,8 @@ function renderVragenScreen(state: AppShellState): string {
         ${renderConsultPrepWizard(gegenereerdeVragenlijst)}
         ${disclosure({
           summary: 'Vragenlijst voor volgende afspraak',
-          open: Boolean(gegenereerdeVragenlijst),
+          id: 'vragen-voorbereiden-volledige-lijst',
+          open: false,
           body: gegenereerdeVragenlijst
             ? renderGegenereerdeVragenlijst(gegenereerdeVragenlijst)
             : renderEmptyState('Nog geen open punten om een lokale vragenlijst te maken.', {

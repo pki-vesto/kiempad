@@ -464,6 +464,7 @@ const targets = [
       '[data-hub-detail-panel="consult-prep-wizard"]',
       '.consult-detail-panel__header',
     ],
+    closedDetailsSelectors: ['#vragen-voorbereiden-volledige-lijst'],
     desktopHiddenSelectors: [
       '.question-focus-shell__header p:last-child',
       '.question-route-section__header > p:last-child',
